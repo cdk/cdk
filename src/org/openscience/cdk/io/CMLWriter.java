@@ -32,6 +32,8 @@ import java.io.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.IDCreator;
+import org.openscience.cdk.io.setting.*;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -75,6 +77,8 @@ import javax.vecmath.Point3d;
 public class CMLWriter extends DefaultChemObjectWriter {
 
     private Writer output;
+
+    private BooleanIOSetting cmlIds;
 
     private boolean done;
     private boolean fragment;
@@ -127,6 +131,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
      */
     public void write(ChemObject object) throws CDKException {
         logger.debug("Writing object in CML of type: " + object.getClass().getName());
+        
+        customizeJob();
+        
         if (!done) {
             if (!fragment) {
                 write("<?xml version=\"1.0\"?>\n");
@@ -160,11 +167,17 @@ public class CMLWriter extends DefaultChemObjectWriter {
     // Private procedures
 
     private void write(ChemFile cf) {
-        write("<cml title=\"sequence\">\n");
-        for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
-            write(cf.getChemSequence(i));
+        if (cf.getChemSequenceCount() > 1) {
+            write("<cml title=\"sequence\">\n");
+            for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
+                write(cf.getChemSequence(i));
+            }
+            write("</cml>\n");
+        } else {
+            for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
+                write(cf.getChemSequence(i));
+            }
         }
-        write("</cml>\n");
     }
 
     private void write(Crystal crystal) {
@@ -273,6 +286,11 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
     
     private void write(Molecule mol) {
+        // create CML atom and bond ids
+        if (cmlIds.isSet()) {
+            IDCreator.createAtomAndBondIDs(mol);
+        }
+
         write("<molecule");
         if (mol.getID() != null && mol.getID().length() != 0) {
             write(" id=\"" + mol.getID() + "\"");
@@ -443,5 +461,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
 		    logger.error("CMLWriter IOException while printing \"" + 
 	                s + "\":\n" + e.toString());
 		}
+    }
+    
+    private void customizeJob() {
+        cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
+          "Should the output use CML identifiers?", 
+          "true");
+        fireWriterSettingQuestion(cmlIds);
     }
 }
