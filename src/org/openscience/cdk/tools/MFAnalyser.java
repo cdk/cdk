@@ -382,6 +382,21 @@ public class MFAnalyser{
         return formula.toString();
     }
 
+	/**
+	 *  Builds the elemental formula of a given molecule as a Hashtable.
+	 *
+	 * @return    a Hashtable, keys are the elemental symbols (Strings) and values are the no. of occurrence (Integer objects).
+	 */
+	public Hashtable getFormulaHashtable() {
+		Hashtable formula = new Hashtable();
+		Vector elements = this.getElements();
+		for (int i = 0; i < elements.size(); i++) {
+			Integer numOfAtom = new Integer(atomContainer.getAtomCount());
+			formula.put(elements.get(i), numOfAtom);
+		}
+		return formula;
+	}
+    
 }
 
 

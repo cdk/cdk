@@ -105,5 +105,12 @@ public class MFAnalyserTest extends TestCase {
       assertEquals(10, ac.getAtomCount());
       assertEquals("C10H16", mfa.getMolecularFormula());//Formula should still contain Hs because hydrogenCount is used for building formula
     }
+    
+    public void testGetFormulaHashtable() {
+	MFAnalyser mfa=new MFAnalyser(molecule);
+	Hashtable formula = mfa.getFormulaHashtable();
+	assertEquals(10, ((Integer)formula.get("C")).intValue());
+    }
+    
 }
 
