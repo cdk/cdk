@@ -4,9 +4,9 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
-* Something (just a test to see if CVS is working, should be removed)
 
 Fixes:
+* Fixed detection of class binaries of Doclets required to compile the CDK
 
 API changes:
 * Removed deprecated methods from LoggingTool

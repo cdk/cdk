@@ -100,6 +100,7 @@
             <echo message="CDK Environment:" />
             <echo message="    CDK version: ${version}" />
             <echo message="      build.xml: $Id$" />
+            <echo message="  Doclets found: ${docletsAreCompiled}" />
             <echo message="   JOELib found: ${joelib.present}" />
             <echo message="   CMLDOM found: ${cmllibs.present}" />
             <echo message="   Java3D found: ${java3D.present}" />
@@ -124,6 +125,12 @@
         
         <target id="check" name="check" depends="checkPlatforms">
             <!-- Checks which parts of CDK can be build. -->
+            <condition property="docletsAreCompiled">
+                <and>
+                    <available classname="MakeJavaFilesFilesDoclet" classpath="${doc}/javadoc"/>
+                    <available classname="MakeCDKSetFilesDoclet" classpath="${doc}/javadoc"/>
+                </and>
+            </condition>
             <available classname="joelib.molecule.JOEAtom" 
                 classpath="${lib}/libio/joelib.jar" 
                 property="joelib.present"/>
@@ -220,7 +227,11 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target name="compileDoclet" id="compileDoclet" depends="check, compileDoclet.MacOSX, compileDoclet.Other" />
+        <target name="compileDoclet" id="compileDoclet" depends="check" unless="docletsAreCompiled">
+             <echo>Compiling doclets in doc/javadoc that are required for compiling CDK...</echo>
+             <antcall target="compileDoclet.MacOSX"/>
+             <antcall target="compileDoclet.Other" />
+        </target>
 
         <target name="compileDoclet.MacOSX" id="compileDoclet.MacOSX" if="isMacOsX">
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
