@@ -1,4 +1,4 @@
-<project name="CDK" default="compile" basedir=".">
+<project name="CDK" default="dist-all" basedir=".">
 
         <!-- compile options -->
         <property name="build.compiler" value="javac1.4" />
@@ -341,8 +341,10 @@
                         <exclude name="org/openscience/cdk/Monomer.class" />
                         <exclude name="org/openscience/cdk/Polymer.class" />
                         <exclude name="org/openscience/cdk/Ring.class" />
-                        <exclude name="org/openscience/cdk/RingSet.class" />
+                        <exclude name="org/openscience/cdk/RingSet*.class" />
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
+                        <exclude name="org/openscience/cdk/Crystal.class" />
+                        <exclude name="org/openscience/cdk/LonePair.class" />
                         <!-- Exclude classes in cdk-io module-->
                         <exclude name="org/openscience/cdk/io/**" />
                         <!-- Exclude classes in cdk-render module-->
@@ -358,6 +360,10 @@
                         <!-- Exclude classes in cdk-standard module-->
                         <exclude name="org/openscience/cdk/tools/LoggingTool.class" />
                         <exclude name="org/openscience/cdk/tools/IsotopeFactory.class" />
+                        <exclude name="org/openscience/cdk/tools/AtomTypeFactory.class" />
+                        <exclude name="org/openscience/cdk/tools/AtomTypeConfigurator.class" />
+                        <exclude name="org/openscience/cdk/tools/JSXBasedAtomTypeConfigurator.class" />
+                        <exclude name="org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.class" />
                         <exclude name="org/openscience/cdk/geometry/GeometryTools.class" />
                         <exclude name="org/openscience/cdk/geometry/CrystalGeometryTools.class" />
                         <exclude name="org/openscience/cdk/renderer/color/AtomColorer.class" />
@@ -460,21 +466,33 @@
         <target name="dist" depends="dist-all" />
 
         <target name="sourcedist" depends="init">
-                <copy todir="${sourcedist}">
-                        <fileset dir="." includes="**/*java" />
-                        <fileset dir="." includes="build.xml" />
+                <property name="package" value="cdk-source-${DSTAMP}"/>
+                <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
+                <copy todir="${sourcedist.dir}/${src}">
+                        <fileset dir="${src}" includes="*.classes" />
+                        <fileset dir="${src}" includes="**/*java" />
+                        <fileset dir="${src}" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
-                <copy todir="${sourcedist}/org/openscience/cdk/config/isotopes.xml">
+                <copy todir="${sourcedist.dir}">
+                        <fileset dir="." includes="build.xml" />
+                        <fileset dir="." includes="javadoc.xml" />
+                        <fileset dir="." includes="README" />
+                        <fileset dir="." includes="CHANGELOG" />
+                </copy>
+                <copy todir="${sourcedist.dir}/jar">                        
+                        <fileset dir="jar" />
+                </copy>
+                <copy todir="${sourcedist.dir}/data">
+                        <fileset dir="data" />
+                </copy>
+                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/">
                         <fileset dir="${src}/org/openscience/cdk/config/"
                                  includes="*" />
                 </copy>
-                <tar tarfile="cdk-source-${DSTAMP}.tar"
-                basedir="${sourcedist}" includes="**" />
-                <gzip zipfile="cdk-source-${DSTAMP}.tar.gz"
-                src="cdk-source-${DSTAMP}.tar" />
-                <delete file="cdk-source-${DSTAMP}.tar" />
-                <zip zipfile="cdk-source-${DSTAMP}.zip"
-                basedir="${sourcedist}" includes="**" />
+                <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
+                <gzip zipfile="${package}.tar.gz" src="cdk-source-${DSTAMP}.tar" />
+                <delete file="${package}.tar" />
+                <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
 
 	<target name="test-core" depends="dist-core, dist-test">
