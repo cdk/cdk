@@ -368,9 +368,42 @@ public class MoleculeFactory
 		mol.addBond(6, 7, 2); // 8
 		mol.addBond(7, 8, 1); // 9
 		mol.addBond(8, 9, 2); // 10
-		mol.addBond(9, 5, 1); // 11		
+		mol.addBond(9, 5, 1); // 11
+		mol.addBond(9, 0, 1); // 12
+		
 		return mol;
 	}
+
+	static Molecule makeIndole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("N")); // 7
+		mol.addAtom(new Atom("C")); // 8
+
+		
+		mol.addBond(0, 1, 2); // 1
+		mol.addBond(1, 2, 1); // 2
+		mol.addBond(2, 3, 2); // 3
+		mol.addBond(3, 4, 1); // 4
+		mol.addBond(4, 5, 2); // 5
+		mol.addBond(5, 6, 1); // 6
+		mol.addBond(6, 7, 2); // 8
+		mol.addBond(7, 8, 1); // 9
+		mol.addBond(8, 9, 2); // 10
+		mol.addBond(8, 5, 1); // 11
+		mol.addBond(8, 0, 1); // 12
+		
+		return mol;
+	}
+
+
 	
 	static Molecule makeSingleRing()
 	{
