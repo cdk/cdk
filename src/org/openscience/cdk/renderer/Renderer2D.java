@@ -231,15 +231,15 @@ public class Renderer2D implements MouseMotionListener   {
         ints[2] = (int)minmax[2] +side; // max x
         ints[3] = (int)minmax[3] +side; // max y
         int[] screenCoords = getScreenCoordinates(ints);
-        int heigth = screenCoords[3] - screenCoords[1]; 
-        int width = screenCoords[2] - screenCoords[0]; 
-        graphics.drawRect((int)screenCoords[0], (int)screenCoords[1], width, heigth);
+        int heigth = screenCoords[1] - screenCoords[3]; 
+        int width = screenCoords[2] - screenCoords[0];
+        graphics.drawRect((int)screenCoords[0], (int)screenCoords[3], width, heigth);
 
         // draw reaction ID
         Font unscaledFont = graphics.getFont();
         float fontSize = getScreenSize(unscaledFont.getSize());
         graphics.setFont(unscaledFont.deriveFont(fontSize));
-        graphics.drawString(caption, (int)screenCoords[0], (int)screenCoords[1]);
+        graphics.drawString(caption, (int)screenCoords[0], (int)screenCoords[3]);
         graphics.setFont(unscaledFont);
     }
     
@@ -698,13 +698,13 @@ public class Renderer2D implements MouseMotionListener   {
             labelX = (int)(atom.getPoint2D().x - (atomSymbolW + atomSymbolLastCharW/2));
         }
         // labelY and labelH are the same for both left/right aligned
-        labelY = (int)(atom.getPoint2D().y + (atomSymbolH/2));
+        labelY = (int)(atom.getPoint2D().y - (atomSymbolH/2));
 
         // make empty space
         {
             int border = 2; // number of pixels
             graphics.setColor(backColor);
-            int[] coords = {labelX - border, labelY + border};
+            int[] coords = {labelX - border, labelY - border};
             int[] bounds = {(int)getScreenSize(labelW + 2*border),
                             (int)getScreenSize(labelH + 2*border)};
             int[] screenCoords = getScreenCoordinates(coords);
@@ -714,8 +714,7 @@ public class Renderer2D implements MouseMotionListener   {
 
         // draw label
         {
-            int[] coords = { labelX,
-                             labelY + atomSymbolH};
+            int[] coords = { labelX, labelY};
             int[] screenCoords = getScreenCoordinates(coords);
             graphics.setColor(Color.black);
             graphics.setFont(normalScreenFont);
@@ -862,7 +861,8 @@ public class Renderer2D implements MouseMotionListener   {
         double[] minmax = GeometryTools.getMinMax(ring);
         double width = (minmax[2]- minmax[0])*0.7;
         double height = (minmax[3]- minmax[1])*0.7;
-		int[] coords = {(int)(center.x - (width/2.0)), (int)(center.y - (height/2.0))};
+		int[] coords = {(int)(center.x - (width/2.0)), 
+                        (int)(center.y + (height/2.0))};
         int[] screenCoords = getScreenCoordinates(coords);
         graphics.fillOval(screenCoords[0], screenCoords[1], 
                           (int)(width*r2dm.getZoomFactor()), 
@@ -870,7 +870,8 @@ public class Renderer2D implements MouseMotionListener   {
         
         double innerWidth = width*0.9;
         double innerHeight = height*0.9;
-		int[] innerCoords = {(int)(center.x - (innerWidth/2.0)), (int)(center.y - (innerHeight/2.0))};
+		int[] innerCoords = {(int)(center.x - (innerWidth/2.0)), 
+                             (int)(center.y + (innerHeight/2.0))};
         screenCoords = getScreenCoordinates(innerCoords);
         graphics.setColor(r2dm.getBackColor());
         graphics.fillOval(screenCoords[0], screenCoords[1], 
