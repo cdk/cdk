@@ -8,13 +8,13 @@
   <property name="javancsslib.dir" value="${javancsslib}"/>
 
   <target id="layout" name="layout" depends="includes">
-    <xslt in="${source.dir}/layout.xml" out="autolayout.xml" 
+    <xslt in="${source.dir}/layout.xml" out="${source.dir}/autolayout.xml" 
           style="${website-docbook-xsl.dir}/xsl/autolayout.xsl"/>
   </target>
 
   <target name="website-from-autolayout" depends="layout">
     <!-- does should work, but it doesn't -->
-    <xslt in="autolayout.xml" destdir="${build.dir}/" style="xsl/tabular.xsl"/>
+    <xslt in="${source.dir}/autolayout.xml" destdir="${build.dir}/" style="${website-docbook-xsl.dir}/xsl/tabular.xsl"/>
   </target>
 
   <target id="clean" name="clean">
@@ -47,8 +47,8 @@
     </uptodate>
     <echo message="Keyword index uptodate: ${keywordindex.uptodate}"/>
     <uptodate property="depends.uptodate"
-      targetfile="../../javadoc/depends.xml">
-      <srcfiles dir="../../.." includes="CHANGELOG"/>
+      targetfile="../javadoc/depends.xml">
+      <srcfiles dir="../.." includes="CHANGELOG"/>
     </uptodate>
     <echo message="Dependency Overview uptodate: ${depends.uptodate}"/>
     <uptodate property="refs.uptodate"
@@ -135,8 +135,8 @@
 
   <target id="depends" name="depends" unless="depends.uptodate">
     <ant dir="../javadoc/" antfile="build.xml" target="dependencies"/>
-    <copy file="builddepends.xml" tofile="../javadoc/builddepends.xml"/>
-    <copy file="depends.xml" tofile="../javadoc/depends.xml"/>
+    <move file="builddepends.xml" tofile="../javadoc/builddepends.xml"/>
+    <move file="depends.xml" tofile="../javadoc/depends.xml"/>
   </target>
 
   <target id="bibliography" name="bibliography" unless="refs.uptodate">
