@@ -49,13 +49,13 @@ public class CDKAtomColors implements AtomColorer {
         Color c = Color.darkGray;
         int atomnumber = a.getAtomicNumber();
         switch (atomnumber) {
-            case AtomicNumbers.HYDROGEN:     c = this.HYDROGEN; break;
-            case AtomicNumbers.CARBON:       c = this.CARBON; break;
-            case AtomicNumbers.NITROGEN:     c = this.NITROGEN; break;
-            case AtomicNumbers.OXYGEN:       c = this.OXYGEN; break;
-            case AtomicNumbers.PHOSPHORUS:   c = this.PHOSPHORUS; break;
-            case AtomicNumbers.SULPHUR:      c = this.SULPHUR; break;
-            case AtomicNumbers.CHLORINE:     c = this.CHLORINE; break;
+            case 1:    c = this.HYDROGEN; break;
+            case 6:    c = this.CARBON; break;
+            case 7:    c = this.NITROGEN; break;
+            case 8:    c = this.OXYGEN; break;
+            case 15:   c = this.PHOSPHORUS; break;
+            case 16:   c = this.SULPHUR; break;
+            case 17:   c = this.CHLORINE; break;
         }
         return c;
     }

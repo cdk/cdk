@@ -235,7 +235,7 @@ public class JCPController2D {
                         int startY = r2dm.getPointerVectorStart().y;
                         Bond bondInRange = r2dm.getHighlightedBond();
                         atomInRange = r2dm.getHighlightedAtom();
-
+                                                          
                         if (bondInRange != null) {
                             // increase Bond order
                             double order = bondInRange.getOrder();

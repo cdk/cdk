@@ -45,10 +45,12 @@ import javax.vecmath.*;
  * @author     steinbeck
  * @created    October 2, 2000
  */
-public class AtomEnumeration implements Enumeration
-{
-	protected int atomEnumerationCounter = 0;
-	protected AtomContainer ac;
+public class AtomEnumeration implements Enumeration {
+
+    /** counter to keep track of current element */
+    protected int atomEnumerationCounter = 0;
+    /** container to enumerate atoms from */
+    protected AtomContainer ac;
 
     /**
      *  Constructs a new AtomEnumeration.
