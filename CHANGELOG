@@ -31,6 +31,7 @@ API changes:
 * Moved package graphinvariant to package graph.invariant
 * Moved AromaticityCalculator from package smiles to aromaticity
 * Moved CanonicalLabeler from package smiles to graph.invariant
+* Moved PathTools from package tools to graph
 
 20020920 Release
 ------------------------------------
