@@ -1,6 +1,7 @@
 org/openscience/cdk/AtomContainer.java
 org/openscience/cdk/AtomEnumeration.java
 org/openscience/cdk/Atom.java
+org/openscience/cdk/PseudoAtom.java
 org/openscience/cdk/AtomType.java
 org/openscience/cdk/BioPolymer.java
 org/openscience/cdk/Bond.java
