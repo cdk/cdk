@@ -14,7 +14,6 @@
   <property name="dist" value="dist" />
   <property name="doc" value="doc" />
   <property name="src" value="src" />
-  <property name="build.src" value="${build}/${src}" />
   <property name="lib" value="jar" />
   <property name="src.tests" value="${src}/org/openscience/cdk/test" />
   <property name="reports.tests" value="reports" />
@@ -42,7 +41,7 @@
     
   <target name="compile-applet">
 
-    <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+    <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol-applet.javafiles">
       <classpath refid="project.class.path" />
@@ -60,7 +59,7 @@
   </target>
 
   <target name="compile">
-    <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}"
+    <javac srcdir="${src}" destdir="${build}" optimize="${optimization}"
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol-b6.javafiles">
       <classpath refid="project.class.path" />
@@ -68,7 +67,7 @@
   </target>
 
   <target name="compile-jmol2">
-    <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+    <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
            debug="${debug}" deprecation="${deprecation}" target="1.1"
            includesfile="${src}/jmol.javafiles">
       <classpath refid="project.class.path" />
@@ -86,7 +85,7 @@
         <!-- Put only required class files in the jar -->
         <include name="**/*.class" />
       </fileset>
-      <fileset dir="${build.src}">
+      <fileset dir="${src}">
         <!-- These config and data files are also needed -->
         <include name="**/jmol_atomtypes.txt" />
         <include name="**/mol2_atomtypes.txt" />
@@ -108,7 +107,7 @@
         <!-- Put only required class files in the jar -->
         <include name="**/*.class" />
       </fileset>
-      <fileset dir="${build.src}">
+      <fileset dir="${src}">
         <!-- These config and data files are also needed -->
         <include name="**/jmol_atomtypes.txt" />
         <include name="org/openscience/cdk/io/cml/data/**" />
@@ -129,7 +128,7 @@
         <!-- Put only required class files in the jar -->
         <include name="**/*.class" />
       </fileset>
-      <fileset dir="${build.src}">
+      <fileset dir="${src}">
         <!-- These config and data files are also needed -->
         <include name="**/jmol_atomtypes.txt" />
         <include name="org/openscience/cdk/io/cml/data/**" />
