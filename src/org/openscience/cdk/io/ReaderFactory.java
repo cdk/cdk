@@ -299,15 +299,11 @@ public class ReaderFactory {
     
     /**
      * Detects the format of the Reader input, and if known, it will return
-     * a CDK Reader to read the format. Note that this Reader might be a
-     * subclass of DummyReader, which means that the Reader does not yet 
-     * have an implementation.
-     *
-     * <p>This method is not able to detect the format of gziped files.
-     * Use createReader(InputStream) instead for such files.
+     * a CDK Reader to read the format. This method is not able to detect the 
+     * format of gziped files. Use createReader(InputStream) instead for such 
+     * files.
      *
      * @see #createReader(InputStream)
-     * @see org.openscience.cdk.io.DummyReader
      */
     public ChemObjectReader createReader(Reader input) throws IOException {
         if (!(input instanceof BufferedReader)) {

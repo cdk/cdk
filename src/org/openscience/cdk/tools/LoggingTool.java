@@ -155,7 +155,7 @@ public class LoggingTool {
      * for the given Class. The Log4J engine is configurated
      * with CDK customized properties.
      *
-     * @param object Object from which the message originates
+     * @param classInst Class from which the message originates
      */
     public LoggingTool(Class classInst) {
         this(classInst.getName(), true);
@@ -703,7 +703,7 @@ public class LoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object Object to apply toString() too and output
-     * @param number boolean to concatenate to object
+     * @param bool   boolean to concatenate to object
      */
     public void warn(Object object, boolean bool) {
         if (debug) {

@@ -47,7 +47,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *  molecular factor is missing (presence of para Hs donor pair).
  *
  *@author         mfe4
- *@created        December 14, 2004
+ *@cdk.created        December 14, 2004
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors

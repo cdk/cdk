@@ -60,8 +60,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author      Egon Willighagen
  * @cdk.created 2005-01-10
  *
- * @keyword     radial distribution function
- * @keyword     RDF
+ * @cdk.keyword radial distribution function
+ * @cdk.keyword RDF
  *
  * @see         org.openscience.cdk.geometry.RDFWeightFunction
  */
@@ -102,14 +102,14 @@ public class RDFCalculator {
      *                       calculated
      */
     public RDFCalculator(double startCutoff, double cutoff, double resolution, 
-                         double peakWidth, RDFWeightFunction function) {
+                         double peakWidth, RDFWeightFunction weightFunction) {
         logger = new LoggingTool(this);
         
          this.startCutoff = startCutoff;
          this.cutoff = cutoff;
          this.resolution = resolution;
          this.peakWidth = peakWidth;
-         this.weightFunction = function;
+         this.weightFunction = weightFunction;
     }
     
     /**

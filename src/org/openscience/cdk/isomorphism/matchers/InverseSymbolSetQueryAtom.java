@@ -35,7 +35,7 @@ import org.openscience.cdk.PseudoAtom;
  *  match for all non-"C"-Atoms).
  *
  *@author        kha
- *@created       16. September 2004
+ *@cdk.created   2004-09-16
  *@see           SymbolSetQueryAtom
  *@cdk.module    extra
  */

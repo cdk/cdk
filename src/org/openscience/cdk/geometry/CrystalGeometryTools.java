@@ -108,9 +108,9 @@ public class CrystalGeometryTools {
     /**
      * Method that transforms fractional coordinates into cartesian coordinates.
      *
-     * @param a     the a axis vector of the unit cell in cartesian coordinates
-     * @param b     the b axis vector of the unit cell in cartesian coordinates
-     * @param c     the c axis vector of the unit cell in cartesian coordinates
+     * @param aAxis the a axis vector of the unit cell in cartesian coordinates
+     * @param bAxis the b axis vector of the unit cell in cartesian coordinates
+     * @param cAxis the c axis vector of the unit cell in cartesian coordinates
      * @param frac  a fractional coordinate to convert
      * @return     an array of length 3 with the cartesian coordinates of the
      *              point defined by frac

@@ -37,7 +37,7 @@ import org.openscience.cdk.CDKConstants;
  *  Description of the mfe4
  *
  *@author     cubic
- *@created    November 13, 2004
+ *@cdk.created    November 13, 2004
  * @cdk.module qsar
  */
 public class QsarDescriptors {

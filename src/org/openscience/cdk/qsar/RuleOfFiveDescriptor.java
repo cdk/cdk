@@ -103,7 +103,7 @@ public class RuleOfFiveDescriptor implements Descriptor {
 	 *  the method take a boolean checkAromaticity: if the boolean is true, it means that
 	 *  aromaticity has to be checked.
 	 *
-	 *@param  ac                atom container
+	 *@param  mol               atom container
 	 *@return                   number of aromatic bonds in the atom container
 	 *@exception  CDKException  Possible Exceptions
 	 */

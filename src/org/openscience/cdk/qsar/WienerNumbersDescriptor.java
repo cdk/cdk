@@ -39,7 +39,7 @@ import org.openscience.cdk.graph.matrix.*;
  *  http://www.csam.montclair.edu/~burch/bpnew.pdf.
  *
  *@author         mfe4
- *@created        December 7, 2004
+ *@cdk.created        December 7, 2004
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors

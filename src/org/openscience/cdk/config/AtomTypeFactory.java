@@ -260,7 +260,7 @@ public class AtomTypeFactory {
 	/**
 	 * Get an AtomType with the given ID.
 	 *
-	 * @param  id                           an ID for a particular atom type (like C$)
+	 * @param  identifier                   an ID for a particular atom type (like C$)
 	 * @return                              The AtomType for this id
 	 * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
 	 */

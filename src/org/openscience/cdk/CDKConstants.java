@@ -226,7 +226,7 @@ public class CDKConstants {
     
     /** Full record from PDB file. **/
     public static final String PDB_RECORD     = "pdb.record";
-    /** PDB field for serial number?. **/
+    /** PDB field for serial number. **/
     public static final String PDB_SERIAL     = "pdb.serial";
     /** PDB field for the name of what?. **/
     public static final String PDB_NAME       = "pdb.name";
@@ -246,9 +246,9 @@ public class CDKConstants {
     public static final String PDB_TEMPFACTOR = "pdb.tempFactor";
     /** PDB field for the segment ID. **/
     public static final String PDB_SEGID      = "pdb.segID";
-    /** PDB field for the element symbol?. **/
+    /** PDB field for the element symbol. **/
     public static final String PDB_ELEMENT    = "pdb.element";
-    /** PDB field for the atomic partial? charge. **/
+    /** PDB field for the atomic partial charge. **/
     public static final String PDB_CHARGE     = "pdb.charge";
 }
 

@@ -38,7 +38,7 @@ import org.openscience.cdk.reaction.ReactionBalancer;
  * @cdkPackage test
  *
  * @author     Kai Hartmann
- * @created    2004-02-20
+ * @cdk.created    2004-02-20
  */
 public class ReactionBalancerTest extends TestCase {
 

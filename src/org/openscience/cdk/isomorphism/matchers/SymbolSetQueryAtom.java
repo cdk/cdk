@@ -35,7 +35,7 @@ import org.openscience.cdk.PseudoAtom;
  *  match for the most common halogens).
  *
  *@author        kha
- *@created       16. September 2004
+ *@cdk.created   2004-09-16
  *@see           InverseSymbolSetQueryAtom
  *@cdk.module    extra
  */

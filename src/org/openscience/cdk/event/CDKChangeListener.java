@@ -40,7 +40,7 @@ public interface CDKChangeListener extends EventListener
 	/**
 	 * Invoked when the target of the listener has changed its state.
 	 *
-	 * @param   e  The EventObject
+	 * @param   event  The EventObject
 	 */
     void stateChanged(EventObject event);
 }

@@ -62,7 +62,7 @@ import java.util.Hashtable;
  * </ul>
  *
  * @author      Rajarshi Guha
- * @created     2004-11-23
+ * @cdk.created     2004-11-23
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  */

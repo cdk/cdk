@@ -312,7 +312,7 @@ public class IsotopeFactory
 	 *  Configures atoms in an AtomContainer to 
 	 *  carry all the correct data according to their element type.
 	 *
-	 *@param  ac  The AtomContainer to be configured
+	 *@param  container  The AtomContainer to be configured
 	 */
 	public void configureAtoms(AtomContainer container)
 	{
