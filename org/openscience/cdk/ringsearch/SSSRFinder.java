@@ -36,6 +36,7 @@ public class SSSRFinder
 {
 
 	public boolean debug = false; // minimum details
+	int trimCounter = 0;
 	private static final int PATH = 0;
 
 	/**
@@ -66,13 +67,13 @@ public class SSSRFinder
 		Vector nodesN2 = new Vector();
 		
 		initPath(molecule);
-		
+		if (debug) System.out.println("molecule.getAtomCount(): " + molecule.getAtomCount());				
 		// load fullSet with the numbers of our atoms
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			fullSet.addElement(molecule.getAtomAt(f));
 		}
-		
+		if (debug) System.out.println("fullSet.size(): " + fullSet.size());						
 		
 		do{
 			//Add nodes of degree zero to trimset.
@@ -90,6 +91,7 @@ public class SSSRFinder
 				{
 					if (!trimSet.contains(atom))
 					{
+						if (debug) System.out.println("Atom of degree 0");
 						trimSet.addElement(atom);
 					}
 				}
@@ -108,6 +110,7 @@ public class SSSRFinder
 			// If there are nodes of degree 1, trim them away
 			if (smallestDegree == 1)
 			{
+				trimCounter ++;
 				trim(smallest, molecule);
 				trimSet.addElement(smallest);
 			}
@@ -121,12 +124,15 @@ public class SSSRFinder
 				for (int f = 0; f < nodesN2.size(); f++)
 				{
 					ring = getRing((Atom)nodesN2.elementAt(f), molecule);
-					// check, if this ring already is in SSSR
-					if (!sssr.ringAlreadyInSet(ring))
+					if (ring != null)
 					{
-						sssr.addElement(ring);
-						rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
-						nodesToBreakCounter++;
+						// check, if this ring already is in SSSR
+						if (!sssr.ringAlreadyInSet(ring))
+						{
+							sssr.addElement(ring);
+							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
+							nodesToBreakCounter++;
+						}
 					}
 				}
 				if (nodesToBreakCounter == 0)
@@ -147,16 +153,26 @@ public class SSSRFinder
 			else if (smallestDegree == 3)
 			{
 				ring = getRing(smallest, molecule);
-				// check, if this ring already is in SSSR
-				if (!sssr.ringAlreadyInSet(ring))
+				if (ring != null)
 				{
-					sssr.addElement(ring);
+					
+					// check, if this ring already is in SSSR
+					if (!sssr.ringAlreadyInSet(ring))
+					{
+						sssr.addElement(ring);
+					}
+					brokenBond = checkEdges(ring, molecule);
+					molecule.removeBond(brokenBond);
 				}
-				brokenBond = checkEdges(ring, molecule);
-				molecule.removeBond(brokenBond);
 			}
 		}
 		while(trimSet.size() < fullSet.size());
+		if (debug)
+		{
+			System.out.println("fullSet.size(): " + fullSet.size());				
+			System.out.println("trimSet.size(): " + trimSet.size());		
+			System.out.println("trimCounter: " + trimCounter);
+		}
 	return sssr;	  
 	}
 
@@ -238,7 +254,7 @@ public class SSSRFinder
 				}
 			}
 		}
-		return new Ring();
+		return null;
 	}
 
 									

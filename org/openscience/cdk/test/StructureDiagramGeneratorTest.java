@@ -46,7 +46,7 @@ public class StructureDiagramGeneratorTest
 	{
 //		molecule = buildPerhydroAzulen();
 //		molecule = buildMolecule4x3();
-		molecule = get5x10Squares(inFile);
+		molecule = loadMolecule(inFile);
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		sdg.setMolecule(molecule);
 		sdg.generateCoordinates();
@@ -117,7 +117,7 @@ public class StructureDiagramGeneratorTest
 		return mol;
 	}
 	
-	Molecule get5x10Squares(String inFile)
+	Molecule loadMolecule(String inFile)
 	{
 		try
 		{

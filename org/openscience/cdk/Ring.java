@@ -160,4 +160,22 @@ public class Ring extends AtomContainer
 		return orderSum;
 	}
 	
+	
+	public String toString(Molecule molecule)
+	{
+		String str = "";
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			try
+			{
+				str += molecule.getAtomNumber(getAtomAt(f)) +  " - ";
+			}
+			catch(Exception exc)
+			{
+			
+			}
+		}
+		return str;
+	
+	}
 }

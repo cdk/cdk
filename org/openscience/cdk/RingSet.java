@@ -190,4 +190,32 @@ public class RingSet extends Vector{
 		}
 		return (Ring) elementAt(mostComplexPosition);
 	}
+	
+
+	/**
+	 * Adds all rings of another RingSet if they are not allready part of this ring set
+	 *
+	 * @param   rs  the ring set to be united with this one.
+	 */
+	public void add(RingSet rs)
+	{
+		for (int f = 0; f < rs.size(); f++)
+		{
+			if (!contains(rs.elementAt(f)))
+			{
+				addElement(rs.elementAt(f));
+			}
+		}
+	}
+
+	public String reportRingList(Molecule molecule)
+	{
+		String ringList = "";
+		for (int f = 0; f < size(); f++)
+		{
+			ringList += ((Ring)elementAt(f)).toString(molecule) + "\n";
+		}
+		return ringList;
+		
+	}
 }

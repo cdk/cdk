@@ -47,7 +47,7 @@ public class StructureDiagramGenerator
 	double bondLength = 1;
 	SSSRFinder sssrf = new SSSRFinder();
 
-	public boolean debug = true;
+	public static boolean debug = false;
 
 	public StructureDiagramGenerator()
 	{
@@ -87,23 +87,31 @@ public class StructureDiagramGenerator
 	/** Performs the actual calculation of the coordinated based on a 
 	    given set of Nodes */
 	
-	public void generateCoordinates(){
-	
-		sssr = sssrf.findSSSR(molecule);
-//		if (debug) System.out.println("\n\n" + sssr.size() + " rings found:\n\n");
-
-		Ring ring = sssr.getMostComplexRing();
-		/* Place the most complex ring at the origin of the coordinate system */
-		placeFirstBondOfFirstRing(ring, new Vector2d(0, 1));
-		RingPlacer.placeRing(ring, ring.getBondAt(0), getRingCenterOfFirstRing(ring), bondLength);
-		ring.flags[RingPlacer.ISPLACED] = true;
-//		if (debug) System.out.println("\n\nFirst ring placed:\n " + ring);
-//		System.out.println("*** status of molecule before drawing ***\n");
-//		System.out.println(molecule + "\n");
-//		System.out.println("*** status of molecule before drawing ***\n");
-		placeConnectedRings(sssr, ring);
+	public void generateCoordinates()
+	{
+		handleRings();
 		fixRest();
 		
+	}
+	
+	private void handleRings()
+	{
+		RingSet rs;
+		sssr = sssrf.findSSSR(molecule);
+		if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> sssr.size(): " + sssr.size());
+		Vector ringSystems = RingPartitioner.partitionRings(sssr);
+		if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> ringSystems.size(): " + ringSystems.size());
+		for (int f = 0; f < 1; f++)
+		{
+			rs = (RingSet)ringSystems.elementAt(f);
+			Ring ring = rs.getMostComplexRing();
+			/* Place the most complex ring at the origin of the coordinate system */
+			placeFirstBondOfFirstRing(ring, new Vector2d(0, 1));
+			RingPlacer.placeRing(ring, ring.getBondAt(0), getRingCenterOfFirstRing(ring), bondLength);
+			ring.flags[RingPlacer.ISPLACED] = true;
+			placeConnectedRings(rs, ring);
+		}
+	
 	}
 	
 	private void placeFirstBondOfFirstRing(Ring ring, Vector2d bondVector)
@@ -142,20 +150,23 @@ public class StructureDiagramGenerator
 			if (!connectedRing.flags[RingPlacer.ISPLACED])
 			{
 				bond = ring.getFusionBond(connectedRing);
-				bondCenter = bond.get2DCenter();
-				oldRingCenter = ring.get2DCenter();
-//				molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));			
-				tempVector = (new Vector2d(bondCenter));
-				tempVector.sub(new Vector2d(oldRingCenter));
-//				System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
-				newRingCenter = new Point2d(bondCenter);
-//				System.out.println("placeConnectedRing -> bondCenter: " + bondCenter);			
-//				molecule.addAtom(new Atom(new Element("B"), new Point2d(bondCenter)));
-				newRingCenter.add(tempVector);
-//				molecule.addAtom(new Atom(new Element("N"), new Point2d(newRingCenter)));
-				RingPlacer.placeRing(connectedRing, bond, new Vector2d(tempVector), bondLength);
-				connectedRing.flags[RingPlacer.ISPLACED] = true;
-				placeConnectedRings(rs, connectedRing);
+				if (bond != null)
+				{
+					bondCenter = bond.get2DCenter();
+					oldRingCenter = ring.get2DCenter();
+	//				molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));			
+					tempVector = (new Vector2d(bondCenter));
+					tempVector.sub(new Vector2d(oldRingCenter));
+	//				if (debug) System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
+					newRingCenter = new Point2d(bondCenter);
+	//				if (debug) System.out.println("placeConnectedRing -> bondCenter: " + bondCenter);			
+	//				molecule.addAtom(new Atom(new Element("B"), new Point2d(bondCenter)));
+					newRingCenter.add(tempVector);
+	//				molecule.addAtom(new Atom(new Element("N"), new Point2d(newRingCenter)));
+					RingPlacer.placeRing(connectedRing, bond, new Vector2d(tempVector), bondLength);
+					connectedRing.flags[RingPlacer.ISPLACED] = true;
+					placeConnectedRings(rs, connectedRing);
+				}
 			}
 		}
 	

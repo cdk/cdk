@@ -44,7 +44,7 @@ import java.awt.*;
 
 public class RingPlacer implements CDKConstants
 {
-	static boolean debug = true;
+	static boolean debug = false;
 	public static int ISPLACED = 0;	
 
 	public static void placeRing(Ring ring, Bond bond, Vector2d ringCenterVector, double bondLength)

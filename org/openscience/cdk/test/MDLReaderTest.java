@@ -25,6 +25,7 @@ package org.openscience.cdk.test;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
+import org.openscience.cdk.renderer.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -40,7 +41,7 @@ public class MDLReaderTest
 	SetOfMolecules setOfMolecules;
 	Molecule[] molecules;
 	
-	public MDLReaderTest(String inFile, String outFile)
+	public MDLReaderTest(String inFile)
 	{
 		try
 		{
@@ -58,12 +59,7 @@ public class MDLReaderTest
 			{
 				molecules[i] = setOfMolecules.getMolecule(i);
 			}
-			FileOutputStream fos = new FileOutputStream(outFile);
-			mw = new MDLWriter(fos);
-			mw.writeMolecules(molecules);
-			System.out.println(fos.toString());
-			fos.flush();
-			fos.close();
+			new MoleculeViewer2D(molecules[0]);
 		}
 		catch(Exception exc)
 		{
@@ -73,7 +69,7 @@ public class MDLReaderTest
 
 	public static void main(String[] args)
 	{
-		new MDLReaderTest(args[0],args[1]);
+		new MDLReaderTest(args[0]);
 	}
 }
 
