@@ -87,6 +87,19 @@ public class ReactionManipulator {
         return container;
     }
     
+    public static SetOfMolecules getAllMolecules(Reaction reaction) {
+        SetOfMolecules moleculeSet = new SetOfMolecules();
+        Molecule[] reactants = reaction.getReactants();
+        for (int i=0; i<reactants.length; i++) {
+            moleculeSet.addMolecule(reactants[i]);
+        }
+        Molecule[] products = reaction.getProducts();
+        for (int i=0; i<products.length; i++) {
+            moleculeSet.addMolecule(products[i]);
+        }
+        return moleculeSet;
+    }
+    
     /**
      * Returns a new Reaction object which is the reverse of the given
      * Reaction.

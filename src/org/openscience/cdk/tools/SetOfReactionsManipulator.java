@@ -63,4 +63,14 @@ public class SetOfReactionsManipulator {
         return container;
     }
     
+    public static SetOfMolecules getAllMolecules(SetOfReactions set) {
+        SetOfMolecules moleculeSet = new SetOfMolecules();
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            moleculeSet.add(ReactionManipulator.getAllMolecules(reaction));
+        }
+        return moleculeSet;
+    }
+    
 }
