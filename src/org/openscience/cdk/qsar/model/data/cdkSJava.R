@@ -119,6 +119,20 @@ function(obj,...) {
     .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelPredict",
     ncol(obj), obj)
 }
+
+#############################################
+# PLS converter
+#############################################
+plsConverter <-
+function(obj,...) {
+    tmp <- .JNew("org.openscience.cdk.qsar.model.R.PLSModelFit")
+    tmp$AddTrainingFields(...)
+    if ("validat" %in% names(obj)) {
+        # Add validation fields
+        tmp$AddValidationFields(...)
+    }
+    tmp
+}
     
 #############################################
 # Register the fit/predict converter funcs
@@ -134,6 +148,9 @@ setJavaFunctionConverter(cnnFitConverter, function(x,...){inherits(x,"nnet")},
                           fromJava=F)
 setJavaFunctionConverter(cnnPredictConverter, function(x,...){inherits(x,"cnnregprediction")},
                           description="cnn (nnet) predict object to Java",
+                          fromJava=F)
+setJavaFunctionConverter(plsConverter, function(x,...){inherits(x,"mvr")},
+                          description="pls/pcr fit object to Java",
                           fromJava=F)
                           
 hashmap.to.list <- function(params) {
@@ -227,6 +244,40 @@ predictCNN <- function(modelname, params) {
     preds
 }
     
+buildPLS <- function(modelname, params) {
+    library(pls.pcr)
+    paramlist <- hasmap.to.list(params)
+    attach(paramlist)
+    
+    x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
+    y <- matrix(unlist(y), nrow=length(y), byrow=TRUE)
+    if (nrow(x) != nrow(y)) { stop("The number of observations in x & y don't match") }
+
+    # This needs to be specified properly as I'm skipping checking for this option
+    ncomp <- unlist(ncomp)
+
+    if (!(method %in% c("PCR","SIMPLS","kernelPLS")) {
+        stop("Invalid methopd specification")
+    }
+    if (!(validation %in% c("none","CV")) {
+        stop("Invalid validation sepcification")
+    }
+    
+    if (niter == 0 && validation == "CV") {
+        niter = nrow(y)
+    }
+    
+
+    # We should do this since when both grpsize and niter are specified niter
+    # is used. So if grpsize comes in as 0 (which will be the default setting)
+    # we specify only niter and if not zero we use grpsize and ignore niter
+    if (grpsize != 0) {
+        obj <- pls(x=x,y=y,ncomp=ncomp,method=method,validation=validation,grpsize=grpsize)
+    } else {
+        obj <- pls(x=x,y=y,ncomp=ncomp,method=method,validation=validation,niter=niter)
+    }
+    obj
+}
 
     
 
