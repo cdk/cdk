@@ -106,7 +106,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		this.atomCount = 0;
 		this.electronContainerCount = 0;
 		atoms = new Atom[atomCount];
-		electronContainers = new Bond[electronContainerCount];
+		electronContainers = new ElectronContainer[electronContainerCount];
 	}
 
 
