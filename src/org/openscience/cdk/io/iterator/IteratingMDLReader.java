@@ -55,6 +55,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
 
     private BufferedReader input = null;
     private org.openscience.cdk.tools.LoggingTool logger = null;
+    private String currentLine = "";
     
     /**
      * Contructs a new MDLReader that can read Molecule from a given Reader.
@@ -67,11 +68,39 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     }
 
     public boolean hasNext() {
-        return false;
+        try {
+            return input.ready();
+        } catch (Exception exception) {
+            logger.error("Error while reading next molecule: " +
+                exception.getMessage());
+            logger.debug(exception);
+            return false;
+        }
     }
     
     public Object next() {
-        return new Object();
+        Molecule molecule = new Molecule();
+        try {
+            currentLine = input.readLine();
+            StringBuffer buffer = new StringBuffer();
+            while (currentLine != null && !currentLine.equals("$$$$")) {
+                // still in a molecule
+                buffer.append(currentLine);
+            }
+            MDLReader reader = new MDLReader(new StringReader(buffer.toString()));
+            molecule = (Molecule)reader.read(new Molecule());
+        } catch (CDKException exception) {
+            logger.error("CDK exception while reading next molecule: " +
+                exception.getMessage());
+            logger.debug(exception);
+            return null;
+        } catch (Exception exception) {
+            logger.error("Error while reading next molecule: " +
+                exception.getMessage());
+            logger.debug(exception);
+            return null;
+        }
+        return molecule;
     }
     
     public void close() throws IOException {
