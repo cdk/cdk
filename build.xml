@@ -205,7 +205,6 @@
                     <fileset dir="${src}" includes="*.javafiles">
                         <exclude name="jmol*.javafiles" />
                     </fileset>
-                    <fileset dir="doc/javadoc" includes="MakeJavaFilesFilesDoclet.class" />
                     <!-- remove java files generated with JavaCC -->
                     <fileset dir="${src}/org/openscience/cdk/smiles/smarts" includes="*.java" />
                     <fileset dir="${src}/org/openscience/cdk/iupac/parser" includes="*.java">
