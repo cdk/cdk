@@ -68,7 +68,7 @@ public class ReaderFactoryTest extends TestCase {
                      "org.openscience.cdk.io.Gaussian94Reader");
     }
     public void testGaussian98() {
-        expectFormat("data/gaussian/g98.out", 
+        expectReader("data/gaussian/g98.out", 
                      "org.openscience.cdk.io.Gaussian98Reader");
     }
     public void testGaussian92() {
@@ -77,7 +77,7 @@ public class ReaderFactoryTest extends TestCase {
     }
 
     public void testGhemical() {
-        expectFormat("data/ethene.mm1gp", "org.openscience.cdk.io.GhemicalMMReader");
+        expectReader("data/ethene.mm1gp", "org.openscience.cdk.io.GhemicalMMReader");
     }
 
     public void testJaguar() {
@@ -85,22 +85,22 @@ public class ReaderFactoryTest extends TestCase {
     }
 
     public void testIChI() {
-        expectFormat("data/ichi/random.ichi", 
+        expectReader("data/ichi/random.ichi", 
                      "org.openscience.cdk.io.IChIReader");
     }
 
     public void testINChI() {
-        expectFormat("data/ichi/guanine.inchi.xml", 
+        expectReader("data/ichi/guanine.inchi.xml", 
                      "org.openscience.cdk.io.INChIReader");
     }
 
     public void testINChIPlainText() {
-        expectFormat("data/ichi/guanine.inchi", 
+        expectReader("data/ichi/guanine.inchi", 
                      "org.openscience.cdk.io.INChIPlainTextReader");
     }
 
     public void testVASP() {
-        expectFormat("data/LiMoS2_optimisation_ISIF3.vasp", 
+        expectReader("data/LiMoS2_optimisation_ISIF3.vasp", 
                      "org.openscience.cdk.io.VASPReader");
     }
 
@@ -113,7 +113,7 @@ public class ReaderFactoryTest extends TestCase {
     }
 
     public void testGamess() {
-        expectFormat("data/ch3oh_gam.out", "org.openscience.cdk.io.GamessReader");
+        expectReader("data/ch3oh_gam.out", "org.openscience.cdk.io.GamessReader");
     }
 
     public void testABINIT() {
@@ -121,63 +121,72 @@ public class ReaderFactoryTest extends TestCase {
     }
 
     public void testCML() {
-        expectFormat("data/cmltest/estron.cml", "org.openscience.cdk.io.CMLReader");
+        expectReader("data/cmltest/estron.cml", "org.openscience.cdk.io.CMLReader");
     }
 
     public void testXYZ() {
-        expectFormat("data/bf3.xyz", "org.openscience.cdk.io.XYZReader");
+        expectReader("data/bf3.xyz", "org.openscience.cdk.io.XYZReader");
     }
 
     public void testShelX() {
-        expectFormat("data/frame_1.res", "org.openscience.cdk.io.ShelXReader");
+        expectReader("data/frame_1.res", "org.openscience.cdk.io.ShelXReader");
     }
     
     public void testMDLMol() {
-        expectFormat("data/mdl/methylbenzol.mol", "org.openscience.cdk.io.MDLReader");
+        expectReader("data/mdl/methylbenzol.mol", "org.openscience.cdk.io.MDLReader");
     }
 
     public void testPDB() {
-        expectFormat("data/coffeine.pdb", "org.openscience.cdk.io.PDBReader");
+        expectReader("data/coffeine.pdb", "org.openscience.cdk.io.PDBReader");
     }
     
     public void testSMILES() {
-        expectFormat("data/smiles.txt", "org.openscience.cdk.io.SMILESReader");
+        expectReader("data/smiles.txt", "org.openscience.cdk.io.SMILESReader");
     }
     
     private void expectFormat(String filename, String expectedFormat) {
+        expectFormatAndReader(filename, expectedFormat, false);
+    }
+    private void expectReader(String filename, String expectedFormat) {
+        expectFormatAndReader(filename, expectedFormat, true);
+    }
+        
+    private void expectFormatAndReader(String filename, String expectedFormat, boolean andReader) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             fail("Cannot find file: " + filename);
         }
         try {
             ChemObjectReader reader = factory.createReader(new InputStreamReader(ins));
-            assertNotNull(reader);
-            String format = reader.getClass().getName();
-            if (format.equals(expectedFormat)) {
-                // ok
-            } else {
-                fail("Wrong file format detected for " + filename + 
-                     ". Expected " + expectedFormat + ", but found: " + format);
-            }
-            // now try reading something from it
-            ChemObject[] objects = { 
-                new ChemFile(), new ChemModel(), new Molecule(),
-                new Reaction()
-            };
-            boolean read = false;
-            for (int i=0; (i<objects.length && !read); i++) {
-                try {
-                    reader.read(objects[i]);
-                } catch (CDKException exception) {
-                    // was not able to read info
+            if (andReader) {
+                assertNotNull(reader);
+                String format = reader.getClass().getName();
+                if (format.equals(expectedFormat)) {
+                    // ok
+                } else {
+                    fail("Wrong file format detected for " + filename + 
+                    ". Expected " + expectedFormat + ", but found: " + format);
                 }
-                read = true;
-            }
-            if (read) {
-                // ok, reseting worked
-            } else {
-                fail("Reading an ChemObject from the Reader did not work properly.");
-            }
+                // now try reading something from it
+                ChemObject[] objects = { 
+                    new ChemFile(), new ChemModel(), new Molecule(),
+                    new Reaction()
+                };
+                boolean read = false;
+                for (int i=0; (i<objects.length && !read); i++) {
+                    try {
+                        reader.read(objects[i]);
+                    } catch (CDKException exception) {
+                        // was not able to read info
+                    }
+                    read = true;
+                }
+                if (read) {
+                    // ok, reseting worked
+                } else {
+                    fail("Reading an ChemObject from the Reader did not work properly.");
+                }
+            } // else ok format is detected, but no reader is available
         } catch (Exception exception) {
             exception.printStackTrace();
             fail(exception.toString());

@@ -35,7 +35,9 @@ public class GamessFormat implements ChemFormatMatcher {
         return "GAMESS log file";
     }
 
-    public String getReaderClassName() { return null; };
+    public String getReaderClassName() { 
+      return "org.openscience.cdk.io.GamessReader";
+    };
     public String getWriterClassName() { return null; };
 
     public boolean matches(int lineNumber, String line) {

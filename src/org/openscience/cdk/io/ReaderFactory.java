@@ -142,9 +142,9 @@ public class ReaderFactory {
             for (int i=0; i<formatNames.length; i++) {
                 // load them one by one
                 try {
-                    ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
+                    ChemFormat format = (ChemFormat)this.getClass().getClassLoader().
                         loadClass(formatNames[i]).newInstance();
-                    formats.addElement(coReader);
+                    formats.addElement(format);
                 } catch (ClassNotFoundException exception) {
                     logger.error("Could not find this ChemObjectReader: ", formatNames[i]);
                     logger.debug(exception);
@@ -269,8 +269,10 @@ public class ReaderFactory {
                     if (readerClassName != null) {
                         try {
                             // make a new instance of this class
-                            return (ChemObjectReader)this.getClass().getClassLoader().
+                            ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
                               loadClass(readerClassName).newInstance();
+                            coReader.setReader(originalBuffer);
+                            return coReader;
                         } catch (ClassNotFoundException exception) {
                             logger.error("Could not find this ChemObjectReader: ", readerClassName);
                             logger.debug(exception);
