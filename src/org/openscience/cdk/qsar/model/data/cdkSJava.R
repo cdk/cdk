@@ -1,3 +1,24 @@
+
+#
+#  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+#
+#  Contact: cdk-devel@lists.sourceforge.net
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU Lesser General Public License
+#  as published by the Free Software Foundation; either version 2.1
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+
 # Basically the idea is to be able to pass an arbitrary Java object
 # to an R session. For this to work, the object should be converted to
 # a valid R object within the R session.
@@ -57,53 +78,44 @@ if (!isJavaInitialized()) {
     .JavaInit()
 }
 
-####################################################
-#
-# Jama Matrix
-#
-####################################################
-jamaMatrixConverter <- function(x, klassName) {
-    vals <- unlist(x$getArray())
-    matrix(vals, x$getRowDimension(), x$getColumnDimension());
+lmFitConverter <-
+function(obj,...)
+{
+    .JNew("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit",
+    obj$coefficients, obj$residuals,
+    obj$fitted, obj$rank, obj$df.residual)
 }
-jamaMatrixMatch <- function(x, klassName) {
-    klassName == 'Jama.Matrix';
+lmPredictConverter <- function(preds,...) {
+    .JNew("org.openscience.cdk.qsar.model.R.LinearRegressionModelPredict",
+    preds$fit[,1], preds$se.fit, preds$fit[,2], preds$fit[,3],
+    preds$df, preds$residual.scale)
 }
+setJavaFunctionConverter(lmFitConverter, function(x,...){inherits(x,"lm")},
+                          description="lm fit object to Java",
+                          fromJava=F)
+setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,"lmprediction")},
+                          description="lm predict object to Java",
+                          fromJava=F)
+                          
+buildLM <- function(modelname, x,y,wts) {
+    # x will come in as a double[][]
+    x <- matrix(unlist(x), ncol=length(x))
 
-####################################################
-#
-# Jama Eigenvalue decomposition
-#
-####################################################
-jamaEDConverter <- function(x, klassName) {
-    re <- x$getRealEigenvalues()
-    re
-}
-jamaEDMatch <- function(x, klassName) {
-    klassName == 'Jama.EigenvalueDecomposition'
-}
+    # assumes y ~ all columns of x
+    d <- data.frame(y=y,x)
+    fmla <- paste(names(d)[-1],sep="",collapse="+")
+    fmla <- formula(paste("y",fmla,sep="~",collapse=""))
 
-
-#####################################
-# User accessible functions
-#####################################
-printMatrix <- function(m) {
-    print(eigen(m)$values)
+    assign(modelname, lm(fmla, d, weights=wts), pos=1)
+    get(modelname)
 }
-
-printEigenvalues <- function(ed) {
-    print(ed)
+predictLM <- function( modelname, newx, interval) {
+    newx <- data.frame( matrix(unlist(newx), ncol=length(newx)) )
+    if (interval == '' || !(interval %in% c('confidence','prediction')) ) { 
+        interval = 'confidence'
+    }
+    preds <- predict( get(modelname), newx, se.fit = TRUE, interval=interval);
+    class(preds) <- 'lmprediction'
+    preds
 }
-
-printJavadoubleArray <- function(doubleArray) {
-    print(doubleArray)
-}
-printJavadoubleArray2D <- function(doubleArray) {
-    m <- matrix(unlist(doubleArray), ncol=length(doubleArray))
-    print(m)
-}
-
-setJavaFunctionConverter(jamaMatrixConverter, jamaMatrixMatch, description="Jama.Matrix to R matrix", fromJava=T);
-setJavaFunctionConverter(jamaEDConverter, jamaEDMatch, description="Jama.EigenvalueDecompositin EV's to R vector", fromJava=T);
-#setJavaFunctionConverter(javaArrayRefConverter,javaArrayRefMatch , description="Jama.EigenvalueDecompositin EV's to R vector", fromJava=T);
 

@@ -52,8 +52,22 @@ import java.io.*;
  */
 public abstract class RModel implements Model {
 
-    public static REvaluator revaluator;
-    public static ROmegahatInterpreter interp;
+    /**
+     * The object that performs the calls to the R engine
+     */
+    public static REvaluator revaluator = null;
+    /**
+     * This object represents an instance of the R interpreter.
+     *
+     * Due to the design of R, only one interpreter can be instantiated in a given 
+     * thread. That is, the underlying R engine is not thread safe. As a result
+     * care must be taken to have only one instance of the interpreter.
+     */
+    public static ROmegahatInterpreter interp = null;
+
+    /**
+     * A boolean that indicates whether the R/Java subsystem has been initialized or not.
+     */
     private static boolean doneInit = false;
     private LoggingTool logger;
         
@@ -121,8 +135,8 @@ public abstract class RModel implements Model {
         }
     }
 
-    abstract public void build();
-    abstract public void predict();
+    abstract public void build() throws QSARModelException;
+    abstract public void predict() throws QSARModelException;
 }
 
 
