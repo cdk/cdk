@@ -920,6 +920,7 @@ public class SmilesGenerator {
           Vector chiralNeighbours = container.getConnectedAtomsVector(atom);
           if (isTetrahedral(container, atom) > 0) {
             sorted = new Atom[3];
+            System.err.println(isTetrahedral(container, atom)+"   ");
           }
           if (isTetrahedral(container, atom) == 1) {
             if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
@@ -1068,6 +1069,7 @@ public class SmilesGenerator {
                   }
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
                     sorted[0] = (Atom) chiralNeighbours.get(i);
+                    System.err.println("0");
                   }
                 }
               }
@@ -1089,6 +1091,7 @@ public class SmilesGenerator {
                 }
               }
               Object[] ohere = hm.values().toArray();
+              System.err.println("kljöl");
               for (int i = ohere.length - 1; i > -1; i--) {
                 sorted[i] = ((Atom) chiralNeighbours.get(((Integer) ohere[i]).intValue()));
               }
@@ -1110,16 +1113,17 @@ public class SmilesGenerator {
                     }
                   }
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[0] = (Atom) chiralNeighbours.get(i);
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                    System.err.println("1");
                   }
                 }
               }
               if(angle1<angle2){
                 sorted[1] = atom2;
-                sorted[2] = atom1;
+                sorted[0] = atom1;
               }else{
                 sorted[1] = atom1;
-                sorted[2] = atom2;
+                sorted[0] = atom2;
               }
             }
           }
