@@ -218,7 +218,7 @@ public class FileConvertor {
     private void write(ChemSequence cs) throws IOException {
         try {
             cow.write(cs);
-        } catch (UnsupportedChemObjectException e) {
+        } catch (CDKException e) {
             int count = cs.getChemModelCount();
             boolean needMoreFiles =
               (compare(new ChemModel(), cow.highestSupportedChemObject()) < 0);
@@ -237,7 +237,7 @@ public class FileConvertor {
     private void write(ChemModel cm) throws IOException {
         try {
             cow.write(cm);
-        } catch (UnsupportedChemObjectException e) {
+        } catch (CDKException e) {
             logger.info("Cannot write ChemModel, trying Crystal.");
             Crystal crystal = cm.getCrystal();
             if (crystal != null) {
@@ -253,16 +253,16 @@ public class FileConvertor {
     private void write(Crystal c) throws IOException {
         try {
             cow.write(c);
-        } catch (UnsupportedChemObjectException e) {
-            logger.error("Cannot write Crystal!");
+        } catch (CDKException e) {
+            logger.error("Cannot write Crystal: " + e.getMessage());
         }
     }
 
     private void write(SetOfMolecules som) throws IOException {
         try {
             cow.write(som);
-        } catch (UnsupportedChemObjectException e) {
-            logger.error("Cannot write SetOfMolecules!");
+        } catch (CDKException e) {
+            logger.error("Cannot write SetOfMolecules " + e.getMessage());
         }
     }
 

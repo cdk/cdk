@@ -26,7 +26,7 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
+import org.openscience.cdk.exception.CDKException;
 import javax.vecmath.Point3d;
 import java.io.Writer;
 import java.io.BufferedWriter;
@@ -58,15 +58,15 @@ public class XYZWriter implements ChemObjectWriter {
         writer.close();
     }
     
-    public void write(ChemObject object) throws UnsupportedChemObjectException {
+    public void write(ChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             try {
-                    writeMolecule((Molecule)object);
+                writeMolecule((Molecule)object);
             } catch(Exception ex) {
-                System.err.println(ex.getMessage());
+                throw new CDKException("Error while writing XYZ file: " + ex.getMessage());
             }
         } else {
-            throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
+            throw new CDKException("XYZWriter only supports output of Molecule classes.");
         }
     }
 

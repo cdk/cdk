@@ -1,10 +1,9 @@
-/*
- * $RCSfile$ 
+/* $RCSfile$ 
  * $Author$ 
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -56,7 +55,7 @@ public interface ChemObjectWriter {
      * @exception UnsupportedChemObjectException is thrown if the output
      *            does not support the data in the object
      */
-    public void write(ChemObject object) throws UnsupportedChemObjectException;
+    public void write(ChemObject object) throws CDKException;
 
     /**
      * Returns an instance of a Class containing the most information.
