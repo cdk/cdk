@@ -1,0 +1,22 @@
+--- src/org/openscience/cdk/layout/StructureDiagramGenerator.java	2003-10-03 20:40:45.000000000 +0200
++++ src/org/openscience/cdk/layout/StructureDiagramGenerator.java.Java1.3	2003-10-08 21:24:31.000000000 +0200
+@@ -205,19 +205,8 @@
+ 		int nrOfEdges = molecule.getBondCount();
+ 		Vector2d ringSystemVector = null, newRingSystemVector = null;
+ 		this.firstBondVector = firstBondVector;
+-		boolean templateMapped = false;
+ 		double angle;
+ 		
+-		/* First we check if we can map any templates with predifined coordinates 
+-		 * Those are stored as MDL molfiles in data/templates 
+-		 */
+-		 logger.debug("Initializing TemplateHandler");
+-		 TemplateHandler templateHandler = new TemplateHandler();
+-		 logger.debug("TemplateHander initialized");
+-		 logger.debug("Now starting Template Detection in Molecule...");
+-		 templateMapped = templateHandler.mapTemplates(molecule);
+-		 logger.debug("Template Detection finished");
+-		 logger.debug("Template found: " + templateMapped);
+ 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
+ 		if (expectedRingCount > 0) {		
+ 			logger.debug("*** Start of handling rings. ***");

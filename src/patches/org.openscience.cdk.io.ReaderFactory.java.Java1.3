@@ -1,0 +1,38 @@
+--- src/org/openscience/cdk/io/ReaderFactory.java	2003-10-05 09:58:13.000000000 +0200
++++ src/org/openscience/cdk/io/ReaderFactory.java.Java1.3	2003-10-08 20:43:54.000000000 +0200
+@@ -119,22 +119,12 @@
+                                            line.indexOf("V2000") >= 0)) {
+                 logger.info("MDL mol/sdf file format detected");
+                 return new org.openscience.cdk.io.MDLReader(originalBuffer);
+-            } else if (lineNumber == 4 && (line.indexOf("v3000") >= 0 ||
+-                                           line.indexOf("V3000") >= 0)) {
+-                logger.info("MDL mol V3000 file format detected");
+-                return new org.openscience.cdk.io.MDLV3000Reader(originalBuffer);
+             } else if (line.startsWith("M  END")) {
+                 logger.info("MDL mol/sdf file format detected");
+                 return new org.openscience.cdk.io.MDLReader(originalBuffer);
+-            } else if (line.startsWith("$RXN V3000")) {
+-                logger.info("MDL rxn v3000 file format detected");
+-                return new org.openscience.cdk.io.MDLRXNV3000Reader(originalBuffer);
+             } else if (line.startsWith("$RXN")) {
+                 logger.info("MDL rxn file format detected");
+                 return new org.openscience.cdk.io.MDLRXNReader(originalBuffer);
+-            } else if (line.startsWith("$RDFILE ")) {
+-                logger.info("MACiE file format detected");
+-                return new org.openscience.cdk.io.MACiEReader(originalBuffer);
+             } else if (line.indexOf("ACES2") >= 0) {
+                 logger.info("Aces2 format detected");
+                 return new org.openscience.cdk.io.Aces2Reader(originalBuffer);
+@@ -180,12 +170,6 @@
+                        (line.indexOf("<bond") != -1)) {
+                 logger.info("CML format detected");
+                 return new org.openscience.cdk.io.CMLReader(originalBuffer);
+-            } else if (line.indexOf("<identifier") != -1) {
+-                logger.info("IChI format detected");
+-                return new org.openscience.cdk.io.IChIReader(originalBuffer);
+-            } else if (line.startsWith("%%Header Start")) {
+-                logger.info("PolyMorph Predictor format detected");
+-                return new org.openscience.cdk.io.PMPReader(originalBuffer);
+             } else if (line.startsWith("ZERR ") ||
+                        line.startsWith("TITL ")) {
+                 logger.info("ShelX format detected");

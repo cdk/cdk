@@ -1,0 +1,37 @@
+--- src/org/openscience/cdk/controller/Controller2D.java	2003-09-01 21:00:32.000000000 +0200
++++ src/org/openscience/cdk/controller/Controller2D.java.Java1.3	2003-10-08 21:00:23.000000000 +0200
+@@ -139,7 +139,7 @@
+     public void mouseDragged(MouseEvent event) {
+         logger.debug("MouseDragged Event Props: mode=" + c2dm.getDrawModeString() + 
+                      ", trigger=" + event.isPopupTrigger() +
+-                     ", Button number: " + event.getButton() +
++                     /* ", Button number: " + event.getButton() + */
+                      ", Click count: " + event.getClickCount());
+         
+         int mouseX = getWorldCoordinate(event.getX()); 
+@@ -232,10 +232,10 @@
+ 
+             logger.debug("MousePressed Event Props: mode=" + c2dm.getDrawModeString() + 
+                          ", trigger=" + event.isPopupTrigger() +
+-                         ", Button number: " + event.getButton() +
++                         /* ", Button number: " + event.getButton() + */
+                          ", Click count: " + event.getClickCount());
+             
+-            if (event.isPopupTrigger() || event.getButton() == MouseEvent.BUTTON3) {
++            if (event.isPopupTrigger() || (event.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
+                 logger.info("Popup menu triggered...");
+                 popupMenuForNearestChemObject(mouseX, mouseY, event);
+             } else {
+@@ -268,10 +268,10 @@
+             
+             logger.debug("MouseReleased Event Props: mode=" + c2dm.getDrawModeString() + 
+                          ", trigger=" + event.isPopupTrigger() +
+-                         ", Button number: " + event.getButton() +
++                         /* ", Button number: " + event.getButton() + */
+                          ", Click count: " + event.getClickCount());
+            
+-            if (event.getButton() == MouseEvent.BUTTON1) {
++            if ((event.getModifiers() & MouseEvent.BUTTON1_MASK) != 0) {
+                 int mouseX = getWorldCoordinate(event.getX()); 
+                 int mouseY = getWorldCoordinate(event.getY());
+ 
