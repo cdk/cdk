@@ -45,15 +45,45 @@ import Jama.EigenvalueDecomposition;
  * <p>
  * Example usage can be:
  * <pre>
- *       AtomContainer ac1, ac2;
+ * AtomContainer ac1, ac2;
  *
- *       try {
- *           KabschAlignment sa = new KabschAlignment(ac1.getAtoms(),ac2.getAtoms());
- *           sa.align();
- *           System.out.println(sa.getRMSD());
- *       } catch (CDKException e){}
+ * try {
+ *    KabschAlignment sa = new KabschAlignment(ac1.getAtoms(),ac2.getAtoms());
+ *    sa.align();
+ *    System.out.println(sa.getRMSD());
+ * } catch (CDKException e){}
  * </pre>
+ * In many cases, molecules will be aligned based on some common substructure.
+ * In this case the center of masses calculated during alignment refer to these
+ * substructures rather than the whole molecules. To superimpose the molecules
+ * for display, the second molecule must be rotated and translated by calling
+ * <code>rotateAtomContainer</code>. However, since this will also translate the
+ * second molecule, the first molecule should also be translated to the center of mass
+ * of the substructure specifed for this molecule. This center of mass can be obtained
+ * by a call to <code>getCenterOfMass</code> and then manually translating the coordinates.
+ * Thus an example would be
+ * <pre>
+ * AtomContainer ac1, ac2;  // whole molecules
+ * Atom[] a1, a2;           // some subset of atoms from the two molecules
+ * KabschAlignment sa;
+ * 
+ * try {
+ *    sa = new KabschAlignment(a1,a2);
+ *    sa.align();
+ * } catch (CDKException e){}
  *
+ * Point3d cm1 = sa.getCenterOfMass();
+ * for (int i = 0; i &lt; ac1.getAtomCount(); i++) {
+ *    Atom a = ac1.getAtomAt(i);
+ *    a.setX3d( a.getX3d() - cm1.x );
+ *    a.setY3d( a.getY3d() - cm1.y );
+ *    a.setY3d( a.getZ3d() - cm1.z );
+ * }
+ * sa.rotateAtomContainer(ac2);
+ *
+ * // display the two AtomContainer's
+ *</pre>
+ * 
  * @author Rajarshi Guha
  * @cdk.created 2004-12-11
  * @cdk.builddepends Jama-1.0.1.jar
@@ -401,6 +431,23 @@ public class KabschAlignment {
     }
 
     /**
+     * Returns the center of mass for the first molecule or fragment used in the calculation.
+     *
+     * This method is useful when using this class to align the coordinates
+     * of two molecules and them displaying them superimposed. Since the center of
+     * mass used during the alignment may not be based on the whole molecule (in 
+     * general common substructures are aligned), when preparing molecules for display
+     * the first molecule should be translated to the center of mass. Then displaying the
+     * first molecule and the rotated version of the second one will result in superimposed
+     * structures.
+     * 
+     * @return A Point3d containing the coordinates of the center of mass
+     */
+    public Point3d getCenterOfMass() {
+        return(this.cm1);
+    }
+
+    /**
      * Rotates the AtomContainer coordinates by the rotation matrix.
      *
      * In general if you align a subset of atoms in a AtomContainer
@@ -409,7 +456,7 @@ public class KabschAlignment {
      * that was passed to the constructor.
      *
      * Note that the AtomContainer coordinates also get translated such that the
-     * center of mass is at the origin.
+     * center of mass of the original fragment used to calculate the alignment is at the origin.
      *
      * @param ac The AtomContainer whose coordinates are to be rotated
      */
@@ -417,9 +464,9 @@ public class KabschAlignment {
         Point3d[] p = getPoint3dArray( ac.getAtoms() );
         for (int i = 0; i < ac.getAtomCount(); i++) {
             // translate the the origin we have calculated
-            p[i].x = p[i].x = this.cm2.x;
-            p[i].y = p[i].y = this.cm2.y;
-            p[i].z = p[i].z = this.cm2.z;
+            p[i].x = p[i].x - this.cm2.x;
+            p[i].y = p[i].y - this.cm2.y;
+            p[i].z = p[i].z - this.cm2.z;
 
             // do the actual rotation
             ac.getAtomAt(i).setX3d( U[0][0]*p[i].x + U[0][1]*p[i].y + U[0][2]*p[i].z );
