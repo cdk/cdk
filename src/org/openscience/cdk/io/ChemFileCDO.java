@@ -48,7 +48,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 
     private int bond_a1;
     private int bond_a2;
-    private int bond_order;
+    private double bond_order;
     private int bond_stereo;
     
     private double crystal_axis_x;
@@ -156,7 +156,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentMolecule.addAtom(currentAtom);
         } else if (objectType.equals("Bond")) {
             logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
-            currentMolecule.addBond(bond_a1, bond_a2, bond_order);
+            currentMolecule.addBond(bond_a1, bond_a2, (int)bond_order);
         } else if (objectType.equals("a-axis")) {
           // set these variables
           if (currentMolecule instanceof Crystal) {
@@ -215,10 +215,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           bond_a2 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("order")) {
           try {
-            bond_order = new Integer(propertyValue).intValue();
+            bond_order = Double.parseDouble(propertyValue);
           } catch (Exception e) {
-            logger.error("Cannot convert to int: " + propertyValue);
-            bond_order = 1;
+            logger.error("Cannot convert to double: " + propertyValue);
+            bond_order = 1.0;
           }
         }
       } else if (objectType.equals("Crystal")) {

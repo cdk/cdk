@@ -34,6 +34,7 @@ Fixes:
 * Fixed CMLWriter to not produce invalid CML code, and patched
   CMLReader to be able to read older CMLReader output
   (fixes bug #620121).
+* Fixed bond order problem in ChemFileCDO (fixes bug #620229)
 
 API changes:
 * Removed obsolete cdk.structgen.stoichastic.ConvertTools
