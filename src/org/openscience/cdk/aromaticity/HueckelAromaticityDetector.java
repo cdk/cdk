@@ -133,12 +133,13 @@ public class HueckelAromaticityDetector
 			}
 			
 		}
+		
 		for (int g = 0; g < ring.getBondCount(); g++)
 		{
 			bond = ring.getBondAt(g);
 			if (bond.getOrder() > 1)
 			{
-				piElectronCount += 2;
+				piElectronCount += 2*(bond.getOrder()-1);
 			}
 		}
 		for (int f = 0; f < ((ring.getAtomCount() - 2)/4) + 2; f ++)
