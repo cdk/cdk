@@ -35,6 +35,7 @@ import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.isomorphism.*;
+import org.openscience.cdk.isomorphism.mcss.*;
 import javax.vecmath.*;
 import java.io.*;
 import java.util.*;
@@ -86,6 +87,7 @@ public class TemplateHandler
 			{
 				MDLReader reader = new MDLReader(new FileReader(templateFiles[f]));
 				templates.addElement((Molecule) reader.read((ChemObject) new Molecule()));
+				logger.debug("Successfully read template " + templateFiles[f].getName());
 			} catch (Exception exc)
 			{
 				logger.debug("Could not read template from file " + templateFiles[f]);
@@ -108,16 +110,25 @@ public class TemplateHandler
 	{
 		boolean mapped = false;
 		Molecule template = null;
-		
+		RMap map = null;
+		Atom atom1 = null, atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = (Molecule) templates.elementAt(f);
 			if (UniversalIsomorphismTester.isSubgraph(new AtomContainer(molecule), new AtomContainer(template)))
 			{
-				mapped = true;
-				logger.debug("Found a subgraph mapping");
 				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(new AtomContainer(molecule), new AtomContainer(template));
-				logger.debug("found mapping of size " + list.size());
+				logger.debug("Found a subgraph mapping of size " + list.size());
+				for (int i = 0; i < list.size(); i ++)					
+				{
+					map = (RMap)list.get(i);
+					atom1 = molecule.getAtomAt(map.getId1());
+					atom2 = template.getAtomAt(map.getId2());
+					atom1.setX2D(atom2.getX2D());
+					atom1.setY2D(atom2.getY2D());
+					atom1.setFlag(CDKConstants.ISPLACED, true);
+				}
+				mapped = true;
 			}
 		}
 		return mapped;

@@ -494,6 +494,35 @@ public class RingPlacer
 	}
 	
 	/**
+	 * Walks throught the atoms of each ring in a ring set and marks 
+	 * a ring as PLACED if all of its atoms have been placed.
+	 *
+	 * @param   rs  The ringset to be checked
+	 * @return  True if coordinates have been assigned to all atoms in all rings.    
+	 */
+
+	public void checkAndMarkPlaced(RingSet rs)
+	{
+		Ring ring = null;
+		boolean allPlaced = true;
+		for (int i = 0; i < rs.size(); i++)
+		{
+			ring = (Ring)rs.elementAt(i);
+			allPlaced = true;
+			for (int j = 0; j < ring.getAtomCount(); j++)
+			{
+				if (!((Atom)ring.getAtomAt(j)).getFlag(CDKConstants.ISPLACED))
+				{
+					allPlaced = false; 
+					break;
+				}
+			}
+			ring.setFlag(CDKConstants.ISPLACED, allPlaced);
+		}
+	}
+
+
+	/**
 	 * Returns the bridge atoms, that is the outermost atoms in
 	 * the chain of more than two atoms which are shared by two rings
 	 *

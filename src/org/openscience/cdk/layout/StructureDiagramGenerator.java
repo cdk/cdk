@@ -194,9 +194,15 @@ public class StructureDiagramGenerator {
 		int nrOfEdges = molecule.getBondCount();
 		Vector2d ringSystemVector = null, newRingSystemVector = null;
 		this.firstBondVector = firstBondVector;
-
+		boolean templateMapped = false;
 		double angle;
 		
+		/* First we check if we can map any templates with predifined coordinates 
+		 * Those are stored as MDL molfiles in data/templates 
+		 */
+		 TemplateHandler templateHandler = new TemplateHandler();
+		 templateMapped = templateHandler.mapTemplates(molecule);
+		 logger.debug("Template found: " + templateMapped);
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
 		if (expectedRingCount > 0) {		
 			logger.debug("*** Start of handling rings. ***");
@@ -211,6 +217,7 @@ public class StructureDiagramGenerator {
 			markRingAtoms(sssr);
 			/* Give a handle of our molecule to the ringPlacer */
 			ringPlacer.setMolecule(molecule);
+			ringPlacer.checkAndMarkPlaced(sssr);
 			/*
 			 * Partition the smallest set of smallest rings into disconnected ring system.
 			 * The RingPartioner returns a Vector containing RingSets. Each of the RingSets contains
@@ -218,6 +225,9 @@ public class StructureDiagramGenerator {
 			 * via spiro connections. 
 			 */
 			ringSystems = RingPartitioner.partitionRings(sssr);
+			
+			/* We got our ring systems now */
+			
 			
 			/* Do the layout for the first connected ring system ... */
 			int largest = 0;
@@ -299,17 +309,20 @@ public class StructureDiagramGenerator {
             if (ring.getElectronContainerAt(i) instanceof Bond) break;
         }
         /* Place the most complex ring at the origin of the coordinate system */
-		sharedAtoms = placeFirstBond((Bond)ring.getElectronContainerAt(i),firstBondVector); 
+		if (!ring.getFlag(CDKConstants.ISPLACED))
+		{
+			sharedAtoms = placeFirstBond((Bond)ring.getElectronContainerAt(i),firstBondVector); 
+			/* 
+			 * Call the method which lays out the new ring.
+			 */
+			ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength); 
+			ringPlacer.placeRing(ring, sharedAtoms, sharedAtoms.get2DCenter(), ringCenterVector, bondLength);
+			/* 
+			 * Mark the ring as placed
+			 */
+			ring.setFlag(CDKConstants.ISPLACED, true);		
+		}
 		/* 
-		 * Call the method which lays out the new ring.
-		 */
-		ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength); 
-		ringPlacer.placeRing(ring, sharedAtoms, sharedAtoms.get2DCenter(), ringCenterVector, bondLength);
-		/* 
-		 * Mark the ring as placed
-		 */
-		ring.setFlag(CDKConstants.ISPLACED, true);		
-        /* 
 		 * Place all other rings in this ringsystem.
 		 */
 		thisRing = 0;
