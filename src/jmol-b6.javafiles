@@ -12,6 +12,7 @@ org/openscience/cdk/Isotope.java
 org/openscience/cdk/Molecule.java
 org/openscience/cdk/SetOfMolecules.java
 org/openscience/cdk/geometry/BondTools.java
+org/openscience/cdk/geometry/GeometryTools.java
 org/openscience/cdk/io/CMLReader.java
 org/openscience/cdk/io/CMLWriter.java
 org/openscience/cdk/io/ChemObjectReader.java
