@@ -1,3 +1,17 @@
+cdk (20040420cvs-2) unstable; urgency=low
+
+  * Now conform Standards Version 3.6.1 (control)
+  * Split up package into two binary packages: libcdk-java and cdk
+  * Now depends on debhelper (rules)
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Tue, 20 Apr 2004 13:27:00 +0100
+
+cdk (20040420cvs-1) unstable; urgency=low
+
+  * New release based on CVS
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Tue, 20 Apr 2004 11:36:00 +0100
+
 cdk (20040202-1) unstable; urgency=low
 
   * New upstream release
