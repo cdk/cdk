@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
 
 import javax.swing.JPanel;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.Atom;
@@ -67,6 +68,7 @@ public class ChemObjectTree extends JPanel {
     private LoggingTool logger;
 
     private JTree tree;
+    private TreeSelectionListener treeListener;
 
 	/**
 	 * Constructs a JPanel showing a ChemObject in a tree.
@@ -74,8 +76,9 @@ public class ChemObjectTree extends JPanel {
 	public ChemObjectTree() {
         logger = new LoggingTool(this);
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
-        this.tree = new JTree(new DefaultMutableTreeNode("empty"));
+        this.tree = new JTree(new DefaultMutableTreeNode("No Object"));
         this.add(tree);
+        treeListener = null;
         this.setBackground(tree.getBackground());
 	}
 
@@ -87,37 +90,38 @@ public class ChemObjectTree extends JPanel {
         this.removeAll();
         if (object == null) {
             // logger.info("Making empty ChemObjectTree");
-            this.tree = new JTree(new DefaultMutableTreeNode("empty"));
+            this.tree = new JTree(new DefaultMutableTreeNode("No Object"));
         } else {
             // logger.info("Making ChemObjectTree for " + object.getClass().getName());
             DefaultMutableTreeNode topNode = getTree(object);
             this.tree = new JTree(topNode);
+            int rowcount = 0;
+            do {
+                rowcount = this.tree.getRowCount();
+                for (int row=rowcount; row>=0; row--){
+                    this.tree.expandRow(row);
+                }
+            }
+            while (rowcount != this.tree.getRowCount());
+        }
+        if (treeListener != null) {
+            this.tree.addTreeSelectionListener(treeListener);
         }
         this.add(this.tree);
     }
     
-    /**
-     * Creates a node with the object name.
-     */
-    private DefaultMutableTreeNode getObjectName(Object object) {
-        StringBuffer name = new StringBuffer();
-        name.append(object.getClass()
-            .getName().substring("org.openscience.cdk.".length()));
-        if (object instanceof Atom) {
-            Atom atom = (Atom)object;
-            name.append(" " + atom.getSymbol());
-        } else if (object instanceof Bond) {
-            Bond bond = (Bond)object;
-            name.append(" " + bond.getOrder());
+    public void addTreeSelectionListener(TreeSelectionListener tsl) {
+        this.treeListener = tsl;
+        if (this.tree != null) {
+            this.tree.addTreeSelectionListener(tsl);
         }
-        return new DefaultMutableTreeNode(name.toString());
     }
     
     /**
      * Generate a tree of ChemObject's.
      */
     private DefaultMutableTreeNode getTree(ChemObject object) {
-        DefaultMutableTreeNode node = getObjectName(object);
+        DefaultMutableTreeNode node = new ChemObjectTreeNode(object);
         Class reflectedClass = object.getClass();
         // get all fields in this ChemObject
         Field[] fields = getFields(reflectedClass);

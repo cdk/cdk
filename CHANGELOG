@@ -16,6 +16,8 @@ New:
 * Added missing getAllIDs() methods to AtomContainer and SetOfAtomContainers
   manipulators
 * Added a method ChemObject.getListenerCount() used at least for JUnit testing
+* Added a TreeListener to the ChemObjectTree
+* The ChemObject tree is now fully expanded by default
 
 Fixes:
 * Partly cleaned up source code of core classes using the PMD reports
