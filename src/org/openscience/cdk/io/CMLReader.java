@@ -69,6 +69,10 @@ public class CMLReader extends DefaultChemObjectReader {
         this.init();
         this.input = input;
     }
+    
+    public CMLReader() {
+        this(new StringReader(""));
+    }
 
     public String getFormatName() {
         return "Chemical Markup Language";
