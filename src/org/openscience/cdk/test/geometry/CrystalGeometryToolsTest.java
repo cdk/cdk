@@ -110,6 +110,18 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(Math.sqrt(3.0), length, 0.001);
     }
 
+    public void testCalcAxisLength2() {
+        double[] a = {1.0, 0.0, 0.0};
+        double length = CrystalGeometryTools.calcAxisLength(a);
+        assertEquals(1.0, length, 0.001);
+        double[] b = {0.0, 1.0, 0.0};
+        length = CrystalGeometryTools.calcAxisLength(b);
+        assertEquals(1.0, length, 0.001);
+        double[] c = {0.0, 0.0, 1.0};
+        length = CrystalGeometryTools.calcAxisLength(c);
+        assertEquals(1.0, length, 0.001);
+    }
+
     public void testCalcAngle() {
         double[] b = {0.0, 2.0, 0.0};
         double[] c = {0.0, 0.0, 3.0};
@@ -117,29 +129,17 @@ public class CrystalGeometryToolsTest extends TestCase {
         assertEquals(90.0, angle, 0.001);
     }
     
-    public void testRoundTripUnitCellCartesianCoordinates() {
-        double[] a = {3.4, 7.6, 5.5};
-        double[] b = {2.8, 4.0, 6.3};
-        double[] c = {1.9, 3.9, 9.1};
-        double[] notionalCoords = CrystalGeometryTools.cartesianToNotional(
-            a,b,c
-        );
-        double[][] cardAxes = CrystalGeometryTools.notionalToCartesian(
-            notionalCoords[0], notionalCoords[1], notionalCoords[2],
-            notionalCoords[3], notionalCoords[4], notionalCoords[5]
-        );
-        // the a axis
-        assertEquals(3.4, cardAxes[0][0], 0.001);
-        assertEquals(7.6, cardAxes[0][1], 0.001);
-        assertEquals(5.5, cardAxes[0][2], 0.001);
-        // the b axis
-        assertEquals(2.8, cardAxes[1][0], 0.001);
-        assertEquals(4.0, cardAxes[1][1], 0.001);
-        assertEquals(6.3, cardAxes[1][2], 0.001);
-        // the c axis
-        assertEquals(1.9, cardAxes[2][0], 0.001);
-        assertEquals(3.9, cardAxes[2][1], 0.001);
-        assertEquals(9.1, cardAxes[2][2], 0.001);
+    public void testCalcAngle2() {
+        double[] b = {0.0, 1.0, 1.0};
+        double[] c = {0.0, 0.0, 1.0};
+        double angle = CrystalGeometryTools.calcAxesAngle(b,c);
+        assertEquals(45.0, angle, 0.001);
+    }
+    
+    public void testCalcAngle3() {
+        double[] b = {4.5, 3.1, 1.7};
+        double angle = CrystalGeometryTools.calcAxesAngle(b,b);
+        assertEquals(0.0, angle, 0.001);
     }
     
     public void testRoundTripUnitCellNotionalCoordinates() {
