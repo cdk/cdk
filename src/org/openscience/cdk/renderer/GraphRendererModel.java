@@ -1,10 +1,9 @@
-/* GraphRendererModel.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 2.7.2001
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -25,8 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
-
+ *
+ */
 package org.openscience.cdk.renderer;
 
 import org.openscience.cdk.math.*;
@@ -38,6 +37,9 @@ import java.text.DecimalFormat;
 
 /**
  * This class handles a set of function for the GraphRenderer
+ *
+ * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @created 2001-07-02
  */ 
 public class GraphRendererModel
 {
