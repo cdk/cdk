@@ -1,3 +1,4 @@
+*.set
 *.classes
 applications.javafiles
 core.javafiles
