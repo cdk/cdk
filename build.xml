@@ -847,6 +847,7 @@
 
         <target id="run-test" name="run-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
                 description="Runs an application">
+                <echo message="Running test class: testclass=${testclass}"/>
                 <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
                     <classpath>
@@ -870,6 +871,7 @@
 
         <target id="junit-test" name="junit-test" depends="dist-core, dist-extra, dist-test, dist-standard" 
                 description="Runs one specific JUnit test set with -Dtestclass=&lt;class>">
+                <echo message="JUnit tests class: testclass=${testclass}"/>
                 <junit printsummary="yes" haltonfailure="no" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
                     <jvmarg value="-Dcdk.debug.stdout=true"/>
