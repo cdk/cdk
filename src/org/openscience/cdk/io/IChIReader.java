@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.ichi.IChIHandler;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -66,7 +67,7 @@ public class IChIReader extends DefaultChemObjectReader {
     private XMLReader parser;
     private Reader input;
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     /**
      * Construct a IChI reader from a Reader object.
@@ -101,7 +102,7 @@ public class IChIReader extends DefaultChemObjectReader {
      * Initializes this reader.
      */
     private void init() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
         boolean success = false;
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {
@@ -170,7 +171,7 @@ public class IChIReader extends DefaultChemObjectReader {
      *
      * @return ChemFile with the content read from the input
      */
-    private ChemFile readChemFile() {
+    private ChemFile readChemFile() throws CDKException {
         ChemFile cf = null;
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
@@ -186,9 +187,11 @@ public class IChIReader extends DefaultChemObjectReader {
         } catch (IOException e) {
             logger.error("IOException: ", e.getMessage());
             logger.debug(e);
+            throw new CDKException("Error while reading IChI: " + e.getMessage());
         } catch (SAXException saxe) {
             logger.error("SAXException: ", saxe.getClass().getName());
             logger.debug(saxe);
+            throw new CDKException("Error while reading IChI: " + saxe.getMessage());
         }
         return cf;
     }
