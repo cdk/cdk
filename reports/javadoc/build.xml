@@ -1,0 +1,36 @@
+<project name="CDK" default="overview" basedir=".">
+
+    <property name="javadoc.dir" value="javadoc" />
+    <property name="pathtojava3d" value="" />
+
+    <path id="project.class.path">
+        <pathelement location="/usr/local/j2sdk1.4.0/lib/rt.jar" />
+
+        <pathelement location="." />
+        <fileset dir="../../jar">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${pathtojava3d}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="overview">
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="JavaDocStats" path="."/>
+
+            <package name="org.openscience.cdk"/>
+
+            <sourcepath>
+                <pathelement path="../.."/>
+            </sourcepath>
+
+        </javadoc>
+    </target>
+
+</project>
+
+
+
