@@ -8,4 +8,12 @@ CLASSPATH="@PATHTO3DJAR@:@PATHTORTJAR@:${JARLIBS}"
 
 JAVA="@PATHTOJAVA@"
 
-${JAVA} -cp ${CLASSPATH} org.openscience.cdk.applications.Viewer $*
+# Collect -D options as java arguments
+command=${JAVA}
+while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
+        command="$command $1"
+        shift
+done
+
+
+${command} -cp ${CLASSPATH} org.openscience.cdk.applications.Viewer $*
