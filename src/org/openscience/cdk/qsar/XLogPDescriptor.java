@@ -40,10 +40,24 @@ import org.openscience.cdk.isomorphism.mcss.*;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- *  Prediction of logP based on the atom-type method called XLogP. For
- *  description of the methodology see Ref. @cdk.cite{WANG97}
- *  or <a href="http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html">http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html</a>. 
- *  Actually one molecular factor is missing (presence of para Hs donor pair).
+ * Prediction of logP based on the atom-type method called XLogP. For
+ * description of the methodology see Ref. @cdk.cite{WANG97}
+ * or <a href="http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html">http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html</a>. 
+ * Actually one molecular factor is missing (presence of para Hs donor pair).
+ *
+ * <p>This descriptor uses these parameters:
+ * <table>
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td>CheckAromaticity</td>
+ *     <td>false</td>
+ *     <td>True is the aromaticity has to be checked</td>
+ *   </tr>
+ * </table>
  *
  *@author         mfe4
  *@cdk.created    2004-11-03
@@ -1026,7 +1040,7 @@ public class XLogPDescriptor implements Descriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "True is the aromaticity has to be checked";
+		params[0] = "CheckAromaticity";
 		return params;
 	}
 
