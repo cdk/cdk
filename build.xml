@@ -468,6 +468,9 @@
                 <copy todir="${sourcedist.dir}/${src}/patches/">
                     <fileset dir="${src}/patches/" includes="*" />
                 </copy>
+                <copy todir="${sourcedist.dir}/${src}/">
+                    <fileset dir="${src}/" includes="*.manifest" />
+                </copy>
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
                 <gzip zipfile="${package}.tar.gz" src="cdk-source-${DSTAMP}.tar" />
                 <delete file="${package}.tar" />
