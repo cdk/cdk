@@ -83,6 +83,13 @@ public interface CDKEditBus {
      */
     public ChemFile getChemFile();
     
+    /**
+     * Runs a script in the application implementing this EditBus. The
+     * script language is indicated by its MIME type, e.g. Rasmol scripts
+     * are indicated with the MIME type application/x-rasmol.
+     */
+    public void runScript(String mimeType, String script);
+    
 }
 
 

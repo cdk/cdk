@@ -131,6 +131,11 @@ public class CDKPluginManager {
             JMenuItem versionMenuItem = new JMenuItem("v. " + plugin.getPluginVersion());
             versionMenuItem.setEnabled(false);
             aboutMenu.add(versionMenuItem);
+            if (APIVersionTester.isBiggerOrEqual("1.10", plugin.getAPIVersion())) {
+                JMenuItem licenseMenuItem = new JMenuItem("license: " + plugin.getPluginLicense());
+                versionMenuItem.setEnabled(false);
+                aboutMenu.add(licenseMenuItem);
+            }
             pluginMenu.add(aboutMenu);
 
             menu.add(pluginMenu);

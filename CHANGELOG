@@ -15,6 +15,8 @@ New:
 * The libio.cml.Convertor now also accepts AtomContainer
 * Added customization of atom color for Renderer[2D|3D]Model 
   (closes RFE #949751)
+* Added the new method CDKPluginInterface.getPluginLicense()
+* Added the new method CDKEditBus.runScript()
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is  returned properly

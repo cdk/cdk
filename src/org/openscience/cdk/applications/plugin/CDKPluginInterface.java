@@ -70,6 +70,11 @@ public interface CDKPluginInterface {
     public String getPluginVersion();
     
     /**
+     * Should return the license of the plugin.
+     */
+    public String getPluginLicense();
+    
+    /**
      * Should return a JPanel that provides access to the functionality
      * of this plugin.
      */
