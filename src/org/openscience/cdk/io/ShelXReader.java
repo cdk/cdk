@@ -169,9 +169,9 @@ public class ShelXReader extends DefaultChemObjectReader {
                 double a = FortranFormat.atof(sa);
                 double b = FortranFormat.atof(sb);
                 double c = FortranFormat.atof(sc);
-                double alpha = FortranFormat.atof(salpha)*Math.PI/180.0;
-                double beta  = FortranFormat.atof(sbeta)*Math.PI/180.0;
-                double gamma = FortranFormat.atof(sgamma)*Math.PI/180.0;
+                double alpha = FortranFormat.atof(salpha);
+                double beta  = FortranFormat.atof(sbeta);
+                double gamma = FortranFormat.atof(sgamma);
                 double[][] axes;
 
                 axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
