@@ -12,7 +12,7 @@
         <itemizedlist>
            <listitem>
              <para>
-               &AtomTypeFactory;, a class generating
+               &tools.AtomTypeFactory;, a class generating
                AtomContraints containing informations like maximum
                allowed bond orders for certain chemical elements. Those
                AtomConstraints are used for example in structure
@@ -21,7 +21,7 @@
            </listitem>
            <listitem>
              <para>
-               &ConnectivityChecker;, a class that checks if an
+               &tools.ConnectivityChecker;, a class that checks if an
                AtomContainer is connected, that is if there is a path
                from each atom to each other atom in the molecule. The
                class also has a method for partitioning an
@@ -41,7 +41,7 @@
            </listitem>
            <listitem>
              <para>
-               &IsotopeFactory;, produces Isotopes for a given ElementSymbol, based on 
+               &tools.IsotopeFactory;, produces Isotopes for a given ElementSymbol, based on 
                an XML configuration file in org/openscience/cdk/config
              </para>
            </listitem>
@@ -104,6 +104,7 @@
         </para>
     </section>
 
+    <section>
     <title>Introduction from the handling of orbitals</title>
     <section>
         <title>Basics</title>
@@ -167,6 +168,7 @@
 
         frame.add(renderer, BorderLayout.CENTER);
         </programlisting>
+    </section>
     </section>
 
 </chapter>
