@@ -108,6 +108,8 @@ public class CDKTests
         suite.addTest(QSARDescriptorTests.suite());
         // from cdk.test.qsar.model
         suite.addTest(QSARModelTests.suite());
+        //suite.addTest(QSARRModelTests.suite());
+        
         // from cdk.test.reaction
         suite.addTest(ReactionBalancerTest.suite());
         // from cdk.test.ringsearch
