@@ -73,7 +73,7 @@
   
   <!-- here's the SF button -->
   <center><a href="http://sourceforge.net">
-    <img src="http://sourceforge.net/sflogo.php?group_id=107219&amp;type=5" width="88" height="31"
+    <img src="http://sourceforge.net/sflogo.php?group_id=20024&amp;type=5" width="88" height="31"
          border="0" alt="SourceForge Logo" />
   </a></center>
   
