@@ -40,6 +40,8 @@ import java.io.*;
  * <a href="http://www.nist.gov/public_affairs/update/upd20020610.htm#International">this
  * press release</a>.
  *
+ * The elements that are read are given in the IChIHandler class.
+ *
  * <p>Reference: <a href="http://cdk.sf.net/biblio.html#HEL01">HEL01</a>.
  *
  * @author     Egon Willighagen
@@ -47,6 +49,8 @@ import java.io.*;
  *
  * @keyword file format, IChI
  * @keyword chemical identifier
+ *
+ * @see     org.openscience.cdk.io.ichi.IChIHandler
  */
 public class IChIReader implements ChemObjectReader {
 

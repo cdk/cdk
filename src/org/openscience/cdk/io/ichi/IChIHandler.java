@@ -37,9 +37,16 @@ import org.xml.sax.helpers.*;
 /**
  * SAX2 implementation for IChI XML fragment parsing.
  *
+ * <p>The supported elements are: identifier, basic and
+ * dbond. 
+ * All other elements are not parsed (at this moment).
+ *
+ * <p>Not found in the original documentation is the use
+ * of ";" in the &lt;basic> element, which is supported. 
+ * See bug #642429.
+ *
  * <p>The returned ChemFile contains a ChemSequence in
- * which the ChemModel represents the molecule. The
- * tautomeric information is not read (yet).
+ * which the ChemModel represents the molecule.
  *
  * @see org.openscience.cdk.io.IChIReader
  */
@@ -109,22 +116,23 @@ public class IChIHandler extends DefaultHandler {
         } else if ("basic".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <basic> chars: " + currentChars);
-                StringTokenizer st = new StringTokenizer(currentChars, ",");
-                if (st.hasMoreTokens()) {
-                    String atomsEncoding =  st.nextToken();
-                    analyseAtomsEncoding(atomsEncoding);
-                } else {
-                    logger.warn("Expected atom data missing!");
-                }
-                if (st.hasMoreTokens()) {
-                    String bondsEncodings =  st.nextToken();
-                    StringTokenizer st2 = new StringTokenizer(bondsEncodings, " ");
-                    while (st2.hasMoreTokens()) {
-                        String bondsEncoding = st2.nextToken();
-                        analyseBondsEncoding(bondsEncoding);
+                if (currentChars.indexOf(";") != 0) {
+                    logger.debug("Multifragment molecule detected.");
+                    /* structure consists of more than one fragment !
+                       This feature is not mentioned in the documentation
+                       for 0.9beta, but requested in bug #642429 */
+                    StringTokenizer st = new StringTokenizer(currentChars, ";");
+                    while (st.hasMoreTokens()) {
+                        String token = st.nextToken();
+                        parseOneMolecule(token);
+                        if (st.hasMoreTokens()) {
+                            setOfMolecules.addMolecule(tautomer);
+                            tautomer = new Molecule();
+                        }
                     }
                 } else {
-                    logger.warn("Expected bond data missing!");
+                    logger.debug("Only one molecule detected.");
+                    parseOneMolecule(currentChars);
                 }
             }
         } else if ("dbond".equals(local)) {
@@ -205,6 +213,30 @@ public class IChIHandler extends DefaultHandler {
 
     // private methods
 
+    /**
+     * Results of parsing is stored in global tautomer variable 
+     */
+    private void parseOneMolecule(String currentChars) {
+        logger.debug("Parsing one molecule: " + currentChars);
+        StringTokenizer st = new StringTokenizer(currentChars, ",");
+        if (st.hasMoreTokens()) {
+            String atomsEncoding =  st.nextToken();
+            analyseAtomsEncoding(atomsEncoding);
+        } else {
+            logger.warn("Expected atom data missing!");
+        }
+        if (st.hasMoreTokens()) {
+            String bondsEncodings =  st.nextToken();
+            StringTokenizer st2 = new StringTokenizer(bondsEncodings, " ");
+            while (st2.hasMoreTokens()) {
+                String bondsEncoding = st2.nextToken();
+                analyseBondsEncoding(bondsEncoding);
+            }
+        } else {
+            logger.warn("Expected bond data missing!");
+        }
+    }
+
     private void analyseAtomsEncoding(String atomsEncoding){
         logger.debug("Parsing atom data: " + atomsEncoding);
 
@@ -242,11 +274,14 @@ public class IChIHandler extends DefaultHandler {
                     Atom copy = (Atom)atomToAdd.clone();
                     tautomer.addAtom(copy);
                 }
+                // all atoms are added, thus:
+                atomToAdd = null;
             } else {
                 logger.error("Cannot parse atoms encoding: " + atomsEncoding);
                 return;
             }
         }
+        if (atomToAdd != null) tautomer.addAtom(atomToAdd);
         logger.debug("NO atoms: " + tautomer.getAtomCount());
         return;
     }
