@@ -112,8 +112,6 @@ public class TextGUIListener implements ReaderListener, WriterListener {
                 } else {
                     this.out.print(" [yN]");
                 }
-            } else if (setting instanceof StringIOSetting) {
-                this.out.print(" [" + setting.getSetting() + "]");
             } else if (setting instanceof OptionIOSetting) {
                 OptionIOSetting optionSet = (OptionIOSetting)setting;
                 Vector settings = optionSet.getOptions();
@@ -125,6 +123,8 @@ public class TextGUIListener implements ReaderListener, WriterListener {
                         this.out.print(" (Default)");
                     }
                 }
+            } else {
+                this.out.print(" [" + setting.getSetting() + "]");
             }
             this.out.println();
             this.out.flush();
