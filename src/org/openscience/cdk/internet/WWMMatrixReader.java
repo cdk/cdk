@@ -37,7 +37,13 @@ import org.openscience.cdk.renderer.MoleculeViewer2D;
 import java.io.*;
 import java.net.*;
 import java.util.Enumeration;
+import java.util.regex.*;
 import javax.vecmath.*;
+import javax.xml.parsers.*;
+import org.apache.xpath.XPathAPI;
+import org.xml.sax.*;
+import org.w3c.dom.*;
+import org.w3c.dom.traversal.*;
 
 /**
  * Reader for the World Wide Molecular Matrix, a project that can be found at
@@ -50,14 +56,15 @@ import javax.vecmath.*;
  */
 public class WWMMatrixReader extends DefaultChemObjectReader {
 
-    String server = "wwmm.ch.cam.ac.uk:8080";
+    String server = "wwmm.ch.cam.ac.uk";
     String collection = "g2";
-    
+    String resultNum = "0";
+
     private String index = "ichi";
     private String query = "C4,";
 
     private org.openscience.cdk.tools.LoggingTool logger;
-    
+
     /** encoding of URLs as recommended by www.w3c.org */
     private final String UTF8 = "UTF-8";
 
@@ -84,7 +91,7 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
     public void setCollection(String collection) {
         this.collection = collection;
     }
-    
+
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof Molecule) {
             try {
@@ -98,7 +105,7 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
             throw new UnsupportedChemObjectException("Only supported is Molecule.");
         }
     }
-    
+
     public static void main(String[] args) throws Exception {
         WWMMatrixReader wwmm = new WWMMatrixReader();
         if (args.length != 4) {
@@ -116,7 +123,7 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
         System.out.println("Collection: " + coll);
         System.out.println("Index     : " + index);
         System.out.println("Query     : " + query);
-        
+
         wwmm.setCollection(coll);
         wwmm.setQuery(index, query);
         Molecule m = (Molecule)wwmm.read(new Molecule());
@@ -131,14 +138,14 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
                                 System.exit(1);
                         }
         }
-        
+
         MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
         MoleculeViewer2D mv = new MoleculeViewer2D(m);
         moleculeListViewer.addStructure(mv, index + "=" + query);
     }
-        
+
     /**
-     * This methods reads molecule from the WWMM based on queries where the index 
+     * This methods reads molecule from the WWMM based on queries where the index
      * is <i>ichi</i> or <i>kegg</i>.
      *
      * @returns null if the index is not recognized.
@@ -156,14 +163,14 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
             return null;
         }
         String colname = URLEncoder.encode("/" + this.collection, UTF8);
-        
+
         logger.info("Doing query: " + xpath + " in collection " + colname);
-        
+
         URL url = new URL("http://" + server + "/Bob/QueryXindice");
         logger.info("Connection to server: " + url.toString());
         URLConnection connection = url.openConnection();
         connection.setDoOutput(true);
-        
+
         PrintWriter out = new PrintWriter(
         connection.getOutputStream());
         out.print("detailed=on");
@@ -176,11 +183,30 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
         out.print("&");
         out.println("query=Query");
         out.close();
-        
+
         // now read the CML file into a data structure
         BufferedReader in = new BufferedReader(
             new InputStreamReader(
             connection.getInputStream()));
+        in.mark(1000000);
+
+        //Get the number of the results
+        in.readLine();
+        String comment = in.readLine();
+        logger.debug("The comment is: " + comment);
+
+        Pattern p = Pattern.compile("<!-- There are (\\d{1,6}) results! -->");
+        Matcher match = p.matcher(comment);
+        if (match.find()) {
+            resultNum = match.group(1);
+        } else {
+            resultNum = "0";
+        }
+
+        logger.debug("The number of result is " + resultNum);
+
+        //Read the molecules from the output of WWMM
+        in.reset();
         CMLReader reader = new CMLReader(in);
         ChemFile cf = (ChemFile)reader.read((ChemObject)new ChemFile());
         logger.debug("#sequences: " + cf.getChemSequenceCount());
@@ -203,10 +229,16 @@ public class WWMMatrixReader extends DefaultChemObjectReader {
         } else {
             logger.warn("No sequences in the file");
         }
+
         in.close();
         return m;
+    }
+
+    public String getResultNum() {
+        return resultNum;
     }
 
     public void close() throws IOException {
     }
 }
+
