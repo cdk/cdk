@@ -3,20 +3,26 @@ CHANGELOG
 
 Changes in CVS
 ------------------------------------
+New:
 * Added Fragment class (fixes wishlist #591476)
-* Merged IsotopeFactory and ElementFactory
-* Made IsotopeFactory a singleton class
-* Moved more test classes to subpackages of cdk.test
 * Added cdk-download program (fixes wishlist #595031)
-* More JavaDoc documentation
-* Added int[][] AtomContainer.getAdjacencyMatrix() method
-* Fixed bug in cdk-view (#588043)
 * Added -t option to cdk-test for textual JUnit output
-* Fixes in MDLReader and FileConvertor (fixes bugs 
-  #599536 and #599539)
 * Added convertor procedures for CDK from/to jmol.Atom,
   jmol.ChemFrame
 * Added support for using Jmol as 3D viewer in cdk-view
+
+Fixes:
+* More JavaDoc documentation
+* Fixed bug in cdk-view (#588043)
+* Fixes in MDLReader and FileConvertor (fixes bugs 
+  #599536 and #599539)
+
+API changes:
+* Moved more test classes to subpackages of cdk.test
+* Merged IsotopeFactory and ElementFactory
+* Made IsotopeFactory a singleton class
+* Added int[][] AtomContainer.getAdjacencyMatrix() method
+* CDKConstants is now a class and no longer an interface  
 
 20020805 Release
 ------------------------------------
