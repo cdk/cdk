@@ -500,7 +500,7 @@ public class Renderer2D   {
 			return;
 		}
 
-        if (bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
+        if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
             // Draw stero information if available
             logger.info("Painting wedge bond");
             if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP) {

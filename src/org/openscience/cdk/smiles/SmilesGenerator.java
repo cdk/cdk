@@ -134,10 +134,17 @@ public class SmilesGenerator {
     to1.getPoint2D().get(B);
     double[] C=new double[2];
     to2.getPoint2D().get(C);
-    double angle=Math.atan2(A[1]-B[1],A[0]-B[0])-Math.atan2(A[1]-C[1],A[0]-C[0]);
-    if(angle<0 && bool)
-      angle=(2*Math.PI)+angle;
-    return(angle);
+    double angle1=Math.atan2((B[1]-A[1]),(B[0]-A[0]));
+    double angle2=Math.atan2((C[1]-A[1]),(C[0]-A[0]));
+    double angle=angle2-angle1;
+    if(angle2<0 && angle1>0 && angle2<-(Math.PI/2))
+      angle=Math.PI+angle2+Math.PI-angle1;
+    if(angle2>0 && angle1<0 && angle1<-(Math.PI/2))
+      angle=-Math.PI+angle2-Math.PI-angle1;
+    if(bool && angle<0)
+      return(2*Math.PI+angle);
+    else
+      return(angle);
   }
 
   /**
@@ -229,7 +236,7 @@ public class SmilesGenerator {
     int up=0;
     int down=0;
     for(int i=0;i<bonds.length;i++){
-      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED ||bonds[i].getStereo()==0)
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_NONE || bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED)
         normal++;
       if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UP)
         up++;
@@ -267,7 +274,7 @@ public class SmilesGenerator {
     int up=0;
     int down=0;
     for(int i=0;i<bonds.length;i++){
-      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED ||bonds[i].getStereo()==0)
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED ||bonds[i].getStereo()==CDKConstants.STEREO_BOND_NONE)
         normal++;
       if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UP)
         up++;
@@ -295,7 +302,7 @@ public class SmilesGenerator {
     int up=0;
     int down=0;
     for(int i=0;i<bonds.length;i++){
-      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED ||bonds[i].getStereo()==0)
+      if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UNDEFINED || bonds[i].getStereo()==CDKConstants.STEREO_BOND_NONE)
         normal++;
       if(bonds[i].getStereo()==CDKConstants.STEREO_BOND_UP)
         up++;
@@ -658,7 +665,7 @@ public class SmilesGenerator {
                 }
               }
             }
-            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_UNDEFINED||container.getBond(parent,atom).getStereo()==0){
+            if(container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_UNDEFINED || container.getBond(parent,atom).getStereo()==CDKConstants.STEREO_BOND_NONE){
               boolean normalBindingIsLeft=false;
               for(int i=0;i<chiralNeighbours.size();i++){
                 if(chiralNeighbours.get(i)!=parent){

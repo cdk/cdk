@@ -415,8 +415,8 @@ public class JCPController2D {
                             double stereo = bondInRange.getStereo();
                             if (stereo == CDKConstants.STEREO_BOND_UP) {
                                 bondInRange.setStereo(CDKConstants.STEREO_BOND_UP_INV);
-                            } else if (stereo >= CDKConstants.STEREO_BOND_UP_INV) {
-                                bondInRange.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+                            } else if (stereo == CDKConstants.STEREO_BOND_UP_INV) {
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
                             } else {
                                 bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
                             };
@@ -447,7 +447,7 @@ public class JCPController2D {
                             if (stereo == CDKConstants.STEREO_BOND_DOWN) {
                                 bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN_INV);
                             } else if (stereo == CDKConstants.STEREO_BOND_DOWN_INV) {
-                                bondInRange.setStereo(CDKConstants.STEREO_BOND_UNDEFINED);
+                                bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
                             } else {
                                 bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
                             };

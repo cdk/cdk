@@ -60,7 +60,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *
 	 */
 	public Bond() {
-        this(null, null, 0.0, CDKConstants.STEREO_BOND_UNDEFINED);
+        this(null, null, 0.0, CDKConstants.STEREO_BOND_NONE);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
      * @param atom2  the second Atom in the bond
      */
     public Bond(Atom atom1, Atom atom2) {
-        this(atom1, atom2, 1.0, CDKConstants.STEREO_BOND_UNDEFINED);
+        this(atom1, atom2, 1.0, CDKConstants.STEREO_BOND_NONE);
     }
     
     /**
@@ -81,7 +81,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
      * @param order  the bond order
      */
     public Bond(Atom atom1, Atom atom2, double order) {
-        this(atom1, atom2, order, CDKConstants.STEREO_BOND_UNDEFINED);
+        this(atom1, atom2, order, CDKConstants.STEREO_BOND_NONE);
     }
 
 	/**

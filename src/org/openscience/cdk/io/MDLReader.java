@@ -301,7 +301,11 @@ public class MDLReader extends DefaultChemObjectReader {
 				{
 					// MDL down bond
 					stereo = CDKConstants.STEREO_BOND_DOWN;
-				}
+				} else if (stereo == 4)
+        {
+          //MDL bond undefined
+          stereo = CDKConstants.STEREO_BOND_UNDEFINED;
+        }
 				// interpret CTfile's special bond orders
 				Atom a1 = molecule.getAtomAt(atom1 - 1);
 				Atom a2 = molecule.getAtomAt(atom2 - 1);
