@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
-                         "../website-2.5.0/schema/dtd/website.dtd" [
+                         "../website-2.5.0/schema/dtd/website-full.dtd" [
   <!ENTITY lgpl SYSTEM "../../lgpl.license">
 ]>
 <webpage id="license">
@@ -16,9 +16,9 @@
 
   <section>
     <title>GNU Lesser General Public License</title>
-    <literallayout>
+    <screen>
       &lgpl;
-    </literallayout>
+    </screen>
   </section>
 
 </webpage>
