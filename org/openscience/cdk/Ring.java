@@ -86,6 +86,8 @@ public class Ring extends AtomContainer
 		return false;
 	}
 	
+	
+	
 	public int getOrderSum()
 	{
 		int orderSum = 0;

@@ -72,7 +72,7 @@ public class SSSRFinder
 		// load fullSet with the numbers of our atoms
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			fullSet.addElement(molecule.getAtom(f));
+			fullSet.addElement(molecule.getAtomAt(f));
 		}
 		
 		
@@ -86,7 +86,7 @@ public class SSSRFinder
 			nodesN2.removeAllElements();
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				Atom atom = molecule.getAtom(f);
+				Atom atom = molecule.getAtomAt(f);
 				degree = molecule.getDegree(atom);
 				if (degree == 0)
 				{
@@ -187,12 +187,10 @@ public class SSSRFinder
 		Vector path[] = new Vector[OKatoms];
 		Vector intersection = new Vector();
 		Vector ring = new Vector();
-
-
 		for (int f = 0; f < OKatoms; f++)
 		{
 			path[f] = new Vector();		
-			molecule.getAtom(f).pointers[PATH].removeAllElements();
+			molecule.getAtomAt(f).pointers[PATH].removeAllElements();
 		}
 		// Initialize the queue with nodes attached to rootNode
 		neighbors = molecule.getConnectedAtoms(rootNode);
@@ -288,7 +286,7 @@ public class SSSRFinder
 	 {
 	 	for (int i = 0; i < molecule.getBondCount(); i++)
 	 	{
-			Bond bond = molecule.getBond(i);
+			Bond bond = molecule.getBondAt(i);
 			if (bond.contains(atom))
 			{
 				molecule.removeBond(i);
@@ -307,7 +305,7 @@ public class SSSRFinder
 	{
 	 	for (int i = 0; i < molecule.getAtomCount(); i++)
 	 	{
-			Atom atom = molecule.getAtom(i);
+			Atom atom = molecule.getAtomAt(i);
 			atom.pointers = new Vector[1];
 			atom.pointers[PATH] = new Vector();
 	 	}		
@@ -369,7 +367,7 @@ public class SSSRFinder
 	{
 		for (int i = 0; i < molecule.getBondCount(); i++)
 		{
-			if (molecule.getBond(i).contains(atom))
+			if (molecule.getBondAt(i).contains(atom))
 			{
 				molecule.removeBond(i);
 				break;
@@ -394,7 +392,7 @@ public class SSSRFinder
 		Molecule molecule = (Molecule)mol.clone();
 		for (int i = 0; i < ring.getBondCount(); i++)
 		{
-			bond = ring.getBond(i);
+			bond = ring.getBondAt(i);
 			molecule.removeBond(bond);
 			r1 = getRing(bond.getAtomAt(0),molecule);
 			r2 = getRing(bond.getAtomAt(1),molecule);
@@ -416,7 +414,7 @@ public class SSSRFinder
 				minMax = i;
 			}
 		}
-		return ring.getBond(minMax);
+		return ring.getBondAt(minMax);
 	}
 	
 	

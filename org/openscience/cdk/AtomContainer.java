@@ -158,7 +158,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * @param  number  The position of the atom to be returned. 
 	 * @return         The atom at position <code>number</code> . 
 	 */
-	public Atom getAtom(int number)
+	public Atom getAtomAt(int number)
 	{
 		return atoms[number];
 	}
@@ -176,7 +176,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	{
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			if (getAtom(f).equals(atom))
+			if (getAtomAt(f) == atom)
 			{
 				return f;
 			}
@@ -193,7 +193,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * @param  number  The position of the bond to be returned. 
 	 * @return         The bond at position <code>number</code> . 
 	 */
-	public Bond getBond(int number)
+	public Bond getBondAt(int number)
 	{
 		return bonds[number];
 	}
@@ -384,7 +384,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		{
 			growBondArray();
 		}
-		Bond bond = new Bond(getAtom(atom1), getAtom(atom2), order, stereo);
+		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order, stereo);
 		addBond(bond);
 	}
 
@@ -402,7 +402,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		{
 			growBondArray();
 		}
-		Bond bond = new Bond(getAtom(atom1), getAtom(atom2), order);
+		Bond bond = new Bond(getAtomAt(atom1), getAtomAt(atom2), order);
 		addBond(bond);
 	}
 
@@ -477,12 +477,12 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		System.out.println("Atomcount: " + getAtomCount());
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			s.append(i + ". " + getAtom(i));
+			s.append(i + ". " + getAtomAt(i));
 		}
 		System.out.println("Bondcount: " + getBondCount());
 		for (int i = 0; i < getBondCount(); i++)
 		{
-			bond = getBond(i);
+			bond = getBondAt(i);
 			s.append("Bond: ");
 			for (int j = 0; j < bond.getAtomCount(); j++)
 			{
@@ -523,6 +523,8 @@ public class AtomContainer extends ChemObject implements Cloneable{
 		return o;
 	}
 }
+
+
 
 
 

@@ -60,6 +60,16 @@ public class Atom extends ChemObject implements Cloneable {
 	protected int stereoParity;
 	
 
+	/**
+	 * Constructs an Atom from a String containing an element symbol
+	 *
+	 * @param   element  The String describing the element for the Atom 
+	 */
+	public Atom(String elementString)
+	{
+		this.element = new Element(elementString);
+	}
+
 
 	/**
 	 * Constructs an Atom from an Element
@@ -70,6 +80,8 @@ public class Atom extends ChemObject implements Cloneable {
 	{
 		this.element = element;
 	}
+
+
 	/**
 	 * Constructs an Atom from an Element and a Point3D
 	 *
@@ -215,4 +227,6 @@ public class Atom extends ChemObject implements Cloneable {
 
 	
 }
+
+
 

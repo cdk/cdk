@@ -125,20 +125,20 @@ public class MDLWriter implements CDKConstants
 			writer.newLine();
 		    for (int f = 0; f < molecule.getAtomCount(); f++)
 		    {
-				Atom atom = molecule.getAtom(f);
+				Atom atom = molecule.getAtomAt(f);
 		        line = "";
 		        line += formatMDLFloat((float) atom.getPoint3D().x);
 		        line += formatMDLFloat((float) atom.getPoint3D().y);
 		        line += formatMDLFloat((float) atom.getPoint3D().z);
 		        line += " ";
-		        line += formatMDLString(molecule.getAtom(f).getElement().getSymbol(), 3);
+		        line += formatMDLString(molecule.getAtomAt(f).getElement().getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
 			    writer.write(line);
 			    writer.newLine();
 		    }
 			for (int g = 0; g < molecule.getBondCount(); g++)
 			{ 
-				Bond bond = molecule.getBond(g);
+				Bond bond = molecule.getBondAt(g);
 				if (bond.getAtoms().length != 2) 
 				{ 
 					System.out.println("keine 2 Atome");

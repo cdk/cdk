@@ -24,6 +24,8 @@
 
 package org.openscience.cdk;
 
+import java.util.Vector;
+
 /**
  * Implements the concept of a bond, i.e. a number of electrons connecting 
  * a number of atoms.
@@ -80,6 +82,23 @@ public class Bond extends ElectronContainer implements Cloneable
 	}
 	
 	/**
+	 * Prepares and returns a Vector containing all the 
+	 * Atom objects in this bond
+	 *
+	 * @return A Vector containing all the Atom objects in this AtomContainer    
+	 */
+	public Vector getAtomsVector()
+	{
+		Vector atomsVector = new Vector();
+		for (int f = 0; f < getAtomCount(); f++)
+		{
+			atomsVector.addElement(getAtomAt(f));
+		}
+		return atomsVector;
+	}
+	
+	
+	/**
 	 * Sets the array of atoms making up this bond
 	 *
 	 * @param   atoms An array of atoms that forms this bond
@@ -129,6 +148,7 @@ public class Bond extends ElectronContainer implements Cloneable
 			return atoms[0];
 		}
 		return null;
+
 	}
 
 	/**
@@ -139,16 +159,15 @@ public class Bond extends ElectronContainer implements Cloneable
 	 */
 	public boolean contains(Atom atom)
 	{
-		boolean contains = false;
-		if (atoms[0] == atom)		
+		if (atoms[0] == atom)
 		{
-			contains = true;
+			return true;
 		}
 		else if (atoms[1] == atom)
 		{
-			contains = true;
+			return true;
 		}
-		return contains;
+		return false;
 	}
 	
 

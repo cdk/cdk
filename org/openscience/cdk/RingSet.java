@@ -66,7 +66,7 @@ public class RingSet extends Vector{
 			{
 				for (int i = 0; i < bonds.length; i++)
 				{
-					bond = newRing.getBond(i);
+					bond = newRing.getBondAt(i);
 					for (int n = 0; n < bonds.length; n++)
 					{
 						if (bond == bonds[n])
