@@ -307,6 +307,7 @@
                         <include name="org/openscience/cdk/SetOfMolecules.class" />
                         <!-- Added after CDK-RFC 2 -->
                         <include name="org/openscience/cdk/Crystal.class" />
+                        <include name="org/openscience/cdk/LonePair.class" />
                    </fileset>
                 </jar>
         </target>
@@ -471,6 +472,43 @@
                 basedir="${sourcedist}" includes="**" />
         </target>
 
+	<target name="test-core" depends="dist-core, dist-test">
+            <junit printsummary="yes" haltonfailure="yes">
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${dist}/jar">
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-test.jar" />
+                    </fileset>
+                </classpath>
+
+                <test name="org.openscience.cdk.test.CoreClassesTests"
+                      haltonfailure="no" todir="${reports.tests}"
+                      outfile="result.core">
+                    <formatter type="brief" />
+                </test>
+            </junit>
+        </target>
+	
+	<target name="test-standard" depends="dist-core, dist-standard, dist-test">
+            <junit printsummary="yes" haltonfailure="yes">
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${dist}/jar">
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-standard.jar" />
+                        <include name="cdk-test.jar" />
+                    </fileset>
+                </classpath>
+
+                <test name="org.openscience.cdk.test.StandardClassesTests"
+                      haltonfailure="no" todir="${reports.tests}"
+                      outfile="result.standard">
+                    <formatter type="brief" />
+                </test>
+            </junit>
+        </target>
+	
         <target name="test" depends="dist-core, dist-extra, dist-test">
                 <junit printsummary="yes" haltonfailure="yes">
                         <classpath>
@@ -488,7 +526,7 @@
                         haltonfailure="no"
                         todir="${reports.tests}"
                         outfile="result">
-                                <formatter type="plain" />
+                                <formatter type="brief" />
                         </test>
                 </junit>
         </target>

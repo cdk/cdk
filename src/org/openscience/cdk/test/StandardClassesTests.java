@@ -25,12 +25,13 @@
 package org.openscience.cdk.test;
 
 import junit.framework.*;
+import org.openscience.cdk.test.tools.*;
 
 /**
  * TestSuite that runs all the sample tests
  *
  */
-public class CoreClassesTests {
+public class StandardClassesTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.standard Tests");
