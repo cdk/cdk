@@ -211,7 +211,7 @@ public class Crystal extends AtomContainer {
                     newPoint.z =      point.z + 0.5*(az + bz + cz);
                     Atom syma = (Atom)a.clone();
                     syma.setPoint3D(newPoint);
-                    super.addAtom(syma);
+                    result.addAtom(syma);
 
                     // point II
                     newPoint.x = -1.0*point.x + 0.5*(ax + bx + cx);
@@ -219,7 +219,7 @@ public class Crystal extends AtomContainer {
                     newPoint.z =      point.z + 0.5*(az + bz + cz);
                     syma = (Atom)a.clone();
                     syma.setPoint3D(newPoint);
-                    super.addAtom(syma);
+                    result.addAtom(syma);
 
                     // point III
                     newPoint.x = -1.0*point.x + 0.5*(ax + bx + cx);
@@ -227,7 +227,7 @@ public class Crystal extends AtomContainer {
                     newPoint.z =      point.z + 0.5*(az + bz + cz);
                     syma = (Atom)a.clone();
                     syma.setPoint3D(newPoint);
-                    super.addAtom(syma);
+                    result.addAtom(syma);
                 } else {
                     System.err.println("WARN: Did not copy 3D coordinates!");
                 }
