@@ -352,7 +352,7 @@ public class Renderer2D implements MouseMotionListener   {
             paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom) + 1);
         }
         if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null) {
-          paintToolTip(atom, graphics);
+          paintToolTip(atom, graphics, container.getAtomNumber(atom) + 1);
         }
     }
 
@@ -804,7 +804,7 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  bondColor  Description of the Parameter
 	 */
 	public void paintBond(Bond bond, Color bondColor, Graphics graphics) {
-		if (bond.getAtomAt(0).getPoint2D() == null ||
+    if (bond.getAtomAt(0).getPoint2D() == null ||
             bond.getAtomAt(1).getPoint2D() == null) {
 			return;
 		}
@@ -991,7 +991,7 @@ public class Renderer2D implements MouseMotionListener   {
 	public void paintOneBond(int[] coords, Color bondColor, Graphics graphics)
 	{
 	    graphics.setColor(bondColor);
-		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
+  	int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
         int[] screenCoords = getScreenCoordinates(newCoords);
 		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
@@ -1142,7 +1142,7 @@ public class Renderer2D implements MouseMotionListener   {
      * @param  atom      The atom.
      * @param  graphics  The current graphics object.
      */
-    public void paintToolTip(Atom atom, Graphics graphics) {
+    public void paintToolTip(Atom atom, Graphics graphics, int atomNumber) {
       String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
       String[] result = text.split("\\n");
       int widestline=0;
@@ -1155,16 +1155,18 @@ public class Renderer2D implements MouseMotionListener   {
         if(atomSymbolW>widestline)
           widestline=atomSymbolW;
       }
+      Font normalFont = graphics.getFont();
+      graphics.setFont(normalFont);
+      FontMetrics fm = graphics.getFontMetrics();
+      int[] provcoords={(int)atom.getPoint2D().x,(int)atom.getPoint2D().y};
+      int[] screenCoords = getScreenCoordinates(provcoords);
       for(int i=0;i<result.length;i++){
         String text2=result[i];
-        Font normalFont = graphics.getFont();
-        graphics.setFont(normalFont);
-        FontMetrics fm = graphics.getFontMetrics();
         int atomSymbolH = (new Integer(fm.getAscent())).intValue();
         graphics.setColor(Color.YELLOW);
-        graphics.fillRect((int) atom.getX2D(), (int) atom.getY2D()+((atomSymbolH + 4) *i), widestline + 4, atomSymbolH + 4);
+        graphics.fillRect(screenCoords[0], screenCoords[1]+((atomSymbolH + 4) *i), widestline + 4, atomSymbolH + 4);
         graphics.setColor(Color.BLACK);
-        graphics.drawString(text2, ((int) atom.getX2D()) + 2, ((int) atom.getY2D()) + atomSymbolH + 2+((atomSymbolH + 4) *i));
+        graphics.drawString(text2, screenCoords[0] + 2, screenCoords[1] + atomSymbolH + 2+((atomSymbolH + 4) *i));
       }
     }
   
@@ -1191,4 +1193,3 @@ public class Renderer2D implements MouseMotionListener   {
   public void mouseDragged(MouseEvent e) {
   }
 }
-
