@@ -101,16 +101,14 @@ public class Renderer2D   {
     }
     
     public void paintReaction(Reaction reaction, Graphics graphics) {
-        paintBoundingBox(ReactionManipulator.getAllInOneContainer(reaction),
-                         reaction.getID(), 20, graphics);
-        
         // paint reactants content
         AtomContainer reactantContainer = new AtomContainer();
         Molecule[] reactants = reaction.getReactants();
         for (int i=0; i<reactants.length; i++) {
             reactantContainer.add(reactants[i]);
         }
-        paintBoundingBox(reactantContainer, "Reactants", 10, graphics);
+        double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
+        paintBoundingBox(minmaxReactants, "Reactants", 10, graphics);
         paintMolecule(reactantContainer, graphics);
 
         // paint products content
@@ -119,18 +117,45 @@ public class Renderer2D   {
         for (int i=0; i<products.length; i++) {
             productContainer.add(products[i]);
         }
-        paintBoundingBox(productContainer, "Products", 10, graphics);
+        double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
+        paintBoundingBox(minmaxProducts, "Products", 10, graphics);
         paintMolecule(productContainer, graphics);
+
+        // paint box around total
+        double[] minmaxReaction = new double[4];
+        minmaxReaction[0] = Math.min(minmaxReactants[0], minmaxProducts[0]);
+        minmaxReaction[1] = Math.min(minmaxReactants[1], minmaxProducts[1]);
+        minmaxReaction[2] = Math.max(minmaxReactants[2], minmaxProducts[2]);
+        minmaxReaction[3] = Math.max(minmaxReactants[3], minmaxProducts[3]);
+        paintBoundingBox(minmaxReaction, reaction.getID(), 20, graphics);
+        
+        // paint arrow
+        int[] ints = new int[4];
+        ints[0] = (int)(minmaxReactants[2]) + 15;
+        ints[1] = (int)(minmaxReactants[1] + (minmaxReactants[3]-minmaxReactants[1])/2);
+        ints[2] = (int)(minmaxProducts[0]) - 15;
+        ints[3] = ints[1];
+        logger.debug("ints: " + ints[0] + ", " + ints[1] + ", " + ints[2] + ", " + ints[3]);
+        int[] screenCoords = getScreenCoordinates(ints);
+        graphics.drawLine(screenCoords[0], screenCoords[1],
+                          screenCoords[2], screenCoords[3]);
+        graphics.drawLine(screenCoords[2], screenCoords[3],
+                          screenCoords[2]-7, screenCoords[3]-7);
+        graphics.drawLine(screenCoords[2], screenCoords[3],
+                          screenCoords[2]-7, screenCoords[3]+7);
+        
     }
     
-    private void paintBoundingBox(AtomContainer container, String caption, 
+    /**
+     * @param minmax array of length for with min and max 2D coordinates
+     */
+    private void paintBoundingBox(double[] minmax, String caption, 
                                   int side, Graphics graphics) {
-        double[] minmax = GeometryTools.getMinMax(container);
         int[] ints = new int[4];
-        ints[0] = (int)minmax[0] -side;
-        ints[1] = (int)minmax[1] -side;
-        ints[2] = (int)minmax[2] +side;
-        ints[3] = (int)minmax[3] +side;
+        ints[0] = (int)minmax[0] -side; // min x
+        ints[1] = (int)minmax[1] -side; // min y
+        ints[2] = (int)minmax[2] +side; // max x
+        ints[3] = (int)minmax[3] +side; // max y
         int[] screenCoords = getScreenCoordinates(ints);
         int heigth = screenCoords[3] - screenCoords[1]; 
         int width = screenCoords[2] - screenCoords[0]; 
