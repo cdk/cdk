@@ -222,9 +222,25 @@ public class MDLReaderTest extends TestCase {
                 "M  END\n" +
                 "$$$$\n";
         try {
-            ChemFile cf = (ChemFile) new MDLReader(new StringReader(mdl)).read(new ChemFile());
-            assertNotNull(cf);
-        } catch (Exception exception) {
+            MDLReader reader = new MDLReader(new StringReader(mdl));
+            ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+            assertNotNull(chemFile);
+            assertEquals(1, chemFile.getChemSequenceCount());
+            ChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(1, seq.getChemModelCount());
+            ChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            
+            SetOfMolecules som = model.getSetOfMolecules();
+            assertNotNull(som);
+            assertEquals(2, som.getMoleculeCount());
+            Molecule m = som.getMolecule(0);
+            assertNotNull(m);
+            assertEquals(9, m.getAtomCount());
+            assertEquals(9, m.getBondCount());
+        } catch (Throwable problem) {
+            problem.printStackTrace();
             fail();
         }
     }
