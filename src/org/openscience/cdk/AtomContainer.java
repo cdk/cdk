@@ -651,7 +651,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			if (electronContainers[i] instanceof LonePair &&
-					((Bond) electronContainers[i]).contains(atom))
+					((LonePair) electronContainers[i]).contains(atom))
 			{
 				count++;
 			}
