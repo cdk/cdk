@@ -72,7 +72,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(new InputStreamReader(ins));
+            IteratingMDLReader reader = new IteratingMDLReader(ins);
             
             int molCount = 0;
             while (reader.hasNext()) {
@@ -84,7 +84,30 @@ public class IteratingMDLReaderTest extends CDKTestCase {
             
             assertEquals(6, molCount);
         } catch (Exception e) {
-            fail(e.toString());
+            logger.debug(e);
+            fail(e.getMessage());
+        }
+    }
+
+    public void testOnMDLMolfile() {
+        String filename = "data/mdl/bug682233.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            IteratingMDLReader reader = new IteratingMDLReader(ins);
+            
+            int molCount = 0;
+            while (reader.hasNext()) {
+                Object object = reader.next();
+                assertNotNull(object);
+                assertTrue(object instanceof Molecule);
+                molCount++;
+            }
+            
+            assertEquals(1, molCount);
+        } catch (Exception e) {
+            logger.debug(e);
+            fail(e.getMessage());
         }
     }
 
