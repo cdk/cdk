@@ -49,6 +49,8 @@ public class ReactionTest extends TestCase {
     public void testReaction() {
         Reaction reaction = new Reaction();
         assertNotNull(reaction);
+        assertEquals(0, reaction.getReactantCount());
+        assertEquals(0, reaction.getProductCount());
     }
     
     public void testAddReactant() {
@@ -123,5 +125,27 @@ public class ReactionTest extends TestCase {
         assertEquals(2, reaction.getProductCoefficient(proton));
 
         assertEquals(-1, reaction.getProductCoefficient(new Molecule()));
+    }
+    
+    public void testGetReactants() {
+        Reaction reaction = new Reaction();
+        Molecule sodiumhydroxide = new Molecule();
+        Molecule aceticAcid = new Molecule();
+        Molecule water = new Molecule();
+        reaction.addReactant(sodiumhydroxide);
+        reaction.addReactant(aceticAcid);
+        reaction.addReactant(water);
+        assertEquals(3, reaction.getReactants().length);
+    }
+
+    public void testGetProducts() {
+        Reaction reaction = new Reaction();
+        Molecule sodiumhydroxide = new Molecule();
+        Molecule aceticAcid = new Molecule();
+        Molecule water = new Molecule();
+        reaction.addProduct(sodiumhydroxide);
+        reaction.addProduct(aceticAcid);
+        reaction.addProduct(water);
+        assertEquals(3, reaction.getProducts().length);
     }
 }
