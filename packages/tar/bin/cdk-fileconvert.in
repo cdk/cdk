@@ -1,0 +1,11 @@
+#! /bin/sh -e
+
+PREFIX="@prefix@"
+
+JARLIBDIR="${PREFIX}/lib/cdk"
+JARLIBS=`ls -1 ${JARLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CLASSPATH="@PATHTORTJAR@:${JARLIBS}:${PREFIX}/share/java/cdk.jar"
+
+JAVA="@PATHTOJAVA@"
+
+${JAVA} -cp ${CLASSPATH} org.openscience.cdk.applications.FileConvertor $*
