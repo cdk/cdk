@@ -12,6 +12,8 @@ New:
 * The Controller2D now maintains an active draw element. Changing the element of
   an existing atom using the SYMBOL mode, also changes the draw element.
 * Added method for id-ing SetOfAtomContainers, Reaction and SetOfReactions
+* Added trigger to auto update of number of implicit hydrogens 
+  (implements JCP RFE #813152)
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface

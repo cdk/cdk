@@ -37,6 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ChemModelManipulator;
 import org.openscience.cdk.tools.ReactionManipulator;
 import org.openscience.cdk.tools.IsotopeFactory;
+import org.openscience.cdk.tools.HydrogenAdder;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
@@ -57,7 +58,7 @@ public class Controller2D {
     Controller2DModel c2dm;
     boolean wasDragged = false;
     boolean isUndoableChange = false;
-    
+
     private Vector listeners = new Vector();
 
     private LoggingTool logger;
@@ -69,6 +70,9 @@ public class Controller2D {
     private Vector commonElements;
 
     private static Hashtable popupMenus = null;
+    
+    // Helper classes
+    HydrogenAdder hydrogenAdder = new HydrogenAdder();
     
     /**
      * Constructs a controller that performs operations on the
@@ -110,7 +114,7 @@ public class Controller2D {
     {
 	    this.isUndoableChange = isUndoable;
     }
-    
+
     public void setController2DModel(Controller2DModel model) {
         this.c2dm = model;
     }
@@ -196,7 +200,7 @@ public class Controller2D {
                  *************************************************************************/
                 if (c2dm.getDrawMode() == c2dm.LASSO) {
                     /* Draw polygon in screencoordinates, convert them
-                       to world coordinates when mouse release */
+                       to world coordinates when mouse released */
                     r2dm.addLassoPoint(new Point(event.getX(), event.getY()));
                 }
 
@@ -236,11 +240,11 @@ public class Controller2D {
             int mouseX = mouseCoords[0];
             int mouseY = mouseCoords[1];
 
-            logger.debug("MousePressed Event Props: mode=" + c2dm.getDrawModeString() + 
+            logger.debug("MousePressed Event Props: mode=" + c2dm.getDrawModeString() +
                          ", trigger=" + event.isPopupTrigger() +
                          ", Button number: " + event.getButton() +
                          ", Click count: " + event.getClickCount());
-            
+
             if (event.isPopupTrigger() || event.getButton() == MouseEvent.BUTTON3) {
                 logger.info("Popup menu triggered...");
                 popupMenuForNearestChemObject(mouseX, mouseY, event);
@@ -257,13 +261,13 @@ public class Controller2D {
                 } else {
                     r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
                 }
-                
+
                 if (c2dm.getDrawMode() == c2dm.MOVE) {
                     selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
                 }
             }
         }
-        
+
 
         /**
          * manages all actions that will be invoked when a mouse button is released
@@ -271,12 +275,12 @@ public class Controller2D {
          * @param   event    MouseEvent object
          **/
         public void mouseReleased(MouseEvent event) {
-            
-            logger.debug("MouseReleased Event Props: mode=" + c2dm.getDrawModeString() + 
+
+            logger.debug("MouseReleased Event Props: mode=" + c2dm.getDrawModeString() +
                          ", trigger=" + event.isPopupTrigger() +
                          ", Button number: " + event.getButton() +
                          ", Click count: " + event.getClickCount());
-           
+
             if (event.getButton() == MouseEvent.BUTTON1) {
                 int[] screenCoords = { event.getX(), event.getY() };
                 int[] mouseCoords = getWorldCoordinates(screenCoords);
@@ -306,11 +310,22 @@ public class Controller2D {
                             logger.error("Error while configuring atom");
                             logger.debug(exception);
                         }
+                        // update atom
+                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                            try {
+                                hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atomInRange);
+                            } catch (Exception exception) {
+                                logger.error(exception.getMessage());
+                                logger.debug(exception);
+                            }
+                        }
+
                         // also adjust the new draw elem
                         c2dm.setDrawElement(symbol);
-                        
-                        /* PRESERVE THIS. This notifies the 
-                        * the listener responsible for 
+
+                        /* PRESERVE THIS. This notifies the
+                        * the listener responsible for
                         * undo and redo storage that it
                         * should store this change of an atom symbol
                         */
@@ -328,23 +343,46 @@ public class Controller2D {
                     Atom atomInRange = r2dm.getHighlightedAtom();
                     if (atomInRange != null) {
                         atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
+
+                        // update atom
+                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                            try {
+                                hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atomInRange);
+                            } catch (Exception exception) {
+                                logger.error(exception.getMessage());
+                                logger.debug(exception);
+                            }
+                        }
+
+		    /* PRESERVE THIS. This notifies the
+		     * the listener responsible for
 		     * undo and redo storage that it
 		     * should store this change of an atom charge
 		     */
 		    isUndoableChange = true;
 		    /* --- */
                         r2dm.fireChange();
-			fireChange();
+                        fireChange();
                     }
                 }
                 if (c2dm.getDrawMode() == c2dm.DECCHARGE) {
                     Atom atomInRange = r2dm.getHighlightedAtom();
                     if (atomInRange != null) {
                         atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
-		/* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
+                        // update atom
+                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                            try {
+                                hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atomInRange);
+                            } catch (Exception exception) {
+                                logger.error(exception.getMessage());
+                                logger.debug(exception);
+                            }
+                        }
+
+		/* PRESERVE THIS. This notifies the
+		     * the listener responsible for
 		     * undo and redo storage that it
 		     * should store this change of an atom symbol
 		     */
@@ -354,7 +392,7 @@ public class Controller2D {
 			fireChange();
                     }
                 }
-                
+
                 /*************************************************************************
                  *                       DRAWBONDMODE                                    *
                  *************************************************************************/
@@ -366,7 +404,7 @@ public class Controller2D {
                         int startY = r2dm.getPointerVectorStart().y;
                         Bond bondInRange = r2dm.getHighlightedBond();
                         atomInRange = r2dm.getHighlightedAtom();
-                                                          
+
                         if (bondInRange != null) {
                             // increase Bond order
                             double order = bondInRange.getOrder();
@@ -374,9 +412,22 @@ public class Controller2D {
                                 bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
                             } else {
                                 bondInRange.setOrder(order + 1.0);
-                                // this is tricky as it depends on the fact that the 
+                                // this is tricky as it depends on the fact that the
                                 // constants are unidistant, i.e. {1.0, 2.0, 3.0}.
                             };
+                            // update atoms
+                            if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                                Atom[] atoms = bondInRange.getAtoms();
+                                AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+                                for (int i=0; i<atoms.length; i++) {
+                                    try {
+                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atoms[i]);
+                                    } catch (Exception exception) {
+                                        logger.error(exception.getMessage());
+                                        logger.debug(exception);
+                                    }
+                                }
+                            }
 		    /* PRESERVE THIS. This notifies the
 		     * the listener responsible for
 		     * undo and redo storage that it
@@ -392,6 +443,16 @@ public class Controller2D {
                                 newAtom1 = new Atom(c2dm.getDrawElement(), new Point2d(startX,startY));
                                 AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                 atomCon.addAtom(newAtom1);
+                                // update atoms
+                                if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                                    try {
+                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, newAtom1);
+                                    } catch (Exception exception) {
+                                        logger.error(exception.getMessage());
+                                        logger.debug(exception);
+                                    }
+
+                                }
 		    /* PRESERVE THIS. This notifies the
 		     * the listener responsible for
 		     * undo and redo storage that it
@@ -416,6 +477,18 @@ public class Controller2D {
                                 }
                                 newBond = new Bond(newAtom1, newAtom2, 1);
                                 atomCon.addBond(newBond);
+
+                                // update atoms
+                                if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                                    try {
+                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, newAtom2);
+                                    } catch (Exception exception) {
+                                        logger.error(exception.getMessage());
+                                        logger.debug(exception);
+                                    }
+
+                                }
+
 		    /* PRESERVE THIS. This notifies the
 		     * the listener responsible for
 		     * undo and redo storage that it
@@ -448,6 +521,16 @@ public class Controller2D {
                                 atomCon.addAtom(newAtom2);
                                 atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
 
+                                // update atoms
+                                if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                                    try {
+                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, atomInRange);
+                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, newAtom2);
+                                    } catch (Exception exception) {
+                                        logger.error(exception.getMessage());
+                                        logger.debug(exception);
+                                    }
+                                }
                             }
                         }
                         r2dm.fireChange();
@@ -471,7 +554,7 @@ public class Controller2D {
                             } else {
                                 bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
                             };
-		/* PRESERVE THIS. This notifies the 
+		/* PRESERVE THIS. This notifies the
 		     * the listener responsible for 
 		     * undo and redo storage that it
 		     * should store this change of an atom symbol
@@ -521,6 +604,7 @@ public class Controller2D {
                  *************************************************************************/
                 if (c2dm.getDrawMode() == c2dm.SELECT && wasDragged)
                 {
+                    logger.info("User asks to selected atoms");
                         AtomContainer selectedPart = new AtomContainer();
                         r2dm.setSelectedPart(selectedPart);
                         r2dm.setSelectedPart(getContainedAtoms(r2dm.getSelectRect()));
@@ -536,13 +620,41 @@ public class Controller2D {
                     Atom highlightedAtom = r2dm.getHighlightedAtom();
                     Bond highlightedBond = r2dm.getHighlightedBond();
                     if (highlightedAtom != null) {
+                        logger.info("User asks to delete an Atom");
                         AtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
                         logger.debug("Atoms before delete: " + container.getAtomCount());
                         ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
                         container = ChemModelManipulator.getAllInOneContainer(chemModel);
                         logger.debug("Atoms before delete: " + container.getAtomCount());
+                        // update atoms
+                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                            Atom[] atoms = container.getConnectedAtoms(highlightedAtom);
+                            AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+                            for (int i=0; i<atoms.length; i++) {
+                                try {
+                                    hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, atoms[i]);
+                                } catch (Exception exception) {
+                                    logger.error(exception.getMessage());
+                                    logger.debug(exception);
+                                }
+                            }
+                        }
                     } else if (highlightedBond != null) {
+                        logger.info("User asks to delete a Bond");
                         ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
+                        // update atoms
+                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                            Atom[] atoms = highlightedBond.getAtoms();
+                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+                            for (int i=0; i<atoms.length; i++) {
+                                try {
+                                    hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atoms[i]);
+                                } catch (Exception exception) {
+                                    logger.error(exception.getMessage());
+                                    logger.debug(exception);
+                                }
+                            }
+                        }
                     } else {
                         logger.warn("Cannot deleted if nothing is highlighted");
                         return;
@@ -577,7 +689,7 @@ public class Controller2D {
                         int ringSize = c2dm.getRingSize();
                         String symbol = c2dm.getDrawElement();
                         AtomContainer sharedAtoms = getHighlighted();
-                        
+
                         /******************** NO ATTACHMENT ************************************/
                         if (sharedAtoms.getAtomCount() == 0) {
                                 sharedAtoms = new AtomContainer();
@@ -657,7 +769,7 @@ public class Controller2D {
                                 isUndoableChange = true;
                                 /* --- */
                         }
-                        
+
                         /*********************** FUSED *****************************************/
                         else if (sharedAtoms.getAtomCount() == 2)
                         {
@@ -693,7 +805,7 @@ public class Controller2D {
                                         distance1 = Math.sqrt(Math.pow(newPoint1.x - conAtomsCenter.x, 2) + Math.pow(newPoint1.y - conAtomsCenter.y, 2));
                                         distance2 = Math.sqrt(Math.pow(newPoint2.x - conAtomsCenter.x, 2) + Math.pow(newPoint2.y - conAtomsCenter.y, 2));
                                 }
-                                ringCenterVector = new Vector2d(sharedAtomsCenter);     
+                                ringCenterVector = new Vector2d(sharedAtomsCenter);
                                 // no ring is attached if the two ditances are equal
                                 if (distance1 == distance2)
                                 {
@@ -734,10 +846,10 @@ public class Controller2D {
                                             }
                                             makeRingAromatic(newRing);
                                         }
-                                        
+
                                         // place the new atoms of the new ring to the right position
                                         ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
-                                        
+
                                         // removes the highlighed bond and its atoms from the ring to add only
                                         // the new placed atoms to the AtomContainer.
                                         try
@@ -762,7 +874,7 @@ public class Controller2D {
                         r2dm.fireChange();
                         fireChange();
                 }
-                
+
            /*************************************************************************
             *                          LASSOMODE                                     *
             *************************************************************************/
@@ -774,18 +886,28 @@ public class Controller2D {
                         Vector lassoPoints = r2dm.getLassoPoints();
                         r2dm.addLassoPoint(new Point((Point)lassoPoints.elementAt(0)));
                         int number = lassoPoints.size();
-                        int[] xPoints = new int[number];
-                        int[] yPoints = new int[number];
+                        logger.debug("# lasso points: " + number);
+                        int[] screenLassoCoords = new int[number*2];
                         Point currentPoint;
                         for (int i = 0; i < number; i++) {
                             currentPoint = (Point)lassoPoints.elementAt(i);
-                            xPoints[i] = currentPoint.x;
-                            yPoints[i] = currentPoint.y;
+                            screenLassoCoords[i*2]   = currentPoint.x;
+                            screenLassoCoords[i*2+1] = currentPoint.y;
+                            logger.debug("ScreenLasso(.x .y) = " + screenLassoCoords[i*2] + ", " + screenLassoCoords[i*2+1]);
                         }
                         /* Convert points to world coordinates as they are
                            in screen coordinates in the vector */
-                        xPoints = getWorldCoordinates(xPoints);
-                        yPoints = getWorldCoordinates(yPoints);
+                        int[] worldCoords = getWorldCoordinates(screenLassoCoords);
+                        logger.debug("Returned coords: "+ worldCoords.length);
+                        logger.debug("       # points: "+ number);
+                        int[] xPoints = new int[number];
+                        int[] yPoints = new int[number];
+                        for (int i = 0; i < number; i++) {
+                            xPoints[i] = worldCoords[i*2];
+                            yPoints[i] = worldCoords[i*2+1];
+                            logger.debug("WorldCoords(.x .y) = " + worldCoords[i*2] + ", " + worldCoords[i*2+1]);
+                            logger.debug("Polygon(.x .y) = " + xPoints[i] + ", " + yPoints[i]);
+                        }
                         Polygon polygon = new Polygon(xPoints, yPoints, number);
                         r2dm.setSelectedPart(getContainedAtoms(polygon));
                         r2dm.getLassoPoints().removeAllElements();
@@ -945,7 +1067,7 @@ public class Controller2D {
         /**
          * Returns a Bond if it is in a certain range of the given point.
          * Used to highlight a bond that is near the cursor.
-         * 
+         *
          * <p><b>Important: the coordinates must be given in world
          * coordinates and not in screen coordinates!
          *
@@ -1101,6 +1223,7 @@ public class Controller2D {
                 for (int i = 0; i < atomCon.getAtomCount(); i++)
                 {
                         currentAtom = atomCon.getAtomAt(i);
+                        logger.debug("Atom: " + currentAtom.toString());
                         if (polygon.contains(new Point((int)currentAtom.getX2D(), (int)currentAtom.getY2D())))
                         {
                                 selectedPart.addAtom(currentAtom);
@@ -1125,18 +1248,23 @@ public class Controller2D {
     /**
      * This methods corrects for the zoom factor, and thus transforms
      * screen coordinates back into world coordinates.
+     * IMPORTANT: even coords are taken as y coordinates, uneven as
+     * x coordinates.
      */
     private int[] getWorldCoordinates(int[] coords) {
         int[] worldCoords = new int[coords.length];
         int coordCount = coords.length / 2;
+        logger.debug("coord.length: " + coords.length);
         int height = (int)(r2dm.getBackgroundDimension()).getHeight();
         for (int i=0; i<coordCount; i++) {
-            worldCoords[i] = (int)((double)coords[i] / r2dm.getZoomFactor());
-            worldCoords[i+1] = height - (int)((double)coords[i+1] / r2dm.getZoomFactor());
+            worldCoords[i*2] = (int)((double)coords[i*2] / r2dm.getZoomFactor());
+            logger.debug("getWorldCoord: " + coords[i*2] + " -> " + worldCoords[i*2]);
+            worldCoords[i*2+1] = (int)((double)(height - coords[i*2+1]) / r2dm.getZoomFactor());
+            logger.debug("getWorldCoord: " + coords[i*2+1] + " -> " + worldCoords[i*2+1]);
         }
         return worldCoords;
     }
-    
+
     	/**
 	 * Adds a change listener to the list of listeners
 	 *

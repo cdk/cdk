@@ -65,7 +65,9 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 
 	private double bondPointerLength = 20;
 	private double ringPointerLength = 20;
-	
+
+    private boolean autoUpdateImplicitHydrogens = true;
+
 	/**
 	 * Returns the draw mode.
 	 *
@@ -140,11 +142,27 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 		return this.snapToGridAngle;
 	}
 
+    /**
+     * Returns true if the number of implicit hydrogens is updated
+     * when an Atom is edited.
+     */
+    public boolean getAutoUpdateImplicitHydrogens() {
+        return this.autoUpdateImplicitHydrogens;
+    }
+    
+    /**
+     * Sets wether the number of implicit hydrogens is update when an
+     * Atom is edited.
+     */
+    public void setAutoUpdateImplicitHydrogens(boolean update) {
+        this.autoUpdateImplicitHydrogens = update;
+    }
+
 
 	/**
 	 * Sets the snapToGridAngle mode
 	 *
-	 * @param   snapToGridAngle  
+	 * @param   snapToGridAngle
 	 */
 	public void setSnapToGridAngle(boolean snapToGridAngle)
 	{
