@@ -1,6 +1,14 @@
---- src/org/openscience/cdk/tools/LoggingTool.java	2003-11-14 10:48:56.000000000 +0100
-+++ build/src/org/openscience/cdk/tools/LoggingTool.java	2003-12-07 19:43:29.000000000 +0100
-@@ -40,7 +40,6 @@
+--- src/org/openscience/cdk/tools/LoggingTool.java	2004-01-02 12:23:45.000000000 +0100
++++ build/src/org/openscience/cdk/tools/LoggingTool.java	2004-01-03 15:15:20.000000000 +0100
+@@ -34,13 +34,14 @@
+  * </pre>
+  *
+  * <p>Uses log4j as a backend if available, and System.out otherwise.
++ *
++ * <p>Patched to make usefull in Jmol applet.
+  */
+ public class LoggingTool {
+ 
      private boolean debug = false;
      private boolean tostdout = false;
  
@@ -8,7 +16,7 @@
      private String classname;
      
      /** Default number of StackTraceElements to be printed by debug(Exception) */
-@@ -62,61 +61,8 @@
+@@ -62,61 +63,8 @@
      
      public LoggingTool(String classname, boolean useConfig) {
          this.classname = classname;
@@ -71,7 +79,7 @@
      }
  
      public void dumpSystemProperties() {
-@@ -140,74 +86,24 @@
+@@ -140,77 +88,24 @@
      }
  
      public void debug(Throwable problem) {
@@ -85,9 +93,12 @@
 -        String trace = stackTraceWriter.toString();
 -        try {
 -            BufferedReader reader = new BufferedReader(new StringReader(trace));
--            while (reader.ready()) {
+-            if (reader.ready()) {
 -                String traceLine = reader.readLine();
--                debug(traceLine);
+-                while (reader.ready() && traceLine != null) {
+-                    debug(traceLine);
+-                    traceLine = reader.readLine();
+-                }
 -            }
 -        } catch (Exception ioException) {
 -            error("Serious error in LoggingTool while printing exception stack trace: " + 
