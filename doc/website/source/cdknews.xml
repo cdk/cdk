@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+<!ENTITY changelog SYSTEM "../../../CHANGELOG">
+]>
+<webpage id="cdknews">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>CDK News</title>
+    <titleabbrev>CDK News</titleabbrev>
+    <summary>Information about CDK News.</summary>
+  </head>
+
+  <para>
+    CDK News is a news letter with articles about CDK and related work
+    started in 2004. Editors-in-Chief are Egon and Chris, complemented
+    by Rajarshi Guha.
+  </para>
+  
+  <para>
+    Issues can be downloaded from the SourceForge website soon.
+  </para>
+  
+</webpage>
