@@ -3,9 +3,9 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -57,8 +57,8 @@ public class IChIReaderTest extends TestCase {
      * Test a IChI 0.9Beta file containing the two tautomers
      * of guanine.
      */
-    public void testGuanine() {
-        String filename = "data/guanine.txt";
+    public void testAminocyclopentene() {
+        String filename = "data/ichi/3-aminocyclopentene.ichi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -72,6 +72,13 @@ public class IChIReaderTest extends TestCase {
             assertEquals(1, seq.getChemModelCount());
             ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
+            SetOfMolecules moleculeSet = model.getSetOfMolecules();
+            assertNotNull(moleculeSet);
+            Molecule molecule = moleculeSet.getMolecule(0);
+            assertNotNull(molecule);
+            
+            assertEquals(6, molecule.getAtomCount());
+            assertEquals(6, molecule.getBondCount());
 
         } catch (Exception e) {
             fail(e.toString());
