@@ -45,6 +45,13 @@ import JSX.*;
  * module. Part of the data in this file was collected from
  * the website <a href="http://www.webelements.org">webelements.org</a>.
  *
+ * <p>The use of this class is examplified as follows. To get information 
+ * about the major isotope of hydrogen, one can use this code:
+ * <pre>
+ *   IsotopeFactory factory = IsotopeFactory.getInstance();
+ *   Isotope major = factory.getMajorIsotope("H");
+ * </pre> 
+ *
  * @author     steinbeck
  * @created    August 29, 2001
  * @keyword    isotope
