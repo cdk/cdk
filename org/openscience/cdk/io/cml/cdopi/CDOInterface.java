@@ -31,12 +31,45 @@ package org.openscience.cdk.io.cml.cdopi;
 
 public interface CDOInterface {
 
+  /**
+   * Called just before XML parsing is started.
+   */
   public void startDocument();
+
+  /**
+   * Called just after XML parsing has ended.
+   */
   public void endDocument();
+
+  /**
+   * Sets a property for this document.
+   *
+   * @param type  Type of the property.
+   * @param value Value of the property.
+   */
   public void setDocumentProperty(String type, String value);
 
+  /**
+   * Start the process of adding a new object to the CDO of a certain type.
+   *
+   * @param objectType  Type of the object being added.
+   */
   public void startObject(String objectType);
+
+  /**
+   * End the process of adding a new object to the CDO of a certain type.
+   *
+   * @param objectType  Type of the object being added.
+   */
   public void endObject(String objectType);
+
+  /**
+   * Sets a property of the object being added.
+   *
+   * @param objectType          Type of the object being added.
+   * @param propertyType        Type of the property being set.
+   * @param propertyValue       Value of the property being set.
+   */
   public void setObjectProperty(String objectType, String propertyType, String propertyValue);
 
   /**
@@ -44,6 +77,5 @@ public interface CDOInterface {
    * return a CDOAcceptedObjects class with the names of the 
    * objects that can be handled.
    **/
-
   public CDOAcceptedObjects acceptObjects();
 }

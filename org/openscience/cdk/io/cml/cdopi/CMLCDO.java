@@ -30,19 +30,33 @@
 package org.openscience.cdk.io.cml.cdopi;
 
 /**
- * This is an dummy class that makes an application accepting basic
+ * This is an dummy class that makes an application accept basic
  * CML objects. But it just disregards all the information.
  **/
 public class CMLCDO implements CDOInterface {
 
   /**
-   * The following precodures are in the interface.
+   * Called just before XML parsing is started.
    */
-
   public void startDocument() {};
+
+  /**
+   * Called just after XML parsing has ended.
+   */
   public void endDocument() {};
+
+  /**
+   * Sets a property for this document.
+   *
+   * @param type  Type of the property.
+   * @param value Value of the property.
+   */
   public void setDocumentProperty(String type, String value) {};
 
+  /**
+   * Exports the list of objects that the CML CDO excepts as a CDOAcceptedObjects object:
+   * Molecule, Fragment, Atom and Bond.
+   */
   public CDOAcceptedObjects acceptObjects() {
     CDOAcceptedObjects objects = new CDOAcceptedObjects();
     objects.add("Molecule");
@@ -52,7 +66,26 @@ public class CMLCDO implements CDOInterface {
     return objects;
   }
 
+  /**
+   * Start the process of adding a new object to the CDO of a certain type.
+   *
+   * @param objectType  Type of the object being added.
+   */
   public void startObject(String objectType) {};
+
+  /**
+   * End the process of adding a new object to the CDO of a certain type.
+   *
+   * @param objectType  Type of the object being added.
+   */
   public void endObject(String objectType) {};
+
+  /**
+   * Sets a property of the object being added.
+   *
+   * @param objectType  Type of the object being added.
+   * @param type        Type of the property being set.
+   * @param value       Value of the property being set.
+   */
   public void setObjectProperty(String objectType, String type, String value) {};
 }

@@ -56,6 +56,11 @@ public class CMLHandler extends DefaultHandler {
       userConventions.put(convention, conv);
     }
 
+    /**
+     * Implementation of the characters() procedure overwriting the DefaultHandler interface.
+     *
+     * @param ch        characters to handle
+     */
     public void characters(char ch[], int start, int length) {
        logger.debug("character data");
        conv.characterData(ch, start, length);
@@ -63,6 +68,9 @@ public class CMLHandler extends DefaultHandler {
 
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}
 
+    /**
+     * Calling this procedure signals the end of the XML document.
+     */
     public void endDocument() {
         conv.endDocument();
     }

@@ -35,11 +35,15 @@ package org.openscience.cdk.io.cml.cdopi;
  **/
 public class ANIMATIONCDO extends CMLCDO {
 
+    /**
+     * Exports the list of objects that the ANIMATION CDO excepts as a CDOAcceptedObjects object:
+     * Animation and Frame.
+     */
     public CDOAcceptedObjects acceptObjects() {
-	CDOAcceptedObjects objects = super.acceptObjects();
-	objects.add("Animation");
-	objects.add("Frame");
-	return objects;
+        CDOAcceptedObjects objects = super.acceptObjects();
+        objects.add("Animation");
+        objects.add("Frame");
+        return objects;
     }
 
 }

@@ -52,6 +52,13 @@ public class CMLErrorHandler implements ErrorHandler {
         logger.info("instantiated");
     }
 
+    /**
+     * Internal procedure that outputs an SAXParseException with a significance level
+     * to the cdk.tools.LoggingTool logger.
+     *
+     * @param level               significance level
+     * @param SAXParseException   Exception to output
+     */
     private void print (String label, SAXParseException e) {
         logger.error("** " + label + ": " + e.getMessage ());
         logger.error("   URI  = " + e.getSystemId ());
@@ -62,6 +69,8 @@ public class CMLErrorHandler implements ErrorHandler {
 
     /**
      * Outputs a SAXParseException error to the logger.
+     *
+     * @param SAXParseException   Exception to output
      **/
     public void error (SAXParseException e) throws SAXException {
         if (reportErrors) print("error", e);
@@ -70,6 +79,8 @@ public class CMLErrorHandler implements ErrorHandler {
 
     /**
      * Outputs as fatal SAXParseException error to the logger.
+     *
+     * @param SAXParseException   Exception to output
      **/
     public void fatalError (SAXParseException e) throws SAXException {
         if (reportErrors) print("fatal", e);
@@ -78,6 +89,8 @@ public class CMLErrorHandler implements ErrorHandler {
 
     /**
      * Outputs a SAXParseException warning to the logger.
+     *
+     * @param SAXParseException   Exception to output
      **/
     public void warning (SAXParseException e) throws SAXException {
         if (reportErrors) print("warning", e);

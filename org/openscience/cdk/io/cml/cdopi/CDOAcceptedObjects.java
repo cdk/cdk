@@ -32,22 +32,45 @@ package org.openscience.cdk.io.cml.cdopi;
 import java.util.Vector;
 import java.util.Enumeration;
 
+/**
+ * List of names (String classes) of objects accepted by CDO.
+ */
 public class CDOAcceptedObjects {
 
   private Vector objects;
 
+  /**
+   * Constructor.
+   */
   public CDOAcceptedObjects () {
     objects = new Vector();
   }
 
+  /**
+   * Adds the name of an accepted object.
+   *
+   * @param object Name of the object
+   */
   public void add(String object) {
     objects.addElement(object);
   }
 
+  /**
+   * Determine if an object name is contained in this list.
+   *
+   * @param   object Name of the object to search in the list
+   * @returns        true if the object is in the list, false otherwise
+   */
   public boolean contains(String object) {
     return objects.contains(object);
   }
 
+  /**
+   * Returns the names in this list as a Enumeration class. Each element in the
+   * Enumeration is of type String.
+   *
+   * @return The names of the accepted objects
+   */
   public Enumeration elements() {
     return objects.elements();
   }

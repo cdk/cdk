@@ -35,6 +35,10 @@ package org.openscience.cdk.io.cml.cdopi;
  **/
 public class NMRCDO extends CMLCDO {
 
+  /**
+   * Exports the list of objects that the NMR CDO excepts as a CDOAcceptedObjects object:
+   * Simulation, Experiment, Spectrum and Peak.
+   */
   public CDOAcceptedObjects acceptObjects() {
     CDOAcceptedObjects objects = new CDOAcceptedObjects();
     objects.add("Simulation");
