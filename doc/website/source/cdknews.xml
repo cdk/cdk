@@ -46,6 +46,18 @@
                       <emphasis>Konqueror web shortcuts to the CDK API</emphasis>.
       </para> 
     </listitem>
+    <listitem>
+      <para><ulink url="http://sourceforge.net/project/showfiles.php?group_id=20024&amp;package_id=124796&amp;release_id=310462">2/1</ulink>,
+        March 2005
+      </para>
+      <para>articles: <emphasis>Using the CDK as a backend to R</emphasis>,
+                      <emphasis>Using R to provide statistical functionality for QSAR modeling in CDK</emphasis>,
+                      <emphasis>Extending www.chemistry-development-kit.org</emphasis>,
+                      <emphasis>Representation and use of chemistry in the global electronic age</emphasis>,
+                      <emphasis>Jmol as 3D viewer for CDK</emphasis>, and
+                      <emphasis>Communication: ChemNomParse</emphasis>
+      </para> 
+    </listitem>
   </itemizedlist>
   
   <para>
