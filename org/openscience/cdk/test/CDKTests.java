@@ -42,6 +42,7 @@ public class CDKTests {
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
 		suite.addTest(MFAnalyserTest.suite());
+		suite.addTest(PathLengthTest.suite());
 		//suite.addTest(StructureDiagramGeneratorTest.suite());
 		//suite.addTest(RandomStructureGeneratorTest.suite());
 		
