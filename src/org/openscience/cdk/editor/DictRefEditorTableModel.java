@@ -28,14 +28,13 @@
 package org.openscience.cdk.editor;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.dict.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
 public class DictRefEditorTableModel extends AbstractTableModel {
-    
-    public final static String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
     
     private String[] columnNames;
     private Vector fields = new Vector();
@@ -111,6 +110,12 @@ public class DictRefEditorTableModel extends AbstractTableModel {
         return true;
     }
     
+    /**
+     * Parses the properties of this ChemObject and looks for (read: start with)
+     * 'org.openscience.cdk.dict" entries. Based on such entries, it fills
+     * the table with dictionary references.
+     *
+     */
     public void setChemObject(ChemObject object) {
         cleanTable();
         Map properties = object.getProperties();
@@ -119,8 +124,13 @@ public class DictRefEditorTableModel extends AbstractTableModel {
             Object key = iter.next();
             if (key instanceof String) {
                 String keyName = (String)key;
-                if (keyName.equals(DICTREFPROPERTYNAME)) {
-                    fields.addElement(keyName);
+                if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
+                    if (keyName.length() > DictionaryDatabase.DICTREFPROPERTYNAME.length()) {
+                        String fieldName = keyName.substring(DictionaryDatabase.DICTREFPROPERTYNAME.length()-1);
+                        fields.addElement(fieldName);
+                    } else {
+                        fields.addElement("unspecified");
+                    }
                     String dictRef = (String)properties.get(keyName);
                     int index = dictRef.indexOf(':');
                     if (index != -1) {

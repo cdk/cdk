@@ -43,6 +43,8 @@ import java.util.Hashtable;
  */
 public class DictionaryDatabase {
 
+    public final static String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
+    
     private org.openscience.cdk.tools.LoggingTool logger;
     
     private String[] dictionaryNames = {
