@@ -291,7 +291,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
                 
                 try {
-                    String reactionAtomIDString = line.substring(50,53).trim();;
+                    String reactionAtomIDString = line.substring(50,53).trim();
                     logger.debug("Parsing mapping id: " + reactionAtomIDString);
                     try {
                         int reactionAtomID = Integer.parseInt(reactionAtomIDString);
@@ -324,50 +324,39 @@ public class MDLReader extends DefaultChemObjectReader {
             
             // read BOND block
             logger.info("Reading bond block");
-			for (int f = 0; f < bonds; f++) {
+            for (int f = 0; f < bonds; f++) {
                 line = input.readLine(); linecount++;
-				strBuff = new StringBuffer(line);
-				strBuff.insert(3, " ");
-				strBuff.insert(7, " ");
-				strBuff.insert(11, " ");
-				strBuff.insert(15, " ");
-				strTok = new StringTokenizer(strBuff.toString());
-				atom1 = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-				atom2 = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-				order = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-				stereo = java.lang.Integer.valueOf(strTok.nextToken()).intValue();
-				logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
-				if (stereo == 1)
-				{
-					// MDL up bond
-					stereo = CDKConstants.STEREO_BOND_UP;
-				} else if (stereo == 6)
-				{
-					// MDL down bond
-					stereo = CDKConstants.STEREO_BOND_DOWN;
-				} else if (stereo == 4)
-        {
-          //MDL bond undefined
-          stereo = CDKConstants.STEREO_BOND_UNDEFINED;
-        }
-				// interpret CTfile's special bond orders
-				Atom a1 = molecule.getAtomAt(atom1 - 1);
-				Atom a2 = molecule.getAtomAt(atom2 - 1);
-				if (order == 4)
-				{
-					// aromatic bond
-					bond = new Bond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
-					// mark both atoms and the bond as aromatic
-					bond.setFlag(CDKConstants.ISAROMATIC, true);
-					a1.setFlag(CDKConstants.ISAROMATIC, true);
-					a2.setFlag(CDKConstants.ISAROMATIC, true);
-					molecule.addBond(bond);
-				} else
-				{
-					bond = new Bond(a1, a2, (double) order, stereo);
-					molecule.addBond(bond);
-				}
-			}
+                atom1 = java.lang.Integer.valueOf(line.substring(0,3).trim()).intValue();
+                atom2 = java.lang.Integer.valueOf(line.substring(3,6).trim()).intValue();
+                order = java.lang.Integer.valueOf(line.substring(6,9).trim()).intValue();
+                stereo = java.lang.Integer.valueOf(line.substring(9,12).trim()).intValue();
+                logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
+                if (stereo == 1) {
+                    // MDL up bond
+                    stereo = CDKConstants.STEREO_BOND_UP;
+                } else if (stereo == 6) {
+                    // MDL down bond
+                    stereo = CDKConstants.STEREO_BOND_DOWN;
+                } else if (stereo == 4) {
+                    //MDL bond undefined
+                    stereo = CDKConstants.STEREO_BOND_UNDEFINED;
+                }
+                // interpret CTfile's special bond orders
+                Atom a1 = molecule.getAtomAt(atom1 - 1);
+                Atom a2 = molecule.getAtomAt(atom2 - 1);
+                if (order == 4) {
+                    // aromatic bond
+                    bond = new Bond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
+                    // mark both atoms and the bond as aromatic
+                    bond.setFlag(CDKConstants.ISAROMATIC, true);
+                    a1.setFlag(CDKConstants.ISAROMATIC, true);
+                    a2.setFlag(CDKConstants.ISAROMATIC, true);
+                    molecule.addBond(bond);
+                } else {
+                    bond = new Bond(a1, a2, (double) order, stereo);
+                    molecule.addBond(bond);
+                }
+            }
             
             // read PROPERTY block
             logger.info("Reading property block");
