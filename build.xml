@@ -311,6 +311,8 @@
                         <!-- Added after CDK-RFC 2 -->
                         <include name="org/openscience/cdk/Crystal.class" />
                         <include name="org/openscience/cdk/LonePair.class" />
+                        <include name="org/openscience/cdk/Reaction.class" />
+                        <include name="org/openscience/cdk/SetOfReactions.class" />
                    </fileset>
                 </jar>
         </target>
@@ -345,11 +347,15 @@
                         <exclude name="org/openscience/cdk/SetOfMolecules.class" />
                         <exclude name="org/openscience/cdk/Crystal.class" />
                         <exclude name="org/openscience/cdk/LonePair.class" />
+                        <exclude name="org/openscience/cdk/Reaction.class" />
+                        <exclude name="org/openscience/cdk/SetOfReactions.class" />
                         <!-- Exclude classes in cdk-io module-->
                         <exclude name="org/openscience/cdk/io/**" />
+                        <exclude name="org/openscience/cdk/ChemFile.class" />
                         <!-- Exclude classes in cdk-render module-->
                         <exclude name="org/openscience/cdk/renderer/**" />
                         <exclude name="org/openscience/cdk/controller/**" />
+                        <exclude name="org/openscience/cdk/event/**" />
                         <!-- Exclude libio classes -->
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
@@ -432,6 +438,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/renderer/**/*" />
                         <include name="org/openscience/cdk/controller/**/*" />
+                        <include name="org/openscience/cdk/event/**/*" />
                     </fileset>
                 </jar>
         </target>
