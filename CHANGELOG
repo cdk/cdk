@@ -3,6 +3,8 @@ CHANGELOG $Date$
 
 Changes in CVS
 ------------------------------------
+Fixes:
+* Fixed reading/writing of isotopes from/to MDL molfiles
 
 20030412 Release
 ------------------------------------

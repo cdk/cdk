@@ -256,13 +256,13 @@ public class MDLWriter implements ChemObjectWriter {
         // write formal isotope information
         for (int i = 0; i < atoms.length; i++) {
             Atom atom = atoms[i];
-            int atomicNumber = atom.getAtomicNumber();
-            int majorNumber = isotopeFactory.getMajorIsotope(atom.getSymbol()).getAtomicNumber();
-            if (atomicNumber != 0 && atomicNumber != majorNumber) {
+            int atomicMass = atom.getAtomicMass();
+            int majorMass = isotopeFactory.getMajorIsotope(atom.getSymbol()).getAtomicMass();
+            if (atomicMass != 0 && atomicMass != majorMass) {
                 writer.write("M  ISO  1 ");
                 writer.write(formatMDLInt(i+1,3));
                 writer.write(" ");
-                writer.write(formatMDLInt(atomicNumber - majorNumber,3));
+                writer.write(formatMDLInt(atomicMass - majorMass,3));
                 writer.newLine();
             }
         }

@@ -352,7 +352,7 @@ public class MDLReader implements ChemObjectReader
                             if (massDiff != 0) { 
                                 Atom isotope = molecule.getAtomAt(atomNumber - 1);
                                 Isotope major = isotopeFactory.getMajorIsotope(isotope.getSymbol());
-                                isotope.setAtomicNumber(major.getAtomicNumber() + massDiff);
+                                isotope.setAtomicNumber(major.getAtomicMass() + massDiff);
                             }
                         }
                     } catch (NumberFormatException exception) {
