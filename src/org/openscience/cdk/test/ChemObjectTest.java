@@ -121,7 +121,7 @@ public class ChemObjectTest extends TestCase {
         assertNull(chemObject.getID());
     }
     
-    public void testSetFlags(){
+    public void testSetFlags_arrayboolean(){
       ChemObject chemObject=new ChemObject();
       chemObject.setFlag(1,true);
       ChemObject chemObject2=new ChemObject();
