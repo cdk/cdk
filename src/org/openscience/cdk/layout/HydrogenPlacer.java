@@ -47,12 +47,11 @@ import java.awt.*;
  * @cdk.created  2003-08-06
  */
 public class HydrogenPlacer {
+    
 	public static boolean debug = false;
 	public static boolean debug1 = false;
 	
-	
-	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength)
-	{
+	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength){
 		LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
 		logger.debug("Entering Hydrogen Placement...");
 		Atom atom = null; 
@@ -87,34 +86,36 @@ public class HydrogenPlacer {
 		AtomPlacer atomPlacer = new AtomPlacer();
 		atomPlacer.setMolecule((Molecule)atomContainer);
 		Vector atomVector = new Vector();
-		logger.debug("bondLength" + bondLength);
+		logger.debug("bondLength ", bondLength);
 		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
 		AtomContainer placedAtoms = new AtomContainer();
 		AtomContainer unplacedAtoms = new AtomContainer();
 		
-		for (int f = 0; f < connectedAtoms.length; f++)
-		{
-			if (connectedAtoms[f].getSymbol().equals("H"))
-			{
+		for (int f = 0; f < connectedAtoms.length; f++) {
+			if (connectedAtoms[f].getSymbol().equals("H")) {
 				unplacedAtoms.addAtom(connectedAtoms[f]);
-			}
-			else
-			{
+			} else {
 				placedAtoms.addAtom(connectedAtoms[f]);
 			}
 		}
 		logger.debug("Atom placement before procedure:");
-		logger.debug("Center atom " + atom.getSymbol() + ": " + atom.getPoint2D());
+		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2D());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
 		{
-			logger.debug("H-" + f + ": " + unplacedAtoms.getAtomAt(f).getPoint2D());
+			logger.debug("H-" + f, ": ", unplacedAtoms.getAtomAt(f).getPoint2D());
 		}
-		atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
+        Point2d centerPlacedAtoms = null;
+        if (placedAtoms.getAtomCount() > 0) {
+            centerPlacedAtoms = placedAtoms.get2DCenter();
+        } else {
+            centerPlacedAtoms = atom.getPoint2D();
+        }
+		atomPlacer.distributePartners(atom, placedAtoms, centerPlacedAtoms, unplacedAtoms, bondLength);
 		logger.debug("Atom placement after procedure:");
-		logger.debug("Center atom " + atom.getSymbol() + ": " + atom.getPoint2D());
+		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2D());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
 		{
-			logger.debug("H-" + f + ": " + unplacedAtoms.getAtomAt(f).getPoint2D());
+			logger.debug("H-" + f, ": ", unplacedAtoms.getAtomAt(f).getPoint2D());
 		}				
 	}
 }
