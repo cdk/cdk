@@ -718,13 +718,15 @@ public class SmilesGenerator {
    * @param  a  Description of Parameter
    * @return    The ringOpenings value
    */
-  private Vector getRingOpenings(Atom a) {
+  private Vector getRingOpenings(Atom a, Vector vbonds) {
     Iterator it = brokenBonds.iterator();
     Vector v = new Vector(10);
     while (it.hasNext()) {
       BrokenBond bond = (BrokenBond) it.next();
       if (bond.getA1().equals(a) || bond.getA2().equals(a)) {
         v.add(new Integer(bond.getMarker()));
+        if(vbonds!=null)
+          vbonds.add(bond.getA1().equals(a) ? bond.getA2() : bond.getA1());
       }
     }
     Collections.sort(v);
@@ -1334,9 +1336,9 @@ public class SmilesGenerator {
             }
             Object[] omy = new Object[numberOfAtoms];
             Object[] onew = new Object[numberOfAtoms];
-            for (int k = getRingOpenings(atom).size(); k < numberOfAtoms; k++) {
-              if(positionInVector + 1 + k - getRingOpenings(atom).size()<v.size())
-                omy[k] = v.get(positionInVector + 1 + k - getRingOpenings(atom).size());
+            for (int k = getRingOpenings(atom,null).size(); k < numberOfAtoms; k++) {
+              if(positionInVector + 1 + k - getRingOpenings(atom,null).size()<v.size())
+                omy[k] = v.get(positionInVector + 1 + k - getRingOpenings(atom,null).size());
             }
             for (int k = 0; k < sorted.length; k++) {
               if (sorted[k] != null) {
@@ -1385,7 +1387,7 @@ public class SmilesGenerator {
                 }
               }
               //This cares about ring openings. Here the ring closure (represendted by a figure) must be the first atom. In onew the closure is null.
-              if(getRingOpenings(atom).size()>0){
+              if(getRingOpenings(atom,null).size()>0){
                 int l = 0;
                 while (onew[0] != null) {
                   Object placeholder = onew[0];
@@ -1592,9 +1594,18 @@ public class SmilesGenerator {
         buffer.append('/');
       }
     }
-    Iterator it = getRingOpenings(a).iterator();
+    Vector v=new Vector();
+    Iterator it = getRingOpenings(a, v).iterator();
+    Iterator it2= v.iterator();
     while (it.hasNext()) {
       Integer integer = (Integer) it.next();
+      Bond b=container.getBond((Atom) it2.next(),a);
+      int type = (int) b.getOrder();
+      if (type == 2 && !b.getFlag(CDKConstants.ISAROMATIC)) {
+        buffer.append("=");
+      } else if (type == 3 && !b.getFlag(CDKConstants.ISAROMATIC)) {
+        buffer.append("#");
+      }
       buffer.append(integer);
     }
     atomsInOrderOfSmiles.add(a);
