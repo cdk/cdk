@@ -106,9 +106,6 @@ public class CDKTests
         suite.addTest(MathToolsTest.suite());
         // from cdk.test.qsar
         suite.addTest(QSARDescriptorTests.suite());
-        // from cdk.test.qsar.model
-        suite.addTest(QSARModelTests.suite());
-        //suite.addTest(QSARRModelTests.suite());
         
         // from cdk.test.reaction
         suite.addTest(ReactionBalancerTest.suite());
@@ -131,6 +128,16 @@ public class CDKTests
         } catch (Exception exception) {
             // ok, do without. Probably compiled with Ant < 1.6
             System.out.println("Could not load the IUPAC Parser test: " + exception.getMessage());
+        }
+
+        // from cdk.test.qsar.model
+        suite.addTest(QSARModelTests.suite());
+        try {
+            Class testClass;
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.qsar.model.QSARRModelTests");
+            suite.addTest( ((QSARRModelTests)testClass.newInstance()).suite() );
+        } catch (Exception exception) {
+            System.out.println("Could not load QSAR R based model tests:" + exception.getMessage());
         }
         return suite;
     }
