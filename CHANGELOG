@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* Atom type list for PDB atom codes (closes RFE #1062516)
 
 Fixes:
 
