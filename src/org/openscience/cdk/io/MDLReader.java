@@ -35,7 +35,7 @@ import java.util.*;
 import javax.vecmath.*;
 
 /**
- * Reads a molecule from an MDL Molfile
+ * Reads a molecule from an MDL Molfile or SDF file.
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#DAL92">DAL92</a>
@@ -44,6 +44,7 @@ import javax.vecmath.*;
  * @created    October 2, 2000
  *
  * @keyword file format, MDL molfile
+ * @keyword file format, SDF
  */
 public class MDLReader implements ChemObjectReader {
 
@@ -113,33 +114,29 @@ public class MDLReader implements ChemObjectReader {
 		ChemModel chemModel = new ChemModel();
 		SetOfMolecules setOfMolecules = new SetOfMolecules();
         Molecule m = readMolecule();
-        if (m == null) return null;
-		setOfMolecules.addMolecule(m);
+        if (m != null) {
+            setOfMolecules.addMolecule(m);
+        }
 		String str;
-		try
-		{
-			do
-			{
+		try {
+			do {
 				str = new String(input.readLine());
 				if (str.equals("$$$$")) {
                     m = readMolecule();
-                    /** if reading of molecule fails, then fail reading
-                        complete document **/
-                    if (m == null) return null;
-                    setOfMolecules.addMolecule(m);
+                    /** if reading of molecule fails, skip the molecule
+                        and continue **/
+                    if (m != null) {
+                        setOfMolecules.addMolecule(m);
+                    }
                 }
 			}
 			while (input.ready());
-		}
-		catch (Exception exc) {
+		} catch (Exception exc) {
             // exc.printStackTrace();
 		}
-		try
-		{
+		try {
 			input.close();
-		}
-		catch (Exception exc)
-		{
+		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
 		chemModel.setSetOfMolecules(setOfMolecules);
