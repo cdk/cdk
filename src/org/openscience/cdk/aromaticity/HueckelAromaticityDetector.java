@@ -39,7 +39,7 @@ import java.io.*;
  *  the Hueckel 4n+2 pi-electrons Rule. This is done by one of the
  *  detectAromaticity methods. They set the aromaticity flags of
  *  appropriate Atoms, Bonds and Rings. After the detection, you
- *  can use get(CDKConstants.ISAROMATIC) on these ChemObjects.
+ *  can use getFlag(CDKConstants.ISAROMATIC) on these ChemObjects.
  *
  * @author     steinbeck, kaihartmann
  * @created    2001-09-04
