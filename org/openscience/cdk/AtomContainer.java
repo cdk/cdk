@@ -636,6 +636,18 @@ public class AtomContainer extends ChemObject implements Cloneable
 		}
 	}
 
+	
+	public void addBonds(AtomContainer atomContainer)
+	{
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
+		{
+			if (!contains(atomContainer.getBondAt(f)))
+			{
+				addBond(atomContainer.getBondAt(f));
+			}
+		}
+
+	}
 
 	/**
 	 *  Adds all atoms and bonds of a given atomcontainer to this container

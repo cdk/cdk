@@ -82,16 +82,13 @@ public class RandomGenerator
 	 */
 	public Molecule proposeStructure()
 	{
-		trial.removeAllElements();
-		trial.add(molecule);
 		do
 		{
+			trial.removeAllBonds();
+			trial.addBonds(molecule);
 			mutate(trial);
-		}
-		while(!cc.isConnected(trial));
-		proposedStructure = trial;
-		if (debug)
-		{
+			if (true)
+			{
 			String s = "BondCounts:    ";
 			for (int f = 0; f < trial.getAtomCount(); f++)
 			{
@@ -104,7 +101,12 @@ public class RandomGenerator
 				s += trial.getBondOrderSum(trial.getAtomAt(f)) + " ";
 			}
 			System.out.println(s);
+			}
+
+
 		}
+		while(!cc.isConnected(trial));
+		proposedStructure = trial;
 		
 		return proposedStructure;
 	}
@@ -325,18 +327,18 @@ public class RandomGenerator
 		}
 	}
 
-// 	protected boolean chemConstraintsOk(Molecule test)
-// 	{
-// 		for (int f = 0; f < test.getAtomCount(); f++)
-// 		{
-// 			if (test.getBondOrderSum(test.getAtomAt(f)) != correctBondOrderSums[f])
-// 			{
-// 				return false;
-// 			}
-// 		}
-// 		return true;
-// 	}
-// 
+ 	protected boolean chemConstraintsOk(Molecule test)
+ 	{
+ 		for (int f = 0; f < test.getAtomCount(); f++)
+ 		{
+ 			if (test.getBondOrderSum(test.getAtomAt(f)) != correctBondOrderSums[f])
+ 			{
+ 				return false;
+ 			}
+ 		}
+ 		return true;
+ 	}
+ 
 	/**
 	 * Analog of Math.max that returns the largest int value in an array of ints
 	 *
@@ -384,7 +386,7 @@ public class RandomGenerator
 	public void setMolecule(Molecule mol)
 	{
 		this.molecule = mol;	
-//		initBondOrderSums(mol);
+		initBondOrderSums(mol);
 	}
 
 
@@ -399,12 +401,12 @@ public class RandomGenerator
 		return this.molecule;
 	}
 	
-// 	protected void initBondOrderSums(Molecule mol)
-// 	{	
-// 		correctBondOrderSums = new int[mol.getAtomCount()];
-// 		for (int f = 0; f < mol.getAtomCount(); f++)
-// 		{
-// 			correctBondOrderSums[f] = mol.getBondOrderSum(mol.getAtomAt(f));
-// 		}
-// 	}
+ 	protected void initBondOrderSums(Molecule mol)
+ 	{	
+ 		correctBondOrderSums = new int[mol.getAtomCount()];
+ 		for (int f = 0; f < mol.getAtomCount(); f++)
+ 		{
+ 			correctBondOrderSums[f] = mol.getBondOrderSum(mol.getAtomAt(f));
+ 		}
+ 	}
 }

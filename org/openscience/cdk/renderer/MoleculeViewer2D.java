@@ -118,9 +118,8 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		{
 			setBackground(r2dm.getBackColor());
 			GeometryTools.translateAllPositive(atomContainer);
-			GeometryTools.scaleMolecule(atomContainer, getPreferredSize(), 0.8);			
-			GeometryTools.center(atomContainer, getPreferredSize());
-
+			GeometryTools.scaleMolecule(atomContainer, getSize(), 0.8);			
+			GeometryTools.center(atomContainer, getSize());
 			renderer.paintMolecule(atomContainer, g);
 		}
 	}

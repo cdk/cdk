@@ -40,21 +40,21 @@ import java.util.*;
 public class ChemObject implements CDKConstants, Cloneable
 {
 	/** Vector for listener administration */
-	protected transient Vector chemObjects = new Vector();
+	protected Vector chemObjects = new Vector();
 	/** 
 	  * A hashtable for the storage of physical properties 
 	  * of this ChemObject. 
 	  */
-	protected transient Hashtable physicalProperties = new Hashtable();
+	protected Hashtable physicalProperties = new Hashtable();
 	/** 
 	  * A hashtable for the storage of any kind of properties 
 	  * of this ChemObject. 
 	  */
-	protected transient Hashtable properties = new Hashtable();
+	protected Hashtable properties = new Hashtable();
 	/** 
 	  * A hashtable for the storage of the remarks.
 	  */
-	protected transient Hashtable remarks = new Hashtable();
+	protected Hashtable remarks = new Hashtable();
 	/** You will frequently have to use some flags on a ChemObject
 	 * for example if you want to draw a molecule and see
 	 * if you've already drawn an atom, or in a ring search to 

@@ -166,4 +166,13 @@ public class XMLTools
 		writer.flush();
 		return writer.toString();
 	}
+	
+	public static Object getFromXMLString(String xmlString) throws java.io.IOException, java.lang.ClassNotFoundException
+	{
+		StringReader reader = new StringReader(xmlString);
+		ObjIn in = new ObjIn(reader); 
+    		Object obj = in.readObject(); 
+		return obj;
+	}
+
 }
