@@ -18,7 +18,7 @@
   <xsl:value-of select=".//*[name(.)='dictionary']/*[name(.)='description']"/>
 </para>
 <informaltable frame='none'>
-  <tgroup cols="2">
+  <tgroup cols="3">
     <thead>
         <row>
           <entry>ID</entry>
