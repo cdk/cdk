@@ -6,6 +6,7 @@ cp ../../../build.xml .
 cp ../../../javadoc.xml .
 rsync -vargopt ../../../data .
 rsync -vargopt ../../../src .
+rsync -vargopt ../../../jar .
 find data -name "CVS" | xargs rm -R
 find src -name "CVS" | xargs rm -R
 find src -name ".cvsignore" | xargs rm -f
