@@ -415,6 +415,7 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/renderer/**/*" />
                         <include name="org/openscience/cdk/controller/**/*" />
+                        <include name="org/openscience/cdk/editor/**/*" />
                         <include name="org/openscience/cdk/event/**/*" />
                     </fileset>
                 </jar>
@@ -430,7 +431,7 @@
         </target>
 
         <target name="dist-all" depends="dist-core, dist-standard, 
-                                         dist-io, dist-render, 
+                                         dist-io, dist-render,
                                          dist-extra, dist-libio,
                                          dist-render-with-java3d,
                                          dist-apps" />
