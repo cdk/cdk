@@ -179,6 +179,9 @@
                     <fileset>
                         <include unless="isMacOsX" name="${java.ext.dirs}/tools.jar" />
                         <include unless="isMacOsX" name="${java.ext.dirs}/../../../lib/tools.jar" />
+                        <include name="${lib}/vecmath1.2-1.14.jar" /> 
+                        <!-- the latter lib is not really needed, but might be needed 
+                             to solve the empty fileset problem on Mac OS/X -->
                     </fileset>
                 </classpath>
             </javac>
