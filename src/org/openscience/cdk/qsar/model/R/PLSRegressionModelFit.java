@@ -83,9 +83,13 @@ class V2M {
  B       - ncase x nvar x npvar
 */
 class PLSTraining {
-    double[][] rms;
-    double[][] xscores, xload, yscores, yload;
-    double[][][] B, ypred;
+    double[][] rms = null;
+    double[][] xscores = null;
+    double[][] xload = null;
+    double[][] yscores = null;
+    double[][] yload = null;
+    double[][][] B = null;
+    double[][][] ypred = null;
 
     PLSTraining(int[] ncomp, double[] B, double[] ypred,
             double[] rms, 
@@ -120,9 +124,11 @@ class PLSTraining {
  * ypred - ncase x nobs x npvar
  */
 class PLSValidation {
-    double[][][] ypred;
+    double[][][] ypred = null;
     int niter, nlv;
-    double[][] rms, rmssd, r2;
+    double[][] rms = null;
+    double[][]  rmssd = null;
+    double[][] r2 = null;
 
     PLSValidation(int[] ncomp, int nobs, int niter, int nlv,
             double[] ypred,  double[] rms, double[] rmssd, double[] r2) {
@@ -141,7 +147,7 @@ class PLSValidation {
 
 public class PLSRegressionModelFit {
     int nobs, nvar, npvar, ncase;
-    int[] ncomp;
+    int[] ncomp = null;
     String method;
     PLSTraining train = null;
     PLSValidation valid = null;
@@ -159,12 +165,12 @@ public class PLSRegressionModelFit {
         for (int i = 0; i < this.ncase; i++) this.ncomp[i] = ncomp[i];
     }
 
-    public void PLSRegressionModelSetTrain(double[] B, double[] ypred, double[] rms, 
+    public void setTrainingData(double[] B, double[] ypred, double[] rms, 
             double[] xscores, double[] yscores,
             double[] xload, double[] yload) {
         this.train = new PLSTraining(this.ncomp, B, ypred, rms, xscores, yscores, xload, yload);
     }
-    public void PLSRegressionModelSetValidation(int niter, int nlv,
+    public void setValidationData(int niter, int nlv,
             double[] ypred,  double[] rms, double[] rmssd, double[] r2) {
         this.valid = new PLSValidation(this.ncomp, this.nobs, niter, nlv, ypred, rms, rmssd, r2);
     }

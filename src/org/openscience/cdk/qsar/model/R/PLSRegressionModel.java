@@ -76,12 +76,15 @@ import java.util.HashMap;
  * </tr>
  * <td>niter</td><td>Integer</td><td>10</td><td>The number of iterations in the cross-validation. Note that if <code>grpsize</code> is set to a non-zero value then the value of <code>niter</code> will be calculated from the value of <code>grpsize</code></td>
  * </tr>
+ * <td>nlv</td><td>Integer</td><td>None</td><td>The number of latent variables to use during prediction. By default this does not need to be specified and will be obtained from the fitted model</td>
+ * </tr>
  * </tbody>
  * </table>
  * </center>
  * <p>
  * In general the <code>getFit*</code> methods provide access to results from the fit and 
- * <code>getPredict*</code> methods provide access to results from the prediction.
+ * <code>getPredict*</code> methods provide access to results from the prediction. In case validation is specified
+ * then the results from the CV can be obtained via the <code>getValidation*</code> methods. 
  * The values returned correspond to the various 
  * values returned by the <a href="http://www.maths.lth.se/help/R/.R/library/pls.pcr/html/mvr.html" target="_top">pls</a> and 
  * <a href="http://www.maths.lth.se/help/R/.R/library/pls.pcr/html/mvr.html" target="_top">predict.mvr</a>
@@ -104,6 +107,14 @@ public class PLSRegressionModel extends RModel {
     private HashMap params = null;
     private int nvar = 0;
     
+    private void setDefaults() {
+        this.params.put("ncomp", new Boolean(false));
+        this.params.put("method", "SIMPLS");
+        this.params.put("validation", "none");
+        this.params.put("grpsize", new Integer(0));
+        this.params.put("niter", new Integer(10));
+        this.params.put("nlv", new Boolean(false));
+    }
     /**
      * Constructs a PLSRegressionModel object.
      *
@@ -117,6 +128,7 @@ public class PLSRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setDefaults();
     }
 
     /**
@@ -138,6 +150,7 @@ public class PLSRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setDefaults();
 
         int nrow = yy.length;
         this.nvar = xx[0].length;
@@ -182,6 +195,7 @@ public class PLSRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setDefaults();
 
         int nrow = yy.length;
         int ncoly = yy[0].length;
@@ -254,6 +268,30 @@ public class PLSRegressionModel extends RModel {
             throw new QSARModelException(re.toString());
         }
     }
+    /**
+     * Uses a fitted model to predict the response for new observations.
+     *
+     * This function uses a previously fitted model to obtain predicted values
+     * for a new set of observations. If the model has not been fitted prior to this
+     * call an exception will be thrown. Use <code>setParameters</code>
+     * to set the values of the independent variable for the new observations.
+     */
+    public void predict() throws QSARModelException {
+        if (this.modelfit == null) 
+            throw new QSARModelException("Before calling predict() you must fit the model using build()");
+
+        Double[][] newx = (Double[][])this.params.get(new String("newX"));
+        if (newx[0].length != this.nvar) {
+            throw new QSARModelException("Number of independent variables used for prediction must match those used for fitting");
+        }
+            
+        try {
+            this.modelpredict = (PLSRegressionModelPredict)revaluator.call("predictPLS",
+                    new Object[]{ getModelName(), this.params });
+        } catch (Exception re) {
+            throw new QSARModelException(re.toString());
+        }
+    }
 
 
     /**
@@ -317,6 +355,12 @@ public class PLSRegressionModel extends RModel {
                 throw new QSARModelException("The class of the 'niter' object must be Integer");
             }
         }
+        if (key.equals("nlv")) {
+            if (!(obj instanceof Integer)) {
+                throw new QSARModelException("The class of the 'nlv' object must be Integer");
+            }
+        }
+        
         if (key.equals("ncomp")) {
             if (!(obj instanceof Integer[])) {
                 throw new QSARModelException("The class of the 'ncomp' object must be Integer[]");
@@ -331,89 +375,96 @@ public class PLSRegressionModel extends RModel {
     }
        
         
-    /**
-     * Uses a fitted model to predict the response for new observations.
-     *
-     * This function uses a previously fitted model to obtain predicted values
-     * for a new set of observations. If the model has not been fitted prior to this
-     * call an exception will be thrown. Use <code>setParameters</code>
-     * to set the values of the independent variable for the new observations.
-     */
-    public void predict() throws QSARModelException {
-        if (this.modelfit == null) 
-            throw new QSARModelException("Before calling predict() you must fit the model using build()");
-
-        Double[][] newx = (Double[][])this.params.get(new String("newdata"));
-        if (newx[0].length != this.nvar) {
-            throw new QSARModelException("Number of independent variables used for prediction must match those used for fitting");
-        }
-            
-        try {
-            this.modelpredict = (PLSRegressionModelPredict)revaluator.call("predictPLS",
-                    new Object[]{ getModelName(), this.params });
-        } catch (Exception re) {
-            throw new QSARModelException(re.toString());
-        }
-    }
 
     /* interface to fit object */
 
     /**
-     * Gets the rank of the fitted linear model.
+     * The method used to build the PLS model.
      *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * 
-     * @return An integer indicating the rank
+     * @return String containing 'SIMPLS' or 'kernelPLS'
      */
+    String getFitMethod() {
+        return(this.modelfit.getMethod());
+    }
+
+    int[] getFitNComp() {
+        return(this.modelfit.getNComp());
+    }
 
     /**
-     * Returns the residuals.
+     * Gets the coefficents.
      *
-     * The residuals are the response minus the fitted values.
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return A double[] contaning the residuals for each observation
+     * The return value is a 3D array. The first dimension corresponds
+     * to the specific number of LV's (1 or 2 or 3 and so on). The second
+     * dimension corresponds to the independent variables and the third
+     * dimension corresponds to the Y variables.
+     *
+     * @return double[][][] containing the coefficients
      */
+    double[][][] getFitB() {
+        return(this.modelfit.getB());
+    }
+    double[][] getFitRMS() {
+        return(this.modelfit.getTrainingRMS());
+    }
+    double[][][] getFitYPred() {
+        return(this.modelfit.getTrainingYPred());
+    }
+    double[][] getFitXLoading() {
+        return(this.modelfit.getXLoading());
+    }
+    double[][] getFitYLoading() {
+        return(this.modelfit.getYLoading());
+    }
+    double[][] getFitXScores() {
+        return(this.modelfit.getXScores());
+    }
+    double[][] getFitYScores() {
+        return(this.modelfit.getYScores());
+    }
+    /**
+     * Indicates whether CV was used to build the model.
+     *
+     * @return A boolean indicating whether CV was used
+     */
+    boolean getFitWasValidated() {
+        return(this.modelfit.wasValidated());
+    }
+
+
+    /**
+     * The number of iterations used during CV.
+     *
+     * @return An int value indicating the number of iterations in CV
+     */
+    int getValidationIter() {
+        return(this.modelfit.getValidationIter());
+    }
+    /**
+     * The number of latent variables suggested by CV.
+     *
+     * @return An int value indicating the number of LV's
+     */
+    int getValidationLV() {
+        return(this.modelfit.getValidationLV());
+    }
+    double[][] getValidationR2() {
+        return(this.modelfit.getValidationR2());
+    }
+    double[][] getValidationRMS() {
+        return(this.modelfit.getValidationRMS());
+    }
+    double[][] getValidationRMSsd() {
+        return(this.modelfit.getValidationRMSSD());
+    }
+    double[][][] getValidationYPred() {
+        return(this.modelfit.getValidationYPred());
+    }
     
-    /**
-     * Returns the estimated coefficients.
-     *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return A double[] containing the coefficients
-     */
 
-    /**
-     * Returns the residual degrees of freedom.
-     *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return An integr indicating the residual degrees of freedom
-     */
-
-    /**
-     * Returns the fitted mean values.
-     *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return A double[] containing the fitted  values
-     */
 
 
     /* interface to predict object */
-
-    /**
-     * Returns the degrees of freedom for residual.
-     *
-     * @return An integer indicating degrees of freedom
-     */
-
-    /**
-     * Returns the residual standard deviations.
-     *
-     * @return A double indicating residual standard deviations
-     */
 
     /**
      * Returns the predicted values for the prediction set. 
@@ -421,37 +472,9 @@ public class PLSRegressionModel extends RModel {
      * This function only returns meaningful results if the <code>predict</code>
      * method of this class has been called.
      *
-     * @return A double[] containing the predicted values
+     * @return A double[][] containing the predicted values
      */
-
-    /**
-     * Returns the lower prediction bounds. 
-     *
-     * By default the bounds (both lower and upper) are confidence bounds. However
-     * the call to <code>predict</code> can specify prediction bounds.
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A double[] containing the lower bounds for the predictions
-     */
-
-    /**
-     * Returns the upper prediction bounds. 
-     *
-     * By default the bounds (both lower and upper) are confidence bounds. However
-     * the call to <code>predict</code> can specify prediction bounds.
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A double[] containing the upper bounds for the predictions
-     */
-
-    /** 
-     * Returns the standard error of predictions.
-     *
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A double[] containing the standard error of predictions.
-     */
+    double[][] getPredictPredicted() {
+        return(this.modelpredict.getPredictions());
+    }
 }

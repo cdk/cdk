@@ -35,7 +35,24 @@ package org.openscience.cdk.qsar.model.R;
  * @cdk.module qsar
  */
 public class PLSRegressionModelPredict {
-    public PLSRegressionModelPredict() {
+    double[][] preds = null;
+
+    private double[][] VectorToMatrix(double[] v, int nrow, int ncol) {
+        double[][] m = new double[nrow][ncol];
+        for (int i = 0; i < ncol; i++) {
+            for (int j = 0; j < nrow; j++) {
+                m[j][i] = v[j + i*nrow];
+            }
+        }
+        return(m);
+    }
+        
+    public PLSRegressionModelPredict(int ncol, double[] preds) {
+        this.preds = VectorToMatrix(preds, preds.length/ncol, ncol);
+    }
+
+    public double[][] getPredictions() {
+        return(this.preds);
     }
 }
 
