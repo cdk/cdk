@@ -592,10 +592,15 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
             } catch (Exception exception) {
                 exception.printStackTrace(System.err);
             }
-            /* Atom atom = (Atom)clone;
-            atom.setPoint2d(new Point2d(point2d.x, point2d.y));
-            atom.setPoint3d(new Point3d(point3d.x, point3d.y, point3d.z));
-            atom.setFractionalPoint3d(new Point3d(fractionalPoint3d.x, fractionalPoint3d.y, fractionalPoint3d.z)); */
+            if (point2d != null) {
+                ((Atom)clone).setPoint2d(new Point2d(point2d.x, point2d.y));
+            }
+            if (point3d != null) {
+                ((Atom)clone).setPoint3d(new Point3d(point3d.x, point3d.y, point3d.z));
+            }
+            if (fractionalPoint3d != null) {
+                ((Atom)clone).setFractionalPoint3d(new Point3d(fractionalPoint3d.x, fractionalPoint3d.y, fractionalPoint3d.z));
+            }
             return clone;
         }
         

@@ -138,6 +138,90 @@ public class AtomTypeTest extends TestCase {
     }
     
     /**
+     * Method to test the clone() method
+     */
+    public void testClone_MaxBondOrder() {
+        AtomType at = new AtomType("C");
+        at.setMaxBondOrder(1.0);
+        AtomType clone = (AtomType)at.clone();
+        
+        at.setMaxBondOrder(2.0);
+        assertEquals(1.0, clone.getMaxBondOrder(), 0.001);
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_BondOrderSum() {
+        AtomType at = new AtomType("C");
+        at.setBondOrderSum(1.0);
+        AtomType clone = (AtomType)at.clone();
+        
+        at.setBondOrderSum(2.0);
+        assertEquals(1.0, clone.getBondOrderSum(), 0.001);
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_VanderwaalsRadius() {
+        AtomType at = new AtomType("C");
+        at.setVanderwaalsRadius(1.0);
+        AtomType clone = (AtomType)at.clone();
+        
+        at.setVanderwaalsRadius(2.0);
+        assertEquals(1.0, clone.getVanderwaalsRadius(), 0.001);
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_CovalentRadius() {
+        AtomType at = new AtomType("C");
+        at.setCovalentRadius(1.0);
+        AtomType clone = (AtomType)at.clone();
+        
+        at.setCovalentRadius(2.0);
+        assertEquals(1.0, clone.getCovalentRadius(), 0.001);
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_FormalCharge() {
+        AtomType at = new AtomType("C");
+        at.setFormalCharge(1);
+        AtomType clone = (AtomType)at.clone();
+        
+        at.setFormalCharge(2);
+        assertEquals(1, clone.getFormalCharge());
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_FormalNeighbourCount() {
+        AtomType at = new AtomType("C");
+        at.setFormalNeighbourCount(1);
+        AtomType clone = (AtomType)at.clone();
+        
+        at.setFormalNeighbourCount(2);
+        assertEquals(1, clone.getFormalNeighbourCount());
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_Hybridization() {
+        AtomType at = new AtomType("C");
+        at.setHybridization(1);
+        AtomType clone = (AtomType)at.clone();
+        
+        at.setHybridization(2);
+        assertEquals(1, clone.getHybridization());
+    }
+    
+    /**
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {

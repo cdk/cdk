@@ -198,23 +198,90 @@ public class AtomTest extends TestCase {
      */
     public void testClone() {
         Atom atom = new Atom("C");
-        atom.setPoint2d(new Point2d(2, 3));
-        atom.setPoint3d(new Point3d(2, 3, 4));
-        atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         Object clone = atom.clone();
         assertTrue(clone instanceof Atom);
         Atom copy = (Atom)clone;
         assertTrue(atom.compare(copy));
-        
-        // make sure the Point2d fields have been cloned too
-        atom.setX2d(5);
-        assertEquals(copy.getX2d(), 2.0, 0.001);
-        atom.setX3d(5);
-        assertEquals(copy.getX3d(), 2.0, 0.001);
-        atom.setFractX3d(5);
-        assertEquals(copy.getFractX3d(), 2.0, 0.001);
     }
     
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_Point2d() {
+        Atom atom = new Atom("C");
+        atom.setPoint2d(new Point2d(2, 3));
+        Atom clone = (Atom)atom.clone();
+
+        // test cloning
+        atom.setX2d(5);
+        assertEquals(clone.getX2d(), 2.0, 0.001);
+    }
+
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_Point3d() {
+        Atom atom = new Atom("C");
+        atom.setPoint3d(new Point3d(2, 3, 4));
+        Atom clone = (Atom)atom.clone();
+
+        // test cloning
+        atom.setX3d(5);
+        assertEquals(clone.getX3d(), 2.0, 0.001);
+    }
+
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_FractionalPoint3d() {
+        Atom atom = new Atom("C");
+        atom.setFractionalPoint3d(new Point3d(2, 3, 4));
+        Atom clone = (Atom)atom.clone();
+
+        // test cloning
+        atom.setFractX3d(5);
+        assertEquals(clone.getFractX3d(), 2.0, 0.001);
+    }
+
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_HydrogenCount() {
+        Atom atom = new Atom("C");
+        atom.setHydrogenCount(3);
+        Atom clone = (Atom)atom.clone();
+
+        // test cloning
+        atom.setHydrogenCount(4);
+        assertEquals(3, clone.getHydrogenCount());
+    }
+
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_StereoParity() {
+        Atom atom = new Atom("C");
+        atom.setStereoParity(3);
+        Atom clone = (Atom)atom.clone();
+
+        // test cloning
+        atom.setStereoParity(4);
+        assertEquals(3, clone.getStereoParity());
+    }
+
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_Charge() {
+        Atom atom = new Atom("C");
+        atom.setCharge(1.0);
+        Atom clone = (Atom)atom.clone();
+
+        // test cloning
+        atom.setCharge(5.0);
+        assertEquals(1.0, clone.getCharge(), 0.001);
+    }
+
     /**
      * Method to test wether the class complies with RFC #9.
      */

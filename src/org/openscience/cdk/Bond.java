@@ -384,22 +384,27 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 
 
 	/**
-	 *  Clones this bond object. Notice that the references to the atom object
-	 *  remain untouched, i.e. you just get a new bond object that points to the
-	 *  same two atoms as the old one.
+	 * Clones this bond object, including clones of the atoms between which the
+     * bond is defined.
 	 *
-	 *@return    The cloned object
+	 * @return    The cloned object
 	 */
-	public Object clone()
-	{
+	public Object clone() {
 		Bond clone = null;
-		try
-		{
+		try {
 			clone = (Bond) super.clone();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
+        // clone all the Atoms
+        if (atoms != null) {
+		    ((Bond)clone).atoms = new Atom[atoms.length];
+            for (int f = 0; f < atoms.length; f++) {
+                if (atoms[f] != null) {
+                    ((Bond)clone).atoms[f] = (Atom)atoms[f].clone();
+                }
+            }
+        }
 		return clone;
 	}
 

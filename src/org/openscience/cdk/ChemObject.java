@@ -215,7 +215,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 	
 	/**
 	 * Clones this <code>ChemObject</code>. It clones the identifier, flags, properties 
-     * and pointer vectors. The ChemObjectListeners are not cloned.
+     * and pointer vectors. The ChemObjectListeners are not cloned, and neither is the
+     * content of the pointer vectors.
 	 *
 	 * @return  The cloned object
 	 */
@@ -250,6 +251,15 @@ public class ChemObject implements java.io.Serializable, Cloneable {
         }
         // delete all listeners
         ((ChemObject)clone).chemObjects = null;
+        // clone the pointer vectors
+        if (pointers != null) {
+		    ((ChemObject)clone).pointers = new Vector[CDKConstants.MAX_POINTER_INDEX + 1];
+            for (int f = 0; f < pointers.length; f++) {
+                if (pointers[f] != null) {
+                    ((ChemObject)clone).pointers[f] = (Vector)pointers[f].clone();
+                }
+            }
+        }
 		return clone;
 	}
 

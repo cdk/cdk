@@ -200,7 +200,8 @@ public class ChemObjectTest extends TestCase {
         assertEquals(pointers, chemObject1.getPointer(1));
         assertNotSame(chemObject1.getPointer(1), chemObject2.getPointer(1));
         assertEquals(chemObject1.getPointer(1).size(), chemObject2.getPointer(1).size());
-        assertNotSame(atom1, chemObject2.getPointer(1).elementAt(0));
+        // the contents of the vectors are not cloned
+        assertEquals(atom1, chemObject2.getPointer(1).elementAt(0));
     }
     
    public void testShallowCopy() {

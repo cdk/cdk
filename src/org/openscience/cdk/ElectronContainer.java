@@ -63,6 +63,21 @@ public class ElectronContainer extends ChemObject implements java.io.Serializabl
 	{
 		this.electronCount = electronCount;
 	}
+
+    /**
+     * Clones this atom object and its content.
+     *
+     * @return  The cloned object   
+     */
+    public Object clone() {
+        Object clone = null;
+        try {
+            clone = super.clone();
+        } catch (Exception exception) {
+            exception.printStackTrace(System.err);
+        }
+        return clone;
+    }
 }
 
 

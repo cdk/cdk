@@ -89,6 +89,24 @@ public class ElementTest extends TestCase {
         assertTrue(clone instanceof Element);
     }
     
+    public void testClone_Symbol() {
+        Element elem = new Element("C");
+        Element clone = (Element)elem.clone();
+        
+        // test cloning of symbol
+        elem.setSymbol("H");
+        assertEquals("C", clone.getSymbol());
+    }
+    
+    public void testClone_AtomicNumber() {
+        Element elem = new Element("C", 6);
+        Element clone = (Element)elem.clone();
+        
+        // test cloning of atomic number
+        elem.setAtomicNumber(5); // don't care about symbol
+        assertEquals(6, clone.getAtomicNumber());
+    }
+    
     /** Test for RFC #9 */
     public void testToString() {
         Element elem = new Element();

@@ -92,6 +92,45 @@ public class IsotopeTest extends TestCase {
     }
     
     /**
+     * Method to test the clone() method
+     */
+    public void testClone_ExactMass() {
+        Isotope iso = new Isotope("C");
+        iso.setExactMass(1.0);
+        Isotope clone = (Isotope)iso.clone();
+        
+        // test cloning of exact mass
+        iso.setExactMass(2.0);
+        assertEquals(1.0, clone.getExactMass(), 0.001);
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_NaturalAbundance() {
+        Isotope iso = new Isotope("C");
+        iso.setNaturalAbundance(1.0);
+        Isotope clone = (Isotope)iso.clone();
+        
+        // test cloning of exact mass
+        iso.setNaturalAbundance(2.0);
+        assertEquals(1.0, clone.getNaturalAbundance(), 0.001);
+    }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone_MassNumber() {
+        Isotope iso = new Isotope("C");
+        iso.setMassNumber(12);
+        Isotope clone = (Isotope)iso.clone();
+        
+        // test cloning of exact mass
+        iso.setMassNumber(13);
+        assertEquals(12, clone.getMassNumber());
+    }
+    
+    /**
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
