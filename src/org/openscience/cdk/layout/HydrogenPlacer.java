@@ -62,8 +62,8 @@ public class HydrogenPlacer {
 			{
 				if (debug1) System.out.println("Now placing hydrogens at atom " + f);
 				logger.debug("Now placing hydrogens at atom " + f);
-				placeHydrogens2D(atomContainer, atom, bondLength);
-			}
+        placeHydrogens2D(atomContainer, atom, bondLength);
+   		}
 		}
 		logger.debug("Hydrogen Placement finished");
 	}
@@ -92,8 +92,8 @@ public class HydrogenPlacer {
 		AtomContainer unplacedAtoms = new AtomContainer();
 		
 		for (int f = 0; f < connectedAtoms.length; f++) {
-			if (connectedAtoms[f].getSymbol().equals("H")) {
-				unplacedAtoms.addAtom(connectedAtoms[f]);
+			if (connectedAtoms[f].getSymbol().equals("H") && connectedAtoms[f].getPoint2d()==null) {
+		    unplacedAtoms.addAtom(connectedAtoms[f]);
 			} else {
 				placedAtoms.addAtom(connectedAtoms[f]);
 			}
@@ -119,3 +119,4 @@ public class HydrogenPlacer {
 		}				
 	}
 }
+
