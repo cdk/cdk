@@ -41,6 +41,8 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.renderer.color.CPKAtomColors;
+import org.openscience.cdk.renderer.color.AtomColorer;
 
 /**
  * Model for Renderer2D that contains settings for drawing objects.
@@ -88,7 +90,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      * @see #getColorHash()
      */
 	private Hashtable colorHash = new Hashtable();
-    private CDK2DAtomColors colorer = new CDK2DAtomColors();
+    private AtomColorer colorer = new CDK2DAtomColors();
 	
 	private transient Vector listeners = new Vector();
 	
@@ -626,6 +628,26 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
         }
         // logger.debug("Color: " + atomColor.toString());
         return atomColor;
+    }
+
+    /**
+     * Returns the current atom colorer.
+     *
+     * @return  The AtomColorer.
+     */
+    public AtomColorer getAtomColorer()
+    {
+        return colorer;
+    }
+
+    /**
+     * Sets the atom colorer.
+     *
+     * @param ac  the new colorer.
+     */
+    public void setAtomColorer(final AtomColorer ac)
+    {
+        colorer = ac;
     }
 
 	/**

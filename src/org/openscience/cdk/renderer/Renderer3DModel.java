@@ -108,4 +108,25 @@ public class Renderer3DModel {
     public Color getAtomColor(Atom a) {
         return atomColorer.getAtomColor(a);
     }
+
+
+    /**
+     * Returns the current atom colorer.
+     *
+     * @return  The AtomColorer.
+     */
+    public AtomColorer getAtomColorer()
+    {
+        return atomColorer;
+    }
+
+    /**
+     * Sets the atom colorer.
+     *
+     * @param ac  the new colorer.
+     */
+    public void setAtomColorer(final AtomColorer ac)
+    {
+        atomColorer = ac;
+    }
 }

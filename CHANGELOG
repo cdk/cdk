@@ -14,6 +14,8 @@ New:
 * Jmol API and IO from CVS HEAD on 10.05
 * Added AminoAcid templates
 * The libio.cml.Convertor now also accepts AtomContainer
+* Added customization of atom color for Renderer[2D|3D]Model
+  (closes RFE #949751)
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is  returned properly
