@@ -60,6 +60,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(GravitationalIndexDescriptorTest.suite());
 	suite.addTest(BCUTDescriptorTest.suite());
 	suite.addTest(WHIMDescriptorTest.suite());
+	suite.addTest(KappaShapeIndicesDescriptorTest.suite());
         return suite;
     }
     
