@@ -305,8 +305,7 @@
         </target>
         
 	      <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
-        <target id="javacc" name="javacc" depends="nojavacc, dojavacc"/>
-        <target name="dojavacc" depends="init, check" if="hasAnt16" unless="dotjjfiles.uptodate">
+        <target id="javacc" name="javacc" depends="init, check" if="hasAnt16" unless="dotjjfiles.uptodate">
           <delete>
               <fileset id="javacc-generated" 
               dir="${src}/org/openscience/cdk/iupac/parser/" 
@@ -316,23 +315,13 @@
             outputdirectory="${src}/org/openscience/cdk/iupac/parser/" 
             javacchome="${lib}"/>
         </target>
-        <target name="nojavacc" depends="init" unless="hasAnt16">
-          <echo message="No Ant 1.6. Not compiling IUPAC parser"/>
-          <delete>
-            <fileset id="javacc-generated"
-              dir="${src}/org/openscience/cdk/iupac/parser/" 
-              includes="**/*"/>
-            <fileset id="javacc-test"
-              dir="${src}/org/openscience/cdk/test/iupac/" 
-              includes="**/*"/>
-          </delete>
-        </target>
 
         <target id="compile-extra" name="compile-extra" depends="dist-standard, dist-io, dist-render">
             <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
                 <includesfile name="${src}/extra.javafiles"/>
                 <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
 
                 <classpath refid="project.class.path" />
                 <classpath>
@@ -374,6 +363,7 @@
                    debug="${debug}" deprecation="${deprecation}">
                 <includesfile name="${src}/test.javafiles"/>
                 <excludesfile name="${src}/java1.4.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
 
                 <classpath refid="project.class.path" />
                 <classpath>
