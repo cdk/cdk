@@ -28,13 +28,14 @@
 package org.openscience.cdk.geometry;
 
 import java.awt.Dimension;
-import java.util.Vector;
+import java.util.*;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -714,6 +715,38 @@ public class GeometryTools {
         }
     }
     
+    /** 
+      * Returns the atoms which are closes to an atom in an AtomContainer by distance in 3d.
+      *
+      * @param   ac The AtomContainer to examine
+      * @param   a the atom to start from
+      * @param   max the number of neighbours to return
+      * @return  the average bond length 
+     */
+    public static Vector findClosestInSpace(AtomContainer ac, Atom a, int max) throws CDKException{
+      Atom[] atoms=ac.getAtoms();
+      Point3d originalPoint=a.getPoint3d();
+      if(originalPoint==null)
+        throw new CDKException("No point3d, but findClosestInSpace is working on point3ds");
+      Map hm=new TreeMap();
+      for(int i=0;i<atoms.length;i++){
+        if(atoms[i]!=a){
+          if(atoms[i].getPoint3d()==null)
+            throw new CDKException("No point3d, but findClosestInSpace is working on point3ds");
+          double distance=atoms[i].getPoint3d().distance(originalPoint);
+          hm.put(new Double(distance),atoms[i]);
+        }
+      }
+      Set ks=hm.keySet();
+      Iterator it=ks.iterator();
+      Vector returnValue=new Vector();
+      int i=0;
+      while(it.hasNext() && i<max){
+        returnValue.add(hm.get(it.next()));
+        i++;
+      }
+      return(returnValue);
+    }
 }
 
 
