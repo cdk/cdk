@@ -110,7 +110,7 @@
 
                 <copy
                 file="org/openscience/cdk/io/cml/data/cml.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />		
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />
 
                 <jar jarfile="${dist}/jar/cdk.jar"
                 basedir="${build}" />
@@ -142,7 +142,7 @@
 
                 <copy
                 file="org/openscience/cdk/io/cml/data/cml.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />          !
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />
 
                 <jar jarfile="${dist}/jar/cdk-with-java3d.jar"
                 basedir="${build}" />
