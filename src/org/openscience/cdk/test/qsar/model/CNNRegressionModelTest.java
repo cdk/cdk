@@ -51,10 +51,14 @@ public class CNNRegressionModelTest extends TestCase {
             try {
                 String rhome = System.getenv("R_HOME");
                 if (rhome.equals("")) {
-                    fail("CNN Regression test ignored since you must set the\nenvironment variable must point to the location of your R installation");
+                    fail("Linear regression test ignored since the R_HOME variable"+
+                            "\nis either unset or set to the empty string. Make sure\n"+
+                            "it points to your R installation directory");
                 }
             } catch (NullPointerException npe) {
-                fail("CNN Regression test ignored since you must set the\nenvironment variable must point to the location of your R installation");
+                fail("Linear regression test ignored since the R_HOME variable"+
+                        "\nis either unset or set to the empty string. Make sure\n"+
+                        "it points to your R installation directory");
             }
 
 
