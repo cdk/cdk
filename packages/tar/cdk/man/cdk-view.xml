@@ -12,7 +12,8 @@
 
   <refsynopsisdiv>
     <cmdsynopsis>
-      <command>cdk-view</command> <arg>--nojava3d</arg> <arg>--no3d</arg> <arg>file.xml</arg>
+      <command>cdk-view</command> <arg>--nojava3d</arg> <arg>--no3d</arg> <arg>--useJmol</arg> <arg>file.xml</arg>
+      <command>cdk-view</command> <arg>--smiles</arg> <arg>SMILES</arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -31,6 +32,12 @@
           <para>do not view 3D coordinates</para>
         </listitem>
       </varlistentry>
+      <varlistentry>
+        <term>--smiles</term>
+        <listitem>
+          <para>show a 2D representation of the SMILES</para>
+        </listitem>
+      </varlistentry>
     </variablelist>
   </refsect1>
 
@@ -38,8 +45,8 @@
     <title>DESCRIPTION</title>
     <para>
       <command>cdk-view</command> displays to content of the file
-      <filename>file.xml</filename> with the format PDB, XYZ, CML
-      or MDLMol.
+      <filename>file.xml</filename> with the format CML, IChI, MDLMol,
+      PDB and XYZ.
     </para>
   </refsect1>
 

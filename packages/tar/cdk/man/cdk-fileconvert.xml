@@ -13,8 +13,8 @@
   <refsynopsisdiv>
     <cmdsynopsis>
       <command>cdk-fileconvert</command>
-      <arg>-i [format]</arg>
-      <arg>-o [format]</arg>
+      <arg>-i[format]</arg>
+      <arg>-o[format]</arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -40,16 +40,21 @@
     <title>DESCRIPTION</title>
     <para>
       <command>cdk-fileconvert</command> reads a input file and converts
-	  it to a new file with an other format.
-	  Supported input formats are
-	  <acronym>CML</acronym>,
-	  <acronym>MDL Molfile</acronym>,
-	  <acronym>PDB</acronym> and
-	  <acronym>XYZ</acronym>.
-	  Supported output formats are
-	  <acronym>CML</acronym>,
-	  <acronym>MDL Molfile</acronym> and
-          <acronym>SMILES</acronym>.
+      it to a new file with an other format.
+      Supported input formats are
+      <acronym>CML</acronym>,
+      <acronym>IChI</acronym>,
+      <acronym>MDL Molfile</acronym>,
+      <acronym>PDB</acronym>,
+      <acronym>PMP</acronym>,
+      <acronym>SHELX</acronym> and
+      <acronym>XYZ</acronym>.
+      Supported output formats are
+      <acronym>CML</acronym>,
+      <acronym>MDL Molfile</acronym>,
+      <acronym>SHELX</acronym>,
+      <acronym>SMILES</acronym> and
+      <acronym>SVG</acronym>.
     </para>
   </refsect1>
 
