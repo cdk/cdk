@@ -703,6 +703,19 @@ public class LoggingTool {
      * toString() method to concatenate the objects.
      *
      * @param object Object to apply toString() too and output
+     * @param number boolean to concatenate to object
+     */
+    public void warn(Object object, boolean bool) {
+        if (debug) {
+            warnString("" + object + bool);
+        }
+    }
+    
+    /**
+     * Shows WARN output for the given Object's. It uses the
+     * toString() method to concatenate the objects.
+     *
+     * @param object Object to apply toString() too and output
      * @param number double to concatenate to object
      */
     public void warn(Object object, double number) {
