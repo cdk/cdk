@@ -1247,12 +1247,12 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		ElectronContainer electronContainer;
 		StringBuffer stringContent = new StringBuffer();
 		stringContent.append("AtomContainer(");
-		stringContent.append(this.hashCode() + ", ");
-		stringContent.append("#A:" + getAtomCount() + ", ");
-		stringContent.append("#EC:" + getElectronContainerCount() + ", ");
+		stringContent.append(this.hashCode()).append(", ");
+		stringContent.append("#A:").append(getAtomCount()).append(", ");
+		stringContent.append("#EC:").append(getElectronContainerCount()).append(", ");
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			stringContent.append(getAtomAt(i).toString() + ", ");
+			stringContent.append(getAtomAt(i).toString()).append(", ");
 		}
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
@@ -1260,10 +1260,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 			// this check should be removed!
 			if (electronContainer != null)
 			{
-				stringContent.append(electronContainer.toString() + ", ");
+				stringContent.append(electronContainer.toString()).append(", ");
 			}
 		}
-        stringContent.append(", AP:[#" + atomParities.size() + ", ");
+        stringContent.append(", AP:[#").append(atomParities.size()).append(", ");
         Enumeration parities = atomParities.elements();
         while (parities.hasMoreElements()) {
 			stringContent.append(((AtomParity)parities.nextElement()).toString());

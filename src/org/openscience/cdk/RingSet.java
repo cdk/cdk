@@ -230,8 +230,8 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
     public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("RingSet(");
-        buffer.append(this.hashCode() + ", ");
-        buffer.append("R=" + size() + ", ");
+        buffer.append(this.hashCode()).append(", ");
+        buffer.append("R=").append(size()).append(", ");
         Enumeration rings = elements();
         while (rings.hasMoreElements()) {
             Ring possibleRing = (Ring)rings.nextElement();

@@ -370,11 +370,11 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     public String toString() {
         StringBuffer description = new StringBuffer();
         description.append("Reaction(");
-        description.append(getID() + ", ");
-        description.append("#M:" + mappingCount + ", ");
-        description.append("reactants=" + reactants.toString() + ", ");
-        description.append("products=" + products.toString() + ", ");
-        description.append("agents=" + agents.toString());
+        description.append(getID()).append(", ");
+        description.append("#M:").append(mappingCount).append(", ");
+        description.append("reactants=").append(reactants.toString()).append(", ");
+        description.append("products=").append(products.toString()).append(", ");
+        description.append("agents=").append(agents.toString());
         description.append(")");
         return description.toString();
     }

@@ -104,12 +104,12 @@ public class AtomParity implements java.io.Serializable, Cloneable  {
     public String toString() {
         StringBuffer resultString = new StringBuffer();
         resultString.append("AtomParity(");
-        resultString.append(this.hashCode() + ", ");
-        resultString.append(centralAtom.getID() + ", ");
-        resultString.append("F:[" + neighbors[0].getID() + ", ");
-        resultString.append(neighbors[1].getID() + ", ");
-        resultString.append(neighbors[2].getID() + ", ");
-        resultString.append(neighbors[3].getID() + "], ");
+        resultString.append(this.hashCode()).append(", ");
+        resultString.append(centralAtom.getID()).append(", ");
+        resultString.append("F:[").append(neighbors[0].getID()).append(", ");
+        resultString.append(neighbors[1].getID()).append(", ");
+        resultString.append(neighbors[2].getID()).append(", ");
+        resultString.append(neighbors[3].getID()).append("], ");
         resultString.append(parity);
         resultString.append(")");
         return resultString.toString();

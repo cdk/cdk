@@ -233,12 +233,12 @@ public class Crystal extends AtomContainer implements java.io.Serializable, Clon
     public String toString() {
         StringBuffer resultString = new StringBuffer();
         resultString.append("Crystal{");
-        resultString.append("SG=" + getSpaceGroup() + ", ");
-        resultString.append("Z=" + getZ() + ", ");
-        resultString.append("a=(" + aAxis.x + ", " + aAxis.y + ", " + aAxis.z + "), ");
-        resultString.append("b=(" + bAxis.x + ", " + bAxis.y + ", " + bAxis.z + "), ");
-        resultString.append("c=(" + cAxis.x + ", " + cAxis.y + ", " + cAxis.z + "), ");
-        resultString.append("#A=" + getAtomCount() + "}");
+        resultString.append("SG=").append(getSpaceGroup()).append(", ");
+        resultString.append("Z=").append(getZ()).append(", ");
+        resultString.append("a=(").append(aAxis.x).append(", ").append(aAxis.y).append(", ").append(aAxis.z).append("), ");
+        resultString.append("b=(").append(bAxis.x).append(", ").append(bAxis.y).append(", ").append(bAxis.z).append("), ");
+        resultString.append("c=(").append(cAxis.x).append(", ").append(cAxis.y).append(", ").append(cAxis.z).append("), ");
+        resultString.append("#A=").append(getAtomCount()).append("}");
         return resultString.toString();
     }
 

@@ -319,14 +319,14 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     public String toString() {
         StringBuffer resultString = new StringBuffer();
         resultString.append("AtomType(");
-        resultString.append(getAtomTypeName() + ", ");
-        resultString.append("MBO:" + getMaxBondOrder() + ", ");
-        resultString.append("BOS:" + getBondOrderSum() + ", ");
-        resultString.append("FC:" + getFormalCharge() + ", ");
-        resultString.append("H:" + getHybridization() + ", ");
-        resultString.append("NC:" + getFormalNeighbourCount() + ", ");
-        resultString.append("CR:" + getCovalentRadius() + ", ");
-        resultString.append("VDWR:" + getVanderwaalsRadius() + ", ");
+        resultString.append(getAtomTypeName()).append(", ");
+        resultString.append("MBO:").append(getMaxBondOrder()).append(", ");
+        resultString.append("BOS:").append(getBondOrderSum()).append(", ");
+        resultString.append("FC:").append(getFormalCharge()).append(", ");
+        resultString.append("H:").append(getHybridization()).append(", ");
+        resultString.append("NC:").append(getFormalNeighbourCount()).append(", ");
+        resultString.append("CR:").append(getCovalentRadius()).append(", ");
+        resultString.append("VDWR:").append(getVanderwaalsRadius()).append(", ");
         resultString.append(super.toString());
         resultString.append(")");
         return resultString.toString(); 
