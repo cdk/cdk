@@ -336,6 +336,8 @@ public class MACiEReader extends DefaultChemObjectReader {
                         logger.error("Cannot find secondary file: " + filename);
                     }
                 }
+                // convert PseudoAtom's in EnzymeResidueLocator's if appropriate
+                markEnzymeResidueLocatorAtoms(currentReaction);
                 // now parse annotation
                 if (reactionStepAnnotation != null) {
                     parseReactionAnnotation(reactionStepAnnotation, currentReaction);
@@ -354,6 +356,26 @@ public class MACiEReader extends DefaultChemObjectReader {
        } else {
             logger.warn("Unrecognized sub level field " + field + 
                 " around line " + input.getLineNumber());
+        }
+    }
+    
+    private void markEnzymeResidueLocatorAtoms(Reaction currentReaction) {
+        Atom[] atoms = ReactionManipulator.getAllInOneContainer(currentReaction).getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            if (atoms[i] instanceof PseudoAtom) {
+                PseudoAtom pseudo = (PseudoAtom)atoms[i];
+                Matcher residueLocatorMatcher = residueLocator.matcher(pseudo.getLabel());
+                if (residueLocatorMatcher.matches()) {
+                    logger.debug("Found residueLocator: " + pseudo.getLabel());
+                    // replace atom with enzymeResidueLocator
+                    AtomContainer container = ReactionManipulator.getRelevantAtomContainer(
+                        currentReaction, pseudo
+                    );
+                    logger.debug("Replacing the pseudo atom with a ezymeResidueLocator atom");
+                    container.removeAtom(pseudo);
+                    container.addAtom(new EnzymeResidueLocator(pseudo));
+                }
+            }
         }
     }
     

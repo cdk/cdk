@@ -124,7 +124,7 @@ public class PDBValidator implements ValidatorInterface {
             for (int i=0; i<validateAtoms.length; i++) {
                 // only testing PseudoAtom's
                 Atom validateAtom = validateAtoms[i];
-                if (validateAtom instanceof PseudoAtom) {
+                if (validateAtom instanceof EnzymeResidueLocator) {
                     ValidationTest badResidueLocator = new ValidationTest(validateAtom,
                         "ResidueLocator does not exist in PDB entry."
                     );
