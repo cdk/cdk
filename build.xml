@@ -112,16 +112,15 @@
                 file="org/openscience/cdk/config/structgen_atomtypes.xml"
                 tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
 
-		
-                <jar jarfile="${dist}/jar/cdk.jar"
-                basedir="${build}" />
-
                 <mkdir
                 dir="${build}/org/openscience/cdk/io/cml/data" />
 
                 <copy
                 file="org/openscience/cdk/io/cml/data/cml.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />
+                tofile="${build}/org/openscience/cdk/io/cml/data/cml.dtd" />		
+
+                <jar jarfile="${dist}/jar/cdk.jar"
+                basedir="${build}" />
 
                 <jar jarfile="${dist}/jar/cdk-cml.jar"
                 basedir="${build}"
