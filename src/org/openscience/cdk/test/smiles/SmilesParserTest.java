@@ -898,7 +898,7 @@ public class SmilesParserTest extends TestCase
             assertEquals(9.0, totalBondOrder, 0.001);
             // I can also check wether the total neighbor count around the 
             // nitrogen is 3, all single bonded
-            Atom nitrogen = mol.getAtomAt(4); // the second atom
+            Atom nitrogen = mol.getAtomAt(3); // the second atom
             assertEquals("N", nitrogen.getSymbol());
             totalBondOrder = 0.0;
             bonds = mol.getConnectedBonds(nitrogen);
