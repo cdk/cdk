@@ -24,7 +24,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  
+ *
  */
 package org.openscience.cdk.controller;
 
@@ -277,8 +277,9 @@ public class JCPController2D {
 
             logger.debug("Is popup trigger: " + event.isPopupTrigger());
             logger.debug("Button number: " + event.getButton());
+            logger.debug("Click count: " + event.getClickCount());
             
-            if (event.isPopupTrigger()) {
+            if (event.isPopupTrigger() || event.getButton() == MouseEvent.BUTTON3) {
                 logger.info("Popup menu triggered...");
                 
                 Atom atomInRange = getAtomInRange(mouseX, mouseY);
@@ -356,6 +357,11 @@ public class JCPController2D {
          * @param   e    MouseEvent object
          **/
         public void mouseReleased(MouseEvent event) {
+            
+            logger.debug("Is popup trigger: " + event.isPopupTrigger());
+            logger.debug("Button number: " + event.getButton());
+            logger.debug("Click count: " + event.getClickCount());
+            
             if (event.getButton() == MouseEvent.BUTTON1) {
                 logger.debug("Mouse released in modus: " + c2dm.getDrawModeString());
 
