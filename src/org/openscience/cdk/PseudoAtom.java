@@ -135,7 +135,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
      * Dummy method: the exact mass is 0, final. 
      */
     public void setExactMass(double mass) {
-        // hydrogen count = 0, always
+        // exact mass = 0, always
     }
 
     /**
@@ -156,7 +156,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
      * Dummy method: the partial charge is 0, final. 
      */
     public void setCharge(double charge) {
-        // formal charge = 0, always
+        // partial charge = 0, always
     }
     /**
      * Dummy method: the stereo parity is undefined, final.
