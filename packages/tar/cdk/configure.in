@@ -178,7 +178,7 @@ then
 	    if test -n "$dir"
 	    then
 		AC_MSG_RESULT("$dir")
-		PATHTODBKXSLHTML="$dir/html/chunker.xsl"
+		PATHTODBKXSLHTML="$dir/html"
 		PATHTODBKXSLCOMMON="$dir/common/common.xsl"
 	    fi
 	    test -n "$PATHTODBKXSLHTML" && break
@@ -193,7 +193,7 @@ else
 	then
 	    AC_MSG_WARN($DBK_XSL_STYLESHEETS isn't present on the system)
 	fi
-	PATHTODBKXSLHTML="$DBK_XSL_STYLESHEETS/html/chunker.xsl"
+	PATHTODBKXSLHTML="$DBK_XSL_STYLESHEETS/html"
 	PATHTODBKXSLCOMMON="$DBK_XSL_STYLESHEETS/common/common.xsl"
     else
 	AC_MSG_RESULT($PATHTODBKXSLHTML)
