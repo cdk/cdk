@@ -20,7 +20,7 @@ from the area of structural chemo- and bioinformatics. As such, it is intended f
 programmers, who wish to save some effort by reusing code. It is not intended for the enduser. 
 If you consider yourself to be more like user, you might not find what you wanted. 
 Please refer to other projects like the JChemPaint project (http://jchempaint.sourceforge.net)
-or the JMol project (http://jmol.sourceforge.net) for programs that actually take advantage of the 
+or the Jmol project (http://jmol.sourceforge.net) for programs that actually take advantage of the 
 CDK library.
 
 2. Compiling
@@ -31,6 +31,16 @@ Ant (http://jakarta.apache.org/ant/):
 cdk/$ ls build.xml
 build.xml
 cdk/$ ant
+
+2.1 Applying patches
+
+A list of available patches is given by the command
+
+cdk/$ ant info
+
+In brackets the names of the patches are given. To apply a patch when compiling, type:
+
+cdk/$ ant -Ddo.lazy.creation=yes clean dist-all
 
 3. Running tests
 
