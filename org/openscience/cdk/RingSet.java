@@ -1,4 +1,4 @@
-/* Ring.java
+/* RingSet.java
  * 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
@@ -23,27 +23,60 @@
 
 package org.openscience.cdk;
 
+import java.util.Vector;
 
-public class Ring extends AtomContainer
-{
 
-	/**
-	 * The constructor
-	 *
-	 */
-	public Ring()
-	{
-		super();
-	}
+/**
+ *  Implementation of a set of Rings.
+ *  Maintains a Vector "rings" to store "ring" objects
+ */
+public class RingSet extends Vector{
 	
 
 	/**
-	 * Returns the number of atoms participating in this ring
+	 * The constructor.
 	 *
-	 * @return    The number of atoms in this ring 
 	 */
-	public int getSize()
+	public RingSet()
 	{
-		return atoms.length;
+		super();
+	}
+
+	/**
+	 * Checks - and returns 'true' - if a certain ring is already
+	 * stored in this setOfRings
+	 *
+	 * @param   newRing  The ring to be tested if it is already stored here
+	 * @return     true if it is already stored
+	 */
+	public boolean ringAlreadyInSet(Ring newRing)
+	{
+		Ring ring;
+		Bond[] bonds;
+		int equalCount = 0;
+		for (int f = 0; f < this.size(); f++)
+		{
+			ring = (Ring)this.elementAt(f);
+			bonds = ring.getBonds();
+			if (bonds.length == newRing.getBonds().length)
+			{
+				for (int i = 0; i < bonds.length; i++)
+				{
+					for (int n = 0; n < bonds.length; n++)
+					{
+						if (bonds[i].equals(newRing.getBond(n)))
+						{
+							equalCount++;
+							break;
+						}
+					}
+				}
+				if (equalCount == bonds.length)
+				{
+					return true;
+				}
+			}
+		}
+		return false;	
 	}
 }

@@ -55,13 +55,14 @@ public class SSSRFinder
 	 * @param   molecule  
 	 * @return     
 	 */
-	public  Ring[] findSSSR(Molecule molecule)
+	public  RingSet findSSSR(Molecule molecule)
 	{
-		Ring[] sorf = new Ring[0];
+		RingSet sssr = new RingSet();
 		
 		
 		Atom smallest;
-		int smallestDegree;
+		int smallestDegree, nodesToBreakCounter;
+		Atom[] rememberNodes;
 		Ring ring;
 	
 		//Two Vectors - as defined in the article. One to hold the
@@ -119,15 +120,37 @@ public class SSSRFinder
 			// they are part of.
 			else if (smallestDegree == 2)
 			{
+				rememberNodes = new Atom[nodesN2.size()];
+				nodesToBreakCounter = 0;
+				for (int f = 0; f < nodesN2.size(); f++)
+				{
+					ring = findSRing((Atom)nodesN2.elementAt(f), molecule);
+					if (ring.getSize() > 0)
+					{
+						// check, if this ring already is in SSSR
+						if (!sssr.ringAlreadyInSet(ring))
+						{
+							sssr.addElement(ring);
+							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
+							nodesToBreakCounter++;
+						}
+					}
+				}
+				if (nodesToBreakCounter == 0){
+					nodesToBreakCounter = 1;
+					rememberNodes[0] = (Atom)nodesN2.elementAt(0);
+				}
+				for (int f = 0; f < nodesToBreakCounter; f++){
+//					breakBond(rememberNodes[f], molecule);
+				}
 			}
-			
 			// if there are nodes of degree 3
 			else if (smallestDegree == 3)
 			{
 			}
 			
 		}while(trimSet.size() < fullSet.size());
-	return sorf;	  
+	return sssr;	  
 	}
 
 
@@ -140,23 +163,24 @@ public class SSSRFinder
 	 * @param   molecule  The molecule that contains the rootNode
 	 * @return     The smallest Ring rootnode is part of
 	 */
-	public Ring findSRing(Atom rootNode, Molecule molecule)
+	private Ring findSRing(Atom rootNode, Molecule molecule)
 	{
 		Atom[] conAtoms;
 		Atom node, neighbor, mAtom; 
-		int source, mNumber, frontNode, neighborNumber; 
+//		int source, mNumber, frontNode, neighborNumber; 
 		/** OKatoms is Figueras nomenclature, giving the number of 
 		    atoms in the structure */
 		int OKatoms = molecule.getAtomCount();
 		/** queue for Breadth First Search of this graph */
 		Queue queue = new Queue();
-		/** ringsset stores the smallest ring found and returns it */
-		Ring ringset = new Ring();
+//		/** ringsset stores the smallest ring found and returns it */
+//		Ring ringset = new Ring();
 		/* Initialize a path Vector for each node
 		*/
 		Vector path[] = new Vector[OKatoms];
 		Vector intersection = new Vector();
 		Vector ring = new Vector();
+		initPath(molecule);
 
 		for (int f = 0; f < OKatoms; f++){
 //			path[f] = new Vector();		
@@ -204,7 +228,7 @@ public class SSSRFinder
 //									System.out.println("Path of m: " + path[mNumber].toString());
 //								}
 								ring = getUnion(node.pointers[PATH], mAtom.pointers[PATH]);
-								return ring;
+								return prepareRing(ring,molecule);
 //								return prepareRing(ring, tempAtomSet);
 							}
 						}
@@ -230,8 +254,36 @@ public class SSSRFinder
 
 									
 	
+	
 
-
+	/**
+	 * Returns the ring that is formed by the atoms in the given vector. 
+	 *
+	 * @param   vec  The vector that contains the atoms of the ring
+	 * @param   mol  The molecule this ring is a substructure of
+	 * @return     The ring formed by the given atoms
+	 */
+	private Ring prepareRing(Vector vec, Molecule mol)
+	{
+		Ring ring = new Ring();
+		int atomCount = vec.size();
+		Atom[] atoms = new Atom[atomCount];
+		vec.copyInto(atoms);
+		ring.setAtoms(atoms);
+		try
+		{
+			for (int i = 0; i < atomCount - 1; i++)
+			{
+				ring.setBond(i,mol.getBond(atoms[i], atoms[i + 1]));
+			}
+			ring.setBond(atomCount - 1, mol.getBond(atoms[0], atoms[atomCount]));
+		}
+		catch (Exception exc)
+		{
+			System.out.println(exc.toString());
+		}
+		return ring;
+	}
 		
 	/**
 	 * removes all bonds connected to the given atom leaving it with degree zero.
@@ -239,7 +291,7 @@ public class SSSRFinder
 	 * @param   atom  The atom to be disconnecred
 	 * @param   molecule  The molecule containing the atom
 	 */
-	 public void trim(Atom atom, Molecule molecule)
+	 private void trim(Atom atom, Molecule molecule)
 	 {
 	 	for (int i = 0; i < molecule.getBondCount(); i++)
 	 	{
@@ -252,6 +304,12 @@ public class SSSRFinder
 		// you are erased! Har, har, har.....  >8-)
 	 }
 	  
+
+	/**
+	 * initializes a path vector in every Atom of the given molecule
+	 *
+	 * @param   molecule  The given molecule
+	 */
 	private void initPath(Molecule molecule)
 	{
 	 	for (int i = 0; i < molecule.getAtomCount(); i++)
@@ -261,8 +319,6 @@ public class SSSRFinder
 			atom.pointers[PATH] = new Vector();
 	 	}		
 	}
-			 
-		
 
 	/**
 	 * Returns a Vector that contains the intersection of Vectors vec1 and vec2
@@ -279,9 +335,6 @@ public class SSSRFinder
 		return is;
 	}	
 
-	
-		
-
 	/**
 	 * Returns a Vector that contains the union of Vectors vec1 and vec2
 	 *
@@ -296,10 +349,6 @@ public class SSSRFinder
 		}	
 		return is;
 	}	
-
-
-	
-	
 
 	/**
 	 * merges two vectors into one
@@ -317,5 +366,73 @@ public class SSSRFinder
 
 	}
 	
-
+	
+	
+	
+	
+	public void breakBond(Atom atom, Molecule molecule)
+	{
+		
+	}
+	
+	
+	
+	
+	
+//	
+//	
+//	/** Eliminates the last bond of this node from the connectiontable*/
+//	public  void breakBond(int thisNode, Atom[] tempAtomSet){
+//		int degree = tempAtomSet[thisNode].degree;
+//		// remember the bond partner of the last bond 
+//		int partner = tempAtomSet[thisNode].nodeTable[degree - 1];
+//		// now delete the bond
+//		tempAtomSet[thisNode].nodeTable[degree - 1] = 0;
+//		tempAtomSet[thisNode].degree --;
+//		// find the same bond for 'partner' and delete it
+//		for (int f = 0; f < tempAtomSet[partner].degree; f++){
+//			if (tempAtomSet[partner].nodeTable[f] == thisNode){
+//				tempAtomSet[partner].nodeTable[f] = 0;
+//				for (int g = f; g < tempAtomSet[partner].degree - 1; g++){
+//					tempAtomSet[partner].nodeTable[g] = tempAtomSet[partner].nodeTable[g+1];
+// 				}
+// 				tempAtomSet[partner].nodeTable[tempAtomSet[partner].degree - 1] = 0;
+// 				tempAtomSet[partner].degree --;
+// 				break;	
+//			}	
+//		}		
+//	}
+//	
+//	/** Eliminate the last bond of this node from the connectiontable*/
+//	public  void breakBond(int from, int to,  Atom[] tempAtomSet){
+//		int degree;
+//		for (int f = 0; f < tempAtomSet[from].degree; f++){
+//			if (tempAtomSet[from].nodeTable[f] == to){
+//				degree = tempAtomSet[from].degree;
+//				for (int g = f; g < tempAtomSet[from].degree - 1; g++){
+//					tempAtomSet[from].nodeTable[g] = tempAtomSet[from].nodeTable[g+1];
+// 				}
+// 				tempAtomSet[from].nodeTable[tempAtomSet[from].degree - 1] = 0;
+// 				tempAtomSet[from].degree --;
+// 				break;	
+//			}	
+//		}		
+//		for (int f = 0; f < tempAtomSet[to].degree; f++){
+//			if (tempAtomSet[to].nodeTable[f] == from){
+//				for (int g = f; g < tempAtomSet[to].degree - 1; g++){
+//					tempAtomSet[to].nodeTable[g] = tempAtomSet[to].nodeTable[g+1];
+// 				}
+// 				tempAtomSet[to].nodeTable[tempAtomSet[to].degree - 1] = 0;
+// 				tempAtomSet[to].degree --;
+// 				break;	
+//			}	
+//		}		
+//	}
+//	
+//	
+//	
+//	
+	
+	
+	
 }

@@ -183,7 +183,36 @@ public class AtomContainer extends ChemObject {
 		return bonds[number];
 	}
 	
-	
+
+	/**
+	 * Returns the bond that connectes the two given atoms.
+	 *
+	 * @param   a1  The first atom
+	 * @param   a2  The second atom
+	 * @return     The bond that connectes the two atoms
+	 * @exception   Exception  thrown if the two atoms are not connected
+	 */
+	public Bond getBond(Atom a1, Atom a2) throws Exception
+	{
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bonds[i].contains(a1))
+			{
+				try
+				{
+					if (bonds[i].getConnectedAtom(a1) == a2)
+					{
+						return bonds[i];
+					}
+				}
+				catch (Exception exc)
+				{
+					throw exc;
+				}
+			}
+		}
+		throw new Exception("atoms not connected");
+	}
 
 	/**
 	 * Returns an array of all atoms connected to the given atom.
@@ -200,7 +229,7 @@ public class AtomContainer extends ChemObject {
 		for (int i = 0; i < bondCount; i++)
 		{
 			bond = bonds[i];
-			if (bond.participateInBond(atom))
+			if (bond.contains(atom))
 			{
 				try
 				{

@@ -113,7 +113,7 @@ public class Bond extends ElectronContainer
     
 
 	/**
-	 * Returns the atom connected to the given atom or null if there is none.
+	 * Returns the atom connected to the given atom.
 	 *
 	 * @param   atom  The atom the bond partner is searched of
 	 * @return     the connected atom or null
