@@ -21,6 +21,7 @@
 
   <target id="clean" name="clean">
     <delete file="javancss-tmp.xml"/>
+    <delete file="keyword.index.xml"/>
     <delete file="${source.dir}/javancss-data.xml"/>
     <delete file="${source.dir}/javadoc-data.xml"/>
     <delete file="${source.dir}/autolayout.xml"/>
@@ -123,7 +124,7 @@
       style="website.cdk.xsl"/>
   </target>
 
-  <target name="javancss" unless="javancss.uptodate">
+  <target name="javancss" depends="check.buildsystem" unless="javancss.uptodate">
     <java classname="javancss.Main" fork="yes"
       output="javancss-tmp.xml">
       <arg value="-package"/>
