@@ -67,7 +67,7 @@ public class Atom extends ChemObject implements Cloneable {
 	 */
 	public Atom(String elementString)
 	{
-		this.element = new Element(elementString);
+		this(new Element(elementString));
 	}
 
 
@@ -79,6 +79,8 @@ public class Atom extends ChemObject implements Cloneable {
 	public Atom(Element element)
 	{
 		this.element = element;
+		point2D = new Point2d();
+		point3D = new Point3d();
 	}
 
 
@@ -369,6 +371,7 @@ public class Atom extends ChemObject implements Cloneable {
 
 	
 }
+
 
 
 

@@ -139,15 +139,19 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
 	System.out.println("property: " + propertyValue);
 	if (objectType.equals("Atom")) {
 	    if (propertyType.equals("type")) {
-		currentAtom.setElement(new Element(propertyValue));
+			currentAtom.setElement(new Element(propertyValue));
 	    } else if (propertyType.equals("x2")) {
-		System.out.println(new Double(propertyValue).doubleValue());
-		currentAtom.setX2D(new Double(propertyValue).doubleValue());
+			Double value = new Double(propertyValue);
+            double val = value.doubleValue();
+			System.out.println(val);
+			System.out.println(currentAtom);
+			currentAtom.setX2D(val);
+			System.out.println("Done");
 	    } else if (propertyType.equals("y2")) {
-		currentAtom.setY2D(new Double(propertyValue).doubleValue());
+			currentAtom.setY2D(new Double(propertyValue).doubleValue());
 	    } else if (propertyType.equals("id")) {
-		System.out.println("id" + propertyValue);
-		atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
+			System.out.println("id" + propertyValue);
+			atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
 	    }
 	} else if (objectType.equals("Bond")) {
 	    if (propertyType.equals("atom1")) {
