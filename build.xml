@@ -464,7 +464,7 @@
                         <fileset dir="." includes="README" />
                         <fileset dir="." includes="CHANGELOG" />
                 </copy>
-                <copy todir="${sourcedist.dir}/jar">                        
+                <copy todir="${sourcedist.dir}/jar">
                         <fileset dir="jar" />
                 </copy>
                 <copy todir="${sourcedist.dir}/data">
@@ -479,6 +479,10 @@
                 </copy>
                 <copy todir="${sourcedist.dir}/${src}/">
                     <fileset dir="${src}/" includes="*.manifest" />
+                </copy>
+                <mkdir dir="${sourcedist.dir}/doc/" />
+                <copy todir="${sourcedist.dir}/doc/">
+                    <fileset dir="doc/" includes="lgpl.license" />
                 </copy>
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
                 <gzip zipfile="${package}.tar.gz" src="cdk-source-${DSTAMP}.tar" />
