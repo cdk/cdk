@@ -5,6 +5,14 @@
 
   <!-- This file is preferable edited in jEdit with the XML plugin installed -->
 
+  <bibtex:entry id="BER2001">
+    <bibtex:misc>
+      <bibtex:author>Bernstein, H.J.</bibtex:author>
+      <bibtex:title>Manual RasMol 2.7.2.1 - CPK Colours</bibtex:title>
+      <bibtex:url>http://www.openrasmol.org/doc/rasmol.html#cpkcolours</bibtex:url>
+    </bibtex:misc>
+  </bibtex:entry>
+  
   <bibtex:entry id="BGdV04a">
     <bibtex:article>
       <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
