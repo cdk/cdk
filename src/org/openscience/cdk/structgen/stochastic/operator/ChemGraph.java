@@ -1,10 +1,10 @@
 package org.openscience.cdk.structgen.stochastic.operator;
 
-
 import java.util.Vector;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.math.RandomNumbersTool;
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 
 public class ChemGraph
 {
@@ -25,7 +25,7 @@ public class ChemGraph
 		dim = chrom.getAtomCount();
 		numAtoms = (int)(dim/2);
 		contab = new double[dim][dim];
-		contab = chrom.getConnectionMatrix();
+		contab = ConnectionMatrix.getMatrix(chrom);
 	}
 	
 	public Vector pickDFgraph()

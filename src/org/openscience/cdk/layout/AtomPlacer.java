@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -42,6 +41,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -482,7 +482,7 @@ public class AtomPlacer
 	public AtomContainer getInitialLongestChain(Molecule molecule) throws org.openscience.cdk.exception.CDKException
 	{
 		logger.debug("Start of getInitialLongestChain()");
-		double[][] conMat = molecule.getConnectionMatrix();
+		double[][] conMat = ConnectionMatrix.getMatrix(molecule);
 		logger.debug("Computing all-pairs-shortest-pathes");
 		int[][] apsp = PathTools.computeFloydAPSP(conMat);
 		int maxPathLength = 0;

@@ -30,6 +30,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
 import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 
 /**
  * Collection of methods for the calculation of topological indices of a molecular graph.
@@ -88,7 +89,7 @@ public class HuLuIndexTool
         throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		boolean debug = false;
-		double[][] adjaMatrix = atomContainer.getConnectionMatrix();
+		double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 		if (debug)
 		{
 			System.out.println("adjacency matrix: ");
@@ -141,7 +142,7 @@ public class HuLuIndexTool
 
 		int k = 0;
 		double[] weightArray = new double[atomContainer.getAtomCount()];
-		double[][] adjaMatrix = atomContainer.getConnectionMatrix();
+		double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 		
 		int[][] apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);		
 		int[] atomLayers = getAtomLayers(apspMatrix);

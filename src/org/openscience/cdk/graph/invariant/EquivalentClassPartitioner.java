@@ -25,6 +25,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 
 /**
  * An algorithm for topological symmetry.
@@ -60,7 +61,7 @@ import org.openscience.cdk.graph.PathTools;
 	 */
 	public EquivalentClassPartitioner(AtomContainer atomContainer)
 	{
-		adjaMatrix = atomContainer.getConnectionMatrix();
+		adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 		apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);
 		layerNumber=1;
 		nodeNumber=atomContainer.getAtoms().length;

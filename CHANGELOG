@@ -4,10 +4,15 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* Added the cdk.graph.matrix package
 
 Fixes:
+* Partly cleaned up source code of core classes using the PMD reports
+* Partly cleaned up JavaDoc of core classes using the DocCheck reports
 
 API changes:
+* Moved AtomContainer.getAdjacencyMatrix to cdk.graph.matrix.AdjecencyMatrix
+* Moved AtomContainer.getConnectionMatrix to cdk.graph.matrix.ConnectionMatrix
 
 20040626 Release
 ------------------------------------

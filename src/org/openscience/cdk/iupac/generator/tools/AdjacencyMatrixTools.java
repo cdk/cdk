@@ -25,6 +25,7 @@ package org.openscience.cdk.iupac.generator.tools;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 
 /**
  * Methods for playing with Adjacency Matrices
@@ -49,6 +50,6 @@ public class AdjacencyMatrixTools {
                 copy.removeAtomAndConnectedElectronContainers(a);
             }
         }
-        return copy.getAdjacencyMatrix();
+        return AdjacencyMatrix.getMatrix(copy);
     }
 }
