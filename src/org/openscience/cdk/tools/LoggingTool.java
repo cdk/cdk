@@ -69,6 +69,10 @@ public class LoggingTool {
         this(object.getClass().getName());
     }
     
+    public LoggingTool(Object object, boolean useConfig) {
+        this(object.getClass().getName(), useConfig);
+    }
+
     public LoggingTool(String classname, boolean useConfig) {
         this.classname = classname;
         try {
