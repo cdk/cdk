@@ -154,7 +154,6 @@ public class CDKPluginManager {
                                     if (plugin instanceof CDKPluginInterface) {
                                         CDKPluginInterface cdkPlugin = (CDKPluginInterface)plugin;
                                         cdkPlugin.setEditBus(editBus);
-                                        cdkPlugin.start();
                                         cdkPlugins.addElement(plugin);
                                     } else {
                                         logger.info("Class is not type CDKPluginInterface");
@@ -196,6 +195,7 @@ public class CDKPluginManager {
         
         public void actionPerformed(ActionEvent e) {
             JPanel pluginPanel = plugin.getPluginPanel();
+            plugin.start();
             if (pluginPanel != null) {
                 JDialog pluginWindow = new JDialog();
                 pluginWindow.getContentPane().add(pluginPanel);
