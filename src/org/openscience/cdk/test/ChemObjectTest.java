@@ -73,22 +73,6 @@ public class ChemObjectTest extends TestCase {
         assertNull(chemObject.getProperty(cDescription));
     }
 
-    public void testRemarks() {
-        ChemObject chemObject = new ChemObject();
-        String cDescription = new String("description");
-        String cRemark = new String("remark");
-        chemObject.setRemark(cDescription, cRemark);
-        assertEquals(cRemark, chemObject.getRemark(cDescription));
-    }
-    
-    public void testSetPhysicalProperty() {
-        ChemObject chemObject = new ChemObject();
-        String cDescription = new String("description");
-        String cProperty = new String("property");
-        chemObject.setPhysicalProperty(cDescription, cProperty);
-        assertEquals(cProperty, chemObject.getPhysicalProperty(cDescription));
-    }
-    
     public void testSetID() {
         ChemObject chemObject = new ChemObject();
         String id = "objectX";
