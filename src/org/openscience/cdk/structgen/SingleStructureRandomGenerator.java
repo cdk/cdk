@@ -46,7 +46,8 @@ import org.openscience.cdk.tools.SaturationChecker;
  * and add more structures to the panel using the "More" button. 
  * In order to use this class, use MFAnalyser to get an AtomContainer from 
  * a molecular formula string.
- * Assign hydrogen counts to each heavy atom. The hydrogens should not be
+ *
+ * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
  * in the atom pool but should be assigned implicitly to the heavy atoms in 
  * order to reduce computational cost.
  * Assign this AtomContainer to the  
@@ -54,8 +55,10 @@ import org.openscience.cdk.tools.SaturationChecker;
  * structure by using the generate() method. You can then repeatedly call
  * the generate() method in order to retrieve further structures. 
  * 
- * Agenda: - add a method for randomly adding hydrogens to the atoms
- *         - add a seed for random generator for reproducability
+ * <p>Agenda<ul>
+ *  <li>add a method for randomly adding hydrogens to the atoms
+ *  <li>add a seed for random generator for reproducability
+ * </ul>
  *
  * @author     steinbeck
  * @cdk.created    2001-09-04

@@ -41,12 +41,8 @@ import org.openscience.cdk.smiles.*;
  * Therefore, it is a mixture
  * of Molodtsov structure generator with other ideas.
  *
- * <p>Details are found in the following papers.
- * Sergey G. Molodtsov, Computer-Aided Generation of Molecular Graphs, Match, 30(213),1994
- * Molchanova, Computer Generation of Molecular Structures by the SMOG Program, J.Chem.Inf.Comput.Sci., 36(889),1996
- * Chang-Yu Hu, Lu Xu, Algorithm for computer perception of topological symmetry, Analytical Chimica Acta,295(127),1994
- * Chang-Yu Hu, Lu Xu, A New Scheme for Assignment of a Canonical Connection Table, J.Chem.Inf.Comput.Sci.,34(840),1994
- * Hu CY, Computer perception of topological symmetry by all-paths algorithm, Chemom. Intell. Lab. Syst. 45(318),1999
+ * <p>Details are found in the following papers 
+ * {@cdk.cite Molodtsov94, Molchanova96, Hu94, Hu94b, Hu99}.
  *
  * @author      Junfeng Hao
  * @cdk.created 2004-02-16

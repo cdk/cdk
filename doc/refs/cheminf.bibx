@@ -4,11 +4,12 @@
   xsi:schemaLocation="http://bibtexml.sf.net/ bibtexml.xsd">
 
   <!-- This file is preferable edited in jEdit with the XML plugin installed -->
-  
+
   <bibtex:entry id="BGdV04a">
     <bibtex:unpublished>
+      <bibtex:author>Unknown</bibtex:author>
       <bibtex:title>Minimum cycle bases for network graphs</bibtex:title>
-      <bibtex:journal>Algorithmica</bibtex:journal>
+      <!-- bibtex:journal>Algorithmica</bibtex:journal -->
       <bibtex:note>To appear.</bibtex:note>
       <bibtex:year>2004</bibtex:year>
     </bibtex:unpublished>
@@ -16,6 +17,7 @@
   
   <bibtex:entry id="BGdV04b">
     <bibtex:unpublished>
+      <bibtex:author>Unknown</bibtex:author>
       <bibtex:title>Computing Cyclic Invariants for Molecular Graphs</bibtex:title>
       <bibtex:note>In preperation.</bibtex:note>
       <bibtex:year>2004</bibtex:year>
@@ -159,6 +161,28 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Hu94">
+    <bibtex:article>
+      <bibtex:author>Hu, C.Y. and Xu, L.</bibtex:author>
+      <bibtex:title>Algorithm for computer perception of topological symmetry</bibtex:title>
+      <bibtex:journal>Analytical Chimica Acta</bibtex:journal>
+      <bibtex:year>1994</bibtex:year>
+      <bibtex:volume>295</bibtex:volume>
+      <bibtex:pages>127</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Hu94b">
+    <bibtex:article>
+      <bibtex:author>Hu, C.Y. and Xu, L.</bibtex:author>
+      <bibtex:title>A New Scheme for Assignment of a Canonical Connection Table</bibtex:title>
+      <bibtex:journal>J.Chem.Inf.Comput.Sci.</bibtex:journal>
+      <bibtex:year>1994</bibtex:year>
+      <bibtex:volume>34</bibtex:volume>
+      <bibtex:pages>840</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="HU96">
     <bibtex:article>
       <bibtex:author>Chang-Yu Hu and Lu Xu</bibtex:author>
@@ -170,6 +194,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Hu99">
+    <bibtex:article>
+       <bibtex:author>Hu, C.Y.</bibtex:author>
+       <bibtex:title>Computer perception of topological symmetry by all-paths algorithm</bibtex:title>
+       <bibtex:journal>Chemom.Intell.Lab.Syst.</bibtex:journal>
+       <bibtex:year>1999</bibtex:year>
+       <bibtex:volume>45</bibtex:volume>
+       <bibtex:pages>318</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
   <bibtex:entry id="KRA00">
     <bibtex:article>
       <bibtex:author>Krause, Stefan and Willighagen, Egon and Steinbeck,
@@ -191,6 +226,28 @@
       <bibtex:year>1989</bibtex:year>
       <bibtex:volume>91</bibtex:volume>
       <bibtex:pages>3571</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Molchanova96">
+    <bibtex:article>
+      <bibtex:author>Molchanova</bibtex:author>
+      <bibtex:title>Computer Generation of Molecular Structures by the SMOG Program</bibtex:title>
+      <bibtex:journal>J.Chem.Inf.Comput.Sci.</bibtex:journal>
+      <bibtex:year>1996</bibtex:year>
+      <bibtex:volume>36</bibtex:volume>
+      <bibtex:pages>889</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Molodtsov94">
+    <bibtex:article>
+      <bibtex:author>Molodtsov, S.G.</bibtex:author>
+      <bibtex:title>Computer-Aided Generation of Molecular Graphs</bibtex:title>
+      <bibtex:journal>Match</bibtex:journal>
+      <bibtex:year>1994</bibtex:year>
+      <bibtex:volume>30</bibtex:volume>
+      <bibtex:pages>213</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
 
