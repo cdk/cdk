@@ -35,6 +35,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.event.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ChemModelManipulator;
+import org.openscience.cdk.tools.ReactionManipulator;
 import org.openscience.cdk.tools.IsotopeFactory;
 import java.awt.*;
 import java.util.*;
@@ -796,6 +797,23 @@ public class JCPController2D {
         }
 
 
+        private ChemObject getChemObjectInRange(int X, int Y) {
+            ChemObject objectInRange = getAtomInRange(X,Y);
+            if (objectInRange != null) {
+                return objectInRange;
+            }
+            objectInRange = getBondInRange(X,Y);
+            if (objectInRange != null) {
+                return objectInRange;
+            }
+            objectInRange = getReactionInRange(X,Y);
+            if (objectInRange != null) {
+                return objectInRange;
+            }
+            /* chemModel covers whole of editing window, and if nothing
+               more interesting is near, then them model is in range. */
+            return chemModel;
+        }
 
         /**
          * Returns an Atom if it is in a certain range of the given point.
@@ -845,6 +863,31 @@ public class JCPController2D {
                 int[] yCoords = {coords[1],coords[3],coords[5],coords[7]};
                 if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(X, Y))) {
                         return closestBond;
+                }
+                return null;
+        }
+
+        /**
+         * Returns a Reaction if the coordinate is within the reaction 'window'.
+         *
+         * @param   X  The x world coordinate of the point
+         * @param   Y  The y world coordinate of the point
+         * @return  A Reaction if it is in a certain range of the given point
+         */
+        private Reaction getReactionInRange(int X, int Y) {
+                SetOfReactions reactionSet = chemModel.getSetOfReactions();
+                if (reactionSet != null) {
+                    // process reaction by reaction
+                    Reaction[] reactions = reactionSet.getReactions();
+                    for (int i=0; i<reactions.length; i++) {
+                        AtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reactions[i]);
+                        double[] minmax = GeometryTools.getMinMax(atomContainer);
+                        if ((X <= minmax[2]) && (X >= minmax[0]) &&
+                            (Y <= minmax[3]) && (Y >= minmax[1])) {
+                            // cursor in in reaction bounding box
+                            return reactions[i];
+                        }
+                    }
                 }
                 return null;
         }
@@ -1033,7 +1076,7 @@ public class JCPController2D {
 		}
 	}
 
-    public void setPopupMenu(ChemObject chemObject, JPopupMenu menu) {
+    public void setPopupMenu(ChemObject chemObject, CDKPopupMenu menu) {
         this.popupMenus.put(chemObject.getClass().getName(), menu);
     }
     
@@ -1041,9 +1084,9 @@ public class JCPController2D {
      * Returns the popup menu for this ChemObject if it is set, and null
      * otherwise.
      */
-    public JPopupMenu getPopupMenu(ChemObject chemObject) {
+    public CDKPopupMenu getPopupMenu(ChemObject chemObject) {
         if (this.popupMenus.containsKey(chemObject.getClass().getName())) {
-            return (JPopupMenu)this.popupMenus.get(chemObject.getClass().getName());
+            return (CDKPopupMenu)this.popupMenus.get(chemObject.getClass().getName());
         } else {
             return null;
         }
@@ -1060,15 +1103,15 @@ public class JCPController2D {
      * @param mouseY     y coordinate in world coordinates (not screen coordinates)
      */
     private void highlightNearestChemObject(int mouseX, int mouseY) {
-        Atom atomInRange = getAtomInRange(mouseX, mouseY);
-        Bond bondInRange = getBondInRange(mouseX, mouseY);
-        
-        if (atomInRange != null) {
-            r2dm.setHighlightedAtom(atomInRange);
+        ChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
+        if (objectInRange instanceof Atom) {
+            r2dm.setHighlightedAtom((Atom)objectInRange);
             r2dm.setHighlightedBond(null);
+        } else if (objectInRange instanceof Bond) {
+            r2dm.setHighlightedBond((Bond)objectInRange); 
+            r2dm.setHighlightedAtom(null);
         } else {
-            r2dm.setHighlightedBond(bondInRange); 
-            // if bondInRange is null, then the previous command is used to *unset* the highlightedBond
+            r2dm.setHighlightedBond(null);
             r2dm.setHighlightedAtom(null);
         }
     }
@@ -1127,23 +1170,11 @@ public class JCPController2D {
     }
     
     private void popupMenuForNearestChemObject(int mouseX, int mouseY, MouseEvent event) {
-        Atom atomInRange = getAtomInRange(mouseX, mouseY);
-        Bond bondInRange = getBondInRange(mouseX, mouseY);
-        if (atomInRange != null) {
-            JPopupMenu atomPopup = getPopupMenu(atomInRange);
-            if (atomPopup != null ) {
-                atomPopup.show(event.getComponent(), event.getX(), event.getY());
-            }
-        } else if (bondInRange != null) {
-            JPopupMenu bondPopup = getPopupMenu(bondInRange);
-            if (bondPopup != null ) {
-                bondPopup.show(event.getComponent(), event.getX(), event.getY());
-            }
-        } else {
-            JPopupMenu modelPopup = getPopupMenu(chemModel);
-            if (modelPopup != null ) {
-                modelPopup.show(event.getComponent(), event.getX(), event.getY());
-            }
+        ChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
+        CDKPopupMenu popupMenu = getPopupMenu(objectInRange);
+        if (popupMenu != null ) {
+            popupMenu.setSource(objectInRange);
+            popupMenu.show(event.getComponent(), event.getX(), event.getY());
         }
     }
     
