@@ -33,56 +33,56 @@ import javax.vecmath.Tuple3d;
  
 public class Vector
 {
-	/** Nullvektor im 3 dimensionalen Raum */
-	public final static Vector NULLVECTOR = new Vector(new double[] {0d,0d,0d});
-	/** Einheitsvektor im 3 dimensionalen Raum */
-	public final static Vector EX = new Vector(new double[] {1d,0d,0d});
-	/** Einheitsvektor im 3 dimensionalen Raum */
-	public final static Vector EY = new Vector(new double[] {0d,1d,0d});
-	/** Einheitsvektor im 3 dimensionalen Raum */
-	public final static Vector EZ = new Vector(new double[] {0d,0d,1d});
+  /** Nullvektor im 3 dimensionalen Raum */
+  public final static Vector NULLVECTOR = new Vector(new double[] {0d,0d,0d});
+  /** Einheitsvektor im 3 dimensionalen Raum */
+  public final static Vector EX = new Vector(new double[] {1d,0d,0d});
+  /** Einheitsvektor im 3 dimensionalen Raum */
+  public final static Vector EY = new Vector(new double[] {0d,1d,0d});
+  /** Einheitsvektor im 3 dimensionalen Raum */
+  public final static Vector EZ = new Vector(new double[] {0d,0d,1d});
 
-	// Vorsicht Variable ist ungeschützt
-	/** Inhalt des Vektors */
-	public double[] vector;
-	/** Größe des Vektors */
-	public int size;
+  // Vorsicht Variable ist ungeschützt
+  /** Inhalt des Vektors */
+  public double[] vector;
+  /** Größe des Vektors */
+  public int size;
 
-	/**
-	 * Konstruiert ein Vektor mit "size"-Elementen
-	 */
-	public Vector(int size)
-	{
-		vector = new double[size];
-		this.size = size;
-	}
+  /**
+   * Konstruiert ein Vektor mit "size"-Elementen
+   */
+  public Vector(int size)
+  {
+    vector = new double[size];
+    this.size = size;
+  }
 
-	/**
-	 * Konstruiert ein Vektor mit Hilfe ein double Arrays
-	 */
-	public Vector(double[] array)
-	{
-		vector = array;
-		size = array.length;
-	}
+  /**
+   * Konstruiert ein Vektor mit Hilfe ein double Arrays
+   */
+  public Vector(double[] array)
+  {
+    vector = array;
+    size = array.length;
+  }
 
-	/**
-	 * Constructs a Vector with a Tuple3d, Vector3d or Point3d
-	 */
-	public Vector(Tuple3d t)
+  /**
+   * Constructs a Vector with a Tuple3d, Vector3d or Point3d
+   */
+  public Vector(Tuple3d t)
   { 
     vector = new double[3];
     size = 3;
-		vector[0] = t.x; vector[1] = t.y; vector[2] = t.z;
+    vector[0] = t.x; vector[1] = t.y; vector[2] = t.z;
   }
 
-	/**
-	 * Liefert die Größe des Vektors zurück
-	 */
-	public int getSize()
-	{
-		return size;
-	}
+  /**
+   * Liefert die Größe des Vektors zurück
+   */
+  public int getSize()
+  {
+    return size;
+  }
 
   /**
    *  Addition from two vectors
@@ -90,7 +90,7 @@ public class Vector
   public Vector add(Vector b)
   {
     if ((b==null) ||
-			 	(size!=b.size))
+         (size!=b.size))
       return null;
       
     int i, j;
@@ -105,7 +105,7 @@ public class Vector
    */
   public Vector sub(Vector b)
   {
-		if ((b==null) ||
+    if ((b==null) ||
         (size!=b.size))
       return null;
       
@@ -134,7 +134,7 @@ public class Vector
   public double dot(Vector b)
   {
     if ((b==null) ||
-				(size!=b.size))
+        (size!=b.size))
       return Double.NaN;
 
     double result = 0;
@@ -144,57 +144,57 @@ public class Vector
     return result;
   }
 
-	/**
-	 * Kreuzprodukt, nur definiert für Vektor aus R^3
-	 */
-	public Vector cross(Vector b)
-	{
-		if ((b==null) ||
+  /**
+   * Kreuzprodukt, nur definiert für Vektor aus R^3
+   */
+  public Vector cross(Vector b)
+  {
+    if ((b==null) ||
         (size!=3) || (b.size!=3))
       return null;
 
-		Vector result = new Vector(3);
-		result.vector[0] = vector[1]*b.vector[2]-vector[2]*b.vector[1];
-		result.vector[1] = vector[2]*b.vector[0]-vector[0]*b.vector[2];
-		result.vector[2] = vector[0]*b.vector[1]-vector[1]*b.vector[0];
-		return result;
-	}
+    Vector result = new Vector(3);
+    result.vector[0] = vector[1]*b.vector[2]-vector[2]*b.vector[1];
+    result.vector[1] = vector[2]*b.vector[0]-vector[0]*b.vector[2];
+    result.vector[2] = vector[0]*b.vector[1]-vector[1]*b.vector[0];
+    return result;
+  }
 
-	/**
-	 * Return the length from this Vector
-	 */
-	public double length()
-	{
-		double value = 0;
-		for(int i=0; i<size; i++)
-			value += vector[i]*vector[i];
-		return Math.sqrt(value);
-	}
+  /**
+   * Return the length from this Vector
+   */
+  public double length()
+  {
+    double value = 0;
+    for(int i=0; i<size; i++)
+      value += vector[i]*vector[i];
+    return Math.sqrt(value);
+  }
 
-	/**
-	 * Normiert diesen Vektor
-	 */
-	public Vector normalize()
-	{
-		Vector result = new Vector(size);
-		double length = length();
-		for(int i=0; i<size; i++)
+  /**
+   * Normiert diesen Vektor
+   */
+  public Vector normalize()
+  {
+    Vector result = new Vector(size);
+    double length = length();
+    for(int i=0; i<size; i++)
       result.vector[i] = vector[i]/length;
-		return result;
-	}
+    return result;
+  }
 
-	/**
-	 * Negiert diesen Vektor
-	 */
-	public Vector negate()
-	{
-		Vector result = new Vector(size);
+  /**
+   * Negiert diesen Vektor
+   */
+  public Vector negate()
+  {
+    Vector result = new Vector(size);
     for(int i=0; i<size; i++)
       result.vector[i] = -vector[i];
     return result;
-	}
+  }
 
-	/**
+  /**
    *  Copy a vector
    */
   public Vector duplicate()

@@ -36,51 +36,51 @@ import java.text.DecimalFormat;
 
 public class Matrix
 {
-	// Attention! Variables are unprotected
-	public double[][] matrix;
-	public int rows;
-	public int columns;
+  // Attention! Variables are unprotected
+  public double[][] matrix;
+  public int rows;
+  public int columns;
 
-	public Matrix(int rows, int columns)
-	{
-		this.rows = rows;
-		this.columns = columns;
-		matrix = new double[rows][columns];
-	}
+  public Matrix(int rows, int columns)
+  {
+    this.rows = rows;
+    this.columns = columns;
+    matrix = new double[rows][columns];
+  }
 
-	public Matrix(double[][] array)
-	{
-		rows = array.length;
-		int i,j;
-		columns = array[0].length;
-		for(i=1; i<rows; i++)
-			columns = Math.min(columns,array[i].length);
-		
-		matrix = new double[rows][columns];
-		for(i=0; i<rows; i++)
-			for(j=0; j<columns; j++)
-				matrix[i][j] = array[i][j];
-	}
+  public Matrix(double[][] array)
+  {
+    rows = array.length;
+    int i,j;
+    columns = array[0].length;
+    for(i=1; i<rows; i++)
+      columns = Math.min(columns,array[i].length);
+    
+    matrix = new double[rows][columns];
+    for(i=0; i<rows; i++)
+      for(j=0; j<columns; j++)
+        matrix[i][j] = array[i][j];
+  }
 
-	public int getRows()
-	{
-		return rows;
-	}
+  public int getRows()
+  {
+    return rows;
+  }
 
-	public int getColumns()
-	{
-		return columns;
-	}
+  public int getColumns()
+  {
+    return columns;
+  }
 
-	public Vector getVectorFromRow(int index)
-	{
-		double[] row = new double[columns];
-		for(int i=0; i<columns; i++)
-			row[i] = matrix[index][i];
-		return new Vector(row);
-	}
+  public Vector getVectorFromRow(int index)
+  {
+    double[] row = new double[columns];
+    for(int i=0; i<columns; i++)
+      row[i] = matrix[index][i];
+    return new Vector(row);
+  }
 
-	public Vector getVectorFromColumn(int index)
+  public Vector getVectorFromColumn(int index)
   {
     double[] column = new double[rows];
     for(int i=0; i<rows; i++)
@@ -88,10 +88,10 @@ public class Matrix
     return new Vector(column);
   }
 
-	public Vector getVectorFromDiagonal()
+  public Vector getVectorFromDiagonal()
   {
-		int size = Math.min(rows, columns);
-		Vector result = new Vector(size);
+    int size = Math.min(rows, columns);
+    Vector result = new Vector(size);
     for(int i=0; i<rows; i++)
       result.vector[i] = matrix[i][i];
     return result;
@@ -103,11 +103,11 @@ public class Matrix
   public Matrix add(Matrix b)
   {
     if ((b==null) ||
-				(rows!=b.rows) || (columns!=b.columns))
+        (rows!=b.rows) || (columns!=b.columns))
       return null;
       
     int i, j;
-		Matrix result = new Matrix(rows, columns);
+    Matrix result = new Matrix(rows, columns);
     for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
         result.matrix[i][j] = matrix[i][j]+b.matrix[i][j];
@@ -119,8 +119,8 @@ public class Matrix
    */
   public Matrix sub(Matrix b)
   {
-		if ((b==null) ||
-				(rows!=b.rows) || (columns!=b.columns))
+    if ((b==null) ||
+        (rows!=b.rows) || (columns!=b.columns))
       return null;
       
     int i, j;
@@ -137,10 +137,10 @@ public class Matrix
   public Matrix mul(Matrix b)
   {
     if ((b==null) ||
-				(columns!=b.rows))
+        (columns!=b.rows))
       return null;
 
-		Matrix result = new Matrix(rows, b.columns);
+    Matrix result = new Matrix(rows, b.columns);
     int i,j,k;
     double sum;
     for(i=0; i<rows; i++)
@@ -161,7 +161,7 @@ public class Matrix
   public Vector mul(Vector a)
   {
     if ((a==null) ||
-				(columns!=a.size))
+        (columns!=a.size))
       return null;
 
     Vector result = new Vector(rows);
@@ -177,12 +177,12 @@ public class Matrix
     return result;
   }
 
-	/**
+  /**
    *  Multiplikation from a scalar and a matrix
    */
   public Matrix mul(double a)
   {
-		Matrix result = new Matrix(rows, columns);
+    Matrix result = new Matrix(rows, columns);
     int i,j;
     for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
@@ -191,20 +191,20 @@ public class Matrix
     return result;
   }
 
-	/**
-	 *  Copy a matrix
+  /**
+   *  Copy a matrix
    */
-	public Matrix duplicate()
-	{
-		Matrix result = new Matrix(rows, columns);
-		int i,j;
-		for(i=0; i<rows; i++)
-			for(j=0; j<columns; j++)
-				result.matrix[i][j] = matrix[i][j];
-		return result;
-	}
+  public Matrix duplicate()
+  {
+    Matrix result = new Matrix(rows, columns);
+    int i,j;
+    for(i=0; i<rows; i++)
+      for(j=0; j<columns; j++)
+        result.matrix[i][j] = matrix[i][j];
+    return result;
+  }
 
-	/**
+  /**
    *  Transpose a matrix
    */
   public Matrix transpose()
@@ -217,100 +217,100 @@ public class Matrix
     return result;
   }
 
-	/**
-	 * Similar transformation
-	 * Ut * M * U
-	 */
-	public Matrix similar(Matrix U)
-	{
-		Matrix result = new Matrix(U.columns, U.columns);
-		double sum, innersum;
-		for(int i=0; i<U.columns; i++)
-			for(int j=0; j<U.columns; j++)
-			{
-				sum = 0d;
-				for(int k=0; k<U.columns; k++)
-				{
-					innersum = 0d;
-					for(int l=0; l<U.columns; l++)
-						innersum += matrix[k][l]*U.matrix[l][j];
-					sum += U.matrix[k][i]*innersum;
-				}
-				result.matrix[i][j] = sum;
-			}
-		return result;
-	}			
+  /**
+   * Similar transformation
+   * Ut * M * U
+   */
+  public Matrix similar(Matrix U)
+  {
+    Matrix result = new Matrix(U.columns, U.columns);
+    double sum, innersum;
+    for(int i=0; i<U.columns; i++)
+      for(int j=0; j<U.columns; j++)
+      {
+        sum = 0d;
+        for(int k=0; k<U.columns; k++)
+        {
+          innersum = 0d;
+          for(int l=0; l<U.columns; l++)
+            innersum += matrix[k][l]*U.matrix[l][j];
+          sum += U.matrix[k][i]*innersum;
+        }
+        result.matrix[i][j] = sum;
+      }
+    return result;
+  }      
 
-	public double contraction()
-	{
-		int i,j;
-		double result = 0d;
-		for(i=0; i<rows; i++)
+  public double contraction()
+  {
+    int i,j;
+    double result = 0d;
+    for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
         result += matrix[i][j];
     return result;
-	}	
+  }  
   
   /**
    *  Return a matrix as a string
    */
   public String toString()
   {
-		if ((rows<=0) || (columns<=0))
-			return "[]";
+    if ((rows<=0) || (columns<=0))
+      return "[]";
     int i,j;
-		DecimalFormat format = new DecimalFormat("00.0000");
-		format.setPositivePrefix("+");
+    DecimalFormat format = new DecimalFormat("00.0000");
+    format.setPositivePrefix("+");
 
     StringBuffer str = new StringBuffer();
     for(i=0; i<(rows-1); i++)
     {
       for(j=0; j<(columns-1); j++)
-				if (Math.round(matrix[i][j]*10000)!=0)
-					str.append(format.format(matrix[i][j])+" ");
-				else
-					str.append("-------- ");
-			if (Math.round(matrix[i][columns-1]*10000)!=0)
-				str.append(format.format(matrix[i][columns-1])+"\n");
-			else
+        if (Math.round(matrix[i][j]*10000)!=0)
+          str.append(format.format(matrix[i][j])+" ");
+        else
+          str.append("-------- ");
+      if (Math.round(matrix[i][columns-1]*10000)!=0)
+        str.append(format.format(matrix[i][columns-1])+"\n");
+      else
           str.append("--------\n");
     }
     for(j=0; j<(columns-1); j++)
-			if (Math.round(matrix[rows-1][j]*10000)!=0)
-				str.append(format.format(matrix[rows-1][j])+" ");
-			else
+      if (Math.round(matrix[rows-1][j]*10000)!=0)
+        str.append(format.format(matrix[rows-1][j])+" ");
+      else
           str.append("-------- ");
-		if (Math.round(matrix[rows-1][columns-1]*10000)!=0)
-			str.append(format.format(matrix[rows-1][columns-1]));
-		else
+    if (Math.round(matrix[rows-1][columns-1]*10000)!=0)
+      str.append(format.format(matrix[rows-1][columns-1]));
+    else
       str.append("-------- ");
     return str.toString();
   }
 
 
-	/** 
-	 * Diagonalisiert diese Matrix nach Jacobi
-	 * nrot Zahl der maximalen Jacobirotationen 
-	 * return Matrix m, with m^t * this * m = diagonal
-	 */
-	public Matrix diagonalize(int nrot)
+  /** 
+   * Diagonalisiert diese Matrix nach Jacobi
+   * nrot Zahl der maximalen Jacobirotationen 
+   * return Matrix m, with m^t * this * m = diagonal
+   */
+  public Matrix diagonalize(int nrot)
   {
-		Matrix m = duplicate();
-		if (m.rows!=m.columns)
-				
-		{
-			System.err.println("Matrix.diagonal: Sizes mismatched");
-			return null;
-		}
-		int n = m.rows;
+    Matrix m = duplicate();
+    if (m.rows!=m.columns)
+        
+    {
+      System.err.println("Matrix.diagonal: Sizes mismatched");
+      return null;
+    }
+    int n = m.rows;
 
     int j,iq,ip,i;
     
     double tresh,theta,tau,t,sm,s,h,g,c;
     double[] b,z;
 
-		Matrix v = new Matrix(columns,columns);
-		Vector d = new Vector(columns);
+    Matrix v = new Matrix(columns,columns);
+    Vector d = new Vector(columns);
     
     b = new double[n+1];
     z = new double[n+1];
@@ -337,8 +337,8 @@ public class Matrix
           sm += Math.abs(m.matrix[ip][iq]);
       }   
 
-			// Fertig ??
-			if (sm == 0.0)
+      // Fertig ??
+      if (sm == 0.0)
         return v;
 
       if (i < 4)
@@ -352,7 +352,7 @@ public class Matrix
         {
           g=100.0*Math.abs(m.matrix[ip][iq]);
           if ((i > 4) && (Math.abs(d.vector[ip])+g == Math.abs(d.vector[ip]))
-            					&& (Math.abs(d.vector[iq])+g == Math.abs(d.vector[iq])))
+                      && (Math.abs(d.vector[iq])+g == Math.abs(d.vector[iq])))
             m.matrix[ip][iq]=0.0;
           else if (Math.abs(m.matrix[ip][iq]) > tresh)
           {
@@ -424,17 +424,17 @@ public class Matrix
     return v;
   }
 
-	/**
-	 * Solves a linear equationsystem with Gauss elimination
- 	 */
-	public static Vector elimination(Matrix matrix, Vector vector)
+  /**
+   * Solves a linear equationsystem with Gauss elimination
+    */
+  public static Vector elimination(Matrix matrix, Vector vector)
   {
     int i,j,k,ipvt;
     int n = vector.size;
     int[] pivot = new int[n];
     double c, temp;
     //double[] x = new double[n];
-		Vector result = new Vector(n);
+    Vector result = new Vector(n);
     Matrix a = matrix.duplicate();
     Vector b = vector.duplicate();
     
@@ -495,61 +495,61 @@ public class Matrix
     return result;
   }
 
-	/**
-	 * Orthonormiert die Vektoren in dieser Matrix nach Gram-Schmidt
-	 */
-	public Matrix orthonormalize(Matrix S)
-	{
-		int p,q,k,i,j;
-		double sum;
-		double innersum;
-		double c;
-		double length;
-		//Matrix scr = S.mul(this);
-		Matrix result = duplicate();
-		for(p=0; p<columns; p++) // Geht alle Vektoren in dieser Matrix durch
-		{
-			for(i=0; i<rows; i++)
-				result.matrix[i][p] = matrix[i][p];
+  /**
+   * Orthonormiert die Vektoren in dieser Matrix nach Gram-Schmidt
+   */
+  public Matrix orthonormalize(Matrix S)
+  {
+    int p,q,k,i,j;
+    double sum;
+    double innersum;
+    double c;
+    double length;
+    //Matrix scr = S.mul(this);
+    Matrix result = duplicate();
+    for(p=0; p<columns; p++) // Geht alle Vektoren in dieser Matrix durch
+    {
+      for(i=0; i<rows; i++)
+        result.matrix[i][p] = matrix[i][p];
 
-			for(k=0; k<p; k++)  // Substrahiert die vorherriegen Vektoren 
-			{
-				// Zuerst die Berechnung des Produktes <phi_p|phi_k>=length
-				length = 0;
+      for(k=0; k<p; k++)  // Substrahiert die vorherriegen Vektoren 
+      {
+        // Zuerst die Berechnung des Produktes <phi_p|phi_k>=length
+        length = 0;
         for(i=0; i<rows; i++) // Geht alle Komponenten der Vektoren durch
         { 
           innersum = 0;
           for(j=0; j<rows; j++)
-					{
+          {
             innersum += result.matrix[j][p]*S.matrix[i][j];
-					}
+          }
           length += result.matrix[i][k]*innersum;
         } 
 
-				// Dann die Subtraktion von phi_k*length
-				for(q=0; q<rows; q++)
-					result.matrix[q][p] -= result.matrix[q][k]*length;
-			}
+        // Dann die Subtraktion von phi_k*length
+        for(q=0; q<rows; q++)
+          result.matrix[q][p] -= result.matrix[q][k]*length;
+      }
 
-			//Berechnet das Intergal für die normierung	
-			length = 0;
-			for(i=0; i<rows; i++)
-				for(j=0; j<rows; j++)
-					length += result.matrix[i][p]*result.matrix[j][p]*S.matrix[i][j];
+      //Berechnet das Intergal für die normierung  
+      length = 0;
+      for(i=0; i<rows; i++)
+        for(j=0; j<rows; j++)
+          length += result.matrix[i][p]*result.matrix[j][p]*S.matrix[i][j];
 
-			length = Math.sqrt(length);
+      length = Math.sqrt(length);
 
-			//Normiert den Vektor
-			if (length!=0d)
-				for(q=0; q<rows; q++)
-					result.matrix[q][p] /= length;
-			else
-				System.out.println("Warning(orthonormalize):"+(p+1)+".Vektor hat die Länge null");
-		}
-		return result;
-	}
+      //Normiert den Vektor
+      if (length!=0d)
+        for(q=0; q<rows; q++)
+          result.matrix[q][p] /= length;
+      else
+        System.out.println("Warning(orthonormalize):"+(p+1)+".Vektor hat die Länge null");
+    }
+    return result;
+  }
 
-	/**
+  /**
    * Normiert die Vektoren in dieser Matrix 
    */
   public Matrix normalize(Matrix S)
@@ -559,7 +559,7 @@ public class Matrix
     Matrix result = duplicate();
     for(p=0; p<columns; p++) // Geht alle Vektoren in dieser Matrix durch
     {
-			//Berechnet das Intergal für die normierung 
+      //Berechnet das Intergal für die normierung 
       length = 0;
       for(i=0; i<rows; i++)
         for(j=0; j<rows; j++)
@@ -574,10 +574,10 @@ public class Matrix
       else
         System.out.println("Warning(orthonormalize):"+(p+1)+".Vektor hat die Länge null");
     }
-		return result;
-	}
+    return result;
+  }
 
-	/*public static Matrix read(InputStream in) throws IOException
+  /*public static Matrix read(InputStream in) throws IOException
   { 
     StreamTokenizer stok = new StreamTokenizer(in);
     stok.resetSyntax();
@@ -588,15 +588,15 @@ public class Matrix
     stok.eolIsSignificant(true);
     
     int rows = (int) readValue(stok);
-		int columns = (int) readValue(stok);
-		Matrix result = new Matrix(rows, columns);
-		for(int i=0; i<rows; i++)
-    	for(int j=0; j<columns; j++)
-      	result.matrix[i][j] = readValue(stok);
-		return result;
-	}
+    int columns = (int) readValue(stok);
+    Matrix result = new Matrix(rows, columns);
+    for(int i=0; i<rows; i++)
+      for(int j=0; j<columns; j++)
+        result.matrix[i][j] = readValue(stok);
+    return result;
+  }
 
-	private static double readValue(StreamTokenizer stok) throws IOException
+  private static double readValue(StreamTokenizer stok) throws IOException
   {
     int type;
     do
