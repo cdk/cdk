@@ -55,6 +55,11 @@
    maxBondOrder="2.0"
    maxBondOrderSum="2.0"/>
    <org.openscience.cdk.AtomType
+   symbol="S"
+   id="structgen.S4"
+   maxBondOrder="2.0"
+   maxBondOrderSum="6.0"/>
+   <org.openscience.cdk.AtomType
    symbol="Se"
    id="structgen.Se2"
    maxBondOrder="2.0"
