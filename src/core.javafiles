@@ -26,3 +26,4 @@ org/openscience/cdk/Crystal.java
 org/openscience/cdk/LonePair.java
 org/openscience/cdk/Reaction.java
 org/openscience/cdk/SetOfReactions.java
+org/openscience/cdk/Mapping.java
