@@ -40,6 +40,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -88,7 +89,37 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		this.standAlone = standAlone;
 	}
 
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testSetRingFlags()
+	{
+		boolean isAromatic = false;
+		boolean testResults[] = {false, true};
+		try
+		{
+			SmilesParser sp = new SmilesParser();
 
+			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
+			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+			(new HueckelAromaticityDetector()).detectAromaticity(mol, rs, true);
+			
+			RingSet ringset = (new SSSRFinder()).findSSSR(mol);
+			HueckelAromaticityDetector.setRingFlags(ringset);
+			for (int i = 0; i < ringset.size(); i++) {
+				assertTrue( ( (Ring)ringset.get(i) ).getFlag(CDKConstants.ISAROMATIC) == testResults[i] );
+			}
+		} catch (Exception exc)
+		{
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+	
+	
 	/**
 	 *  A unit test for JUnit The special difficulty with Azulene is that only the
 	 *  outermost larger 10-ring is aromatic according to Hueckel rule.

@@ -149,7 +149,33 @@ public class HueckelAromaticityDetector {
 		}
 		return foundSomething;
 	}
-
+	
+	
+	/**
+	 * This method sets the aromaticity flags for a RingSet from the Atom flags.
+	 * It can be used after the aromaticity detection to set the appropriate flags
+	 * for a RingSet from the SSSR search.
+	 *
+	 * @param  ringset                 the RingSet to set the flags for
+	 */
+	static public void setRingFlags(RingSet ringset) {
+		for (int i = 0; i < ringset.size(); i++) {
+			boolean aromatic = true;
+			Ring ring = (Ring)ringset.get(i);
+			for (int j = 0; j < ring.getAtomCount(); j++) {
+				if (ring.getAtomAt(j).getFlag(CDKConstants.ISAROMATIC) != true) {
+					aromatic = false;
+					break;
+				}
+			}
+			if (aromatic) {
+				ring.setFlag(CDKConstants.ISAROMATIC, true);
+			} else {
+				ring.setFlag(CDKConstants.ISAROMATIC, false);
+			}
+		}
+	}
+	
 	/*
 	 *  public static boolean isAromatic(AtomContainer ac, Ring ring)
 	 *  {
