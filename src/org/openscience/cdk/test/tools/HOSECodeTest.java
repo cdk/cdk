@@ -119,13 +119,13 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
-				//System.out.println("|" + s + "|,");
-				assertTrue(result[f].equals(s));
-				
+				System.out.print("|" + s + "| -> " + result[f]);
+				assertEquals(result[f], s);
+				System.out.println("  OK");
 			}
-		} catch (Exception exc)
-		{
+		} catch (Exception exc) {
 			exc.printStackTrace();
+            fail(exc.getMessage());
 		}
 	}
 
@@ -194,12 +194,14 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < startData.length; f++)
 			{
 				s = hcg.makeBremserCompliant(startData[f]);
-				assertTrue(result[f].equals(s));
-				
+				System.out.print("|" + s + "| -> " + result[f]);
+				assertEquals(result[f], s);
+				System.out.println("  OK");
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
+            fail(exc.getMessage());
 		}
 	}	
 	
@@ -246,11 +248,14 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				assertTrue(result[f].equals(s));
+				System.out.print("|" + s + "| -> " + result[f]);
+				assertEquals(result[f], s);
+				System.out.println("  OK");
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
+            fail(exc.getMessage());
 		}
 
 	}
@@ -283,13 +288,14 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				//System.out.println("\"" + s + "\",");
-				assertTrue(result[f].equals(s));
+				System.out.print("|" + s + "| -> " + result[f]);
+				assertEquals(result[f], s);
+				System.out.println("  OK");
 			}
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
-
+            fail(exc.getMessage());
 		}
 
 	}
@@ -314,12 +320,15 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				assertTrue(result[f].equals(s));
+				System.out.print("|" + s + "| -> " + result[f]);
+				assertEquals(result[f], s);
+				System.out.println("  OK");
 			}
 
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
+            fail(exc.getMessage());
 		}
 		
 		/*JFrame frame = new JFrame("HOSECodeTest");
@@ -384,12 +393,15 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-      	assertTrue(result[f].equals(s));
+				System.out.print("|" + s + "| -> " + result[f]);
+				assertEquals(result[f], s);
+				System.out.println("  OK");
 			}
 
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
+            fail(exc.getMessage());
 		}
   }
   /**
