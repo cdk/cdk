@@ -315,15 +315,11 @@ public class FileConvertor {
                     System.exit(1);
                 }
 			} else if (option.equals("--addHydrogens")) {
-				System.out.println("Not implemented yet.");
-				System.exit(1);
+				this.applyHAdding = true;
 			} else if (option.equals("--removeHydrogens")) {
-				System.out.println("Not implemented yet.");
-				System.exit(1);
+				this.applyHRemoval = true;
 			} else if (option.equals("--create2DCoordinates")) {
 				this.apply2DCleanup = true;
-				System.out.println("Not implemented yet.");
-				System.exit(1);
             } else {
                 System.out.println("Unrecognized option: " + args[i]);
                 System.exit(1);
@@ -487,10 +483,12 @@ public class FileConvertor {
                 IDCreator.createAtomAndBondIDs(molecule);
             }
             if (applyHAdding) {
-				// not implemented yet
+				System.out.println("Not implemented yet");
+				System.exit(1);
 			}
             if (applyHRemoval) {
-				// not implemented yet
+				System.out.println("Not implemented yet");
+				System.exit(1);
 			}
             if (apply2DCleanup) {
             	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
