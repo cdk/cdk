@@ -2,6 +2,8 @@ In CVS
 =================
 * Updated cdk-view man page
 * Updated for cdk -> cdk-core + cdk-extra split
+* Added DocBook XML 2 man page stylesheets which improves the
+  portability of the building from CVS
 
 20020518-2
 =================

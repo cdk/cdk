@@ -1,19 +1,19 @@
 
 XML2MAN_RULE = \
-        docbook2man $< > $@
+        xsltproc xsl/db2man.xsl $< 
 
 CHECK_XML_RULE = for f in $^; \
  do \
-  echo -n Checking $$f...; \
+  echo -n "Checking $$f..."; \
   rm -f $$f.dbx; \
-  echo "<?xml version=\"\"?>" > $$f.dbx; \
+  echo "<?xml version=\"1.0\"?>" > $$f.dbx; \
   echo "<!DOCTYPE part PUBLIC \"-//OASIS//DTD DocBook XML V4.1.2//EN\"" >> $$f.dbx; \
   echo "        \"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd\">" >> $$f.dbx; \
   echo "<part>" >> $$f.dbx; \
   echo "  <title>Man page for $$f</title>" >> $$f.dbx; \
   cat $$f >> $$f.dbx; \
   echo "</part>" >> $$f.dbx; \
-  $(PATHTONSGMLS) -s xml.dcl $$f.dbx && echo ok; \
+  xmllint --valid --noout $$f.dbx && echo ok; \
   rm -f $$f.dbx; \
  done
 
