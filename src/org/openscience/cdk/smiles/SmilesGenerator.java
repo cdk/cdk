@@ -476,14 +476,14 @@ public class SmilesGenerator {
         Enumeration molecules = moleculeSet.elements();
         while (molecules.hasMoreElements()) {
             Molecule molPart = (Molecule)molecules.nextElement();
-            fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, false, new boolean[molPart.getBondCount()]));
+            fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, chiral, doubleBondConfiguration));
             if (molecules.hasMoreElements()) {
                 fullSMILES.append('.');
             }
         }
         return fullSMILES.toString();
     } else {
-        return (createSMILESWithoutCheckForMultipleMolecules(molecule, false, new boolean[molecule.getBondCount()]));
+        return (createSMILESWithoutCheckForMultipleMolecules(molecule, chiral, doubleBondConfiguration));
     }
   }
   
