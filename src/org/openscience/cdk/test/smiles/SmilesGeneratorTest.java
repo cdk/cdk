@@ -327,7 +327,7 @@ public class SmilesGeneratorTest extends TestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("[H]O[C@]1([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1([H])(O[H]))"));
+  	assertTrue(smiles1.equals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])"));
 		mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
 		try
 		{
@@ -439,7 +439,7 @@ public class SmilesGeneratorTest extends TestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])[C@]2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]2([H])(C1([H])([H]))))"));
+		assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])[C@]2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]2(C1([H])([H]))([H])))"));
 		mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
 		try
 		{
