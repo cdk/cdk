@@ -1,2 +1,3 @@
 org/openscience/cdk/applications/FileConvertor.java
+org/openscience/cdk/applications/FileFormatGuesser.java
 org/openscience/cdk/applications/Viewer.java

@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -41,7 +41,7 @@ import javax.vecmath.*;
  *
  * @keyword file format, XYZ
  */
-public class XYZReader implements ChemObjectReader {
+public class XYZReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
 

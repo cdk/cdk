@@ -56,6 +56,12 @@ dist/jar/cdk-extra.jar:
 cdk-extra.jar: dist/jar/cdk-extra.jar 
 	cp dist/jar/cdk-extra.jar .
 
+dist/jar/cdk-render.jar:
+	ant ${JAVAC} -Dpathtojava3d=${JAVA3DDIR} dist-render
+
+cdk-render.jar: dist/jar/cdk-render.jar 
+	cp dist/jar/cdk-render.jar .
+
 dist/jar/cdk-libio.jar:
 	ant ${JAVAC} dist-libio
 

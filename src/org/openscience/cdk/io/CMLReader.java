@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -50,7 +50,7 @@ import java.net.*;
  *
  * @keyword file format, CML
  */
-public class CMLReader implements ChemObjectReader {
+public class CMLReader extends DefaultChemObjectReader {
 
     private XMLReader parser;
     private Reader input;

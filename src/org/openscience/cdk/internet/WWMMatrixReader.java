@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -43,10 +43,12 @@ import javax.vecmath.*;
  * Reader for the World Wide Molecular Matrix, a project that can be found at
  * http://wwmm.ch.cam.ac.uk/.
  *
- * @author Yong Zhang <yz237@cam.ac.uk>        // Xindice part
+ * @author Yong Zhang <yz237@cam.ac.uk>
  * @author Egon Willighagen <elw38@cam.ac.uk>
+ *
+ * @keyword world wide molecular matrix
  */
-public class WWMMatrixReader implements ChemObjectReader {
+public class WWMMatrixReader extends DefaultChemObjectReader {
 
     String server = "wwmm.ch.cam.ac.uk:8080";
     String collection = "g2";
@@ -201,48 +203,5 @@ public class WWMMatrixReader implements ChemObjectReader {
         in.close();
         return m;
     }
-    
-    /**
-     * This method will support direct access to the Xindice database later.
-    private void getResult(String DB, String xpath) throws XMLDBException {
 
-        Collection col = null;
-
-        try {
-            String driver = "org.apache.xindice.client.xmldb.DatabaseImpl";
-            Class c = Class.forName(driver);
-            Database database = (Database)c.newInstance();
-            DatabaseManager.registerDatabase(database);
-
-            String dbname = database.getName();
-            col = DatabaseManager.getCollection("xmldb:xindice:///db/" + DB);
-
-            XPathQueryService service = (XPathQueryService)col.getService(
-                                                "XPathQueryService", "1.0");
-            ResourceSet resultSet = service.query(xpath);
-            ResourceIterator results = resultSet.getIterator();
-
-            // get the results
-            while (results.hasMoreResources()) {
-                Resource reso = results.nextResource();
-                // outbr.write((String)reso.getContent() + "\n\n");
-            }
-        } catch (XMLDBException eXML) {
-            out.println(
-                    "In getResult(); XML:DB Exception occured " + 
-                    eXML.errorCode + " " + eXML.getMessage());
-        } catch (Exception e) {
-            out.println("Other Exception occured " + e.toString());
-        } finally {
-            // close collection
-            if (col != null) {
-                try {
-                    col.close();
-                } catch (Exception eCol) {
-                    out.println(
-                            "XML:DB Exception occured " + eCol.getMessage());
-                }
-            }
-        }
-    } */
 }

@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: cdk-devel@lists.sf.net
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -46,7 +46,7 @@ import java.io.*;
  *
  * <p>Reference: <a href="http://cdk.sf.net/biblio.html#HEL01">HEL01</a>.
  *
- * @author     Egon Willighagen
+ * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    25 September 2002
  *
  * @keyword file format, IChI
@@ -54,7 +54,7 @@ import java.io.*;
  *
  * @see     org.openscience.cdk.io.ichi.IChIHandler
  */
-public class IChIReader implements ChemObjectReader {
+public class IChIReader extends DefaultChemObjectReader {
 
     private XMLReader parser;
     private Reader input;

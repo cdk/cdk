@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -38,14 +38,13 @@ import javax.vecmath.*;
 
 /*
  * Reads an frames from a PMP formated input.
- *
  * Both compilation and use of this class requires Java 1.4.
  *
  * @keyword file format, Polymorph Predictor (tm)
  *
  * @author E.L. Willighagen
  */
-public class PMPReader implements ChemObjectReader {
+public class PMPReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
 

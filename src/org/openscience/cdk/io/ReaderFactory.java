@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -33,18 +33,55 @@ import java.io.IOException;
 import java.io.Reader;
 
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 
 /**
  * A factory for creating ChemObjectReaders. The type of reader 
  * created is determined from the content of the input.
  *
- * @author  Bradley A. Smith (bradley@baysmith.com)
+ * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * @author  Bradley A. Smith <bradley@baysmith.com>
  */
 public class ReaderFactory {
+    
+    private Vector headerBuffer = null;
+    private int currentLine = 0;
+    private BufferedReader buffer = null;
 
+    public ReaderFactory() {
+        headerBuffer = new Vector();
+        currentLine = 0;
+    }
+    
+    private void reset() {
+        currentLine = 0;
+    }
+    
+    private String readLine() throws IOException {
+        currentLine++;
+        if (currentLine > headerBuffer.size()) {
+            headerBuffer.addElement(buffer.readLine());
+        }
+        return (String)headerBuffer.elementAt(currentLine);
+    }
+    
+    private boolean ready() throws IOException {
+        return (currentLine < headerBuffer.size() ||
+                buffer.ready());
+    }
+    
+    public String guessFormat(Reader input) throws IOException {
+        ChemObjectReader reader = createReader(input);
+        if (reader == null) {
+            return "unknown";
+        } else {
+            return reader.getClass().getName();
+        }
+    }
+    
     /**
-     * Creates a ChemFObjectReader of the type determined by
+     * Creates a ChemObjectReader of the type determined by
      * reading the input. The input is read line-by-line
      * until a line containing an identifying string is
      * found.
@@ -55,7 +92,7 @@ public class ReaderFactory {
      * @throws IOException  if an I/O error occurs
      * @throws IllegalArgumentException if the input is null
      */
-    public static ChemObjectReader createReader(Reader input)
+    public ChemObjectReader createReader(Reader input)
                                          throws IOException
     {
         org.openscience.cdk.tools.LoggingTool logger = 
@@ -67,8 +104,7 @@ public class ReaderFactory {
             throw new IllegalArgumentException("input cannot be null");
         }
 
-        BufferedReader buffer = new BufferedReader(input);
-        buffer.mark(1024);
+        buffer = new BufferedReader(input);
         
         if (isMDLMolfile(buffer)) {
             logger.info("MDL Molfile format detected");
@@ -81,12 +117,12 @@ public class ReaderFactory {
         }
 
         /* Search file for a line containing an identifying keyword */
-        String line = buffer.readLine();
-        while (buffer.ready() && (line != null)) {
+        String line = readLine();
+        while (ready() && (line != null)) {
             logger.debug(line);
             if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
                 logger.info("PDB format detected");
-                buffer.reset();
+                reset();
                 return new PDBReader(input);
             } else if ((line.indexOf("<atom") != -1) ||
                        (line.indexOf("<molecule") != -1) ||
@@ -94,23 +130,23 @@ public class ReaderFactory {
                        (line.indexOf("<cml") != -1) ||
                        (line.indexOf("<bond") != -1)) {
                 logger.info("CML format detected");
-                buffer.reset();
+                reset();
                 return new CMLReader(buffer);
             } else if (line.indexOf("<identifier") != -1) {
                 logger.info("IChI format detected");
-                buffer.reset();
+                reset();
                 return new IChIReader(buffer);
             } else if (line.startsWith("%%Header Start")) {
                 logger.info("PolyMorph Predictor format detected");
-                buffer.reset();
+                reset();
                 return new PMPReader(buffer);
             } else if (line.startsWith("ZERR ") ||
                        line.startsWith("TITL ")) {
                 logger.info("ShelX format detected");
-                buffer.reset();
+                reset();
                 return new ShelXReader(buffer);
             }
-            line = buffer.readLine();
+            line = readLine();
         }
 
         if (isSMILESfile(buffer)) {
@@ -123,15 +159,15 @@ public class ReaderFactory {
         return null;
     }
     
-    private static boolean isMDLMolfile(BufferedReader buffer)
+    private boolean isMDLMolfile(BufferedReader buffer)
                                          throws IOException
     {
-        buffer.reset();
-        buffer.readLine();
-        buffer.readLine();
-        buffer.readLine();
-        String line4 = buffer.readLine();
-        buffer.reset();
+        reset();
+        readLine();
+        readLine();
+        readLine();
+        String line4 = readLine();
+        reset();
         
         // If the fourth line contains the MDL Ctab version tag or
         // contains two integers in the first 6 characters and the
@@ -166,13 +202,12 @@ public class ReaderFactory {
         return mdlFile;
     }
     
-    private static boolean isXYZfile(BufferedReader buffer)
+    private boolean isXYZfile(BufferedReader buffer)
                                          throws IOException
     {
         // An integer on the first line is a special test for XYZ files
-        buffer.reset();
-        buffer.mark(1024);
-        String line = buffer.readLine();
+        reset();
+        String line = readLine();
         boolean xyzFile = false;
         if (line != null) {
             StringTokenizer tokenizer = new StringTokenizer(line.trim());
@@ -192,17 +227,17 @@ public class ReaderFactory {
                 xyzFile = false;
             }
         }
-        buffer.reset();
+        reset();
         return xyzFile;
     }
 
-    private static boolean isSMILESfile(BufferedReader buffer)
+    private boolean isSMILESfile(BufferedReader buffer)
                                          throws IOException
     {
         // If the first line is a parsable SMILES string then the file
         // is a SMILES file
-        buffer.reset();
-        String line = buffer.readLine();
+        reset();
+        String line = readLine();
         boolean smilesFile = false;
         try {
             SmilesParser sp = new SmilesParser();
@@ -210,7 +245,7 @@ public class ReaderFactory {
             smilesFile = true;
         } catch (InvalidSmilesException ise) {
         }
-        buffer.reset();
+        reset();
         return smilesFile;
     }
 }

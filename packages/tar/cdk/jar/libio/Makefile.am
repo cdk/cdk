@@ -3,7 +3,7 @@
 
 PREFIX="@prefix@"
 JARLIBDIR="${PREFIX}/lib/cdk"
-JARLIBS=joelib.jar jmol.jar
+JARLIBS=
 
 EXTRA_DIST=${JARLIBS}
 

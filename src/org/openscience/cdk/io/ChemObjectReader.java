@@ -1,12 +1,11 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$  
  * $Revision$
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -38,11 +37,15 @@ import javax.vecmath.*;
 /**
  * This class is the interface that all IO readers should implement.
  * Programs need only care about this interface for any kind of IO.
- *
  * Currently, database IO and file IO is supported. Internet IO is
  * expected.
  *
- * @version  $Revision$
+ * <p>The easiest way to implement a new ChemObjectReader is to
+ * subclass the DefaultChemObjectReader.
+ *
+ * @see DefaultChemObjectReader
+ *
+ * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public interface ChemObjectReader {
 
@@ -61,5 +64,26 @@ public interface ChemObjectReader {
      **/
     public ChemObject read(ChemObject object) throws CDKException;
 
+    /**
+     * Adds a ReaderListener to this ChemObjectReader.
+     *
+     * @param listener the reader listener to add.
+     */
+    public void addReaderListener(ReaderListener l);
+
+    /**
+     * Removes a ReaderListener from this ChemObjectReader.
+     *
+     * @param listener the reader listener to remove.
+     */
+    public void removeReaderListener(ReaderListener l);
+    
+    /**
+     * Returns a Vector of ReaderSettings, that interface with the
+     * ChemObjectReader user for specific question. The list is
+     * by default empty.
+     */
+    public Vector getReaderSettings();
+    
 }
 

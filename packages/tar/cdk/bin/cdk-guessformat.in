@@ -1,0 +1,13 @@
+#! /bin/sh -e
+
+PREFIX=@prefix@
+RTJAR=@PATHTORTJAR@
+JAVA=@PATHTOJAVA@
+CDKLIBDIR=@CDKLIBDIR@
+CDKJARDIR=@CDKJARDIR@
+
+JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CDKLIBS=`ls -1 ${CDKJARDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CLASSPATH=${RTJAR}:${JARLIBS}:${CDKLIBS}
+
+${JAVA} -Dcdk.debugging=true -cp ${CLASSPATH} org.openscience.cdk.applications.FileFormatGuesser $*

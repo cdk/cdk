@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -26,9 +26,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.database;
-
 
 import java.sql.*;
 import java.io.*;
@@ -36,49 +34,42 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.exception.*;
 
+/**
+ * Reader that can read from a relational database that can be
+ * accessed through JDBC.
+ *
+ * @keyword database
+ * @keyword JDBC
+ */
+public class DBReader extends DefaultChemObjectReader {
 
-
-public class DBReader implements ChemObjectReader
-{
 	Connection con;
 	String query = null;
 	
-	public DBReader(Connection con)
-	{
+	public DBReader(Connection con) {
 		this.con = con;
 	}
 
-
-
-
-    public ChemObject read(ChemObject object) throws UnsupportedChemObjectException
-    {
-	    if (object instanceof Molecule) 
-	    {
+    public ChemObject read(ChemObject object) throws CDKException {
+	    if (object instanceof Molecule) {
 	        return (ChemObject)readMolecule();
-	    } 
-	    else 
-	    {
-	        throw new UnsupportedChemObjectException("Only supported Molecule.");
+	    } else {
+	        throw new CDKException("ChemObject is not supported Molecule.");
 	    }
     }
 	
-	
-	private ChemObject readMolecule()
-	{
+	private ChemObject readMolecule() {
 		Molecule mol = null;
 		CMLReader cmlr;
 		StringReader reader;
 		Statement st;
 		ResultSet rs;
-		try
-		{
+		try {
 			con.setAutoCommit(false);
 			st = con.createStatement();
 			System.out.println(query);
 			rs = st.executeQuery(query);
-			while (rs.next())
-			{
+			while (rs.next()) {
 				byte[] bytes = rs.getBytes(14);
                 String CMLString = new String(bytes);
 				reader = new StringReader(CMLString);
@@ -93,27 +84,20 @@ public class DBReader implements ChemObjectReader
 			st.close();
 			con.commit();
 			con.setAutoCommit(true);
-		}
-	
-	    catch (Exception exc)
-	    {
+		} catch (Exception exc) {
 	    	exc.printStackTrace();
 	    }
 		return mol;
     }
-		
 
-	private Molecule getMolecule(ChemFile cf)
-	{		
+	private Molecule getMolecule(ChemFile cf) {		
 		ChemSequence cs = cf.getChemSequence(0);
 		ChemModel cm = cs.getChemModel(0);
 		SetOfMolecules som = cm.getSetOfMolecules();
 		return som.getMolecule(0);
 	}
 
-
-	public void setQuery(String query)
-	{
+	public void setQuery(String query) {
 		this.query = query;
 	}
 	

@@ -51,8 +51,7 @@ import javax.vecmath.*;
  * @keyword    file format, MDL molfile
  * @keyword    file format, SDF
  */
-public class MDLReader implements ChemObjectReader
-{
+public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
     private org.openscience.cdk.tools.LoggingTool logger = null;

@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -50,7 +50,7 @@ import java.util.StringTokenizer;
  * @keyword file format, ShelXL
  * @author E.L. Willighagen
  */
-public class ShelXReader implements ChemObjectReader {
+public class ShelXReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
     private org.openscience.cdk.tools.LoggingTool logger;

@@ -26,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.database;
 
 import java.sql.*;
@@ -47,9 +46,14 @@ import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
 /**
+ * Reader that can read molecules from a Xindice database as set up
+ * as in a World Wide Molecular Matrix node
+ * 
  * @author Yong Zhang <yz237@cam.ac.uk>
+ *
+ * @keyword database, Xindice
  */
-public class XindiceReader implements ChemObjectReader {
+public class XindiceReader extends DefaultChemObjectReader {
 
     private String collection;
     private String xpath = null;
