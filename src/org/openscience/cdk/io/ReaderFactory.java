@@ -120,6 +120,12 @@ public class ReaderFactory {
                                            line.indexOf("V2000") >= 0)) {
                 logger.info("MDL mol/sdf file format detected");
                 return "org.openscience.cdk.io.MDLReader";
+            } else if (line.startsWith("$RXN")) {
+                logger.info("MDL rxn file format detected");
+                return "org.openscience.cdk.io.MDLRXNReader";
+            } else if (line.startsWith("$RDFILE ")) {
+                logger.info("MDL RDF file format detected");
+                return "org.openscience.cdk.io.MDLRDFReader";
             } else if (line.indexOf("ACES2") >= 0) {
                 logger.info("Aces2 format detected");
                 return "org.openscience.cdk.io.Aces2Reader";
