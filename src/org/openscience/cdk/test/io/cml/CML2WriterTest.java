@@ -40,6 +40,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
@@ -91,6 +92,34 @@ public class CML2WriterTest extends TestCase {
         logger.debug(writer.toString());
 		logger.debug("******************************");
         assertTrue(writer.toString().indexOf("</molecule>") != -1);
+	}
+	
+	public void testCMLCrystal() {
+		StringWriter writer = new StringWriter();
+        Crystal crystal = new Crystal();
+        Atom silicon = new Atom("Si");
+        silicon.setFractX3d(0.0);
+        silicon.setFractY3d(0.0);
+        silicon.setFractZ3d(0.0);
+        crystal.addAtom(silicon);
+        crystal.setA(1.5, 0.0, 0.0);
+        crystal.setB(0.0, 2.0, 0.0);
+        crystal.setC(0.0, 0.0, 1.5);
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        
+        try {
+            cmlWriter.write(crystal);
+        } catch (Exception exception) {
+            logger.error("Error while creating an CML2 file: ", exception.getMessage());
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+        String cmlContent = writer.toString();
+		logger.debug("******************************");
+        logger.debug(cmlContent);
+		logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("</crystal>") != -1); // the cystal info has to be present
+        assertTrue(cmlContent.indexOf("<atom") != -1); // an Atom has to be present
 	}
 	
 }

@@ -54,14 +54,15 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.dict.*;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.setting.StringIOSetting;
+import org.openscience.cdk.tools.*;
 
 /**
  * Class that provides convertor procedures to
- * convert CDK classes to cml classes/documents.
+ * convert CDK classes to CMLDOM 4.x classes/documents.
  *
  * @author        shk3
  * @author        egonw
@@ -166,29 +167,44 @@ public class Convertor {
     }
 
     private void writeCrystal(Crystal crystal, Element nodeToAppend) throws CMLException {
-        // FIXME: does this produce CML 2
-        MoleculeImpl mol=new MoleculeImpl(doc);
+        MoleculeImpl mol = new MoleculeImpl(doc);
+        
+        // output the crystal info
+        double[] notionalCoords = CrystalGeometryTools.cartesianToNotional(
+            crystal.getA(), crystal.getB(), crystal.getC()
+        );
+        CrystalImpl crystalimp = new CrystalImpl(doc);
+        CMLScalar scalar = new ScalarImpl(doc);
+        scalar.setTitle("a");
+        scalar.setContentValue(Double.toString(notionalCoords[0]));
+        crystalimp.appendScalar(scalar);
+        scalar = new ScalarImpl(doc);
+        scalar.setTitle("b");
+        scalar.setContentValue(Double.toString(notionalCoords[1]));
+        crystalimp.appendScalar(scalar);
+        scalar = new ScalarImpl(doc);
+        scalar.setTitle("c");
+        scalar.setContentValue(Double.toString(notionalCoords[2]));
+        crystalimp.appendScalar(scalar);
+        scalar = new ScalarImpl(doc);
+        scalar.setTitle("alpha");
+        scalar.setContentValue(Double.toString(notionalCoords[3]));
+        crystalimp.appendScalar(scalar);
+        scalar = new ScalarImpl(doc);
+        scalar.setTitle("beta");
+        scalar.setContentValue(Double.toString(notionalCoords[4]));
+        crystalimp.appendScalar(scalar);
+        scalar = new ScalarImpl(doc);
+        scalar.setTitle("gamma");
+        scalar.setContentValue(Double.toString(notionalCoords[5]));
+        crystalimp.appendScalar(scalar);
+        CMLSymmetry symmetry = new SymmetryImpl(doc);
+        symmetry.setSpaceGroup(crystal.getSpaceGroup());
+        crystalimp.appendSymmetry(symmetry);
+
+        mol.appendCrystal(crystalimp);
+        writeAtomContainer((AtomContainer)crystal,mol);
         nodeToAppend.appendChild(mol);
-        CrystalImpl crystalimp=new CrystalImpl(doc);
-        mol.appendChild(crystalimp);
-        Element string = this.createElement("string");
-        string.setAttribute("builtin","spacegroup");
-        crystalimp.appendChild(string);
-        Element floatarraya = this.createElement("floatArray");
-        floatarraya.setAttribute("title","a");
-        floatarraya.setAttribute("convention","PMP");
-        crystalimp.appendChild(floatarraya);
-        floatarraya.appendChild(doc.createTextNode(write(crystal.getA())));
-        Element floatarrayb = this.createElement("floatArray");
-        floatarrayb.setAttribute("title","b");
-        floatarrayb.setAttribute("convention","PMP");
-        crystalimp.appendChild(floatarrayb);
-        floatarrayb.appendChild(doc.createTextNode(write(crystal.getB())));
-        Element floatarrayc = this.createElement("floatArray");
-        floatarrayc.setAttribute("title","c");
-        floatarrayc.setAttribute("convention","PMP");
-        crystalimp.appendChild(floatarrayc);
-        floatarrayc.appendChild(doc.createTextNode(write(crystal.getC())));
     }
 
     private void writeAtomContainer(AtomContainer ac, Element nodeToAppend) throws CMLException{
