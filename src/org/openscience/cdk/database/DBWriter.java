@@ -65,7 +65,7 @@ public class DBWriter implements ChemObjectWriter {
         return new SetOfMolecules();
     };
 
-	public void write(ChemObject object) throws UnsupportedChemObjectException {
+	public void write(ChemObject object) throws CDKException {
 		if (object instanceof Molecule) {
 			writeMolecule((Molecule)object);
 		} else if (object instanceof SetOfMolecules) {
@@ -80,7 +80,7 @@ public class DBWriter implements ChemObjectWriter {
      *
      * @param   mol    The molecule to be stored
      */
-    public void writeMolecule(Molecule mol) throws UnsupportedChemObjectException {
+    public void writeMolecule(Molecule mol) throws CDKException {
 		PreparedStatement ps;
 		// The Molecule is turned into a CML string
 		writer = new StringWriter();
@@ -138,7 +138,7 @@ public class DBWriter implements ChemObjectWriter {
 	 *
 	 * @param  som    The set of molecules to be stored
 	 */
-	private void writeSetOfMolecules(SetOfMolecules som) throws UnsupportedChemObjectException
+	private void writeSetOfMolecules(SetOfMolecules som) throws CDKException
 	{
 		for (int i = 0; i < som.getMoleculeCount(); i++)
 		{
