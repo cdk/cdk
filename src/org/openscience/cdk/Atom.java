@@ -25,17 +25,37 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ *
+ */
 package org.openscience.cdk;
 
 import javax.vecmath.*;
 
 /**
- *  Represents the idea of an chemical atom.
+ * Represents the idea of an chemical atom.
  *
- * @author     steinbeck 
+ * <p>An Atom class is instantiated with at least the atom symbol:
+ * <pre>
+ *   Atom a = new Atom("C");
+ * </pre>
+ *
+ * <p>Once instantiated all field not filled by passing parameters
+ * to the constructured are null. Atoms can be configured by using
+ * the IsotopeFactory.configure() method:
+ * <pre>
+ *   IsotopeFactory if = IsotopeFactory.getInstance();
+ *   if.configure(a);
+ * </pre>
+ *
+ * <p>More example on using this class can be found in the
+ * Junit test for this class.
+ *
+ * @author     steinbeck
  * @created    October 2, 2000
  * @keyword    atom
+ *
+ * @see  test.AtomTest
+ * @see  tools.IsotopeFactory.configure()
  */
 public class Atom extends AtomType implements Cloneable {
         /* Let's keep this exact specification
