@@ -3,9 +3,9 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -22,15 +22,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
 package org.openscience.cdk.renderer.color;
 
 import org.openscience.cdk.*;
 import java.awt.Color;
 
 /**
- * Implements the idea of an element in the periodic table.
- * Use an element factory to get a ready-to-use element by name or number
+ * Gives a short table of atom colors for 3D display.
  */
 public class CDKAtomColors implements AtomColorer {
 
