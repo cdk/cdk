@@ -27,6 +27,9 @@
  *  */
 package org.openscience.cdk.index;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Tools to work with CAS registry numbers. 
  *
@@ -38,12 +41,34 @@ package org.openscience.cdk.index;
 public class CASNumber {
 
     /**
-     * Infrastructure for checking numbers.
+     * Checks wether the registry number is valid.
+     * See <a href="http://www.cas.org/EO/checkdig.html">CAS website</a>.
      *
      * @keyword CAS number, validation
      */
-    public void checkNumber(String casNumber) {
-        // to be implemented
+    public static boolean isValid(String casNumber) {
+        boolean overall = true;
+        // check format
+        String format = "^(\\d+)-(\\d\\d)-(\\d)$";
+        Pattern pattern = Pattern.compile(format);
+        Matcher matcher = pattern.matcher(casNumber);
+        overall = overall && matcher.matches();
+        
+        // check number
+        String part1 = matcher.group(1);
+        String part2 = matcher.group(2);
+        String part3 = matcher.group(3);
+        int total = 0;
+        total = total + 1*Integer.parseInt(part2.substring(1,2));
+        total = total + 2*Integer.parseInt(part2.substring(0,1));
+        int length = part1.length();
+        for (int i=0; i<length; i++) {
+            total = total + (3+i)*Integer.parseInt(part1.substring(length-1-i,length-i));
+        }
+        int digit = total % 10;
+        overall = overall && (digit == Integer.parseInt(part3));
+        
+        return overall;
     }
     
 }
