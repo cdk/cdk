@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.exception.InvalidSmilesException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -64,6 +68,7 @@ public class ReaderFactory {
         }
 
         BufferedReader buffer = new BufferedReader(input);
+        buffer.mark(1024);
         
         if (isMDLMolfile(buffer)) {
             logger.info("MDL Molfile format detected");
@@ -78,20 +83,20 @@ public class ReaderFactory {
         /* Search file for a line containing an identifying keyword */
         String line = buffer.readLine();
         while (buffer.ready() && (line != null)) {
-
+            logger.debug(line);
             if (line.startsWith("HEADER") || line.startsWith("ATOM  ")) {
                 logger.info("PDB format detected");
                 buffer.reset();
                 return new PDBReader(input);
-            } else if (line.indexOf("<atom") != 0) {
+            } else if (line.indexOf("<atom") != -1) {
                 logger.info("CML format detected");
                 buffer.reset();
                 return new CMLReader(input);
-            } else if (line.indexOf("<identifier") != 0) {
+            } else if (line.indexOf("<identifier") != -1) {
                 logger.info("IChI format detected");
                 buffer.reset();
                 return new IChIReader(input);
-            } else if (line.indexOf("%%Header Start") != 0) {
+            } else if (line.startsWith("%%Header Start")) {
                 logger.info("PolyMorph Predictor format detected");
                 buffer.reset();
                 return new PMPReader(input);
@@ -104,6 +109,11 @@ public class ReaderFactory {
             line = buffer.readLine();
         }
 
+        if (isSMILESfile(buffer)) {
+            logger.info("SMILES format detected");
+            return new SMILESReader(input);
+        }
+
         logger.warn("File format undetermined");
 
         return null;
@@ -112,6 +122,8 @@ public class ReaderFactory {
     private static boolean isMDLMolfile(BufferedReader buffer)
                                          throws IOException
     {
+        buffer.reset();
+        buffer.readLine();
         buffer.readLine();
         buffer.readLine();
         String line4 = buffer.readLine();
@@ -178,5 +190,23 @@ public class ReaderFactory {
         }
         buffer.reset();
         return xyzFile;
+    }
+
+    private static boolean isSMILESfile(BufferedReader buffer)
+                                         throws IOException
+    {
+        // If the first line is a parsable SMILES string then the file
+        // is a SMILES file
+        buffer.reset();
+        String line = buffer.readLine();
+        boolean smilesFile = false;
+        try {
+            SmilesParser sp = new SmilesParser();
+            Molecule m = sp.parseSmiles("c1ccccc1");
+            smilesFile = true;
+        } catch (InvalidSmilesException ise) {
+        }
+        buffer.reset();
+        return smilesFile;
     }
 }

@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -42,6 +42,8 @@ public class IOTests {
         suite.addTest(MDLReaderTest.suite());
         suite.addTest(SMILESReaderTest.suite());
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test uet! */
+        
+        suite.addTest(ReaderFactoryTest.suite());
         return suite;
     }
 
