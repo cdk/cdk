@@ -36,8 +36,10 @@ import com.baysmith.io.FileUtilities;
 import java.util.Iterator;
 
 /**
- *
  * TestCase for the PDBReader class.
+ *
+ * @author  Edgar Luttmann <edgar@uni-paderborn.de>
+ * @created 2001-08-09 				$
  *
  */
 public class PDBReaderTest extends TestCase {
@@ -67,6 +69,8 @@ public class PDBReaderTest extends TestCase {
   }
 
   public void tearDown() {
+    assertTrue("Error removing test directory \"" + testDirectory + "\"",
+      testDirectory.delete());
     testDirectory = null;
   }
 
