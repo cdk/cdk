@@ -55,15 +55,15 @@ public class GravitationalIndexDescriptorTest extends TestCase {
             Descriptor descriptor = new GravitationalIndexDescriptor();
             ArrayList retval = (ArrayList)descriptor.calculate(ac);
 
-            assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue());
-            assertEquals(41.91069159994975, ((Double)retval.get(1)).doubleValue());
-            assertEquals(12.06562671430088, ((Double)retval.get(2)).doubleValue());
-            assertEquals(1976.6432599699767, ((Double)retval.get(3)).doubleValue());
-            assertEquals(44.45945636161082, ((Double)retval.get(4)).doubleValue());
-            assertEquals(12.549972243701887, ((Double)retval.get(5)).doubleValue());
-            assertEquals(4333.097373073368, ((Double)retval.get(6)).doubleValue());
-            assertEquals(65.82626658920714, ((Double)retval.get(7)).doubleValue());
-            assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue());
+            assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
+            assertEquals(41.91069159994975,  ((Double)retval.get(1)).doubleValue(), 0.00000001);
+            assertEquals(12.06562671430088,  ((Double)retval.get(2)).doubleValue(), 0.00000001);
+            assertEquals(1976.6432599699767, ((Double)retval.get(3)).doubleValue(), 0.00000001);
+            assertEquals(44.45945636161082,  ((Double)retval.get(4)).doubleValue(), 0.00000001);
+            assertEquals(12.549972243701887, ((Double)retval.get(5)).doubleValue(), 0.00000001);
+            assertEquals(4333.097373073368,  ((Double)retval.get(6)).doubleValue(), 0.00000001);
+            assertEquals(65.82626658920714,  ((Double)retval.get(7)).doubleValue(), 0.00000001);
+            assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue(), 0.00000001);
         }
 }
 
