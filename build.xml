@@ -530,14 +530,11 @@
                 </java>
         </target>
 
-        <target name="run" depends="dist-core, dist-extra, dist-test, dist-apps, dist-libio">
-                <java classname="org.openscience.cdk.applications.Viewer" fork="yes">
-			<arg value="--nojava3d" />
-			<arg value="--no3d" />
-			<arg value="--useJmol" />
-			<arg value="data/guanine.txt" />
+        <target name="run" depends="dist-core, dist-extra, dist-test, dist-standard">
+                <java classname="org.openscience.cdk.test.HOSECodeTest" fork="yes">
 			<classpath>
                                 <pathelement location="${dist}/jar/cdk-core.jar" />
+				<pathelement location="${dist}/jar/cdk-standard.jar" />
                                 <pathelement location="${dist}/jar/cdk-extra.jar" />
                                 <pathelement location="${dist}/jar/cdk-apps.jar" />
                                 <pathelement location="${dist}/jar/cdk-test.jar" />
