@@ -44,7 +44,7 @@ import java.awt.event.*;
 import javax.vecmath.*;
 
 /**
- * Class that acts on MouseEvents and KeyEvents. 
+ * Class that acts on MouseEvents and KeyEvents.
  *
  * @author       steinbeck
  * @author       egonw
@@ -257,9 +257,6 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			 *  should not store this change
 			 */
 			isUndoableChange = false;
-			/*
-			 *  ---
-			 */
 			fireChange();
 		}
 
@@ -1572,6 +1569,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 */
 	private void drawProposedBond(int startX, int startY, int mouseX, int mouseY)
 	{
+		logger.debug("Drawing proposed bond...");
 		int endX = 0;
 		int endY = 0;
 		double pointerVectorLength = c2dm.getBondPointerLength();
@@ -1579,8 +1577,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		Atom atomInRange;
 
 		angle = GeometryTools.getAngle(startX - mouseX, startY - mouseY);
-		if (c2dm.getSnapToGridAngle())
-		{
+		if (c2dm.getSnapToGridAngle()) {
 			angle = snapAngle(angle);
 		}
 		atomInRange = getAtomInRange(mouseX, mouseY);
@@ -1594,6 +1591,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			endY = startY - (int) (Math.sin(angle) * pointerVectorLength);
 		}
 		logger.debug("End point: " + endX + ", " + endY);
+		logger.debug("Start point: " + startX + ", " + startY);
 		r2dm.setPointerVectorEnd(new Point(endX, endY));
 	}
 
