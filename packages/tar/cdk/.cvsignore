@@ -1,0 +1,15 @@
+Makefile
+Makefile.in
+aclocal.m4
+configure
+config.*
+cdk*.tar.gz
+ChangeLog
+build
+sourcedist
+dist
+reports
+src
+build.xml
+javadoc.xml
+cdk*jar

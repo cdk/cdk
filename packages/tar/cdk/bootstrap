@@ -1,0 +1,11 @@
+#! /bin/sh -e
+# bootstrap this software
+
+cp ../../../CHANGELOG ChangeLog
+cp ../../../build.xml .
+cp ../../../javadoc.xml .
+cp -R ../../../src .
+find src -name "CVS" | xargs rm -R
+find src -name ".cvsignore" | xargs rm
+
+aclocal && automake --verbose --gnu && autoconf

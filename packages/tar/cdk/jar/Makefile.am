@@ -1,0 +1,19 @@
+## Process this file with automake to produce Makefile.in
+## $Id$
+
+PREFIX="@prefix@"
+JARLIBDIR="${PREFIX}/lib/cdk"
+JARLIBS=vecmath1.2-1.14.jar postgresql7.0-1.2.jar mysql-2.0.4.jar \
+        gnujaxp.jar baysmith-io.jar dadml.jar JSX1.0.1.1.jar \
+        junit.jar xerces-1.3.0.jar
+
+EXTRA_DIST=${JARLIBS}
+
+alljardir = "${JARLIBDIR}"
+
+alljar_DATA = ${JARLIBS}
+
+SUBDIRS= libio
+
+${JARLIBS}:
+	cd ../../../../jar; cp ${JARLIBS} ../packages/tar/cdk/lib/.

@@ -1,0 +1,15 @@
+#! /bin/sh -e
+
+PREFIX=/usr/local/cdk
+XERCESJAR=@PATHTOXERCES@
+LOGJAVA=@PATHTOLOGJAVA@
+RTJAR=/usr/lib/j2re1.3/lib/rt.jar
+JAVA=/usr/local/j2sdk1.4.0/bin/java
+CDKLIBDIR=/usr/local/cdk/lib/cdk
+CDKJARDIR=/usr/local/cdk/share/java
+
+JARLIBS=`ls -1 ${CDKLIBDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CDKLIBS=`ls -1 ${CDKJARDIR}/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+CLASSPATH=${RTJAR}:${LOGJAVA}:${XERCESJAR}:${JARLIBS}:${CDKLIBS}
+
+${JAVA} -Dcdk.debugging=true -cp ${CLASSPATH} org.openscience.cdk.database.DBAdmin $*
