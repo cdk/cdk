@@ -28,10 +28,16 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.Vector;
+import java.util.Map;
+import java.util.List;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.LonePair;
 
@@ -50,7 +56,7 @@ import org.openscience.cdk.LonePair;
  * @cdk.created 2003-08-07
  */
 public class AtomContainerManipulator {
-    
+
     public static void replaceAtomByAtom(AtomContainer container, Atom atom, Atom newAtom) {
         if (!container.contains(atom)) {
             // it should complain
@@ -75,43 +81,43 @@ public class AtomContainerManipulator {
                 }
             }
         }
-        
+
     }
-	
-	
-	/**
-	 * @return The summed charges of all atoms in this AtomContainer.
-	 */
-	public static double getTotalCharge(AtomContainer atomContainer) {
-		double charge = 0.0;
-		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-			charge += atomContainer.getAtomAt(i).getCharge();
-		}
-		return charge;
-	}
-	
-	/**
-	 * @return The summed formal charges of all atoms in this AtomContainer.
-	 */
-	public static int getTotalFormalCharge(AtomContainer atomContainer) {
-		int charge = 0;
-		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-			charge += atomContainer.getAtomAt(i).getFormalCharge();
-		}
-		return charge;
-	}
-	
-	/**
-	 * @return The summed implicit hydrogens of all atoms in this AtomContainer.
-	 */
-	public static int getTotalHydrogenCount(AtomContainer atomContainer) {
-		int hCount = 0;
-		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-			hCount += atomContainer.getAtomAt(i).getHydrogenCount();
-		}
-		return hCount;
-	}
-	
+
+
+    /**
+     * @return The summed charges of all atoms in this AtomContainer.
+     */
+    public static double getTotalCharge(AtomContainer atomContainer) {
+        double charge = 0.0;
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            charge += atomContainer.getAtomAt(i).getCharge();
+        }
+        return charge;
+    }
+
+    /**
+     * @return The summed formal charges of all atoms in this AtomContainer.
+     */
+    public static int getTotalFormalCharge(AtomContainer atomContainer) {
+        int charge = 0;
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            charge += atomContainer.getAtomAt(i).getFormalCharge();
+        }
+        return charge;
+    }
+
+    /**
+     * @return The summed implicit hydrogens of all atoms in this AtomContainer.
+     */
+    public static int getTotalHydrogenCount(AtomContainer atomContainer) {
+        int hCount = 0;
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            hCount += atomContainer.getAtomAt(i).getHydrogenCount();
+        }
+        return hCount;
+    }
+
     public static Vector getAllIDs(AtomContainer mol) {
         Vector IDlist = new Vector();
         if (mol != null) {
@@ -129,5 +135,90 @@ public class AtomContainerManipulator {
         }
         return IDlist;
     }
+
+
+    /**
+     * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
+     * The new molecule is a deep copy.
+     *
+     * @param ac The AtomContainer from which to remove the hydrogens
+     * @return The mol without Hs.
+     * @cdk.keyword hydrogen, removal
+     */
+    public static AtomContainer removeHydrogens(AtomContainer ac)
+    {
+        Map map = new HashMap();        // maps original atoms to clones.
+        List remove = new ArrayList();  // lists removed Hs.
+
+        // Clone atoms except those to be removed.
+        Molecule mol = new Molecule();
+        int count = ac.getAtomCount();
+        for (int i = 0;
+                i < count;
+                i++)
+        {
+            // Clone/remove this atom?
+            Atom atom = ac.getAtomAt(i);
+            if (!atom.getSymbol().equals("H"))
+            {
+                Atom a = (Atom) atom.clone();
+                a.setHydrogenCount(0);
+                mol.addAtom(a);
+                map.put(atom, a);
+            }
+            else
+            {
+                remove.add(atom);   // maintain list of removed H.
+            }
+        }
+
+        // Clone bonds except those involving removed atoms.
+        count = ac.getBondCount();
+        for (int i = 0;
+                i < count;
+                i++)
+        {
+            // Check bond.
+            final Bond bond = ac.getBondAt(i);
+            Atom[] atoms = bond.getAtoms();
+            boolean remove_bond = false;
+            final int length = atoms.length;
+            for (int k = 0;
+                    k < length;
+                    k++)
+            {
+                if (remove.contains(atoms[k]))
+                {
+                    remove_bond = true;
+                    break;
+                }
+            }
+
+            // Clone/remove this bond?
+            if (!remove_bond)
+                // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
+            {
+                Bond clone = (Bond) ac.getBondAt(i).clone();
+                clone.setAtoms(new Atom[]{(Atom) map.get(atoms[0]), (Atom) map.get(atoms[1])});
+                mol.addBond(clone);
+            }
+        }
+
+        // Recompute hydrogen counts of neighbours of removed Hydrogens.
+        for (Iterator i = remove.iterator();
+                i.hasNext();)
+        {
+            // Process neighbours.
+            for (Iterator n = ac.getConnectedAtomsVector((Atom) i.next()).iterator();
+                    n.hasNext();)
+            {
+                final Atom neighb = (Atom) map.get(n.next());
+                neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
+            }
+        }
+
+        return (mol);
+    }
+
 }
 
