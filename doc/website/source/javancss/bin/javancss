@@ -5,8 +5,11 @@
 #
 # Maybe you have to set SWING_HOME if using jdk 1.1 (see below).
 
-JAVA_HOME=`which java 2>/dev/null || whence java`
-JAVA_HOME=`dirname "$JAVA_HOME"`/..
+if test "x${JAVA_HOME}" = "x" 
+then
+  JAVA_HOME=`which java 2>/dev/null || whence java`
+  JAVA_HOME=`dirname "$JAVA_HOME"`/..
+fi
 
 if [ "$SWING_HOME" = "" ] ; then
   SWING_HOME=${JAVA_HOME}/../swing-1.1.1fcs
