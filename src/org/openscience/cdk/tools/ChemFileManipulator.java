@@ -29,10 +29,10 @@ package org.openscience.cdk.tools;
 
 import java.util.Enumeration;
 import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.ChemModel;
 
 /**
  * Class with convenience methods that provide methods from
@@ -81,6 +81,29 @@ public class ChemFileManipulator {
             arrayOffset += modelContainers.length;
         }
         return containers;
+    }
+    
+    public static ChemModel[] getAllChemModels(ChemFile file)
+    {
+	    ChemSequence[] sequences = file.getChemSequences();
+	    int modelCounter = 0;
+	    int counter = 0;
+	    ChemModel[] tempModels = null;
+	    for (int f = 0; f < sequences.length; f++)
+	    {
+		    modelCounter += sequences[f].getChemModelCount();
+	    }
+	    ChemModel[] models = new ChemModel[modelCounter];
+	    for (int f = 0; f < sequences.length; f++)
+	    {
+		    tempModels = sequences[f].getChemModels();
+		    for (int g = 0; g < tempModels.length; g++)
+		    {
+			    models[counter] = tempModels[g];
+			    counter ++;
+		    }
+	    }
+	    return models;
     }
 }
 
