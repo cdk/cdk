@@ -46,6 +46,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	static AtomContainer atomContainer;
 	public Renderer2DModel r2dm;
 	public Renderer2D renderer;
+	public String title = "Molecule Viewer";
 
 	/**
 	 * Constructs a MoleculeViewer with a molecule to display
@@ -102,6 +103,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
+		frame.setTitle(title);
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -141,6 +143,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		{
 			exc.printStackTrace();		
 		}
+		
 		new MoleculeViewer2D(atomContainer, new Renderer2DModel());
 	}
 
@@ -153,6 +156,8 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	public void setRenderer2DModel(Renderer2DModel r2dm)
 	{
 		this.r2dm = r2dm;
+		r2dm.addCDKChangeListener(this);
+		renderer = new Renderer2D(r2dm);
 	}
 
 

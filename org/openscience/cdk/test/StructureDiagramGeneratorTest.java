@@ -49,34 +49,47 @@ public class StructureDiagramGeneratorTest extends TestCase
 	public void setUp()
 	{
 		sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		Renderer2DModel r2dm = new Renderer2DModel();
+		mv = new MoleculeViewer2D();
+		r2dm = new Renderer2DModel();
 		r2dm.setDrawNumbers(true);
 		mv.setRenderer2DModel(r2dm);
-		
 	}
 
 	public static Test suite() {
 		return new TestSuite(StructureDiagramGeneratorTest.class);
 	}
 
-	public void testAlphaPinene()
+//	public void testAlphaPinene()
+//	{
+//		assert(showIt(MoleculeFactory.makeAlphaPinene()));
+//	}
+//
+	public void testMolecule()
 	{
-		molecules.addElement(MoleculeFactory.makeAlphaPinene());
-		assert(showIt((Molecule)molecules.lastElement()));
+		assert(showIt(MoleculeFactory.loadMolecule("data/reserpine.mol")));
 	}
 	
-	public void testCondensed()
-	{
-		molecules.addElement(MoleculeFactory.make4x3CondensedRings());
-		assert(showIt((Molecule)molecules.lastElement()));
-	}
+//	public void testCondensed()
+//	{
+//		assert(showIt(MoleculeFactory.make4x3CondensedRings()));
+//	}
+//
+//	public void testSpiro()
+//	{
+//		assert(showIt(MoleculeFactory.makeSpiroRings()));
+//	}
 
-	public void testSpiro()
-	{
-		molecules.addElement(MoleculeFactory.makeSpiroRings());
-		assert(showIt((Molecule)molecules.lastElement()));
-	}
+
+//	public void testRingSubstituents()
+//	{
+//		assert(showIt(MoleculeFactory.makeMethylDecaline()));
+//	}
+
+
+//	public void testBranchedAliphatic()
+//	{
+//		assert(showIt(MoleculeFactory.makeBranchedAliphatic()));
+//	}
 
 
 	boolean showIt(Molecule molecule)

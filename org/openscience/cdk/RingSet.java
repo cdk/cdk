@@ -24,7 +24,7 @@
 package org.openscience.cdk;
 
 import java.util.Vector;
-
+import javax.vecmath.*;
 
 /**
  *  Implementation of a set of Rings.
@@ -110,7 +110,29 @@ public class RingSet extends Vector{
 		return rings;
 	}
 	
-	
+	/**
+	 * Returns a vector of all rings that this atom is part of.
+	 *
+	 * @param   atom  The atom to be checked
+	 * @return   A vector of all rings that this bond is part of  
+	 */
+
+	public RingSet getRings(Atom atom)
+	{
+		RingSet rings = new RingSet();
+		Ring ring;
+		for (int i = 0; i < this.size();i++)
+		{
+			ring = (Ring)elementAt(i);
+			if (ring.contains(atom))
+			{
+				rings.addElement(ring);
+			}
+		}
+		return rings;
+	}
+
+
 
 	/**
 	 * We define the heaviest ring as the one with the highest number of double bonds.
@@ -231,7 +253,23 @@ public class RingSet extends Vector{
 		}
 	}
 
-	
+	/**
+	 * Returns the geometric center of all the rings in this ringset
+	 *
+	 * @return the geometric center of the rings in this ringset
+	 */
+	public Point2d get2DCenter()
+	{
+		double centerX = 0, centerY = 0;
+		for (int i = 0; i < size(); i++)
+		{
+			centerX += ((Ring)elementAt(i)).get2DCenter().x;
+			centerY += ((Ring)elementAt(i)).get2DCenter().y;
+		}
+		System.out.println("Center for " + size() + " rings");
+		Point2d point = new Point2d(centerX / ((double)size()), centerY / ((double)size()));
+		return point;
+	}
 
 	/**
 	 * Returns a sequence of string representations for all rings in the 

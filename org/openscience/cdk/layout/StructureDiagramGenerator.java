@@ -150,11 +150,18 @@ public class StructureDiagramGenerator implements CDKConstants
 		}
 		else
 		{
-//			Atom complexAtom = getComplexCentralAtom();
-//			Bond[] bonds = molecule.getConnectedBonds(complexAtom);
-//			placeFirstBond(bonds[0], firstBondVector);
+			AtomContainer longestChain = getInitialLongestChain(molecule);
+			System.out.println(listNumbers(longestChain));
+			longestChain.getAtomAt(0).setPoint2D(new Point2d(0,0));
+			longestChain.getAtomAt(0).flags[ISPLACED] = true;
+			/* place the first bond such that the whole chain will be vertically 
+			 * alligned on the x axis
+			 */
+			double angle = Math.toRadians(-30);
+			atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
 		}
-		//handleAliphatics();
+		listPlaced(molecule);
+		handleAliphatics();
 //		fixRest();
 	}
 
@@ -168,162 +175,6 @@ public class StructureDiagramGenerator implements CDKConstants
 		generateCoordinates(new Vector2d(0, 1));
 	}
 
-
-
-	/**
-	 * Positions the aliphatic substituents of a ring system
-	 *
-	 * @exception   Exception  Thrown if something goes wrong.
-	 */
-	public void placeRingSubstituents() throws java.lang.Exception
-	{
-		RingSet rs = null; 
-		Ring ring = null;
-		Atom atom = null;
-		AtomContainer aliphaticPartners = new AtomContainer();;
-		AtomContainer sharedAtoms = new AtomContainer();
-		for (int i = 0; i < ringSystems.size(); i++)
-		{
-			rs = (RingSet)ringSystems.elementAt(i); /* Get the i-th RingSet */
-			for (int j = 0; j < rs.size(); j++)
-			{
-				ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
-				
-				for (int k = 0; k < ring.getAtomCount(); k++)
-				{
-				
-					aliphaticPartners.removeAllElements();
-					sharedAtoms.removeAllElements();
-					if (debug) System.out.println(aliphaticPartners.getAtomCount());
-					atom = ring.getAtomAt(k);
-					partitionPartners(atom, aliphaticPartners, sharedAtoms);
-					if (debug) System.out.println(aliphaticPartners.getAtomCount());
-					if (aliphaticPartners.getAtomCount() > 0)
-					{
-						atomPlacer.distributePartners(atom, sharedAtoms, aliphaticPartners, bondLength);
-					}
-				}
-			}
-		}
-	
-	}
-	
-	
-	private Atom getComplexCentralAtom() throws java.lang.Exception
-	{
-		int[][] conMat = molecule.getConnectionMatrix();
-		int[][] apsp = PathTools.computeFloydAPSP(conMat);
-		int[] apspCol = PathTools.getInt2DColumnSum(apsp);
-		int position = 0;
-		int max = molecule.getAtomCount() * molecule.getAtomCount();
-		Atom atom = null, mostComplexAtom = null;
-		
-		
-		Vector[] complexity = new Vector[10];
-		for (int i = 0; i < 10; i++)
-		{
-			complexity[i] = new Vector();
-		}		
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			complexity[molecule.getDegree(i)].addElement(molecule.getAtomAt(i));
-		}
-		for (int i = 9; i >= 0; i--)
-		{
-			if (complexity[i].size() > 0)
-			{
-				/* This is the Vector with the most substituted atoms
-				 * in the molecule.
-				 */
-				for (int j = 0; j < complexity[i].size(); j++)
-				{
-				    atom = (Atom)complexity[i].elementAt(j);
-					if (debug) System.out.println(i + ", " + j + ", " + apspCol[molecule.getAtomNumber(atom)]);
-					/* for each atom the molecule check its apsp distance sum */
-					if (apspCol[molecule.getAtomNumber(atom)] < max)
-					{
-						max = apspCol[molecule.getAtomNumber(atom)];
-						mostComplexAtom = atom;
-					}
-				}
-				break;
-			}
-		}
-		try
-		{
-			if (debug) System.out.println(molecule.getAtomNumber(mostComplexAtom));
-		}
-		catch(Exception exc)
-		{
-			
-		}
-		return mostComplexAtom;
- 	}
-
-	/**
-	 * Does a layout of all the non-ring parts of the molecule
-	 */
-	private void handleAliphatics() throws java.lang.Exception
-	{
-		AtomContainer longestChain = getInitialLongestChain(molecule);
-		longestChain.getAtomAt(0).setPoint2D(new Point2d(0,0));
-		Atom atom = null;
-		Atom[] atoms;
-		Bond[] bonds = null;
-		/* place the first bond such that the whole chain will be vertically 
-		 * alligned on the x axis
-		 */
-		double angle = Math.toRadians(-30);
-		Vector unplacedAtoms = null;
-		double startAngle = 0, addAngle = 0, unoccupiedAngle = 0;
-		atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
-		//System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
-
-		do
-		{
-			atom = getNextAtomWithUnplacedNeigbors();
-			if (atom != null)
-			{
-				unplacedAtoms = getUnplacedAtoms(atom);
-				atoms = atomPlacer.getLargestUnoccupiedAngleAtoms(atom);
-			}
-//			XXXXXXXXXXXXXXXX Hier geht weiter XXXXXXXXXXXXXXXXXXXX
-//			Berechne den Winkel zwischen den beiden bestimmten Atomen und fülle 
-//			ihn mit Substituenten.
-//			Finde den optimalen Startwinkel zu den schon
-//			Plazierten Atomen.					
-		}while(!true);
-	}
-	
-	private Vector getUnplacedAtoms(Atom atom)
-	{
-		Vector unplacedAtoms = new Vector();
-		Bond[] bonds = molecule.getConnectedBonds(atom);
-		for (int f = 0; f < bonds.length; f++)
-		{
-			unplacedAtoms.addElement(bonds[f].getConnectedAtom(atom));
-		}
-		return unplacedAtoms;
-	}
-	
-	private Atom getNextAtomWithUnplacedNeigbors()
-	{
-		Bond bond = null; 
-		for (int f = 0; f < molecule.getBondCount(); f++)
-		{
-			bond = molecule.getBondAt(f);
-			if (!bond.getAtomAt(0).flags[ISPLACED] &&  bond.getAtomAt(1).flags[ISPLACED])
-			{
-				return bond.getAtomAt(1);
-			}
-			
-			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED])
-			{
-				return bond.getAtomAt(0);
-			}
-		}
-		return null;
-	}
 
 	
 
@@ -398,6 +249,172 @@ public class StructureDiagramGenerator implements CDKConstants
 
 	}
 
+	/**
+	 * Positions the aliphatic substituents of a ring system
+	 *
+	 * @exception   Exception  Thrown if something goes wrong.
+	 */
+	public void placeRingSubstituents() throws java.lang.Exception
+	{
+		RingSet rs = null; 
+		Ring ring = null;
+		Atom atom = null;
+		RingSet rings = null;
+		AtomContainer aliphaticPartners = new AtomContainer();;
+		AtomContainer sharedAtoms = new AtomContainer();
+		AtomContainer primaryAtoms = new AtomContainer();
+		Point2d centerOfRingGravity = null;
+		for (int i = 0; i < ringSystems.size(); i++)
+		{
+			rs = (RingSet)ringSystems.elementAt(i); /* Get the i-th RingSet */
+			for (int j = 0; j < rs.size(); j++)
+			{
+				ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
+				
+				for (int k = 0; k < ring.getAtomCount(); k++)
+				{
+				
+					aliphaticPartners.removeAllElements();
+					sharedAtoms.removeAllElements();
+					primaryAtoms.removeAllElements();
+					if (debug) System.out.println("k = " + k + ", aliphaticPartners.getAtomCount(): " + aliphaticPartners.getAtomCount());
+					atom = ring.getAtomAt(k);
+					rings = rs.getRings(atom);
+					centerOfRingGravity = rings.get2DCenter();
+					partitionPartners(atom, aliphaticPartners, sharedAtoms);
+
+//					for (int f = 0; f < aliphaticPartners.getAtomCount(); f++)
+//					{
+//						if (molecule.getDegree(aliphaticPartners.getAtomAt(f)) == 1)
+//						{
+//							primaryAtoms.addAtom(aliphaticPartners.getAtomAt(f));
+//						}
+//					}
+					
+					if (!allPlaced(aliphaticPartners))
+					{
+						System.out.println(listNumbers(sharedAtoms));
+						if (debug) System.out.println("k = " + k + ", aliphaticPartners.getAtomCount(): " + aliphaticPartners.getAtomCount());
+						
+						if (aliphaticPartners.getAtomCount() > 0)
+						{
+							atomPlacer.distributePartners(atom, sharedAtoms, centerOfRingGravity, aliphaticPartners, bondLength);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+
+	/**
+	 * Does a layout of all the non-ring parts of the molecule
+	 */
+	private void handleAliphatics() throws java.lang.Exception
+	{
+		//System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
+		Atom atom = null;
+		double xDiff, yDiff;
+		Atom[] atoms = null;
+		Bond[] bonds = null;
+		AtomContainer unplacedAtoms = null;
+		AtomContainer placedAtoms = null;
+		AtomContainer longestUnplacedChain = null;
+		
+		double startAngle = 0, addAngle = 0, unoccupiedAngle = 0;
+
+		Vector2d direction = null;
+		Vector2d startVector = null;
+
+
+		do
+		{
+			atom = getNextAtomWithUnplacedNeigbors();
+			if (atom != null)
+			{
+				System.out.println("getNextAtomWithUnplacedNeigbors(): " + molecule.getAtomNumber(atom));
+				unplacedAtoms = getUnplacedAtoms(atom);
+				placedAtoms = getPlacedAtoms(atom);
+
+				longestUnplacedChain = getLongestUnplacedChain(molecule, atom);
+				if (placedAtoms.getAtomCount() > 1)
+				{
+					atomPlacer.distributePartners(atom, placedAtoms, placedAtoms.get2DCenter(), unplacedAtoms, bondLength);
+					direction = new Vector2d(longestUnplacedChain.getAtomAt(1).getPoint2D());
+					startVector = new Vector2d(atom.getPoint2D());
+					direction.sub(startVector);
+				}
+				else
+				{
+					direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), placedAtoms.getAtomAt(0));
+				}
+				
+				for (int f = 1; f < longestUnplacedChain.getAtomCount(); f++)
+				{
+					longestUnplacedChain.getAtomAt(f).flags[ISPLACED] = false;
+				}
+
+				atomPlacer.placeLinearChain(longestUnplacedChain, direction, bondLength);
+				System.out.println(listNumbers(longestUnplacedChain));				
+				listPlaced(molecule);				
+			}
+		}while(!allPlaced(molecule));
+//		}while(false);
+	}
+	
+	private AtomContainer getUnplacedAtoms(Atom atom)
+	{
+		AtomContainer unplacedAtoms = new AtomContainer();
+		Bond[] bonds = molecule.getConnectedBonds(atom);
+		Atom connectedAtom = null;
+		for (int f = 0; f < bonds.length; f++)
+		{
+			connectedAtom = bonds[f].getConnectedAtom(atom);
+			if (!connectedAtom.flags[ISPLACED])
+			{
+				unplacedAtoms.addAtom(connectedAtom);
+			}
+		}
+		return unplacedAtoms;
+	}
+	
+	private AtomContainer getPlacedAtoms(Atom atom)
+	{
+		AtomContainer placedAtoms = new AtomContainer();
+		Bond[] bonds = molecule.getConnectedBonds(atom);
+		Atom connectedAtom = null;
+		for (int f = 0; f < bonds.length; f++)
+		{
+			connectedAtom = bonds[f].getConnectedAtom(atom);
+			if (connectedAtom.flags[ISPLACED])
+			{
+				placedAtoms.addAtom(connectedAtom);
+			}
+		}
+		return placedAtoms;
+	}
+
+
+	private Atom getNextAtomWithUnplacedNeigbors()
+	{
+		Bond bond = null; 
+		for (int f = 0; f < molecule.getBondCount(); f++)
+		{
+			bond = molecule.getBondAt(f);
+			if (!bond.getAtomAt(0).flags[ISPLACED] &&  bond.getAtomAt(1).flags[ISPLACED])
+			{
+				return bond.getAtomAt(1);
+			}
+			
+			if (bond.getAtomAt(0).flags[ISPLACED] &&  !bond.getAtomAt(1).flags[ISPLACED])
+			{
+				return bond.getAtomAt(0);
+			}
+		}
+		return null;
+	}
+
 
 	/**
 	 * Places the first bond of the first ring such that one atom 
@@ -420,11 +437,13 @@ public class StructureDiagramGenerator implements CDKConstants
 			atom = bond.getAtomAt(0);
 			if (debug) System.out.println("Atom 1 of first Bond: " + molecule.getAtomNumber(atom));
 			atom.setPoint2D(point);
+			atom.flags[ISPLACED] = true;
 			point = new Point2d(0, 0);
 			atom = bond.getAtomAt(1);
 			if (debug) System.out.println("Atom 2 of first Bond: " + molecule.getAtomNumber(atom));		
 			point.add(bondVector);
 			atom.setPoint2D(point);
+			atom.flags[ISPLACED] = true;
 			/* 
 			 * The new ring is layed out relativ to some shared atoms that have already been 
 			 * placed. Usually this is another ring, that has already been draw and to which the new 
@@ -522,11 +541,7 @@ public class StructureDiagramGenerator implements CDKConstants
 				}
 			}
 		}
-
 	}
-
-
-		
 
 	/**
 	 * This method will go as soon as the rest works. 
@@ -543,8 +558,6 @@ public class StructureDiagramGenerator implements CDKConstants
 			}
 		}
 	}
-
-
 
 	/**
 	 * Initializes all rings in RingSet rs as not placed
@@ -577,6 +590,58 @@ public class StructureDiagramGenerator implements CDKConstants
 		
 		return true;
 	}
+
+	private Atom getComplexCentralAtom() throws java.lang.Exception
+	{
+		int[][] conMat = molecule.getConnectionMatrix();
+		int[][] apsp = PathTools.computeFloydAPSP(conMat);
+		int[] apspCol = PathTools.getInt2DColumnSum(apsp);
+		int position = 0;
+		int max = molecule.getAtomCount() * molecule.getAtomCount();
+		Atom atom = null, mostComplexAtom = null;
+		
+		
+		Vector[] complexity = new Vector[10];
+		for (int i = 0; i < 10; i++)
+		{
+			complexity[i] = new Vector();
+		}		
+		for (int i = 0; i < molecule.getAtomCount(); i++)
+		{
+			complexity[molecule.getDegree(i)].addElement(molecule.getAtomAt(i));
+		}
+		for (int i = 9; i >= 0; i--)
+		{
+			if (complexity[i].size() > 0)
+			{
+				/* This is the Vector with the most substituted atoms
+				 * in the molecule.
+				 */
+				for (int j = 0; j < complexity[i].size(); j++)
+				{
+				    atom = (Atom)complexity[i].elementAt(j);
+					if (debug) System.out.println(i + ", " + j + ", " + apspCol[molecule.getAtomNumber(atom)]);
+					/* for each atom the molecule check its apsp distance sum */
+					if (apspCol[molecule.getAtomNumber(atom)] < max)
+					{
+						max = apspCol[molecule.getAtomNumber(atom)];
+						mostComplexAtom = atom;
+					}
+				}
+				break;
+			}
+		}
+		try
+		{
+			if (debug) System.out.println(molecule.getAtomNumber(mostComplexAtom));
+		}
+		catch(Exception exc)
+		{
+			
+		}
+		return mostComplexAtom;
+	}
+
 
 	/**
 	 * Mark all atoms in the molecule as being part of a ring
@@ -644,36 +709,122 @@ public class StructureDiagramGenerator implements CDKConstants
 		endAtom = molecule.getAtomAt(bestEndAtom);
 		AtomContainer path = new AtomContainer();
 		if (debug) System.out.println("Longest chain with length " + maxPathLength + " is between atoms " + molecule.getAtomNumber(startAtom) + " and " + molecule.getAtomNumber(endAtom));
+		path.addAtom(startAtom);
 		PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
 		return path;
 	}
 	
-	private AtomContainer getLongestChain(Molecule molecule, Atom startAtom) throws java.lang.Exception
+	private AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws java.lang.Exception
 	{
-		int [][] conMat = molecule.getConnectionMatrix();
-		int [][] apsp  = PathTools.computeFloydAPSP(conMat);
-		int startNumber = molecule.getAtomNumber(startAtom);
-		int maxPathLength = 0;
-		int maxAtom = -1;
-		for (int f = 0; f < apsp.length; f++)
+		int longest = 0;
+		int longestPathLength = 0;
+		AtomContainer[] pathes = new AtomContainer[molecule.getAtomCount()];
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			if (apsp[startNumber][f] > maxPathLength)
+			molecule.getAtomAt(f).flags[VISITED] = false;
+			pathes[f] = new AtomContainer();
+			pathes[f].addAtom(startAtom);
+			
+		}
+		Vector startSphere = new Vector();
+		startSphere.addElement(startAtom);
+		breadthFirstSearch(molecule, startSphere, pathes);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{ 
+			System.out.println("pathes[" + f + "].getAtomCount(): " + pathes[f].getAtomCount());
+			if (pathes[f].getAtomCount() > longestPathLength)
 			{
-				maxPathLength = apsp[startNumber][f];
-				maxAtom = f;
+				longest = f;
+				longestPathLength = pathes[f].getAtomCount();
+				System.out.println(listNumbers(pathes[f]));
 			}
 		}
-		Atom farestAtom = molecule.getAtomAt(maxAtom);
-		return new AtomContainer();
+		System.out.println("Longest Path was : " + longest);
+		System.out.println(listNumbers(pathes[longest]));
+		return pathes[longest];
 	}
+
+
+	/**
+	 * Performs a breadthFirstSearch in an AtomContainer starting with
+	 * a particular sphere, which usually consists of one start atom, and 
+	 * searches for the longest chain which is yet unplaced.
+	 *
+	 * @param   ac  The AtomContainer to be searched
+	 * @param   sphere  A sphere of atoms to start the search with
+	 * @param   pathes  A vector of N pathes (N = no of heavy atoms). 
+	 */
+	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws java.lang.Exception
+	{
+		Atom atom = null, nextAtom = null; 
+		int atomNr, nextAtomNr;
+		AtomContainer path = null;
+		Vector newSphere = new Vector();
+		for (int f = 0; f < sphere.size(); f++)
+		{
+			atom = (Atom)sphere.elementAt(f);
+			atomNr = ac.getAtomNumber(atom);
+			Bond[] bonds = ac.getConnectedBonds(atom);
+			for (int g = 0; g < bonds.length; g++)
+			{
+				nextAtom = bonds[g].getConnectedAtom(atom);
+				if (!nextAtom.flags[VISITED] && !nextAtom.flags[ISPLACED])
+				{
+					nextAtomNr = ac.getAtomNumber(nextAtom);
+					pathes[nextAtomNr] = (AtomContainer)pathes[atomNr].clone();
+					pathes[nextAtomNr].addAtom(nextAtom);
+					pathes[nextAtomNr].addBond(bonds[g]);
+					newSphere.addElement(nextAtom);
+					nextAtom.flags[VISITED] = true;					
+				}
+
+			}
+		}
+		if (newSphere.size() >0)
+		{
+			breadthFirstSearch(ac, newSphere, pathes);
+		}
+	}
+
 
 	private boolean allPlaced(AtomContainer ac)
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (!ac.getAtomAt(f).flags[VISITED]) return false;
+			if (!ac.getAtomAt(f).flags[ISPLACED]) return false;
 		}
 		return true;
 	}
 
+	private void listPlaced(AtomContainer ac)
+	{
+		String s = "Placed: ";
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			if (ac.getAtomAt(f).flags[ISPLACED]) 
+			{
+				s += f + "+ ";
+			}
+			else
+			{
+				s += f + "- ";
+			}
+		}
+		System.out.println(s);
+	}
+
+	private String listNumbers(AtomContainer ac) throws java.lang.Exception
+	{
+		String s = "Numbers: ";
+		for (int f = 0; f < ac.getAtomCount(); f++)
+		{
+			s += molecule.getAtomNumber(ac.getAtomAt(f)) +  " ";
+		}
+		return s;
+	}
+
+
 }
+
+
+

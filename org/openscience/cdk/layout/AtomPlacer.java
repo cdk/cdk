@@ -83,91 +83,102 @@ public class AtomPlacer implements CDKConstants
 	 * @param   bondLength  The standared bondlength
 	 * @exception   Exception  An exception if something goes wrong
 	 */
-	public void distributePartners(Atom atom, AtomContainer sharedAtoms, AtomContainer partners, double bondLength) throws java.lang.Exception
+	public void distributePartners(Atom atom, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, AtomContainer partners, double bondLength) throws java.lang.Exception
 	{
 		double occupiedAngle = 0;
 		double smallestDistance = Double.MAX_VALUE;
 		Atom[] nearestAtoms = new Atom[2];
 		Atom[] sortedAtoms = null;
 		/* calculate the direction away from the already placed partners of atom */
-		Point2d sharedAtomsCenter = sharedAtoms.get2DCenter();
-		Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);		
+		//Point2d sharedAtomsCenter = sharedAtoms.get2DCenter();
+		Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);	
+
 		Vector2d newDirection = new Vector2d(atom.getPoint2D());
+		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
+		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
 		/* if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable) */	
-		if (sharedAtomsCenter.distance(atom.getPoint2D()) > bondLength / 10)
-		{
-			newDirection.sub(sharedAtomsCenterVector);
-			newDirection.normalize();
-			newDirection.scale(bondLength);
-			Point2d distanceMeasure = new Point2d(sharedAtomsCenter);	
-			distanceMeasure.add(newDirection);
-			/* get the two sharedAtom partners with the smallest distance to the new center */
-			sortedAtoms = sharedAtoms.getAtoms();
-			GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
-			Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2D());
-			Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2D());			
-			closestPoint1.sub(new Vector2d(atom.getPoint2D()));
-			closestPoint2.sub(new Vector2d(atom.getPoint2D()));			
-			occupiedAngle = closestPoint1.angle(closestPoint2);
-			//System.out.println("distributePartners->occupiedAngle: " + Math.toDegrees(occupiedAngle));
+		//newDirection.sub(sharedAtomsCenterVector);
+		sharedAtomsCenterVector.sub(newDirection);
+		newDirection = sharedAtomsCenterVector;
+		newDirection.normalize();
+		newDirection.scale(bondLength);
+		newDirection.negate();
+		Point2d distanceMeasure = new Point2d(atom.getPoint2D());	
+		distanceMeasure.add(newDirection);
+
+//		Atom marker = new Atom(new Element("O"), new Point2d(sharedAtomsCenter));
+//		marker.flags[ISPLACED] = true;
+//		molecule.addAtom(marker);			
 		
-		}
-		else
-		{
-			/* find the pair of partners from sharedAtoms
-			 which has the largest angle between them */
-		}
-
-
+		/* get the two sharedAtom partners with the smallest distance to the new center */
+		sortedAtoms = sharedAtoms.getAtoms();
+		GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
+		System.out.println(molecule.getAtomNumber(sortedAtoms[0]));
+		System.out.println(molecule.getAtomNumber(sortedAtoms[1]));			
+		Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2D());
+		Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2D());			
+		closestPoint1.sub(new Vector2d(atom.getPoint2D()));
+		closestPoint2.sub(new Vector2d(atom.getPoint2D()));			
+		occupiedAngle = closestPoint1.angle(occupiedDirection);
+		occupiedAngle += closestPoint2.angle(occupiedDirection);
+		
+		
 		double angle1 = GeometryTools.getAngle(sortedAtoms[0].getX2D() - atom.getX2D(), sortedAtoms[0].getY2D() - atom.getY2D());				
 		double angle2 = GeometryTools.getAngle(sortedAtoms[1].getX2D() - atom.getX2D(), sortedAtoms[1].getY2D() - atom.getY2D());				
-		Atom startAtom = null;		 
-		if (angle1 > angle2)
+		double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getX2D(), distanceMeasure.y - atom.getY2D());						
+		System.out.println("distributePartners->sortedAtoms[0]: " + molecule.getAtomNumber(sortedAtoms[0]));
+		System.out.println("distributePartners->sortedAtoms[1]: " + molecule.getAtomNumber(sortedAtoms[1]));		
+		System.out.println("distributePartners->angle1: " + Math.toDegrees(angle1));
+		System.out.println("distributePartners->angle2: " + Math.toDegrees(angle2));
+
+		Atom startAtom = null;
+		
+		if (angle1 > angle3)
 		{
-			if (angle1 - angle2 < Math.PI)
+			if (angle1 - angle3 < Math.PI)
 			{
-				startAtom = sortedAtoms[0];
+				startAtom = sortedAtoms[1];
 			}
 			else
 			{
-				startAtom = sortedAtoms[1];
+				// 12 o'clock is between the two vectors
+				startAtom = sortedAtoms[0];
 			}
 		
 		}
 		else
 		{
-			if (angle2 - angle1 < Math.PI)
-			{
-				startAtom = sortedAtoms[1];
-			}
-			else
+			if (angle3 - angle1 < Math.PI)
 			{
 				startAtom = sortedAtoms[0];
 			}
+			else
+			{
+				// 12 o'clock is between the two vectors
+				startAtom = sortedAtoms[1];
+			}
 		}
+		
+				 
+		System.out.println("distributePartners->startAtom: " + molecule.getAtomNumber(startAtom));
 
 		double remainingAngle = (2 * Math.PI) - occupiedAngle;
 		double addAngle = remainingAngle / (partners.getAtomCount() + 1);
 
+		System.out.println("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
+		System.out.println("distributePartners->addAngle: " + Math.toDegrees(addAngle));
+		System.out.println("distributePartners-> partners.getAtomCount(): " + partners.getAtomCount());
+		
 		for (int f = 0; f < partners.getAtomCount(); f++)
 		{
 			atomsToDraw.addElement(partners.getAtomAt(f));
 		}
 		double radius = bondLength;
-
-
-		
 		double startAngle = GeometryTools.getAngle(startAtom.getX2D() - atom.getX2D(), startAtom.getY2D() - atom.getY2D());
-		/* 
-		 * Get one bond connected to the spiro bridge atom.
-		 * It doesn't matter in which direction we draw.
-		 */ 
 		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, radius);
+		
 	}
-
-
-	
 
 	/**
 	 * Grows a chain. 
@@ -254,7 +265,7 @@ public class AtomPlacer implements CDKConstants
 	 * @param   rootAtom  A root atom from which the next atom is to be farmost away
 	 * @return  A vector pointing to the location of the next atom to draw   
 	 */
-	private Vector2d getNextBondVector(Atom atom, Atom previousAtom, Atom rootAtom)
+	protected Vector2d getNextBondVector(Atom atom, Atom previousAtom, Atom rootAtom)
 	{
 		double angle = GeometryTools.getAngle(previousAtom.getX2D() - atom.getX2D(), previousAtom.getY2D() - atom.getY2D());
 		double addAngle = Math.toRadians(120);
@@ -316,6 +327,13 @@ public class AtomPlacer implements CDKConstants
 			if (debug) System.out.println("drawPolygon-> y " + y);
 			newX = x + rotationCenter.x;
 			newY = y + rotationCenter.y;
+			try
+			{
+				System.out.println("populatePolygonCorners->connectAtom: " + molecule.getAtomNumber(connectAtom));
+			}
+			catch(Exception e)
+			{
+			}
 			if (connectAtom.getPoint2D() == null)
 			{
 				connectAtom.setPoint2D(new Point2d(newX, newY));				
@@ -410,6 +428,5 @@ public class AtomPlacer implements CDKConstants
 		
 		return atoms;
 	}
-
 
 }
