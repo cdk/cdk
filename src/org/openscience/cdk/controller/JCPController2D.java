@@ -68,15 +68,10 @@ public class JCPController2D {
         logger = new LoggingTool(this.getClass().getName());
         
         commonElements = new Vector();
-        commonElements.add("C");
-        commonElements.add("O");
-        commonElements.add("N");
-        commonElements.add("S");
-        commonElements.add("H");
-        commonElements.add("P");
-        commonElements.add("Cl");
-        commonElements.add("Br");
-        commonElements.add("F");
+        String[] elements = c2dm.getCommonElements();
+        for (int i=0; i < elements.length; i++) {
+            commonElements.add(elements[i]);
+        }
     }
 
     public JCPController2D(AtomContainer atomCon, Renderer2DModel r2dm) {

@@ -60,6 +60,8 @@ public class JCPController2DModel
 	private int snapCartesian = 10;	
 	
 	private String defaultElementSymbol = "C";
+    private String[] commonElements = { "C", "O", "N", "H", "P", "S" };
+
 	private double bondPointerLength = 20;
 	private double ringPointerLength = 20;
 	
@@ -306,5 +308,11 @@ public class JCPController2DModel
 		this.ringPointerLength = ringPointerLength;
 	}
 
+    public void setCommonElements(String[] elements) {
+        this.commonElements = elements;
+    }
 
+    public String[] getCommonElements() {
+        return this.commonElements;
+    }
 }
