@@ -59,7 +59,7 @@ public class HINReaderTest extends TestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(MDLReaderTest.class);
+        return new TestSuite(HINReaderTest.class);
     }
 
     public void testBenzene() {
