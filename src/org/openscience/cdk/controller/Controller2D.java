@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -311,15 +311,8 @@ public class Controller2D {
                             logger.debug(exception);
                         }
                         // update atom
-                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-                            try {
-                                hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atomInRange);
-                            } catch (Exception exception) {
-                                logger.error(exception.getMessage());
-                                logger.debug(exception);
-                            }
-                        }
+                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                        updateAtom(container, atomInRange);
 
                         // also adjust the new draw elem
                         c2dm.setDrawElement(symbol);
@@ -345,15 +338,8 @@ public class Controller2D {
                         atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
 
                         // update atom
-                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-                            try {
-                                hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atomInRange);
-                            } catch (Exception exception) {
-                                logger.error(exception.getMessage());
-                                logger.debug(exception);
-                            }
-                        }
+                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                        updateAtom(container, atomInRange);
 
 		    /* PRESERVE THIS. This notifies the
 		     * the listener responsible for
@@ -371,15 +357,8 @@ public class Controller2D {
                     if (atomInRange != null) {
                         atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
                         // update atom
-                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-                            try {
-                                hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atomInRange);
-                            } catch (Exception exception) {
-                                logger.error(exception.getMessage());
-                                logger.debug(exception);
-                            }
-                        }
+                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+                        updateAtom(container, atomInRange);
 
 		/* PRESERVE THIS. This notifies the
 		     * the listener responsible for
@@ -416,18 +395,9 @@ public class Controller2D {
                                 // constants are unidistant, i.e. {1.0, 2.0, 3.0}.
                             };
                             // update atoms
-                            if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                                Atom[] atoms = bondInRange.getAtoms();
-                                AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-                                for (int i=0; i<atoms.length; i++) {
-                                    try {
-                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atoms[i]);
-                                    } catch (Exception exception) {
-                                        logger.error(exception.getMessage());
-                                        logger.debug(exception);
-                                    }
-                                }
-                            }
+                            Atom[] atoms = bondInRange.getAtoms();
+                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+                            updateAtoms(container, atoms);
 		    /* PRESERVE THIS. This notifies the
 		     * the listener responsible for
 		     * undo and redo storage that it
@@ -444,15 +414,8 @@ public class Controller2D {
                                 AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                 atomCon.addAtom(newAtom1);
                                 // update atoms
-                                if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                                    try {
-                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, newAtom1);
-                                    } catch (Exception exception) {
-                                        logger.error(exception.getMessage());
-                                        logger.debug(exception);
-                                    }
-
-                                }
+                                updateAtom(atomCon, newAtom1);
+                                
 		    /* PRESERVE THIS. This notifies the
 		     * the listener responsible for
 		     * undo and redo storage that it
@@ -479,15 +442,7 @@ public class Controller2D {
                                 atomCon.addBond(newBond);
 
                                 // update atoms
-                                if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                                    try {
-                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, newAtom2);
-                                    } catch (Exception exception) {
-                                        logger.error(exception.getMessage());
-                                        logger.debug(exception);
-                                    }
-
-                                }
+                                updateAtom(atomCon, newAtom2);
 
 		    /* PRESERVE THIS. This notifies the
 		     * the listener responsible for
@@ -522,15 +477,8 @@ public class Controller2D {
                                 atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
 
                                 // update atoms
-                                if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                                    try {
-                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, atomInRange);
-                                        hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, newAtom2);
-                                    } catch (Exception exception) {
-                                        logger.error(exception.getMessage());
-                                        logger.debug(exception);
-                                    }
-                                }
+                                updateAtom(atomCon, atomInRange);
+                                updateAtom(atomCon, newAtom2);
                             }
                         }
                         r2dm.fireChange();
@@ -627,34 +575,16 @@ public class Controller2D {
                         container = ChemModelManipulator.getAllInOneContainer(chemModel);
                         logger.debug("Atoms before delete: " + container.getAtomCount());
                         // update atoms
-                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                            Atom[] atoms = container.getConnectedAtoms(highlightedAtom);
-                            AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-                            for (int i=0; i<atoms.length; i++) {
-                                try {
-                                    hydrogenAdder.addImplicitHydrogensToSatisfyValency(atomCon, atoms[i]);
-                                } catch (Exception exception) {
-                                    logger.error(exception.getMessage());
-                                    logger.debug(exception);
-                                }
-                            }
-                        }
+                        Atom[] atoms = container.getConnectedAtoms(highlightedAtom);
+                        AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+                        updateAtoms(atomCon, atoms);
                     } else if (highlightedBond != null) {
                         logger.info("User asks to delete a Bond");
                         ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
                         // update atoms
-                        if (c2dm.getAutoUpdateImplicitHydrogens()) {
-                            Atom[] atoms = highlightedBond.getAtoms();
-                            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-                            for (int i=0; i<atoms.length; i++) {
-                                try {
-                                    hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atoms[i]);
-                                } catch (Exception exception) {
-                                    logger.error(exception.getMessage());
-                                    logger.debug(exception);
-                                }
-                            }
-                        }
+                        Atom[] atoms = highlightedBond.getAtoms();
+                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+                        updateAtoms(container, atoms);
                     } else {
                         logger.warn("Cannot deleted if nothing is highlighted");
                         return;
@@ -1004,6 +934,25 @@ public class Controller2D {
             logger.debug("Key pressed");
         }
 
+        /* Start of private methods */
+        
+        private void updateAtoms(AtomContainer container, Atom[] atoms) {
+            for (int i=0; i<atoms.length; i++) {
+                updateAtom(container, atoms[i]);
+            }
+        };
+        
+        private void updateAtom(AtomContainer container, Atom atom) {
+            if (c2dm.getAutoUpdateImplicitHydrogens()) {
+                try {
+                    hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
+                } catch (Exception exception) {
+                    logger.error(exception.getMessage());
+                    logger.debug(exception);
+                }
+            }
+        };
+        
         private double snapAngle(double angle)
         {
                 double div = (Math.PI / 180) * c2dm.getSnapAngle();
