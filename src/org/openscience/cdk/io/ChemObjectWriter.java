@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.io.listener.*;
 import java.io.*;
 import java.util.*;
 import java.text.*;

@@ -25,6 +25,7 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.io.setting.*;
+import org.openscience.cdk.io.listener.*;
 import java.util.Vector;
 
 /**
