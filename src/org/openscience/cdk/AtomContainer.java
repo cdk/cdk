@@ -97,15 +97,15 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 	/**
 	 *  Constructs an empty AtomContainer that will contain a certain number of atoms
-	    *  and electronContainers.
+	 *  and electronContainers. It will set the starting array lengths to the defined
+     *  values, but will not create any Atom or ElectronContainer's.
 	 *
 	 * @param  atomCount  Number of atoms to be in this container
 	 * @param  electronContainerCount  Number of electronContainers to be in this container
 	 */
-	public AtomContainer(int atomCount, int electronContainerCount)
-	{
-		this.atomCount = atomCount;
-		this.electronContainerCount = electronContainerCount;
+	public AtomContainer(int atomCount, int electronContainerCount) {
+		this.atomCount = 0;
+		this.electronContainerCount = 0;
 		atoms = new Atom[atomCount];
 		electronContainers = new Bond[electronContainerCount];
 	}
@@ -509,8 +509,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	 *
 	 * @see       #setAtomCount
 	*/
-	public int getAtomCount()
-	{
+	public int getAtomCount() {
 		return this.atomCount;
 	}
 

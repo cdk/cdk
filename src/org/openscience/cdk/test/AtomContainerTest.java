@@ -255,4 +255,53 @@ public class AtomContainerTest extends TestCase {
             }
 		}
     }
+    
+    public void testGetAtomCount() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        assertEquals(0, acetone.getAtomCount());
+        
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        
+        assertEquals(4, acetone.getAtomCount());
+    }
+    
+    public void testGetBondCount() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        assertEquals(0, acetone.getBondCount());
+        
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertEquals(3, acetone.getBondCount());
+    }
+    
+    public void testAtomContainer_int_int() {
+        // create an empty container with predefined
+        // array lengths
+        AtomContainer ac = new AtomContainer(5,6);
+        
+        assertEquals(0, ac.getAtomCount());
+        assertEquals(0, ac.getBondCount());
+    }
 }
