@@ -4,10 +4,10 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
-* added isomorphism.ConjugatedPiSystemsDetector
+* Added isomorphism.ConjugatedPiSystemsDetector
 * ChemFormat and ChemFormatMatchers interfaces in new io.formats package
-* added charges.GasteigerMarsiliPartialCharges calculation
-* added charges.AtomTypesCharges class to assign charges to atom types
+* Added charges.GasteigerMarsiliPartialCharges calculation
+* Added charges.AtomTypesCharges class to assign charges to atom types
 
 Fixes:
 * Split file format matching from file reading reducing the requirements
@@ -15,6 +15,7 @@ Fixes:
 * Fixed wrong element types in the valency atom type list (closes #1057016)
 * Extended build/test system to conditionally build/test non-Java5 stuff 
   with Java5 (closes #1038316)
+* CML output marked as Java 1.4 only
 
 API changes:
 * ChemObjectIO.getFormatName() is replaced by ChemObjectIO.getFormat()
@@ -26,7 +27,7 @@ New:
 
 Fixes:
 * UniversalIsomorphismTester works with QueryAtomContainers
-* Now compiles with Java 1.5.0 aka 5.0 (but CML does test correctly)
+* Now compiles with Java 1.5.0 aka 5.0 (but CML does not test correctly)
 * Faster SSSR algorithms
 * The core class now notify their listeners when things are changed
 * ChangeEvents are now propagated through the container hierarchy
