@@ -26,6 +26,11 @@ package org.openscience.cdk.templates.saturatedhydrocarbons;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 
+/**
+ * This class contains methods for generating simple organic alkanes.
+ *
+ * @cdk.keyword templates
+ */
 public class IsoAlkanes {
 
     public static Molecule getIsobutane() {
