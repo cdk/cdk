@@ -21,6 +21,7 @@ New:
 * Added parsing of xy2 and xyz3 CML atom attributes
 * FileConvertor can take a Java property file for IOSetting question
   answering automization
+* Added HydrogrenAdder class.
 
 Changes:
 * CML output now by defaults uses CML ids for atoms and bonds
@@ -45,6 +46,8 @@ Fixes:
 API changes:
 * ChemObject now has protected flags/pointers (implements RFC #13)
 * FileConvertor command line API changed considerable (see --help)
+* The hydrogen adding methods in SaturationChecker are now deprecated
+  (and replaced by cdk.tools.HydrogrenAdder).
 
 20030412 Release
 ------------------------------------

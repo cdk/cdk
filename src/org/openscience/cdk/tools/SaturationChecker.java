@@ -359,7 +359,7 @@ public class SaturationChecker
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	private int calculateMissingHydrogen(Atom atom, AtomContainer container)
+	public int calculateMissingHydrogen(Atom atom, AtomContainer container)
 	{
 		logger.info("Calculating number of missing hydrogen atoms");
 		// get default atom
@@ -393,6 +393,8 @@ public class SaturationChecker
      * @param  molecule  Molecule to saturate
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
+     *
+     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
      */
     public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
     {
@@ -405,6 +407,8 @@ public class SaturationChecker
      * @param  molecule  Molecule to saturate
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
+     *
+     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
      */
     public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException
     {
@@ -422,6 +426,8 @@ public class SaturationChecker
      *
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
+     *
+     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
      */
     public void addHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
         throws IOException, ClassNotFoundException
@@ -437,6 +443,8 @@ public class SaturationChecker
      *
      * @keyword          hydrogen, adding
      * @keyword          explicit hydrogen
+     *
+     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
      */
     public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
         throws IOException, ClassNotFoundException
@@ -462,6 +470,10 @@ public class SaturationChecker
 	 *@param  molecule  Molecule to saturate
 	 *@keyword          hydrogen, adding
 	 *@keyword          implicit hydrogen
+     *
+     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
+     *
+     * @deprecated Use org.openscience.cdk.tools.HydrogenAdder.
 	 */
 	public void addImplicitHydrogensToSatisfyValency(AtomContainer container)
 	{
