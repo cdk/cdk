@@ -45,6 +45,7 @@ import java.util.*;
 	private int layerNumber;
 	private int nodeNumber;
 	private static double LOST=0.000000000001;
+	private org.openscience.cdk.tools.LoggingTool logger;
 
 
 	/**
@@ -68,6 +69,7 @@ import java.util.*;
 		nodeMatrix=new double[nodeNumber][layerNumber+1];
 		bondMatrix=new double[nodeNumber][layerNumber];
 		weight=new double[nodeNumber+1];
+		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 	}
 
 
@@ -139,7 +141,7 @@ import java.util.*;
 				 else if(atoms[i].getSymbol().equals("I"))nodeSequence[i]=45;//I-
 				 else
 				 {
-					 System.out.println("This is a new node. please report this bug to j.hao@uni-koeln.de");
+					 logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				 }
 			 }
 			 else if(bonds.length==2)
@@ -200,7 +202,7 @@ import java.util.*;
 				}
 				else
 				{
-					System.out.println("This is a new node. please report this bug to j.hao@uni-koeln.de");
+					logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				}
 			 }
 			 else if(bonds.length==3)
@@ -236,7 +238,7 @@ import java.util.*;
 				 }
 				 else
 				 {
-					 System.out.println("This is a new node. please report this bug to j.hao@uni-koeln.de");
+					logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				 }
 			 }
 			 else if(bonds.length==4)
@@ -247,7 +249,7 @@ import java.util.*;
 				 else if(atoms[i].getSymbol().equals("P"))nodeSequence[i]=41;//=P<-
 				 else
 				 {
-					 System.out.println("This is a new node. please report this bug to j.hao@uni-koeln.de");
+					logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				 }
 			 }
 		 }
