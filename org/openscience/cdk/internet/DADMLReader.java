@@ -135,7 +135,13 @@ public class DADMLReader implements ChemObjectReader {
 			  while (fields.hasMoreElements()) {
 			    FIELD f = (FIELD)fields.nextElement();
 			    String mime = f.getMIMETYPE();
-			    if ((mime.equals("chemical/x-mdl-mol") || mime.equals("chemical/x-cml"))) {
+			    String ftype = f.getTYPE();
+			    if ((mime.equals("chemical/x-mdl-mol") ||
+				      mime.equals("chemical/x-pdb") ||
+				      mime.equals("chemical/x-cml")) &&
+					  (ftype.equals("3DSTRUCTURE") ||
+					   ftype.equals("2DSTRUCTURE"))) {
+				  logger.info("Accepted: " + f.getMIMETYPE() + "," + f.getTYPE());
 				  Enumeration indices = f.getINDEX();
 				  while (indices.hasMoreElements()) {
 				    INDEX ind = (INDEX)indices.nextElement();
@@ -156,9 +162,7 @@ public class DADMLReader implements ChemObjectReader {
 				  }
 			    } else {
                   // reject other mime types && type structures
-				  logger.info("Rejected.");
-				  logger.info("Type: " + f.getMIMETYPE());
-				  logger.info("Mime: " + f.getTYPE());
+				  logger.info("Rejected: " + f.getMIMETYPE() + "," + f.getTYPE());
 			    }
 			  }
 		   }
@@ -175,9 +179,12 @@ public class DADMLReader implements ChemObjectReader {
 			if (mime.equals("chemical/x-cml")) 	{
                 CMLReader reader = new CMLReader(br);
                 ChemFile cf = (ChemFile)reader.read((ChemObject)new ChemFile());
+				logger.debug("#sequences: " + cf.getChemSequenceCount());
                 ChemSequence chemSequence = cf.getChemSequence(0);
+				logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
                 ChemModel chemModel = chemSequence.getChemModel(0);
                 SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+				logger.debug("#mols in model: " + setOfMolecules.getMoleculeCount());
                 m = setOfMolecules.getMolecule(0);
 			} else if (mime.equals("chemical/x-mdl-mol")) {
                 MDLReader reader = new MDLReader(br);
