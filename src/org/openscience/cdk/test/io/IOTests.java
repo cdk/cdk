@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.test.io.cml.CMLIOTests;
 
 /**
- * TestSuite that runs all the sample tests
+ * TestSuite that runs all the sample tests for the cdk.io package.
  *
  * @cdkPackage test
  */
@@ -43,12 +43,13 @@ public class IOTests {
         //suite.addTest(IChIReaderTest.suite());
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(MDLReaderTest.suite());
+        suite.addTest(MDLWriterTest.suite());
         suite.addTest(SMILESReaderTest.suite());
         suite.addTest(HINReaderTest.suite());
         suite.addTest(GhemicalReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
         suite.addTest(VASPReaderTest.suite());
-	suite.addTest(MDLRXNReaderTest.suite());
+        suite.addTest(MDLRXNReaderTest.suite());
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
         suite.addTest(ReaderFactoryTest.suite());

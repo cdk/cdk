@@ -9,8 +9,10 @@ Fixes:
 * Fixed calculation of cartesian atomic coordinates from fractional coordinates
   in CrystalGeometry
 * Cleaned up import statements
+* Fixed writing of MDL mol with PseudoAtom's (closes #890456)
 
 API changes:
+* Renderer2D.getScreenSize() and .getScreenCoordinates() are now protected
 
 20040202 Release
 ------------------------------------

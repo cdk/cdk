@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.io;
 
-
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,6 +41,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IsotopeFactory;
@@ -286,14 +286,16 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // write formal isotope information
         for (int i = 0; i < atoms.length; i++) {
             Atom atom = atoms[i];
-            int atomicMass = atom.getMassNumber();
-            int majorMass = isotopeFactory.getMajorIsotope(atom.getSymbol()).getMassNumber();
-            if (atomicMass != 0 && atomicMass != majorMass) {
-                writer.write("M  ISO  1 ");
-                writer.write(formatMDLInt(i+1,3));
-                writer.write(" ");
-                writer.write(formatMDLInt(atomicMass - majorMass,3));
-                writer.newLine();
+            if (!(atom instanceof PseudoAtom)) {
+                int atomicMass = atom.getMassNumber();
+                int majorMass = isotopeFactory.getMajorIsotope(atom.getSymbol()).getMassNumber();
+                if (atomicMass != 0 && atomicMass != majorMass) {
+                    writer.write("M  ISO  1 ");
+                    writer.write(formatMDLInt(i+1,3));
+                    writer.write(" ");
+                    writer.write(formatMDLInt(atomicMass - majorMass,3));
+                    writer.newLine();
+                }
             }
         }
         
