@@ -367,6 +367,45 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
             }
         }
 
+        public void setFractX3D(double x) {
+            if (fractionalPoint3D == null) {
+                fractionalPoint3D = new Point3d();
+            }
+            fractionalPoint3D.x = x;
+        }
+        public void setFractY3D(double y) {
+            if (fractionalPoint3D == null) {
+                fractionalPoint3D = new Point3d();
+            }
+            fractionalPoint3D.y = y;
+        }
+        public void setFractZ3D(double z) {
+            if (fractionalPoint3D == null) {
+                fractionalPoint3D = new Point3d();
+            }
+            fractionalPoint3D.z = z;
+        }
+        public double getFractX3D() {
+            if (fractionalPoint3D == null) {
+                return 0.0;
+            } else {
+                return fractionalPoint3D.x;
+            }
+        }
+        public double getFractY3D() {
+            if (fractionalPoint3D == null) {
+                return 0.0;
+            } else {
+                return fractionalPoint3D.y;
+            }
+        }
+        public double getFractZ3D() {
+            if (fractionalPoint3D == null) {
+                return 0.0;
+            } else {
+                return fractionalPoint3D.z;
+            }
+        }
 
         /**
          * Sets the x coordinate for of the 2D location of this atom.
