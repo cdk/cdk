@@ -1,4 +1,7 @@
-    <chapter id="sect:goal">
+<part id="part:cdk-library">
+  <title>The CDK Library</title>
+
+  <chapter id="sect:goal">
       <title>The Goal</title>
       <para>
         The goal of the CDK is to be a library of java classes to support
@@ -8,17 +11,42 @@
     </chapter>
 
     <chapter id="sect:classcategories">
-      <title>Class categories</title>
+      <title>CDK Modules</title>
       <para>
         All CDK classes are categorized into classes. Currently, these classes
-        are defined: core, extra, and libio.
+        are defined: cdk-core, cdk-standard, cdk-io, cdk-render,
+        cdk-libio and cdk-extra.
       </para>
       <section>
         <title>Core classes</title>
         <para>
-          Core classes represent chemical entities, like bonds, atoms, molecules, and
+          In the cdk-core module the core classes represent chemical entities, like 
+          bonds, atoms, molecules, and
           more abstract entities, like connectivity tables, used for in common
           computational and information chemistry.
+        </para>
+      </section>
+      <section>
+        <title>Standard classes</title>
+        <para>
+          The standard classes found in the cdk-standard module are those classes that
+          do not store chemical data, but that are used by two or more of the modules
+          below, and that are considered basic.
+        </para>
+      </section>
+      <section>
+        <title>IO classes</title>
+        <para>
+          The cdk-io module contains classes for file, internet and database input and
+          output.
+        </para>
+      </section>
+      <section>
+        <title>Rendering classes</title>
+        <para>
+          The cdk-render module provides classes for displaying 2D and 3D chemical
+          information, and classes that provide ways to have users interact with these
+          graphical representations.
         </para>
       </section>
       <section>
@@ -34,41 +62,6 @@
         </para>
       </section>
 
-      <!-- The next part has not been proposed yet.
-        section>
-        <title>Standard classes</title>
-
-        <para>
-          Standard classes are all classes that do not represent some entity,
-          but are common to many applications dealing with chemical problems.
-          These classes deal with manipulation and other ways of dealing with the
-          core classes. These can be further grouped into two subclasses.
-          One class changes the content of the entities, the other does not.
-        </para>
-        <para>
-          Example classes that do not change the content of core classes, are
-          IO classes and viewers. In this subclass belong also the classes that
-          generate instances of core classes, example classes are classes that
-          generate 3D coordinates, for example.
-        </para>
-        <para>
-          The other subclass contains classes that change the content of the
-          core classes. E.g. classes implementing a molecular dynamics run
-          and editors.
-        </para>
-        <para>
-          <remark>This subclassification seems to be too artificial.</remark>
-        </para>
-      </section>
-      <section>
-        <title>Project classes</title>
-        <para>
-          Java classes and packages in this category are not really
-          part of the CDK library, but are aimed to help manage the
-          project, by ways of testing and generating documentation and
-          project statistics.
-        </para>
-      </section -->
     </chapter>
 
   <chapter id="sect:compiling">
@@ -108,6 +101,22 @@ cdk/$ ant -Dpathtojava3d=/some/path compile-with-java3d
       </para>
     </section>
 
+    <section>
+      <title>Debugging and Optimization</title>
+      <para>
+        It is useful to compile CDK with debugging information while
+        writing and testing new code, but when making a release the code
+        must be optimized for speed and size: debugging information must
+        be turned off then, and optimization turned on.
+        The build.xml file by default compiles with debugging options, but
+        this can be overwritten. The next example shows you how to compile
+        CDK for release:
+        <programlisting>
+cdk/$ ant -Ddebug=off -Doptimization=on -Ddeprecation=off dist-all
+        </programlisting>
+      </para>
+    </section>
+    
   </chapter>
 
   <chapter id="sect:testing">
@@ -136,7 +145,7 @@ test:
       </para>
 
       <para>
-        A recent alternative is to install the cdk-test package.
+        An alternative is to install the cdk-test package.
         You can then do tests with
         <programlisting>
 $ cdk-test org.openscience.cdk.test.CDKTests
@@ -178,4 +187,4 @@ $ cdk-test org.openscience.cdk.test.CDKTests
       </para>
     </section>
   </chapter>
-
+</part>

@@ -41,13 +41,14 @@
     <title>Documentation</title>
     &docs;
     
-    &biblio;
+    <chapter>
+      <title>Literature</title>
+      &biblio;
+    </chapter>
   </part>
 
-  <part id="part:cdk-library">
-    <title>The CDK Library</title>
-    &library-development;
-  </part>
+  <!-- PART on CDK development -->
+  &library-development;
 
   <part id="part:website">
     <title>The CDK Website</title>
