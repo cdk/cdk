@@ -108,15 +108,19 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     /** Determines wether atoms are colored by type. */
     private boolean colorAtomsByType = true;
 
-    private Dimension backgroupDimension = new Dimension(500,1200);
+    private Dimension backgroundDimension = new Dimension(500,1200);
+    
+    public Dimension getZoomedBackgroundDimension() {
+        return new Dimension((int)((double)backgroundDimension.getWidth() * zoomFactor),
+                             (int)((double)backgroundDimension.getHeight() * zoomFactor));
+    }
     
     public Dimension getBackgroundDimension() {
-        return new Dimension((int)((double)backgroupDimension.getWidth() * zoomFactor),
-                             (int)((double)backgroupDimension.getHeight() * zoomFactor));
+        return this.backgroundDimension;
     }
     
     public void setBackgroundDimension(Dimension dim) {
-        this.backgroupDimension = dim;
+        this.backgroundDimension = dim;
     }
     
 	/**
