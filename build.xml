@@ -181,7 +181,6 @@
             depends="init, info, compile-core, compile-standard, compile-extra, compile-io, 
                      compile-render, compile-render-with-java3d, compile-libio,
                      compile-apps">
-                <antcall target="compile-all"/>
         </target>
 
         <target id="compile-all" name="compile-all" depends="compile, compile-experimental"
@@ -618,8 +617,19 @@
         <target id="dist-large" name="dist-large" depends="compile-all, dist.init"
             description="Builds on big jar file for the CDK, including experimental classes.">
                 <jar jarfile="${dist}/jar/cdk-all.jar">
-                    <fileset dir="${build}/${src}">
+                    <fileset dir="${build}">
                         <include name="org/openscience/cdk/**" />
+                    </fileset>
+                    <fileset dir=".">
+                        <include name="CHANGELOG" />
+                        <include name="README" />
+                        <include name="BUGS" />
+                    </fileset>
+                    <fileset dir="${doc}">
+                        <include name="lgpl.license" />
+                    </fileset>
+                    <fileset dir="packages/tar/cdk">
+                        <include name="AUTHORS" />
                     </fileset>
                 </jar>
         </target>
