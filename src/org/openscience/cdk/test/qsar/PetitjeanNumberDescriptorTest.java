@@ -26,8 +26,6 @@ package org.openscience.cdk.test.qsar;
 import org.openscience.cdk.qsar.*;
 import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.Molecule;
 import junit.framework.TestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import junit.framework.TestSuite;

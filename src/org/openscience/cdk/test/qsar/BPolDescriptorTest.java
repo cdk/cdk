@@ -30,7 +30,6 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.Molecule;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 
