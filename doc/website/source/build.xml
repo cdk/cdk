@@ -36,6 +36,11 @@
       <srcfiles dir="../../.." includes="CHANGELOG"/>
     </uptodate>
     <echo message="Keyword index uptodate: ${keywordindex.uptodate}"/>
+    <uptodate property="depends.uptodate"
+      targetfile="../../javadoc/depends.xml">
+      <srcfiles dir="../../.." includes="CHANGELOG"/>
+    </uptodate>
+    <echo message="Dependency Overview uptodate: ${depends.uptodate}"/>
     <uptodate property="refs.uptodate"
       targetfile="../../refs/cheminf.dbx">
       <srcfiles dir="../../refs" includes="cheminf.btx"/>
@@ -93,6 +98,12 @@
   <target id="keyword.index" name="keyword.index" unless="keywordindex.uptodate">
     <ant dir="../../javadoc/" antfile="build.xml" target="keyword.index"/>
     <copy file="keyword.index.xml" tofile="../../javadoc/keyword.index.xml"/>
+  </target>
+
+  <target id="depends" name="depends" unless="depends.uptodate">
+    <ant dir="../../javadoc/" antfile="build.xml" target="dependencies"/>
+    <copy file="builddepends.xml" tofile="../../javadoc/builddepends.xml"/>
+    <copy file="depends.xml" tofile="../../javadoc/depends.xml"/>
   </target>
 
   <target id="bibliography" name="bibliography" unless="refs.uptodate">

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+  <!ENTITY builddepends SYSTEM "../../javadoc/builddepends.xml">
+  <!ENTITY depends SYSTEM "../../javadoc/depends.xml">
+]>
+<webpage id="depends">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Library Dependencies</title>
+    <titleabbrev>Dependencies</titleabbrev>
+    <summary>A list with jars on which CDK classes depend.</summary>
+  </head>
+
+  <section>
+    <title>Dependencies</title>
+    <para>
+      Build dependencies denote jars that are required to get the CDK
+      classes compiled. But, classes can be loaded using a ClassLoader too,
+      and then the library is not required to be present while compiling
+      the CDK class; ofcourse, the class is required to be present when
+      the CDK class is used. Such dependencies are called run-time
+      dependencies.
+    </para>
+    &builddepends;
+    &depends;
+  </section>
+
+</webpage>
