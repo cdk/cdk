@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -127,13 +127,15 @@ public class FileConvertor {
                 for (int i=0; i<containers.length; i++) {
                     AtomContainer container = containers[i];
                     Atom[] atoms = container.getAtoms();
-                    for (int j=0; j<atoms.length; j++) {
-                        if (!(atoms[i] instanceof PseudoAtom)) {
-                            try {
-                                factory.configure(atoms[j]);
-                            } catch (CDKException exception) {
-                                logger.warn("Could not configure atom: " + exception.getMessage());
-                                logger.debug(exception);
+                    if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
+                        for (int j=0; j<atoms.length; j++) {
+                            if (!(atoms[j] instanceof PseudoAtom)) {
+                                try {
+                                    factory.configure(atoms[j]);
+                                } catch (CDKException exception) {
+                                    logger.warn("Could not configure atom: " + exception.getMessage());
+                                    logger.debug(exception);
+                                }
                             }
                         }
                     }
