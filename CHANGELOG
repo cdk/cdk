@@ -34,6 +34,10 @@ New:
 * Added SetOfMolecules.add(SetOfMolecules) method
 * Added SetOfMolecules getAllMolecules() convenience methods to
   SetOfReactionsManipulator ReactionManipulator
+* Added 2D rendering of atom-atom mapping in reactions
+* MDL reader now read atom-atom mapping from RXN files
+* Added MFAnalyser.getHTMLMFString() that outputs HTML
+  (thanx to Stephen Tomkinson)
 
 Fixes:
 * Added missing LGPL license to distributions.
