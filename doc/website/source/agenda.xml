@@ -28,7 +28,14 @@
                 <para>An interface API to other programs and implementation
 				  (like Tinker, Gaussian, Mopac etc)</para>
          </listitem>
+         <listitem>
+                <para>A non-accelerated 3D viewer</para>
+         </listitem>
     </itemizedlist>
   </para>
 
+  <para>
+    More information about current subprojects can be found 
+    <ulink url="http://sourceforge.net/pm/?group_id=20024">here</ulink>.
+  </para>
 </webpage>
