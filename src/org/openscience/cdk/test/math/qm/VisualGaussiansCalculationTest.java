@@ -1,12 +1,11 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -40,16 +39,20 @@ import java.awt.*;
 import java.awt.event.*;
  
 /**
+ * Demonstration of the quantum mechanical capabilities of CDK.
+ * This application takes a XYZ, CML or MDL mol file, calculates
+ * orbitals and displays them using Java3D.
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-09
+ *
+ * @keyword command line util
  */
-public class VisualGaussiansCalculationTest
-{
+public class VisualGaussiansCalculationTest {
+    
   private AcceleratedRenderer3DModel model;
 
-	public VisualGaussiansCalculationTest(String inFile)
-  { 
+  public VisualGaussiansCalculationTest(String inFile) { 
     try      
     {        
       ChemObjectReader reader;

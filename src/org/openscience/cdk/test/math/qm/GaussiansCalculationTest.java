@@ -3,9 +3,9 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -24,8 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
-
+ *  
+ */
 package org.openscience.cdk.test.math.qm;
  
 import org.openscience.cdk.*;
@@ -40,9 +40,14 @@ import javax.swing.*;
 import java.awt.*;
  
 /**
+ * Demonstration of the quantum mechanical capabilities of CDK.
+ * This application takes a XYZ, CML or MDL mol file, calculates
+ * orbitals and outputs them to STDOUT.
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-09
+ *
+ * @keyword command line util
  */
 public class GaussiansCalculationTest
 {
