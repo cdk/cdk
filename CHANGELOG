@@ -16,6 +16,7 @@ Fixes:
 * Extended build/test system to conditionally build/test non-Java5 stuff 
   with Java5 (closes #1038316)
 * CML output marked as Java 1.4 only
+* Fixed ClassCastException in cdk.internet.DADMLReader
 
 API changes:
 * ChemObjectIO.getFormatName() is replaced by ChemObjectIO.getFormat()
