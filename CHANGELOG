@@ -14,6 +14,7 @@ New:
   will be notified of users selecting a particular element, which you can then get by 
   psepanel.getSelectedElement().
 * Implemented GamessReader
+* Added parsing reaction specifications in SMILES
 
 Removed:
 * Viewer application. Use JChemPaint (jchempaint.sf.net) or Jmol (jmol.sf.net) instead

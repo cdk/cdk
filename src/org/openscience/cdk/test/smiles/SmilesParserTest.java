@@ -32,11 +32,14 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.ConnectivityChecker;
 
 /**
  * @cdk.module test
@@ -538,6 +541,89 @@ public class SmilesParserTest extends TestCase
 		} catch (Exception e) {
 			fail(e.toString());
 		}
+    }
+    
+    /**
+     * Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003,
+     * page 89 (Part I).
+     */
+    public void testNonBond() {
+        try {
+            String sodiumPhenoxide = "c1cc([O-].[Na+])ccc1";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(sodiumPhenoxide);
+            assertEquals(8, mol.getAtomCount());
+            assertEquals(7, mol.getBondCount());
+
+            ConnectivityChecker connChecker = new ConnectivityChecker();
+            SetOfMolecules fragments = connChecker.partitionIntoMolecules(mol);
+            int fragmentCount = fragments.getMoleculeCount();
+            assertEquals(2, fragmentCount);
+            Molecule mol1 = fragments.getMolecule(0);
+            Molecule mol2 = fragments.getMolecule(1);
+            // one should have one atom, the other seven atoms
+            // in any order, so just test the difference
+            assertEquals(6, Math.abs(mol1.getAtomCount() - mol2.getAtomCount()));
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    /**
+     * Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003,
+     * page 89 (Part I).
+     */
+    public void testConnectedByRingClosure() {
+        try {
+            String sodiumPhenoxide = "C1.O2.C12";
+            SmilesParser sp = new SmilesParser();
+            Molecule mol = sp.parseSmiles(sodiumPhenoxide);
+            assertEquals(3, mol.getAtomCount());
+            assertEquals(2, mol.getBondCount());
+
+            ConnectivityChecker connChecker = new ConnectivityChecker();
+            SetOfMolecules fragments = connChecker.partitionIntoMolecules(mol);
+            int fragmentCount = fragments.getMoleculeCount();
+            assertEquals(1, fragmentCount);
+            Molecule mol1 = fragments.getMolecule(0);
+            assertEquals(3, mol1.getAtomCount());
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
+    /**
+     * Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003,
+     * page 89 (Part I).
+     */
+    public void testReaction() {
+        try {
+            String reactionSmiles = "O>>[H+].[OH-]";
+            SmilesParser parser = new SmilesParser();
+            Reaction reaction = parser.parseReactionSmiles(reactionSmiles);
+            assertEquals(1, reaction.getReactantCount());
+            assertEquals(2, reaction.getProductCount());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
+    }
+    
+    /**
+     * Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003,
+     * page 90 (Part I).
+     */
+    public void testReactionWithAgents() {
+        try {
+            String reactionSmiles = "CCO.CC(=O)O>[H+]>CC(=O)OCC.O";
+            SmilesParser parser = new SmilesParser();
+            Reaction reaction = parser.parseReactionSmiles(reactionSmiles);
+            assertEquals(2, reaction.getReactantCount());
+            assertEquals(2, reaction.getProductCount());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
     }
     
 	/**

@@ -30,13 +30,17 @@ package org.openscience.cdk.smiles;
 
 import java.util.Enumeration;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.tools.ConnectivityChecker;
 
 /**
  *  Parses a SMILES string and an AtomContainer. So far only the SSMILES subset
@@ -86,6 +90,39 @@ public class SmilesParser
 	Molecule molecule = null;
 	String currentSymbol = null;
 
+    public Reaction parseReactionSmiles(String smiles) throws InvalidSmilesException {
+        StringTokenizer tokenizer = new StringTokenizer(smiles, ">");
+        String reactantSmiles = tokenizer.nextToken();
+        String agentSmiles = "";
+        String productSmiles = tokenizer.nextToken();
+        if (tokenizer.hasMoreTokens()) {
+            agentSmiles = productSmiles;
+            productSmiles = tokenizer.nextToken();
+        }
+        
+        ConnectivityChecker connChecker = new ConnectivityChecker();
+        
+        Reaction reaction = new Reaction();
+
+        // add reactants
+        Molecule reactantContainer = parseSmiles(reactantSmiles);
+        SetOfMolecules reactantSet = connChecker.partitionIntoMolecules(reactantContainer);
+        Molecule[] reactants = reactantSet.getMolecules();
+        for (int i=0; i<reactants.length; i++) {
+            reaction.addReactant(reactants[i]);
+        }
+
+        // add products
+        Molecule productContainer = parseSmiles(productSmiles);
+        SetOfMolecules productSet = connChecker.partitionIntoMolecules(productContainer);
+        Molecule[] products = productSet.getMolecules();
+        for (int i=0; i<products.length; i++) {
+            reaction.addProduct(products[i]);
+        }
+        
+        return reaction;
+    }
+    
     /**
      * Parses a SMILES string and returns a Molecule object. The SMILES string
      * may not contain any '.' characters.
