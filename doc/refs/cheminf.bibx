@@ -152,6 +152,19 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="GM2003">
+    <bibtex:inbook>
+      <bibtex:author>Gasteiger, J.</bibtex:author>
+      <bibtex:title>A Hierarchy of Structure Representations</bibtex:title>
+      <bibtex:chapter>3</bibtex:chapter>
+      <bibtex:pages>3219-3288</bibtex:pages>
+      <bibtex:year>1980</bibtex:year>
+      <bibtex:volume>3</bibtex:volume>
+      <bibtex:series>Handbook of Chemoinformatics</bibtex:series>
+      <bibtex:editor>Gasteiger, J.</bibtex:editor>
+    </bibtex:inbook>
+  </bibtex:entry>
+
   <bibtex:entry id="GM80">
     <bibtex:article>
       <bibtex:author>Gasteiger, J. and  Marsili, M.</bibtex:author>
