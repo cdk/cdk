@@ -258,10 +258,6 @@ public class Renderer2D   {
 		}
 		paintBonds(atomCon, ringSet, graphics);
 		paintAtoms(atomCon, graphics);
-		if (r2dm.drawNumbers())
-		{
-			paintNumbers(atomCon, atomCon.getAtomCount(), graphics);
-		}
 		if (r2dm.getSelectRect() != null)
 		{
 		    graphics.setColor(r2dm.getHighlightColor());
@@ -287,55 +283,6 @@ public class Renderer2D   {
 			}
 		}
 	}
-
-
-	/**
-	 * Draw all numbers of all atoms in the molecule.
-	 *
-	 * @param  atoms   The array of atoms
-	 * @param  number  The number of atoms in this array
-	 */
-	private void paintNumbers(AtomContainer container, int number, Graphics graphics)
-	{
-        Atom[] atoms = container.getAtoms();
-		for (int i = 0; i < number; i++)
-		{
-			paintNumber(container, atoms[i], graphics);
-		}
-	}
-
-
-	/**
-	 *  Paints the number of an Atom.
-	 *
-	 *  @param   atom    The atom to be drawn
-	 */
-	private void paintNumber(AtomContainer container, Atom atom, Graphics graphics)
-	{
-		if (atom.getPoint2D() == null)
-		{
-			return;
-		}
-		FontMetrics fm = graphics.getFontMetrics();
-		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol()) / 2)).intValue();
-		int ySymbOffset = (new Integer(fm.getAscent() / 2)).intValue();
-
-		try
-		{
-			int i = container.getAtomNumber(atom);
-//		    graphics.setColor(r2dm.getBackColor());
-//		    graphics.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize);
-		    graphics.setColor(r2dm.getForeColor());
-		    graphics.drawString(Integer.toString(i+1), (int) (atom.getPoint2D().x + (xSymbOffset)), (int) (atom.getPoint2D().y - (ySymbOffset)));
-		    graphics.setColor(r2dm.getBackColor());
-		    graphics.drawLine((int) atom.getPoint2D().x, (int) atom.getPoint2D().y, 
-                              (int) atom.getPoint2D().x, (int) atom.getPoint2D().y);
-		} catch (Exception exception)
-		{
-            logger.error("Error while drawing atom number:" + exception.toString());
-		}
-	}
-
 
 	/**
 	 * Searches through all the atoms in the given array of atoms, triggers the
@@ -386,6 +333,8 @@ public class Renderer2D   {
                 }
             } catch (Exception exception) {
             };
+        } else if (r2dm.drawNumbers()) {
+            paintAtomSymbol(atom, atomBackColor, graphics, alignment, container.getAtomNumber(atom));
         }
     }
 
@@ -408,6 +357,13 @@ public class Renderer2D   {
 	}
 
     /**
+     * @see paintAtomSymbol(Atom, Color, Graphics, int, int)
+     */
+    private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment) {
+        paintAtomSymbol(atom, backColor, graphics, alignment, 0);
+    }
+
+    /**
      * Paints the given atom symbol. It first outputs some empty space using the
      * background color, slightly larger than the space that the symbol occupies.
      * The atom symbol is then printed into the empty space.
@@ -418,7 +374,7 @@ public class Renderer2D   {
      * @author  Egon Willighagen <egonw@users.sf.net>
      * @created 2003-07-21
      */
-    private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment) {
+    private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment, int atomNumber) {
         if (atom.getPoint2D() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
@@ -438,6 +394,9 @@ public class Renderer2D   {
         
         // calculate SYMBOL width, height
         String atomSymbol = atom.getSymbol();
+        if (r2dm.drawNumbers() && atomNumber != 0) {
+            atomSymbol += "-" + atomNumber;
+        }
         graphics.setFont(normalFont);
         FontMetrics fm = graphics.getFontMetrics();
         int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
