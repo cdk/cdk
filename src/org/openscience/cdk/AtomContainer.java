@@ -897,7 +897,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 			growElectronContainerArray();
 		}
 		// are we supposed to check if the atoms forming this bond are
-		// already in here and add them if neccessary?
+		// already in here and add them if neccessary? No, core classes
+        // must not check parameter input.
 		electronContainers[electronContainerCount] = ec;
 		electronContainerCount++;
 	}
@@ -1156,10 +1157,13 @@ public class AtomContainer extends ChemObject implements Cloneable
 		for (int i = 0; i < getAtomCount(); i++) {
 			s.append(getAtomAt(i).toString() + ", ");
 		}
-		for (int i = 0; i < getElectronContainerCount(); i++) {
-			ec = getElectronContainerAt(i);
-			s.append(ec.toString() + ", ");
-		}
+        for (int i = 0; i < getElectronContainerCount(); i++) {
+            ec = getElectronContainerAt(i);
+            // this check should be removed!
+            if (ec != null) {
+                s.append(ec.toString() + ", ");
+            }
+        }
         s.append(")");
 		return s.toString();
 	}

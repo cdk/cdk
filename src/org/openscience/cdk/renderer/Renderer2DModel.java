@@ -323,8 +323,13 @@ public class Renderer2DModel
 	 */
 	public void setHighlightedAtom(Atom highlightedAtom)
 	{
-		this.highlightedAtom = highlightedAtom;
-		fireChange();		
+		if ((this.highlightedAtom == null) &&
+            (highlightedAtom == null)) {
+            // do not do anything, nothing has changed
+        } else {
+            this.highlightedAtom = highlightedAtom;
+            fireChange();
+        }
 	}
 
 	
@@ -347,8 +352,13 @@ public class Renderer2DModel
 	 */
 	public void setHighlightedBond(Bond highlightedBond)
 	{
-		this.highlightedBond = highlightedBond;
-		fireChange();		
+		if ((this.highlightedBond == null) &&
+            (highlightedBond == null)) {
+            // do not do anything, nothing has changed
+        } else {
+            this.highlightedBond = highlightedBond;
+            fireChange();
+        }
 	}
 
 	

@@ -76,8 +76,6 @@ public class AtomContainerTest extends TestCase {
 	}
 
     public void testGetConnectedElectronContainers() {
-        System.out.println("testGetConnectedElectronContainers");
-
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -96,8 +94,6 @@ public class AtomContainerTest extends TestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        System.out.println(acetone.toString());
-        
         assertEquals(1, acetone.getConnectedElectronContainers(o).length);
         assertEquals(3, acetone.getConnectedElectronContainers(c1).length);
         assertEquals(1, acetone.getConnectedElectronContainers(c2).length);
@@ -109,8 +105,6 @@ public class AtomContainerTest extends TestCase {
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
 
-        System.out.println(acetone.toString());
-        
         assertEquals(3, acetone.getConnectedElectronContainers(o).length);
         assertEquals(3, acetone.getConnectedElectronContainers(c1).length);
         assertEquals(1, acetone.getConnectedElectronContainers(c2).length);
@@ -119,8 +113,6 @@ public class AtomContainerTest extends TestCase {
     }
 
     public void testGetConnectedBonds() {
-        System.out.println("testGetConnectedBonds");
-        
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -158,8 +150,6 @@ public class AtomContainerTest extends TestCase {
     }
 
     public void testGetLonePairs() {
-        System.out.println("testGetLonePairs");
-
         // acetone molecule
         Molecule acetone = new Molecule();
         
@@ -227,5 +217,42 @@ public class AtomContainerTest extends TestCase {
         assertEquals(3, acetone.getAtomCount());
         assertEquals(2, acetone.getBondCount());
         assertEquals(0, acetone.getLonePairCount());
+    }
+
+    public void testGetElectronContainerAt() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        // add lone pairs on oxygen
+        LonePair lp1 = new LonePair(o);
+        LonePair lp2 = new LonePair(o);
+        acetone.addElectronContainer(lp1);
+        acetone.addElectronContainer(lp2);
+        
+		for (int i = 0; i < acetone.getElectronContainerCount(); i++) {
+            try {
+                ElectronContainer ec = acetone.getElectronContainerAt(i);
+                if (ec == null) {
+                    fail("ElectronContainer is unexpectedly null!");
+                }
+            } catch (Exception e) {
+                fail();
+            }
+		}
     }
 }
