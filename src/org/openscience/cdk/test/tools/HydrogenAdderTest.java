@@ -95,6 +95,25 @@ public class HydrogenAdderTest extends TestCase {
         assertEquals(0, proton.getHydrogenCount());
     }
     
+    public void testHydrogen() {
+        Molecule mol = new Molecule();
+        Atom proton = new Atom("H");
+        mol.addAtom(proton);
+        
+        try {
+            adder.addExplicitHydrogensToSatisfyValency(mol);
+        } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
+            fail();
+        }
+        
+        assertEquals(2, mol.getAtomCount());
+        assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
+        assertEquals(1, mol.getBondCount(proton));
+        assertEquals(0, proton.getHydrogenCount());
+    }
+    
     public void testMethane() {
         Molecule mol = new Molecule();
         Atom carbon = new Atom("C");
