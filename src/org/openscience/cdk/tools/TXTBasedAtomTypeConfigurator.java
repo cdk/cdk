@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-developers@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -63,8 +63,8 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
         if (ins == null) {
             // trying the default
-            System.out.println("readAtomTypes getResourceAsStream:"
-                               + configFile);
+            //System.out.println("readAtomTypes getResourceAsStream:"
+            //                   + configFile);
             ins = getClass().getResourceAsStream(configFile);
         }
         if (ins == null) 
