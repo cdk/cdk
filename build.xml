@@ -168,7 +168,10 @@
                     <fileset dir="." includes="*.tar.gz" />
                     <fileset dir="." includes="*.zip" />
                     <fileset dir="${src}" includes="*.classes" />
-                    <fileset dir="${src}" includes="*.javafiles" />
+                    <fileset dir="${src}" includes="*.javafiles">
+                        <exclude name="jmol*.javafiles" />
+                        <exclude name="java14.javafiles" />
+                    </fileset>
                 </delete>
 
                 <delete dir="${build}" />
