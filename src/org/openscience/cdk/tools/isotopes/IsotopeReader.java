@@ -59,7 +59,7 @@ public class IsotopeReader {
                 parser = saxParser.getXMLReader();
                 logger.info("Using JAXP/SAX XML parser.");
                 success = true;
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 logger.warn("Could not instantiate JAXP/SAX XML reader!");
                 logger.debug(e);
             }
