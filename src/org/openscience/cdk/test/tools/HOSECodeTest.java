@@ -105,12 +105,12 @@ public class HOSECodeTest extends TestCase
 	public void testSecondSphere()
 	{
     try{
-        String filename = "data/mdl/www.nmrshiftdb.org_mainz_2003-06-28_10:47:43_0268.mol";
+        String filename = "data/mdl/isopropylacetate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(new InputStreamReader(ins));
 				Molecule mol1 = (Molecule) reader.read(new Molecule());
         String code1=new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtoms()[0], 6);
-        filename="data/mdl/www.nmrshiftdb.org_mainz2_2003-07-21_04:53:08_0136.mol";
+        filename="data/mdl/testisopropylacetate.mol";
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader2 = new MDLReader(new InputStreamReader(ins2));
 				Molecule mol2 = (Molecule) reader2.read(new Molecule());
