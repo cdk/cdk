@@ -51,6 +51,7 @@ import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.config.IsotopeFactory;
 
@@ -91,6 +92,9 @@ public class SmilesGenerator {
    * The canonical labler
    */
   private CanonicalLabeler canLabler = new CanonicalLabeler();
+  private final String RING_CONFIG="stereoconfig";
+  private final String UP="up";
+  private final String DOWN="down";
 
 
   /**
@@ -277,9 +281,49 @@ public class SmilesGenerator {
     (new HueckelAromaticityDetector()).detectAromaticity(molecule, rings, false);
     
     
+    if(chiral && rings.size()>0){
+      Vector v=RingPartitioner.partitionRings(rings);
+      for(int i=0;i<v.size();i++){
+        int counter=0;
+        AtomContainer allrings=((RingSet)v.get(i)).getRingSetInAtomContainer();
+        for(int k=0;k<allrings.getAtomCount();k++){
+          if(!isStereo(molecule,allrings.getAtomAt(k)) && hasWedges(molecule,allrings.getAtomAt(k))!=null){
+            Bond bond=molecule.getBond(allrings.getAtomAt(k),hasWedges(molecule,allrings.getAtomAt(k)));
+            if(bond.getStereo()==CDKConstants.STEREO_BOND_UP)
+              allrings.getAtomAt(k).setProperty(RING_CONFIG,UP);
+            else
+              allrings.getAtomAt(k).setProperty(RING_CONFIG,DOWN);
+            counter++;
+          }
+        }
+        if(counter==1){
+          for(int k=0;k<allrings.getAtomCount();k++){
+            allrings.getAtomAt(k).setProperty(RING_CONFIG,UP);
+          }
+        }
+      }
+    }
+    
+    
     StringBuffer l = new StringBuffer();
     createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
     return l.toString();
+  }
+  
+  
+  private Atom hasWedges(AtomContainer ac, Atom a){
+    Atom[] atoms=ac.getConnectedAtoms(a);
+    for(int i=0;i<atoms.length;i++){
+      if(ac.getBond(a, atoms[i]).getStereo()!=CDKConstants.STEREO_BOND_NONE && !atoms[i].getSymbol().equals("H")){
+        return(atoms[i]);
+      }
+    }
+    for(int i=0;i<atoms.length;i++){
+      if(ac.getBond(a, atoms[i]).getStereo()!=CDKConstants.STEREO_BOND_NONE){
+        return(atoms[i]);
+      }
+    }
+    return(null);
   }
 
 
@@ -555,16 +599,6 @@ public class SmilesGenerator {
         }
       }
       if (numberOfSymbolsWithDifferentMorganNumbers != differentSymbols.size()) {
-        if (stereo == 1 && atoms.length == 4) {
-          for (int i = 0; i < atoms.length; i++) {
-            RingSet rs = new SSSRFinder().findSSSR((Molecule) container);
-            RingSet rs1 = rs.getRings(a);
-            RingSet rs2 = rs1.getRings(atoms[i]);
-            if (rs2.size() > 1) {
-              return true;
-            }
-          }
-        }
         if ((atoms.length == 5 || atoms.length == 6) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1))) {
           return (true);
         }
@@ -926,13 +960,13 @@ public class SmilesGenerator {
               for (int i = 0; i < chiralNeighbours.size(); i++) {
                 if (chiralNeighbours.get(i) != parent) {
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[0] = (Atom) chiralNeighbours.get(i);
-                  }
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
                     sorted[2] = (Atom) chiralNeighbours.get(i);
                   }
-                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
                     sorted[1] = (Atom) chiralNeighbours.get(i);
+                  }
+                  if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
+                    sorted[0] = (Atom) chiralNeighbours.get(i);
                   }
                 }
               }
@@ -941,10 +975,10 @@ public class SmilesGenerator {
               for (int i = 0; i < chiralNeighbours.size(); i++) {
                 if (chiralNeighbours.get(i) != parent) {
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[2] = (Atom) chiralNeighbours.get(i);
+                    sorted[1] = (Atom) chiralNeighbours.get(i);
                   }
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
-                    sorted[1] = (Atom) chiralNeighbours.get(i);
+                    sorted[2] = (Atom) chiralNeighbours.get(i);
                   }
                   if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isBondBroken((Atom) chiralNeighbours.get(i), atom)) {
                     sorted[0] = (Atom) chiralNeighbours.get(i);
@@ -1497,6 +1531,10 @@ public class SmilesGenerator {
         } else {
             buffer.append(symbol);
         }
+        if(a.getProperty(RING_CONFIG)!=null && a.getProperty(RING_CONFIG).equals(UP))
+          buffer.append('/');
+        if(a.getProperty(RING_CONFIG)!=null && a.getProperty(RING_CONFIG).equals(DOWN))
+          buffer.append('\\');
         if (chiral && stereo && (isTrigonalBipyramidalOrOctahedral(container, a) || isSquarePlanar(container, a) || isTetrahedral(container, a) != 0)) {
             buffer.append('@');
         }
