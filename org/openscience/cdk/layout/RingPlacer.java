@@ -92,7 +92,6 @@ public class RingPlacer implements CDKConstants
 	 *
 	 * @param   rs The RingSystem for which the substituents are to be laid out 
 	 * @return  A list of atoms that where laid out   
-	 * @exception   Exception  
 	 */
 	public AtomContainer placeRingSubstituents(RingSet rs, double bondLength)
 	{

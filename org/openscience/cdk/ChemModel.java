@@ -114,7 +114,7 @@ public class ChemModel extends ChemObject
 	/**
 	 * Returns the RingSet of this ChemModel
 	 *
-	 * @return     
+	 * @return the ringset of this model
 	 */
 	public RingSet getRingSet()
 	{

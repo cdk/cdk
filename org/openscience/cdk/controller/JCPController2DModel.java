@@ -23,10 +23,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ *
+ */
 package org.openscience.cdk.controller;
-
-
 
 
 public class JCPController2DModel 
@@ -85,9 +84,9 @@ public class JCPController2DModel
 
 
 	/**
-	 *
-	 *
-	 * @return     
+	 * Returns the snapToGridAngle mode
+         *
+	 * @returns the snapToGridAngle mode
 	 */
 	public boolean getSnapToGridAngle()
 	{
@@ -96,7 +95,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the snapToGridAngle mode
 	 *
 	 * @param   snapToGridAngle  
 	 */
@@ -108,9 +107,9 @@ public class JCPController2DModel
 	
 
 	/**
+	 * Returns the snapAngle mode
 	 *
-	 *
-	 * @return     
+	 * @return the snapAngle mode
 	 */
 	public int getSnapAngle()
 	{
@@ -119,7 +118,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the snapAngle mode
 	 *
 	 * @param   snapAngle  
 	 */
@@ -131,9 +130,9 @@ public class JCPController2DModel
 	
 
 	/**
+	 * Returns the snapToGridCartesian mode
 	 *
-	 *
-	 * @return     
+	 * @return the snapToGridCartesian mode
 	 */
 	public boolean getSnapToGridCartesian()
 	{
@@ -142,7 +141,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the snapToGridCartesian mode
 	 *
 	 * @param   snapToGridCartesian  
 	 */
@@ -154,9 +153,9 @@ public class JCPController2DModel
 	
 
 	/**
+	 *  Returns the snapCartesian value
 	 *
-	 *
-	 * @return     
+	 * @return the snapCartesian value
 	 */
 	public int getSnapCartesian()
 	{
@@ -165,7 +164,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the snapCartesian value
 	 *
 	 * @param   snapCartesian  
 	 */
@@ -177,9 +176,9 @@ public class JCPController2DModel
 	
 
 	/**
+	 * Returns the ring size
 	 *
-	 *
-	 * @return     
+	 * @return the ring size
 	 */
 	public int getRingSize()
 	{
@@ -188,7 +187,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the ring size
 	 *
 	 * @param   ringSize  
 	 */
@@ -210,7 +209,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the default element symbol
 	 *
 	 * @param   elementSymbol  
 	 */
@@ -220,9 +219,9 @@ public class JCPController2DModel
 	}
 
 	/**
+	 * Returns the bond pointer length
 	 *
-	 *
-	 * @return     
+	 * @return the length
 	 */
 	public double getBondPointerLength()
 	{
@@ -231,7 +230,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the pointer length
 	 *
 	 * @param   pointerVectorLength  
 	 */
@@ -242,9 +241,9 @@ public class JCPController2DModel
 
 
 	/**
+	 * Returns the ring pointer length
 	 *
-	 *
-	 * @return     
+	 * @return the length
 	 */
 	public double getRingPointerLength()
 	{
@@ -253,7 +252,7 @@ public class JCPController2DModel
 
 
 	/**
-	 *
+	 * Sets the pointer length
 	 *
 	 * @param   pointerVectorLength  
 	 */

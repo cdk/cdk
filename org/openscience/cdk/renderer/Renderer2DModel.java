@@ -374,9 +374,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Returns the end of the pointer vector
 	 *
-	 *
-	 * @return     
+	 * @return the end point
 	 */
 	public Point getPointerVectorEnd()
 	{
@@ -385,7 +385,7 @@ public class Renderer2DModel
 
 
 	/**
-	 *
+	 * Sets the end of a pointer vector
 	 *
 	 * @param   pointerVectorEnd  
 	 */
@@ -398,9 +398,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Returns the start of a pointer vector
 	 *
-	 *
-	 * @return     
+	 * @return the start point
 	 */
 	public Point getPointerVectorStart()
 	{
@@ -409,7 +409,7 @@ public class Renderer2DModel
 
 
 	/**
-	 *
+	 * Sets the start point of a pointer vector
 	 *
 	 * @param   pointerVectorStart  
 	 */
@@ -422,9 +422,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Returns selected rectangular
 	 *
-	 *
-	 * @return     
+	 * @return the selection
 	 */
 	public Polygon getSelectRect()
 	{
@@ -433,7 +433,7 @@ public class Renderer2DModel
 
 
 	/**
-	 *
+	 * Sets a selected region
 	 *
 	 * @param   selectRect  
 	 */
@@ -446,9 +446,9 @@ public class Renderer2DModel
 	
 
 	/**
+	 * Get selected atoms
 	 *
-	 *
-	 * @return     
+	 * @return an atomcontainer with the selected atoms
 	 */
 	public AtomContainer getSelectedPart()
 	{
@@ -457,7 +457,7 @@ public class Renderer2DModel
 
 
 	/**
-	 *
+	 * Sets the selected atoms
 	 *
 	 * @param   selectedPart  
 	 */
@@ -477,9 +477,9 @@ public class Renderer2DModel
 
 
 	/**
+	 * Returns a set of points constituating a selected region
 	 *
-	 *
-	 * @return     
+	 * @return a vector with points
 	 */
 	public Vector getLassoPoints()
 	{
@@ -488,7 +488,7 @@ public class Renderer2DModel
 
 
 	/**
-	 *
+	 * Adds a point to the list of lasso points
 	 *
 	 * @param   lassoPoints  
 	 */
