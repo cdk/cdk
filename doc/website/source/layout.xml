@@ -31,7 +31,6 @@
         <tocentry page="user-extra.xml" filename="user-extra.html"/>
         <tocentry page="user-io.xml" filename="user-io.html"/>
       </tocentry>
-      <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
       <tocentry page="depends_web.xml" filename="depends_web.html"/>
       <tocentry page="api.xml" filename="api.html"/>
       <tocentry page="manpages.xml" filename="manpages.html">
@@ -61,6 +60,7 @@
           <title>QSAR dict</title>
         </tocentry>
       </tocentry>
+      <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
     </tocentry>
     <tocentry page="development.xml" filename="development.html">
       <tocentry page="whoiswho.xml" filename="whoiswho.html"/>
@@ -78,13 +78,16 @@
       <tocentry page="javancss-stats.xml" filename="javancss-stats.html"/>
       </tocentry>
       <tocentry page="modules.xml" filename="modules.html">
-        <tocentry page="module-data.xml" filename="module-data.html"/>
+        <tocentry page="module-applications.xml" filename="module-applications.html"/>
+        <tocentry page="module-builder3d.xml" filename="module-builder3d.html"/>
         <tocentry page="module-core.xml" filename="module-core.html"/>
-        <tocentry page="module-standard.xml" filename="module-standard.html"/>
-        <tocentry page="module-io.xml" filename="module-io.html"/>
-        <tocentry page="module-render.xml" filename="module-render.html"/>
-        <tocentry page="module-qsar.xml" filename="module-qsar.html"/>
+        <tocentry page="module-data.xml" filename="module-data.html"/>
         <tocentry page="module-extra.xml" filename="module-extra.html"/>
+        <tocentry page="module-io.xml" filename="module-io.html"/>
+        <tocentry page="module-libio.xml" filename="module-libio.html"/>
+        <tocentry page="module-qsar.xml" filename="module-qsar.html"/>
+        <tocentry page="module-render.xml" filename="module-render.html"/>
+        <tocentry page="module-standard.xml" filename="module-standard.html"/>
       </tocentry>
       <tocentry id="SFBugs" href="http://sourceforge.net/tracker/?group_id=20024&amp;atid=120024">
         <title>Bugs</title>
