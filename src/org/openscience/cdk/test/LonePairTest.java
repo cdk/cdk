@@ -62,12 +62,34 @@ public class LonePairTest extends TestCase {
         assertTrue(lp.contains(atom));
     }
     
-    public void testSetAtom() {
+    public void testSetAtom_Atom() {
         Atom atom = new Atom("N");
         LonePair lp = new LonePair();
-        assertTrue(lp.getAtom() == null);
         lp.setAtom(atom);
         assertTrue(lp.getAtom().compare(atom));
+    }
+    
+    public void testGetAtom() {
+        Atom atom = new Atom("N");
+        LonePair lp = new LonePair();
+        assertNull(lp.getAtom());
+        lp.setAtom(atom);
+        assertTrue(lp.getAtom().compare(atom));
+    }
+    
+    public void testGetElectronCount() {
+        LonePair lp = new LonePair();
+        assertEquals(2, lp.getElectronCount());
+        
+        lp = new LonePair(new Atom("N"));
+        assertEquals(2, lp.getElectronCount());
+    }
+    
+    public void testContains_Atom() {
+        Atom atom = new Atom("N");
+        LonePair lp = new LonePair();
+        lp.setAtom(atom);
+        assertTrue(lp.contains(atom));
     }
     
     public void testClone() {
