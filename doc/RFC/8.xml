@@ -1,0 +1,150 @@
+<refentry id="cdk-rfc-8">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2002-10-24</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>RFC CDK #8</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Introduction</title>
+    <para>
+The introduction of Pseudo Atoms into the set of core CDK classes. A pseudo
+atom is an entity that like the Atom class has a label and 2D/3D coordinates.
+Mass may be associated with it, as well as other atomic properties like 
+charges. As such I think it is reasonable to have a PseudoAtom class with the
+same interface as the Atom class present in CVS on 2002-10-24. This makes
+it possible to still calculate molecular mass even if pseudo atoms are found 
+in the molecule (Note that pseudo atoms can have both zero as non-zero mass).
+    </para>
+    <para>
+Example pseudo atoms are (amongst others): the methyl group, denoted by Me; a 
+phenyl amino acid, denoted by Phe; a R group, denoted by R ;) and 
+representing an alkyl species. All of these may have specific properties, but 
+in the presented proposal, this is dealt with.
+    </para>
+    <para>
+Before I make the actual proposal, please take into account these points.
+      <orderedlist>
+        <listitem><para>The objective of the new design is to have a shared API for both 'real' 
+atoms and pseudo atoms, to ensure that they can be interchanged in any 
+algorithm dealing with atoms, as if it were 'real' atoms. In other words,
+pseudo atoms *must* not break calculation of molecular mass, centre of mass, 
+fragments, etc.</para></listitem>
+        <listitem><para>A second objective is that the API used by users should be understandable.
+This means that methods performing operations on atoms (real or pseudo) must
+have a signature where atoms are class-ed as Atom.</para></listitem>
+        <listitem><para>Finally, there are a number of limitations to the actual implementation due 
+to limitations of the Java programming language.</para></listitem>
+      </orderedlist>
+    </para>
+    <para>
+I've discussed the issue with Christoph, and gave it a lot of thoughts in the 
+last two/three weeks, and the problem turns out to be hard to solve. But, in 
+the end I've come to this proposal.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+As pseudo atoms and 'real' atoms must share a common API and be able to be 
+used as if they were of the same type, they must share an interface (see 1.).
+As I would like to keep the CDK API easy to understand I propose the name
+this interface Atom, thus replacing the current Atom class. The Atom class in 
+turn must thus be renamed. (Or moved into a separate package?) The Atom 
+class is renamed to IsotopicAtom, because it extends the Isotope class, and
+will implement the new Atom interface.
+    </para>
+    <para>
+The interface Atom will have this signature:
+<programlisting>
+public interface Atom {
+  java.lang.Object clone();
+  boolean compare(java.lang.Object);
+  get/setPoint2D();
+  get/setPoint3D();
+  get/setX2D(); //etc
+  get/setX3D(); //etc
+  setCharge();
+  setFormalCharge(); //maybe, see RFC #6
+  get/setSymbol();
+  get/setExactMass(); //default = 0.0
+}
+</programlisting>
+    </para>
+    <para>
+To remove the IsotopicAtom name from the CDK users point of view, I propose
+to have them (optionally) instantiated by means of the IsotopeFactory with a 
+method similar to the configure(Atom) method. This new method will have this
+signature (notice the similar getElement(String symbol) method already 
+available):
+<programlisting>
+Atom IsotopeFactory.getAtom(String symbol);
+</programlisting>
+The method itself will return an IsotopicAtom. Code like
+<programlisting>
+Atom a = new Atom("C");
+</programlisting>
+will have to be replaced by:
+<programlisting>
+IsotopeFactory if = IsotopeFactory.getInstance();
+Atom a = if.getAtom("C");
+</programlisting>
+    </para>
+    <para>
+The IsotopicAtom will still have a constructor like the old Atom structure, 
+and an Atom can thus also be instantiated with:
+<programlisting>
+Atom a = new IsotopicAtom("C");
+</programlisting>
+    </para>
+    <para>
+However, the latter method returns an unconfigured atom, like
+the current Atom(String symbol) constructor does. Configuration can
+be done afterwards by IsotopeFactory.configure(Atom), like the way
+it is done at this moment.
+    </para>
+    <para>
+Pseudo atoms will be instantiated in similar ways. E.g. the 
+AminoAcidAtomFactory should be written to provide methods like:
+<programlisting>
+Atom AminoAcidAtomFactory.getAminoAcidAtom(String AminoAcidSymbol);
+</programlisting>
+returning a AminoAcidAtom class which subclasses the PseudoAtom class.
+    </para>
+    <para>
+Finally note that the symbol (as in get/setSymbol) in the Atom interface gets
+a slightly different meaning. It is to be expected that a PseudoAtom subclass
+is written to represent groups like Me, Et, Ph, t-Bu, etc where the actual 
+symbol has some free format, and only representing a idea of a user drawing
+a 2D structure. This in contrast with the current Atom symbol field, which is 
+supposed to be a string in a fixed list of strings, e.g. all atom type names.
+This has implications on methods that rely on the content of this symbol
+field. For example, file writers must take notice of the actual class name 
+when the file format can only contain atom type names, and a restricted set
+of other names.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+The concept of Pseudo Atoms is common in 2D editors and is needed for 
+developing a future CDK projects.
+    </para>
+  </refsect1>
+
+</refentry>
