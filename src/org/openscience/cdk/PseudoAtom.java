@@ -43,6 +43,10 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
 
     private String label;
     
+    public PseudoAtom() {
+        this("");
+    }
+    
     /**
      * Constructs an Atom from a String containing an element symbol.
      *

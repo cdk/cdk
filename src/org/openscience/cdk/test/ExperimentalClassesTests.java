@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.test.io.VASPReaderTest;
 import org.openscience.cdk.test.tools.HydrogenAdder2Test;
 import org.openscience.cdk.test.tools.ValencyCheckerTest;
+import org.openscience.cdk.test.isomorphism.SMARTSTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.
@@ -43,6 +44,7 @@ public class ExperimentalClassesTests {
         suite.addTest(HydrogenAdder2Test.suite());
         suite.addTest(ValencyCheckerTest.suite());
         suite.addTest(VASPReaderTest.suite());
+        suite.addTest(SMARTSTest.suite());
         return suite;
     }
 
