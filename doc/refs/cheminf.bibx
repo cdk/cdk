@@ -497,4 +497,28 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="KJ81">
+    <bibtex:article>
+      <bibtex:author>Kang, Y.K. and  Jhon, M.S.</bibtex:author>
+      <bibtex:title>Additivity of Atomic Static Polarizabilities and Dispersion Coefficients</bibtex:title>
+      <bibtex:journal> Theoretica Chimica Acta</bibtex:journal>
+      <bibtex:year>1982</bibtex:year>
+      <bibtex:volume>61</bibtex:volume>
+      <bibtex:pages>41-48</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="GH82">
+    <bibtex:article>
+      <bibtex:author>Gasteiger, J. and  Hutchings, M.G.</bibtex:author>
+      <bibtex:title>Quantitative Models of Gas-Phase Proton Transfer Reactions Involving Alcohols, Ethers, and their Thio analogs. Correlation Analyses Based on Residual Electronegativity and Effective Polarizability</bibtex:title>
+      <bibtex:journal>J. Amer. Chem. Soc.</bibtex:journal>
+      <bibtex:year>1984</bibtex:year>
+      <bibtex:volume>106</bibtex:volume>
+      <bibtex:pages>6489-6495</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+
+
 </bibtex:file>
