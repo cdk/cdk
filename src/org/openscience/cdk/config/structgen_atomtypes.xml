@@ -29,11 +29,16 @@
    id="structgen.N3"
    maxBondOrder="3.0"
    maxBondOrderSum="3.0"/>
-  <org.openscience.cdk.AtomType
+  <!-- org.openscience.cdk.AtomType
    symbol="N"
    id="structgen.N4"
    maxBondOrder="2.0"
-   maxBondOrderSum="4.0"/>
+   maxBondOrderSum="4.0"/ -->
+  <org.openscience.cdk.AtomType
+   symbol="N"
+   id="structgen.N5"
+   maxBondOrder="2.0"
+   maxBondOrderSum="5.0"/>
   <org.openscience.cdk.AtomType
    symbol="O"
    id="structgen.O2"
