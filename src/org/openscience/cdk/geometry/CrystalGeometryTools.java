@@ -85,6 +85,13 @@ public class CrystalGeometryTools {
     public static double[][] notionalToCartesian(double alength, double blength,
                                                  double clength, double alpha,
                                                  double beta, double gamma) {
+        System.out.println("Creating cartesian from:");
+        System.out.println("  a: " + alength);
+        System.out.println("  b: " + blength);
+        System.out.println("  c: " + blength);
+        System.out.println("  alpha: " + alpha);
+        System.out.println("  beta: " + beta);
+        System.out.println("  gamma: " + gamma);
         double[][] axes = new double[3][3];
         
         /* 1. align the a axis with x axis */
@@ -92,13 +99,15 @@ public class CrystalGeometryTools {
         axes[0][1] = 0.0;               // ay
         axes[0][2] = 0.0;               // az
 
+        double toRadians = Math.PI/180;
+        
         /* some intermediate variables */
-        double cosalpha = Math.cos(alpha);
-        double cosbeta = Math.cos(beta);
-        double cosgamma = Math.cos(gamma);
-        double sinalpha = Math.sin(alpha);
-        double sinbeta = Math.sin(beta);
-        double singamma = Math.sin(gamma);
+        double cosalpha = Math.cos(toRadians*alpha);
+        double cosbeta = Math.cos(toRadians*beta);
+        double cosgamma = Math.cos(toRadians*gamma);
+        double sinalpha = Math.sin(toRadians*alpha);
+        double sinbeta = Math.sin(toRadians*beta);
+        double singamma = Math.sin(toRadians*gamma);
 
         /* 2. place the b is in xy plane making a angle gamma with a */
         axes[1][0] = blength*cosgamma;  // bx
@@ -112,6 +121,17 @@ public class CrystalGeometryTools {
                              cosbeta*cosbeta -
                              cosgamma*cosgamma +
                              2.0*cosalpha*cosbeta*cosgamma);
+        System.out.println("Volume: " + V);
+        System.out.println("    a*b*c = " + alength * blength * clength);
+        System.out.println("    sqrt() = " + (1.0 - cosalpha*cosalpha -
+                             cosbeta*cosbeta -
+                             cosgamma*cosgamma +
+                             2.0*cosalpha*cosbeta*cosgamma));
+        System.out.println("    cosalpha^2 = " + cosalpha*cosalpha);
+        System.out.println("    cosbeta^2 = " +cosbeta*cosbeta);
+        System.out.println("    cosgamma^2 = " +cosgamma*cosgamma);
+        System.out.println("    alp*bet*gam = " + cosalpha*cosbeta*cosgamma);
+        System.out.println("singamma: " + singamma);
         axes[2][0] = clength*cosbeta;   // cx
         axes[2][1] = clength*(cosalpha- // cy
              cosbeta*cosgamma)/singamma;
