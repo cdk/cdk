@@ -624,6 +624,27 @@ public class AtomContainer extends ChemObject implements Cloneable
 		return conMat;
 	}
 
+    /**
+     *  Returns a adjecency matrix representation of this AtomContainer
+     *
+     * @return A adjecency matrix representating this AtomContainer
+     *
+     * @keyword adjecency matrix
+     */
+    public int[][] getAdjecencyMatrix() {
+        Bond bond = null;
+        int i;
+        int j;
+        int[][] conMat = new int[getAtomCount()][getAtomCount()];
+        for (int f = 0; f < getBondCount(); f++) {
+            bond = getBondAt(f);
+            i = bond.getAtomAt(0);
+            j = bond.getAtomAt(1);
+            conMat[i][j] = 1;
+            conMat[j][i] = 1;
+        }
+        return conMat;
+    }
 
 	/**
 	 *  Add bonds to a set of atoms (Experimental!)
@@ -853,7 +874,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 
 	/**
 	 *  Removes the given atom from the AtomContainer
-     *  Note that the bonds are unaffected: you also have to take care of removeing all 
+     *  Note that the bonds are unaffected: you also have to take care of removeing all
      * bonds to this atom from the container.
 	 *
 	 * @param  atom  The atom to be removed
