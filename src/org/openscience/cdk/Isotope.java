@@ -41,6 +41,8 @@ package org.openscience.cdk;
  *   Isotope carbon = new Isotope(1, "H", 2, 2.01410179, 100.0);
  * </pre>
  *
+ * @cdkPackage core
+ *
  * @author     steinbeck
  * @created    2001-08-21
  *

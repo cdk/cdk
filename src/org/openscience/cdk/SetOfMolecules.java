@@ -45,6 +45,8 @@ package org.openscience.cdk;
  * }
  * </pre>
  *
+ * @cdkPackage core
+ *
  * @keyword reaction
  * @keyword molecule
  */

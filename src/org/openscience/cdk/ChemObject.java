@@ -36,7 +36,7 @@ import java.util.*;
  * for adding listeners and for their notification of events, as well a 
  * a hash table for administration of physical or chemical properties
  *
- * <p>The lazyCreation patch has been applied to this class.
+ * @cdkPackage core
  */
 public class ChemObject implements java.io.Serializable, Cloneable {
     

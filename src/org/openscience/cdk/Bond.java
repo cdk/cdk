@@ -31,11 +31,13 @@ import javax.vecmath.*;
  *  Implements the concept of a covalent bond between two atoms. A bond is
  *  considered to be a number of electrons connecting a two of atoms.
  *
- *@author     steinbeck
- *@created    October 2, 2003
- *@keyword    bond
- *@keyword    atom
- *@keyword    electron
+ * @cdkPackage core
+ *
+ * @author     steinbeck
+ * @created    2003-10-02
+ * @keyword    bond
+ * @keyword    atom
+ * @keyword    electron
  */
 public class Bond extends ElectronContainer implements java.io.Serializable, Cloneable
 {

@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk;
 
-
 /**
  * Implements the idea of an element in the periodic table.
  * 
@@ -35,6 +34,8 @@ package org.openscience.cdk;
  *   Element e1 = if.getElement("C");
  *   Element e2 = if.getElement(12);
  * </pre>
+ *
+ * @cdkPackage core
  *
  * @keyword element
  *

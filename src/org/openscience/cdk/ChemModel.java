@@ -30,6 +30,8 @@ import java.util.*;
  * An object containig multiple SetOfMolecules and 
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
+ *
+ * @cdkPackage core
  */
 public class ChemModel extends ChemObject implements java.io.Serializable, Cloneable
 {

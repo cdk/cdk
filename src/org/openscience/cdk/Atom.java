@@ -49,6 +49,8 @@ import javax.vecmath.*;
  * <p>More examples about using this class can be found in the
  * Junit test for this class.
  *
+ * @cdkPackage core
+ *
  * @author     steinbeck
  * @created    2000-10-02
  * @keyword    atom

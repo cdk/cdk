@@ -27,6 +27,8 @@ package org.openscience.cdk;
 
 /** 
  * A set of AtomContainers.
+ *
+ * @cdkPackage core
  */
 public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, Cloneable {
 

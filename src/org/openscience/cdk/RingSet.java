@@ -29,8 +29,9 @@ import javax.vecmath.*;
 
 
 /**
- *  Implementation of a set of Rings.
- *  Maintains a Vector "rings" to store "ring" objects
+ * Maintains a set of Ring objects.
+ *
+ * @cdkPackage core
  *
  * @keyword     ring, set of
  */

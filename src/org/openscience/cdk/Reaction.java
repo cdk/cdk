@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -37,6 +37,8 @@ import javax.vecmath.*;
  * <p>The class mostly represents abstract reactions, such as 2D diagrams,
  * and is not intended to represent reaction trajectories. Such can better
  * be represented with a ChemSequence.
+ *
+ * @cdkPackage core
  *
  * @author     Egon Willighagen <elw38@cam.ac.uk>
  * @created    2003-02-13

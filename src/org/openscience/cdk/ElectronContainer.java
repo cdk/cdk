@@ -28,6 +28,8 @@ package org.openscience.cdk;
 /**
  * Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
  *
+ * @cdkPackage core
+ *
  * @keyword orbital
  * @keyword lone-pair
  * @keyword bond

@@ -28,14 +28,16 @@ import javax.vecmath.*;
 import java.util.Vector;
 
 /** 
-  * Class representing a ring structure in a molecule.
-  * A ring is a linear sequence of
-  * N atoms interconnected to each other by covalent bonds,
-  * such that atom i (1 < i < N) is bonded to
-  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
-  *
-  * @keyword    ring
-  */
+ * Class representing a ring structure in a molecule.
+ * A ring is a linear sequence of
+ * N atoms interconnected to each other by covalent bonds,
+ * such that atom i (1 < i < N) is bonded to
+ * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
+ *
+ * @cdkPackage core
+ *
+ * @keyword    ring
+ */
 public class Ring extends AtomContainer implements java.io.Serializable, Cloneable
 {
 

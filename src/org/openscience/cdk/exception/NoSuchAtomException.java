@@ -29,6 +29,9 @@
  */
 package org.openscience.cdk.exception;
 
+/**
+ * @cdkPackage core
+ */
 public class NoSuchAtomException extends CDKException {
 
     public NoSuchAtomException(String message) {

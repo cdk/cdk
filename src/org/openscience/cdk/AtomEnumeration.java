@@ -39,8 +39,10 @@ import javax.vecmath.*;
  *  }
  *  </pre>
  *
- *  The Enumeration does not clone the AtomContainer from which
+ *  <p>The Enumeration does not clone the AtomContainer from which
  *  it is constructed, which might lead to errors.
+ *
+ * @cdkPackage core
  *
  * @author     steinbeck
  * @created    2000-10-02

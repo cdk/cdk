@@ -34,6 +34,8 @@ package org.openscience.cdk;
  *
  * <p>This should be replaced by the mechanism explained in RFC #8.
  *
+ * @cdkPackage core
+ *
  * @see  Atom
  */
 public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable 

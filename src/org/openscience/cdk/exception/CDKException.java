@@ -29,6 +29,8 @@ package org.openscience.cdk.exception;
 
 /**
  * Exception that is thrown by CDK classes when some problem has occured.
+ *
+ * @cdkPackage core
  */
 public class CDKException extends Exception {
 

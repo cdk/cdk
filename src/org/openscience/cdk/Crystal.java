@@ -35,6 +35,8 @@ import javax.vecmath.Point3d;
  * <p>The crystal is designed to store only the assymetric atoms.
  * Though this is not enforced, it is assumed by all methods.
  *
+ * @cdkPackage core
+ *
  * @keyword crystal
  */
 public class Crystal extends AtomContainer implements java.io.Serializable, Cloneable

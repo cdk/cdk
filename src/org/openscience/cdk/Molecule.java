@@ -29,6 +29,8 @@ import java.util.Vector;
  * Represents the concept of a chemical molecule, an object composed of 
  * atoms connected by bonds.
  *
+ * @cdkPackage core
+ *
  * @author     steinbeck
  * @created    2000-10-02
  *

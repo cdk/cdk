@@ -36,8 +36,9 @@ import org.openscience.cdk.event.*;
  * Classes implementing this interface must implement this method
  * such that they react appropriately to changes in the object they
  * are interested in.
+ *
+ * @cdkPackage core
  */
-
 public interface ChemObjectListener
 {
 	/**

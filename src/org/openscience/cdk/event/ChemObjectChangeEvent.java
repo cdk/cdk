@@ -31,6 +31,8 @@ package org.openscience.cdk.event;
 /**
  * Event fired by cdk classes to their registered listeners
  * in case something changes within them.
+ *
+ * @cdkPackage core
  */
 public class ChemObjectChangeEvent extends java.util.EventObject
 {

@@ -37,6 +37,8 @@ import javax.vecmath.*;
  *  }
  *  </pre>
  *
+ * @cdkPackage core
+ *
  * @author     steinbeck
  * @created    2000-10-02
  */
