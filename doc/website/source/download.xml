@@ -65,17 +65,20 @@
         </para>
         <para>
           Debian users can also apt-get the package from
-          <ulink url="http://mentors.debian.net/">mentors.debian.net</ulink> 
+          <ulink url="http://www.wgdd.de/debian/">www.wgdd.de/debian</ulink> 
           by adding the following to <filename>/etc/apt/sources.list</filename>:
         </para>
         <literallayout>
-deb http://mentors.debian.net/debian unstable main contrib
-deb-src http://mentors.debian.net/debian unstable main contrib
+deb http://www.wgdd.de/debian unstable main contrib non-free
+deb-src http://www.wgdd.de/debian unstable main contrib non-free
         </literallayout>
         <para>
           Doing 
-          <userinput>apt-get update &amp;&amp; apt-get install cdk/unstable</userinput>.
-          will then install CDK. (Jmol is also available from that apt-get repository.)
+          <userinput>apt-get update &amp;&amp; apt-get install libcdk-java/unstable</userinput>. 
+          will then install CDK. (Jmol, Jchempaint and the CDK-plugins are also available from that 
+          apt-get repository.) The repository has changed, because 
+          <ulink url="http://mentors.debian.net/">mentors.debian.net</ulink> will no longer provide 
+          binary-packages.
         </para>
       </section>
       <section>
