@@ -29,6 +29,7 @@ package org.openscience.cdk.test.renderer;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
 import java.util.*;
@@ -37,7 +38,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @cdkPackage test
+ * @cdkPackage test-java3d
  */
 public class AcceleratedRenderer3DTest
 {

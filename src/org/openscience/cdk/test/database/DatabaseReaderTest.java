@@ -25,6 +25,7 @@
 package org.openscience.cdk.test.database;
 
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.database.*;
 import java.sql.*;

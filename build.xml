@@ -207,11 +207,10 @@
             description="Compiles the CDK."
             depends="init, info, src.star.javafiles, 
                      compile-core, compile-standard, compile-extra, compile-io, 
-                     compile-render, compile-render-with-java3d, compile-libio,
-                     compile-apps">
+                     compile-render, compile-render-with-java3d, compile-libio">
         </target>
 
-        <target id="compile-all" name="compile-all" depends="compile, compile-experimental"
+        <target id="compile-all" name="compile-all" depends="compile, compile-experimental, compile-apps"
             description="Compiles the CDK, including experimental classes.">
         </target>
 
@@ -247,22 +246,33 @@
         </target>
         
         <target id="compile-apps" name="compile-apps" 
-                depends="dist-extra, dist-libio, dist-render, 
-                      dist-render-with-java3d, patch-viewer-for-no-jmol">        
-                <!-- Task to build the applications classes. Some require extra
-                     jars, like those in ${lib}/libio -->
-                <echo message="Compiling classes defined in ${src}/applications.javafiles." />
+                depends="dist-libio, dist-experimental,
+                        dist-render-with-java3d, patch-viewer-for-no-jmol">        
+            <!-- Task to build the applications classes. Some require extra
+                 jars, like those in ${lib}/libio -->
+            <echo message="Compiling classes defined in ${src}/applications.javafiles." />
 
-                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/applications.javafiles">
-                        <classpath refid="project.class.path" />
-                        <classpath>
-                            <fileset dir="${lib}/libio">
-                                <include name="*.jar" />
-                            </fileset>
-                        </classpath>
-                </javac>
+            <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                   debug="${debug}" deprecation="${deprecation}"
+                   includesfile="${src}/applications.javafiles">
+                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${dist}/jar">
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-standard.jar" />
+                        <include name="cdk-render.jar" />
+                        <include name="cdk-io.jar" />
+                        <include name="cdk-extra.jar" />
+                        <include name="cdk-libio.jar" />
+                        <include name="cdk-experimental.jar" />
+                    </fileset>
+                </classpath>
+                <classpath>
+                    <fileset dir="${lib}/libio">
+                        <include name="*.jar" />
+                    </fileset>
+                </classpath>
+            </javac>
         </target>
 
         <target id="patch-core" name="patch-core" 
@@ -407,7 +417,8 @@
             </javac>
         </target>
 
-        <target id="compile-test" name="compile-test" depends="dist-all, dist-libio, dist-experimental">
+        <target id="compile-test" name="compile-test" 
+                depends="dist-all">
             <!-- Task to build the test classes. -->
             <javac srcdir="${build.src}"
                    destdir="${build}" optimize="${optimization}" 
@@ -424,6 +435,7 @@
                         <include name="cdk-extra.jar" />
                         <include name="cdk-libio.jar" />
                         <include name="cdk-experimental.jar" />
+                        <include name="cdk-apps.jar" />
                     </fileset>
                 </classpath>
             </javac>
@@ -520,36 +532,15 @@
                 <jar jarfile="${dist}/jar/cdk-core-debug.jar">
                     <fileset dir="${build}/core-debug">
                         <includesfile name="${src}/core.classes" />
-                   </fileset>
+                    </fileset>
                 </jar>
         </target>
 
         <target id="dist-extra" name="dist-extra" depends="dist-core, compile-extra">
                 <jar jarfile="${dist}/jar/cdk-extra.jar">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/**/**" />
-                        <!-- Exclude core classes -->
-                        <excludesfile name="${src}/core.classes" />
-                        <!-- Exclude classes in cdk-io module -->
-                        <exclude name="org/openscience/cdk/io/**" />
-                        <exclude name="org/openscience/cdk/ChemFile.class" />
-                        <!-- Exclude classes in cdk-render module -->
-                        <exclude name="org/openscience/cdk/renderer/**" />
-                        <exclude name="org/openscience/cdk/controller/**" />
-                        <exclude name="org/openscience/cdk/editor/**" />
-                        <exclude name="org/openscience/cdk/event/**" />
-                        <!-- Exclude libio classes -->
-                        <exclude name="org/openscience/cdk/libio/**" />
-                        <exclude name="org/openscience/cdk/test/libio/**" />
-                        <!-- Exclude application classes -->
-                        <excludesfile name="${src}/applications.classes" />
-                        <!-- Exclude test classes -->
-                        <exclude name="org/openscience/cdk/test/**" />
-                        <!-- Exclude classes in cdk-standard module -->
-                        <excludesfile name="${src}/standard.classes" />
-                        <!-- Exclude classes in cdk-experimental module -->
-                        <excludesfile name="${src}/experimental.classes" />
-                   </fileset>
+                        <includesfile name="${src}/extra.classes" />
+                    </fileset>
                 </jar>
         </target>
 
@@ -557,8 +548,7 @@
                 <jar jarfile="${dist}/jar/cdk-experimental.jar">
                     <fileset dir="${build}">
                         <includesfile name="${src}/experimental.classes" />
-                        <include name="org/openscience/cdk/iupac/generator/data/**" />
-                   </fileset>
+                    </fileset>
                 </jar>
         </target>
 
@@ -573,7 +563,7 @@
         <target id="dist-test" name="dist-test" depends="compile-test">
                 <jar jarfile="${dist}/jar/cdk-test.jar">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/test/**" />
+                        <includesfile name="${src}/test.classes" />
                     </fileset>
                     <fileset dir=".">
                         <include name="data/**" />
@@ -584,8 +574,7 @@
         <target id="dist-libio" name="dist-libio" depends="compile-libio" unless="libio.present">
                 <jar jarfile="${dist}/jar/cdk-libio.jar">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/libio/**" />
-                        <include name="org/openscience/cdk/test/libio/**" />
+                        <includesfile name="${src}/libio.classes" />
                     </fileset>
                     <fileset dir="${build}">
                         <include name="org/openscience/jmol/**" />
@@ -596,9 +585,7 @@
         <target id="dist-io" name="dist-io" depends="compile-io">
                 <jar jarfile="${dist}/jar/cdk-io.jar">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/io/**/*" />
-                        <include name="org/openscience/cdk/ChemFile.class" />
-                        <excludesfile name="${src}/experimental.classes" />
+                        <includesfile name="${src}/io.classes" />
                     </fileset>
                 </jar>
         </target>
@@ -606,23 +593,17 @@
         <target id="dist-render" name="dist-render" depends="compile-render">
                 <jar jarfile="${dist}/jar/cdk-render.jar">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/renderer/**/*" />
-                        <include name="org/openscience/cdk/controller/**/*" />
-                        <include name="org/openscience/cdk/editor/**/*" />
-                        <include name="org/openscience/cdk/event/**/*" />
-                        <excludesfile name="${src}/java3d.classes" />
+                        <includesfile name="${src}/render.classes" />
                     </fileset>
                 </jar>
         </target>
 
-        <target name="dist-render-with-java3d" depends="compile-render-with-java3d"
+        <target id="dist-render-with-java3d" name="dist-render-with-java3d" depends="compile-render-with-java3d"
                 if="java3D.present">
                 <jar jarfile="${dist}/jar/cdk-render.jar">
                     <fileset dir="${build}">
-                        <include name="org/openscience/cdk/renderer/**/*" />
-                        <include name="org/openscience/cdk/controller/**/*" />
-                        <include name="org/openscience/cdk/editor/**/*" />
-                        <include name="org/openscience/cdk/event/**/*" />
+                        <includesfile name="${src}/render.classes" />
+                        <includesfile name="${src}/java3d.classes" />
                     </fileset>
                 </jar>
         </target>
@@ -656,14 +637,13 @@
                 </jar>
         </target>
 
-        <target id="dist-all" name="dist-all" depends="dist, dist-experimental"
+        <target id="dist-all" name="dist-all" depends="dist, dist-experimental, dist-apps"
                 description="Builds the jar files for the CDK, including experimental classes."/>
 
         <target id="dist" name="dist" depends="dist-core, dist-standard, 
                                          dist-io, dist-render,
                                          dist-extra, dist-libio,
-                                         dist-render-with-java3d,
-                                         dist-apps" 
+                                         dist-render-with-java3d" 
                 description="Builds the jar files for the CDK."/>
 
         <target id="sourcedist" name="sourcedist" depends="init"
@@ -793,7 +773,7 @@
                                 <include name="*.jar" />
                         </fileset>
                     </classpath>
-                        <test name="org.openscience.cdk.test.ExperimentalClassesTests"
+                    <test name="org.openscience.cdk.test.ExperimentalClassesTests"
                         haltonfailure="no"
                         todir="${reports.tests}"
                         outfile="experimental">
@@ -821,7 +801,7 @@
                                 <include name="*.jar" />
                         </fileset>
                     </classpath>
-                        <test name="org.openscience.cdk.test.CDKTests"
+                    <test name="org.openscience.cdk.test.CDKTests"
                         haltonfailure="no"
                         todir="${reports.tests}"
                         outfile="result">

@@ -34,6 +34,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.math.*;
 import org.openscience.cdk.math.qm.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -41,7 +42,7 @@ import java.awt.event.*;
 /**
  * This class test the OrbitalRenderer3D
  *
- * @cdkPackage test
+ * @cdkPackage test-java3d
  *
  * @author     benedikta
  */

@@ -27,6 +27,7 @@ package org.openscience.cdk.test.internet;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.internet.*;

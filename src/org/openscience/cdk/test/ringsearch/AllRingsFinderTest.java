@@ -30,6 +30,7 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.templates.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.layout.*;
 import javax.vecmath.*;
 

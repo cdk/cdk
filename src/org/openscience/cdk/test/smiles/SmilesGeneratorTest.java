@@ -34,6 +34,7 @@ import org.openscience.cdk.aromaticity.*;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.test.*;
 import javax.vecmath.*;

@@ -26,6 +26,7 @@ package org.openscience.cdk.test;
 
 import junit.framework.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.test.fingerprint.*;
 import org.openscience.cdk.test.graph.invariant.*;
 import org.openscience.cdk.test.graph.rebond.*;

@@ -27,6 +27,7 @@ package org.openscience.cdk.test.io;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.geometry.*;
 import java.util.*;
@@ -35,7 +36,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @cdkPackage test
+ * @cdkPackage test-java3d
  */
 public class ZMatrixReaderTest
 {
@@ -52,7 +53,7 @@ public class ZMatrixReaderTest
 
 			ChemSequence[] chemSequence = chemFile.getChemSequences();
 			ChemModel[] chemModels = chemSequence[0].getChemModels();
-			AtomContainer atomContainer = chemModels[0].getAllInOneContainer();
+			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
       atomContainer.addBonds(1.5); // new!!!
 
 			JFrame frame = new JFrame("ZMatrixReaderTest");

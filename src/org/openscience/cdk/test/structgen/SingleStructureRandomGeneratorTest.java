@@ -30,6 +30,7 @@ import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.applications.swing.*;
 import org.openscience.cdk.structgen.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.templates.*;

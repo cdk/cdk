@@ -31,7 +31,7 @@ import junit.framework.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 
 /**
- * @cdkPackage test
+ * @cdkPackage test-libio
  */
 public class JmolLibIOTest extends TestCase {
 
