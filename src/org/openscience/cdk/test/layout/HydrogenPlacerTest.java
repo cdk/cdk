@@ -68,6 +68,7 @@ public class HydrogenPlacerTest extends TestCase {
     }
 
     public void testPlaceHydrogens2D() throws Exception {
+	    HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         Molecule dichloromethane = new Molecule();
         Atom carbon = new Atom("C");
         Point2d carbonPos = new Point2d(0.0,0.0);
@@ -94,7 +95,7 @@ public class HydrogenPlacerTest extends TestCase {
         assertNull(h2.getPoint2D());
         
         // generate new coords
-        HydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
+        hydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
         if (standAlone) MoleculeViewer2D.display(dichloromethane, false);
         // check that previously set coordinates are kept
         assertEquals(carbonPos, carbon.getPoint2D(), 0.01);
@@ -117,6 +118,7 @@ public class HydrogenPlacerTest extends TestCase {
     */
 	public void visualFullMolecule2DEvaluation()
 	{
+		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
                 String filename = "data/mdl/reserpine.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
@@ -131,7 +133,7 @@ public class HydrogenPlacerTest extends TestCase {
 		    logger.debug("Starting addition of H's");
 		    ha.addExplicitHydrogensToSatisfyValency(mol);
 		    logger.debug("ended addition of H's");
-		    HydrogenPlacer.placeHydrogens2D(mol, bondLength);
+		    hydrogenPlacer.placeHydrogens2D(mol, bondLength);
             if (standAlone) {
                 MoleculeViewer2D.display(mol, false);
             }

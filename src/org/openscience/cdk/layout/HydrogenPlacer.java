@@ -51,7 +51,7 @@ public class HydrogenPlacer {
 	public static boolean debug1 = false;
 	
 	
-	public static void placeHydrogens2D(AtomContainer atomContainer, double bondLength)
+	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength)
 	{
 		LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
 		logger.debug("Entering Hydrogen Placement...");
@@ -70,7 +70,7 @@ public class HydrogenPlacer {
 	}
 	
 	
-	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
+	public  void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
 	{
 		double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
 		placeHydrogens2D(atomContainer, atom, bondLength);
@@ -78,7 +78,7 @@ public class HydrogenPlacer {
 	
 	}
 	
-	public static void placeHydrogens2D(AtomContainer atomContainer, Atom atom, double bondLength)
+	public  void placeHydrogens2D(AtomContainer atomContainer, Atom atom, double bondLength)
 	{
 		LoggingTool logger = new LoggingTool("org.openscience.cdk.layout.HydrogenPlacer");
 		

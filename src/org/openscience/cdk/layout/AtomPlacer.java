@@ -62,9 +62,9 @@ public class AtomPlacer
 	/**
 	 *  The molecule to be laid out. To be assigned from outside
 	 */
-	static Molecule molecule = null;
+	 Molecule molecule = null;
 
-	final static Comparator ATOM_ORDER =
+	final  Comparator ATOM_ORDER =
 		new Comparator()
 		{
 			public int compare(Object o1, Object o2)
@@ -576,7 +576,7 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws org.openscience.cdk.exception.CDKException
+	public  void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws org.openscience.cdk.exception.CDKException
 	{
 		Atom atom = null;
 		Atom nextAtom = null;
@@ -668,7 +668,7 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public static String listNumbers(Molecule mol, AtomContainer ac) throws org.openscience.cdk.exception.CDKException
+	public  String listNumbers(Molecule mol, AtomContainer ac) throws org.openscience.cdk.exception.CDKException
 	{
 		String s = "Numbers: ";
 		for (int f = 0; f < ac.getAtomCount(); f++)
@@ -708,7 +708,7 @@ public class AtomPlacer
 	 *@param  ac  The AtomContainer to be searched
 	 *@return     True is all the atoms in the given AtomContainer have been placed
 	 */
-	public static boolean allPlaced(AtomContainer ac)
+	public  boolean allPlaced(AtomContainer ac)
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
@@ -726,7 +726,7 @@ public class AtomPlacer
 	 *
 	 *@param  ac  The AtomContainer whose atoms are to be marked
 	 */
-	public static void markNotPlaced(AtomContainer ac)
+	public  void markNotPlaced(AtomContainer ac)
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
@@ -742,7 +742,7 @@ public class AtomPlacer
 	 *@param  ac  The AtomContainer whose atoms are to be marked
 	 */
 
-	public static void markPlaced(AtomContainer ac)
+	public  void markPlaced(AtomContainer ac)
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{

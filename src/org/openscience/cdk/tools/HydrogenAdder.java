@@ -252,7 +252,7 @@ public class HydrogenAdder {
             logger.debug("Creating 2D coordinates for new hydrogens");
             double bondLength = GeometryTools.getBondLengthAverage(container);
             logger.debug("Average bondlength in current molecule: " + bondLength);
-            HydrogenPlacer.placeHydrogens2D(container, bondLength);
+            new HydrogenPlacer().placeHydrogens2D(container, bondLength);
         }*/
     }
     
