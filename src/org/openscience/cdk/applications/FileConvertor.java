@@ -478,6 +478,7 @@ public class FileConvertor {
     }
 
     private void write(Molecule molecule, String outputFilename) throws IOException {
+		Molecule writedMol = null;
         try {
             if (cow instanceof CMLWriter) {
                 IDCreator.createAtomAndBondIDs(molecule);
@@ -496,13 +497,14 @@ public class FileConvertor {
 	            try {
 	                sdg.setMolecule(molecule);
 	                sdg.generateCoordinates(new Vector2d(0, 1));
-	                molecule = sdg.getMolecule();
+	                writedMol = sdg.getMolecule();
 	            } catch (Exception exc) {
 	                System.out.println("Could not generate coordinates for this molecule.");
 	                System.exit(1);
 	            }
 			}
-            cow.write(molecule);
+			if (writedMol == null) writedMol = molecule;
+            cow.write(writedMol);
         } catch (CDKException e) {
             logger.error("Cannot write Molecule: " + e.getMessage());
         }
