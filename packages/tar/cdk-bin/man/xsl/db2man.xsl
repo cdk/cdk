@@ -9,8 +9,10 @@
 <xsl:param name="saxon.character.representation" select="'entity;decimal'"/>
 <xsl:param name="chunk.quietly" select="'0'"/>
 
-<xsl:include href="http://docbook.sourceforge.net/release/xsl/current/common/common.xsl"/>
-<xsl:include href="http://docbook.sourceforge.net/release/xsl/current/html/chunker.xsl"/>
+<!-- xsl:include href="http://docbook.sourceforge.net/release/xsl/current/common/common.xsl"/ -->
+<xsl:include href="file:///usr/share/sgml/docbook/stylesheet/xsl/nwalsh/common/common.xsl"/>
+<!-- xsl:include href="http://docbook.sourceforge.net/release/xsl/current/html/chunker.xsl"/ -->
+<xsl:include href="file:///usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html/chunker.xsl"/>
 
 <xsl:include href="synop.xsl"/>
 <xsl:include href="lists.xsl"/>

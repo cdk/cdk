@@ -1,3 +1,4 @@
+SUBDIRS= xsl
 
 XML2MAN_RULE = \
         xsltproc xsl/db2man.xsl $< 
@@ -21,7 +22,7 @@ docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-view.xml
 
 man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-view.1
 
-CLEANFILES = 
+CLEANFILES = ${man_MANS}
 
 EXTRA_DIST = $(docbooks) ${man_MANS}
 

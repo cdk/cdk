@@ -50,7 +50,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 AC_MSG_CHECKING(for CDK libraries)
-for d in $prefix/lib/cdk $prefix/share/cdk/lib
+for d in $prefix/lib/cdk $prefix/share/cdk/lib /usr/share/cdk/lib
 do
     if test -f "$d/dadml.jar"
     then
@@ -169,6 +169,90 @@ AC_SUBST(PATHTOXERCES)
 dnl needed for check_xml
 AC_PATH_PROGS(PATHTONSGMLS, onsgmls nsgmls, no)
 
+dnl detection copied from Lire 1.0 (www.logreport.org)
+dnl Try to find the SGML directory layout
+dnl Find a list of potential SGML/XML trees, we will look into subdirectories
+dnl of this one to find the DSSSL/DTD/XSLT stuff.
+sgmldirs=""
+try_dirs="/usr/lib/sgml /usr/share/sgml /usr/local/lib/sgml /usr/local/share/sgml /usr/share/xml /usr/local/share/xml /usr/local/share/xsl"
+if test x"$prefix" != "xNONE"
+then
+    try_dirs="$try_dirs $prefix/lib/sgml $prefix/share/sgml $prefix/share/xml"
+fi
+AC_MSG_CHECKING(for SGML/XML trees)
+for d in $try_dirs
+do
+    if test -d $d
+    then
+	if echo "$sgmldirs" | grep $d > /dev/null
+	then
+	    :
+	else
+	    sgmldirs="$sgmldirs $d"
+	fi
+    fi
+done
+if test -z "$sgmldirs"
+then
+    sgmldirs="none"
+fi
+AC_MSG_RESULT($sgmldirs)
+AC_MSG_CHECKING(for DocBook XSL stylesheets)
+if test -z "$DBK_XSL_STYLESHEETS" && test -z "$PATHTODBKXSLHTML"
+then
+    for d in $sgmldirs
+    do
+	for f in stylesheet/xsl/docbook stylesheet/xsl stylesheet docbook/stylesheet/xsl docbook/xsl docbook
+	do
+	    dir=
+            if test -f "$d/$f/xhtml/docbook.xsl"
+	    then
+		dir="$d/$f"
+	    elif test -f "$d/$f/modular/xhtml/docbook.xsl"
+	    then
+		dir="$d/$f/modular"
+	    elif test -f "$d/$f/nwalsh/xhtml/docbook.xsl"
+	    then
+		dir="$d/$f/nwalsh"
+	    fi
+	    if test -n "$dir"
+	    then
+		AC_MSG_RESULT("$dir")
+		PATHTODBKXSLHTML="$dir/html/chunker.xsl"
+		PATHTODBKXSLCOMMON="$dir/common/common.xsl"
+	    fi
+	    test -n "$PATHTODBKXSLHTML" && break
+	done
+	test -n "$PATHTODBKXSLHTML" && break
+    done
+else
+    if test -n "$DBK_XSL_STYLESHEETS"
+    then
+	AC_MSG_RESULT($DBK_XSL_STYLESHEETS)
+	if ! test -d "$DBK_XSL_STYLESHEETS"
+	then
+	    AC_MSG_WARN($DBK_XSL_STYLESHEETS isn't present on the system)
+	fi
+	PATHTODBKXSLHTML="$DBK_XSL_STYLESHEETS/html/chunker.xsl"
+	PATHTODBKXSLCOMMON="$DBK_XSL_STYLESHEETS/common/common.xsl"
+    else
+	AC_MSG_RESULT($PATHTODBKXSLHTML)
+	AC_MSG_RESULT($PATHTODBKXSLCOMMON)
+
+	if ! test -f "$PATHTODBKXSLHTML"
+	then
+	    AC_MSG_WARN($PATHTODBKXSLHTML isn't present on system)
+	fi
+    fi
+fi
+if test "x$PATHTODBKXSLHTML" = "x"
+then
+    AC_MSG_RESULT(no)
+fi
+AC_SUBST(PATHTODBKXSLHTML)
+AC_SUBST(PATHTODBKXSLCOMMON)
+
+
 AC_OUTPUT([
    Makefile
    bin/Makefile
@@ -177,5 +261,7 @@ AC_OUTPUT([
    bin/cdk-view
    jar/Makefile
    man/Makefile
+   man/xsl/Makefile
+   man/xsl/db2man.xsl
 ])
 

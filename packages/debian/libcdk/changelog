@@ -1,9 +1,11 @@
+libcdk (20020723-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Thu, 23 Jul 2002 09:04:21 +0200
+
 libcdk (20020518-1) unstable; urgency=low
 
   * New upstream version
 
  -- E.L. Willighagen (Egon) <egonw@sci.kun.nl>  Sat, 18 May 2002 19:31:00 +0200
-
-Local variables:
-mode: debian-changelog
-End:
