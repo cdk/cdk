@@ -234,7 +234,7 @@ public class SmilesGenerator {
     //detect aromaticity
     AllRingsFinder ringFinder = new AllRingsFinder();
     RingSet rings = ringFinder.findAllRings(molecule);
-    (new HueckelAromaticityDetector()).detectAromaticity(molecule, rings, true);
+    (new HueckelAromaticityDetector()).detectAromaticity(molecule, rings, false);
     
     
     StringBuffer l = new StringBuffer();
@@ -1323,6 +1323,10 @@ public class SmilesGenerator {
           viewTo = (Atom) currentChain.get(i);
           break;
         }
+        if (afterThisAtom && currentChain.get(i) instanceof Vector) {
+          viewTo = (Atom) ((Vector)currentChain.get(i)).get(0);
+          break;
+        }
         if (a == currentChain.get(i)) {
           afterThisAtom = true;
         }
@@ -1330,9 +1334,9 @@ public class SmilesGenerator {
       boolean firstDirection = isLeft(viewFrom, a, parent);
       boolean secondDirection = isLeft(viewTo, parent, a);
       if (firstDirection == secondDirection) {
-        buffer.append('/');
-      } else {
         buffer.append('\\');
+      } else {
+        buffer.append('/');
       }
     }
     Iterator it = getRingOpenings(a).iterator();
