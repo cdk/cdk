@@ -1,5 +1,5 @@
---- src/org/openscience/cdk/tools/LoggingTool.java.1.5	2003-05-06 09:29:24.754343000 +0200
-+++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-05-06 09:32:15.115267000 +0200
+--- src/org/openscience/cdk/tools/LoggingTool.java.1.5	2003-05-06 16:54:33.276190000 +0200
++++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-05-06 16:54:24.335085000 +0200
 @@ -30,7 +30,6 @@
      private boolean debug = false;
      private boolean tostdout = false;
@@ -70,8 +70,19 @@
      }
  
      public void dumpSystemProperties() {
-@@ -127,55 +79,19 @@
-         }
+@@ -116,66 +68,21 @@
+     }
+ 
+     public void debug(Exception exception) {
+-        StackTraceElement[] stack = exception.getStackTrace();
+-        String string = "Exception: " + exception.toString();
+-        this.debug(string);
+-        for (int i=0; i<stack.length; i++) {
+-            string        = "       in: " + stack[i].getFileName() + " (line: " +
+-            stack[i].getLineNumber() + ")";
+-            this.debug(string);
+-            if (i == this.stackLength) i = stack.length;
+-        }
      }
      
 -    public void debug(String s) {
@@ -104,9 +115,8 @@
 -                ((org.apache.log4j.Category)logger).fatal(s);
 -            }
 -        }
-+        toSTDOUT("FATAL", s);
-     }
- 
+-    }
+-
 -    public void info(String s) {
 -        if (debug) {
 -            if (tostdout) {
@@ -116,8 +126,7 @@
 -            }
 -        }
 -    }
-+    public void info(String s) {}
- 
+-
 -    public void warn(String s) {
 -        if (debug) {
 -            if (tostdout) {
@@ -126,7 +135,11 @@
 -                ((org.apache.log4j.Category)logger).warn(s);
 -            }
 -        }
--    }
++        toSTDOUT("FATAL", s);
+     }
++
++    public void info(String s) {}
++
 +    public void warn(String s) {}
      
      private void toSTDOUT(String level, String message) {
