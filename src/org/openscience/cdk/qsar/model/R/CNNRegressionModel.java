@@ -124,7 +124,7 @@ public class CNNRegressionModel extends RModel {
         }
         this.params.put("x", xx);
         this.params.put("y", yy);
-        this.params.put("size", size);
+        this.params.put("size", new Integer(size));
         this.setDefaults();
     }
     
@@ -177,7 +177,7 @@ public class CNNRegressionModel extends RModel {
         }
         this.params.put("x", xx);
         this.params.put("y", yy);
-        this.params.put("size", size);
+        this.params.put("size", new Integer(size));
         this.setDefaults();
     }
 
