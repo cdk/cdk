@@ -1,1713 +1,1591 @@
-<java.util.Vector>
-  <org.openscience.cdk.Isotope
-   symbol="H"
-   atomicNumber="1"
-   massNumber="1"
-   exactMass="1.00782504"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="H"
-   atomicNumber="1"
-   massNumber="2"
-   exactMass="2.01410179"
-   naturalAbundance="0.015"/>
-  <org.openscience.cdk.Isotope
-   symbol="D"
-   atomicNumber="1"
-   massNumber="2"
-   exactMass="2.01410179"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="He"
-   atomicNumber="2"
-   massNumber="3"
-   exactMass="3.01602929"
-   naturalAbundance="1.0E-4"/>
-  <org.openscience.cdk.Isotope
-   symbol="He"
-   atomicNumber="2"
-   massNumber="4"
-   exactMass="4.00260325"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Li"
-   atomicNumber="3"
-   massNumber="6"
-   exactMass="6.0151232"
-   naturalAbundance="8.1081"/>
-  <org.openscience.cdk.Isotope
-   symbol="Li"
-   atomicNumber="3"
-   massNumber="7"
-   exactMass="7.0160045"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Be"
-   atomicNumber="4"
-   massNumber="9"
-   exactMass="9.0121825"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="B"
-   atomicNumber="5"
-   massNumber="10"
-   exactMass="10.012938"
-   naturalAbundance="24.8439"/>
-  <org.openscience.cdk.Isotope
-   symbol="B"
-   atomicNumber="5"
-   massNumber="11"
-   exactMass="11.0093053"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="C"
-   atomicNumber="6"
-   massNumber="12"
-   exactMass="12.0"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="C"
-   atomicNumber="6"
-   massNumber="13"
-   exactMass="13.0033548"
-   naturalAbundance="1.1122"/>
-  <org.openscience.cdk.Isotope
-   symbol="N"
-   atomicNumber="7"
-   massNumber="14"
-   exactMass="14.003074"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="N"
-   atomicNumber="7"
-   massNumber="15"
-   exactMass="15.000109"
-   naturalAbundance="0.3673"/>
-  <org.openscience.cdk.Isotope
-   symbol="O"
-   atomicNumber="8"
-   massNumber="16"
-   exactMass="15.9949146"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="O"
-   atomicNumber="8"
-   massNumber="17"
-   exactMass="16.9991306"
-   naturalAbundance="0.0381"/>
-  <org.openscience.cdk.Isotope
-   symbol="O"
-   atomicNumber="8"
-   massNumber="18"
-   exactMass="17.9991594"
-   naturalAbundance="0.2005"/>
-  <org.openscience.cdk.Isotope
-   symbol="F"
-   atomicNumber="9"
-   massNumber="19"
-   exactMass="18.9984033"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ne"
-   atomicNumber="10"
-   massNumber="20"
-   exactMass="19.9924391"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ne"
-   atomicNumber="10"
-   massNumber="21"
-   exactMass="20.9938453"
-   naturalAbundance="0.2983"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ne"
-   atomicNumber="10"
-   massNumber="22"
-   exactMass="21.9913837"
-   naturalAbundance="10.1867"/>
-  <org.openscience.cdk.Isotope
-   symbol="Na"
-   atomicNumber="11"
-   massNumber="23"
-   exactMass="22.9897697"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mg"
-   atomicNumber="12"
-   massNumber="24"
-   exactMass="23.985045"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mg"
-   atomicNumber="12"
-   massNumber="25"
-   exactMass="24.9858392"
-   naturalAbundance="12.6598"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mg"
-   atomicNumber="12"
-   massNumber="26"
-   exactMass="25.9825954"
-   naturalAbundance="13.938"/>
-  <org.openscience.cdk.Isotope
-   symbol="Al"
-   atomicNumber="13"
-   massNumber="27"
-   exactMass="26.9815413"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Si"
-   atomicNumber="14"
-   massNumber="28"
-   exactMass="27.9769284"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Si"
-   atomicNumber="14"
-   massNumber="29"
-   exactMass="28.9764964"
-   naturalAbundance="5.0634"/>
-  <org.openscience.cdk.Isotope
-   symbol="Si"
-   atomicNumber="14"
-   massNumber="30"
-   exactMass="29.9737717"
-   naturalAbundance="3.3612"/>
-  <org.openscience.cdk.Isotope
-   symbol="P"
-   atomicNumber="15"
-   massNumber="31"
-   exactMass="30.9737634"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="S"
-   atomicNumber="16"
-   massNumber="32"
-   exactMass="31.9720718"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="S"
-   atomicNumber="16"
-   massNumber="33"
-   exactMass="32.9714591"
-   naturalAbundance="0.7893"/>
-  <org.openscience.cdk.Isotope
-   symbol="S"
-   atomicNumber="16"
-   massNumber="34"
-   exactMass="33.9678677"
-   naturalAbundance="4.4306"/>
-  <org.openscience.cdk.Isotope
-   symbol="S"
-   atomicNumber="16"
-   massNumber="36"
-   exactMass="35.967079"
-   naturalAbundance="0.022"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cl"
-   atomicNumber="17"
-   massNumber="35"
-   exactMass="34.9688527"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cl"
-   atomicNumber="17"
-   massNumber="37"
-   exactMass="36.9659026"
-   naturalAbundance="31.978"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ar"
-   atomicNumber="18"
-   massNumber="36"
-   exactMass="35.9675456"
-   naturalAbundance="0.338"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ar"
-   atomicNumber="18"
-   massNumber="38"
-   exactMass="37.9627322"
-   naturalAbundance="0.063"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ar"
-   atomicNumber="18"
-   massNumber="40"
-   exactMass="39.9623831"
-   naturalAbundance="100.0"/>
-   <org.openscience.cdk.Isotope
-   symbol="K"
-   atomicNumber="19"
-   massNumber="39"
-   exactMass="38.9637079"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="K"
-   atomicNumber="19"
-   massNumber="40"
-   exactMass="39.9639988"
-   naturalAbundance="0.013"/>
-  <org.openscience.cdk.Isotope
-   symbol="K"
-   atomicNumber="19"
-   massNumber="42"
-   exactMass="40.9618254"
-   naturalAbundance="7.217"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ca"
-   atomicNumber="20"
-   massNumber="40"
-   exactMass="39.9625907"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ca"
-   atomicNumber="20"
-   massNumber="42"
-   exactMass="41.9586218"
-   naturalAbundance="0.6674"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ca"
-   atomicNumber="20"
-   massNumber="43"
-   exactMass="42.9587704"
-   naturalAbundance="0.1393"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ca"
-   atomicNumber="20"
-   massNumber="44"
-   exactMass="43.9554848"
-   naturalAbundance="2.1518"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ca"
-   atomicNumber="20"
-   massNumber="46"
-   exactMass="45.953689"
-   naturalAbundance="0.0041"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ca"
-   atomicNumber="20"
-   massNumber="48"
-   exactMass="47.952532"
-   naturalAbundance="0.1929"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sc"
-   atomicNumber="21"
-   massNumber="45"
-   exactMass="44.9559136"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ti"
-   atomicNumber="22"
-   massNumber="46"
-   exactMass="45.952633"
-   naturalAbundance="10.8401"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ti"
-   atomicNumber="22"
-   massNumber="47"
-   exactMass="46.951765"
-   naturalAbundance="9.8916"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ti"
-   atomicNumber="22"
-   massNumber="48"
-   exactMass="47.947947"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ti"
-   atomicNumber="22"
-   massNumber="49"
-   exactMass="48.947871"
-   naturalAbundance="7.4526"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ti"
-   atomicNumber="22"
-   massNumber="50"
-   exactMass="49.944786"
-   naturalAbundance="7.3171"/>
-  <org.openscience.cdk.Isotope
-   symbol="V"
-   atomicNumber="23"
-   massNumber="50"
-   exactMass="49.947161"
-   naturalAbundance="0.251"/>
-  <org.openscience.cdk.Isotope
-   symbol="V"
-   atomicNumber="23"
-   massNumber="51"
-   exactMass="50.943963"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cr"
-   atomicNumber="24"
-   massNumber="50"
-   exactMass="49.946046"
-   naturalAbundance="5.1915"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cr"
-   atomicNumber="24"
-   massNumber="52"
-   exactMass="51.94051"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cr"
-   atomicNumber="24"
-   massNumber="53"
-   exactMass="52.940651"
-   naturalAbundance="11.3379"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cr"
-   atomicNumber="24"
-   massNumber="54"
-   exactMass="53.938882"
-   naturalAbundance="2.8166"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mn"
-   atomicNumber="25"
-   massNumber="55"
-   exactMass="54.938046"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Fe"
-   atomicNumber="26"
-   massNumber="54"
-   exactMass="53.939612"
-   naturalAbundance="6.3236"/>
-  <org.openscience.cdk.Isotope
-   symbol="Fe"
-   atomicNumber="26"
-   massNumber="56"
-   exactMass="55.934939"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Fe"
-   atomicNumber="26"
-   massNumber="57"
-   exactMass="56.935396"
-   naturalAbundance="2.3986"/>
-  <org.openscience.cdk.Isotope
-   symbol="Fe"
-   atomicNumber="26"
-   massNumber="58"
-   exactMass="57.933278"
-   naturalAbundance="0.3053"/>
-  <org.openscience.cdk.Isotope
-   symbol="Co"
-   atomicNumber="27"
-   massNumber="59"
-   exactMass="58.933198"
-   naturalAbundance="100.0"/>
-   <org.openscience.cdk.Isotope
-   symbol="Ni"
-   atomicNumber="28"
-   massNumber="58"
-   exactMass="57.935347"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ni"
-   atomicNumber="28"
-   massNumber="60"
-   exactMass="59.930789"
-   naturalAbundance="38.2305"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ni"
-   atomicNumber="28"
-   massNumber="61"
-   exactMass="60.931059"
-   naturalAbundance="1.6552"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ni"
-   atomicNumber="28"
-   massNumber="62"
-   exactMass="61.928346"
-   naturalAbundance="5.2585"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ni"
-   atomicNumber="28"
-   massNumber="64"
-   exactMass="63.927968"
-   naturalAbundance="1.3329"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cu"
-   atomicNumber="29"
-   massNumber="63"
-   exactMass="62.9295991"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cu"
-   atomicNumber="29"
-   massNumber="65"
-   exactMass="64.9277921"
-   naturalAbundance="44.571"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zn"
-   atomicNumber="30"
-   massNumber="64"
-   exactMass="63.929145"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zn"
-   atomicNumber="30"
-   massNumber="66"
-   exactMass="65.926035"
-   naturalAbundance="57.4074"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zn"
-   atomicNumber="30"
-   massNumber="67"
-   exactMass="66.927129"
-   naturalAbundance="8.4362"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zn"
-   atomicNumber="30"
-   massNumber="68"
-   exactMass="67.924846"
-   naturalAbundance="38.6831"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zn"
-   atomicNumber="30"
-   massNumber="70"
-   exactMass="69.925325"
-   naturalAbundance="1.2346"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ga"
-   atomicNumber="31"
-   massNumber="69"
-   exactMass="68.925581"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ga"
-   atomicNumber="31"
-   massNumber="71"
-   exactMass="70.924701"
-   naturalAbundance="66.389"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ge"
-   atomicNumber="32"
-   massNumber="70"
-   exactMass="69.92425"
-   naturalAbundance="56.1644"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ge"
-   atomicNumber="32"
-   massNumber="72"
-   exactMass="71.92208"
-   naturalAbundance="75.0685"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ge"
-   atomicNumber="32"
-   massNumber="73"
-   exactMass="72.923464"
-   naturalAbundance="21.3698"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ge"
-   atomicNumber="32"
-   massNumber="74"
-   exactMass="73.921179"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ge"
-   atomicNumber="32"
-   massNumber="76"
-   exactMass="75.921403"
-   naturalAbundance="21.3698"/>
-  <org.openscience.cdk.Isotope
-   symbol="As"
-   atomicNumber="33"
-   massNumber="75"
-   exactMass="74.921596"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Se"
-   atomicNumber="34"
-   massNumber="74"
-   exactMass="73.922477"
-   naturalAbundance="1.8145"/>
-  <org.openscience.cdk.Isotope
-   symbol="Se"
-   atomicNumber="34"
-   massNumber="76"
-   exactMass="75.919207"
-   naturalAbundance="18.1451"/>
-  <org.openscience.cdk.Isotope
-   symbol="Se"
-   atomicNumber="34"
-   massNumber="77"
-   exactMass="76.919908"
-   naturalAbundance="15.3226"/>
-  <org.openscience.cdk.Isotope
-   symbol="Se"
-   atomicNumber="34"
-   massNumber="78"
-   exactMass="77.917304"
-   naturalAbundance="47.379"/>
-  <org.openscience.cdk.Isotope
-   symbol="Se"
-   atomicNumber="34"
-   massNumber="80"
-   exactMass="79.916521"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Se"
-   atomicNumber="34"
-   massNumber="82"
-   exactMass="81.916709"
-   naturalAbundance="18.9516"/>
-   <org.openscience.cdk.Isotope
-   symbol="Br"
-   atomicNumber="35"
-   massNumber="79"
-   exactMass="78.918336"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Br"
-   atomicNumber="35"
-   massNumber="81"
-   exactMass="80.91629"
-   naturalAbundance="97.2776"/>
-  <org.openscience.cdk.Isotope
-   symbol="Kr"
-   atomicNumber="36"
-   massNumber="78"
-   exactMass="77.920397"
-   naturalAbundance="0.614"/>
-  <org.openscience.cdk.Isotope
-   symbol="Kr"
-   atomicNumber="36"
-   massNumber="80"
-   exactMass="79.916375"
-   naturalAbundance="3.9474"/>
-  <org.openscience.cdk.Isotope
-   symbol="Kr"
-   atomicNumber="36"
-   massNumber="82"
-   exactMass="81.913483"
-   naturalAbundance="20.3509"/>
-  <org.openscience.cdk.Isotope
-   symbol="Kr"
-   atomicNumber="36"
-   massNumber="83"
-   exactMass="82.914134"
-   naturalAbundance="20.1754"/>
-  <org.openscience.cdk.Isotope
-   symbol="Kr"
-   atomicNumber="36"
-   massNumber="84"
-   exactMass="83.911506"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Kr"
-   atomicNumber="36"
-   massNumber="86"
-   exactMass="85.910614"
-   naturalAbundance="30.3509"/>
-  <org.openscience.cdk.Isotope
-   symbol="Rb"
-   atomicNumber="37"
-   massNumber="85"
-   exactMass="84.9117996"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Rb"
-   atomicNumber="37"
-   massNumber="87"
-   exactMass="86.909184"
-   naturalAbundance="38.571"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sr"
-   atomicNumber="38"
-   massNumber="84"
-   exactMass="83.913428"
-   naturalAbundance="0.6781"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sr"
-   atomicNumber="38"
-   massNumber="86"
-   exactMass="85.909273"
-   naturalAbundance="11.9399"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sr"
-   atomicNumber="38"
-   massNumber="87"
-   exactMass="86.90889"
-   naturalAbundance="8.4766"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sr"
-   atomicNumber="38"
-   massNumber="88"
-   exactMass="87.905625"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Y"
-   atomicNumber="39"
-   massNumber="89"
-   exactMass="88.905856"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zr"
-   atomicNumber="40"
-   massNumber="90"
-   exactMass="89.904708"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zr"
-   atomicNumber="40"
-   massNumber="91"
-   exactMass="90.905644"
-   naturalAbundance="21.9048"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zr"
-   atomicNumber="40"
-   massNumber="92"
-   exactMass="91.905039"
-   naturalAbundance="33.3722"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zr"
-   atomicNumber="40"
-   massNumber="94"
-   exactMass="93.906319"
-   naturalAbundance="33.6832"/>
-  <org.openscience.cdk.Isotope
-   symbol="Zr"
-   atomicNumber="40"
-   massNumber="96"
-   exactMass="95.908272"
-   naturalAbundance="5.4033"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nb"
-   atomicNumber="41"
-   massNumber="93"
-   exactMass="92.906378"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mo"
-   atomicNumber="442"
-   massNumber="92"
-   exactMass="91.906809"
-   naturalAbundance="61.5002"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mo"
-   atomicNumber="42"
-   massNumber="94"
-   exactMass="93.905086"
-   naturalAbundance="38.334"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mo"
-   atomicNumber="42"
-   massNumber="95"
-   exactMass="94.905838"
-   naturalAbundance="65.976"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mo"
-   atomicNumber="42"
-   massNumber="96"
-   exactMass="95.904676"
-   naturalAbundance="69.1256"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mo"
-   atomicNumber="42"
-   massNumber="97"
-   exactMass="96.906018"
-   naturalAbundance="39.5773"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mo"
-   atomicNumber="42"
-   massNumber="98"
-   exactMass="97.905405"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Mo"
-   atomicNumber="42"
-   massNumber="100"
-   exactMass="99.907473"
-   naturalAbundance="39.9088"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ru"
-   atomicNumber="44"
-   massNumber="96"
-   exactMass="95.907596"
-   naturalAbundance="17.4684"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ru"
-   atomicNumber="44"
-   massNumber="98"
-   exactMass="97.905287"
-   naturalAbundance="5.9494"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ru"
-   atomicNumber="44"
-   massNumber="99"
-   exactMass="98.905937"
-   naturalAbundance="40.1899"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ru"
-   atomicNumber="44"
-   massNumber="100"
-   exactMass="99.904218"
-   naturalAbundance="39.8734"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ru"
-   atomicNumber="44"
-   massNumber="101"
-   exactMass="100.905581"
-   naturalAbundance="53.7975"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ru"
-   atomicNumber="44"
-   massNumber="102"
-   exactMass="101.904348"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ru"
-   atomicNumber="44"
-   massNumber="104"
-   exactMass="103.905422"
-   naturalAbundance="59.1772"/>
-  <org.openscience.cdk.Isotope
-   symbol="Rh"
-   atomicNumber="45"
-   massNumber="103"
-   exactMass="102.905503"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pd"
-   atomicNumber="46"
-   massNumber="102"
-   exactMass="101.905609"
-   naturalAbundance="3.7322"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pd"
-   atomicNumber="46"
-   massNumber="104"
-   exactMass="103.904026"
-   naturalAbundance="40.7611"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pd"
-   atomicNumber="46"
-   massNumber="105"
-   exactMass="104.905075"
-   naturalAbundance="81.7051"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pd"
-   atomicNumber="46"
-   massNumber="106"
-   exactMass="105.903475"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pd"
-   atomicNumber="46"
-   massNumber="108"
-   exactMass="107.903894"
-   naturalAbundance="96.8167"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pd"
-   atomicNumber="46"
-   massNumber="110"
-   exactMass="109.905169"
-   naturalAbundance="42.883"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ag"
-   atomicNumber="47"
-   massNumber="107"
-   exactMass="106.905095"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ag"
-   atomicNumber="47"
-   massNumber="109"
-   exactMass="108.904754"
-   naturalAbundance="92.905"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="106"
-   exactMass="105.906461"
-   naturalAbundance="4.3508"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="108"
-   exactMass="107.904186"
-   naturalAbundance="3.0978"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="110"
-   exactMass="109.903007"
-   naturalAbundance="43.4737"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="111"
-   exactMass="110.904182"
-   naturalAbundance="44.5527"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="112"
-   exactMass="111.902761"
-   naturalAbundance="83.9888"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="113"
-   exactMass="112.904401"
-   naturalAbundance="42.5339"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="114"
-   exactMass="113.903361"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cd"
-   atomicNumber="48"
-   massNumber="116"
-   exactMass="115.904758"
-   naturalAbundance="26.0703"/>
-  <org.openscience.cdk.Isotope
-   symbol="In"
-   atomicNumber="49"
-   massNumber="113"
-   exactMass="112.904056"
-   naturalAbundance="4.4932"/>
-  <org.openscience.cdk.Isotope
-   symbol="In"
-   atomicNumber="49"
-   massNumber="115"
-   exactMass="114.903875"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="112"
-   exactMass="111.904823"
-   naturalAbundance="3.0864"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="114"
-   exactMass="113.902781"
-   naturalAbundance="2.1605"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="115"
-   exactMass="114.903344"
-   naturalAbundance="1.2346"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="116"
-   exactMass="115.901744"
-   naturalAbundance="45.3704"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="117"
-   exactMass="116.902954"
-   naturalAbundance="23.7654"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="118"
-   exactMass="117.901607"
-   naturalAbundance="75.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="119"
-   exactMass="118.90331"
-   naturalAbundance="26.5432"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="120"
-   exactMass="119.902199"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="122"
-   exactMass="121.90344"
-   naturalAbundance="14.1975"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sn"
-   atomicNumber="50"
-   massNumber="124"
-   exactMass="123.905271"
-   naturalAbundance="17.284"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sb"
-   atomicNumber="51"
-   massNumber="121"
-   exactMass="120.903824"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sb"
-   atomicNumber="51"
-   massNumber="123"
-   exactMass="122.904222"
-   naturalAbundance="74.5201"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="120"
-   exactMass="119.904021"
-   naturalAbundance="0.284"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="122"
-   exactMass="121.903055"
-   naturalAbundance="7.6923"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="123"
-   exactMass="122.904278"
-   naturalAbundance="2.6864"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="124"
-   exactMass="123.902825"
-   naturalAbundance="14.2485"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="125"
-   exactMass="124.904435"
-   naturalAbundance="21.1243"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="126"
-   exactMass="125.90331"
-   naturalAbundance="56.0651"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="128"
-   exactMass="127.904464"
-   naturalAbundance="93.7574"/>
-  <org.openscience.cdk.Isotope
-   symbol="Te"
-   atomicNumber="52"
-   massNumber="130"
-   exactMass="129.906229"
-   naturalAbundance="100.0"/>
-   <org.openscience.cdk.Isotope
-   symbol="I"
-   atomicNumber="53"
-   massNumber="127"
-   exactMass="126.904477"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="124"
-   exactMass="123.90612"
-   naturalAbundance="0.3717"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="126"
-   exactMass="125.904281"
-   naturalAbundance="0.3346"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="128"
-   exactMass="127.903531"
-   naturalAbundance="7.1004"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="129"
-   exactMass="128.90478"
-   naturalAbundance="98.1413"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="130"
-   exactMass="129.90351"
-   naturalAbundance="15.2416"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="131"
-   exactMass="130.90508"
-   naturalAbundance="78.8104"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="132"
-   exactMass="131.904148"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="134"
-   exactMass="133.905395"
-   naturalAbundance="38.6617"/>
-  <org.openscience.cdk.Isotope
-   symbol="Xe"
-   atomicNumber="54"
-   massNumber="136"
-   exactMass="135.907219"
-   naturalAbundance="33.0855"/>
-  <org.openscience.cdk.Isotope
-   symbol="Cs"
-   atomicNumber="55"
-   massNumber="133"
-   exactMass="132.905433"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ba"
-   atomicNumber="56"
-   massNumber="130"
-   exactMass="129.906277"
-   naturalAbundance="0.1478"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ba"
-   atomicNumber="56"
-   massNumber="132"
-   exactMass="131.905042"
-   naturalAbundance="0.1409"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ba"
-   atomicNumber="56"
-   massNumber="134"
-   exactMass="133.90449"
-   naturalAbundance="3.371"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ba"
-   atomicNumber="56"
-   massNumber="135"
-   exactMass="134.905668"
-   naturalAbundance="9.1939"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ba"
-   atomicNumber="56"
-   massNumber="136"
-   exactMass="135.904556"
-   naturalAbundance="10.954"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ba"
-   atomicNumber="56"
-   massNumber="137"
-   exactMass="136.905816"
-   naturalAbundance="15.6625"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ba"
-   atomicNumber="56"
-   massNumber="138"
-   exactMass="137.905236"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="La"
-   atomicNumber="57"
-   massNumber="138"
-   exactMass="137.907114"
-   naturalAbundance="0.0901"/>
-  <org.openscience.cdk.Isotope
-   symbol="La"
-   atomicNumber="57"
-   massNumber="139"
-   exactMass="138.906355"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ce"
-   atomicNumber="58"
-   massNumber="136"
-   exactMass="135.90714"
-   naturalAbundance="0.2147"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ce"
-   atomicNumber="58"
-   massNumber="138"
-   exactMass="137.905996"
-   naturalAbundance="0.2825"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ce"
-   atomicNumber="58"
-   massNumber="140"
-   exactMass="139.905442"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ce"
-   atomicNumber="58"
-   massNumber="142"
-   exactMass="141.909249"
-   naturalAbundance="12.5226"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pr"
-   atomicNumber="59"
-   massNumber="141"
-   exactMass="140.907657"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nd"
-   atomicNumber="60"
-   massNumber="142"
-   exactMass="141.907731"
-   naturalAbundance="100.0"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nd"
-   atomicNumber="60"
-   massNumber="143"
-   exactMass="142.909823"
-   naturalAbundance="44.8949"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nd"
-   atomicNumber="60"
-   massNumber="144"
-   exactMass="143.910096"
-   naturalAbundance="87.7258"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nd"
-   atomicNumber="60"
-   massNumber="145"
-   exactMass="144.912582"
-   naturalAbundance="30.5934"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nd"
-   atomicNumber="60"
-   massNumber="146"
-   exactMass="145.913126"
-   naturalAbundance="63.3616"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nd"
-   atomicNumber="60"
-   massNumber="148"
-   exactMass="147.916901"
-   naturalAbundance="21.2311"/>
-  <org.openscience.cdk.Isotope
-   symbol="Nd"
-   atomicNumber="60"
-   massNumber="150"
-   exactMass="149.9209"
-   naturalAbundance="20.7888"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sm"
-   atomicNumber="62"
-   massNumber="152"
-   exactMass="151.919728"
-   naturalAbundance="26.75"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sm"
-   atomicNumber="62"
-   massNumber="154"
-   exactMass="153.922205"
-   naturalAbundance="22.75"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sm"
-   atomicNumber="62"
-   massNumber="147"
-   exactMass="146.914894"
-   naturalAbundance="14.99"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sm"
-   atomicNumber="62"
-   massNumber="149"
-   exactMass="148.917180"
-   naturalAbundance="13.82"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sm"
-   atomicNumber="62"
-   massNumber="148"
-   exactMass="147.914819"
-   naturalAbundance="11.24"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sm"
-   atomicNumber="62"
-   massNumber="150"
-   exactMass="149.917273"
-   naturalAbundance="7.38"/>
-  <org.openscience.cdk.Isotope
-   symbol="Sm"
-   atomicNumber="62"
-   massNumber="144"
-   exactMass="143.911998"
-   naturalAbundance="3.07"/>
-  <org.openscience.cdk.Isotope
-   symbol="Eu"
-   atomicNumber="63"
-   massNumber="153"
-   exactMass="152.921225"
-   naturalAbundance="52.19"/>
-  <org.openscience.cdk.Isotope
-   symbol="Eu"
-   atomicNumber="63"
-   massNumber="151"
-   exactMass="150.919702"
-   naturalAbundance="47.81"/>
-  <org.openscience.cdk.Isotope
-   symbol="Gd"
-   atomicNumber="64"
-   massNumber="158"
-   exactMass="157.924019"
-   naturalAbundance="24.84"/>
-  <org.openscience.cdk.Isotope
-   symbol="Gd"
-   atomicNumber="64"
-   massNumber="160"
-   exactMass="159.927049"
-   naturalAbundance="21.86"/>
-  <org.openscience.cdk.Isotope
-   symbol="Gd"
-   atomicNumber="64"
-   massNumber="156"
-   exactMass="155.922118"
-   naturalAbundance="20.47"/>
-  <org.openscience.cdk.Isotope
-   symbol="Gd"
-   atomicNumber="64"
-   massNumber="157"
-   exactMass="156.923956"
-   naturalAbundance="15.65"/>
-  <org.openscience.cdk.Isotope
-   symbol="Gd"
-   atomicNumber="64"
-   massNumber="155"
-   exactMass="154.922618"
-   naturalAbundance="14.80"/>
-  <org.openscience.cdk.Isotope
-   symbol="Gd"
-   atomicNumber="64"
-   massNumber="154"
-   exactMass="153.920861"
-   naturalAbundance="2.18"/>
-  <org.openscience.cdk.Isotope
-   symbol="Gd"
-   atomicNumber="64"
-   massNumber="152"
-   exactMass="151.919786"
-   naturalAbundance="0.20"/>
-  <org.openscience.cdk.Isotope
-   symbol="Tb"
-   atomicNumber="65"
-   massNumber="159"
-   exactMass="158.925342"
-   naturalAbundance="100"/>
-  <org.openscience.cdk.Isotope
-   symbol="Dy"
-   atomicNumber="66"
-   massNumber="164"
-   exactMass="163.929171"
-   naturalAbundance="28.18"/>
-  <org.openscience.cdk.Isotope
-   symbol="Dy"
-   atomicNumber="66"
-   massNumber="162"
-   exactMass="161.926795"
-   naturalAbundance="25.51"/>
-  <org.openscience.cdk.Isotope
-   symbol="Dy"
-   atomicNumber="66"
-   massNumber="163"
-   exactMass="162.928728"
-   naturalAbundance="24.90"/>
-  <org.openscience.cdk.Isotope
-   symbol="Dy"
-   atomicNumber="66"
-   massNumber="161"
-   exactMass="160.926930"
-   naturalAbundance="18.91"/>
-  <org.openscience.cdk.Isotope
-   symbol="Dy"
-   atomicNumber="66"
-   massNumber="160"
-   exactMass="159.925193"
-   naturalAbundance="2.34"/>
-  <org.openscience.cdk.Isotope
-   symbol="Dy"
-   atomicNumber="66"
-   massNumber="158"
-   exactMass="157.924403"
-   naturalAbundance="0.10"/>
-  <org.openscience.cdk.Isotope
-   symbol="Dy"
-   atomicNumber="66"
-   massNumber="156"
-   exactMass="155.924277"
-   naturalAbundance="0.06"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ho"
-   atomicNumber="67"
-   massNumber="165"
-   exactMass="164.930319"
-   naturalAbundance="100"/>
-  <org.openscience.cdk.Isotope
-   symbol="Er"
-   atomicNumber="68"
-   massNumber="166"
-   exactMass="165.930290"
-   naturalAbundance="33.61"/>
-  <org.openscience.cdk.Isotope
-   symbol="Er"
-   atomicNumber="68"
-   massNumber="168"
-   exactMass="167.932368"
-   naturalAbundance="26.78"/>
-  <org.openscience.cdk.Isotope
-   symbol="Er"
-   atomicNumber="68"
-   massNumber="167"
-   exactMass="166.932046"
-   naturalAbundance="22.93"/>
-  <org.openscience.cdk.Isotope
-   symbol="Er"
-   atomicNumber="68"
-   massNumber="170"
-   exactMass="169.935461"
-   naturalAbundance="14.93"/>
-  <org.openscience.cdk.Isotope
-   symbol="Er"
-   atomicNumber="68"
-   massNumber="164"
-   exactMass="163.929198"
-   naturalAbundance="1.61"/>
-  <org.openscience.cdk.Isotope
-   symbol="Er"
-   atomicNumber="68"
-   massNumber="162"
-   exactMass="161.928775"
-   naturalAbundance="0.14"/>
-  <org.openscience.cdk.Isotope
-   symbol="Tm"
-   atomicNumber="69"
-   massNumber="169"
-   exactMass="168.934212"
-   naturalAbundance="100"/>
-  <org.openscience.cdk.Isotope
-   symbol="Yb"
-   atomicNumber="70"
-   massNumber="174"
-   exactMass="173.938859"
-   naturalAbundance="31.83"/>
-  <org.openscience.cdk.Isotope
-   symbol="Yb"
-   atomicNumber="70"
-   massNumber="172"
-   exactMass="171.936378"
-   naturalAbundance="21.83"/>
-  <org.openscience.cdk.Isotope
-   symbol="Yb"
-   atomicNumber="70"
-   massNumber="173"
-   exactMass="172.938208"
-   naturalAbundance="16.13"/>
-  <org.openscience.cdk.Isotope
-   symbol="Yb"
-   atomicNumber="70"
-   massNumber="171"
-   exactMass="170.936323"
-   naturalAbundance="14.28"/>
-  <org.openscience.cdk.Isotope
-   symbol="Yb"
-   atomicNumber="70"
-   massNumber="176"
-   exactMass="175.942564"
-   naturalAbundance="12.76"/>
-  <org.openscience.cdk.Isotope
-   symbol="Yb"
-   atomicNumber="70"
-   massNumber="170"
-   exactMass="169.934759"
-   naturalAbundance="3.04"/>
-  <org.openscience.cdk.Isotope
-   symbol="Yb"
-   atomicNumber="70"
-   massNumber="168"
-   exactMass="167.933894"
-   naturalAbundance="0.13"/>
-  <org.openscience.cdk.Isotope
-   symbol="Lu"
-   atomicNumber="71"
-   massNumber="175"
-   exactMass="174.940770"
-   naturalAbundance="97.41"/>
-  <org.openscience.cdk.Isotope
-   symbol="Lu"
-   atomicNumber="71"
-   massNumber="176"
-   exactMass="175.942679"
-   naturalAbundance="2.59"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hf"
-   atomicNumber="72"
-   massNumber="180"
-   exactMass="179.9465457"
-   naturalAbundance="35.08"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hf"
-   atomicNumber="72"
-   massNumber="178"
-   exactMass="177.943696"
-   naturalAbundance="27.28"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hf"
-   atomicNumber="72"
-   massNumber="177"
-   exactMass="176.943217"
-   naturalAbundance="18.60"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hf"
-   atomicNumber="72"
-   massNumber="179"
-   exactMass="178.9458122"
-   naturalAbundance="13.62"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hf"
-   atomicNumber="72"
-   massNumber="176"
-   exactMass="175.941406"
-   naturalAbundance="5.26"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hf"
-   atomicNumber="72"
-   massNumber="174"
-   exactMass="173.940044"
-   naturalAbundance="0.16"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ta"
-   atomicNumber="73"
-   massNumber="181"
-   exactMass="180.947992"
-   naturalAbundance="99.988"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ta"
-   atomicNumber="73"
-   massNumber="180"
-   exactMass="179.947462"
-   naturalAbundance="0.012"/>
-  <org.openscience.cdk.Isotope
-   symbol="W"
-   atomicNumber="74"
-   massNumber="184"
-   exactMass="183.950928"
-   naturalAbundance="30.64"/>
-  <org.openscience.cdk.Isotope
-   symbol="W"
-   atomicNumber="74"
-   massNumber="186"
-   exactMass="185.954357"
-   naturalAbundance="28.43"/>
-  <org.openscience.cdk.Isotope
-   symbol="W"
-   atomicNumber="74"
-   massNumber="182"
-   exactMass="181.948202"
-   naturalAbundance="26.50"/>
-  <org.openscience.cdk.Isotope
-   symbol="W"
-   atomicNumber="74"
-   massNumber="183"
-   exactMass="182.950220"
-   naturalAbundance="14.31"/>
-  <org.openscience.cdk.Isotope
-   symbol="W"
-   atomicNumber="74"
-   massNumber="180"
-   exactMass="179.946701"
-   naturalAbundance="0.12"/>
-  <org.openscience.cdk.Isotope
-   symbol="Re"
-   atomicNumber="75"
-   massNumber="187"
-   exactMass="186.955744"
-   naturalAbundance="62.60"/>
-  <org.openscience.cdk.Isotope
-   symbol="Re"
-   atomicNumber="75"
-   massNumber="185"
-   exactMass="184.952951"
-   naturalAbundance="37.40"/>
-  <org.openscience.cdk.Isotope
-   symbol="Os"
-   atomicNumber="76"
-   massNumber="192"
-   exactMass="191.961467"
-   naturalAbundance="40.78"/>
-  <org.openscience.cdk.Isotope
-   symbol="Os"
-   atomicNumber="76"
-   massNumber="190"
-   exactMass="189.958436"
-   naturalAbundance="26.26"/>
-  <org.openscience.cdk.Isotope
-   symbol="Os"
-   atomicNumber="76"
-   massNumber="189"
-   exactMass="188.958137"
-   naturalAbundance="16.15"/>
-  <org.openscience.cdk.Isotope
-   symbol="Os"
-   atomicNumber="76"
-   massNumber="188"
-   exactMass="187.955830"
-   naturalAbundance="13.24"/>
-  <org.openscience.cdk.Isotope
-   symbol="Os"
-   atomicNumber="76"
-   massNumber="187"
-   exactMass="186.955741"
-   naturalAbundance="1.96"/>
-  <org.openscience.cdk.Isotope
-   symbol="Os"
-   atomicNumber="76"
-   massNumber="186"
-   exactMass="185.953830"
-   naturalAbundance="1.59"/>
-  <org.openscience.cdk.Isotope
-   symbol="Os"
-   atomicNumber="76"
-   massNumber="184"
-   exactMass="183.952488"
-   naturalAbundance="0.02"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ir"
-   atomicNumber="77"
-   massNumber="193"
-   exactMass="192.962917"
-   naturalAbundance="62.7"/>
-  <org.openscience.cdk.Isotope
-   symbol="Ir"
-   atomicNumber="77"
-   massNumber="191"
-   exactMass="190.960584"
-   naturalAbundance="37.3"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pt"
-   atomicNumber="78"
-   massNumber="195"
-   exactMass="194.964766"
-   naturalAbundance="33.832"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pt"
-   atomicNumber="78"
-   massNumber="194"
-   exactMass="193.962655"
-   naturalAbundance="32.967"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pt"
-   atomicNumber="78"
-   massNumber="196"
-   exactMass="195.964926"
-   naturalAbundance="25.242"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pt"
-   atomicNumber="78"
-   massNumber="198"
-   exactMass="197.967869"
-   naturalAbundance="7.163"/>
-  <org.openscience.cdk.Isotope
-   symbol="Au"
-   atomicNumber="79"
-   massNumber="197"
-   exactMass="196.966543"
-   naturalAbundance="100"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hg"
-   atomicNumber="80"
-   massNumber="202"
-   exactMass="201.970617"
-   naturalAbundance="29.86"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hg"
-   atomicNumber="80"
-   massNumber="200"
-   exactMass="199.968300"
-   naturalAbundance="23.10"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hg"
-   atomicNumber="80"
-   massNumber="199"
-   exactMass="198.968254"
-   naturalAbundance="16.87"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hg"
-   atomicNumber="80"
-   massNumber="201"
-   exactMass="200.970277"
-   naturalAbundance="13.18"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hg"
-   atomicNumber="80"
-   massNumber="198"
-   exactMass="197.966743"
-   naturalAbundance="9.97"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hg"
-   atomicNumber="80"
-   massNumber="204"
-   exactMass="203.973467"
-   naturalAbundance="6.87"/>
-  <org.openscience.cdk.Isotope
-   symbol="Hg"
-   atomicNumber="80"
-   massNumber="196"
-   exactMass="195.965807"
-   naturalAbundance="0.15"/>
-  <org.openscience.cdk.Isotope
-   symbol="Tl"
-   atomicNumber="81"
-   massNumber="205"
-   exactMass="204.974401"
-   naturalAbundance="70.476"/>
-  <org.openscience.cdk.Isotope
-   symbol="Tl"
-   atomicNumber="81"
-   massNumber="203"
-   exactMass="202.972320"
-   naturalAbundance="29.524"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pb"
-   atomicNumber="82"
-   massNumber="208"
-   exactMass="207.976627"
-   naturalAbundance="52.4"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pb"
-   atomicNumber="82"
-   massNumber="206"
-   exactMass="205.974440"
-   naturalAbundance="24.1"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pb"
-   atomicNumber="82"
-   massNumber="207"
-   exactMass="206.975872"
-   naturalAbundance="22.1"/>
-  <org.openscience.cdk.Isotope
-   symbol="Pb"
-   atomicNumber="82"
-   massNumber="204"
-   exactMass="203.973020"
-   naturalAbundance="1.4"/>
-  <org.openscience.cdk.Isotope
-   symbol="Bi"
-   atomicNumber="83"
-   massNumber="209"
-   exactMass="208.980374"
-   naturalAbundance="100"/>
-  <org.openscience.cdk.Isotope
-   symbol="U"
-   atomicNumber="92"
-   massNumber="238"
-   exactMass="238.0507847"
-   naturalAbundance="99.2745"/>
-  <org.openscience.cdk.Isotope
-   symbol="U"
-   atomicNumber="92"
-   massNumber="235"
-   exactMass="235.0439242"
-   naturalAbundance="0.7200"/>
-  <org.openscience.cdk.Isotope
-   symbol="U"
-   atomicNumber="92"
-   massNumber="234"
-   exactMass="234.0409468"
-   naturalAbundance="0.0055"/>
-</java.util.Vector>
+<?xml version="1.0"?>
+<list xmlns="http://www.xml-cml.org/schema/cml2/core"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../io/cml/data/cmlCore.xsd">
 
+    <isotopeList id="H">
+        <isotope id="H1" isotopeNumber="1" elementType="H">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">1.00782504</scalar>
+            <scalar dictRef="cdk:atomicNumber">1</scalar>
+        </isotope>
+        <isotope id="H2" isotopeNumber="2" elementType="H">
+            <abundance dictRef="cdk:relativeAbundance">0.015</abundance>
+            <scalar dictRef="cdk:exactMass">2.01410179</scalar>
+            <scalar dictRef="cdk:atomicNumber">1</scalar>
+        </isotope>
+        <isotope id="D2" isotopeNumber="2" elementType="D">
+            <abundance dictRef="cdk:relativeAbundance">0.015</abundance>
+            <scalar dictRef="cdk:exactMass">2.01410179</scalar>
+            <scalar dictRef="cdk:atomicNumber">1</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="He">
+        <isotope id="He3" isotopeNumber="3" elementType="He">
+            <abundance dictRef="cdk:relativeAbundance">1.0E-4</abundance>
+            <scalar dictRef="cdk:exactMass">3.01602929</scalar>
+            <scalar dictRef="cdk:atomicNumber">2</scalar>
+        </isotope>
+        <isotope id="He4" isotopeNumber="4" elementType="He">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">4.00260325</scalar>
+            <scalar dictRef="cdk:atomicNumber">2</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Li">
+        <isotope id="Li6" isotopeNumber="6" elementType="Li">
+            <abundance dictRef="cdk:relativeAbundance">8.1081</abundance>
+            <scalar dictRef="cdk:exactMass">6.0151232</scalar>
+            <scalar dictRef="cdk:atomicNumber">3</scalar>
+        </isotope>
+        <isotope id="Li7" isotopeNumber="7" elementType="Li">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">7.0160045</scalar>
+            <scalar dictRef="cdk:atomicNumber">3</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Be">
+        <isotope id="Be9" isotopeNumber="9" elementType="Be">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">9.0121825</scalar>
+            <scalar dictRef="cdk:atomicNumber">4</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="B">
+        <isotope id="B10" isotopeNumber="10" elementType="B">
+            <abundance dictRef="cdk:relativeAbundance">24.8439</abundance>
+            <scalar dictRef="cdk:exactMass">10.012938</scalar>
+            <scalar dictRef="cdk:atomicNumber">5</scalar>
+        </isotope>
+        <isotope id="B11" isotopeNumber="11" elementType="B">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">11.0093053</scalar>
+            <scalar dictRef="cdk:atomicNumber">5</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="C">
+        <isotope id="C12" isotopeNumber="12" elementType="C">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">12.0</scalar>
+            <scalar dictRef="cdk:atomicNumber">6</scalar>
+        </isotope>
+        <isotope id="C13" isotopeNumber="13" elementType="C">
+            <abundance dictRef="cdk:relativeAbundance">1.1122</abundance>
+            <scalar dictRef="cdk:exactMass">13.0033548</scalar>
+            <scalar dictRef="cdk:atomicNumber">6</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="N">
+        <isotope id="N14" isotopeNumber="14" elementType="N">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">14.003074</scalar>
+            <scalar dictRef="cdk:atomicNumber">7</scalar>
+        </isotope>
+        <isotope id="N15" isotopeNumber="15" elementType="N">
+            <abundance dictRef="cdk:relativeAbundance">0.3673</abundance>
+            <scalar dictRef="cdk:exactMass">15.000109</scalar>
+            <scalar dictRef="cdk:atomicNumber">7</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="O">
+        <isotope id="O16" isotopeNumber="16" elementType="O">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">15.9949146</scalar>
+            <scalar dictRef="cdk:atomicNumber">8</scalar>
+        </isotope>
+        <isotope id="O17" isotopeNumber="17" elementType="O">
+            <abundance dictRef="cdk:relativeAbundance">0.0381</abundance>
+            <scalar dictRef="cdk:exactMass">16.9991306</scalar>
+            <scalar dictRef="cdk:atomicNumber">8</scalar>
+        </isotope>
+        <isotope id="O18" isotopeNumber="18" elementType="O">
+            <abundance dictRef="cdk:relativeAbundance">0.2005</abundance>
+            <scalar dictRef="cdk:exactMass">17.9991594</scalar>
+            <scalar dictRef="cdk:atomicNumber">8</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="F">
+        <isotope id="F19" isotopeNumber="19" elementType="F">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">18.9984033</scalar>
+            <scalar dictRef="cdk:atomicNumber">9</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ne">
+        <isotope id="Ne20" isotopeNumber="20" elementType="Ne">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">19.9924391</scalar>
+            <scalar dictRef="cdk:atomicNumber">10</scalar>
+        </isotope>
+        <isotope id="Ne21" isotopeNumber="21" elementType="Ne">
+            <abundance dictRef="cdk:relativeAbundance">0.2983</abundance>
+            <scalar dictRef="cdk:exactMass">20.9938453</scalar>
+            <scalar dictRef="cdk:atomicNumber">10</scalar>
+        </isotope>
+        <isotope id="Ne22" isotopeNumber="22" elementType="Ne">
+            <abundance dictRef="cdk:relativeAbundance">10.1867</abundance>
+            <scalar dictRef="cdk:exactMass">21.9913837</scalar>
+            <scalar dictRef="cdk:atomicNumber">10</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Na">
+        <isotope id="Na23" isotopeNumber="23" elementType="Na">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">22.9897697</scalar>
+            <scalar dictRef="cdk:atomicNumber">11</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Mg">
+        <isotope id="Mg24" isotopeNumber="24" elementType="Mg">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">23.985045</scalar>
+            <scalar dictRef="cdk:atomicNumber">12</scalar>
+        </isotope>
+        <isotope id="Mg25" isotopeNumber="25" elementType="Mg">
+            <abundance dictRef="cdk:relativeAbundance">12.6598</abundance>
+            <scalar dictRef="cdk:exactMass">24.9858392</scalar>
+            <scalar dictRef="cdk:atomicNumber">12</scalar>
+        </isotope>
+        <isotope id="Mg26" isotopeNumber="26" elementType="Mg">
+            <abundance dictRef="cdk:relativeAbundance">13.938</abundance>
+            <scalar dictRef="cdk:exactMass">25.9825954</scalar>
+            <scalar dictRef="cdk:atomicNumber">12</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Al">
+        <isotope id="Al27" isotopeNumber="27" elementType="Al">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">26.9815413</scalar>
+            <scalar dictRef="cdk:atomicNumber">13</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Si">
+        <isotope id="Si28" isotopeNumber="28" elementType="Si">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">27.9769284</scalar>
+            <scalar dictRef="cdk:atomicNumber">14</scalar>
+        </isotope>
+        <isotope id="Si29" isotopeNumber="29" elementType="Si">
+            <abundance dictRef="cdk:relativeAbundance">5.0634</abundance>
+            <scalar dictRef="cdk:exactMass">28.9764964</scalar>
+            <scalar dictRef="cdk:atomicNumber">14</scalar>
+        </isotope>
+        <isotope id="Si30" isotopeNumber="30" elementType="Si">
+            <abundance dictRef="cdk:relativeAbundance">3.3612</abundance>
+            <scalar dictRef="cdk:exactMass">29.9737717</scalar>
+            <scalar dictRef="cdk:atomicNumber">14</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="P">
+        <isotope id="P31" isotopeNumber="31" elementType="P">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">30.9737634</scalar>
+            <scalar dictRef="cdk:atomicNumber">15</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="S">
+        <isotope id="S32" isotopeNumber="32" elementType="S">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">31.9720718</scalar>
+            <scalar dictRef="cdk:atomicNumber">16</scalar>
+        </isotope>
+        <isotope id="S33" isotopeNumber="33" elementType="S">
+            <abundance dictRef="cdk:relativeAbundance">0.7893</abundance>
+            <scalar dictRef="cdk:exactMass">32.9714591</scalar>
+            <scalar dictRef="cdk:atomicNumber">16</scalar>
+        </isotope>
+        <isotope id="S34" isotopeNumber="34" elementType="S">
+            <abundance dictRef="cdk:relativeAbundance">4.4306</abundance>
+            <scalar dictRef="cdk:exactMass">33.9678677</scalar>
+            <scalar dictRef="cdk:atomicNumber">16</scalar>
+        </isotope>
+        <isotope id="S36" isotopeNumber="36" elementType="S">
+            <abundance dictRef="cdk:relativeAbundance">0.022</abundance>
+            <scalar dictRef="cdk:exactMass">35.967079</scalar>
+            <scalar dictRef="cdk:atomicNumber">16</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Cl">
+        <isotope id="Cl35" isotopeNumber="35" elementType="Cl">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">34.9688527</scalar>
+            <scalar dictRef="cdk:atomicNumber">17</scalar>
+        </isotope>
+        <isotope id="Cl37" isotopeNumber="37" elementType="Cl">
+            <abundance dictRef="cdk:relativeAbundance">31.978</abundance>
+            <scalar dictRef="cdk:exactMass">36.9659026</scalar>
+            <scalar dictRef="cdk:atomicNumber">17</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ar">
+        <isotope id="Ar36" isotopeNumber="36" elementType="Ar">
+            <abundance dictRef="cdk:relativeAbundance">0.338</abundance>
+            <scalar dictRef="cdk:exactMass">35.9675456</scalar>
+            <scalar dictRef="cdk:atomicNumber">18</scalar>
+        </isotope>
+        <isotope id="Ar38" isotopeNumber="38" elementType="Ar">
+            <abundance dictRef="cdk:relativeAbundance">0.063</abundance>
+            <scalar dictRef="cdk:exactMass">37.9627322</scalar>
+            <scalar dictRef="cdk:atomicNumber">18</scalar>
+        </isotope>
+        <isotope id="Ar40" isotopeNumber="40" elementType="Ar">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">39.9623831</scalar>
+            <scalar dictRef="cdk:atomicNumber">18</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="K">
+        <isotope id="K39" isotopeNumber="39" elementType="K">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">38.9637079</scalar>
+            <scalar dictRef="cdk:atomicNumber">19</scalar>
+        </isotope>
+        <isotope id="K40" isotopeNumber="40" elementType="K">
+            <abundance dictRef="cdk:relativeAbundance">0.013</abundance>
+            <scalar dictRef="cdk:exactMass">39.9639988</scalar>
+            <scalar dictRef="cdk:atomicNumber">19</scalar>
+        </isotope>
+        <isotope id="K42" isotopeNumber="42" elementType="K">
+            <abundance dictRef="cdk:relativeAbundance">7.217</abundance>
+            <scalar dictRef="cdk:exactMass">40.9618254</scalar>
+            <scalar dictRef="cdk:atomicNumber">19</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ca">
+        <isotope id="Ca40" isotopeNumber="40" elementType="Ca">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">39.9625907</scalar>
+            <scalar dictRef="cdk:atomicNumber">20</scalar>
+        </isotope>
+        <isotope id="Ca42" isotopeNumber="42" elementType="Ca">
+            <abundance dictRef="cdk:relativeAbundance">0.6674</abundance>
+            <scalar dictRef="cdk:exactMass">41.9586218</scalar>
+            <scalar dictRef="cdk:atomicNumber">20</scalar>
+        </isotope>
+        <isotope id="Ca43" isotopeNumber="43" elementType="Ca">
+            <abundance dictRef="cdk:relativeAbundance">0.1393</abundance>
+            <scalar dictRef="cdk:exactMass">42.9587704</scalar>
+            <scalar dictRef="cdk:atomicNumber">20</scalar>
+        </isotope>
+        <isotope id="Ca44" isotopeNumber="44" elementType="Ca">
+            <abundance dictRef="cdk:relativeAbundance">2.1518</abundance>
+            <scalar dictRef="cdk:exactMass">43.9554848</scalar>
+            <scalar dictRef="cdk:atomicNumber">20</scalar>
+        </isotope>
+        <isotope id="Ca46" isotopeNumber="46" elementType="Ca">
+            <abundance dictRef="cdk:relativeAbundance">0.0041</abundance>
+            <scalar dictRef="cdk:exactMass">45.953689</scalar>
+            <scalar dictRef="cdk:atomicNumber">20</scalar>
+        </isotope>
+        <isotope id="Ca48" isotopeNumber="48" elementType="Ca">
+            <abundance dictRef="cdk:relativeAbundance">0.1929</abundance>
+            <scalar dictRef="cdk:exactMass">47.952532</scalar>
+            <scalar dictRef="cdk:atomicNumber">20</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Sc">
+        <isotope id="Sc45" isotopeNumber="45" elementType="Sc">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">44.9559136</scalar>
+            <scalar dictRef="cdk:atomicNumber">21</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ti">
+        <isotope id="Ti46" isotopeNumber="46" elementType="Ti">
+            <abundance dictRef="cdk:relativeAbundance">10.8401</abundance>
+            <scalar dictRef="cdk:exactMass">45.952633</scalar>
+            <scalar dictRef="cdk:atomicNumber">22</scalar>
+        </isotope>
+        <isotope id="Ti47" isotopeNumber="47" elementType="Ti">
+            <abundance dictRef="cdk:relativeAbundance">9.8916</abundance>
+            <scalar dictRef="cdk:exactMass">46.951765</scalar>
+            <scalar dictRef="cdk:atomicNumber">22</scalar>
+        </isotope>
+        <isotope id="Ti48" isotopeNumber="48" elementType="Ti">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">47.947947</scalar>
+            <scalar dictRef="cdk:atomicNumber">22</scalar>
+        </isotope>
+        <isotope id="Ti49" isotopeNumber="49" elementType="Ti">
+            <abundance dictRef="cdk:relativeAbundance">7.4526</abundance>
+            <scalar dictRef="cdk:exactMass">48.947871</scalar>
+            <scalar dictRef="cdk:atomicNumber">22</scalar>
+        </isotope>
+        <isotope id="Ti50" isotopeNumber="50" elementType="Ti">
+            <abundance dictRef="cdk:relativeAbundance">7.3171</abundance>
+            <scalar dictRef="cdk:exactMass">49.944786</scalar>
+            <scalar dictRef="cdk:atomicNumber">22</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="V">
+        <isotope id="V50" isotopeNumber="50" elementType="V">
+            <abundance dictRef="cdk:relativeAbundance">0.251</abundance>
+            <scalar dictRef="cdk:exactMass">49.947161</scalar>
+            <scalar dictRef="cdk:atomicNumber">23</scalar>
+        </isotope>
+        <isotope id="V51" isotopeNumber="51" elementType="V">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">50.943963</scalar>
+            <scalar dictRef="cdk:atomicNumber">23</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Cr">
+        <isotope id="Cr50" isotopeNumber="50" elementType="Cr">
+            <abundance dictRef="cdk:relativeAbundance">5.1915</abundance>
+            <scalar dictRef="cdk:exactMass">49.946046</scalar>
+            <scalar dictRef="cdk:atomicNumber">24</scalar>
+        </isotope>
+        <isotope id="Cr52" isotopeNumber="52" elementType="Cr">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">51.94051</scalar>
+            <scalar dictRef="cdk:atomicNumber">24</scalar>
+        </isotope>
+        <isotope id="Cr53" isotopeNumber="53" elementType="Cr">
+            <abundance dictRef="cdk:relativeAbundance">11.3379</abundance>
+            <scalar dictRef="cdk:exactMass">52.940651</scalar>
+            <scalar dictRef="cdk:atomicNumber">24</scalar>
+        </isotope>
+        <isotope id="Cr54" isotopeNumber="54" elementType="Cr">
+            <abundance dictRef="cdk:relativeAbundance">2.8166</abundance>
+            <scalar dictRef="cdk:exactMass">53.938882</scalar>
+            <scalar dictRef="cdk:atomicNumber">24</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Mn">
+        <isotope id="Mn55" isotopeNumber="55" elementType="Mn">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">54.938046</scalar>
+            <scalar dictRef="cdk:atomicNumber">25</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Fe">
+        <isotope id="Fe54" isotopeNumber="54" elementType="Fe">
+            <abundance dictRef="cdk:relativeAbundance">6.3236</abundance>
+            <scalar dictRef="cdk:exactMass">53.939612</scalar>
+            <scalar dictRef="cdk:atomicNumber">26</scalar>
+        </isotope>
+        <isotope id="Fe56" isotopeNumber="56" elementType="Fe">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">55.934939</scalar>
+            <scalar dictRef="cdk:atomicNumber">26</scalar>
+        </isotope>
+        <isotope id="Fe57" isotopeNumber="57" elementType="Fe">
+            <abundance dictRef="cdk:relativeAbundance">2.3986</abundance>
+            <scalar dictRef="cdk:exactMass">56.935396</scalar>
+            <scalar dictRef="cdk:atomicNumber">26</scalar>
+        </isotope>
+        <isotope id="Fe58" isotopeNumber="58" elementType="Fe">
+            <abundance dictRef="cdk:relativeAbundance">0.3053</abundance>
+            <scalar dictRef="cdk:exactMass">57.933278</scalar>
+            <scalar dictRef="cdk:atomicNumber">26</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Co">
+        <isotope id="Co59" isotopeNumber="59" elementType="Co">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">58.933198</scalar>
+            <scalar dictRef="cdk:atomicNumber">27</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ni">
+        <isotope id="Ni58" isotopeNumber="58" elementType="Ni">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">57.935347</scalar>
+            <scalar dictRef="cdk:atomicNumber">28</scalar>
+        </isotope>
+        <isotope id="Ni60" isotopeNumber="60" elementType="Ni">
+            <abundance dictRef="cdk:relativeAbundance">38.2305</abundance>
+            <scalar dictRef="cdk:exactMass">59.930789</scalar>
+            <scalar dictRef="cdk:atomicNumber">28</scalar>
+        </isotope>
+        <isotope id="Ni61" isotopeNumber="61" elementType="Ni">
+            <abundance dictRef="cdk:relativeAbundance">1.6552</abundance>
+            <scalar dictRef="cdk:exactMass">60.931059</scalar>
+            <scalar dictRef="cdk:atomicNumber">28</scalar>
+        </isotope>
+        <isotope id="Ni62" isotopeNumber="62" elementType="Ni">
+            <abundance dictRef="cdk:relativeAbundance">5.2585</abundance>
+            <scalar dictRef="cdk:exactMass">61.928346</scalar>
+            <scalar dictRef="cdk:atomicNumber">28</scalar>
+        </isotope>
+        <isotope id="Ni64" isotopeNumber="64" elementType="Ni">
+            <abundance dictRef="cdk:relativeAbundance">1.3329</abundance>
+            <scalar dictRef="cdk:exactMass">63.927968</scalar>
+            <scalar dictRef="cdk:atomicNumber">28</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Cu">
+        <isotope id="Cu63" isotopeNumber="63" elementType="Cu">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">62.9295991</scalar>
+            <scalar dictRef="cdk:atomicNumber">29</scalar>
+        </isotope>
+        <isotope id="Cu65" isotopeNumber="65" elementType="Cu">
+            <abundance dictRef="cdk:relativeAbundance">44.571</abundance>
+            <scalar dictRef="cdk:exactMass">64.9277921</scalar>
+            <scalar dictRef="cdk:atomicNumber">29</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Zn">
+        <isotope id="Zn64" isotopeNumber="64" elementType="Zn">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">63.929145</scalar>
+            <scalar dictRef="cdk:atomicNumber">30</scalar>
+        </isotope>
+        <isotope id="Zn66" isotopeNumber="66" elementType="Zn">
+            <abundance dictRef="cdk:relativeAbundance">57.4074</abundance>
+            <scalar dictRef="cdk:exactMass">65.926035</scalar>
+            <scalar dictRef="cdk:atomicNumber">30</scalar>
+        </isotope>
+        <isotope id="Zn67" isotopeNumber="67" elementType="Zn">
+            <abundance dictRef="cdk:relativeAbundance">8.4362</abundance>
+            <scalar dictRef="cdk:exactMass">66.927129</scalar>
+            <scalar dictRef="cdk:atomicNumber">30</scalar>
+        </isotope>
+        <isotope id="Zn68" isotopeNumber="68" elementType="Zn">
+            <abundance dictRef="cdk:relativeAbundance">38.6831</abundance>
+            <scalar dictRef="cdk:exactMass">67.924846</scalar>
+            <scalar dictRef="cdk:atomicNumber">30</scalar>
+        </isotope>
+        <isotope id="Zn70" isotopeNumber="70" elementType="Zn">
+            <abundance dictRef="cdk:relativeAbundance">1.2346</abundance>
+            <scalar dictRef="cdk:exactMass">69.925325</scalar>
+            <scalar dictRef="cdk:atomicNumber">30</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ga">
+        <isotope id="Ga69" isotopeNumber="69" elementType="Ga">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">68.925581</scalar>
+            <scalar dictRef="cdk:atomicNumber">31</scalar>
+        </isotope>
+        <isotope id="Ga71" isotopeNumber="71" elementType="Ga">
+            <abundance dictRef="cdk:relativeAbundance">66.389</abundance>
+            <scalar dictRef="cdk:exactMass">70.924701</scalar>
+            <scalar dictRef="cdk:atomicNumber">31</scalar>
+        </isotope>
+        <isotope id="Ge70" isotopeNumber="70" elementType="Ge">
+            <abundance dictRef="cdk:relativeAbundance">56.1644</abundance>
+            <scalar dictRef="cdk:exactMass">69.92425</scalar>
+            <scalar dictRef="cdk:atomicNumber">32</scalar>
+        </isotope>
+        <isotope id="Ge72" isotopeNumber="72" elementType="Ge">
+            <abundance dictRef="cdk:relativeAbundance">75.0685</abundance>
+            <scalar dictRef="cdk:exactMass">71.92208</scalar>
+            <scalar dictRef="cdk:atomicNumber">32</scalar>
+        </isotope>
+        <isotope id="Ge73" isotopeNumber="73" elementType="Ge">
+            <abundance dictRef="cdk:relativeAbundance">21.3698</abundance>
+            <scalar dictRef="cdk:exactMass">72.923464</scalar>
+            <scalar dictRef="cdk:atomicNumber">32</scalar>
+        </isotope>
+        <isotope id="Ge74" isotopeNumber="74" elementType="Ge">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">73.921179</scalar>
+            <scalar dictRef="cdk:atomicNumber">32</scalar>
+        </isotope>
+        <isotope id="Ge76" isotopeNumber="76" elementType="Ge">
+            <abundance dictRef="cdk:relativeAbundance">21.3698</abundance>
+            <scalar dictRef="cdk:exactMass">75.921403</scalar>
+            <scalar dictRef="cdk:atomicNumber">32</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="As">
+        <isotope id="As75" isotopeNumber="75" elementType="As">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">74.921596</scalar>
+            <scalar dictRef="cdk:atomicNumber">33</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Se">
+        <isotope id="Se74" isotopeNumber="74" elementType="Se">
+            <abundance dictRef="cdk:relativeAbundance">1.8145</abundance>
+            <scalar dictRef="cdk:exactMass">73.922477</scalar>
+            <scalar dictRef="cdk:atomicNumber">34</scalar>
+        </isotope>
+        <isotope id="Se76" isotopeNumber="76" elementType="Se">
+            <abundance dictRef="cdk:relativeAbundance">18.1451</abundance>
+            <scalar dictRef="cdk:exactMass">75.919207</scalar>
+            <scalar dictRef="cdk:atomicNumber">34</scalar>
+        </isotope>
+        <isotope id="Se77" isotopeNumber="77" elementType="Se">
+            <abundance dictRef="cdk:relativeAbundance">15.3226</abundance>
+            <scalar dictRef="cdk:exactMass">76.919908</scalar>
+            <scalar dictRef="cdk:atomicNumber">34</scalar>
+        </isotope>
+        <isotope id="Se78" isotopeNumber="78" elementType="Se">
+            <abundance dictRef="cdk:relativeAbundance">47.379</abundance>
+            <scalar dictRef="cdk:exactMass">77.917304</scalar>
+            <scalar dictRef="cdk:atomicNumber">34</scalar>
+        </isotope>
+        <isotope id="Se80" isotopeNumber="80" elementType="Se">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">79.916521</scalar>
+            <scalar dictRef="cdk:atomicNumber">34</scalar>
+        </isotope>
+        <isotope id="Se82" isotopeNumber="82" elementType="Se">
+            <abundance dictRef="cdk:relativeAbundance">18.9516</abundance>
+            <scalar dictRef="cdk:exactMass">81.916709</scalar>
+            <scalar dictRef="cdk:atomicNumber">34</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Br">
+        <isotope id="Br79" isotopeNumber="79" elementType="Br">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">78.918336</scalar>
+            <scalar dictRef="cdk:atomicNumber">35</scalar>
+        </isotope>
+        <isotope id="Br81" isotopeNumber="81" elementType="Br">
+            <abundance dictRef="cdk:relativeAbundance">97.2776</abundance>
+            <scalar dictRef="cdk:exactMass">80.91629</scalar>
+            <scalar dictRef="cdk:atomicNumber">35</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Kr">
+        <isotope id="Kr78" isotopeNumber="78" elementType="Kr">
+            <abundance dictRef="cdk:relativeAbundance">0.614</abundance>
+            <scalar dictRef="cdk:exactMass">77.920397</scalar>
+            <scalar dictRef="cdk:atomicNumber">36</scalar>
+        </isotope>
+        <isotope id="Kr80" isotopeNumber="80" elementType="Kr">
+            <abundance dictRef="cdk:relativeAbundance">3.9474</abundance>
+            <scalar dictRef="cdk:exactMass">79.916375</scalar>
+            <scalar dictRef="cdk:atomicNumber">36</scalar>
+        </isotope>
+        <isotope id="Kr82" isotopeNumber="82" elementType="Kr">
+            <abundance dictRef="cdk:relativeAbundance">20.3509</abundance>
+            <scalar dictRef="cdk:exactMass">81.913483</scalar>
+            <scalar dictRef="cdk:atomicNumber">36</scalar>
+        </isotope>
+        <isotope id="Kr83" isotopeNumber="83" elementType="Kr">
+            <abundance dictRef="cdk:relativeAbundance">20.1754</abundance>
+            <scalar dictRef="cdk:exactMass">82.914134</scalar>
+            <scalar dictRef="cdk:atomicNumber">36</scalar>
+        </isotope>
+        <isotope id="Kr84" isotopeNumber="84" elementType="Kr">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">83.911506</scalar>
+            <scalar dictRef="cdk:atomicNumber">36</scalar>
+        </isotope>
+        <isotope id="Kr86" isotopeNumber="86" elementType="Kr">
+            <abundance dictRef="cdk:relativeAbundance">30.3509</abundance>
+            <scalar dictRef="cdk:exactMass">85.910614</scalar>
+            <scalar dictRef="cdk:atomicNumber">36</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Rb">
+        <isotope id="Rb85" isotopeNumber="85" elementType="Rb">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">84.9117996</scalar>
+            <scalar dictRef="cdk:atomicNumber">37</scalar>
+        </isotope>
+        <isotope id="Rb87" isotopeNumber="87" elementType="Rb">
+            <abundance dictRef="cdk:relativeAbundance">38.571</abundance>
+            <scalar dictRef="cdk:exactMass">86.909184</scalar>
+            <scalar dictRef="cdk:atomicNumber">37</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Sr">
+        <isotope id="Sr84" isotopeNumber="84" elementType="Sr">
+            <abundance dictRef="cdk:relativeAbundance">0.6781</abundance>
+            <scalar dictRef="cdk:exactMass">83.913428</scalar>
+            <scalar dictRef="cdk:atomicNumber">38</scalar>
+        </isotope>
+        <isotope id="Sr86" isotopeNumber="86" elementType="Sr">
+            <abundance dictRef="cdk:relativeAbundance">11.9399</abundance>
+            <scalar dictRef="cdk:exactMass">85.909273</scalar>
+            <scalar dictRef="cdk:atomicNumber">38</scalar>
+        </isotope>
+        <isotope id="Sr87" isotopeNumber="87" elementType="Sr">
+            <abundance dictRef="cdk:relativeAbundance">8.4766</abundance>
+            <scalar dictRef="cdk:exactMass">86.90889</scalar>
+            <scalar dictRef="cdk:atomicNumber">38</scalar>
+        </isotope>
+        <isotope id="Sr88" isotopeNumber="88" elementType="Sr">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">87.905625</scalar>
+            <scalar dictRef="cdk:atomicNumber">38</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Y">
+        <isotope id="Y89" isotopeNumber="89" elementType="Y">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">88.905856</scalar>
+            <scalar dictRef="cdk:atomicNumber">39</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Zr">
+        <isotope id="Zr90" isotopeNumber="90" elementType="Zr">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">89.904708</scalar>
+            <scalar dictRef="cdk:atomicNumber">40</scalar>
+        </isotope>
+        <isotope id="Zr91" isotopeNumber="91" elementType="Zr">
+            <abundance dictRef="cdk:relativeAbundance">21.9048</abundance>
+            <scalar dictRef="cdk:exactMass">90.905644</scalar>
+            <scalar dictRef="cdk:atomicNumber">40</scalar>
+        </isotope>
+        <isotope id="Zr92" isotopeNumber="92" elementType="Zr">
+            <abundance dictRef="cdk:relativeAbundance">33.3722</abundance>
+            <scalar dictRef="cdk:exactMass">91.905039</scalar>
+            <scalar dictRef="cdk:atomicNumber">40</scalar>
+        </isotope>
+        <isotope id="Zr94" isotopeNumber="94" elementType="Zr">
+            <abundance dictRef="cdk:relativeAbundance">33.6832</abundance>
+            <scalar dictRef="cdk:exactMass">93.906319</scalar>
+            <scalar dictRef="cdk:atomicNumber">40</scalar>
+        </isotope>
+        <isotope id="Zr96" isotopeNumber="96" elementType="Zr">
+            <abundance dictRef="cdk:relativeAbundance">5.4033</abundance>
+            <scalar dictRef="cdk:exactMass">95.908272</scalar>
+            <scalar dictRef="cdk:atomicNumber">40</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Nb">
+        <isotope id="Nb93" isotopeNumber="93" elementType="Nb">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">92.906378</scalar>
+            <scalar dictRef="cdk:atomicNumber">41</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Mo">
+        <isotope id="Mo92" isotopeNumber="92" elementType="Mo">
+            <abundance dictRef="cdk:relativeAbundance">61.5002</abundance>
+            <scalar dictRef="cdk:exactMass">91.906809</scalar>
+            <scalar dictRef="cdk:atomicNumber">442</scalar>
+        </isotope>
+        <isotope id="Mo94" isotopeNumber="94" elementType="Mo">
+            <abundance dictRef="cdk:relativeAbundance">38.334</abundance>
+            <scalar dictRef="cdk:exactMass">93.905086</scalar>
+            <scalar dictRef="cdk:atomicNumber">42</scalar>
+        </isotope>
+        <isotope id="Mo95" isotopeNumber="95" elementType="Mo">
+            <abundance dictRef="cdk:relativeAbundance">65.976</abundance>
+            <scalar dictRef="cdk:exactMass">94.905838</scalar>
+            <scalar dictRef="cdk:atomicNumber">42</scalar>
+        </isotope>
+        <isotope id="Mo96" isotopeNumber="96" elementType="Mo">
+            <abundance dictRef="cdk:relativeAbundance">69.1256</abundance>
+            <scalar dictRef="cdk:exactMass">95.904676</scalar>
+            <scalar dictRef="cdk:atomicNumber">42</scalar>
+        </isotope>
+        <isotope id="Mo97" isotopeNumber="97" elementType="Mo">
+            <abundance dictRef="cdk:relativeAbundance">39.5773</abundance>
+            <scalar dictRef="cdk:exactMass">96.906018</scalar>
+            <scalar dictRef="cdk:atomicNumber">42</scalar>
+        </isotope>
+        <isotope id="Mo98" isotopeNumber="98" elementType="Mo">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">97.905405</scalar>
+            <scalar dictRef="cdk:atomicNumber">42</scalar>
+        </isotope>
+        <isotope id="Mo100" isotopeNumber="100" elementType="Mo">
+            <abundance dictRef="cdk:relativeAbundance">39.9088</abundance>
+            <scalar dictRef="cdk:exactMass">99.907473</scalar>
+            <scalar dictRef="cdk:atomicNumber">42</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ru">
+        <isotope id="Ru96" isotopeNumber="96" elementType="Ru">
+            <abundance dictRef="cdk:relativeAbundance">17.4684</abundance>
+            <scalar dictRef="cdk:exactMass">95.907596</scalar>
+            <scalar dictRef="cdk:atomicNumber">44</scalar>
+        </isotope>
+        <isotope id="Ru98" isotopeNumber="98" elementType="Ru">
+            <abundance dictRef="cdk:relativeAbundance">5.9494</abundance>
+            <scalar dictRef="cdk:exactMass">97.905287</scalar>
+            <scalar dictRef="cdk:atomicNumber">44</scalar>
+        </isotope>
+        <isotope id="Ru99" isotopeNumber="99" elementType="Ru">
+            <abundance dictRef="cdk:relativeAbundance">40.1899</abundance>
+            <scalar dictRef="cdk:exactMass">98.905937</scalar>
+            <scalar dictRef="cdk:atomicNumber">44</scalar>
+        </isotope>
+        <isotope id="Ru100" isotopeNumber="100" elementType="Ru">
+            <abundance dictRef="cdk:relativeAbundance">39.8734</abundance>
+            <scalar dictRef="cdk:exactMass">99.904218</scalar>
+            <scalar dictRef="cdk:atomicNumber">44</scalar>
+        </isotope>
+        <isotope id="Ru101" isotopeNumber="101" elementType="Ru">
+            <abundance dictRef="cdk:relativeAbundance">53.7975</abundance>
+            <scalar dictRef="cdk:exactMass">100.905581</scalar>
+            <scalar dictRef="cdk:atomicNumber">44</scalar>
+        </isotope>
+        <isotope id="Ru102" isotopeNumber="102" elementType="Ru">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">101.904348</scalar>
+            <scalar dictRef="cdk:atomicNumber">44</scalar>
+        </isotope>
+        <isotope id="Ru104" isotopeNumber="104" elementType="Ru">
+            <abundance dictRef="cdk:relativeAbundance">59.1772</abundance>
+            <scalar dictRef="cdk:exactMass">103.905422</scalar>
+            <scalar dictRef="cdk:atomicNumber">44</scalar>
+        </isotope>
+        <isotope id="Rh103" isotopeNumber="103" elementType="Rh">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">102.905503</scalar>
+            <scalar dictRef="cdk:atomicNumber">45</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Pd">
+        <isotope id="Pd102" isotopeNumber="102" elementType="Pd">
+            <abundance dictRef="cdk:relativeAbundance">3.7322</abundance>
+            <scalar dictRef="cdk:exactMass">101.905609</scalar>
+            <scalar dictRef="cdk:atomicNumber">46</scalar>
+        </isotope>
+        <isotope id="Pd104" isotopeNumber="104" elementType="Pd">
+            <abundance dictRef="cdk:relativeAbundance">40.7611</abundance>
+            <scalar dictRef="cdk:exactMass">103.904026</scalar>
+            <scalar dictRef="cdk:atomicNumber">46</scalar>
+        </isotope>
+        <isotope id="Pd105" isotopeNumber="105" elementType="Pd">
+            <abundance dictRef="cdk:relativeAbundance">81.7051</abundance>
+            <scalar dictRef="cdk:exactMass">104.905075</scalar>
+            <scalar dictRef="cdk:atomicNumber">46</scalar>
+        </isotope>
+        <isotope id="Pd106" isotopeNumber="106" elementType="Pd">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">105.903475</scalar>
+            <scalar dictRef="cdk:atomicNumber">46</scalar>
+        </isotope>
+        <isotope id="Pd108" isotopeNumber="108" elementType="Pd">
+            <abundance dictRef="cdk:relativeAbundance">96.8167</abundance>
+            <scalar dictRef="cdk:exactMass">107.903894</scalar>
+            <scalar dictRef="cdk:atomicNumber">46</scalar>
+        </isotope>
+        <isotope id="Pd110" isotopeNumber="110" elementType="Pd">
+            <abundance dictRef="cdk:relativeAbundance">42.883</abundance>
+            <scalar dictRef="cdk:exactMass">109.905169</scalar>
+            <scalar dictRef="cdk:atomicNumber">46</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ag">
+        <isotope id="Ag107" isotopeNumber="107" elementType="Ag">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">106.905095</scalar>
+            <scalar dictRef="cdk:atomicNumber">47</scalar>
+        </isotope>
+        <isotope id="Ag109" isotopeNumber="109" elementType="Ag">
+            <abundance dictRef="cdk:relativeAbundance">92.905</abundance>
+            <scalar dictRef="cdk:exactMass">108.904754</scalar>
+            <scalar dictRef="cdk:atomicNumber">47</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Cd">
+        <isotope id="Cd106" isotopeNumber="106" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">4.3508</abundance>
+            <scalar dictRef="cdk:exactMass">105.906461</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+        <isotope id="Cd108" isotopeNumber="108" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">3.0978</abundance>
+            <scalar dictRef="cdk:exactMass">107.904186</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+        <isotope id="Cd110" isotopeNumber="110" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">43.4737</abundance>
+            <scalar dictRef="cdk:exactMass">109.903007</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+        <isotope id="Cd111" isotopeNumber="111" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">44.5527</abundance>
+            <scalar dictRef="cdk:exactMass">110.904182</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+        <isotope id="Cd112" isotopeNumber="112" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">83.9888</abundance>
+            <scalar dictRef="cdk:exactMass">111.902761</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+        <isotope id="Cd113" isotopeNumber="113" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">42.5339</abundance>
+            <scalar dictRef="cdk:exactMass">112.904401</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+        <isotope id="Cd114" isotopeNumber="114" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">113.903361</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+        <isotope id="Cd116" isotopeNumber="116" elementType="Cd">
+            <abundance dictRef="cdk:relativeAbundance">26.0703</abundance>
+            <scalar dictRef="cdk:exactMass">115.904758</scalar>
+            <scalar dictRef="cdk:atomicNumber">48</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="In">
+        <isotope id="In113" isotopeNumber="113" elementType="In">
+            <abundance dictRef="cdk:relativeAbundance">4.4932</abundance>
+            <scalar dictRef="cdk:exactMass">112.904056</scalar>
+            <scalar dictRef="cdk:atomicNumber">49</scalar>
+        </isotope>
+        <isotope id="In115" isotopeNumber="115" elementType="In">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">114.903875</scalar>
+            <scalar dictRef="cdk:atomicNumber">49</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Sn">
+        <isotope id="Sn112" isotopeNumber="112" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">3.0864</abundance>
+            <scalar dictRef="cdk:exactMass">111.904823</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn114" isotopeNumber="114" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">2.1605</abundance>
+            <scalar dictRef="cdk:exactMass">113.902781</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn115" isotopeNumber="115" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">1.2346</abundance>
+            <scalar dictRef="cdk:exactMass">114.903344</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn116" isotopeNumber="116" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">45.3704</abundance>
+            <scalar dictRef="cdk:exactMass">115.901744</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn117" isotopeNumber="117" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">23.7654</abundance>
+            <scalar dictRef="cdk:exactMass">116.902954</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn118" isotopeNumber="118" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">75.0</abundance>
+            <scalar dictRef="cdk:exactMass">117.901607</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn119" isotopeNumber="119" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">26.5432</abundance>
+            <scalar dictRef="cdk:exactMass">118.90331</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn120" isotopeNumber="120" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">119.902199</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn122" isotopeNumber="122" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">14.1975</abundance>
+            <scalar dictRef="cdk:exactMass">121.90344</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+        <isotope id="Sn124" isotopeNumber="124" elementType="Sn">
+            <abundance dictRef="cdk:relativeAbundance">17.284</abundance>
+            <scalar dictRef="cdk:exactMass">123.905271</scalar>
+            <scalar dictRef="cdk:atomicNumber">50</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Sb">
+        <isotope id="Sb121" isotopeNumber="121" elementType="Sb">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">120.903824</scalar>
+            <scalar dictRef="cdk:atomicNumber">51</scalar>
+        </isotope>
+        <isotope id="Sb123" isotopeNumber="123" elementType="Sb">
+            <abundance dictRef="cdk:relativeAbundance">74.5201</abundance>
+            <scalar dictRef="cdk:exactMass">122.904222</scalar>
+            <scalar dictRef="cdk:atomicNumber">51</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Te">
+        <isotope id="Te120" isotopeNumber="120" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">0.284</abundance>
+            <scalar dictRef="cdk:exactMass">119.904021</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+        <isotope id="Te122" isotopeNumber="122" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">7.6923</abundance>
+            <scalar dictRef="cdk:exactMass">121.903055</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+        <isotope id="Te123" isotopeNumber="123" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">2.6864</abundance>
+            <scalar dictRef="cdk:exactMass">122.904278</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+        <isotope id="Te124" isotopeNumber="124" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">14.2485</abundance>
+            <scalar dictRef="cdk:exactMass">123.902825</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+        <isotope id="Te125" isotopeNumber="125" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">21.1243</abundance>
+            <scalar dictRef="cdk:exactMass">124.904435</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+        <isotope id="Te126" isotopeNumber="126" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">56.0651</abundance>
+            <scalar dictRef="cdk:exactMass">125.90331</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+        <isotope id="Te128" isotopeNumber="128" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">93.7574</abundance>
+            <scalar dictRef="cdk:exactMass">127.904464</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+        <isotope id="Te130" isotopeNumber="130" elementType="Te">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">129.906229</scalar>
+            <scalar dictRef="cdk:atomicNumber">52</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="I">
+        <isotope id="I127" isotopeNumber="127" elementType="I">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">126.904477</scalar>
+            <scalar dictRef="cdk:atomicNumber">53</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Xe">
+        <isotope id="Xe124" isotopeNumber="124" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">0.3717</abundance>
+            <scalar dictRef="cdk:exactMass">123.90612</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe126" isotopeNumber="126" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">0.3346</abundance>
+            <scalar dictRef="cdk:exactMass">125.904281</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe128" isotopeNumber="128" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">7.1004</abundance>
+            <scalar dictRef="cdk:exactMass">127.903531</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe129" isotopeNumber="129" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">98.1413</abundance>
+            <scalar dictRef="cdk:exactMass">128.90478</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe130" isotopeNumber="130" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">15.2416</abundance>
+            <scalar dictRef="cdk:exactMass">129.90351</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe131" isotopeNumber="131" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">78.8104</abundance>
+            <scalar dictRef="cdk:exactMass">130.90508</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe132" isotopeNumber="132" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">131.904148</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe134" isotopeNumber="134" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">38.6617</abundance>
+            <scalar dictRef="cdk:exactMass">133.905395</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+        <isotope id="Xe136" isotopeNumber="136" elementType="Xe">
+            <abundance dictRef="cdk:relativeAbundance">33.0855</abundance>
+            <scalar dictRef="cdk:exactMass">135.907219</scalar>
+            <scalar dictRef="cdk:atomicNumber">54</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Cs">
+        <isotope id="Cs133" isotopeNumber="133" elementType="Cs">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">132.905433</scalar>
+            <scalar dictRef="cdk:atomicNumber">55</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ba">
+        <isotope id="Ba130" isotopeNumber="130" elementType="Ba">
+            <abundance dictRef="cdk:relativeAbundance">0.1478</abundance>
+            <scalar dictRef="cdk:exactMass">129.906277</scalar>
+            <scalar dictRef="cdk:atomicNumber">56</scalar>
+        </isotope>
+        <isotope id="Ba132" isotopeNumber="132" elementType="Ba">
+            <abundance dictRef="cdk:relativeAbundance">0.1409</abundance>
+            <scalar dictRef="cdk:exactMass">131.905042</scalar>
+            <scalar dictRef="cdk:atomicNumber">56</scalar>
+        </isotope>
+        <isotope id="Ba134" isotopeNumber="134" elementType="Ba">
+            <abundance dictRef="cdk:relativeAbundance">3.371</abundance>
+            <scalar dictRef="cdk:exactMass">133.90449</scalar>
+            <scalar dictRef="cdk:atomicNumber">56</scalar>
+        </isotope>
+        <isotope id="Ba135" isotopeNumber="135" elementType="Ba">
+            <abundance dictRef="cdk:relativeAbundance">9.1939</abundance>
+            <scalar dictRef="cdk:exactMass">134.905668</scalar>
+            <scalar dictRef="cdk:atomicNumber">56</scalar>
+        </isotope>
+        <isotope id="Ba136" isotopeNumber="136" elementType="Ba">
+            <abundance dictRef="cdk:relativeAbundance">10.954</abundance>
+            <scalar dictRef="cdk:exactMass">135.904556</scalar>
+            <scalar dictRef="cdk:atomicNumber">56</scalar>
+        </isotope>
+        <isotope id="Ba137" isotopeNumber="137" elementType="Ba">
+            <abundance dictRef="cdk:relativeAbundance">15.6625</abundance>
+            <scalar dictRef="cdk:exactMass">136.905816</scalar>
+            <scalar dictRef="cdk:atomicNumber">56</scalar>
+        </isotope>
+        <isotope id="Ba138" isotopeNumber="138" elementType="Ba">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">137.905236</scalar>
+            <scalar dictRef="cdk:atomicNumber">56</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="La">
+        <isotope id="La138" isotopeNumber="138" elementType="La">
+            <abundance dictRef="cdk:relativeAbundance">0.0901</abundance>
+            <scalar dictRef="cdk:exactMass">137.907114</scalar>
+            <scalar dictRef="cdk:atomicNumber">57</scalar>
+        </isotope>
+        <isotope id="La139" isotopeNumber="139" elementType="La">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">138.906355</scalar>
+            <scalar dictRef="cdk:atomicNumber">57</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ce">
+        <isotope id="Ce136" isotopeNumber="136" elementType="Ce">
+            <abundance dictRef="cdk:relativeAbundance">0.2147</abundance>
+            <scalar dictRef="cdk:exactMass">135.90714</scalar>
+            <scalar dictRef="cdk:atomicNumber">58</scalar>
+        </isotope>
+        <isotope id="Ce138" isotopeNumber="138" elementType="Ce">
+            <abundance dictRef="cdk:relativeAbundance">0.2825</abundance>
+            <scalar dictRef="cdk:exactMass">137.905996</scalar>
+            <scalar dictRef="cdk:atomicNumber">58</scalar>
+        </isotope>
+        <isotope id="Ce140" isotopeNumber="140" elementType="Ce">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">139.905442</scalar>
+            <scalar dictRef="cdk:atomicNumber">58</scalar>
+        </isotope>
+        <isotope id="Ce142" isotopeNumber="142" elementType="Ce">
+            <abundance dictRef="cdk:relativeAbundance">12.5226</abundance>
+            <scalar dictRef="cdk:exactMass">141.909249</scalar>
+            <scalar dictRef="cdk:atomicNumber">58</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Pr">
+        <isotope id="Pr141" isotopeNumber="141" elementType="Pr">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">140.907657</scalar>
+            <scalar dictRef="cdk:atomicNumber">59</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Nd">
+        <isotope id="Nd142" isotopeNumber="142" elementType="Nd">
+            <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
+            <scalar dictRef="cdk:exactMass">141.907731</scalar>
+            <scalar dictRef="cdk:atomicNumber">60</scalar>
+        </isotope>
+        <isotope id="Nd143" isotopeNumber="143" elementType="Nd">
+            <abundance dictRef="cdk:relativeAbundance">44.8949</abundance>
+            <scalar dictRef="cdk:exactMass">142.909823</scalar>
+            <scalar dictRef="cdk:atomicNumber">60</scalar>
+        </isotope>
+        <isotope id="Nd144" isotopeNumber="144" elementType="Nd">
+            <abundance dictRef="cdk:relativeAbundance">87.7258</abundance>
+            <scalar dictRef="cdk:exactMass">143.910096</scalar>
+            <scalar dictRef="cdk:atomicNumber">60</scalar>
+        </isotope>
+        <isotope id="Nd145" isotopeNumber="145" elementType="Nd">
+            <abundance dictRef="cdk:relativeAbundance">30.5934</abundance>
+            <scalar dictRef="cdk:exactMass">144.912582</scalar>
+            <scalar dictRef="cdk:atomicNumber">60</scalar>
+        </isotope>
+        <isotope id="Nd146" isotopeNumber="146" elementType="Nd">
+            <abundance dictRef="cdk:relativeAbundance">63.3616</abundance>
+            <scalar dictRef="cdk:exactMass">145.913126</scalar>
+            <scalar dictRef="cdk:atomicNumber">60</scalar>
+        </isotope>
+        <isotope id="Nd148" isotopeNumber="148" elementType="Nd">
+            <abundance dictRef="cdk:relativeAbundance">21.2311</abundance>
+            <scalar dictRef="cdk:exactMass">147.916901</scalar>
+            <scalar dictRef="cdk:atomicNumber">60</scalar>
+        </isotope>
+        <isotope id="Nd150" isotopeNumber="150" elementType="Nd">
+            <abundance dictRef="cdk:relativeAbundance">20.7888</abundance>
+            <scalar dictRef="cdk:exactMass">149.9209</scalar>
+            <scalar dictRef="cdk:atomicNumber">60</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Sm">
+        <isotope id="Sm152" isotopeNumber="152" elementType="Sm">
+            <abundance dictRef="cdk:absoluteAbundance">26.75</abundance>
+            <scalar dictRef="cdk:exactMass">151.919728</scalar>
+            <scalar dictRef="cdk:atomicNumber">62</scalar>
+        </isotope>
+        <isotope id="Sm154" isotopeNumber="154" elementType="Sm">
+            <abundance dictRef="cdk:absoluteAbundance">22.75</abundance>
+            <scalar dictRef="cdk:exactMass">153.922205</scalar>
+            <scalar dictRef="cdk:atomicNumber">62</scalar>
+        </isotope>
+        <isotope id="Sm147" isotopeNumber="147" elementType="Sm">
+            <abundance dictRef="cdk:absoluteAbundance">14.99</abundance>
+            <scalar dictRef="cdk:exactMass">146.914894</scalar>
+            <scalar dictRef="cdk:atomicNumber">62</scalar>
+        </isotope>
+        <isotope id="Sm149" isotopeNumber="149" elementType="Sm">
+            <abundance dictRef="cdk:absoluteAbundance">13.82</abundance>
+            <scalar dictRef="cdk:exactMass">148.917180</scalar>
+            <scalar dictRef="cdk:atomicNumber">62</scalar>
+        </isotope>
+        <isotope id="Sm148" isotopeNumber="148" elementType="Sm">
+            <abundance dictRef="cdk:absoluteAbundance">11.24</abundance>
+            <scalar dictRef="cdk:exactMass">147.914819</scalar>
+            <scalar dictRef="cdk:atomicNumber">62</scalar>
+        </isotope>
+        <isotope id="Sm150" isotopeNumber="150" elementType="Sm">
+            <abundance dictRef="cdk:absoluteAbundance">7.38</abundance>
+            <scalar dictRef="cdk:exactMass">149.917273</scalar>
+            <scalar dictRef="cdk:atomicNumber">62</scalar>
+        </isotope>
+        <isotope id="Sm144" isotopeNumber="144" elementType="Sm">
+            <abundance dictRef="cdk:absoluteAbundance">3.07</abundance>
+            <scalar dictRef="cdk:exactMass">143.911998</scalar>
+            <scalar dictRef="cdk:atomicNumber">62</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Eu">
+        <isotope id="Eu153" isotopeNumber="153" elementType="Eu">
+            <abundance dictRef="cdk:absoluteAbundance">52.19</abundance>
+            <scalar dictRef="cdk:exactMass">152.921225</scalar>
+            <scalar dictRef="cdk:atomicNumber">63</scalar>
+        </isotope>
+        <isotope id="Eu151" isotopeNumber="151" elementType="Eu">
+            <abundance dictRef="cdk:absoluteAbundance">47.81</abundance>
+            <scalar dictRef="cdk:exactMass">150.919702</scalar>
+            <scalar dictRef="cdk:atomicNumber">63</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Gd">
+        <isotope id="Gd158" isotopeNumber="158" elementType="Gd">
+            <abundance dictRef="cdk:absoluteAbundance">24.84</abundance>
+            <scalar dictRef="cdk:exactMass">157.924019</scalar>
+            <scalar dictRef="cdk:atomicNumber">64</scalar>
+        </isotope>
+        <isotope id="Gd160" isotopeNumber="160" elementType="Gd">
+            <abundance dictRef="cdk:absoluteAbundance">21.86</abundance>
+            <scalar dictRef="cdk:exactMass">159.927049</scalar>
+            <scalar dictRef="cdk:atomicNumber">64</scalar>
+        </isotope>
+        <isotope id="Gd156" isotopeNumber="156" elementType="Gd">
+            <abundance dictRef="cdk:absoluteAbundance">20.47</abundance>
+            <scalar dictRef="cdk:exactMass">155.922118</scalar>
+            <scalar dictRef="cdk:atomicNumber">64</scalar>
+        </isotope>
+        <isotope id="Gd157" isotopeNumber="157" elementType="Gd">
+            <abundance dictRef="cdk:absoluteAbundance">15.65</abundance>
+            <scalar dictRef="cdk:exactMass">156.923956</scalar>
+            <scalar dictRef="cdk:atomicNumber">64</scalar>
+        </isotope>
+        <isotope id="Gd155" isotopeNumber="155" elementType="Gd">
+            <abundance dictRef="cdk:absoluteAbundance">14.80</abundance>
+            <scalar dictRef="cdk:exactMass">154.922618</scalar>
+            <scalar dictRef="cdk:atomicNumber">64</scalar>
+        </isotope>
+        <isotope id="Gd154" isotopeNumber="154" elementType="Gd">
+            <abundance dictRef="cdk:absoluteAbundance">2.18</abundance>
+            <scalar dictRef="cdk:exactMass">153.920861</scalar>
+            <scalar dictRef="cdk:atomicNumber">64</scalar>
+        </isotope>
+        <isotope id="Gd152" isotopeNumber="152" elementType="Gd">
+            <abundance dictRef="cdk:absoluteAbundance">0.20</abundance>
+            <scalar dictRef="cdk:exactMass">151.919786</scalar>
+            <scalar dictRef="cdk:atomicNumber">64</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Tb">
+        <isotope id="Tb159" isotopeNumber="159" elementType="Tb">
+            <abundance dictRef="cdk:absoluteAbundance">100</abundance>
+            <scalar dictRef="cdk:exactMass">158.925342</scalar>
+            <scalar dictRef="cdk:atomicNumber">65</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Dy">
+        <isotope id="Dy164" isotopeNumber="164" elementType="Dy">
+            <abundance dictRef="cdk:absoluteAbundance">28.18</abundance>
+            <scalar dictRef="cdk:exactMass">163.929171</scalar>
+            <scalar dictRef="cdk:atomicNumber">66</scalar>
+        </isotope>
+        <isotope id="Dy162" isotopeNumber="162" elementType="Dy">
+            <abundance dictRef="cdk:absoluteAbundance">25.51</abundance>
+            <scalar dictRef="cdk:exactMass">161.926795</scalar>
+            <scalar dictRef="cdk:atomicNumber">66</scalar>
+        </isotope>
+        <isotope id="Dy163" isotopeNumber="163" elementType="Dy">
+            <abundance dictRef="cdk:absoluteAbundance">24.90</abundance>
+            <scalar dictRef="cdk:exactMass">162.928728</scalar>
+            <scalar dictRef="cdk:atomicNumber">66</scalar>
+        </isotope>
+        <isotope id="Dy161" isotopeNumber="161" elementType="Dy">
+            <abundance dictRef="cdk:absoluteAbundance">18.91</abundance>
+            <scalar dictRef="cdk:exactMass">160.926930</scalar>
+            <scalar dictRef="cdk:atomicNumber">66</scalar>
+        </isotope>
+        <isotope id="Dy160" isotopeNumber="160" elementType="Dy">
+            <abundance dictRef="cdk:absoluteAbundance">2.34</abundance>
+            <scalar dictRef="cdk:exactMass">159.925193</scalar>
+            <scalar dictRef="cdk:atomicNumber">66</scalar>
+        </isotope>
+        <isotope id="Dy158" isotopeNumber="158" elementType="Dy">
+            <abundance dictRef="cdk:absoluteAbundance">0.10</abundance>
+            <scalar dictRef="cdk:exactMass">157.924403</scalar>
+            <scalar dictRef="cdk:atomicNumber">66</scalar>
+        </isotope>
+        <isotope id="Dy156" isotopeNumber="156" elementType="Dy">
+            <abundance dictRef="cdk:absoluteAbundance">0.06</abundance>
+            <scalar dictRef="cdk:exactMass">155.924277</scalar>
+            <scalar dictRef="cdk:atomicNumber">66</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ho">
+        <isotope id="Ho165" isotopeNumber="165" elementType="Ho">
+            <abundance dictRef="cdk:absoluteAbundance">100</abundance>
+            <scalar dictRef="cdk:exactMass">164.930319</scalar>
+            <scalar dictRef="cdk:atomicNumber">67</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Er">
+        <isotope id="Er166" isotopeNumber="166" elementType="Er">
+            <abundance dictRef="cdk:absoluteAbundance">33.61</abundance>
+            <scalar dictRef="cdk:exactMass">165.930290</scalar>
+            <scalar dictRef="cdk:atomicNumber">68</scalar>
+        </isotope>
+        <isotope id="Er168" isotopeNumber="168" elementType="Er">
+            <abundance dictRef="cdk:absoluteAbundance">26.78</abundance>
+            <scalar dictRef="cdk:exactMass">167.932368</scalar>
+            <scalar dictRef="cdk:atomicNumber">68</scalar>
+        </isotope>
+        <isotope id="Er167" isotopeNumber="167" elementType="Er">
+            <abundance dictRef="cdk:absoluteAbundance">22.93</abundance>
+            <scalar dictRef="cdk:exactMass">166.932046</scalar>
+            <scalar dictRef="cdk:atomicNumber">68</scalar>
+        </isotope>
+        <isotope id="Er170" isotopeNumber="170" elementType="Er">
+            <abundance dictRef="cdk:absoluteAbundance">14.93</abundance>
+            <scalar dictRef="cdk:exactMass">169.935461</scalar>
+            <scalar dictRef="cdk:atomicNumber">68</scalar>
+        </isotope>
+        <isotope id="Er164" isotopeNumber="164" elementType="Er">
+            <abundance dictRef="cdk:absoluteAbundance">1.61</abundance>
+            <scalar dictRef="cdk:exactMass">163.929198</scalar>
+            <scalar dictRef="cdk:atomicNumber">68</scalar>
+        </isotope>
+        <isotope id="Er162" isotopeNumber="162" elementType="Er">
+            <abundance dictRef="cdk:absoluteAbundance">0.14</abundance>
+            <scalar dictRef="cdk:exactMass">161.928775</scalar>
+            <scalar dictRef="cdk:atomicNumber">68</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Tm">
+        <isotope id="Tm169" isotopeNumber="169" elementType="Tm">
+            <abundance dictRef="cdk:absoluteAbundance">100</abundance>
+            <scalar dictRef="cdk:exactMass">168.934212</scalar>
+            <scalar dictRef="cdk:atomicNumber">69</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Yb">
+        <isotope id="Yb174" isotopeNumber="174" elementType="Yb">
+            <abundance dictRef="cdk:absoluteAbundance">31.83</abundance>
+            <scalar dictRef="cdk:exactMass">173.938859</scalar>
+            <scalar dictRef="cdk:atomicNumber">70</scalar>
+        </isotope>
+        <isotope id="Yb172" isotopeNumber="172" elementType="Yb">
+            <abundance dictRef="cdk:absoluteAbundance">21.83</abundance>
+            <scalar dictRef="cdk:exactMass">171.936378</scalar>
+            <scalar dictRef="cdk:atomicNumber">70</scalar>
+        </isotope>
+        <isotope id="Yb173" isotopeNumber="173" elementType="Yb">
+            <abundance dictRef="cdk:absoluteAbundance">16.13</abundance>
+            <scalar dictRef="cdk:exactMass">172.938208</scalar>
+            <scalar dictRef="cdk:atomicNumber">70</scalar>
+        </isotope>
+        <isotope id="Yb171" isotopeNumber="171" elementType="Yb">
+            <abundance dictRef="cdk:absoluteAbundance">14.28</abundance>
+            <scalar dictRef="cdk:exactMass">170.936323</scalar>
+            <scalar dictRef="cdk:atomicNumber">70</scalar>
+        </isotope>
+        <isotope id="Yb176" isotopeNumber="176" elementType="Yb">
+            <abundance dictRef="cdk:absoluteAbundance">12.76</abundance>
+            <scalar dictRef="cdk:exactMass">175.942564</scalar>
+            <scalar dictRef="cdk:atomicNumber">70</scalar>
+        </isotope>
+        <isotope id="Yb170" isotopeNumber="170" elementType="Yb">
+            <abundance dictRef="cdk:absoluteAbundance">3.04</abundance>
+            <scalar dictRef="cdk:exactMass">169.934759</scalar>
+            <scalar dictRef="cdk:atomicNumber">70</scalar>
+        </isotope>
+        <isotope id="Yb168" isotopeNumber="168" elementType="Yb">
+            <abundance dictRef="cdk:absoluteAbundance">0.13</abundance>
+            <scalar dictRef="cdk:exactMass">167.933894</scalar>
+            <scalar dictRef="cdk:atomicNumber">70</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Lu">
+        <isotope id="Lu175" isotopeNumber="175" elementType="Lu">
+            <abundance dictRef="cdk:absoluteAbundance">97.41</abundance>
+            <scalar dictRef="cdk:exactMass">174.940770</scalar>
+            <scalar dictRef="cdk:atomicNumber">71</scalar>
+        </isotope>
+        <isotope id="Lu176" isotopeNumber="176" elementType="Lu">
+            <abundance dictRef="cdk:absoluteAbundance">2.59</abundance>
+            <scalar dictRef="cdk:exactMass">175.942679</scalar>
+            <scalar dictRef="cdk:atomicNumber">71</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Hf">
+        <isotope id="Hf180" isotopeNumber="180" elementType="Hf">
+            <abundance dictRef="cdk:absoluteAbundance">35.08</abundance>
+            <scalar dictRef="cdk:exactMass">179.9465457</scalar>
+            <scalar dictRef="cdk:atomicNumber">72</scalar>
+        </isotope>
+        <isotope id="Hf178" isotopeNumber="178" elementType="Hf">
+            <abundance dictRef="cdk:absoluteAbundance">27.28</abundance>
+            <scalar dictRef="cdk:exactMass">177.943696</scalar>
+            <scalar dictRef="cdk:atomicNumber">72</scalar>
+        </isotope>
+        <isotope id="Hf177" isotopeNumber="177" elementType="Hf">
+            <abundance dictRef="cdk:absoluteAbundance">18.60</abundance>
+            <scalar dictRef="cdk:exactMass">176.943217</scalar>
+            <scalar dictRef="cdk:atomicNumber">72</scalar>
+        </isotope>
+        <isotope id="Hf179" isotopeNumber="179" elementType="Hf">
+            <abundance dictRef="cdk:absoluteAbundance">13.62</abundance>
+            <scalar dictRef="cdk:exactMass">178.9458122</scalar>
+            <scalar dictRef="cdk:atomicNumber">72</scalar>
+        </isotope>
+        <isotope id="Hf176" isotopeNumber="176" elementType="Hf">
+            <abundance dictRef="cdk:absoluteAbundance">5.26</abundance>
+            <scalar dictRef="cdk:exactMass">175.941406</scalar>
+            <scalar dictRef="cdk:atomicNumber">72</scalar>
+        </isotope>
+        <isotope id="Hf174" isotopeNumber="174" elementType="Hf">
+            <abundance dictRef="cdk:absoluteAbundance">0.16</abundance>
+            <scalar dictRef="cdk:exactMass">173.940044</scalar>
+            <scalar dictRef="cdk:atomicNumber">72</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ta">
+        <isotope id="Ta181" isotopeNumber="181" elementType="Ta">
+            <abundance dictRef="cdk:absoluteAbundance">99.988</abundance>
+            <scalar dictRef="cdk:exactMass">180.947992</scalar>
+            <scalar dictRef="cdk:atomicNumber">73</scalar>
+        </isotope>
+        <isotope id="Ta180" isotopeNumber="180" elementType="Ta">
+            <abundance dictRef="cdk:absoluteAbundance">0.012</abundance>
+            <scalar dictRef="cdk:exactMass">179.947462</scalar>
+            <scalar dictRef="cdk:atomicNumber">73</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="W">
+        <isotope id="W184" isotopeNumber="184" elementType="W">
+            <abundance dictRef="cdk:absoluteAbundance">30.64</abundance>
+            <scalar dictRef="cdk:exactMass">183.950928</scalar>
+            <scalar dictRef="cdk:atomicNumber">74</scalar>
+        </isotope>
+        <isotope id="W186" isotopeNumber="186" elementType="W">
+            <abundance dictRef="cdk:absoluteAbundance">28.43</abundance>
+            <scalar dictRef="cdk:exactMass">185.954357</scalar>
+            <scalar dictRef="cdk:atomicNumber">74</scalar>
+        </isotope>
+        <isotope id="W182" isotopeNumber="182" elementType="W">
+            <abundance dictRef="cdk:absoluteAbundance">26.50</abundance>
+            <scalar dictRef="cdk:exactMass">181.948202</scalar>
+            <scalar dictRef="cdk:atomicNumber">74</scalar>
+        </isotope>
+        <isotope id="W183" isotopeNumber="183" elementType="W">
+            <abundance dictRef="cdk:absoluteAbundance">14.31</abundance>
+            <scalar dictRef="cdk:exactMass">182.950220</scalar>
+            <scalar dictRef="cdk:atomicNumber">74</scalar>
+        </isotope>
+        <isotope id="W180" isotopeNumber="180" elementType="W">
+            <abundance dictRef="cdk:absoluteAbundance">0.12</abundance>
+            <scalar dictRef="cdk:exactMass">179.946701</scalar>
+            <scalar dictRef="cdk:atomicNumber">74</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Re">
+        <isotope id="Re187" isotopeNumber="187" elementType="Re">
+            <abundance dictRef="cdk:absoluteAbundance">62.60</abundance>
+            <scalar dictRef="cdk:exactMass">186.955744</scalar>
+            <scalar dictRef="cdk:atomicNumber">75</scalar>
+        </isotope>
+        <isotope id="Re185" isotopeNumber="185" elementType="Re">
+            <abundance dictRef="cdk:absoluteAbundance">37.40</abundance>
+            <scalar dictRef="cdk:exactMass">184.952951</scalar>
+            <scalar dictRef="cdk:atomicNumber">75</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Os">
+        <isotope id="Os192" isotopeNumber="192" elementType="Os">
+            <abundance dictRef="cdk:absoluteAbundance">40.78</abundance>
+            <scalar dictRef="cdk:exactMass">191.961467</scalar>
+            <scalar dictRef="cdk:atomicNumber">76</scalar>
+        </isotope>
+        <isotope id="Os190" isotopeNumber="190" elementType="Os">
+            <abundance dictRef="cdk:absoluteAbundance">26.26</abundance>
+            <scalar dictRef="cdk:exactMass">189.958436</scalar>
+            <scalar dictRef="cdk:atomicNumber">76</scalar>
+        </isotope>
+        <isotope id="Os189" isotopeNumber="189" elementType="Os">
+            <abundance dictRef="cdk:absoluteAbundance">16.15</abundance>
+            <scalar dictRef="cdk:exactMass">188.958137</scalar>
+            <scalar dictRef="cdk:atomicNumber">76</scalar>
+        </isotope>
+        <isotope id="Os188" isotopeNumber="188" elementType="Os">
+            <abundance dictRef="cdk:absoluteAbundance">13.24</abundance>
+            <scalar dictRef="cdk:exactMass">187.955830</scalar>
+            <scalar dictRef="cdk:atomicNumber">76</scalar>
+        </isotope>
+        <isotope id="Os187" isotopeNumber="187" elementType="Os">
+            <abundance dictRef="cdk:absoluteAbundance">1.96</abundance>
+            <scalar dictRef="cdk:exactMass">186.955741</scalar>
+            <scalar dictRef="cdk:atomicNumber">76</scalar>
+        </isotope>
+        <isotope id="Os186" isotopeNumber="186" elementType="Os">
+            <abundance dictRef="cdk:absoluteAbundance">1.59</abundance>
+            <scalar dictRef="cdk:exactMass">185.953830</scalar>
+            <scalar dictRef="cdk:atomicNumber">76</scalar>
+        </isotope>
+        <isotope id="Os184" isotopeNumber="184" elementType="Os">
+            <abundance dictRef="cdk:absoluteAbundance">0.02</abundance>
+            <scalar dictRef="cdk:exactMass">183.952488</scalar>
+            <scalar dictRef="cdk:atomicNumber">76</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Ir">
+        <isotope id="Ir193" isotopeNumber="193" elementType="Ir">
+            <abundance dictRef="cdk:absoluteAbundance">62.7</abundance>
+            <scalar dictRef="cdk:exactMass">192.962917</scalar>
+            <scalar dictRef="cdk:atomicNumber">77</scalar>
+        </isotope>
+        <isotope id="Ir191" isotopeNumber="191" elementType="Ir">
+            <abundance dictRef="cdk:absoluteAbundance">37.3</abundance>
+            <scalar dictRef="cdk:exactMass">190.960584</scalar>
+            <scalar dictRef="cdk:atomicNumber">77</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Pt">
+        <isotope id="Pt195" isotopeNumber="195" elementType="Pt">
+            <abundance dictRef="cdk:absoluteAbundance">33.832</abundance>
+            <scalar dictRef="cdk:exactMass">194.964766</scalar>
+            <scalar dictRef="cdk:atomicNumber">78</scalar>
+        </isotope>
+        <isotope id="Pt194" isotopeNumber="194" elementType="Pt">
+            <abundance dictRef="cdk:absoluteAbundance">32.967</abundance>
+            <scalar dictRef="cdk:exactMass">193.962655</scalar>
+            <scalar dictRef="cdk:atomicNumber">78</scalar>
+        </isotope>
+        <isotope id="Pt196" isotopeNumber="196" elementType="Pt">
+            <abundance dictRef="cdk:absoluteAbundance">25.242</abundance>
+            <scalar dictRef="cdk:exactMass">195.964926</scalar>
+            <scalar dictRef="cdk:atomicNumber">78</scalar>
+        </isotope>
+        <isotope id="Pt198" isotopeNumber="198" elementType="Pt">
+            <abundance dictRef="cdk:absoluteAbundance">7.163</abundance>
+            <scalar dictRef="cdk:exactMass">197.967869</scalar>
+            <scalar dictRef="cdk:atomicNumber">78</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Au">
+        <isotope id="Au197" isotopeNumber="197" elementType="Au">
+            <abundance dictRef="cdk:absoluteAbundance">100</abundance>
+            <scalar dictRef="cdk:exactMass">196.966543</scalar>
+            <scalar dictRef="cdk:atomicNumber">79</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Hg">
+        <isotope id="Hg202" isotopeNumber="202" elementType="Hg">
+            <abundance dictRef="cdk:absoluteAbundance">29.86</abundance>
+            <scalar dictRef="cdk:exactMass">201.970617</scalar>
+            <scalar dictRef="cdk:atomicNumber">80</scalar>
+        </isotope>
+        <isotope id="Hg200" isotopeNumber="200" elementType="Hg">
+            <abundance dictRef="cdk:absoluteAbundance">23.10</abundance>
+            <scalar dictRef="cdk:exactMass">199.968300</scalar>
+            <scalar dictRef="cdk:atomicNumber">80</scalar>
+        </isotope>
+        <isotope id="Hg199" isotopeNumber="199" elementType="Hg">
+            <abundance dictRef="cdk:absoluteAbundance">16.87</abundance>
+            <scalar dictRef="cdk:exactMass">198.968254</scalar>
+            <scalar dictRef="cdk:atomicNumber">80</scalar>
+        </isotope>
+        <isotope id="Hg201" isotopeNumber="201" elementType="Hg">
+            <abundance dictRef="cdk:absoluteAbundance">13.18</abundance>
+            <scalar dictRef="cdk:exactMass">200.970277</scalar>
+            <scalar dictRef="cdk:atomicNumber">80</scalar>
+        </isotope>
+        <isotope id="Hg198" isotopeNumber="198" elementType="Hg">
+            <abundance dictRef="cdk:absoluteAbundance">9.97</abundance>
+            <scalar dictRef="cdk:exactMass">197.966743</scalar>
+            <scalar dictRef="cdk:atomicNumber">80</scalar>
+        </isotope>
+        <isotope id="Hg204" isotopeNumber="204" elementType="Hg">
+            <abundance dictRef="cdk:absoluteAbundance">6.87</abundance>
+            <scalar dictRef="cdk:exactMass">203.973467</scalar>
+            <scalar dictRef="cdk:atomicNumber">80</scalar>
+        </isotope>
+        <isotope id="Hg196" isotopeNumber="196" elementType="Hg">
+            <abundance dictRef="cdk:absoluteAbundance">0.15</abundance>
+            <scalar dictRef="cdk:exactMass">195.965807</scalar>
+            <scalar dictRef="cdk:atomicNumber">80</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Tl">
+        <isotope id="Tl205" isotopeNumber="205" elementType="Tl">
+            <abundance dictRef="cdk:absoluteAbundance">70.476</abundance>
+            <scalar dictRef="cdk:exactMass">204.974401</scalar>
+            <scalar dictRef="cdk:atomicNumber">81</scalar>
+        </isotope>
+        <isotope id="Tl203" isotopeNumber="203" elementType="Tl">
+            <abundance dictRef="cdk:absoluteAbundance">29.524</abundance>
+            <scalar dictRef="cdk:exactMass">202.972320</scalar>
+            <scalar dictRef="cdk:atomicNumber">81</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Pb">
+        <isotope id="Pb208" isotopeNumber="208" elementType="Pb">
+            <abundance dictRef="cdk:absoluteAbundance">52.4</abundance>
+            <scalar dictRef="cdk:exactMass">207.976627</scalar>
+            <scalar dictRef="cdk:atomicNumber">82</scalar>
+        </isotope>
+        <isotope id="Pb206" isotopeNumber="206" elementType="Pb">
+            <abundance dictRef="cdk:absoluteAbundance">24.1</abundance>
+            <scalar dictRef="cdk:exactMass">205.974440</scalar>
+            <scalar dictRef="cdk:atomicNumber">82</scalar>
+        </isotope>
+        <isotope id="Pb207" isotopeNumber="207" elementType="Pb">
+            <abundance dictRef="cdk:absoluteAbundance">22.1</abundance>
+            <scalar dictRef="cdk:exactMass">206.975872</scalar>
+            <scalar dictRef="cdk:atomicNumber">82</scalar>
+        </isotope>
+        <isotope id="Pb204" isotopeNumber="204" elementType="Pb">
+            <abundance dictRef="cdk:absoluteAbundance">1.4</abundance>
+            <scalar dictRef="cdk:exactMass">203.973020</scalar>
+            <scalar dictRef="cdk:atomicNumber">82</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="Bi">
+        <isotope id="Bi209" isotopeNumber="209" elementType="Bi">
+            <abundance dictRef="cdk:absoluteAbundance">100</abundance>
+            <scalar dictRef="cdk:exactMass">208.980374</scalar>
+            <scalar dictRef="cdk:atomicNumber">83</scalar>
+        </isotope>
+    </isotopeList>
+    <isotopeList id="U">
+        <isotope id="U238" isotopeNumber="238" elementType="U">
+            <abundance dictRef="cdk:absoluteAbundance">99.2745</abundance>
+            <scalar dictRef="cdk:exactMass">238.0507847</scalar>
+            <scalar dictRef="cdk:atomicNumber">92</scalar>
+        </isotope>
+        <isotope id="U235" isotopeNumber="235" elementType="U">
+            <abundance dictRef="cdk:absoluteAbundance">0.7200</abundance>
+            <scalar dictRef="cdk:exactMass">235.0439242</scalar>
+            <scalar dictRef="cdk:atomicNumber">92</scalar>
+        </isotope>
+        <isotope id="U234" isotopeNumber="234" elementType="U">
+            <abundance dictRef="cdk:absoluteAbundance">0.0055</abundance>
+            <scalar dictRef="cdk:exactMass">234.0409468</scalar>
+            <scalar dictRef="cdk:atomicNumber">92</scalar>
+        </isotope>
+    </isotopeList>
+</list>
