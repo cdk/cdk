@@ -5,6 +5,7 @@ Changes in CVS
 ------------------------------------
 New:
 * An interface for iterated reading of data from a file, e.g. a SDF file.
+* Added Atom field for fractional coordinates as used in crystal representation
 
 Fixes:
 * Added missing get() methods to cdk.applications.plugin.EditBus interface

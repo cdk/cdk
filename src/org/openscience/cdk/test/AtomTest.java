@@ -115,6 +115,19 @@ public class AtomTest extends TestCase {
     /**
      * Method to test the set[XYZ]3D() methods.
      */
+    public void testSetFractional3D() {
+        Atom a = new Atom("C");
+        a.setFractionalPoint3D(new Point3d(0.5, 0.5, 0.5));
+        Point3d fract = a.getFractionalPoint3D();
+        assertNotNull(fract);
+        assertEquals(0.5, fract.x, 0.001);
+        assertEquals(0.5, fract.y, 0.001);
+        assertEquals(0.5, fract.z, 0.001);
+    }
+    
+    /**
+     * Method to test the set[XYZ]3D() methods.
+     */
     public void testSet3D() {
 
         Atom a = new Atom("C");

@@ -72,6 +72,10 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          */
         protected javax.vecmath.Point3d point3D;
         /**
+         *  A 3 point specifying the location of this atom in a crystal unit cell.
+         */
+        protected javax.vecmath.Point3d fractionalPoint3D;
+        /**
          *  The number of implicitly bound hydrogen atoms for this atom.
          */
         protected int hydrogenCount;
@@ -216,6 +220,18 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 this.point3D = point3D;
         }
         /**
+         * Sets a point specifying the location of this
+         * atom in a Crystal unit cell.
+         *
+         * @param  point3D  A point in a 3d fractional unit cell space
+         *
+         * @see    #getFractionalPoint3D
+         * @see    org.openscience.cdk.Crystal
+         */
+        public void setFractionalPoint3D(javax.vecmath.Point3d point3D) {
+                this.fractionalPoint3D = point3D;
+        }
+        /**
          * Sets the stereo parity for this atom.
          *
          * @param  stereoParity  The stereo parity for this atom
@@ -250,6 +266,18 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
                 return this.point3D;
         }
 
+        /**
+         * Returns a point specifying the location of this
+         * atom in a Crystal unit cell.
+         *
+         * @return    A point in 3d fractional unit cell space
+         *
+         * @see       #setPoint3D
+         * @see       org.openscience.cdk.CDKConstants for predefined values.
+         */
+        public javax.vecmath.Point3d getFractionalPoint3D() {
+                return this.fractionalPoint3D;
+        }
 
         /**
          * Returns the x coordinate for of the 2D location of this atom.
