@@ -65,21 +65,16 @@ public class SaturationCheckerTest extends TestCase
 		super(name);
 	}
 
-
-	/**
-	 *  The JUnit setup method
-	 */
-	public void setUp()
-	{
-		try
-		{
-			satcheck = new SaturationChecker();
-		} catch (Exception e)
-		{
-			fail();
-		}
-	}
-
+    /**
+    *  The JUnit setup method
+    */
+    public void setUp() {
+        try {
+            satcheck = new SaturationChecker();
+        } catch (Exception e) {
+            fail();
+        }
+    }
 
 	/**
 	 * A unit test suite for JUnit
@@ -174,74 +169,6 @@ public class SaturationCheckerTest extends TestCase
 		assertTrue(2.0 == b.getOrder());
 	}
 
-
-	/**
-	 *  A unit test for JUnit
-	 */
-	public void testAromaticSaturation()
-	{
-		Molecule mol = new Molecule();
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 5
-		mol.addAtom(new Atom("C")); // 6
-		mol.addAtom(new Atom("C")); // 7
-
-
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(0, 6, 1.0); // 7
-		mol.addBond(6, 7, 3.0); // 8
-		
-		for (int f = 0; f < 6; f++)
-		{
-			mol.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, true);
-			mol.getBondAt(f).setFlag(CDKConstants.ISAROMATIC, true);
-		}
-		try
-		{
-			satcheck.addHydrogensToSatisfyValency(mol);
-		}
-		catch(Exception exc)
-		{
-			fail();	
-		}
-		satcheck.saturate(mol);
-		MFAnalyser mfa = new MFAnalyser(mol);
-		if (standAlone)
-		{
-			MoleculeViewer2D.display(mol, true);
-		}
-		assertEquals(mfa.getAtomCount("H"),6);
-	}
-
-	public void testAddImplicitHydrogens()
-	{
-		Molecule molecule = null;
-		try
-		{
-			String filename = "data/mdl/saturationcheckertest.mol";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
-			molecule = (Molecule)reader.read((ChemObject)new Molecule());
-			new SaturationChecker().addHydrogensToSatisfyValency(molecule);
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-		}
-		if (standAlone)
-		{
-			MoleculeViewer2D.display(molecule, true);
-		}
-	}
-
 	/**
 	 *  The main program for the SaturationCheckerTest class
 	 *
@@ -252,7 +179,9 @@ public class SaturationCheckerTest extends TestCase
 		SaturationCheckerTest sct = new SaturationCheckerTest("SaturationCheckerTest");
 		sct.standAlone = true;
 		sct.setUp();
-		sct.testAddImplicitHydrogens();
+		sct.testSaturate();
+		sct.testIsSaturated();
+		sct.testAllSaturated();
 	}
 }
 

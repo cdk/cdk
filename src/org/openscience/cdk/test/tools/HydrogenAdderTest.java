@@ -51,21 +51,19 @@ import junit.framework.*;
  */
 public class HydrogenAdderTest extends TestCase {
 
-    SaturationChecker satcheck = null;
+    private HydrogenAdder adder = null;
+    private boolean standalone = false;
 
     public HydrogenAdderTest(String name) {
         super(name);
+        standalone = false;
     }
 
     /**
      * The JUnit setup method
      */
     public void setUp() {
-        try {
-            satcheck = new SaturationChecker();
-        } catch (Exception e) {
-            fail();
-        }
+        adder = new HydrogenAdder();
     }
 
     /**
@@ -83,7 +81,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(carbon);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -99,7 +97,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(nitrogen);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -116,7 +114,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(nitrogen);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -132,7 +130,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(oxygen);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -149,7 +147,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(oxygen);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -166,7 +164,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(oxygen);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -189,7 +187,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(atom);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -205,7 +203,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addAtom(atom);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -233,7 +231,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addBond(b3);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -257,7 +255,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addBond(b);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -279,7 +277,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addBond(b);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -301,7 +299,7 @@ public class HydrogenAdderTest extends TestCase {
         mol.addBond(b);
         
         try {
-            satcheck.addExplicitHydrogensToSatisfyValency(mol);
+            adder.addExplicitHydrogensToSatisfyValency(mol);
         } catch (Exception exception) {
             fail();
         }
@@ -312,5 +310,74 @@ public class HydrogenAdderTest extends TestCase {
         assertEquals(2, mol.getBondCount(carbon1));
         assertEquals(2, mol.getBondCount(carbon2));
     }
+
+    public void testAromaticSaturation() {
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("C")); // 3
+        mol.addAtom(new Atom("C")); // 4
+        mol.addAtom(new Atom("C")); // 5
+        mol.addAtom(new Atom("C")); // 6
+        mol.addAtom(new Atom("C")); // 7
+        
+        
+        mol.addBond(0, 1, 1.0); // 1
+        mol.addBond(1, 2, 1.0); // 2
+        mol.addBond(2, 3, 1.0); // 3
+        mol.addBond(3, 4, 1.0); // 4
+        mol.addBond(4, 5, 1.0); // 5
+        mol.addBond(5, 0, 1.0); // 6
+        mol.addBond(0, 6, 1.0); // 7
+        mol.addBond(6, 7, 3.0); // 8
+        
+        for (int f = 0; f < 6; f++) {
+            mol.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, true);
+            mol.getBondAt(f).setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        try {
+            adder.addHydrogensToSatisfyValency(mol);
+            new SaturationChecker().saturate(mol);
+        } catch(Exception exc) {
+            fail();	
+        }
+        MFAnalyser mfa = new MFAnalyser(mol);
+        if (standalone) {
+            MoleculeViewer2D.display(mol, true);
+        }
+        assertEquals(mfa.getAtomCount("H"),6);
+    }
+    
+    public void testAddImplicitHydrogens() {
+        Molecule molecule = null;
+        try {
+            String filename = "data/mdl/saturationcheckertest.mol";
+            InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            molecule = (Molecule)reader.read((ChemObject)new Molecule());
+            adder.addHydrogensToSatisfyValency(molecule);
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        } 
+        if (standalone) {
+            MoleculeViewer2D.display(molecule, true);
+        }
+    }
+
+    /**
+     * The main program for the HydrogenAdderTest class
+     *
+     * @param  args  The command line arguments
+     */
+    public static void main(String[] args)
+    {
+        HydrogenAdderTest test = new HydrogenAdderTest("HydrogenAdderTest");
+        test.standalone = true;
+        test.setUp();
+        test.testAddImplicitHydrogens();
+        test.testAromaticSaturation();
+    }
+    
 }
 
