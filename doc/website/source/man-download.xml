@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+  <!ENTITY manpage SYSTEM "../../../packages/tar/cdk/man/cdk-download.xml">
+]>
+<webpage id="man-download">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>The cdk-download Manual Page</title>
+    <titleabbrev>cdk-download</titleabbrev>
+    <summary>This page contains the manual page of the cdk-download binary that is
+      included in the CDK distribution.</summary>
+  </head>
+
+  <section>
+    <title>Manual Page</title>
+    &manpage;
+  </section>
+
+</webpage>

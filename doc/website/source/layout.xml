@@ -9,7 +9,7 @@
           altval="Banner"/>
 
   <copyright>
-    <year>2001</year><holder>The CDK Team</holder>
+    <year>2001-2003</year><holder>The CDK Team</holder>
   </copyright>
 
   <style src="example.css" type="text/css"/>
@@ -23,7 +23,12 @@
       <tocentry page="reference.xml" filename="reference.html"/>
       <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
       <tocentry page="api.xml" filename="api.html"/>
-      <tocentry page="manpages.xml" filename="manpages.html"/>
+      <tocentry page="manpages.xml" filename="manpages.html">
+        <tocentry page="man-dbadmin.xml" filename="man-dbadmin.html"/>
+        <tocentry page="man-download.xml" filename="man-download.html"/>
+        <tocentry page="man-fileconvert.xml" filename="man-fileconvert.html"/>
+        <tocentry page="man-view.xml" filename="man-view.html"/>
+      </tocentry>
       <tocentry page="rfc.xml" filename="rfc.html">
         <tocentry page="rfc1.xml" filename="rfc1.html"/>
         <tocentry page="rfc2.xml" filename="rfc2.html"/>

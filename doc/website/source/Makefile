@@ -11,6 +11,9 @@ XML_FILES := $(wildcard *.xml)
 
 all:
 	make website
+	make install
+
+install:
 	cp *.html ../target/.
 	mv ../target/index.html ../target/index_template.html
 
@@ -19,8 +22,11 @@ update: update-stats update-keyword
 stats: javadoc-stats.html javancss-stats.html
 update-stats: javancss-tmp.xml
 
-keyword: ../../../reports/javadoc/keyword.index.xml
-update-keyword: ../../../reports/javadoc/keyword.index.xml
+keyword: update-keyword
+update-keyword: ../../../reports/javadoc/MakeKeywordIndexDoclet.class ../../../reports/javadoc/keyword.index.xml
+
+../../../reports/javadoc/MakeKeywordIndexDoclet.class:
+	cd ../../../reports/javadoc; make
 
 ../../../reports/javadoc/keyword.index.xml:
 	cd ../../../reports/javadoc; ant keyword.index
