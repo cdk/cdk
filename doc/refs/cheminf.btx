@@ -2,19 +2,27 @@
 <!DOCTYPE bibtex:file SYSTEM "bibtexml-strict.dtd" >
 <bibtex:file xmlns:bibtex="http://bibtexml.sf.net/">
 
-<bibtex:entry id="Abola2000">
-<bibtex:article>
-<bibtex:author>Abola, E. E. and Bairoch, A. and Barker, W. C. and Beck, S. and Benson, D. A. and Berman, H. and Cameron, G. and Cantor, C. and Doubet, S. and Hubbard, T. J. P. and Jones, T. A. and Kleywegt, G. J. and Kolaskar, A. S. and Van Kuik, A. and Lesk, A. M. and Mewes, H. W. and Neuhaus, D. and Pfeiffer, G. and TenEyck, L. F. and Simpson, R. J. and Stoesser, G. and Sussman, J. L. and Tateno, Y. and Tsugita, A. and Ulrich, E. L. and et al.</bibtex:author>
-<bibtex:title>Quality control in databanks for molecular biology</bibtex:title>
-<bibtex:journal>Bioessays</bibtex:journal>
-<bibtex:volume>22</bibtex:volume>
-<bibtex:number>11</bibtex:number>
-<bibtex:pages>1024-1034</bibtex:pages>
-<bibtex:note>Nov</bibtex:note>
-<bibtex:abstract>Using a scientific measurement without an estimate of its error is like lending money to a stranger. Given the explosion in nucleic acid and protein sequence and structural data, what risks are the scientific and medical communities running in using these databases. Is there an 'ombudsman' who speaks for the users of the data? CODATA, the Committee on Data for Science and Technology of the International Council of Scientific Unions was established to improve the quality, reliability, processing, management, and accessibility of data for science and technology. The CODATA Task Group on Biological Macromolecules has surveyed quality control procedures of archival databanks in molecular biology. Our role is 'to advise, to be consulted, and to warn.' This report describes the kinds and extents of errors that may appear in nucleic acid and protein databases, and presents an agenda for future work to improve the quality of these databases, The results of the survey appear on the web (http://www.codata.org/codata/tgreports/tg_reps,html). BioEssays 22:1024-1034, 2000. (C) 2000 John Wiley &amp; Sons, Inc. [References: 52]</bibtex:abstract>
-<bibtex:keywords>Dna-sequencing projectsFree r-valueChloromuconate cycloisomeraseCrystal-structureAccuracyRefinementSearchNmrCrystallographyResolution</bibtex:keywords>
-<bibtex:year>2000</bibtex:year>
-</bibtex:article>
-</bibtex:entry>
+  <bibtex:entry id="BLE91">
+    <bibtex:article>
+      <bibtex:author>Bley, K. and Brandt, J. and Dengler, A. and
+        Frank, R. and Ugi, I.</bibtex:author>
+      <bibtex:title>Constitutional Formulae generated from Connectivity
+        Information: the Program MDRAW</bibtex:title>
+      <bibtex:journal>Journal of Chemical Research</bibtex:journal>
+      <bibtex:pages>2601-2689</bibtex:pages>
+      <bibtex:year>1991</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="BRE78">
+    <bibtex:article>
+      <bibtex:author>Bremser, W.</bibtex:author>
+      <bibtex:title>HOSE - A Novel Substructure Code</bibtex:title>
+      <bibtex:journal>Analytica Chimica Acta</bibtex:journal>
+      <bibtex:volume>103</bibtex:volume>
+      <bibtex:pages>355-365</bibtex:pages>
+      <bibtex:year>1978</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
 
 </bibtex:file>
