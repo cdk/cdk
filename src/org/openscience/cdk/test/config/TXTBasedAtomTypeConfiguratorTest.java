@@ -61,7 +61,7 @@ public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase
     
     public void testReadAtomTypes() throws Exception {
         TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
-        assertNotSame(0, configurator.readAtomTypes().size());
+        assertNotSame(new Integer(0), new Integer(configurator.readAtomTypes().size()));
     }
     
     public void testSetInputStream_InputStream() throws Exception {

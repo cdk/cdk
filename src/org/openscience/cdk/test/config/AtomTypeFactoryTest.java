@@ -66,7 +66,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
 	public void testAtomTypeFactory() {
         assertTrue(atf != null);
-        assertNotSame(0, atf.getSize());
+        assertNotSame(new Integer(0), new Integer(atf.getSize()));
     }
     
     public void testGetInstanceInputStream_InputStream_String() {
@@ -75,7 +75,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
             AtomTypeFactory atf = AtomTypeFactory.getInstance(ins, "xml");
             assertNotNull(atf);
-            assertNotSame(0, atf.getSize());
+            assertNotSame(new Integer(0),new Integer( atf.getSize()));
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -93,7 +93,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     public void testGetSize() {
         try {
             AtomTypeFactory atf = AtomTypeFactory.getInstance();
-            assertNotSame(0, atf.getSize());
+            assertNotSame(new Integer(0), new Integer(atf.getSize()));
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -104,7 +104,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
             AtomTypeFactory atf = AtomTypeFactory.getInstance();
             AtomType[] types = atf.getAllAtomTypes();
             assertNotNull(types);
-            assertNotSame(0, types.length);
+            assertNotSame(new Integer(0), new Integer(types.length));
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
