@@ -35,16 +35,16 @@ import java.util.Map;
 public interface Descriptor {
 
    /**
-    * Returns a <code>Map</code> which specifies which descriptor
-    * is implemented by this class. These fields are used in the map:
-    * <ul>
-    *  <li>Specification-Reference: refers to an entry in a unique dictionary
-    *  <li>Implementation-Title: anything
-    *  <li>Implementation-Identifier: a unique identifier for this version of
-    *      this class
-    *  <li>Implementation-Vendor: CDK, JOELib, or anything else
-    * </ul>
-    */
+   * Returns a <code>Map</code> which specifies which descriptor
+   * is implemented by this class. These fields are used in the map:
+   * <ul>
+   * <li>Specification-Reference: refers to an entry in a unique dictionary
+   * <li>Implementation-Title: anything
+   * <li>Implementation-Identifier: a unique identifier for this version of
+   *  this class
+   * <li>Implementation-Vendor: CDK, JOELib, or anything else
+   * </ul>
+   */
     public Map getSpecification();
     
     /** Returns the names of the parameters for this descriptor. */
