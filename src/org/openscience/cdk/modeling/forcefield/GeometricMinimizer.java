@@ -43,6 +43,8 @@ public class GeometricMinimizer {
 	double d = 0;
 	
 	ForceFieldTools ffTools = new ForceFieldTools();
+	BondStretching bs = new BondStretching();
+	AngleBending ab = new AngleBending();
 
 	Molecule molecule;
 
@@ -199,6 +201,7 @@ public class GeometricMinimizer {
 			
 			iterationNumber += 1;
 			iterationNumberBefore += 1;
+
 			//System.out.println("");
 			//System.out.println("SD Iteration number: " + iterationNumber);
 			//System.out.println("gm.steepestDescentsMinimisation, Energy Gradient:"+forceField.getEnergyGradient());
@@ -226,7 +229,6 @@ public class GeometricMinimizer {
 			gradient.set(forceField.getEnergyGradient());
 
 			checkConvergence(SDconvergenceCriterion);
-			//System.out.println("convergence: " + convergence);
 
 			System.out.println("");
 			System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.energyFunction(kCoordinates));
@@ -235,10 +237,16 @@ public class GeometricMinimizer {
 			    //System.out.println("STEEPESTDM: kplus1Coordinates:"+kplus1Coordinates);
 			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
 			}
+			
+			if (convergence == true) {
+				System.out.println("convergence: " + convergence);
+				System.out.println("gradient = " + gradient);
+			}
 
 		}
 		steepestDescentsMinimum.set(kplus1Coordinates);
-		System.out.println("The SD minimum energy is at: " + steepestDescentsMinimum);
+		forceField.setEnergyGradient(steepestDescentsMinimum);
+		//System.out.println("The SD minimum energy is at: " + steepestDescentsMinimum);
 		
 		return;
 	}
@@ -317,22 +325,27 @@ public class GeometricMinimizer {
 			
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradient.set(forceField.getEnergyGradient());
-
+			
 			checkConvergence(CGconvergenceCriterion);
-			//System.out.println("convergence: " + convergence);
-
+			
 			System.out.println("");
 			System.out.println("f(x" + iterationNumberBefore + ") = " + forceField.energyFunction(kCoordinates));
 			System.out.println("f(x" + iterationNumber + ") = " + forceField.energyFunction(kplus1Coordinates));
-
+			
 			if (molecule !=null){
 			    System.out.println("CGM: kplus1Coordinates:"+kplus1Coordinates);
 			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
 			}
-
+			
+			if (convergence == true) {
+				System.out.println("convergence: " + convergence);
+				System.out.println("gradient = " + gradient);
+			}
+			
 		 }
 		 
 		 conjugateGradientMinimum.set(kplus1Coordinates);
+		 forceField.setEnergyGradient(conjugateGradientMinimum);
 		 //System.out.println("The CG minimum energy is at: " + conjugateGradientMinimum);
 		 
 		return;

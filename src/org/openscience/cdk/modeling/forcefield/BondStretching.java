@@ -60,6 +60,7 @@ public class BondStretching {
 
 		Bond[] bonds = molecule.getBonds();
 		bondsNumber = bonds.length;
+		//System.out.println("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[bondsNumber][];
 		Atom[] atomsInBond = null;
 
@@ -207,8 +208,9 @@ public class BondStretching {
 	public void setGradientMMFF94SumEB(GVector coord3d) {
 		
 		gradientMMFF94SumEB.setSize(coord3d.getSize());
-		setBondLengthsFirstDerivative(coord3d);
+		
 		calculateDeltar(coord3d);
+		setBondLengthsFirstDerivative(coord3d);
 		
 		double sumGradientEB;
 		for (int i = 0; i < gradientMMFF94SumEB.getSize(); i++) {
@@ -220,6 +222,7 @@ public class BondStretching {
 			}
 			gradientMMFF94SumEB.setElement(i, sumGradientEB);
 		}
+		//System.out.println("gradientMMFF94 = " + gradientMMFF94SumEB);
 	}
 
 
@@ -347,6 +350,8 @@ public class BondStretching {
 	public void setHessianMMFF94SumEB(GVector coord3d) {
 		
 		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
+		
+		calculateDeltar(coord3d);
 		setBondLengthsSecondDerivative(coord3d);
 		calculateDeltar(coord3d);
 		

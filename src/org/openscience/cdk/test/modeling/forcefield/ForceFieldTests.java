@@ -109,36 +109,13 @@ public class ForceFieldTests extends CDKTestCase {
 		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
 		System.out.println("EnergyFunction is set");
 		
-		gm.setConvergenceParametersForSDM(5, 0.001);
+		gm.setConvergenceParametersForSDM(20, 0.00001);
 		System.out.println("SDM Parameters are set");
 		gm.steepestDescentsMinimization(acCoordinates, mmff94EF);
 		
 		System.out.println("gm.getSteepestDescentsMinimum() : " + gm.getSteepestDescentsMinimum());
 		/*for (int i = 0; i < acCoordinates.getSize(); i++) {
 			assertEquals(testResult3C[i], gm.getSteepestDescentsMinimum().getElement(i), 0.1);
-		}*/
-	}
-
-
-    	/**
-	 *  A unit test for JUnit (MMFF94EnergyFunction minimization with Conjugate Gradient Method)
-	 */
-	public void testMMFF94EnergyFunctionMinimizationWithConjugateGradientMethod()  throws Exception {
-		System.out.println("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Conjugate Gradient Method");
-		
-		createTestMoleculeAndSetMMFF94Parameters();
-
-		System.out.println("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
-		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
-		System.out.println("EnergyFunction is set");
-		
-		gm.setConvergenceParametersForCGM(5, 0.001);
-		System.out.println("CGM Parameters are set");
-		gm.conjugateGradientMinimization(acCoordinates, mmff94EF);
-		
-		System.out.println("gm.getConjugateGradientMinimum() : " + gm.getConjugateGradientMinimum());
-		/*for (int i = 0; i < acCoordinates.getSize(); i++) {
-			assertEquals(testResult3C[i], gm.getConjugateGradientMinimum().getElement(i), 0.1);
 		}*/
 	}
 
@@ -156,6 +133,29 @@ public class ForceFieldTests extends CDKTestCase {
 		for (int i = 0; i < molecule3Coordinates.getSize(); i++) {
 			assertEquals(testResult3C[i], gm.getConjugateGradientMinimum().getElement(i), 0.00001);
 		}
+	}
+
+
+    	/**
+	 *  A unit test for JUnit (MMFF94EnergyFunction minimization with Conjugate Gradient Method)
+	 */
+	public void testMMFF94EnergyFunctionMinimizationWithConjugateGradientMethod()  throws Exception {
+		System.out.println("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Conjugate Gradient Method");
+		
+		createTestMoleculeAndSetMMFF94Parameters();
+
+		System.out.println("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
+		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
+		System.out.println("EnergyFunction is set");
+		
+		gm.setConvergenceParametersForCGM(20, 0.00001);
+		System.out.println("CGM Parameters are set");
+		gm.conjugateGradientMinimization(acCoordinates, mmff94EF);
+		
+		System.out.println("gm.getConjugateGradientMinimum() : " + gm.getConjugateGradientMinimum());
+		/*for (int i = 0; i < acCoordinates.getSize(); i++) {
+			assertEquals(testResult3C[i], gm.getConjugateGradientMinimum().getElement(i), 0.1);
+		}*/
 	}
 
 
@@ -531,7 +531,19 @@ public class ForceFieldTests extends CDKTestCase {
 		}
 		return molecule;
 	}
-	
+
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception     Description of the Exception
+	 *@exception  CDKException  Description of the Exception
+	 */
+	public void testForceField() throws Exception, CDKException {
+		
+	}
+
+
 	/**
 	 *  A unit test for JUnit (Torsions)
 	 *

@@ -171,7 +171,7 @@ public class AngleBending {
 		int atomNumber = 0;
 		int coordinate;
 
-		for (int m = 0; m < coord3d.getSize(); m++) {
+		for (int m = 0; m < dDeltav.length; m++) {
 			
 			dDeltav[m] = new double[angleNumber];
 			
@@ -200,32 +200,32 @@ public class AngleBending {
 					xkj.sub(xk,xj);
 					//System.out.println("xkj = " + xkj);
 					
-					double rij = xi.distance(xj);
-					//System.out.println("rij = " + rij);
-					double rkj = xk.distance(xj);
-					//System.out.println("rkj = " + rkj);
+					double rji = xj.distance(xi);
+					//System.out.println("rji = " + rji);
+					double rjk = xj.distance(xk);
+					//System.out.println("rji = " + rjk);
 
-					dDeltav[m][l] = (-1/Math.sqrt(1-Math.pow(xij.dot(xkj)/(rij * rkj),2))) * (1/(Math.pow(rij,2) * Math.pow(rkj,2))); 
+					dDeltav[m][l] = (-1/Math.sqrt(1-Math.pow(xij.dot(xkj)/(rji * rjk),2))) * (1/(Math.pow(rji,2) * Math.pow(rjk,2))); 
 
 					if (angleAtomPosition[l][0] == atomNumber) {
 
 						switch (coordinate) {
-							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xk.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.x-xj.x)/rij));
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xk.x-xj.x) * rji * rjk - (xij.dot(xkj)) * rjk * (-(xj.x-xi.x)/rji));
 								break;
-							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xk.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.y-xj.y)/rij));
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xk.y-xj.y) * rji * rjk - (xij.dot(xkj)) * rjk * (-(xj.y-xi.y)/rji));
 								break;
-							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xk.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rkj * ((xi.z-xj.z)/rij));
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xk.z-xj.z) * rji * rjk - (xij.dot(xkj)) * rjk * (-(xj.z-xi.z)/rji));
 								break;
 						}
 					}
 					if (angleAtomPosition[l][1] == atomNumber) {
 
 						switch (coordinate) {
-							case 0: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.x - xk.x - xi.x) * rij * rkj - (xij.dot(xkj)) * ((-(xi.x-xj.x)/rij) * rkj + (-(xk.x-xj.x)/rkj) * rij));
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.x - xk.x - xi.x) * rji * rjk - (xij.dot(xkj)) * (((xj.x-xi.x)/rji) * rjk + ((xj.x-xk.x)/rjk) * rji));
 								break;
-							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.y - xk.y - xi.y) * rij * rkj - (xij.dot(xkj)) * ((-(xi.y-xj.y)/rij) * rkj + (-(xk.y-xj.y)/rkj) * rij));
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.y - xk.y - xi.y) * rji * rjk - (xij.dot(xkj)) * (((xj.y-xi.y)/rji) * rjk + ((xj.y-xk.y)/rjk) * rji));
 								break;
-							case 2: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.z - xk.z - xi.z) * rij * rkj - (xij.dot(xkj)) * ((-(xi.z-xj.z)/rij) * rkj + (-(xk.z-xj.z)/rkj) * rij));
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((2 * xj.z - xk.z - xi.z) * rji * rjk - (xij.dot(xkj)) * (((xj.z-xi.z)/rji) * rjk + ((xj.z-xk.z)/rjk) * rji));
 								break;
 						}
 					}
@@ -233,11 +233,11 @@ public class AngleBending {
 					if (angleAtomPosition[l][2] == atomNumber) {
 
 						switch (coordinate) {
-							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xi.x-xj.x) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.x-xj.x)/rkj));
+							case 0: dDeltav[m][l] = dDeltav[m][l] * ((xi.x-xj.x) * rji * rjk - (xij.dot(xkj)) * rji * (-(xj.x-xk.x)/rjk));
 								break;
-							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xi.y-xj.y) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.y-xj.y)/rkj));
+							case 1:	dDeltav[m][l] = dDeltav[m][l] * ((xi.y-xj.y) * rji * rjk - (xij.dot(xkj)) * rji * (-(xj.y-xk.y)/rjk));
 								break;
-							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xi.z-xj.z) * rij * rkj - (xij.dot(xkj)) * rij * ((xk.z-xj.z)/rkj));
+							case 2: dDeltav[m][l] = dDeltav[m][l] * ((xi.z-xj.z) * rji * rjk - (xij.dot(xkj)) * rji * (-(xj.z-xk.z)/rjk));
 								break;
 						}
 					}

@@ -15,6 +15,7 @@ import org.openscience.cdk.*;
  */
 
 public interface PotentialFunction {
+	String energyFunctionShape = "";
 	double energy = 0;			//Energy function in a 3xN point
 	GVector energyGradient = new GVector(3);		//Gradient of the energy function in a 3xN point.
 	GMatrix energyHessian = null;

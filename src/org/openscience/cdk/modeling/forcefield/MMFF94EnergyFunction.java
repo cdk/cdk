@@ -35,11 +35,13 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	 *
 	 */
 	public MMFF94EnergyFunction(AtomContainer molecule, Hashtable mmff94Tables) throws Exception {
+		System.out.println(molecule.getAtomCount() + " "+mmff94Tables.size());
 		bs.setMMFF94BondStretchingParameters(molecule, mmff94Tables);
+		System.out.println("bs is OK");
 		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables);
 		sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables);
-		t.setMMFF94TorsionsParameters(molecule, mmff94Tables);
-		vdwi.setMMFF94VanDerWaalsParameters(molecule, mmff94Tables);
+		//t.setMMFF94TorsionsParameters(molecule, mmff94Tables);
+		//vdwi.setMMFF94VanDerWaalsParameters(molecule, mmff94Tables);
 	}
 
 
@@ -70,18 +72,22 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	 *@param  coords3d  Current molecule coordinates.
 	 */
 	public void setEnergyGradient(GVector coords3d) {
+		//System.out.println("coords3d : " + coords3d);
 		energyGradient.setSize(coords3d.getSize());
 		
 		bs.setGradientMMFF94SumEB(coords3d);
-		ab.setGradientMMFF94SumEA(coords3d);
-		sbi.setGradientMMFF94SumEBA(coords3d);
-		t.setGradientMMFF94SumET(coords3d);
-		vdwi.setGradientMMFF94SumEvdW(coords3d);
+		//ab.setGradientMMFF94SumEA(coords3d);
+		//sbi.setGradientMMFF94SumEBA(coords3d);
+		//t.setGradientMMFF94SumET(coords3d);
+		//vdwi.setGradientMMFF94SumEvdW(coords3d);
+		
+		//System.out.println("bs.getGradientMMFF94SumEB() = " + bs.getGradientMMFF94SumEB());
+		//System.out.println("ab.getGradientMMFF94SumEA() = " + ab.getGradientMMFF94SumEA());
 		
 		for (int i=0; i<energyGradient.getSize();i++) {
 			energyGradient.setElement(i, bs.getGradientMMFF94SumEB().getElement(i) 
-				+ ab.getGradientMMFF94SumEA().getElement(i) + sbi.getGradientMMFF94SumEBA().getElement(i)
-				+ t.getGradientMMFF94SumET().getElement(i) + vdwi.getGradientMMFF94SumEvdW().getElement(i));
+				);//+ ab.getGradientMMFF94SumEA().getElement(i) + sbi.getGradientMMFF94SumEBA().getElement(i)
+				//+ t.getGradientMMFF94SumET().getElement(i) + vdwi.getGradientMMFF94SumEvdW().getElement(i));
 		}
 	}
 
@@ -106,16 +112,16 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 		double [] forHessian = new double[coords3d.getSize()*coords3d.getSize()];
 		
 		bs.setHessianMMFF94SumEB(coords3d);
-		ab.setHessianMMFF94SumEA(coords3d);
-		sbi.setHessianMMFF94SumEBA(coords3d);
-		t.setHessianMMFF94SumET(coords3d);
+		//ab.setHessianMMFF94SumEA(coords3d);
+		//sbi.setHessianMMFF94SumEBA(coords3d);
+		//t.setHessianMMFF94SumET(coords3d);
 		//vdwi.setHessianMMFF94SumEvdW(coords3d);
 		
 		for (int i = 0; i < coords3d.getSize(); i++) {
 			for (int j = 0; j < coords3d.getSize(); j++) {
 				forHessian [i*coords3d.getSize()+j] = bs.getHessianMMFF94SumEB().getElement(i,j) 
-					+ ab.getHessianMMFF94SumEA().getElement(i,j) + sbi.getHessianMMFF94SumEBA().getElement(i,j) 
-					+ t.getHessianMMFF94SumET().getElement(i,j); //+ vdwi.getHessianMMFF94SumEvdW().getElement(i,j);
+					;//+ ab.getHessianMMFF94SumEA().getElement(i,j) + sbi.getHessianMMFF94SumEBA().getElement(i,j) 
+					//+ t.getHessianMMFF94SumET().getElement(i,j); //+ vdwi.getHessianMMFF94SumEvdW().getElement(i,j);
 			}		
 		}
 

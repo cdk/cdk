@@ -16,7 +16,7 @@ import org.openscience.cdk.modeling.forcefield.*;
  * @cdk.module test
  */
 public class TestPotentialFunction implements PotentialFunction {
-	String functionShape = " f(X,Y) = X2 + 2 Y2 ";
+	String energyFunctionShape = " f(X,Y) = X2 + 2 Y2 ";
 	String gradientShape = " g = ( 2x , 4y )";
 	double energy = 0;
 	GVector energyGradient = new GVector(3);
