@@ -214,7 +214,7 @@ public class Renderer2D   {
     /**
      * @param minmax array of length for with min and max 2D coordinates
      */
-    private void paintBoundingBox(double[] minmax, String caption, 
+    public void paintBoundingBox(double[] minmax, String caption, 
                                   int side, Graphics graphics) {
         int[] ints = new int[4];
         ints[0] = (int)minmax[0] -side; // min x
@@ -269,7 +269,7 @@ public class Renderer2D   {
 	}
 
 
-	private void paintLassoLines(Graphics graphics)
+	public void paintLassoLines(Graphics graphics)
 	{
 		Vector points = r2dm.getLassoPoints();
 		if (points.size() > 1)
@@ -292,14 +292,14 @@ public class Renderer2D   {
 	 *
 	 * @param  atomCon  Description of the Parameter
 	 */
-     private void paintAtoms(AtomContainer atomCon, Graphics graphics) {
+    public void paintAtoms(AtomContainer atomCon, Graphics graphics) {
          Atom[] atoms = atomCon.getAtoms();
          for (int i = 0; i < atoms.length; i++) {
              paintAtom(atomCon, atoms[i], graphics);
          }
      }
 
-	private void paintAtom(AtomContainer container, Atom atom, Graphics graphics) {
+	public void paintAtom(AtomContainer container, Atom atom, Graphics graphics) {
         Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
         if (atom.equals(r2dm.getHighlightedAtom())) {
             paintColouredAtomBackground(atom, atomBackColor, graphics);
@@ -349,7 +349,7 @@ public class Renderer2D   {
 	 * @param  atom   The atom to be drawn
 	 * @param  color  The color of the atom to be drawn
 	 */
-	private void paintColouredAtomBackground(Atom atom, Color color, Graphics graphics)
+	public void paintColouredAtomBackground(Atom atom, Color color, Graphics graphics)
 	{
 		int atomRadius = r2dm.getAtomRadius();
 	    graphics.setColor(color);
@@ -374,7 +374,7 @@ public class Renderer2D   {
      * @author  Egon Willighagen <egonw@users.sf.net>
      * @created 2003-07-21
      */
-    private void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment, int atomNumber) {
+    public void paintAtomSymbol(Atom atom, Color backColor, Graphics graphics, int alignment, int atomNumber) {
         if (atom.getPoint2D() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
@@ -614,7 +614,7 @@ public class Renderer2D   {
      * @author  Egon Willighagen <egonw@users.sf.net>
      * @created 2003-08-08
      */
-    private void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics graphics, int alignment) {
+    public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, Graphics graphics, int alignment) {
         if (atom.getPoint2D() == null) {
             logger.warn("Cannot draw atom without 2D coordinate");
             return;
@@ -682,7 +682,7 @@ public class Renderer2D   {
      * @param  ringSet  The set of rings the molecule contains
      * @param  atomCon  Description of the Parameter
      */
-    private void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics graphics) {
+    public void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics graphics) {
         Color bondColor;
         Ring ring;
         Bond[] bonds = atomCon.getBonds();
@@ -715,7 +715,7 @@ public class Renderer2D   {
 	 * @param  bond       The Bond to be drawn.
 	 * @param  bondColor  Description of the Parameter
 	 */
-	private void paintBond(Bond bond, Color bondColor, Graphics graphics) {
+	public void paintBond(Bond bond, Color bondColor, Graphics graphics) {
 		if (bond.getAtomAt(0).getPoint2D() == null || 
             bond.getAtomAt(1).getPoint2D() == null) {
 			return;
@@ -749,7 +749,7 @@ public class Renderer2D   {
 	 * @param  ring       Description of the Parameter
 	 * @param  bondColor  Description of the Parameter
 	 */
-	private void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
+	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
 		if (bond.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC) && bond.getAtomAt(1).getFlag(CDKConstants.ISAROMATIC))
 		{
@@ -776,7 +776,7 @@ public class Renderer2D   {
 	 * @param  bond       The single bond to be drawn
 	 * @param  bondColor  Description of the Parameter
 	 */
-	private void paintSingleBond(Bond bond, Color bondColor, Graphics graphics) {
+	public void paintSingleBond(Bond bond, Color bondColor, Graphics graphics) {
         if (GeometryTools.has2DCoordinates(bond)) { 
             paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
         }
@@ -788,7 +788,7 @@ public class Renderer2D   {
 	 * @param  bond       The double bond to be drawn
 	 * @param  bondColor  Description of the Parameter
 	 */
-	private void paintDoubleBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintDoubleBond(Bond bond, Color bondColor, Graphics graphics)
 	{
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
 
@@ -805,7 +805,7 @@ public class Renderer2D   {
 	 * @param  bond       The triple bond to be drawn
 	 * @param  bondColor  Description of the Parameter
 	 */
-	private void paintTripleBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintTripleBond(Bond bond, Color bondColor, Graphics graphics)
 	{
 		paintSingleBond(bond, bondColor, graphics);
 
@@ -826,7 +826,7 @@ public class Renderer2D   {
 	 * @param  ring       The ring the bond is part of
 	 * @param  bondColor  Color of the bond
 	 */
-	private void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
+	public void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics graphics)
 	{
 		Point2d center = ring.get2DCenter();
 
@@ -869,7 +869,7 @@ public class Renderer2D   {
 	 * @param  coords
 	 * @param  bondColor  Color of the bond
 	 */
-	private void paintOneBond(int[] coords, Color bondColor, Graphics graphics)
+	public void paintOneBond(int[] coords, Color bondColor, Graphics graphics)
 	{
 	    graphics.setColor(bondColor);
 		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
@@ -886,7 +886,7 @@ public class Renderer2D   {
 	 * @param  bond       The singlebond to be drawn
 	 * @param  bondColor  Color of the bond
 	 */
-	void paintWedgeBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintWedgeBond(Bond bond, Color bondColor, Graphics graphics)
 	{
         double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
         
@@ -914,7 +914,7 @@ public class Renderer2D   {
 	 * @param  bond       The single bond to be drawn
 	 * @param  bondColor  Color of the bond
 	 */
-	void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics graphics)
+	public void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics graphics)
 	{
 	    graphics.setColor(bondColor);
 
@@ -954,7 +954,7 @@ public class Renderer2D   {
 	 *  Paints a line between the start point and end point of the pointer vector that
 	 *  is stored in the Renderer2DModel.
 	 */
-	private void paintPointerVector(Graphics graphics)
+	public void paintPointerVector(Graphics graphics)
 	{
 		Point startPoint = r2dm.getPointerVectorStart();
 		Point endPoint = r2dm.getPointerVectorEnd();
