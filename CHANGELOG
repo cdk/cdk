@@ -17,6 +17,7 @@ New:
   a Vector with asorted element names
 * Added a Comparator that can sort element names
   according to: C,H, then others (alphabetically)
+* More references in documentation.
 
 Fixes:
 * Added initialization of atoms Array in Bond.java

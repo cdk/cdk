@@ -34,6 +34,8 @@ import java.util.*;
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#MOR65">MOR65</a>
+ *
+ * @keyword Morgan number
  */
 
 public class MorganNumbersTools 

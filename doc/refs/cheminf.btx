@@ -52,6 +52,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="FIG96">
+   <bibtex:article>
+      <bibtex:author>Figueras, J.</bibtex:author>
+      <bibtex:title>Ring Perception Using Breadth-First Search</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput Sci.</bibtex:journal>
+      <bibtex:volume>36</bibtex:volume>
+      <bibtex:pages>986-991</bibtex:pages>
+      <bibtex:year>1996</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="FAU96">
     <bibtex:article>
       <bibtex:author>Faulon, J. L.</bibtex:author>
@@ -62,6 +73,18 @@
       <bibtex:volume>36</bibtex:volume>
       <bibtex:number>4</bibtex:number>
       <bibtex:pages>731-740</bibtex:pages>
+      <bibtex:year>1996</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="HAN96">
+    <bibtex:article>
+      <bibtex:author>Hanser, Th. and Jauffret, Ph. and Kaufmann, G.</bibtex:author>
+      <bibtex:title>A New Algorithm for Exhaustive Ring Perception in a 
+        Molecular Graph</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:volume>36</bibtex:volume>
+      <bibtex:pages>1146-1152</bibtex:pages>
       <bibtex:year>1996</bibtex:year>
     </bibtex:article>
   </bibtex:entry>
@@ -80,6 +103,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="HU96">
+    <bibtex:article>
+      <bibtex:author>Chang-Yu Hu and Lu Xu</bibtex:author>
+      <bibtex:title>On Highly Discriminating Molecular Topological Index</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:volume>29</bibtex:volume>
+      <bibtex:pages>82-90</bibtex:pages>
+      <bibtex:year>1996</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="KRA00">
     <bibtex:article>
       <bibtex:author>Krause, Stefan and Willighagen, Egon and Steinbeck,
@@ -90,6 +124,16 @@
       <bibtex:volume>5</bibtex:volume>
       <bibtex:pages>93-98</bibtex:pages>
       <bibtex:year>2000</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="MAR89">
+    <bibtex:article>
+      <bibtex:author>Marston, C.C.</bibtex:author>
+      <bibtex:journal>J.Chem.Phys.</bibtex:journal>
+      <bibtex:volume>91</bibtex:volume>
+      <bibtex:pages>3571</bibtex:pages>
+      <bibtex:year>1989</bibtex:year>
     </bibtex:article>
   </bibtex:entry>
 
@@ -140,6 +184,16 @@
           Chart.</bibtex:abstract>
       <bibtex:keywords>information</bibtex:keywords>
       <bibtex:year>1999</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="SCH84">
+    <bibtex:article>von Scholley, A., J. Chem. Inf. Comput. Sci. (1984) 24, 235-241
+      <bibtex:author>Von Scholley, A.</bibtex:author>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:volume>12</bibtex:volume>
+      <bibtex:pages>235-241</bibtex:pages>
+      <bibtex:year>1984</bibtex:year>
     </bibtex:article>
   </bibtex:entry>
 

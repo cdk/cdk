@@ -5,6 +5,7 @@
   <!ENTITY packages SYSTEM "packages.xml">
   <!ENTITY preface SYSTEM "preface.xml">
   <!ENTITY docs SYSTEM "docs.xml">
+  <!ENTITY biblio SYSTEM "../refs/biblio.dbx">
   <!ENTITY library-development SYSTEM "library-development.xml">
   <!ENTITY website-development SYSTEM "website-development.xml">
 ]>
@@ -39,6 +40,8 @@
   <part id="part:documentation">
     <title>Documentation</title>
     &docs;
+    
+    &biblio;
   </part>
 
   <part id="part:cdk-library">

@@ -1,6 +1,8 @@
-/* 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
@@ -37,10 +39,13 @@ import java.util.Vector;
  * provided with a starting constitution and it makes random moves in 
  * constitutional space from there. 
  * This generator was first suggested by
- * Faulon, J.-L. Journal of Chemical Information and Computer Sciences 1996, 36, 731-740. 
+ * Faulon, J.-L.
  * 
+ * References:
+ *   <a href="http://cdk.sf.net/biblio.html#FAU96">FAU96</a>
+ *
  * @keyword structure generator
- **/
+ */
  
 public class VicinitySampler
 {

@@ -35,12 +35,14 @@ import java.util.*;
 
 /**
  * This class checks whether a given molecular graph is contained as a subgraph in another 
- * given graph. The algorithm used is that described in 
- * von Scholley, A., J. Chem. Inf. Comput. Sci. (1984) 24, 235-241 
+ * given graph. The algorithm used is that described in SCH84.
+ *
+ * References:
+ *   <a href="http://cdk.sf.net/biblio.html#SCH84">SCH84</a>
  *
  * @author     steinbeck
  * @created    24. Februar 2002
- * @keyword    fingerprint
+ * @keyword    subgraph
  * @keyword    similarity
  */
 public class VonScholleySubgraphIsomorphismChecker 

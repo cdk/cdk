@@ -32,11 +32,11 @@ package org.openscience.cdk.math.qm;
 import org.openscience.cdk.math.*;
  
 /**
- * At his time the class don't work correcly
+ * At his time this class does not work correcly.
+ * The theory were from MAR89.
  *
- * The theory were from 
- * C.C.Marston; J.Chem.Phys. Vol.91; (1989) 3571
- * 
+ * References:
+ *   <a href="http://cdk.sf.net/biblio.html#MAR89">MAR89</a>
  */
 public class FourierGridBasis implements Basis
 {

@@ -1,10 +1,11 @@
-/* CanonicalLabeler.java
- *
- * $ author: 	Oliver Horlacher		$
- * $ contact: 	oliver.horlacher@therastrat.com 	$
- * $ date: 		Feb 26, 2002			$
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2001-2002
+ *
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -35,26 +36,30 @@ import java.util.Comparator;
 import java.util.Collections;
 /**
  * Canonically lables an atom container.
+ *
+ * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
+ * @created  Feb 26, 2002
+ *
+ * @keyword canonicalization
  */
 public class CanonicalLabeler {
 
-  /**
-   * Default constructor.
-   */
   public CanonicalLabeler() {
   }
 
   /**
    * Canonicaly label the fragment.
    * This is an implementation of the algorithm published in
-   * David Weininger etal, "SMILES 2. Algorithm for Generation of Unique SMILES Notation",
-   * J. Chem. Inf. Comput Sci. 1989, 29, 97-101.
+   * David Weininger et.al. (see WEI89).
    * <P>
    * The Collections.sort() method uses a merge sort which is stable and runs in n log(n).
    * <p>
-   * It is assumed that a chemicaly valid AtomContainer is provided this method dose not check
-   * the correctens of the AtomContainer.  Negative H counts will cause a NumberFormatException
+   * It is assumed that a chemicaly valid AtomContainer is provided: this method dose not check
+   * the correctness of the AtomContainer.  Negative H counts will cause a NumberFormatException
    * to be thrown.
+   *
+   * References:
+   *   <a href="http://cdk.sf.net/biblio.html#WEI89">WEI89</a>
    */
   public synchronized void canonLabel(AtomContainer atomContainer) {
     if (atomContainer.getAtomCount() == 0)

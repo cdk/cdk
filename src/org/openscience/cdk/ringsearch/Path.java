@@ -1,5 +1,7 @@
-/*
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/*  $RCSfile$    
+ *  $Author$    
+ *  $Date$    
+ *  $Revision$
  *
  *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
@@ -30,7 +32,12 @@ import java.util.Vector;
 import org.openscience.cdk.*;
 
 /**
- *  Implementation of a Path as needed by Th. Hanser, Ph, Jauffret, G. Kaufmann, "A New Algorithm for Exhaustive Ring Perception in a Molecular Graph" J. Chem. Inf. Comput Sci. 1996, 36, 1146-1152
+ *  Implementation of a Path as needed by HAN96.
+ *
+ * References:
+ *   <a href="http://cdk.sf.net/biblio.html#HAN96">HAN96</a>
+ *
+ * @keyword graph, path
  *
  * @author     steinbeck
  * @created    February 28, 2002

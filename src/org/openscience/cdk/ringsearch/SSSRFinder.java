@@ -1,6 +1,7 @@
-/* SSSRFinder.java
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -34,8 +35,10 @@ import org.openscience.cdk.*;
 /**
  * Finds the Smallest Set of Smallest Rings. 
  * This is an implementation of the algorithm published in
- * John Figueras, "Ring Perception Using Breadth-First Search", 
- * J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
+ * FIG96.
+ *
+ * References:
+ *   <a href="http://cdk.sf.net/biblio.html#FIG96">FIG96</a>
  *
  * @keyword smallest-set-of-rings
  */
@@ -47,10 +50,7 @@ public class SSSRFinder
 	private static final int PATH = 0;
 
 	/**
-	 * Finds the Smallest Set of Smallest Rings. 
-	 * This is an implementation of the algorithm published in
-	 * John Figueras, "Ring Perception Using Breadth-First Search", 
-	 * J. Chem. Inf. Comput Sci. 1996, 36, 986-991.
+	 * Finds the Smallest Set of Smallest Rings.
 	 *
 	 * @param   molecule the molecule to be searched for rings 
 	 * @return a RingSet containing the rings in molecule    

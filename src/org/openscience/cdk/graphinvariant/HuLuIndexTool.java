@@ -1,6 +1,7 @@
-/* 
- *
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -29,10 +30,10 @@ import org.openscience.cdk.tools.*;
 import org.openscience.cdk.graphinvariant.exception.*;
 import org.openscience.cdk.exception.*;
 import java.util.*;
+
 /**
- * Collection of methods for the calculation of topological indices of a molecular graph
+ * Collection of methods for the calculation of topological indices of a molecular graph.
  */
- 
 public class HuLuIndexTool 
 {
 	private static final int INFINITE = Integer.MAX_VALUE;
@@ -40,8 +41,12 @@ public class HuLuIndexTool
    /**
    * Calculates the extended adjacency matrix index.
    * An implementation of the algorithm published in
-   * Chang-Yu Hu and Lu Xu, "On Highly Discriminating Molecular Topological Index",
-   * J. Chem. Inf. Comput. Sci. 1996, 29, 82-90.
+   * the reference.
+   *
+   * References:
+   *   <a href="http://cdk.sf.net/biblio.html#HU96">HU96</a>
+   *
+   * @keyword EAID number
    */
 	public static double getEAIDNumber(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException,
 			BadMatrixFormatException,MatrixIndexOutOfBoundsException
