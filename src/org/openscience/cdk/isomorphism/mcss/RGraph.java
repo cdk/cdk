@@ -9,7 +9,7 @@
  *  and Thierry Hanser from IXELIS mail@ixelis.net
  *  
  *  IXELIS sarl - Semantic Information Systems
- *               17 rue des Cèdres 67200 Strasbourg, France
+ *               17 rue des C?dres 67200 Strasbourg, France
  *               Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
   *
  *  CDK Contact: cdk-devel@lists.sf.net
@@ -49,54 +49,57 @@ import java.util.BitSet;
   * between the 2 couple of compatible edges associated to the 2 RGraph nodes
   * forming this edge.
   * 
-  * Exeample: G1 : C-C=O  and G2 : C-C-C=0
-  *                1 2 3           1 2 3 4
+  * <p>Example:
+  * <pre>
+  *    G1 : C-C=O  and G2 : C-C-C=0
+  *         1 2 3           1 2 3 4
+  * </pre>
   *
   *  The resulting RGraph(G1,G2) will contain 3 nodes:
   *
-  *  Node A : association between bond C-C :  1-2 in G1 and 1-2 in G2
+  *  <p>Node A : association between bond C-C :  1-2 in G1 and 1-2 in G2
   *  Node B : association between bond C-C :  1-2 in G1 and 2-3 in G2
   *  Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2
   *  The RGraph will also contain one edge representing the 
   *  adjacency between node B and C  that is : bonds 1-2 and 2-3 in G1 
   *  and bonds 2-3 and 3-4 in G2.
   *
-  *  Once the RGraph has been built from the two compared graphs
+  *  <p>Once the RGraph has been built from the two compared graphs
   *  it becomes a very interesting tool to perform all kinds of 
   *  structural search (isomorphism, substructure search, maximal common
   *  substructure,....).
   *
-  *  The  search may be constrained by mandatory elements (e.g. bonds that
+  *  <p>The  search may be constrained by mandatory elements (e.g. bonds that
   *  have to be present in the mapped common substructures).
   *
-  *  Performing a query on an RGraph requires simply to set the constrains
+  *  <p>Performing a query on an RGraph requires simply to set the constrains
   *  (if any) and to invoke the parsing method (parse())
   * 
-  *  The RGraph has been designed to be a generic tool. It may be constructed
+  *  <p>The RGraph has been designed to be a generic tool. It may be constructed
   *  from any kind of source graphs, thus it is not restricted to a chemical
   *  context.
   *
-  *  The RGraph model is indendant from the CDK model and the link between
+  *  <p>The RGraph model is indendant from the CDK model and the link between
   *  both model is performed by the RTools class. In this way the RGraph 
   *  class may be reused in other graph context (conceptual graphs,....)
   *
-  *  /!\ Important note: This implementation of the algorithm has not been
+  *  <p><b>Important note</b>: This implementation of the algorithm has not been
   *                      optimized for speed at this stage. It has been
   *                      written with the goal to clearly retrace the 
   *                      principle of the underlined search method. There is
   *                      room for optimization in many ways including the
   *                      the algorithm itself. 
   *
-  *  The general algoritm derives from "Machine Learning of
+  *  <p>The general algoritm derives from "Machine Learning of
   *  of generic Reactions : 3. An efficient Algorithm for Maximal Common 
   *  Substructure determination" C. Tonnelier, Ph. Jauffret, T. Hanser
   *  and G. Kaufmann. Tetrahedron Vol. 3, No 6, pp. 351-358, 1990.
   *  and modified in the These of T. Hanser "Apprentissage automatique 
-  *  de méthodes de synthèse à partir d'exemples". Université Louis Pasteur
+  *  de m?thodes de synth?se ? partir d'exemples". Universit? Louis Pasteur
   *  STRASBOURG 1993.
   *
   * @author     Stephane Werner from IXELIS mail@ixelis.net
-  * @created    17 juillet 2002
+  * @created    2002-07-17
   */
 
 public class RGraph
@@ -216,7 +219,7 @@ public class RGraph
      *  Parsing of the RGraph. This is the main method
      *  to perform a query. Given the constrains c1 and c2
      *  defining mandatory elements in G1 and G2 and given
-     *  the search options, this méthod builds an initial set
+     *  the search options, this m?thod builds an initial set
      *  of starting nodes (B) and parses recursively the
      *  RGraph to find a list of solution according to 
      *  these parameters.
