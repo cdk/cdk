@@ -555,6 +555,9 @@
                     <fileset dir="${build}">
                         <includesfile name="${src}/extra.classes" />
                     </fileset>
+                    <fileset dir="${build}/${src}">
+                        <include name="org/openscience/cdk/dict/data/*.xml" />
+                    </fileset>
                 </jar>
         </target>
 
