@@ -52,6 +52,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     IOSetting comment;
     IOSetting command;
     BooleanIOSetting shell;
+    IntegerIOSetting proccount;
+    BooleanIOSetting usecheckpoint;
     
     /**
     * Constructs a new writer that produces input files to run a
@@ -89,6 +91,20 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     public void writeMolecule(Molecule mol) throws IOException {
         
         customizeJob();
+        
+        // write extra statements
+        if (proccount.getSettingValue() > 1) {
+            writer.write("%nprocl=" + proccount.getSettingValue());
+            writer.newLine();
+        }
+        if (usecheckpoint.isSet()) {
+            if (mol.getID() != null && mol.getID().length() > 0) {
+                writer.write("%chk=" + mol.getID() + ".chk");
+            } else {
+                writer.write("%chk=job.chk");
+            }
+            writer.newLine();
+        }
         
         // write the command line
         writer.write("# " + method.getSetting() + 
@@ -187,6 +203,16 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
           "Should the calculation be open shell?", 
           "false");
         fireWriterSettingQuestion(shell);
+
+        proccount = new IntegerIOSetting("ProcessorCount", IOSetting.LOW,
+          "How many processors should be used by Gaussian?", 
+          "1");
+        fireWriterSettingQuestion(proccount);
+
+        usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.LOW,
+          "Should a check point file be saved?", 
+          "false");
+        fireWriterSettingQuestion(usecheckpoint);
     }
 }
 
