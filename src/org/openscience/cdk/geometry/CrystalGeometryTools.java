@@ -288,6 +288,20 @@ public class CrystalGeometryTools {
             (calcAxisLength(a)*calcAxisLength(b))));
     };
 
+	/** 
+     * Determines if this model contains fractional (crystal) coordinates.
+	 *
+	 * @return  boolean indication that 3D coordinates are available 
+	 */
+    public static boolean hasCrystalCoordinates(AtomContainer m) {
+        Atom[] atoms = m.getAtoms();
+        for (int i=0; i < atoms.length; i++) {
+            if (atoms[i].getFractionalPoint3D() == null) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 
