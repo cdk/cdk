@@ -1,0 +1,6 @@
+Makefile
+Makefile.in
+aclocal.m4
+configure
+config.*
+cdk-doc-*.tar.gz

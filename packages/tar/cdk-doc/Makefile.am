@@ -1,0 +1,6 @@
+
+PREFIX="@prefix@"
+SUBDIRS=javadoc
+
+EXTRA_DIST=VERSION
+
