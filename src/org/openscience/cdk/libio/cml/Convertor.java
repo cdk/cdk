@@ -29,13 +29,35 @@
  */
 package org.openscience.cdk.libio.cml;
 
+import java.util.*;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.w3c.dom.Document;
 
 import org.xmlcml.cmlimpl.*;
 import org.xmlcml.cml.*;
 
-import org.openscience.cdk.*;
+import org.w3c.dom.*;
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.dict.*;
 
 /**
  * Class that provides convertor procedures to
@@ -51,163 +73,432 @@ public class Convertor {
 
   public final static int COORDINATES_3D = 3;
   public final static int COORDINATES_2D = 2;
-  private static org.openscience.cdk.tools.LoggingTool logger = new org.openscience.cdk.tools.LoggingTool();
-
-
-  /**
-   *  Converts a cdk atom to cml atom.
-   *
-   * @param  atom  The atom to convert.
-   * @param  ac    An atom container atom is in, null if none. Used for building id.
-   * @param  doc   The cmldocument we want this to be part of.
-   * @return       The cml atom.
-   */
-  public static CMLAtom convert(Atom atom, AtomContainer ac, CMLDocument doc) {
-    return convert(atom, -1, ac, doc);
+  private static org.openscience.cdk.tools.LoggingTool logger;
+  private CMLDocument doc;
+  private IsotopeFactory isotopeFactory;
+  boolean useCmlIdentifiers;
+  
+  
+  public Convertor(){
+    super();
+    logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+    try {
+        isotopeFactory = IsotopeFactory.getInstance();
+    } catch (Exception exception) {
+        logger.error("Failed to initiate isotope factory: " + exception.toString());
+    }
   }
 
 
-  /**
-   *  Converts a cdk atom to cml atom.
-   *
-   * @param  atom  The atom to convert.
-   * @param  coordType  2 or 3.
-   * @param  ac    An atom container atom is in, null if none. Used for building id.
-   * @param  doc   The cmldocument we want this to be part of.
-   * @return       The cml atom.
-   */
-  public static CMLAtom convert(Atom atom, int coordType, AtomContainer ac, CMLDocument doc) {
-    if (atom != null) {
-      AtomImpl convertedAtom = new AtomImpl(doc);
-      if (coordType == COORDINATES_3D || (atom.getPoint3D() != null && coordType != -1)) {
-        convertedAtom.setX3(atom.getX3D());
-        convertedAtom.setY3(atom.getY3D());
-        convertedAtom.setZ3(atom.getZ3D());
-      } else if (coordType == COORDINATES_2D || (atom.getPoint2D() != null && coordType != -1)) {
-        convertedAtom.setX2(atom.getX2D());
-        convertedAtom.setY2(atom.getY2D());
-      }
-      convertedAtom.setElementType(atom.getSymbol());
-      if (atom.getCharge() != 0) {
-        convertedAtom.setFormalCharge((int) atom.getCharge());
-      }
-      if (atom.getHydrogenCount() != 0) {
-        convertedAtom.setHydrogenCount(atom.getHydrogenCount() + "");
-      }
-      if (ac != null) {
-        convertedAtom.setId("a" + (ac.getAtomNumber(atom) + 1));
-      }
-      int massNumber = atom.getMassNumber();
-      if (!(atom instanceof PseudoAtom)) {
-        try {
-          Isotope majorIsotope = IsotopeFactory.getInstance().getMajorIsotope(atom.getSymbol());
-          if (majorIsotope != null) {
-            int majorMassNumber = majorIsotope.getMassNumber();
-            if (massNumber != 0 && massNumber != majorMassNumber) {
-              convertedAtom.setIsotope(massNumber);
-            }
-          } else {
-            logger.warn("Could not find major isotope for : " + atom.getSymbol());
-          }
-        } catch (Exception ex) {
-          logger.error("Failed to initiate isotope factory: " + ex.toString());
+  
+    /**
+     * Serializes the ChemObject to CML and redirects it to the output Writer.
+     *
+     * @param object A Molecule of SetOfMolecules object
+     */
+    public Node convert(ChemObject object, CMLDocument doc, boolean useCmlIdentifiers) throws CDKException, CMLException {
+        logger.debug("Writing object in CML of type: " + object.getClass().getName());
+        this.doc=doc;
+        this.useCmlIdentifiers=useCmlIdentifiers;
+        Element test=doc.createElement("test");
+        if (object instanceof SetOfMolecules) {
+            writeSetOfMolecules((SetOfMolecules)object, test);
+        } else if (object instanceof Molecule) {
+            writeMolecule((Molecule)object, test);
+        } else if (object instanceof Crystal) {
+            writeCrystal((Crystal)object, test);
+        } else if (object instanceof ChemSequence) {
+            writeChemSequence((ChemSequence)object, test);
+        } else if (object instanceof ChemFile) {
+            writeChemFile((ChemFile)object, test);
+        } else if (object instanceof ChemModel) {
+            writeChemModel((ChemModel)object, test);
+        } else if (object instanceof Atom) {
+            writeAtom((Atom)object, test);
+        } else if (object instanceof Bond) {
+            writeBond((Bond)object, test);
+        } else if (object instanceof Reaction) {
+            writeReaction((Reaction)object, test);
+        } else {
+            logger.error("This object type is not supported.");
+            throw new CDKException("This object type is not supported.");
         }
-      }
-      return convertedAtom;
-    } else {
-      return null;
+        return(test.getFirstChild());
+    };
+
+    // Private procedures
+
+    private void writeChemFile(ChemFile cf, Element nodeToAppend) throws CMLException{
+        CmlImpl cml=new CmlImpl(doc);
+        if (cf.getChemSequenceCount() > 1) {
+            cml.setTitle("sequence");
+            nodeToAppend.appendChild(cml);
+            for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
+                writeChemSequence(cf.getChemSequence(i),cml);
+            }
+        } else {
+            for (int i=0; i < cf.getChemSequenceCount(); i++ ) {
+                writeChemSequence(cf.getChemSequence(i),cml);
+            }
+        }
     }
-  }
 
-
-  /**
-   *  Converts a cdk bond to cml bond.
-   *
-   * @param  bond              The bond to convert.
-   * @param  ac                An atom container atom is in, null if none. Used for building id and related atoms.
-   * @param  doc               The document this should be part of.
-   * @return                   Description of the Returned Value.
-   * @exception  CMLException  Description of Exception.
-   */
-  public static CMLBond convert(Bond bond, AtomContainer ac, CMLDocument doc) throws CMLException {
-    if (bond != null) {
-      BondImpl convertedBond = new BondImpl(doc);
-      if (ac != null) {
-        convertedBond.setAtomRefs2("a" + (ac.getAtomNumber(bond.getAtoms()[0])+1) + " a" + (ac.getAtomNumber(bond.getAtoms()[1])+1));
-        convertedBond.setId("b" + (ac.getBondNumber(bond) + 1));
-      }
-      convertedBond.setOrder(((int) bond.getOrder()) + "");
-      return convertedBond;
-    } else {
-      return null;
+    private void writeCrystal(Crystal crystal, Element nodeToAppend) throws CMLException {
+        // FIXME: does this produce CML 2
+        MoleculeImpl mol=new MoleculeImpl(doc);
+        nodeToAppend.appendChild(mol);
+        CrystalImpl crystalimp=new CrystalImpl(doc);
+        mol.appendChild(crystalimp);
+        Element string=doc.createElement("string");
+        string.setAttribute("builtin","spacegroup");
+        crystalimp.appendChild(string);
+        Element floatarraya=doc.createElement("floatArray");
+        floatarraya.setAttribute("title","a");
+        floatarraya.setAttribute("convention","PMP");
+        crystalimp.appendChild(floatarraya);
+        floatarraya.appendChild(doc.createTextNode(write(crystal.getA())));
+        Element floatarrayb=doc.createElement("floatArray");
+        floatarrayb.setAttribute("title","b");
+        floatarrayb.setAttribute("convention","PMP");
+        crystalimp.appendChild(floatarrayb);
+        floatarrayb.appendChild(doc.createTextNode(write(crystal.getB())));
+        Element floatarrayc=doc.createElement("floatArray");
+        floatarrayc.setAttribute("title","c");
+        floatarrayc.setAttribute("convention","PMP");
+        crystalimp.appendChild(floatarrayc);
+        floatarrayc.appendChild(doc.createTextNode(write(crystal.getC())));
     }
-  }
 
-
-  /**
-   *  Converts a cdk molecule to a cml molecule.
-   *
-   * @param  mol               The molecule to convert.
-   * @return                   The converted molecule.
-   * @exception  CMLException  Description of Exception
-   */
-  public static CMLMolecule convert(Molecule mol) throws CMLException {
-    return convert(mol, -1);
-  }
-
-
-  /**
-   *  Converts a cdk molecule to a cml molecule.
-   *
-   * @param  mol               The molecule to convert.
-   * @param  coordType         2 or 3.
-   * @return                   The converted molecule.
-   * @exception  CMLException  Description of Exception
-   */
-  public static CMLMolecule convert(Molecule mol, int coordType) throws CMLException {
-    CMLDocumentFactory docfac = DocumentFactoryImpl.newInstance();
-    CMLDocument doc = (CMLDocument) docfac.createDocument();
-    return convert(mol, coordType, doc);
-  }
-
-
-
-  /**
-   *  Converts a cdk molecule to a cml molecule.
-   *
-   * @param  mol               The molecule to convert.
-   * @param  coordType         2 or 3.
-   * @param  doc               The document this will be part of.
-   * @return                   The converted molecule.
-   * @exception  CMLException  Description of Exception.
-   */
-  public static CMLMolecule convert(Molecule mol, int coordType, CMLDocument doc) throws CMLException {
-    if (mol != null) {
-      MoleculeImpl converted = new MoleculeImpl(doc);
-      AtomArrayImpl atomarray = new AtomArrayImpl(doc);
-      BondArrayImpl bondarray = new BondArrayImpl(doc);
-
-      int NOatoms = mol.getAtomCount();
-
-      // add atoms
-      for (int i = 0; i < NOatoms; i++) {
-        atomarray.appendAtom(convert(mol.getAtomAt(i), coordType, mol, doc));
-      }
-
-      converted.appendAtomArray(atomarray);
-
-      // add bonds
-      for (int i = 0; i < mol.getBondCount(); i++) {
-        bondarray.appendBond(convert(mol.getBondAt(i), mol, doc));
-      }
-
-      converted.appendBondArray(bondarray);
-      doc.appendChild(converted);
-
-      return converted;
-    } else {
-      return null;
+    private void writeAtomContainer(AtomContainer ac, Element nodeToAppend) throws CMLException{
+        writeAtomArray(ac.getAtoms(),nodeToAppend);
+        writeBondArray(ac.getBonds(),nodeToAppend);
     }
-  }
+
+    private void writeSetOfMolecules(SetOfMolecules som, Element nodeToAppend) throws CMLException{
+        logger.debug("Writing SOM");
+        int count = som.getMoleculeCount();
+        logger.debug("Found " + count + " molecule(s) in set");
+        if (count > 1) {
+            ListImpl list=new ListImpl(doc);
+            nodeToAppend.appendChild(list);
+            for (int i = 0; i < count; i++) {
+              writeMolecule(som.getMolecule(i), list);
+            }
+        }else{
+            writeMolecule(som.getMolecule(0), nodeToAppend);
+        }
+    }
+
+    private void writeChemSequence(ChemSequence chemseq, Element nodeToAppend) throws CMLException {
+        int count = chemseq.getChemModelCount();
+        if (count > 1){
+            ListImpl list=new ListImpl(doc);
+            nodeToAppend.appendChild(list);
+            for (int i = 0; i < count; i++) {
+                writeChemModel(chemseq.getChemModel(i),list);
+            }
+        }else{
+            writeChemModel(chemseq.getChemModel(0), nodeToAppend);
+        }
+    }
+
+    private void writeChemModel(ChemModel model, Element nodeToAppend) throws CMLException {
+        logger.debug("Writing ChemModel");
+        Crystal crystal = model.getCrystal();
+        SetOfMolecules som = model.getSetOfMolecules();
+        SetOfReactions reactionSet = model.getSetOfReactions();
+        if (crystal != null) {
+            writeCrystal(crystal, nodeToAppend);
+        }
+        if (som != null) {
+            writeSetOfMolecules(som, nodeToAppend);
+        }
+        if (reactionSet != null) {
+            writeSetOfReactions(reactionSet, nodeToAppend);
+        }
+        if (crystal == null && som == null && reactionSet == null) {
+            nodeToAppend.appendChild(doc.createComment("model contains no data -->\n"));
+        }
+    }
+
+    private void writeSetOfReactions(SetOfReactions reactionSet, Element nodeToAppend) throws CMLException{
+        Reaction[] reactions = reactionSet.getReactions();
+        if (reactions.length > 0) {
+            ReactionListImpl reactionlist=new ReactionListImpl(doc);
+            reactionlist.setAttribute("xmlns","http://www.xml-cml.org/schema/cml2/react");
+            nodeToAppend.appendChild(reactionlist);
+            addID(reactionSet, reactionlist);
+            addTitle(reactionSet, reactionlist);
+            // first reaction properties
+            writeProperties(reactionSet, reactionlist);
+            // now come the actual reactions
+            for (int i=0; i < reactions.length; i++) {
+                writeReaction(reactions[i], reactionlist);
+            }
+        }
+    }
+    
+    private void writeReaction(Reaction reaction, Element nodeToAppend) throws CMLException{
+        ReactionImpl reactionimpl=new ReactionImpl(doc);
+        reactionimpl.setAttribute("xmlns","http://www.xml-cml.org/schema/cml2/react");
+        nodeToAppend.appendChild(reactionimpl);
+        addID(reaction, reactionimpl);
+        addTitle(reaction, reactionimpl);
+        // first reaction properties
+        writeProperties(reaction, reactionimpl);
+        // now come reactants and products
+        Molecule[] reactants = reaction.getReactants().getMolecules();
+        if (reactants.length > 0) {
+            ReactantListImpl reactantslist=new ReactantListImpl(doc);
+            reactionimpl.appendChild(reactantslist);
+            for (int i=0; i<reactants.length; i++) {
+                ReactantImpl reactant=new ReactantImpl(doc);
+                reactantslist.appendChild(reactant);
+                writeMolecule(reactants[i], reactant);
+            }
+        }
+        Molecule[] products = reaction.getProducts().getMolecules();
+        if (products.length > 0) {
+            ProductListImpl productslist=new ProductListImpl(doc);
+            reactionimpl.appendChild(productslist);
+            for (int i=0; i<products.length; i++) {
+                ProductImpl product=new ProductImpl(doc);
+                productslist.appendChild(product);
+                writeMolecule(products[i], product);
+            }
+        }
+    }
+    
+    private boolean addID(ChemObject object, Element nodeToAdd) {
+        if (object.getID() == null || object.getID().length() == 0) {
+            return false;
+        } else {
+            // use some unique default -> the hashcode
+            nodeToAdd.setAttribute("id", object.getID());
+            return true;
+        }
+    }
+    
+    private boolean addTitle(ChemObject object, Element nodeToAdd) {
+        if (object.getProperty(CDKConstants.TITLE) != null) {
+            addTitle(object,nodeToAdd);
+            return true;
+        }
+        return false;
+    }
+
+    private void writeMolecule(Molecule mol, Element nodeToAppend) throws CMLException{
+        // create CML atom and bond ids
+        if (useCmlIdentifiers) {
+            new IDCreator().createIDs(mol);
+        }
+        MoleculeImpl molecule=new MoleculeImpl(doc);
+        nodeToAppend.appendChild(molecule);
+        if (mol.getID() != null && mol.getID().length() != 0) {
+            molecule.setAttribute("id", mol.getID());
+        }        
+        writeAtomContainer((AtomContainer)mol,molecule);
+    }
+
+    private void writeAtomArray(Atom atoms[], Element nodeToAppend) {
+        AtomArrayImpl atomarray=new AtomArrayImpl(doc);
+        nodeToAppend.appendChild(atomarray);
+        for (int i = 0; i < atoms.length; i++) {
+            writeAtom(atoms[i], atomarray);
+        }
+    }
+    
+    private void writeBondArray(Bond bonds[], Element nodeToAppend) throws CMLException{
+        if (bonds.length > 0) {
+            BondArrayImpl bondarray=new BondArrayImpl(doc);
+            nodeToAppend.appendChild(bondarray);
+            for (int i = 0; i < bonds.length; i++) {
+                writeBond(bonds[i], bondarray);
+            }
+        }
+    }
+    
+    private void writeProperties(ChemObject object, Element nodeToAppend) {
+        Hashtable props = object.getProperties();
+        Enumeration keys = props.keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            if (key instanceof DictRef) {
+                Object value = props.get(key);
+                Element scalar=doc.createElement("scalar");
+                scalar.setAttribute("dictRef",((DictRef)key).getType());
+                nodeToAppend.appendChild(scalar);
+                scalar.appendChild(doc.createTextNode(value.toString()));
+            } else if (key instanceof String && !((String)key).startsWith("org.openscience.cdk")) {
+                Object value = props.get(key);
+                Element scalar=doc.createElement("scalar");
+                scalar.setAttribute("title",(String)key);
+                nodeToAppend.appendChild(scalar);
+                scalar.appendChild(doc.createTextNode(value.toString()));
+            } else {
+                logger.warn("Don't know what to do with this property key: " +
+                    key.getClass().getName()
+                );
+            }
+        }
+    }
+
+    /**
+     * Picks the first dictRef it finds. CML support only one, but CDK 
+     * tends to have more than one, i.e. also dictRefs for fields.
+     */
+    private boolean addDictRef(ChemObject object, Element nodeToAppend) {
+        Hashtable properties = object.getProperties();
+        Iterator iter = properties.keySet().iterator();
+        while (iter.hasNext()) {
+            Object key = iter.next();
+            if (key instanceof String) {
+                String keyName = (String)key;
+                if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
+                    String dictRef = (String)properties.get(keyName);
+                    String details = "Dictref being anaylyzed: " + dictRef;
+                    nodeToAppend.setAttribute("dictRef", dictRef);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private boolean addAtomID(Atom atom, Element nodeToAppend) {
+        nodeToAppend.setAttribute("id", "a" + new Integer(atom.hashCode()).toString());
+        return true;
+    }
+    
+    private void writeAtom(Atom atom, Element nodeToAppend) {
+        AtomImpl atomimpl=new AtomImpl(doc);
+        nodeToAppend.appendChild(atomimpl);
+        addAtomID(atom, atomimpl);
+        addDictRef(atom, atomimpl);
+        if (atom instanceof PseudoAtom) {
+            String label = ((PseudoAtom)atom).getLabel();
+            if (label != null) atomimpl.setAttribute("title", label);
+            atomimpl.setAttribute("elementType", "Du");
+        } else {
+            atomimpl.setAttribute("elementType", atom.getSymbol());
+        }
+        add(atom.getPoint2D(), atomimpl);
+        add(atom.getPoint3D(), atomimpl);
+        addFractional(atom.getFractionalPoint3D(), atomimpl);
+        int fCharge = atom.getFormalCharge();
+        if (fCharge != 0) {
+            atomimpl.setAttribute("formalCharge", fCharge+"");
+        }
+        int hydrogenCount = atom.getHydrogenCount();
+        if (hydrogenCount != 0) {
+            atomimpl.setAttribute("hydrogenCount", hydrogenCount+"");
+        }
+        int massNumber = atom.getMassNumber();
+        if (!(atom instanceof PseudoAtom)) {
+            Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+            if (majorIsotope != null) {
+                int majorMassNumber = majorIsotope.getMassNumber();
+                if (massNumber != 0 && massNumber != majorMassNumber) {
+                    atomimpl.setAttribute("isotope", massNumber+"");
+                }
+            } else {
+                logger.warn("Could not find major isotope for : " + atom.getSymbol());
+            }
+        }
+        writeProperties(atom, atomimpl);
+    }
+
+    private void writeBond(Bond bond, Element nodeToAdd) throws CMLException {
+        BondImpl bondimpl=new BondImpl(doc);
+        nodeToAdd.appendChild(bondimpl);
+        logger.debug("Bond id: " + bond.getID());
+        if (bond.getID() == null || bond.getID().length() == 0) {
+            nodeToAdd.setAttribute("id", "b" + bond.hashCode());
+        }else{
+            nodeToAdd.setAttribute("id", bond.getID());
+        }
+        StringBuffer atomRefs = new StringBuffer();
+        Atom[] atoms = bond.getAtoms();
+        for (int i = 0; i < atoms.length; i++) {
+            String atomID = atoms[i].getID();
+            if (atomID == null || atomID.length() == 0) {
+                atomRefs.append("a" + new Integer(atoms[i].hashCode()).toString());
+            } else {
+                atomRefs.append(atomID);
+            }
+            if (i < atoms.length-1) {
+                atomRefs.append(" ");
+            }
+        }
+        if (atoms.length == 2) {
+            bondimpl.setAtomRefs2(atomRefs.toString());
+        } else {
+            bondimpl.setAtomRefs(atomRefs.toString());
+        }
+        double border = bond.getOrder();
+        if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            bondimpl.setAttribute("order", "A");
+        } else if (border == CDKConstants.BONDORDER_SINGLE) {
+            bondimpl.setAttribute("order", "S");
+        } else if (border == CDKConstants.BONDORDER_DOUBLE) {
+            bondimpl.setAttribute("order", "D");
+        } else if (border == CDKConstants.BONDORDER_TRIPLE) {
+            bondimpl.setAttribute("order", "T");
+        } else {
+            logger.warn("Outputing bond order in non CML2 default way.");
+            Element scalar=doc.createElement("scalar");
+            scalar.setAttribute("dataType","xsd:float");
+            scalar.setAttribute("title","order");
+            bondimpl.appendChild(scalar);
+            scalar.appendChild(doc.createTextNode(bond.getOrder()+""));
+        }
+        if (bond.getStereo() == CDKConstants.STEREO_BOND_UP ||
+            bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+            Element scalar=doc.createElement("scalar");
+            scalar.setAttribute("dataType","xsd:string");
+            scalar.setAttribute("dictRef","mdl:stereo");
+            bondimpl.appendChild(scalar);
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+              scalar.appendChild(doc.createTextNode("W"));
+            }else{
+              scalar.appendChild(doc.createTextNode("H"));
+            }
+        }
+        if (bond.getProperties().size() > 0) writeProperties(bond, bondimpl);
+    }
+
+    private void add(Point2d p, Element nodeToAdd) {
+        if (p != null) {
+            nodeToAdd.setAttribute("x2", new Float(p.x).toString());
+            nodeToAdd.setAttribute("y2", new Float(p.y).toString());
+        }
+    }
+
+    private void add(Point3d p, Element nodeToAdd) {
+        if (p != null) {
+            nodeToAdd.setAttribute("x3", new Float(p.x).toString());
+            nodeToAdd.setAttribute("y3", new Float(p.y).toString());
+            nodeToAdd.setAttribute("z3", new Float(p.z).toString());
+        }
+    }
+
+    private void addFractional(Point3d p, Element nodeToAdd) {
+        if (p != null) {
+            nodeToAdd.setAttribute("xFract", new Float(p.x).toString());
+            nodeToAdd.setAttribute("yFract", new Float(p.y).toString());
+            nodeToAdd.setAttribute("zFract", new Float(p.z).toString());
+        }
+    }  
+    
+    private String write(double[] da) {
+        StringBuffer sb=new StringBuffer();
+        for (int i=0; i < da.length; i++) {
+            sb.append(new Double(da[i]).toString());
+            if (i < (da.length -1)) {
+                sb.append(" ");
+            }
+        }
+        return(sb.toString());
+    }
 }
 
