@@ -45,6 +45,7 @@ import org.xml.sax.*;
 public class CMLCoreModule implements ModuleInterface {
 
     protected org.openscience.cdk.tools.LoggingTool logger;
+    protected boolean debug = false;
     protected final String SYSTEMID = "CML-1999-05-15";
     protected CDOInterface cdo;
     
@@ -218,7 +219,7 @@ public class CMLCoreModule implements ModuleInterface {
                               Attributes atts) {
 
         String name = local;
-        logger.debug("StartElement");
+        if (debug) logger.debug("StartElement");
         currentChars = "";
         
         BUILTIN = "";
@@ -228,15 +229,15 @@ public class CMLCoreModule implements ModuleInterface {
             String qname = atts.getQName(i);
             if (qname.equals("builtin")) {
                 BUILTIN = atts.getValue(i);
-                logger.debug(name + "->BUILTIN found: " + atts.getValue(i));
+                if (debug) logger.debug(name + "->BUILTIN found: " + atts.getValue(i));
             } else if (qname.equals("dictRef")) {
                 DICTREF = atts.getValue(i);
-                logger.debug(name + "->DICTREF found: " + atts.getValue(i));
+                if (debug) logger.debug(name + "->DICTREF found: " + atts.getValue(i));
             } else if (qname.equals("title")) {
                 elementTitle = atts.getValue(i);
-                logger.debug(name + "->TITLE found: " + atts.getValue(i));
+                if (debug) logger.debug(name + "->TITLE found: " + atts.getValue(i));
             } else {
-                logger.debug("Qname: " + qname);
+                if (debug) logger.debug("Qname: " + qname);
             }
         }
         
@@ -343,13 +344,13 @@ public class CMLCoreModule implements ModuleInterface {
             bondCounter++;
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
-                logger.debug(
+                if (debug) logger.debug(
                 "B2 " + att + "=" + 
                 atts.getValue(i));
                 
                 if (att.equals("id")) {
                     bondid.addElement(atts.getValue(i));
-                    logger.debug("B3 " + bondid);
+                    if (debug) logger.debug("B3 " + bondid);
                 } else if (att.equals("atomRefs") || // this is CML 1.x support
                 att.equals("atomRefs2")) { // this is CML 2.0 support
                     
@@ -426,7 +427,7 @@ public class CMLCoreModule implements ModuleInterface {
     }
 
     public void endElement(CMLStack xpath, String uri, String name, String raw) {
-        logger.debug("EndElement: " + name);
+        if (debug) logger.debug("EndElement: " + name);
 
         String cData = currentChars;
         
@@ -521,7 +522,7 @@ public class CMLCoreModule implements ModuleInterface {
             cdo.endObject("SetOfMolecules");
         } else if ("coordinate3".equals(name)) {
             if (BUILTIN.equals("xyz3")) {
-                logger.debug("New coord3 xyz3 found: " + currentChars);
+                if (debug) logger.debug("New coord3 xyz3 found: " + currentChars);
                 
                 try {
                     
@@ -529,24 +530,24 @@ public class CMLCoreModule implements ModuleInterface {
                     x3.addElement(st.nextToken());
                     y3.addElement(st.nextToken());
                     z3.addElement(st.nextToken());
-                    logger.debug("coord3 x3.length: " + x3.size());
-                    logger.debug("coord3 y3.length: " + y3.size());
-                    logger.debug("coord3 z3.length: " + z3.size());
+                    if (debug) logger.debug("coord3 x3.length: " + x3.size());
+                    if (debug) logger.debug("coord3 y3.length: " + y3.size());
+                    if (debug) logger.debug("coord3 z3.length: " + z3.size());
                 } catch (Exception exception) {
                     logger.error(
                     "CMLParsing error while setting coordinate3!");
-                    logger.debug(exception);
+                    if (debug) logger.debug(exception);
                 }
             } else {
                 logger.warn("Unknown coordinate3 BUILTIN: " + BUILTIN);
             }
         } else if ("string".equals(name)) {
             if (BUILTIN.equals("elementType")) {
-                logger.debug("Element: " + cData.trim());
+                if (debug) logger.debug("Element: " + cData.trim());
                 elsym.addElement(cData);
             } else if (BUILTIN.equals("atomRef")) {
                 curRef++;
-                logger.debug("Bond: ref #" + curRef);
+                if (debug) logger.debug("Bond: ref #" + curRef);
                 
                 if (curRef == 1) {
                     bondARef1.addElement(cData.trim());
@@ -554,12 +555,12 @@ public class CMLCoreModule implements ModuleInterface {
                     bondARef2.addElement(cData.trim());
                 }
             } else if (BUILTIN.equals("order")) {
-                logger.debug("Bond: order " + cData.trim());
+                if (debug) logger.debug("Bond: order " + cData.trim());
                 order.addElement(cData.trim());
             } else if (BUILTIN.equals("formalCharge")) {
                 // NOTE: this combination is in violation of the CML DTD!!!
                 logger.warn("formalCharge BUILTIN accepted but violating CML DTD");
-                logger.debug("Charge: " + cData.trim());
+                if (debug) logger.debug("Charge: " + cData.trim());
                 String charge = cData.trim();
                 if (charge.startsWith("+") && charge.length() > 1) {
                     charge = charge.substring(1);
@@ -589,7 +590,7 @@ public class CMLCoreModule implements ModuleInterface {
             }
         } else if ("coordinate2".equals(name)) {
             if (BUILTIN.equals("xy2")) {
-                logger.debug("New coord2 xy2 found." + cData);
+                if (debug) logger.debug("New coord2 xy2 found." + cData);
                 
                 try {
                     
@@ -611,7 +612,7 @@ public class CMLCoreModule implements ModuleInterface {
                     while (st.hasMoreTokens()) {
                         if (countAtoms) { atomCounter++; }
                         String token = st.nextToken();
-                        logger.debug("StringArray (Token): " + token);
+                        if (debug) logger.debug("StringArray (Token): " + token);
                         elid.addElement(token);
                     }
                 } catch (Exception e) {
@@ -632,7 +633,7 @@ public class CMLCoreModule implements ModuleInterface {
                 }
             } else if (BUILTIN.equals("atomRefs")) {
                 curRef++;
-                logger.debug("New atomRefs found: " + curRef);
+                if (debug) logger.debug("New atomRefs found: " + curRef);
                 
                 try {
                     boolean countBonds = (bondCounter == 0) ? true : false;
@@ -641,7 +642,7 @@ public class CMLCoreModule implements ModuleInterface {
                     while (st.hasMoreTokens()) {
                         if (countBonds) { bondCounter++; }
                         String token = st.nextToken();
-                        logger.debug("Token: " + token);
+                        if (debug) logger.debug("Token: " + token);
                         
                         if (curRef == 1) {
                             bondARef1.addElement(token);
@@ -654,7 +655,7 @@ public class CMLCoreModule implements ModuleInterface {
                 }
             } else if (BUILTIN.equals("atomRef")) {
                 curRef++;
-                logger.debug("New atomRef found: " + curRef); // this is CML1 stuff, we get things like:
+                if (debug) logger.debug("New atomRef found: " + curRef); // this is CML1 stuff, we get things like:
                 /*
                   <bondArray>
                   <stringArray builtin="atomRef">a2 a2 a2 a2 a3 a3 a4 a4 a5 a6 a7 a9</stringArray>
@@ -670,7 +671,7 @@ public class CMLCoreModule implements ModuleInterface {
                     while (st.hasMoreTokens()) {
                         if (countBonds) { bondCounter++; }
                         String token = st.nextToken();
-                        logger.debug("Token: " + token);
+                        if (debug) logger.debug("Token: " + token);
                         
                         if (curRef == 1) {
                             bondARef1.addElement(token);
@@ -682,7 +683,7 @@ public class CMLCoreModule implements ModuleInterface {
                     notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
                 }
             } else if (BUILTIN.equals("order")) {
-                logger.debug("New bond order found.");
+                if (debug) logger.debug("New bond order found.");
                 
                 try {
                     
@@ -691,7 +692,7 @@ public class CMLCoreModule implements ModuleInterface {
                     while (st.hasMoreTokens()) {
                         
                         String token = st.nextToken();
-                        logger.debug("Token: " + token);
+                        if (debug) logger.debug("Token: " + token);
                         order.addElement(token);
                     }
                 } catch (Exception e) {
@@ -699,7 +700,7 @@ public class CMLCoreModule implements ModuleInterface {
                 }
             }
         } else if ("integerArray".equals(name)) {
-            logger.debug("IntegerArray: builtin = " + BUILTIN);
+            if (debug) logger.debug("IntegerArray: builtin = " + BUILTIN);
             
             if (BUILTIN.equals("formalCharge")) {
                 
@@ -710,7 +711,7 @@ public class CMLCoreModule implements ModuleInterface {
                     while (st.hasMoreTokens()) {
                         
                         String token = st.nextToken();
-                        logger.debug("Charge added: " + token);
+                        if (debug) logger.debug("Charge added: " + token);
                         formalCharges.addElement(token);
                     }
                 } catch (Exception e) {
@@ -719,7 +720,7 @@ public class CMLCoreModule implements ModuleInterface {
             }
         } else if ("scalar".equals(name)) {
             if (xpath.toString().endsWith("crystal/scalar/")) {
-                logger.debug("Going to set a crystal parameter: " + crystalScalar + 
+                if (debug) logger.debug("Going to set a crystal parameter: " + crystalScalar + 
                     " to " + cData);
                 try {
                     unitcellparams[crystalScalar-1] = Double.parseDouble(cData.trim());
@@ -768,7 +769,7 @@ public class CMLCoreModule implements ModuleInterface {
                     notify("CMLParsing error: " + e, SYSTEMID, 221, 1);
                 }
             } else if (BUILTIN.equals("x2")) {
-                logger.debug("New floatArray found.");
+                if (debug) logger.debug("New floatArray found.");
                 
                 try {
                     
@@ -780,7 +781,7 @@ public class CMLCoreModule implements ModuleInterface {
                     notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
                 }
             } else if (BUILTIN.equals("y2")) {
-                logger.debug("New floatArray found.");
+                if (debug) logger.debug("New floatArray found.");
                 
                 try {
                     
@@ -792,7 +793,7 @@ public class CMLCoreModule implements ModuleInterface {
                     notify("CMLParsing error: " + e, SYSTEMID, 454, 1);
                 }
             } else if (BUILTIN.equals("partialCharge")) {
-                logger.debug("New floatArray with partial charges found.");
+                if (debug) logger.debug("New floatArray with partial charges found.");
                 
                 try {
                     
@@ -815,15 +816,15 @@ public class CMLCoreModule implements ModuleInterface {
 
     public void characterData(CMLStack xpath, char[] ch, int start, int length) {
         currentChars = currentChars + new String(ch, start, length);
-        logger.debug("CD: " + currentChars);
+        if (debug) logger.debug("CD: " + currentChars);
     }
 
     protected void notify(String message, String systemId, int line, 
                           int column) {
-        logger.debug("Message: " + message);
-        logger.debug("SystemId: " + systemId);
-        logger.debug("Line: " + line);
-        logger.debug("Column: " + column);
+        if (debug) logger.debug("Message: " + message);
+        if (debug) logger.debug("SystemId: " + systemId);
+        if (debug) logger.debug("Line: " + line);
+        if (debug) logger.debug("Column: " + column);
     }
 
     protected void storeData() {
@@ -832,7 +833,7 @@ public class CMLCoreModule implements ModuleInterface {
     }
 
     protected void storeAtomData() {
-        logger.debug("No atoms: " + atomCounter);
+        if (debug) logger.debug("No atoms: " + atomCounter);
         if (atomCounter == 0) {
             return;
         }
@@ -852,21 +853,21 @@ public class CMLCoreModule implements ModuleInterface {
         if (elid.size() == atomCounter) {
             hasID = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No atom ids: " + elid.size() + " != " + atomCounter);
         }
 
         if (elsym.size() == atomCounter) {
             hasSymbols = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No atom symbols: " + elsym.size() + " != " + atomCounter);
         }
 
         if (eltitles.size() == atomCounter) {
             hasTitles = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No atom titles: " + eltitles.size() + " != " + atomCounter);
         }
 
@@ -874,7 +875,7 @@ public class CMLCoreModule implements ModuleInterface {
             (z3.size() == atomCounter)) {
             has3D = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No 3D info: " + x3.size() + " " + y3.size() + " " + 
                     z3.size() + " != " + atomCounter);
         }
@@ -883,7 +884,7 @@ public class CMLCoreModule implements ModuleInterface {
             (zfract.size() == atomCounter)) {
             has3Dfract = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No 3D fractional info: " + xfract.size() + " " + yfract.size() + " " + 
                     zfract.size() + " != " + atomCounter);
         }
@@ -891,7 +892,7 @@ public class CMLCoreModule implements ModuleInterface {
         if ((x2.size() == atomCounter) && (y2.size() == atomCounter)) {
             has2D = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No 2D info: " + x2.size() + " " + y2.size() + " != " + 
                     atomCounter);
         }
@@ -899,7 +900,7 @@ public class CMLCoreModule implements ModuleInterface {
         if (formalCharges.size() == atomCounter) {
             hasFormalCharge = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No formal Charge info: " + formalCharges.size() + 
                     " != " + atomCounter);
         }
@@ -907,7 +908,7 @@ public class CMLCoreModule implements ModuleInterface {
         if (partialCharges.size() == atomCounter) {
             hasPartialCharge = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No partial Charge info: " + partialCharges.size() + 
                     " != " + atomCounter);
         }
@@ -915,7 +916,7 @@ public class CMLCoreModule implements ModuleInterface {
         if (hCounts.size() == atomCounter) {
             hasHCounts = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No hydrogen Count info: " + hCounts.size() + 
                     " != " + atomCounter);
         }
@@ -923,7 +924,7 @@ public class CMLCoreModule implements ModuleInterface {
         if (atomDictRefs.size() == atomCounter) {
             hasDictRefs = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No dictRef info: " + atomDictRefs.size() + 
                     " != " + atomCounter);
         }
@@ -931,7 +932,7 @@ public class CMLCoreModule implements ModuleInterface {
         if (isotope.size() == atomCounter) {
             hasIsotopes = true;
         } else {
-            logger.debug(
+            if (debug) logger.debug(
                     "No isotope info: " + isotope.size() + 
                     " != " + atomCounter);
         }
@@ -993,7 +994,7 @@ public class CMLCoreModule implements ModuleInterface {
             }
 
             if (hasPartialCharge) {
-                logger.debug("Storing partial atomic charge...");
+                if (debug) logger.debug("Storing partial atomic charge...");
                 cdo.setObjectProperty("Atom", "partialCharge", 
                                       (String)partialCharges.elementAt(i));
             }
@@ -1027,14 +1028,14 @@ public class CMLCoreModule implements ModuleInterface {
     }
     
     protected void storeBondData() {
-        logger.debug(
+        if (debug) logger.debug(
                 "Testing a1,a2,stereo,order = count: " + bondARef1.size() + "," + 
                 bondARef2.size() + "," + bondStereo.size() + "," + order.size() + "=" +
                 bondCounter);
 
         if ((bondARef1.size() == bondCounter) && 
             (bondARef2.size() == bondCounter)) {
-            logger.debug("About to add bond info to " + cdo.getClass().getName());
+            if (debug) logger.debug("About to add bond info to " + cdo.getClass().getName());
 
             Enumeration orders = order.elements();
             Enumeration ids = bondid.elements();

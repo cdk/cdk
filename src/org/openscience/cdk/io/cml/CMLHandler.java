@@ -48,12 +48,14 @@ public class CMLHandler extends DefaultHandler {
     
     private ModuleInterface conv;
     private org.openscience.cdk.tools.LoggingTool logger;
-
+    private boolean debug = false;
+    
     private Hashtable userConventions;
 
   // this is a problem under MSFT ie jvm
   //private Stack xpath;
     private CMLStack xpath;
+    
     
     /**
      * Constructor for the CMLHandler.
@@ -78,7 +80,7 @@ public class CMLHandler extends DefaultHandler {
      * @param ch        characters to handle
      */
     public void characters(char ch[], int start, int length) {
-       logger.debug(new String(ch, start, length));
+       if (debug) logger.debug(new String(ch, start, length));
        conv.characterData(xpath, ch, start, length);
     }
 
@@ -92,7 +94,7 @@ public class CMLHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String local, String raw) {
-       logger.debug("</" + raw + ">");
+       if (debug) logger.debug("</" + raw + ">");
        conv.endElement(xpath, uri, local, raw);
        xpath.pop();
     }
@@ -107,7 +109,7 @@ public class CMLHandler extends DefaultHandler {
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
         xpath.push(local);
-        logger.debug("<" + raw + "> -> " + xpath);
+        if (debug) logger.debug("<" + raw + "> -> " + xpath);
         // Detect CML modules, like CRML and CCML
         if (local.startsWith("reaction")) {
             // e.g. reactionList, reaction -> CRML module
@@ -121,13 +123,13 @@ public class CMLHandler extends DefaultHandler {
                 if (atts.getQName(i).equals("convention")) {
                     logger.info(new StringBuffer("New Convention: ").append(atts.getValue(i)).toString());
                     if (atts.getValue(i).equals("CML")) {
-                        logger.debug("Doing nothing");
+                        if (debug) logger.debug("Doing nothing");
                     } else if (atts.getValue(i).equals("PDB")) {
                         conv = new PDBConvention(conv);
                     } else if (atts.getValue(i).equals("PMP")) {
                         conv = new PMPConvention(conv);
                     } else if (atts.getValue(i).equals("MDLMol")) {
-                        logger.debug("MDLMolConvention instantiated...");
+                        if (debug) logger.debug("MDLMolConvention instantiated...");
                         conv = new MDLMolConvention(conv);
                     } else if (atts.getValue(i).equals("JMOL-ANIMATION")) {
                         conv = new JMOLANIMATIONConvention(conv);
