@@ -36,6 +36,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -789,6 +790,8 @@ public class Renderer2D implements MouseMotionListener   {
         Color bondColor;
         Ring ring;
         Bond[] bonds = atomCon.getBonds();
+        ArrayList painted_rings = new ArrayList();
+
         logger.debug("Painting bonds...");
         for (int i = 0; i < bonds.length; i++){
             Bond currentBond = bonds[i];
@@ -811,8 +814,10 @@ public class Renderer2D implements MouseMotionListener   {
                     if (r2dm.getShowAromaticityInCDKStyle()) {
                         paintAromaticRingBondCDKStyle(currentBond, ring, bondColor, graphics);
                     } else {
-                        // FIXME: don't draw the circle this many times!
-                        paintRingRing(ring, bondColor, graphics);
+                        if (!painted_rings.contains(ring)) {
+                            paintRingRing(ring, bondColor, graphics);
+                            painted_rings.add(ring);
+                        }
                         paintSingleBond(currentBond, bondColor, graphics);
                     }
                 } else {
