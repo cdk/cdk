@@ -202,9 +202,9 @@ public class SmilesGenerator {
       }
       if(atoms[i]!=parent&&one==null){
         one=atoms[i];
-      }
-      if(atoms[i]!=parent&&one!=null)
+      }else if(atoms[i]!=parent&&one!=null){
         two=atoms[i];
+      }
     }
     if(one!=two && doubleBond && doubleBondConfiguration[container.getBondNumber(a,nextAtom)])
       return(true);
@@ -1093,9 +1093,23 @@ public class SmilesGenerator {
     //Deal with the end of a double bond configuration
     if(isEndOfDoubleBond(container,a,parent,doubleBondConfiguration)){
       Atom viewFrom=null;
-      for(int i=0;i<atomsInOrderOfSmiles.size();i++){
-        if(atomsInOrderOfSmiles.get(i)==parent)
-          viewFrom=(Atom)atomsInOrderOfSmiles.get(i-1);
+      for(int i=0;i<currentChain.size();i++){
+        if(currentChain.get(i)==parent){
+          int k=i-1;
+          while(k>-1){
+            if(currentChain.get(k) instanceof Atom){
+              viewFrom=(Atom)currentChain.get(k);
+              break;
+            }
+            k--;
+          }
+        }
+      }
+      if(viewFrom==null){
+        for(int i=0;i<atomsInOrderOfSmiles.size();i++){
+          if(atomsInOrderOfSmiles.get(i)==parent)
+            viewFrom=(Atom)atomsInOrderOfSmiles.get(i-1);
+        }
       }
       boolean afterThisAtom=false;
       Atom viewTo=null;
