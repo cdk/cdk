@@ -40,6 +40,7 @@ import java.awt.*;
 public class Renderer2DTest extends JPanel
 {
 	MDLReader mr;
+        CMLReader cr;
 	ChemFile chemFile;
 	ChemSequence chemSequence;
 	ChemModel chemModel;
@@ -59,8 +60,13 @@ public class Renderer2DTest extends JPanel
 		try
 		{
 			FileInputStream fis = new FileInputStream(inFile);
-			mr = new MDLReader(fis);
-			chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
+			if (inFile.endsWith(".cml")) {
+			    cr = new CMLReader(new FileReader(inFile));
+			    chemFile = (ChemFile)cr.read((ChemObject)new ChemFile());
+			} else {
+			    mr = new MDLReader(fis);
+			    chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
+			}
 			fis.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
@@ -75,7 +81,7 @@ public class Renderer2DTest extends JPanel
 			exc.printStackTrace();		
 		}
 		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
 		frame.setVisible(true);
