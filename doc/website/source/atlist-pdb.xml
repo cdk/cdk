@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.5.0//EN" 
+                         "../website-2.5.0/schema/dtd/website.dtd" [
+  <!ENTITY atlist SYSTEM "pdb_atomtypes.dbx">  
+]>
+<webpage id="atlist-hybrid">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>PDB Atom Type List</title>
+    <titleabbrev>PDB ATList</titleabbrev>
+  </head>
+
+  &atlist;
+
+</webpage>

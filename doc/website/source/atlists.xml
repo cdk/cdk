@@ -21,6 +21,7 @@
   <itemizedlist>
     <listitem><para><ulink url="atlist-hybrid.html">Valency/Hybridization</ulink></para></listitem>
     <listitem><para><ulink url="atlist-mol2.html">Mol2</ulink></para></listitem>
+    <listitem><para><ulink url="atlist-pdb.html">PDB</ulink></para></listitem>
     <listitem><para><ulink url="atlist-structgen.html">Structgen</ulink></para></listitem>
     <listitem><para><ulink url="atlist-valency.html">Valency</ulink></para></listitem>
   </itemizedlist>

@@ -156,6 +156,7 @@
   <target name="atlists" unless="atlists.uptodate">
     <xslt in="../../src/org/openscience/cdk/config/data/hybridization_atomtypes.xml" out="${source.dir}/hybridization_atomtypes.dbx" style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
     <xslt in="../../src/org/openscience/cdk/config/data/mol2_atomtypes.xml"          out="${source.dir}/mol2_atomtypes.dbx"          style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
+    <xslt in="../../src/org/openscience/cdk/config/data/pdb_atomtypes.xml"           out="${source.dir}/pdb_atomtypes.dbx"           style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
     <xslt in="../../src/org/openscience/cdk/config/data/valency_atomtypes.xml"       out="${source.dir}/valency_atomtypes.dbx"       style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
     <xslt in="../../src/org/openscience/cdk/config/data/structgen_atomtypes.xml"     out="${source.dir}/structgen_atomtypes.dbx"     style="${source.dir}/xsl/atomtypelist2docbook.xsl"/>
   </target>
