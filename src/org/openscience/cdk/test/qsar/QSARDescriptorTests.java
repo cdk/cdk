@@ -47,6 +47,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
 	suite.addTest(SigmaElectronegativityDescriptorTest.suite());
 	suite.addTest(AromaticAtomsCountDescriptorTest.suite());
+	suite.addTest(AromaticBondsCountDescriptorTest.suite());
 	suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
 	suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
 	suite.addTest(EffectivePolarizabilityDescriptorTest.suite());
@@ -61,7 +62,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(BCUTDescriptorTest.suite());
 	suite.addTest(WHIMDescriptorTest.suite());
 	suite.addTest(KappaShapeIndicesDescriptorTest.suite());
-
+	suite.addTest(TPSADescriptorTest.suite());
         suite.addTest(DescriptorEngineTest.suite());
         return suite;
     }
