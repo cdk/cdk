@@ -45,9 +45,15 @@ package org.openscience.cdk;
  */
 public class Reaction extends ChemObject implements java.io.Serializable, Cloneable {
 
+    /** Reaction of which the equilibrium is not set. */
     public static final int UNKNOWN_DIRECTION = 0;
+    /** Reaction equalibrium which is (almost) fully on the product side. 
+        Often denoted with a forward arrow. */
     public static final int FORWARD           = 1;
+    /** Reaction equalibrium which is (almost) fully on the reactant side. 
+        Often denoted with a backward arrow. */
     public static final int BACKWARD          = 2;
+    /** Reaction equalibrium state. Often denoted by a double arrow. */
     public static final int BIDIRECTIONAL     = 3;
     
 	protected int growArraySize = 3;
@@ -77,6 +83,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     
     /**
      * Returns the number of reactants in this reaction.
+     *
+     * @return The number of reactants in this reaction
      */
     public int getReactantCount() {
         return reactants.getAtomContainerCount();
@@ -84,13 +92,17 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     
     /**
      * Returns the number of products in this reaction.
+     *
+     * @return The number of products in this reaction
      */
     public int getProductCount() {
         return products.getAtomContainerCount();
     }
 
     /**
-     * Returns an SetOfMolecules containing the reactants in this reaction.
+     * Returns a SetOfMolecules containing the reactants in this reaction.
+     *
+     * @return A SetOfMolecules containing the reactants in this reaction
      */
     public SetOfMolecules getReactants() {
         return reactants;
@@ -98,13 +110,17 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 
     /**
      * Assigns a SetOfMolecules to the reactants in this reaction.
+     *
+     * @param setOfMolecules The new set of reactants
      */
     public void setReactants(SetOfMolecules setOfMolecules) {
         reactants = setOfMolecules;
     }
 	
     /**
-     * Returns an SetOfMolecules containing the products of this reaction.
+     * Returns a SetOfMolecules containing the products of this reaction.
+     *
+     * @return A SetOfMolecules containing the products in this reaction
      */
     public SetOfMolecules getProducts() {
         return products;
@@ -112,13 +128,17 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     
 	/**
      * Assigns a SetOfMolecules to the products of this reaction.
+     *
+     * @param setOfMolecules The new set of products
      */
     public void setProducts(SetOfMolecules setOfMolecules) {
         products = setOfMolecules;
     }
 	
     /**
-     * Returns an SetOfMolecules containing the agents in this reaction.
+     * Returns a SetOfMolecules containing the agents in this reaction.
+     *
+     * @return A SetOfMolecules containing the agents in this reaction
      */
     public SetOfMolecules getAgents() {
         return agents;
@@ -262,11 +282,21 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     
     /**
      * Returns the direction of the reaction.
+     *
+     * @return The direction of this reaction (FORWARD, BACKWARD or BIDIRECTIONAL)
+     *
+     * @see BIDIRECTIONAL
      */
     public int getDirection() {
         return reactionDirection;
     }
     
+    /**
+     * Adds a mapping between the reactant and product side to this
+     * Reaction.
+     *
+     * @param mapping Mapping to add.
+     */
     public void addMapping(Mapping mapping) {
         if (mappingCount + 1 >= map.length) growMappingArray();
         map[mappingCount] = mapping;

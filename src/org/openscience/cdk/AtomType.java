@@ -203,9 +203,9 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     }
     
     /**
-     *  Sets the formal neighbour count of this atom.
+     * Sets the formal neighbour count of this atom.
      *
-     * @param  charge  The neighbour count
+     * @param  count  The neighbour count
      *
      * @see    #getFormalNeighbourCount
      */
@@ -214,7 +214,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     }
     
     /**
-     *  Returns the formal neighbour count of this atom.
+     * Returns the formal neighbour count of this atom.
      *
      * @return the formal neighbour count of this atom
      *
@@ -268,18 +268,38 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
         return false;
     }
     
+    /**
+     * Sets the Vanderwaals radius for this AtomType.
+     *
+     * @param radius The Vanderwaals radius for this AtomType
+     */
     public void setVanderwaalsRadius(double radius) {
         this.vanderwaalsRadius = radius;
     }
     
+    /**
+     * Returns the Vanderwaals radius for this AtomType.
+     *
+     * @return The Vanderwaals radius for this AtomType
+     */
     public double getVanderwaalsRadius() {
         return this.vanderwaalsRadius;
     }
     
+    /**
+     * Sets the covalent radius for this AtomType.
+     *
+     * @param radius The covalent radius for this AtomType
+     */
     public void setCovalentRadius(double radius) {
         this.covalentRadius = radius;
     }
     
+    /**
+     * Returns the covalent radius for this AtomType.
+     *
+     * @return The covalent radius for this AtomType
+     */
     public double getCovalentRadius() {
         return this.covalentRadius;
     }

@@ -34,6 +34,11 @@ package org.openscience.cdk.exception;
  */
 public class CDKException extends Exception {
 
+    /**
+     * Constructs a new CDKException with the given message.
+     *
+     * @param Message for the constructed exception
+     */
     public CDKException(String message) {
         super( message );
     }

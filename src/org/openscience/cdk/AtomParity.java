@@ -46,6 +46,13 @@ public class AtomParity implements java.io.Serializable, Cloneable  {
     
     /**
      * Constructs an completely unset AtomParity.
+     *
+     * @param centralAtom Atom for which the parity is defined
+     * @param first       First Atom of four that define the stereochemistry
+     * @param second      Second Atom of four that define the stereochemistry
+     * @param third       Third Atom of four that define the stereochemistry
+     * @param fourth      Fourth Atom of four that define the stereochemistry
+     * @param int         +1 or -1, defining the parity
      */
     public AtomParity(Atom centralAtom, 
                       Atom first, Atom second, Atom third, Atom fourth,
@@ -59,14 +66,24 @@ public class AtomParity implements java.io.Serializable, Cloneable  {
         this.parity = parity;
     }
     
+    /**
+     * Returns the atom for which this parity is defined.
+     */
     public Atom getAtom() { 
         return centralAtom;
     }
     
+    /**
+     * Returns the four atoms that define the stereochemistry for
+     * this parity.
+     */
     public Atom[] getSurroundingAtoms() {
         return neighbors;
     }
     
+    /**
+     * Returns the parity value.
+     */
     public int getParity() {
         return parity;
     }

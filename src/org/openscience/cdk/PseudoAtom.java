@@ -43,6 +43,9 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
 
     private String label;
     
+    /**
+     * Constructs an empty PseudoAtom.
+     */
     public PseudoAtom() {
         this("");
     }
@@ -108,14 +111,18 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     }
 
     /**
-     * Returns the label of this PseudoAtom. 
+     * Returns the label of this PseudoAtom.
+     *
+     * @return The label for this PseudoAtom
      */
     public String getLabel() {
         return label;
     }
 
     /**
-     * Sets the label of this PseudoAtom. 
+     * Sets the label of this PseudoAtom.
+     *
+     * @param label The new label for this PseudoAtom
      */
     public void setLabel(String label) {
         this.label = label;
@@ -149,7 +156,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
         // formal charge = 0, always
     }
     /**
-     * Dummy method: the stereo parity is undefined, final
+     * Dummy method: the stereo parity is undefined, final.
      */
     public void setStereoParity(int stereoParity) {
         // this is undefined, always
