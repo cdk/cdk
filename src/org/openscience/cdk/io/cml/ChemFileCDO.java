@@ -75,7 +75,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private double crystal_axis_z;
 
     protected org.openscience.cdk.tools.LoggingTool logger;
-    boolean debug = false;
+
     /**
      * Basic contructor
      */
@@ -111,22 +111,22 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endDocument() {
-        if (debug) logger.debug("Closing document");
+        logger.debug("Closing document");
         if (currentSetOfReactions != null && currentSetOfReactions.getReactionCount() == 0 &&
             currentReaction != null) {
-            if (debug) logger.debug("Adding reaction to SetOfReactions");
+            logger.debug("Adding reaction to SetOfReactions");
             currentSetOfReactions.addReaction(currentReaction);
         }
         if (currentSetOfReactions != null && currentChemModel.getSetOfReactions() == null) {
-            if (debug) logger.debug("Adding SOR to ChemModel");
+            logger.debug("Adding SOR to ChemModel");
             currentChemModel.setSetOfReactions(currentSetOfReactions);
         }
         if (currentSetOfMolecules != null && currentSetOfMolecules.getMoleculeCount() != 0) {
-            if (debug) logger.debug("Adding reaction to SetOfMolecules");
+            logger.debug("Adding reaction to SetOfMolecules");
             currentChemModel.setSetOfMolecules(currentSetOfMolecules);
         }
         if (currentChemSequence.getChemModelCount() == 0) {
-            if (debug) logger.debug("Adding ChemModel to ChemSequence");
+            logger.debug("Adding ChemModel to ChemSequence");
             currentChemSequence.addChemModel(currentChemModel);
         }
         if (getChemSequenceCount() == 0) {
@@ -148,14 +148,14 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void startObject(String objectType) {
-      if (debug) logger.debug("START:" + objectType);
+      logger.debug("START:" + objectType);
       if (objectType.equals("Molecule")) {
           if (currentChemModel == null) currentChemModel = new ChemModel();
           if (currentSetOfMolecules == null) currentSetOfMolecules = new SetOfMolecules();
           currentMolecule = new Molecule();
       } else if (objectType.equals("Atom")) {
         currentAtom = new Atom("H");
-        if (debug) logger.debug("Atom # " + numberOfAtoms);
+        logger.debug("Atom # " + numberOfAtoms);
         numberOfAtoms++;
       } else if (objectType.equals("Bond")) {
           bond_id = null;
@@ -194,14 +194,14 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * supposed to be called by the JCFL library
      */
     public void endObject(String objectType) {
-        if (debug) logger.debug("END: " + objectType);
+        logger.debug("END: " + objectType);
         if (objectType.equals("Molecule")) {
             if (currentMolecule instanceof Molecule) {
-                if (debug) logger.debug("Adding molecule to set");
+                logger.debug("Adding molecule to set");
                 currentSetOfMolecules.addMolecule((Molecule)currentMolecule);
-                if (debug) logger.debug("#mols in set: " + currentSetOfMolecules.getMoleculeCount());
+                logger.debug("#mols in set: " + currentSetOfMolecules.getMoleculeCount());
             } else if (currentMolecule instanceof Crystal) {
-                if (debug) logger.debug("Adding crystal to chemModel");
+                logger.debug("Adding crystal to chemModel");
                 currentChemModel.setCrystal((Crystal)currentMolecule);
                 currentChemSequence.addChemModel(currentChemModel);
             }
@@ -216,7 +216,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (objectType.equals("Atom")) {
             currentMolecule.addAtom(currentAtom);
         } else if (objectType.equals("Bond")) {
-            if (debug) logger.debug("Bond(" + bond_id + "): " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
+            logger.debug("Bond(" + bond_id + "): " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
             if (bond_a1 > currentMolecule.getAtomCount() ||
                 bond_a2 > currentMolecule.getAtomCount()) {
                 logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
@@ -267,14 +267,14 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           currentChemSequence.addChemModel(currentChemModel);
           /* FIXME: this should be when document is closed! */ 
       } else if (objectType.equals("Reaction")) {
-          if (debug) logger.debug("Adding reaction to SOR");
+          logger.debug("Adding reaction to SOR");
           currentSetOfReactions.addReaction(currentReaction);
       } else if (objectType.equals("Reactant")) {
           currentReaction.addReactant((Molecule)currentMolecule);
       } else if (objectType.equals("Product")) {
           currentReaction.addProduct((Molecule)currentMolecule);
       } else if (objectType.equals("Crystal")) {
-          if (debug) logger.debug("Crystal: " + currentMolecule);
+          logger.debug("Crystal: " + currentMolecule);
       }
     };
 
@@ -284,9 +284,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      */
     public void setObjectProperty(String objectType, String propertyType,
                                   String propertyValue) {
-      if (debug) logger.debug("objectType: " + objectType);
-      if (debug) logger.debug("propType: " + propertyType);
-      if (debug) logger.debug("property: " + propertyValue);
+      logger.debug("objectType: " + objectType);
+      logger.debug("propType: " + propertyType);
+      logger.debug("property: " + propertyValue);
       
       if (objectType == null) {
           logger.error("Cannot add property for null object");
@@ -347,7 +347,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (propertyType.equals("massNumber")) {
             currentAtom.setMassNumber(Integer.parseInt(propertyValue));
         } else if (propertyType.equals("id")) {
-          if (debug) logger.debug("id" + propertyValue);
+          logger.debug("id: ", propertyValue);
           currentAtom.setID(propertyValue);
           atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
         }
@@ -357,7 +357,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (propertyType.equals("atom2")) {
           bond_a2 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("id")) {
-          if (debug) logger.debug("id: " + propertyValue);
+          logger.debug("id: " + propertyValue);
           bond_id = propertyValue;
         } else if (propertyType.equals("order")) {
           try {
@@ -394,11 +394,11 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           if (currentMolecule instanceof Crystal) {
               Crystal current = (Crystal)currentMolecule;
               if (propertyType.equals("spacegroup")) {
-                  if (debug) logger.debug("Setting crystal spacegroup to: " + propertyValue);
+                  logger.debug("Setting crystal spacegroup to: " + propertyValue);
                   current.setSpaceGroup(propertyValue);
               } else if (propertyType.equals("z")) {
                   try {
-                      if (debug) logger.debug("Setting z to: " + propertyValue);
+                      logger.debug("Setting z to: " + propertyValue);
                       current.setZ(Integer.parseInt(propertyValue));
                   } catch (NumberFormatException exception) {
                       logger.error("Error in format of Z value");
@@ -414,7 +414,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           // set these variables
           if (currentMolecule instanceof Crystal) {
               Crystal current = (Crystal)currentMolecule;
-              if (debug) logger.debug("Setting axis (" + objectType + "): " + propertyValue);
+              logger.debug("Setting axis (" + objectType + "): " + propertyValue);
               if (propertyType.equals("x")) {
                   crystal_axis_x = Double.parseDouble(propertyValue);
               } else if (propertyType.equals("y")) {
@@ -427,7 +427,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
                            "Crystal class!");
           }
       }
-      if (debug) logger.debug("Object property set...");
+      logger.debug("Object property set...");
     };
 
     /**
