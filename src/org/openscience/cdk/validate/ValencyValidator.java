@@ -134,7 +134,10 @@ public class ValencyValidator implements ValidatorInterface {
                 report.addOK(checkValency);
             }
         } catch (Exception exception) {
-            System.err.println("Error while performing atom valency validation: " + exception.toString());
+            String error = "Error while performing atom valency validation: " + exception.getMessage();
+            System.err.println(error);
+            checkValency.setDetails(error);
+            report.addCDKError(checkValency);
         }
         return report;
     }

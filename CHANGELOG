@@ -38,6 +38,8 @@ Fixes:
 * Fixed handling of CML conventions: don't compare new convention with itself,
   and all convention handlers already subclass CMLCore convention, so don't reset
   to CMLCore convention when CML convention found
+* ValencyChecker now throws a CDKException when the checked atom is not known
+  (closes JCP #903412)
 
 API changes:
 * Changed SetOfAtomContainers.getAtomContainerMultiplier() to .getMultiplier()
