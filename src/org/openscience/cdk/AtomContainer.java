@@ -113,6 +113,8 @@ public class AtomContainer extends ChemObject implements Cloneable
 	public void setAtoms(Atom[] atoms)
 	{
 		this.atoms = atoms;
+		setAtomCount(atoms.length);
+		
 	}
 
 
@@ -126,6 +128,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	public void setBonds(Bond[] bonds)
 	{
 		this.bonds = bonds;
+		setBondCount(bonds.length);
 	}
 
 
@@ -156,6 +159,17 @@ public class AtomContainer extends ChemObject implements Cloneable
 		bonds[number] = bond;
 	}
 
+	/**
+	 *  Sets the number of bonds in this container.
+	 *
+	 * @param  bondCount  The number of bonds in this container
+     *
+     * @see    #getBondCount
+	 */
+	public void setBondCount(int bondCount)
+	{
+		this.bondCount = bondCount;
+	}
 
 	/**
 	 *  Sets the number of atoms in this container.
@@ -167,8 +181,7 @@ public class AtomContainer extends ChemObject implements Cloneable
 	public void setAtomCount(int atomCount)
 	{
 		this.atomCount = atomCount;
-	}
-
+	}	
 
 	/**
 	 *  Returns the array of atoms of this AtomContainer.
