@@ -37,7 +37,7 @@ Fixes:
 * Make sure to also draw proposed bonds when there is nothing else to be 
   drawn (closes JCP #886944)"
 * Fixed Controller2D to not show a proposed bond when dragging from a bond
-  (closes JCP #932378)
+  (closes JCP #932378, JCP #933601, JCP #933600, JCP #846617)
 
 API changes:
 * Moved *Manipulator from cdk.tools into cdk.tools.manipulator
