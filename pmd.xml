@@ -10,7 +10,7 @@
         <pathelement location="${build}"/>
         <fileset dir="${lib}">
             <include name="jaxen-core-1.0-fcs.jar"/>
-            <include name="pmd-1.5.jar"/>
+            <include name="pmd-1.8.jar"/>
             <include name="saxpath-1.0-fcs.jar"/>
         </fileset>
     </path>
@@ -23,8 +23,7 @@
     <target name="pmd-core">
         <mkdir dir="${reports.tests}/pmd"/>
         <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
-            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
-                     toFile="${reports.tests}/pmd/core.html"/>
+            <formatter type="summaryhtml" toFile="${reports.tests}/pmd/core.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/core.javafiles"/>
             </fileset>
