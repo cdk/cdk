@@ -47,4 +47,9 @@ public class ChemModelTest extends TestCase {
         return new TestSuite(ChemModelTest.class);
     }
     
+    public void testConstructor()
+    {
+	    ChemModel chemModel = new ChemModel();
+	    assertTrue(chemModel != null);
+    }
 }
