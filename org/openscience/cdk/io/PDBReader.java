@@ -121,15 +121,15 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 						
 						// construct a string describing the residue
 						cResidue = new StringBuffer(8);
-						oObj = oAtom.getPhysicalProperty("pdb.resName");
+						oObj = oAtom.getProperty("pdb.resName");
 						if (oObj != null) {
 							cResidue = cResidue.append(((String)oObj).trim());
 						}
-						oObj = oAtom.getPhysicalProperty("pdb.chainID");
+						oObj = oAtom.getProperty("pdb.chainID");
 						if (oObj != null) {
 							cResidue = cResidue.append(((String)oObj).trim());
 						}
-						oObj = oAtom.getPhysicalProperty("pdb.resSeq");
+						oObj = oAtom.getProperty("pdb.resSeq");
 						if (oObj != null) {
 							cResidue = cResidue.append(((String)oObj).trim());
 						}
@@ -139,7 +139,7 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 						if (oMonomer == null) {
 							oMonomer = new Monomer();
 							oMonomer.setMonomerName(cResidue.toString());
-							oMonomer.setMonomerType((String)oAtom.getPhysicalProperty("resName"));
+							oMonomer.setMonomerType((String)oAtom.getProperty("pdb.resName"));
 						}
 						
 						// add the atom
@@ -194,11 +194,19 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
 									 new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
 									 				 new Double(cLine.substring(38, 46)).doubleValue(),
 									 				 new Double(cLine.substring(46, 54)).doubleValue()));
-		oAtom.setPhysicalProperty("pdb.name", (new String(cLine.substring(12, 16))).trim());
-		oAtom.setPhysicalProperty("pdb.altLoc", (new String(cLine.substring(16, 17))).trim());
-		oAtom.setPhysicalProperty("pdb.resName", (new String(cLine.substring(17, 20))).trim());
-		oAtom.setPhysicalProperty("pdb.chainID", (new String(cLine.substring(21, 22))).trim());
-		oAtom.setPhysicalProperty("pdb.resSeq", (new String(cLine.substring(22, 26))).trim());
+		oAtom.setProperty("pdb.serial", new Integer(cLine.substring(6, 11).trim()));
+		oAtom.setProperty("pdb.name", (new String(cLine.substring(12, 16))).trim());
+		oAtom.setProperty("pdb.altLoc", (new String(cLine.substring(16, 17))).trim());
+		oAtom.setProperty("pdb.resName", (new String(cLine.substring(17, 20))).trim());
+		oAtom.setProperty("pdb.chainID", (new String(cLine.substring(21, 22))).trim());
+		oAtom.setProperty("pdb.resSeq", (new String(cLine.substring(22, 26))).trim());
+		oAtom.setProperty("pdb.iCode", (new String(cLine.substring(26, 27))).trim());
+		oAtom.setProperty("pdb.occupancy", new Double(cLine.substring(54, 60)));
+		oAtom.setProperty("pdb.tempFactor", new Double(cLine.substring(60, 66)));
+		oAtom.setProperty("pdb.segID", (new String(cLine.substring(72, 76))).trim());
+		oAtom.setProperty("pdb.element", (new String(cLine.substring(76, 78))).trim());
+		oAtom.setProperty("pdb.charge", (new String(cLine.substring(78, 80))).trim());
+
 		return oAtom;
 		}
 }

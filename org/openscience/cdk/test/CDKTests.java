@@ -45,6 +45,10 @@ public class CDKTests {
 		suite.addTest(MFAnalyserTest.suite());
 		suite.addTest(PathLengthTest.suite());
 		suite.addTest(IsomorphismTesterTest.suite());		
+		suite.addTest(MonomerTest.suite());		
+		suite.addTest(PolymerTest.suite());		
+		suite.addTest(PDBReaderTest.suite());		
+		suite.addTest(ChemObjectTest.suite());
 		//suite.addTest(StructureDiagramGeneratorTest.suite());
 		//suite.addTest(RandomStructureGeneratorTest.suite());
 		

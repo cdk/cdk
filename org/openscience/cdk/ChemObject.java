@@ -42,10 +42,20 @@ public class ChemObject implements CDKConstants, Cloneable
 	/** Vector for listener administration */
 	protected Vector chemObjects = new Vector();
 	protected int size;
-	/** A hashtable for the storage of physical properties 
+	/** 
+	  * A hashtable for the storage of physical properties 
 	  * of this ChemObject. 
 	  */
 	protected Hashtable physicalProperties = new Hashtable();
+	/** 
+	  * A hashtable for the storage of any kind of properties 
+	  * of this ChemObject. 
+	  */
+	protected Hashtable properties = new Hashtable();
+	/** 
+	  * A hashtable for the storage of the remarks.
+	  */
+	protected Hashtable remarks = new Hashtable();
 	/** You will frequently have to use some flags on a ChemObject
 	 * for example if you want to draw a molecule and see
 	 * if you've already drawn an atom, or in a ring search to 
@@ -148,13 +158,53 @@ public class ChemObject implements CDKConstants, Cloneable
 	/**
 	 * Returns a physical property for the ChemObject
 	 *
-	 * param   description  An object description of the property (most likely a unique string)
+	 * @param   description  An object description of the property (most likely a unique string)
 	 * @return  The object containing the property   
 	 */
 	public Object getPhysicalProperty(Object description)
 	{
 		return physicalProperties.get(description);
 	
+	}
+
+	/**
+	 * Set a property for a ChemObject
+	 *
+	 * @param   description  An object description of the property (most likely a unique string)
+	 * @param   property  An object with the property itself
+	 */
+	public void setProperty(Object description, Object property) {
+		properties.put(description, property);
+	}
+
+	/**
+	 * Returns a property for the ChemObject
+	 *
+	 * @param   description  An object description of the property (most likely a unique string)
+	 * @return  The object containing the property   
+	 */
+	public Object getProperty(Object description) {
+		return properties.get(description);
+	}
+
+	/**
+	 * Set a remark for this ChemObject
+	 *
+	 * @param   description  An object description of the remark (most likely an Integer or an unique ID string)
+	 * @param   remark  An object with the remark (most likely a String)
+	 */
+	public void setRemark(Object description, Object remark) {
+		remarks.put(description, remark);
+	}
+
+	/**
+	 * Returns a remark for this ChemObject
+	 *
+	 * @param   description  An object description of the remark (most likely an Integer or an unique ID string)
+	 * @return  The object containing the remark
+	 */
+	public Object getRemark(Object description) {
+		return remarks.get(description);	
 	}
 
 	/**
