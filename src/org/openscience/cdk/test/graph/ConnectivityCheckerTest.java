@@ -22,7 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-package org.openscience.cdk.test.tools;
+package org.openscience.cdk.test.graph;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
