@@ -257,7 +257,7 @@ public class MDLWriter implements ChemObjectWriter {
     private static String formatMDLInt(int i, int l)
     {
         String s = "", fs = "";
-        NumberFormat nf = NumberFormat.getNumberInstance();
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setParseIntegerOnly(true);
         nf.setMinimumIntegerDigits(1);
         nf.setMaximumIntegerDigits(l);
@@ -284,7 +284,7 @@ public class MDLWriter implements ChemObjectWriter {
     {
         String s = "", fs = "";
         int l;
-        NumberFormat nf = NumberFormat.getNumberInstance();
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setMinimumIntegerDigits(1);
         nf.setMaximumIntegerDigits(4);
         nf.setMinimumFractionDigits(4);
