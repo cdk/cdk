@@ -25,6 +25,7 @@ import junit.framework.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.test.io.cml.*;
 
+
 /**
  * TestSuite that runs all the sample tests
  *
@@ -40,7 +41,7 @@ public class CDKTests {
 	public static Test suite ( ) 
 	{
 		TestSuite suite= new TestSuite("All CDK Tests");
-        suite.addTest(CoreClassesTests.suite());
+		suite.addTest(CoreClassesTests.suite());
 		suite.addTest(CloneAtomContainerTest.suite());
 		suite.addTest(RingSearchTest.suite());
 		suite.addTest(ConnectivityCheckerTest.suite());
@@ -55,8 +56,8 @@ public class CDKTests {
 		suite.addTest(FingerprinterTest.suite());
 		suite.addTest(AtomTypeFactoryTest.suite());
 		suite.addTest(CMLIOTests.suite());
-		suite.addTest(SmilesGeneratorTest.suite());
-		suite.addTest(SmilesParserTest.suite());
+		suite.addTest(org.openscience.cdk.test.smiles.SmilesGeneratorTest.suite());
+		suite.addTest(org.openscience.cdk.test.smiles.SmilesParserTest.suite());
 
 	    return suite;
 	}
