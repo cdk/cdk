@@ -376,15 +376,6 @@ public class LoggingToolTest extends TestCase {
         }
     }
 	
-	public void testFatal_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.fatal(this);
-        } catch (Exception exception) {
-            fail("Exception during fatal: " + exception.getMessage());
-        }
-    }
-	
 	public void testSetStackLength_int() {
         LoggingTool logger = new LoggingTool(this);
         try {
@@ -398,6 +389,15 @@ public class LoggingToolTest extends TestCase {
         LoggingTool logger = new LoggingTool(this);
         try {
             logger.dumpClasspath();
+        } catch (Exception exception) {
+            fail("Exception during test: " + exception.getMessage());
+        }
+    }
+	
+	public void testDumpSystemProperties() {
+        LoggingTool logger = new LoggingTool(this);
+        try {
+            logger.dumpSystemProperties();
         } catch (Exception exception) {
             fail("Exception during test: " + exception.getMessage());
         }
