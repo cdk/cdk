@@ -102,26 +102,21 @@ public class Renderer2D   {
     }
     
     public void paintReaction(Reaction reaction, Graphics graphics) {
-        // paint reactants content
+        // calculate some boundaries
         AtomContainer reactantContainer = new AtomContainer();
         Molecule[] reactants = reaction.getReactants();
         for (int i=0; i<reactants.length; i++) {
             reactantContainer.add(reactants[i]);
         }
         double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
-        paintBoundingBox(minmaxReactants, "Reactants", 10, graphics);
-        paintMolecule(reactantContainer, graphics);
-
-        // paint products content
         AtomContainer productContainer = new AtomContainer();
         Molecule[] products = reaction.getProducts();
         for (int i=0; i<products.length; i++) {
             productContainer.add(products[i]);
         }
         double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
-        paintBoundingBox(minmaxProducts, "Products", 10, graphics);
-        paintMolecule(productContainer, graphics);
 
+        
         // paint box around total
         double[] minmaxReaction = new double[4];
         minmaxReaction[0] = Math.min(minmaxReactants[0], minmaxProducts[0]);
@@ -130,6 +125,14 @@ public class Renderer2D   {
         minmaxReaction[3] = Math.max(minmaxReactants[3], minmaxProducts[3]);
         paintBoundingBox(minmaxReaction, reaction.getID(), 20, graphics);
         
+        // paint reactants content
+        paintBoundingBox(minmaxReactants, "Reactants", 10, graphics);
+        paintMolecule(reactantContainer, graphics);
+
+        // paint products content
+        paintBoundingBox(minmaxProducts, "Products", 10, graphics);
+        paintMolecule(productContainer, graphics);
+
         // paint arrow
         int[] ints = new int[4];
         ints[0] = (int)(minmaxReactants[2]) + 15;
@@ -307,14 +310,16 @@ public class Renderer2D   {
 
 	private void paintAtom(AtomContainer container, Atom atom, Graphics graphics) {
         Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
-        // paintColouredAtomBackground(atom, atomBackColor, graphics);
-
+        if (atom.equals(r2dm.getHighlightedAtom())) {
+            paintColouredAtomBackground(atom, atomBackColor, graphics);
+        }
+        
         int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
         if (atom instanceof PseudoAtom) {
             paintPseudoAtomLabel((PseudoAtom)atom, atomBackColor, graphics, alignment);
         } else if (!atom.getSymbol().equals("C")) {
             /*
-             *  only show element for non-carbon atoms,
+            *  only show element for non-carbon atoms,
              *  unless (see below)...
              */
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
@@ -324,12 +329,22 @@ public class Renderer2D   {
         } else if (container.getConnectedBonds(atom).length < 1) {
             // ... unless carbon is unbonded
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+        } else if (r2dm.getShowEndCarbons() && 
+                   (container.getConnectedBonds(atom).length == 1)) {
         } else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
             // ... unless carbon is unbonded
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
         } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
             // ... unless carbon is an methyl, and the user wants those with symbol
             paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+        } else if (atom.getAtomicMass() != 0) {
+            try {
+                if (atom.getAtomicMass() != IsotopeFactory.getInstance().
+                       getMajorIsotope(atom.getSymbol()).getAtomicMass()) {
+                    paintAtomSymbol(atom, atomBackColor, graphics, alignment);
+                }
+            } catch (Exception exception) {
+            };
         }
     }
 
