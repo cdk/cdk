@@ -65,21 +65,21 @@ public class DictionaryDatabase {
             Dictionary dictionary = readDictionary("org/openscience/cdk/dict/data/" + name + ".xml");
             if (dictionary != null) {
                 dictionaries.put(name.toLowerCase(), dictionary);
-                logger.info("Read dictionary: " + name);
+                logger.debug("Read dictionary: ", name);
             }
         }
     }
 
     private Dictionary readDictionary(String databaseLocator) {
         Dictionary dictionary = null;
-        logger.info("Reading dictionary from " + databaseLocator);
+        logger.info("Reading dictionary from ", databaseLocator);
         try {
             InputStreamReader reader = new InputStreamReader(
                 this.getClass().getClassLoader().getResourceAsStream(databaseLocator));
             dictionary = Dictionary.unmarshal(reader);
         } catch (Exception exception) {
             dictionary = null;
-            logger.error("Could not read dictionary " + databaseLocator);
+            logger.error("Could not read dictionary ", databaseLocator);
             logger.debug(exception);
         }
         return dictionary;
@@ -90,18 +90,18 @@ public class DictionaryDatabase {
      */
     public void readDictionary(Reader reader, String name) {
         name = name.toLowerCase();
-        logger.info("Reading dictionary: " + name);
+        logger.debug("Reading dictionary: ", name);
         if (!dictionaries.containsKey(name)) {
             try {
                 Dictionary dictionary = Dictionary.unmarshal(reader);
                 dictionaries.put(name, dictionary);
-                logger.info("  ... loaded and stored");
+                logger.debug("  ... loaded and stored");
             } catch (Exception exception) {
-                logger.error("Could not read dictionary: " + name);
+                logger.error("Could not read dictionary: ", name);
                 logger.debug(exception);
             }
         } else {
-            logger.error("Dictionary already loaded: " + name);
+            logger.error("Dictionary already loaded: ", name);
         }
     };
 
@@ -124,7 +124,7 @@ public class DictionaryDatabase {
             // FIXME: dummy method that needs an implementation
             Entry[] entries = dictionary.getEntry();
             String[] entryNames = new String[entries.length];
-            logger.info("Found " + entryNames.length + " entries in dictionary " + 
+            logger.info("Found ", "" + entryNames.length, " entries in dictionary ", 
               dictionaryName);
             for (int i=0; i<entries.length; i++) {
                 entryNames[i] = entries[i].getTerm();

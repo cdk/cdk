@@ -68,14 +68,14 @@ public class Dictionary {
         XMLReader parser = null;
         try {
             parser = new gnu.xml.aelfred2.XmlReader();
-            logger.info("Using Aelfred2 XML parser.");
+            logger.debug("Using Aelfred2 XML parser.");
         } catch (Exception e) {
             logger.error("Could not instantiate Aelfred2 XML reader!");
             logger.debug(e);
         }
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
-            logger.info("Deactivated validation");
+            logger.debug("Deactivated validation");
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
             logger.debug(e);
