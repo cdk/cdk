@@ -48,12 +48,10 @@ import org._3pq.jgrapht.graph.Subgraph;
 
 /**
  * Finds the biconnected components of a graph.
- * 
  * Two edges belong to the same biconnected component if and only if they are 
  * identical or both belong to a simple cycle.
  * 
  * @author Ulrich Bauer <baueru@cs.tum.edu>
- * 
  *
  * @cdk.module standard
  *
@@ -208,7 +206,8 @@ public class BiconnectivityInspector {
 	
 	/**
 	 * Returns a list of <code>Set</code>s, where each set contains all edge that are
-	 * in the same biconnected component. All graph edges occur in exactly one set. 
+	 * in the same biconnected component. All graph edges occur in exactly one set.
+     *
 	 * @return a list of <code>Set</code>s, where each set contains all edge that are
 	 * in the same biconnected component
 	 */
@@ -242,7 +241,7 @@ public class BiconnectivityInspector {
 	
 	
     /**
-     * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
+     * @see org._3pq.jgrapht.event.GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
     public void edgeAdded( GraphEdgeChangeEvent e ) {
         init(  ); 
@@ -250,7 +249,7 @@ public class BiconnectivityInspector {
 
 
     /**
-     * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
+     * @see org._3pq.jgrapht.event.GraphListener#edgeRemoved(GraphEdgeChangeEvent)
      */
     public void edgeRemoved( GraphEdgeChangeEvent e ) {
         init(  );

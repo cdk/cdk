@@ -158,17 +158,16 @@ public class ReaderFactory {
     }
 
     /**
-     * Creates a String of the Class name of the ChemObject reader
+     * Creates a String of the Class name of the <code>ChemObject</code> reader
      * for this file format. The input is read line-by-line
      * until a line containing an identifying string is
      * found.
      *
      * <p>The ReaderFactory detects more formats than the CDK
-     * has Readers for. If the CDK IO Reader is an instance of 
-     * DummyReader, than it Reader is not implemented.
+     * has Readers for.
      *
      * <p>This method is not able to detect the format of gziped files.
-     * Use guessFormat(InputStream) instead for such files.
+     * Use <code>guessFormat(InputStream)</code> instead for such files.
      *
      * @throws IOException  if an I/O error occurs
      * @throws IllegalArgumentException if the input is null
@@ -266,12 +265,12 @@ public class ReaderFactory {
     
     /**
      * Detects the format of the Reader input, and if known, it will return
-     * a CDK Reader to read the format. Note that this Reader might be a
-     * subclass of DummyReader, which means that the Reader does not yet 
-     * have an implementation.
+     * a CDK Reader to read the format, or null when the reader is not
+     * implemented.
+     *
+     * @return null if CDK does not contain a reader for the detected format.
      *
      * @see #createReader(Reader)
-     * @see org.openscience.cdk.io.DummyReader
      */
     public ChemObjectReader createReader(InputStream input) throws IOException {
         BufferedInputStream bistream = new BufferedInputStream(input, 8192);

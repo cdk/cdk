@@ -81,6 +81,7 @@ public class CMLCoreModule implements ModuleInterface {
     protected Vector bondDictRefs;
     protected Vector bondElid;
     protected boolean stereoGiven;
+    protected String inchi;
     protected int curRef;
     protected int CurrentElement;
     protected String BUILTIN;
@@ -138,6 +139,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.bondDictRefs = conv.bondDictRefs;
             this.curRef = conv.curRef;
             this.unitcellparams = conv.unitcellparams;
+            this.inchi = conv.inchi;
         } else {
             logger.warn("Cannot inherit information from module: ", convention.getClass().getName());
         }
@@ -151,11 +153,19 @@ public class CMLCoreModule implements ModuleInterface {
      * Clean all data about parsed data.
      */
     protected void newMolecule() {
+        newMoleculeData();
         newAtomData();
         newBondData();
         newCrystalData();
     }
     
+    /**
+     * Clean all data about the molecule itself.
+     */
+    protected void newMoleculeData() {
+        this.inchi = null;
+    }
+
     /**
      * Clean all data about read atoms.
      */
@@ -821,6 +831,9 @@ public class CMLCoreModule implements ModuleInterface {
                     notify("CMLParsing error: " + e, SYSTEMID, 462, 1);
                 }
             }
+        } else if ("basic".equals(name)) {
+            // assuming this is the child element of <identifier>
+            this.inchi = cData;
         } else {
             logger.warn("Skipping element: " + name);
         }
@@ -844,6 +857,9 @@ public class CMLCoreModule implements ModuleInterface {
     }
 
     protected void storeData() {
+        if (inchi != null) {
+            cdo.setObjectProperty("Molecule", "inchi", inchi);
+        }
         storeAtomData();
         storeBondData();
     }

@@ -55,7 +55,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     public static final int BACKWARD          = 2;
     /** Reaction equalibrium state. Often denoted by a double arrow. */
     public static final int BIDIRECTIONAL     = 3;
-    
+
 	protected int growArraySize = 3;
 
     protected SetOfMolecules reactants;
@@ -333,8 +333,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
     /**
      * Returns the direction of the reaction.
      *
-     * @return The direction of this reaction (FORWARD, BACKWARD or BIDIRECTIONAL)
-     * @see    BIDIRECTIONAL
+     * @return The direction of this reaction (FORWARD, BACKWARD or BIDIRECTIONAL).
+     * @see    #BIDIRECTIONAL
      * @see    #setDirection
      */
     public int getDirection() {
