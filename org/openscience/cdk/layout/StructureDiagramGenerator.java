@@ -58,10 +58,6 @@ public class StructureDiagramGenerator implements CDKConstants
 	Vector ringSystems = null;
 	public static boolean debug = false;
 
-	static int FUSED = 0;
-	static int BRIDGED = 1;		
-	static int SPIRO = 2;
-	
 	/**
 	 * The empty constructor
 	 */
@@ -118,8 +114,6 @@ public class StructureDiagramGenerator implements CDKConstants
 	}
 
 
-
-
 	/**
 	 * Returns the molecule, usually used after a call of 
 	 * generateCoordinates()
@@ -141,16 +135,13 @@ public class StructureDiagramGenerator implements CDKConstants
 		/* compute the minimum number of rings as 
 		   given by Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939) */
 		int nrOfEdges = molecule.getBondCount();
-		Bond nextRingAttachmentBond = null;
 		Vector2d ringSystemVector = null, newRingSystemVector = null;
-		AtomContainer ringSystem = null, tempAc = null;
-		Atom vectorAtom1 = null, vectorAtom2 = null;
-		Point2d oldPoint1 = null, newPoint1 = null, oldPoint2 = null, newPoint2 = null;
-		RingSet nextRingSystem = null;
-		double angle, angle1, angle2;
+		this.firstBondVector = firstBondVector;
+
+		double angle;
+		
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
-		// if there are rings, get them...
-		if (debug) System.out.println("StructureDiagramGenerator->: " + expectedRingCount + " rings expected");
+
 		if (expectedRingCount > 0)
 		{
 		
@@ -162,9 +153,10 @@ public class StructureDiagramGenerator implements CDKConstants
 			{
 				return;
 			}
+			/* Mark all the atoms from the ring system as "ISINRING" */
 			markRingAtoms(sssr);
+			/* Give a handle of our molecule to the ringPlacer */
 			ringPlacer.setMolecule(molecule);
-			if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> sssr.size(): " + sssr.size());
 			/*
 			 * Partition the smallest set of smallest rings into disconnected ring system.
 			 * The RingPartioner returns a Vector containing RingSets. Each of the RingSets contains
@@ -172,79 +164,40 @@ public class StructureDiagramGenerator implements CDKConstants
 			 * via spiro connections. 
 			 */
 			ringSystems = RingPartitioner.partitionRings(sssr);
-			if (debug) System.out.println("StructureDiagramGenerator -> handleRings -> ringSystems.size(): " + ringSystems.size());
 			
-			handleRings(firstBondVector, (RingSet)ringSystems.elementAt(0));
+			/* Do the layout for the first connected ring system ... */
+			layoutRingSet(firstBondVector, (RingSet)ringSystems.elementAt(0));
+			/* and to the placement of all the directly connected atoms of this ringsystem */
 			ringPlacer.placeRingSubstituents((RingSet)ringSystems.elementAt(0), bondLength);
-			
 		}
 		else
 		{
+			/* We are here because there are no rings in the molecule
+			 * so we get the longest chain in the molecule and placed in 
+			 * on a horizontal axis
+			 */
 			AtomContainer longestChain = atomPlacer.getInitialLongestChain(molecule);
 			longestChain.getAtomAt(0).setPoint2D(new Point2d(0,0));
 			longestChain.getAtomAt(0).flags[ISPLACED] = true;
-			/* place the first bond such that the whole chain will be vertically 
+			/* place the first bond such that the whole chain will be horizontally
 			 * alligned on the x axis
 			 */
 			angle = Math.toRadians(-30);
 			atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
 		}
-		if (debug) System.out.println("Placed initial chain or ring. Now do the rest");
+
+		/* Now, do the layout of the rest of the molecule */
 		do
 		{
-
+			/* do layout for all aliphatic parts of the molecule which are 
+			 * connected to the parts which have already been laid out.
+			 */
 			handleAliphatics();
-			resetUnplacedRings();
-			tempAc = atomPlacer.getPlacedAtoms(molecule);
-			nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
-
-			if (nextRingAttachmentBond != null)
-			{
-				vectorAtom2 = getRingAtom(nextRingAttachmentBond);
-				if (nextRingAttachmentBond.getAtomAt(0) == vectorAtom1)
-				{
-					vectorAtom1 = nextRingAttachmentBond.getAtomAt(1);
-				}						
-				else
-				{
-					vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
-				}						
-				if (debug) System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom1)" + molecule.getAtomNumber(vectorAtom1));
-				if (debug) System.out.println("generateCoordinates -> molecule.getAtomNumber(vectorAtom2)" + molecule.getAtomNumber(vectorAtom2));
-				oldPoint2 = vectorAtom2.getPoint2D();
-				oldPoint1 = vectorAtom1.getPoint2D();				
-
-				angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);								
-				nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
-				ringSystem = new AtomContainer();
-				ringSystem.add(nextRingSystem.getRingSetInAtomContainer());
-
-				/* Do the layout of the next ring system */
-				handleRings(firstBondVector, nextRingSystem);
-				/* Place all the substituents of next ring system */
-				atomPlacer.markNotPlaced(tempAc);				
-				ringSystem.add(ringPlacer.placeRingSubstituents(nextRingSystem, bondLength));
-				atomPlacer.markPlaced(tempAc);				
-
-				newPoint2 = vectorAtom2.getPoint2D();
-				newPoint1 = vectorAtom1.getPoint2D();				
-				
-				angle2 = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint2.y);				
-				if (debug) System.out.println("Angle: " + angle1 + ", " + angle2);
-				if (debug) System.out.println("Points: " + oldPoint1 + ", " + oldPoint2 + ", " + newPoint1 + ", " + newPoint2);				
-				Vector2d transVec = new Vector2d(oldPoint1);
-				transVec.sub(new Vector2d(newPoint1));
-//				ringSystem.removeAtom(vectorAtom1);
-
-				if (debug) System.out.println("RingSystem to rotate" + atomPlacer.listNumbers(molecule, ringSystem));				
-				GeometryTools.translate2D(ringSystem, transVec);				
-				GeometryTools.rotate(ringSystem, oldPoint1, angle1 - angle2);
-				vectorAtom1.setPoint2D(oldPoint1);				
-			}
-
-
+			/* do layout for the next ring aliphatic parts of the molecule which are 
+			 * connected to the parts which have already been laid out.
+			 */
+			layoutNextRingSystem();
 		}while(!atomPlacer.allPlaced(molecule));		
-//		}while(!true);				
 		fixRest();
 	}
 
@@ -259,9 +212,12 @@ public class StructureDiagramGenerator implements CDKConstants
 	}
 
 	/**
-	 * Does a layout of all the rings in the molecule
+	 * Does a layout of all the rings in a given connected RingSet
+	 *
+	 * @param   firstBondVector  A vector giving the placement for the first bond
+	 * @param   rs  The connected RingSet for which the layout is to be done
 	 */
-	private void handleRings(Vector2d firstBondVector, RingSet rs)
+	private void layoutRingSet(Vector2d firstBondVector, RingSet rs)
 	{
 		AtomContainer sharedAtoms;
 		Bond bond;
@@ -273,7 +229,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		/* 
 		 * Call the method which lays out the new ring.
 		 */
-		ringCenterVector = getRingCenterOfFirstRing(ring, firstBondVector); 
+		ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength); 
 		ringPlacer.placeRing(ring, sharedAtoms, sharedAtoms.get2DCenter(), ringCenterVector, bondLength);
 		/* 
 		 * Mark the ring as placed
@@ -287,9 +243,9 @@ public class StructureDiagramGenerator implements CDKConstants
 		{
 			if (ring.flags[ISPLACED])
 			{
-				placeConnectedRings(rs, ring, FUSED);
-				placeConnectedRings(rs, ring, BRIDGED);
-				placeConnectedRings(rs, ring, SPIRO);
+				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.FUSED, bondLength);
+				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.BRIDGED, bondLength);
+				ringPlacer.placeConnectedRings(rs, ring, ringPlacer.SPIRO, bondLength);
 			}
 			thisRing ++;
 			if (thisRing == rs.size()) thisRing = 0;
@@ -301,9 +257,10 @@ public class StructureDiagramGenerator implements CDKConstants
 	
 
 	/**
-	 * Does a layout of all the non-ring parts of the molecule
+	 * Does a layout of all aliphatic parts connected to 
+	 * the parts of the molecule that have already been laid out.
 	 */
-	private void handleAliphatics() throws java.lang.Exception
+	private void handleAliphatics() throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		//System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
 		Atom atom = null;
@@ -329,7 +286,6 @@ public class StructureDiagramGenerator implements CDKConstants
 				placedAtoms = getPlacedAtoms(atom);
 
 				longestUnplacedChain = atomPlacer.getLongestUnplacedChain(molecule, atom);
-				if (debug) System.out.println("longestUnplacedChain: " + atomPlacer.listNumbers(molecule, longestUnplacedChain));
 		
 				if (longestUnplacedChain.getAtomCount() > 1)
 				{
@@ -365,6 +321,70 @@ public class StructureDiagramGenerator implements CDKConstants
 		}while(!done);
 	}
 	
+
+
+
+	/**
+	 * Does the layout for the next RingSystem that is connected to 
+	 * those parts of the molecule that have already been laid out.
+	 */
+	private void layoutNextRingSystem()
+	{
+		Atom vectorAtom1 = null, vectorAtom2 = null;
+		Point2d oldPoint1 = null, newPoint1 = null, oldPoint2 = null, newPoint2 = null;
+		RingSet nextRingSystem = null;
+		AtomContainer ringSystem = null;		
+		Bond nextRingAttachmentBond = null;	
+		double angle, angle1, angle2;
+	
+		resetUnplacedRings();
+		AtomContainer tempAc = atomPlacer.getPlacedAtoms(molecule);
+		nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
+		if (nextRingAttachmentBond != null)
+		{
+			vectorAtom2 = getRingAtom(nextRingAttachmentBond);
+			if (nextRingAttachmentBond.getAtomAt(0) == vectorAtom1)
+			{
+				vectorAtom1 = nextRingAttachmentBond.getAtomAt(1);
+			}						
+			else
+			{
+				vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
+			}						
+			oldPoint2 = vectorAtom2.getPoint2D();
+			oldPoint1 = vectorAtom1.getPoint2D();				
+
+			angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);								
+			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
+			ringSystem = new AtomContainer();
+			ringSystem.add(nextRingSystem.getRingSetInAtomContainer());
+
+			/* Do the layout of the next ring system */
+			layoutRingSet(firstBondVector, nextRingSystem);
+			/* Place all the substituents of next ring system */
+			atomPlacer.markNotPlaced(tempAc);				
+			ringSystem.add(ringPlacer.placeRingSubstituents(nextRingSystem, bondLength));
+			atomPlacer.markPlaced(tempAc);				
+
+			newPoint2 = vectorAtom2.getPoint2D();
+			newPoint1 = vectorAtom1.getPoint2D();				
+
+			angle2 = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint2.y);				
+			Vector2d transVec = new Vector2d(oldPoint1);
+			transVec.sub(new Vector2d(newPoint1));
+
+			GeometryTools.translate2D(ringSystem, transVec);				
+			GeometryTools.rotate(ringSystem, oldPoint1, angle1 - angle2);
+			vectorAtom1.setPoint2D(oldPoint1);				
+		}
+	}
+
+	/**
+	 * Returns an AtomContainer with all the unplaced atoms connected to a given atom
+	 *
+	 * @param   atom  The Atom whose unplaced bonding partners are to be returned
+	 * @return an AtomContainer with all the unplaced atoms connected to a given atom
+	 */
 	private AtomContainer getUnplacedAtoms(Atom atom)
 	{
 		AtomContainer unplacedAtoms = new AtomContainer();
@@ -381,6 +401,13 @@ public class StructureDiagramGenerator implements CDKConstants
 		return unplacedAtoms;
 	}
 	
+
+	/**
+	 * Returns an AtomContainer with all the placed atoms connected to a given atom
+	 *
+	 * @param   atom  The Atom whose placed bonding partners are to be returned
+	 * @return an AtomContainer with all the placed atoms connected to a given atom
+	 */
 	private AtomContainer getPlacedAtoms(Atom atom)
 	{
 		AtomContainer placedAtoms = new AtomContainer();
@@ -398,6 +425,12 @@ public class StructureDiagramGenerator implements CDKConstants
 	}
 
 
+
+	/**
+	 * Returns the next atom with unplaced aliphatic neighbors
+	 *
+	 * @return the next atom with unplaced aliphatic neighbors    
+	 */
 	private Atom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
 		Bond bond = null; 
@@ -418,6 +451,12 @@ public class StructureDiagramGenerator implements CDKConstants
 	}
 
 
+
+	/**
+	 * Returns the next bond with an unplaced ring atom
+	 *
+	 * @return the next bond with an unplaced ring atom    
+	 */
 	private Bond getNextBondWithUnplacedRingAtom()
 	{
 		Bond bond = null; 
@@ -485,85 +524,6 @@ public class StructureDiagramGenerator implements CDKConstants
 	}
 
 
-	/**
-	 * Calculated the center for the first ring so that it can
-	 * layed out. Only then, all other rings can be assigned
-	 * coordinates relative to it. 
-	 *
-	 * @param   ring  The ring for which the center is to be calculated
-	 * @return  A Vector2d pointing to the new ringcenter   
-	 */
-	private Vector2d getRingCenterOfFirstRing(Ring ring, Vector2d bondVector)
-	{
-		int size = ring.getAtomCount();
-		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
-		double newRingPerpendicular = Math.sqrt(Math.pow(radius, 2) - Math.pow(bondLength/2, 2));		
-		if (debug) System.out.println("getRingCenterOfFirstRing->radius: " + radius);
-		if (debug) System.out.println("getRingCenterOfFirstRing->newRingPerpendicular: " + newRingPerpendicular);		
-		/* get the angle between the x axis and the bond vector */
-		double rotangle = GeometryTools.getAngle(bondVector.x, bondVector.y);
-		/* Add 90 Degrees to this angle, this is supposed to be the new ringcenter vector */
-		rotangle += Math.PI / 2;
-		return new Vector2d(Math.cos(rotangle) * newRingPerpendicular, Math.sin(rotangle) * newRingPerpendicular);
-	}
-
-
-	/**
-	 * Layout all rings in the given RingSet that are connected to a given Ring
-	 *
-	 * @param   rs  The RingSet to be searched for rings connected to Ring
-	 * @param   ring  The Ring for which all connected rings in RingSet are to be layed out. 
-	 */
-	private void placeConnectedRings(RingSet rs, Ring ring, int handleType)
-	{
-		Vector connectedRings = rs.getConnectedRings(ring);
-		Ring connectedRing;
-		AtomContainer sharedAtoms;
-		int sac;
-		Point2d oldRingCenter, newRingCenter, sharedAtomsCenter, tempPoint;
-		Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
-		Bond bond;
-
-//		if (debug) System.out.println(rs.reportRingList(molecule)); 
-		for (int i = 0; i < connectedRings.size(); i++)
-		{
-			connectedRing = (Ring)connectedRings.elementAt(i);
-			if (!connectedRing.flags[ISPLACED])
-			{
-//				if (debug) System.out.println(ring.toString(molecule));
-//				if (debug) System.out.println(connectedRing.toString(molecule));				
-				sharedAtoms = ring.getIntersection(connectedRing);
-				sac = sharedAtoms.getAtomCount();
-				if (debug) System.out.println("placeConnectedRings-> connectedRing: " + (ring.toString(molecule)));
-				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))
-				{
-					sharedAtomsCenter = sharedAtoms.get2DCenter();
-					if (debug) molecule.addAtom(new Atom(new Element("B"), new Point2d(sharedAtomsCenter)));
-					oldRingCenter = ring.get2DCenter();
-					if (debug) molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));
-					tempVector = (new Vector2d(sharedAtomsCenter));
-					newRingCenterVector = new Vector2d(tempVector);
-					newRingCenterVector.sub(new Vector2d(oldRingCenter));
-					oldRingCenterVector = new Vector2d(newRingCenterVector);
-					if (debug)
-					{
-						System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length()); System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
-						System.out.println("placeConnectedRing -> bondCenter: " + sharedAtomsCenter);
-						System.out.println("placeConnectedRing -> oldRingCenterVector.length(): " + oldRingCenterVector.length());
-					}
-					if (debug)
-					{
-						System.out.println("placeConnectedRing -> newRingCenterVector.length(): " + newRingCenterVector.length());					
-					}
-					tempPoint = new Point2d(sharedAtomsCenter);
-					tempPoint.add(newRingCenterVector);
-					ringPlacer.placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
-					connectedRing.flags[ISPLACED] = true;
-					placeConnectedRings(rs, connectedRing, handleType);
-				}
-			}
-		}
-	}
 
 	/**
 	 * This method will go as soon as the rest works. 
@@ -614,57 +574,6 @@ public class StructureDiagramGenerator implements CDKConstants
 		return true;
 	}
 
-	private Atom getComplexCentralAtom() throws java.lang.Exception
-	{
-		int[][] conMat = molecule.getConnectionMatrix();
-		int[][] apsp = PathTools.computeFloydAPSP(conMat);
-		int[] apspCol = PathTools.getInt2DColumnSum(apsp);
-		int position = 0;
-		int max = molecule.getAtomCount() * molecule.getAtomCount();
-		Atom atom = null, mostComplexAtom = null;
-		
-		
-		Vector[] complexity = new Vector[10];
-		for (int i = 0; i < 10; i++)
-		{
-			complexity[i] = new Vector();
-		}		
-		for (int i = 0; i < molecule.getAtomCount(); i++)
-		{
-			complexity[molecule.getDegree(i)].addElement(molecule.getAtomAt(i));
-		}
-		for (int i = 9; i >= 0; i--)
-		{
-			if (complexity[i].size() > 0)
-			{
-				/* This is the Vector with the most substituted atoms
-				 * in the molecule.
-				 */
-				for (int j = 0; j < complexity[i].size(); j++)
-				{
-				    atom = (Atom)complexity[i].elementAt(j);
-					if (debug) System.out.println(i + ", " + j + ", " + apspCol[molecule.getAtomNumber(atom)]);
-					/* for each atom the molecule check its apsp distance sum */
-					if (apspCol[molecule.getAtomNumber(atom)] < max)
-					{
-						max = apspCol[molecule.getAtomNumber(atom)];
-						mostComplexAtom = atom;
-					}
-				}
-				break;
-			}
-		}
-		try
-		{
-			if (debug) System.out.println(molecule.getAtomNumber(mostComplexAtom));
-		}
-		catch(Exception exc)
-		{
-			
-		}
-		return mostComplexAtom;
-	}
-
 
 	/**
 	 * Mark all atoms in the molecule as being part of a ring
@@ -684,6 +593,14 @@ public class StructureDiagramGenerator implements CDKConstants
 		}
 	}
 
+
+
+	/**
+	 * Get the unplaced ring atom in this bond
+	 *
+	 * @param   bond  the bond to be search for the unplaced ring atom
+	 * @return  the unplaced ring atom in this bond   
+	 */
 	private Atom getRingAtom(Bond bond)
 	{
 		if (bond.getAtomAt(0).flags[ISINRING] && !bond.getAtomAt(0).flags[ISPLACED]) return bond.getAtomAt(0);
@@ -691,6 +608,14 @@ public class StructureDiagramGenerator implements CDKConstants
 		return null;
 	}
 	
+
+	/**
+	 * Get the ring system of which the given atom is part of
+	 *
+	 * @param   ringSystems  A Vector of ring systems to be searched
+	 * @param   ringAtom  The ring atom to be search in the ring system.
+	 * @return the ring system of which the given atom is part of     
+	 */
 	private RingSet getRingSystemOfAtom(Vector ringSystems, Atom ringAtom)
 	{
 		RingSet ringSet = null;
@@ -705,6 +630,11 @@ public class StructureDiagramGenerator implements CDKConstants
 		return null;
 	}
 	
+
+	/**
+	 * Set all the atoms in unplaced rings to be unplaced
+	 *
+	 */
 	private void resetUnplacedRings()
 	{
 		Ring ring = null;

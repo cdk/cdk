@@ -217,7 +217,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * @return         The Position of the atom in the atoms array. 
 	 */
 
-	public int getAtomNumber(Atom atom) throws Exception
+	public int getAtomNumber(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		for (int f = 0; f < getAtomCount(); f++)
 		{
@@ -226,7 +226,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 				return f;
 			}
 		}
-		throw new Exception("No such Atom");
+		throw new org.openscience.cdk.exception.NoSuchAtomException("No such Atom");
 	}
 	
 
@@ -418,7 +418,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
      * @param   atomContainer  The atomcontainer to be removed
      * @exception   Exception  
      */
-    public void remove(AtomContainer atomContainer) throws java.lang.Exception
+    public void remove(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
     {
             for (int f = 0; f < atomContainer.getAtomCount(); f++)
             {
@@ -488,9 +488,9 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * removeing all bonds to this atom from the container.
 	 *
 	 * @param   atom  The atom to be removed
-	 * @exception   Exception  throws if the atom is not in the container
+	 * @exception   org.openscience.cdk.exception.NoSuchAtomException  throws if the atom is not in the container
 	 */
-	public void removeAtom(Atom atom) throws java.lang.Exception
+	public void removeAtom(Atom atom) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		int position = getAtomNumber(atom);
 		removeAtom(position);
@@ -703,7 +703,7 @@ public class AtomContainer extends ChemObject implements Cloneable{
 	 * @return  A connection matrix representation of this AtomContainer
 	 */
 
-	public int[][] getConnectionMatrix() throws java.lang.Exception
+	public int[][] getConnectionMatrix() throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		Bond bond = null;
 		int i, j;

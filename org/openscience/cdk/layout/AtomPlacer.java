@@ -81,9 +81,8 @@ public class AtomPlacer implements CDKConstants
 	 * @param   sharedAtoms  The atoms which are already placed
 	 * @param   partners  The partners to be placed
 	 * @param   bondLength  The standared bondlength
-	 * @exception   Exception  An exception if something goes wrong
 	 */
-	public void distributePartners(Atom atom, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, AtomContainer partners, double bondLength) throws java.lang.Exception
+	public void distributePartners(Atom atom, AtomContainer sharedAtoms, Point2d sharedAtomsCenter, AtomContainer partners, double bondLength)
 	{
 		double occupiedAngle = 0;
 		double smallestDistance = Double.MAX_VALUE;
@@ -97,7 +96,6 @@ public class AtomPlacer implements CDKConstants
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
-		if (debug) System.out.println(listNumbers(molecule, partners));
 		/* if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable) */	
 		//newDirection.sub(sharedAtomsCenterVector);
 		sharedAtomsCenterVector.sub(newDirection);
@@ -124,10 +122,17 @@ public class AtomPlacer implements CDKConstants
 		double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getX2D(), distanceMeasure.y - atom.getY2D());						
 		if (debug)
 		{
-			System.out.println("distributePartners->sortedAtoms[0]: " + molecule.getAtomNumber(sortedAtoms[0]));
-			System.out.println("distributePartners->sortedAtoms[1]: " + molecule.getAtomNumber(sortedAtoms[1]));		
-			System.out.println("distributePartners->angle1: " + Math.toDegrees(angle1));
-			System.out.println("distributePartners->angle2: " + Math.toDegrees(angle2));
+			try
+			{
+				System.out.println("distributePartners->sortedAtoms[0]: " + molecule.getAtomNumber(sortedAtoms[0]));
+				System.out.println("distributePartners->sortedAtoms[1]: " + molecule.getAtomNumber(sortedAtoms[1]));		
+				System.out.println("distributePartners->angle1: " + Math.toDegrees(angle1));
+				System.out.println("distributePartners->angle2: " + Math.toDegrees(angle2));
+			}
+			catch(Exception exc)
+			{
+				exc.printStackTrace();
+			}
 		}
 		Atom startAtom = null;
 		
@@ -160,10 +165,18 @@ public class AtomPlacer implements CDKConstants
 		double addAngle = remainingAngle / (partners.getAtomCount() + 1);
 		if (debug)
 		{
-			System.out.println("distributePartners->startAtom: " + molecule.getAtomNumber(startAtom));
-			System.out.println("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
-			System.out.println("distributePartners->addAngle: " + Math.toDegrees(addAngle));
-			System.out.println("distributePartners-> partners.getAtomCount(): " + partners.getAtomCount());
+			try
+			{
+				System.out.println("distributePartners->startAtom: " + molecule.getAtomNumber(startAtom));
+				System.out.println("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
+				System.out.println("distributePartners->addAngle: " + Math.toDegrees(addAngle));
+				System.out.println("distributePartners-> partners.getAtomCount(): " + partners.getAtomCount());
+			}
+			catch(Exception exc)
+			{
+				exc.printStackTrace();
+			}
+
 		}
 		for (int f = 0; f < partners.getAtomCount(); f++)
 		{
@@ -292,21 +305,18 @@ public class AtomPlacer implements CDKConstants
 	 * @param   atom  The atom whose bonding partners are to be partitioned
 	 * @param   unplacedPartners  A vector for the unplaced bonding partners to go in
 	 * @param   placedPartners  A vector for the placed bonding partners to go in
-	 * @exception   Exception  If something goes wrong
 	 */
-	public void partitionPartners(Atom atom, AtomContainer unplacedPartners, AtomContainer placedPartners) throws java.lang.Exception
+	public void partitionPartners(Atom atom, AtomContainer unplacedPartners, AtomContainer placedPartners)
 	{
 		Atom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
 		{
 			if (atoms[i].flags[ISPLACED])
 			{
-				if (debug) System.out.println(molecule.getAtomNumber(atoms[i]) + " is placed");
 				placedPartners.addAtom(atoms[i]);
 			}
 			else
 			{
-				if (debug) System.out.println(molecule.getAtomNumber(atoms[i]) + " is not placed");
 				unplacedPartners.addAtom(atoms[i]);
 			}
 		}
@@ -320,9 +330,8 @@ public class AtomPlacer implements CDKConstants
 	 *
 	 * @param   molecule  The molecule to be search for the longest unplaced chain
 	 * @return  An AtomContainer holding the longest chain.   
-	 * @exception   Exception  If something goes wrong
 	 */
-	public AtomContainer getInitialLongestChain(Molecule molecule) throws java.lang.Exception
+	public AtomContainer getInitialLongestChain(Molecule molecule) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		int [][] conMat = molecule.getConnectionMatrix();
 		int [][] apsp  = PathTools.computeFloydAPSP(conMat);
@@ -348,7 +357,6 @@ public class AtomPlacer implements CDKConstants
 		startAtom = molecule.getAtomAt(bestStartAtom);
 		endAtom = molecule.getAtomAt(bestEndAtom);
 		AtomContainer path = new AtomContainer();
-		if (debug) System.out.println("Longest chain with length " + maxPathLength + " is between atoms " + molecule.getAtomNumber(startAtom) + " and " + molecule.getAtomNumber(endAtom));
 		path.addAtom(startAtom);
 		PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
 		return path;
@@ -366,9 +374,9 @@ public class AtomPlacer implements CDKConstants
 	 * @param   molecule  The molecule to be search for the longest unplaced chain
 	 * @param   startAtom  A start atom from which the chain search starts
 	 * @return  An AtomContainer holding the longest unplaced chain.   
-	 * @exception   Exception  If something goes wrong
+	 * @exception   org.openscience.cdk.exception.NoSuchAtomException  If something goes wrong
 	 */
-	public AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws java.lang.Exception
+	public AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		int longest = 0;
 		int longestPathLength = 0;
@@ -409,7 +417,7 @@ public class AtomPlacer implements CDKConstants
 	 * @param   sphere  A sphere of atoms to start the search with
 	 * @param   pathes  A vector of N pathes (N = no of heavy atoms). 
 	 */
-	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws java.lang.Exception
+	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		Atom atom = null, nextAtom = null; 
 		int atomNr, nextAtomNr;
@@ -528,6 +536,11 @@ public class AtomPlacer implements CDKConstants
 		return true;
 	}
 
+	/**
+	 * Marks all the atoms in the given AtomContainer as not placed
+	 *
+	 * @param   ac  The AtomContainer whose atoms are to be marked
+	 */
 	public static void markNotPlaced(AtomContainer ac)
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
@@ -536,6 +549,12 @@ public class AtomPlacer implements CDKConstants
 		}
 
 	}
+
+	/**
+	 * Marks all the atoms in the given AtomContainer as placed
+	 *
+	 * @param   ac  The AtomContainer whose atoms are to be marked
+	 */
 
 	public static void markPlaced(AtomContainer ac)
 	{

@@ -51,6 +51,11 @@ public class RingPlacer implements CDKConstants
 	
 	private AtomPlacer atomPlacer = new AtomPlacer();
 	
+	static int FUSED = 0;
+	static int BRIDGED = 1;		
+	static int SPIRO = 2;
+
+
 
 	/**
 	 * Generated coordinates for a given ring. Multiplexes to special handlers 
@@ -89,7 +94,7 @@ public class RingPlacer implements CDKConstants
 	 * @return  A list of atoms that where laid out   
 	 * @exception   Exception  
 	 */
-	public AtomContainer placeRingSubstituents(RingSet rs, double bondLength) throws java.lang.Exception
+	public AtomContainer placeRingSubstituents(RingSet rs, double bondLength)
 	{
 		Ring ring = null;
 		Atom atom = null;
@@ -102,24 +107,20 @@ public class RingPlacer implements CDKConstants
 		for (int j = 0; j < rs.size(); j++)
 		{
 			ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
-			if (debug) System.out.println(atomPlacer.listNumbers(molecule, ring));
 			for (int k = 0; k < ring.getAtomCount(); k++)
 			{
 			
 				unplacedPartners.removeAllElements();
 				sharedAtoms.removeAllElements();
 				primaryAtoms.removeAllElements();
-				if (debug) System.out.println("k = " + k + ", unplacedPartners.getAtomCount(): " + unplacedPartners.getAtomCount());
 				atom = ring.getAtomAt(k);
 				rings = rs.getRings(atom);
 				centerOfRingGravity = rings.get2DCenter();
 				atomPlacer.partitionPartners(atom, unplacedPartners, sharedAtoms);
-//				partitionNonRingPartners(atom, ring, sharedAtoms, unplacedPartners);
 				atomPlacer.markNotPlaced(unplacedPartners);
 				treatedAtoms.add(unplacedPartners);
 				if (unplacedPartners.getAtomCount() > 0)
 				{
-					if (debug) System.out.println("unplacedPartners: " + atomPlacer.listNumbers(molecule, unplacedPartners));
 					atomPlacer.distributePartners(atom, sharedAtoms, centerOfRingGravity, unplacedPartners, bondLength);
 				}
 			}
@@ -491,22 +492,22 @@ public class RingPlacer implements CDKConstants
 		return bridgeAtoms;
 	}
 
-
-
-
 	/**
-	 * Get all atoms bonded to a given atom in a given ring, which are not part of this ring
+	 * Partition the bonding partners of a given atom into ring atoms and non-ring atoms
 	 *
-	 * 
+	 * @param   atom  The atom whose bonding partners are to be partitioned
+	 * @param   ring  The ring against which the bonding partners are checked
+	 * @param   ringAtoms  An AtomContainer to store the ring bonding partners
+	 * @param   nonRingAtoms  An AtomContainer to store the non-ring bonding partners
 	 */
-	public void partitionNonRingPartners(Atom atom, Ring ring, AtomContainer ringAtoms, AtomContainer unPlacedPartners) throws java.lang.Exception
+	public void partitionNonRingPartners(Atom atom, Ring ring, AtomContainer ringAtoms, AtomContainer nonRingAtoms)
 	{
 		Atom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
 		{
 			if (!ring.contains(atoms[i]))
 			{
-				unPlacedPartners.addAtom(atoms[i]);
+				nonRingAtoms.addAtom(atoms[i]);
 			}
 			else
 			{
@@ -532,6 +533,86 @@ public class RingPlacer implements CDKConstants
 		return radius;
 	}
 
+
+
+
+	/**
+	 * Calculated the center for the first ring so that it can
+	 * layed out. Only then, all other rings can be assigned
+	 * coordinates relative to it. 
+	 *
+	 * @param   ring  The ring for which the center is to be calculated
+	 * @return  A Vector2d pointing to the new ringcenter   
+	 */
+	Vector2d getRingCenterOfFirstRing(Ring ring, Vector2d bondVector, double bondLength)
+	{
+		int size = ring.getAtomCount();
+		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
+		double newRingPerpendicular = Math.sqrt(Math.pow(radius, 2) - Math.pow(bondLength/2, 2));		
+		/* get the angle between the x axis and the bond vector */
+		double rotangle = GeometryTools.getAngle(bondVector.x, bondVector.y);
+		/* Add 90 Degrees to this angle, this is supposed to be the new ringcenter vector */
+		rotangle += Math.PI / 2;
+		return new Vector2d(Math.cos(rotangle) * newRingPerpendicular, Math.sin(rotangle) * newRingPerpendicular);
+	}
+
+
+	/**
+	 * Layout all rings in the given RingSet that are connected to a given Ring
+	 *
+	 * @param   rs  The RingSet to be searched for rings connected to Ring
+	 * @param   ring  The Ring for which all connected rings in RingSet are to be layed out. 
+	 */
+	void placeConnectedRings(RingSet rs, Ring ring, int handleType, double bondLength)
+	{
+		Vector connectedRings = rs.getConnectedRings(ring);
+		Ring connectedRing;
+		AtomContainer sharedAtoms;
+		int sac;
+		Point2d oldRingCenter, newRingCenter, sharedAtomsCenter, tempPoint;
+		Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
+		Bond bond;
+
+//		if (debug) System.out.println(rs.reportRingList(molecule)); 
+		for (int i = 0; i < connectedRings.size(); i++)
+		{
+			connectedRing = (Ring)connectedRings.elementAt(i);
+			if (!connectedRing.flags[ISPLACED])
+			{
+//				if (debug) System.out.println(ring.toString(molecule));
+//				if (debug) System.out.println(connectedRing.toString(molecule));				
+				sharedAtoms = ring.getIntersection(connectedRing);
+				sac = sharedAtoms.getAtomCount();
+				if (debug) System.out.println("placeConnectedRings-> connectedRing: " + (ring.toString(molecule)));
+				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))
+				{
+					sharedAtomsCenter = sharedAtoms.get2DCenter();
+					if (debug) molecule.addAtom(new Atom(new Element("B"), new Point2d(sharedAtomsCenter)));
+					oldRingCenter = ring.get2DCenter();
+					if (debug) molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));
+					tempVector = (new Vector2d(sharedAtomsCenter));
+					newRingCenterVector = new Vector2d(tempVector);
+					newRingCenterVector.sub(new Vector2d(oldRingCenter));
+					oldRingCenterVector = new Vector2d(newRingCenterVector);
+					if (debug)
+					{
+						System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length()); System.out.println("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: " + tempVector.length());
+						System.out.println("placeConnectedRing -> bondCenter: " + sharedAtomsCenter);
+						System.out.println("placeConnectedRing -> oldRingCenterVector.length(): " + oldRingCenterVector.length());
+					}
+					if (debug)
+					{
+						System.out.println("placeConnectedRing -> newRingCenterVector.length(): " + newRingCenterVector.length());					
+					}
+					tempPoint = new Point2d(sharedAtomsCenter);
+					tempPoint.add(newRingCenterVector);
+					placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
+					connectedRing.flags[ISPLACED] = true;
+					placeConnectedRings(rs, connectedRing, handleType, bondLength);
+				}
+			}
+		}
+	}
 
 	public Molecule getMolecule()
 	{

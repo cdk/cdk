@@ -123,12 +123,11 @@ public class PathTools implements CDKConstants
 	 * @param   path  An AtomContainer to be filled with the path
 	 * @return  true if the target atom was found during this function call   
 	 */
-	public static boolean depthFirstTargetSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws java.lang.Exception
+	public static boolean depthFirstTargetSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException
 	{	
 		Bond[] bonds = molecule.getConnectedBonds(root);
 		Atom nextAtom = null;
 		root.flags[VISITED] = true;
-		//System.out.println("root: " + molecule.getAtomNumber(root));
 		for(int f = 0; f < bonds.length; f++)
 		{
 			nextAtom = bonds[f].getConnectedAtom(root);
@@ -136,10 +135,8 @@ public class PathTools implements CDKConstants
 			{
 				path.addAtom(nextAtom);
 				path.addBond(bonds[f]);
-				//System.out.println("nextAtom: " + molecule.getAtomNumber(nextAtom));
 				if (nextAtom == target)
 				{
-					//System.out.println("target found: " + molecule.getAtomNumber(nextAtom));				
 					return true;
 				}
 				else
