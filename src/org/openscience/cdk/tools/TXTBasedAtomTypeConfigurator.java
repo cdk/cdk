@@ -42,7 +42,7 @@ import java.awt.Color;
  */
 public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 
-    private String configFile = "org/openscience/cdk/config/jmol_atomtypes.txt";
+    private String configFile = "jmol_atomtypes.txt";
     
 	public TXTBasedAtomTypeConfigurator() {
 	}
