@@ -15,6 +15,7 @@ New:
 * Added INChI parser for its plain text output
 * Added missing getAllIDs() methods to AtomContainer and SetOfAtomContainers
   manipulators
+* Added a method ChemObject.getListenerCount() used at least for JUnit testing
 
 Fixes:
 * Partly cleaned up source code of core classes using the PMD reports

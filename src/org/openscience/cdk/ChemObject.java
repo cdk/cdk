@@ -113,6 +113,17 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		// just silently ignore it?
 	}
 
+    /**
+     * Returns the number of ChemObjectListeners registered with this
+     * object.
+     * @return the number of registered listeners.
+     */
+    public int getListenerCount() {
+        if (chemObjects == null) {
+            return 0;
+        }
+        return chemObjects.size();
+    }
 
 	/**
 	 * Use this to remove a ChemObjectListener from the
@@ -203,8 +214,8 @@ public class ChemObject implements java.io.Serializable, Cloneable {
     }
 	
 	/**
-	 * Clones this <code>ChemObject</code> by applying a deep copy on all Objects
-     * which are clonable.
+	 * Clones this <code>ChemObject</code>. It clones the identifier, flags, properties 
+     * and pointer vectors. The ChemObjectListeners are not cloned.
 	 *
 	 * @return  The cloned object
 	 */
@@ -220,6 +231,25 @@ public class ChemObject implements java.io.Serializable, Cloneable {
 		for (int f = 0; f < flags.length; f++) {
 			((ChemObject)clone).flags[f] = flags[f];
 		}
+        // clone the properties
+        if (properties != null) {
+            Hashtable clonedHashtable = new Hashtable();
+            Enumeration keys = properties.keys();
+            while (keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                if (key instanceof ChemObject) {
+                    key = ((ChemObject)key).clone();
+                }
+                Object value = properties.get(key);
+                if (value instanceof ChemObject) {
+                    value = ((ChemObject)value).clone();
+                }
+                clonedHashtable.put(key, value);
+            }
+            ((ChemObject)clone).properties = clonedHashtable;
+        }
+        // delete all listeners
+        ((ChemObject)clone).chemObjects = null;
 		return clone;
 	}
 

@@ -34,7 +34,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemObjectListener;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /**
  * TestCase for the ChemObject class.
@@ -148,10 +151,59 @@ public class ChemObjectTest extends TestCase {
         props2.put("key", "value");
         chemObject2.setProperties(props2);
         assertEquals(props1, chemObject1.getProperties());
+        assertEquals(1, chemObject2.getProperties().size());
         assertEquals(0, chemObject1.getProperties().size());
     }
     
-    public void testShallowCopy() {
+    public void testClone_Properties2() {
+        ChemObject chemObject1 = new ChemObject();
+        Hashtable props1 = new Hashtable();
+        Atom atom = new Atom("C");
+        props1.put("atom", atom);
+        chemObject1.setProperties(props1);
+        ChemObject chemObject2 = (ChemObject)chemObject1.clone();
+
+        // test cloning of properties field
+        Hashtable props2 = new Hashtable();
+        chemObject2.setProperties(props2);
+        assertEquals(props1, chemObject1.getProperties());
+        assertEquals(1, chemObject2.getProperties().size());
+        assertEquals(1, chemObject1.getProperties().size());
+        // ok, copied hashtable item, but this item should be cloned
+        assertNotSame(atom, chemObject2.getProperties().get("atom"));
+    }
+    
+    public void testClone_ChemObjectListeners() {
+        ChemObject chemObject1 = new ChemObject();
+        DummyChemObjectListener listener = new DummyChemObjectListener();
+        chemObject1.addListener(listener);
+        ChemObject chemObject2 = (ChemObject)chemObject1.clone();
+
+        // test lack of cloning of listeners
+        assertEquals(1, chemObject1.getListenerCount());
+        assertEquals(0, chemObject2.getListenerCount());
+    }
+    
+    class DummyChemObjectListener implements ChemObjectListener {
+        public void stateChanged(ChemObjectChangeEvent event) {};
+    }
+    
+    public void testClone_Pointers() {
+        ChemObject chemObject1 = new ChemObject();
+        Vector pointers = new Vector();
+        Atom atom1 = new Atom("C");
+        pointers.addElement(atom1);
+        chemObject1.setPointer(1, pointers);
+        ChemObject chemObject2 = (ChemObject)chemObject1.clone();
+
+        // test cloning of pointer vectors field
+        assertEquals(pointers, chemObject1.getPointer(1));
+        assertNotSame(chemObject1.getPointer(1), chemObject2.getPointer(1));
+        assertEquals(chemObject1.getPointer(1).size(), chemObject2.getPointer(1).size());
+        assertNotSame(atom1, chemObject2.getPointer(1).elementAt(0));
+    }
+    
+   public void testShallowCopy() {
         ChemObject chemObject = new ChemObject();
         Object clone = chemObject.clone();
         assertTrue(clone instanceof ChemObject);
