@@ -33,8 +33,10 @@ import org.openscience.cdk.graph.rebond.*;
 import org.openscience.cdk.layout.*;
 import org.openscience.cdk.tools.AtomTypeFactory;
 import org.openscience.cdk.tools.ChemFileManipulator;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IDCreator;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.SaturationChecker;
 import java.io.*;
 import java.util.*;
 import javax.vecmath.*;
@@ -122,8 +124,11 @@ public class FileConvertor {
                         factory.configure(atoms[j]);
                     }
                     if (applyHAdding) {
-                        System.out.print("Cannot add hydrogens at this moment.");
-                        System.exit(-1);
+                        logger.info("Adding Hydrogens...");
+                        HydrogenAdder adder = new HydrogenAdder();
+                        adder.addExplicitHydrogensToSatisfyValency(
+                            new Molecule(container)
+                        );
                     }
                     if (applyHRemoval) {
                         System.out.print("Cannot remove hydrogens at this moment.");
@@ -137,6 +142,8 @@ public class FileConvertor {
                         logger.info("Creating bonds from 3D coordinates");
                         RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
                         rebonder.rebond(container);
+                        SaturationChecker satChecker = new SaturationChecker();
+                        satChecker.saturate(container);
                     }
                 }
                 
