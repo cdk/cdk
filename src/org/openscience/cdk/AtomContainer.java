@@ -37,11 +37,10 @@ import javax.vecmath.*;
  *  }
  *  </pre>
  *
- *@author     steinbeck
- *@created    October 2, 2000
+ * @author     steinbeck
+ * @created    October 2, 2000
  */
-public class AtomContainer extends ChemObject implements java.io.Serializable, Cloneable
-{
+public class AtomContainer extends ChemObject implements java.io.Serializable, Cloneable {
 
 	/**
 	 *  Number of atoms contained by this object.
@@ -491,6 +490,20 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *@return       The array with the size of connected atoms
 	 */
 	public Bond[] getConnectedBonds(Atom atom)
+  {
+    Vector bondsVec=getConnectedBondsVector(atom);
+		Bond[] conBonds = new Bond[bondsVec.size()];
+		bondsVec.copyInto(conBonds);
+		return conBonds;
+	}
+  
+	/**
+	 *  Returns a Vector of all Bonds connected to the given atom.
+	 *
+	 *@param  atom  The atom the connected bonds are searched of
+	 *@return       The vector with the size of connected atoms
+	 */
+  public Vector getConnectedBondsVector(Atom atom)
 	{
 		Vector bondsVec = new Vector();
 		for (int i = 0; i < electronContainerCount; i++)
@@ -501,10 +514,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 				bondsVec.addElement(electronContainers[i]);
 			}
 		}
-		Bond[] conBonds = new Bond[bondsVec.size()];
-		bondsVec.copyInto(conBonds);
-		return conBonds;
-	}
+    return(bondsVec);
+  }
 
 
 	/**
