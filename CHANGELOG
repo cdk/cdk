@@ -13,6 +13,7 @@ New:
 * PeriodicTablePanel is now interactive. You can register as a CDKListener and 
   will be notified of users selecting a particular element, which you can then get by 
   psepanel.getSelectedElement().
+* Implemented GamessReader
 
 Fixes:
 * A nasty threading bug in StructureDiagramGenerator has been fixed, preventing 
