@@ -30,6 +30,8 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.io.setting.*;
+import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.tools.ReactionManipulator;
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
@@ -53,13 +55,14 @@ public class MACiEReader extends DefaultChemObjectReader {
     private LineNumberReader input = null;
     private org.openscience.cdk.tools.LoggingTool logger = null;
 
-    private BooleanIOSetting firstOnly;
+    private IntegerIOSetting selectedEntry;
     private BooleanIOSetting readSecondaryFiles;
     private StringIOSetting readSecondaryDir;
 
     private Pattern topLevelDatum;
     private Pattern subLevelDatum;
     private Pattern annotationTuple;
+    private Pattern residueLocator;
     
     private ChemModel currentEntry;
     private Reaction currentReaction;
@@ -80,6 +83,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         topLevelDatum = Pattern.compile("(.+):(.+)");
         subLevelDatum = Pattern.compile("(.+):(.+)\\((.+)\\):(.+)");
         annotationTuple = Pattern.compile("(\\w+)=\\((.+?)\\);(.*)");
+        residueLocator = Pattern.compile("\\w{3}\\d{1,5}");
     }
 
 
@@ -134,6 +138,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     private ChemObject readReactions(boolean selectEntry) throws CDKException, IOException {
         ChemSequence entries = new ChemSequence();
         currentEntry = null;
+        int entryCounter = 0;
         currentReactionStepSet = null;
         
         while (input.ready()) {
@@ -148,11 +153,12 @@ public class MACiEReader extends DefaultChemObjectReader {
                     // store previous entry
                     currentEntry.setSetOfReactions(currentReactionStepSet);
                     entries.addChemModel(currentEntry);
-                    if (selectEntry && firstOnly.isSet()) {
+                    if (selectEntry && (entryCounter == selectedEntry.getSettingValue())) {
                         return currentEntry;
                     }
                 }
                 currentEntry = new ChemModel();
+                entryCounter++;
                 currentReactionStepSet = new SetOfReactions();
             } else if (line.startsWith("$DTYPE")) {
                 String[] tuple = readDtypeDatumTuple(line);
@@ -322,7 +328,58 @@ public class MACiEReader extends DefaultChemObjectReader {
 
     private void processAnnotation(String field, String value, Reaction reaction) {
         logger.debug("Annote: " + field + "=" + value);
-        
+        if (field.equals("RxnAtts")) {
+            // reaction attributes
+            markWithDictRefs(reaction, "Attributes", value);
+        } else if (field.equals("Reversible")) {
+            if (value.equalsIgnoreCase("yes")) {
+                reaction.setDirection(Reaction.BIDIRECTIONAL);
+                markWithDictRefs(reaction, "ReactionType", "ReversibleReaction");
+            }
+        } else {
+            Matcher residueLocatorMatcher =
+                residueLocator.matcher(field);
+            if (residueLocatorMatcher.matches()) {
+                logger.debug("Found residueLocator: " + field);
+                Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
+                boolean found = false;
+                logger.debug("Searching through #atom: " + atoms.length);
+                logger.debug("Taken from reaction " + reaction.toString());
+                for (int i=0; i<atoms.length; i++) {
+                    if (atoms[i] instanceof PseudoAtom) {
+                        // that is what we are looking for
+                        PseudoAtom atom = (PseudoAtom)atoms[i];
+                        logger.debug("Found PseudoAtom: " + atom.getLabel());
+                        if (atom.getLabel().equals(field)) {
+                            // we have a hit, now mark Atom with dict refs
+                            markWithDictRefs(atom, "ResidueRole", value);
+                            found = true;
+                        } else {
+                            logger.debug("Label " + atom.getLabel() +
+                                " does not match " + field);
+                        }
+                    } else {
+                        logger.debug("Atom is not a PseudoAtom, so can't be a residueLocator");
+                        logger.debug("Atom.getSymbol() " + atoms[i].getSymbol());
+                    }
+                }
+                if (!found) {
+                    logger.error("MACiE annotation mentions a residue that does not exist!");
+                }
+            }
+        }
+    }
+    
+    private void markWithDictRefs(ChemObject object, String type, String values) {
+        StringTokenizer tokenizer = new StringTokenizer(values, ",");
+        while (tokenizer.hasMoreTokens()) {
+            String token = tokenizer.nextToken();
+            object.setProperty(
+                DictionaryDatabase.DICTREFPROPERTYNAME + "." + type,
+                "enzymeReaction:" + token
+            );
+            logger.debug("Added dict ref " + token + " to " + object.toString());
+        }
     }
     
     public void close() throws IOException {
@@ -330,13 +387,13 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
 
     private void customizeJob() {
-        firstOnly = new BooleanIOSetting("FirstEntryOnly", IOSetting.LOW,
-          "Should I read the first entry only?", 
-          "true");
-        fireReaderSettingQuestion(firstOnly);
+        selectedEntry = new IntegerIOSetting("SelectedEntry", IOSetting.LOW,
+          "Which frame should I read?",
+          "1");
+        fireReaderSettingQuestion(selectedEntry);
 
         readSecondaryFiles = new BooleanIOSetting("ReadSecondaryFiles", IOSetting.LOW,
-          "Should I read the secondary files (if available)?", 
+          "Should I read the secondary files (if available)?",
           "true");
         fireReaderSettingQuestion(readSecondaryFiles);
 
