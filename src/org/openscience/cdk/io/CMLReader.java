@@ -40,6 +40,7 @@ import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.cml.ChemFileCDO;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -66,7 +67,7 @@ public class CMLReader extends DefaultChemObjectReader {
     private Reader input;
     private String url;
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     /**
      * Define this CMLReader to take the input from a java.io.Reader
@@ -84,12 +85,23 @@ public class CMLReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
+    /**
+     * Define this CMLReader to take the input from a java.io.Reader
+     * class. Possible readers are (among others) StringReader and FileReader.
+     *
+     * @param url String url which points to the file to be read
+     */
+    public CMLReader(String url) {
+        this.init();
+        this.url = url;
+    }
+
     public String getFormatName() {
         return "Chemical Markup Language";
     }
 
     public void setReader(Reader reader) throws CDKException {
-        this.input = input;
+        this.input = reader;
     }
 
     public boolean matches(int lineNumber, String line) {
@@ -103,19 +115,8 @@ public class CMLReader extends DefaultChemObjectReader {
         return false;
     }
     
-    /**
-     * Define this CMLReader to take the input from a java.io.Reader
-     * class. Possible readers are (among others) StringReader and FileReader.
-     *
-     * @param url String url which points to the file to be read
-     */
-    public CMLReader(String url) {
-        this.init();
-        this.url = url;
-    }
-
     private void init() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
 
         url = ""; // make sure it is not null
 
@@ -130,7 +131,7 @@ public class CMLReader extends DefaultChemObjectReader {
                 logger.info("Using JAXP/SAX XML parser.");
                 success = true;
             } catch (Exception e) {
-                logger.warn("Could not instantiate JAXP/SAX XML reader!");
+                logger.warn("Could not instantiate JAXP/SAX XML reader: ", e.getMessage());
                 logger.debug(e);
             }
         }
@@ -181,6 +182,7 @@ public class CMLReader extends DefaultChemObjectReader {
     // private functions
 
     private ChemFile readChemFile() throws CDKException {
+        logger.debug("Started parsing from input...");
         ChemFileCDO cdo = new ChemFileCDO();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
@@ -194,22 +196,27 @@ public class CMLReader extends DefaultChemObjectReader {
         parser.setErrorHandler(new CMLErrorHandler());
         try {
             if (input == null) {
+                logger.debug("Parsing from URL: ", url);
                 parser.parse(url);
             } else {
+                logger.debug("Parsing from Reader");
                 parser.parse(new InputSource(input));
             }
         } catch (IOException e) {
-            String error = "Error while reading file: " + e.toString();
+            String error = "Error while reading file: " + e.getMessage();
             logger.error(error);
+            logger.debug(e);
             throw new CDKException(error);
         } catch (SAXParseException saxe) {
             SAXParseException spe = (SAXParseException)saxe;
             String error = "Found well-formedness error in line " + spe.getLineNumber();
             logger.error(error);
+            logger.debug(saxe);
             throw new CDKException(error);
         } catch (SAXException saxe) {
-            String error = "Error while parsing XML: " + saxe.toString();
+            String error = "Error while parsing XML: " + saxe.getMessage();
             logger.error(error);
+            logger.debug(saxe);
             throw new CDKException(error);
         }
         return cdo;
