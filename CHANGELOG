@@ -4,14 +4,18 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
-* A Crystal convertor to Jmol is being added.
+* A Crystal convertor to Jmol is added.
 * StructureDiagramGenerator now uses LoggingTool.
+* It is now possible to say if the double bond 
+  configurations should be evaluated for every 
+  single double bond in the SmilesGenerator.
 
 Fixes:
 * Reading of 3D coordinates from ShelX files
 * Fixed "M  END" line in MDL output (fixes bug #624656)
 
 API changes:
+* Two getBondNumber() methods are added to AtomContainer.
 
 20021012 Release
 ------------------------------------

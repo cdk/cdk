@@ -207,11 +207,8 @@ public class Convertor {
         if (crystal != null) {
             // first convert content
             org.openscience.jmol.ChemFile file = new org.openscience.jmol.ChemFile();
-            file.addFrame(
-                convert((AtomContainer)crystal));
-            CrystalFile converted = new CrystalFile(file);
+            file.addFrame(convert((AtomContainer)crystal));
             // now add unit cell info
-            UnitCellBox unitCellBox = new UnitCellBox();
             float[][] rprim = new float[3][3];
             float[] acell = new float[3];
             double[] a = crystal.getA();
@@ -220,19 +217,16 @@ public class Convertor {
             }
             double[] b = crystal.getB();
             for (int i=0; i<3; i++) {
-                rprim[0][i] = (float)b[i];
+                rprim[1][i] = (float)b[i];
             }
             double[] c = crystal.getC();
             for (int i=0; i<3; i++) {
-                rprim[0][i] = (float)c[i];
+                rprim[2][i] = (float)c[i];
             }
             for (int i=0; i<3; i++) {
                 acell[i] = (float)1.0;
             }
-            unitCellBox.setPrimVectorsCartesian(rprim, acell);
-            converted.setUnitCellBox(unitCellBox);
-            converted.setCrystalBox(new CrystalBox());
-            // converted.generateCrystalFrame();
+            CrystalFile converted = new CrystalFile(file, rprim, acell);
             return converted;
         } else {
             return null;
