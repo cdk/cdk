@@ -41,6 +41,7 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.Element;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -135,7 +136,7 @@ public class MFAnalyser{
    }
 
    /**
-     * returns the exact mass for a given molecular formula
+     * returns the exact mass for a given molecular formula, using major isotope for each element.
      **/
     public float getMass()
     {
@@ -161,6 +162,54 @@ public class MFAnalyser{
                 return 0;
             }
             mass += ac.getAtomAt(f).getHydrogenCount()*h.exactMass;
+        }
+        return mass;
+    }
+
+
+    /**
+     *  Gets the natural mass of this element, defined as average of masses of isotopes, weighted by abundance.
+     *
+     * @return    The natural mass value
+     */
+    public double getNaturalMass(Element element) throws java.io.IOException, ClassNotFoundException {
+      Isotope[] isotopes=IsotopeFactory.getInstance().getIsotopes(element.getSymbol());
+      double summedAbundances=0;
+      double summedWeightedAbundances=0;
+      for(int i=0;i<isotopes.length;i++){
+        summedAbundances+=isotopes[i].getNaturalAbundance();
+        summedWeightedAbundances+=isotopes[i].getNaturalAbundance()*isotopes[i].getExactMass();
+      }
+      return summedWeightedAbundances/summedAbundances;
+    }
+
+
+    /**
+     * returns the exact mass for a given molecular formula, using weighted average of isotopes.
+     **/
+    public float getNaturalMass() throws java.io.IOException, ClassNotFoundException
+    {
+        float mass = 0;
+        IsotopeFactory si = null;
+        try {
+            si = IsotopeFactory.getInstance();
+        } catch (Exception exception) {
+            System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
+        }
+        AtomContainer ac = getAtomContainer();
+        Isotope h= si.getMajorIsotope("H");
+        for(int f = 0; f < ac.getAtomCount();f++)
+        {
+            Element i = si.getElement(ac.getAtomAt(f).getSymbol());
+            if(i != null)
+            {
+                mass += getNaturalMass(i);
+            }
+            else
+            {
+                return 0;
+            }
+            mass += ac.getAtomAt(f).getHydrogenCount()*getNaturalMass(h);
         }
         return mass;
     }
