@@ -119,6 +119,27 @@ public class CrystalGeometryToolsTest extends TestCase {
     }
 
     /**
+     * This method tests the conversion of atomic fractional coordinates to
+     * cartesian coordinates. The specific numbers are taken from 9603.res.
+     */
+    public void testFractionalToCartesian2() {
+        double[][] cardAxes = CrystalGeometryTools.notionalToCartesian(
+            9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821
+        );
+        double[] a = {cardAxes[0][0], cardAxes[0][1], cardAxes[0][2]};
+        double[] b = {cardAxes[1][0], cardAxes[1][1], cardAxes[1][2]};
+        double[] c = {cardAxes[2][0], cardAxes[2][1], cardAxes[2][2]};
+        
+        double[] fractCoords = {0.517879, 0.258121, 0.698477};
+        double[] cartCoords = CrystalGeometryTools.fractionalToCartesian(
+            a, b, c, fractCoords
+        );
+        assertEquals(7.005, cartCoords[0], 0.001);
+        assertEquals(8.441, cartCoords[1], 0.001);
+        assertEquals(3.096, cartCoords[2], 0.001);
+    }
+
+    /**
      * This method tests the conversion of atomic cartesian coordinates to
      * fractional coordinates.
      */
