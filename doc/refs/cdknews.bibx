@@ -5,7 +5,7 @@
 
   <!-- This file is preferable edited in jEdit with the XML plugin installed -->
   
-  <!-- Copied from CDK News CVS at CUBIC (almost machine) : 1.2 -->
+  <!-- Copied from CDK News CVS at CUBIC (almost machine) : 1.3 -->
   
   <!-- $RCSfile$
        $Revision$
@@ -15,7 +15,7 @@
 
   <bibtex:entry id="cdknews.art1">
     <bibtex:article>
-      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
       <bibtex:title>What's 2004 going to bring?</bibtex:title>
       <bibtex:journal>CDK News</bibtex:journal>
       <bibtex:year>2004</bibtex:year>
@@ -27,7 +27,7 @@
 
   <bibtex:entry id="cdknews.art2">
     <bibtex:article>
-      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
       <bibtex:title>Submitting articles to CDK News</bibtex:title>
       <bibtex:journal>CDK News</bibtex:journal>
       <bibtex:year>2004</bibtex:year>
@@ -39,7 +39,7 @@
 
   <bibtex:entry id="cdknews.art3">
     <bibtex:article>
-      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
       <bibtex:title>Customizing file IO</bibtex:title>
       <bibtex:journal>CDK News</bibtex:journal>
       <bibtex:year>2004</bibtex:year>
@@ -99,7 +99,7 @@
 
   <bibtex:entry id="cdknews.art9">
     <bibtex:article>
-      <bibtex:author>Willighagen, E.</bibtex:author>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
       <bibtex:title>Konqueror web shortcuts to the CDK API</bibtex:title>
       <bibtex:journal>CDK News</bibtex:journal>
       <bibtex:year>2004</bibtex:year>
