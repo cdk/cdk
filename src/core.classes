@@ -1,4 +1,4 @@
-org/openscience/cdk/AtomContainer.class" />
+org/openscience/cdk/AtomContainer.java
 org/openscience/cdk/AtomEnumeration.java
 org/openscience/cdk/Atom.java
 org/openscience/cdk/AtomType.java
@@ -21,3 +21,4 @@ org/openscience/cdk/Polymer.java
 org/openscience/cdk/Ring.java
 org/openscience/cdk/RingSet.java
 org/openscience/cdk/SetOfMolecules.java
+org/openscience/cdk/Crystal.java
