@@ -166,6 +166,7 @@ public class UniversalIsomorphismTester {
    *  Returns all the isomorph 'mappings' found between two
    *  atom containers.
    *
+   * @deprecated Two AtomContainers are isomporph if all Bonds can be mapped. There is only one mapping then. Use getIsomorphMap instead.
    * @param  g1  first molecule
    * @param  g2  second molecule
    * @return     the list of all the 'mappings'
@@ -212,6 +213,19 @@ public class UniversalIsomorphismTester {
   }
 
 
+  /**
+   *  Returns all subgraph 'atom mappings' found for g2 in g1. If more than one subgraph match is found,
+   *  the mapping is simply added to the end of the list. The number of mappings can be retrieved with 
+   *  List.getItemCount() divided by g2.getAtomCount().
+   *
+   * @param  g1  first AtomContainer
+   * @param  g2  second AtomContainer
+   * @return     all subgraph atom mappings found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
+   */
+  public static List getSubgraphAtomsMaps(AtomContainer g1, AtomContainer g2) {
+    return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2));
+  }
+  
   /**
    *  Returns the first subgraph 'atom mapping' found for g2 in g1.
    *
