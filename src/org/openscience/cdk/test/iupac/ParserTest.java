@@ -126,4 +126,30 @@ public class ParserTest extends TestCase
             assertTrue (true);
         }
     }
+    
+    public void testUnconnectingGroup()
+    {
+        try
+        {
+            Molecule parserMolecule = NomParser.generate("7-chloropentane");
+            fail("Molecule was successfully generated but should have thrown a ParseException");
+        }
+        catch (ParseException pe)
+        {
+            assertTrue (true);
+        }        
+    }
+    
+    public void testUnconnectingSubChain()
+    {
+        try
+        {
+            Molecule parserMolecule = NomParser.generate("9-ethylhexane");
+            fail("Molecule was successfully generated but should have thrown a ParseException");
+        }
+        catch (ParseException pe)
+        {
+            assertTrue (true);
+        }        
+    }
 }
