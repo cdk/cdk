@@ -55,7 +55,6 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
-
 public class SimpleCycle extends UndirectedSubgraph {
 
 	/**
@@ -91,7 +90,7 @@ public class SimpleCycle extends UndirectedSubgraph {
 	/**
 	 * Returns the sum of the weights of all edges in this cycle.
 	 *
-	 * @returns the sum of the weights of all edges in this cycle
+	 * @return the sum of the weights of all edges in this cycle
 	 */
 	public double weight() {
 		double result = 0;
@@ -106,7 +105,7 @@ public class SimpleCycle extends UndirectedSubgraph {
 	 * Returns a list of the vertices contained in this cycle.
 	 * The vertices are in the order of a traversal of the cycle.
 	 *
-	 * @returns a list of the vertices contained in this cycle
+	 * @return a list of the vertices contained in this cycle
 	 */
 	public List vertexList() {
 		List vertices = new ArrayList(edgeSet().size());

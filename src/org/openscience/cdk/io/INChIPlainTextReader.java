@@ -49,7 +49,8 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
  * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text 
  * document. This reader parses output generated with INChI 1.12beta like:
  * <pre>
- * * Input_File: "E:\Program Files\INChI\inchi-samples\Figure04.mol"
+ * 
+ * Input_File: "E:\Program Files\INChI\inchi-samples\Figure04.mol"
  * 
  * Structure: 1
  * INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H
@@ -65,7 +66,7 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
  * @cdk.keyword chemical identifier
  * @cdk.require java1.4
  *
- * @see     org.openscience.cdk.io.ichi.INChIReader
+ * @see     org.openscience.cdk.io.INChIReader
  */
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 

@@ -99,7 +99,7 @@ public class INChIContentProcessorTool {
      * Typical values look like 1-2-4-6-5-3-1, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
      *
      * @param bondsEncoding the content of the INChI connections field
-     * @param atomContainer the atomContainer parsed from the formula field
+     * @param container     the atomContainer parsed from the formula field
      * @param source        the atom to build the path upon. If -1, then start new path
      *
      * @see   #processFormula

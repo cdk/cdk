@@ -57,7 +57,7 @@ import org.xml.sax.XMLReader;
  * @cdk.keyword chemical identifier
  * @cdk.require java1.4
  *
- * @see     org.openscience.cdk.io.ichi.INChIHandler
+ * @see     org.openscience.cdk.io.inchi.INChIHandler
  */
 public class INChIReader extends DefaultChemObjectReader {
 

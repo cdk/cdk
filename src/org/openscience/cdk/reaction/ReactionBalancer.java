@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -348,7 +348,7 @@ public class ReactionBalancer {
 
 
 	/**
-	 *  Add a no. of Molecules to a SetOfMolecules
+	 *  Add a number of Molecules to a SetOfMolecules
 	 *
 	 *@param  som           The SetOfMolecules that the Molecules are to be added
 	 *@param  elementCount  The number of Molecules to be added
@@ -360,7 +360,7 @@ public class ReactionBalancer {
 	}
 
 	/**
-	 *  Add a no. of Molecules to a SetOfMolecules
+	 *  Add a number of Molecules to a SetOfMolecules
 	 *
 	 *@param  som           The SetOfMolecules that the Molecules are to be added
 	 *@param  elementCount  The number of Molecules to be added

@@ -249,7 +249,7 @@ public class CycleBasis {
 	/**
 	 * Returns the cycles that form the cycle basis.
 	 *
-	 * @returns a <Code>Collection</code> of the basis cycles
+	 * @return a <Code>Collection</code> of the basis cycles
 	 */
 
 	public Collection cycles() {
@@ -260,7 +260,7 @@ public class CycleBasis {
 	 * Returns the essential cycles of this cycle basis.
 	 * A essential cycle is contained in every minimum cycle basis of a graph.
 	 *
-	 * @returns a <Code>Collection</code> of the essential cycles
+	 * @return a <Code>Collection</code> of the essential cycles
 	 */
 
 	public Collection essentialCycles() {
@@ -279,7 +279,7 @@ public class CycleBasis {
 	 * Returns the essential cycles of this cycle basis.
 	 * A relevant cycle is contained in some minimum cycle basis of a graph.
 	 *
-	 * @returns a <Code>Map</code> mapping each relevant cycles to the corresponding
+	 * @return a <Code>Map</code> mapping each relevant cycles to the corresponding
 	 * basis cycle in this basis
 	 */
 
@@ -300,7 +300,7 @@ public class CycleBasis {
 	 * Two cycles belong to the same commected component if there is a circuit (a minimal 
 	 * dependent set) containing both cycles.
 	 *
-	 * @returns a <Code>List</code> of <Code>Set</code>s consisting of the cycles in a
+	 * @return a <Code>List</code> of <Code>Set</code>s consisting of the cycles in a
 	 * equivalence class.
 	 */
 
