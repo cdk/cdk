@@ -17,6 +17,7 @@ New:
 
 Removed:
 * Viewer application. Use JChemPaint (jchempaint.sf.net) or Jmol (jmol.sf.net) instead
+* CDK core debug patch (was incomplete and experimental)
 
 Fixes:
 * A nasty threading bug in StructureDiagramGenerator has been fixed, preventing 
