@@ -12,4 +12,9 @@ alljardir = "${JARLIBDIR}"
 alljar_DATA = ${JARLIBS}
 
 ${JARLIBS}:
-	cd ../../../../../jar/libio; cp ${JARLIBS} ../../packages/tar/cdk/jar/libio/.
+	cd ../../../../../jar/libio; \
+	    if (test -e $@) ; \
+	    then \
+	        cp --target-directory=../../packages/tar/cdk/jar/libio/. $$file; \
+	    fi;
+	

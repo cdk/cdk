@@ -14,7 +14,7 @@ EXTRA_DIST=${JARLIBS}
 alljardir = ${JARLIBDIR}
 alljar_DATA = ${JARLIBS}
 
-SUBDIRS= libio
+SUBDIRS= libio 
 
 ${JARLIBS}:
 	cd ../../../../jar; cp ${JARLIBS} ../packages/tar/cdk/jar/.
