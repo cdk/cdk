@@ -396,6 +396,7 @@ public class CMLCoreModule implements ModuleInterface {
                     bondsCounted = true;
                 }
             }
+            curRef = 0;
         } else if ("molecule".equals(name)) {
             newMolecule();
             BUILTIN = "";
@@ -600,7 +601,8 @@ public class CMLCoreModule implements ModuleInterface {
                 }
             }
         } else if ("stringArray".equals(name)) {
-            if (BUILTIN.equals("id") || BUILTIN.equals("atomId")) {
+            if (BUILTIN.equals("id") || BUILTIN.equals("atomId")
+                || BUILTIN.equals("atomID")) { // invalid according to CML1 DTD but found in OpenBabel 1.x output
                 
                 try {
                     boolean countAtoms = (atomCounter == 0) ? true : false;
@@ -631,6 +633,35 @@ public class CMLCoreModule implements ModuleInterface {
             } else if (BUILTIN.equals("atomRefs")) {
                 curRef++;
                 logger.debug("New atomRefs found: " + curRef);
+                
+                try {
+                    boolean countBonds = (bondCounter == 0) ? true : false;
+                    StringTokenizer st = new StringTokenizer(cData);
+                    
+                    while (st.hasMoreTokens()) {
+                        if (countBonds) { bondCounter++; }
+                        String token = st.nextToken();
+                        logger.debug("Token: " + token);
+                        
+                        if (curRef == 1) {
+                            bondARef1.addElement(token);
+                        } else if (curRef == 2) {
+                            bondARef2.addElement(token);
+                        }
+                    }
+                } catch (Exception e) {
+                    notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
+                }
+            } else if (BUILTIN.equals("atomRef")) {
+                curRef++;
+                logger.debug("New atomRef found: " + curRef); // this is CML1 stuff, we get things like:
+                /*
+                  <bondArray>
+                  <stringArray builtin="atomRef">a2 a2 a2 a2 a3 a3 a4 a4 a5 a6 a7 a9</stringArray>
+                  <stringArray builtin="atomRef">a9 a11 a12 a13 a5 a4 a6 a9 a7 a8 a8 a10</stringArray>
+                  <stringArray builtin="order">1 1 1 1 2 1 2 1 1 1 2 2</stringArray>
+                  </bondArray>
+                */
                 
                 try {
                     boolean countBonds = (bondCounter == 0) ? true : false;
@@ -822,7 +853,7 @@ public class CMLCoreModule implements ModuleInterface {
             hasID = true;
         } else {
             logger.debug(
-                    "No atom ids: " + elsym.size() + " != " + atomCounter);
+                    "No atom ids: " + elid.size() + " != " + atomCounter);
         }
 
         if (elsym.size() == atomCounter) {
