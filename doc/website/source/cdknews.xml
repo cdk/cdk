@@ -14,12 +14,30 @@
 
   <para>
     CDK News is a news letter with articles about CDK and related work
-    started in 2004. Editors-in-Chief are Egon and Chris, complemented
-    by Rajarshi Guha.
+    started in 2004. The news letter contains a few recurrent articles,
+    like Literature and Changelog, but the major part is supposed to be
+    specialized articles about application and development of CDK,
+    technology tutorials, and anything else related to CDK.
   </para>
   
   <para>
     Issues can be downloaded from the SourceForge website soon.
   </para>
+  
+  <para>
+    The editorial board of the news letter consists of
+    Egon Willighagen and Christoph Steinbeck, who are Editor-in-Chief,
+    and Rajarshi Guha.
+  </para>
+  
+  <section>
+   <title>Submitting articles</title>
+   <para>
+     The first issue (1/1) features an article about writing an article for 
+     CDK&nbsp;News, so please read that. The article mentions websources for
+     the Latex style file and an example Latex source file for
+     an article. Both can be found <ulink url="http://cdk.sf.net/cdknews/exampleArticle">here</ulink>.
+   </para>
+  </section>
   
 </webpage>
