@@ -216,9 +216,8 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Returns all subgraph 'atom mappings' found for g2 in g1. If more than one subgraph match is found,
-   *  the mapping is simply added to the end of the list. The number of mappings can be retrieved with 
-   *  List.getItemCount() divided by g2.getAtomCount().
+   *  Returns all subgraph 'atom mappings' found for g2 in g1.
+   *  This is an ArrayList of ArrayLists of RMap objects.
    *
    * @param  g1  first AtomContainer
    * @param  g2  second AtomContainer
