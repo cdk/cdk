@@ -27,8 +27,8 @@
  */
 package org.openscience.cdk.editor;
 
+import org.openscience.cdk.*;
 import java.util.*;
-import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
@@ -46,13 +46,11 @@ public class DictRefEditorTableModel extends AbstractTableModel {
         columnNames[1] = "Dictionary";
         columnNames[2] = "Entry";
         
-        fields.addElement("");
-        dicts.addElement("");
-        entries.addElement("");
+        insertBlankRow(0);
     }
     
     
-    public void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int column) {
         if (((String)value).length() == 0 ) {
             fields.removeElementAt(row);
             dicts.removeElementAt(row);
@@ -61,11 +59,11 @@ public class DictRefEditorTableModel extends AbstractTableModel {
             if (fields.size() < 1) {
                 insertBlankRow(row);
             }
-        } else if (col == 0) {
+        } else if (column == 0) {
             fields.setElementAt(value, row);
-        } else if (col == 1) {
+        } else if (column == 1) {
             dicts.setElementAt(value, row);
-        } else if (col == 2) {
+        } else if (column == 2) {
             entries.setElementAt(value, row);
         }
 
@@ -73,7 +71,7 @@ public class DictRefEditorTableModel extends AbstractTableModel {
             insertBlankRow(row);
         }
         
-        fireTableCellUpdated(row, col);
+        fireTableCellUpdated(row, column);
     }
     
     
@@ -94,8 +92,9 @@ public class DictRefEditorTableModel extends AbstractTableModel {
     }
     
     public Object getValueAt(int row, int col) {
-        if ( row >= fields.size() || col >= columnNames.length )
+        if ( row >= fields.size() || col >= columnNames.length ) {
             return null;
+        }
         
         if (col == 0) {
             return fields.elementAt(row);
@@ -106,8 +105,36 @@ public class DictRefEditorTableModel extends AbstractTableModel {
         }
     }
     
-    public boolean isCellEditable( int row, int col ) {
+    public boolean isCellEditable(int row, int column) {
         return true;
+    }
+    
+    public void setChemObject(ChemObject object) {
+        cleanTable();
+        Map properties = object.getProperties();
+        Iterator iter = properties.getKeys().iterator();
+        while (iter.hasNext()) {
+            Object key = iter.next();
+            if (key instanceof String) {
+                String keyName = (String)key;
+                if (keyName.startsWith("org.openscience.cdk.dict") {
+                }
+            }
+        }
+    }
+    
+    private void insertRow(Object[] dataInRow) {
+        for (int i=0; i<columnNames.length; i++) {
+            fields.addElement(dataInRow[i]);
+        }
+    }
+    
+    private void cleanTable() {
+        fields.clear();
+        dicts.clear();
+        entries.clear();
+        fireTableDataChanged();
+        insertBlankRow(0);
     }
     
     private void insertBlankRow(int row) {
