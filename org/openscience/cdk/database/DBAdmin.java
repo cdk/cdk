@@ -85,7 +85,7 @@ public class DBAdmin
     /**
      *  Driver for database
      **/
-    public String driver = "postgres";
+    public String driver = "postgresql";
     
     /**
      *  An object representing a connection to a database
@@ -195,9 +195,9 @@ public class DBAdmin
 	 	
         try
         {
-            if (driver.equals("postgres")) {
+            if (driver.equals("postgresql")) {
               System.out.print("Loading PostGres driver... ");
-              Class.forName("postgres.Driver");
+              Class.forName("org.postgresql.Driver");
             } else if (driver.equals("mysql")) {
               System.out.print("Loading MySQL driver... ");
               Class.forName("org.gjt.mm.mysql.Driver").newInstance();

@@ -78,8 +78,9 @@ public class DBReader implements ChemObjectReader
 			rs = st.executeQuery(query);
 			while (rs.next())
 			{
-				byte[] bytes = rs.getBytes(4);
-				reader = new StringReader(new String(bytes));
+				byte[] bytes = rs.getBytes(14);
+        String CMLString = new String(bytes);
+				reader = new StringReader(CMLString);
 				cmlr = new CMLReader(reader);
 				mol = getMolecule((ChemFile)cmlr.read(new ChemFile()));
 				
