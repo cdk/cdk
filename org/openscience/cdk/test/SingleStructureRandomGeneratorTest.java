@@ -82,13 +82,26 @@ public class SingleStructureRandomGeneratorTest
 	private AtomContainer getBunchOfUnbondedAtoms()
 	{
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+		fixCarbonHCount(molecule);
 		molecule.removeAllBonds();
-		int[] hcounts = {1,0,1,2,1,2,1,0,3,3};
-		for (int f = 0; f < hcounts.length; f++)
-		{
-			molecule.getAtomAt(f).setHydrogenCount(hcounts[f]);
-		}
 		return (AtomContainer)molecule;
+	}
+	
+	private void fixCarbonHCount(Molecule mol)
+	{	
+		/* the following line are just a quick fix for this
+		   particluar carbon-only molecule until we have a proper 
+		   hydrogen count configurator
+		 */
+		int bondCount = 0;
+		Atom atom;
+		 for (int f = 0; f < mol.getAtomCount(); f++)
+		{
+			atom = mol.getAtomAt(f);
+			bondCount =  mol.getBondOrderSum(atom);
+			if (bondCount > 4) System.out.println("bondCount: " + bondCount);
+			atom.setHydrogenCount(4 - bondCount - (int)atom.getCharge());
+		}
 	}
 	
 	public static void main(String[] args)

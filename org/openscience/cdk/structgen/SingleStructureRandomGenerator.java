@@ -30,7 +30,7 @@ package org.openscience.cdk.structgen;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
-import java.util.Vector;
+import java.util.*;
 import java.io.*;
 
 /**
@@ -60,7 +60,19 @@ public class SingleStructureRandomGenerator
 	AtomContainer atomContainer;
 	SaturationChecker satCheck;
 	static boolean debug = false;
+	Random random = null;
 
+	/**
+	 *  Constructor for the SingleStructureRandomGenerator object
+	 *
+	 * @exception  java.lang.Exception  Description of Exception
+	 * @since
+	 */
+	public SingleStructureRandomGenerator(long seed) throws java.lang.Exception
+	{
+		satCheck = new SaturationChecker();
+		random = new Random(seed);
+	}
 
 	/**
 	 *  Constructor for the SingleStructureRandomGenerator object
@@ -70,10 +82,10 @@ public class SingleStructureRandomGenerator
 	 */
 	public SingleStructureRandomGenerator() throws java.lang.Exception
 	{
-		satCheck = new SaturationChecker();
+		this((long)11000);
 	}
 
-
+	
 	/**
 	 *  Sets the AtomContainer attribute of the SingleStructureRandomGenerator object
 	 *
@@ -120,12 +132,7 @@ public class SingleStructureRandomGenerator
 							cmax1 = satCheck.getCurrentMaxBondOrder(atom, atomContainer);
 							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
 							max = Math.min(cmax1, cmax2);
-							order = Math.min(Math.max(1.0, (double)Math.round(Math.random() * max)), 3.0);
-														if (debug)
-							{
-								System.out.println("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
-							}
-
+							order = Math.min(Math.max(1.0, random.nextInt((int)Math.round(max))), 3.0);
 							atomContainer.addBond(new Bond(atom, partner, order));
 							bondFormed = true;
 						}
@@ -155,7 +162,7 @@ public class SingleStructureRandomGenerator
 	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom)
 	{
 		Atom atom;
-		int next = (int) (Math.random() * atomContainer.getAtomCount());
+		int next = random.nextInt(atomContainer.getAtomCount());
 
 		for (int f = next; f < atomContainer.getAtomCount(); f++)
 		{

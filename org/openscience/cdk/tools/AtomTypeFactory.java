@@ -78,7 +78,7 @@ public class AtomTypeFactory
 			throw new IOException("There was a problem getting org.openscience.cdk.config.atomtypes.xml as a stream");
 		}
 		if (ins == null) throw new IOException("There was a problem getting org/openscience/cdk/config/atomtypes.xml as a stream");
-		in = new ObjIn(ins);
+		in = new ObjIn(ins, new Config().aliasID(false));
 		atomTypes = (Vector) in.readObject();
 	}
 	

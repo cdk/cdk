@@ -81,7 +81,7 @@ public class VicinitySampler
 	 */
 	public Vector sample(AtomContainer ac)
 	{
-		if(debug) System.out.println("RandomGenerator->mutate() Start");
+		if(debug) if (debug) System.out.println("RandomGenerator->mutate() Start");
 		Vector structures = new Vector();
 		ConnectivityChecker conCheck = new ConnectivityChecker();
 		int nrOfAtoms = ac.getAtomCount();
@@ -92,7 +92,7 @@ public class VicinitySampler
 		double b22 = 0;
 		double[] cmax = new double[4]; 
 		double[] cmin = new double[4];
-		AtomContainer newAc = (AtomContainer)ac.clone();
+		AtomContainer newAc = null;
 
 		Atom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
 		Bond b1 = null, b2 = null, b3 = null, b4 = null;
@@ -109,17 +109,15 @@ public class VicinitySampler
 				{
 					for (int y2 = y1 + 1; y2 < nrOfAtoms; y2++)
 					{
-						if (changed) newAc = (AtomContainer)ac.clone();
 						nonZeroBondsCounter = 0;
-						ax1 = newAc.getAtomAt(x1);
-						ay1 = newAc.getAtomAt(y1);
-						ax2 = newAc.getAtomAt(x2);
-						ay2 = newAc.getAtomAt(y2);
-						
-						
+						ax1 = ac.getAtomAt(x1);
+						ay1 = ac.getAtomAt(y1);
+						ax2 = ac.getAtomAt(x2);
+						ay2 = ac.getAtomAt(y2);
+												
 						/* Get four bonds for these four atoms */
 						
-						b1 = newAc.getBond(ax1, ay1);
+						b1 = ac.getBond(ax1, ay1);
 						if (b1 != null)
 						{
 							a11 = b1.getOrder();
@@ -130,7 +128,7 @@ public class VicinitySampler
 							a11 = 0;
 						}
 						
-						b2 = newAc.getBond(ax1, ay2);
+						b2 = ac.getBond(ax1, ay2);
 						if (b2 != null)
 						{
 							a12 = b2.getOrder();
@@ -141,7 +139,7 @@ public class VicinitySampler
 							a12 = 0;
 						}
 		
-						b3 = newAc.getBond(ax2, ay1);
+						b3 = ac.getBond(ax2, ay1);
 						if (b3 != null)
 						{
 							a21 = b3.getOrder();
@@ -152,7 +150,7 @@ public class VicinitySampler
 							a21 = 0;
 						}
 						
-						b4 = newAc.getBond(ax2, ay2);									
+						b4 = ac.getBond(ax2, ay2);									
 						if (b4 != null)
 						{
 							a22 = b4.getOrder();
@@ -184,16 +182,17 @@ public class VicinitySampler
 									b12 = a11 + a12 - b11;
 									b21 = a11 + a21 - b11;
 									b22 = a22 - a11 + b11;
-									System.out.println("Trying atom combination : " + x1 + ":" + x2 + ":"+ y1 + ":"+ y2);
+									if (debug) System.out.println("Trying atom combination : " + x1 + ":" + x2 + ":"+ y1 + ":"+ y2);
 									changed = true;
-									newAc = change(newAc, ax1, ay1, ax2, ay2, b1, b2, b3, b4, b11, b12, b21, b22);
+									newAc = (AtomContainer)ac.clone();
+									change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
 									if (conCheck.isConnected(newAc))
 									{
 										structures.add(newAc);
 									}
 									else
 									{
-										System.out.println("not connected");	
+										if (debug) System.out.println("not connected");	
 									}
 								}
 							}
@@ -203,7 +202,6 @@ public class VicinitySampler
 			}
 		}
 		return structures;
-
 	}
 
 	/**
@@ -244,96 +242,106 @@ public class VicinitySampler
 		return min;
 	}
 
-	private AtomContainer change(AtomContainer ac, Atom ax1, Atom ay1, Atom ax2, Atom ay2, Bond b1, Bond b2, Bond b3, Bond b4, double b11, double b12, double b21, double b22)
+	private AtomContainer change(AtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12, double b21, double b22)
 	{
-		int x1 = -1, x2 = -1, y1 = -1, y2 = -1;
-		System.out.println("About to make modification " + molCounter);
+		Atom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
+		Bond b1 = null, b2 = null, b3 = null, b4 = null;
+		if (debug) System.out.println("About to make modification " + molCounter);
 		molCounter ++;
+		if (debug) System.out.println("Changes for molecule no. " + molCounter);
 		try
 		{
-			x1 = ac.getAtomNumber(ax1);
-			x2 = ac.getAtomNumber(ax2);
-			y1 = ac.getAtomNumber(ay1);
-			y2 = ac.getAtomNumber(ay2);
+			ax1 = ac.getAtomAt(x1);
+			ax2 = ac.getAtomAt(x2);
+			ay1 = ac.getAtomAt(y1);
+			ay2 = ac.getAtomAt(y2);
 		}
 		catch(Exception exc)
 		{
 			exc.printStackTrace();	
 		}
+		b1 = ac.getBond(ax1, ay1);
+		b2 = ac.getBond(ax1, ay2);
+		b3 = ac.getBond(ax2, ay1);
+		b4 = ac.getBond(ax2, ay2);									
 		if (b11 > 0)
 		{
 			if (b1 == null)
 			{
-				System.out.println("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
+				if (debug) System.out.println("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
 				b1 = new Bond(ax1, ay1, b11);
 				ac.addBond(b1);
 			}
 			else
 			{
 				b1.setOrder(b11);
+				if (debug) System.out.println("Setting bondorder for " + x1 + "-" + y1 + " to " + b11);
 			}
 		}
 		else if (b1 != null)
 		{
 			ac.removeBond(b1);
-			System.out.println("removing bond " + x1 + "-" + y1);			
+			if (debug) System.out.println("removing bond " + x1 + "-" + y1);			
 		}
 		
 		if (b12 > 0) 
 		{
 			if (b2 == null)
 			{
-				System.out.println("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);				
+				if (debug) System.out.println("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);				
 				b2 = new Bond(ax1, ay2, b12);
 				ac.addBond(b2);
 			}
 			else
 			{
 				b2.setOrder(b12);
+				if (debug) System.out.println("Setting bondorder for " + x1 + "-" + y2 + " to " + b12);
 			}
 		}
 		else if (b2 != null)
 		{
 			ac.removeBond(b2);
-			System.out.println("removing bond " + x1 + "-" + y2);			
+			if (debug) System.out.println("removing bond " + x1 + "-" + y2);			
 		}
 		
 		if (b21 > 0) 
 		{
 			if (b3 == null)
 			{
-				System.out.println("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
+				if (debug) System.out.println("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
 				b3 = new Bond(ax2, ay1, b21);
 				ac.addBond(b3);
 			}
 			else
 			{
 				b3.setOrder(b21);
+				if (debug) System.out.println("Setting bondorder for " + x2 + "-" + y1 + " to " + b21);
 			}
 		}
 		else if (b3 != null)
 		{
 			ac.removeBond(b3);
-			System.out.println("removing bond " + x2 + "-" + y1);
+			if (debug) System.out.println("removing bond " + x2 + "-" + y1);
 		}
 
 		if (b22 > 0) 
 		{
 			if (b4 == null)
 			{
-				System.out.println("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
+				if (debug) System.out.println("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
 				b4 = new Bond(ax2, ay2, b22);
 				ac.addBond(b4);
 			}
 			else
 			{
 				b4.setOrder(b22);
+				if (debug) System.out.println("Setting bondorder for " + x2 + "-" + y2 + " to " + b22);
 			}
 		}
 		else if (b4 != null)
 		{
 			ac.removeBond(b4);
-			System.out.println("removing bond " + x2 + "-" + y2);
+			if (debug) System.out.println("removing bond " + x2 + "-" + y2);
 		}
 		return ac;
 	}

@@ -1,7 +1,6 @@
 <project name="CDK" default="compile" basedir=".">
 
-        <property name="build.compiler" value="javac1.1" />
-	<property name="build.target" value="1.1" />
+        <property name="build.compiler" value="modern" />
         <property name="build" value="build" />
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
@@ -100,7 +99,7 @@
                 <mkdir dir="${build}" />
 
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
-                        <src path="org" />
+                        <src path="." />
                         <exclude name="${sourcedist}/**" />
                         <exclude
                         name="org/openscience/cdk/applications/Viewer.java" />
@@ -121,7 +120,7 @@
                 </javac>
 
                 <copy todir="${build}">
-                        <fileset dir="org" includes="**/Test-*" />
+                        <fileset dir="." includes="**/Test-*" />
                 </copy>
         </target>
 
@@ -297,7 +296,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.VicinitySamplerTest" fork="yes">
+                <java classname="org.openscience.cdk.test.SingleStructureRandomGeneratorTest" fork="yes">
                         <classpath>
                                 <pathelement
                                 location="${dist}/jar/cdk.jar" />
