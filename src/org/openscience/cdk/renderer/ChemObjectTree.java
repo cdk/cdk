@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
  *
  *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -80,10 +80,10 @@ public class ChemObjectTree extends JPanel {
         // make a new tree
         this.removeAll();
         if (object == null) {
-            logger.info("Making empty ChemObjectTree");
+            // logger.info("Making empty ChemObjectTree");
             this.tree = new JTree(new DefaultMutableTreeNode("empty"));
         } else {
-            logger.info("Making ChemObjectTree for " + object.getClass().getName());
+            // logger.info("Making ChemObjectTree for " + object.getClass().getName());
             DefaultMutableTreeNode top = getTree(object);
             this.tree = new JTree(top);
         }
