@@ -92,13 +92,13 @@ public class Rule2dot1 extends NamingRule {
             // determine longest C-C chain
             try {
                 AtomContainer copy = new AtomContainer();
-                System.err.println(" m: " + m);
+//                System.err.println(" m: " + m);
                 copy.add(m);
-                System.err.println("cp: " + copy);
+//                System.err.println("cp: " + copy);
                 AtomContainer longestChain = ap.getInitialLongestChain(
                     new Molecule(deleteNonCarbonAtoms(copy))
                 );
-                System.err.println("AC: " + longestChain);
+//                System.err.println("AC: " + longestChain);
 
                 int length = longestChain.getAtomCount();
                 m.setProperty(COMPLETED_FLAG, "no");
@@ -121,15 +121,15 @@ public class Rule2dot1 extends NamingRule {
 
     private AtomContainer deleteNonCarbonAtoms(AtomContainer ac) throws NoSuchAtomException {
         AtomContainer result = (AtomContainer)ac.clone();
-        System.out.println("Deleting non carbon atoms...");
+//        System.out.println("Deleting non carbon atoms...");
         Atom[] atoms = ac.getAtoms();
         for (int i=0; i < atoms.length; i++) {
             Atom atom = atoms[i];
             if (!"C".equals(atom.getSymbol())) {
-                System.out.println("  deleting: " + atom.getSymbol());
+//                System.out.println("  deleting: " + atom.getSymbol());
                 ac.removeAtomAndConnectedElectronContainers(atom);
             } else {
-                System.out.println("   keeping: " + atom.getSymbol());
+//                System.out.println("   keeping: " + atom.getSymbol());
             }
         }
         return result;

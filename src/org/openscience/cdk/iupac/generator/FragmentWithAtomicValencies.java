@@ -70,13 +70,13 @@ public class FragmentWithAtomicValencies extends Fragment {
      * on the atoms.
      */
     public void addValencyAtAtom(Atom a) throws NoSuchAtomException {
-        System.out.println("test");
+//        System.out.println("test");
         int atomNumber = super.getAtomNumber(a);
-        System.out.println("test");
+//        System.out.println("test");
         int valencyIndex = getFreeValences();
-        System.out.println("test");
+//        System.out.println("test");
         valenciesAt[valencyIndex] = atomNumber;
-        System.out.println("test");
+//        System.out.println("test");
         return;
     }
 
