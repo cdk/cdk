@@ -12,6 +12,8 @@ New:
 * Rewrote Renderer2D.paintAtomSymbol() which will now draw
   isotope info, e.g. 13C, and properly align implicit
   hydrogens, e.g. H3C-
+* Stoichiometry and direction concepts added to Reaction
+* Added a reverse() Reaction method to ReactionManipulator
 
 Fixes:
 * Added missing LGPL license to distributions.
