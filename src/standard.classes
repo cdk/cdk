@@ -9,3 +9,10 @@ org/openscience/cdk/geometry/CrystalGeometryTools.java
 org/openscience/cdk/renderer/color/AtomColorer.java
 org/openscience/cdk/renderer/color/CDKAtomColors.java
 org/openscience/cdk/renderer/color/PartialAtomicChargeColors.java
+org/openscience/cdk/exception/CDKException.java
+org/openscience/cdk/exception/Coordinates2DMissingException.java
+org/openscience/cdk/exception/InvalidSmilesException.java
+org/openscience/cdk/exception/NoSuchAtomException.java
+org/openscience/cdk/exception/NoSuchAtomTypeException.java
+org/openscience/cdk/exception/UnsupportedChemObjectException.java
+org/openscience/cdk/smiles/SmilesParser.java
