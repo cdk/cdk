@@ -31,7 +31,7 @@
         <tocentry page="user-io.xml" filename="user-io.html"/>
       </tocentry>
       <tocentry page="keywordindex.xml" filename="keywordindex.html"/>
-      <tocentry page="depends.xml" filename="depends.html"/>
+      <tocentry page="depends_web.xml" filename="depends_web.html"/>
       <tocentry page="api.xml" filename="api.html"/>
       <tocentry page="manpages.xml" filename="manpages.html">
         <tocentry page="man-dbadmin.xml" filename="man-dbadmin.html"/>
