@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -301,6 +301,18 @@ public class SaturationCheckerTest extends TestCase {
         assertEquals(1.0, b8.getOrder(), 0.001);
         assertEquals(2.0, b4.getOrder(), 0.001);
     }
+    
+    /**
+     * Tests wether the saturation checker gets a proton right.
+     */
+	public void testIsSaturated_Proton() throws CDKException {
+		// test H+
+		Molecule m = new Molecule();
+		Atom h = new Atom("H");
+        h.setFormalCharge(+1);
+		m.addAtom(h);
+		assertTrue(satcheck.isSaturated(h, m));
+	}
     
 }
 
