@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" "/usr/lib/sgml/dtd/docbook-xml-4.1/docbookx.dtd">
+<article id="cdk_database">
+  <title>CDK's database design</title>
+  <articleinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>$Date$</date>
+        <revremark>$Id$</revremark>
+      </revision>
+    </revhistory>
+  </articleinfo>
+  
+  <section>
+    <title>Storing Molecules</title>
+    <para>
+      Molecules are stored in any JDBC compatible database.
+      The molecular information is stored in the cdk_molecules
+      table (See <xref linkend="table-cdk_molecules"/>). Note
+      that most information is stored as a CML string to be
+      very flexible in what can be stored. The downside of this
+      design is that the CML is hard to query. A real XML database
+      might be a solution in the future.
+      <table id="table-cdk_molecules">
+        <title>cdk_molecules</title>
+        <tgroup cols="4">
+        <tbody>
+          <row>
+            <entry>molid</entry>
+            <entry>INT11</entry>
+            <entry>auto_increment NOT NULL</entry>
+            <entry>PRIMARY INDEX</entry>
+          </row>
+          <row>
+            <entry>cas_nr</entry>
+            <entry>TEXT</entry>
+            <entry/>
+            <entry/>
+          </row>
+          <row>
+            <entry>cml_code</entry>
+            <entry>TEXT</entry>
+            <entry>NOT NULL</entry>
+            <entry/>
+          </row>
+        </tbody>
+        </tgroup>
+      </table>
+    </para>
+    <para>
+      Additional names are stored in the cdk_chemnames table 
+      (See <xref linkend="table-cdk_chemnames"/>). Every name
+      occupies a new record in the table. None of the fields need
+      to be unique.
+      <table id="table-cdk_chemnames">
+        <title>cdk_chemnames</title>
+        <tgroup cols="4">
+        <tbody>
+          <row>
+            <entry>molid</entry>
+            <entry>INT11</entry>
+            <entry>NOT NULL</entry>
+            <entry/>
+          </row>
+          <row>
+            <entry>name</entry>
+            <entry>TEXT</entry>
+            <entry/>
+            <entry/>
+          </row>
+          <row>
+            <entry>type</entry>
+            <entry>TEXT</entry>
+            <entry/>
+            <entry/>
+          </row>
+        </tbody>
+        </tgroup>
+      </table>
+    </para>
+  </section>
+  
+  <section>
+    <title>Indexing</title>
+    <para>
+      Indexing is done in two ways. One is that a molecule get indexed by
+      some sort of (semi-)unique id. And the other is an index based on
+      molecular structure.
+    </para>
+    <section>
+      <title>Based on molecular structure</title>
+      <para>
+        Two proposed indices are based on the number of atoms the molecules:
+        cdk_index_bruto_common and cdk_index_bruto_other (see
+        <xref linkend="table-cdk_index_bruto_common"/> and
+        <xref linkend="table-cdk_index_bruto_other"/>
+        <table id="table-cdk_index_bruto_common">
+          <title>cdk_index_bruto_common</title>
+          <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>molid</entry>
+              <entry>INT11</entry>
+              <entry>NOT NULL</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>C</entry>
+              <entry>INT4</entry>
+              <entry/>
+              <entry/>
+            </row>
+            <row>
+              <entry>H</entry>
+              <entry>INT4</entry>
+              <entry/>
+              <entry/>
+            </row>
+            <row>
+              <entry>N</entry>
+              <entry>INT4</entry>
+              <entry/>
+              <entry/>
+            </row>
+            <row>
+              <entry>O</entry>
+              <entry>INT4</entry>
+              <entry/>
+              <entry/>
+            </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table id="table-cdk_index_bruto_other">
+          <title>cdk_index_bruto_other</title>
+          <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>molid</entry>
+              <entry>INT11</entry>
+              <entry>NOT NULL</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>Cl</entry>
+              <entry>INT4</entry>
+              <entry/>
+              <entry/>
+            </row>
+            <row>
+              <entry>Br</entry>
+              <entry>INT4</entry>
+              <entry/>
+              <entry/>
+            </row>
+            <row>
+              <entry>I</entry>
+              <entry>INT4</entry>
+              <entry/>
+              <entry/>
+            </row>
+          </tbody>
+        </tgroup>
+        </table>
+      </para>      
+    </section>
+    <section>
+      <title>Other</title>
+      <para>
+        <table id="table-cdk_index_common">
+          <title>cdk_index_common</title>
+          <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>molid</entry>
+              <entry>INT11</entry>
+              <entry>NOT NULL</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>cas_nr</entry>
+              <entry>TEXT</entry>
+              <entry/>
+              <entry/>
+            </row>
+          </tbody>
+        </tgroup>
+        </table>
+      </para>
+    </section>      
+    <section>
+      <title>Fingerprints</title>
+      <para>
+        A third kind of indexing is used for the
+        cdk_index_fingerprint_* tables. In these tables fingerprints
+        of the molecule are given which should facilitate functionality
+        like substructure search.
+        <table id="table-cdk_index_fingerprint_asterix">
+          <title>cdk_index_fingerprint_*</title>
+          <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>molid</entry>
+              <entry>INT11</entry>
+              <entry>NOT NULL</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>fingerprint</entry>
+              <entry>TEXT</entry>
+              <entry>INDEXED</entry>
+              <entry/>
+            </row>
+          </tbody>
+        </tgroup>
+        </table>
+      </para>
+    </section>
+  </section>
+</article>
