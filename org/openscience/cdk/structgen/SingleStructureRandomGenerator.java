@@ -167,9 +167,8 @@ public class SingleStructureRandomGenerator
 			{
 				return atomContainer;
 			}
-		} while (true);
+		} while (!true);
 	}
-
 
 	/**
 	 *  Description of the Method
