@@ -121,7 +121,14 @@ public class ConjugatedPiSystemsDetector {
         } else if (currentAtom.getFormalCharge() == 1 && currentAtom.getSymbol().equals("C")) {
             check = 0;
         } else if (currentAtom.getFormalCharge() == -1) {
-            // check whether negative charge may be delocalized
+		//// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
+	    int counterOfPi = 0;
+            for(int n = 0; n < atoms.size(); n++) {
+		Atom atom = (Atom) atoms.get(n);
+		if(ac.getMaximumBondOrder(atom) > 1.0) { counterOfPi ++; }
+	    }
+	    if(counterOfPi > 0) check = 0;
+	        ///////////////////////////////////////////////////////////// 
         } else {
             int singleBondCount = 0;
             int highOrderBondCount = 0;
