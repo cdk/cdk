@@ -45,7 +45,7 @@
 
   <target name="compile" depends="init">
     <mkdir dir="${build}"/>
-    <javac destdir="${build}" optimize="on" deprecation="on">
+    <javac destdir="${build}" optimize="on" deprecation="off">
       <src path="."/>
       <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D*"/>
       <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D*"/>
@@ -60,7 +60,7 @@
 
   <target name="compile-with-java3d" depends="init">
     <mkdir dir="${build}"/>
-    <javac destdir="${build}" optimize="on" deprecation="on">
+    <javac destdir="${build}" optimize="on" deprecation="off">
       <src path="."/>
       <classpath refid="project.class.path"/>
     </javac>
@@ -70,6 +70,9 @@
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}/jar"/>
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <mkdir dir="${build}/org/openscience/cdk/structgen/config"/>
+    <copy file="org/openscience/cdk/structgen/config/structgenatomtypes.xml"
+          tofile="${build}/org/openscience/cdk/structgen/config/structgenatomtypes.xml"/>
     <jar jarfile="${dist}/jar/cdk.jar" basedir="${build}"/>
     <mkdir dir="${build}/org/openscience/cdk/io/cml/data"/>
     <copy file="org/openscience/cdk/io/cml/data/cml.dtd"

@@ -235,7 +235,7 @@ public class JCPController2D
                         }
                         else
                         {
-                                newAtom1 = new Atom(new Element(c2dm.getDefaultElementSymbol()), new Point2d(startX,startY));
+                                newAtom1 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(startX,startY));
                                 atomCon.addAtom(newAtom1);
                         }
                         
@@ -250,7 +250,7 @@ public class JCPController2D
                                 }
                                 else
                                 {
-                                        newAtom2 = new Atom(new Element(c2dm.getDefaultElementSymbol()), new Point2d(endX,endY));
+                                        newAtom2 = new Atom(c2dm.getDefaultElementSymbol(), new Point2d(endX,endY));
                                         atomCon.addAtom(newAtom2);
                                 }
                                 newBond = new Bond(newAtom1, newAtom2, 1);

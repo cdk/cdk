@@ -97,7 +97,7 @@ public class Element extends ChemObject
 		if (this.atomicNumber == 0)
 		{
 			isotope	= new org.openscience.cdk.tools.StandardIsotopes().getMajorIsotope(getSymbol());
-			this.atomicNumber = isotope.atomicMass / 2;
+			this.atomicNumber = (int)(isotope.atomicMass / 2);
 		}
 		return this.atomicNumber;
 	}
@@ -131,5 +131,25 @@ public class Element extends ChemObject
 	{
 		this.symbol = symbol;
 	}
+	
+	        /**
+         * Clones this atom object.
+         *
+         * @return  The cloned object   
+         */
+        public Object clone()
+        {
+                Object o = null;
+                try
+                {
+                        o = super.clone();
+                }
+                catch (Exception e)
+                {
+                        e.printStackTrace(System.err);
+                }
+                return o;
+        }
+
 }
 

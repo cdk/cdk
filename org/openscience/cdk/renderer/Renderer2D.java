@@ -152,7 +152,7 @@ public class Renderer2D
 		if (atom.getPoint2D() == null) return;
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
-		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
+		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol())/2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
 
 		try
@@ -196,7 +196,7 @@ public class Renderer2D
 			{
 				atomColor = r2dm.getBackColor();
 			}			
-			if (!atom.getElement().getSymbol().equals("C"))
+			if (!atom.getSymbol().equals("C"))
 			{
 				paintAtomSymbol(atom, atomColor);
 			}
@@ -235,12 +235,12 @@ public class Renderer2D
 		if (atom.getPoint2D() == null) return;
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
-		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
+		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol())/2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
 		g.setColor(backColor);
 		g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
 		g.setColor(r2dm.getForeColor());
-		g.drawString(atom.getElement().getSymbol(),(int)(atom.getPoint2D().x - xSymbOffset),(int)(atom.getPoint2D().y + ySymbOffset));
+		g.drawString(atom.getSymbol(),(int)(atom.getPoint2D().x - xSymbOffset),(int)(atom.getPoint2D().y + ySymbOffset));
 //		g.setColor(r2dm.getBackColor());
 //		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}

@@ -75,7 +75,7 @@ public class GaussiansBasis implements Basis
     for(i=0; i<count_atoms; i++)
     { 
       this.rN[i] = (new Vector(atoms[i].getPoint3D())).mul(1.8897);
-      this.oz[i] = atoms[i].getElement().getAtomicNumber();
+      this.oz[i] = atoms[i].getAtomicNumber();
       System.out.println((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3D()))+"[å]");
     }
     System.out.println();

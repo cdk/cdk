@@ -33,35 +33,43 @@ package org.openscience.cdk;
  *	Used to store data of a particular isotope
  */
  
-public class Isotope extends Object implements Cloneable{
+public class Isotope extends Element implements Cloneable{
 	
-	public String symbol= "";
-	public int atomicMass = -1 ;
 	public double exactMass = (double)-1;
 	public double naturalAbundance = (double)-1;
 	
-    public Isotope()
+    public Isotope(int atomicNumber, String elementSymbol, double atomicMass, double exactMass, double nA)
     {
-    
-    }
-
-    public Isotope(int am, String symbol, double exactMass, double nA)
-    {
-        this.atomicMass = am;
-        this.symbol = symbol;
+	    super(elementSymbol, atomicNumber, atomicMass);
         this.exactMass = exactMass; 
         this. naturalAbundance = nA;
     }
     
-    public Object clone(){
-		Isotope i = new Isotope();
-		i.symbol = this.symbol;
-		i.atomicMass = this.atomicMass;
-		i.exactMass = this.exactMass;
-		i.naturalAbundance = this.naturalAbundance;
-		return i;
-	}
-	
+        public Isotope(int atomicNumber, String elementSymbol, double exactMass, double nA)
+    {
+	this(atomicNumber, elementSymbol, (double)Math.round(exactMass), exactMass, nA);
+    }
+
+    
+        /**
+         * Clones this atom object.
+         *
+         * @return  The cloned object   
+         */
+        public Object clone()
+        {
+                Object o = null;
+                try
+                {
+                        o = super.clone();
+                }
+                catch (Exception e)
+                {
+                        e.printStackTrace(System.err);
+                }
+                return o;
+        }
+
 	public String toString(){
 		String s = "[" + atomicMass + "]";
 		s += symbol + ": exact mass = " + exactMass;

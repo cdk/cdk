@@ -107,7 +107,7 @@ public class PDBReaderTest extends TestCase {
 
 				Atom oAtom = oMol.getFirstAtom();
 				assertNotNull(oAtom);
-				assertEquals(new String("C"), oAtom.getElement().getSymbol());
+				assertEquals(new String("C"), oAtom.getSymbol());
 				assertEquals(new Integer(1), oAtom.getProperty("pdb.serial"));
 				assertEquals(new String("C1"), oAtom.getProperty("pdb.name"));
 				assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
@@ -123,7 +123,7 @@ public class PDBReaderTest extends TestCase {
 
 				oAtom = oMol.getAtoms()[3];
 				assertNotNull(oAtom);
-				assertEquals(new String("O"), oAtom.getElement().getSymbol());
+				assertEquals(new String("O"), oAtom.getSymbol());
 				assertEquals(new Integer(4), oAtom.getProperty("pdb.serial"));
 				assertEquals(new String("O4"), oAtom.getProperty("pdb.name"));
 				assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
@@ -139,7 +139,7 @@ public class PDBReaderTest extends TestCase {
 
 				oAtom = oMol.getLastAtom();
 				assertNotNull(oAtom);
-				assertEquals(new String("N"), oAtom.getElement().getSymbol());
+				assertEquals(new String("N"), oAtom.getSymbol());
 				assertEquals(new Integer(14), oAtom.getProperty("pdb.serial"));
 				assertEquals(new String("N14"), oAtom.getProperty("pdb.name"));
 				assertEquals(new String(""), oAtom.getProperty("pdb.altLoc"));
@@ -204,7 +204,7 @@ public class PDBReaderTest extends TestCase {
       
       Atom atom = mol.getAtomAt(94);
       assertNotNull(atom);
-      assertEquals("C", atom.getElement().getSymbol());
+      assertEquals("C", atom.getSymbol());
       assertEquals(new Integer(95), atom.getProperty("pdb.serial"));
       assertEquals("CZ", atom.getProperty("pdb.name"));
       assertEquals("", atom.getProperty("pdb.altLoc"));

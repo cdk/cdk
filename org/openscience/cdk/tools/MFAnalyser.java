@@ -86,7 +86,7 @@ public class MFAnalyser{
         AtomContainer ac = getAtomContainer();
         for(int f = 0; f < ac.getAtomCount();f++)
         {
-            i = si.getMajorIsotope(ac.getAtomAt(f).getElement().getSymbol());
+            i = si.getMajorIsotope(ac.getAtomAt(f).getSymbol());
             if(i != null)
             {
                 mass += i.exactMass;
@@ -106,7 +106,7 @@ public class MFAnalyser{
 		AtomContainer newAc = new AtomContainer();
 		AtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++){
-			if (!ac.getAtomAt(f).getElement().getSymbol().equals("H"))
+			if (!ac.getAtomAt(f).getSymbol().equals("H"))
 			{
 				newAc.addAtom(ac.getAtomAt(f));
 			}
@@ -148,7 +148,7 @@ public class MFAnalyser{
                     RecentElementCount = 1;
             	}
             	for (int g = 0; g < RecentElementCount; g++){
-            		ac.addAtom(new Atom(new Element(RecentElementSymbol)));
+            		ac.addAtom(new Atom(RecentElementSymbol));
             	}
             }
         }
@@ -176,7 +176,7 @@ public class MFAnalyser{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtomAt(f);
-			symbol = atom.getElement().getSymbol();	
+			symbol = atom.getSymbol();	
 			if (atom.getHydrogenCount() > 0) HCount += atom.getHydrogenCount();		
 			done = false;
 			for (int g = 0; g < numberOfElements ; g++){
@@ -215,7 +215,7 @@ public class MFAnalyser{
 		int atomCount = 0;
 		if (thisElement.equals("H") &&  HCount > 0) return HCount;
 		for (int f = 0; f < atomContainer.getAtomCount(); f++){
-			if (atomContainer.getAtomAt(f).getElement().getSymbol().equals(thisElement))
+			if (atomContainer.getAtomAt(f).getSymbol().equals(thisElement))
 			{
  				atomCount++;
 			}

@@ -96,7 +96,7 @@ public class XYZReader implements ChemObjectReader {
                             if (fields == 8) 
                                 charge = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            Atom atom = new Atom(new Element(atomtype), new Point3d(x,y,z));
+                            Atom atom = new Atom(atomtype, new Point3d(x,y,z));
                             atom.setCharge(charge);
                             m.addAtom(atom);
                         }

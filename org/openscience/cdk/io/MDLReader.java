@@ -160,7 +160,7 @@ public class MDLReader implements CDKConstants, ChemObjectReader {
 	            y = new Double(strTok.nextToken()).doubleValue();
 	            z = new Double(strTok.nextToken()).doubleValue();
 				if (debug) System.out.println("Coordinates: " + x + "; " + y + "; " + z);
-				atom = new Atom(new Element(strTok.nextToken()), new Point3d(x, y, z));
+				atom = new Atom(strTok.nextToken(), new Point3d(x, y, z));
 				atom.setPoint2D(new Point2d(x, y));
 	            molecule.addAtom(atom);
 	        }

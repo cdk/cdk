@@ -56,11 +56,11 @@ public class MonomerTest extends TestCase {
 		assertEquals(new String("TRP279"), oMonomer.getMonomerName());
 		oMonomer.setMonomerType(new String("TRP"));
 		assertEquals(new String("TRP"), oMonomer.getMonomerType());
-		Atom oAtom = new Atom(new Element("C"));
+		Atom oAtom = new Atom("C");
 		oMonomer.addAtom(oAtom);
 		oMonomer.addAtom(oAtom);
-		oMonomer.addAtom(new Atom(new Element("N")));
-		oMonomer.addAtom(new Atom(new Element("O")));
+		oMonomer.addAtom(new Atom("N"));
+		oMonomer.addAtom(new Atom("O"));
 		assertEquals(oMonomer.getAtomCount(), 3);
 		assertEquals(oAtom, oMonomer.getAtomAt(0));
 	}

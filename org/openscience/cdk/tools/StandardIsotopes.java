@@ -62,7 +62,7 @@ public class StandardIsotopes
         Isotope isotope = null;
         for (int f = 0; f < getSize(); f++)
         {
-            if (isotopes[f].symbol.equals(element))
+            if (isotopes[f].getSymbol().equals(element))
             {
                 if ((int) isotopes[f].naturalAbundance == 100)
                 {

@@ -129,7 +129,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 			}
 			/* In the first sphere the atoms are labled with 
 			   their own atom number as source */
-			sphereNodes.addElement(new TreeNode(root.getElement().getSymbol(), root, atom, bond.getOrder(), 0));
+			sphereNodes.addElement(new TreeNode(root.getSymbol(), root, atom, bond.getOrder(), 0));
 			atom.flags[VISITED] = true;
 		}
 		nextSphere(sphereNodes);
@@ -172,7 +172,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 							if (debug) System.out.println("HOSECodeGenerator->nextSphere()->toNode.number:" + atomContainer.getAtomNumber(toNode));
 							if (!toNode.flags[VISITED])							
 							{			   			   
-								nextSphereNodes.addElement(new TreeNode(toNode.getElement().getSymbol(), node, toNode, atomContainer.getBond(node, toNode).getOrder(), treeNode.score  * 1000000));
+								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), node, toNode, atomContainer.getBond(node, toNode).getOrder(), treeNode.score  * 1000000));
 								toNode.flags[VISITED] = true;
 							}
 							else if (!toNode.equals(treeNode.source))
@@ -281,7 +281,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 	}
 	
 	
-	private int getElementRank(String symbol)
+	private double getElementRank(String symbol)
 	{
 		if (debug)System.out.println("getElementRank() -> symbol: " + symbol);
 		for (int f = 0; f < rankedSymbols.length; f++)
@@ -293,7 +293,7 @@ public class HOSECodeGenerator implements java.io.Serializable, CDKConstants
 			}
 		}
 		Isotope isotope = (new StandardIsotopes()).getMajorIsotope(symbol);
-		return (800000-isotope.atomicMass);
+		return ((double)800000- isotope.getAtomicMass());
 	}
 	
 	private String getElementSymbol(String sym)

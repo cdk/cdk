@@ -101,7 +101,7 @@ public class AtomicTable extends JPanel implements CDKChangeListener {
     
     public Object getValueAt(int row, int col) {
       if (getColumnName(col).equals("atom")) {
-        return (atomContainer.getAtomAt(row)).getElement().getSymbol();
+        return (atomContainer.getAtomAt(row)).getSymbol();
       } else if (getColumnName(col).equals("x2")) {
         return new Double((atomContainer.getAtomAt(row)).getX2D());
       } else if (getColumnName(col).equals("y2")) {

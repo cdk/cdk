@@ -44,13 +44,13 @@ class MockMolecule extends Molecule {
 		// construct a Mock Molecule which looks like a cube. the center
 		// of the cube is located at (0,0,0) and the corners have a length of 2.
 		//
-		addAtom(new Atom(new Element("C"), new Point3d(1,1,-1)));
-		addAtom(new Atom(new Element("C"), new Point3d(1,-1,-1)));
-		addAtom(new Atom(new Element("C"), new Point3d(-1,1,-1)));
-		addAtom(new Atom(new Element("C"), new Point3d(-1,-1,-1)));
-		addAtom(new Atom(new Element("C"), new Point3d(1,1,1)));
-		addAtom(new Atom(new Element("C"), new Point3d(1,-1,1)));
-		addAtom(new Atom(new Element("C"), new Point3d(-1,1,1)));
-		addAtom(new Atom(new Element("C"), new Point3d(-1,-1,1)));
+		addAtom(new Atom("C", new Point3d(1,1,-1)));
+		addAtom(new Atom("C", new Point3d(1,-1,-1)));
+		addAtom(new Atom("C", new Point3d(-1,1,-1)));
+		addAtom(new Atom("C", new Point3d(-1,-1,-1)));
+		addAtom(new Atom("C", new Point3d(1,1,1)));
+		addAtom(new Atom("C", new Point3d(1,-1,1)));
+		addAtom(new Atom("C", new Point3d(-1,1,1)));
+		addAtom(new Atom("C", new Point3d(-1,-1,1)));
 	}
 }

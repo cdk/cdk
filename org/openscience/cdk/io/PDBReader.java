@@ -202,7 +202,7 @@ public class PDBReader implements CDKConstants, ChemObjectReader {
     if (cLine.length() < 59) {
       throw new RuntimeException("PDBReader error during readAtom(): line too short");
     }
-    Atom oAtom = new Atom(new Element(cLine.substring(12, 14).trim()), 
+    Atom oAtom = new Atom(cLine.substring(12, 14).trim(), 
         new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
           new Double(cLine.substring(38, 46)).doubleValue(),
             new Double(cLine.substring(46, 54)).doubleValue()));

@@ -167,7 +167,7 @@ public class CMLWriter implements ChemObjectWriter, CDKConstants {
     private void write(Atom atom) {
 		write("<atom id=\"a" + atom.hashCode() + "\">\n");
 		write("<string builtin=\"elementType\">");
-		write(atom.getElement().getSymbol());
+		write(atom.getSymbol());
 		write("</string>\n");
 		write(atom.getPoint2D());
 		write(atom.getPoint3D());

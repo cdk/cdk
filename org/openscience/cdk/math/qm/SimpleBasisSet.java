@@ -46,7 +46,7 @@ public class SimpleBasisSet extends GaussiansBasis
 		int atomicnumber;
 		for(i=0; i<atoms.length; i++)
 		{
-			atomicnumber = atoms[i].getElement().getAtomicNumber();
+			atomicnumber = atoms[i].getAtomicNumber();
 			if (atomicnumber<=2)
 				size += 4;
 			else if (atomicnumber<=18)
@@ -66,7 +66,7 @@ public class SimpleBasisSet extends GaussiansBasis
 		j = 0;
 		for(i=0; i<atoms.length; i++)
 		{
-			atomicnumber = atoms[i].getElement().getAtomicNumber();
+			atomicnumber = atoms[i].getAtomicNumber();
 			rN = new Vector(atoms[i].getPoint3D());
       if (atomicnumber<=2)
 			{

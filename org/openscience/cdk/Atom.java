@@ -35,11 +35,7 @@ import javax.vecmath.*;
  * @author     steinbeck 
  * @created    October 2, 2000 
  */
-public class Atom extends ChemObject implements Cloneable {
-        /**
-         *  The element type of this atom 
-         */
-        protected Element element;
+public class Atom extends AtomType implements Cloneable {
         /* Let's keep this exact specification
          * of what kind of point2d we're talking of here,
          * sinces there are so many around in the java standard api */
@@ -72,23 +68,10 @@ public class Atom extends ChemObject implements Cloneable {
          *
          * @param   element  The String describing the element for the Atom 
          */
-        public Atom(String elementString)
+        public Atom(String elementSymbol)
         {
-                this(new Element(elementString));
+		super(elementSymbol);
         }
-
-        /**
-         * Constructs an Atom from an Element
-         *
-         * @param   element  The Element the Atom is constructed of
-         */
-        public Atom(Element element)
-        {
-                this.element = element;
-                point2D = new javax.vecmath.Point2d();
-                point3D = new javax.vecmath.Point3d();
-        }
-
 
         /**
          * Constructs an Atom from an Element and a Point3D
@@ -96,9 +79,9 @@ public class Atom extends ChemObject implements Cloneable {
          * @param   element   The Element
          * @param   point3D   The Point
          */
-        public Atom(Element element, javax.vecmath.Point3d point3D)
+        public Atom(String elementSymbol, javax.vecmath.Point3d point3D)
         {
-                this(element);
+                this(elementSymbol);
                 this.point3D = point3D;
         }
 
@@ -108,9 +91,9 @@ public class Atom extends ChemObject implements Cloneable {
          * @param   element   The Element
          * @param   point2D   The Point
          */
-        public Atom(Element element, javax.vecmath.Point2d point2D)
+        public Atom(String elementSymbol, javax.vecmath.Point2d point2D)
         {
-                this(element);
+                this(elementSymbol);
                 this.point2D = point2D;
         }
 
@@ -130,14 +113,6 @@ public class Atom extends ChemObject implements Cloneable {
                return this.charge;
         }
 
-        /**
-         *  Sets the element type of this atom 
-         *
-         * @param  element  The element type to be assigned to this atom. 
-         */
-        public void setElement(Element element) {
-                this.element = element;
-        }
         /**
          *  Sets the hydrogen count of this atom. 
          *
@@ -176,23 +151,7 @@ public class Atom extends ChemObject implements Cloneable {
         public void setStereoParity(int stereoParity) {
                 this.stereoParity = stereoParity;
         }
-        /**
-         *  Convenience method for returns the element symbol for
-	 *  this atom's element  
-         *
-         * @return    The element symbol for this atoms element 
-         */
-        public String getElementSymbol() {
-                return getElement().getSymbol();
-        }
-        /**
-         *  Returns an Element representing the element type of this Atom. 
-         *
-         * @return    An Element representing the element type of this Atom. 
-         */
-        public Element getElement() {
-                return this.element;
-        }
+
 
         /**
          *  Returns the hydrogen count of this atom 
@@ -370,7 +329,7 @@ public class Atom extends ChemObject implements Cloneable {
         public String toString()
         {
                 StringBuffer s = new StringBuffer();
-                s.append("Atom " + getElement().getSymbol() + "\n");
+                s.append("Atom " + getSymbol() + "\n");
                 s.append("Hydrogen count: " + getHydrogenCount() + "\n");
                 s.append("Stereo Parity: " + getStereoParity() + "\n");
                 s.append("2D coordinates: " + getPoint2D() + "\n");

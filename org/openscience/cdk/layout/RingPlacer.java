@@ -587,9 +587,7 @@ public class RingPlacer implements CDKConstants
 				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))
 				{
 					sharedAtomsCenter = sharedAtoms.get2DCenter();
-					if (debug) molecule.addAtom(new Atom(new Element("B"), new Point2d(sharedAtomsCenter)));
 					oldRingCenter = ring.get2DCenter();
-					if (debug) molecule.addAtom(new Atom(new Element("O"), new Point2d(oldRingCenter)));
 					tempVector = (new Vector2d(sharedAtomsCenter));
 					newRingCenterVector = new Vector2d(tempVector);
 					newRingCenterVector.sub(new Vector2d(oldRingCenter));

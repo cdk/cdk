@@ -155,7 +155,7 @@ public class MDLWriter implements CDKConstants
 		        line += formatMDLFloat((float) atom.getX2D());
 		        line += formatMDLFloat((float) atom.getY2D());
 				line += " 0 ";
-		        line += formatMDLString(molecule.getAtomAt(f).getElement().getSymbol(), 3);
+		        line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
 		        line += " 0  0  0  0  0  0  0  0  0  0  0  0";
 			    writer.write(line);
 			    writer.newLine();
