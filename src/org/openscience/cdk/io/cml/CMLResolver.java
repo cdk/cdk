@@ -78,7 +78,8 @@ public class CMLResolver implements EntityResolver {
             (systemId.indexOf("cml1_0.dtd") != -1)) {
             return getCMLType( "cml1_0.dtd" );
         } else if ((systemId.indexOf("cml-2001-04-06.dtd") != -1) ||
-            (systemId.indexOf("cml1_0_1.dtd") != -1)) {
+                   (systemId.indexOf("cml1_0_1.dtd") != -1) ||
+                   (systemId.indexOf("cml_1_0_1.dtd") != -1)) {
             return getCMLType( "cml1_0_1.dtd" );
         } else {
             logger.warn("Could not resolve " + systemId);

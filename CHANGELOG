@@ -11,6 +11,7 @@ Fixes:
 * Added missing switch for display of implicit hydrogens in Renderer2D
 * Fixed reading of OpenBabel CML1/2 output
 * Now compiles with GCJ 3.3.1 (closes #807833)
+* Fixed resolving of URI http://www.xml-cml.org/dtd/cml_1_0_1.dtd (closes #809134)
 
 API changes:
 * Added getIOSettings() to ChemObject[Reader|Writer]
