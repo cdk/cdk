@@ -18,17 +18,8 @@
       <para>
         <ulink url="http://seneca.sf.net/">SENECA</ulink>
         is a software package for Computer-Assisted Structure Elucidation (CASE) of 
-	organic molecules based on spectroscopic data 
-	<ulink url="http://cdk.sf.net/biblio.html#ste2001">[STE2001]</ulink>.
-      </para>
-    </section>
-    <section>
-      <title>NMRShiftDB</title>
-      <para>
-        <ulink url="http://www.nmrshiftdb.org/">NMRShiftDB</ulink>
-        is an open-source, open-content database of organic structures and
-	their NMR data.
-	<ulink url="http://cdk.sf.net/biblio.html#ste2002">[STE2002]</ulink>.
+        organic molecules based on spectroscopic data
+        <ulink url="http://cdk.sf.net/biblio.html#ste2001">[STE2001]</ulink>.
       </para>
     </section>
 
@@ -37,29 +28,29 @@
       <para>
         <ulink url="http://www.nmrshiftdb.org/">NMRShiftDB</ulink>
         is an open-source, open-content database of organic structures and
-	their NMR data.
-	<ulink url="http://cdk.sf.net/biblio.html#ste2002">[STE2002]</ulink>.
+        their NMR data.
+        <ulink url="http://cdk.sf.net/biblio.html#ste2002">[STE2002]</ulink>.
       </para>
     </section>
 
     <section>
       <title>XB Edit (Working title)</title>
       <para>
-        XB Edit is an Extreme Blue (tm) internship project currently 
-	in progress at IBM Germany Development Lab in Boeblingen near Stuttgart, Germany.
-	XB Edit is supposed grow into a combined 2D/3D editor for chemical structure and 
-	uses the CDK for handling the standard chemoinformatical algorithms.
+        XB Edit is an Extreme Blue (tm) internship project currently
+        in progress at IBM Germany Development Lab in Boeblingen near Stuttgart, Germany.
+        XB Edit is supposed grow into a combined 2D/3D editor for chemical structure and
+        uses the CDK for handling the standard chemoinformatical algorithms.
       </para>
     </section>
-    
-    
+
+
     <section>
       <title>SafeBase(TM)</title>
       <para>
         <ulink url="http://www.therastrat.com/">SafeBase (TM)</ulink>
-         is a theragenomics knowledge management
-      system on adverse drug reactions developed by 
-      <ulink url="http://www.therastrat.com/">TheraSTrat</ulink.
+        is a theragenomics knowledge management
+        system on adverse drug reactions developed by
+        <ulink url="http://www.therastrat.com/">TheraSTrat</ulink>.
       </para>
     </section>
 
@@ -73,7 +64,7 @@
     </section>
     <para>
       If your CDK using software is missing from this list, please send
-      an email to <ulink="mailto:cdk-devel@lists.sf.net">cdk-devel@lists.sf.net</ulink>.
+      an email to <ulink url="mailto:cdk-devel@lists.sf.net">cdk-devel@lists.sf.net</ulink>.
     </para>
   </section>
 
