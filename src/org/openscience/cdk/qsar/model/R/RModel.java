@@ -127,7 +127,7 @@ public abstract class RModel implements Model {
      */
     public RModel() {
         String[] args = {"--vanilla","-q"};
-        logger = new LoggingTool(true);
+        logger = new LoggingTool(this);
         if (!doneInit) {
             this.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
             this.revaluator = new REvaluator();
