@@ -129,7 +129,7 @@ public class CMLCoreModule implements ModuleInterface {
         return (CDOInterface)this.cdo;
     }
     
-    private void newMolecule() {
+    protected void newMolecule() {
         elsym = new Vector();
         elid = new Vector();
         formalCharges = new Vector();
@@ -383,10 +383,22 @@ public class CMLCoreModule implements ModuleInterface {
             case ATOM:
            
                 if (elsym.size() > formalCharges.size()) {
+                    /* while strictly undefined, assume zero 
+                    charge when no number is given */
                     formalCharges.addElement("0");
                 }
                 if (elsym.size() > hCounts.size()) {
+                    /* while strictly undefined, assume zero 
+                    implicit hydrogens when no number is given */
                     hCounts.addElement("0");
+                }
+                /* It may happen that not all atoms have
+                   associated 2D coordinates. accept that */
+                if (elsym.size() > x2.size() && x2.size() != 0) {
+                    /* apparently, the previous atoms had atomic
+                       coordinates, add 'null' for this atom */
+                    x2.add(null);
+                    y2.add(null);
                 }
 
                 break;
@@ -839,8 +851,10 @@ public class CMLCoreModule implements ModuleInterface {
             }
 
             if (has2D) {
-                cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));
-                cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
+                if (x2.elementAt(i) != null)
+                    cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));
+                if (y2.elementAt(i) != null)
+                    cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
             }
 
             cdo.endObject("Atom");

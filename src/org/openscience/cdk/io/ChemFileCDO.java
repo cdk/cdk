@@ -1,10 +1,9 @@
-/*
- * $RCSfile$
+/* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -39,6 +38,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private SetOfMolecules currentSetOfMolecules;
     private ChemModel currentChemModel;
     private ChemSequence currentChemSequence;
+    private SetOfReactions currentSetOfReactions;
+    private Reaction currentReaction;
     private Atom currentAtom;
     private Crystal currentCrystal;
 
@@ -66,6 +67,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       currentChemSequence = new ChemSequence();
       currentChemModel = new ChemModel();
       currentSetOfMolecules = new SetOfMolecules();
+      currentSetOfReactions = null;
+      currentReaction = null;
       currentMolecule = new Molecule();
       atomEnumeration = new Hashtable();
     }
@@ -89,13 +92,26 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
      */
-    public void endDocument() {
+    public void endDocument() {        
+        if (currentSetOfReactions != null && currentSetOfReactions.getReactionCount() == 0 &&
+            currentReaction != null) {
+            logger.debug("Adding reaction to SetOfReactions");
+            currentSetOfReactions.addReaction(currentReaction);
+        }
+        if (currentSetOfReactions != null && currentChemModel.getSetOfReactions() == null) {
+            logger.debug("Adding SOR to ChemModel");
+            currentChemModel.setSetOfReactions(currentSetOfReactions);
+        }
+        if (currentChemSequence.getChemModelCount() == 0) {
+            logger.debug("Adding ChemModel to ChemSequence");
+            currentChemSequence.addChemModel(currentChemModel);
+        }
         if (getChemSequenceCount() == 0) {
             // assume there is one non-animation ChemSequence
             addChemSequence(currentChemSequence);
-            logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
         }
         logger.info("End CDO Object");
+        logger.info("This file has " + getChemSequenceCount() + " sequence(s).");
     };
 
     /**
@@ -111,9 +127,9 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     public void startObject(String objectType) {
       logger.debug("START:" + objectType);
       if (objectType.equals("Molecule")) {
-        currentChemModel = new ChemModel();
-        currentSetOfMolecules = new SetOfMolecules();
-        currentMolecule = new Molecule();
+          if (currentChemModel == null) currentChemModel = new ChemModel();
+          if (currentSetOfMolecules == null) currentSetOfMolecules = new SetOfMolecules();
+          currentMolecule = new Molecule();
       } else if (objectType.equals("Atom")) {
         currentAtom = new Atom("H");
         logger.debug("Atom # " + numberOfAtoms);
@@ -130,6 +146,17 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           crystal_axis_x = 0.0;
           crystal_axis_y = 0.0;
           crystal_axis_z = 0.0;
+      } else if (objectType.equals("SetOfReactions")) {
+          currentSetOfReactions = new SetOfReactions();
+      } else if (objectType.equals("Reaction")) {
+          if (currentSetOfReactions == null) startObject("SetOfReactions");
+          currentReaction = new Reaction();
+      } else if (objectType.equals("Reactant")) {          
+          if (currentReaction == null) startObject("Reaction");
+          currentMolecule = new Molecule();
+      } else if (objectType.equals("Product")) {
+          if (currentReaction == null) startObject("Reaction");
+          currentMolecule = new Molecule();
       }
     };
 
@@ -148,6 +175,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
                 currentChemModel.setCrystal((Crystal)currentMolecule);
             }
             currentChemSequence.addChemModel(currentChemModel);
+            /* FIXME: this should be when document is closed! */ 
         } else if (objectType.equals("Frame")) {
         } else if (objectType.equals("Animation")) {
             addChemSequence(currentChemSequence);
@@ -179,6 +207,17 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
                            crystal_axis_y,
                            crystal_axis_z);
           }
+      } else if (objectType.equals("SetOfReactions")) {
+          currentChemModel.setSetOfReactions(currentSetOfReactions);
+          currentChemSequence.addChemModel(currentChemModel);
+          /* FIXME: this should be when document is closed! */ 
+      } else if (objectType.equals("Reaction")) {
+          logger.debug("Adding reaction to SOR");
+          currentSetOfReactions.addReaction(currentReaction);
+      } else if (objectType.equals("Reactant")) {          
+          currentReaction.addReactant((Molecule)currentMolecule);
+      } else if (objectType.equals("Product")) {
+          currentReaction.addProduct((Molecule)currentMolecule);
         }
     };
 
@@ -275,6 +314,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         objects.add("a-axis");
         objects.add("b-axis");
         objects.add("c-axis");
+        objects.add("SetOfReactions");
+        objects.add("Reactions");
+        objects.add("Reactant");
+        objects.add("Product");
       return objects;
     };
 }

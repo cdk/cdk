@@ -1,10 +1,9 @@
-/*
- * $RCSfile$    
+/* $RCSfile$    
  * $Author$    
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  * 
@@ -31,13 +30,17 @@ import java.util.*;
   * the other lower level concepts like rings, sequences, 
   * fragments, etc.
   */
-public class ChemModel extends ChemObject
-{
+public class ChemModel extends ChemObject {
 
 	/**
 	 *  A SetOfMolecules.
 	 */
 	protected SetOfMolecules setOfMolecules = null;
+
+	/**
+	 *  A SetOfReactions.
+	 */
+	protected SetOfReactions setOfReactions = null;
 
 	/**
 	 *  A RingSet.
@@ -53,12 +56,8 @@ public class ChemModel extends ChemObject
 	 *  Constructs an new ChemModel with a non-null, but 
      *  empty setOfMolecules.
 	 */
-	public ChemModel()   
-	{
-		setOfMolecules = new SetOfMolecules();
+	public ChemModel() {
 	}
-
-
 
 	/**
 	 * Puts all the Molecules of this container together in one 
@@ -67,14 +66,33 @@ public class ChemModel extends ChemObject
 	 * @return  The AtomContainer with all the Molecules of this container   
 	 */
 	public AtomContainer getAllInOneContainer() {
+        // FIXME: this method should be in ChemModelTools
 		AtomContainer ac = new AtomContainer();
-		for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
-            Molecule m = setOfMolecules.getMolecule(i);
-            // FIXME: should remove sanity check
-            if (m != null) {
+        // add molecules in SetOfMolecules
+        if (setOfMolecules != null) {
+            Molecule[] mols = setOfMolecules.getMolecules();
+            for (int i=0; i < mols.length; i++) {
+                Molecule m = mols[i];
                 ac.add(m);
             }
-		}
+        }
+        // add molecules in SetOfReactions
+        if (setOfReactions != null) {
+            Reaction[] reactions = setOfReactions.getReactions();
+            for (int i=0; i < reactions.length; i++) {
+                Reaction r = reactions[i];
+                // add reactants in Reaction
+                Molecule[] reactants = r.getReactants();
+                for (int j=0; j < reactants.length; j++) {
+                    ac.add(reactants[i]);
+                }
+                // add products in Reaction
+                Molecule[] products = r.getProducts();
+                for (int j=0; j < products.length; j++) {
+                    ac.add(products[i]);
+                }
+            }
+        }
 		return ac;
 	}
 	
@@ -149,6 +167,28 @@ public class ChemModel extends ChemObject
      */
     public void setCrystal(Crystal c) {
         this.crystal = c;
+    }
+
+    /**
+     * Gets the SetOfReactions contained in this ChemModel.
+     *
+     * @return The SetOfReactions in this model
+     *
+     * @see      #setSetOfReactions
+     */
+    public SetOfReactions getSetOfReactions() {
+        return this.setOfReactions;
+    }
+
+    /**
+     * Sets the SetOfReactions contained in this ChemModel.
+     *
+     * @param   c     the SetOfReactions to store in this model
+     *
+     * @see      #getSetOfReactions
+     */
+    public void setSetOfReactions(SetOfReactions sor) {
+        this.setOfReactions = sor;
     }
 }
 

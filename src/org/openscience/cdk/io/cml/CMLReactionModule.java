@@ -60,11 +60,38 @@ public class CMLReactionModule extends CMLCoreModule {
     
     
     public void startElement (String uri, String local, String raw, Attributes atts) {
-        super.startElement(uri, local, raw, atts);
+        if ("reaction".equals(local)) {
+            cdo.startObject("Reaction");
+        } else if ("reactionList".equals(local)) {
+            cdo.startObject("SetOfReactions");
+        } else if ("reactant".equals(local)) {
+            cdo.startObject("Reactant");
+        } else if ("product".equals(local)) {
+            cdo.startObject("Product");
+        } else if ("molecule".equals(local)) {
+            // do nothing for now
+            super.newMolecule();
+        } else {
+            super.startElement(uri, local, raw, atts);
+        }
     };
 
     public void endElement(String uri, String local, String raw) {
-        super.endElement(uri, local, raw);
+        if ("reaction".equals(local)) {
+            cdo.endObject("Reaction");
+        } else if ("reactionList".equals(local)) {
+            cdo.endObject("SetOfReactions");
+        } else if ("reactant".equals(local)) {
+            cdo.endObject("Reactant");
+        } else if ("product".equals(local)) {
+            cdo.endObject("Product");
+        } else if ("molecule".equals(local)) {
+            logger.debug("Storing Molecule");
+            super.storeData();
+            // do nothing else but store atom/bond information
+        } else {
+            super.endElement(uri, local, raw);
+        }
     }
 
     public void characterData (char ch[], int start, int length) {
