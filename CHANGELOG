@@ -23,11 +23,14 @@ Fixes:
   compile dependencies for jar libraries (closes #814294)
 * Added missing toString() methods to SetOfMolecules and SetOfReactions
 * Fixed coordinate system of Renderer2D (partly fixes #834515)
+* Deal with charges and H is special case (closes JCP bug #850143)
 
 API changes:
 * SetOfMolecules now extends SetOfAtomContainers which gives it additional
   methods like addAtomContainer().
 * Renamed color property to have the org.openscience.cdk prefix
+* The coordinate system of Renderer2D has been fixed
+* Renderer2DModel.getBackgroundDimension() now returns the active dimensions
 
 20031017 Release
 ------------------------------------
