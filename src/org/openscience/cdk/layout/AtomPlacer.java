@@ -151,7 +151,7 @@ public class AtomPlacer
 		occupiedDirection.sub(newDirection);
 		Vector atomsToDraw = new Vector();
 
-		logger.debug("Number of shared atoms: " + placedNeighbours.getAtomCount());
+		logger.debug("Number of shared atoms: ", placedNeighbours.getAtomCount());
 		if (placedNeighbours.getAtomCount() == 1)
 		{
 			logger.debug("Only one neighbour...");
@@ -180,9 +180,7 @@ public class AtomPlacer
 
 			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
 			return;
-		}
-
-		if (placedNeighbours.getAtomCount() == 0)
+		} else if (placedNeighbours.getAtomCount() == 0)
 		{
 			logger.debug("First atom...");
 			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
@@ -190,14 +188,12 @@ public class AtomPlacer
 				atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
 			}
 
-			addAngle = Math.PI * 2 / (unplacedNeighbours.getAtomCount() + placedNeighbours.getAtomCount());
+			addAngle = Math.PI * 2.0 / unplacedNeighbours.getAtomCount();
 			/*
-			 *  IMPORTANT: At this point we need a calculation of the
-			 *  start angle.
-			 *  Not done yet.
+             * IMPORTANT: At this point we need a calculation of the
+			 * start angle. Not done yet.
 			 */
-			startAngle = 0;
-			//- (Math.PI / 2.0);
+			startAngle = 0.0;
 			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);
 			return;
 		}
@@ -233,10 +229,10 @@ public class AtomPlacer
 		{
 			try
 			{
-				logger.debug("distributePartners->sortedAtoms[0]: " + (molecule.getAtomNumber(sortedAtoms[0]) + 1));
-				logger.debug("distributePartners->sortedAtoms[1]: " + (molecule.getAtomNumber(sortedAtoms[1]) + 1));
-				logger.debug("distributePartners->angle1: " + Math.toDegrees(angle1));
-				logger.debug("distributePartners->angle2: " + Math.toDegrees(angle2));
+				logger.debug("distributePartners->sortedAtoms[0]: ", (molecule.getAtomNumber(sortedAtoms[0]) + 1));
+				logger.debug("distributePartners->sortedAtoms[1]: ", (molecule.getAtomNumber(sortedAtoms[1]) + 1));
+				logger.debug("distributePartners->angle1: ", Math.toDegrees(angle1));
+				logger.debug("distributePartners->angle2: ", Math.toDegrees(angle2));
 			} catch (Exception exc)
 			{
 				logger.debug(exc);
@@ -401,22 +397,28 @@ public class AtomPlacer
 		double newY;
 		double x;
 		double y;
-		logger.debug("populatePolygonCorners->startAngle: " + Math.toDegrees(angle));
+		logger.debug("populatePolygonCorners->startAngle: ", Math.toDegrees(angle));
 		Vector points = new Vector();
 		Atom atom = null;
 
+        logger.debug("  centerX:", rotationCenter.x);
+        logger.debug("  centerY:", rotationCenter.y);
+        logger.debug("  radius :", radius);
+        
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
 			angle = angle + addAngle;
-			if (angle >= 2 * Math.PI)
+			if (angle >= 2.0 * Math.PI)
 			{
-				angle -= 2 * Math.PI;
+				angle -= 2.0 * Math.PI;
 			}
-			logger.debug("populatePolygonCorners->angle: " + Math.toDegrees(angle));
+			logger.debug("populatePolygonCorners->angle: ", Math.toDegrees(angle));
 			x = Math.cos(angle) * radius;
 			y = Math.sin(angle) * radius;
 			newX = x + rotationCenter.x;
 			newY = y + rotationCenter.y;
+            logger.debug("  newX:", newX);
+            logger.debug("  newY:", newY);
 			points.addElement(new Point2d(newX, newY));
 			
       if (logger.isDebugEnabled())
