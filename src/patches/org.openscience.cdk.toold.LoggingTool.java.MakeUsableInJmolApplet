@@ -1,5 +1,5 @@
---- src/org/openscience/cdk/tools/LoggingTool.java.1.5	2003-05-06 16:54:33.276190000 +0200
-+++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-05-06 16:54:24.335085000 +0200
+--- src/org/openscience/cdk/tools/LoggingTool.java	2003-08-14 14:39:25.000000000 +0100
++++ src/org/openscience/cdk/tools/LoggingTool.java.JmolApplet	2003-08-14 19:40:56.000000000 +0100
 @@ -30,7 +30,6 @@
      private boolean debug = false;
      private boolean tostdout = false;
@@ -8,14 +8,12 @@
      private String classname;
      
      /** Default number of StackTraceElements to be printed by debug(Exception) */
-@@ -38,59 +37,12 @@
-      
+@@ -39,58 +38,12 @@
       private int stackLength = DEFAULT_STACK_LENGTH;
  
--    public LoggingTool() {
+     public LoggingTool() {
 -        this( LoggingTool.class.getName() );
--    }
-+    public LoggingTool() {}
+     }
  
      public LoggingTool(String classname) {
          this.classname = classname;
@@ -70,7 +68,7 @@
      }
  
      public void dumpSystemProperties() {
-@@ -116,66 +68,21 @@
+@@ -116,70 +69,23 @@
      }
  
      public void debug(Exception exception) {
@@ -78,14 +76,19 @@
 -        String string = "Exception: " + exception.toString();
 -        this.debug(string);
 -        for (int i=0; i<stack.length; i++) {
--            string        = "       in: " + stack[i].getFileName() + " (line: " +
--            stack[i].getLineNumber() + ")";
+-            string = "       in: " + stack[i].getClassName() +
+-                     "." + stack[i].getMethodName();
+-            String filename = stack[i].getFileName();
+-            if (filename != null) {
+-                string = string + "(" + filename + " line: " +
+-                         stack[i].getLineNumber() + ")";
+-            }
 -            this.debug(string);
 -            if (i == this.stackLength) i = stack.length;
 -        }
      }
      
--    public void debug(String s) {
+     public void debug(String s) {
 -        if (debug) {
 -            if (tostdout) {
 -                toSTDOUT("DEBUG", s);
@@ -93,8 +96,7 @@
 -                ((org.apache.log4j.Category)logger).debug(s);
 -            }
 -        }
--    }
-+    public void debug(String s) {}
+     }
  
      public void error(String s) {
 -        if (debug) {
@@ -115,9 +117,10 @@
 -                ((org.apache.log4j.Category)logger).fatal(s);
 -            }
 -        }
--    }
--
--    public void info(String s) {
++        toSTDOUT("FATAL", s);
+     }
+ 
+     public void info(String s) {
 -        if (debug) {
 -            if (tostdout) {
 -                toSTDOUT("INFO", s);
@@ -125,9 +128,9 @@
 -                ((org.apache.log4j.Category)logger).info(s);
 -            }
 -        }
--    }
--
--    public void warn(String s) {
+     }
+ 
+     public void warn(String s) {
 -        if (debug) {
 -            if (tostdout) {
 -                toSTDOUT("WARN", s);
@@ -135,12 +138,6 @@
 -                ((org.apache.log4j.Category)logger).warn(s);
 -            }
 -        }
-+        toSTDOUT("FATAL", s);
      }
-+
-+    public void info(String s) {}
-+
-+    public void warn(String s) {}
      
      private void toSTDOUT(String level, String message) {
-         System.out.print(classname);

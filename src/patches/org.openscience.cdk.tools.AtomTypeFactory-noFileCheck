@@ -1,15 +1,6 @@
---- src/org/openscience/cdk/tools/AtomTypeFactory.java.1.22	2003-05-06 09:45:20.311916000 +0200
-+++ src/org/openscience/cdk/tools/AtomTypeFactory.java.Jmol	2003-05-06 09:48:58.218785000 +0200
-@@ -33,8 +33,6 @@
- import javax.xml.parsers.*;
- import org.w3c.dom.*;
- 
--import JSX.*;
--
- /**
-  *  General class for defining AtomTypes. This class itself does not define the
-  *  items types; for this classes implementing the AtomTypeConfiguration
-@@ -112,27 +110,28 @@
+--- src/org/openscience/cdk/tools/AtomTypeFactory.java	2003-08-12 10:11:43.000000000 +0100
++++ src/org/openscience/cdk/tools/AtomTypeFactory.java.Jmol	2003-08-14 19:49:31.000000000 +0100
+@@ -119,18 +119,6 @@
  
  		InputStream ins = null;
  		{
@@ -25,52 +16,26 @@
 -                }
 -			} else {
 -			 
--                logger.debug("configFile must be a stream");
--                // assume it is a default config file in distro
--                /*
--                *  this has to be this.getClass.getClassLoader.getResource,
--                *  getClass.getResource fails, elw
--                */            
--                ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+                 logger.debug("configFile must be a stream");
+                 // assume it is a default config file in distro
+                 /*
+@@ -138,7 +126,6 @@
+                 *  getClass.getResource fails, elw
+                 */
+                 ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
 -            }
--            
-+			// FIXME mth -- this call cannot be used on browsers because
-+			// checking for the existence of a file is a security violation
-+			// we need another mechanism to deal with this.
-+			/*
-+			 *  File f = new File(configFile);
-+			 *  if (f.exists()) {
-+			 *  logger.debug("configFile is a File");
-+			 *  / what's next?
-+			 *  try {
-+			 *  ins = new FileInputStream(f);
-+			 *  } catch (Exception exc) {
-+			 *  logger.error(exc.toString());
-+			 *  }
-+			 *  } else
-+			 */
-+			logger.debug("configFile must be a stream");
-+			// assume it is a default config file in distro
-+			/*
-+			 *  this has to be this.getClass.getClassLoader.getResource,
-+			 *  getClass.getResource fails, elw
-+			 */
-+			ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+             
  			if (ins == null)
  			{
- 				logger.error("There was a problem getting a stream for " +
-@@ -151,11 +150,13 @@
+@@ -158,11 +145,6 @@
  				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
  						loadClass("org.openscience.cdk.tools.TXTBasedAtomTypeConfigurator").
  						newInstance();
 -			} else if (configFile.endsWith("xml"))
-+			/* elw: don't use this, because we don't want to depend on JSX at all
-+            } else if (configFile.endsWith("xml"))
- 			{
- 				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
- 						loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
- 						newInstance();
-+            */
+-			{
+-				atc = (AtomTypeConfigurator) this.getClass().getClassLoader().
+-						loadClass("org.openscience.cdk.tools.JSXBasedAtomTypeConfigurator").
+-						newInstance();
  			}
  			logger.debug("Instantiated a AtomTypeConfigurator of class: " +
  					atc.getClass().getName());
