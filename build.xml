@@ -225,11 +225,18 @@
         <target name="reallyRunDoclet" depends="compileDoclet" unless="dotjavafiles.uptodate">
             <javadoc private="false" public="true">
                 <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="${lib}/libio">
+                        <include name="*.jar" />
+                    </fileset>
+                </classpath>
+
                 <doclet name="MakeJavaFilesFilesDoclet" path="${doc}/javadoc"/>
 
                 <packageset dir="${src}">
                     <include name="org/openscience/cdk/**"/>
                 </packageset>
+
             </javadoc>
             <move todir="${src}" failonerror="true">
                 <fileset dir=".">
@@ -275,7 +282,7 @@
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${lib}/libio">
-                        <include name="*.jar" />
+                        <include name="joelib.jar" />
                     </fileset>
                 </classpath>
             </javac>
