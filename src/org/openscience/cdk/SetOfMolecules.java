@@ -101,9 +101,7 @@ public class SetOfMolecules extends ChemObject implements java.io.Serializable, 
 	 */
 	public Molecule[] getMolecules() {
         Molecule[] result = new Molecule[moleculeCount];
-        for (int i=0; i < moleculeCount; i++) {
-            result[i] = molecules[i];
-        }
+        System.arraycopy(this.molecules, 0, result, 0, result.length);
 		return result;
 	}
 	
