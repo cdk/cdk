@@ -37,10 +37,10 @@ import org.openscience.cdk.test.qsar.model.*;
  
  public class QSARRModelTests {
     public static Test suite() {
-        TestSuite suite = new TestSuite("All QSAR Descriptor Tests");
+        TestSuite suite = new TestSuite("All QSAR R Based Modeling Tests");
+        suite.addTest(SJavaEnvironmentTest.suite());
         suite.addTest(LinearRegressionModelTest.suite());
         suite.addTest(CNNRegressionModelTest.suite());
 	return suite;
     }
-    
 }
