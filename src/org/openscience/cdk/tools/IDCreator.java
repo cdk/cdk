@@ -107,7 +107,7 @@ public class IDCreator {
             if (bond.getID() == null) {
                 bondCount++;
                 while (tabuList.contains("b" + bondCount)) bondCount++;
-                atoms[i].setID("b" + bondCount);
+                bonds[i].setID("b" + bondCount);
             }
         }
     }
