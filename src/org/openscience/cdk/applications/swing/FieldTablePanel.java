@@ -34,7 +34,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.JComponent;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.event.CDKChangeListener;
@@ -53,27 +53,25 @@ public class FieldTablePanel extends JPanel {
         rows = 0;
     }
     
-    protected void addField(String labelText, JTextField text) {
+    protected void addField(String labelText, JComponent component) {
         rows++;
         GridBagConstraints constraints = new GridBagConstraints();
         JLabel label = new JLabel(labelText + ": ", JLabel.TRAILING);
-        text.setEditable(false);
-        label.setLabelFor(text);
+        label.setLabelFor(component);
         constraints.gridx = 0;
         constraints.gridy = rows;
         constraints.anchor = GridBagConstraints.LINE_START;
         add(label, constraints);
         constraints.gridx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        add(text, constraints);
+        add(component, constraints);
     }
     
-    protected void addArea(String labelText, JEditorPane text) {
+    protected void addArea(String labelText, JComponent component) {
         rows++;
         GridBagConstraints constraints = new GridBagConstraints();
         JLabel label = new JLabel(labelText + ": ");
-        text.setEditable(false);
-        label.setLabelFor(text);
+        label.setLabelFor(component);
         constraints.gridx = 0;
         constraints.gridwidth = 2;
         constraints.gridy = rows;
@@ -81,7 +79,7 @@ public class FieldTablePanel extends JPanel {
         add(label, constraints);
         rows++;
         constraints.gridy = rows;
-        JScrollPane editorScrollPane = new JScrollPane(text);
+        JScrollPane editorScrollPane = new JScrollPane(component);
         editorScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         editorScrollPane.setPreferredSize(new Dimension(250, 145));
         editorScrollPane.setMinimumSize(new Dimension(10, 10));
