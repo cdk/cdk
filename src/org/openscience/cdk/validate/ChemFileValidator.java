@@ -40,10 +40,11 @@ public class ChemFileValidator {
     public static Vector validate(ChemFile chemFile) {
         Vector errors = new Vector();
         ChemSequence[] sequences = chemFile.getChemSequences();
-        for (int i=0; i < sequences.length; i++) {
+        for (int i=0; i < chemFile.getChemSequenceCount(); i++) { // DIRTY !!!! FIXME !!!!!
+            // but it does not seem to work on 1.4.2 otherwise....
             if (sequences[i] == null) {
                 errors.add(
-                  new CDKError(chemFile, "ChemFile contains a null object at position " + i)
+                  new CDKError(chemFile, "ChemFile contains a null ChemSequence at position " + i)
                 );
             } else {
                 errors.addAll(ChemSequenceValidator.validate(sequences[i]));

@@ -40,10 +40,11 @@ public class ChemSequenceValidator {
     public static Vector validate(ChemSequence sequence) {
         Vector errors = new Vector();
         ChemModel[] models = sequence.getChemModels();
-        for (int i=0; i < models.length; i++) {
+        for (int i=0; i < sequence.getChemModelCount(); i++) { // DIRTY !!!! FIXME !!!!!
+            // but it does not seem to work on 1.4.2 otherwise....
             if (models[i] == null) {
                 errors.add(
-                  new CDKError(sequence, "ChemSequence contains a null object at position " + i)
+                  new CDKError(sequence, "ChemSequence contains a null ChemModel at position " + i)
                 );
             } else {
                 errors.addAll(ChemModelValidator.validate(models[i]));
