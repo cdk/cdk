@@ -100,7 +100,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     /** Determines wether methyl carbons' symbols should be drawn explicit
      *  for methyl carbons. Example C/\C instead of /\. 
      */
-    private boolean showEndCarbons = true;
+    private boolean showEndCarbons = false;
 
     /** Determines wether implicit hydrogens should be drawn. */
     private boolean showImplicitHydrogens = true;
