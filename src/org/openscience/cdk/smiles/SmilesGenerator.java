@@ -1076,7 +1076,7 @@ public class SmilesGenerator {
      buffer.append(a.getSymbol().toLowerCase());
     else
       buffer.append(symbol);
-    if(chiral && stereo)
+    if(chiral && stereo && (isTrigonalBipyramidalOrOctahedral(container,a) || isSquarePlanar(container,a) || isTetrahedral(container,a)!=0))
       buffer.append('@');
     if(chiral && stereo && isSquarePlanar(container,a))
       buffer.append("SP1");
