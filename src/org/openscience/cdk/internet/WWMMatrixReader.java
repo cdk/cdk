@@ -52,33 +52,33 @@ public class WWMMatrixReader implements ChemObjectReader {
     String collection = "g2";
     
     private String index = "ichi";
-	private String query = "C4,";
+    private String query = "C4,";
 
     private org.openscience.cdk.tools.LoggingTool logger;
 
-	public WWMMatrixReader() {
+    public WWMMatrixReader() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
-	}
-    
-	public WWMMatrixReader(String server) {
+    }
+
+    public WWMMatrixReader(String server) {
         this();
         this.server = server;
-	}
-    
-	/**
-	 * Sets the query.
-	 *
-	 * @param   index   Index type (e.g. IChI)
-	 * @param   value   Index of molecule to download (e.g. 'C4,')
-	 */
-	public void setQuery(String index, String value) {
-		this.index = index.toLowerCase();
-		this.query = value;
-	}
-    
-	public void setCollection(String collection) {
-		this.collection = collection;
-	}
+    }
+
+    /**
+     * Sets the query.
+     *
+     * @param   index   Index type (e.g. IChI)
+     * @param   value   Index of molecule to download (e.g. 'C4,')
+     */
+    public void setQuery(String index, String value) {
+        this.index = index.toLowerCase();
+        this.query = value;
+    }
+
+    public void setCollection(String collection) {
+        this.collection = collection;
+    }
     
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof Molecule) {
@@ -86,12 +86,12 @@ public class WWMMatrixReader implements ChemObjectReader {
                 return (ChemObject)readMolecule();
             } catch (Exception exc) {
                 logger.error("Error while reading molecule: " + exc.toString());
-		exc.printStackTrace();
+                exc.printStackTrace();
                 return object;
             }
-		} else {
-		    throw new UnsupportedChemObjectException("Only supported is Molecule.");
-		}
+        } else {
+            throw new UnsupportedChemObjectException("Only supported is Molecule.");
+        }
     }
     
     public static void main(String[] args) throws Exception {
@@ -116,15 +116,15 @@ public class WWMMatrixReader implements ChemObjectReader {
         wwmm.setQuery(index, query);
         Molecule m = (Molecule)wwmm.read(new Molecule());
         if (!GeometryTools.has2DCoordinates(m)) {
-			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-			try {
-				sdg.setMolecule(new Molecule(m));
-				sdg.generateCoordinates(new Vector2d(0, 1));
-				m = sdg.getMolecule();
-			} catch (Exception exc) {
-				System.out.println("Molecule has no coordinates and cannot generate those.");
-				System.exit(1);
-			}            
+                        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                        try {
+                                sdg.setMolecule(new Molecule(m));
+                                sdg.generateCoordinates(new Vector2d(0, 1));
+                                m = sdg.getMolecule();
+                        } catch (Exception exc) {
+                                System.out.println("Molecule has no coordinates and cannot generate those.");
+                                System.exit(1);
+                        }            
         }
         
         MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
@@ -144,11 +144,13 @@ public class WWMMatrixReader implements ChemObjectReader {
             xpath = URLEncoder.encode("//molecule[./identifier/basic='" + query + "']");
         } else if (index.equals("kegg")) {
             xpath = URLEncoder.encode("//molecule[./@name='" + query + "' and ./@dictRef='KEGG']");
+        } else if (index.equals("nist")) {
+            xpath = URLEncoder.encode("//molecule[../@id='" + query + "']");
         } else {
             logger.error("Did not recognize index type: " + index);
             return null;
         }
-        String colname = URLEncoder.encode("//wwmm/" + this.collection);
+        String colname = URLEncoder.encode("/" + this.collection);
         
         logger.info("Doing query: " + xpath + " in collection " + colname);
         
@@ -177,25 +179,25 @@ public class WWMMatrixReader implements ChemObjectReader {
         CMLReader reader = new CMLReader(in);
         ChemFile cf = (ChemFile)reader.read((ChemObject)new ChemFile());
         logger.debug("#sequences: " + cf.getChemSequenceCount());
-	Molecule m = null;
-	if (cf.getChemSequenceCount() > 0) {
+        Molecule m = null;
+        if (cf.getChemSequenceCount() > 0) {
             ChemSequence chemSequence = cf.getChemSequence(0);
             logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
-	    if (chemSequence.getChemModelCount() > 0) {
+            if (chemSequence.getChemModelCount() > 0) {
                 ChemModel chemModel = chemSequence.getChemModel(0);
                 SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
                 logger.debug("#mols in model: " + setOfMolecules.getMoleculeCount());
-		if (setOfMolecules.getMoleculeCount() > 0) {
+                if (setOfMolecules.getMoleculeCount() > 0) {
                     m = setOfMolecules.getMolecule(0);
-	        } else {
-		    logger.warn("No molecules in the model");
-		}
-	    } else {
-	        logger.warn("No models in the sequence");
-	    }
-	} else {
-	    logger.warn("No sequences in the file");
-	}
+                } else {
+                    logger.warn("No molecules in the model");
+                }
+            } else {
+                logger.warn("No models in the sequence");
+            }
+        } else {
+            logger.warn("No sequences in the file");
+        }
         in.close();
         return m;
     }
