@@ -48,18 +48,14 @@ public class ExperimentalClassesTests {
         suite.addTest(SMARTSTest.suite());
         
         ExperimentalClassesTests thisTest = new ExperimentalClassesTests();
+        // from cdk.test.smiles.smarts
         try {
-            TestCase test = (TestCase)thisTest.getClass().getClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest").newInstance();
-            TestSuite testSuite = new TestSuite(test.getClass());
-            suite.addTest(testSuite);
-        } catch (Exception exception) {
-            // ok, does not exist, just skip
-            System.out.println("Could not load the IUPAC Parser test: " + exception.getMessage());
-        }
+        } catch (Exception exception) {} //ok, do without. Probably compiled with Ant < 1.6
         try {
-            TestCase test = (TestCase)thisTest.getClass().getClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest").newInstance();
-            TestSuite testSuite = new TestSuite(test.getClass());
-            suite.addTest(testSuite);
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest");
+            suite.addTest(new TestSuite(testClass));
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSSearchTest");
+            suite.addTest(new TestSuite(testClass));
         } catch (Exception exception) {
             // ok, does not exist, just skip
             System.out.println("Could not load the SMARTS Parser test: " + exception.getMessage());
