@@ -134,6 +134,10 @@ public class IChIHandler extends DefaultHandler {
                 if (st.hasMoreTokens()) {
                     String dbondEncoding =  st.nextToken();
                     analyseDBondEncoding(dbondEncoding);
+                    while (st.hasMoreTokens()) {
+                        dbondEncoding =  st.nextToken();
+                        analyseDBondEncoding(dbondEncoding);
+                    }
                 } else {
                     logger.warn("Expected dbond data missing!");
                 }
