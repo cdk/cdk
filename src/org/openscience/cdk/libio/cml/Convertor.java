@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.*;
  *
  * @author        shk3
  * @created       February 19, 2004
- * @cdkPackage    libio
+ * @cdk.module    libio
  * @keyword       cml
  * @keyword       class convertor
  */
