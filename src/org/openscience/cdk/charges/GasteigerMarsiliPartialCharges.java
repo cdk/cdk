@@ -139,7 +139,18 @@ public class GasteigerMarsiliPartialCharges {
 		return ac;
 	}
 
-
+	
+	/**
+	 *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
+	 *  object
+	 *
+	 *@return STEP_SIZE
+	 */
+	public int getStepSize(){
+		return STEP_SIZE;
+	}
+	
+	
 	/**
 	 *  Method which stores and assigns the factors a,b,c and CHI+
 	 *
