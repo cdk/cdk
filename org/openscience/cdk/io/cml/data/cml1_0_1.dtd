@@ -1,0 +1,485 @@
+<!-- CML V1.01 DTD -->
+<!-- Amendments and errata from V1. (1999-05-15) -->
+<!-- Authors:
+ P.Murray-Rust
+ H.Rzepa
+This DTD is fully described in  P. Murray-Rust and H. S. Rzepa, Journal of Chem
+ical Information
+ and Computer Science,  1999, 39, 928. 
+-->
+<!-- Changes (2001-04-06):
+1.      atomRefs has been added as an attribute for string,
+  float, integer and their *Arrays
+2.      some elements and attributes have been annotated as
+ belonging to a subset "CoreCML" for simple small molecules
+3.      multiple dictRef on molecule removed
+4.      delimiter attribute added to floatArray, integerArray, floatMatrix
+5.      generic PE's created for many attributes for ease of maintenance
+  no new attributes created
+6.      dictRef added to a very small number of elements - this is now
+  almost universal
+-->
+
+<!-- elements and attributes fall into 2 categories:
+ coreCML - a subset of CML for easy implementation for small molecules
+ fullCML - the full DTD (includes coreCML)
+-->
+<!-- % fullCML can be overridden
+by prepending the statement:
+<!ENTITY % fullCML "IGNORE">
+at this stage (or transmitting it in from the parser controls if
+implemented) -->
+
+<!ENTITY % coreCML      "INCLUDE">
+<!ENTITY % fullCML      "INCLUDE">
+
+<!-- =======================================================-->
+<!-- PARAMETER ENTITIES                                     -->
+<!-- =======================================================-->
+
+<!-- ======attributes found on almost all elements ==========-->
+
+<!ENTITY %      title           'title          CDATA   #IMPLIED'>
+<!ENTITY %      id              'id             CDATA   #IMPLIED'>
+<!ENTITY %      convention      'convention     CDATA   "CML"'>
+<!ENTITY %      dictRef         'dictRef        CDATA   #IMPLIED'>
+
+<!-- a very common combination (on most elements) -->
+<!ENTITY %      tit_id_conv     '%title; %id; %convention;'>
+<!ENTITY %      tit_id_conv_dict        '%tit_id_conv; %dictRef;'>
+
+<!-- ======linking information ==============================-->
+
+<!ENTITY %      simpleLink      'href           CDATA   #REQUIRED'>
+
+<!-- ======quantifiers and constraints on some primitives ===-->
+
+<!ENTITY %      count           'count          CDATA   "1"'>
+<![ %fullCML; [
+<!ENTITY %      size            'size           CDATA   #IMPLIED'>
+<!ENTITY %      rows            'rows           CDATA   #REQUIRED'>
+<!ENTITY %      columns         'columns        CDATA   #REQUIRED'>
+]]>
+<!ENTITY %      size            ''>
+<!ENTITY %      rows            ''>
+<!ENTITY %      columns         ''>
+
+<!-- ====== delimiter in Array elements ===-->
+<!ENTITY %      delimiter       'delimiter      CDATA   #IMPLIED'>
+
+<!-- ======constraints on some numeric data primitives    ===-->
+
+<!ENTITY %      units           'units          CDATA   #IMPLIED'>
+
+<![%fullCML;[
+<!ENTITY %      min             'min            CDATA   #IMPLIED'>
+<!ENTITY %      max             'max            CDATA   #IMPLIED'>
+<!ENTITY %      angleUnits      'units  (degrees | radians) "degrees"'>
+<!ENTITY %      unitsRef        'unitsRef       CDATA           #IMPLIED'>
+]]>
+<!ENTITY %      min             ''>
+<!ENTITY %      max             ''>
+<!ENTITY %      angleUnits      ''>
+<!ENTITY %      unitsRef        ''>
+
+<!-- for CoreCML degrees are mandatory -->
+<!ENTITY %      angleUnits      'units          CDATA   #FIXED "degrees"'>
+
+<!--  values which may be useful in min and max attributes  -->
+<!ENTITY %      integer.zero                    '0'>
+<!ENTITY %      integer.max                     '2147483647'>
+<!ENTITY %      integer.min                     '-2147483648'>
+<!ENTITY %      float.zero                      '0.0'>
+<!ENTITY %      float.max                       '8.98846567431158E307'>
+<!ENTITY %      float.min                       '4.9E-324'>
+
+<!-- ======= builtin values for any element ================-->
+<!ENTITY %      builtinId       'id'>
+
+<!-- ======= builtin values for atoms ======================-->
+<!ENTITY %      elementType     'elementType'>
+
+<![%fullCML;[
+<!ENTITY %      atomId          ' | atomId '>
+]]>
+<!ENTITY %      atomId          ''>
+
+<!ENTITY %      x2              'x2'>
+<!ENTITY %      y2              'y2'>
+<!ENTITY %      x3              'x3'>
+<!ENTITY %      y3              'y3'>
+<!ENTITY %      z3              'z3'>
+<!ENTITY %      xy2             'xy2'>
+<!ENTITY %      xyz3            'xyz3'>
+<!ENTITY %      xFract          'xFract'>
+<!ENTITY %      yFract          'yFract'>
+<!ENTITY %      zFract          'zFract'>
+<!ENTITY %      xyzFract        'xyzFract'>
+<!ENTITY %      occupancy       'occupancy'>
+<!ENTITY %      isotope         'isotope'>
+<!ENTITY %      formalCharge    'formalCharge'>
+<!ENTITY %      nonHydrogenCount        'nonHydrogenCount'>
+<!ENTITY %      hydrogenCount   'hydrogenCount'>
+<!ENTITY %      atomParity      'atomParity'>
+
+<![%fullCML;[
+<!ENTITY %      residueType     ' | residueType'>
+<!ENTITY %      residueId       ' | residueId'>
+]]>
+<!ENTITY %      residueType     ''>
+<!ENTITY %      residueId       ''>
+
+<!ENTITY %      atomStringBuiltin       '
+    %elementType;  %atomId;
+    %residueType;  %residueId;
+    '
+>
+<!ENTITY %      atomFloatBuiltin        '
+    %x2; | %y2; |
+    %x3; | %y3; |  %z3; |
+    %xFract; | %yFract; |  %zFract; |
+    %occupancy; | %isotope; |
+    %formalCharge; | %hydrogenCount; | %nonHydrogenCount; |
+    %atomParity;
+    '
+>
+<!ENTITY %      atomIntegerBuiltin      '
+    %isotope; |
+    %formalCharge; | %hydrogenCount; | %nonHydrogenCount; |
+    %atomParity;
+    '
+>
+<!ENTITY %      atomCoordinate2Builtin  '
+    %xy2;
+    '
+>
+<!ENTITY %      atomCoordinate3Builtin  '
+    %xyz3; | %xyzFract;
+    '
+>
+<!-- ======= builtin values for bonds ======================-->
+<!ENTITY %      atomRef         'atomRef'>
+<!ENTITY %      builtinAtomRefs 'atomRefs'>
+<!ENTITY %      length          'length'>
+<!ENTITY %      order           'order'>
+<!ENTITY %      stereo          'stereo'>
+<!ENTITY %      atomRefs        'atomRefs       CDATA   #IMPLIED'>
+
+<!ENTITY %      bondStringBuiltin       '
+    %atomRef; | %builtinAtomRefs; |
+    %order; |
+    %stereo;
+    '
+>
+<!ENTITY %      bondFloatBuiltin        '
+    %length;
+    '
+>
+<!ENTITY %      bondIntegerBuiltin      ''
+>
+<!-- ======= builtin values for crystal ====================-->
+
+<!ENTITY %      acell                   'acell'>
+<!ENTITY %      bcell                   'bcell'>
+<!ENTITY %      ccell                   'ccell'>
+<!ENTITY %      alpha                   'alpha'>
+<!ENTITY %      beta                    'beta'>
+<!ENTITY %      gamma                   'gamma'>
+<!ENTITY %      z                       'z'>
+<!ENTITY %      spacegroup              'spacegroup'>
+
+<!ENTITY %      crystalStringBuiltin    '
+    %spacegroup;
+    '
+>
+<!ENTITY %      crystalFloatBuiltin     '
+    %acell; | %bcell; | %ccell; |
+    %alpha; | %beta; | %gamma; |
+    %z;
+    '
+>
+<!ENTITY %      crystalIntegerBuiltin   '
+    %z;
+    '
+>
+<!-- =======================================================-->
+<!ENTITY %      stringBuiltin   '
+    builtin (
+    %builtinId; |
+    %atomStringBuiltin; |
+    %bondStringBuiltin; |
+    %crystalStringBuiltin;
+    )   #IMPLIED        '
+>
+<!ENTITY %      floatBuiltin    '
+    builtin (
+    %atomFloatBuiltin; |
+    %bondFloatBuiltin; |
+    %crystalFloatBuiltin;
+    )   #IMPLIED        '
+>
+<!ENTITY %      integerBuiltin  '
+    builtin (
+    %atomIntegerBuiltin; |
+    %crystalIntegerBuiltin;
+    )   #IMPLIED        '
+>
+<!ENTITY %      coordinate2Builtin      '
+    builtin (
+    %atomCoordinate2Builtin;
+    )   #IMPLIED        '
+>
+<!ENTITY %      coordinate3Builtin      '
+    builtin (
+    %atomCoordinate3Builtin;
+    )   #IMPLIED        '
+>
+
+<!-- =======================================================-->
+<!-- ELEMENTS for widely used data primitives               -->
+<!-- =======================================================-->
+
+<!-- CML-DTD V1.01 addition
+ certain children of atom or bond may refer to atoms (particularly
+ builtin="atomParity" and builtin="stereo"). For these
+ we need the attribute 'atomRefs'
+-->
+<!ENTITY %      scalar.content          '(#PCDATA)'>
+<!ENTITY %      array.content           '(#PCDATA)'>
+<!ENTITY %      matrix.content          '(#PCDATA)'>
+<!ENTITY %      angle.content           '(#PCDATA)'>
+<!ENTITY %      coordinate.content      '(#PCDATA)'>
+
+<!ENTITY %      array.atts
+   '%size;
+   %delimiter;
+'>
+
+<!ELEMENT       string          %scalar.content;>
+<!ATTLIST       string
+                 %tit_id_conv_dict;
+   %stringBuiltin;
+   %atomRefs;
+>
+<!-- link is for implementing XLink - only used in fullCML -->
+<![ %fullCML; [
+<!ELEMENT       link            %scalar.content;>
+<!ATTLIST       link
+                 %tit_id_conv;
+   %simpleLink;
+>
+]]>
+
+<!ELEMENT       float           %scalar.content;>
+<!ATTLIST       float
+                 %tit_id_conv_dict;
+   %floatBuiltin;
+   %min;
+   %max;
+   %units;
+   %unitsRef;
+   %atomRefs;
+>
+<!ELEMENT       integer         %scalar.content;>
+<!ATTLIST       integer
+                 %tit_id_conv_dict;
+   %integerBuiltin;
+   %min;
+   %max;
+   %units;
+   %unitsRef;
+   %atomRefs;
+>
+<!ELEMENT       stringArray             %array.content;>
+<!ATTLIST       stringArray
+                 %tit_id_conv_dict;
+   %stringBuiltin;
+   %array.atts;
+   %min;
+   %max;
+>
+<!ELEMENT       floatArray              %array.content;>
+<!ATTLIST       floatArray
+                 %tit_id_conv_dict;
+   %floatBuiltin;
+   %array.atts;
+   %units;
+   %unitsRef;
+   %min;
+   %max;
+>
+<!ELEMENT       integerArray            %array.content;>
+<!ATTLIST       integerArray
+                 %tit_id_conv_dict;
+   %integerBuiltin;
+   %array.atts;
+   %min;
+   %max;
+   %units;
+   %unitsRef;
+>
+<!ELEMENT       floatMatrix             %matrix.content;>
+<!ATTLIST       floatMatrix
+                 %tit_id_conv_dict;
+   %rows;
+   %columns;
+   %min;
+   %max;
+   %units;
+   %unitsRef;
+   %delimiter;
+>
+
+<!ELEMENT       coordinate2             %coordinate.content;>
+<!ATTLIST       coordinate2
+                 %tit_id_conv_dict;
+   %coordinate2Builtin;
+   %unitsRef;
+>
+
+<!ELEMENT       coordinate3             %coordinate.content;>
+<!ATTLIST       coordinate3
+                 %tit_id_conv_dict;
+   %coordinate3Builtin;
+   %unitsRef;
+>
+<!ELEMENT       angle                   %angle.content;>
+<!ATTLIST       angle
+                 %tit_id_conv_dict;
+   %atomRefs;
+   %angleUnits;
+   %min;
+   %max;
+>
+
+<!ELEMENT       torsion                 %angle.content;>
+<!ATTLIST       torsion
+                 %tit_id_conv_dict;
+   %atomRefs;
+   %angleUnits;
+   %min;
+   %max;
+>
+
+<!ELEMENT       list                    ANY>
+<!ATTLIST       list
+                 %tit_id_conv_dict;
+>
+
+<!-- =======================================================-->
+<!-- ELEMENTS for chemical and crystallographic concepts    -->
+<!-- =======================================================-->
+<!-- NOTE
+ for elements which have element-specific values for the
+ builtin attribute, those values are already listed as
+ entities
+-->
+<!-- =======================================================-->
+<![%fullCML;[
+<!ENTITY %      molecule.content        'ANY'>
+]]>
+<!ENTITY %      molecule.content        '(atomArray, bondArray)'>
+
+<!ELEMENT       molecule                %molecule.content;>
+<!ATTLIST       molecule
+                 %tit_id_conv_dict;
+   %count;
+>
+
+<!-- ========================================================-->
+<!ELEMENT       formula         ANY>
+<!ATTLIST       formula
+                 %tit_id_conv_dict;
+   %count;
+>
+
+<!-- ========================================================-->
+<![%fullCML;[
+<!ENTITY %      atom.content            'ANY'>
+]]>
+<!ENTITY %      atom.content            '(string | float | integer)*'>
+<!ELEMENT       atom                    %atom.content;>
+<!ATTLIST       atom
+                 %tit_id_conv_dict;
+   %count;
+>
+
+<!-- .......................................................-->
+<![%fullCML;[
+<!ENTITY %      atomArray.content       'ANY'>
+]]>
+<!ENTITY %      atomArray.content       '
+   (atom+ | (stringArray | floatArray | integerArray)*)
+    '
+>
+<!ELEMENT       atomArray               %atomArray.content;>
+<!ATTLIST       atomArray
+                 %tit_id_conv;
+>
+
+<!-- ========================================================-->
+<![%fullCML;[
+<!ENTITY %      bond.content            'ANY'>
+]]>
+<!ENTITY %      bond.content            '(string | float | integer)*'>
+<!ELEMENT       bond                    %bond.content;>
+<!ATTLIST       bond
+                 %tit_id_conv_dict;
+   %atomRefs;
+>
+
+<!-- ========================================================-->
+<![%fullCML;[
+<!ENTITY %      bondArray.content       'ANY'>
+]]>
+<!ENTITY %      bondArray.content       '
+   (bond+ | (stringArray | floatArray | integerArray)*)
+    '
+>
+<!ELEMENT       bondArray               %bondArray.content;>
+<!ATTLIST       bondArray
+                 %tit_id_conv;
+>
+<!-- ========================================================-->
+<![ %fullCML; [
+<!ELEMENT       electron                ANY>
+<!ATTLIST       electron
+                 %tit_id_conv_dict;
+   %count;
+>
+]]>
+<!-- ========================================================-->
+<![ %fullCML; [
+<!ELEMENT       reaction                ANY>
+<!ATTLIST       reaction
+                 %tit_id_conv_dict;
+>
+]]>
+
+<!-- ======================================================= -->
+
+<![%fullCML;[
+<!ENTITY %      crystal.content         'ANY'>
+]]>
+<!ENTITY %      crystal.content         '(string | float | integer)*'>
+<!ELEMENT       crystal                 %crystal.content;>
+<!ATTLIST       crystal
+                 %tit_id_conv_dict;
+>
+
+<!-- ======================================================= -->
+<![ %fullCML; [
+<!ELEMENT       sequence                ANY>
+<!ATTLIST       sequence
+                 %tit_id_conv_dict;
+>
+]]>
+
+<!-- ======================================================= -->
+<![ %fullCML; [
+<!ELEMENT       feature         ANY>
+<!ATTLIST       feature
+                 %tit_id_conv_dict;
+>
+]]>
+
