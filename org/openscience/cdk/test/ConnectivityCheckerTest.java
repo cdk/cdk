@@ -78,7 +78,7 @@ public class ConnectivityCheckerTest extends TestCase {
 			// Vector molecules is empty but initialized
 			// so no need for any action here
 		}
-		assert(molecules.size() == 3);
+		assertTrue(molecules.size() == 3);
 	}
 
 

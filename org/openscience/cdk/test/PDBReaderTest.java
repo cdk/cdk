@@ -62,7 +62,7 @@ public class PDBReaderTest extends TestCase {
   public void setUp() {
     testDirectory = new File("PDBReaderTest.directory");
     FileUtilities.deleteAll(testDirectory);
-    assert("Error creating test directory \"" + testDirectory + "\"",
+    assertTrue("Error creating test directory \"" + testDirectory + "\"",
       testDirectory.mkdir());
   }
   

@@ -58,7 +58,7 @@ public class MFAnalyserTest extends TestCase
 		AtomContainer ac = mfa.getAtomContainer();
 		MFAnalyser mfa2 = new MFAnalyser(ac);
 		String mf = mfa2.getMolecularFormula();
-		assert(mf.equals("C10H16"));
+		assertTrue(mf.equals("C10H16"));
 	}
 	
 }

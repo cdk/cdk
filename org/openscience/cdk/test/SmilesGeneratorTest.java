@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -76,7 +76,7 @@ public class SmilesGeneratorTest extends TestCase
 		}
 		//if (standAlone)  System.out.println("SMILES 1: " + smiles1);
 		if (standAlone)  System.out.println("SMILES 2: " + smiles2);
-		assert(smiles1.equals("c2cc(c3ccc1c(ccc(c1)CCC)c3c2)CC"));
+		assertTrue(smiles1.equals("c2cc(c3ccc1c(ccc(c1)CCC)c3c2)CC"));
 		
 		                  
 	}

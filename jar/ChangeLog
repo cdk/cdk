@@ -2,6 +2,10 @@
 * dbdoclet.jar
 	Uploaded dbdoclet 0.23
 
+2002-03-16  
+* junit.jar
+	Uploaded version 3.7, that is compatible with JDK 1.4
+
 2002-03-03  egonw
 * dbdoclet.jar
 	Uploaded dbdoclet 0.13

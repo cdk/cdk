@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
@@ -46,7 +46,7 @@ public class MorganNumberToolsTest extends TestCase
 	{
 
 	}
-	
+
 	public static Test suite() {
 		return new TestSuite(MorganNumberToolsTest.class);
 	}
@@ -65,14 +65,14 @@ public class MorganNumberToolsTest extends TestCase
 			System.err.println("An Exception");
 			fail();
 		}
-		assert(morganNumbers.length == reference.length);
+		assertTrue(morganNumbers.length == reference.length);
 		for (int f = 0; f < morganNumbers.length; f ++)
 		{
 			//System.out.println(morganNumbers[f]);
-			assert(reference[f] == morganNumbers[f]);
+			assertTrue(reference[f] == morganNumbers[f]);
 		}
 	}
-	
+
 	public static void main(String[] args)
 	{
 		new MorganNumberToolsTest("MorganNumberToolsTest").testMorganNumbers();

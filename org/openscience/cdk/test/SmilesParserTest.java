@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -70,7 +70,7 @@ public class SmilesParserTest extends TestCase
 		{
 			throw new AssertionFailedError("Problem parsing SMILES: " +  exc.toString());
 		}
-		assert(mol.getAtomCount() == 13);
+		assertTrue(mol.getAtomCount() == 13);
 	}
 
 	

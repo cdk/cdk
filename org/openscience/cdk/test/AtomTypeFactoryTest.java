@@ -1,4 +1,4 @@
-/* 
+/*
   * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -61,7 +61,7 @@ public class AtomTypeFactoryTest extends TestCase
 			throw new AssertionFailedError("Problem instantiating AtomTypeFactory: " +  exc.toString());
 		}
 		
-		assert(atfac.getSize() > 0);
+		assertTrue(atfac.getSize() > 0);
 		
 		try
 		{
@@ -72,6 +72,6 @@ public class AtomTypeFactoryTest extends TestCase
 			throw new AssertionFailedError("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.toString());
 		}
 		
-		assert(atomType.getMaxBondOrderSum() == 4.0);
+		assertTrue(atomType.getMaxBondOrderSum() == 4.0);
 	}
 }

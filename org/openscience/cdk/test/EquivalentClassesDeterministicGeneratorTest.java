@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -65,7 +65,7 @@ public class EquivalentClassesDeterministicGeneratorTest extends TestCase
 		EquivalentClassesDeterministicGenerator ecdg = new EquivalentClassesDeterministicGenerator();
 		ecdg.setAtomContainer(mol);
 		
-		assert(1==1);
+		assertTrue(1==1);
 	}
 
 	private void fixCarbonHCount(Molecule mol)

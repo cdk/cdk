@@ -70,7 +70,7 @@ public class ElementFactoryTest extends TestCase
 			throw new AssertionFailedError("Problem instantiating ElementFactory: " + exc.toString());
 		}
 
-		assert(elfac.getSize() > 0);
+		assertTrue(elfac.getSize() > 0);
 
 		try
 		{
@@ -81,7 +81,7 @@ public class ElementFactoryTest extends TestCase
 			throw new AssertionFailedError("Problem getting isotope " + findThis + " from ElementFactory: " + exc.toString());
 		}
 
-		assert(element.getAtomicNumber() == 35);
+		assertTrue(element.getAtomicNumber() == 35);
 	}
 
 	/**

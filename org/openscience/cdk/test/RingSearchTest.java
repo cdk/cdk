@@ -57,7 +57,7 @@ public class RingSearchTest extends TestCase
 	public void testAlphaPinene()
 	{
 		ringSet = sssrf.findSSSR(molecule);
-		assert(ringSet.size() == 2);
+		assertTrue(ringSet.size() == 2);
 	}
 	
 }

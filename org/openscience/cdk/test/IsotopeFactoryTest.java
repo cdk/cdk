@@ -1,4 +1,4 @@
-/* 
+/*
   * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -62,7 +62,7 @@ public class IsotopeFactoryTest extends TestCase
 			throw new AssertionFailedError("Problem instantiating IsotopeFactory: " +  exc.toString());
 		}
 		
-		assert(isofac.getSize() > 0);
+		assertTrue(isofac.getSize() > 0);
 		
 		try
 		{
@@ -73,7 +73,7 @@ public class IsotopeFactoryTest extends TestCase
 			throw new AssertionFailedError("Problem getting isotope 'Te' from IsotopeFactory: "  +  exc.toString());
 		}
 		
-		assert(isotope.getExactMass() == 129.906229);
+		assertTrue(isotope.getExactMass() == 129.906229);
 
 		try
 		{
@@ -84,7 +84,7 @@ public class IsotopeFactoryTest extends TestCase
 			throw new AssertionFailedError("Problem getting Isotope 'Cl' from IsotopeFactory by atomicNumber 17: "  +  exc.toString());
 		}
 		
-		assert(isotope.getSymbol().equals("Cl"));
+		assertTrue(isotope.getSymbol().equals("Cl"));
 		
 		
 	}

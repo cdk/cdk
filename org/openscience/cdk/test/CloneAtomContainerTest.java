@@ -54,14 +54,14 @@ public class CloneAtomContainerTest extends TestCase {
 	{
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		Molecule clonedMol = (Molecule)molecule.clone();
-		assert(molecule.getAtomCount() == clonedMol.getAtomCount());
+		assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			for (int g = 0; g < clonedMol.getAtomCount(); g++)
 			{
 				assertNotNull(molecule.getAtomAt(f));
 				assertNotNull(clonedMol.getAtomAt(g));
-				assert(molecule.getAtomAt(f) != clonedMol.getAtomAt(g));
+				assertTrue(molecule.getAtomAt(f) != clonedMol.getAtomAt(g));
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -126,8 +126,8 @@ public class IsomorphismTesterTest extends TestCase
 		try
 		{
 			IsomorphismTester it = new IsomorphismTester(pinene_1);
-			assert(it.isIsomorphic(pinene_2));
-			assert(!it.isIsomorphic(pinene_non));
+			assertTrue(it.isIsomorphic(pinene_2));
+			assertTrue(!it.isIsomorphic(pinene_non));
 		}
 		catch(Exception exc)
 		{

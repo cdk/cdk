@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The JChemPaint project
@@ -65,9 +65,9 @@ public class FingerprinterTest extends TestCase
 		System.out.println("bs2: " + bs2);
 		System.out.println("bs3: " + bs3);
 		System.out.println("bs4: " + bs4);
-		assert(Fingerprinter.isSubset(bs, bs1));
-		assert(!Fingerprinter.isSubset(bs, bs2));
-		assert(!Fingerprinter.isSubset(bs, bs3));
+		assertTrue(Fingerprinter.isSubset(bs, bs1));
+		assertTrue(!Fingerprinter.isSubset(bs, bs2));
+		assertTrue(!Fingerprinter.isSubset(bs, bs3));
 	}
 
 	public static Molecule makeFragment1()

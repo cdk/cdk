@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -78,7 +78,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		{
 			System.out.println("Benzene is aromatic");
 		}
-		assert(isAromatic == true);
+		assertTrue(isAromatic == true);
 	}	
 
 	public void testAzulene()
@@ -103,7 +103,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		{
 			System.out.println("Azulene is aromatic");
 		}
-		assert(isAromatic == true);
+		assertTrue(isAromatic == true);
 	
 	}	
 
@@ -129,7 +129,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 		{
 			System.out.println("Indole is aromatic");
 		}
-		assert(isAromatic == true);
+		assertTrue(isAromatic == true);
 	
 	}	
 	

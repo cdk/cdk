@@ -1,4 +1,4 @@
-/* 
+/*
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The Chemistry Development Kit (CDK) project
@@ -71,7 +71,7 @@ public class AllRingsFinderTest extends TestCase
 			System.out.println(exc);	
 		}
 
-		assert(ringSet.size() == 6); 
+		assertTrue(ringSet.size() == 6); 
 	}
 	
 	private void display(Molecule molecule)
