@@ -332,8 +332,9 @@ public class AtomTypeFactory {
 
 
 	/**
-	 * Configures an atom. Finds the correct element type by looking at the atoms
-	 * atom type id (atom.getAtomTypeName()).
+	 * Configures an atom. Finds the correct element type by looking at the Atom's
+	 * atom type name, and if that fails, picks the first atom type matching
+     * the Atom's element symbol..
 	 *
 	 * @param  atom  The atom to be configured
 	 * @return       The configured atom
@@ -361,10 +362,13 @@ public class AtomTypeFactory {
             } else {
                 at = getAtomType(atom.getAtomTypeName());
             }
+            logger.debug("Configuring with atomtype: ", at);
+            atom.setSymbol(at.getSymbol());
             atom.setMaxBondOrder(at.getMaxBondOrder());
             atom.setBondOrderSum(at.getBondOrderSum());
             atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
             atom.setCovalentRadius(at.getCovalentRadius());
+            atom.setHybridization(at.getHybridization());
             Object color = at.getProperty("org.openscience.cdk.renderer.color");
             if (color != null) {
                 atom.setProperty("org.openscience.cdk.renderer.color", color);

@@ -30,6 +30,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 
@@ -117,5 +118,19 @@ public class AtomTypeFactoryTest extends TestCase {
 		assertEquals(1, atomType.getFormalCharge());
 		assertEquals(3.0, atomType.getBondOrderSum(), 0.0001);
 		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
+	}
+
+    public void testConfigure_Atom() {
+		AtomType atomType = null;
+        Atom atom = new Atom("X");
+        atom.setAtomTypeName("C.ar");
+		try {
+            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml");
+			atomType = factory.configure(atom);
+		} catch(Exception exc) {
+			fail("Problem getting AtomType for 'valency:O+' from AtomTypeFactory: "  +  exc.getMessage());
+		}
+		
+        assertEquals("C", atom.getSymbol());
 	}
 }

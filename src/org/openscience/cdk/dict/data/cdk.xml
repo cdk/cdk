@@ -52,6 +52,16 @@
     </definition>
   </entry>
   
+  <entry id="hybridization" term="Hybridization">
+    <definition>
+       Denotes the geometrical orientation of the atom with respect
+       to it's bonded neighbors.
+    </definition>
+    <description>
+       Accepted values are: sp1, sp2 and sp3. See the CDKConstants class.
+    </description>
+  </entry>
+  
   <entry id="maxBondOrder" term="Maximal Bond Order">
     <definition>
       The maximal bond order that this atom type can have. 

@@ -27,6 +27,7 @@ package org.openscience.cdk.config.atomtypes;
 import java.util.Vector;
 
 import org.openscience.cdk.AtomType;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -40,6 +41,7 @@ public class AtomTypeHandler extends DefaultHandler {
     private final int SCALAR_UNSET = 0;
     private final int SCALAR_MAXBONDORDER = 1; 
     private final int SCALAR_BONDORDERSUM = 2;
+    private final int SCALAR_HYBRIDIZATION = 3;
     
     private LoggingTool logger;
     private String currentChars;
@@ -82,15 +84,24 @@ public class AtomTypeHandler extends DefaultHandler {
         if ("atomType".equals(local)) {
             atomTypes.addElement(atomType);
         } else if ("scalar".equals(local)) {
+            currentChars.trim();
             try {
-                double value = Double.parseDouble(currentChars.trim());
                 if (scalarType == SCALAR_BONDORDERSUM) {
-                    atomType.setBondOrderSum(value);
+                    double value = Double.parseDouble(currentChars);
+                    atomType.setBondOrderSum(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_MAXBONDORDER) {
-                    atomType.setMaxBondOrder(value);
+                    atomType.setMaxBondOrder(Double.parseDouble(currentChars));
+                } else if (scalarType == SCALAR_MAXBONDORDER) {
+                    if ("sp1".equals(currentChars)) {
+                        atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
+                    } else if ("sp2".equals(currentChars)) {
+                        atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+                    } else if ("sp3".equals(currentChars)) {
+                        atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
+                    }
                 }
-            } catch (NumberFormatException exception) {
-                logger.error("Value is not the expected double: ", currentChars);
+            } catch (Exception exception) {
+                logger.error("Value (", currentChars, ") is not off the expected type: ", exception.getMessage());
                 logger.debug(exception);
             }
             scalarType = SCALAR_UNSET;
