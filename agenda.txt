@@ -1,4 +1,4 @@
 - Port much more from JChemPaint 1.x to CDK, among which:
    - Internet download
 
-- Implement a SMILES parser/generator pair
+- Implement a SMILES parser/generator pair 
