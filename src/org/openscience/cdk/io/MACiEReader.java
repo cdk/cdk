@@ -223,6 +223,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     currentEntry.setSetOfReactions(currentReactionStepSet);
                     createNiceMACiETitle(currentEntry);
                     entries.addChemModel(currentEntry);
+                    fireFrameRead();
                     if (selectEntry && (entryCounter == selectedEntry.getSettingValue())) {
                         logger.info("Starting reading wanted frame: ", selectedEntry);
                         return currentEntry;
@@ -272,6 +273,7 @@ public class MACiEReader extends DefaultChemObjectReader {
             // store last entry
             currentEntry.setSetOfReactions(currentReactionStepSet);
             entries.addChemModel(currentEntry);
+            fireFrameRead();
         }
         
         if (selectEntry) {
