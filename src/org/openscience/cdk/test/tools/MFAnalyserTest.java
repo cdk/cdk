@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -94,7 +94,7 @@ public class MFAnalyserTest extends TestCase {
     
     public void testRemoveHydrogens() throws IOException, ClassNotFoundException{
       Molecule mol=MoleculeFactory.makeAlphaPinene();
-      new SaturationChecker().addHydrogensToSatisfyValency(mol);
+      new HydrogenAdder().addHydrogensToSatisfyValency(mol);
       MFAnalyser mfa=new MFAnalyser(mol);
       AtomContainer ac=mfa.removeHydrogens();
       mfa=new MFAnalyser(ac);
