@@ -156,13 +156,13 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	public boolean isSaturated(Atom atom, AtomContainer ac) throws CDKException {
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
         if(atomTypes.length==0)
-            throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
+            throw new CDKException("Missing entry in structgen_atomtypes.xml for "+ atom.getSymbol());
         double bondOrderSum = ac.getBondOrderSum(atom);
         double maxBondOrder = ac.getMaximumBondOrder(atom);
         int hcount = atom.getHydrogenCount();
         int charge = atom.getFormalCharge();
         try {
-            logger.debug("*** Checking saturation of atom " + atom.getSymbol() + ac.getAtomNumber(atom) + " ***");
+            logger.debug("*** Checking saturation of atom ", atom.getSymbol(), "" + ac.getAtomNumber(atom) + " ***");
             logger.debug("bondOrderSum: " + bondOrderSum);
             logger.debug("maxBondOrder: " + maxBondOrder);
             logger.debug("hcount: " + hcount);
@@ -228,7 +228,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	{
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
-      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
+      throw new CDKException("Missing entry in structgen_atomtypes.xml for "+ atom.getSymbol());
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		int hcount = atom.getHydrogenCount();
 		double max = 0;
@@ -356,7 +356,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
         Atom[] atoms = bond.getAtoms();
         Atom atom = atoms[0];
         Atom partner = atoms[1];
-        logger.debug("  saturating bond: " + atom.getSymbol() + "-" + partner.getSymbol());
+        logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
         AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
         AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
         boolean bondOrderIncreased = true;
@@ -365,14 +365,14 @@ public class SaturationChecker implements ValencyCheckerInterface {
             bondOrderIncreased = false;
             for (int atCounter1=0; atCounter1<atomTypes1.length&& !bondOrderIncreased; atCounter1++) {
                 AtomType aType1 = atomTypes1[atCounter1];
-                logger.debug("  condidering atom type: " + aType1);
+                logger.debug("  condidering atom type: ", aType1);
                 if (couldMatchAtomType(atomContainer, atom, aType1)) {
-                    logger.debug("  trying atom type: " + aType1);
+                    logger.debug("  trying atom type: ", aType1);
                     for (int atCounter2=0; atCounter2<atomTypes2.length && !bondOrderIncreased; atCounter2++) {
                         AtomType aType2 = atomTypes2[atCounter2];
-                        logger.debug("  condidering partner type: " + aType1);
+                        logger.debug("  condidering partner type: ", aType1);
                         if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
-                            logger.debug("    with atom type: " + aType2);
+                            logger.debug("    with atom type: ", aType2);
                             if (bond.getOrder() >= aType2.getMaxBondOrder() || 
                                 bond.getOrder() >= aType1.getMaxBondOrder()) {
                                 logger.debug("Bond order not increased: atoms has reached (or exceeded) maximum bond order for this atom type");
@@ -394,7 +394,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
      * Determines if the atom can be of type AtomType.
      */
     public boolean couldMatchAtomType(AtomContainer atomContainer, Atom atom, AtomType atomType) {
-        logger.debug("   ... matching atom " + atom.getSymbol() + " vs " + atomType);
+        logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", atomType);
         int neighbours = atomContainer.getConnectedAtoms(atom).length;
         if (atomContainer.getBondOrderSum(atom) + atom.getHydrogenCount() < atomType.getBondOrderSum()) {
            logger.debug("    Match!");
@@ -426,10 +426,10 @@ public class SaturationChecker implements ValencyCheckerInterface {
 			for (int f = 0; f < atomContainer.getAtomCount(); f++)
 			{
 				atom = atomContainer.getAtomAt(f);
-				logger.debug("symbol: " + atom.getSymbol());
+				logger.debug("symbol: ", atom.getSymbol());
 				atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
         if(atomTypes1.length>0){
-          logger.debug("first atom type: " + atomTypes1[0]);
+          logger.debug("first atom type: ", atomTypes1[0]);
           if (atomContainer.getBondCount(atom) == i)
           {
             if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getBondOrderSum() - atom.getHydrogenCount()){
@@ -440,7 +440,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
                 logger.debug("Atom has " + partners.length + " partners");
                 atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
                 if(atomTypes2.length==0)
-                  throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
+                  throw new CDKException("Missing entry in structgen_atomtypes.xml for "+ partner.getSymbol());
                 if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum() - partner.getHydrogenCount())
                 {
                   logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getBondOrderSum());
@@ -596,7 +596,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
             // get default atom
             AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
             if(atomTypes.length==0 && throwExceptionForUnknowAtom)
-              throw new CDKException("Missing entry in structgen_atomtypes.xml for "+atom.getSymbol());
+              throw new CDKException("Missing entry in structgen_atomtypes.xml for " + atom.getSymbol());
             logger.debug("Found atomtypes: " + atomTypes.length);
             if (atomTypes.length > 0) {
                 AtomType defaultAtom = atomTypes[0];
