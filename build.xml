@@ -155,6 +155,11 @@
                        debug="${debug}" deprecation="${deprecation}"
                        includesfile="${src}/applications.javafiles">
                         <classpath refid="project.class.path" />
+                        <classpath>
+                            <fileset dir="${lib}/libio">
+                                <include name="*.jar" />
+                            </fileset>
+                        </classpath>
                 </javac>
         </target>
 
