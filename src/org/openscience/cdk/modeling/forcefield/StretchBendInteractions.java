@@ -41,7 +41,9 @@ public class StretchBendInteractions {
 	double[] rkj = null;
 	double[] deltarij = null;
 	double[] deltarkj = null;
-
+	
+	ForceFieldTools ffTools = new ForceFieldTools();
+		
 
 	/**
 	 *  Constructor for the StretchBendInteractions object
@@ -133,7 +135,7 @@ public class StretchBendInteractions {
 		
 		Atom[] atomConnected = null;
 		RDFProtonDescriptor rdfpdo = new RDFProtonDescriptor();
-		ForceField ff = new ForceField();
+		
 		int l=-1;
 		
 		for (int j = 0; j < molecule.getAtomCount(); j++) {
@@ -148,10 +150,10 @@ public class StretchBendInteractions {
 						v[l] = rdfpdo.calculateAngleBetweenTwoLines(vb, vb, vc, vb);
 						deltav[l] = v[l] - v0[l];
 
-						rij[l] = ff.distanceBetweenTwoAtoms(atomConnected[i].getPoint3d(), molecule.getAtomAt(j).getPoint3d());
+						rij[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[i].getPoint3d(), molecule.getAtomAt(j).getPoint3d());
 						deltarij[l] = rij[l] - r0IJ[l];
 
-						rkj[l] = ff.distanceBetweenTwoAtoms(atomConnected[k].getPoint3d(), molecule.getAtomAt(j).getPoint3d());
+						rkj[l] = ffTools.distanceBetweenTwoAtoms(atomConnected[k].getPoint3d(), molecule.getAtomAt(j).getPoint3d());
 						deltarkj[l] = rkj[l] - r0KJ[l];
 					}
 				}

@@ -41,7 +41,8 @@ public class GeometricMinimizer {
 	double RMSD = 0;
 	double RMS = 0;
 	double d = 0;
-	ForceField forceFieldObject = new ForceField();
+	
+	ForceFieldTools ffTools = new ForceFieldTools();
 
 /*
 	double B11 = 0;
@@ -113,7 +114,7 @@ public class GeometricMinimizer {
 
 		RMSD = 0;
 		for (int i = 0; i < AtomsNumber; i++) {
-			d = forceFieldObject.calculate3dDistanceBetweenTwoAtomFromTwo3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
+			d = ffTools.calculate3dDistanceBetweenTwoAtomFromTwo3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
 			RMSD = RMSD + Math.pow(d, 2);
 		}
 		RMSD = RMSD / dimension;

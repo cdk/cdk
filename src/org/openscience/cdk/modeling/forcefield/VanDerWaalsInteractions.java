@@ -8,7 +8,9 @@ import Jama.*;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
-import org.openscience.cdk.qsar.WienerNumbersDescriptor;
+import org.openscience.cdk.qsar.BondsToAtomDescriptor;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**			
  *  Van Der Waals Interactions calculator for the potential energy function. Include function and derivatives.
@@ -34,7 +36,10 @@ public class VanDerWaalsInteractions {
 	GVector dt = new GVector(3);
 	GVector dIvdw = new GVector(3);
 	
-	int[][] distances = null;	//Better check common atom connected 
+	//int[][] distances = null;	//Better check common atom connected
+	Descriptor shortestPathBetweenToAtoms=new BondsToAtomDescriptor();
+	Object[] params = {new Integer(0), new Integer(0)};
+	
 	int vdwInteractionNumber;
 	double[] epsilonSK = null; 	// vdW well depths (mmff94: Slater-Kirkwood-based formula).
 	double[] asteriskR = null;	// minimum-energy separation in angstroms (mmff94).
@@ -57,12 +62,13 @@ public class VanDerWaalsInteractions {
 	double[] t = null;
 	double[] ivdw = null;
 	double vdwScale14 = 1;	// Scale factor for 1-4 interactions. To take in the future from mmff94.prm files.
-
-
+	
+	ForceFieldTools ffTools = new ForceFieldTools();
+	
 	/**
 	 *  Constructor for the VanDerWaalsInteractions object
 	 */
-	public VanDerWaalsInteractions() { }
+	public VanDerWaalsInteractions() {}
 
 
 	/**
@@ -75,13 +81,16 @@ public class VanDerWaalsInteractions {
 	 */
 	public void setMMFF94VanDerWaalsParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
 
-		WienerNumbersDescriptor wnd = new WienerNumbersDescriptor();
-		distances = wnd.getShortestPathLengthBetweenAtoms(molecule);
+		//distances = wnd.getShortestPathLengthBetweenAtoms((AtomContainer) molecule);
 		
 		vdwInteractionNumber = 0;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
+				params[0] = new Integer(i);
+				params[1] = new Integer(j);
+				shortestPathBetweenToAtoms.setParameters(params);
+				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
+				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()>2){
 					vdwInteractionNumber += 1;
 				}
 			}
@@ -118,7 +127,11 @@ public class VanDerWaalsInteractions {
 		int l = -1;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
+				params[0] = new Integer(i);
+				params[1] = new Integer(j);
+				shortestPathBetweenToAtoms.setParameters(params);
+				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
+				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()>2){
 					l += 1;
 					vdwInteractionData = (Vector) parameterSet.get("data" + molecule.getAtomAt(i).getID());
 					aaI = ((Double) vdwInteractionData.get(6)).doubleValue();
@@ -160,7 +173,11 @@ public class VanDerWaalsInteractions {
 					
 					t[l] = 1;
 					
-					if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))] == 3) {
+					params[0] = new Integer(i);
+					params[1] = new Integer(j);
+					shortestPathBetweenToAtoms.setParameters(params);
+					if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()==3){
+					//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))] == 3) {
 						ivdw[l] = vdwScale14;
 					}else {
 						ivdw[l] = 1;
@@ -176,17 +193,21 @@ public class VanDerWaalsInteractions {
 	 *
 	 *@param  molecule  The molecule like an AtomContainer object.
 	 */
-	public void setAtomDistance(AtomContainer molecule) {
+	public void setAtomDistance(AtomContainer molecule) throws Exception{
 
-		ForceField ff = new ForceField();
+		
 		Vector vdwInteractionData = null;
 
 		int l = -1;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
+				params[0] = new Integer(i);
+				params[1] = new Integer(j);
+				shortestPathBetweenToAtoms.setParameters(params);
+				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()>2){
+				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
 					l += 1;
-					r[l] = ff.distanceBetweenTwoAtoms(molecule.getAtomAt(i), molecule.getAtomAt(j));
+					r[l] = ffTools.distanceBetweenTwoAtoms(molecule.getAtomAt(i).getPoint3d(), molecule.getAtomAt(j).getPoint3d());
 					//System.out.println("r[" + l + "]= " + r[l]);
 
 				}

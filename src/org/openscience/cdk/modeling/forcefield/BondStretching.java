@@ -19,7 +19,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 public class BondStretching {
 
 	String functionShape = " Bond Stretching ";
-
+	ForceFieldTools ffTools = new ForceFieldTools();
 	double mmff94SumEB_InWishedCoordinates = 0;
 	GVector gradientMMFF94SumEB_InWishedCoordinates = new GVector(3);
 	GMatrix hessianMMFF94SumEB_InWishedCoordinates = new GMatrix(3,3);
@@ -88,15 +88,14 @@ public class BondStretching {
 
 		bonds = molecule.getBonds();
 		Atom[] atomsInBond = null;
-		ForceField ff = new ForceField();
-		
+				
 		r = new double[bonds.length];
 		deltar = new double[r.length];
 		
 		for (int i = 0; i < bonds.length; i++) {
 
 			atomsInBond = bonds[i].getAtoms();
-			r[i] = ff.distanceBetweenTwoAtoms(atomsInBond[0].getPoint3d(), atomsInBond[1].getPoint3d());
+			r[i] = ffTools.distanceBetweenTwoAtoms(atomsInBond[0].getPoint3d(), atomsInBond[1].getPoint3d());
 			deltar[i] = r[i] - r0[i];
 		}
 		return;
@@ -132,8 +131,7 @@ public class BondStretching {
 	 */
 	public GVector gradientMMFF94SumEB_InPoint(AtomContainer molecule) {
 		
-		ForceField ff = new ForceField();
-		GVector point = new GVector(ff.getCoordinates3xNVector(molecule)); 
+		GVector point = new GVector(ffTools.getCoordinates3xNVector(molecule)); 
 		
 		gradientMMFF94SumEB_InWishedCoordinates.setSize(point.getSize());
 		dDeltar.setSize(point.getSize());
@@ -161,8 +159,7 @@ public class BondStretching {
 	 */
 	public GMatrix hessianInPoint(AtomContainer molecule) {
 		
-		ForceField ff = new ForceField();
-		GVector point = new GVector(ff.getCoordinates3xNVector(molecule)); 
+		GVector point = new GVector(ffTools.getCoordinates3xNVector(molecule)); 
 		
 		double[] forHessian = new double[point.getSize() * point.getSize()];
 		double sumHessianEB = 0;
