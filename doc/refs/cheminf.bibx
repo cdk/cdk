@@ -466,6 +466,20 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="SMILESTUT">
+    <bibtex:misc>
+      <bibtex:title>SMILES Tutorial</bibtex:title>
+      <bibtex:url>http://www.daylight.com/dayhtml/smiles/smiles-intro.html</bibtex:url>
+    </bibtex:misc>
+  </bibtex:entry>
+
+  <bibtex:entry id="SSMILESTUT">
+    <bibtex:misc>
+      <bibtex:title>SSMILES Tutorial</bibtex:title>
+      <bibtex:url>http://www.daylight.com/dayhtml/smiles/ssmiles.html</bibtex:url>
+    </bibtex:misc>
+  </bibtex:entry>
+  
   <bibtex:entry id="SCH84">
     <bibtex:article>
       <bibtex:author>Von Scholley, A.</bibtex:author>

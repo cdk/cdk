@@ -46,18 +46,20 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
- *  Parses a SMILES string and an AtomContainer. So far only the SSMILES subset
- *  and the '%' tag for more than 10 rings at a time are supported, but this
- *  should be sufficient for most organic molecules. An example:
- *  <pre>
- *  try {
- *    SmilesParser sp = new SmilesParser();
- *    Molecule m = sp.parseSmiles("c1ccccc1");
- *  } catch (InvalidSmilesException ise) {
- *  }
- *  </pre> 
+ * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer.
+ * The full SSMILES subset {@cdk.cite SSMILESTUT}
+ * and the '%' tag for more than 10 rings at a time are supported. An example:
+ * <pre>
+ * try {
+ *   SmilesParser sp = new SmilesParser();
+ *   Molecule m = sp.parseSmiles("c1ccccc1");
+ * } catch (InvalidSmilesException ise) {
+ * }
+ * </pre> 
  *
- * <p>This parser does not parse stereochemical information.
+ * <p>This parser does not parse stereochemical information, but the following
+ * features are supported: reaction smiles, partitioned structures, charged
+ * atoms, implicit hydrogen count, '*' and isotope information.
  *
  * <p>See {@cdk.cite WEI88}.
  *
