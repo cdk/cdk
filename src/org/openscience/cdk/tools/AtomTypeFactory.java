@@ -164,6 +164,10 @@ public class AtomTypeFactory {
             AtomType at = getAtomType(atom.getID());
             atom.setMaxBondOrder(at.getMaxBondOrder());
             atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
+            atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
+            atom.setCovalentRadius(at.getCovalentRadius());
+            atom.setProperty("org.openscience.jmol.color",
+                             atom.getProperty("org.openscience.jmol.color"));
             if (at.getAtomicNumber() != 0) {
                 atom.setAtomicNumber(at.getAtomicNumber());
             } else {
