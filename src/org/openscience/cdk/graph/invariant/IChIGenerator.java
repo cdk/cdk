@@ -26,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-
 package org.openscience.cdk.graph.invariant;
 
 import java.io.BufferedReader;
@@ -44,54 +43,52 @@ import java.util.Random;
 import org.openscience.cdk.io.ChemObjectWriter;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.tools.ConnectivityChecker;
+import org.openscience.cdk.exception.CDKException;
 
 /**
- * Generate IChI for input SDF/mol file
+ * Generate IChI for a Molecule.
  *
- * @author Yong Zhang <yz237@cam.ac.uk>
+ * @author  Yong Zhang <yz237@cam.ac.uk>
+ * @created  2003-06-13
+ *
+ * @see org.openscience.cdk.io.IChIReader
  */
 public class IChIGenerator {
 
+    // FIX: make this configuarable
     private static String ichiProgram = "ichi.exe";
     private static org.openscience.cdk.tools.LoggingTool logger;
-    private static Process process = null ;
+    private static Process process = null;
 
     public IChIGenerator() {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
     }
 
     /**
-     * Generate IChI from inputfile (mol or sdf)
-     * @inputFile   Input mol or sdf file
-     * @outputFile  Generated IChI file
+     * Generate IChI from the <code>Molecule</code>.
+     *
+     * @param molecule The molecule to evaluate
+     *
      */
-    public void generate(String inputFile, String outputFile) {
-        String cmd = ichiProgram + " " + inputFile + " " + outputFile;
-        logger.debug("Generating IChI: " + cmd);
-        execute(cmd);
-    }
-
-    /**
-    * Generate IChI from the <code>molecule</code>
-    *
-    * @param molecule The molecule to evaluate
-    *
-    */
-    public String createIChI(Molecule molecule) {
-        String IChI = "";
+    public String createIChI(Molecule molecule) throws CDKException {
+        String IChIString = "";
         //Save the molecule into mol file
         logger.debug("Creating IChI in cdk");
         ChemObjectWriter cow;
         FileOutputStream fos;
+        // FIX: Use some TMPDIR instead of user home dir
         File curdir = new File(System.getProperty("user.dir"));
         String molFileName = curdir.getAbsolutePath() + System.getProperty("file.separator") + getHumanreableString(30) + ".mol";
         logger.debug("molFileName = " + molFileName);
         try {
             cow = new MDLWriter(new FileWriter(molFileName));
             cow.write(molecule);
+            File iChiProgramLocater = new File(ichiProgram);
+            if (!iChiProgramLocater.exists()) {
+                throw new CDKException("Cannot find IChI executable.");
+            }
             String cmd = ichiProgram + " " + molFileName + " " + molFileName + ".ichi";
-            execute(cmd);
+            createIChI(cmd);
             logger.debug("Waiting for 2 seconds to refresh the direcotry system!");
             Thread.currentThread().sleep(2000);
             FileReader fr = new FileReader(molFileName + ".ichi");
@@ -99,7 +96,7 @@ public class IChIGenerator {
             String record = "";
             try {
                while ( (record=br.readLine()) != null ) {
-                   IChI += "\n" + record;
+                   IChIString += "\n" + record;
                }
             } catch (IOException err) {
                 logger.error("Error: " + err);
@@ -111,11 +108,12 @@ public class IChIGenerator {
             File ichiFile = new File(molFileName + ".ichi");
             molFile.delete();
             ichiFile.delete();
-        } catch(Exception exc) {
-            logger.error("Error: " + exc);
+        } catch(Exception exception) {
+            logger.error("Error while generating IChI.");
+            logger.debug(exception);
         }
 
-        return(IChI);
+        return(IChIString);
     }
 
     /**
@@ -144,14 +142,16 @@ public class IChIGenerator {
         }
 
         String cmd = ichiProgram + " " + inFile + " " + outFile;
-        execute(cmd);
+        createIChI(cmd);
     }
 
     /**
-     * To execute a command
+     * Method that executes the IChI program.
+     *
      * @param cmd    command string
      */
-    private static void execute(String cmd){
+    private static void createIChI(String cmd){
+        // FIXME: take working dir (or tmp mol file) as parameter
         try {
             File curdir = new File(System.getProperty("user.dir"));
             cmd = curdir.getAbsolutePath() + System.getProperty("file.separator") + cmd;
