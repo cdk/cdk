@@ -30,6 +30,7 @@ package org.openscience.cdk.test.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
+import org.openscience.cdk.tools.LoggingTool;
 import java.io.*;
 import junit.framework.*;
 
@@ -42,11 +43,11 @@ import junit.framework.*;
  */
 public class MDLRXNReaderTest extends TestCase {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public MDLRXNReaderTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this);
     }
 
     public static Test suite() {
@@ -121,4 +122,24 @@ public class MDLRXNReaderTest extends TestCase {
             fail(e.getMessage());
         }
     }
+    
+    public void testReadMapping() {
+		String filename2 = "data/mdl/mappingTest.rxn";
+		logger.info("Testing: " + filename2);
+		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
+        try {
+			MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
+			Reaction reaction2 = new Reaction();
+			reaction2 = (Reaction)reader2.read(reaction2);
+			reader2.close();
+			
+			assertNotNull(reaction2);
+            Mapping[] maps = reaction2.getMappings();
+			assertEquals(2, maps.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+    }
+    
 }

@@ -261,7 +261,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 }
             }
         }
-        logger.info("Mapped atoms: " + mappingCount);
+        logger.info("Mapped atom pairs: " + mappingCount);
         
         return reaction;
     }

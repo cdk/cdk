@@ -369,7 +369,8 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
                 
                 try {
-                    String reactionAtomIDString = line.substring(50,53).trim();
+                    // read the mmm field as position 61-63
+                    String reactionAtomIDString = line.substring(60,63).trim();
                     logger.debug("Parsing mapping id: ", reactionAtomIDString);
                     try {
                         int reactionAtomID = Integer.parseInt(reactionAtomIDString);
