@@ -1,5 +1,7 @@
 <project name="CDK" default="compile" basedir=".">
 
+        <property name="build.compiler" value="modern" />
+
         <property name="build" value="build" />
 
         <property name="sourcedist" value="sourcedist" />
@@ -143,6 +145,20 @@
                 basedir="${build}" />
         </target>
 
+        <target name="libdist" depends="init">
+                <copy todir="${sourcedist}/jar">
+                        <fileset dir="jar" includes="*jar" />
+                        <fileset dir="jar" includes="ChangeLog" />
+                </copy>
+
+                <tar tarfile="cdk-libs-${DSTAMP}.tar" basedir="${sourcedist}" includes="**" />
+
+                <gzip zipfile="cdk-libs-${DSTAMP}.tar.gz" src="cdk-libs-${DSTAMP}.tar" />
+                <zip zipfile="cdk-libs-${DSTAMP}.zip" basedir="${sourcedist}" includes="**" />
+
+                <delete file="cdk-libs-${DSTAMP}.tar" />
+        </target>
+
         <target name="sourcedist" depends="init">
                 <copy todir="${sourcedist}">
                         <fileset dir="." includes="**/*java" />
@@ -152,10 +168,6 @@
                 <copy todir="${sourcedist}/org/openscience/cdk/config/isotopes.xml">
                         <fileset dir="org/openscience/cdk/config/"
                                  includes="*" />
-                </copy>
-
-                <copy todir="${sourcedist}/jar">
-                        <fileset dir="jar" includes="*jar" />
                 </copy>
 
                 <tar tarfile="cdk-source-${DSTAMP}.tar"
