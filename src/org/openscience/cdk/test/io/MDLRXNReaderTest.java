@@ -29,18 +29,15 @@ package org.openscience.cdk.test.io;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
-import org.openscience.cdk.geometry.*;
 import java.io.*;
 import junit.framework.*;
-import com.baysmith.io.FileUtilities;
-import java.util.Iterator;
 
 /**
- * TestCase for the reading MDL mol files using one test file.
+ * TestCase for the reading MDL RXN files using one test file.
  *
  * @cdkPackage test
  *
- * @see org.openscience.cdk.io.MDLReader
+ * @see org.openscience.cdk.io.MDLRXNReader
  */
 public class MDLRXNReaderTest extends TestCase {
 
