@@ -90,5 +90,9 @@ public class SetOfMoleculesManipulator {
     public static Vector getAllIDs(SetOfMolecules set) {
 		return SetOfAtomContainersManipulator.getAllIDs(set);
 	}
+
+    public static void setAtomProperties(SetOfMolecules set, Object propKey, Object propVal) {
+        SetOfAtomContainersManipulator.setAtomProperties(set, propKey, propVal);
+    }
 }
 

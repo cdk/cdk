@@ -111,4 +111,12 @@ public class SetOfReactionsManipulator {
         }
         return null;
     }
+    
+    public static void setAtomProperties(SetOfReactions set, Object propKey, Object propVal) {
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            ReactionManipulator.setAtomProperties(reaction, propKey, propVal);
+        }
+    }
 }

@@ -132,5 +132,13 @@ public class SetOfAtomContainersManipulator {
         }
         return idList;
     }
+    
+    public static void setAtomProperties(SetOfAtomContainers set, Object propKey, Object propVal) {
+        if (set != null) {
+            for (int i = 0; i < set.getAtomContainerCount(); i++) {
+                AtomContainerManipulator.setAtomProperties(set.getAtomContainer(i), propKey, propVal);
+            }
+        }
+    }
 }
 

@@ -185,5 +185,23 @@ public class ChemModelManipulator {
         }
         return SetOfMoleculesManipulator.getAllAtomContainers(moleculeSet);
     }
+
+    public static void setAtomProperties(ChemModel chemModel, Object propKey, Object propVal) {
+        if (chemModel.getSetOfMolecules() != null) {
+            SetOfMoleculesManipulator.setAtomProperties(
+                chemModel.getSetOfMolecules(), propKey, propVal
+            );
+        }
+        if (chemModel.getSetOfReactions() != null) {
+            SetOfReactionsManipulator.setAtomProperties(
+                chemModel.getSetOfReactions(), propKey, propVal
+            );
+        }
+        if (chemModel.getCrystal() != null) {
+            AtomContainerManipulator.setAtomProperties(
+                chemModel.getCrystal(), propKey, propVal
+            );
+        }
+    }
 }
 

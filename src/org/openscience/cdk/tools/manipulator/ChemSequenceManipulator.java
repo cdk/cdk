@@ -39,6 +39,8 @@ import org.openscience.cdk.ChemSequence;
  * methods from ChemObjects within the ChemSequence.
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(Atom)
+ *
+ * @cdk.module standard
  */
 public class ChemSequenceManipulator {
 

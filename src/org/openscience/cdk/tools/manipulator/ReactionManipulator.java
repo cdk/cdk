@@ -178,4 +178,19 @@ public class ReactionManipulator {
         }
         return null;
     }
+    
+    public static void setAtomProperties(Reaction reaction, Object propKey, Object propVal) {
+        Molecule[] reactants = reaction.getReactants().getMolecules();
+        for (int j=0; j<reactants.length; j++) {
+            AtomContainerManipulator.setAtomProperties(
+                reactants[j], propKey, propVal
+            );
+        }
+        Molecule[] products = reaction.getProducts().getMolecules();
+        for (int j=0; j<products.length; j++) {
+            AtomContainerManipulator.setAtomProperties(
+                products[j], propKey, propVal
+            );
+        }
+    }
 }

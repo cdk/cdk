@@ -39,6 +39,8 @@ import org.openscience.cdk.ChemModel;
  * methods from ChemObjects within the ChemFile.
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(Atom)
+ *
+ * @cdk.module standard
  */
 public class ChemFileManipulator {
 
