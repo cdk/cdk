@@ -28,10 +28,12 @@ import org.openscience.cdk.Atom;
 /**
  * @cdk.module extra
  */
-public class SymbolQueryAtom extends Atom {
+public class SymbolQueryAtom extends Atom implements QueryAtom {
     
-    public SymbolQueryAtom(String elementSymbol) {
-        super(elementSymbol);
+    public SymbolQueryAtom() {}
+    
+    public SymbolQueryAtom(Atom atom) {
+        super(atom.getSymbol());
     }
     
 	public boolean matches(Atom atom) {

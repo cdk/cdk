@@ -56,18 +56,20 @@ import org.openscience.cdk.isomorphism.mcss.RNode;
 import org.openscience.cdk.tools.ChemModelManipulator;
 
 /**
- *  This class implements a multipurpose structure comparaison tool.
+ *  This class implements a multipurpose structure comparison tool.
  *  It allows to find maximal common substructure, find the
  *  mapping of a substructure in another structure, and the mapping of
- *  2 isomorph structure.
- *  Structure comparaison may be associated to bond constraints
+ *  two isomorphic structures.
+ *
+ *  <p>Structure comparison may be associated to bond constraints
  *  (mandatory bonds, e.g. scaffolds, reaction cores,...) on each source graph.
  *  The constraint flexibility allows a number of interesting queries.
  *  The substructure analysis relies on the RGraph generic class (see: RGraph)
  *  This class implements the link between the RGraph model and the
  *  the CDK model in this way the RGraph remains independant and may be used
  *  in other contexts.
- *  This algorithm derives from the algorithm described in "Machine Learning of
+ *
+ *  <p>This algorithm derives from the algorithm described in "Machine Learning of
  *  of generic Reactions : 3. An efficient Algorithm for Maximal Common
  *  Substructure determination" C. Tonnelier, Ph. Jauffret, T. Hanser
  *  and G. Kaufmann. Tetrahedron Vol. 3, No 6, pp. 351-358, 1990.
@@ -75,7 +77,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  *  de m???hodes de synth???e ???partir d'exemples". Universit???Louis Pasteur
  *  STRASBOURG 1993.
  *
- *  < FONT COLOR="#FF0000">
+ *  <p><FONT COLOR="#FF0000">
  *     warning :  As a result of the adjacency perception used in this algorithm
  *                there is a single limitation : cyclopropane and isobutane are seen as isomorph
  *                This is due to the fact that these two compounds are the only ones where
@@ -88,7 +90,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  *                not the same (3 != 4) and in most case this will be already
  *                screened out by a fingerprint based filtering.
  *                It is possible to add a special treatment for these special query.
- *   < /FONT>
+ *   </FONT>
  *
  *
  * @author     Stephane Werner from IXELIS mail@ixelis.net
@@ -96,9 +98,9 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  * @cdk.require java1.4
  */
 public class UniversalIsomorphismTester {
+
   final static int ID1 = 0;
   final static int ID2 = 1;
-
 
   ///////////////////////////////////////////////////////////////////////////
   //                            Query Methods

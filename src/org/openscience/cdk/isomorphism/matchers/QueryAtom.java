@@ -28,14 +28,9 @@ import org.openscience.cdk.Atom;
 /**
  * @cdk.module extra
  */
-public abstract class QueryAtom extends Atom {
+public interface QueryAtom {
     
-    public QueryAtom() {
-        throw new InstantiationError("An abstract QueryAtom should not be used directly");
-    };
+	public boolean matches(Atom atom);
     
-	public boolean matches(Atom atom) {
-        throw new AbstractMethodError("The QueryBond class did not implement this method");
-    };
 }
 

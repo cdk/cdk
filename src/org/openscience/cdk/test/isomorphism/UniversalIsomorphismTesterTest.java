@@ -35,7 +35,10 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -99,7 +102,14 @@ public class UniversalIsomorphismTesterTest extends TestCase
         }
 	}
 	
-	
+	public void testBasicQueryAtomContainer() throws Exception {
+		SmilesParser sp = new SmilesParser();
+        AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+        AtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
+        QueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
+        
+        assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    }
 	
 	public static void main(String[] args)
 	{

@@ -23,19 +23,39 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 
 /**
  * @cdk.module extra
  */
-public class OrderQueryBond extends Bond {
+public class OrderQueryBond extends Bond implements QueryBond {
+
+    public OrderQueryBond() {
+    }
 
     public OrderQueryBond(QueryAtom atom1, QueryAtom atom2, double order) {
-        super(atom1, atom2, order);
+        super((Atom)atom1, (Atom)atom2, order);
     }
     
 	public boolean matches(Bond bond) {
         throw new AbstractMethodError("The QueryBond class did not implement this method");
     };
+
+    public void setAtoms(Atom[] atoms) {
+        if (atoms.length > 0 && atoms[0] instanceof QueryAtom) {
+            super.setAtoms(atoms);
+        } else {
+            throw new IllegalArgumentException("Array is not of type QueryAtom[]");
+        }
+	}
+    
+	public void setAtomAt(Atom atom, int position) {
+        if (atom instanceof QueryAtom) {
+            super.setAtomAt(atom, position);
+        } else {
+            throw new IllegalArgumentException("Atom is not of type QueryAtom");
+        }
+    }
 }
 

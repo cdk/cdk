@@ -30,33 +30,28 @@ import org.openscience.cdk.Bond;
 /**
  * @cdk.module extra
  */
-public class QueryAtomContainer extends AtomContainer {
+public class QueryAtomContainerCreator {
 
-    public QueryAtomContainer() {
-    };
-    
-    public void add(AtomContainer container) {
-        if (container instanceof QueryAtomContainer) {
-            super.add(container);
-        } else {
-            throw new IllegalArgumentException("AtomContainer is not of type QueryAtomContainer");
+    /**
+     * Creates a QueryAtomContainerCreator with SymbolQueryAtom's and
+     * OrderQueryBond's.
+     */
+    public static QueryAtomContainer createBasicQueryContainer(AtomContainer container) {
+        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        Atom[] atoms = container.getAtoms();
+        for (int i=0; i<atoms.length; i++) {
+            queryContainer.addAtom(new SymbolQueryAtom(atoms[i]));
         }
-    }
-    
-    public void addAtom(Atom atom) {
-        if (atom instanceof QueryAtom) {
-            super.addAtom(atom);
-        } else {
-            throw new IllegalArgumentException("Atom is not of type QueryAtom");
+        Bond[] bonds = container.getBonds();
+        for (int i=0; i<bonds.length; i++) {
+            int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
+            int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
+            queryContainer.addBond(new OrderQueryBond((QueryAtom)queryContainer.getAtomAt(index1),
+                                                      (QueryAtom)queryContainer.getAtomAt(index1),
+                                                      bonds[i].getOrder()));
         }
+        return queryContainer;
     }
 
-    public void addBond(Bond bond) {
-        if (bond instanceof QueryBond) {
-            super.addBond(bond);
-        } else {
-            throw new IllegalArgumentException("Bond is not of type QueryBond");
-        }
-    }
 }
 
