@@ -22,6 +22,7 @@
       Below is a list of plugins that are currently available:
     </para>
     <itemizedlist>
+      <listitem><para><ulink url="plugin-dirbrowser.html">DirBrowser</ulink></para></listitem>
       <listitem><para><ulink url="plugin-rssviewer.html">RSSViewer</ulink></para></listitem>
       <listitem><para><ulink url="plugin-wwmmplugin.html">WWMMPlugin</ulink></para></listitem>
     </itemizedlist>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" []>
+<webpage id="plugin-dirbrowser">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <!-- This page is maintained by the author(s) of the plugin. 
+       Discuss changes to this file with them first. -->
+  
+  <head>
+    <title>DirBrowser Plugin</title>
+    <titleabbrev>DirBrowser</titleabbrev>
+    <summary>Information about the DirBrowser plugin.</summary>
+  </head>
+
+  <section>
+    <title>DirBrowser</title>
+    <para>
+        Plugin that will show all files in the given directory. For each file it shows
+        the format, if the file has a chemical nature and is recognized. For this it uses
+        CDK's ReaderFactory, and it is able to process gziped files too.
+    </para>
+    <para>
+        The source code can be found in the cdk-plugins module in CDK cvs.
+        It is licensed LGPL.
+    </para>
+  </section>
+
+</webpage>

@@ -9,7 +9,7 @@
           altval="Banner"/>
 
   <copyright>
-    <year>2001-2003</year><holder>The CDK Team</holder>
+    <year>2001-2004</year><holder>The CDK Team</holder>
   </copyright>
 
   <style src="example.css" type="text/css"/>
@@ -20,6 +20,7 @@
     </tocentry>
     <tocentry page="software.xml" filename="software.html">
       <tocentry page="plugins.xml" filename="plugins.html">
+        <tocentry page="plugin-dirbrowser.xml" filename="plugin-dirbrowser.html"/>
         <tocentry page="plugin-rssviewer.xml" filename="plugin-rssviewer.html"/>
         <tocentry page="plugin-wwmmplugin.xml" filename="plugin-wwmmplugin.html"/>
       </tocentry>
