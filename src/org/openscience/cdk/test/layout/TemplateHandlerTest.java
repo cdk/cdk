@@ -1,0 +1,127 @@
+/*
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.test.layout;
+
+import org.openscience.cdk.controller.*;
+import org.openscience.cdk.*;
+import org.openscience.cdk.io.*;
+import org.openscience.cdk.smiles.*;
+import org.openscience.cdk.layout.*;
+import org.openscience.cdk.tools.LoggingTool;
+import java.util.*;
+import java.io.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+/**
+ *  Description of the Class
+ *
+ *@author     steinbeck
+ *@created    September 4, 2003
+ */
+public class TemplateHandlerTest extends TestCase
+{
+
+	/**
+	 *  Description of the Field
+	 */
+	public boolean standAlone = false;
+	private LoggingTool logger = null;
+
+
+	/**
+	 *  Constructor for the TemplateHandlerTest object
+	 *
+	 *@param  name  Description of the Parameter
+	 */
+	public TemplateHandlerTest(String name)
+	{
+		super(name);
+	}
+
+
+	/**
+	 *  The JUnit setup method
+	 */
+	public void setUp()
+	{
+		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+	}
+
+
+	/**
+	 *  A unit test suite for JUnit
+	 *
+	 *@return    The test suite
+	 */
+	public static Test suite()
+	{
+		return new TestSuite(TemplateHandlerTest.class);
+	}
+
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public void testInit() throws Exception
+	{
+		TemplateHandler th = new TemplateHandler();
+		
+		assertTrue(th.getTemplateCount() > 0);
+	}
+
+	public void testDetection() throws Exception
+	{
+		TemplateHandler th = new TemplateHandler();
+		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
+		Molecule mol = new SmilesParser().parseSmiles(smiles);
+		assertTrue(th.mapTemplates(mol));
+	}
+
+
+	/**
+	 *  The main program for the TemplateHandlerTest class
+	 *
+	 *@param  args  The command line arguments
+	 */
+	public static void main(String[] args)
+	{
+		try
+		{
+			TemplateHandlerTest tht = new TemplateHandlerTest("TemplateHandlerTest");
+			tht.setUp();
+			tht.standAlone = true;
+			//tht.testInit();
+			tht.testDetection();
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}
+}
+
