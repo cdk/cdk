@@ -50,6 +50,7 @@
     <xslt in="biblio.xml" out="${build.dir}/biblio.html" style="xsl/tabular.xsl"/>
     <xslt in="changelog.xml" out="${build.dir}/changelog.html" style="xsl/tabular.xsl"/>
     <xslt in="contact.xml" out="${build.dir}/contact.html" style="xsl/tabular.xsl"/>
+    <xslt in="deprecrfc.xml" out="${build.dir}/deprecrfc.html" style="xsl/tabular.xsl"/>
     <xslt in="development.xml" out="${build.dir}/development.html" style="xsl/tabular.xsl"/>
     <xslt in="documentation.xml" out="${build.dir}/documentation.html" style="xsl/tabular.xsl"/>
     <xslt in="download.xml" out="${build.dir}/download.html" style="xsl/tabular.xsl"/>

@@ -21,6 +21,22 @@
       developers can vote YES/NO on the RFC. If the majority votes in favor
       of the RFC, it will be accepted.
     </para>
+    <para>
+      The status of an RFC has three options:
+    </para>
+    <itemizedlist>
+      <listitem><para>empty: RFC is being discussed or being voted on</para></listitem>
+      <listitem><para>accepted: RFC is accepted by voting</para></listitem>
+      <listitem><para>implemented: RFC is accepted and has been implemented</para></listitem>
+    </itemizedlist>
+    <para>
+      Note, that once an RFC has been accepted, and the CVS HEAD source code violates this RFC,
+      it should be filed as a bug on CDK's SourceForge project page.
+    </para>
+    <para>
+      A <ulink url="deprecrfc.html">list of deprecated RFCs</ulink> is also
+      available.
+    </para>
     <informaltable frame="none">
         <tgroup cols="5">
           <thead>
@@ -34,13 +50,6 @@
           </thead>
           <tbody>
             <row>
-              <entry>1</entry>
-              <entry><ulink url="rfc1.html">Setting up an RFC system</ulink></entry>
-              <entry>2002-05-22</entry>
-              <entry>accepted (de facto)</entry>
-              <entry>2002-08-14</entry>
-            </row>
-            <row>
               <entry>2</entry>
               <entry><ulink url="rfc2.html">List of core classes</ulink></entry>
               <entry>2002-05-22</entry>
@@ -51,14 +60,14 @@
               <entry>3</entry>
               <entry><ulink url="rfc3.html">Tests in org.openscience.cdk.test Use Same Directory Structure as Tested Classes</ulink></entry>
               <entry>2002-07-30</entry>
-              <entry>partially implemented</entry>
+              <entry>implemented</entry>
               <entry>2002-09-18</entry>
             </row>
             <row>
               <entry>4</entry>
               <entry><ulink url="rfc4.html">Core classes must not check method parameters</ulink></entry>
               <entry>2002-08-14</entry>
-              <entry>partially implemented</entry>
+              <entry>implemented</entry>
               <entry>2002-09-18</entry>
             </row>
             <row>
@@ -142,7 +151,7 @@
               <entry>16</entry>
               <entry><ulink url="rfc16.html">Isotope.getAtomicMass() should be renamed to Isotope.getMassNumber()</ulink></entry>
               <entry>2003-06-08</entry>
-              <entry>accepted</entry>
+              <entry>implemented</entry>
               <entry>2003-06-26</entry>
             </row>
             <row>
@@ -170,7 +179,7 @@
               <entry>20</entry>
               <entry><ulink url="rfc20.html">Removal of get/setRemark and get/setPhysicalProperty from ChemObject</ulink></entry>
               <entry>2003-08-11</entry>
-              <entry>accepted</entry>
+              <entry>implemented</entry>
               <entry>2003-09-12</entry>
             </row>
             <row>

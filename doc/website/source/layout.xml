@@ -39,7 +39,7 @@
         <tocentry page="man-view.xml" filename="man-view.html"/>
       </tocentry>
       <tocentry page="rfc.xml" filename="rfc.html">
-        <tocentry page="rfc1.xml" filename="rfc1.html"/>
+        <tocentry page="deprecrfc.xml" filename="deprecrfc.html"/>
         <tocentry page="rfc2.xml" filename="rfc2.html"/>
         <tocentry page="rfc3.xml" filename="rfc3.html"/>
         <tocentry page="rfc4.xml" filename="rfc4.html"/>

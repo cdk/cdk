@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
+]>
+<webpage id="deprecatedRequestForComments">
+  <config param="last-change-by" value="$Author$"/>
+  <config param="rcsdate" value="$Date$"/>
+
+  <head>
+    <title>Request for Comments</title>
+    <titleabbrev>Old RFCs</titleabbrev>
+    <summary>This page contains the list of deprecated RFCs.</summary>
+  </head>
+
+  <section>
+    <title>Deprecated RFCs</title>
+    <para>
+      This is the list of deprecated CDK RFCs, i.e. request for comments that have
+      been replaced by newer RFCs.
+    </para>
+    <informaltable frame="none">
+        <tgroup cols="5">
+          <thead>
+            <row>
+              <entry>#</entry>
+              <entry>topic</entry>
+              <entry>posted</entry>
+              <entry>accepted</entry>
+              <entry>replaced by</entry>
+              <entry>replaced on</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>1</entry>
+              <entry><ulink url="rfc1.html">Setting up an RFC system</ulink></entry>
+              <entry>2002-05-22</entry>
+              <entry>2002-08-14</entry>
+              <entry><ulink url="rfc18.html">#18</ulink></entry>
+              <entry>2003-09-12</entry>
+            </row>
+         </tbody>
+        </tgroup>
+    </informaltable>
+  </section>
+
+</webpage>
