@@ -5,7 +5,7 @@
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -240,6 +240,20 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       logger.debug("objectType: " + objectType);
       logger.debug("propType: " + propertyType);
       logger.debug("property: " + propertyValue);
+      
+      if (objectType == null) {
+          logger.error("Cannot add property for null object");
+          return;
+      }
+      if (propertyType == null) {
+          logger.error("Cannot add property for null property type");
+          return;
+      }
+      if (propertyValue == null) {
+          logger.error("Cannot add null property");
+          return;
+      }
+      
       if (objectType.equals("Molecule")) {
         if (propertyType.equals("id")) {
           currentMolecule.setID(propertyValue);
