@@ -103,17 +103,18 @@
     <bibtex:article>
       <bibtex:author>Tonnelier, C. and Jauffret, Ph. and Hanser, Th. and Jauffret, Ph. and Kaufmann, G.</bibtex:author>
       <bibtex:title>Machine Learning of generic reactions: 3. An efficient algorithm for maximal common substructure determination</bibtex:title>
-      <bibtex:journal>TetrAhedron</bibtex:journal>
+      <bibtex:journal>Tetrahedron Comput. Methodol.</bibtex:journal>
       <bibtex:year>1990</bibtex:year>
-      <bibtex:volume>6</bibtex:volume>
-      <bibtex:pages>351--258</bibtex:pages>
+      <bibtex:volume>3</bibtex:volume>
+      <bibtex:number>6</bibtex:number>
+      <bibtex:pages>351-358</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
 
   <bibtex:entry id="HAN93">
     <bibtex:phdthesis>
       <bibtex:author>Hanser, Th.</bibtex:author>
-      <bibtex:title>Apprentissage automatique de m???hodes de synth???e ???partir d'exemples</bibtex:title>
+      <bibtex:title>Apprentissage automatique de méthodes de synthèse à partir d'exemples</bibtex:title>
       <bibtex:school>Université Louis Pasteur</bibtex:school>
       <bibtex:year>1993</bibtex:year>
       <bibtex:address>Strasbourg</bibtex:address>
