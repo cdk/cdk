@@ -19,5 +19,13 @@ while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
         shift
 done
 
+junit_gui="-Dcdk.debugging=true junit.awtui.TestRunner"
+while getopts t o; do
+    case $o in
+        t)
+            junit_gui="-Dcdk.debugging=false junit.textui.TestRunner"
+            ;;
+    esac
+done
 
-${command} -cp ${CLASSPATH} -Dcdk.debugging=true junit.awtui.TestRunner $*
+${command} -cp ${CLASSPATH} ${junit_gui} $*
