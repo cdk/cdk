@@ -25,4 +25,32 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="BRE85">
+    <bibtex:article>
+      <bibtex:author>Bremser, W.</bibtex:author>
+      <bibtex:title>Expectation Ranges of 13-C NMR Chemical Shifts</bibtex:title>
+      <bibtex:journal>Magnetic Resonance in Chemistry</bibtex:journal>
+      <bibtex:volume>23</bibtex:volume>
+      <bibtex:number>4</bibtex:number>
+      <bibtex:pages>271-275</bibtex:pages>
+      <bibtex:year>1985</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="DAL92">
+    <bibtex:article>
+      <bibtex:author>Dalby, A. and Nourse, J. G. and Hounshell, W. D. and
+          Gushurst, A. K. and Grier, D. L. and Leland, B. A. and
+          Laufer, J.</bibtex:author>
+      <bibtex:title>Description of Several Chemical Structure File Formats Used by
+          Computer Programs Developed at Molecular Design Limited</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
+      <bibtex:volume>32</bibtex:volume>
+      <bibtex:pages>244-255</bibtex:pages>
+      <bibtex:year>1992</bibtex:year>
+      <bibtex:note> An updated online version of this document can be found on
+          http://www.mdli.com/downloads/literature/ctfile.pdf</bibtex:note>
+    </bibtex:article>
+  </bibtex:entry>
+
 </bibtex:file>
