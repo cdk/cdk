@@ -232,7 +232,7 @@ public class GamessReader extends DefaultChemObjectReader {
 			/*
 			 * There are 2 types of coordinate sets: 
 			 * - bohr coordinates sets		(if statement)
-			 * - angstr�m coordinates sets	(else statement)
+			 * - angstr???m coordinates sets	(else statement)
 			 */
 			if (currentReadLine.indexOf("COORDINATES (BOHR)") >= 0) {
 				
@@ -260,7 +260,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	
 	/**
 	 * Reads a set of coordinates from the "file system" file through the use of 
-	 * the "input" field, scales coordinate to angstr�m unit, builds each atom with 
+	 * the "input" field, scales coordinate to angstr???m unit, builds each atom with 
 	 * the right associated coordinates, builds a new molecule with these atoms
 	 * and returns the complete molecule.
 	 * 
@@ -277,7 +277,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	private Molecule readCoordinates(boolean coordinatesUnits) throws IOException {
 		
 		/*
-		 * Coordinates must all be given in angstr�ms.
+		 * Coordinates must all be given in angstr???ms.
 		 */ 
 		double unitScaling = GamessReader.scalesCoordinatesUnits(coordinatesUnits);
 		
@@ -415,11 +415,12 @@ public class GamessReader extends DefaultChemObjectReader {
 	}
 	
 	/**
-	 * Scales coordinates to Angstr�m unit if they are given in Bohr unit. 
-	 * If coordinates are already given in Angstr�m unit, then no modifications
+	 * Scales coordinates to &Aring;ngstr&ouml;m unit if they are given in Bohr unit. 
+	 * If coordinates are already given in &Aring;ngstr&ouml;m unit, then no modifications
 	 * are performed.
 	 * 
-	 * @param	coordinatesUnits	<code>BOHR_UNIT</code> if coordinates are given in Bohr unit and <code>ANGSTROM_UNIT</code> if they are given in Angstr�m unit.
+	 * @param	coordinatesUnits	<code>BOHR_UNIT</code> if coordinates are given in Bohr unit and <code>ANGSTROM_UNIT</code> 
+     *                              if they are given in &Aring;ngstr&ouml;m unit.
 	 * 
 	 * @return	The scaling convertion factor: 1 if no scaling is needed and <code>BOHR_TO_ANGSTROM</code> if scaling has to be performed.
 	 * 

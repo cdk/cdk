@@ -113,7 +113,7 @@ public class ParserTest extends TestCase
     {
         try
         {
-            Molecule parserMolecule = NomParser.generate("!\"£$%^&*()-=_+");
+            Molecule parserMolecule = NomParser.generate("!\"$%^&*()-=_+");
             fail("Molecule was successfully generated but should have thrown a TokenMgrError");
         } catch (ParseException pe) {
             fail("The molecule did throw a class, but it incorrectly threw a ParseException," +

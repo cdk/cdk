@@ -25,7 +25,7 @@ import org.openscience.cdk.io.GamessReader;
  * 
  * @cdk.module test
  *
- * @author Nathana�l "M.Le_maudit" Mazuir
+ * @author Nathana&euml;l "M.Le_maudit" Mazuir
  */
 //TODO Update TestCase comments with appropriate information.
 public class GamessReaderTest extends TestCase {

@@ -35,8 +35,8 @@ import org.openscience.cdk.index.CASNumber;
  * @cdk.module test
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
- * @author Nathanaël "M.Le_maudit" Mazuir
- * 
+ * @author Nathana&euml;l "M.Le_maudit" Mazuir
+ *
  * @cdk.created    2003-07-01
  * @cdk.require java1.4
  */

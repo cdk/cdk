@@ -43,8 +43,8 @@ import java.util.regex.Pattern;
  * </p>
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
- * @author Nathanaël "M.Le_maudit" Mazuir
- * 
+ * @author Nathana&euml;l "M.Le_maudit" Mazuir
+ *
  * @see <a href="http://www.cas.org">CAS website</a>
  * 
  * @cdk.created 2003-06-30
