@@ -25,7 +25,7 @@ docbooks = cdk-fileconvert.xml cdk-dbadmin.xml cdk-view.xml cdk-download.xml \
 
 mandir=${PREFIX}/share/man
 man_MANS = cdk-fileconvert.1 cdk-dbadmin.1 cdk-view.1 cdk-download.1 \
-  cdk-guessformat.1 cdk-test.1
+  cdk-guessformat.1 cdk-test.1 cdk-validate.1
 
 CLEANFILES = ${man_MANS}
 
