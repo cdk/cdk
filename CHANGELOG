@@ -9,6 +9,7 @@ New:
 * Added Ant doc.xml build file for converting documentation to HTML
 * MDLRXNReader now accepts ChemFile, so it can be used by FileConvertor
 * CMLWriter now outputs namespaced CML2
+* Extended DADMLReader to support URI's like dadml://any/CAS-NUMBER?50-00-0
 
 Fixes:
 * cdk-* shell wrapper now accept -X java options (closes #882990)
