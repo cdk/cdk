@@ -359,7 +359,7 @@ public class SmilesGeneratorTest extends TestCase
 	 */
 	public void testCisDecalin() throws Exception
 	{
-		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
+    HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
 		SmilesGenerator sg = new SmilesGenerator();
 		Molecule mol1 = new Molecule();
 		mol1.addAtom(new Atom("H", new Point2d(1, 0)));
@@ -442,8 +442,8 @@ public class SmilesGeneratorTest extends TestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])[C@]2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]2(C1([H])([H]))([H])))"));
-		mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
+    assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])[C@]2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]2([H])(C1([H])([H]))))"));
+    mol1 = (Molecule) new MFAnalyser(mol1).removeHydrogens();
 		try
 		{
 			smiles1 = sg.createSMILES(mol1);
