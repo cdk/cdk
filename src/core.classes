@@ -22,3 +22,4 @@ org/openscience/cdk/Ring.java
 org/openscience/cdk/RingSet.java
 org/openscience/cdk/SetOfMolecules.java
 org/openscience/cdk/Crystal.java
+org/openscience/cdk/LonePair.java
