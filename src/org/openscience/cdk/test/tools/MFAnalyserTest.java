@@ -86,10 +86,20 @@ public class MFAnalyserTest extends TestCase {
     
     public void testGetHeavyAtoms() {
         MFAnalyser mfa = new MFAnalyser("C10H16");
-        assertEquals(10, mfa.getHeavyAtoms().getAtomCount());        
+        assertEquals(10, mfa.getHeavyAtoms().size());        
     
         mfa = new MFAnalyser("CH3OH");
-        assertEquals(2, mfa.getHeavyAtoms().getAtomCount());        
+        assertEquals(2, mfa.getHeavyAtoms().size());        
+    }
+    
+    public void testRemoveHydrogens() throws IOException, ClassNotFoundException{
+      Molecule mol=MoleculeFactory.makeAlphaPinene();
+      new SaturationChecker().addHydrogensToSatisfyValency(mol);
+      MFAnalyser mfa=new MFAnalyser(mol);
+      AtomContainer ac=mfa.removeHydrogens();
+      mfa=new MFAnalyser(ac);
+      assertEquals(10, ac.getAtomCount());
+      assertEquals("C10H16", mfa.getMolecularFormula());//Formula should still contain Hs because hydrogenCount is used for building formula
     }
 }
 
