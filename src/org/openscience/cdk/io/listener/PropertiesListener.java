@@ -81,12 +81,14 @@ public class PropertiesListener implements ReaderListener, WriterListener {
      */
     public void processIOSettingQuestion(IOSetting setting) {
         String questionName = setting.getName();
-        String propValue = props.getProperty(questionName, setting.getSetting());
-        try {
-            setting.setSetting(propValue);
-        } catch (CDKException exception) {
-            String message = "Submitted Value (" + propValue + ") is not valid!";
-            out.println(message);
+        if (props != null) {
+            String propValue = props.getProperty(questionName, setting.getSetting());
+            try {
+                setting.setSetting(propValue);
+            } catch (CDKException exception) {
+                String message = "Submitted Value (" + propValue + ") is not valid!";
+                out.println(message);
+            }
         }
     };
   
