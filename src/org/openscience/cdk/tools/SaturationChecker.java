@@ -370,7 +370,7 @@ public class SaturationChecker
 		int missingHydrogen = (int) (defaultAtom.getMaxBondOrderSum() -
 				container.getBondOrderSum(atom) +
 				atom.getFormalCharge());
-		if (atom.flags[CDKConstants.ISAROMATIC]) missingHydrogen--;
+		if (atom.getFlag(CDKConstants.ISAROMATIC)) missingHydrogen--;
 		logger.debug("Atom: " + atom.getSymbol());
 		logger.debug("  max bond order: " + defaultAtom.getMaxBondOrderSum());
 		logger.debug("  bond order sum: " + container.getBondOrderSum(atom));

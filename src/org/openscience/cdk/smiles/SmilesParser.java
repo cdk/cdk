@@ -136,7 +136,7 @@ public class SmilesParser
 					atom = new Atom(currentSymbol);
                     if (currentSymbol.length() == 1) {
                         if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
-                            atom.flags[CDKConstants.ISAROMATIC] = true;
+                            atom.setFlag(CDKConstants.ISAROMATIC, true);
                             atom.setSymbol(currentSymbol.toUpperCase());
                         }
                     }
@@ -147,7 +147,7 @@ public class SmilesParser
                         logger.debug("Creating bond between " + atom.getSymbol() + " and " + lastNode.getSymbol());
 						bond = new Bond(atom, lastNode, bondStatus);
 						if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
-							bond.flags[CDKConstants.ISAROMATIC] = true;
+							bond.setFlag(CDKConstants.ISAROMATIC, true);
 		    				}
 						molecule.addBond(bond);
 					}
@@ -216,7 +216,7 @@ public class SmilesParser
                     if (lastNode != null && bondExists) {
 						bond = new Bond(atom, lastNode, bondStatus);
 						if (bondStatus == CDKConstants.BONDORDER_AROMATIC) {
-							bond.flags[CDKConstants.ISAROMATIC] = true;
+							bond.setFlag(CDKConstants.ISAROMATIC, true);
 						}
 						molecule.addBond(new Bond(atom, lastNode, bondStatus));
                         logger.debug("Added bond: " + bond);
@@ -418,7 +418,7 @@ public class SmilesParser
                     atom = new Atom(currentSymbol);
                     if (currentSymbol.length() == 1) {
                         if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
-                            atom.flags[CDKConstants.ISAROMATIC] = true;
+                            atom.setFlag(CDKConstants.ISAROMATIC, true);
                             atom.setSymbol(currentSymbol.toUpperCase());
                         }
                     }
@@ -511,7 +511,7 @@ public class SmilesParser
 
 			partner = thisNode;
 			bond = new Bond(atom, partner, bondStat);
-			bond.flags[CDKConstants.ISAROMATIC] = true;
+			bond.setFlag(CDKConstants.ISAROMATIC, true);
 			molecule.addBond(bond);
 			rings[thisRing] = null;
 			ringbonds[thisRing] = -1;

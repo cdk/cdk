@@ -201,8 +201,8 @@ public class SaturationCheckerTest extends TestCase
 		
 		for (int f = 0; f < 6; f++)
 		{
-			mol.getAtomAt(f).flags[CDKConstants.ISAROMATIC] = true;
-			mol.getBondAt(f).flags[CDKConstants.ISAROMATIC] = true;
+			mol.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, true);
+			mol.getBondAt(f).setFlag(CDKConstants.ISAROMATIC, true);
 		}
 		try
 		{

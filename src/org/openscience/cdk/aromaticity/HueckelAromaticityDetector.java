@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -54,12 +54,12 @@ public class HueckelAromaticityDetector
 	{	
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[CDKConstants.ISAROMATIC] = false;		
+			ac.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);	
 		}
         Bond[] bonds = ac.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
-			bonds[f].flags[CDKConstants.ISAROMATIC] = false;		
+			bonds[f].setFlag(CDKConstants.ISAROMATIC, false);	
 		}
 		RingSet ringSet = new AllRingsFinder().findAllRings(ac);
 		if (ringSet.size() > 0)
@@ -79,12 +79,12 @@ public class HueckelAromaticityDetector
 		boolean foundSomething = false;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[CDKConstants.ISAROMATIC] = false;
+			ac.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);
 		}
 		for (int f = 0; f < ac.getElectronContainerCount(); f++) 
 		{
 			ElectronContainer ec = ac.getElectronContainerAt(f);
-			if (ec instanceof Bond) ec.flags[CDKConstants.ISAROMATIC] = false;
+			if (ec instanceof Bond) ec.setFlag(CDKConstants.ISAROMATIC, false);
 		}
 
 		Ring ring = null;
@@ -98,12 +98,12 @@ public class HueckelAromaticityDetector
 			{
 				for (int g = 0; g < ring.getAtomCount(); g++)
 				{
-					ring.getAtomAt(g).flags[CDKConstants.ISAROMATIC] = true;
+					ring.getAtomAt(g).setFlag(CDKConstants.ISAROMATIC, true);
 				}
 				for (int g = 0; g < ring.getElectronContainerCount(); g++) 
 				{
 					ElectronContainer ec = ring.getElectronContainerAt(g);
-					if (ec instanceof Bond) ec.flags[CDKConstants.ISAROMATIC] = true;
+					if (ec instanceof Bond) ec.setFlag(CDKConstants.ISAROMATIC, true);
 				}
 				foundSomething = true;
 				if (debug)System.out.println("Ring no " + f + " is aromatic.");
@@ -136,7 +136,7 @@ public class HueckelAromaticityDetector
 			{
 				freeElectronPairCount += 1;
 			}
-			if (atom.flags[CDKConstants.ISAROMATIC])
+			if (atom.getFlag(CDKConstants.ISAROMATIC))
 			{
 				aromaCounter ++;
 			}

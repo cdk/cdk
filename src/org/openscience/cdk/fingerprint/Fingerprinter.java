@@ -1,12 +1,11 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -168,15 +167,15 @@ public class Fingerprinter
 			{
 				for (int g = 0; g < ac.getAtomCount(); g++)
 				{
-					ac.getAtomAt(g).flags[CDKConstants.VISITED] = false;
+					ac.getAtomAt(g).setFlag(CDKConstants.VISITED, false);
 				}
-				root.flags[CDKConstants.VISITED] = true;
+				root.setFlag(CDKConstants.VISITED, true);
 			}
 			nextAtom = bonds[f].getConnectedAtom(root);
-			if (!nextAtom.flags[CDKConstants.VISITED])
+			if (!nextAtom.getFlag(CDKConstants.VISITED))
 			{
 				newPath = new String(currentPath);
-				if (bonds[f].flags[CDKConstants.ISAROMATIC])
+				if (bonds[f].getFlag(CDKConstants.ISAROMATIC))
 				{
 					newPath += ":";
 				}
@@ -194,7 +193,7 @@ public class Fingerprinter
 				}
 
 				newPath += nextAtom.getSymbol();
-				nextAtom.flags[CDKConstants.VISITED] = true;
+				nextAtom.setFlag(CDKConstants.VISITED, true);
 				checkAndStore(newPath);
 				if (currentDepth == searchDepth)
 				{

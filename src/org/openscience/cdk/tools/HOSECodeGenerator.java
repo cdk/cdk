@@ -1,30 +1,29 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public License
- *  as published by the Free Software Foundation; either version 2.1
- *  of the License, or (at your option) any later version.
- *  All I ask is that proper credit is given for my work, which includes
- *  - but is not limited to - adding the above copyright notice to the beginning
- *  of your source code files, and to any copyright notice that you may distribute
- *  with programs based on this work.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All I ask is that proper credit is given for my work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
 package org.openscience.cdk.tools;
@@ -163,9 +162,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 		spheres = new Vector[noOfSpheres + 1];
 		for (int i = 0; i < ac.getAtomCount(); i++)
 		{
-			ac.getAtomAt(i).flags[CDKConstants.VISITED] = false;
+			ac.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
 		}
-		root.flags[CDKConstants.VISITED] = true;
+		root.setFlag(CDKConstants.VISITED, true);
 		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getBondCount(root), 0);
 		/*
 		 *  All we need to observe is how the ranking of substituents
@@ -218,7 +217,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				 *  In the first sphere the atoms are labled with
 				 *  their own atom atom as source
 				 */
-				if (bond.flags[CDKConstants.ISAROMATIC])
+				if (bond.getFlag(CDKConstants.ISAROMATIC))
 				{
 					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, 4, atomContainer.getBondCount(atom), 0);
 				} else
@@ -227,7 +226,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				}
 				sphereNodes.addElement(tempNode);
 				rootNode.childs.addElement(tempNode);
-				atom.flags[CDKConstants.VISITED] = true;
+				atom.setFlag(CDKConstants.VISITED, true);
 			} catch (Exception exc)
 			{
 				throw new CDKException("Error in HOSECodeGenerator->breadthFirstSearch.");
@@ -275,7 +274,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 						if (toNode != treeNode.source.atom)
 						{
 							bond = atomContainer.getBond(node, toNode);
-							if (bond.flags[CDKConstants.ISAROMATIC])
+							if (bond.getFlag(CDKConstants.ISAROMATIC))
 							{
 								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer.getBondCount(toNode), treeNode.score * 1000000));
 							} else
@@ -316,7 +315,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		TreeNode tn = null;
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
-			atomContainer.getAtomAt(f).flags[CDKConstants.VISITED] = false;
+			atomContainer.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
 		}
 
 		for (int f = 0; f < maxSphere; f++)
@@ -434,11 +433,11 @@ public class HOSECodeGenerator implements java.io.Serializable
 				{
 					throw new CDKException("Unknown bond type");
 				}
-				if (treeNode.atom != null && !treeNode.atom.flags[CDKConstants.VISITED])
+				if (treeNode.atom != null && !treeNode.atom.getFlag(CDKConstants.VISITED))
 				{
 					tempCode.append(getElementSymbol(treeNode.symbol));
 				}
-				else if (treeNode.atom != null && treeNode.atom.flags[CDKConstants.VISITED])
+				else if (treeNode.atom != null && treeNode.atom.getFlag(CDKConstants.VISITED))
 				{
 					tempCode.append("&");
 					treeNode.stopper = true;
@@ -446,7 +445,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				code.append(tempCode);
 				treeNode.hSymbol = tempCode.toString();
 			}
-			if (treeNode.atom != null)treeNode.atom.flags[CDKConstants.VISITED] = true;
+			if (treeNode.atom != null) treeNode.atom.setFlag(CDKConstants.VISITED, true);
 			if (treeNode.source.stopper) treeNode.stopper = true;
 		}
 		code.append(sphereDelimiters[sphere - 1]);

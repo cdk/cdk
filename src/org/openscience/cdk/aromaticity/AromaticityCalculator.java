@@ -3,9 +3,9 @@
  * $Date$
  * $Revision$
  *
- *  Copyright (C) 2001-2002
+ *  Copyright (C) 2001-2003
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -45,12 +45,12 @@ public class AromaticityCalculator
 
 	/**
 	 *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the 
-   *  H&uuml;ckle rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non 
-   *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in 
-   *  or anything else in a ring and d electron elements get to complicated) 
-   *  sp<sup>2</sup> hybridized heteroatoms contribute 1 electron hybridization is worked out by
-   *  counting the number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed 
-   *  if there is one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
+     *  H&uuml;ckle rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non 
+     *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in 
+     *  or anything else in a ring and d electron elements get to complicated) 
+     *  sp<sup>2</sup> hybridized heteroatoms contribute 1 electron hybridization is worked out by
+     *  counting the number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed 
+     *  if there is one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
 	 *
 	 * @param  ring      the ring to test
 	 * @param  atomContainer  the AtomContainer the ring is in
@@ -84,7 +84,7 @@ public class AromaticityCalculator
 				//C or heteroatoms both contibute 1 electron in sp2 hybridized form
 				eCount++;
 			}
-			else if (atom.flags[CDKConstants.ISAROMATIC])
+			else if (atom.getFlag(CDKConstants.ISAROMATIC))
 			{
 				eCount++;
 			}

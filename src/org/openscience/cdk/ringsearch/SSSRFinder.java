@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -212,7 +212,7 @@ public class SSSRFinder
 		for (int f = 0; f < OKatoms; f++)
 		{
 			path[f] = new Vector();		
-			molecule.getAtomAt(f).pointers[PATH].removeAllElements();
+			molecule.getAtomAt(f).getPointer(PATH).removeAllElements();
 		}
 		// Initialize the queue with nodes attached to rootNode
 		neighbors = molecule.getConnectedAtoms(rootNode);
@@ -223,28 +223,28 @@ public class SSSRFinder
 			// push the f-st node onto our FIFO queue	
 			// after assigning rootNode as its source
 			queue.push(neighbor);
-			neighbor.pointers[PATH].addElement(rootNode);
-			neighbor.pointers[PATH].addElement(neighbor);
+			neighbor.getPointer(PATH).addElement(rootNode);
+			neighbor.getPointer(PATH).addElement(neighbor);
 		}
 		while (queue.size() > 0){	
 			node = (Atom)queue.pop();
 			mAtoms = molecule.getConnectedAtoms(node);
 			for (int f = 0; f < mAtoms.length; f++){
 				mAtom = mAtoms[f];
-				if (mAtom != node.pointers[PATH].elementAt(node.pointers[PATH].size() - 2)){
-					if (mAtom.pointers[PATH].size() > 0){
-						intersection = getIntersection(node.pointers[PATH], mAtom.pointers[PATH]);
+				if (mAtom != node.getPointer(PATH).elementAt(node.getPointer(PATH).size() - 2)){
+					if (mAtom.getPointer(PATH).size() > 0){
+						intersection = getIntersection(node.getPointer(PATH), mAtom.getPointer(PATH));
 						if (intersection.size() == 1){
 							// we have found a valid ring closure
 							// now let's prepare the path to
 							// return in tempAtomSet
 							if (debug){
-								System.out.println("path1  "+node.pointers[PATH].toString());
-								System.out.println("path2  "+mAtom.pointers[PATH].toString());
+								System.out.println("path1  "+node.getPointer(PATH).toString());
+								System.out.println("path2  "+mAtom.getPointer(PATH).toString());
 								System.out.println("rootNode  "+rootNode);
 								System.out.println("ring   "+ ring.toString());
 							}
-							ring = getUnion(node.pointers[PATH], mAtom.pointers[PATH]);
+							ring = getUnion(node.getPointer(PATH), mAtom.getPointer(PATH));
 							return prepareRing(ring,molecule);
 						}
 					}
@@ -252,10 +252,10 @@ public class SSSRFinder
 					{   
 						// if path[mNumber] is null
 					    // update the path[mNumber]							
-						pfad2 = node.pointers[PATH];
-						mAtom.pointers[PATH] = (Vector)node.pointers[PATH].clone();
-						mAtom.pointers[PATH].addElement(mAtom);
-						pfad1 = mAtom.pointers[PATH];
+						pfad2 = node.getPointer(PATH);
+						mAtom.setPointer(PATH, (Vector)node.getPointer(PATH).clone());
+						mAtom.getPointer(PATH).addElement(mAtom);
+						pfad1 = mAtom.getPointer(PATH);
 						// now push the node m onto the queue
 						queue.push(mAtom);	
 					}
@@ -332,11 +332,9 @@ public class SSSRFinder
 	 */
 	private void initPath(Molecule molecule)
 	{
-	 	for (int i = 0; i < molecule.getAtomCount(); i++)
-	 	{
+	 	for (int i = 0; i < molecule.getAtomCount(); i++) {
 			Atom atom = molecule.getAtomAt(i);
-			atom.pointers = new Vector[1];
-			atom.pointers[PATH] = new Vector();
+			atom.setPointer(PATH, new Vector());
 	 	}		
 	}
 
@@ -347,7 +345,7 @@ public class SSSRFinder
 	 * @param   vec2   The second vector
 	 * @return     
 	 */
-	private  Vector getIntersection(Vector vec1, Vector vec2){
+	private  Vector getIntersection(Vector vec1, Vector vec2) {
 		Vector is = new Vector();		
 		for (int f = 0; f < vec1.size(); f++){
 			if (vec2.contains((Atom)vec1.elementAt(f))) is.addElement((Atom)vec1.elementAt(f));	

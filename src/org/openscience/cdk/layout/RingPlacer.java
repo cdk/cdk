@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -26,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  
  */
-
 package org.openscience.cdk.layout;
 
 import org.openscience.cdk.*;
@@ -483,7 +482,7 @@ public class RingPlacer
 	{
 		for (int i = 0; i < rs.size(); i++)
 		{
-			if (!((Ring)rs.elementAt(i)).flags[CDKConstants.ISPLACED])
+			if (!((Ring)rs.elementAt(i)).getFlag(CDKConstants.ISPLACED)) 
 			{
 				return false;
 			}
@@ -600,7 +599,7 @@ public class RingPlacer
 		for (int i = 0; i < connectedRings.size(); i++)
 		{
 			connectedRing = (Ring)connectedRings.elementAt(i);
-			if (!connectedRing.flags[CDKConstants.ISPLACED])
+			if (!connectedRing.getFlag(CDKConstants.ISPLACED))
 			{
 //				if (debug) System.out.println(ring.toString(molecule));
 //				if (debug) System.out.println(connectedRing.toString(molecule));				
@@ -628,7 +627,7 @@ public class RingPlacer
 					tempPoint = new Point2d(sharedAtomsCenter);
 					tempPoint.add(newRingCenterVector);
 					placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
-					connectedRing.flags[CDKConstants.ISPLACED] = true;
+					connectedRing.setFlag(CDKConstants.ISPLACED, true);
 					placeConnectedRings(rs, connectedRing, handleType, bondLength);
 				}
 			}

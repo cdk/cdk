@@ -26,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk;
 
 import org.openscience.cdk.event.*;
@@ -37,9 +36,8 @@ import java.util.*;
  * for adding listeners and for their notification of events, as well a 
  * a hash table for administration of physical or chemical properties
  */
-
-public class ChemObject implements java.io.Serializable, Cloneable
-{
+public class ChemObject implements java.io.Serializable, Cloneable {
+    
 	/** Vector for listener administration. */
 	protected Vector chemObjects = new Vector();
 	/** 
@@ -64,12 +62,12 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 * flag array with self-defined constants (flags[VISITED] = true).
 	 * 100 flags per object should be more than enough.
 	 */
-	public boolean[] flags = new boolean[100];
+	protected boolean[] flags = new boolean[100];
 
 	/** Array of multipurpose vectors. Handle like described for the
 	  * flags above.
 	  */
-	public Vector[] pointers;
+	protected Vector[] pointers = new Vector[10];
 
     protected String id = ""; 
     
@@ -247,7 +245,9 @@ public class ChemObject implements java.io.Serializable, Cloneable
 		 * flag array with self-defined constants (flags[VISITED] = true).
 		 * 10 flags per object should be more than enough.
 		 */
-		flags = new boolean[100];		
+		flags = new boolean[100];
+        
+        pointers = new Vector[10];
 	}
 	
 	/**
@@ -308,6 +308,45 @@ public class ChemObject implements java.io.Serializable, Cloneable
     public void setID(String id) {
         this.id = id;
     }
+    
+    /**
+     * Sets the value of some flag.
+     * 
+     * @param  flag_type  Flag to set
+     * @param  flag_value Value to assign to flag
+     */
+    public void setFlag(int flag_type, boolean flag_value) {
+        flags[flag_type] = flag_value;
+    }
+    
+    /**
+     * Returns the value of some flag.
+     *
+     * @param  flag_type  Flag to retrieve the value of
+     */
+    public boolean getFlag(int flag_type) {
+        return flags[flag_type];
+    }
+    
+    /**
+     * Sets the value of some pointer.
+     * 
+     * @param  pointer_type  Pointer to set
+     * @param  pointer_value Value to assign to pointer
+     */
+    public void setPointer(int pointer_type, Vector pointer_value) {
+        pointers[pointer_type] = pointer_value;
+    }
+    
+    /**
+     * Returns the value of some pointer.
+     *
+     * @param  pointer_type  Pointer to retrieve the value of
+     */
+    public Vector getPointer(int pointer_type) {
+        return pointers[pointer_type];
+    }
+    
 }
 
 

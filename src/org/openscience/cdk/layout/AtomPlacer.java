@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -217,7 +217,7 @@ public class AtomPlacer
 			bondVector.scale(bondLength);	
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2D(atomPoint);		
-			nextAtom.flags[CDKConstants.ISPLACED] = true;
+			nextAtom.setFlag(CDKConstants.ISPLACED, true);
 			bondVector = getNextBondVector(nextAtom, atom, molecule.get2DCenter());
 		}
 	}
@@ -294,7 +294,7 @@ public class AtomPlacer
 
 			}
 		
-		connectAtom.flags[CDKConstants.ISPLACED] = true;
+		connectAtom.setFlag(CDKConstants.ISPLACED, true);
 		}
 	}
 
@@ -311,7 +311,7 @@ public class AtomPlacer
 		Atom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
 		{
-			if (atoms[i].flags[CDKConstants.ISPLACED])
+			if (atoms[i].getFlag(CDKConstants.ISPLACED))
 			{
 				placedPartners.addAtom(atoms[i]);
 			}
@@ -385,7 +385,7 @@ public class AtomPlacer
 		AtomContainer[] pathes = new AtomContainer[molecule.getAtomCount()];
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			molecule.getAtomAt(f).flags[CDKConstants.VISITED] = false;
+			molecule.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
 			pathes[f] = new AtomContainer();
 			pathes[f].addAtom(startAtom);
 			
@@ -429,7 +429,7 @@ public class AtomPlacer
 		for (int f = 0; f < sphere.size(); f++)
 		{
 			atom = (Atom)sphere.elementAt(f);
-			if (!atom.flags[CDKConstants.ISINRING])
+			if (!atom.getFlag(CDKConstants.ISINRING))
 			{
 				atomNr = ac.getAtomNumber(atom);
 				if (debug)
@@ -441,7 +441,8 @@ public class AtomPlacer
 				for (int g = 0; g < bonds.length; g++)
 				{
 					nextAtom = bonds[g].getConnectedAtom(atom);
-					if (!nextAtom.flags[CDKConstants.VISITED] && !nextAtom.flags[CDKConstants.ISPLACED])
+					if (!nextAtom.getFlag(CDKConstants.VISITED) && 
+                        !nextAtom.getFlag(CDKConstants.ISPLACED))
 					{
 						if (debug)
 						{
@@ -462,7 +463,7 @@ public class AtomPlacer
 		{
 			for (int f = 0; f < newSphere.size(); f++)
 			{
-				((Atom)newSphere.elementAt(f)).flags[CDKConstants.VISITED] = true;			
+				((Atom)newSphere.elementAt(f)).setFlag(CDKConstants.VISITED, true);			
 			}
 			breadthFirstSearch(ac, newSphere, pathes);
 		}
@@ -479,7 +480,7 @@ public class AtomPlacer
 		String s = "Placed: ";
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (ac.getAtomAt(f).flags[CDKConstants.ISPLACED]) 
+			if (ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED)) 
 			{
 				s += (f + 1) + "+ ";
 			}
@@ -540,7 +541,7 @@ public class AtomPlacer
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (!ac.getAtomAt(f).flags[CDKConstants.ISPLACED]) return false;
+			if (!ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED)) return false;
 		}
 		return true;
 	}
@@ -554,7 +555,7 @@ public class AtomPlacer
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[CDKConstants.ISPLACED] = false;
+			ac.getAtomAt(f).setFlag(CDKConstants.ISPLACED, false);
 		}
 
 	}
@@ -569,7 +570,7 @@ public class AtomPlacer
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[CDKConstants.ISPLACED] = true;
+			ac.getAtomAt(f).setFlag(CDKConstants.ISPLACED, true);
 		}
 	}
 
@@ -585,7 +586,7 @@ public class AtomPlacer
 		AtomContainer ret = new AtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (ac.getAtomAt(f).flags[CDKConstants.ISPLACED])
+			if (ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED))
 			{
 				ret.addAtom(ac.getAtomAt(f));
 			}

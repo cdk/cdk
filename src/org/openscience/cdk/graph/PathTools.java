@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 2001-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -145,10 +145,10 @@ public class PathTools  {
 	public static boolean depthFirstTargetSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException {
 		Bond[] bonds = molecule.getConnectedBonds(root);
 		Atom nextAtom = null;
-		root.flags[CDKConstants.VISITED] = true;
+		root.setFlag(CDKConstants.VISITED, true);
 		for (int f = 0; f < bonds.length; f++) {
 			nextAtom = bonds[f].getConnectedAtom(root);
-			if (!nextAtom.flags[CDKConstants.VISITED]) {
+			if (!nextAtom.getFlag(CDKConstants.VISITED)) {
 				path.addAtom(nextAtom);
 				path.addBond(bonds[f]);
 				if (nextAtom == target) {
@@ -196,15 +196,15 @@ public class PathTools  {
 			molecule.addAtom(atom);
 			Bond[] bonds = ac.getConnectedBonds(atom);
 			for (int g = 0; g < bonds.length; g++) {
-				if (!bonds[g].flags[CDKConstants.VISITED]) {
+				if (!bonds[g].getFlag(CDKConstants.VISITED)) {
 					molecule.addBond(bonds[g]);
-					bonds[g].flags[CDKConstants.VISITED] = true;
+					bonds[g].setFlag(CDKConstants.VISITED, true);
 				}
 				nextAtom = bonds[g].getConnectedAtom(atom);
-				if (!nextAtom.flags[CDKConstants.VISITED]) {
+				if (!nextAtom.getFlag(CDKConstants.VISITED)) {
 //					System.out.println("wie oft???");
 					newSphere.addElement(nextAtom);
-					nextAtom.flags[CDKConstants.VISITED] = true;
+					nextAtom.setFlag(CDKConstants.VISITED, true);
 				}
 			}
 		}
@@ -245,16 +245,16 @@ public class PathTools  {
 			atom = (Atom) sphere.elementAt(f);
 			Bond[] bonds = ac.getConnectedBonds(atom);
 			for (int g = 0; g < bonds.length; g++) {
-				if (!bonds[g].flags[CDKConstants.VISITED]) {
-					bonds[g].flags[CDKConstants.VISITED] = true;
+				if (!bonds[g].getFlag(CDKConstants.VISITED)) {
+					bonds[g].setFlag(CDKConstants.VISITED, true);
 				}
 				nextAtom = bonds[g].getConnectedAtom(atom);
-				if (!nextAtom.flags[CDKConstants.VISITED]) {
+				if (!nextAtom.getFlag(CDKConstants.VISITED)) {
 					if (nextAtom == target) {
 						return pathLength;
 					}
 					newSphere.addElement(nextAtom);
-					nextAtom.flags[CDKConstants.VISITED] = true;
+					nextAtom.setFlag(CDKConstants.VISITED, true);
 				}
 			}
 		}
@@ -268,11 +268,11 @@ public class PathTools  {
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).flags[CDKConstants.VISITED] = false;	
+			ac.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
 		}
 		for (int f = 0; f < ac.getElectronContainerCount(); f++)
 		{
-			ac.getElectronContainerAt(f).flags[CDKConstants.VISITED] = false;
+			ac.getElectronContainerAt(f).setFlag(CDKConstants.VISITED, false);
 		}
 		
 	}

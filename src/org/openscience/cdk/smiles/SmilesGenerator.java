@@ -497,8 +497,7 @@ public class SmilesGenerator {
       Atom atom = all[i];
       if(chiral && atom.getPoint2D()==null)
         throw new CDKException("Atom number "+i+" has no 2D coordinates, but 2D coordinates are needed for creating chiral smiles");
-      if (atom.flags == null) atom.flags = new boolean[100];
-      atom.flags[CDKConstants.VISITED] = false;
+      atom.setFlag(CDKConstants.VISITED, false);
       if (((Long)atom.getProperty("CanonicalLable")).longValue() == 1) {
         start = atom;
       }
@@ -550,10 +549,10 @@ public class SmilesGenerator {
     Vector neighbours = getCanNeigh(a, container);
     neighbours.remove(parent);
     Atom next;
-    a.flags[CDKConstants.VISITED] = true;
+    a.setFlag(CDKConstants.VISITED, true);
     for(int x = 0; x < neighbours.size(); x++) {
       next = (Atom)neighbours.elementAt(x);
-      if (!next.flags[CDKConstants.VISITED]) {
+      if (!next.getFlag(CDKConstants.VISITED)) {
         if(x == neighbours.size() - 1) { //Last neighbour therefore in this chain
           createDFSTree(next, tree, a, container);
         }

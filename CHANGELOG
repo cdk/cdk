@@ -28,6 +28,9 @@ Fixes:
 * Fixed Bond.toString() and Bond.getAtoms
 * Fixed a number of bugs in SmilesGenerator
 
+API changes:
+* ChemObject now has protected flags/pointers (implements RFC #13)
+
 20030412 Release
 ------------------------------------
 New:
