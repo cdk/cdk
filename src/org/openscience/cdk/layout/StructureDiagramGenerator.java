@@ -47,6 +47,8 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
