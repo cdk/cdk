@@ -1315,29 +1315,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 		return clone;
 	}
 
-
-	/**
-	 *  Clones this atomContainer object but leaves references to all atoms and
-	 *  electronContainers the same.
-	 *
-	 *@return    The shallow copied object
-	 *@see       #clone
-	 */
-	public Object shallowCopy()
-	{
-		Object copy = null;
-		try
-		{
-			copy = super.clone();
-		} catch (Exception e)
-		{
-			e.printStackTrace(System.err);
-		}
-		return copy;
-	}
-
-
-
 	/**
 	 *  Grows the ElectronContainer array by a given size.
 	 *
