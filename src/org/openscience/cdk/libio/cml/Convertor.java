@@ -327,7 +327,7 @@ public class Convertor {
         writeAtomContainer((AtomContainer)mol,molecule);
     }
 
-    private void writeAtomArray(Atom atoms[], Element nodeToAppend) {
+    private void writeAtomArray(Atom atoms[], Element nodeToAppend) throws CMLException {
         AtomArrayImpl atomarray=new AtomArrayImpl(doc);
         nodeToAppend.appendChild(atomarray);
         for (int i = 0; i < atoms.length; i++) {
@@ -335,7 +335,7 @@ public class Convertor {
         }
     }
     
-    private void writeBondArray(Bond bonds[], Element nodeToAppend) throws CMLException{
+    private void writeBondArray(Bond bonds[], Element nodeToAppend) throws CMLException {
         if (bonds.length > 0) {
             BondArrayImpl bondarray=new BondArrayImpl(doc);
             nodeToAppend.appendChild(bondarray);
@@ -400,7 +400,7 @@ public class Convertor {
         return true;
     }
     
-    private void writeAtom(Atom atom, Element nodeToAppend) {
+    private void writeAtom(Atom atom, Element nodeToAppend) throws CMLException {
         AtomImpl atomimpl=new AtomImpl(doc);
         nodeToAppend.appendChild(atomimpl);
         addAtomID(atom, atomimpl);
@@ -434,6 +434,14 @@ public class Convertor {
             } else {
                 logger.warn("Could not find major isotope for : " + atom.getSymbol());
             }
+        }
+        if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+            Element scalar = this.createElement("scalar");
+            scalar.setAttribute("dataType","xsd:boolean");
+            scalar.setAttribute("dictRef","cdk:aromaticAtom");
+            scalar.setAttribute("title","isAromatic");
+            atomimpl.appendChild(scalar);
+            scalar.appendChild(doc.createTextNode("1"));
         }
         writeProperties(atom, atomimpl);
     }
