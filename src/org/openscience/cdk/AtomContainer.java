@@ -144,7 +144,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Set the atom at position <code>number</code>.
+	 *  Set the atom at position <code>number</code> in [0,..].
 	 *
 	 *@param  number  The position of the atom to be set.
 	 *@param  atom    The atom to be stored at position <code>number</code>
@@ -157,7 +157,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Get the atom at position <code>number</code>.
+	 *  Get the atom at position <code>number</code> in [0,..].
 	 *
 	 *@param  number  The position of the atom to be retrieved.
 	 *@return         The atomAt value
@@ -170,7 +170,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Get the bond at position <code>number</code>.
+	 *  Get the bond at position <code>number</code> in [0,..].
 	 *
 	 *@param  number  The position of the bond to be retrieved.
 	 *@return         The bondAt value
@@ -184,7 +184,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 
 
 	/**
-	 *  Sets the ElectronContainer at position <code>number</code>.
+	 *  Sets the ElectronContainer at position <code>number</code> in [0,..].
 	 *
 	 *@param  number  The position of the ElectronContainer to be set.
 	 *@param  ec      The ElectronContainer to be stored at position <code>number</code>
@@ -362,7 +362,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *  the atom atom does not exist.
 	 *
 	 *@param  atom  The atom to be sought
-	 *@return       The Position of the atom in the atoms array.
+	 *@return       The Position of the atom in the atoms array in [0,..].
 	 */
 	public int getAtomNumber(Atom atom)
 	{
@@ -397,7 +397,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *  returns -1 if the bond does not exist.
 	 *
 	 *@param  b  The bond to be sought
-	 *@return    The Position of the bond in the electronContainers array.
+	 *@return    The Position of the bond in the electronContainers array in [0,..].
 	 */
 	public int getBondNumber(Bond b)
 	{
@@ -1151,8 +1151,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  Adds a bond to this container.
 	 *
-	 *@param  atom1   Id of the first atom of the Bond
-	 *@param  atom2   Id of the second atom of the Bond
+	 *@param  atom1   Id of the first atom of the Bond in [0,..]
+	 *@param  atom2   Id of the second atom of the Bond in [0,..]
 	 *@param  order   Bondorder
 	 *@param  stereo  Stereochemical orientation
 	 */
@@ -1176,8 +1176,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  Adds a bond to this container.
 	 *
-	 *@param  atom1  Id of the first atom of the Bond
-	 *@param  atom2  Id of the second atom of the Bond
+	 *@param  atom1  Id of the first atom of the Bond in [0,..]
+	 *@param  atom2  Id of the second atom of the Bond in [0,..]
 	 *@param  order  Bondorder
 	 */
 	public void addBond(int atom1, int atom2, double order)
@@ -1195,7 +1195,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	/**
 	 *  Adds a LonePair to this Atom.
 	 *
-	 *@param  atomID  The feature to be added to the LonePair attribute
+	 *@param  atomID  The atom number to which the LonePair is added in [0,..]
 	 */
 	public void addLonePair(int atomID)
 	{
