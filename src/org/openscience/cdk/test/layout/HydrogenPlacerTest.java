@@ -40,7 +40,7 @@ import junit.framework.*;
 
 public class HydrogenPlacerTest extends TestCase {
     
-    public boolean standAlone = true;
+    public boolean standAlone = false;
     
     public HydrogenPlacerTest(String name) {
         super(name);
@@ -52,7 +52,7 @@ public class HydrogenPlacerTest extends TestCase {
         return new TestSuite(HydrogenPlacerTest.class);
     }
 
-    public void testplaceHydrogens2D() throws Exception {
+    public void testPlaceHydrogens2D() throws Exception {
         Molecule dichloromethane = new Molecule();
         Atom carbon = new Atom("C");
         Point2d carbonPos = new Point2d(0.0,0.0);
@@ -75,6 +75,9 @@ public class HydrogenPlacerTest extends TestCase {
         dichloromethane.addBond(new Bond(carbon, cl1));
         dichloromethane.addBond(new Bond(carbon, cl2));
 
+        assertNull(h1.getPoint2D());
+        assertNull(h2.getPoint2D());
+        
         // generate new coords
         HydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
         if (standAlone) MoleculeViewer2D.display(dichloromethane, false);
@@ -82,6 +85,8 @@ public class HydrogenPlacerTest extends TestCase {
         assertEquals(carbonPos, carbon.getPoint2D(), 0.01);
         assertEquals(cl1Pos, cl1.getPoint2D(), 0.01);
         assertEquals(cl2Pos, cl2.getPoint2D(), 0.01);
+        assertNotNull(h1.getPoint2D());
+        assertNotNull(h2.getPoint2D());
     }
     
     private void assertEquals(Point2d p1, Point2d p2, double error) throws Exception {
@@ -105,7 +110,9 @@ public class HydrogenPlacerTest extends TestCase {
 		    HydrogenAdder ha = new HydrogenAdder();
 		    ha.addExplicitHydrogensToSatisfyValency(mol);
 		    HydrogenPlacer.placeHydrogens2D(mol);
-		    MoleculeViewer2D.display(mol, false);
+            if (standAlone) {
+                MoleculeViewer2D.display(mol, false);
+            }
 		} catch (Exception e) 
 		{
 		    e.printStackTrace();
@@ -118,7 +125,7 @@ public class HydrogenPlacerTest extends TestCase {
 		try{
 			HydrogenPlacerTest hpt = new HydrogenPlacerTest("HydrogenPlacerTest");
 			hpt.standAlone = true;
-			//hpt.testplaceHydrogens2D();
+			//hpt.testPlaceHydrogens2D();
 			hpt.testFullMolecule2D();			
 		}
 		catch(Exception exc)
