@@ -41,6 +41,7 @@ API changes:
 * Moved AromaticityCalculator from package smiles to aromaticity
 * Moved CanonicalLabeler from package smiles to graph.invariant
 * Moved PathTools from package tools to graph
+* Removed old hard coded property get and set methods from Molecule.
 
 20020920 Release
 ------------------------------------
