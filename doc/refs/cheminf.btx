@@ -94,6 +94,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="OS">
+    <bibtex:misc>
+      <bibtex:note> Several articles (for example "The Cathedral and the Bazaar", 
+          "Homesteading the Noosphere") on the foundations of the open-source idea, 
+          that are highly recommended reading, were written by Eric S: Raymond and 
+          can be found on http://www.tuxedo.org. Further, http://www.opensource.org  
+          is a web site completely dedicated to evangelizing the open-source 
+          idea.</bibtex:note>
+    </bibtex:misc>
+  </bibtex:entry>
+
   <bibtex:entry id="PMR99">
     <bibtex:article>
       <bibtex:author>Murray-Rust, P. and Rzepa, H.S.</bibtex:author>
@@ -119,5 +130,58 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="WEI88">
+    <bibtex:article>
+      <bibtex:author>Weininger, David</bibtex:author>
+      <bibtex:title>SMILES, a Chemical Language and Information System. 1.
+          Introduction to Methodology and Encoding Rules</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:volume>28</bibtex:volume>
+      <bibtex:pages>31-36</bibtex:pages>
+      <bibtex:year>1988</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="WEI89">
+    <bibtex:article>
+      <bibtex:author>Weininger, David and Weininger, Arthur and Weininger, Joseph
+        L.</bibtex:author>
+      <bibtex:title>SMILES 2. Algorithm for Generation of Unique SMILES
+          Notation</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer
+          Sciences</bibtex:journal>
+      <bibtex:volume>29</bibtex:volume>
+      <bibtex:pages>97-101</bibtex:pages>
+      <bibtex:year>1989</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="WIL01">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
+      <bibtex:title>Processing CML Conventions in Java</bibtex:title>
+      <bibtex:journal>Internet Journal of Chemistry</bibtex:journal>
+      <bibtex:volume>4</bibtex:volume>
+      <bibtex:abstract>
+        This article describes the first opensource Java implementation of import 
+        filters for the Chemical Markup Language (CML). The filters support CML conventions 
+        and were tested with two opensource project: Jmol, a 3D molecular viewer, and
+        JChemPaint, a chemical editor. Furthermore, the use of conventions in CML is 
+        explained and the reason for using conventions is pointed out. Finally, the 
+        implementation is compared with two recently developed techniques for handling 
+        CML data.
+      </bibtex:abstract>
+      <bibtex:keywords>XML, CML, Java</bibtex:keywords>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="XML">
+    <bibtex:misc>
+      <bibtex:note>XML is a recommendation written by the World Wide Web
+          Consortium (W3C).</bibtex:note>
+      <bibtex:url>http://www.w3.org/TR/1998/REC-xml-19980210</bibtex:url>
+    </bibtex:misc>
+  </bibtex:entry>
 
 </bibtex:file>
