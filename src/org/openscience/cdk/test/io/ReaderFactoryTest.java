@@ -84,6 +84,16 @@ public class ReaderFactoryTest extends TestCase {
         expectFormat("data/ch4-opt.out", "org.openscience.cdk.io.JaguarReader");
     }
 
+    public void testIChI() {
+        expectFormat("data/ichi/random.ichi", 
+                     "org.openscience.cdk.io.IChIReader");
+    }
+
+    public void testINChI() {
+        expectFormat("data/ichi/guanine.inchi", 
+                     "org.openscience.cdk.io.INChIReader");
+    }
+
     public void testVASP() {
         expectFormat("data/LiMoS2_optimisation_ISIF3.vasp", 
                      "org.openscience.cdk.io.VASPReader");

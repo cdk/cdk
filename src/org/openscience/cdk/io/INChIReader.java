@@ -92,7 +92,7 @@ public class INChIReader extends DefaultChemObjectReader {
     }
 
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("<identifier") != -1) {
+        if (line.indexOf("<INChI") != -1) {
             return true;
         }
         return false;
