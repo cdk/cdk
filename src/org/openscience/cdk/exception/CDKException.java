@@ -1,12 +1,11 @@
-/*
- * $RCSfile$   
+/* $RCSfile$   
  * $Author$   
  * $Date$   
  * $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -25,11 +24,12 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
  */
+package org.openscience.cdk.exception;
 
- package org.openscience.cdk.exception;
-
+/**
+ * Exception that is thrown by CDK classes when some problem has occured.
+ */
 public class CDKException extends Exception {
 
     public CDKException(String message) {
