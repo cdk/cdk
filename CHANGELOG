@@ -12,6 +12,7 @@ New:
 * The PluginManager now adds the plugin menu to the plugin
   window (implements RFE #954356)
 * Jmol API and IO from CVS HEAD on 10.05
+* Added AminoAcid templates
 
 Fixes:
 * Fixed junit-test and run-test: missing cdk-data.jar
