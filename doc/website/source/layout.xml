@@ -20,10 +20,8 @@
       <tocentry page="webpresence.xml" filename="webpresence.html"/>
     </tocentry>
     <tocentry page="software.xml" filename="software.html">
-      <tocentry page="plugins.xml" filename="plugins.html">
-        <tocentry page="plugin-dirbrowser.xml" filename="plugin-dirbrowser.html"/>
-        <tocentry page="plugin-rssviewer.xml" filename="plugin-rssviewer.html"/>
-        <tocentry page="plugin-wwmmplugin.xml" filename="plugin-wwmmplugin.html"/>
+      <tocentry id="plugins" href="http://www.woc.sci.kun.nl/cdk/">
+        <title>Plugins</title>
       </tocentry>
     </tocentry>
     <tocentry page="documentation.xml" filename="documentation.html">
