@@ -9,7 +9,6 @@
 
         <!-- patches to apply -->
         <property name="do.patch.rfc20" value="yes" />
-        <property name="do.lazy.creation" value="no" />
 
         <!-- where to find Java3D -->
         <property name="pathtojava3d" value="" />
