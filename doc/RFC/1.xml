@@ -1,0 +1,101 @@
+<refentry id="cdk-rfc-2">
+
+  <refentryinfo>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>25 May 2002</date>
+        <authorinitials>elw</authorinitials>
+        <revremark>
+          See <ulink url="http://sourceforge.net/mailarchive/forum.php?thread_id=742807&amp;forum_id=2178">email archive</ulink>.
+        </revremark>
+      </revision>
+    </revhistory>
+  </refentryinfo>
+
+
+  <refnamediv>
+    <refname>Setting up an RFC system</refname>
+  </refnamediv>
+
+  <refsect1>
+    <title>Proposal</title>
+    <para>
+      Any choice of change in the API of the CDK should be formalized with
+      Request For Comment's (RFC's). A RFC is a document like this which is
+      written by one or more developers containing a API description, like
+      package names, class organization, method names, etc. etc. RFC's will 
+      serve as a discussion platform and as documentation tool. The RFC may
+      be changed during the period of discussion on the developers mailling 
+      list (cdk-devel@lists.sf.net).
+      At any time the writers of the RFC may
+      choose to Call For Votes (CFV). To do so, they compose a final RFC
+      which will be subject to majority voting.
+      When called for votes, each CDK developer and user
+      can vote in favor or against the RFC. The voting period will take
+      at most two weeks, and will take place by using voting ballots that
+      are send along with the CFV. Filled in CFVs are returned by email to
+      the developers mailling list, and are preferably signed with a 
+      PGP/GnuPG key available from a free keyserver. 
+      One can only vote in favor (YES) or against (NO) the acceptance of
+      a RFC, and the majority of votes count. In case of equal number of
+      votes, the RFC is not accepted.
+      After the RFC has been accepted the RFC will be valid until replaced
+      by another accepted RFC.
+    </para>
+    <para>
+      A RFC is only valid if it includes this information:
+      <itemizedlist>
+        <listitem><para>A name. This is normally a sentence describing
+          its intend.</para></listitem>
+        <listitem><para>A "Proposal" paragraph. This will describe the
+          may, should, and must's which the RFC will enforce whence it is
+          accepted.</para></listitem>
+        <listitem><para>A "Reason" paragraph. This will describe why the
+          RFC is needed, and may include arguments to convince developers
+          and users to accept the RFC.</para></listitem>
+        <listitem><para>A list of accepted RFCs that it will
+          replace.</para></listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      The voting ballot must resemble the following format, and must include
+      all information and fields found in the following example ballot:
+      <literallayout>
+=============================================================
+
+ Name:
+ Email:
+ PGP/GPG key:
+
+ I vote
+
+ [ ] YES
+ [ ] NO
+
+ on the acceptance of RFC #2 posted on 22 May 2002 with the
+ title "list of core classes". The content of this RFC can be
+ found at http://cdk.sourceforge.net/rfc2.html.
+
+=============================================================
+      </literallayout>
+      The proper RFC number and title must be given as well as
+      a link to the final RFC and the date on which
+      the final RFC was sent to the developers mailling list.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Reason</title>
+    <para>
+      To smoothe the process of API changes and to formalize habits that grew
+      habits.
+      The system is not supposed to delay
+      development, but smooth the development and use of the library. Usage of
+      branches in CVS can still be used to test new ideas/APIs in addition to the
+      more formalized RFC/voting system. And new classes/algorithms etc are always
+      welcomed and not intended to be covered by this system.
+    </para>
+  </refsect1>
+
+</refentry>
