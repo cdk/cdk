@@ -1,6 +1,6 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 2002-2003  The Chemistry Development Kit (CDK) project
@@ -57,7 +57,7 @@ public class BondTest extends TestCase {
     
     public void testBond_Atom_Atom() {
         Atom c = new Atom("C");
-        Atom o = new Atom("O");        
+        Atom o = new Atom("O");
         Bond bond = new Bond(c, o);
         
         assertEquals(2, bond.getAtomCount());
@@ -69,7 +69,7 @@ public class BondTest extends TestCase {
     
     public void testBond_Atom_Atom_Double() {
         Atom c = new Atom("C");
-        Atom o = new Atom("O");        
+        Atom o = new Atom("O");
         Bond bond = new Bond(c, o, 2.0);
         
         assertEquals(2, bond.getAtomCount());
@@ -81,7 +81,7 @@ public class BondTest extends TestCase {
     
     public void testBond_Atom_Atom_Double_Int() {
         Atom c = new Atom("C");
-        Atom o = new Atom("O");        
+        Atom o = new Atom("O");
         Bond bond = new Bond(c, o, 1.0, CDKConstants.STEREO_BOND_UP);
         
         assertEquals(2, bond.getAtomCount());
@@ -195,7 +195,7 @@ public class BondTest extends TestCase {
         Bond bond = new Bond();
         Object clone = bond.clone();
         assertTrue(clone instanceof Bond);
-    }    
+    }
 
     /** Test for RFC #9 */
     public void testToString() {

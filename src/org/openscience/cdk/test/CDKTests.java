@@ -76,8 +76,10 @@ public class CDKTests {
         suite.addTest(UniversalIsomorphismTesterTest.suite());
         // from cdk.test.aromaticity
         suite.addTest(HueckelAromaticityDetectorTest.suite());
-	suite.addTest(HOSECodeTest.suite());
-	suite.addTest(BremserPredictorTest.suite());
+        suite.addTest(HOSECodeTest.suite());
+        suite.addTest(BremserPredictorTest.suite());
+        // from cdk.test.structgen
+        suite.addTest(RandomStructureGeneratorTest.suite());
 	    return suite;
 	}
     

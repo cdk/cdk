@@ -292,7 +292,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 				};
 		try
 		{
-			String filename = "data/porphyrin.mol";
+			String filename = "data/mdl/porphyrin.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
@@ -342,7 +342,7 @@ public class HueckelAromaticityDetectorTest extends TestCase
 				false};
 		try
 		{
-			String filename = "data/bug698152.mol";
+			String filename = "data/mdl/bug698152.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());

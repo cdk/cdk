@@ -3,9 +3,9 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk.test.structgen;
 
 import org.openscience.cdk.controller.*;
@@ -35,15 +34,32 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 import javax.vecmath.Vector2d;
+import junit.framework.*;
 
-public class RandomStructureGeneratorTest
+public class RandomStructureGeneratorTest extends TestCase
 {
 	public boolean debug = false;
+	boolean standAlone = false;
+
 	public MoleculeListViewer moleculeListViewer = null;
-	public RandomStructureGeneratorTest()
+    
+    public RandomStructureGeneratorTest(String name) {
+        super(name);
+    }
+    
+    public RandomStructureGeneratorTest() {
+        this("RandomStructureGeneratorTest");
+        moleculeListViewer = new MoleculeListViewer();
+    }
+
+	public void setStandAlone(boolean standAlone)
 	{
-		moleculeListViewer = new MoleculeListViewer();
-		testIt();
+		this.standAlone = standAlone;
+	}
+
+	public static Test suite()
+	{
+		return new TestSuite(RandomStructureGeneratorTest.class);
 	}
 
 	/** A complex alkaloid with two separate ring systems to 
@@ -54,7 +70,7 @@ public class RandomStructureGeneratorTest
 		String s = null;
 		Vector structures = new Vector();	
 		Molecule mol = null;
-		Molecule molecule = MoleculeFactory.loadMolecule("data/a-pinene.mol");
+		Molecule molecule = MoleculeFactory.loadMolecule("data/mdl/a-pinene.mol");
 
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
@@ -104,10 +120,6 @@ public class RandomStructureGeneratorTest
 		for (int f = 0; f < structures.size(); f++)
 		{
 			sdg = new StructureDiagramGenerator();
-			mv = new MoleculeViewer2D();
-//			Renderer2DModel r2dm = new Renderer2DModel();
-//			r2dm.setDrawNumbers(true);
-//			mv.setRenderer2DModel(r2dm);
 
 			mol = (Molecule)structures.elementAt(f);
 			sdg.setMolecule((Molecule)mol.clone());
@@ -118,18 +130,26 @@ public class RandomStructureGeneratorTest
 			}
 			catch(Exception exc)
 			{
-				System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 				exc.printStackTrace();
+				fail("*** Exit due to an unexpected error during coordinate generation ***");
 			}
-			mv.setAtomContainer(sdg.getMolecule());
-			moleculeListViewer.addStructure(mv, "RandomGent Result no. " + (f + 1));
+            if (standAlone) {
+                mv.setAtomContainer(sdg.getMolecule());
+                mv = new MoleculeViewer2D();
+                //			Renderer2DModel r2dm = new Renderer2DModel();
+                //			r2dm.setDrawNumbers(true);
+                //			mv.setRenderer2DModel(r2dm);
+                moleculeListViewer.addStructure(mv, "RandomGent Result no. " + (f + 1));
+            }
 		}
 		return true;
 	}
 	
 	public static void main(String[] args)
 	{
-		new RandomStructureGeneratorTest();	
+		RandomStructureGeneratorTest test = new RandomStructureGeneratorTest();
+		test.setStandAlone(true);
+        test.testIt();
 	}
 }
 

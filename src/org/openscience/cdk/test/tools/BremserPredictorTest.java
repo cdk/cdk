@@ -1,12 +1,11 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2002  The Chemistry Development Kit (CKD) project
+ *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -49,10 +48,10 @@ import java.awt.*;
 import junit.framework.*;
 
 /**
- *  Tests the HOSECode genertor. This is *not* a JUnit test class!
+ * Tests the HOSECode genertor.
  *
- *@author     steinbeck
- *@created    November 16, 2002
+ * @author     steinbeck
+ * @created    November 16, 2002
  */
 public class BremserPredictorTest extends TestCase
 {
@@ -220,7 +219,7 @@ double[] result = {
 		Molecule molecule = null;
 		try
 		{
-			String filename = "data/BremserPredictionTest.mol";
+			String filename = "data/mdl/BremserPredictionTest.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			molecule = (Molecule)reader.read((ChemObject)new Molecule());

@@ -54,7 +54,7 @@ public class MDLReaderTest extends TestCase {
     }
 
     public void testBug682233() {
-        String filename = "data/bug682233.mol";
+        String filename = "data/mdl/bug682233.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -92,7 +92,7 @@ public class MDLReaderTest extends TestCase {
     }
 
     public void testAPinene() {
-        String filename = "data/a-pinene.mol";
+        String filename = "data/mdl/a-pinene.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -104,7 +104,7 @@ public class MDLReaderTest extends TestCase {
     }
 
     public void testBug642426() {
-        String filename = "data/bug642426.mol";
+        String filename = "data/mdl/bug642426.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -116,7 +116,7 @@ public class MDLReaderTest extends TestCase {
     }
 
     public void testFourRing() {
-        String filename = "data/four-ring-5x10.mol";
+        String filename = "data/mdl/four-ring-5x10.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -129,7 +129,7 @@ public class MDLReaderTest extends TestCase {
 
 
     public void testHydrozyamino() {
-        String filename = "data/hydroxyamino.mol";
+        String filename = "data/mdl/hydroxyamino.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -142,7 +142,7 @@ public class MDLReaderTest extends TestCase {
 
 
     public void testMethylBenzol() {
-        String filename = "data/methylbenzol.mol";
+        String filename = "data/mdl/methylbenzol.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -155,7 +155,7 @@ public class MDLReaderTest extends TestCase {
     
 
     public void testPolycarpol() {
-        String filename = "data/polycarpol.mol";
+        String filename = "data/mdl/polycarpol.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -167,7 +167,7 @@ public class MDLReaderTest extends TestCase {
     }
     
     public void testReserpine() {
-        String filename = "data/reserpine.mol";
+        String filename = "data/mdl/reserpine.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -180,7 +180,7 @@ public class MDLReaderTest extends TestCase {
 
 
     public void testSixRing() {
-        String filename = "data/six-ring-4x4.mol";
+        String filename = "data/mdl/six-ring-4x4.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -193,7 +193,7 @@ public class MDLReaderTest extends TestCase {
 
 
     public void testSuperspiro() {
-        String filename = "data/superspiro.mol";
+        String filename = "data/mdl/superspiro.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

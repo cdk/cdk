@@ -1,11 +1,11 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
+/* $RCSfile$
+ * $Author$
+ * $Date$
  * $Revision$
  * 
  * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -51,7 +51,7 @@ public class ControllerTest
 //		molecule = buildMolecule2x3();
 //		molecule = buildMolecule2x4();
 //		molecule = buildSpiroRings();
-		molecule = loadMolecule("data/reserpine.mol");
+		molecule = loadMolecule("data/mdl/reserpine.mol");
 //		molecule = buildRing();
 //		molecule = new Molecule();
 

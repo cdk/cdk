@@ -1,12 +1,11 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
  *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- *  Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -23,7 +22,6 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package org.openscience.cdk.test.tools;
-
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
@@ -228,7 +226,7 @@ public class SaturationCheckerTest extends TestCase
 		Molecule molecule = null;
 		try
 		{
-			String filename = "data/saturationcheckertest.mol";
+			String filename = "data/mdl/saturationcheckertest.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			molecule = (Molecule)reader.read((ChemObject)new Molecule());

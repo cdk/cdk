@@ -1,11 +1,11 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
+/* $RCSfile$
+ * $Author$
+ * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -52,10 +52,10 @@ public class StructureDiagramGeneratorTest extends TestCase {
 	
     public void runVisualTests() {
 		moleculeListViewer = new MoleculeListViewer();
-		showIt(MoleculeFactory.loadMolecule("data/reserpine.mol"), "Reserpine");
-		showIt(MoleculeFactory.loadMolecule("data/four-ring-5x10.mol"), "5x10 condensed four membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/six-ring-4x4.mol"), "4x4 condensed six membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/polycarpol.mol"), "Polycarpol");
+		showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
+		showIt(MoleculeFactory.loadMolecule("data/mdl/four-ring-5x10.mol"), "5x10 condensed four membered rings");
+		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
+		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol"), "Polycarpol");
 		showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene");
 		showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl");
 		showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings");

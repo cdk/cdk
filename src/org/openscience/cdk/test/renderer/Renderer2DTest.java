@@ -1,10 +1,11 @@
-/* Renderer2DTest.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
- * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -20,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk.test.renderer;
-
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.renderer.*;
@@ -105,7 +104,7 @@ public class Renderer2DTest extends JPanel
 	 * @param   args    The Arguments from the commandline
 	 */	public static void main(String[] args)
 	{
-		new Renderer2DTest("data/reserpine.mol");
+		new Renderer2DTest("data/mdl/reserpine.mol");
 	}
 }
 
