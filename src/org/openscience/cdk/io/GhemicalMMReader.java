@@ -93,9 +93,11 @@ public class GhemicalMMReader extends DummyReader {
                 } else if ("!Info".equals(command)) {
                     logger.warn("Ignoring info");
                 } else if ("!Atoms".equals(command)) {
+                    logger.info("Reading atom block");
                     // determine number of atoms to read
                     try {
                         numberOfAtoms = Integer.parseInt(st.nextToken());
+                        logger.debug("  #atoms: " + numberOfAtoms);
                         atoms = new int[numberOfAtoms];
                         atomxs = new double[numberOfAtoms];
                         atomys = new double[numberOfAtoms];
@@ -107,12 +109,14 @@ public class GhemicalMMReader extends DummyReader {
                             StringTokenizer atomInfoFields = new StringTokenizer(line);
                             int atomID = Integer.parseInt(atomInfoFields.nextToken());
                             atoms[atomID] = Integer.parseInt(atomInfoFields.nextToken());
+                            logger.debug("Set atomic number of atom (" + atomID + ") to: " + atoms[atomID]);
                         }
                     } catch (Exception exception) {
                         logger.error("Error while reading Atoms block");
                         logger.debug(exception);
                     }
                 } else if ("!Bonds".equals(command)) {
+                    logger.info("Reading bond block");
                     try {
                         // determine number of bonds to read
                         numberOfBonds = Integer.parseInt(st.nextToken());
@@ -143,6 +147,7 @@ public class GhemicalMMReader extends DummyReader {
                         logger.debug(exception);
                     }
                 } else if ("!Coord".equals(command)) {
+                    logger.info("Reading coordinate block");
                     try {
                         for (int i = 0; i < numberOfAtoms; i++) {
                             line = input.readLine();
@@ -151,36 +156,40 @@ public class GhemicalMMReader extends DummyReader {
                             double x = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
                             double y = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
                             double z = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
-                            atomxs[atomID] = x * 10;    // convert to Angstrom
-                            atomys[atomID] = y * 10;
-                            atomzs[atomID] = z * 10;
+                            atomxs[atomID] = x;
+                            atomys[atomID] = y;
+                            atomzs[atomID] = z;
                         }
                     } catch (Exception exception) {
                         logger.error("Error while reading Coord block");
                         logger.debug(exception);
                     }
                 } else if ("!Charges".equals(command)) {
+                    logger.info("Reading charges block");
                     try {
                         for (int i = 0; i < numberOfAtoms; i++) {
                             line = input.readLine();
                             StringTokenizer atomInfoFields = new StringTokenizer(line);
                             int atomID = Integer.parseInt(atomInfoFields.nextToken());
                             double charge = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
-                            atomxs[atomID] = charge;
+                            atomcharges[atomID] = charge;
                         }
                     } catch (Exception exception) {
                         logger.error("Error while reading Charges block");
                         logger.debug(exception);
                     }
                 } else if ("!End".equals(command)) {
+                    logger.info("Found end of file");
                     // Store atoms
                     AtomContainer container = new AtomContainer();
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
                             Atom atom = new Atom(IsotopeFactory.getInstance().getElementSymbol(atoms[i]));
+                            atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3D(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);
                             container.addAtom(atom);
+                            logger.debug("Stored atom: " + atom);
                         } catch (Exception exception) {
                             logger.error("Cannot create an atom with atomic number: " + atoms[i]);
                             logger.debug(exception);
