@@ -16,6 +16,8 @@ New:
 * Added a reverse() Reaction method to ReactionManipulator
 * Debug CDK core classes that can help when developing CDK
   based applications (dist-core-debug task in build.xml)
+* Added cdk-experimental package with an experimental IUPAC
+  name generator
 
 Fixes:
 * Added missing LGPL license to distributions.

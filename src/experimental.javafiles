@@ -1,0 +1,17 @@
+org/openscience/cdk/iupac/generator/FragmentWithAtomicValencies.java
+org/openscience/cdk/iupac/generator/IUPACName.java
+org/openscience/cdk/iupac/generator/IUPACNameLocalizer.java
+org/openscience/cdk/iupac/generator/IUPACNamePart.java
+org/openscience/cdk/iupac/generator/NamingRule.java
+org/openscience/cdk/iupac/generator/NumberingRule.java
+org/openscience/cdk/iupac/generator/Rule.java
+org/openscience/cdk/iupac/generator/RulePriorityList.java
+org/openscience/cdk/iupac/generator/sectiona/Rule1dot1.java
+org/openscience/cdk/iupac/generator/sectiona/Rule1dot2.java
+org/openscience/cdk/iupac/generator/sectiona/Rule2dot1.java
+org/openscience/cdk/iupac/generator/sectiona/Rule2dot2.java
+org/openscience/cdk/iupac/generator/sectionc/Rule103dot1.java
+org/openscience/cdk/iupac/generator/sectionc/Rule102dot1.java
+org/openscience/cdk/iupac/generator/IUPACNameGenerator.java
+org/openscience/cdk/iupac/generator/tools/CarbonChainNames.java
+org/openscience/cdk/iupac/generator/tools/AdjacencyMatrixTools.java

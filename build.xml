@@ -1,4 +1,4 @@
-<project name="CDK" default="dist-all" basedir=".">
+<project name="CDK" default="dist-default" basedir=".">
 
         <!-- compile options -->
         <property name="build.sysclasspath" value="ignore" />
@@ -279,10 +279,21 @@
                 <classpath refid="project.class.path" />
 
                 <excludesfile name="${src}/java3d.javafiles" />
+                <excludesfile name="${src}/experimental.javafiles" />
                 <exclude name="org/openscience/cdk/libio/**/*.java" />
                 <exclude name="org/openscience/cdk/test/**/*.java" />
                 <exclude name="org/openscience/cdk/applications/**/*.java" />
             </javac>          
+        </target>
+
+        <target id="compile-experimental" name="compile-experimental" depends="compile-extra">
+                <echo message="Compiling classes for cdk-experimental module." />
+
+                <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                       debug="${debug}" deprecation="${deprecation}"
+                       includesfile="${src}/experimental.javafiles">
+                    <classpath refid="project.class.path" />
+                </javac>
         </target>
 
         <target id="compile-test" name="compile-test" depends="compile">
@@ -369,6 +380,9 @@
                 <copy file="${src}/applications.javafiles" tofile="${src}/applications.classes"/>
                 <replace file="${src}/applications.classes" token=".java" value=".class"/>
                 
+                <copy file="${src}/experimental.javafiles" tofile="${src}/experimental.classes"/>
+                <replace file="${src}/experimental.classes" token=".java" value=".class"/>
+                
         </target>
 
         <target id="dist-core" name="dist-core" depends="compile-core, dist.init">
@@ -393,10 +407,10 @@
                         <include name="org/openscience/cdk/**/**" />
                         <!-- Exclude core classes -->
                         <excludesfile name="${src}/core.classes" />
-                        <!-- Exclude classes in cdk-io module-->
+                        <!-- Exclude classes in cdk-io module -->
                         <exclude name="org/openscience/cdk/io/**" />
                         <exclude name="org/openscience/cdk/ChemFile.class" />
-                        <!-- Exclude classes in cdk-render module-->
+                        <!-- Exclude classes in cdk-render module -->
                         <exclude name="org/openscience/cdk/renderer/**" />
                         <exclude name="org/openscience/cdk/controller/**" />
                         <exclude name="org/openscience/cdk/editor/**" />
@@ -408,8 +422,18 @@
                         <excludesfile name="${src}/applications.classes" />
                         <!-- Exclude test classes -->
                         <exclude name="org/openscience/cdk/test/**" />
-                        <!-- Exclude classes in cdk-standard module-->
+                        <!-- Exclude classes in cdk-standard module -->
                         <excludesfile name="${src}/standard.classes" />
+                        <!-- Exclude classes in cdk-experimental module -->
+                        <excludesfile name="${src}/experimental.classes" />
+                   </fileset>
+                </jar>
+        </target>
+
+        <target id="dist-experimental" name="dist-experimental" depends="compile-experimental, dist.init">
+                <jar jarfile="${dist}/jar/cdk-experimental.jar">
+                    <fileset dir="${build}">
+                        <includesfile name="${src}/experimental.classes" />
                    </fileset>
                 </jar>
         </target>
@@ -487,10 +511,16 @@
                 </jar>
         </target>
 
+        <target name="dist-default" depends="dist-core, dist-standard, 
+                                             dist-io, dist-render,
+                                             dist-extra, dist-libio,
+                                             dist-apps" />
+
         <target name="dist-all" depends="dist-core, dist-standard, 
                                          dist-io, dist-render,
                                          dist-extra, dist-libio,
                                          dist-render-with-java3d,
+                                         dist-experimental,
                                          dist-apps" />
 
         <target id="dist" name="dist" depends="dist-all" 
