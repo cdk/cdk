@@ -183,9 +183,9 @@ public class TPSADescriptor implements Descriptor {
 		
 		
 		RingSet rs = (new AllRingsFinder()).findAllRings(ac);
-		//if (checkAromaticity) {
+		if (checkAromaticity) {
 			HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
-		//}
+		}
 		RingSet rsAtom = null;
 		Ring ring = null;
 		String profile = "";
@@ -207,7 +207,7 @@ public class TPSADescriptor implements Descriptor {
 		int atomPosition = 0;
 		for(int i = 0; i < atoms.length; i ++) {
 			if( atoms[i].getSymbol().equals("N") || atoms[i].getSymbol().equals("O") || atoms[i].getSymbol().equals("S") || atoms[i].getSymbol().equals("P") ) {
-				System.out.println("tpsa atom: "+atoms[i].getSymbol());
+				//System.out.println("tpsa atom: "+atoms[i].getSymbol());
 				singleBondCount = 0;
 				doubleBondCount = 0;
 				tripleBondCount = 0;
@@ -266,7 +266,7 @@ public class TPSADescriptor implements Descriptor {
 					}
 				}
 				profile = atoms[i].getSymbol() +"+"+ maxOrder +"+"+ orderSum +"+"+ numberOfNeighboors +"+"+ hCount +"+"+ charge +"+"+ aromaticBondCount +"+"+ isin3ring +"+"+ singleBondCount +"+"+ doubleBondCount +"+"+ tripleBondCount;
-				System.out.println("tpsa profile: "+profile);
+				//System.out.println("tpsa profile: "+profile);
 				profiles.add(profile);
 			}
 		}
@@ -274,7 +274,7 @@ public class TPSADescriptor implements Descriptor {
 		for(int p = 0; p < profiles.size(); p ++) {
 			if(map.containsKey(profiles.elementAt(p))) {
 				tpsa += ((Double)map.get(profiles.elementAt(p))).doubleValue();
-				System.out.println("tpsa contribs: "+((Double)map.get(profiles.elementAt(p))).doubleValue());
+				//System.out.println("tpsa contribs: "+((Double)map.get(profiles.elementAt(p))).doubleValue());
 			}
 		}
 		profiles.clear();
@@ -288,8 +288,9 @@ public class TPSADescriptor implements Descriptor {
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
-		// no param names to return
-		return (null);
+		String[] params = new String[1];
+		params[0] = "True is the aromaticity has to be checked";
+		return params;
 	}
 
 
@@ -302,7 +303,9 @@ public class TPSADescriptor implements Descriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		return (null);
+		Object[] paramTypes = new Object[1];
+		paramTypes[0] = new Boolean(true);
+		return paramTypes;
 	}
 }
 
