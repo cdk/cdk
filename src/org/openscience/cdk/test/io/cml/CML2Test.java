@@ -343,8 +343,8 @@ public class CML2Test extends TestCase {
             assertNotNull(mol);
             assertEquals(27, mol.getAtomCount());
             assertEquals(27, mol.getBondCount());
-            assertFalse(GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertFalse(GeometryTools.has2DCoordinates(mol));
             
         } catch (Exception e) {
             fail(e.toString());
@@ -385,38 +385,6 @@ public class CML2Test extends TestCase {
     }
 
     public void testCMLOK9() {
-        String filename = "data/cmltestok/nsc3dcml.xml";
-        logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(new InputStreamReader(ins));
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            ChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            ChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
-
-            // test the molecule
-            Molecule mol = model.getSetOfMolecules().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(27, mol.getAtomCount());
-            assertEquals(27, mol.getBondCount());
-            assertFalse(GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
-    }
-
-    public void testCMLOK10() {
         String filename = "data/cmltestok/nsc3dmol.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -439,8 +407,8 @@ public class CML2Test extends TestCase {
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
-            assertFalse(GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertFalse(GeometryTools.has2DCoordinates(mol));
             
         } catch (Exception e) {
             fail(e.toString());
@@ -448,7 +416,7 @@ public class CML2Test extends TestCase {
         }
     }
 
-    public void testCMLOK11() {
+    public void testCMLOK10() {
         String filename = "data/cmltestok/nsc3dmol.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -471,8 +439,8 @@ public class CML2Test extends TestCase {
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
-            assertFalse(GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertFalse(GeometryTools.has2DCoordinates(mol));
             
         } catch (Exception e) {
             fail(e.toString());
@@ -480,7 +448,7 @@ public class CML2Test extends TestCase {
         }
     }
 
-    public void testCMLOK12() {
+    public void testCMLOK11() {
         String filename = "data/cmltestok/nsc3dmol.a1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -503,8 +471,8 @@ public class CML2Test extends TestCase {
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
-            assertFalse(GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertFalse(GeometryTools.has2DCoordinates(mol));
             
         } catch (Exception e) {
             fail(e.toString());
@@ -512,7 +480,7 @@ public class CML2Test extends TestCase {
         }
     }
 
-    public void testCMLOK13() {
+    public void testCMLOK12() {
         String filename = "data/cmltestok/nsc3dmol.a2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -535,8 +503,8 @@ public class CML2Test extends TestCase {
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
-            assertFalse(GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertFalse(GeometryTools.has2DCoordinates(mol));
             
         } catch (Exception e) {
             fail(e.toString());
