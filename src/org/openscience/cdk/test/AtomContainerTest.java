@@ -57,6 +57,7 @@ public class AtomContainerTest extends TestCase {
         ac.setAtoms(atoms);
         
         assertEquals(4, ac.getAtomCount());
+        assertEquals(4, ac.getAtoms().length);
     }
 
     /**
@@ -349,4 +350,457 @@ public class AtomContainerTest extends TestCase {
         AtomContainer container = new AtomContainer(acetone);
         assertEquals(3, container.getBondCount());
     }
+    
+    public void testSetAtomAt() {
+        AtomContainer container = new AtomContainer();
+        Atom c = new Atom("C");
+        container.setAtomAt(0, c);
+        
+        assertNotNull(container.getAtomAt(0));
+        assertTrue("C".equals(container.getAtomAt(0).getSymbol()));
+    }
+    
+    public void testGetAtomAt() {
+        AtomContainer acetone = new AtomContainer();
+        
+        Atom c = new Atom("C");
+        Atom n = new Atom("N");
+        Atom o = new Atom("O");
+        Atom s = new Atom("S");
+        acetone.addAtom(c);
+        acetone.addAtom(n);
+        acetone.addAtom(o);
+        acetone.addAtom(s);
+        
+        Atom a1 = acetone.getAtomAt(0);
+        assertNotNull(a1);
+        assertTrue("C".equals(a1.getSymbol()));
+        Atom a2 = acetone.getAtomAt(1);
+        assertNotNull(a2);
+        assertTrue("N".equals(a2.getSymbol()));
+        Atom a3 = acetone.getAtomAt(2);
+        assertNotNull(a3);
+        assertTrue("O".equals(a3.getSymbol()));
+        Atom a4 = acetone.getAtomAt(3);
+        assertNotNull(a4);
+        assertTrue("S".equals(a4.getSymbol()));
+    }
+    
+    public void testGetBondAt() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        assertEquals(0, acetone.getBondCount());
+        
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,3);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertEquals(3, (int)acetone.getBondAt(0).getOrder());
+        assertEquals(2, (int)acetone.getBondAt(1).getOrder());
+        assertEquals(1, (int)acetone.getBondAt(2).getOrder());
+    }
+    
+    public void testSetElectronContainerAt() {
+        AtomContainer container = new AtomContainer();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        container.addAtom(c1);
+        container.addAtom(c2);
+        Bond b = new Bond(c1, c2, 3);
+        container.setElectronContainerAt(3, b);
+        
+        assertTrue(container.getElectronContainerAt(3) instanceof Bond);
+        Bond bond = (Bond)container.getElectronContainerAt(3);
+        assertEquals(3, (int)bond.getOrder());
+    }
+    
+    public void testGetElectronContainerCount() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        LonePair lp1 = new LonePair(o);
+        LonePair lp2 = new LonePair(o);
+        acetone.addElectronContainer(lp1);
+        acetone.addElectronContainer(lp2);
+        
+        assertEquals(3, acetone.getBondCount());
+        assertEquals(2, acetone.getLonePairCount());
+        assertEquals(5, acetone.getElectronContainerCount());
+    }
+    
+    public void testSetElectronContainerCount() {
+        AtomContainer container = new AtomContainer();
+        container.setElectronContainerCount(2);
+        
+        assertEquals(2, container.getElectronContainerCount());
+    }
+    
+    public void testSetAtomCount() {
+        AtomContainer container = new AtomContainer();
+        container.setAtomCount(2);
+        
+        assertEquals(2, container.getAtomCount());
+    }
+    
+    public void testGetAtoms() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        
+        assertEquals(4, acetone.getAtoms().length);
+    }
+    
+    public void testAtoms() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        
+        Enumeration atomEnum = acetone.atoms();
+        int counter = 0;
+        while (atomEnum.hasMoreElements()) {
+            atomEnum.nextElement();
+            counter++;
+        }
+        assertEquals(4, counter);
+    }
+
+    public void testGetElectronContainers() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        LonePair lp1 = new LonePair(o);
+        LonePair lp2 = new LonePair(o);
+        acetone.addElectronContainer(lp1);
+        acetone.addElectronContainer(lp2);
+        
+        assertEquals(5, acetone.getElectronContainers().length);
+    }
+    
+    public void testGetBonds() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertEquals(3, acetone.getBonds().length);
+    }
+    
+    public void testLonePairs_Atom() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom o = new Atom("O");
+        acetone.addAtom(c1);
+        acetone.addAtom(o);
+        LonePair lp1 = new LonePair(o);
+        LonePair lp2 = new LonePair(o);
+        acetone.addElectronContainer(lp1);
+        acetone.addElectronContainer(lp2);
+        
+        assertEquals(2, acetone.getLonePairs(o).length);
+        assertEquals(0, acetone.getLonePairs(c1).length);
+    }
+    
+    public void testGetFirstAtom() {
+        AtomContainer container = new AtomContainer();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("O");
+        Atom o = new Atom("H");
+        container.addAtom(c1);
+        container.addAtom(c2);
+        container.addAtom(o);
+        
+        assertNotNull(container.getFirstAtom());
+        assertTrue("C".equals(container.getFirstAtom().getSymbol()));
+    }
+
+    public void testGetLastAtom() {
+        AtomContainer container = new AtomContainer();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("O");
+        Atom o = new Atom("H");
+        container.addAtom(c1);
+        container.addAtom(c2);
+        container.addAtom(o);
+        
+        assertNotNull(container.getLastAtom());
+        assertTrue("H".equals(container.getLastAtom().getSymbol()));
+    }
+    
+    public void testGetAtomNumber() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        
+        assertEquals(0, acetone.getAtomNumber(c1));
+        assertEquals(1, acetone.getAtomNumber(c2));
+        assertEquals(2, acetone.getAtomNumber(c3));
+        assertEquals(3, acetone.getAtomNumber(o));
+    }
+    
+    public void testGetBondNumber_Bond() {
+        // acetone molecule
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertEquals(0, acetone.getBondNumber(b1));
+        assertEquals(1, acetone.getBondNumber(b2));
+        assertEquals(2, acetone.getBondNumber(b3));
+    }
+    
+    public void testGetBondNumber_Atom_Atom() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertEquals(0, acetone.getBondNumber(c1, c2));
+        assertEquals(1, acetone.getBondNumber(c1, o));
+        assertEquals(2, acetone.getBondNumber(c1, c3));
+    }
+    
+    public void testGetBond() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertTrue(b1.equals(acetone.getBond(c1, c2)));        
+        assertTrue(b2.equals(acetone.getBond(c1, o)));        
+        assertTrue(b3.equals(acetone.getBond(c1, c3)));        
+    }
+    
+    public void testGetConnectedAtoms() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertEquals(3, acetone.getConnectedAtoms(c1).length);
+        assertEquals(1, acetone.getConnectedAtoms(c2).length);
+        assertEquals(1, acetone.getConnectedAtoms(c3).length);
+        assertEquals(1, acetone.getConnectedAtoms(o).length);
+    }
+    
+    public void testGetLonePairCount() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        // add lone pairs on oxygen
+        LonePair lp1 = new LonePair(o);
+        LonePair lp2 = new LonePair(o);
+        acetone.addElectronContainer(lp1);
+        acetone.addElectronContainer(lp2);
+        
+        assertEquals(2, acetone.getLonePairCount());
+    }
+
+    public void testGetBondCount_Atom() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        assertEquals(3, acetone.getBondCount(c1));
+        assertEquals(1, acetone.getBondCount(c2));
+        assertEquals(1, acetone.getBondCount(c3));
+        assertEquals(1, acetone.getBondCount(o));
+    }
+    
+    public void testGetLonePairCount_Atom() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        // add lone pairs on oxygen
+        LonePair lp1 = new LonePair(o);
+        LonePair lp2 = new LonePair(o);
+        acetone.addElectronContainer(lp1);
+        acetone.addElectronContainer(lp2);
+        
+        assertEquals(2, acetone.getLonePairCount(c1));
+        assertEquals(0, acetone.getLonePairCount(c2));
+        assertEquals(0, acetone.getLonePairCount(c3));
+        assertEquals(0, acetone.getLonePairCount(o));
+    }
+
+    public void testGetBondOrderSum_Atom() {
+        Molecule acetone = new Molecule();
+        Atom c1 = new Atom("C");
+        Atom c2 = new Atom("C");
+        Atom o = new Atom("O");
+        Atom c3 = new Atom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        Bond b1 = new Bond(c1, c2,1);
+        Bond b2 = new Bond(c1, o, 2);
+        Bond b3 = new Bond(c1, c3,1);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        // add lone pairs on oxygen
+        LonePair lp1 = new LonePair(o);
+        LonePair lp2 = new LonePair(o);
+        acetone.addElectronContainer(lp1);
+        acetone.addElectronContainer(lp2);
+        
+        assertEquals(4.0, acetone.getBondOrderSum(c1), 0.00001);
+        assertEquals(1.0, acetone.getBondOrderSum(c2), 0.00001);
+        assertEquals(1.0, acetone.getBondOrderSum(c3), 0.00001);
+        assertEquals(2.0, acetone.getBondOrderSum(o), 0.00001);
+    }
+
 }
