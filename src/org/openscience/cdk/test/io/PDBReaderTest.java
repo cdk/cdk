@@ -1,10 +1,9 @@
-/* PDBReaderTest.java
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
- * $ author: 	Edgar Luttmann 			$ 
- * $ contact: 	edgar@uni-paderborn.de 	$
- * $ date: 		2001-08-09 				$
- * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
