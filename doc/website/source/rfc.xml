@@ -156,8 +156,8 @@
               <entry>18</entry>
               <entry><ulink url="rfc18.html">A revised RFC system</ulink></entry>
               <entry>2003-06-27</entry>
-              <entry></entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2003-09-12</entry>
             </row>
             <row>
               <entry>19</entry>
@@ -170,22 +170,22 @@
               <entry>20</entry>
               <entry><ulink url="rfc20.html">Removal of get/setRemark and get/setPhysicalProperty from ChemObject</ulink></entry>
               <entry>2003-08-11</entry>
-              <entry></entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2003-09-12</entry>
             </row>
             <row>
               <entry>21</entry>
               <entry><ulink url="rfc21.html">Replacement of SetOfMolecules by SetOfAtomContainers</ulink></entry>
               <entry>2003-08-12</entry>
-              <entry></entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2003-09-12</entry>
             </row>
             <row>
               <entry>22</entry>
               <entry><ulink url="rfc22.html">On hydrogen bonds and other non-covalent interactions</ulink></entry>
               <entry>2003-08-12</entry>
-              <entry></entry>
-              <entry></entry>
+              <entry>accepted</entry>
+              <entry>2003-09-12</entry>
             </row>
          </tbody>
         </tgroup>
