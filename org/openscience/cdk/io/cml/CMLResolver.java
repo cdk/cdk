@@ -6,7 +6,7 @@
  *
  * This class was based on the DTDResolver class developed by Dan Gezelter.
  *
- * Copyright (c) 2001 The CDK Project
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public

@@ -4,7 +4,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001  The CDK Project
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
  * Contact: egonw@sci.kun.nl
  *

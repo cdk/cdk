@@ -1,39 +1,44 @@
 /*
- * @(#)PMPConvention.java   0.1 2001/01/20
+ * $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
  *
- * Information can be found at http://www.openscience.org/~egonw/cml/
+ * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  *
- * Copyright (c) 2001 E.L. Willighagen (egonw@sci.kun.nl)
- * 
+ * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- **/
- 
-/*** 
- *  Implementation of the PMPMol Covention for CML.
- *
- *  PMP stands for PolyMorph Predictor and is a module
- *  of Cerius (tm).
  */
-
 package org.openscience.cdk.io.cml;
 
 import java.util.*;
 import org.xml.sax.*;
 import org.openscience.cdk.io.cml.cdopi.*;
 
+/***
+ *  Implementation of the PMPMol Covention for CML.
+ *
+ *  PMP stands for PolyMorph Predictor and is a module
+ *  of Cerius (tm).
+ */
 public class PMPConvention extends Convention {
 
     public PMPConvention(CDOInterface cdo) {
