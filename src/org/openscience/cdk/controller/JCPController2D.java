@@ -40,6 +40,10 @@ import javax.vecmath.*;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.
+ *
+ * <p>This class requires Java 1.4 or higher.
+ *
+ * @keyword mouse events
  */
 public class JCPController2D {
 
@@ -228,8 +232,8 @@ public class JCPController2D {
          *
          * @param   e    MouseEvent object
          **/
-        public void mouseReleased(MouseEvent e)
-        {
+        public void mouseReleased(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON1) {
                 logger.debug("Mouse released in modus: " + c2dm.getDrawMode());
 
                 int mouseX = e.getX(), mouseY = e.getY();
@@ -546,6 +550,7 @@ public class JCPController2D {
                         }
                 }
                 wasDragged = false;
+            }
         }
         
         
