@@ -7,20 +7,21 @@ import javax.vecmath.*;
 import org.openscience.cdk.*;
 
 /**
- *  The line-search method searches along the line containing the current point, xk, parallel to the search direction
+ *  The line-search method searches along the line containing the current point, xk, and parallel to the search direction
  *
  *@author     vlabarta
  *
  */
 public class LineSearch {
-	double stepSize = 2;
-	GVector kplus1Point1 = new GVector(3);
-	GVector kplus1Point2 = new GVector(3);
-	GVector kplus1Point3 = new GVector(3);
-	GVector direction = new GVector(3);
-	double minimumLambda = 0;
-	double maximumLambda = 2;
 
+	double lambdaa = 0;
+	double lambdab = 0;
+	double lambdac = 0;
+	double fxa = 0;
+	double fxb = 0;
+	double fxc = 0;
+	double parabolMinimumLambda = 0;
+	double arbitraryStepSize = 0;
 
 	/**
 	 *  Constructor for the LineSearch object
@@ -29,119 +30,135 @@ public class LineSearch {
 
 
 	/**
-	 *  Constructor for the LineSearch object
-	 *
-	 *@param  point  Coordinates from current point
-	 */
-	public LineSearch(GVector point) {
-		kplus1Point1.setSize(point.getSize());
-		kplus1Point2.setSize(point.getSize());
-		kplus1Point3.setSize(point.getSize());
-		direction.setSize(point.getSize());
-	}
-
-
-	/**
 	 *  Bracketing the minimum: The bracketing phase determines the range of points on the line to be searched.
 	 *  Look for 3 points along the line where the energy of the middle point is lower than the energy of the two outer points.
 	 *  The bracket corresponds to an interval specifying the range of values of Lambda.
 	 *
 	 *@param  kPoint              Current point, xk
-	 *@param  directionVector     Search direction
+	 *@param  searchDirection     Search direction
 	 *@param  forceFieldFunction  Potential energy function
 	 */
-	public void bracketingTheMinimum(GVector kPoint, GVector directionVector, PotentialFunction forceFieldFunction) {
+	public void bracketingTheMinimum(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction, int iterNum) {
 
-		System.out.println("Start line search: ls.bracketingTheMinimum");
-		stepSize = 2;
-		System.out.println("f(Xk) : " + forceFieldFunction.functionInPoint(kPoint));
-		System.out.println("Initial step size : lambda = " + stepSize);
+		//System.out.println("Bracketing the minimum:");
+		//System.out.print("X" + iterNum + " = " + kPoint + "	");
+		//System.out.println("f(X" + iterNum + ") = " + forceFieldFunction.functionInPoint(kPoint));
 
-		kplus1Point1.set(kPoint);
-		minimumLambda = 0;
-		kplus1Point2.set(kPoint);
-		direction.set(directionVector);
-		direction.scale(stepSize);
-		kplus1Point2.add(direction);
-		maximumLambda = stepSize;
+		GVector xa = new GVector(kPoint);
+		lambdaa = 0;
 
-		System.out.println("forceFieldFunction.functionInPoint(kplus1Point2) = " + forceFieldFunction.functionInPoint(kplus1Point2));
-		System.out.println("forceFieldFunction.functionInPoint(kPoint) = " + forceFieldFunction.functionInPoint(kPoint));
-		//System.out.println("if (forceFieldFunction.functionInPoint(kplus1Point2) < forceFieldFunction.functionInPoint(kPoint))");
+		GVector xb = new GVector(kPoint);
+		lambdab = 2;
+		GVector direction = new GVector(searchDirection);
+		direction.scale(lambdab);
+		xb.add(direction);
+
+		GVector xc = new GVector(kPoint.getSize());
+
+
+		fxa = forceFieldFunction.functionInPoint(xa);
+		fxb = forceFieldFunction.functionInPoint(xb);
+		
+		//System.out.print("lambdaa = " + lambdaa + "	");
+		//System.out.println("fxa = " + fxa);
+		//System.out.print("lambdab = " + lambdab + "	");
+		//System.out.println("fxb = " + fxb);
 
 		boolean finish = false;
-		if (forceFieldFunction.functionInPoint(kplus1Point2) < forceFieldFunction.functionInPoint(kPoint)) {
+		if (fxb < fxa) {
 
-			System.out.println("The energy decrease with the current step size. The stepsize will be increase by 20%");
-			stepSize = 1.2 * stepSize;
-			kplus1Point3.set(kPoint);
-			direction.set(directionVector);
-			direction.scale(stepSize);
-			kplus1Point3.add(direction);
-			maximumLambda = stepSize;
-
-			System.out.println("kplus1Point1 = " + kplus1Point1);
-			System.out.println("kplus1Point2 = " + kplus1Point2);
-			System.out.println("kplus1Point3 = " + kplus1Point3);
-			System.out.println("minimumLambda = " + minimumLambda);
-			System.out.println("maximumLambda = " + maximumLambda);
+			//System.out.println("The energy decrease with the current step size. The stepsize will be increase by 20%");
+			lambdac = 1.2 * lambdab;
+			xc.set(kPoint);
+			direction.set(searchDirection);
+			direction.scale(lambdac);
+			xc.add(direction);
+			fxc = forceFieldFunction.functionInPoint(xc);
+		
+			//System.out.print("lambdaa = " + lambdaa + "	");
+			//System.out.println("fxa = " + fxa);
+			//System.out.print("lambdab = " + lambdab + "	");
+			//System.out.println("fxb = " + fxb);
+			//System.out.print("lambdac = " + lambdac + "	");
+			//System.out.println("fxc = " + fxc);
 
 			while (finish == false) {
 
-				if (forceFieldFunction.functionInPoint(kplus1Point3) > forceFieldFunction.functionInPoint(kplus1Point2)) {
+				if (fxc > fxb) {
 					finish = true;
-				} else {
-					kplus1Point1.set(kplus1Point2);
-					minimumLambda = stepSize / 1.2;
-					kplus1Point2.set(kplus1Point3);
-					stepSize = 1.2 * stepSize;
-					kplus1Point3.set(kPoint);
-					direction.set(directionVector);
-					direction.scale(stepSize);
-					kplus1Point3.add(direction);
-					maximumLambda = stepSize;
+				} 
+				else {
+					xa.set(xb);
+					lambdaa = lambdab;
+					fxa = fxb;
+					
+					xb.set(xc);
+					lambdab = lambdac;
+					fxb = fxc;
+					
+					//System.out.println("The energy decrease with the current step size. The stepsize will be increase by 20%");
+					lambdac = 1.2 * lambdac;
+					xc.set(kPoint);
+					direction.set(searchDirection);
+					direction.scale(lambdac);
+					xc.add(direction);
+					fxc = forceFieldFunction.functionInPoint(xc);
 
-					System.out.println("kplus1Point1 = " + kplus1Point1);
-					System.out.println("kplus1Point2 = " + kplus1Point2);
-					System.out.println("kplus1Point3 = " + kplus1Point3);
-					System.out.println("minimumLambda = " + minimumLambda);
-					System.out.println("maximumLambda = " + maximumLambda);
+					//System.out.print("lambdaa = " + lambdaa + "	");
+					//System.out.println("fxa = " + fxa);
+					//System.out.print("lambdab = " + lambdab + "	");
+					//System.out.println("fxb = " + fxb);
+					//System.out.print("lambdac = " + lambdac + "	");
+					//System.out.println("fxc = " + fxc);
+
 				}
 			}
-		} else {
+		} 
+		else {
 			while (finish == false) {
-				System.out.println("The energy increase with the current step size. The step size will be halve");
-				kplus1Point3.set(kplus1Point2);
-				maximumLambda = stepSize;
-				stepSize = stepSize / 2;
-				kplus1Point2.set(kPoint);
-				direction.set(directionVector);
-				direction.scale(stepSize);
-				kplus1Point2.add(direction);
+				
+				//System.out.println("The energy increase with the current step size. The step size will be halve");
+				
+				xc.set(xb);
+				lambdac = lambdab;
+				fxc = fxb;
+				
+				lambdab = lambdab / 2;
+				xb.set(kPoint);
+				direction.set(searchDirection);
+				direction.scale(lambdab);
+				xb.add(direction);
+				fxb = forceFieldFunction.functionInPoint(xb);
 
-				System.out.println("kplus1Point1 = " + kplus1Point1);
-				System.out.println("kplus1Point2 = " + kplus1Point2);
-				System.out.println("kplus1Point3 = " + kplus1Point3);
-				System.out.println("minimumLambda = " + minimumLambda);
-				System.out.println("maximumLambda = " + maximumLambda);
+				//System.out.print("lambdaa = " + lambdaa + "	");
+				//System.out.println("fxa = " + fxa);
+				//System.out.print("lambdab = " + lambdab + "	");
+				//System.out.println("fxb = " + fxb);
+				//System.out.print("lambdac = " + lambdac + "	");
+				//System.out.println("fxc = " + fxc);
 
-				if (forceFieldFunction.functionInPoint(kplus1Point2) < forceFieldFunction.functionInPoint(kPoint)) {
+				if (fxb < fxa) {
 					finish = true;
 				}
-				if (maximumLambda < 0.001) {
+				if (lambdab < 0.00001) {
 					finish = true;
 				}
 			}
-			/*
-			 *  if ((forceFieldFunction.functionInPoint(kplus1Point2) < forceFieldFunction.functionInPoint(kPoint)) &
-			 *  (forceFieldFunction.functionInPoint(kplus1Point2) < forceFieldFunction.functionInPoint(kplus1Point3))) {
-			 *  }
-			 *  else {
-			 *  }
-			 */
 		}
-
+		arbitraryStepSize = lambdab;
+		System.out.println("");
+		System.out.println("ArbitraryStep: ");
+		System.out.println("arbitraryStepSize = " + arbitraryStepSize);
 		return;
+	}
+
+
+	public double parabolicInterpolation() {
+		parabolMinimumLambda = fxa * (Math.pow(lambdac,2) - Math.pow(lambdab,2)) + fxb * (Math.pow(lambdaa,2) - Math.pow(lambdac,2)) + fxc * (Math.pow(lambdab,2) - Math.pow(lambdaa,2));
+		parabolMinimumLambda = parabolMinimumLambda / (fxa * (lambdac-lambdab) + fxb * (lambdaa-lambdac) + fxc * (lambdab-lambdaa));
+		parabolMinimumLambda = 0.5 * parabolMinimumLambda;
+		System.out.println("parabolMinimumLambda = " + parabolMinimumLambda);
+		return parabolMinimumLambda;
 	}
 
 
@@ -151,7 +168,7 @@ public class LineSearch {
 	 *@return    The stepSize value
 	 */
 	public double getStepSize() {
-		return stepSize;
+		return lambdab;
 	}
 
 
@@ -165,32 +182,6 @@ public class LineSearch {
 	public GVector setCoordinates(GVector oldCoordinates, double currentStepSize) {
 		GVector coordinates = new GVector(oldCoordinates.getSize());
 		return coordinates;
-	}
-
-
-	/**
-	 *  Minimize The fitted function on the line *** Waiting to be completed
-	 *
-	 *@return           Minimun of the fitted function on the line segment
-	 */
-	public GVector minimizeFitFunction() {
-
-		GVector fitFunctionMinimum = new GVector(3);
-		return fitFunctionMinimum;
-	}
-
-
-	/**
-	 *  Fit a function of order p using the three points in the line *** Waiting to be completed
-	 *
-	 *@param  point1  Point 1 in the line
-	 *@param  point2  Point 2 in the line
-	 *@param  point3  Point 3 in the line
-	 *@param  order   Order of the function to be fit
-	 */
-	public void fitFunction(Vector point1, Vector point2, Vector point3, byte order) {
-
-		return;
 	}
 
 
