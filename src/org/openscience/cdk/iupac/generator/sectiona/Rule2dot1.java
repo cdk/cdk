@@ -113,7 +113,7 @@ public class Rule2dot1 extends NamingRule {
                         longestChain.getAtomAt(i).setProperty(ATOM_MUST_BE_NUMBERED_FLAG, "yes");
                     }
                 }
-            } catch (NoSuchAtomException e) {
+            } catch (CDKException e) {
                 System.err.println(e.toString());
                 e.printStackTrace(System.err);
             }
