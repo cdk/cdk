@@ -246,6 +246,65 @@ double[] result = {
 		
 	}
 
+	public void testFailure1()
+	{	
+		boolean correct = false;
+		double prediction;
+		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+		try
+		{
+			prediction = bp.predict("dumb code");
+		}
+		catch(Exception exc)
+		{
+			if (exc instanceof org.openscience.cdk.exception.CDKException)
+			{
+				correct = true;	
+			}
+		}
+		assertTrue(correct);
+	}
+
+	public void testFailure2()
+	{	
+		boolean correct = false;
+		double prediction;
+		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+		try
+		{
+			prediction = bp.getConfidenceLimit("dumb code");
+		}
+		catch(Exception exc)
+		{
+			if (exc instanceof org.openscience.cdk.exception.CDKException)
+			{
+				correct = true;	
+			}
+		}
+		assertTrue(correct);
+	}
+
+	public void testFailure3()
+	{	
+		boolean correct = false;
+		double prediction;
+		String test = null;
+		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+		try
+		{
+			prediction = bp.predict(test);
+		}
+		catch(Exception exc)
+		{
+			if (exc instanceof org.openscience.cdk.exception.CDKException)
+			{
+				correct = true;	
+			}
+		}
+		assertTrue(correct);
+	}
+
+	
 	private void removeHydrogens(AtomContainer ac)
 	{
 		Atom atom = null;
@@ -273,7 +332,10 @@ double[] result = {
 		BremserPredictorTest bpt = new BremserPredictorTest("BremserPredictorTest");
 		//bpt.testConstructor();
 		//bpt.testPrediction();
-		bpt.testGetConfidenceLimit();
+		//bpt.testGetConfidenceLimit();
+		//bpt.testFailure1();
+		//bpt.testFailure2();
+		bpt.testFailure3();
 	}
 }
 
