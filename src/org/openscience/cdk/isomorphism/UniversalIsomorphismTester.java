@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *  de m???hodes de synth???e ???partir d'exemples". Universit???Louis Pasteur
  *  STRASBOURG 1993.
  *
- *  <p><FONT COLOR="#FF0000">
+ *  <p><font color="#FF0000">
  *     warning :  As a result of the adjacency perception used in this algorithm
  *                there is a single limitation : cyclopropane and isobutane are seen as isomorph
  *                This is due to the fact that these two compounds are the only ones where
@@ -92,8 +92,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *                exception query. Furthermore isomorphism may be discarded since  the number of atoms are
  *                not the same (3 != 4) and in most case this will be already
  *                screened out by a fingerprint based filtering.
- *                It is possible to add a special treatment for these special query.
- *   </FONT>
+ *                It is possible to add a special treatment for this special query.
+ *                Be reminded that this algorithm matches bonds only. Hence an AtomContainer that
+ *                contains no bonds is seen as isomorph to any other AtomContainer.
+ *   </font>
  *
  *
  * @author     Stephane Werner from IXELIS mail@ixelis.net
