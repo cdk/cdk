@@ -56,9 +56,6 @@ public class MDLReader implements ChemObjectReader
 
 	private org.openscience.cdk.tools.LoggingTool logger;
 
-	IsotopeFactory elemfact;
-
-
 	/**
 	 *  Contructs a new MDLReader that can read Molecule from a given InputStream
 	 *
@@ -77,11 +74,6 @@ public class MDLReader implements ChemObjectReader
 	public MDLReader(Reader in) {
 		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
 		input = new BufferedReader(in);
-		try {
-			elemfact = IsotopeFactory.getInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 
@@ -93,15 +85,15 @@ public class MDLReader implements ChemObjectReader
 	 *@param  object                              The object that subclasses
 	 *      ChemObject
 	 *@return                                     The ChemObject read
-	 *@exception  UnsupportedChemObjectException
+	 *@exception  CDKException
 	 */
-	public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
+	public ChemObject read(ChemObject object) throws CDKException {
 		if (object instanceof ChemFile) {
 			return (ChemObject) readChemFile();
 		} else if (object instanceof Molecule) {
 			return (ChemObject) readMolecule();
 		} else {
-			throw new UnsupportedChemObjectException("Only supported are ChemFile and Molecule.");
+			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}
 	}
 
