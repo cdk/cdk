@@ -48,4 +48,8 @@ public class DummyReader extends DefaultChemObjectReader {
         return "Not Implemented (post a feature request if you need it)";
     }
 
+    public boolean matches(int lineNumber, String line) {
+	return false;
+    }
+    
 }

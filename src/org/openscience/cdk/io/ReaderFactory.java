@@ -60,7 +60,9 @@ public class ReaderFactory {
     
     private int headerLength;
     private LoggingTool logger;
-    
+
+    private static List readers;
+
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
      * first 65536 chars.
@@ -68,7 +70,7 @@ public class ReaderFactory {
     public ReaderFactory() {
         this(65536);
     }
-    
+
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
      * first given number of chars.
@@ -78,8 +80,60 @@ public class ReaderFactory {
     public ReaderFactory(int headerLength) {
         logger = new LoggingTool(this);
         this.headerLength = headerLength;
+        readers = new Vector();
     }
-    
+
+    /**
+     * Registers a reader for format detection. To be useful, the
+     * registered ChemObjectReader must implement the matches()
+     * method.
+     *
+     * @see org.openscience.cdk.io.ChemObjectReader#matches(int,String)
+     */
+    public void registerReader(ChemObjectReader reader) {
+        readers.addElement(reader);
+    }
+
+    private void loadReaders() {
+        String[] readerNames = {
+            "org.openscience.cdk.io.ABINITReader.java",
+            "org.openscience.cdk.io.Aces2Reader.java",
+            "org.openscience.cdk.io.ADFReader.java",
+            "org.openscience.cdk.io.CACheReader.java",
+            "org.openscience.cdk.io.ChemicalRSSReader.java",
+            "org.openscience.cdk.io.CIFReader.java",
+            "org.openscience.cdk.io.CMLReader.java",
+            "org.openscience.cdk.io.CrystClustReader.java",
+            "org.openscience.cdk.io.DaltonReader.java",
+            "org.openscience.cdk.io.GamessReader.java",
+            "org.openscience.cdk.io.Gaussian03Reader.java",
+            "org.openscience.cdk.io.Gaussian90Reader.java",
+            "org.openscience.cdk.io.Gaussian92Reader.java",
+            "org.openscience.cdk.io.Gaussian94Reader.java",
+            "org.openscience.cdk.io.Gaussian95Reader.java",
+            "org.openscience.cdk.io.Gaussian98Reader.java",
+            "org.openscience.cdk.io.GhemicalMMReader.java",
+            "org.openscience.cdk.io.HINReader.java",
+            "org.openscience.cdk.io.IChIReader.java",
+            "org.openscience.cdk.io.JaguarReader.java",
+            "org.openscience.cdk.io.MACiEReader.java",
+            "org.openscience.cdk.io.MDLReader.java",
+            "org.openscience.cdk.io.MDLRXNReader.java",
+            "org.openscience.cdk.io.MDLRXNV3000Reader.java",
+            "org.openscience.cdk.io.MDLV3000Reader.java",
+            "org.openscience.cdk.io.Mol2Reader.java",
+            "org.openscience.cdk.io.MOPAC7Reader.java",
+            "org.openscience.cdk.io.MOPAC97Reader.java",
+            "org.openscience.cdk.io.PDBReader.java",
+            "org.openscience.cdk.io.PMPReader.java",
+            "org.openscience.cdk.io.ShelXReader.java",
+            "org.openscience.cdk.io.SMILESReader.java",
+            "org.openscience.cdk.io.VASPReader.java",
+            "org.openscience.cdk.io.XYZReader.java",
+            "org.openscience.cdk.io.ZMatrixReader.java"
+        }
+    }
+
     /**
      * Creates a String of the Class name of the ChemObject reader
      * for this file format. The input is read line-by-line
@@ -160,6 +214,8 @@ public class ReaderFactory {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");
         }
+
+	// FIXME: this should use the new ChemObjectReader.matches() method
 
         int bufferSize = this.headerLength;
         BufferedReader originalBuffer = new BufferedReader(input, bufferSize);

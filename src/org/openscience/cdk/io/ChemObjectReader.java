@@ -37,7 +37,13 @@ import org.openscience.cdk.exception.CDKException;
  * Currently, database IO and file IO is supported.
  *
  * <p>The easiest way to implement a new ChemObjectReader is to
- * subclass the DefaultChemObjectReader.
+ * subclass the DefaultChemObjectReader. If a Reader is develop that
+ * is not yet implemented, but just used to format detection (allowed
+ * too!), then it should subclass the DummyReader.
+ *
+ * <p>I don't know how this should be enforced, but a Reader should
+ * also provide an empty constructor so that ClassLoader/getInstance()
+ * can be used to instantiate a ChemObjectReader.
  *
  * @cdk.module io
  *
@@ -60,7 +66,23 @@ public interface ChemObjectReader extends ChemObjectIO {
      *            the type of information is not available from 
      *            the input
      **/
-    public ChemObject read(ChemObject object) throws CDKException;
+    public ChemObject read(ChemObject object) throws CDKException, IOException;
 
+    /**
+     * Method that checks wether the given line is part of the format
+     * read by this reader.
+     *
+     * @param lineNumber  number of the line
+     * @param line        line in the file being checked
+     *
+     * @return true if the line is of a file format read by this reader
+     */
+    public boolean matches(int lineNumber, String line);
+
+    /**
+     * Sets the Reader from which this ChemObjectReader should read
+     * the contents.
+     */
+    public void setReader(ChemObjectReader reader) throws CDKException;
 }
 

@@ -62,6 +62,10 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
         return true;
     }
     
+    public boolean matches(int lineNumber, String line) {
+	return false;
+    }
+
     /* Extra convenience methods */
     
     /**
