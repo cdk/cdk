@@ -179,6 +179,20 @@ public class CDKConstants {
     /** The CAS Registry Number */
     public static final String CASRN = "CasRN";
 
+    /****************************************
+    * Some predefined property names for    *
+    * Atoms                                 *
+    ****************************************/
+
+    /** The Isotropic Shielding, usually calculated by
+      * a quantum chemistry program like Gaussian.
+      * This is a property used for calculating NMR chemical
+      * shifts by subtracting the value from the 
+      * isotropic shielding value of a standard (e.g. TMS).
+      */
+    public static final String ISOTROPIC_SHIELDING = "IsotropicShielding";
+    
+    
 }
 
 
