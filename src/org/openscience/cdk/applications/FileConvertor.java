@@ -27,6 +27,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.program.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.tools.LoggingTool;
 import java.io.*;
 import java.util.*;
 
@@ -68,7 +69,7 @@ public class FileConvertor {
      * @param oformat   format of the output
      */
     public FileConvertor(String iformat, String oformat, int level) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        logger = new LoggingTool(this.getClass().getName());
         logger.dumpSystemProperties();
 
         this.iformat = iformat;
@@ -143,6 +144,7 @@ public class FileConvertor {
     File input;
     File output;
     int level = 0; // no questions by default
+    LoggingTool logger = new LoggingTool("org.openscience.cdk.applications.FileConvertor.main");
     
     int startFromHere = 0;
     if (args.length < 3) {
@@ -153,6 +155,7 @@ public class FileConvertor {
     // process options
     for (int i=0; i<args.length-3; i++) {
         String option = args[i];
+        logger.debug("Parsing option: " + option);
         if (option.startsWith("--question:") && option.length() > 11) {
             String levelString = option.substring(11);
             if (levelString.equals("none")) {
@@ -164,6 +167,8 @@ public class FileConvertor {
             } else if (levelString.equals("all")) {
                 level = 3;
             }
+        } else {
+            System.out.println("Unrecognized option: " + args[i]);
         }
         startFromHere = i + 1;
     }
@@ -211,6 +216,9 @@ public class FileConvertor {
             reader = new SMILESReader(fileReader);
         } else if (format.equals("org.openscience.cdk.io.XYZReader")) {
             reader = new XYZReader(fileReader);
+        }
+        if (reader != null) {
+            reader.addReaderListener(readerListener);
         }
         return reader;
     }
