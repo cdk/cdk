@@ -1,14 +1,15 @@
---- src/org/openscience/cdk/CDKConstants.java	2003-09-03 09:49:00.094915000 +0200
-+++ /tmp/CDKConstants.java.new	2003-10-16 17:34:46.051288400 +0200
-@@ -63,7 +63,6 @@
- 
-         public final static int STEREO_ATOM_PARITY_PLUS = 1;
-         public final static int STEREO_ATOM_PARITY_MINUS = -1;
--        public final static int STEREO_ATOM_PARITY_UNDEFINED = 0;
- 
-         /** 
-          * Carbon NMR shift contant for use as a key in the
-@@ -111,33 +110,42 @@
+--- src/org/openscience/cdk/CDKConstants.java	2003-08-25 18:11:54.000000000 +0200
++++ build/src/org/openscience/cdk/CDKConstants.java	2003-12-07 17:45:01.000000000 +0100
+@@ -30,6 +30,8 @@
+  * parameters used throughout the CDK. Classes using these Constants should
+  * implement this interface.
+  *
++ * <p>The lazyCreation patch has been applied to this class.
++ *
+  * @keyword bond order
+  * @keyword stereochemistry
+  */
+@@ -111,33 +113,42 @@
  
          /** Flag that is set if the chemobject is placed (somewhere).
           */
