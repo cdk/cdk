@@ -82,7 +82,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  *
  *
  * @author     Stephane Werner from IXELIS mail@ixelis.net
- * @created    17 juillet 2002
+ * @created    2002-07-17
  */
 
 public class UniversalIsomorphismTester {

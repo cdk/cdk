@@ -40,7 +40,7 @@ import org.openscience.cdk.*;
  * @keyword graph, path
  *
  * @author     steinbeck
- * @created    February 28, 2002
+ * @created    2002-02-28
  */
 public class Path extends Vector
 {

@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.*;
  * are calculated by applying a zoom factor to the world coordinates.
  *
  * @author     steinbeck
- * @created    October 3, 2002
+ * @created    2002-10-03
  * @keyword    viewer, 2D-viewer
  */
 public class Renderer2D   {

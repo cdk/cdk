@@ -57,7 +57,7 @@ import java.awt.FlowLayout;
  * it has that is either a ChemObject or a ChemObject[].
  *
  * @author     egonw
- * @created    December 29, 2002
+ * @created    2002-12-29
  * @keyword    tree, ChemObject
  */
 public class ChemObjectTree extends JPanel {

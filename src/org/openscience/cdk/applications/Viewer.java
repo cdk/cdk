@@ -42,7 +42,7 @@ import javax.vecmath.*;
  *
  * @author     steinbeck
  * @author     egonw
- * @created    October 3, 2002
+ * @created    2002-10-03
  *
  * @keyword    command line util
  */

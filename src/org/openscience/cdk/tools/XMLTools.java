@@ -47,10 +47,10 @@ import JSX.*;
 
 
 /**
- *  A collection of tools for handling an xml document as a DOM tree
+ * A collection of tools for handling an xml document as a DOM tree
  *
- *@author     steinbeck
- *@created    9. August 2001
+ * @author     steinbeck
+ * @created    2001-08-09
  */
 public class XMLTools
 {

@@ -31,7 +31,7 @@ import org.openscience.cdk.*;
  *  An implementation of Faulons equivalent classes deterministic generator 
  *
  * @author     steinbeck
- * @created    October 2, 2000
+ * @created    2000-10-02
  */
 public class EquivalentClassesDeterministicGenerator
 {

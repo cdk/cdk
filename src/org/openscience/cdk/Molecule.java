@@ -30,7 +30,7 @@ import java.util.Vector;
  * atoms connected by bonds.
  *
  * @author     steinbeck
- * @created    October 2, 2000
+ * @created    2000-10-02
  *
  * @keyword    molecule
  */

@@ -52,7 +52,7 @@ import junit.framework.*;
  *  Tests the HOSECode genertor. This is *not* a JUnit test class!
  *
  *@author     steinbeck
- *@created    November 16, 2002
+ *@created    2002-11-16
  */
 public class HOSECodeTest extends TestCase
 {

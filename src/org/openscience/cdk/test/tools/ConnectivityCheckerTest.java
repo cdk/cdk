@@ -35,7 +35,7 @@ import junit.framework.*;
  *  Checks the functionality of the ConnectivityChecker
  *
  * @author     steinbeck
- * @created    July 24, 2001
+ * @created    2001-07-24
  */
 public class ConnectivityCheckerTest extends TestCase {
 	AtomContainer atomCon = null;

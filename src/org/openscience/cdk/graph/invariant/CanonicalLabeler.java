@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2002
+ * Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) Project
  *
  * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
  *
@@ -39,7 +39,7 @@ import java.util.Collections;
  * Canonically lables an atom container.
  *
  * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
- * @created  Feb 26, 2002
+ * @created  2002-02-26
  *
  * @keyword canonicalization
  */

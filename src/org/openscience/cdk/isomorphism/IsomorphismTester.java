@@ -36,7 +36,7 @@ import java.util.*;
  * order into account.
  *
  * @author     steinbeck
- * @created    September 10, 2001
+ * @created    2001-09-10
  *
  * @keyword    isomorphism
  *

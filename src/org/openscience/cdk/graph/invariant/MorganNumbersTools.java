@@ -36,7 +36,7 @@ import java.util.*;
  *   <a href="http://cdk.sf.net/biblio.html#MOR65">MOR65</a>
  *
  * @author     shk3
- * @created    June 30, 2003
+ * @created    2003-06-30
  * @keyword    Morgan number
  */
 

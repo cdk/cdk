@@ -54,7 +54,7 @@ import java.io.*;
  *         - add a seed for random generator for reproducability
  *
  * @author     steinbeck
- * @created    September 4, 2001
+ * @created    2001-09-04
  */
 public class PartialFilledStructureMerger
 {

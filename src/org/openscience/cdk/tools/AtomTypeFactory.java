@@ -43,10 +43,10 @@ import JSX.*;
  *  To see which AtomTypeConfigurator's CDK provides, one should check the
  *  AtomTypeConfigurator API.
  *
- *@author     steinbeck
- *@created    August 29, 2001
- *@keyword    atom, type
- *@see        AtomTypeConfigurator
+ * @author     steinbeck
+ * @created    2001-08-29
+ * @keyword    atom, type
+ * @see        AtomTypeConfigurator
  */
 public class AtomTypeFactory
 {

@@ -35,7 +35,7 @@ package org.openscience.cdk;
  *  hybridized carbon C3, etc., in some molecular modelling applications.
  *
  * @author     steinbeck
- * @created    8. August 2001
+ * @created    2001-08-08
  *
  * @keyword     atom, type
  */

@@ -42,7 +42,7 @@ import java.awt.*;
  *  A Swing-based implementation of Renderer2D for viewing molecules
  *
  * @author     steinbeck
- * @created    May 30, 2002
+ * @created    2002-05-30
  */
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {

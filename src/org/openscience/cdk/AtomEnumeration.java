@@ -43,7 +43,7 @@ import javax.vecmath.*;
  *  it is constructed, which might lead to errors.
  *
  * @author     steinbeck
- * @created    October 2, 2000
+ * @created    2000-10-02
  */
 public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumeration {
 

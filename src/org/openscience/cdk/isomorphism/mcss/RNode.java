@@ -10,7 +10,7 @@
  *  and Thierry Hanser from IXELIS mail@ixelis.net
  *
  *  IXELIS sarl - Semantic Information Systems
- *  17 rue des Cèdres 67200 Strasbourg, France
+ *  17 rue des C?dres 67200 Strasbourg, France
  *  Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
  *
  *  CDK Contact: cdk-devel@lists.sf.net
@@ -44,7 +44,7 @@ import java.util.BitSet;
  *  this node in the same solution)
  *
  *@author     Stephane Werner from IXELIS mail@ixelis.net
- *@created    17 juillet 2002
+ *@created    2002-07-17
  */
 public class RNode
 {

@@ -9,7 +9,7 @@
  *  and Thierry Hanser from IXELIS mail@ixelis.net
  *  
  *  IXELIS sarl - Semantic Information Systems
- *               17 rue des C�res 67200 Strasbourg, France
+ *               17 rue des C???res 67200 Strasbourg, France
  *               Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
   *
  *  CDK Contact: cdk-devel@lists.sf.net
@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  *  Substructure determination" C. Tonnelier, Ph. Jauffret, T. Hanser
  *  and G. Kaufmann. Tetrahedron Vol. 3, No 6, pp. 351-358, 1990.
  *  and modified in the These of T. Hanser "Apprentissage automatique 
- *  de m�hodes de synth�e �partir d'exemples". Universit�Louis Pasteur
+ *  de m???hodes de synth???e ???partir d'exemples". Universit???Louis Pasteur
  *  STRASBOURG 1993.
  *
  *  < FONT COLOR="#FF0000"> 
@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  *   < /FONT> 
  * 
  * @author     Stephane Werner from IXELIS mail@ixelis.net
- * @created    17 juillet 2002
+ * @created    2002-07-17
  *
  */
 

@@ -32,14 +32,14 @@ import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.math.*;
 
 /**
- * At his time this class does not work correcly.
+ * At this time this class does not work correcly.
  * The theory were from MAR89.
  *
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#MAR89">MAR89</a>
  *
  * @author    Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * @created   2 July 2001
+ * @created   2001-07-02
  */
 public class FourierGridBasis implements Basis
 {

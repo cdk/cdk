@@ -38,7 +38,7 @@ import javax.vecmath.*;
  *  </pre>
  *
  * @author     steinbeck
- * @created    October 2, 2000
+ * @created    2000-10-02
  */
 public class AtomContainer extends ChemObject implements java.io.Serializable, Cloneable {
 

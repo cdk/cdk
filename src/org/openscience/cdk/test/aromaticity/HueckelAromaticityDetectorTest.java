@@ -45,7 +45,7 @@ import junit.framework.*;
  *  Description of the Class
  *
  *@author     steinbeck
- *@created    October 6, 2002
+ *@created    2002-10-06
  */
 public class HueckelAromaticityDetectorTest extends TestCase
 {

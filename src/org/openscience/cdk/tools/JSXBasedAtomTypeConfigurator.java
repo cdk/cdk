@@ -40,7 +40,7 @@ import JSX.*;
  * can be found in org.openscience.cdk.config.structgen_atomtypes.xml.
  *
  * @author     steinbeck
- * @created    August 29, 2001
+ * @created    2001-08-29
  *
  * @keyword    atom, type
  */

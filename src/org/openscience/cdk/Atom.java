@@ -50,7 +50,7 @@ import javax.vecmath.*;
  * Junit test for this class.
  *
  * @author     steinbeck
- * @created    October 2, 2000
+ * @created    2000-10-02
  * @keyword    atom
  *
  * @see  org.openscience.cdk.test.AtomTest

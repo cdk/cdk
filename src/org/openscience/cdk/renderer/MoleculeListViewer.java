@@ -37,26 +37,15 @@ import java.util.zip.*;
 import java.io.*;
 
 /**
- *  Description of the Class
- *
- *@author     steinbeck
- *@created    October 29, 2002
+ * @author     steinbeck
+ * @created    2002-10-29
  */
 public class MoleculeListViewer extends JFrame
 {
-	/**
-	 *  Description of the Field
-	 */
 	protected StrucContainer panel;
 
-	/**
-	 *  Description of the Field
-	 */
 	protected JScrollPane scrollPane;
 
-	/**
-	 *  Description of the Field
-	 */
 	protected int noOfStructures = 0;
 
 	/**
@@ -64,14 +53,8 @@ public class MoleculeListViewer extends JFrame
 	 */
 	protected Dimension molViewDim = new Dimension(250, 250);
 
-	/**
-	 *  Description of the Field
-	 */
 	protected Vector moleculeViewerPanels = new Vector();
 
-	/**
-	 *  Description of the Field
-	 */
 	public static boolean standAlone = false;
 
 
@@ -145,11 +128,6 @@ public class MoleculeListViewer extends JFrame
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  g  Description of the Parameter
-	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -158,10 +136,8 @@ public class MoleculeListViewer extends JFrame
 
 
 	/**
-	 *  Description of the Class
-	 *
-	 *@author     steinbeck
-	 *@created    October 29, 2002
+	 * @author     steinbeck
+	 * @created    2002-10-29
 	 */
 	class StrucContainer extends JPanel
 	{

@@ -47,7 +47,7 @@ import javax.vecmath.*;
  *
  * @author     steinbeck
  * @author     Egon Willighagen
- * @created    October 2, 2000
+ * @created    2000-10-02
  * @keyword    file format, MDL molfile
  * @keyword    file format, SDF
  */

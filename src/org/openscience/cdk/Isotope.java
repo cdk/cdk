@@ -37,7 +37,7 @@ package org.openscience.cdk;
  * </pre>
  *
  * @author     steinbeck
- * @created    August 21, 2001
+ * @created    2001-08-21
  *
  * @keyword     isotope
  */

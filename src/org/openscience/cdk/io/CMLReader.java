@@ -46,7 +46,7 @@ import java.net.*;
  *   <a href="http://cdk.sf.net/biblio.html#WILLIGHAGEN2001">WILLIGHAGEN2001</a>
  *
  * @author     Egon L. Willighagen
- * @created    February 2001
+ * @created    2001-02-01
  *
  * @keyword file format, CML
  */

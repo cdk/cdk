@@ -43,10 +43,8 @@ import java.awt.*;
 import junit.framework.*;
 
 /**
- *  Description of the Class
- *
- *@author     steinbeck
- *@created    February 20, 2003
+ * @author     steinbeck
+ * @created    2003-02-20
  */
 public class SaturationCheckerTest extends TestCase
 {

@@ -38,7 +38,7 @@ import java.io.*;
  *  respect to a particular atom type
  *
  *@author     steinbeck
- *@created    September 4, 2001
+ *@created    2001-09-04
  *@keyword    saturation
  *@keyword    atom, valency
  */

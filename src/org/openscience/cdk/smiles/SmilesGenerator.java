@@ -55,7 +55,7 @@ import javax.vecmath.Vector2d;
  *
  * @author     Oliver Horlacher,
  * @author     Stefan Kuhn (chiral smiles)
- * @created    Feb 26, 2002
+ * @created    2002-02-26
  * @keyword    SMILES, generator
  */
 public class SmilesGenerator {
@@ -1379,7 +1379,7 @@ public class SmilesGenerator {
  *  Description of the Class
  *
  * @author     shk3
- * @created    June 17, 2003
+ * @created    2003-06-17
  */
 class BrokenBond {
 

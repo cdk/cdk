@@ -51,7 +51,7 @@ import junit.framework.*;
  * Tests the HOSECode genertor.
  *
  * @author     steinbeck
- * @created    November 16, 2002
+ * @created    2002-11-16
  */
 public class BremserPredictorTest extends TestCase
 {

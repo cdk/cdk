@@ -36,7 +36,7 @@ import java.io.*;
  *  Tools class with methods for handling molecular graphs
  *
  * @author     steinbeck
- * @created    17. Juni 2001
+ * @created    2001-06-17
  */
 public class PathTools  {
 	

@@ -32,7 +32,7 @@ import org.openscience.cdk.*;
  *  A set of utilities which did not really fit into any other category
  *
  * @author     steinbeck
- * @created    June 19, 2001
+ * @created    2001-06-19
  */
 public class SwissArmyKnife {
 

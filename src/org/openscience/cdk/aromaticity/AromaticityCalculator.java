@@ -36,7 +36,7 @@ import org.openscience.cdk.Bond;
 
 /**
  * @author     Oliver Horlacher <oliver.horlacher@therastrat.com>
- * @created    Mar 14, 2002
+ * @created    2002-03-14
  *
  * @keyword aromaticity detector
  */
