@@ -49,6 +49,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     public PseudoAtom(String label) {
         super("R");
         this.label = label;
+        this.fractionalPoint3D = null;
         this.point3D = null;
         this.point2D = null;
         // set these default, unchangable values
@@ -67,6 +68,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable
     public PseudoAtom(Atom atom) {
         super("R");
         super.setProperties(atom.getProperties());
+        this.fractionalPoint3D = fractionalPoint3D;
         this.point3D = atom.point3D;
         this.point2D = atom.point2D;
         super.setHydrogenCount(atom.getHydrogenCount());
