@@ -172,6 +172,13 @@ public class GeometryTools
 		translate2D(molecule, new Vector2d(transX, transY));
 	}
 	
+
+	/**
+	 * Calculates the center of the given atoms and returns it as a Point2d
+	 *
+	 * @param   atoms  The vector of the given atoms
+	 * @return     The center of the given atoms as Point2d
+	 */
 	public static Point2d get2DCenter(Vector atoms)
 	{
 		Atom atom; 
@@ -212,6 +219,111 @@ public class GeometryTools
 		}
 		return angle;
 	}
+	/**
+	 * Gets the coordinates of two points (that represent a bond) and
+	 * calculates for each the coordinates of two new points that have the given
+	 * distance vertical to the bond.
+	 *
+	 * @param   coords  The coordinates of the two given points of the bond
+	 * @param   dist  The vertical distance between the given points and those to be calculated
+	 * @return     The coordinates of the calculated four points
+	 */
+	public static int[] distanceCalculator(int[] coords,double dist)
+	{
+		double angle;
+		if ((coords[2] - coords[0]) == 0) angle = Math.PI/2;
+		else
+		{
+			angle = Math.atan(((double)coords[3] - (double)coords[1]) / ((double)coords[2] - (double)coords[0]));
+		}
+		int begin1X = (int)(Math.cos(angle + Math.PI/2) * dist + coords[0]);
+		int begin1Y = (int)(Math.sin(angle + Math.PI/2) * dist + coords[1]);
+		int begin2X = (int)(Math.cos(angle - Math.PI/2) * dist + coords[0]);
+		int begin2Y = (int)(Math.sin(angle - Math.PI/2) * dist + coords[1]);
+		int end1X = (int)(Math.cos(angle - Math.PI/2) * dist + coords[2]);
+		int end1Y = (int)(Math.sin(angle - Math.PI/2) * dist + coords[3]);
+		int end2X = (int)(Math.cos(angle + Math.PI/2) * dist + coords[2]);
+		int end2Y = (int)(Math.sin(angle + Math.PI/2) * dist + coords[3]);
+		
+		int[] newCoords = {begin1X,begin1Y,begin2X,begin2Y,end1X,end1Y,end2X,end2Y};
+		return newCoords; 
+	}
+
+
+	/**
+	 * Writes the coordinates of the atoms participating the given bond into an array.
+	 *
+	 * @param   bond   The given bond 
+	 * @return     The array with the coordinates
+	 */
+	public static int[] getBondCoordinates(Bond bond)
+	{
+		int beginX = (int)bond.getAtomAt(0).getPoint2D().x;
+		int endX = (int)bond.getAtomAt(1).getPoint2D().x;
+		int beginY = (int)bond.getAtomAt(0).getPoint2D().y;
+		int endY = (int)bond.getAtomAt(1).getPoint2D().y;
+		int[] coords = {beginX,beginY,endX,endY};
+		return coords;
+	}
+	
+
+	/**
+	 * Returns the atom of the given molecule that is closest to the given 
+	 * coordinates.
+	 *
+	 * @param   xPosition  The x coordinate
+	 * @param   yPosition  The y coordinate	
+	 * @param   molecule  The molecule that is searched for the closest atom
+	 * @return   The atom that is closest to the given coordinates  
+	 */
+	public static Atom getClosestAtom(int xPosition, int yPosition, Molecule molecule)
+	{
+		Atom closestAtom = null, currentAtom;
+		double smallestMouseDistance = -1, mouseDistance, atomX, atomY;
+		for (int i = 0; i < molecule.getAtomCount(); i++)
+		{
+			currentAtom = molecule.getAtomAt(i);
+			atomX = currentAtom.getX2D();
+			atomY = currentAtom.getY2D();
+			mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
+			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
+			{
+				smallestMouseDistance = mouseDistance;
+				closestAtom = currentAtom;
+			}
+		}
+		return closestAtom;
+	}
+	
+
+	/**
+	 * Returns the bond of the given molecule that is closest to the given 
+	 * coordinates.
+	 *
+	 * @param   xPosition  The x coordinate
+	 * @param   yPosition  The y coordinate	
+	 * @param   molecule  The molecule that is searched for the closest bond
+	 * @return   The bond that is closest to the given coordinates  
+	 */
+	public static Bond getClosestBond(int xPosition, int yPosition, Molecule molecule)
+	{
+		Point2d bondCenter;
+		Bond closestBond = null, currentBond;
+		double smallestMouseDistance = -1, mouseDistance, bondCenterX, bondCenterY;
+		for (int i = 0; i < molecule.getAtomCount(); i++)
+		{
+			currentBond = molecule.getBondAt(i);
+			bondCenter = get2DCenter(currentBond.getAtomsVector());
+			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
+			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
+			{
+				smallestMouseDistance = mouseDistance;
+				closestBond = currentBond;
+			}
+		}
+		return closestBond;
+	}
+
 	
 
 	/**

@@ -23,7 +23,7 @@
 
 package org.openscience.cdk.test;
 
-
+import org.openscience.cdk.controller.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.layout.*;
@@ -46,7 +46,7 @@ public class StructureDiagramGeneratorTest
 	public StructureDiagramGeneratorTest(String inFile)
 	{
 //		molecule = buildFusedRings();
-//		molecule = buildMolecule4x3();
+		molecule = buildMolecule4x3();
 //		molecule = buildMolecule2x3();
 //		molecule = buildMolecule2x4();
 //		molecule = buildSpiroRings();
@@ -71,7 +71,7 @@ public class StructureDiagramGeneratorTest
 		r2dm.setDrawNumbers(true);
 		mv.setRenderer2DModel(r2dm);
 		mv.display();
-		
+
 	}
 
 	/**

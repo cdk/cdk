@@ -40,8 +40,14 @@ public class Renderer2DModel
 	private Color backColor = Color.white;
 
 	private Color foreColor = Color.black;
+	
+	private Color highlightColor = Color.lightGray;
+	
+	private double highlightRadius = 6;
 
 	private boolean drawNumbers = false;	
+	
+	private int atomRadius = 6;
 
 	/**
 	 * Returns the distance between two lines in a double or triple bond
@@ -165,5 +171,74 @@ public class Renderer2DModel
 	public void setDrawNumbers(boolean drawNumbers)
 	{
 		this.drawNumbers = drawNumbers;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public Color getHighlightColor()
+	{
+	return this.highlightColor;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   highlightColor  
+	 */
+	public void setHighlightColor(Color highlightColor)
+	{
+	this.highlightColor = highlightColor;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public double getHighlightRadius()
+	{
+	return this.highlightRadius;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   highlightRadius  
+	 */
+	public void setHighlightRadius(double highlightRadius)
+	{
+	this.highlightRadius = highlightRadius;
+	}
+
+	
+
+	/**
+	 *
+	 *
+	 * @return     
+	 */
+	public int getAtomRadius()
+	{
+		return this.atomRadius;
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param   atomRadius  
+	 */
+	public void setAtomRadius(int atomRadius)
+	{
+		this.atomRadius = atomRadius;
 	}
 }

@@ -29,8 +29,9 @@ package org.openscience.cdk.renderer;
 
 import java.awt.*;
 import javax.vecmath.*;
-import java.util.Vector;
+import java.util.*;
 import org.openscience.cdk.ringsearch.*;
+import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.*;
 
 
@@ -38,9 +39,11 @@ import org.openscience.cdk.*;
 public class Renderer2D 
 {
 	SSSRFinder sssrf = new SSSRFinder();
-	Renderer2DModel r2dm;
+	public Renderer2DModel r2dm;
 	Graphics g;
 	Molecule molecule;
+	public Hashtable colorHash = new Hashtable();
+	
 
 	/**
 	 * Constructs a Renderer2D
@@ -79,24 +82,6 @@ public class Renderer2D
 		if (r2dm.drawNumbers()) paintNumbers(molecule.getAtoms(), molecule.getAtomCount());
 	}
 	
-	/**
-	 * Searches through all the atoms in the given array of atoms and triggers
-	 * the paintAtom method if the symbol of the atom is not C.
-	 *
-	 * @param   atoms     The array of atoms
-	 * @param   number    The number of atoms in this array
-	 */
-	private void paintAtoms(Atom[] atoms, int number)
-	{
-		for (int i = 0; i < number; i++)
-		{
-			if (!atoms[i].getElement().getSymbol().equals("C"))
-			{
-				paintAtom(atoms[i]);
-			}
-		}
-	}
-
 
 	/**
 	 * Draw all numbers of all atoms in the molecule
@@ -142,7 +127,53 @@ public class Renderer2D
 		}
 	}
 
+	/**
+	 * Searches through all the atoms in the given array of atoms, triggers the
+	 * paintColouredAtoms method if the atom has got a certain color and triggers
+	 * the paintAtomSymbol method if the symbol of the atom is not C.
+	 *
+	 * @param   atoms     The array of atoms
+	 * @param   number    The number of atoms in this array
+	 */
+	private void paintAtoms(Atom[] atoms, int number)
+	{
+		Color atomColor; 
+		Atom atom;
+		for (int i = 0; i < number; i++)
+		{
+			atom = atoms[i];
+			atomColor = (Color)colorHash.get(atom);
+//			System.out.println("color aus dem hash  "+ colorHash.get(atom));
+			if (atomColor != null)
+			{
+				paintColouredAtom(atom, atomColor);
+			}
+			else
+			{
+				atomColor = r2dm.getBackColor();
+			}			
+			if (!atom.getElement().getSymbol().equals("C"))
+			{
+				paintAtomSymbol(atom, atomColor);
+			}
+		}
+	}
 
+
+	/**
+	 * Paints a rectangle of the given color at the position of the given atom.
+	 * For example when the atom is highlighted.
+	 *
+	 * @param   atom  The atom to be drawn
+	 * @param   color  The color of the atom to be drawn
+	 */
+	private void paintColouredAtom(Atom atom, Color color)
+	{
+		int atomRadius = r2dm.getAtomRadius();
+		g.setColor(color);
+		g.fillRect((int)atom.getX2D() - (atomRadius / 2), (int)atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
+	}
+	
 	/**
 	 * Paints the given atom.
 	 * first some empty space, slightly larger than the space
@@ -151,35 +182,46 @@ public class Renderer2D
 	 *
 	 * @param   atom    The atom to be drawn
 	 */
-	private void paintAtom(Atom atom)
+	private void paintAtomSymbol(Atom atom, Color backColor)
 	{
 		if (atom.getPoint2D() == null) return;
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getElement().getSymbol())/2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
-		g.setColor(r2dm.getBackColor());
+		g.setColor(backColor);
 		g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
 		g.setColor(r2dm.getForeColor());
 		g.drawString(atom.getElement().getSymbol(),(int)(atom.getPoint2D().x - xSymbOffset),(int)(atom.getPoint2D().y + ySymbOffset));
-		g.setColor(r2dm.getBackColor());
-		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
+//		g.setColor(r2dm.getBackColor());
+//		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}
 
+
+	/**
+	 *
+	 *
+	 * @param   bonds  
+	 * @param   number  
+	 * @param   ringSet  
+	 */
 	private void paintBonds(Bond[] bonds, int number, RingSet ringSet)
 	{
+		Color bondColor;
 		Ring ring;
 		for (int i = 0; i < number; i++)
 		{
+			bondColor = (Color)colorHash.get(bonds[i]);
+			if (bondColor == null) bondColor = r2dm.getForeColor();
 			ring = ringSet.getHeaviestRing(bonds[i]);
 			if (ring != null)
 			{
-					paintRingBond(bonds[i], ring);
+					paintRingBond(bonds[i], ring, bondColor);
 
 			}
 			else
 			{
-				paintBond(bonds[i]);
+				paintBond(bonds[i], bondColor);
 			}
 		}
 	}
@@ -190,20 +232,20 @@ public class Renderer2D
 	 *
 	 * @param   bond    The Bond to be drawn.
 	 */
-	private void paintBond(Bond bond)
+	private void paintBond(Bond bond, Color bondColor)
 	{
 		if (bond.getAtomAt(0).getPoint2D() == null || bond.getAtomAt(1).getPoint2D() == null) return;
 		if (bond.getOrder() == 1)
 		{
-			paintSingleBond(bond);
+			paintSingleBond(bond, bondColor);
 		}
 		else if (bond.getOrder() == 2)
 		{
-			paintDoubleBond(bond);
+			paintDoubleBond(bond, bondColor);
 		}
 		else if (bond.getOrder() == 3)
 		{
-			paintTripleBond(bond);
+			paintTripleBond(bond, bondColor);
 		}
 	}
 	
@@ -214,20 +256,20 @@ public class Renderer2D
 	 *
 	 * @param   bond    The Bond to be drawn.
 	 */
-	private void paintRingBond(Bond bond, Ring ring)
+	private void paintRingBond(Bond bond, Ring ring, Color bondColor)
 	{
 		if (bond.getOrder() == 1)
 		{
-			paintSingleBond(bond);
+			paintSingleBond(bond, bondColor);
 		}
 		else if (bond.getOrder() == 2)
 		{
-			paintSingleBond(bond);
-			paintInnerBond(bond,ring);
+			paintSingleBond(bond, bondColor);
+			paintInnerBond(bond,ring, bondColor);
 		}
 		else if (bond.getOrder() == 3)
 		{
-			paintTripleBond(bond);
+			paintTripleBond(bond, bondColor);
 		}
 	}
 
@@ -236,9 +278,9 @@ public class Renderer2D
 	 *
 	 * @param   bond  The singlebond to be drawn
 	 */
-	private void paintSingleBond(Bond bond)
+	private void paintSingleBond(Bond bond, Color bondColor)
 	{
-		paintOneBond(getBondCoordinates(bond));
+		paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor);
 		
 	}
 	
@@ -248,15 +290,15 @@ public class Renderer2D
 	 *
 	 * @param   bond  The doublebond to be drawn
 	 */
-	private void paintDoubleBond(Bond bond)
+	private void paintDoubleBond(Bond bond, Color bondColor)
 	{
-		int[] coords = distanceCalculator(getBondCoordinates(bond),r2dm.getBondDistance()/2);
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond),r2dm.getBondDistance()/2);
 		
 		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
-		paintOneBond(newCoords1);
+		paintOneBond(newCoords1, bondColor);
 		
 		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
-		paintOneBond(newCoords2);
+		paintOneBond(newCoords2, bondColor);
 				
 	}
 	
@@ -265,17 +307,17 @@ public class Renderer2D
 	 *
 	 * @param   bond  The triplebond to be drawn
 	 */
-	private void paintTripleBond(Bond bond)
+	private void paintTripleBond(Bond bond, Color bondColor)
 	{
-		paintSingleBond(bond);
+		paintSingleBond(bond, bondColor);
 		
-		int[] coords = distanceCalculator(getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
 		
 		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
-		paintOneBond(newCoords1);
+		paintOneBond(newCoords1, bondColor);
 		
 		int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
-		paintOneBond(newCoords2);
+		paintOneBond(newCoords2, bondColor);
 	}
 	
 	/**
@@ -284,22 +326,22 @@ public class Renderer2D
 	 * @param   bond  The bond to be drawn
 	 * @param   ring  The ring the bond is part of
 	 */
-	private void paintInnerBond(Bond bond, Ring ring)
+	private void paintInnerBond(Bond bond, Ring ring, Color bondColor)
 	{
 		Point2d center = ring.get2DCenter();
 
-		int[] coords = distanceCalculator(getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x),2) + Math.pow((coords[1] - center.y),2));
 		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x),2) + Math.pow((coords[3] - center.y),2));
 		if (dist1 < dist2)	
 		{
 			int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
-			paintOneBond(shortenBond(newCoords1, ring.getRingSize()));
+			paintOneBond(shortenBond(newCoords1, ring.getRingSize()), bondColor);
 		}
 		else
 		{
 			int[] newCoords2 = {coords[2],coords[3],coords[4],coords[5]};
-			paintOneBond(shortenBond(newCoords2, ring.getRingSize()));
+			paintOneBond(shortenBond(newCoords2, ring.getRingSize()), bondColor);
 		}	
 	}
 	
@@ -326,59 +368,13 @@ public class Renderer2D
 	 *
 	 * @param   coords  
 	 */
-	private void paintOneBond(int[] coords)
+	private void paintOneBond(int[] coords, Color bondColor)
 	{
-		int[] newCoords = distanceCalculator(coords, r2dm.getBondWidth()/2);
+		g.setColor(bondColor);
+			System.out.println("bondColor  "+ bondColor);
+		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth()/2);
 		int[] xCoords = {newCoords[0],newCoords[2],newCoords[4],newCoords[6]};
 		int[] yCoords = {newCoords[1],newCoords[3],newCoords[5],newCoords[7]};
 		g.fillPolygon(xCoords,yCoords,4);
 	}
-	
-
-	/**
-	 * Writes the coordinates of the atoms participating the given bond into an array.
-	 *
-	 * @param   bond   The given bond 
-	 * @return     The array with the coordinates
-	 */
-	private int[] getBondCoordinates(Bond bond)
-	{
-		int beginX = (int)bond.getAtomAt(0).getPoint2D().x;
-		int endX = (int)bond.getAtomAt(1).getPoint2D().x;
-		int beginY = (int)bond.getAtomAt(0).getPoint2D().y;
-		int endY = (int)bond.getAtomAt(1).getPoint2D().y;
-		int[] coords = {beginX,beginY,endX,endY};
-		return coords;
-	}
-	
-	/**
-	 * Gets the coordinates of two points (that represent a bond) and
-	 * calculates for each the coordinates of two new points that have the given
-	 * distance vertical to the bond.
-	 *
-	 * @param   coords  The coordinates of the two given points of the bond
-	 * @param   dist  The distance between the given points and those to be calculated
-	 * @return     The coordinates of the calculated four points
-	 */
-	private int[] distanceCalculator(int[] coords,double dist)
-	{
-		double angle;
-		if ((coords[2] - coords[0]) == 0) angle = Math.PI/2;
-		else
-		{
-			angle = Math.atan(((double)coords[3] - (double)coords[1]) / ((double)coords[2] - (double)coords[0]));
-		}
-		int begin1X = (int)(Math.cos(angle + Math.PI/2) * dist + coords[0]);
-		int begin1Y = (int)(Math.sin(angle + Math.PI/2) * dist + coords[1]);
-		int begin2X = (int)(Math.cos(angle - Math.PI/2) * dist + coords[0]);
-		int begin2Y = (int)(Math.sin(angle - Math.PI/2) * dist + coords[1]);
-		int end1X = (int)(Math.cos(angle - Math.PI/2) * dist + coords[2]);
-		int end1Y = (int)(Math.sin(angle - Math.PI/2) * dist + coords[3]);
-		int end2X = (int)(Math.cos(angle + Math.PI/2) * dist + coords[2]);
-		int end2Y = (int)(Math.sin(angle + Math.PI/2) * dist + coords[3]);
-		
-		int[] newCoords = {begin1X,begin1Y,begin2X,begin2Y,end1X,end1Y,end2X,end2Y};
-		return newCoords; 
-	}
-	
 }

@@ -41,8 +41,8 @@ public class MoleculeViewer2D extends JPanel
 {
 	static Molecule molecule;
 	
-	Renderer2DModel r2dm;
-	Renderer2D renderer;
+	public Renderer2DModel r2dm;
+	public Renderer2D renderer;
 
 	public MoleculeViewer2D(Molecule molecule)
 	{
