@@ -1,6 +1,7 @@
-/* CDKInputAdapter.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -33,14 +34,12 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.*;
 import java.awt.*;
 
-
-
 public class CDKInputAdapter extends JCPController2D implements MouseMotionListener, MouseListener, KeyListener
 {
-	
+
 	public CDKInputAdapter(AtomContainer atomCon, Renderer2DModel r2dm, JCPController2DModel c2dm)
 	{
 		super(atomCon, r2dm, c2dm);
 	}
-	
+
 }

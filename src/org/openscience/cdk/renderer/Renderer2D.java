@@ -1,6 +1,7 @@
-/* Renderer2D.java
- * 
- * $RCSfile$    $Author$    $Date$    $Revision$
+/* $RCSfile$    
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
  * 
@@ -189,21 +190,22 @@ public class Renderer2D
 		{
 			atom = atomCon.getAtomAt(i);
 			atomColor = (Color)r2dm.getColorHash().get(atom);
-			if (atom == r2dm.getHighlightedAtom()) atomColor = r2dm.getHighlightColor();
+			if (atom == r2dm.getHighlightedAtom()) 
+              atomColor = r2dm.getHighlightColor();
 			if (atomColor != null)
 			{
 				paintColouredAtom(atom, atomColor);
 			}
-			else
-			{
+			else {
 				atomColor = r2dm.getBackColor();
-			}			
+			}
 			if (!atom.getSymbol().equals("C"))
 			{
+                /* only show element for non-carbon atoms,
+                   unless (see below)... */
 				paintAtomSymbol(atom, atomColor);
-			}
-			else if (atomCon.getBondCount(atom) == 0)
-			{
+			} else if (atomCon.getBondCount(atom) == 0) {
+                // if atom has no bond always show element
 				paintAtomSymbol(atom, atomColor);
 			}
 		}
@@ -223,26 +225,42 @@ public class Renderer2D
 		g.setColor(color);
 		g.fillRect((int)atom.getX2D() - (atomRadius / 2), (int)atom.getY2D() - (atomRadius / 2), atomRadius, atomRadius);
 	}
-	
+
 	/**
-	 * Paints the given atom.
-	 * first some empty space, slightly larger than the space
-	 * that the symbol occupies, is drawn using the background color.
+	 * Paints the given atom symbol.
+	 * It first outputs some empty space using the background color, 
+     * slightly larger than the space that the symbol occupies. 
 	 * The atom symbol is then printed into the empty space.
 	 *
 	 * @param   atom    The atom to be drawn
 	 */
-	private void paintAtomSymbol(Atom atom, Color backColor)
-	{
+	private void paintAtomSymbol(Atom atom, Color backColor) {
 		if (atom.getPoint2D() == null) return;
 		FontMetrics fm = g.getFontMetrics();
 		int fontSize = g.getFont().getSize();
 		int xSymbOffset = (new Integer(fm.stringWidth(atom.getSymbol())/2)).intValue();
 		int ySymbOffset = (new Integer(fm.getAscent()/2)).intValue();
+        // make empty space
 		g.setColor(backColor);
-		g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),(int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),(int)fontSize,(int)fontSize); 
+		g.fillRect((int)(atom.getPoint2D().x - (xSymbOffset * 1.8)),
+                   (int)(atom.getPoint2D().y - (ySymbOffset * 0.8)),
+                   (int)fontSize,
+                   (int)fontSize);
+        // draw symbol
 		g.setColor(r2dm.getForeColor());
-		g.drawString(atom.getSymbol(),(int)(atom.getPoint2D().x - xSymbOffset),(int)(atom.getPoint2D().y + ySymbOffset));
+        // but first determine symbol
+        String symbol = atom.getSymbol();
+        // if there are implicit hydrogens, draw them
+        int implicitHydrogen = atom.getHydrogenCount();
+        if (implicitHydrogen > 0) {
+            symbol = symbol + "H";
+            if (implicitHydrogen > 1) {
+                symbol = symbol + implicitHydrogen;
+            }
+        }
+		g.drawString(symbol,
+                     (int)(atom.getPoint2D().x - xSymbOffset),
+                     (int)(atom.getPoint2D().y + ySymbOffset));
 //		g.setColor(r2dm.getBackColor());
 //		g.drawLine((int)atom.getPoint2D().x,(int)atom.getPoint2D().y,(int)atom.getPoint2D().x,(int)atom.getPoint2D().y);
 	}
@@ -379,7 +397,7 @@ public class Renderer2D
 	private void paintTripleBond(Bond bond, Color bondColor)
 	{
 		paintSingleBond(bond, bondColor);
-		
+
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond),(r2dm.getBondWidth()/2 + r2dm.getBondDistance()));
 		
 		int[] newCoords1 = {coords[0],coords[1],coords[6],coords[7]};
