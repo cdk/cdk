@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,9 +24,13 @@
  */
 package org.openscience.cdk.test.applications.swing;
 
+import java.awt.BorderLayout;
+import javax.swing.JFrame;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.openscience.cdk.applications.swing.PeriodicTablePanel;
+import org.openscience.cdk.tools.AtomTypeFactory;
 
 /**
  *  Checks the funcitonality of the PeriodicTablePanelTest
@@ -36,8 +39,7 @@ import junit.framework.TestSuite;
  *@created       February 10, 2004
  *@cdkPackage    test
  */
-public class PeriodicTablePanelTest extends TestCase
-{
+public class PeriodicTablePanelTest extends TestCase {
 
 	AtomTypeFactory atf = null;
 
@@ -58,17 +60,6 @@ public class PeriodicTablePanelTest extends TestCase
 	 */
 	public void setUp()
 	{
-	}
-
-
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite()
-	{
-		return new TestSuite(AtomTypeFactoryTest.class);
 	}
 
 
@@ -94,7 +85,7 @@ public class PeriodicTablePanelTest extends TestCase
 	 */
 	public static void main(String[] args)
 	{
-		PeriodicTablePanelTest ptpt = new PeriodicTablePanelTest();
+		PeriodicTablePanelTest ptpt = new PeriodicTablePanelTest("Visual Test");
 		ptpt.setUp();
 		ptpt.runVisual();
 
