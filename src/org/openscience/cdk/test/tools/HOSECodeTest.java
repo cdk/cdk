@@ -27,7 +27,7 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-package org.openscience.cdk.tools.test;
+package org.openscience.cdk.test.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.*;
@@ -101,7 +101,7 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
-				//System.out.println("Atom " + (f + 1) + ": " + s);
+				System.out.println(s + ",");
 			}
 		} catch (Exception exc)
 		{
@@ -129,7 +129,8 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				//System.out.println("Atom " + (f + 1) + ": " + s);
+				System.out.println(s + ",");
+				
 			}
 		} catch (Exception exc)
 		{
@@ -155,7 +156,7 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				//System.out.println("Atom " + (f + 1) + ": " + s);
+				System.out.println(s + ",");
 			}
 		} catch (Exception exc)
 		{
@@ -180,7 +181,7 @@ public class HOSECodeTest extends TestCase
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				//System.out.println("Atom " + (f + 1) + ": " + s);
+				System.out.println(s + ",");
 			}
 		} catch (Exception exc)
 		{
@@ -203,12 +204,10 @@ public class HOSECodeTest extends TestCase
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				//System.out.println("Atom " + molecule.getAtomAt(f).getSymbol() + "-" + (f + 1));
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-				//System.out.println(molecule.getAtomAt(f).flags[CDKConstants.ISAROMATIC]);
-				//System.out.println(s);
+				System.out.println(s + ",");
 			}
-            Bond[] bonds = molecule.getBonds();
+			Bond[] bonds = molecule.getBonds();
 			for (int f = 0; f < bonds.length; f++)
 			{
 				//System.out.println(bonds[f].flags[CDKConstants.ISAROMATIC]);
@@ -272,7 +271,7 @@ public class HOSECodeTest extends TestCase
 		//hct.test2();
 		//hct.test3();
 		//hct.test4();
-		//hct.testBug655169();
+		hct.testBug655169();
 	}
 }
 
