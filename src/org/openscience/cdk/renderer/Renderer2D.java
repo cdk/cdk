@@ -122,7 +122,8 @@ public class Renderer2D implements MouseMotionListener   {
 	}
 
     public void paintChemModel(ChemModel model, Graphics graphics) {
-      tooltiparea=null;
+        tooltiparea=null;
+        paintPointerVector(graphics);
         if (model.getSetOfReactions() != null) {
             paintSetOfReactions(model.getSetOfReactions(), graphics);
         }
@@ -303,9 +304,6 @@ public class Renderer2D implements MouseMotionListener   {
 		}
 		for (int i = 0; i < molecules.length; i++) {
 			ringSet.add(sssrf.findSSSR(molecules[i]));
-		}
-		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null) {
-			paintPointerVector(graphics);
 		}
 		paintBonds(atomCon, ringSet, graphics);
 		paintAtoms(atomCon, graphics);
@@ -1136,16 +1134,24 @@ public class Renderer2D implements MouseMotionListener   {
 	 */
 	public void paintPointerVector(Graphics graphics)
 	{
-		Point startPoint = r2dm.getPointerVectorStart();
-		Point endPoint = r2dm.getPointerVectorEnd();
-		int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
-		int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
-        int[] screenCoords = getScreenCoordinates(newCoords);
-		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
-		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
-	    graphics.setColor(r2dm.getForeColor());
-        // apply zoomFactor
-	    graphics.fillPolygon(xCoords, yCoords, 4);
+		if (r2dm.getPointerVectorStart() != null) {
+            if (r2dm.getPointerVectorEnd() != null) {
+                Point startPoint = r2dm.getPointerVectorStart();
+                Point endPoint = r2dm.getPointerVectorEnd();
+                int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
+                int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
+                int[] screenCoords = getScreenCoordinates(newCoords);
+                int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
+                int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
+                graphics.setColor(r2dm.getForeColor());
+                // apply zoomFactor
+                graphics.fillPolygon(xCoords, yCoords, 4);
+            } else {
+                logger.warn("Start point of vector was not null, but end was!");
+            }
+        } else if (r2dm.getPointerVectorEnd() != null) {
+            logger.warn("End point of vector was not null, but start was!");
+        }
 	}
 
 	/**
