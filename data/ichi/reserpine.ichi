@@ -1,0 +1,20 @@
+<IChI version="0.932Beta">
+
+ <structure number="1" id.name="" id.value="">
+
+  <identifier version="0.932Beta" tautomeric="0">
+   <basic>C33H40N2O9,1H3-38-18-7H-8H-19-20(11H-18)34H-25-23(19)12H2-13H2-35-16H2-28H-14H2-31H(33H(43-6H3)32H(27(37)42-5H3)30H(28)15H2-29H(25)35)44-26(36)17-9H-21(39-2H3)24(41-4H3)22(10H-17)40-3H3</basic>
+   <charge></charge>
+   <stereo>
+    <dbond></dbond>
+    <sp3>28?,29?,30?,31?,32?,33?</sp3>
+   </stereo>
+  </identifier>
+
+  <identifier.auxiliary-info version="0.932Beta" tautomeric="0">
+   <!-- Auxiliary info is not a part of the identifier, it is not unique -->
+   <atom.orig-nbr>35,38,42,40,34,43,1,6,29,25,3,13,12,21,14,17,24,2,5,4,28,26,9,27,8,23,32,16,10,15,20,18,19,7,11,36,44,30,37,41,39,33,31,22</atom.orig-nbr>
+   <atom.equivalence>(2,3)(9,10)(21,22)(39,40)</atom.equivalence>
+  </identifier.auxiliary-info>
+ </structure>
+</IChI>
