@@ -277,7 +277,7 @@ TOKEN :
 /* Skip the "a" letter for greek numbers */
 SKIP :
 {
-    < A : "a" >
+    < A : "a" > | < SPACE : " " >
 }
 
 TOKEN : /*BOND MODIFIERS*/
