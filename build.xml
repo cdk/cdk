@@ -364,10 +364,11 @@
         
 	      <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
         <target id="javacc" name="javacc" depends="init, check" if="hasAnt16" unless="dotjjfiles.uptodate">
+          <!-- the IUPAC name parser -->
           <delete>
               <fileset id="javacc-generated" 
-              dir="${src}/org/openscience/cdk/iupac/parser/" 
-              includes="NomParser*.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
+                dir="${src}/org/openscience/cdk/iupac/parser/" 
+                includes="NomParser*.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
           </delete>
           <javacc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj" 
             outputdirectory="${src}/org/openscience/cdk/iupac/parser/" 
