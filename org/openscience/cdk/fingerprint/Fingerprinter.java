@@ -50,7 +50,8 @@ public class Fingerprinter implements CDKConstants
 	static int defaultSize = 1024;
 	static int searchDepth = 7;
 	static Hashtable pathes;
-
+	static boolean debug = true;
+	static int debugCounter = 0;
 
 	/**
 	 *  Generates a fingerprint of the default size for the given AtomContainer
@@ -96,6 +97,7 @@ public class Fingerprinter implements CDKConstants
 	static void findPathes(AtomContainer ac)
 	{
 		pathes = new Hashtable();
+		debugCounter = 0;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			for (int g = 0; g < ac.getAtomCount(); g++)
@@ -122,16 +124,23 @@ public class Fingerprinter implements CDKConstants
 		root.flags[VISITED] = true;
 		currentDepth++;
 		String newPath = new String(currentPath);
+		String reversePath = null;
+		StringBuffer strBuff = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
 			nextAtom = bonds[f].getConnectedAtom(root);
 			if (!nextAtom.flags[VISITED])
 			{
 				newPath += nextAtom.getSymbol();
-				if (!pathes.containsKey(newPath))
+				reversePath = new StringBuffer(newPath).reverse().toString();
+				if (!pathes.containsKey(newPath) && !pathes.containsKey(reversePath))
 				{
 					pathes.put(newPath, newPath);
-					System.out.println(newPath + ", Hash: " + newPath.hashCode());
+					if (debug)
+					{
+						debugCounter ++;
+						System.out.println("Path no. " + debugCounter + ": " + newPath + ", Hash: " + newPath.hashCode());
+					}
 				}
 				if (currentDepth == searchDepth)
 				{

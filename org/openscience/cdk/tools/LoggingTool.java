@@ -43,7 +43,8 @@ public class LoggingTool {
             // configure Log4J
             URL url = getClass().getClassLoader().getResource("org/openscience/cdk/config/log4j.properties");
             // debug(url.toString());
-            (org.apache.log4j.PropertyConfigurator).configure(url);
+            //(org.apache.log4j.PropertyConfigurator).configure(url);
+	    org.apache.log4j.PropertyConfigurator.configure(url);
         } catch (NoClassDefFoundError e) {
             tostdout = true;
         } catch (NullPointerException e) {

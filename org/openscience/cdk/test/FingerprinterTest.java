@@ -42,7 +42,9 @@ public class FingerprinterTest
 	{
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		BitSet bs = Fingerprinter.getFingerprint(mol);
+		System.out.println("Resulting BitSet looks like:");
 		System.out.println(bs);
+		System.out.println("(Numbers indicate position of '1' Bits)");
 		return false;
 	}
 

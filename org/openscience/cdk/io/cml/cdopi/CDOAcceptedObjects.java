@@ -35,7 +35,7 @@ public class CDOAcceptedObjects {
   }
 
   public void add(String object) {
-    objects.add(object);
+    objects.addElement(object);
   }
 
   public boolean contains(String object) {

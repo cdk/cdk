@@ -1,6 +1,7 @@
 <project name="CDK" default="compile" basedir=".">
 
-        <property name="build.compiler" value="modern" />
+        <property name="build.compiler" value="javac1.1" />
+	<property name="build.target" value="1.1" />
         <property name="build" value="build" />
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
@@ -17,11 +18,9 @@
                 location="/usr/lib/j2sdk1.3/jre/lib/rt.jar" />
 
                 <pathelement location="." />
-
                 <fileset dir="jar">
                         <include name="*.jar" />
                 </fileset>
-
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
                 </fileset>
@@ -49,9 +48,51 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target name="compile" depends="init">
+
+
+        <target name="compile118" depends="init">
+                <echo message="Compiling only the classes that are needed 
+		for use in a drawing applet and don't use Java3d." />
                 <echo
-                message="Compiling only the classes that don't use Java3d." />
+                message="Use 'compile-with-java3d' target for full Java3D support. " />
+                <mkdir dir="${build}" />
+
+                <javac destdir="${build}" optimize="on" debug="off" deprecation="off">
+                        <src path="." />
+                        <exclude name="${sourcedist}/**" />
+                        <exclude name="org/openscience/cdk/test/**"/>
+                        <exclude name="org/openscience/cdk/database/**"/>
+                        <exclude name="org/openscience/cdk/renderer/Molecule*.*"/>
+                        <exclude name="org/openscience/cdk/renderer/GraphRend*.*"/>
+                        <exclude name="org/openscience/cdk/renderer/AtomicTable*.*"/>
+                        <exclude name="org/openscience/cdk/io/CMLReader*.*"/>			
+
+                        <exclude
+                        name="org/openscience/cdk/applications/Viewer.java" />
+                        <exclude
+                        name="org/openscience/cdk/renderer/AcceleratedRenderer3D*" />
+                        <exclude
+                        name="org/openscience/cdk/renderer/OrbitalsRenderer3D*" />
+                        <exclude
+                        name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java" />
+                        <exclude
+                        name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
+                        <exclude
+                        name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
+                        <exclude
+                        name="org/openscience/cdk/test/ZMatrixReaderTest.java" />
+
+                        <classpath refid="project.class.path" />
+                </javac>
+
+                <copy todir="${build}">
+                        <fileset dir="." includes="**/Test-*" />
+                </copy>
+        </target>
+
+	
+        <target name="compile" depends="init">
+                <echo message="Compiling only the classes that don't use Java3d." />
 
                 <echo
                 message="Use 'compile-with-java3d' target for full Java3D support. " />
@@ -60,7 +101,6 @@
 
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="." />
-
                         <exclude name="${sourcedist}/**" />
                         <exclude
                         name="org/openscience/cdk/applications/Viewer.java" />
@@ -251,7 +291,7 @@
         </target>
 
         <target name="run" depends="dist">
-                <java classname="org.openscience.cdk.test.Renderer2DTest" fork="yes">
+                <java classname="org.openscience.cdk.test.FingerprinterTest" fork="yes">
                         <classpath>
                                 <pathelement
                                 location="${dist}/jar/cdk.jar" />
@@ -278,5 +318,6 @@
                 </javadoc>
         </target>
 </project>
+
 
 
