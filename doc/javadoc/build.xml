@@ -87,6 +87,18 @@
         </javadoc>
     </target>
 
+    <target name="dependencies" id="dependencies" depends="compileDoclets">
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="MakeJarDependencyDoclet" path="."/>
+
+            <packageset dir="../../src/">
+              <include name="org/openscience/cdk/**"/>
+            </packageset>
+        </javadoc>
+    </target>
+
     <target name="xmi" id="xmi" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
@@ -102,7 +114,7 @@
 
     <target name="compileDoclets" id="compileDoclets">
       <javac srcdir="source" destdir="."
-             includes="*.java">
+             includes="*.java" debug="on" optimize="off">
         <classpath>
           <fileset dir="${java.ext.dirs}">
             <include name="tools.jar" />
