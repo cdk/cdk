@@ -84,6 +84,7 @@
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="${src}/org/openscience/cdk/libio" />
                         <src path="${src}/org/openscience/cdk/test/libio" />
+                        <src path="${src}/org/openscience/cdk/applications"/>
 
                         <classpath refid="project.class.path" />
                         <classpath>
@@ -240,7 +241,7 @@
         </target>
 
         <target name="dist-apps" depends="compile-apps">
-                <jar jarfile="${dist}/jar/cdk-apps.jar">
+                <jar jarfile="${dist}/jar/cdk-apps.jar" manifest="${src}/cdk-apps.manifest">
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/applications/**" />
                     </fileset>
@@ -263,7 +264,9 @@
                     <fileset dir="${build}">
                         <include name="org/openscience/cdk/libio/**" />
                         <include name="org/openscience/cdk/test/libio/**" />
-                        <include name="org/openscience/jmol/PublicJmol.class" />
+                    </fileset>
+                    <fileset dir="${build}">
+                        <include name="org/openscience/jmol/**" />
                     </fileset>
                 </jar>
         </target>
