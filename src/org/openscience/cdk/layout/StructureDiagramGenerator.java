@@ -66,8 +66,8 @@ import org.openscience.cdk.tools.HydrogenAdder;
  *@author     steinbeck
  *@created    February 2, 2004
  *@see        org.openscience.cdk.tools.ConnectivityChecker#partitionIntoMolecules(AtomContainer)
- *@keyword    layout
- *@keyword    2D-coordinates
+ *@cdk.keyword    layout
+ *@cdk.keyword    2D-coordinates
  */
 public class StructureDiagramGenerator
 {

@@ -45,7 +45,7 @@ import org.openscience.cdk.SetOfReactions;
  * @author   Egon Willighagen
  * @created  2003-04-01
  *
- * @keyword  id, creation
+ * @cdk.keyword  id, creation
  */
 public class IDCreator {
 

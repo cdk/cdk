@@ -52,7 +52,7 @@ import javax.swing.JPopupMenu;
  *
  *@author     steinbeck
  *@created    February 4, 2004
- *@keyword    mouse events
+ *@cdk.keyword    mouse events
  */
 public class Controller2D
 {

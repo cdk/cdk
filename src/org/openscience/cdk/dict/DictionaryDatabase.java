@@ -39,7 +39,7 @@ import java.util.Hashtable;
  *
  * @author     Egon Willighagen
  * @created    2003-04-06
- * @keyword    dictionary
+ * @cdk.keyword    dictionary
  * @cdk.depends    stmml.jar
  * @cdk.depends    castor.jar
  */

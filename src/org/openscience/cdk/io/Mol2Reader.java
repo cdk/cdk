@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.AtomTypeFactory;
  * @author     Egon Willighagen
  * @created    2003-08-21
  *
- * @keyword    file format, Mol2
+ * @cdk.keyword    file format, Mol2
  */
 public class Mol2Reader extends DefaultChemObjectReader {
 

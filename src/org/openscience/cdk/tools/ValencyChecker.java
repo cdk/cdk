@@ -48,7 +48,7 @@ import org.openscience.cdk.exception.CDKException;
  * @author     Egon Willighagen
  * @created    2004-01-07
  *
- * @keyword    atom, valency
+ * @cdk.keyword    atom, valency
  */
 public class ValencyChecker implements ValencyCheckerInterface {
 

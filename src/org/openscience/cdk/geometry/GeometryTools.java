@@ -277,7 +277,7 @@ public class GeometryTools {
      *
      * @param ac        AtomContainer for which the center of mass is calculated
      *
-     * @keyword center of mass
+     * @cdk.keyword center of mass
      */
     public static Point2d get2DCentreOfMass(AtomContainer ac) {
         double x = 0.0;
@@ -303,7 +303,7 @@ public class GeometryTools {
      *
      * @param ac        AtomContainer for which the center of mass is calculated
      *
-     * @keyword center of mass
+     * @cdk.keyword center of mass
      */
     public static Point3d get3DCentreOfMass(AtomContainer ac) {
         double x = 0.0;

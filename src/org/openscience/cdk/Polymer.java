@@ -37,7 +37,7 @@ import java.util.Hashtable;
  *
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @created    2001-08-06
- * @keyword    polymer
+ * @cdk.keyword    polymer
  *
  */
 public class Polymer extends Molecule implements java.io.Serializable, Cloneable

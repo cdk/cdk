@@ -39,7 +39,7 @@ import freeware.PrintfFormat;
  *
  * @author     Egon Willighagen
  * @created    2003-10-22
- * @keyword    IUPAC name
+ * @cdk.keyword    IUPAC name
  */
 public class IUPACNameGenerator
 {

@@ -33,8 +33,8 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword animation
- * @keyword reaction
+ * @cdk.keyword animation
+ * @cdk.keyword reaction
  */
 public class ChemSequence extends ChemObject implements java.io.Serializable, Cloneable
 {

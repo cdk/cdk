@@ -49,7 +49,7 @@ import org.openscience.cdk.validate.ValidatorEngine;
  * @author     egonw
  * @created    2003-07-14
  *
- * @keyword    command line util
+ * @cdk.keyword    command line util
  */
 public class Validator {
 

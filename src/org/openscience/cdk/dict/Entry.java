@@ -37,7 +37,7 @@ package org.openscience.cdk.dict;
  *
  * @author     Egon Willighagen
  * @created    2003-08-23
- * @keyword    dictionary
+ * @cdk.keyword    dictionary
  */
 public class Entry {
     

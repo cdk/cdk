@@ -62,7 +62,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
  * @author Yong Zhang <yz237@cam.ac.uk>
  * @author Egon Willighagen <elw38@cam.ac.uk>
  *
- * @keyword world wide molecular matrix
+ * @cdk.keyword world wide molecular matrix
  *
  * @since Java 1.4
  */

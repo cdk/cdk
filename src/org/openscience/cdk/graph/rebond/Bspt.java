@@ -72,9 +72,9 @@ import java.util.Enumeration;
  * @author  Miguel Howard
  * @created 2003-05
  *
- * @keyword rebonding
- * @keyword Binary Space Partitioning Tree
- * @keyword join-the-dots
+ * @cdk.keyword rebonding
+ * @cdk.keyword Binary Space Partitioning Tree
+ * @cdk.keyword join-the-dots
  */
 public final class Bspt {
 

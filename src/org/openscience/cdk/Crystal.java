@@ -35,7 +35,7 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword crystal
+ * @cdk.keyword crystal
  */
 public class Crystal extends AtomContainer implements java.io.Serializable, Cloneable
 {

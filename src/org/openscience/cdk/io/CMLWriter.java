@@ -99,7 +99,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
  *
  * @author Egon Willighagen
  *
- * @keyword file format, CML
+ * @cdk.keyword file format, CML
  */
 public class CMLWriter extends DefaultChemObjectWriter {
 

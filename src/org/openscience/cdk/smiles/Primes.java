@@ -33,7 +33,7 @@ package org.openscience.cdk.smiles;
  * @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created 2002-02-26
  *
- * @keyword prime numbers
+ * @cdk.keyword prime numbers
  */
 public class Primes {
 

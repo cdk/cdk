@@ -46,7 +46,7 @@ public class HuLuIndexTool
    * References:
    *   <a href="http://cdk.sf.net/biblio.html#HU96">HU96</a>
    *
-   * @keyword EAID number
+   * @cdk.keyword EAID number
    */
 	public static double getEAIDNumber(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException,
 			BadMatrixFormatException,MatrixIndexOutOfBoundsException

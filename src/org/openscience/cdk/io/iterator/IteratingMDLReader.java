@@ -50,8 +50,8 @@ import org.openscience.cdk.io.MDLReader;
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    2003-10-19
  *
- * @keyword    file format, MDL molfile
- * @keyword    file format, SDF
+ * @cdk.keyword    file format, MDL molfile
+ * @cdk.keyword    file format, SDF
  */
 public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
 

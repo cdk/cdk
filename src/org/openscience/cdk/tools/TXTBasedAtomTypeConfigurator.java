@@ -43,7 +43,7 @@ import org.openscience.cdk.AtomType;
  *
  * @author     Bradley A. Smith <bradley@baysmith.com>
  *
- * @keyword    atom, type
+ * @cdk.keyword    atom, type
  */
 public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
 

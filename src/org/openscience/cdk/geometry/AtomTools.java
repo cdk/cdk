@@ -58,8 +58,8 @@ public class AtomTools {
      *
      * @param atomContainer the set of atoms involved
      *
-     * @keyword coordinate calculation
-     * @keyword 3D model
+     * @cdk.keyword coordinate calculation
+     * @cdk.keyword 3D model
      */
     public static void add3DCoordinates1(AtomContainer atomContainer) {
             // atoms without coordinates
@@ -181,7 +181,7 @@ public class AtomTools {
      * too many atoms, or strange geometry, returns empty array (zero length, 
      * not null)
      *
-     * @keyword coordinate generation
+     * @cdk.keyword coordinate generation
      */
     public static Point3d[] calculate3DCoordinatesForLigands(
         AtomContainer atomContainer, Atom refAtom, int nwanted, 

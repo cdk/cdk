@@ -33,7 +33,7 @@ package org.openscience.cdk.io.cml;
  *
  * @cdkPackage io
  *
- * @keyword stack
+ * @cdk.keyword stack
  */
 public class CMLStack {
 

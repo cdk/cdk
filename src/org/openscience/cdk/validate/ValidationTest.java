@@ -33,7 +33,7 @@ import org.openscience.cdk.ChemObject;
  * @created  2003-03-28
  *
  * @see      org.openscience.cdk.ChemObject
- * @keyword atom, chemical validation
+ * @cdk.keyword atom, chemical validation
  */ 
 public class ValidationTest {
     

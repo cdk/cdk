@@ -56,7 +56,7 @@ import org.openscience.cdk.exception.CDKException;
  * @author     Egon Willighagen
  * @created    2003-07-24
  *
- * @keyword    file format, MDL RXN
+ * @cdk.keyword    file format, MDL RXN
  */
 public class MDLRXNReader extends DefaultChemObjectReader {
 

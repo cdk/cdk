@@ -35,7 +35,7 @@ import javax.vecmath.Point2d;
  *
  * @cdkPackage core
  *
- * @keyword     ring, set of
+ * @cdk.keyword     ring, set of
  */
 public class RingSet extends Vector implements java.io.Serializable, Cloneable
 {

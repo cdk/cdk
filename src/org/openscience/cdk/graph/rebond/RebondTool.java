@@ -40,8 +40,8 @@ import org.openscience.cdk.exception.CDKException;
  * atom types are configured such that the covalent bond radii
  * for all atoms are set. The AtomTypeFactory can be used for this.
  *
- * @keyword    rebonding
- * @keyword    bond, recalculation
+ * @cdk.keyword    rebonding
+ * @cdk.keyword    bond, recalculation
  * 
  * @author  Miguel Howard
  * @created 2003-05-23

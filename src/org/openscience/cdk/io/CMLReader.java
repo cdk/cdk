@@ -58,7 +58,7 @@ import org.xml.sax.XMLReader;
  * @author     Egon L. Willighagen
  * @created    2001-02-01
  *
- * @keyword file format, CML
+ * @cdk.keyword file format, CML
  */
 public class CMLReader extends DefaultChemObjectReader {
 

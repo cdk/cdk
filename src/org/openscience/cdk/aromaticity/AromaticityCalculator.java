@@ -40,7 +40,7 @@ import org.openscience.cdk.Ring;
  * @author     Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created    2002-03-14
  *
- * @keyword aromaticity detector
+ * @cdk.keyword aromaticity detector
  */
 public class AromaticityCalculator
 {

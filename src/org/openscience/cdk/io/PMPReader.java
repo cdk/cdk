@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  *
  * @cdkPackage io
  *
- * @keyword file format, Polymorph Predictor (tm)
+ * @cdk.keyword file format, Polymorph Predictor (tm)
  *
  * @author E.L. Willighagen
  *

@@ -69,7 +69,7 @@ import org.openscience.cdk.tools.ChemModelManipulator;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-09
  *
- * @keyword command line util
+ * @cdk.keyword command line util
  */
 public class VisualGaussiansCalculationTest {
     

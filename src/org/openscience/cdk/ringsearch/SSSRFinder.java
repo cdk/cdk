@@ -47,8 +47,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdkPackage standard
  *
- * @keyword smallest-set-of-rings
- * @keyword ring search
+ * @cdk.keyword smallest-set-of-rings
+ * @cdk.keyword ring search
  */
 public class SSSRFinder {
 

@@ -47,8 +47,8 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword reaction
- * @keyword molecule
+ * @cdk.keyword reaction
+ * @cdk.keyword molecule
  */
 public class SetOfMolecules extends SetOfAtomContainers {
 

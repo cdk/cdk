@@ -55,8 +55,8 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * @author     steinbeck
  * @created    2002-02-24
  *
- * @keyword    fingerprint
- * @keyword    similarity
+ * @cdk.keyword    fingerprint
+ * @cdk.keyword    similarity
  */
 public class Fingerprinter 
 {
@@ -128,7 +128,7 @@ public class Fingerprinter
 	 * @param  bs2  The BitSet which is compared with bs1
 	 * @return      True, if bs2 is a subset of bs2
      *
-     * @keyword substructure search
+     * @cdk.keyword substructure search
 	 */
 	public static boolean isSubset(BitSet bs1, BitSet bs2)
 	{

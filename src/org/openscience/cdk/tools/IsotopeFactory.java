@@ -59,8 +59,8 @@ import org.openscience.cdk.tools.isotopes.IsotopeReader;
  *
  * @author     steinbeck
  * @created    2001-08-29
- * @keyword    isotope
- * @keyword    element
+ * @cdk.keyword    isotope
+ * @cdk.keyword    element
  */
 public class IsotopeFactory
 {

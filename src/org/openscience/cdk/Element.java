@@ -37,7 +37,7 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword element
+ * @cdk.keyword element
  *
  * @see org.openscience.cdk.tools.IsotopeFactory
  */

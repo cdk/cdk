@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-06-30
  *
- * @keyword CAS number
+ * @cdk.keyword CAS number
  *
  * @since Java 1.4
  */
@@ -46,7 +46,7 @@ public class CASNumber {
      * Checks wether the registry number is valid.
      * See <a href="http://www.cas.org/EO/checkdig.html">CAS website</a>.
      *
-     * @keyword CAS number, validation
+     * @cdk.keyword CAS number, validation
      */
     public static boolean isValid(String casNumber) {
         boolean overall = true;

@@ -36,7 +36,7 @@ import java.util.Comparator;
   *
   * @cdkPackage standard
   *
-  * @keyword element, sorting
+  * @cdk.keyword element, sorting
   */
 public class ElementComparator implements Comparator {
 

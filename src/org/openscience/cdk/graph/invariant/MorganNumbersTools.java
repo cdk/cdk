@@ -37,7 +37,7 @@ import org.openscience.cdk.AtomContainer;
  *
  * @author     shk3
  * @created    2003-06-30
- * @keyword    Morgan number
+ * @cdk.keyword    Morgan number
  */
 
 public class MorganNumbersTools {

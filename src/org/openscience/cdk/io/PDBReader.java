@@ -58,7 +58,7 @@ import org.openscience.cdk.exception.CDKException;
  * @author     Bradley Smith (bradley@baysmith.com)
  * @created    2001-08-06 
  *
- * @keyword file format, PDB
+ * @cdk.keyword file format, PDB
  */
 public class PDBReader extends DefaultChemObjectReader {
 

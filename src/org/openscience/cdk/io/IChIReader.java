@@ -55,8 +55,8 @@ import org.xml.sax.XMLReader;
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    25 September 2002
  *
- * @keyword file format, IChI
- * @keyword chemical identifier
+ * @cdk.keyword file format, IChI
+ * @cdk.keyword chemical identifier
  *
  * @see     org.openscience.cdk.io.ichi.IChIHandler
  *

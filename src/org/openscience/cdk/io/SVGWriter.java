@@ -56,9 +56,9 @@ import org.w3c.dom.Document;
  *
  * @cdkPackage extra
  *
- * @keyword file format
- * @keyword vector graphics, SVG
- * @keyword scalable vector graphics
+ * @cdk.keyword file format
+ * @cdk.keyword vector graphics, SVG
+ * @cdk.keyword scalable vector graphics
  *
  * @author  Egon Willighagen
  * @created 2002-09-30

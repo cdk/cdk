@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @author  Egon Willighagen <egonw@sci.kun.nl> 
  * @created 2002-05-21
  *
- * @keyword IUPAC name
+ * @cdk.keyword IUPAC name
  */
 public class IUPACNameGenerator {
 

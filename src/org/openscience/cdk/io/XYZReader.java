@@ -52,7 +52,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdkPackage io
  *
- * @keyword file format, XYZ
+ * @cdk.keyword file format, XYZ
  */
 public class XYZReader extends DefaultChemObjectReader {
 

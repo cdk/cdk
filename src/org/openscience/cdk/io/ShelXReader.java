@@ -59,7 +59,7 @@ import org.openscience.cdk.math.FortranFormat;
  *
  * @cdkPackage io
  *
- * @keyword file format, ShelXL
+ * @cdk.keyword file format, ShelXL
  * @author E.L. Willighagen
  */
 public class ShelXReader extends DefaultChemObjectReader {

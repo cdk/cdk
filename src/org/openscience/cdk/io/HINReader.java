@@ -51,7 +51,7 @@ import org.openscience.cdk.exception.CDKException;
  * @author  Rajarshi Guha <rajarshi@presidency.com>
  * @created 2004-01-27
  *
- * @keyword file format, HIN 
+ * @cdk.keyword file format, HIN 
  */
 public class HINReader extends DefaultChemObjectReader {
 

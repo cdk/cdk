@@ -31,8 +31,8 @@ package org.openscience.cdk;
  * @author     egonw
  * @created    2002-08-14
  *
- * @keyword    fragment
- * @keyword    free valence
+ * @cdk.keyword    fragment
+ * @cdk.keyword    free valence
  */
 public class Fragment extends AtomContainer implements java.io.Serializable, Cloneable  
 {

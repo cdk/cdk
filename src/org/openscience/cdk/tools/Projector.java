@@ -33,7 +33,7 @@ import org.openscience.cdk.AtomContainer;
 /**
  * Tool to make projections from 3D to 2D
  *
- * @keyword projection in 2D
+ * @cdk.keyword projection in 2D
  */
 public class Projector  {
   

@@ -37,7 +37,7 @@ package org.openscience.cdk;
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @created    2001-08-06 
  *
- * @keyword    monomer
+ * @cdk.keyword    monomer
  *
  */
 public class Monomer extends AtomContainer implements java.io.Serializable, Cloneable

@@ -74,8 +74,8 @@ import org.openscience.cdk.tools.IsotopeFactory;
  * @author     steinbeck
  * @author     Egon Willighagen
  * @created    2000-10-02
- * @keyword    file format, MDL molfile
- * @keyword    file format, SDF
+ * @cdk.keyword    file format, MDL molfile
+ * @cdk.keyword    file format, SDF
  */
 public class MDLReader extends DefaultChemObjectReader {
 

@@ -51,8 +51,8 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * @author  Egon Willighagen
  * @created    2001-09-04
  *
- * @keyword    saturation
- * @keyword    atom, valency
+ * @cdk.keyword    saturation
+ * @cdk.keyword    atom, valency
  */
 public class SaturationChecker implements ValencyCheckerInterface {
 
@@ -264,7 +264,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	/**
 	 * Saturates a molecule by setting appropriate bond orders.
 	 *
-	 * @keyword            bond order, calculation
+	 * @cdk.keyword            bond order, calculation
      *
      * @created 2003-10-03
 	 */

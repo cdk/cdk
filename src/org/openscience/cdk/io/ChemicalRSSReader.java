@@ -52,8 +52,8 @@ import org.xml.sax.XMLReader;
  * @author     Egon Willighagen
  * @created    2003-09-07
  *
- * @keyword    news feed
- * @keyword    file format, RSS
+ * @cdk.keyword    news feed
+ * @cdk.keyword    file format, RSS
  */
 public class ChemicalRSSReader extends DefaultChemObjectReader {
 

@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.IDCreator;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-01
  * 
- * @keyword file format, CDK source code
+ * @cdk.keyword file format, CDK source code
  */
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 

@@ -34,7 +34,7 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword    ring
+ * @cdk.keyword    ring
  */
 public class Ring extends AtomContainer implements java.io.Serializable, Cloneable
 {

@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.ConnectivityChecker;
  * References:
  *   <a href="http://cdk.sf.net/biblio.html#FAU96">FAU96</a>
  *
- * @keyword structure generator
+ * @cdk.keyword structure generator
  */
  
 public class VicinitySampler

@@ -56,7 +56,7 @@ import org.openscience.cdk.geometry.ZMatrixTools;
  *
  * @cdkPackage io
  *
- * @keyword file format, Z-matrix
+ * @cdk.keyword file format, Z-matrix
  */
 public class ZMatrixReader extends DefaultChemObjectReader {
 

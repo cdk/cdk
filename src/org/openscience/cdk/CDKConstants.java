@@ -37,8 +37,8 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword bond order
- * @keyword stereochemistry
+ * @cdk.keyword bond order
+ * @cdk.keyword stereochemistry
  */
 public class CDKConstants {
 

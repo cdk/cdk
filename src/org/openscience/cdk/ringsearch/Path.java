@@ -41,7 +41,7 @@ import org.openscience.cdk.AtomContainer;
  *
  * @cdkPackage standard
  *
- * @keyword graph, path
+ * @cdk.keyword graph, path
  *
  * @author     steinbeck
  * @created    2002-02-28

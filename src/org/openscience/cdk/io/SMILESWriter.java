@@ -45,7 +45,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
  *
  * @cdkPackage extra
  *
- * @keyword file format
+ * @cdk.keyword file format
  */
 public class SMILESWriter extends DefaultChemObjectWriter {
 

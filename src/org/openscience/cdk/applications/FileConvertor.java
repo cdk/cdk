@@ -84,8 +84,8 @@ import org.openscience.cdk.tools.SaturationChecker;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
- * @keyword command line util
- * @keyword file format
+ * @cdk.keyword command line util
+ * @cdk.keyword file format
  */
 public class FileConvertor {
 

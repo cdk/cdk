@@ -53,7 +53,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-20
  *
- * @keyword viewer, 3D-viewer
+ * @cdk.keyword viewer, 3D-viewer
  */
 public class AcceleratedRenderer3D extends Canvas3D
 {

@@ -321,8 +321,8 @@ public class Matrix
    * @param nrot Count of max. rotations
    * @return Matrix m, with m^t * this * m = diagonal
    *
-   * @keyword Jacobi algorithm
-   * @keyword diagonalization
+   * @cdk.keyword Jacobi algorithm
+   * @cdk.keyword diagonalization
    */
   public Matrix diagonalize(int nrot)
   {
@@ -458,7 +458,7 @@ public class Matrix
   /**
    * Solves a linear equation system with Gauss elimination.
    *
-   * @keyword Gauss elimination
+   * @cdk.keyword Gauss elimination
    */
   public static Vector elimination(Matrix matrix, Vector vector)
   {
@@ -531,8 +531,8 @@ public class Matrix
   /**
    * Orthonormalize the vectors of this matrix by Gram-Schmidt.
    *
-   * @keyword orthonormalization
-   * @keyword Gram-Schmidt algorithm
+   * @cdk.keyword orthonormalization
+   * @cdk.keyword Gram-Schmidt algorithm
    */
   public Matrix orthonormalize(Matrix S)
   {

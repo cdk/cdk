@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-05
  * 
- * @keyword MDL V3000
+ * @cdk.keyword MDL V3000
  *
  * @since Java 1.4
  */

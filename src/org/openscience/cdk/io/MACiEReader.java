@@ -70,7 +70,7 @@ import org.openscience.cdk.tools.ReactionManipulator;
  * @author     Egon Willighagen
  * @created    2003-07-24
  *
- * @keyword    file format, MACiE RDF
+ * @cdk.keyword    file format, MACiE RDF
  *
  * @since Java 1.4
  */

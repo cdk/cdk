@@ -56,8 +56,8 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
  *
  * @cdkPackage io
  *
- * @keyword file format, CIF
- * @keyword file format, mmCIF
+ * @cdk.keyword file format, CIF
+ * @cdk.keyword file format, mmCIF
  *
  * @author  E.L. Willighagen
  * @created 2003-10-12

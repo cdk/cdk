@@ -48,8 +48,8 @@ import org.openscience.cdk.Molecule;
  * @author     egonw
  * @author     Joerg K. Wegner <wegnerj@informatik.uni-tuebingen.de>
  *
- * @keyword    JOELib
- * @keyword    class convertor
+ * @cdk.keyword    JOELib
+ * @cdk.keyword    class convertor
  */
 public class Convertor {
 

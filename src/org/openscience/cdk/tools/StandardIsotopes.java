@@ -35,7 +35,7 @@ import org.openscience.cdk.Isotope;
  *
  * @cdkPackage standard
  *
- * @keyword isotope
+ * @cdk.keyword isotope
  */
 public class StandardIsotopes {
 

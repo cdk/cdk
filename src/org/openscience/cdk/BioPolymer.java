@@ -38,8 +38,8 @@ package org.openscience.cdk;
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
  * @created    2001-08-06 
  *
- * @keyword    polymer
- * @keyword    biopolymer
+ * @cdk.keyword    polymer
+ * @cdk.keyword    biopolymer
  */
 public class BioPolymer extends Polymer implements java.io.Serializable, Cloneable
 {

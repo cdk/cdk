@@ -48,7 +48,7 @@ import org.openscience.cdk.Reaction;
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    2003-08-06
- * @keyword    dictionary, implicit CDK references
+ * @cdk.keyword    dictionary, implicit CDK references
  */
 public class CDKDictionaryReferences {
 

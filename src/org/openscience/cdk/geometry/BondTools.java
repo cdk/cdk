@@ -39,8 +39,8 @@ public class BondTools {
      * Returns true if the two atoms are within the distance fudge
      * factor of each other.
      *
-     * @keyword join-the-dots
-     * @keyword bond creation
+     * @cdk.keyword join-the-dots
+     * @cdk.keyword bond creation
      */
     public static boolean closeEnoughToBond(Atom atom1, Atom atom2, double distanceFudgeFactor) {
         

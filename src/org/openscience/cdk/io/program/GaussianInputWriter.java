@@ -50,7 +50,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *
- * @keyword Gaussian (tm), input file
+ * @cdk.keyword Gaussian (tm), input file
  */
 public class GaussianInputWriter extends DefaultChemObjectWriter {
   

@@ -46,7 +46,7 @@ import freeware.PrintfFormat;
  *
  * @author Egon Willighagen
  *
- * @keyword file format, ShelX
+ * @cdk.keyword file format, ShelX
  */
 public class ShelXWriter extends DefaultChemObjectWriter {
 

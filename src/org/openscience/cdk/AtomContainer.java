@@ -867,7 +867,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, C
 	 *  References: <a href="http://cdk.sf.net/biblio.html#TRI1992">TRI1992</a> ,
 	 *
 	 *@return     A adjacency matrix representating this AtomContainer
-	 *@keyword    adjacency matrix
+	 *@cdk.keyword    adjacency matrix
 	 */
 	public int[][] getAdjacencyMatrix()
 	{

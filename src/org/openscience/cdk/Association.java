@@ -29,9 +29,9 @@ package org.openscience.cdk;
  *
  * @cdkPackage experimental
  *
- * @keyword orbital
- * @keyword association
- * @keyword bond
+ * @cdk.keyword orbital
+ * @cdk.keyword association
+ * @cdk.keyword bond
  */
 public class Association extends ElectronContainer implements java.io.Serializable, Cloneable {
 

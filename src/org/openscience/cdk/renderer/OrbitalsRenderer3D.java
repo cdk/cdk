@@ -56,8 +56,8 @@ import org.openscience.cdk.math.qm.Orbitals;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-07-20
  *
- * @keyword orbital
- * @keyword viewer
+ * @cdk.keyword orbital
+ * @cdk.keyword viewer
  */
 public class OrbitalsRenderer3D extends Switch
 {

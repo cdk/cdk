@@ -44,7 +44,7 @@ import org.openscience.cdk.graph.invariant.MorganNumbersTools;
  * @author     steinbeck
  * @created    2001-09-10
  *
- * @keyword    isomorphism
+ * @cdk.keyword    isomorphism
  *
  * @see        org.openscience.cdk.graph.invariant.MorganNumbersTools
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester

@@ -40,7 +40,7 @@ import org.openscience.cdk.graph.PathTools;
  *
  * @cdkPackage standard
  *
- * @keyword connectivity
+ * @cdk.keyword connectivity
  */ 
 public class ConnectivityChecker 
 {

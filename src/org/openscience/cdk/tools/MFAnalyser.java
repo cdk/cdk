@@ -50,8 +50,8 @@ import org.openscience.cdk.Molecule;
  *
  * @cdkPackage standard
  *
- * @keyword molecule, molecular mass
- * @keyword molecule, molecular formula
+ * @cdk.keyword molecule, molecular mass
+ * @cdk.keyword molecule, molecular formula
  */
 public class MFAnalyser{
 	
@@ -202,7 +202,7 @@ public class MFAnalyser{
   	/** 
      * Returns a set of nodes excluding all the hydrogens
      *
-     * @keyword hydrogen, removal
+     * @cdk.keyword hydrogen, removal
      */
 	public List getHeavyAtoms()
 	{

@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @created 2003-10-05
  * 
- * @keyword MDL RXN V3000
+ * @cdk.keyword MDL RXN V3000
  *
  * @since Java 1.4
  */

@@ -30,9 +30,9 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword orbital
- * @keyword lone-pair
- * @keyword bond
+ * @cdk.keyword orbital
+ * @cdk.keyword lone-pair
+ * @cdk.keyword bond
  */
 public class ElectronContainer extends ChemObject implements java.io.Serializable, Cloneable 
 {

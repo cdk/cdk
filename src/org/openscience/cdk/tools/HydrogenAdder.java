@@ -78,7 +78,7 @@ import org.openscience.cdk.geometry.GeometryTools;
  *   int atomCount = ethane.getAtomCount(); // = 5
  * </pre>
  *
- * @keyword    hydrogen, adding
+ * @cdk.keyword    hydrogen, adding
  */
 public class HydrogenAdder {
 
@@ -126,8 +126,8 @@ public class HydrogenAdder {
      * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
-     * @keyword          hydrogen, adding
-     * @keyword          explicit hydrogen
+     * @cdk.keyword          hydrogen, adding
+     * @cdk.keyword          explicit hydrogen
      */
     public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
@@ -146,8 +146,8 @@ public class HydrogenAdder {
      * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
-     * @keyword          hydrogen, adding
-     * @keyword          explicit hydrogen
+     * @cdk.keyword          hydrogen, adding
+     * @cdk.keyword          explicit hydrogen
      */
     public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
@@ -177,8 +177,8 @@ public class HydrogenAdder {
      * @param  container AtomContainer containing the atom
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
      *
-     * @keyword          hydrogen, adding
-     * @keyword          explicit hydrogen
+     * @cdk.keyword          hydrogen, adding
+     * @cdk.keyword          explicit hydrogen
      *
      * @deprecated
      */
@@ -203,8 +203,8 @@ public class HydrogenAdder {
      * @param  container AtomContainer containing the atom
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
      *
-     * @keyword          hydrogen, adding
-     * @keyword          explicit hydrogen
+     * @cdk.keyword          hydrogen, adding
+     * @cdk.keyword          explicit hydrogen
      */
     public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException, CDKException
@@ -226,8 +226,8 @@ public class HydrogenAdder {
      * @param  count     Number of hydrogens to add
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
      *
-     * @keyword          hydrogen, adding
-     * @keyword          explicit hydrogen
+     * @cdk.keyword          hydrogen, adding
+     * @cdk.keyword          explicit hydrogen
      */
     public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
@@ -260,8 +260,8 @@ public class HydrogenAdder {
      *  Method that saturates a molecule by adding implicit hydrogens.
      *
      *@param  container  Molecule to saturate
-     *@keyword          hydrogen, adding
-     *@keyword          implicit hydrogen
+     *@cdk.keyword          hydrogen, adding
+     *@cdk.keyword          implicit hydrogen
      */
     public void addImplicitHydrogensToSatisfyValency(AtomContainer container) throws CDKException {
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
@@ -280,8 +280,8 @@ public class HydrogenAdder {
      *
      * @param  container  Molecule to saturate
      * @param  atom      Atom to satureate.
-     * @keyword          hydrogen, adding
-     * @keyword          implicit hydrogen
+     * @cdk.keyword          hydrogen, adding
+     * @cdk.keyword          implicit hydrogen
      */
     public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
     {

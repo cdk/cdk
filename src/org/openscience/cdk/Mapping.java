@@ -32,7 +32,7 @@ package org.openscience.cdk;
  *
  * @cdkPackage core
  *
- * @keyword reaction, atom mapping
+ * @cdk.keyword reaction, atom mapping
  *
  * @author  Egon Willighagen
  * @created 2003-08-16

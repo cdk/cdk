@@ -34,8 +34,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdkPackage applications
  *
- *  @keyword command line util
- *  @keyword file format
+ *  @cdk.keyword command line util
+ *  @cdk.keyword file format
  */
 public class FileFormatGuesser {
 

@@ -68,8 +68,8 @@ import org.openscience.dadml.tools.DBDEFInfo;
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @created    2001-12-18
  *
- * @keyword    internet
- * @keyword    database
+ * @cdk.keyword    internet
+ * @cdk.keyword    database
  * @cdk.builddepends dadml.jar
  */
 public class DADMLReader extends DefaultChemObjectReader {

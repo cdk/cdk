@@ -37,9 +37,9 @@ import javax.vecmath.Point3d;
  *
  * @author     steinbeck
  * @created    2003-10-02
- * @keyword    bond
- * @keyword    atom
- * @keyword    electron
+ * @cdk.keyword    bond
+ * @cdk.keyword    atom
+ * @cdk.keyword    electron
  */
 public class Bond extends ElectronContainer implements java.io.Serializable, Cloneable
 {

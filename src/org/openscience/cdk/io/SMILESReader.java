@@ -47,7 +47,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdkPackage io
  *
- * @keyword file format, SMILES
+ * @cdk.keyword file format, SMILES
  */
 public class SMILESReader extends DefaultChemObjectReader {
 

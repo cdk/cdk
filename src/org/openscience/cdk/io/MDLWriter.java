@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.IsotopeFactory;
  *
  * @cdkPackage io
  *
- * @keyword file format, MDL molfile
+ * @cdk.keyword file format, MDL molfile
  */
 public class MDLWriter extends DefaultChemObjectWriter {
 

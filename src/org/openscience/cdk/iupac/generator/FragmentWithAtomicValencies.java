@@ -41,8 +41,8 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * @author     egonw
  * @created    August 14th 2002
  *
- * @keyword    fragment
- * @keyword    free valence
+ * @cdk.keyword    fragment
+ * @cdk.keyword    free valence
  */
 public class FragmentWithAtomicValencies extends Fragment {
 

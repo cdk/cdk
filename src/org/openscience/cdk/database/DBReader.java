@@ -49,8 +49,8 @@ import org.openscience.cdk.io.DefaultChemObjectReader;
  * Reader that can read from a relational database that can be
  * accessed through JDBC.
  *
- * @keyword database
- * @keyword JDBC
+ * @cdk.keyword database
+ * @cdk.keyword JDBC
  */
 public class DBReader extends DefaultChemObjectReader {
 

@@ -50,7 +50,7 @@ import org.openscience.cdk.smiles.InvPair;
  * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @created  2002-02-26
  *
- * @keyword canonicalization
+ * @cdk.keyword canonicalization
  */
 public class CanonicalLabeler {
 

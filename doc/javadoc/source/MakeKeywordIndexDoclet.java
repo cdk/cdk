@@ -4,6 +4,8 @@ import java.io.*;
 
 public class MakeKeywordIndexDoclet {
 
+    private final String javaDocKeywordTag = "cdk.keyword";
+    
     private final String rootToAPI = "/api/";
     private final String omitPackageNamePart = "org.openscience.cdk.";
 
@@ -113,7 +115,7 @@ public class MakeKeywordIndexDoclet {
     }
 
     private void processClass(ClassDoc classDoc) throws IOException {
-        Tag[] tags = classDoc.tags("keyword");
+        Tag[] tags = classDoc.tags(javaDocKeywordTag);
         for (int j=0; j<tags.length; j++) {
             String word = tags[j].text();
             String className = classDoc.qualifiedName().substring(omitPackageNamePart.length());
@@ -126,7 +128,7 @@ public class MakeKeywordIndexDoclet {
 
     private void processMethod(MethodDoc methodDoc, String className) throws IOException {
         // System.out.println("Processing: " + methodDoc.qualifiedName());
-        Tag[] tags = methodDoc.tags("keyword");
+        Tag[] tags = methodDoc.tags(javaDocKeywordTag);
         for (int j=0; j<tags.length; j++) {
             String word = tags[j].text();
             String methodName = methodDoc.name();

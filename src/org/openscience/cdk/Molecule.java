@@ -33,7 +33,7 @@ package org.openscience.cdk;
  * @author     steinbeck
  * @created    2000-10-02
  *
- * @keyword    molecule
+ * @cdk.keyword    molecule
  */
 public class Molecule extends AtomContainer implements java.io.Serializable, Cloneable
 {

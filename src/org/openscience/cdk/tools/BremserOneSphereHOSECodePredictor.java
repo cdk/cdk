@@ -33,7 +33,7 @@ import java.util.Hashtable;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * @keyword HOSE code
+ * @cdk.keyword HOSE code
  */
 public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 {

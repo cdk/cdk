@@ -81,7 +81,7 @@ import org.openscience.cdk.validate.ProblemMarker;
  * @author     egonw
  *
  * @created    2002-10-03
- * @keyword    viewer, 2D-viewer
+ * @cdk.keyword    viewer, 2D-viewer
  */
 public class Renderer2D implements MouseMotionListener   {
 

@@ -40,7 +40,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *
- * @keyword fractional coordinates, crystal
+ * @cdk.keyword fractional coordinates, crystal
  */
 public class CrystalGeometryTools {
 
@@ -99,8 +99,8 @@ public class CrystalGeometryTools {
      * @return     an array of length 3 with the cartesian coordinates of the
      *              point defined by frac
      *
-     * @keyword     cartesian coordinates
-     * @keyword     fractional coordinates
+     * @cdk.keyword     cartesian coordinates
+     * @cdk.keyword     fractional coordinates
      *
      * @see #cartesianToFractional(double[], double[], double[], double[])
      */
@@ -132,7 +132,7 @@ public class CrystalGeometryTools {
      * @return         a 3x3 matrix with the three cartesian vectors representing
      *                  the unit cell axes. The a axis is the first row.
      *
-     * @keyword  notional coordinates
+     * @cdk.keyword  notional coordinates
      */
     public static double[][] notionalToCartesian(double alength, double blength,
                                                  double clength, double alpha,
@@ -185,7 +185,7 @@ public class CrystalGeometryTools {
      * @param c    length of the c axis
      * @return     an array of length 6 with a,b,c,alpha,beta and gamma
      *
-     * @keyword  notional coordinates
+     * @cdk.keyword  notional coordinates
      */
     public static double[] cartesianToNotional(double[] a, double[] b, double[] c) {
         double[] notionalCoords = new double[6];

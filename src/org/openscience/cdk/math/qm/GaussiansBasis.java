@@ -47,7 +47,7 @@ import org.openscience.cdk.math.Vector;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @created 2001-06-14
  *
- * @keyword Gaussian basis set
+ * @cdk.keyword Gaussian basis set
  */ 
 public class GaussiansBasis implements Basis
 {

@@ -65,7 +65,7 @@ import org.openscience.cdk.exception.NoSuchAtomTypeException;
  *
  * @author     steinbeck
  * @created    2001-08-29
- * @keyword    atom, type
+ * @cdk.keyword    atom, type
  * @see        AtomTypeConfigurator
  */
 public class AtomTypeFactory {

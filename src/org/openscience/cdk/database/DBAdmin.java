@@ -50,7 +50,7 @@ import org.openscience.cdk.io.CMLReader;
   * @author egonw
   *
   * @deprecated
-  * @keyword MySQL
+  * @cdk.keyword MySQL
   * @cdk.depends postgresql7.0-1.2.jar
   * @cdk.depends mysql-2.0.4.jar
   */

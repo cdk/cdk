@@ -48,8 +48,8 @@ import org.openscience.cdk.RingSet;
  * @author     steinbeck
  * @created    2003-09-4
  *
- * @keyword    layout
- * @keyword    2D-coordinates
+ * @cdk.keyword    layout
+ * @cdk.keyword    2D-coordinates
  */
 public class OverlapResolver
 {

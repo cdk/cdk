@@ -61,7 +61,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @author     egonw
  * @created    2002-10-03
  *
- * @keyword    command line util
+ * @cdk.keyword    command line util
  */
 public class Viewer {
 
