@@ -236,6 +236,7 @@ public class AtomPlacer implements CDKConstants
 			bondVector.scale(bondLength);	
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2D(atomPoint);		
+			nextAtom.flags[ISPLACED] = true;
 			bondVector = getNextBondVector(nextAtom, atom, rootAtom);
 		}
 	}
@@ -368,7 +369,7 @@ public class AtomPlacer implements CDKConstants
 				atom1 = bonds[f].getConnectedAtom(atom);
 				if (atom1.getPoint2D() != null)
 				{
-					ac.addAtom(atom);
+					ac.addAtom(atom1);
 				}
 			}
 			if (ac.getAtomCount() < 2)
@@ -376,6 +377,7 @@ public class AtomPlacer implements CDKConstants
 				return null;
 			} 
 			placedAtomsVector = new Vector2d(ac.get2DCenter());
+			molecule.addAtom(new Atom(new Element("S"), new Point2d(ac.get2DCenter())));
 			unoccupiedAngleVector = new Vector2d(atomPoint);
 			unoccupiedAngleVector.sub(placedAtomsVector);
 			unoccupiedAngleCenter  = new Point2d(atomPoint);
@@ -384,7 +386,27 @@ public class AtomPlacer implements CDKConstants
 			 * largest unoccupied angle and can get the two atoms with 
 			 * the smallest distance to it
 			 */
-			 /* XXXXXXXXXXXXXX   Hier geht's weiter XXXXXXXXXXXXXXXXX*/
+			 molecule.addAtom(new Atom(new Element("O"), new Point2d(unoccupiedAngleCenter)));
+			 for (int f = 0; f < ac.getAtomCount(); f++)
+			 {
+			 	if (atoms[0] == null)
+				{
+					atoms[0] = ac.getAtomAt(f);
+				}
+				else if (unoccupiedAngleCenter.distance(ac.getAtomAt(f).getPoint2D()) < unoccupiedAngleCenter.distance(atoms[0].getPoint2D()))
+				{
+					atoms[1] = atoms[0];
+					atoms[0] = ac.getAtomAt(f);
+				}
+				else if (atoms[1] == null)
+				{
+					atoms[1] = ac.getAtomAt(f);				
+				}
+				else if (unoccupiedAngleCenter.distance(ac.getAtomAt(f).getPoint2D()) < unoccupiedAngleCenter.distance(atoms[1].getPoint2D()))
+				{
+					atoms[1] = ac.getAtomAt(f);
+				}
+			 }
 		}
 		
 		return atoms;

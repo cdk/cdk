@@ -42,7 +42,6 @@ public class ChemModel
 	
 	protected RingSet ringSet;
 
-
 	/**
 	 *  Constructs an empty SetOfMolecules
 	 */
@@ -90,7 +89,6 @@ public class ChemModel
 		setSetOfMolecules(newSet);
 	}
 	
-
 	/**
 	 * Returns the SetOfMolecules of this ChemModel
 	 *

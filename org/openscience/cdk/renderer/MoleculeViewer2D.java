@@ -43,7 +43,6 @@ import java.awt.event.*;
  */
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
-
 	static AtomContainer atomContainer;
 	public Renderer2DModel r2dm;
 	public Renderer2D renderer;
@@ -156,8 +155,6 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 		repaint();
 	}
 
-	
-
 	/**
 	 * Returns the AtomContainer which is being displayed
 	 *
@@ -167,7 +164,6 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 	{
 		return MoleculeViewer2D.atomContainer;
 	}
-
 
 	/**
 	 * Sets the AtomContainer to be displayed

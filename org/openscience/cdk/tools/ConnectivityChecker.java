@@ -95,6 +95,7 @@ public class ConnectivityChecker implements CDKConstants
 	 * @exception   Exception  If something goes wrong
 	 */
 	public  static Vector partitionIntoMolecules(AtomContainer atomContainer) throws java.lang.Exception
+
 	{
 		AtomContainer ac = new AtomContainer();
 		Atom atom = null, nextAtom = null; 

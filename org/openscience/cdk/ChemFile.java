@@ -31,6 +31,7 @@ package org.openscience.cdk;
   */ 
 public class ChemFile extends ChemObject {
 
+
 	/**
 	 *  Array of ChemSquences 
 	 */

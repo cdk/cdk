@@ -26,7 +26,12 @@ package org.openscience.cdk;
 import javax.vecmath.*;
 import java.util.Vector;
 
-
+/** 
+  * A ring in a molecule, i.e. a linear sequence of 
+  * N atoms interconnected to each 
+  * other by bonds, such that atom i (1 < i < N) is bonded to 
+  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
+  */
 public class Ring extends AtomContainer
 {
 
@@ -126,6 +131,12 @@ public class Ring extends AtomContainer
 	}
 	
 	
+	 /**
+	  * Convenience method for giving a string representation 
+	  * of this ring based on the number of the atom in a given 
+	  * molecule.
+	  * @param molecule A molecule to determine an atom number for each ring atom
+	  */
 	public String toString(Molecule molecule)
 	{
 		String str = "";

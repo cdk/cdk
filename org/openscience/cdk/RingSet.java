@@ -94,6 +94,7 @@ public class RingSet extends Vector{
 	 * @param   bond  The bond to be checked
 	 * @return   A vector of all rings that this bond is part of  
 	 */
+
 	public Vector getRings(Bond bond)
 	{
 		Vector rings = new Vector();
@@ -141,6 +142,7 @@ public class RingSet extends Vector{
 	 * @param   ring  A ring with which all return rings must share one or more atoms
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
+
 	public Vector getConnectedRings(Ring ring)
 	{
 		Vector connectedRings = new Vector();

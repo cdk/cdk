@@ -481,11 +481,13 @@ public class Renderer2DModel
 	 *
 	 * @param   listener  The listener added to the list 
 	 */
+
 	public void addCDKChangeListener(CDKChangeListener listener)
 	{
 		listeners.add(listener);
 	}
 	
+
 	/**
 	 * Removes a change listener from the list of listeners
 	 *

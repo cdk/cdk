@@ -154,7 +154,7 @@ public class StructureDiagramGenerator implements CDKConstants
 //			Bond[] bonds = molecule.getConnectedBonds(complexAtom);
 //			placeFirstBond(bonds[0], firstBondVector);
 		}
-//		handleAliphatics();
+		handleAliphatics();
 //		fixRest();
 	}
 
@@ -268,6 +268,7 @@ public class StructureDiagramGenerator implements CDKConstants
 		AtomContainer longestChain = getInitialLongestChain(molecule);
 		longestChain.getAtomAt(0).setPoint2D(new Point2d(0,0));
 		Atom atom = null;
+		Atom[] atoms;
 		Bond[] bonds = null;
 		/* place the first bond such that the whole chain will be vertically 
 		 * alligned on the x axis
@@ -277,15 +278,21 @@ public class StructureDiagramGenerator implements CDKConstants
 		double startAngle = 0, addAngle = 0, unoccupiedAngle = 0;
 		atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
 		System.out.println("Longest Chain has " + longestChain.getAtomCount() + " atoms.");
-//		do
-//		{
-//			atom = getNextAtomWithUnplacedNeigbors();
-//			unplacedAtoms = getUnplacedAtoms(atom);
-//			unoccupiedAngle = getLargestUnoccupiedAngle(atom);
+
+		do
+		{
+			atom = getNextAtomWithUnplacedNeigbors();
+			if (atom != null)
+			{
+				unplacedAtoms = getUnplacedAtoms(atom);
+				atoms = atomPlacer.getLargestUnoccupiedAngleAtoms(atom);
+			}
 //			XXXXXXXXXXXXXXXX Hier geht weiter XXXXXXXXXXXXXXXXXXXX
+//			Berechne den Winkel zwischen den beiden bestimmten Atomen und fülle 
+//			ihn mit Substituenten.
 //			Finde den optimalen Startwinkel zu den schon
 //			Plazierten Atomen.					
-//		}while(!allPlaced(molecule));
+		}while(!true);
 	}
 	
 	private Vector getUnplacedAtoms(Atom atom)
