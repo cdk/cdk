@@ -79,7 +79,8 @@ public class MDLRXNReaderTest extends TestCase {
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
         try {
 			MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
-			Reaction reaction2 = (Reaction)reader2.read(reaction2);
+			Reaction reaction2 = new Reaction();
+			reaction2 = (Reaction)reader2.read(reaction2);
 			
 			assertNotNull(reaction2);
 			assertEquals(2, reaction2.getReactantCount());
