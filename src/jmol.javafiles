@@ -111,14 +111,13 @@ org/openscience/cdk/tools/isotopes/IsotopeHandler.java
 org/openscience/cdk/tools/isotopes/IsotopeReader.java
 org/openscience/cdk/tools/AtomTypeConfigurator.java
 org/openscience/cdk/tools/AtomTypeFactory.java
-org/openscience/cdk/tools/ChemFileManipulator.java
-org/openscience/cdk/tools/ChemModelManipulator.java
-org/openscience/cdk/tools/ChemSequenceManipulator.java
 org/openscience/cdk/tools/MFAnalyser.java
-org/openscience/cdk/tools/SetOfAtomContainersManipulator.java
-org/openscience/cdk/tools/SetOfMoleculesManipulator.java
 org/openscience/cdk/tools/IsotopeFactory.java
 org/openscience/cdk/tools/LoggingTool.java
 org/openscience/cdk/tools/TXTBasedAtomTypeConfigurator.java
-
+org/openscience/cdk/tools/manipulator/ChemFileManipulator.java
+org/openscience/cdk/tools/manipulator/ChemModelManipulator.java
+org/openscience/cdk/tools/manipulator/ChemSequenceManipulator.java
+org/openscience/cdk/tools/manipulator/SetOfAtomContainersManipulator.java
+org/openscience/cdk/tools/manipulator/SetOfMoleculesManipulator.java
 
