@@ -502,13 +502,13 @@ public class CMLCoreModule implements ModuleInterface {
                         unitcella, unitcellb, unitcellc, unitcellalpha, unitcellbeta, unitcellgamma
                     );
                     a[0] = axes[0][0];
-                    a[1] = axes[1][0];
-                    a[2] = axes[2][0];
-                    b[0] = axes[0][1];
+                    a[1] = axes[0][1];
+                    a[2] = axes[0][2];
+                    b[0] = axes[1][0];
                     b[1] = axes[1][1];
-                    b[2] = axes[2][1];
-                    c[0] = axes[0][2];
-                    c[1] = axes[1][2];
+                    b[2] = axes[1][2];
+                    c[0] = axes[2][0];
+                    c[1] = axes[2][1];
                     c[2] = axes[2][2];
                     cartesianAxesSet = true;
                     cdo.setObjectProperty("a-axis", "x", new Double(a[0]).toString());
