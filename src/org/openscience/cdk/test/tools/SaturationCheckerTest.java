@@ -82,7 +82,6 @@ public class SaturationCheckerTest extends TestCase
 	 */
     public static Test suite() {
         TestSuite suite = new TestSuite(SaturationCheckerTest.class);
-        suite.addTest(HydrogenAdderTest.suite());
         return suite;
 	}
 
@@ -177,11 +176,10 @@ public class SaturationCheckerTest extends TestCase
 	}
     
     /**
-     * Tests wether the saturation checker considers negative
-     * charges.
+     * Tests wether the saturation checker gets a proton right.
      */
 	public void testIsSaturated_Proton() throws CDKException {
-		// test methane with explicit hydrogen
+		// test H+
 		Molecule m = new Molecule();
 		Atom h = new Atom("H");
         h.setFormalCharge(+1);

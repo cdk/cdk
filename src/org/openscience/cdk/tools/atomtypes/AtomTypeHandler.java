@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sf.net
  *
@@ -87,6 +87,8 @@ public class AtomTypeHandler extends DefaultHandler {
                         atomType.setMaxBondOrder(Double.parseDouble(atts.getValue(i)));
                     } else if ("bondOrderSum".equals(atts.getQName(i))) {
                         atomType.setBondOrderSum(Double.parseDouble(atts.getValue(i)));
+                    } else if ("formalCharge".equals(atts.getQName(i))) {
+                        atomType.setFormalCharge(Integer.parseInt(atts.getValue(i)));
                     }
                 } catch (NumberFormatException exception) {
                     logger.error("Value of AtomType@" + atts.getQName(i) +

@@ -382,7 +382,7 @@
                 </javac>
         </target>
 
-        <target id="compile-test" name="compile-test" depends="dist-all">
+        <target id="compile-test" name="compile-test" depends="dist-all, dist-experimental">
                 <!-- Task to build the test classes. -->
                 <javac srcdir="${build.src}/org/openscience/cdk/test"
                        destdir="${build}" optimize="${optimization}" 
@@ -439,6 +439,9 @@
                 <copy
                 file="${src}/org/openscience/cdk/config/structgen_atomtypes.xml"
                 tofile="${build}/org/openscience/cdk/config/structgen_atomtypes.xml" />
+                <copy
+                file="${src}/org/openscience/cdk/config/valency_atomtypes.xml"
+                tofile="${build}/org/openscience/cdk/config/valency_atomtypes.xml" />
                 <copy
                 file="${src}/org/openscience/cdk/config/jmol_atomtypes.txt"
                 tofile="${build}/org/openscience/cdk/config/jmol_atomtypes.txt" />

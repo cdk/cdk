@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,7 +30,6 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.geometry.GeometryTools;
 import java.util.Vector;
 import java.io.*;
@@ -79,15 +78,33 @@ import java.io.*;
 public class HydrogenAdder {
 
     private LoggingTool logger;
-    private SaturationChecker satChecker;
+    private ValencyCheckerInterface satChecker;
 
     /**
-     * Creates a tool to add missing hydrogens.
+     * Creates a tool to add missing hydrogens using the SaturationChecker class.
+     * 
+     * @see org.openscience.cdk.tools.SaturationChecker
      */
     public HydrogenAdder() {
+        this("org.openscience.cdk.tools.SaturationChecker");
+    }
+    
+    /**
+     * Creates a tool to add missing hydrogens using a ValencyCheckerInterface.
+     * 
+     * @see org.openscience.cdk.tools.ValencyCheckerInterface
+     */
+    public HydrogenAdder(String valencyCheckerInterfaceClassName) {
         logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
         try {
-            satChecker = new SaturationChecker();
+            if (valencyCheckerInterfaceClassName.equals("org.openscience.cdk.tools.ValencyChecker")) {
+                satChecker = new ValencyChecker();
+            } else if (valencyCheckerInterfaceClassName.equals("org.openscience.cdk.tools.SaturationChecker")) {
+                satChecker = new SaturationChecker();
+            } else {
+                logger.error("Cannot instantiate unknown ValencyCheckerInterface; using SaturationChecker");
+                satChecker = new SaturationChecker();
+            }
         } catch (Exception exception) {
             logger.error("Could not intantiate a SaturationChecker.");
             logger.debug(exception);

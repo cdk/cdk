@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2001-2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2001-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -45,8 +45,7 @@ import java.io.*;
  * @keyword    saturation
  * @keyword    atom, valency
  */
-public class SaturationChecker
-{
+public class SaturationChecker implements ValencyCheckerInterface {
 
 	AtomTypeFactory structgenATF;
 
@@ -99,6 +98,12 @@ public class SaturationChecker
 		return false;
 	}
 
+    /**
+     * Determines of all atoms on the AtomContainer are saturated.
+     */
+	public boolean isSaturated(AtomContainer container) throws CDKException {
+        return allSaturated(container);
+    }
 	public boolean allSaturated(AtomContainer ac) throws CDKException
 	{
         logger.debug("Are all atoms saturated?");

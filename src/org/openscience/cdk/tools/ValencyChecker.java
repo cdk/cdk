@@ -48,7 +48,7 @@ import java.io.*;
  *
  * @keyword    atom, valency
  */
-public class ValencyChecker {
+public class ValencyChecker implements ValencyCheckerInterface {
 
 	private AtomTypeFactory structgenATF;
 
@@ -129,14 +129,29 @@ public class ValencyChecker {
             if (charge == type.getFormalCharge()) {
                 if (bondOrderSum + hcount <= type.getBondOrderSum() && 
                     maxBondOrder <= type.getMaxBondOrder()) {
+                    logger.debug("This type matches: " + type);
                     missingHydrogen = (int) (type.getBondOrderSum() -
                         container.getBondOrderSum(atom));
+                    break;
                 }
             } // else: formal charges don't match
         }
         
+        logger.debug("missing hydrogens: " + missingHydrogen);
         return missingHydrogen;
     }
     
+    /**
+     * Determines of all atoms on the AtomContainer are saturated.
+     */
+	public boolean isSaturated(AtomContainer ac) throws CDKException {
+        logger.debug("Are all atoms saturated?");
+        for (int f = 0; f < ac.getAtomCount(); f++) {
+            if (!isSaturated(ac.getAtomAt(f), ac)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 

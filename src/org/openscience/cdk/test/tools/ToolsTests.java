@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -26,8 +26,8 @@ package org.openscience.cdk.test.tools;
 import junit.framework.*;
 
 /**
- * TestSuite that runs all the sample tests
- *
+ * TestSuite that runs all the sample tests in the
+ * org.openscience.cdk.tools package.
  */
 public class ToolsTests {
 
@@ -36,10 +36,12 @@ public class ToolsTests {
         suite.addTest(AtomTypeFactoryTest.suite());
         suite.addTest(CASNumberTest.suite());
         suite.addTest(ConnectivityCheckerTest.suite());
+        suite.addTest(HydrogenAdderTest.suite());
         suite.addTest(IsotopeFactoryTest.suite());
         suite.addTest(MFAnalyserTest.suite());
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
+        suite.addTest(ValencyCheckerTest.suite());
         return suite;
     }
 

@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2003  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -51,7 +51,7 @@ import junit.framework.*;
  */
 public class HydrogenAdderTest extends TestCase {
 
-    private HydrogenAdder adder = null;
+    protected HydrogenAdder adder = null;
     private boolean standalone = false;
 
     public HydrogenAdderTest(String name) {
@@ -72,7 +72,9 @@ public class HydrogenAdderTest extends TestCase {
      * @return    The test suite
      */
     public static Test suite() {
-        return new TestSuite(HydrogenAdderTest.class);
+        TestSuite suite = new TestSuite(HydrogenAdderTest.class);
+        suite.addTest(HydrogenAdder2Test.suite());
+        return suite;
     }
 
     public void testProton() {
