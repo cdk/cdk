@@ -73,8 +73,8 @@ public class SetOfMoleculesManipulatorTest extends TestCase {
     }
 	
 	public void testGetTotalFormalCharge() {
-        int charge = SetOfMoleculesManipulator.getTotalFormalCharge(som);
-		assertEquals(-1, charge);
+        double charge = SetOfMoleculesManipulator.getTotalFormalCharge(som);
+		assertEquals(-1.0, charge, 0.000001);
     }
 	
 	public void testGetTotalHydrogenCount() {

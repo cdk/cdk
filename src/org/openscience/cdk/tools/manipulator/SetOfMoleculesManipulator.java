@@ -75,7 +75,7 @@ public class SetOfMoleculesManipulator {
 	/**
 	 * @see SetOfAtomContainersManipulator
 	 */
-	public static int getTotalFormalCharge(SetOfMolecules set) {
+	public static double getTotalFormalCharge(SetOfMolecules set) {
 		return SetOfAtomContainersManipulator.getTotalFormalCharge(set);
 	}
 	

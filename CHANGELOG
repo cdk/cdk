@@ -42,6 +42,8 @@ Fixes:
   (closes JCP #932378, JCP #933601, JCP #933600, JCP #846617)
 
 API changes:
+* cdk.tools.manipulator.SetOf(AtomContainers|Molecules)Manipluator.
+  getTotalFormalCharge returns double instead of int
 * Moved *Manipulator from cdk.tools into cdk.tools.manipulator
 * PopupController2D.getPopupMenu() now also checks for popup menu's of super
   classes
