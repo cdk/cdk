@@ -168,7 +168,7 @@ public class AtomTypeFactory {
 	 * @return        An array of atomtypes that matches the given element symbol and atomtype class
 	 */
 	public AtomType[] getAtomTypes(String symbol, String id) {
-		ArrayList al = new ArrayList();
+		Vector al = new Vector();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++){
             AtomType at = (AtomType) atomTypes.elementAt(f); 
@@ -177,20 +177,20 @@ public class AtomTypeFactory {
 			}
 		}
 		AtomType[] atomTypes = new AtomType[al.size()];
-		al.toArray(atomTypes);
+		al.copyInto(atomTypes);
 		return atomTypes;
 	}
     
     public org.openscience.cdk.AtomType[] getAllAtomTypes() {
         logger.debug("Returning list of size: " + getSize());
-		ArrayList al = new ArrayList();
+		Vector al = new Vector();
 		AtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++){
             AtomType at = (AtomType) atomTypes.elementAt(f); 
             al.add((AtomType)at.clone());
 		}
 		AtomType[] atomTypes = new AtomType[al.size()];
-		al.toArray(atomTypes);
+		al.copyInto(atomTypes);
 		return atomTypes;
     }
 
