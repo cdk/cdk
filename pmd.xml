@@ -18,7 +18,7 @@
     <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
                         classpathref="pmd.classpath"/>
 
-    <target name="pmd" depends="pmd-core, pmd-standard, pmd-io, pmd-extra, pmd-render"/>
+    <target name="pmd" depends="pmd-core, pmd-standard, pmd-io, pmd-extra, pmd-render, pmd-applications, pmd-libio"/>
     
     <target name="pmd-core">
         <mkdir dir="${reports.tests}/pmd"/>
@@ -71,6 +71,39 @@
                      toFile="${reports.tests}/pmd/extra.html"/>
             <fileset dir="${src}">
                 <includesfile name="${src}/extra.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-applications">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/applications.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/applications.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-libio">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/libio.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/libio.javafiles"/>
+            </fileset>
+        </pmd>
+    </target>
+
+    <target name="pmd-experimental">
+        <mkdir dir="${reports.tests}/pmd"/>
+        <pmd rulesetfiles="rulesets/basic.xml, rulesets/naming.xml, rulesets/unusedcode.xml, rulesets/imports.xml, rulesets/strings.xml, rulesets/codesize.xml">
+            <formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" 
+                     toFile="${reports.tests}/pmd/experimental.html"/>
+            <fileset dir="${src}">
+                <includesfile name="${src}/experimental.javafiles"/>
             </fileset>
         </pmd>
     </target>
