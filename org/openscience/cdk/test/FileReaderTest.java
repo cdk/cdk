@@ -28,6 +28,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.tools.*;
+import org.openscience.cdk.geometry.*;
 import java.util.*;
 import java.io.*;
 
@@ -65,7 +66,7 @@ public class FileReaderTest {
 	          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
               Molecule m = setOfMolecules.getMolecule(i);
               // since there is no Renderer3D yet, project in XY plane
-              if (!HasInformation.has2DCoordinates(m)) Projector.project2D(m);
+              if (!GeometryTools.has2DCoordinates(m)) Projector.project2D(m);
               MoleculeViewer2D mv = new MoleculeViewer2D(m);
               mv.display();
               AtomicTable at = new AtomicTable(m);
