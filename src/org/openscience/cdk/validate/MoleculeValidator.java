@@ -54,7 +54,7 @@ public class MoleculeValidator {
             SaturationChecker saturationChecker = new SaturationChecker();
             if (!saturationChecker.isSaturated(atom, molecule)) {
                 String error = "Atom " + atom.getSymbol() + " has an unfulfilled valency";
-                errors.add(new ValidationError(atom, error));
+                errors.add(new SeriousValidationError(atom, error));
             }
         } catch (Exception exception) {
             System.err.println("Error while performing atom valency validation: " + exception.toString());

@@ -43,7 +43,7 @@ public class ChemSequenceValidator {
         for (int i=0; i < models.length; i++) {
             if (models[i] == null) {
                 errors.add(
-                  new ValidationError(sequence, "ChemSequence contains a null object at position " + i)
+                  new CDKError(sequence, "ChemSequence contains a null object at position " + i)
                 );
             } else {
                 errors.addAll(ChemModelValidator.validate(models[i]));

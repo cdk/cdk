@@ -24,32 +24,16 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.*;
-import java.util.Vector;
+import org.openscience.cdk.ChemObject;
 
 /**
- * Tool to validate the chemical semantics for an ChemFile.
- *
- * @author   Egon Willighagen <egonw@sci.kun.nl>
- * @created  2003-07-14
- *
- * @see      org.openscience.cdk.ChemFile
- */ 
-public class ChemFileValidator {
-
-    public static Vector validate(ChemFile chemFile) {
-        Vector errors = new Vector();
-        ChemSequence[] sequences = chemFile.getChemSequences();
-        for (int i=0; i < sequences.length; i++) {
-            if (sequences[i] == null) {
-                errors.add(
-                  new CDKError(chemFile, "ChemFile contains a null object at position " + i)
-                );
-            } else {
-                errors.addAll(ChemSequenceValidator.validate(sequences[i]));
-            }
-        }
-        return errors;
-    }
+ * This is an error reported by a validation class that does not
+ * report a problem with the chemical semantics, but with the semantics
+ * of the internal represenation.
+ */
+public class CDKError extends ValidationError {
     
+    public CDKError(ChemObject object, String error) {
+        super(object, error);
+    }
 }

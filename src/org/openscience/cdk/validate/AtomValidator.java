@@ -51,10 +51,10 @@ public class AtomValidator {
         if (atom.getSymbol().equals("O") || atom.getSymbol().equals("N") ||
             atom.getSymbol().equals("C") || atom.getSymbol().equals("H")) {
             if (atom.getFormalCharge() < -1) {
-                errors.add(new ValidationError(atom, "Atom has an unlikely large negative charge"));
+                errors.add(new ValidationWarning(atom, "Atom has an unlikely large negative charge"));
             }
             if (atom.getFormalCharge() > 1) {
-                errors.add(new ValidationError(atom, "Atom has an unlikely large positive charge"));
+                errors.add(new ValidationWarning(atom, "Atom has an unlikely large positive charge"));
             }
         }
         return errors;
