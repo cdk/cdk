@@ -58,26 +58,18 @@
                 <javac destdir="${build}" optimize="off" debug="on" deprecation="off">
                         <src path="${src}" />
                         <exclude name="${sourcedist}/**" />
-                        <exclude
-                        name="org/openscience/cdk/applications/Viewer.java" />
-                        <exclude
-                        name="org/openscience/cdk/renderer/AcceleratedRenderer3D*" />
-                        <exclude
-                        name="org/openscience/cdk/renderer/OrbitalsRenderer3D*" />
-                        <exclude
-                        name="org/openscience/cdk/test/AcceleratedRenderer3DTest.java" />
-                        <exclude
-                        name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
-                        <exclude
-                        name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
-                        <exclude
-                        name="org/openscience/cdk/test/ZMatrixReaderTest.java" />
-
+                        <exclude name="org/openscience/cdk/applications/Viewer.java" />
+                        <exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3D.java" />
+			<exclude name="org/openscience/cdk/renderer/AcceleratedRenderer3DModel.java" />
+                        <exclude name="org/openscience/cdk/renderer/OrbitalsRenderer3D.java" />
+                        <exclude name="org/openscience/cdk/test/renderer/AcceleratedRenderer3DTest.java" />
+                        <exclude name="org/openscience/cdk/test/OrbitalsRenderer3DTest.java" />
+                        <exclude name="org/openscience/cdk/test/VisualGaussiansCalculationTest.java" />
+                        <exclude name="org/openscience/cdk/test/io/ZMatrixReaderTest.java" />
                         <!-- exclude libio classes that require additional
                              libraries, and are compiled elsewhere -->
                         <exclude name="org/openscience/cdk/libio/**" />
                         <exclude name="org/openscience/cdk/test/libio/**" />
-
                         <classpath refid="project.class.path" />
                 </javac>
 
