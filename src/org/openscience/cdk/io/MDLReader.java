@@ -348,10 +348,10 @@ public class MDLReader implements ChemObjectReader
                         for (int i=1; i <= infoCount; i++) {
                             StringTokenizer st = new StringTokenizer(line.substring(9));
                             int atomNumber = Integer.parseInt(st.nextToken().trim());
-                            int massDiff = Integer.parseInt(st.nextToken().trim());
-                            if (massDiff != 0) { 
+                            int absMass = Integer.parseInt(st.nextToken().trim());
+                            if (absMass != 0) { 
                                 Atom isotope = molecule.getAtomAt(atomNumber - 1);
-                                isotope.setAtomicMass(massDiff);
+                                isotope.setAtomicMass(absMass);
                             }
                         }
                     } catch (NumberFormatException exception) {
