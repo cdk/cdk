@@ -33,17 +33,11 @@ import org.openscience.cdk.*;
 import java.util.*;
 
 /**
- *  Generates a Fingerprint for a given AtomContainer. 
- *  Fingerprints are one-dimensional bit arrays, where bits are set according to
- *  a the occurence of a particular structural feature (See for example the 
- *  Daylight inc. theory manual for more information)
- *  Fingerprints allow for a fast screening step to excluded candidates 
- *  for a substructure search in a database. 
- *  They are also a means for determining the similarity of chemical
- *  structures.
+ *  Generates a Fingerprint for a given AtomContainer. Fingerprints are one-dimensional bit arrays, where bits are set according to a the occurence of a particular structural feature (See for example the Daylight inc. theory manual for more information) Fingerprints
+ *  allow for a fast screening step to excluded candidates for a substructure search in a database. They are also a means for determining the similarity of chemical structures.
  *
- *@author     steinbeck
- *@created    24. Februar 2002
+ * @author     steinbeck
+ * @created    24. Februar 2002
  */
 public class Fingerprinter implements CDKConstants
 {
@@ -53,11 +47,12 @@ public class Fingerprinter implements CDKConstants
 	static boolean debug = true;
 	static int debugCounter = 0;
 
+
 	/**
 	 *  Generates a fingerprint of the default size for the given AtomContainer
 	 *
-	 *@param  ac  The AtomContainer for which a Fingerprint is generated
-	 *@return     The Fingerprint (A one-dimensional bit array)
+	 * @param  ac  The AtomContainer for which a Fingerprint is generated
+	 * @return     The Fingerprint (A one-dimensional bit array)
 	 */
 	public static BitSet getFingerprint(AtomContainer ac)
 	{
@@ -68,9 +63,9 @@ public class Fingerprinter implements CDKConstants
 	/**
 	 *  Generates a fingerprint of a given size for the given AtomContainer
 	 *
-	 *@param  ac  The AtomContainer for which a Fingerprint is generated
-	 *@param  size  The desired size of the fingerprint
-	 *@return     The Fingerprint (A one-dimensional bit array)
+	 * @param  ac    The AtomContainer for which a Fingerprint is generated
+	 * @param  size  The desired size of the fingerprint
+	 * @return       The Fingerprint (A one-dimensional bit array)
 	 */
 	public static BitSet getFingerprint(AtomContainer ac, int size)
 	{
@@ -87,12 +82,30 @@ public class Fingerprinter implements CDKConstants
 
 
 	/**
-	 
-	 *  Gets all pathes of length 1 up to the length given by the
-	 *  'searchDepth" parameter. The pathes are aquired by a 
-	 *  number of depth first searches, one for each atom.
+	 *  Checks whether all the positive bits in BitSet bs2 occur in BitSet
+	 *  bs1. If so, the molecular structure from which bs2 was generated is 
+	 *  a possible substructure of bs1
 	 *
-	 *@param  ac  The AtomContainer which is to be searched.
+	 * @param  bs1  The reference BitSet
+	 * @param  bs2  The BitSet which is compared with bs1
+	 * @return      True, if bs2 is a subset of bs2
+	 */
+	public static boolean isSubset(BitSet bs1, BitSet bs2)
+	{
+		BitSet clone = (BitSet) bs1.clone();
+		clone.and(bs2);
+		if (clone.equals(bs2))
+		{
+			return true;
+		}
+		return false;
+	}
+
+
+	/**
+	 *  Gets all pathes of length 1 up to the length given by the 'searchDepth" parameter. The pathes are aquired by a number of depth first searches, one for each atom.
+	 *
+	 * @param  ac  The AtomContainer which is to be searched.
 	 */
 	static void findPathes(AtomContainer ac)
 	{
@@ -112,10 +125,10 @@ public class Fingerprinter implements CDKConstants
 	/**
 	 *  Performs a recursive depth first search
 	 *
-	 *@param  ac            The AtomContainer to be searched
-	 *@param  root          The Atom to start the search at
-	 *@param  currentPath   The Path that has been generated so far
-	 *@param  currentDepth  The current depth in this recursive search
+	 * @param  ac            The AtomContainer to be searched
+	 * @param  root          The Atom to start the search at
+	 * @param  currentPath   The Path that has been generated so far
+	 * @param  currentDepth  The current depth in this recursive search
 	 */
 	static void depthFirstSearch(AtomContainer ac, Atom root, String currentPath, int currentDepth)
 	{
@@ -138,7 +151,7 @@ public class Fingerprinter implements CDKConstants
 					pathes.put(newPath, newPath);
 					if (debug)
 					{
-						debugCounter ++;
+						debugCounter++;
 						System.out.println("Path no. " + debugCounter + ": " + newPath + ", Hash: " + newPath.hashCode());
 					}
 				}

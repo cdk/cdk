@@ -1,5 +1,4 @@
-/* FingerprinterTest.java
- *
+/* 
  * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2001  The JChemPaint project
@@ -42,12 +41,110 @@ public class FingerprinterTest
 	{
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		BitSet bs = Fingerprinter.getFingerprint(mol);
+		Molecule frag1 = makeFragment1();
+		Molecule frag2 = makeFragment2();
+		Molecule frag3 = makeFragment3();
+		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
+		BitSet bs2 = Fingerprinter.getFingerprint(frag2);
+		BitSet bs3 = Fingerprinter.getFingerprint(frag3);
 		System.out.println("Resulting BitSet looks like:");
 		System.out.println(bs);
 		System.out.println("(Numbers indicate position of '1' Bits)");
+		System.out.println(bs1);
+		System.out.println(bs2);
+		System.out.println(bs3);
+		if (Fingerprinter.isSubset(bs, bs1))
+		{
+			System.out.println("Fragment 1 could be a substructure of Alpha-Pinene");	
+		}
+		else 
+		{
+			System.out.println("Fragment 1 is not a substructure of Alpha-Pinene");
+		}
+
+		if (Fingerprinter.isSubset(bs, bs2))
+		{
+			System.out.println("Fragment 2 could be a substructure of Alpha-Pinene");	
+		}
+		else 
+		{
+			System.out.println("Fragment 2 is not a substructure of Alpha-Pinene");
+		}
+
+		if (Fingerprinter.isSubset(bs, bs3))
+		{
+			System.out.println("Fragment 3 could be a substructure of Alpha-Pinene");	
+		}
+		else 
+		{
+			System.out.println("Fragment 3 is not a substructure of Alpha-Pinene");
+		}
+
 		return false;
 	}
 
+	public static Molecule makeFragment1()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+				
+		mol.addBond(0, 1, 1); // 1
+		mol.addBond(0, 2, 1); // 2
+		mol.addBond(0, 3, 1); // 3
+		mol.addBond(0, 4, 1); // 4
+		mol.addBond(3, 5, 1); // 5
+		mol.addBond(5, 6, 2); // 6
+		return mol;
+	}
+
+	public static Molecule makeFragment2()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("S")); // 3
+		mol.addAtom(new Atom("O")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+				
+		mol.addBond(0, 1, 2); // 1
+		mol.addBond(0, 2, 1); // 2
+		mol.addBond(0, 3, 1); // 3
+		mol.addBond(0, 4, 1); // 4
+		mol.addBond(3, 5, 1); // 5
+		mol.addBond(5, 6, 2); // 6
+		mol.addBond(5, 6, 2); // 7
+		return mol;
+	}
+	
+	public static Molecule makeFragment3()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+				
+		mol.addBond(0, 1, 1); // 1
+		mol.addBond(0, 2, 1); // 2
+		mol.addBond(0, 3, 1); // 3
+		mol.addBond(0, 4, 1); // 4
+		mol.addBond(3, 5, 2); // 5
+		mol.addBond(5, 6, 1); // 6
+		return mol;
+	}
+	
+	
 	public static void main(String[] args)
 	{
 		FingerprinterTest fpt = new FingerprinterTest();
