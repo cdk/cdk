@@ -29,6 +29,9 @@ New:
   problems
 * The Renderer2D will now underline Atom's with validation problems
   with a red line
+* Added SetOfMolecules.add(SetOfMolecules) method
+* Added SetOfMolecules getAllMolecules() convenience methods to
+  SetOfReactionsManipulator ReactionManipulator
 
 Fixes:
 * Added missing LGPL license to distributions.
@@ -42,6 +45,7 @@ Fixes:
 * Proper rendering PseudoAtom labels
 * Fixed the 'organic subset' idea, and requirement for []'s
   (fixed #784433)
+* Fixed reading of dictionaries, and added dictionaries to jar
 
 API changes:
 * ConnectivityChecker.partitionIntoMolecules() now returns a 
