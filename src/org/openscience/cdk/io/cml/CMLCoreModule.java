@@ -70,6 +70,7 @@ public class CMLCoreModule implements ModuleInterface {
     public final static int SEQUENCE = 22;
     public final static int FEATURE = 23;
     public final static int SCALAR = 24;
+    public final static int SYMMETRY = 25;
     protected final String SYSTEMID = "CML-1999-05-15";
     protected CDOInterface cdo;
     
@@ -107,12 +108,8 @@ public class CMLCoreModule implements ModuleInterface {
     protected String elementTitle;
     protected String currentChars;
     
-    protected double unitcella;
-    protected double unitcellb;
-    protected double unitcellc;
-    protected double unitcellalpha;
-    protected double unitcellbeta;
-    protected double unitcellgamma;
+    protected double[] unitcellparams;
+    protected int crystalScalar;
     
     private double[] a;
     private double[] b;
@@ -159,9 +156,7 @@ public class CMLCoreModule implements ModuleInterface {
             this.bondStereo = conv.bondStereo;
             this.bondDictRefs = conv.bondDictRefs;
             this.curRef = conv.curRef;
-            this.unitcella = conv.unitcella;
-            this.unitcellb = conv.unitcellb;
-            this.unitcellc = conv.unitcellc;
+            this.unitcellparams = conv.unitcellparams;
         } else {
             logger.warn("Cannot inherit information from module: " + convention.getClass().getName());
         }
@@ -221,13 +216,9 @@ public class CMLCoreModule implements ModuleInterface {
      * Clean all data about read bonds.
      */
     protected void newCrystalData() {
-        unitcella = -1.0;
-        unitcellb = -1.0;
-        unitcellc = -1.0;
-        unitcellalpha = -1.0;
-        unitcellbeta = -1.0;
-        unitcellgamma = -1.0;
+        unitcellparams = new double[6];
         cartesianAxesSet = false;
+        crystalScalar = 0;
         a = new double[3];
         b = new double[3];
         c = new double[3];
@@ -246,7 +237,7 @@ public class CMLCoreModule implements ModuleInterface {
         logger.info("End XML Doc");
     }
     
-    public void startElement(String uri, String local, String raw, 
+    public void startElement(Stack xpath, String uri, String local, String raw, 
                               Attributes atts) {
 
         String name = local;
@@ -419,9 +410,26 @@ public class CMLCoreModule implements ModuleInterface {
             case CRYSTAL:
                 newCrystalData();
                 cdo.startObject("Crystal");
+                for (int i = 0; i < atts.getLength(); i++) {
+                    String att = atts.getQName(i);
+                    if (att.equals("z")) {
+                        cdo.setObjectProperty("Crystal", "z", atts.getValue(i));
+                    }
+                }
+                break;
+
+            case SYMMETRY:
+                for (int i = 0; i < atts.getLength(); i++) {
+                    String att = atts.getQName(i);
+                    if (att.equals("spacegroup")) {
+                        cdo.setObjectProperty("Crystal", "spacegroup", atts.getValue(i));
+                    }
+                }
                 break;
 
             case SCALAR:
+                if (xpath.toString().endsWith("crystal/scalar"))
+                    crystalScalar++;
                 break;
             
             case LIST:
@@ -430,7 +438,7 @@ public class CMLCoreModule implements ModuleInterface {
         }
     }
 
-    public void endElement(String uri, String name, String raw) {
+    public void endElement(Stack xpath, String uri, String name, String raw) {
         logger.debug("EndElement: " + name);
         setCurrentElement(name);
 
@@ -496,10 +504,11 @@ public class CMLCoreModule implements ModuleInterface {
                 break;
 
             case CRYSTAL:
-                if (unitcella != -1.0) {
+                if (unitcellparams[5] != -1.0) {
                     // convert unit cell parameters to cartesians
                     double[][] axes = CrystalGeometryTools.notionalToCartesian(
-                        unitcella, unitcellb, unitcellc, unitcellalpha, unitcellbeta, unitcellgamma
+                        unitcellparams[0], unitcellparams[1], unitcellparams[2],
+                        unitcellparams[3], unitcellparams[4], unitcellparams[5]
                     );
                     a[0] = axes[0][0];
                     a[1] = axes[0][1];
@@ -560,7 +569,7 @@ public class CMLCoreModule implements ModuleInterface {
         elementTitle = "";
     }
 
-    public void characterData(char[] ch, int start, int length) {
+    public void characterData(Stack xpath, char[] ch, int start, int length) {
         logger.debug("CD");
 
         String s = new String(ch, start, length);
@@ -745,39 +754,9 @@ public class CMLCoreModule implements ModuleInterface {
             
             case SCALAR:
                 logger.debug("Going to store scalar data for dictref: " + DICTREF);
-                if (DICTREF.equals("cml:a")) {
+                if (xpath.toString().endsWith("crystal/scalar")) {
                     try {
-                        unitcella = Double.parseDouble(s);
-                    } catch (NumberFormatException exception) {
-                        logger.error("Content must a float: " + s);
-                    }
-                } else if (DICTREF.equals("cml:b")) {
-                    try {
-                        unitcellb = Double.parseDouble(s);
-                    } catch (NumberFormatException exception) {
-                        logger.error("Content must a float: " + s);
-                    }
-                } else if (DICTREF.equals("cml:c")) {
-                    try {
-                        unitcellc = Double.parseDouble(s);
-                    } catch (NumberFormatException exception) {
-                        logger.error("Content must a float: " + s);
-                    }
-                } else if (DICTREF.equals("cml:alpha")) {
-                    try {
-                        unitcellalpha = Double.parseDouble(s);
-                    } catch (NumberFormatException exception) {
-                        logger.error("Content must a float: " + s);
-                    }
-                } else if (DICTREF.equals("cml:beta")) {
-                    try {
-                        unitcellbeta = Double.parseDouble(s);
-                    } catch (NumberFormatException exception) {
-                        logger.error("Content must a float: " + s);
-                    }
-                } else if (DICTREF.equals("cml:gamma")) {
-                    try {
-                        unitcellgamma = Double.parseDouble(s);
+                        unitcellparams[crystalScalar-1] = Double.parseDouble(s);
                     } catch (NumberFormatException exception) {
                         logger.error("Content must a float: " + s);
                     }
@@ -912,6 +891,8 @@ public class CMLCoreModule implements ModuleInterface {
             CurrentElement = FEATURE;
         } else if (name.equals("scalar")) {
             CurrentElement = SCALAR;
+        } else if (name.equals("symmetry")) {
+            CurrentElement = SYMMETRY;
         } else {
             CurrentElement = UNKNOWN;
         }
@@ -1158,4 +1139,5 @@ public class CMLCoreModule implements ModuleInterface {
         }
         newBondData();
     }
+
 }

@@ -66,15 +66,15 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     };
 
 
-    public void startElement(String uri, String local, String raw, Attributes atts) {
+    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
         String name = local;
         if (name.equals("list")) {
             // System.err.println("Oke, JMOLANIMATION seems to be kicked in :)");
             cdo.startObject("Animation");
-            super.startElement(uri, local, raw, atts);
+            super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("molecule")) {
             cdo.startObject("Frame");
-            super.startElement(uri, local, raw, atts);
+            super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("float")) {
             boolean isEnergy = false;
             System.err.println("FLOAT found!");
@@ -92,14 +92,14 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
                 // oke, this is the frames energy!
                 current = ENERGY;
             } else {
-                super.startElement(uri, local, raw, atts);
+                super.startElement(xpath, uri, local, raw, atts);
             }
         } else {
-            super.startElement(uri, local, raw, atts);
+            super.startElement(xpath, uri, local, raw, atts);
         }
     };
 
-    public void endElement(String uri, String local, String raw) {
+    public void endElement(Stack xpath, String uri, String local, String raw) {
         String name = local;
         if (current == ENERGY) {
             cdo.setObjectProperty("Frame", "energy", frame_energy);
@@ -108,21 +108,21 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
             frame_energy = "";
             units = "";
         } else if (name.equals("list")) {
-            super.endElement(uri, local, raw);
+            super.endElement(xpath, uri, local, raw);
             cdo.endObject("Animation");
         } else if (name.equals("molecule")) {
-            super.endElement(uri, local, raw);
+            super.endElement(xpath, uri, local, raw);
             cdo.endObject("Frame");
         } else {
-            super.endElement(uri, local, raw);
+            super.endElement(xpath, uri, local, raw);
         }
     }
 
-    public void characterData(char ch[], int start, int length) {
+    public void characterData(Stack xpath, char ch[], int start, int length) {
         if (current == ENERGY) {
             frame_energy = new String(ch, start, length);
         } else {
-            super.characterData(ch, start, length);
+            super.characterData(xpath, ch, start, length);
         }
     }
 }

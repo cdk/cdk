@@ -59,7 +59,7 @@ public class CMLReactionModule extends CMLCoreModule {
     };
     
     
-    public void startElement (String uri, String local, String raw, Attributes atts) {
+    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
         if ("reaction".equals(local)) {
             cdo.startObject("Reaction");
             for (int i = 0; i < atts.getLength(); i++) {
@@ -100,11 +100,11 @@ public class CMLReactionModule extends CMLCoreModule {
             // do nothing for now
             super.newMolecule();
         } else {
-            super.startElement(uri, local, raw, atts);
+            super.startElement(xpath, uri, local, raw, atts);
         }
     };
 
-    public void endElement(String uri, String local, String raw) {
+    public void endElement(Stack xpath, String uri, String local, String raw) {
         if ("reaction".equals(local)) {
             cdo.endObject("Reaction");
         } else if ("reactionList".equals(local)) {
@@ -118,12 +118,12 @@ public class CMLReactionModule extends CMLCoreModule {
             super.storeData();
             // do nothing else but store atom/bond information
         } else {
-            super.endElement(uri, local, raw);
+            super.endElement(xpath, uri, local, raw);
         }
     }
 
-    public void characterData (char ch[], int start, int length) {
+    public void characterData(Stack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
-        super.characterData(ch, start, length);
+        super.characterData(xpath, ch, start, length);
     }
 }

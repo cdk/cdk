@@ -87,7 +87,7 @@ public class PDBConvention extends CMLCoreModule {
         super.endDocument();
     }
     
-    public void startElement(String uri, String local, String raw, 
+    public void startElement(Stack xpath, String uri, String local, String raw, 
                               Attributes atts) {
         String name = raw;
         isELSYM = false;
@@ -117,11 +117,11 @@ public class PDBConvention extends CMLCoreModule {
                 // ignore other list items at this moment
             }
         } else {
-            super.startElement(uri, local, raw, atts);
+            super.startElement(xpath, uri, local, raw, atts);
         }
     }
     
-    public void endElement(String uri, String local, String raw) {
+    public void endElement(Stack xpath, String uri, String local, String raw) {
 
         String name = raw;
 
@@ -132,10 +132,10 @@ public class PDBConvention extends CMLCoreModule {
 
         isELSYM = false;
         isBond = false;
-        super.endElement(uri, local, raw);
+        super.endElement(xpath, uri, local, raw);
     }
 
-    public void characterData(char[] ch, int start, int length) {
+    public void characterData(Stack xpath, char[] ch, int start, int length) {
 
         String s = new String(ch, start, length).trim();
 
@@ -169,7 +169,7 @@ public class PDBConvention extends CMLCoreModule {
                 }
             }
         } else {
-            super.characterData(ch, start, length);
+            super.characterData(xpath, ch, start, length);
         }
     }
 }

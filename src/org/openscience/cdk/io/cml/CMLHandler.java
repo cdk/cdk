@@ -51,7 +51,7 @@ public class CMLHandler extends DefaultHandler {
 
     private Hashtable userConventions;
 
-    private Stack xpath; 
+    private Stack xpath;
     
     /**
      * Constructor for the CMLHandler.
@@ -63,7 +63,7 @@ public class CMLHandler extends DefaultHandler {
                        this.getClass().getName());
         conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
-        xpath = new Stack();
+        xpath = new CMLStack();
     }
 
     public void registerConvention(String convention, ModuleInterface conv) {
@@ -77,7 +77,7 @@ public class CMLHandler extends DefaultHandler {
      */
     public void characters(char ch[], int start, int length) {
        logger.debug(new String(ch, start, length));
-       conv.characterData(ch, start, length);
+       conv.characterData(xpath, ch, start, length);
     }
 
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}
@@ -91,7 +91,7 @@ public class CMLHandler extends DefaultHandler {
 
     public void endElement(String uri, String local, String raw) {
        logger.debug("</" + raw + ">");
-       conv.endElement(uri, local, raw);
+       conv.endElement(xpath, uri, local, raw);
        xpath.pop();
     }
 
@@ -103,20 +103,9 @@ public class CMLHandler extends DefaultHandler {
         conv.startDocument();
     }
 
-    private String printStringStack(Stack s) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("/");
-        Enumeration strings = s.elements();
-        while (strings.hasMoreElements()) {
-            sb.append(strings.nextElement());
-            sb.append("/");
-        }
-        return sb.toString();
-    }
-    
     public void startElement(String uri, String local, String raw, Attributes atts) {
         xpath.push(local);
-        logger.debug("<" + raw + "> -> " + printStringStack(xpath));
+        logger.debug("<" + raw + "> -> " + xpath);
         // Detect CML modules, like CRML and CCML
         if (local.startsWith("reaction")) {
             // e.g. reactionList, reaction -> CRML module
@@ -151,7 +140,7 @@ public class CMLHandler extends DefaultHandler {
                 }
             }
         }
-        conv.startElement(uri, local, raw, atts);
+        conv.startElement(xpath, uri, local, raw, atts);
     }
 
 }

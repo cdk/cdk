@@ -66,16 +66,16 @@ public class PMPConvention extends CMLCoreModule {
     };
     
     
-    public void startElement (String uri, String local, String raw, Attributes atts) {
+    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("PMP element: name");
-        super.startElement(uri, local, raw, atts);
+        super.startElement(xpath, uri, local, raw, atts);
     };
 
-    public void endElement(String uri, String local, String raw) {
-        super.endElement(uri, local, raw);
+    public void endElement(Stack xpath, String uri, String local, String raw) {
+        super.endElement(xpath, uri, local, raw);
     }
 
-    public void characterData (char ch[], int start, int length) {
+    public void characterData(Stack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
         logger.debug(" ElTitle: " + elementTitle);
@@ -112,7 +112,7 @@ public class PMPConvention extends CMLCoreModule {
             }
             cdo.endObject(axis);
         } else {
-            super.characterData(ch, start, length);
+            super.characterData(xpath, ch, start, length);
         }
         logger.debug("End PMP chardata");
     }

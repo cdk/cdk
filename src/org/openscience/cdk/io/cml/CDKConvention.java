@@ -62,7 +62,7 @@ public class CDKConvention extends CMLCoreModule {
         super.endDocument();
     };
 
-    public void startElement(String uri, String local, String raw, Attributes atts) {
+    public void startElement(Stack xpath, String uri, String local, String raw, Attributes atts) {
         String name = raw;
         setCurrentElement(name);
         isBond = false;
@@ -74,15 +74,15 @@ public class CDKConvention extends CMLCoreModule {
                 }
             }
         } else {
-            super.startElement(uri, local, raw, atts);
+            super.startElement(xpath, uri, local, raw, atts);
         }
     };
 
-    public void endElement (String uri, String local, String raw) {
-        super.endElement(uri, local, raw);
+    public void endElement (Stack xpath, String uri, String local, String raw) {
+        super.endElement(xpath, uri, local, raw);
     }
 
-    public void characterData (char ch[], int start, int length) {
+    public void characterData(Stack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         if (isBond) {
             logger.debug("CharData (bond): " + s);
@@ -94,7 +94,7 @@ public class CDKConvention extends CMLCoreModule {
                 cdo.setObjectProperty("Bond", "order", border);
             }
         } else {
-            super.characterData(ch, start, length);
+            super.characterData(xpath, ch, start, length);
         }
     }
 }
