@@ -249,7 +249,7 @@ public class CMLWriter implements ChemObjectWriter {
 
     private void write(Atom atom) {
 		write("    <atom id=\"");
-        if (atom.getID() != null) {
+        if (atom.getID() != null && atom.getID().length() != 0) {
             write(atom.getID());
         } else {
             // use some unique default -> the hashcode
@@ -271,7 +271,7 @@ public class CMLWriter implements ChemObjectWriter {
     private void write(Bond bond) {
         StringBuffer childElements = new StringBuffer();
 		write("    <bond id=\"");
-        if (bond.getID() != null) {
+        if (bond.getID() != null && bond.getID().length() != 0) {
             write(bond.getID());
         } else {
             // use some unique default -> the hashcode
