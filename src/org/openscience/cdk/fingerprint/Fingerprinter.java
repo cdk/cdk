@@ -54,6 +54,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *   BitSet fingerprint = Fingerprinter.getFingerprint(molecule);s
  * </pre>
  *
+ * <p>The FingerPrinter assumes that hydrogens are explicitely given!
+ *
  * @author     steinbeck
  * @cdk.created    2002-02-24
  *
