@@ -34,9 +34,6 @@ import java.util.*;
 import java.io.IOException;
 import java.text.NumberFormat;
 
-/**
- * @keyword SMILES
- **/
 public class SmilesGenerator {
   private static boolean debug = false;
 
@@ -53,7 +50,7 @@ public class SmilesGenerator {
   private Set arromaticRings = new HashSet();
 
   /** The canonical labler */
-  CanonicalLabeler canLabler = new CanonicalLabeler();
+  private CanonicalLabeler canLabler = new CanonicalLabeler();
 
   /**
    * Default constructor
@@ -213,6 +210,7 @@ public class SmilesGenerator {
    *
    * @param a the atom whose neighbours are to be found.
    * @param container the AtomContainer that is being parsed.
+   * @return Vector of atoms in canonical oreder.
    */
   private Vector getCanNeigh(final Atom a, final AtomContainer container) {
     Vector v = container.getConnectedAtomsVector(a);
@@ -220,12 +218,6 @@ public class SmilesGenerator {
       Collections.sort(v, new Comparator() {
         public int compare(Object o1, Object o2) {
           return (int) (((Long)((Atom) o1).getProperty("CanonicalLable")).longValue() - ((Long)((Atom) o2).getProperty("CanonicalLable")).longValue());
-        }
-      });
-      //Sort that high bond orders are at the front
-      Collections.sort(v, new Comparator() {
-        public int compare(Object o1, Object o2) {
-          return (int)(container.getBond((Atom)o2, a).getOrder() - container.getBond((Atom) o1, a).getOrder());
         }
       });
     }
@@ -358,6 +350,22 @@ public class SmilesGenerator {
       Ring ring = (Ring) it.next();
       if(ring.contains(a))
         return true;
+    }
+    return false;
+  }
+
+  /**
+   * Returns true if the <code>atom</code> in the <code>container</code> has
+   * been marked as a chiral center by the user.
+   */
+  private boolean isChiralCenter(Atom atom, AtomContainer container) {
+    Bond[] bonds = container.getConnectedBonds(atom);
+    for (int i = 0; i < bonds.length; i++) {
+      Bond bond = bonds[i];
+      int stereo = bond.getStereo();
+      if(stereo == Bond.STEREO_BOND_DOWN || stereo == Bond.STEREO_BOND_UP) {
+        return true;
+      }
     }
     return false;
   }
