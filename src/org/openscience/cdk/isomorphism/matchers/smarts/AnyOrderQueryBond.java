@@ -58,7 +58,6 @@ public class AnyOrderQueryBond extends SMARTSBond {
 			}
 		}
 		s.append(")");
-		s.append(")");
 		return s.toString();
     }
 }
