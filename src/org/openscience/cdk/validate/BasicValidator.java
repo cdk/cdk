@@ -28,6 +28,8 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.tools.IsotopeFactory;
 import org.openscience.cdk.tools.AtomTypeFactory;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.ValencyCheckerInterface;
+import org.openscience.cdk.tools.ValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -330,7 +332,7 @@ public class BasicValidator implements ValidatorInterface {
             "The atom has an unfulfilled valency."
         );
         try {
-            SaturationChecker saturationChecker = new SaturationChecker();
+            ValencyCheckerInterface saturationChecker = new ValencyChecker();
             if (!saturationChecker.isSaturated(atom, molecule)) {
                 checkValency.setDetails("Atom " + atom.getSymbol() + " fails");
                 report.addError(checkValency);
@@ -350,43 +352,42 @@ public class BasicValidator implements ValidatorInterface {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/structgen_atomtypes.xml"
+                "org/openscience/cdk/config/valency_atomtypes.xml"
             );
             int bos = (int)molecule.getBondOrderSum(atom);
             AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
-            AtomType failedOn = null;
-            boolean foundMatchingAtomType = false;
-            for (int j=0; j<atomTypes.length; j++) {
-                if (atom.getSymbol().equals("H")) {
-                    if (atom.getFormalCharge() != 0 && bos > 0) {
-                        // H- and H+ without bonds
-                        failedOn = atomTypes[j];
-                    } else if (bos == 1) {
-                        // H--X
-                        foundMatchingAtomType = true;
-                    } else {
-                        // bad
-                        failedOn = atomTypes[j];
-                    }
-                } else {
-                    if (bos <= (atomTypes[j].getBondOrderSum() + atom.getFormalCharge())) {
-                        foundMatchingAtomType = true;
-                    } else {
-                        failedOn = atomTypes[j];
-                    }
-                }
-            }
-            if (foundMatchingAtomType) {
-                report.addOK(checkBondSum);
+            if (atomTypes.length == 0) {
+                checkBondSum.setDetails(
+                    "Cannot validate bond order sum for atom not in valency atom type list: " +
+                    atom.getSymbol()
+                );
+                report.addWarning(checkBondSum);
             } else {
-                if (failedOn != null) {
-                    checkBondSum.setDetails(
-                        "Bond order exceeds the one allowed for atom " +
-                        atom.getSymbol() + " for which the total bond order is " +
-                        failedOn.getBondOrderSum()
-                    );
+                AtomType failedOn = null;
+                boolean foundMatchingAtomType = false;
+                for (int j=0; j<atomTypes.length; j++) {
+                    AtomType type = atomTypes[j];
+                    if (atom.getFormalCharge() == type.getFormalCharge()) {
+                        foundMatchingAtomType = true;
+                        if (bos == type.getBondOrderSum()) {
+                            // skip this atom type
+                        } else {
+                            failedOn = atomTypes[j];
+                        }
+                    }
                 }
-                report.addError(checkBondSum);
+                if (foundMatchingAtomType) {
+                    report.addOK(checkBondSum);
+                } else {
+                    if (failedOn != null) {
+                        checkBondSum.setDetails(
+                            "Bond order exceeds the one allowed for atom " +
+                            atom.getSymbol() + " for which the total bond order is " +
+                            failedOn.getBondOrderSum()
+                        );
+                    }
+                    report.addError(checkBondSum);
+                }
             }
         } catch (Exception exception) {
             System.err.println("Error while performing atom bos validation: " + exception.toString());
