@@ -45,10 +45,11 @@
           Computer Programs Developed at Molecular Design Limited</bibtex:title>
       <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
       <bibtex:volume>32</bibtex:volume>
+      <bibtex:issue>3</bibtex:issue>
       <bibtex:pages>244-255</bibtex:pages>
       <bibtex:year>1992</bibtex:year>
       <bibtex:note> An updated online version of this document can be found on
-          http://www.mdli.com/downloads/literature/ctfile.pdf</bibtex:note>
+          http://www.mdli.com/downloads/public/ctfile/ctfile.jsp</bibtex:note>
     </bibtex:article>
   </bibtex:entry>
 
@@ -287,6 +288,7 @@
       <bibtex:journal>Journal of Chemical Information and Computer
           Sciences</bibtex:journal>
       <bibtex:volume>28</bibtex:volume>
+      <bibtex:issue>1</bibtex:issue>
       <bibtex:pages>31-36</bibtex:pages>
       <bibtex:year>1988</bibtex:year>
     </bibtex:article>
@@ -301,6 +303,7 @@
       <bibtex:journal>Journal of Chemical Information and Computer
           Sciences</bibtex:journal>
       <bibtex:volume>29</bibtex:volume>
+      <bibtex:issue>2</bibtex:issue>
       <bibtex:pages>97-101</bibtex:pages>
       <bibtex:year>1989</bibtex:year>
     </bibtex:article>
