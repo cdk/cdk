@@ -21,6 +21,9 @@
   <itemizedlist>
     <listitem><para><ulink url="module-core.html">core</ulink></para></listitem>
     <listitem><para><ulink url="module-standard.html">standard</ulink></para></listitem>
+    <listitem><para><ulink url="module-io.html">io</ulink></para></listitem>
+    <listitem><para><ulink url="module-render.html">render</ulink></para></listitem>
+    <listitem><para><ulink url="module-extra.html">extra</ulink></para></listitem>
   </itemizedlist>
 
 </webpage>

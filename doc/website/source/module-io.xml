@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" []>
-<webpage id="module-standard">
+<webpage id="module-io">
   <config param="last-change-by" value="$Author$"/>
   <config param="rcsdate" value="$Date$"/>
 
@@ -8,22 +8,22 @@
        Discuss changes to this file with them first. -->
   
   <head>
-    <title>Standard Module</title>
-    <titleabbrev>cdk-standard</titleabbrev>
-    <summary>Information about CDK's standard module.</summary>
+    <title>IO Module</title>
+    <titleabbrev>cdk-io</titleabbrev>
+    <summary>Information about CDK's io module.</summary>
   </head>
 
   <section>
-    <title>Standard Module</title>
+    <title>IO Module</title>
     <para>
-        The classes in this module deal with basic but important algorithms.
+        The classes in this module deals with file and other types of IO.
     </para>
     
     <section>
       <title>Quality Control</title>
       <itemizedlist>
-        <listitem><para><ulink url="reports/pmd/standard.html">PMD results</ulink></para></listitem>
-        <listitem><para><ulink url="reports/javadoc/standard/">Javadoc DocCheck results</ulink></para></listitem>
+        <listitem><para><ulink url="reports/pmd/io.html">PMD results</ulink></para></listitem>
+        <listitem><para><ulink url="reports/javadoc/io/">Javadoc DocCheck results</ulink></para></listitem>
       </itemizedlist>
       <para>
         These results are created with the Ant scripts <filename>pmd.xml</filename> and
