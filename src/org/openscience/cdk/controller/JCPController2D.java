@@ -38,6 +38,7 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.vecmath.*;
+import javax.swing.JPopupMenu;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.
@@ -251,49 +252,68 @@ public class JCPController2D {
          * @param   e    MouseEvent object
          **/
         public void mousePressed(MouseEvent e) {
-            logger.debug("Mouse pressed in mode: " + c2dm.getDrawModeString());
 
-            Atom atomInRange;
-            int mouseX = getWorldCoordinate(e.getX()); 
+            int mouseX = getWorldCoordinate(e.getX());
             int mouseY = getWorldCoordinate(e.getY());
-            int startX = 0, startY = 0;
-            r2dm.setPointerVectorStart(null);
-            r2dm.setPointerVectorEnd(null);
-            atomInRange = getAtomInRange(mouseX, mouseY);
-            if (atomInRange != null) {
+
+            if (e.isPopupTrigger()) {
+                logger.info("Popup menu triggered...");
+                
+                Atom atomInRange = getAtomInRange(mouseX, mouseY);
+                Bond bondInRange = getBondInRange(mouseX, mouseY);
+                if (atomInRange != null) {
+                    JPopupMenu popup = c2dm.getAtomPopupMenu();
+                    if (popup != null ) popup.show(e.getComponent(), e.getX(), e.getY());
+                } else if (bondInRange != null) {
+                    JPopupMenu popup = c2dm.getBondPopupMenu();
+                    if (popup != null ) popup.show(e.getComponent(), e.getX(), e.getY());
+                } else {
+                    logger.warn("Popup for model has not been implemented yet!");
+                }
+            } else {
+            
+                logger.debug("Mouse pressed in mode: " + c2dm.getDrawModeString());
+            
+                Atom atomInRange;
+                int startX = 0, startY = 0;
+                r2dm.setPointerVectorStart(null);
+                r2dm.setPointerVectorEnd(null);
+                atomInRange = getAtomInRange(mouseX, mouseY);
+                if (atomInRange != null) {
                     startX = (int)atomInRange.getX2D();
                     startY = (int)atomInRange.getY2D();
                     r2dm.setPointerVectorStart(new Point(startX, startY));
-            } else {
+                } else {
                     r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
-            }
-            
-            if (c2dm.getDrawMode() == c2dm.MOVE) {
-                AtomContainer container = r2dm.getSelectedPart();
-                if (container == null || (container.getAtomCount() == 0)) {
-                    // if no atoms are selected, then temporarily select nearest
-                    // to make sure to original state is reached again when the
-                    // mouse is released, the draggingSelected boolean is set
-                    logger.warn("No atoms selected: temporarily selecting nearest atom/bond");
-                    draggingSelected = false;
-                    AtomContainer selected = new AtomContainer();
-                    if (atomInRange != null) {
-                        selected.addAtom(atomInRange);
-                        r2dm.setSelectedPart(selected);
-                    } else {
-                        Bond bondInRange = getBondInRange(mouseX, mouseY);
-                        // because only atoms are dragged, select the atoms
-                        // in the bond, instead of the bond itself
-                        if (bondInRange != null) {
-                            Atom[] atoms = bondInRange.getAtoms();
-                            for (int i=0; i<atoms.length; i++) {
-                                selected.addAtom(atoms[i]);
-                            }
+                }
+                
+                if (c2dm.getDrawMode() == c2dm.MOVE) {
+                    AtomContainer container = r2dm.getSelectedPart();
+                    if (container == null || (container.getAtomCount() == 0)) {
+                        // if no atoms are selected, then temporarily select nearest
+                        // to make sure to original state is reached again when the
+                        // mouse is released, the draggingSelected boolean is set
+                        logger.warn("No atoms selected: temporarily selecting nearest atom/bond");
+                        draggingSelected = false;
+                        AtomContainer selected = new AtomContainer();
+                        if (atomInRange != null) {
+                            selected.addAtom(atomInRange);
                             r2dm.setSelectedPart(selected);
+                        } else {
+                            Bond bondInRange = getBondInRange(mouseX, mouseY);
+                            // because only atoms are dragged, select the atoms
+                            // in the bond, instead of the bond itself
+                            if (bondInRange != null) {
+                                Atom[] atoms = bondInRange.getAtoms();
+                                for (int i=0; i<atoms.length; i++) {
+                                    selected.addAtom(atoms[i]);
+                                }
+                                r2dm.setSelectedPart(selected);
+                            }
                         }
+                        logger.debug("Selected: " + selected.toString());
+                        fireChange();
                     }
-                    logger.debug("Selected: " + selected.toString());
-                    fireChange();
                 }
             }
         }
