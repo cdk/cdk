@@ -103,6 +103,18 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="HEL01">
+    <bibtex:article>
+      <bibtex:author>Stein, S. and Heller, S.</bibtex:author>
+      <bibtex:title>IUPAC Chemical Identifier (IChI)</bibtex:title>
+      <bibtex:journal>Chemistry International</bibtex:journal>
+      <bibtex:volume>23</bibtex:volume>
+      <bibtex:issue>3</bibtex:issue>
+      <bibtex:year>2001</bibtex:year>
+      <bibtex:url>http://www.iupac.org/publications/ci/2001/may/project_2000-025-1-050.html</bibtex:url>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="HU96">
     <bibtex:article>
       <bibtex:author>Chang-Yu Hu and Lu Xu</bibtex:author>
