@@ -47,7 +47,7 @@ import java.awt.*;
 public class HydrogenPlacer
 {
 	public static boolean debug = false;
-	public static boolean debug1 = true;
+	public static boolean debug1 = false;
 	
 	public static void placeHydrogens2D(AtomContainer atomContainer)
 	{
@@ -98,7 +98,7 @@ public class HydrogenPlacer
 				atomVector.addElement(unplacedAtoms.getAtomAt(f));
 			}
 
-			addAngle = Math.PI * 2 / unplacedAtoms.getAtomCount();
+			addAngle = Math.PI * 2 / unplacedAtoms.getAtomCount() - 1;
 			atomPlacer.populatePolygonCorners(atomVector, new Point2d(atom.getPoint2D()), startAngle, addAngle, bondLength);	
 		}
 			
