@@ -2,7 +2,7 @@
 
         <!-- compile options -->
         <property name="build.sysclasspath" value="ignore" />
-        <property name="build.compiler" value="javac1.4" />
+        <property name="build.compiler" value="modern" />
         <property name="debug" value="on" />
         <property name="deprecation" value="on" />
         <property name="optimization" value="off" />
@@ -68,11 +68,17 @@
 
         <target id="info" name="info" depends="check" 
                 description="Gives information about the building process.">
-            <echo message="Using compiler: ${build.compiler}" />
+            <echo message="Environment:" />
+            <echo message="   Ant version: ${ant.version}" />
+            <echo message="  Java version: ${java.version}" />
             <echo message="    Jmol found: ${jmol.present}" />
             <echo message="  JOELib found: ${joelib.present}" />
             <echo message="  Java3D found: ${java3D.present}" />
-            <echo message="   Ant version: ${ant.version}" />
+            <echo message="Compiling:" />
+            <echo message="           for: ${build.compiler}" />
+            <echo message="         debug: ${debug}" />
+            <echo message="   deprecation: ${deprecation}" />
+            <echo message="  optimization: ${optimization}" />
         </target>
 
         <target id="check" name="check"
@@ -89,9 +95,14 @@
           <condition property="hasAnt16">
             <contains string="${ant.version}" substring="1.6"/>
           </condition>
+          <condition property="isJava13">
+            <contains string="${java.version}" substring="1.3"/>
+          </condition>
         </target>
 
-        <target id="init" name="init" depends="check">
+        <target id="init" name="init" depends="check, setupBuildDir, patchForJava13"/>
+        
+        <target id="setupBuildDir" name="setupBuildDir">
                 <tstamp />
                 <mkdir dir="${build}" />
                 <mkdir dir="${build.src}" />
@@ -106,6 +117,27 @@
                 <copy todir="${build.src}/org">
                     <fileset dir="${src}/org"/>
                 </copy>
+        </target>
+
+        <target id="patchForJava13" name="patchForJava13" if="isJava13">
+            <echo message="Deleting files that require Java 1.4 or higher"/>
+            <delete>
+                <fileset dir="${build.src}" includesfile="${src}/java14.javafiles" />
+            </delete>
+
+            <echo message="Patching for Java 1.3"/>
+            <patch dir="${build.src}" strip="1"
+                patchfile="${src}/patches/org.openscience.cdk.controller.Controller2D.java.Java1.3"/>
+            <patch dir="${build.src}" strip="1"
+                patchfile="${src}/patches/org.openscience.cdk.io.ReaderFactory.java.Java1.3"/>
+            <patch dir="${build.src}" strip="1"
+                patchfile="${src}/patches/org.openscience.cdk.layout.StructureDiagramGenerator.java.Java1.3"/>
+            <patch dir="${build.src}" strip="1"
+                patchfile="${src}/patches/org.openscience.cdk.test.tools.ToolsTests.java.Java1.3"/>
+            <patch dir="${build.src}" strip="1"
+                patchfile="${src}/patches/org.openscience.cdk.test.CDKTests.java.Java1.3"/>
+            <patch dir="${build.src}" strip="1"
+                patchfile="${src}/patches/org.openscience.cdk.tools.LoggingTool.java.Java1.3"/>
         </target>
 
         <target id="init-core-debug" name="init-core-debug" depends="init">
