@@ -199,6 +199,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="RZEPA04">
+    <bibtex:article>
+      <bibtex:author>Peter Murray-Rust, Henry S. Rzepa, Mark J. Williamson, and Egon L. Willighagen</bibtex:author>
+      <bibtex:title>Chemical Markup, XML, and the World Wide Web. 5. Applications of Chemical Metadata in RSS Aggregators</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:volume>?</bibtex:volume>
+      <bibtex:pages>?-?</bibtex:pages>
+      <bibtex:year>2004</bibtex:year>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="SCH84">
     <bibtex:article>
       <bibtex:author>Von Scholley, A.</bibtex:author>
