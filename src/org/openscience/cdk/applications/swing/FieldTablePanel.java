@@ -53,21 +53,23 @@ public class FieldTablePanel extends JPanel {
         rows = 0;
     }
     
-    protected void addField(String labelText, JComponent component) {
+    public void addField(String labelText, JComponent component) {
         rows++;
         GridBagConstraints constraints = new GridBagConstraints();
         JLabel label = new JLabel(labelText + ": ", JLabel.TRAILING);
         label.setLabelFor(component);
         constraints.gridx = 0;
         constraints.gridy = rows;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.anchor = GridBagConstraints.LINE_START;
+        constraints.weightx = 1.0;
         add(label, constraints);
         constraints.gridx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         add(component, constraints);
     }
     
-    protected void addArea(String labelText, JComponent component) {
+    public void addArea(String labelText, JComponent component) {
         rows++;
         GridBagConstraints constraints = new GridBagConstraints();
         JLabel label = new JLabel(labelText + ": ");
@@ -76,6 +78,8 @@ public class FieldTablePanel extends JPanel {
         constraints.gridwidth = 2;
         constraints.gridy = rows;
         constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.anchor = GridBagConstraints.LINE_START;
+        constraints.weightx = 1.0;
         add(label, constraints);
         rows++;
         constraints.gridy = rows;
