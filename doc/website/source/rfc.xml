@@ -45,35 +45,35 @@
               <entry>2</entry>
               <entry><ulink url="rfc2.html">List of core classes</ulink></entry>
               <entry>2002-05-22</entry>
-              <entry>accepted</entry>
+              <entry>implemented</entry>
               <entry>2002-08-28</entry>
             </row>
             <row>
               <entry>3</entry>
               <entry><ulink url="rfc3.html">Tests in org.openscience.cdk.test Use Same Directory Structure as Tested Classes</ulink></entry>
               <entry>2002-07-30</entry>
-              <entry>accepted</entry>
+              <entry>partially implemented</entry>
               <entry>2002-09-18</entry>
             </row>
             <row>
               <entry>4</entry>
               <entry><ulink url="rfc4.html">Core classes must not check method parameters</ulink></entry>
               <entry>2002-08-14</entry>
-              <entry>accepted</entry>
+              <entry>partially implemented</entry>
               <entry>2002-09-18</entry>
             </row>
             <row>
               <entry>5</entry>
               <entry><ulink url="rfc5.html">The Lone Pair Concept</ulink></entry>
               <entry>2002-10-03</entry>
-              <entry>accepted</entry>
+              <entry>implemented</entry>
               <entry>2002-11-22</entry>
             </row>
             <row>
               <entry>6</entry>
               <entry><ulink url="rfc6.html">A Formal Charge field for Atom</ulink></entry>
               <entry>2002-10-03</entry>
-              <entry>accepted</entry>
+              <entry>implemented</entry>
               <entry>2002-11-22</entry>
             </row>
             <row>
@@ -92,7 +92,7 @@
             </row>
             <row>
               <entry>9</entry>
-              <entry><ulink url="rfc9.html">Online toString() methods for core classes</ulink></entry>
+              <entry><ulink url="rfc9.html">One-line toString() methods for core classes</ulink></entry>
               <entry>2002-11-26</entry>
               <entry>accepted</entry>
               <entry></entry>
@@ -101,14 +101,14 @@
               <entry>10</entry>
               <entry><ulink url="rfc10.html">Fields for covalent and vanderwaals radii in AtomType</ulink></entry>
               <entry>2002-11-28</entry>
-              <entry>accepted</entry>
+              <entry>implemented</entry>
               <entry></entry>
             </row>
             <row>
               <entry>11</entry>
               <entry><ulink url="rfc11.html">change AtomType.getID() into AtomType.getAtomTypeName()</ulink></entry>
               <entry>2003-02-21</entry>
-              <entry></entry>
+              <entry>patch available</entry>
               <entry></entry>
             </row>
             <row>
