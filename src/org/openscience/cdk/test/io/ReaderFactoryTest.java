@@ -30,6 +30,7 @@ package org.openscience.cdk.test.io;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.geometry.*;
+import org.openscience.cdk.exception.CDKException;
 import java.io.*;
 import junit.framework.*;
 import com.baysmith.io.FileUtilities;
@@ -125,18 +126,34 @@ public class ReaderFactoryTest extends TestCase {
             fail("Cannot find file: " + filename);
         }
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            String format = factory.guessFormat(br);
-            if (format == null) {
-                fail("Format could not be determined");
-            }
+            ChemObjectReader reader = factory.createReader(new InputStreamReader(ins));
+            assertNotNull(reader);
+            String format = reader.getClass().getName();
             if (format.equals(expectedFormat)) {
                 // ok
             } else {
                 fail("Wrong file format detected for " + filename + 
                      ". Expected " + expectedFormat + ", but found: " + format);
             }
-            br.close();
+            // now try reading something from it
+            ChemObject[] objects = { 
+                new ChemFile(), new ChemModel(), new Molecule(),
+                new Reaction()
+            };
+            boolean read = false;
+            for (int i=0; (i<objects.length && !read); i++) {
+                try {
+                    reader.read(objects[i]);
+                } catch (CDKException exception) {
+                    // was not able to read info
+                }
+                read = true;
+            }
+            if (read) {
+                // ok, reseting worked
+            } else {
+                fail("Reading an ChemObject from the Reader did not work properly.");
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             fail(exception.toString());

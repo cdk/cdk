@@ -21,3 +21,4 @@ org/openscience/cdk/tools/SetOfMoleculesManipulator.java
 org/openscience/cdk/tools/SetOfReactionsManipulator.java
 org/openscience/cdk/tools/ReactionManipulator.java
 org/openscience/cdk/tools/AtomContainerManipulator.java
+org/openscience/cdk/math/FortranFormat.java
