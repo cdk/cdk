@@ -496,6 +496,8 @@ public class FileConvertor {
 	            try {
 	                sdg.setMolecule(molecule, false); // false -> don't make clone!
 	                sdg.generateCoordinates(new Vector2d(0, 1));
+	                molecule = sdg.getMolecule();
+	                logger.debug("###########" + molecule.toString());
 	            } catch (Exception exc) {
 	                System.out.println("Could not generate coordinates for this molecule.");
 	                System.exit(1);
