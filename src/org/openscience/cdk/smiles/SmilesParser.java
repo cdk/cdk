@@ -44,6 +44,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.tools.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ValencyChecker;
 
 /**
  *  Parses a SMILES string and an AtomContainer. So far only the SSMILES subset
@@ -68,18 +69,24 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2002-04-29
  * @cdk.keyword    SMILES, parser
  */
-public class SmilesParser
-{
+public class SmilesParser {
 
 	private LoggingTool logger;
-
+    private HydrogenAdder hAdder;
+    private ValencyChecker valencyChecker;
 
 	/**
 	 *  Constructor for the SmilesParser object
 	 */
-	public SmilesParser()
-	{
+	public SmilesParser() {
 		logger = new LoggingTool(this);
+        hAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
+        try {
+            valencyChecker = new ValencyChecker();
+        } catch (Exception exception) {
+            logger.error("Could not instantiate valencyChecker: ", exception.getMessage());
+            logger.debug(exception);
+        }
 	}
 
 
@@ -194,13 +201,21 @@ public class SmilesParser
                     } else {
                         currentSymbol = getSymbolForOrganicSubsetElement(smiles, position);
                         if (currentSymbol != null) {
-                            atom = new Atom(currentSymbol);
                             if (currentSymbol.length() == 1) {
                                 if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
+                                    currentSymbol = currentSymbol.toUpperCase();
+                                    atom = createAtom(currentSymbol);
                                     atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
-                                    atom.setSymbol(currentSymbol.toUpperCase());
+                                    if (atom.getHydrogenCount() > 0) {
+                                        atom.setHydrogenCount(atom.getHydrogenCount() - 1);
+                                    }
+                                } else {
+                                    atom = createAtom(currentSymbol);
                                 }
+                            } else {
+                                atom = createAtom(currentSymbol);
                             }
+                            logger.debug("Made atom: " + atom);
                         } else {
                             throw new InvalidSmilesException(
                                 "Found element which is not a 'organic subset' element. You must " +
@@ -212,8 +227,17 @@ public class SmilesParser
                     logger.debug("Adding atom " + atom.hashCode());
                     if ((lastNode != null) && bondExists) {
                         logger.debug("Creating bond between " + atom.getSymbol() + " and " + lastNode.getSymbol());
-                        bond = new Bond(atom, lastNode, bondStatus);
+                        bond = createBond(atom, lastNode, bondStatus);
                         molecule.addBond(bond);
+                        if (bondStatus == CDKConstants.BONDORDER_DOUBLE) {
+                            // ok, correct for possible double reduction of implicit H count
+                            if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+                                atom.setHydrogenCount(atom.getHydrogenCount() + 1);
+                            }
+                            if (lastNode.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+                                lastNode.setHydrogenCount(lastNode.getHydrogenCount() + 1);
+                            }
+                        }
                     }
                     bondStatus = CDKConstants.BONDORDER_SINGLE;
                     lastNode = atom;
@@ -274,8 +298,8 @@ public class SmilesParser
 					molecule.addAtom(atom);
                     logger.debug("Added atom: " + atom);
                     if (lastNode != null && bondExists) {
-						bond = new Bond(atom, lastNode, bondStatus);
-						molecule.addBond(new Bond(atom, lastNode, bondStatus));
+						bond = createBond(atom, lastNode, bondStatus);
+						molecule.addBond(bond);
                         logger.debug("Added bond: " + bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
@@ -312,10 +336,12 @@ public class SmilesParser
 
         // conceive aromatic perception
         Molecule[] moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule).getMolecules();
-        HydrogenAdder adder = new HydrogenAdder();
+        logger.debug("#mols ", moleculeSet.length);
         for (int i=0; i<moleculeSet.length; i++) {
+            logger.debug("mol: ", moleculeSet[i]);
             try {
-                adder.addImplicitHydrogensToSatisfyValency(moleculeSet[i]);
+                valencyChecker.saturate(moleculeSet[i]);
+                logger.debug(" after saturation: ", moleculeSet[i]);
                 if (HueckelAromaticityDetector.detectAromaticity(moleculeSet[i])) {
                     logger.debug("Structure is aromatic...");
                 }
@@ -527,12 +553,19 @@ public class SmilesParser
                     } else {
                         logger.debug("Found element symbol: " + currentSymbol);
                         position = position + currentSymbol.length();
-                        atom = new Atom(currentSymbol);
                         if (currentSymbol.length() == 1) {
                             if (!(currentSymbol.toUpperCase()).equals(currentSymbol)) {
+                                currentSymbol = currentSymbol.toUpperCase();
+                                atom = createAtom(currentSymbol);
                                 atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
-                                atom.setSymbol(currentSymbol.toUpperCase());
+                                if (atom.getHydrogenCount() > 0) {
+                                    atom.setHydrogenCount(atom.getHydrogenCount() - 1);
+                                }
+                            } else {
+                                atom = createAtom(currentSymbol);
                             }
+                        } else {
+                            atom = createAtom(currentSymbol);
                         }
                         logger.debug("Made atom: " + atom);
                     }
@@ -624,7 +657,7 @@ public class SmilesParser
 		// lookup
 		if (thisNode != null) {
 			partner = thisNode;
-			bond = new Bond(atom, partner, bondStat);
+			bond = createBond(atom, partner, bondStat);
 			molecule.addBond(bond);
 			rings[thisRing] = null;
 			ringbonds[thisRing] = -1;
@@ -638,5 +671,28 @@ public class SmilesParser
 			ringbonds[thisRing] = bondStatus;
 		}
 	}
+    
+    private Atom createAtom(String symbol) {
+        Atom atom = new Atom(symbol);
+        try {
+            hAdder.addImplicitHydrogensToSatisfyValency(atom);
+        } catch (Exception exception) {
+            logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
+        }
+        return atom;
+    }
+    
+    private Bond createBond(Atom atom, Atom AtomToAtach, double bondOrder) {
+        // update the number of implicit hydrogens
+        if (atom.getHydrogenCount() > 0) {
+            atom.setHydrogenCount(atom.getHydrogenCount() - (int)bondOrder);
+        }
+        if (AtomToAtach.getHydrogenCount() > 0) {
+            AtomToAtach.setHydrogenCount(AtomToAtach.getHydrogenCount() -(int)bondOrder);
+        }
+        // create the new bond
+        Bond newBond = new Bond(atom, AtomToAtach, bondOrder);
+        return newBond;
+    }
 }
 
