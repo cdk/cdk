@@ -1,3 +1,4 @@
+*.entitylist
 *.set
 *.classes
 ant1.6.javafiles
