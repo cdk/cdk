@@ -44,6 +44,8 @@ API changes:
 * Moved RandomNumbersTool and PathTools from cdk.tools to cdk.math
 * Moved ConnectivityChecker from cdk.tools to cdk.graph
 * Moved cdk.tools.Projector to cdk.geometry
+* The ValencyChecker no longer fails (but warns to the logger) about atoms not
+  in the atom type list
 
 20040324 Release
 ------------------------------------
