@@ -70,6 +70,7 @@ import org.openscience.cdk.test.qsar.*;
         suite.addTest(DescriptorEngineTest.suite());
 	suite.addTest(RuleOfFiveDescriptorTest.suite());
 	suite.addTest(RDFProtonDescriptorTest.suite());
+	suite.addTest(MomentOfInertiaDescriptorTest.suite());
 	return suite;
     }
     
