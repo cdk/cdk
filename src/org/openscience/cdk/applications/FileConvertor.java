@@ -26,6 +26,7 @@ package org.openscience.cdk.applications;
 import org.openscience.cdk.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.program.*;
+import org.openscience.cdk.io.listener.*;
 import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.LoggingTool;
 import java.io.*;
@@ -52,8 +53,7 @@ public class FileConvertor {
     private String ofilename;
     private ChemObjectWriter cow;
     
-    private WriterListener writerListener;
-    private ReaderListener readerListener;
+    private TextGUIListener settingListener;
 
     private int level;
     
@@ -76,8 +76,7 @@ public class FileConvertor {
         this.oformat = oformat;
         this.level = level;
         
-        readerListener = new TextReaderListener(level);
-        writerListener = new TextWriterListener(level);
+        settingListener = new TextGUIListener(level);
         
         logger.debug("Input format: " + iformat);
         logger.debug("Output format: " + oformat);
@@ -218,7 +217,7 @@ public class FileConvertor {
             reader = new XYZReader(fileReader);
         }
         if (reader != null) {
-            reader.addReaderListener(readerListener);
+            reader.addReaderListener(settingListener);
         }
         return reader;
     }
@@ -245,7 +244,7 @@ public class FileConvertor {
             writer = new GaussianInputWriter(fw);
         }
         if (writer != null) {
-            writer.addWriterListener(writerListener);
+            writer.addWriterListener(settingListener);
         }
         return writer;
     }

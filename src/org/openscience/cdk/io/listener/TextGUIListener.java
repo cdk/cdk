@@ -25,18 +25,19 @@
 package org.openscience.cdk.io.listener;
 
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.setting.*;
 import java.io.*;
 import java.util.EventListener;
 import java.util.Vector;
 
 /**
- * Allows processing of ReaderSetting quesions which are passed to the user
+ * Allows processing of IOSetting quesions which are passed to the user
  * by using the System.out and System.in.
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class TextWriterListener implements WriterListener {
+public class TextGUIListener implements ReaderListener, WriterListener {
 
     private int level = 0;
     
@@ -44,11 +45,22 @@ public class TextWriterListener implements WriterListener {
      * 0 = ask no questions
      * 3 = ask all questions
      */
-    public TextWriterListener(int level) {
+    public TextGUIListener(int level) {
         this.level = level;
     }
     
-    public void processWriterSettingQuestion(IOSetting setting){
+    public void frameRead(ReaderEvent event) {
+    };
+    
+    public void processWriterSettingQuestion(IOSetting setting) {
+        processIOSetting(setting);
+    }
+    
+    public void processReaderSettingQuestion(IOSetting setting) {
+        processIOSetting(setting);
+    }
+    
+    private void processIOSetting(IOSetting setting) {
         // post the question
         if (setting.getLevel() < this.level) {
             System.out.print(setting.getQuestion());
