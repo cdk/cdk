@@ -55,4 +55,9 @@ public class ProblemMarker {
     public static void unmarkWithWarning(ChemObject object) {
         object.removeProperty(WARNING_MARKER);
     }
+    
+    public static void unmark(ChemObject object) {
+        unmarkWithWarning(object);
+        unmarkWithError(object);
+    }
 }
