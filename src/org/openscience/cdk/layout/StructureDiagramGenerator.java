@@ -332,7 +332,7 @@ public class StructureDiagramGenerator {
 	 * Does a layout of all aliphatic parts connected to 
 	 * the parts of the molecule that have already been laid out.
 	 */
-	private void handleAliphatics() throws org.openscience.cdk.exception.NoSuchAtomException {
+	private void handleAliphatics() throws org.openscience.cdk.exception.CDKException {
 		Atom atom = null;
 		double xDiff, yDiff;
 		Atom[] atoms = null;
@@ -357,7 +357,7 @@ public class StructureDiagramGenerator {
 
 				logger.debug("---start of longest unplaced chain---");
                 try {
-                    logger.debug("Start at atom no. " + molecule.getAtomNumber(atom));
+                    logger.debug("Start at atom no. " + (molecule.getAtomNumber(atom) + 1));
                     logger.debug(atomPlacer.listNumbers(molecule, longestUnplacedChain));
                 } catch(Exception exc) {
                     exc.printStackTrace();
