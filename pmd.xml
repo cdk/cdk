@@ -18,7 +18,7 @@
     <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
                         classpathref="pmd.classpath"/>
 
-    <target name="pmd" depends="pmd-core, pmd-standard, pmd-io, pmd-extra, pmd-render, pmd-applications, pmd-libio"/>
+    <target name="pmd" depends="pmd-core, pmd-standard, pmd-io, pmd-extra, pmd-render, pmd-applications, pmd-libio, pmd-experimental"/>
     
     <target name="pmd-core">
         <mkdir dir="${reports.tests}/pmd"/>
