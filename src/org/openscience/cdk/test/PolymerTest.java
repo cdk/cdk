@@ -4,7 +4,7 @@
  * $ contact: 	edgar@uni-paderborn.de 	$
  * $ date: 		2001-08-09 				$
  * 
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2004  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

@@ -2,7 +2,7 @@
  * $Author$
  * $Date$
  *
- * Copyright (C) 2003  The Jmol Development Team
+ * Copyright (C) 2003-2004  The Jmol Development Team
  * Copyright (C) 2003-2004  The CDK Project
  *
  * Contact: cdk-devel@lists.sf.net

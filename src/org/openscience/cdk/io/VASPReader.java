@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003  The Jmol Development Team (v. 1.1.2.2)
+ * Copyright (C) 2003-2004  The Jmol Development Team (v. 1.1.2.2)
  * Copyright (C) 2003-2004  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
