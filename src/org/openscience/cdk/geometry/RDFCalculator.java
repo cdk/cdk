@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2005  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -38,7 +38,9 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Calculator of radial distribution functions.
+ * Calculator of radial distribution functions. The RDF has bins defined around
+ * a point, i.e. the first bin starts at 0 &Aring; and ends at 0.5*resolution
+ * &Aring;, and the second bins ends at 1.5*resulution &Aring;.
  *
  * @cdk.module  extra
  *
@@ -57,25 +59,44 @@ public class RDFCalculator {
     private double resolution;
     private double peakWidth;
     
+    private RDFWeightFunction weightFunction;
+    
+    /**
+     * Constructs a RDF calculator that calculates a unweighted, digitized
+     * RDF function.
+     *
+     * @param startCutoff radial length in &Aring;ngstrom at which the RDF starts
+     * @param cutoff      radial length in &Aring;ngstrom at which the RDF stops
+     * @param resolution  width of the bins
+     * @param peakWidth   width of the gaussian applied to the peaks in &Aring;ngstrom
+     */
+    public RDFCalculator(double startCutoff, double cutoff, double resolution, 
+                         double peakWidth) {
+        this(startCutoff, cutoff, resolution, peakWidth, null);
+    }
+
     /**
      * Constructs a RDF calculator that calculates a digitized
      * RDF function.
      *
-     * @param startCutoff radial length in Angstrom at which the RDF starts
-     * @param cutoff      radial length in Angstrom at which the RDF stops
-     * @param resolution  width of the bins
-     * @param peakWidth   width of the gaussian applied to the peaks in Angstrom
+     * @param startCutoff    radial length in &Aring;ngstrom at which the RDF starts
+     * @param cutoff         radial length in &Aring;ngstrom at which the RDF stops
+     * @param resolution     width of the bins
+     * @param peakWidth      width of the gaussian applied to the peaks in &Aring;ngstrom
+     * @param weightFunction the weight function. If null, then an unweighted RDF is
+     *                       calculated
      */
     public RDFCalculator(double startCutoff, double cutoff, double resolution, 
-                         double peakWidth) {
+                         double peakWidth, RDFWeightFunction function) {
         logger = new LoggingTool(this);
         
          this.startCutoff = startCutoff;
          this.cutoff = cutoff;
          this.resolution = resolution;
          this.peakWidth = peakWidth;
+         this.weightFunction = function;
     }
-
+    
     /**
      * Calculates a RDF for <code>Atom</code> atom in the environment
      * of the atoms in the <code>AtomContainer</code>.
@@ -102,15 +123,19 @@ public class RDFCalculator {
         for (int i=0; i<atomsInContainer.length; i++) {
             distance = atomPoint.distance(atomsInContainer[i].getPoint3d());
             index = (int)((distance-startCutoff)/this.resolution);
-            rdf[index] += 1; // unweighted
+            double weight = 1.0;
+            if (weightFunction != null) {
+                weight = weightFunction.calculate(atom, atomsInContainer[i]);
+            }
+            rdf[index] += weight; // unweighted
             if (this.peakWidth > 0.0) {
                 // apply Gaussian smoothing
                 for (int binCounter=1; binCounter<=binsToFillOnEachSide; binCounter++) {
                     if ((index - binCounter) >= 0) {
-                        rdf[index - binCounter] += factors[binCounter];
+                        rdf[index - binCounter] += weight*factors[binCounter];
                     }
                     if ((index + binCounter) < length) {
-                        rdf[index + binCounter] += factors[binCounter];
+                        rdf[index + binCounter] += weight*factors[binCounter];
                     }
                 }
             }
