@@ -6,6 +6,14 @@ Changes in CVS
 New:
 
 Fixes:
+
+API changes:
+
+20051015 Release
+------------------------------------
+New:
+
+Fixes:
 * UniversalIsomorphismTester works with QueryAtomContainers
 * Now compiles with Java 1.5.0 aka 5.0 (but CML does test correctly)
 * Faster SSSR algorithms
