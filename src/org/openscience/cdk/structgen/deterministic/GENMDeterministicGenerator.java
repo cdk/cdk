@@ -2698,6 +2698,16 @@ public class GENMDeterministicGenerator
 	  }
 	 
 	  /**
+	   * Get the number of isomers
+	   * @return	the number of isomers
+	   */
+	 public int getNumberOfStructure()
+	 {
+		return this.numberOfStructure;
+	 }
+	 
+	 
+	  /**
 	   * Get the vector of SMILES
 	   * @return	vector contains suitable SMILES format for suitable structures
 	   */
