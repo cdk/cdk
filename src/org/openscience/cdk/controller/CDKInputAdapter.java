@@ -29,7 +29,7 @@ package org.openscience.cdk.controller;
 
 
 import java.awt.event.*;
-import org.openscience.cdk.controller.JCPController2D;
+import org.openscience.cdk.controller.Controller2D;
 import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ import java.awt.*;
 /**
  * Class that acts on MouseEvents.
  */
-public class CDKInputAdapter extends JCPController2D 
+public class CDKInputAdapter extends Controller2D 
     implements MouseMotionListener, MouseListener, KeyListener
     {
 
@@ -48,7 +48,7 @@ public class CDKInputAdapter extends JCPController2D
      * @param atomCon   AtomContainer to act on
      */
 	public CDKInputAdapter(ChemModel model, Renderer2DModel r2dm,
-                           JCPController2DModel c2dm) {
+                           Controller2DModel c2dm) {
 		super(model, r2dm, c2dm);
 	}
 

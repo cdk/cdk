@@ -50,11 +50,11 @@ import javax.swing.JPopupMenu;
  *
  * @keyword mouse events
  */
-public class JCPController2D {
+public class Controller2D {
 
     Renderer2DModel r2dm;
     ChemModel chemModel;
-    JCPController2DModel c2dm;
+    Controller2DModel c2dm;
     boolean wasDragged = false;
     boolean isUndoableChange = false;
     
@@ -74,7 +74,7 @@ public class JCPController2D {
      * Constructs a controller that performs operations on the
      * AtomContainer when actions are detected from the MouseEvents.
      */
-    public JCPController2D(ChemModel chemModel, Renderer2DModel r2dm, JCPController2DModel c2dm) {
+    public Controller2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm) {
         this.chemModel = chemModel;
         this.r2dm = r2dm;
         this.c2dm = c2dm;
@@ -92,12 +92,12 @@ public class JCPController2D {
         }
     }
 
-    public JCPController2D(ChemModel chemModel, Renderer2DModel r2dm) {
-        this(chemModel, r2dm, new JCPController2DModel());
+    public Controller2D(ChemModel chemModel, Renderer2DModel r2dm) {
+        this(chemModel, r2dm, new Controller2DModel());
     }
 
 
-    public JCPController2DModel getController2DModel() {
+    public Controller2DModel getController2DModel() {
         return c2dm;
     }
     
@@ -111,7 +111,7 @@ public class JCPController2D {
 	    this.isUndoableChange = isUndoable;
     }
     
-    public void setController2DModel(JCPController2DModel model) {
+    public void setController2DModel(Controller2DModel model) {
         this.c2dm = model;
     }
 

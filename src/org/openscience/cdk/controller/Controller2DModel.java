@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk.controller;
 
-public class JCPController2DModel implements java.io.Serializable, Cloneable
+public class Controller2DModel implements java.io.Serializable, Cloneable
 {
 	
     public final static int DRAWBOND = 0;
