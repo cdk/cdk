@@ -48,6 +48,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	public final static int LASSO=14;
 	public final static int INCCHARGE=15;
 	public final static int DECCHARGE=16;
+	public final static int BENZENERING=17;
 	
 	private int drawMode = 6;
 	private int ringSize = 6;

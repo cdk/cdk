@@ -174,7 +174,7 @@ public class Controller2D {
                 /*************************************************************************
                  *                          RINGMODE                                     *
                  *************************************************************************/
-                if (c2dm.getDrawMode() == c2dm.RING)
+                if (c2dm.getDrawMode() == c2dm.RING || c2dm.getDrawMode() == c2dm.BENZENERING)
                 {
                         int endX = 0, endY = 0;
                         double angle = 0;
@@ -523,7 +523,7 @@ public class Controller2D {
                 /*************************************************************************
                  *                          RINGMODE                                     *
                  *************************************************************************/
-                if (c2dm.getDrawMode() == c2dm.RING)
+                if (c2dm.getDrawMode() == c2dm.RING || c2dm.getDrawMode() == c2dm.BENZENERING)
                 {
                         Ring newRing;
                         Point2d sharedAtomsCenter;
@@ -544,6 +544,14 @@ public class Controller2D {
                         if (sharedAtoms.getAtomCount() == 0) {
                                 sharedAtoms = new AtomContainer();
                                 newRing = new Ring(ringSize, symbol);
+                                if (c2dm.getDrawMode() == c2dm.BENZENERING) {
+                                    // make newRing a benzene ring
+                                    Bond[] bonds = newRing.getBonds();
+                                    bonds[0].setOrder(2.0);
+                                    bonds[2].setOrder(2.0);
+                                    bonds[4].setOrder(2.0);
+                                    makeRingAromatic(newRing);
+                                }
                                 bondLength = r2dm.getBondLength();
                                 ringRadius = (bondLength / 2) /Math.sin(Math.PI / c2dm.getRingSize());
                                 sharedAtomsCenter = new Point2d(mouseX, mouseY - ringRadius);
@@ -555,13 +563,13 @@ public class Controller2D {
                                 ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
                                 AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
                                 atomCon.add(newRing);
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
-		     * undo and redo storage that it
-		     * should store this change of an atom symbol
-		     */
-		    isUndoableChange = true;
-		    /* --- */
+                                /* PRESERVE THIS. This notifies the 
+                                * the listener responsible for 
+                                * undo and redo storage that it
+                                * should store this change of an atom symbol
+                                */
+                                isUndoableChange = true;
+                                /* --- */
                         }
                         
                         /*********************** SPIRO *****************************************/
@@ -570,6 +578,14 @@ public class Controller2D {
                                 spiroAtom = sharedAtoms.getAtomAt(0);
                                 sharedAtomsCenter = sharedAtoms.get2DCenter();
                                 newRing = createAttachRing(sharedAtoms, ringSize, symbol);
+                                if (c2dm.getDrawMode() == c2dm.BENZENERING) {
+                                    // make newRing a benzene ring
+                                    Bond[] bonds = newRing.getBonds();
+                                    bonds[0].setOrder(2.0);
+                                    bonds[2].setOrder(2.0);
+                                    bonds[4].setOrder(2.0);
+                                    makeRingAromatic(newRing);
+                                }
                                 bondLength = r2dm.getBondLength();
                                 conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);                          
                                 if (conAtomsCenter.equals(spiroAtom.getPoint2D()))
@@ -594,13 +610,13 @@ public class Controller2D {
                                 }
                                 AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, spiroAtom);
                                 atomCon.add(newRing);
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
-		     * undo and redo storage that it
-		     * should store this change of an atom symbol
-		     */
-		    isUndoableChange = true;
-		    /* --- */
+                                /* PRESERVE THIS. This notifies the 
+                                * the listener responsible for 
+                                * undo and redo storage that it
+                                * should store this change of an atom symbol
+                                */
+                                isUndoableChange = true;
+                                /* --- */
                         }
                         
                         /*********************** FUSED *****************************************/
@@ -655,8 +671,30 @@ public class Controller2D {
                                                 ringCenterVector.sub(newPoint2);
                                         }
                                         
+                                        AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, firstAtom);
+
                                         // construct a new Ring that contains the highlighted bond an its two atoms
                                         newRing = createAttachRing(sharedAtoms, ringSize, symbol);
+                                        if (c2dm.getDrawMode() == c2dm.BENZENERING) {
+                                            // make newRing a benzene ring
+                                            Bond existingBond = atomCon.getBond(firstAtom, secondAtom);
+                                            Bond[] bonds = newRing.getBonds();
+
+                                            if (existingBond.getOrder() == 1.0) {
+                                                if (existingBond.getFlag(CDKConstants.ISAROMATIC)) {
+                                                    bonds[2].setOrder(2.0);
+                                                    bonds[4].setOrder(2.0);
+                                                } else {
+                                                    bonds[1].setOrder(2.0);
+                                                    bonds[3].setOrder(2.0);
+                                                    bonds[5].setOrder(2.0);
+                                                }
+                                            } else {
+                                                bonds[2].setOrder(2.0);
+                                                bonds[4].setOrder(2.0);
+                                            }
+                                            makeRingAromatic(newRing);
+                                        }
                                         
                                         // place the new atoms of the new ring to the right position
                                         ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
@@ -671,16 +709,15 @@ public class Controller2D {
                                         {
                                                 exc.printStackTrace();
                                         }
-                                        AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, firstAtom);
                                         atomCon.add(newRing);
                                 }
-		    /* PRESERVE THIS. This notifies the 
-		     * the listener responsible for 
-		     * undo and redo storage that it
-		     * should store this change of an atom symbol
-		     */
-		    isUndoableChange = true;
-		    /* --- */
+                                /* PRESERVE THIS. This notifies the 
+                                * the listener responsible for 
+                                * undo and redo storage that it
+                                * should store this change of an atom symbol
+                                */
+                                isUndoableChange = true;
+                                /* --- */
                         }
                         r2dm.fireChange();
                         fireChange();
@@ -737,6 +774,16 @@ public class Controller2D {
             }
         }
         
+        private void makeRingAromatic(Ring ring) {
+            Atom[] atoms = ring.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                atoms[i].setFlag(CDKConstants.ISAROMATIC, true);
+            }
+            Bond[] bonds = ring.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                bonds[i].setFlag(CDKConstants.ISAROMATIC, true);
+            }
+        }
         
         /**
          * manages all actions that will be invoked when a mouse button is clicked
