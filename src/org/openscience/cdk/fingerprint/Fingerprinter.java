@@ -40,8 +40,14 @@ import java.util.*;
  *  allow for a fast screening step to excluded candidates for a substructure search in a 
  *  database. They are also a means for determining the similarity of chemical structures.
  *
+ * <p>A fingerprint is generated for an AtomContainer with this code:
+ * <pre>
+ *   Molecule molecule = new Molecule();
+ *   BitSet fingerprint = Fingerprinter.getFingerprint(molecule);s
+ * </pre>
+ *
  * @author     steinbeck
- * @created    24. Februar 2002
+ * @created    2002-02-24
  *
  * @keyword    fingerprint
  * @keyword    similarity
@@ -101,7 +107,7 @@ public class Fingerprinter
 	 *  bs1. If so, the molecular structure from which bs2 was generated is 
 	 *  a possible substructure of bs1.
      *
-     *  Example:
+     *  <p>Example:
      *  <pre>
      *  Molecule mol = MoleculeFactory.makeIndole();
      *  BitSet bs = Fingerprinter.getFingerprint(mol);
