@@ -30,6 +30,8 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.layout.HydrogenPlacer;
+import org.openscience.cdk.geometry.GeometryTools;
 import java.util.Vector;
 import java.io.*;
 
@@ -148,6 +150,9 @@ public class HydrogenAdder {
     public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) 
         throws IOException, ClassNotFoundException
     {
+        boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
+        boolean create3DCoordinates = GeometryTools.has3DCoordinates(container);
+        
         Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
         atom.setHydrogenCount(0);
         // set number of implicit hydrogens to zero
@@ -155,11 +160,15 @@ public class HydrogenAdder {
         int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
         for (int i = 1; i <= missingHydrogens; i++) {
             Atom hydrogen = new Atom("H");
-            hydrogen.setPoint2D(atom.getPoint2D());
             IsotopeFactory.getInstance().configure(hydrogen, isotope);
             container.addAtom(hydrogen);
             Bond newBond = new Bond(atom, hydrogen, 1.0);
             container.addBond(newBond);
+        }
+        // now create coordinates for new hydrogens
+        if (create2DCoordinates) {
+            logger.debug("Creating 2D coordinates for new hydrogens");
+            HydrogenPlacer.placeHydrogens2D(container);
         }
     }
     
