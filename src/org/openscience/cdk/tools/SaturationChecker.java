@@ -425,6 +425,8 @@ public class SaturationChecker
                 partner = partners[g];
                 logger.debug("Atom has " + partners.length + " partners");
                 atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+                if(atomTypes2.length==0)
+                  throw new CDKException("Missing entry in structgen_atomtypes.xml for "+partner.getSymbol());
                 if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum() - partner.getHydrogenCount())
                 {
                   logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getBondOrderSum());
