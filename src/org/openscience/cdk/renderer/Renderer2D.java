@@ -1154,7 +1154,6 @@ public class Renderer2D implements MouseMotionListener   {
     } else {
       r2dm.setShowTooltip(false);
     }
-    r2dm.setLastHighlightedAtom(r2dm.getHighlightedAtom());
   }
 
 

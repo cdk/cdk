@@ -118,8 +118,6 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     private HashMap toolTipTextMap = new HashMap();
     
-    private Atom lastHighlightedAtom = null;
-    
     public Dimension getZoomedBackgroundDimension() {
         return new Dimension((int)((double)backgroundDimension.getWidth() * zoomFactor),
                              (int)((double)backgroundDimension.getHeight() * zoomFactor));
@@ -756,21 +754,31 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
   }
   
   
+  /**
+   *  Sets the showTooltip attribute.
+   *
+   * @param  b  The new value.
+   */
   public void setShowTooltip(boolean b){
     showTooltip=b;
   }
   
   
-  public void setLastHighlightedAtom(Atom a){
-    lastHighlightedAtom=a;
-  }
-  
-  
+  /**
+   *  Gets showTooltip attribute.
+   *
+   * @return    The showTooltip value.
+   */
   public boolean getShowTooltip(){
     return(showTooltip);
   }
   
   
+  /**
+   *  Sets the toolTipTextMap.
+   *
+   * @param  map  A map containing Atoms of the current molecule as keys and Strings to display as values.  
+   */
   public void setToolTipTextMap(HashMap map){
     toolTipTextMap=map;
   }
