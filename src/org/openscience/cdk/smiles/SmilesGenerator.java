@@ -429,25 +429,9 @@ public class SmilesGenerator {
    */
   public synchronized String createSMILES(Molecule molecule) {
       try {
-          Vector moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-          if (moleculeSet.size() > 1) {
-              StringBuffer fullSMILES = new StringBuffer();
-              Enumeration molecules = moleculeSet.elements();
-              while (molecules.hasMoreElements()) {
-                  Molecule molPart = (Molecule)molecules.nextElement();
-                  fullSMILES.append(createSMILES(molPart, false, new boolean[molPart.getBondCount()]));
-                  if (molecules.hasMoreElements()) {
-                      fullSMILES.append('.');
-                  }
-              }
-              return fullSMILES.toString();
-          } else {
-              return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
-          }
+        return (createSMILES(molecule, false, new boolean[molecule.getBondCount()]));
       } catch (CDKException exception) {
           // This exception can only happen if a chiral smiles is requested
-          return("");
-      } catch (Exception exception) {
           return("");
       }
    }
@@ -460,7 +444,8 @@ public class SmilesGenerator {
    * that the smiles complies to any externeal rules, but it is canonical compared to other smiles
    * produced by this method. The method checks if there are 2D coordinates but does not
    * check if coordinates make sense. Invalid stereo configurations are ignored; if there are no 
-   * valid stereo configuration the smiles will be the same as the non-chiral one.
+   * valid stereo configuration the smiles will be the same as the non-chiral one. Note that often 
+   * stereo configurations are only complete and can be converted to a smiles if explicit Hs are given.
    *
    * @exception  CDKException  At least one atom has no Point2D; coordinates are needed for creating the chiral smiles.
    * @param molecule The molecule to evaluate
@@ -475,7 +460,7 @@ public class SmilesGenerator {
   /**
    * Generate canonical SMILES from the <code>molecule</code>.  This method
    * canonicaly lables the molecule but dose not perform any checks on the
-   * chemical validity of the molecule.
+   * chemical validity of the molecule. This method also takes care of multiple molecules.
    *
    * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
    * @param molecule The molecule to evaluate
@@ -485,6 +470,36 @@ public class SmilesGenerator {
    *
    */
   public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException{
+    Vector moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+    if (moleculeSet.size() > 1) {
+        StringBuffer fullSMILES = new StringBuffer();
+        Enumeration molecules = moleculeSet.elements();
+        while (molecules.hasMoreElements()) {
+            Molecule molPart = (Molecule)molecules.nextElement();
+            fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, false, new boolean[molPart.getBondCount()]));
+            if (molecules.hasMoreElements()) {
+                fullSMILES.append('.');
+            }
+        }
+        return fullSMILES.toString();
+    } else {
+        return (createSMILESWithoutCheckForMultipleMolecules(molecule, false, new boolean[molecule.getBondCount()]));
+    }
+  }
+  
+  /**
+   * Generate canonical SMILES from the <code>molecule</code>.  This method
+   * canonicaly lables the molecule but dose not perform any checks on the
+   * chemical validity of the molecule. Does not care about multiple molecules.
+   *
+   * @see org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel.
+   * @param molecule The molecule to evaluate
+   * @param chiral true=SMILES will be chiral, false=SMILES will not be chiral.
+   * @param doubleBondConfiguration[] Should double bond configurations be evaluated. If bond X (numbering as in the bonds array) should be evaluated isDoubleBondSpecified[x] should be true, if not false.
+   * @exception  CDKException  At least one atom has no Point2D; coordinates are needed for crating the chiral smiles. This excpetion can only be thrown if chiral smiles is created, ignore it if you want a non-chiral smiles (createSMILES(AtomContainer) does not throw an exception).
+   *
+   */
+  public synchronized String createSMILESWithoutCheckForMultipleMolecules(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException{
     if (molecule.getAtomCount() == 0)
       return "";
     canLabler.canonLabel(molecule);
