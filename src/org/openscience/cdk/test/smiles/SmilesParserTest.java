@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -603,6 +604,37 @@ public class SmilesParserTest extends TestCase
 			String smiles = "Nc4cc3[n+](c2c(c1c(cccc1)cc2)nc3c5c4cccc5)c6c7c(ccc6)cccc7";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(33, mol.getAtomCount());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+    }
+    
+    /**
+     * A bug found with JCP.
+     */
+    public void testSFBug956929() {
+		try {
+			String smiles = "Cn1cccc1";
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(6, mol.getAtomCount());
+            // it's a bit hard to detect two double bonds in the pyrrole ring
+            // but I do can check the total order in the whole molecule
+            double totalBondOrder = 0.0;
+            Bond[] bonds = mol.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                totalBondOrder += bonds[i].getOrder();
+            }
+            assertEquals(8.0, totalBondOrder, 0.001);
+            // I can also check wether the total bond order around the nitrogen
+            // is 3
+            Atom nitrogen = mol.getAtomAt(1); // the second atom
+            assertEquals("N", nitrogen.getSymbol());
+            totalBondOrder = 0.0;
+            bonds = mol.getConnectedBonds(nitrogen);
+            for (int i=0; i<bonds.length; i++) {
+                totalBondOrder += bonds[i].getOrder();
+            }
+            assertEquals(3.0, totalBondOrder, 0.001);
 		} catch (Exception e) {
 			fail(e.toString());
 		}
