@@ -29,9 +29,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
  *  ElectronContainers. <p>

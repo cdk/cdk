@@ -24,12 +24,8 @@
 
 package org.openscience.cdk;
 
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Vector;
-
-import javax.vecmath.Point2d;
-
 
 /**
  * Maintains a set of Ring objects.

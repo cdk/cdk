@@ -10,6 +10,8 @@ import org.openscience.cdk.modeling.forcefield.*;
 /**
  *  Potential function for testing
  *
+ * @cdk.module applications
+ *
  *@author     labarta
  *@created    2004-12-03
  */
