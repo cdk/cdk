@@ -55,13 +55,13 @@ public class AtomTypeTest extends TestCase {
     public void testAtomType_String_String() {
         AtomType at = new AtomType("C4", "C");
         assertEquals("C", at.getSymbol());
-        assertEquals("C4", at.getID());
+        assertEquals("C4", at.getAtomTypeName());
     }
     
-    public void testSetID() {
+    public void testSetAtomTypeName() {
         AtomType at = new AtomType("C");
-        at.setID("C4");
-        assertEquals("C4", at.getID());
+        at.setAtomTypeName("C4");
+        assertEquals("C4", at.getAtomTypeName());
     }
 
     public void testSetMaxBondOrder() {

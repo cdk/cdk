@@ -222,7 +222,11 @@ public class CMLWriter implements ChemObjectWriter {
     }
 
     private void write(Molecule mol) {
-        write("<molecule>\n");
+        write("<molecule");
+        if (mol.getID() != null) {
+            write(" id=\"" + mol.getID() + "\"");
+        }
+        write(">\n");
         write((AtomContainer)mol);
         write("</molecule>\n");
     }
@@ -244,7 +248,14 @@ public class CMLWriter implements ChemObjectWriter {
     }
 
     private void write(Atom atom) {
-		write("    <atom id=\"a" + atom.hashCode() + "\" ");
+		write("    <atom id=\"");
+        if (atom.getID() != null) {
+            write(atom.getID());
+        } else {
+            // use some unique default -> the hashcode
+            write("a" + atom.hashCode());
+        }
+        write("\" ");
 		write("elementType=\"");
 		write(atom.getSymbol());
 		write("\" ");
@@ -259,7 +270,14 @@ public class CMLWriter implements ChemObjectWriter {
 
     private void write(Bond bond) {
         StringBuffer childElements = new StringBuffer();
-		write("    <bond id=\"b" + bond.hashCode() + "\" ");
+		write("    <bond id=\"");
+        if (bond.getID() != null) {
+            write(bond.getID());
+        } else {
+            // use some unique default -> the hashcode
+            write("b" + bond.hashCode());
+        }
+        write("\" ");
 		Atom atoms[] = bond.getAtoms();
         if (atoms.length == 2) {
             write("atomRefs2=\"");

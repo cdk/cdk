@@ -205,7 +205,7 @@ public class AtomTypeFactory
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			atomType = (AtomType) atomTypes.elementAt(f);
-			if (atomType.getID().equals(id))
+			if (atomType.getAtomTypeName().equals(id))
 			{
 				return atomType;
 			}
@@ -231,7 +231,7 @@ public class AtomTypeFactory
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			AtomType at = (AtomType) atomTypes.elementAt(f);
-			if (at.getSymbol().equals(symbol) && (at.getID().indexOf(id) > -1))
+			if (at.getSymbol().equals(symbol) && (at.getAtomTypeName().indexOf(id) > -1))
 			{
 				//System.out.println("Atomtype for symbol " + symbol + " found.");
 				al.addElement((AtomType) at.clone());
@@ -267,7 +267,7 @@ public class AtomTypeFactory
 
 	/**
 	 *  Configures an atom. Finds the correct element type by looking at the atoms
-	 *  atom type id (atom.getID()).
+	 *  atom type id (atom.getAtomTypeName()).
 	 *
 	 *@param  atom  The atom to be configured
 	 *@return       The configured atom
@@ -276,7 +276,7 @@ public class AtomTypeFactory
 	{
 		try
 		{
-			AtomType at = getAtomType(atom.getID());
+			AtomType at = getAtomType(atom.getAtomTypeName());
 			atom.setMaxBondOrder(at.getMaxBondOrder());
 			atom.setMaxBondOrderSum(at.getMaxBondOrderSum());
 			atom.setVanderwaalsRadius(at.getVanderwaalsRadius());
@@ -303,7 +303,7 @@ public class AtomTypeFactory
 		} catch (Exception exc)
 		{
 			logger.warn("Could not configure atom with unknown ID: " +
-					atom.toString() + " + (id=" + atom.getID() + ")");
+					atom.toString() + " + (id=" + atom.getAtomTypeName() + ")");
 		}
 		logger.debug("Configured " + atom.toString());
 		return atom;

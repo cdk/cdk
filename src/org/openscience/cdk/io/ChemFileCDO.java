@@ -51,7 +51,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private int bond_a2;
     private double bond_order;
     private int bond_stereo;
-    private int bond_id;
+    private String bond_id;
     
     private double crystal_axis_x;
     private double crystal_axis_y;
@@ -136,6 +136,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         logger.debug("Atom # " + numberOfAtoms);
         numberOfAtoms++;
       } else if (objectType.equals("Bond")) {
+          bond_id = null;
       } else if (objectType.equals("Animation")) {
         currentChemSequence = new ChemSequence();
       } else if (objectType.equals("Frame")) {
@@ -189,7 +190,11 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentMolecule.addAtom(currentAtom);
         } else if (objectType.equals("Bond")) {
             logger.debug("Bond: " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
-            currentMolecule.addBond(bond_a1, bond_a2, (int)bond_order);
+            Atom a1 = currentMolecule.getAtomAt(bond_a1);
+            Atom a2 = currentMolecule.getAtomAt(bond_a2);
+            Bond b = new Bond(a1, a2, bond_order);
+            if (bond_id != null) b.setID(bond_id);
+            currentMolecule.addBond(b);
         } else if (objectType.equals("a-axis")) {
           // set these variables
           if (currentMolecule instanceof Crystal) {
@@ -235,7 +240,11 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       logger.debug("objectType: " + objectType);
       logger.debug("propType: " + propertyType);
       logger.debug("property: " + propertyValue);
-      if (objectType.equals("Atom")) {
+      if (objectType.equals("Molecule")) {
+        if (propertyType.equals("id")) {
+          currentMolecule.setID(propertyValue);
+        }
+      } else if (objectType.equals("Atom")) {
         if (propertyType.equals("type")) {
           currentAtom.setSymbol(propertyValue);
         } else if (propertyType.equals("x2")) {
@@ -258,7 +267,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             currentAtom.setProperty("org.openscience.cdk.dict", propertyValue);
         } else if (propertyType.equals("id")) {
           logger.debug("id" + propertyValue);
-          // currentAtom.setID(propertyValue);
+          currentAtom.setID(propertyValue);
           atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
         }
       } else if (objectType.equals("Bond")) {
@@ -268,7 +277,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           bond_a2 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("id")) {
           logger.debug("id" + propertyValue);
-          // bond_id = propertyValue;
+          bond_id = propertyValue;
         } else if (propertyType.equals("order")) {
           try {
             bond_order = Double.parseDouble(propertyValue);

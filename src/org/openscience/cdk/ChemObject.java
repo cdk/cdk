@@ -71,6 +71,8 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	  */
 	public Vector[] pointers;
 
+    protected String id = ""; 
+    
     /**
      * Constructs a new ChemObject.
      */
@@ -272,6 +274,23 @@ public class ChemObject implements java.io.Serializable, Cloneable
 		return o;
 	}
 
+    /**
+     * Returns the identifier (ID) of this object.
+     *
+     * @see setID
+     */
+    public String getID() {
+        return this.id;
+    }
+    
+    /**
+     * Sets the identifier (ID) of this object.
+     *
+     * @see getID
+     */
+    public void setID(String id) {
+        this.id = id;
+    }
 }
 
 

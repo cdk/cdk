@@ -450,7 +450,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
           if (object instanceof Atom)
           {
             Atom atom = (Atom) object;
-            if ((getID()== atom.getID()) &&
+            if ((getAtomTypeName()== atom.getAtomTypeName()) &&
                 (maxBondOrder==atom.maxBondOrder) &&
                 (maxBondOrderSum==atom.maxBondOrderSum) &&
                 ((point2D==atom.point2D) || ((point2D!=null) && (point2D.equals(atom.point2D)))) &&

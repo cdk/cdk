@@ -43,9 +43,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	protected int growArraySize = 2;
 
     protected Molecule[] reactants;
-    protected int reactantCount;    
-    protected Molecule[] products;    
-    protected int productCount;    
+    protected int reactantCount;
+    protected Molecule[] products;
+    protected int productCount;
     
     /**
      * Constructs an empty reaction;

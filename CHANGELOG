@@ -38,7 +38,7 @@ Fixes:
 * Better layout of ChemObjectTree
 
 API chages:
-* Implemented RFC #11 as a patch (which is applied by default)
+* Implemented RFC #11
 * Removed ChemModel.getAtomContainer
 
 20030217 Release

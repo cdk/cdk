@@ -84,7 +84,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	public AtomType(String id, String elementSymbol)
 	{
 		this(elementSymbol);
-		setID(id);
+		setAtomTypeName(id);
 	}
 
 
@@ -93,9 +93,9 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	 *
 	 * @param  id  The new AtomTypeID value
      *
-     * @see    #getID
+     * @see    #getAtomTypeName
 	 */
-	public void setID(String id)
+	public void setAtomTypeName(String id)
 	{
 		this.id = id;
 	}
@@ -132,9 +132,9 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	 *
 	 * @return    The id value
      *
-     * @see       #setID
+     * @see       #setAtomTypeName
 	 */
-	public String getID()
+	public String getAtomTypeName()
 	{
 		return id;
 	}
@@ -175,7 +175,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     {
         if (object instanceof AtomType) {
             AtomType type = (AtomType) object;
-            if ((getID()==type.getID()) &&
+            if ((getAtomTypeName()==type.getAtomTypeName()) &&
                 (maxBondOrder==type.maxBondOrder) &&
             (maxBondOrderSum==type.maxBondOrderSum))
             return true;
@@ -202,7 +202,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("AtomType(");
-        sb.append(getID() + ", ");
+        sb.append(getAtomTypeName() + ", ");
         sb.append("MB:" + getMaxBondOrder() + ", ");
         sb.append("TBS:" + getMaxBondOrderSum());
         sb.append(super.toString());
