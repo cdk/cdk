@@ -69,7 +69,7 @@ public class TextGUIListener implements ReaderListener, WriterListener {
         if (writer instanceof PrintWriter) {
             this.out = (PrintWriter)writer;
         } else if (writer == null) {
-            this.in = null;
+            this.out = null;
         } else {
             this.out = new PrintWriter(writer);
         }
@@ -128,7 +128,11 @@ public class TextGUIListener implements ReaderListener, WriterListener {
                 Vector settings = optionSet.getOptions();
                 for (int i=0; i<settings.size(); i++) {
                     this.out.println();
-                    this.out.print((i+1) + ". " + settings.elementAt(i));
+                    String option = (String)settings.elementAt(i);
+                    this.out.print((i+1) + ". " + option);
+                    if (option.equals(setting.getSetting())) {
+                        this.out.print(" (Default)");
+                    }
                 }
             }
             this.out.println();
