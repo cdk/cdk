@@ -248,16 +248,20 @@ public class SaturationChecker
 				{
 					if (atomContainer.getBondOrderSum(atom) < atomTypes1[0].getMaxBondOrderSum() - atom.getHydrogenCount())
 					{
+						//System.out.println("Atom has " + atomContainer.getBondOrderSum(atom) + ", may have: " + atomTypes1[0].getMaxBondOrderSum());
 						partners = atomContainer.getConnectedAtoms(atom);
 						for (int g = 0; g < partners.length; g++)
 						{
 							partner = partners[g];
+							//System.out.println("Atom has " + partners.length + " partners");
 							atomTypes2 = atf.getAtomTypes(partner.getSymbol(), atf.ATOMTYPE_ID_STRUCTGEN);
-
 							if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getMaxBondOrderSum() - partner.getHydrogenCount())
 							{
+								//System.out.println("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getMaxBondOrderSum());
 								bond = atomContainer.getBond(atom, partner);
+								//System.out.println("Bond order was " + bond.getOrder());
 								bond.setOrder(bond.getOrder() + 1);
+								//System.out.println("Bond order now " + bond.getOrder());
 								break;
 							}
 						}
@@ -272,12 +276,27 @@ public class SaturationChecker
 	{
 		RingSet rs = new SSSRFinder().findSSSR((Molecule)atomContainer);
 		Vector ringSets = RingPartitioner.partitionRings(rs);
-		AtomContainer ac;
+		AtomContainer ac = null;
+		Atom atom = null;
+		int temp[];
 		for (int f = 0; f < ringSets.size(); f++)
 		{
 			rs = (RingSet)ringSets.elementAt(f);
 			ac = rs.getRingSetInAtomContainer();
+			temp = new int[ac.getAtomCount()];
+			for (int g = 0; g < ac.getAtomCount(); g++)
+			{
+				atom = ac.getAtomAt(g);
+				temp[g] = atom.getHydrogenCount();
+				atom.setHydrogenCount(atomContainer.getBondCount(atom) - ac.getBondCount(atom) - temp[g]);
+			}
 			saturate(ac);
+			for (int g = 0; g < ac.getAtomCount(); g++)
+			{
+				atom = ac.getAtomAt(g);
+				atom.setHydrogenCount(temp[g]);
+			}
+			
 		}
 	}
 	
