@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE webpage PUBLIC "-//Norman Walsh//DTD Website V2.0b1//EN" "dtd/website.dtd" [
-  <!ENTITY intro SYSTEM "../../user-guide/intro.xml">
-  <!ENTITY core SYSTEM "../../user-guide/coreclasses.xml">
   <!ENTITY extra SYSTEM "../../user-guide/extraclasses.xml">
   <!ENTITY % classes SYSTEM "../../user-guide/classes.mod">
 %classes;
@@ -16,6 +14,6 @@
     <summary></summary>
   </head>
 
-  &core;
+  &extra;
 
 </webpage>
