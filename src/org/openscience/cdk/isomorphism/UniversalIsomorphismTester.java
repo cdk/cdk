@@ -508,7 +508,9 @@ public class UniversalIsomorphismTester {
    * @param  g2  The second one (first and second as in getMap)
    * @return     The mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
-  private static List makeAtomsMapOfBondsMap(List l, AtomContainer g1, AtomContainer g2) {
+  public static List makeAtomsMapOfBondsMap(List l, AtomContainer g1, AtomContainer g2) {
+    if(l==null)
+      return(l);
     Bond[] bonds1 = g1.getBonds();
     Bond[] bonds2 = g2.getBonds();
     List result = new Vector();
@@ -551,7 +553,6 @@ public class UniversalIsomorphismTester {
                 }
               }
             }
-            break;
           }
         }
       }
