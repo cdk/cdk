@@ -22,6 +22,10 @@ New:
 * MDL MOL/SDF reader now parses the 'G  ' lines in the property
   blocks
 * A ChemObject removeProperty() method
+* A cdk.validate.ProblemMarker which can 'tag' ChemObject's with
+  problems
+* The Renderer2D will now underline Atom's with validation problems
+  with a red line
 
 Fixes:
 * Added missing LGPL license to distributions.
