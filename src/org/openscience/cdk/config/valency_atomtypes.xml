@@ -141,5 +141,29 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
     </atom>
   </atomType>
+  <atomType id="Si">
+    <atom elementType="Si" formalCharge="0">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
+    </atom>
+  </atomType>
+  <atomType id="Se">
+    <atom elementType="Se" formalCharge="0">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
+    </atom>
+  </atomType>
+  <atomType id="Li">
+    <atom elementType="Se" formalCharge="0">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
+    </atom>
+  </atomType>
+  <atomType id="As">
+    <atom elementType="Se" formalCharge="0">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
+    </atom>
+  </atomType>
 
 </atomTypeList>
