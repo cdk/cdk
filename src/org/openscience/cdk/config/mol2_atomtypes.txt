@@ -1,0 +1,12 @@
+#Type	Base	Number	Mass	vdWR	covR	Red	Green	Blue
+# X is a fall-back element type that should always exist
+X	X	0	0.0	1.0	0.0	255	20	147
+# Atom types found in a Vega generated Mol2 file
+P.3 P   15	30.974	1.80	1.06	255	165	0
+O.2 O   8	15.999	1.52	0.73	255	0	0
+O.3 O   8	15.999	1.52	0.73	255	0	0
+C.1 C   6	12.011	1.70	0.77	112	128	144
+C.2 C   6	12.011	1.70	0.77	112	128	144
+N.pl    N   7	14.007	1.55	0.75	0	191	255
+N.2 N   7	14.007	1.55	0.75	0	191	255
+N.1 N   7	14.007	1.55	0.75	0	191	255

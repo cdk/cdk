@@ -132,6 +132,9 @@ public class ReaderFactory {
             } else if (line.indexOf("ACES2") >= 0) {
                 logger.info("Aces2 format detected");
                 return new org.openscience.cdk.io.Aces2Reader(originalBuffer);
+            } else if (line.indexOf("<TRIPOS>") >= 0) {
+                logger.info("Mol2 format detected");
+                return new org.openscience.cdk.io.Mol2Reader(originalBuffer);
             } else if (line.indexOf("Amsterdam Density Functional") >= 0) {
                 logger.info("ADF format detected");
                 return new org.openscience.cdk.io.ADFReader(originalBuffer);
