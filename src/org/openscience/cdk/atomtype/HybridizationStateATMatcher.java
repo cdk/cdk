@@ -74,7 +74,6 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
 	 */
 	public AtomType findMatchingAtomType(AtomContainer ac, Atom atom) throws CDKException {
 		
-		AtomType matched = null;
 		symbol = atom.getSymbol();
 		//Hs are included?
 		Atom[] neighboors = ac.getConnectedAtoms(atom);
@@ -100,17 +99,16 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
 					if (tmp_neighboorsCount == neighboorsCount) {
 						logger.debug("!!!!! ATOM TYPE FOUND");
 						atName = type[i].getAtomTypeName();
-						matched = type[i];
+						return type[i];
 					}
 				}
 			}
-			return matched;
-
 		} catch (Exception ex1) {
             logger.error(ex1.getMessage());
 			logger.debug(ex1);
 			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
 		}
+		return null;
 	}
 }
 
