@@ -54,11 +54,19 @@ public class XindiceReader implements ChemObjectReader {
     private String collection;
     private String xpath = null;
     
+    private org.openscience.cdk.tools.LoggingTool logger;
+
     public XindiceReader(String collection) {
+        logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+        
+        while (collection.startsWith("/")) {
+            collection = collection.substring(1);
+        }
         this.collection = collection;
     }
 
     public void setQuery(String xpath) {
+        logger.info("Xindice query set to " + xpath);
         this.xpath = xpath;
     }
 
@@ -66,24 +74,22 @@ public class XindiceReader implements ChemObjectReader {
         if (object instanceof SetOfMolecules) {
             return (ChemObject)readSetOfMolecules();
         } else {
-            throw new CDKException("Only supported Molecule.");
+            throw new CDKException("Only supported is SetOfMolecules.");
         }
     }
     
-    private SetOfMolecules readSetOfMolecules() throws CDKException{
-        SetOfMolecules mols = null;
-        CMLReader cmlr;
-        StringReader reader;
+    private SetOfMolecules readSetOfMolecules() throws CDKException {
+        SetOfMolecules mols = new SetOfMolecules();
         Collection col = null;
-
         try {
             String driver = "org.apache.xindice.client.xmldb.DatabaseImpl";
             Class c = Class.forName(driver);
             Database database = (Database)c.newInstance();
             DatabaseManager.registerDatabase(database);
 
-            String dbname = database.getName();
-            col = DatabaseManager.getCollection("xmldb:xindice:///db/" + this.collection);
+            String collectionRL = "xmldb:xindice:///db/" + this.collection;
+            logger.debug("Looking at collection: " + collectionRL);
+            col = DatabaseManager.getCollection(collectionRL);
             
             XPathQueryService service = (XPathQueryService)col.getService("XPathQueryService", "1.0");
             ResourceSet resultSet = service.query(xpath);
@@ -91,17 +97,18 @@ public class XindiceReader implements ChemObjectReader {
 
             while (results.hasMoreResources()) {
                 Resource resource = results.nextResource();
-                String CMLString = new String((String)resource.getContent());
-                reader = new StringReader(CMLString);
-                cmlr = new CMLReader(reader);
+                String CMLString = (String)resource.getContent();
+                StringReader reader = new StringReader(CMLString);
+                CMLReader cmlr = new CMLReader(reader);
                 mols.addMolecule(getMolecule((ChemFile)cmlr.read(new ChemFile())));
             }
+            logger.info("Retrieved " + mols.getMoleculeCount() + " molecules");
         } catch (XMLDBException eXML) {
-            System.err.println(
+            throw new CDKException(
                 "In getResult(); XML:DB Exception occured " + eXML.errorCode + " " + 
                 eXML.getMessage());
         } catch (Exception e) {
-            System.err.println("Other Exception occured " + e.getMessage());
+            throw new CDKException("Other Exception occured " + e.getMessage());
         } finally {
             if (col != null) {
                 try {
