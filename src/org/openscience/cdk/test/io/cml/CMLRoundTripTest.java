@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2003  The Chemistry Development Kit (CDK) project
  * 
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -93,6 +93,19 @@ public class CMLRoundTripTest extends TestCase {
         assertEquals(atom.getZ3D(), roundTrippedAtom.getZ3D(), 0.00001);
     }
     
+    public void testPseudoAtom() {
+        Molecule mol = new Molecule();
+        PseudoAtom atom = new PseudoAtom("N");
+        atom.setLabel("Glu55");
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertTrue(roundTrippedAtom instanceof PseudoAtom);
+        assertEquals("Glu55", ((PseudoAtom)roundTrippedAtom).getLabel());
+    }
+    
     public void testAtomFormalCharge() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
@@ -105,6 +118,46 @@ public class CMLRoundTripTest extends TestCase {
         assertEquals(1, roundTrippedMol.getAtomCount());
         Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
         assertEquals(atom.getFormalCharge(), roundTrippedAtom.getFormalCharge());
+    }
+    
+    public void testAtomPartialCharge() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        double partialCharge = 0.5;
+        atom.setCharge(partialCharge);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
+        assertEquals(atom.getCharge(), roundTrippedAtom.getCharge(), 0.0001);
+    }
+    
+    public void testAtomStereoParity() {
+        fail();
+    }
+    
+    public void testBond() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        Atom atom2 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        Bond bond = new Bond(atom, atom2, 1.0);
+        
+        Molecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(2, roundTrippedMol.getAtomCount());
+        assertEquals(1, roundTrippedMol.getBondCount());
+        Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
+        assertEquals(2, bond.getAtomCount());
+        assertEquals("C", bond.getAtomAt(0)); // preserved direction?
+        assertEquals("O", bond.getAtomAt(1));
+        assertEquals(1.0, bond.getOrder(), 0.0001);
+    }
+    
+    public void testBondStereo() {
+        fail();
     }
     
     /**
@@ -145,7 +198,6 @@ public class CMLRoundTripTest extends TestCase {
             assertNotNull(moleculeSet);
             assertEquals(1, moleculeSet.getMoleculeCount());
             roundTrippedMol = moleculeSet.getMolecule(0);
-            
             assertNotNull(roundTrippedMol);
         } catch (Exception exception) {
             String message = "Failed when reading CML";
