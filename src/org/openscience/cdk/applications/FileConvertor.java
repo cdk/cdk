@@ -28,10 +28,12 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.program.*;
 import org.openscience.cdk.io.listener.*;
 import org.openscience.cdk.exception.*;
+import org.openscience.cdk.layout.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.IDCreator;
 import java.io.*;
 import java.util.*;
+import javax.vecmath.*;
 
 /**
  * Program that converts a file from one format to a file with another format.
@@ -51,11 +53,18 @@ public class FileConvertor {
     private ChemObjectReader cor;
     private String oformat;
     private ChemObjectWriter cow;
-    
+
     private TextGUIListener settingListener;
     private PropertiesListener propsListener;
     private int level;
     private Vector chemObjectNames = new Vector();
+
+	/* The below three processings are applied on the molecular level
+	 * only, and the implementation can be found in write(Molecule);
+	 */
+    private boolean applyHAdding = false;
+    private boolean applyHRemoval = false;
+    private boolean apply2DCleanup = false;
 
     public FileConvertor() {
         logger = new LoggingTool(this.getClass().getName());
@@ -63,7 +72,7 @@ public class FileConvertor {
 
         settingListener = new TextGUIListener(level);
         propsListener = null;
-        
+
         this.level = 0;
         this.oformat = "cml";
 
@@ -74,7 +83,7 @@ public class FileConvertor {
         chemObjectNames.add("org.openscience.cdk.ChemSequence");
         chemObjectNames.add("org.openscience.cdk.ChemFile");
     }
-    
+
     /**
      * Convert the file <code>ifilename</code>.
      *
@@ -92,12 +101,12 @@ public class FileConvertor {
                     System.err.println("The format of the input file is not recognized or not supported.");
                     return false;
                 }
-                
+
                 ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
                 if (content == null) {
                     return false;
                 }
-                
+
                 // create output file
                 String ofilename = getOutputFileName(ifilename, this.oformat);
                 FileWriter fw = new FileWriter(new File(ofilename));
@@ -109,7 +118,7 @@ public class FileConvertor {
                 }
                 write(content, ofilename);
                 cow.close();
-                
+
                 success = true;
             } else {
                 System.out.println("Skipping non-file.");
@@ -133,10 +142,10 @@ public class FileConvertor {
         int level = 0; // no questions by default
         LoggingTool logger = new LoggingTool("org.openscience.cdk.applications.FileConvertor.main");
         FileConvertor convertor = new FileConvertor();
-        
+
         // process options
         int firstNonOptionArgument = convertor.parseCommandLineOptions(args);
-        
+
         // do conversion(s)
         for (int i=firstNonOptionArgument; i < args.length; i++) {
             String inputFilename = args[i];
@@ -159,7 +168,7 @@ public class FileConvertor {
         // reopen file, to force to start at the beginning
         fileReader.close();
         fileReader = new FileReader(file);
-        
+
         ChemObjectReader reader = null;
         // construct right reader
         if (format.equals("org.openscience.cdk.io.CMLReader")) {
@@ -247,14 +256,14 @@ public class FileConvertor {
         }
         return outputFilename;
     }
-    
+
     /**
      * Parses the options in the command line arguments and returns
      * the index of the first non-option argument.
      */
     private int parseCommandLineOptions(String[] args) {
         int i = 0;
-        
+
         // parse options
         if (args.length == 0) {
             printHelp();
@@ -305,17 +314,27 @@ public class FileConvertor {
                     System.out.println("Cannot read properties file: " + filename);
                     System.exit(1);
                 }
+			} else if (option.equals("--addHydrogens")) {
+				System.out.println("Not implemented yet.");
+				System.exit(1);
+			} else if (option.equals("--removeHydrogens")) {
+				System.out.println("Not implemented yet.");
+				System.exit(1);
+			} else if (option.equals("--create2DCoordinates")) {
+				this.apply2DCleanup = true;
+				System.out.println("Not implemented yet.");
+				System.exit(1);
             } else {
                 System.out.println("Unrecognized option: " + args[i]);
                 System.exit(1);
             }
             i++;
         } // done parsing options
-        
+
         // return the index of the first non-option command line arguments
         return i;
     }
-    
+
     private void printHelp() {
         System.out.println(" FileConverter [OPTIONS] <files>");
         System.out.println();
@@ -341,7 +360,7 @@ public class FileConvertor {
         System.out.println("  svg    Scalable Vector Graphics");
         System.out.println("  xyz    XYZ");
     }
-    
+
     /**
      * Convert the file <code>ifilename</code>.
      *
@@ -467,6 +486,23 @@ public class FileConvertor {
             if (cow instanceof CMLWriter) {
                 IDCreator.createAtomAndBondIDs(molecule);
             }
+            if (applyHAdding) {
+				// not implemented yet
+			}
+            if (applyHRemoval) {
+				// not implemented yet
+			}
+            if (apply2DCleanup) {
+            	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+	            try {
+	                sdg.setMolecule(molecule);
+	                sdg.generateCoordinates(new Vector2d(0, 1));
+	                molecule = sdg.getMolecule();
+	            } catch (Exception exc) {
+	                System.out.println("Could not generate coordinates for this molecule.");
+	                System.exit(1);
+	            }
+			}
             cow.write(molecule);
         } catch (CDKException e) {
             logger.error("Cannot write Molecule: " + e.getMessage());
