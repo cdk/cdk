@@ -1,0 +1,21 @@
+#! /bin/sh
+
+GCJ=gcj-3.0
+
+CDKLIBDIR="../jar"
+CDKSRCDIR="../src"
+CDKBUILDDIR="../gcj/build"
+JARLIBS=`ls -1 $CDKLIBDIR/*.jar | perl -ne "s/\n|\r/:/g; print;"`
+
+CDKCORECLASSES=`cat core.classes | perl -n -e "s/\./\//g; print '$CDKSRCDIR/'; print;"`
+
+for FILE in $CDKCORECLASSES
+do
+    echo "Compiling $FILE..."
+    OPTIONS="-d $CDKBUILDDIR -I$CDKSRCDIR --CLASSPATH=$JARLIBS"
+    if ! $GCJ $OPTIONS -C $FILE.java
+    then
+        echo "Error during compilation!"
+        exit 1
+    fi
+done
