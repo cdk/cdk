@@ -18,4 +18,4 @@ while [ `echo $1 | egrep '^-D' | wc -l` != 0 ]; do
 done
 
 
-${command} -cp ${CLASSPATH} org.openscience.cdk.applications.Viewer $*
+${command} -Dcdk.debugging=true -cp ${CLASSPATH} org.openscience.cdk.applications.Viewer $*

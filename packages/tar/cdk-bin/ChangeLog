@@ -1,3 +1,8 @@
+20020419
+=================
+* added SMILES output for cdk-fileconvertor
+* debugging is now done with -Dcdk.debugging=yes
+
 20020206
 =================
 * fixed PATHTORTJAR bug
