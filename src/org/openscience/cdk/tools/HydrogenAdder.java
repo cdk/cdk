@@ -215,7 +215,9 @@ public class HydrogenAdder {
     public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)
     {
         int missingHydrogens = satChecker.calculateMissingHydrogen(atom, container);
-        atom.setHydrogenCount(missingHydrogens);
+        if (missingHydrogens > 0) {
+            atom.setHydrogenCount(missingHydrogens);
+        }
     }
 
 }
