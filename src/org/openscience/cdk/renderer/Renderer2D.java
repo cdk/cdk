@@ -145,21 +145,18 @@ public class Renderer2D   {
 	 */
 	public void paintMolecule(AtomContainer atomCon, Graphics graphics) {
 		RingSet ringSet = new RingSet();
-		Vector molecules = null;
-		try
-		{
-			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
-		} catch (Exception exception)
-		{
+		Molecule[] molecules = null;
+		try {
+			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
+		} catch (Exception exception) {
             logger.warn("Could not partition molecule: " + exception.toString());
-			exception.printStackTrace();
+			logger.debug(exception);
+            return;
 		}
-		for (int i = 0; i < molecules.size(); i++)
-		{
-			ringSet.add(sssrf.findSSSR((Molecule) molecules.elementAt(i)));
+		for (int i = 0; i < molecules.length; i++) {
+			ringSet.add(sssrf.findSSSR(molecules[i]));
 		}
-		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null)
-		{
+		if (r2dm.getPointerVectorStart() != null && r2dm.getPointerVectorEnd() != null) {
 			paintPointerVector(graphics);
 		}
 		paintBonds(atomCon, ringSet, graphics);

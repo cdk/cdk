@@ -80,16 +80,14 @@ public class ConnectivityChecker
 	 * Partitions the atoms in an AtomContainer into covalently connected components.
 	 *
 	 * @param   atomContainer  The AtomContainer to be partitioned into connected components, i.e. molecules
-	 * @return  A vector of AtomContainers, each containing a connected molecule   
+	 * @return                 A SetOfMolecules.
 	 */
-	public  static Vector partitionIntoMolecules(AtomContainer atomContainer)
-
-	{
+	public static SetOfMolecules partitionIntoMolecules(AtomContainer atomContainer) {
 		AtomContainer ac = new AtomContainer();
 		Atom atom = null, nextAtom = null;
 		Bond bond = null;
 		Molecule molecule = null;
-		Vector molecules = new Vector();
+		SetOfMolecules molecules = new SetOfMolecules();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -111,7 +109,7 @@ public class ConnectivityChecker
 			sphere.addElement(atom);
 			atom.setFlag(CDKConstants.VISITED, true);
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
-			molecules.addElement(molecule);
+			molecules.addMolecule(molecule);
 			ac.remove(molecule);
 		}
 		return molecules;

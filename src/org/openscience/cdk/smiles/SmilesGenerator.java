@@ -261,14 +261,14 @@ public class SmilesGenerator {
    * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(AtomContainer)
    */
   public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException {
-    Vector moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-    if (moleculeSet.size() > 1) {
+    SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+    if (moleculeSet.getMoleculeCount() > 1) {
       StringBuffer fullSMILES = new StringBuffer();
-      Enumeration molecules = moleculeSet.elements();
-      while (molecules.hasMoreElements()) {
-        Molecule molPart = (Molecule) molecules.nextElement();
+      Molecule[] molecules = moleculeSet.getMolecules();
+      for (int i=0; i<molecules.length; i++) {
+        Molecule molPart = molecules[i];
         fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, chiral, doubleBondConfiguration));
-        if (molecules.hasMoreElements()) {
+        if (i<(molecules.length-1)) { // are there more molecules?
           fullSMILES.append('.');
         }
       }

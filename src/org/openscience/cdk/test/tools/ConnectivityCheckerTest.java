@@ -1,12 +1,11 @@
-/*
- * $RCSfile$    
+/* $RCSfile$    
  * $Author$    
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 1997-2002  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2003  The Chemistry Development Kit (CDK) project
  *
- * Contact: steinbeck@ice.mpg.de, gezelter@maul.chem.nd.edu, egonw@sci.kun.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -38,10 +37,8 @@ import junit.framework.*;
  * @created    2001-07-24
  */
 public class ConnectivityCheckerTest extends TestCase {
-	AtomContainer atomCon = null;
-	Vector molecules = null;
-	ConnectivityChecker cc = null;
 
+	ConnectivityChecker cc = null;
 
 	/**
 	 *  Constructor for the ConnectivityCheckerTest object
@@ -52,35 +49,64 @@ public class ConnectivityCheckerTest extends TestCase {
 		super(name);
 	}
 
-
 	/**
 	 *  The JUnit setup method
 	 */
 	public void setUp() {
-		atomCon = new AtomContainer();
-		molecules = new Vector();
 		cc = new ConnectivityChecker();
 	}
 
-
 	/**
-	 *  A unit test for JUnit
+	 * This test tests the function of the partitionIntoMolecule() method.
 	 */
-	public void testPartitioning() {
+	public void testPartitionIntoMolecules() {
 		//System.out.println(atomCon);
+        AtomContainer atomCon = new AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
+        SetOfMolecules moleculeSet = null;
 		try {
-			molecules = cc.partitionIntoMolecules(atomCon);
+			moleculeSet = cc.partitionIntoMolecules(atomCon);
+		} catch (Exception exc) {
+            fail(exc.toString());
 		}
-		catch (Exception exc) {
-			// Vector molecules is empty but initialized
-			// so no need for any action here
-		}
-		assertTrue(molecules.size() == 3);
+        assertNotNull(moleculeSet);
+		assertEquals(3, moleculeSet.getMoleculeCount());
 	}
 
+	/**
+	 * This test tests the consitency between isConnected() and
+     * partitionIntoMolecules().
+	 */
+	public void testPartitionIntoMolecules_IsConnected_Consistency() {
+		//System.out.println(atomCon);
+        AtomContainer atomCon = new AtomContainer();
+		atomCon.add(MoleculeFactory.make4x3CondensedRings());
+		atomCon.add(MoleculeFactory.makeAlphaPinene());
+		atomCon.add(MoleculeFactory.makeSpiroRings());
+        SetOfMolecules moleculeSet = null;
+		try {
+			moleculeSet = cc.partitionIntoMolecules(atomCon);
+		} catch (Exception exc) {
+            fail(exc.toString());
+		}
+        assertNotNull(moleculeSet);
+		assertEquals(3, moleculeSet.getMoleculeCount());
+        
+        Molecule[] molecules = moleculeSet.getMolecules();
+        assertTrue(cc.isConnected(molecules[0]));
+        assertTrue(cc.isConnected(molecules[1]));
+        assertTrue(cc.isConnected(molecules[2]));
+	}
+
+	/**
+	 * This test tests the algorithm behind isConnected().
+	 */
+	public void testIsConnected() {
+        Molecule spiro = MoleculeFactory.makeSpiroRings();
+        assertTrue(cc.isConnected(spiro));
+	}
 
 	/**
 	 *  A unit test suite for JUnit
