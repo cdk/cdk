@@ -327,7 +327,7 @@ public class WHIMDescriptor implements Descriptor {
             double n = (double)ac.getAtomCount();
             gamma[i] = -1.0 * ( (ns/n)*Math.log(ns/n)/Math.log(2.0) + (na/n)*Math.log(1.0/n)/Math.log(2.0) );
             gamma[i] = 1.0 / (1.0 + gamma[i]);
-            System.out.println("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
+            //System.out.println("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
         }
                 
                 
