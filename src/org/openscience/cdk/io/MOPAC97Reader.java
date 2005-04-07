@@ -30,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.jmol.api.JmolAdapter;
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.openscience.cdk.AtomContainer;
@@ -84,6 +86,10 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
 	public ChemObject read(ChemObject object) throws CDKException {

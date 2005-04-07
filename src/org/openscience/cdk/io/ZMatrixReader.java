@@ -32,6 +32,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.AxisAngle4d;
@@ -74,6 +76,10 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     this.input = new BufferedReader(input);
   }
   
+    public ZMatrixReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public ZMatrixReader() {
         this(new StringReader(""));
     }
@@ -88,6 +94,10 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
   /**

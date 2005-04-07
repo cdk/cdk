@@ -31,6 +31,8 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -79,6 +81,10 @@ public class CMLReader extends DefaultChemObjectReader {
         this.input = input;
     }
     
+    public CMLReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public CMLReader() {
         this(new StringReader(""));
     }
@@ -100,6 +106,10 @@ public class CMLReader extends DefaultChemObjectReader {
 
     public void setReader(Reader reader) throws CDKException {
         this.input = reader;
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     private void init() {

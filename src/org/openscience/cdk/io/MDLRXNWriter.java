@@ -32,6 +32,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.StringWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
@@ -75,7 +76,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      *
      * @param   out  The OutputStream to write to
      */
-    public MDLRXNWriter(FileOutputStream out) throws Exception {
+    public MDLRXNWriter(OutputStream out) throws Exception {
         this(new BufferedWriter(new OutputStreamWriter(out)));
     }
 

@@ -28,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import org.openscience.cdk.Atom;
@@ -63,6 +65,10 @@ public class CrystClustReader extends DefaultChemObjectReader {
         }
     }
 
+    public CrystClustReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public ChemFormat getFormat() {
         return new CrystClustFormat();
     }
@@ -73,6 +79,10 @@ public class CrystClustReader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(reader);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     public ChemObject read(ChemObject object) throws CDKException {

@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import org.openscience.cdk.Atom;
@@ -92,6 +94,10 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		this(new StringReader(""));
 	}
 
+    public Gaussian98Reader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public ChemFormat getFormat() {
         return new Gaussian98Format();
     }
@@ -112,6 +118,10 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 			this.input = new BufferedReader(input);
 		}
 	}
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
+    }
 
 
 	/**

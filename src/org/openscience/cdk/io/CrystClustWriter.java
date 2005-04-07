@@ -55,6 +55,10 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         output = out;
     }
 
+    public CrystClustWriter(OutputStream input) {
+        this(new OutputStreamWriter(input));
+    }
+    
     public ChemFormat getFormat() {
         return new CrystClustFormat();
     }

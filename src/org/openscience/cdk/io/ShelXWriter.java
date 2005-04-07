@@ -27,6 +27,8 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Enumeration;
 import java.util.Vector;
 import javax.vecmath.Point3d;
@@ -66,6 +68,10 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         output = out;
     }
 
+    public ShelXWriter(OutputStream input) {
+        this(new OutputStreamWriter(input));
+    }
+    
     public ChemFormat getFormat() {
         return new ShelXFormat();
     }

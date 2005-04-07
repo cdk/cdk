@@ -29,6 +29,8 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.Atom;
@@ -73,9 +75,14 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         logger = new LoggingTool(this);
     }
 
+    public CDKSourceCodeWriter(OutputStream out) {
+        this(new OutputStreamWriter(out));
+    }
+
     public ChemFormat getFormat() {
         return new CDKSourceCodeFormat();
     }
+    
     /**
      * Flushes the output and closes this object.
      */

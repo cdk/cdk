@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
@@ -67,6 +68,10 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         }
     }
 
+    public SMILESWriter(OutputStream input) {
+        this(new OutputStreamWriter(input));
+    }
+    
     public ChemFormat getFormat() {
         return new SMILESFormat();
     }

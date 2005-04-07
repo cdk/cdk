@@ -37,6 +37,7 @@ import java.io.BufferedWriter;
 import java.io.Writer;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * Saves molecules in a rudimentary PDB format.
@@ -54,6 +55,10 @@ public class PDBWriter extends DefaultChemObjectWriter {
         writer = new BufferedWriter(out);
     }
 
+    public PDBWriter(OutputStream input) {
+        this(new OutputStreamWriter(input));
+    }
+    
     public ChemFormat getFormat() {
         return new PDBFormat();
     }

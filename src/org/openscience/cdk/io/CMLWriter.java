@@ -31,6 +31,8 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -155,6 +157,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
         this(out, false);
     }
 
+    public CMLWriter(OutputStream input) {
+        this(new OutputStreamWriter(input));
+    }
+    
     public CMLWriter() {
         this(new StringWriter());
     }

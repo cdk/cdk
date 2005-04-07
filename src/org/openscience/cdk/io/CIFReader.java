@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.StringTokenizer;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -90,6 +92,10 @@ public class CIFReader extends DefaultChemObjectReader {
         this.logger = new LoggingTool(this);
     }
     
+    public CIFReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public CIFReader() {
         this(new StringReader(""));
     }
@@ -100,6 +106,10 @@ public class CIFReader extends DefaultChemObjectReader {
 
     public void setReader(Reader reader) throws CDKException {
         this.input = input;
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     /**

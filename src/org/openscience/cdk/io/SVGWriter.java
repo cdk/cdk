@@ -33,6 +33,7 @@ import java.awt.Graphics2D;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
@@ -91,6 +92,10 @@ public class SVGWriter extends DefaultChemObjectWriter {
         }
     }
 
+    public SVGWriter(OutputStream input) {
+        this(new OutputStreamWriter(input));
+    }
+    
     public ChemFormat getFormat() {
         return new ChemFormat() {
             public String getFormatName() {

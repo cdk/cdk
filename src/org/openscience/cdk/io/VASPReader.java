@@ -29,6 +29,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
@@ -97,6 +99,10 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
 
+    public VASPReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public VASPReader() {
         this(new StringReader(""));
     }
@@ -111,6 +117,10 @@ public class VASPReader extends DefaultChemObjectReader {
         } else {
             this.inputBuffer = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     public ChemObject read(ChemObject object) throws CDKException {

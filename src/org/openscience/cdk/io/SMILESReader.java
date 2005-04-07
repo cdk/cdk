@@ -32,6 +32,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -67,6 +69,10 @@ public class SMILESReader extends DefaultChemObjectReader {
         sp = new SmilesParser();
     }
 
+    public SMILESReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public SMILESReader() {
         this(new StringReader(""));
     }
@@ -81,6 +87,10 @@ public class SMILESReader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     /**

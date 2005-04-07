@@ -32,6 +32,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
@@ -81,6 +83,10 @@ public class ShelXReader extends DefaultChemObjectReader {
         this.logger = new LoggingTool(this);
     }
 
+    public ShelXReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public ShelXReader() {
         this(new StringReader(""));
     }
@@ -97,6 +103,10 @@ public class ShelXReader extends DefaultChemObjectReader {
         }
     }
     
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
+    }
+
     /**
      * Read a ChemFile from input
      *

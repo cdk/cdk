@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.AtomContainer;
@@ -86,6 +88,10 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         inchiTool = new INChIContentProcessorTool();
     }
 
+    public INChIPlainTextReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public INChIPlainTextReader() {
         this(new StringReader(""));
     }
@@ -100,6 +106,10 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     /**

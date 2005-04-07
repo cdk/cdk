@@ -32,6 +32,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
@@ -69,6 +71,10 @@ public class XYZReader extends DefaultChemObjectReader {
         this.input = new BufferedReader(input);
     }
 
+    public XYZReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public XYZReader() {
         this(new StringReader(""));
     }
@@ -83,6 +89,10 @@ public class XYZReader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     /**

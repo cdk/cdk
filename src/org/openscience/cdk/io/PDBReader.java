@@ -110,6 +110,10 @@ public class PDBReader extends DefaultChemObjectReader {
         }
     }
 
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
+    }
+
   /**
    *
    * Takes an object which subclasses ChemObject, e.g. Molecule, and will

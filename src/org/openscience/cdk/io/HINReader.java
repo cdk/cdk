@@ -28,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -68,6 +70,10 @@ public class HINReader extends DefaultChemObjectReader {
         this.input = new BufferedReader(input);
     }
 
+    public HINReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public HINReader() {
         this(new StringReader(""));
     }
@@ -86,6 +92,10 @@ public class HINReader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     /**

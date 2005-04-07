@@ -49,7 +49,8 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * This Reader extracts the connection table from CDX files.
+ * This Reader extracts the connection table from CDX files. Not functional
+ * at this moment whatsoever.
  *
  * @cdk.module experimental
  *

@@ -113,6 +113,10 @@ public class MDLReader extends DefaultChemObjectReader {
         }
     }
 
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
+    }
+
 	/**
 	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
 	 *

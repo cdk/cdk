@@ -27,6 +27,8 @@ package org.openscience.cdk.io;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import javax.vecmath.Point3d;
 
@@ -59,6 +61,10 @@ public class HINWriter extends DefaultChemObjectWriter {
         writer = new BufferedWriter(out);
     }
 
+    public HINWriter(OutputStream input) {
+        this(new OutputStreamWriter(input));
+    }
+    
     public ChemFormat getFormat() {
         return new HINFormat();
     }

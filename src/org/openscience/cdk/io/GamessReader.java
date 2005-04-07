@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.vecmath.Point3d;
 
@@ -139,6 +141,10 @@ public class GamessReader extends DefaultChemObjectReader {
 		this.input = new BufferedReader(inputReader);
     }
 	
+    public GamessReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public GamessReader() {
         this(new StringReader(""));
     }
@@ -161,6 +167,10 @@ public class GamessReader extends DefaultChemObjectReader {
     
     public void setReader(Reader reader) throws CDKException {
         this.input = input;
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)

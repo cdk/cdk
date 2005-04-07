@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.InputStream;
 import java.io.Reader;
 
 import org.openscience.cdk.ChemObject;
@@ -39,9 +40,7 @@ import org.openscience.cdk.exception.CDKException;
  * Currently, database IO and file IO is supported.
  *
  * <p>The easiest way to implement a new ChemObjectReader is to
- * subclass the DefaultChemObjectReader. If a Reader is develop that
- * is not yet implemented, but just used to format detection (allowed
- * too!), then it should subclass the DummyReader.
+ * subclass the DefaultChemObjectReader.
  *
  * <p>I don't know how this should be enforced, but a Reader should
  * also provide an empty constructor so that ClassLoader/getInstance()
@@ -75,5 +74,11 @@ public interface ChemObjectReader extends ChemObjectIO {
      * the contents.
      */
     public void setReader(Reader reader) throws CDKException;
+
+    /**
+     * Sets the InputStream from which this ChemObjectReader should read
+     * the contents.
+     */
+    public void setReader(InputStream reader) throws CDKException;
 }
 

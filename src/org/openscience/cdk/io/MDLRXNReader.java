@@ -31,6 +31,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.Atom;
@@ -72,6 +74,10 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         input = new BufferedReader(in);
     }
 
+    public MDLRXNReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public MDLRXNReader() {
         this(new StringReader(""));
     }
@@ -88,6 +94,10 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         }
     }
     
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
+    }
+
     /**
      * Takes an object which subclasses ChemObject, e.g.Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation

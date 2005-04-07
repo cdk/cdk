@@ -32,6 +32,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -120,6 +122,10 @@ public class MACiEReader extends DefaultChemObjectReader {
         this.input = new LineNumberReader(in);
     }
 
+    public MACiEReader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public MACiEReader() {
         logger = new LoggingTool(this);
         
@@ -142,6 +148,10 @@ public class MACiEReader extends DefaultChemObjectReader {
         } else {
             this.input = new LineNumberReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     /**

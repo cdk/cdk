@@ -31,6 +31,7 @@ package org.openscience.cdk.io;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
@@ -77,7 +78,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param   out  The OutputStream to write to
      */
-    public MDLWriter(FileOutputStream out) throws Exception {
+    public MDLWriter(OutputStream out) throws Exception {
         this(new BufferedWriter(new OutputStreamWriter(out)));
     }
 

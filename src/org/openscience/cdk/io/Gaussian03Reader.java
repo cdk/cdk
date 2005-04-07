@@ -31,6 +31,8 @@ import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.StringTokenizer;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.vecmath.Point3d;
 
@@ -88,6 +90,10 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         }
     }
     
+    public Gaussian03Reader(InputStream input) {
+        this(new InputStreamReader(input));
+    }
+    
     public Gaussian03Reader() {
         this(new StringReader(""));
     }
@@ -98,6 +104,10 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     
     public void setReader(Reader reader) throws CDKException {
         this.input = input;
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
     public boolean accepts(ChemObject object) {

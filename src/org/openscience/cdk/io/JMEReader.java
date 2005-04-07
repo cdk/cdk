@@ -69,7 +69,7 @@ public class JMEReader extends DefaultChemObjectReader {
     }
     
 	public JMEReader(InputStream in) {
-		this(new BufferedReader(new InputStreamReader(in)));
+		this(new InputStreamReader(in));
 	}
 
 	public JMEReader(Reader in) {
@@ -91,6 +91,10 @@ public class JMEReader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+    }
+
+    public void setReader(InputStream input) throws CDKException {
+        setReader(new InputStreamReader(input));
     }
 
 	public ChemObject read(ChemObject object) throws CDKException {
