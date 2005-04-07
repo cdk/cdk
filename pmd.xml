@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="CDK" default="pmd" basedir=".">
 
-    <property name="lib" value="jar" />
+    <property name="lib" value="develjar" />
     <property name="build" value="build" />
     <property name="src" value="src" />
     <property name="reports.tests" value="reports" />
