@@ -76,7 +76,35 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 		addAtomContainer(atomContainer, 1.0);
 		/* notifyChanged is called below */
 	}
-
+    
+    /**
+	 * Removes an AtomContainer from this container.
+	 *
+	 * @param  atomContainer  The atomContainer to be removed from this container 
+	 */
+    public void removeAtomContainer(AtomContainer atomContainer) {
+        for (int i = 0; i < atomContainerCount; i++) {
+            if (atomContainers[i] == atomContainer) removeAtomContainer(i);
+        }
+    }
+    
+    /**
+	 * Removes an AtomContainer from this container.
+	 *
+	 * @param  pos  The position of the AtomContainer to be removed from this container 
+	 */
+    public void removeAtomContainer(int pos) {
+        atomContainers[pos].removeListener(this);
+		for (int i = pos; i < atomContainerCount - 1; i++)
+		{
+			atomContainers[i] = atomContainers[i + 1];
+            multipliers[i] = multipliers[i + 1];
+		}
+		atomContainers[atomContainerCount - 1] = null;
+		atomContainerCount--;
+		notifyChanged();
+    }
+    
 	/**
      * Sets the coefficient of a AtomContainer to a given value.
      *

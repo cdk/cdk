@@ -224,6 +224,28 @@ public class SetOfAtomContainersTest extends CDKTestCase {
         assertTrue(listener.changed);
     }
 
+    public void testRemoveAtomContainer_AtomContainer() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        AtomContainer ac1 = new AtomContainer();
+        AtomContainer ac2 = new AtomContainer();
+        som.addAtomContainer(ac1);
+        som.addAtomContainer(ac2);
+        som.removeAtomContainer(ac1);
+        assertEquals(1, som.getAtomContainerCount());
+        assertEquals(ac2, som.getAtomContainer(0));
+    }
+    
+    public void testRemoveAtomContainer_int() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        AtomContainer ac1 = new AtomContainer();
+        AtomContainer ac2 = new AtomContainer();
+        som.addAtomContainer(ac1);
+        som.addAtomContainer(ac2);
+        som.removeAtomContainer(0);
+        assertEquals(1, som.getAtomContainerCount());
+        assertEquals(ac2, som.getAtomContainer(0));
+    }
+    
     private class ChemObjectListenerImpl implements ChemObjectListener {
         private boolean changed;
         
