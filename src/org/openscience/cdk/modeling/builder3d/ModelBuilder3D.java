@@ -125,6 +125,16 @@ public class ModelBuilder3D {
 		ap3d.initilize(parameterSet);
 		atlp3d.setParameterSet(parameterSet);
 	}
+  
+  
+	/**
+	 *  gives a list of possible force field types
+	 *
+	 *@return                the list
+	 */
+  public String[] getFfTypes(){
+    return ffc.getFfTypes();
+  }
 
 
 	/**
