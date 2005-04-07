@@ -23,6 +23,7 @@
         <property name="doc" value="doc" />
         <property name="src" value="src" />
         <property name="lib" value="jar" />
+        <property name="devellib" value="develjar" />
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
         <property name="appjars.dir" value="${dist}/appjars" />
@@ -361,7 +362,8 @@
             </javac>
         </target>
 
-        <target name="compile-libio-cml" if="cmllibs.present" depends="dont-compile-libio-cml, dist-extra">
+        <target name="compile-libio-cml" if="cmllibs.present" 
+            depends="dont-compile-libio-cml, dist-data, dist-qsar, dist-extra">
             <!-- Task to build the libio classes for CMLDOM. -->
             <echo message="Compiling libio for CMLDOM" /> 
 
@@ -369,13 +371,20 @@
                    debug="${debug}" deprecation="${deprecation}">
                 <src path="${src}/org/openscience/cdk/libio/cml" />
                 
-                <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="dist/jar">
+                        <include name="cdk-data.jar" />
+                        <include name="cdk-core.jar" />
+                        <include name="cdk-extra.jar" />
+                        <include name="cdk-qsar.jar" />
+                    </fileset>
+                </classpath>
                 <classpath>
                     <fileset dir="${lib}">
                         <include name="base_1.4.jar" />
                         <include name="cmlAll_1.4.jar" />
                         <include name="euclid_1.4.jar" />
-                        <include name="pmrlib_1.4.jar" />
+                        <include name="pmrdom_1.4.jar" />
                     </fileset>
                 </classpath>
             </javac>
@@ -602,6 +611,12 @@
                 <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
 
                 <classpath refid="project.class.path" />
+                <classpath>
+                    <fileset dir="develjar">
+                        <include name="hansel-1.02.jar" />
+                        <include name="junit.jar" />
+                    </fileset>
+                </classpath>
                 <classpath>
                     <pathelement location="${dist}/jar/cdk-${version}.jar" />
                 </classpath>
@@ -918,7 +933,6 @@
                 <srcfiles dir="${lib}" includes="jgrapht-0.5.3.jar"/>
                 <srcfiles dir="${lib}" includes="jmolApis.jar"/>
                 <srcfiles dir="${lib}" includes="jmolIO.jar"/>
-                <srcfiles dir="${lib}" includes="junit.jar"/>
                 <srcfiles dir="${lib}" includes="log4j.jar"/>
                 <srcfiles dir="${lib}" includes="mysql-2.0.4.jar"/>
                 <srcfiles dir="${lib}" includes="pmrdom_1.4.jar"/>
@@ -947,7 +961,6 @@
             <unjar dest="${appjars.dir}" src="${lib}/jgrapht-0.5.3.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/jmolApis.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/jmolIO.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/junit.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/mysql-2.0.4.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/pmrdom_1.4.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/postgresql7.0-1.2.jar"/>
@@ -1047,6 +1060,9 @@
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
+                        <fileset dir="${devellib}">
+                                <include name="*.jar" />
+                        </fileset>
                         <fileset dir="${lib}/libio">
                                 <include name="*.jar" />
                         </fileset>
@@ -1074,6 +1090,9 @@
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
+                        <fileset dir="${devellib}">
+                                <include name="*.jar" />
+                        </fileset>
                         <fileset dir="${lib}/libio">
                                 <include name="*.jar" />
                         </fileset>
@@ -1095,6 +1114,9 @@
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
+                        <fileset dir="${devellib}">
+                                <include name="*.jar" />
+                        </fileset>
                         <fileset dir="${lib}/libio">
                                 <include name="*.jar" />
                         </fileset>
@@ -1114,6 +1136,9 @@
                                 <pathelement location="${dist}/jar/cdk-${version}.jar" />
                                 <pathelement path="${java.class.path}" />
                                 <pathelement location="." />
+                                <fileset dir="${devellib}">
+                                        <include name="*.jar" />
+                                </fileset>
                                 <fileset dir="${lib}">
                                         <include name="*.jar" />
                                 </fileset>
@@ -1161,6 +1186,9 @@
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
+                        <fileset dir="${devellib}">
+                                <include name="*.jar" />
+                        </fileset>
                         <fileset dir="${lib}/libio">
                                 <include name="*.jar" />
                         </fileset>
@@ -1180,6 +1208,9 @@
                         <pathelement path="${java.class.path}" />
                         <pathelement location="." />
                         <fileset dir="${lib}">
+                                <include name="*.jar" />
+                        </fileset>
+                        <fileset dir="${devellib}">
                                 <include name="*.jar" />
                         </fileset>
                         <fileset dir="${lib}/libio">
