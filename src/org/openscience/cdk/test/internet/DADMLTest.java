@@ -45,13 +45,12 @@ public class DADMLTest {
       LoggingTool.configureLog4j();
 
       try {
-        ChemObjectReader reader;
         logger.info("SuperDB: ", superdb);
         logger.info("index type: ", type);
         logger.info("index: ", index);
-		reader = new DADMLReader(superdb);
-		((DADMLReader)reader).setQuery(type, index);
-        Molecule m = (Molecule)reader.read((ChemObject)new Molecule());
+        DADMLReader reader = new DADMLReader(superdb);
+        reader.setQuery(type, index);
+        Molecule m = (Molecule)reader.read(new Molecule());
 
         MoleculeViewer2D mv = new MoleculeViewer2D(m);
         mv.display();
