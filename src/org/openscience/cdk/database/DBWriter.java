@@ -47,7 +47,7 @@ import org.openscience.cdk.io.formats.ChemFormat;
 /**
  *  Writer that is used to store molecules in JDBC databases.
  **/
-public class DBWriter extends DefaultChemObjectWriter {
+public class DBWriter {
 
 	private org.openscience.cdk.tools.LoggingTool logger;
 

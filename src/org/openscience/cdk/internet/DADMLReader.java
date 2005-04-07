@@ -77,7 +77,7 @@ import org.openscience.dadml.tools.DBDEFInfo;
  * @cdk.keyword    database
  * @cdk.builddepends dadml.jar
  */
-public class DADMLReader extends DefaultChemObjectReader {
+public class DADMLReader {
 
     private String superdb;
 

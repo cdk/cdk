@@ -69,7 +69,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
  * @cdk.keyword world wide molecular matrix, WWMM
  * @cdk.require java1.4+
  */
-public class WWMMatrixReader extends DefaultChemObjectReader {
+public class WWMMatrixReader {
 
     String server = "wwmm.ch.cam.ac.uk";
     String collection = "g2";

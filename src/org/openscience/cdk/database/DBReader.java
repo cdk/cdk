@@ -54,7 +54,7 @@ import org.openscience.cdk.io.formats.ChemFormat;
  * @cdk.keyword database
  * @cdk.keyword JDBC
  */
-public class DBReader extends DefaultChemObjectReader {
+public class DBReader {
 
 	Connection con;
 	String query = null;

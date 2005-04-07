@@ -61,7 +61,7 @@ import org.xmldb.api.modules.XPathQueryService;
  * @cdk.builddepends xmldb.jar
  * @cdk.builddepends xindice.jar
  */
-public class XindiceReader extends DefaultChemObjectReader {
+public class XindiceReader {
 
     private String collection;
     private String xpath = null;
