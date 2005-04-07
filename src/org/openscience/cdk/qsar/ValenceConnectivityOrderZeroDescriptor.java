@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -31,7 +30,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.LoggingTool;
-import junit.framework.AssertionFailedError;
 import java.util.Hashtable;
 
 
@@ -135,13 +133,13 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
                             elfac = IsotopeFactory.getInstance();
                         } catch (Exception exc) {
                             logger.debug(exc);
-                            throw new AssertionFailedError("Problem instantiating IsotopeFactory: " + exc.toString());
+                            throw new CDKException("Problem instantiating IsotopeFactory: " + exc.toString());
                         }
                         try {
                             element = elfac.getElement(symbol);
                         } catch (Exception exc) {
                             logger.debug(exc);
-                            throw new AssertionFailedError("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString());
+                            throw new CDKException("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString());
                         }
                         atomicNumber = element.getAtomicNumber();
                         valence = ((Integer)valences.get(symbol)).intValue();
