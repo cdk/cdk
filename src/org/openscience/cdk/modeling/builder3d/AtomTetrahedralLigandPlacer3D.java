@@ -765,7 +765,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *			if unplaced is not up (relativ to stereocenter)
 	 *				n=b x a
 	 *	     Determine angle between n and possible ligand place points
-	 *	     if angle smaller than 90° take this branch point
+	 *	     if angle smaller than 90 degrees take this branch point
 	 *
 	 *@param  atomA         placed Atom - stereocenter
 	 *@param  ax            bond between stereocenter and unplaced atom
