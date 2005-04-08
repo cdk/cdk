@@ -32,6 +32,8 @@ import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
+import java.io.*;
+
 /**
  *  This class return the VdW radius of a given atom.
  *
@@ -64,8 +66,9 @@ public class VdWRadiusDescriptor implements Descriptor {
 	/**
 	 *  Constructor for the VdWRadiusDescriptor object
 	 */
-	public VdWRadiusDescriptor() {
+	public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {
 		logger = new LoggingTool(this);
+    factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
 	}
 
 
@@ -124,7 +127,6 @@ public class VdWRadiusDescriptor implements Descriptor {
 		double vdwradius = 0;
 		int atomicNumber = 0;
 		try {
-			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
 			String symbol = container.getAtomAt(atomPosition).getSymbol();
 			AtomType type = factory.getAtomType(symbol);
 			vdwradius = type.getVanderwaalsRadius();

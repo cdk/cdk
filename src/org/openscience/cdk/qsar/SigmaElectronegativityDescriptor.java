@@ -58,12 +58,17 @@ import java.util.Hashtable;
 public class SigmaElectronegativityDescriptor implements Descriptor {
 
 	private int atomPosition = 0;
+  private GasteigerMarsiliPartialCharges peoe = null;
+  private AtomContainer oldac=null;
+  private double[] gasteigerFactors = null;
 
 
 	/**
 	 *  Constructor for the SigmaElectronegativityDescriptor object
 	 */
-	public SigmaElectronegativityDescriptor() { }
+	public SigmaElectronegativityDescriptor() {
+    peoe = new GasteigerMarsiliPartialCharges();
+  }
 
 
 	/**
@@ -124,14 +129,17 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		double sigmaElectronegativity = 0;
 		Molecule mol = new Molecule(ac);
-		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		try {
-			peoe.assignGasteigerMarsiliPartialCharges(mol, true);
-			double[] gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
-			int stepSize = peoe.getStepSize();
+      long starttime=System.currentTimeMillis();
+      if(oldac!=ac){
+        peoe.assignGasteigerMarsiliPartialCharges(mol, true);
+        gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
+        oldac=ac;
+      }
+      int stepSize = peoe.getStepSize();
 			int start = (stepSize * (atomPosition) + atomPosition);
 			sigmaElectronegativity = ((gasteigerFactors[start]) + (mol.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((mol.getAtomAt(atomPosition).getCharge() * mol.getAtomAt(atomPosition).getCharge()))));
-			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(sigmaElectronegativity));
+      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(sigmaElectronegativity));
 		} catch (Exception ex1) {
 			throw new CDKException("Problems with GasteigerMarsiliPartialCharges due to " + ex1.toString());
 		}
