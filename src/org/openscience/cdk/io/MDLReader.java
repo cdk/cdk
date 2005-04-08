@@ -217,7 +217,18 @@ public class MDLReader extends DefaultChemObjectReader {
                             
                         }
                     } else {
-                        // skip stuff between "M  END" and "$$$$" 
+                        // here the stuff between 'M  END' and '$$$$'
+                        if (m != null) {
+                            // ok, the first lines should start with '>'
+                            if (str.startsWith("> ")) {
+                                // ok, should extract the field name
+                                // end skip all other lines
+                                while (str.startsWith("> ")) {
+                                    line = input.readLine();
+                                    str = new String(line);
+                                }
+                            }
+                        }
                     }
                     line = input.readLine();
                 } while (input.ready() && line != null);
