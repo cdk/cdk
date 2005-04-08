@@ -385,6 +385,7 @@
                         <include name="cmlAll_1.4.jar" />
                         <include name="euclid_1.4.jar" />
                         <include name="pmrdom_1.4.jar" />
+                        <include name="vecmath1.2-1.14.jar" />
                     </fileset>
                 </classpath>
             </javac>
