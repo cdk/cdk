@@ -36,6 +36,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -112,6 +113,20 @@ public class MDLReaderTest extends CDKTestCase {
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         } catch (Exception e) {
             fail(e.toString());
+        }
+    }
+
+    public void testReadTitle() {
+        String filename = "data/mdl/a-pinene.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            Molecule mol = (Molecule)reader.read(new Molecule());
+            assertEquals("a-pinen.mol", mol.getProperty(CDKConstants.TITLE));
+        } catch (Exception exception) {
+            logger.debug(exception);
+            fail(exception.getMessage());
         }
     }
 

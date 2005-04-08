@@ -36,6 +36,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -83,6 +84,25 @@ public class IteratingMDLReaderTest extends CDKTestCase {
             }
             
             assertEquals(6, molCount);
+        } catch (Exception e) {
+            logger.debug(e);
+            fail(e.getMessage());
+        }
+    }
+
+    public void testReadTitle() {
+        String filename = "data/mdl/test.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            IteratingMDLReader reader = new IteratingMDLReader(ins);
+
+            int molCount = 0;
+            assertTrue(reader.hasNext());
+            Object object = reader.next();
+            assertNotNull(object);
+            assertTrue(object instanceof Molecule);
+            assertEquals("2-methylbenzo-1,4-quinone", ((Molecule)object).getProperty(CDKConstants.TITLE));
         } catch (Exception e) {
             logger.debug(e);
             fail(e.getMessage());
