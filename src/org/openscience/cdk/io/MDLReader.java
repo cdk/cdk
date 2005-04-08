@@ -72,6 +72,11 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
  * 2D, otherwise the coordinates are read as 3D.
  *
+ * <p>The title of the MOL file is read and can be retrieved with:
+ * <pre>
+ *   molecule.getProperty(CDKConstants.TITLE);
+ * </pre>
+ *
  * @cdk.module io
  *
  * @author     steinbeck
