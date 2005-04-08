@@ -31,6 +31,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
@@ -107,6 +108,42 @@ public class SetOfReactionsManipulator {
             AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
             if (container != null) { // a match!
                 return reaction;
+            }
+        }
+        return null;
+    }
+
+    public static Reaction getRelevantReaction(SetOfReactions set, Bond bond) {
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, bond);
+            if (container != null) { // a match!
+                return reaction;
+            }
+        }
+        return null;
+    }
+
+    public static AtomContainer getRelevantAtomContainer(SetOfReactions set, Atom atom) {
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
+            if (container != null) { // a match!
+                return container;
+            }
+        }
+        return null;
+    }
+
+    public static AtomContainer getRelevantAtomContainer(SetOfReactions set, Bond bond) {
+        Reaction[] reactions = set.getReactions();
+        for (int i=0; i < reactions.length; i++) {
+            Reaction reaction = reactions[i];
+            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, bond);
+            if (container != null) { // a match!
+                return container;
             }
         }
         return null;

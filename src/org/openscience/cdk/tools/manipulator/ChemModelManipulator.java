@@ -29,6 +29,7 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.ElectronContainer;
@@ -135,25 +136,34 @@ public class ChemModelManipulator {
      * ChemModel is best suited to contain added Atom's and Bond's.
      */
     public static AtomContainer getRelevantAtomContainer(ChemModel chemModel, Atom atom) {
+        AtomContainer result = null;
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
-            Molecule[] molecules = moleculeSet.getMolecules();
-            for (int i=0; i<molecules.length; i++) {
-                if (molecules[i].contains(atom)) {
-                    return molecules[i];
-                }
+            result = SetOfMoleculesManipulator.getRelevantAtomContainer(moleculeSet, atom);
+            if (result != null) {
+                return result;
             }
         }
         if (chemModel.getSetOfReactions() != null) {
             SetOfReactions reactionSet = chemModel.getSetOfReactions();
-            Reaction[] reactions = reactionSet.getReactions();
-            for (int i=0; i<reactions.length; i++) {
-                Reaction reaction = reactions[i];
-                AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
-                if (container != null) {
-                    return container;
-                }
+            return SetOfReactionsManipulator.getRelevantAtomContainer(reactionSet, atom);
+        }
+        // This should never happen.
+        return null;
+    }
+
+    public static AtomContainer getRelevantAtomContainer(ChemModel chemModel, Bond bond) {
+        AtomContainer result = null;
+        if (chemModel.getSetOfMolecules() != null) {
+            SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            result = SetOfMoleculesManipulator.getRelevantAtomContainer(moleculeSet, bond);
+            if (result != null) {
+                return result;
             }
+        }
+        if (chemModel.getSetOfReactions() != null) {
+            SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            return SetOfReactionsManipulator.getRelevantAtomContainer(reactionSet, bond);
         }
         // This should never happen.
         return null;

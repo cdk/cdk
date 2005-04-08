@@ -31,6 +31,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
@@ -159,24 +160,20 @@ public class ReactionManipulator {
         return idList;
     }
 
-    /**
-     * This badly named methods tries to determine which AtomContainer in the
-     * ChemModel is best suited to contain added Atom's and Bond's.
-     */
     public static AtomContainer getRelevantAtomContainer(Reaction reaction, Atom atom) {
-        Molecule[] reactants = reaction.getReactants().getMolecules();
-        for (int j=0; j<reactants.length;j++) {
-            if (reactants[j].contains(atom)) {
-                return reactants[j];
-            }
+        AtomContainer result = SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getReactants(), atom);
+        if (result != null) {
+            return result;
         }
-        Molecule[] products = reaction.getProducts().getMolecules();
-        for (int j=0; j<products.length; j++) {
-            if (products[j].contains(atom)) {
-                return products[j];
-            }
+        return SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getProducts(), atom);
+    }
+
+    public static AtomContainer getRelevantAtomContainer(Reaction reaction, Bond bond) {
+        AtomContainer result = SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getReactants(), bond);
+        if (result != null) {
+            return result;
         }
-        return null;
+        return SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getProducts(), bond);
     }
     
     public static void setAtomProperties(Reaction reaction, Object propKey, Object propVal) {

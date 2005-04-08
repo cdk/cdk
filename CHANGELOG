@@ -23,6 +23,7 @@ New:
 * Added rendering of radicals (SingleElectron)
 * Added reading of 'M  RAD' from MDL molfiles
 * Added writing and reading of radicals in CML2
+* Added getRelevantAtomContainer(ChemObject, Bond) to cdk.tools.manipulators
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is returned properly

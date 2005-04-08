@@ -1,7 +1,7 @@
-/* $RCSfile $
- * $Author $ 
- * $Date $
- * $Revision $
+/* $RCSfile$
+ * $Author$ 
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2003-2005  The Chemistry Development Kit (CDK) project
  * 
@@ -31,6 +31,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SetOfAtomContainers;
 
@@ -139,6 +140,26 @@ public class SetOfAtomContainersManipulator {
                 AtomContainerManipulator.setAtomProperties(set.getAtomContainer(i), propKey, propVal);
             }
         }
+    }
+
+    public static AtomContainer getRelevantAtomContainer(SetOfAtomContainers containerSet, Atom atom) {
+        AtomContainer[] containers = containerSet.getAtomContainers();
+        for (int i=0; i<containers.length; i++) {
+            if (containers[i].contains(atom)) {
+                return containers[i];
+            }
+        }
+        return null;
+    }
+
+    public static AtomContainer getRelevantAtomContainer(SetOfAtomContainers containerSet, Bond bond) {
+        AtomContainer[] containers = containerSet.getAtomContainers();
+        for (int i=0; i<containers.length; i++) {
+            if (containers[i].contains(bond)) {
+                return containers[i];
+            }
+        }
+        return null;
     }
 }
 

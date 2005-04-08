@@ -24,13 +24,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *  */
+ */
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SetOfMolecules;
 
@@ -94,5 +95,14 @@ public class SetOfMoleculesManipulator {
     public static void setAtomProperties(SetOfMolecules set, Object propKey, Object propVal) {
         SetOfAtomContainersManipulator.setAtomProperties(set, propKey, propVal);
     }
+
+    public static AtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, Atom atom) {
+        return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, atom);
+    }
+
+    public static AtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, Bond bond) {
+        return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, bond);
+    }
+
 }
 
