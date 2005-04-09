@@ -303,4 +303,29 @@ public class MDLReaderTest extends CDKTestCase {
         }
     }
 
+    public void testDataFromSDFReading() {
+        String filename = "data/mdl/test.sdf"; // a multi molecule SDF file
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+            assertEquals(1, fileContents.getChemSequenceCount());
+            ChemSequence sequence = fileContents.getChemSequence(0);
+            assertNotNull(sequence);
+            assertEquals(9, sequence.getChemModelCount());
+            ChemModel model = sequence.getChemModel(0);
+            assertNotNull(model);
+            
+            SetOfMolecules som = model.getSetOfMolecules();
+            assertNotNull(som);
+            assertEquals(1, som.getMoleculeCount());
+            Molecule m = som.getMolecule(0);
+            assertNotNull(m);
+            assertEquals("1", m.getProperty("E_NSC"));
+            assertEquals("553-97-9", m.getProperty("E_CAS"));
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+    
 }

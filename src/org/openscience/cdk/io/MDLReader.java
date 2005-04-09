@@ -220,13 +220,37 @@ public class MDLReader extends DefaultChemObjectReader {
                         // here the stuff between 'M  END' and '$$$$'
                         if (m != null) {
                             // ok, the first lines should start with '>'
+                            String fieldName = null;
                             if (str.startsWith("> ")) {
                                 // ok, should extract the field name
+                                String content = str.substring(2);
+                                int index = str.indexOf("<");
+                                if (index != -1) {
+                                    int index2 = str.substring(index).indexOf(">");
+                                    if (index2 != -1) {
+                                        fieldName = str.substring(
+                                            index+1,
+                                            index+index2
+                                        );
+                                    }
+                                }
                                 // end skip all other lines
                                 while (str.startsWith("> ")) {
+                                    logger.debug("data header line: ", line);
                                     line = input.readLine();
                                     str = new String(line);
                                 }
+                            }
+                            String data = "";
+                            while (str.trim().length() > 0) {
+                                logger.debug("data line: ", line);
+                                data += str;
+                                line = input.readLine();
+                                str = new String(line).trim();
+                            }
+                            if (fieldName != null) {
+                                logger.info("fieldName, data: ", fieldName, ", ", data);
+                                m.setProperty(fieldName, data);
                             }
                         }
                     }
