@@ -1,37 +1,4 @@
-To generate PDFs you need these files:
+The DocBook XML 4.1.2 DTD and DocBook XSLT stylesheets.
 
-egonw@garak: ~/data/Projects/SourceForge/CDK/cdk/doc/devel-guide $ ls -al jar/.
-total 8004
-drwxr-xr-x    3 egonw    egonw        4096 Mar  4 20:55 .
-drwxr-xr-x    7 egonw    egonw        4096 Feb  2 09:26 ..
-drwxr-xr-x    2 egonw    egonw        4096 Mar  4 20:56 CVS
--rwxr-xr-x    1 egonw    egonw      389839 Nov  5 15:37 batik-awt-util.jar
--rwxr-xr-x    1 egonw    egonw      231628 Nov  5 15:37 batik-bridge.jar
--rwxr-xr-x    1 egonw    egonw      177696 Nov  5 15:37 batik-css.jar
--rwxr-xr-x    1 egonw    egonw       78861 Nov  5 15:37 batik-dom.jar
--rwxr-xr-x    1 egonw    egonw      137031 Nov  5 15:37 batik-ext.jar
--rwxr-xr-x    1 egonw    egonw       13107 Nov  5 15:37 batik-extension.jar
--rwxr-xr-x    1 egonw    egonw      123117 Nov  5 15:37 batik-gui-util.jar
--rwxr-xr-x    1 egonw    egonw      131129 Nov  5 15:37 batik-gvt.jar
--rwxr-xr-x    1 egonw    egonw       58712 Nov  5 15:37 batik-parser.jar
--rwxr-xr-x    1 egonw    egonw        3936 Nov  5 15:37 batik-rasterizer.jar
--rwxr-xr-x    1 egonw    egonw       13340 Nov  5 15:37 batik-script.jar
--rwxr-xr-x    1 egonw    egonw      296047 Nov  5 15:37 batik-svg-dom.jar
--rwxr-xr-x    1 egonw    egonw      187472 Nov  5 15:37 batik-svgbrowser.jar
--rwxr-xr-x    1 egonw    egonw      215922 Nov  5 15:37 batik-svggen.jar
--rwxr-xr-x    1 egonw    egonw       12467 Nov  5 15:37 batik-svgpp.jar
--rwxr-xr-x    1 egonw    egonw       72180 Nov  5 15:37 batik-transcoder.jar
--rwxr-xr-x    1 egonw    egonw        1371 Nov  5 15:37 batik-ttf2svg.jar
--rwxr-xr-x    1 egonw    egonw       49613 Nov  5 15:37 batik-util.jar
--rwxr-xr-x    1 egonw    egonw       25166 Nov  5 15:37 batik-xml.jar
--rwxr-xr-x    1 egonw    egonw         501 Nov  5 15:37 batik.jar
--rwxr-xr-x    1 egonw    egonw       66725 Nov  5 15:37 crimson-parser.jar
--rwxr-xr-x    1 egonw    egonw     1869555 Nov  5 15:37 fop.jar
--rw-r--r--    1 egonw    egonw      231445 Mar  4 20:55 gnujaxp.jar
--rwxr-xr-x    1 egonw    egonw      460074 Nov  5 15:37 jimi.jar
--rw-r--r--    1 egonw    egonw       60426 Mar  4 20:53 jreferences.jar
--rwxr-xr-x    1 egonw    egonw      426212 Nov  5 15:37 js.jar
--rwxr-xr-x    1 egonw    egonw      882739 Nov  5 15:37 xalan-2.2.jar
--rwxr-xr-x    1 egonw    egonw     1808883 Nov  5 15:37 xerces-1.4.3.jar
+Use xsltproc (or so) to create some non source version of the guide.
 
-and the DocBook XML 4.1.2 DTD and DocBook XSLT stylesheets.

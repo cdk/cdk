@@ -1,10 +1,6 @@
-<part id="part:cdk-library">
+<part id="part:cdk-release">
   <title>Releasing the CDK</title>
 
-  <para>
-    Releasing the CDK is a story an sich.
-  </para>
-  
   <chapter id="sect:releasing">
     <title>Releasing a CDK version</title>
     <para>

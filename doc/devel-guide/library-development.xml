@@ -382,17 +382,17 @@ $ cdk-test org.openscience.cdk.test.CDKTests
       tool is need for this, e.g. 
       <ulink url="http://www.khelekore.org/jmp/">jmp</ulink>. With this program you can
       very easily profile your classes by typing something like:
-      <command>java <arg>-Xrunjmp</arg> org.openscience.cdk.test.SomeTest</command>.
+      <command>java -Xrunjmp org.openscience.cdk.test.SomeTest</command>.
     </para>
     <para>
       Jmp can be run in a graphical mode, which can only be used if the program does not
-      terminate, e.g. like cdk-fileconvert. Otherwise the <command><arg>nogui</arg></command>
-      may be used (as in <command>java <arg>-Xrunjmp:nogui</arg></command> which will create
+      terminate, e.g. like cdk-fileconvert. Otherwise the <command>nogui</command>
+      may be used (as in <command>java -Xrunjmp:nogui</command> which will create
       a file containing the profiling information.
     </para>
     <para>
       It becomes even better if you get the hang of filters; try for example
-      <command>java <arg>-Xrunjmp:nogui,filter=org.openscience.cdk</arg></command>.
+      <command>java -Xrunjmp:nogui,filter=org.openscience.cdk</command>.
     </para>
   </chapter>
   
