@@ -59,7 +59,7 @@ public class SMILESReaderTest extends CDKTestCase {
     }
 
     public void testReading() {
-        String filename = "data/smiles.smi";
+        String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -73,7 +73,7 @@ public class SMILESReaderTest extends CDKTestCase {
     
     
     public void testReadingSmiFile_1() {
-        String filename = "data/smiles.smi";
+        String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -91,7 +91,7 @@ public class SMILESReaderTest extends CDKTestCase {
     }
     
     public void testReadingSmiFile_2() {
-        String filename = "data/smiles.smi";
+        String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
