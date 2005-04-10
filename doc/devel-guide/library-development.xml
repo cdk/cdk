@@ -1,6 +1,3 @@
-<part id="part:cdk-library">
-  <title>The CDK Library</title>
-
   <chapter id="sect:goal">
       <title>The Goal</title>
       <para>
@@ -407,5 +404,4 @@ $ cdk-test org.openscience.cdk.test.CDKTests
       The latter is important to ensure that the bug will never ever be created again.
     </para>
   </chapter>
-  
-</part>
+

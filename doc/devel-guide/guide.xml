@@ -50,16 +50,18 @@
     <chapter>
       <title>Literature</title>
       <para>References to literature of methods used/implemented in CDK.</para>
-      <bibliography>
+      <!-- if this fails, run 'ant convertToDocbook' in ../refs/ -->
       &biblio;
-        <!-- if this fails, run 'ant list' in ../refs/ -->
-      </bibliography>
     </chapter>
   </part>
 
   <!-- PART on CDK development -->
-  &library-development;
-  &library-release;
+  <part id="part:cdk-library">
+    <title>The CDK Library</title>
+
+    &library-development;
+    &library-release;
+  </part>
 
   <part id="part:website">
     <title>The CDK Website</title>

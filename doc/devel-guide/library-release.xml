@@ -1,6 +1,3 @@
-<part id="part:cdk-release">
-  <title>Releasing the CDK</title>
-
   <chapter id="sect:releasing">
     <title>Releasing a CDK version</title>
     <para>
@@ -60,5 +57,4 @@
       At this moment Christoph Steinbeck is CDK's release manager and takes care of all of this.
     </para>
   </chapter>
-  
-</part>
+
