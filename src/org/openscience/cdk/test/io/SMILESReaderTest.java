@@ -97,14 +97,11 @@ public class SMILESReaderTest extends CDKTestCase {
         try {
             SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
-            String name = null;
-	    Molecule thisMol = null;
-	    thisMol = som.getMolecule(1);
-	    name = ( (String)thisMol.getProperty("SMIdbNAME") ).toString();
-	    if(name==" ") name = "withoutName";
-	    assertEquals(" ", name);
+            Molecule thisMol = som.getMolecule(1);
+            assertNull(thisMol.getProperty("SMIdbNAME"));
         } catch (Exception e) {
-            fail(e.toString());
+            e.printStackTrace();
+            fail("Error in test: " + e.getMessage());
         }
     }
 }
