@@ -44,20 +44,30 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This Reader reads files which has one SMILES string on each
- * line. For each line a molecule is generated.
+ * line, where the format is given as below:
+ * <pre>
+ * COC ethoxy ethane
+ * </pre>
+ * Thus first the SMILES, and then after the first space on the line a title
+ * that is stored as "SMIdbNAME" property in the Molecule.
+ *
+ * <p>For each line a molecule is generated, and multiple Molecules are
+ * read as SetOfMolecules.
  *
  * @cdk.module io
- *
  * @cdk.keyword file format, SMILES
+ *
+ * @see org.openscience.cdk.io.iterator.IteratingSMILESReader
  */
 public class SMILESReader extends DefaultChemObjectReader {
 
     private BufferedReader input = null;
     private SmilesParser sp = null;
-    
+    private LoggingTool logger;
 
     /* 
      * construct a new reader from a Reader type object
@@ -65,6 +75,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @param input reader from which input is read
      */
     public SMILESReader(Reader input) {
+        logger = new LoggingTool(this);
         this.input = new BufferedReader(input);
         sp = new SmilesParser();
     }
@@ -126,31 +137,39 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @return A ChemFile containing the data parsed from input.
      */
     private SetOfMolecules readSetOfMolecules() {
-	String delimiter = " ";
         SetOfMolecules som = new SetOfMolecules();
         try {
-            String line = input.readLine();
+            String line = input.readLine().trim();
             while (line != null) {
-		java.util.StringTokenizer st = new java.util.StringTokenizer(line, " ");
-		String[] tokenized = line.split("\\s");
-		
-		//System.out.println(line);
+                logger.debug("Line: ", line);
+                int indexSpace = line.indexOf(" ");
+                String SMILES = line;
+                String name = null;
+                
+                if (indexSpace != -1) {
+                    logger.debug("Space found at index: ", indexSpace);
+                    SMILES = line.substring(0,indexSpace);
+                    name = line.substring(indexSpace+1);
+                    logger.debug("Line contains SMILES and name: ", SMILES,
+                    " + " , name);
+                }
+                
                 try {
-                    Molecule molecule = sp.parseSmiles(tokenized[0]);
+                    Molecule molecule = sp.parseSmiles(SMILES);
                     som.addMolecule(molecule);
-		    if(tokenized.length > 1) {
-			    molecule.setProperty("SMIdbNAME", new String(tokenized[1]));
-		    }
-		    else {
-			    molecule.setProperty("SMIdbNAME", new String(" "));
-		    }
-                } catch (Exception e) {
-                    // should make some noise now, but for now: just skip this line
+                    if (name != null) {
+                        molecule.setProperty("SMIdbNAME", name);
+                    }
+                } catch (Exception exception) {
+                    logger.warn("This SMILES could not be parsed: ", SMILES);
+                    logger.warn("Because of: ", exception.getMessage());
+                    logger.debug(exception);
                 }
                 if (input.ready()) { line = input.readLine(); } else { line = null; }
             }
-        } catch (Exception exc) {
-            // should make some noise now
+        } catch (Exception exception) {
+            logger.error("Error while reading SMILES line: ", exception.getMessage());
+            logger.debug(exception);
         }
         return som;
     }

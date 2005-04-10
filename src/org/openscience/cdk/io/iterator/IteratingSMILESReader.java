@@ -39,6 +39,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -63,6 +64,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     private BufferedReader input;
     private LoggingTool logger;
     private String currentLine;
+    private SmilesParser sp = null;
     
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
@@ -76,6 +78,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     public IteratingSMILESReader(Reader in) {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
+        sp = new SmilesParser();
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
@@ -101,11 +104,24 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
             // now try to parse the next Molecule
             try {
                 if (input.ready()) {
-                    currentLine = input.readLine();
-                    SMILESReader reader = new SMILESReader(
-                        new StringReader(currentLine)
-                    );
-                    nextMolecule = (Molecule)reader.read(new Molecule());
+                    currentLine = input.readLine().trim();
+                    logger.debug("Line: ", currentLine);
+                    int indexSpace = currentLine.indexOf(" ");
+                    String SMILES = currentLine;
+                    String name = null;
+                
+                    if (indexSpace != -1) {
+                        logger.debug("Space found at index: ", indexSpace);
+                        SMILES = currentLine.substring(0,indexSpace);
+                        name = currentLine.substring(indexSpace+1);
+                        logger.debug("Line contains SMILES and name: ", SMILES,
+                                     " + " , name);
+                    }
+                
+                    nextMolecule = sp.parseSmiles(SMILES);
+                    if (name != null) {
+                        nextMolecule.setProperty("SMIdbNAME", name);
+                    }
                     if (nextMolecule.getAtomCount() > 0) {
                         hasNext = true;
                     } else {
