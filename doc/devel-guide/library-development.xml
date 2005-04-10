@@ -396,39 +396,6 @@ $ cdk-test org.openscience.cdk.test.CDKTests
     </para>
   </chapter>
   
-  <chapter id="sect:releasing">
-    <title>Releasing a CDK version</title>
-    <para>
-      Making a new CDK release involves much work. It is not just enough to build a set
-      of CDK module jars from CVS and put that in a zip or tar file. Some quality has to
-      be assured. This chapter will give an overview of the things that need to be done
-      and checked before a release can be made.
-    </para>
-    <para>
-      Basically, the list below covers the process. In the rest of this chapter these
-      points are further described.
-      <orderedlist>
-        <listitem><para>Make CDK compiles from scratch</para></listitem>
-        <listitem><para>Make the JUnit tests succeed, or report 
-            failing tests in the JavaDoc</para></listitem>
-        <listitem><para>Make the Javadoc generate without errors and warnings</para></listitem>
-        <listitem><para>Report bugs that cannot be fixed easily on SourceForge</para></listitem>
-        <listitem><para>Make the Changelog up to date</para></listitem>
-        <listitem><para>Make the other documentation up to date</para></listitem>
-        <listitem><para>Make the tar.gz package</para></listitem>
-        <listitem><para>Determine the status of each module (stable, unstable)</para></listitem>
-        <listitem><para>Write the release notes</para></listitem>
-        <listitem><para>Publish the packages on SourceForge</para></listitem>
-        <listitem><para>Email the release notes to the mailling lists</para></listitem>
-        <listitem><para>Update the website and add release notes to it</para></listitem>
-        <listitem><para>Tag CVS for this release</para></listitem>
-      </orderedlist>
-    </para>
-    <para>
-      At this moment Egon Willighagen is CDK's release manager and takes care of all of this.
-    </para>
-  </chapter>  
-  
   <chapter id="sect:bugs">
     <title>Dealing with bugs</title>
     <para>

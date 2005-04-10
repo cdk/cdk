@@ -1,0 +1,68 @@
+<part id="part:cdk-library">
+  <title>Releasing the CDK</title>
+
+  <para>
+    Releasing the CDK is a story an sich.
+  </para>
+  
+  <chapter id="sect:releasing">
+    <title>Releasing a CDK version</title>
+    <para>
+      Making a new CDK release involves much work. It is not just enough to build a set
+      of CDK module jars from CVS and put that in a zip or tar file. Some quality has to
+      be assured. This chapter will give an overview of the things that need to be done
+      and checked before a release can be made.
+    </para>
+    <para>
+      Basically, the list below covers the process. In the rest of this chapter these
+      points are further described.
+      <orderedlist>
+        <listitem><para>Make a clean CVS checkout (important!)</para></listitem>
+        <listitem><para>Make the CDK in CVS compile from scratch</para></listitem>
+        <listitem><para>Make the JUnit tests succeed (<command>ant clean test-all</command>),
+            or report failing tests in the JavaDoc, using the @cdk.bug tag</para></listitem>
+        <listitem><para>Remove @cdk.bug tags from JavaDoc which are now fixed,
+            and possibly close the bugs on SourceForge</para></listitem>
+        <listitem><para>Make the Javadoc generate (<command>ant -f javadoc.xml html</command>)
+            without errors and warnings</para></listitem>
+        <listitem><para>Check for PMD problems in the modules that are supposed to
+            be released in a stable condition (<command>ant -f pmd.xml pmd-data pmd-core 
+            pmd-XXX</command>)</para></listitem>
+        <listitem><para>Report bugs that cannot be fixed easily on SourceForge</para></listitem>
+        <listitem><para>Determine the status of each module (stable, unstable)</para></listitem>
+        <listitem><para>Make the Changelog up to date</para></listitem>
+        <listitem><para>Make other documentation up to date</para></listitem>
+        <listitem><para>Update the <filename>build.props</filename> file</para></listitem>
+        <listitem><para>Make the source packages (<command>ant sourcedist</command>)</para></listitem>
+        <listitem><para>Make the big jar (<command>ant dist-large</command>)</para></listitem>
+        <listitem><para>Write the release notes</para></listitem>
+        <listitem><para>Publish the packages on SourceForge</para></listitem>
+        <listitem><para>Email the release notes to the mailling lists</para></listitem>
+        <listitem>
+            <para>
+                Update the website and add release notes to it. That is:
+                <orderedlist>
+                  <listitem><para>update the API on <ulink url="http://cdk.sf.net/api/">http://cdk.sf.net/api/</ulink></para></listitem>
+                  <listitem><para>update the keyword list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/docu/featurefolder/">http://almost.cubic.uni-koeln.de/cdk/docu/featurefolder/</ulink></para></listitem>
+                  <listitem><para>update the ChangeLog list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/docu/changelog/">http://almost.cubic.uni-koeln.de/cdk/docu/changelog/</ulink></para></listitem>
+                  <listitem><para>update the library dependencies list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/docu/dep/">http://almost.cubic.uni-koeln.de/cdk/docu/dep//</ulink></para></listitem>
+                  <listitem><para>update the bibliography list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/bib/base_view">http://almost.cubic.uni-koeln.de/cdk/bib/base_view</ulink></para></listitem>
+                  <listitem><para>update the PMD results for the CDK modules on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/quality/pmd/">http://almost.cubic.uni-koeln.de/cdk/devel/quality/pmd/</ulink></para></listitem>
+                  <listitem><para>update the JavaDoc stats on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/quality/javadoc_stats/">http://almost.cubic.uni-koeln.de/cdk/devel/quality/javadoc_stats/</ulink></para></listitem>
+                  <listitem><para>update the source code stats on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/quality/source_stats/">http://almost.cubic.uni-koeln.de/cdk/devel/quality/source_stats/</ulink></para></listitem>
+                  <listitem><para>update the modules page on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/modules/">http://almost.cubic.uni-koeln.de/cdk/devel/modules/</ulink></para></listitem>
+                  <listitem><para>update all pages below the modules page on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/modules/">http://almost.cubic.uni-koeln.de/cdk/devel/modules/</ulink></para></listitem>
+                </orderedlist>
+                Preferably, a large set of these things goes in a semi-automatic mechanism. Hence, my
+                focus on the Plone FTP server!
+           </para>
+        </listitem>
+        <listitem><para>Tag CVS for this release (something like <command>cvs tag cdk-200Y-MM-DD</command>)</para></listitem>
+      </orderedlist>
+    </para>
+    <para>
+      At this moment Christoph Steinbeck is CDK's release manager and takes care of all of this.
+    </para>
+  </chapter>
+  
+</part>

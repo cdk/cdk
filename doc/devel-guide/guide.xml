@@ -6,9 +6,10 @@
   <!ENTITY docs SYSTEM "docs.xml">
   <!ENTITY docs-uml SYSTEM "docs-uml.xml">
   <!ENTITY docs-docbook SYSTEM "docs-docbook.xml">
-  <!ENTITY biblio SYSTEM "../refs/biblio.dbx">
+  <!ENTITY biblio SYSTEM "../refs/cheminf.dbx">
     <!-- generated with 'ant list' from ../refs/ -->
   <!ENTITY library-development SYSTEM "library-development.xml">
+  <!ENTITY library-release SYSTEM "library-release.xml">
   <!ENTITY website-development SYSTEM "website-development.xml">
 ]>
 <book id="devel-guide">
@@ -58,6 +59,7 @@
 
   <!-- PART on CDK development -->
   &library-development;
+  &library-release;
 
   <part id="part:website">
     <title>The CDK Website</title>
