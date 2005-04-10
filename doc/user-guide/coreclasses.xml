@@ -1,10 +1,10 @@
 <chapter>
-  <title>Core Classes</title>
+  <title>Data Classes</title>
   <section>
     <title>Programmers Reference</title>	
     <section> 
-      <title>The Core Classes</title>
-      <para>The core classes are located in the top level hierarchy of the CDK,
+      <title>The Data Classes</title>
+      <para>The data classes are located in the top level hierarchy of the CDK,
         which is org.openscience.cdk. A chemist will find many of his/her well
         known concepts implemented as classes in the CDK:
         <itemizedlist>
