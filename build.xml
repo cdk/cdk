@@ -1078,7 +1078,7 @@
         </target>
 
         <target id="noJunit" name="noJunit" depends="check" unless="junit.present">
-            <fail message="JUnit is not installed in Ant. Please copy cdk/jar/junit.jar to ${ant.home}/lib/."/>
+            <fail message="JUnit is not installed in Ant. Please copy cdk/develjar/junit.jar to ${ant.home}/lib/."/>
         </target>
         
         <target id="test" name="test" depends="dist-test, dist-large, noJunit"
