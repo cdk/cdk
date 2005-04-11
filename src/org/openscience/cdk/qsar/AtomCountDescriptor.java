@@ -121,13 +121,13 @@ public class AtomCountDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer container) throws CDKException {
 		int atomCount = 0;
 		Atom[] atoms = container.getAtoms();
-		if (elementName == "*") {
+		if (elementName.equals("*")) {
 			for (int i = 0; i < atoms.length; i++) {
 				atomCount += container.getAtomAt(i).getHydrogenCount();
 			}			
 			atomCount += atoms.length;
 		} 
-		else if (elementName == "H") {
+		else if (elementName.equals("H")) {
 			for (int i = 0; i < atoms.length; i++) {
 				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
 					atomCount += 1;
