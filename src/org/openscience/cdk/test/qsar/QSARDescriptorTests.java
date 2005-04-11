@@ -80,6 +80,7 @@ import org.openscience.cdk.test.qsar.*;
         suite.addTest(PeriodicTablePositionDescriptorTest.suite());
 	suite.addTest(AtomHybridizationDescriptorTest.suite());
 	suite.addTest(EccentricConnectivityIndexDescriptorTest.suite());
+	suite.addTest(WeightDescriptorTest.suite());
         return suite;
     }
     

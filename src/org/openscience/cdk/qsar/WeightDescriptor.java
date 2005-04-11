@@ -34,12 +34,13 @@ import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.config.IsotopeFactory;
 import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  Descriptor based on the weight of atoms of a certain element type. If no
- *  element is specified, the returned value is the molecular weight.
+ *  Descriptor based on the weight of atoms of a certain element type. If the wild-card symbol *
+ *  is specified, the returned value is the molecular weight.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -50,8 +51,8 @@ import java.util.Hashtable;
  *   </tr>
  *   <tr>
  *     <td>elementSymbol</td>
- *     <td>null</td>
- *     <td>If null, returns the molecular weight, otherwise the weight for the given element</td>
+ *     <td>*</td>
+ *     <td>If *, returns the molecular weight, otherwise the weight for the given element</td>
  *   </tr>
  * </table>
  *
@@ -62,10 +63,10 @@ import java.util.Hashtable;
  */
 public class WeightDescriptor implements Descriptor {
 
-	private String elementName = null;
+	private String elementName = "*";
 
 	/**
-	 *  Constructor for the AtomCountDescriptor object
+	 *  Constructor for the WeightDescriptor object
 	 */
 	public WeightDescriptor() { }
 
@@ -78,7 +79,7 @@ public class WeightDescriptor implements Descriptor {
     };
 
 	/**
-	 *  Sets the parameters attribute of the AtomCountDescriptor object
+	 *  Sets the parameters attribute of the WeightDescriptor object
 	 *
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
@@ -96,7 +97,7 @@ public class WeightDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameters attribute of the AtomCountDescriptor object
+	 *  Gets the parameters attribute of the WeightDescriptor object
 	 *
 	 *@return    The parameters value
 	 */
@@ -118,28 +119,40 @@ public class WeightDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer container) {
 		double weight = 0;
 		Atom[] atoms = container.getAtoms();
-		if (elementName == "") {
-			for (int i = 0; i < atoms.length; i++) {
-				weight += container.getAtomAt(i).getExactMass();
-				weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
-			}
-			
-		} 
-		else if (elementName == "H") {
-			for (int i = 0; i < atoms.length; i++) {
-				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-					weight += container.getAtomAt(i).getExactMass();
-				}
-				else {
+		if (elementName.equals("*")) {
+			try {
+				for (int i = 0; i < atoms.length; i++) {
+					//System.out.println("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
+					weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
 					weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
 				}
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+		} 
+		else if (elementName.equals("H")) {
+			try {
+				for (int i = 0; i < atoms.length; i++) {
+					if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+						weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+					}
+					else {
+						weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
+					}
+				}
+			} catch (Exception e) {
+				System.out.println(e.toString());
 			}
 		}
 		else {
-			for (int i = 0; i < atoms.length; i++) {
-				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-					weight += container.getAtomAt(i).getExactMass();
+			try {
+				for (int i = 0; i < atoms.length; i++) {
+					if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+						weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+					}
 				}
+			} catch (Exception e) {
+				System.out.println(e.toString());
 			}
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight));
@@ -147,7 +160,7 @@ public class WeightDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterNames attribute of the AtomCountDescriptor object
+	 *  Gets the parameterNames attribute of the WeightDescriptor object
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -159,7 +172,7 @@ public class WeightDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterType attribute of the AtomCountDescriptor object
+	 *  Gets the parameterType attribute of the WeightDescriptor object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
