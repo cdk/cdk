@@ -29,11 +29,15 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * @cdk.module test
@@ -437,6 +441,19 @@ public class SaturationCheckerTest extends CDKTestCase
       assertTrue(m.getBondAt(9).getOrder()==2 ^ m.getBondAt(5).getOrder()==2);
       assertTrue(m.getBondAt(13).getOrder()==2 ^ m.getBondAt(3).getOrder()==2);
     }
+    
+    public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
+	    Molecule pyrrole = (new MoleculeFactory()).makePyrrole();
+	    Atom n = pyrrole.getAtomAt(1);
+	    RingSet rs = (new SSSRFinder(pyrrole)).findSSSR();
+	    Ring ring = (Ring) rs.get(0);
+	    for (int j=0 ; j<ring.getBondCount(); j++)
+	    {
+		    ring.getBondAt(j).setOrder(1.5);
+	    }
+	    assertEquals(5, ring.getBondCount());
+	    assertEquals(1, satcheck.calculateMissingHydrogen(n, pyrrole));
+    }
 
     /**
 	 *  The main program for the SaturationCheckerTest class
@@ -451,6 +468,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		sct.testSaturate();
 		sct.testIsSaturated();
 		sct.testAllSaturated();
+		sct.testCalculateMissingHydrogens_Aromatic();
 	}
 }
 
