@@ -615,7 +615,7 @@ public class MFAnalyser {
 	 */
 	public String getHTMLMolecularFormulaWithCharge() {
 		String formula = new MFAnalyser(atomContainer).getHTMLMolecularFormula();
-		double charge = (new AtomContainerManipulator()).getTotalFormalCharge(atomContainer);
+		int charge = (new AtomContainerManipulator()).getTotalFormalCharge(atomContainer);
 		if (charge == 0)
 		{
 			return formula;

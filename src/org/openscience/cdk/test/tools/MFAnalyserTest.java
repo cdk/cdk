@@ -164,5 +164,15 @@ public class MFAnalyserTest extends CDKTestCase {
         MFAnalyser mfa = new MFAnalyser("CH4");
         assertEquals(1.0079760, mfa.getNaturalMass(new Element("H")), 0.1);
     }
+    
+    public void testGetHTMLMolecularFormulaWithCharge() {
+        Atom atom = molecule.getAtomAt(0);
+        MFAnalyser mfa = new MFAnalyser(molecule);
+	assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
+	atom.setFormalCharge(atom.getFormalCharge() + 1);
+	assertEquals("C<sub>10</sub><sup>1</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+	atom.setFormalCharge(atom.getFormalCharge() - 2);
+	assertEquals("C<sub>10</sub><sup>-1</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+    }
 }
 
