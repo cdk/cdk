@@ -603,6 +603,26 @@ public class MFAnalyser {
 		return formula;
 	}
 
+	/**
+	 * 
+	 * Returns the string representation of the molecule formula with
+	 * numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the total
+	 * charge of AtomContainer in &lt;sup&gt;&lt;/sup&gt; tags
+	 * Useful for displaying formulae in Swing components or on the web.
+	 *
+	 * @return    The html-string representation of the sum formula with charge 
+	 * @see #getHTMLMolecularFormula()
+	 */
+	public String getHTMLMolecularFormulaWithCharge() {
+		String formula = new MFAnalyser(atomContainer).getHTMLMolecularFormula();
+		double charge = (new AtomContainerManipulator()).getTotalFormalCharge(atomContainer);
+		if (charge == 0)
+		{
+			return formula;
+		} else {
+			return formula + "<sup>" + charge + "</sup>";
+		}
+	}
 }
 
 

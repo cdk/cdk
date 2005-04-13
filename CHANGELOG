@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* Added new method MFAnalyser.getHTMLMolecularFormulaWithCharge()
 * Added new methods SetOfAtomContainers.removeAtomContainer()
 * Added a CDKRXNWriter.
 * Atom type list for PDB atom codes (implements RFE #1062516)
