@@ -619,8 +619,10 @@ public class MFAnalyser {
 		if (charge == 0)
 		{
 			return formula;
+		} else if (charge < 0) {
+			return formula + "<sup>" + charge * -1 + "-" + "</sup>";
 		} else {
-			return formula + "<sup>" + charge + "</sup>";
+			return formula + "<sup>" + charge +"+" + "</sup>";
 		}
 	}
 }

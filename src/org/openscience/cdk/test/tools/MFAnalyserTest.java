@@ -170,9 +170,9 @@ public class MFAnalyserTest extends CDKTestCase {
         MFAnalyser mfa = new MFAnalyser(molecule);
 	assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
 	atom.setFormalCharge(atom.getFormalCharge() + 1);
-	assertEquals("C<sub>10</sub><sup>1</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+	assertEquals("C<sub>10</sub><sup>1+</sup>", mfa.getHTMLMolecularFormulaWithCharge());
 	atom.setFormalCharge(atom.getFormalCharge() - 2);
-	assertEquals("C<sub>10</sub><sup>-1</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+	assertEquals("C<sub>10</sub><sup>1-</sup>", mfa.getHTMLMolecularFormulaWithCharge());
     }
 }
 
