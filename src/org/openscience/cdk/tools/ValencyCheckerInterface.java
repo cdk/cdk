@@ -43,8 +43,7 @@ public interface ValencyCheckerInterface {
 
 	public boolean isSaturated(AtomContainer ac) throws CDKException;
 	public boolean isSaturated(Atom atom, AtomContainer container) throws CDKException;
-	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException;
-	public int calculateMissingHydrogen(Atom atom) throws CDKException;
+	public int calculateNumberOfImplicitHydrogens(Atom atom, AtomContainer container) throws CDKException;
 
 }
 

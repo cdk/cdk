@@ -61,7 +61,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 
 	AtomTypeFactory structgenATF;
 
-	private org.openscience.cdk.tools.LoggingTool logger;
+	private LoggingTool logger;
 
 	public SaturationChecker() throws IOException, ClassNotFoundException
 	{
@@ -571,17 +571,17 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException {
-        return this.calculateMissingHydrogen(atom, container, false);
+	public int calculateNumberOfImplicitHydrogens(Atom atom, AtomContainer container) throws CDKException {
+        return this.calculateNumberOfImplicitHydrogens(atom, container, false);
     }
     
-	public int calculateMissingHydrogen(Atom atom) throws CDKException {
+	public int calculateNumberOfImplicitHydrogens(Atom atom) throws CDKException {
         Bond[] bonds = new Bond[0];
-        return this.calculateMissingHydrogen(atom, 0, bonds, false);
+        return this.calculateNumberOfImplicitHydrogens(atom, 0, bonds, false);
     }
 
-	public int calculateMissingHydrogen(Atom atom, AtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
-        return this.calculateMissingHydrogen(atom, 
+	public int calculateNumberOfImplicitHydrogens(Atom atom, AtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
+        return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
             container.getConnectedBonds(atom),
             throwExceptionForUnknowAtom
@@ -599,7 +599,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateMissingHydrogen(Atom atom, double bondOrderSum, Bond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
+	public int calculateNumberOfImplicitHydrogens(Atom atom, double bondOrderSum, Bond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
         throws CDKException {
 
         int missingHydrogen = 0;

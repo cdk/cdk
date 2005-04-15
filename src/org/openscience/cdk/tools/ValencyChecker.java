@@ -156,16 +156,16 @@ public class ValencyChecker implements ValencyCheckerInterface {
 	 * @param  container  Description of the Parameter
 	 * @return           Description of the Return Value
 	 */
-	public int calculateMissingHydrogen(Atom atom, AtomContainer container) throws CDKException {
-        return this.calculateMissingHydrogen(atom, 
+	public int calculateNumberOfImplicitHydrogens(Atom atom, AtomContainer container) throws CDKException {
+        return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
             container.getMaximumBondOrder(atom),
             container.getConnectedAtoms(atom).length
         );
     }
     
-	public int calculateMissingHydrogen(Atom atom) throws CDKException {
-        return this.calculateMissingHydrogen(atom, 0.0, 0.0, 0);
+	public int calculateNumberOfImplicitHydrogens(Atom atom) throws CDKException {
+        return this.calculateNumberOfImplicitHydrogens(atom, 0.0, 0.0, 0);
     }
 
     /** 
@@ -173,7 +173,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
      * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
      * does not have an entry in the configuration file.
      */
-	public int calculateMissingHydrogen(Atom atom, double bondOrderSum, double maxBondOrder, int neighbourCount) 
+	public int calculateNumberOfImplicitHydrogens(Atom atom, double bondOrderSum, double maxBondOrder, int neighbourCount) 
         throws CDKException {
 
         int missingHydrogen = 0;

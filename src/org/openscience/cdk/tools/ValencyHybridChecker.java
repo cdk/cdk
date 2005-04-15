@@ -30,6 +30,7 @@ package org.openscience.cdk.tools;
 
 import java.io.IOException;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
@@ -63,18 +64,28 @@ public class ValencyHybridChecker extends ValencyChecker {
      * AtomType only differs in bond orders, or implicit hydrogen count.
      */
     public boolean couldMatchAtomType(Atom atom, double bondOrderSum, double maxBondOrder, AtomType type) {
-        logger.debug("   ... matching atom ", atom, " vs ", type);
+        logger.debug("couldMatchAtomType:   ... matching atom ", atom, " vs ", type);
         int hcount = atom.getHydrogenCount();
         int charge = atom.getFormalCharge();
-        if (charge == type.getFormalCharge() &&
-            atom.getHybridization() == type.getHybridization()) {
-            if (bondOrderSum + hcount <= type.getBondOrderSum() && 
-                maxBondOrder <= type.getMaxBondOrder()) {
-                logger.debug("    We have a match!");
-                return true;
+        if (charge == type.getFormalCharge()) {
+            logger.debug("couldMatchAtomType:     formal charge matches...");
+            if (atom.getHybridization() == type.getHybridization()) {
+                logger.debug("couldMatchAtomType:     hybridization is OK...");
+                if (bondOrderSum + hcount <= type.getBondOrderSum()) {
+                    logger.debug("couldMatchAtomType:     bond order sum is OK...");
+                    if (maxBondOrder <= type.getMaxBondOrder()) {
+                        logger.debug("couldMatchAtomType:     max bond order is OK... We have a match!");
+                        return true;
+                    }
+                } else {
+                    logger.debug("couldMatchAtomType:      no match", "" + 
+                        (bondOrderSum + hcount), " > ", "" + type.getBondOrderSum());
+                }
             }
+        } else {
+            logger.debug("couldMatchAtomType:     formal charge does NOT match...");
         }
-        logger.debug("    No Match");
+        logger.debug("couldMatchAtomType:    No Match");
         return false;
     }
 
@@ -83,7 +94,7 @@ public class ValencyHybridChecker extends ValencyChecker {
      * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
      * does not have an entry in the configuration file.
      */
-	public int calculateMissingHydrogen(Atom atom, double bondOrderSum, double maxBondOrder, int neighbourCount) 
+	public int calculateNumberOfImplicitHydrogens(Atom atom, double bondOrderSum, double maxBondOrder, int neighbourCount) 
         throws CDKException {
 
         int missingHydrogens = 0;
@@ -129,6 +140,58 @@ public class ValencyHybridChecker extends ValencyChecker {
         
         logger.debug("missing hydrogens: ", missingHydrogens);
         return missingHydrogens;
+    }
+
+    /**
+     * Checks wether an Atom is saturated by comparing it with known AtomTypes.
+     * It returns true if the atom is an PseudoAtom and when the element is not in the list.
+     */
+	public boolean isSaturated(Atom atom, AtomContainer container) throws CDKException {
+        if (atom instanceof PseudoAtom) {
+            logger.debug("don't figure it out... it simply does not lack H's");
+            return true;
+        }
+
+		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+        if (atomTypes.length == 0) {
+            logger.warn("Missing entry in atom type list for ", atom.getSymbol());
+            return true;
+        }
+        double bondOrderSum = container.getBondOrderSum(atom);
+        double maxBondOrder = container.getMaximumBondOrder(atom);
+        int hcount = atom.getHydrogenCount();
+        int charge = atom.getFormalCharge();
+
+        logger.debug("Checking saturation of atom ", atom.getSymbol());
+        logger.debug("bondOrderSum: ", bondOrderSum);
+        logger.debug("maxBondOrder: ", maxBondOrder);
+        logger.debug("hcount: ", hcount);
+        logger.debug("charge: ", charge);
+
+        boolean elementPlusChargeMatches = false;
+        for (int f = 0; f < atomTypes.length; f++) {
+            AtomType type = atomTypes[f];
+            if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
+                if (bondOrderSum + hcount == type.getBondOrderSum() && 
+                    maxBondOrder <= type.getMaxBondOrder()) {
+                    logger.debug("We have a match: ", type);
+                    logger.debug("Atom is saturated: ", atom.getSymbol());
+                    return true;
+                } else {
+                    // ok, the element and charge matche, but unfulfilled
+                    elementPlusChargeMatches = true;
+                }
+            } // else: formal charges don't match
+        }
+        
+        if (elementPlusChargeMatches) {
+            logger.debug("No, atom is not saturated.");
+            return false;
+        }
+        
+        // ok, the found atom was not in the list
+        throw new CDKException("The atom with element " + atom.getSymbol() +
+                               " and charge " + charge + " is not found.");
     }
 }
 
