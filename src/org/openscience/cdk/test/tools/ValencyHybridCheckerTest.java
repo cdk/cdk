@@ -82,8 +82,8 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 		m.addAtom(c1);
 		m.addAtom(c2);
 		m.addBond(new Bond(c1, c2));
-		assertEquals(2, satcheck.calculateMissingHydrogen(c1, m));
-		assertEquals(2, satcheck.calculateMissingHydrogen(c2, m));
+		assertEquals(2, satcheck.calculateNumberOfImplicitHydrogens(c1, m));
+		assertEquals(2, satcheck.calculateNumberOfImplicitHydrogens(c2, m));
 	}
 
 	public void testCalculateMissingHydrogen_Ethane() throws CDKException {
@@ -96,8 +96,8 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 		m.addAtom(c1);
 		m.addAtom(c2);
 		m.addBond(new Bond(c1, c2));
-		assertEquals(3, satcheck.calculateMissingHydrogen(c1, m));
-		assertEquals(3, satcheck.calculateMissingHydrogen(c2, m));
+		assertEquals(3, satcheck.calculateNumberOfImplicitHydrogens(c1, m));
+		assertEquals(3, satcheck.calculateNumberOfImplicitHydrogens(c2, m));
 	}
 
 }

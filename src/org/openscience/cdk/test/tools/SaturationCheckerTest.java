@@ -442,19 +442,6 @@ public class SaturationCheckerTest extends CDKTestCase
       assertTrue(m.getBondAt(13).getOrder()==2 ^ m.getBondAt(3).getOrder()==2);
     }
     
-    public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
-	    Molecule pyrrole = (new MoleculeFactory()).makePyrrole();
-	    Atom n = pyrrole.getAtomAt(1);
-	    RingSet rs = (new SSSRFinder(pyrrole)).findSSSR();
-	    Ring ring = (Ring) rs.get(0);
-	    for (int j=0 ; j<ring.getBondCount(); j++)
-	    {
-		    ring.getBondAt(j).setOrder(1.5);
-	    }
-	    assertEquals(5, ring.getBondCount());
-	    assertEquals(1, satcheck.calculateMissingHydrogen(n, pyrrole));
-    }
-
     /**
 	 *  The main program for the SaturationCheckerTest class
 	 *

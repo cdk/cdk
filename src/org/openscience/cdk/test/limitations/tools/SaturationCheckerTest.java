@@ -307,5 +307,18 @@ public class SaturationCheckerTest extends CDKTestCase {
 		assertTrue(satcheck.isSaturated(h, m));
 	}
     
+    public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
+	    Molecule pyrrole = (new MoleculeFactory()).makePyrrole();
+	    Atom n = pyrrole.getAtomAt(1);
+	    RingSet rs = (new SSSRFinder(pyrrole)).findSSSR();
+	    Ring ring = (Ring) rs.get(0);
+	    for (int j=0 ; j<ring.getBondCount(); j++)
+	    {
+		    ring.getBondAt(j).setOrder(1.5);
+	    }
+	    assertEquals(5, ring.getBondCount());
+	    assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
+    }
+
 }
 
