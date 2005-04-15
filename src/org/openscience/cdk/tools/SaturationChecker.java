@@ -50,6 +50,10 @@ import org.openscience.cdk.tools.LoggingTool;
  * Provides methods for checking whether an atoms valences are saturated with
  * respect to a particular atom type.
  *
+ * <p>Important: this class does not deal with hybridization states, which makes
+ * it fail, for example, for situations where bonds are marked as aromatic (either
+ * 1.5 or single an AROMATIC).
+ *
  * @author     steinbeck
  * @author  Egon Willighagen
  * @cdk.created    2001-09-04
