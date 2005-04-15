@@ -67,7 +67,37 @@ public class QueryAtomContainerCreator {
         return queryContainer;
     }
 
-
+    
+    /**
+     *  Creates a QueryAtomContainer with SymbolAncChargeQueryAtom's and
+     *  OrderQueryBond's.
+     *
+     *@param  container  The AtomContainer that stands as model
+     *@return            The new QueryAtomContainer created from container.
+     */
+    public static QueryAtomContainer createSymbolAndChargeQueryContainer(AtomContainer container) {
+        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        Atom[] atoms = container.getAtoms();
+        for (int i = 0; i < atoms.length; i++) {
+            queryContainer.addAtom(new SymbolAndChargeQueryAtom(atoms[i]));
+        }
+        Bond[] bonds = container.getBonds();
+        for (int i = 0; i < bonds.length; i++) {
+            int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
+            int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
+            if (bonds[i].getFlag(CDKConstants.ISAROMATIC)) {
+                queryContainer.addBond(new AromaticQueryBond((QueryAtom) queryContainer.getAtomAt(index1),
+                                      (QueryAtom) queryContainer.getAtomAt(index2),
+                                      1.5));
+            } else {
+                queryContainer.addBond(new OrderQueryBond((QueryAtom) queryContainer.getAtomAt(index1),
+                                      (QueryAtom) queryContainer.getAtomAt(index2),
+                                      bonds[i].getOrder()));
+            }
+        }
+        return queryContainer;
+    }    
+    
 
     /**
      *  Creates a QueryAtomContainer with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
