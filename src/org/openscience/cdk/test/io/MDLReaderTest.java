@@ -45,6 +45,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -111,6 +112,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -137,6 +141,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -150,6 +157,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -163,6 +173,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -176,6 +189,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -188,6 +204,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -201,6 +220,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -214,6 +236,9 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
