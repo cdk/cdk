@@ -139,7 +139,7 @@ public class ForceFieldConfigurator {
 				//System.out.println("ForceFieldConfigurator: open Force Field mm2");
 				//f = new File(mm2File);
 				//readFile(f);
-				ins = this.getClass().getClassLoader().getResourceAsStream("mm2.prm");
+				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mm2.prm");
 				mm2 = new MM2BasedParameterSetReader();
 				mm2.setInputStream(ins);
 				this.setMM2Parameters();
@@ -147,7 +147,7 @@ public class ForceFieldConfigurator {
 				//System.out.println("ForceFieldConfigurator: open Force Field mmff94");
 				//f = new File(mmff94File);
 				//readFile(f);
-				ins = this.getClass().getClassLoader().getResourceAsStream("mmff94.prm");
+				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mmff94.prm");
 				mmff94= new MMFF94BasedParameterSetReader();
 				mmff94.setInputStream(ins);
 				this.setMMFF94Parameters();
