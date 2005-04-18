@@ -286,6 +286,9 @@
                     <fileset dir="${lib}/libio">
                         <include name="*.jar" />
                     </fileset>
+                    <fileset dir="${devellib}">
+                        <include name="*.jar" />
+                    </fileset>
                 </classpath>
 
                 <doclet name="MakeJavaFilesFilesDoclet" path="${doc}/javadoc"/>
@@ -299,6 +302,9 @@
                 <classpath refid="project.class.path" />
                 <classpath>
                     <fileset dir="${lib}/libio">
+                        <include name="*.jar" />
+                    </fileset>
+                    <fileset dir="${devellib}">
                         <include name="*.jar" />
                     </fileset>
                 </classpath>
@@ -613,7 +619,7 @@
 
                 <classpath refid="project.class.path" />
                 <classpath>
-                    <fileset dir="develjar">
+                    <fileset dir="${devellib}">
                         <include name="hansel-1.02.jar" />
                         <include name="junit.jar" />
                     </fileset>
