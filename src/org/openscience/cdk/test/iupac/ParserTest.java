@@ -115,7 +115,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            Molecule parserMolecule = NomParser.generate("!\"$%^&*()-=_+");
+            NomParser.generate("!\"$%^&*()-=_+");
             fail("Molecule was successfully generated but should have thrown a TokenMgrError");
         } catch (ParseException pe) {
             fail("The molecule did throw a class, but it incorrectly threw a ParseException," +
@@ -132,7 +132,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            Molecule parserMolecule = NomParser.generate("");
+            NomParser.generate("");
             fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             assertTrue (true);
@@ -145,7 +145,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            Molecule parserMolecule = NomParser.generate("ethol");
+            NomParser.generate("ethol");
             fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             assertTrue (true);
@@ -158,7 +158,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            Molecule parserMolecule = NomParser.generate("7-chloropentane");
+            NomParser.generate("7-chloropentane");
             fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             assertTrue (true);
@@ -171,7 +171,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            Molecule parserMolecule = NomParser.generate("9-ethylhexane");
+            NomParser.generate("9-ethylhexane");
             fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             assertTrue (true);
