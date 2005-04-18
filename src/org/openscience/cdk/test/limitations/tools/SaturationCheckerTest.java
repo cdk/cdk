@@ -30,8 +30,12 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**

@@ -455,7 +455,6 @@ public class SaturationCheckerTest extends CDKTestCase
 		sct.testSaturate();
 		sct.testIsSaturated();
 		sct.testAllSaturated();
-		sct.testCalculateMissingHydrogens_Aromatic();
 	}
 }
 
