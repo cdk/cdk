@@ -414,7 +414,6 @@ public class HOSECodeGenerator implements java.io.Serializable
 			}
 			sortNodesByScore(sphereNodes);
 		}
-		BigInteger big = new BigInteger("10");
 		for (int f = 0; f < maxSphere; f++)
 		{
 			sphereNodes = spheres[f];
@@ -452,7 +451,6 @@ public class HOSECodeGenerator implements java.io.Serializable
 		{
 			return sphereDelimiters[sphere - 1];
 		}
-		Atom node = null;
 		TreeNode treeNode = null;
 		StringBuffer code = new StringBuffer();
 		/*
@@ -462,7 +460,6 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 */
 		Atom branch = ((TreeNode) (((TreeNode) sphereNodes.elementAt(0)).source)).atom;
 		Atom nextBranch;
-		int start = 0;
 		StringBuffer tempCode = null;
 		nextBranch = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
@@ -569,7 +566,6 @@ public class HOSECodeGenerator implements java.io.Serializable
 	private void calculateNodeScores(Vector sphereNodes) throws org.openscience.cdk.exception.CDKException
 	{
 		TreeNode treeNode = null;
-		Atom node = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
 		{
 			treeNode = (TreeNode) sphereNodes.elementAt(i);
@@ -613,8 +609,6 @@ public class HOSECodeGenerator implements java.io.Serializable
 			}
 		} while (changed);
 		/* Having sorted a sphere, we lable the nodes with their sort order */
-		int counter = 0;
-		TreeNode root = ((TreeNode) sphereNodes.elementAt(0));
 		TreeNode temp = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
 		{

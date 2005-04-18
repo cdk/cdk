@@ -402,7 +402,6 @@ public class SaturationChecker implements ValencyCheckerInterface {
      */
     public boolean couldMatchAtomType(AtomContainer atomContainer, Atom atom, AtomType atomType) {
         logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", atomType);
-        int neighbours = atomContainer.getConnectedAtoms(atom).length;
         if (atomContainer.getBondOrderSum(atom) + atom.getHydrogenCount() < atomType.getBondOrderSum()) {
            logger.debug("    Match!");
            return true;

@@ -246,7 +246,6 @@ public class HydrogenAdder {
         throws IOException, ClassNotFoundException
     {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
-        boolean create3DCoordinates = GeometryTools.has3DCoordinates(container);
         
         Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
         atom.setHydrogenCount(0);
@@ -258,15 +257,6 @@ public class HydrogenAdder {
             Bond newBond = new Bond(atom, hydrogen, 1.0);
             totalContainer.addBond(newBond);
         }
-        /* The following code has been removed for a clearer separation
-	 * between adding (in HydrogenAdder) and placing the hydrogens (in HydrogenPlacer)
-	
-        /*if (create2DCoordinates) {
-            logger.debug("Creating 2D coordinates for new hydrogens");
-            double bondLength = GeometryTools.getBondLengthAverage(container);
-            logger.debug("Average bondlength in current molecule: " + bondLength);
-            new HydrogenPlacer().placeHydrogens2D(container, bondLength);
-        }*/
     }
     
     /**

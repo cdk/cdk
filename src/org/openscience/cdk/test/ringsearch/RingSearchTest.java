@@ -235,7 +235,6 @@ public class RingSearchTest extends CDKTestCase
 	
 	public void testBug891021() {
 		Molecule molecule = null;
-		Ring ring = null;
 		try {
 			String filename = "data/mdl/too.many.rings.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

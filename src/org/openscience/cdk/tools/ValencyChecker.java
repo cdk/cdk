@@ -190,9 +190,6 @@ public class ValencyChecker implements ValencyCheckerInterface {
             return 0;
         }
 
-        int hcount = atom.getHydrogenCount();
-        int charge = atom.getFormalCharge();
-        
         logger.debug("Found atomtypes: ", atomTypes.length);
         for (int f = 0; f < atomTypes.length; f++) {
             AtomType type = atomTypes[f];

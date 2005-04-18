@@ -425,13 +425,6 @@ public class HOSECodeTest extends CDKTestCase
 		frame.show(); */
 	}
 
-	private void assembleNodes(DefaultMutableTreeNode top, HOSECodeGenerator hcg)
-	{
-		DefaultMutableTreeNode node = null;
-		
-	}
-	
-	
   public void testBug795480()
 	{
 		Molecule molecule = null;
@@ -446,27 +439,28 @@ public class HOSECodeTest extends CDKTestCase
 		try
 		{
 			molecule = (new SmilesParser()).parseSmiles("CC=CBr");
-      boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+            boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+            assertFalse(isAromatic);
 			molecule.getAtomAt(0).setFormalCharge(-1);
-      molecule.getAtomAt(3).setFormalCharge(+4);
+            molecule.getAtomAt(3).setFormalCharge(+4);
 			hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
-        if (standAlone)
-          System.out.print("|" + s + "| -> " + result[f]);
+                if (standAlone)
+                    System.out.print("|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);
-        if (standAlone)
-          System.out.println("  OK");
+                if (standAlone)
+                    System.out.println("  OK");
 			}
-
+            
 		} catch (Exception exc)
 		{
 			exc.printStackTrace();
             fail(exc.getMessage());
 		}
-  }
+    }
   /**
 	 *  The main program for the HOSECodeTest class
 	 *

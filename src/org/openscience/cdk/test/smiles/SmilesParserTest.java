@@ -154,6 +154,7 @@ public class SmilesParserTest extends CDKTestCase
         try {
             String smiles = "C1(C=C(C=C(C=C(C=C(C=CC%35=C%36)C%31=C%35C%32=C%33C%36=C%34)C%22=C%31C%23=C%32C%24=C%25C%33=C%26C%34=CC%27=CC%28=CC=C%29)C%14=C%22C%15=C%23C%16=C%24C%17=C%18C%25=C%19C%26=C%27C%20=C%28C%29=C%21)C6=C%14C7=C%15C8=C%16C9=C%17C%12=C%11C%18=C%10C%19=C%20C%21=CC%10=CC%11=CC(C=C%30)=C%12%13)=C(C6=C(C7=C(C8=C(C9=C%13C%30=C5)C5=C4)C4=C3)C3=C2)C2=CC=C1";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertNotNull(molecule);
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -163,6 +164,7 @@ public class SmilesParserTest extends CDKTestCase
         try {
             String smiles = "CC1(C(=C(CC(C1)O)C)C=CC(=CC=CC(=CC=CC=C(C=CC=C(C=CC1=C(CC(CC1(C)C)O)C)C)C)C)C)C";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertNotNull(molecule);
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -172,6 +174,7 @@ public class SmilesParserTest extends CDKTestCase
         try {
             String smiles = "NC(C(C)C)C(NC(C(C)O)C(NC(C(C)C)C(NC(CCC(N)=O)C(NC(CC([O-])[O-])C(NCC(NC(CC(N)=O)C(NC(Cc1ccccc1)C(NC(CO)C(NC(Cc2ccccc2)C(NC(CO)C(NC(CC(C)C)C(NC(CCC([O-])[O-])C(NC(CO)C(NC(C(C)C)C(NC(CCCC[N+])C(NC(CCCC[N+])C(NC(CC(C)C)C(NC(CCCC[N+])C(NC(CC([O-])[O-])C(NC(CC(C)C)C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(N3CCCC3C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(N4CCCC4C(NC(CCCNC([N+])[N+])C(NC(C(C)C)C(NCC(NC(CCCC[N+])C(NC(CC(C)C)C(NC(CCCNC([N+])[N+])C(NC(CC(N)=O)C(NC(Cc5ccccc5)C(NC(C)C(N6CCCC6C(NC(C(C)CC)C(N7CCCC7C(NCC(NC(CCC([O-])[O-])C(N8CCCC8C(NC(C(C)C)C(NC(C(C)C)C(N9CCCC9C(NC(C(C)CC)C(NC(CC(C)C)C(NC%19C[S][S]CC(C(NC(CCCC[N+])C(NC(CCC([O-])[O-])C(N%10CCCC%10C(NC(CC(N)=O)C(NC(C)C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(NC(C(C)CC)C(NC(CC(C)C)C(NC(CCC(N)=O)C(NC(CCCNC([N+])[N+])C(NC(CC(C)C)C(NC(CCC([O-])[O-])C(NC(CCC([O-])[O-])C(NC(C(C)CC)C(NC(C)C(NC(CCC([O-])[O-])C(NC(CC([O-])[O-])C(N%11CCCC%11C(NCC(NC(C(C)O)C(NC%14C[S][S]CC%13C(NC(C(C)O)C(NCC(NC(C[S][S]CC(C(NC(C)C(NC(Cc%12ccc(O)cc%12)C(NC(C)C(NC(C)C(N%13)=O)=O)=O)=O)=O)NC(=O)C(C(C)CC)NC(=O)C(CCC([O-])[O-])NC%14=O)C(O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)NC(=O)C(CC(C)C)NC(=O)C%15CCCN%15C(=O)C(CCCC[N+])NC(=O)C(CC(C)C)NC(=O)C(CCC([O-])[O-])NC(=O)C(CCC([O-])[O-])NC(=O)C%16CCCN%16C(=O)C(Cc%17ccccc%17)NC(=O)C(CC(N)=O)NC(=O)C%18CCCN%18C(=O)C(CC(N)=O)NC(=O)C(CO)NC%19=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O";
             Molecule molecule = sp.parseSmiles(smiles);
+            assertNotNull(molecule);
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -223,7 +226,7 @@ public class SmilesParserTest extends CDKTestCase
 				fail(exc.toString());
 			}
 		}
-        long l1 = System.currentTimeMillis();
+        // long l1 = System.currentTimeMillis();
         try
         {
             Molecule mol = sp.parseSmiles(smiles[6]);
@@ -238,7 +241,7 @@ public class SmilesParserTest extends CDKTestCase
         {
             exc.printStackTrace();
         }
-        long l2 = System.currentTimeMillis();
+        // long l2 = System.currentTimeMillis();
         //System.out.println(l2-l1);
 	}
 
@@ -587,7 +590,7 @@ public class SmilesParserTest extends CDKTestCase
 	public void testSingleH() {
 		try {
 			String smiles = "H";
-            Molecule mol = sp.parseSmiles(smiles);
+            Molecule mol = sp.parseSmiles(smiles); // NOPMD (don't care about mol, should throw exception)
 			fail("The SMILES string 'H' is not valid: H is not in the organic element subset");
 		} catch (Exception e) {
             // yes! it should fail
@@ -932,6 +935,7 @@ public class SmilesParserTest extends CDKTestCase
 	public static void main(String[] args) {
         LoggingTool logger = new LoggingTool(SmilesParserTest.class);
         LoggingTool.configureLog4j();
+        logger.info("Running the SmilesParserTest tests...");
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
 		spt.viewSmilesStructures();
