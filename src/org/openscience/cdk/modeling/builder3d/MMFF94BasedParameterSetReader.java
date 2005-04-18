@@ -104,11 +104,12 @@ public class MMFF94BasedParameterSetReader {
 		String swell = st.nextToken();
 		String sapol=st.nextToken();
 		String sNeff=st.nextToken();
-		st.nextToken();
+		//st.nextToken();
 		String sDA=st.nextToken();
 		String sq0=st.nextToken();
-		String sfcadj=st.nextToken();
 		String spbci=st.nextToken();
+		String sfcadj=st.nextToken();
+		
 		
 		stvdW.nextToken();
 		stvdW.nextToken();
@@ -217,6 +218,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setBond() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
+		String scode = st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String slen = st.nextToken();
@@ -226,6 +228,7 @@ public class MMFF94BasedParameterSetReader {
 		String sbci = st.nextToken();
 		
 		try {
+		    //int code=new Integer(scode).intValue();
 			double len = new Double(slen).doubleValue();
 			double k2 = new Double(sk2).doubleValue();
 			double k3 = new Double(sk3).doubleValue();
@@ -252,6 +255,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setAngle() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
+		String scode = st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -261,6 +265,7 @@ public class MMFF94BasedParameterSetReader {
 		String value4 = st.nextToken();
 		
 		try {
+		    //int code=new Integer(scode).intValue();
 			double va1 = new Double(value1).doubleValue();
 			double va2 = new Double(value2).doubleValue();
 			double va3 = new Double(value3).doubleValue();
@@ -294,6 +299,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setStrBnd() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
+		String scode = st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -301,6 +307,7 @@ public class MMFF94BasedParameterSetReader {
 		String value2 = st.nextToken();
 		
 		try {
+		    //int code=new Integer(scode).intValue();
 			double va1 = new Double(value1).doubleValue();
 			double va2 = new Double(value2).doubleValue();
 			data.add(new Double(va1));
@@ -319,8 +326,9 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setTorsion() throws Exception {
-		Vector data = new Vector();
+		Vector data = null;
 		st.nextToken();
+		String scode = st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -332,16 +340,13 @@ public class MMFF94BasedParameterSetReader {
 		String value5 = st.nextToken();
 		
 		try {
+		    //int code=new Integer(scode).intValue();
 			double va1 = new Double(value1).doubleValue();
 			double va2 = new Double(value2).doubleValue();
 			double va3 = new Double(value3).doubleValue();
-			double va4 = new Double(value3).doubleValue();
-			double va5 = new Double(value3).doubleValue();
-			data.add(new Double(va1));
-			data.add(new Double(va2));
-			data.add(new Double(va3));
-			data.add(new Double(va4));
-			data.add(new Double(va5));
+			double va4 = new Double(value4).doubleValue();
+			double va5 = new Double(value5).doubleValue();
+
 			
 			key = "torsion" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
 			if (parameterSet.containsKey(key)) {
@@ -349,8 +354,20 @@ public class MMFF94BasedParameterSetReader {
 				data.add(new Double(va1));
 				data.add(new Double(va2));
 				data.add(new Double(va3));
+				data.add(new Double(va4));
+				data.add(new Double(va5));
 			}
+			else{
+			    data = new Vector();
+			    data.add(new Double(va1));
+			    data.add(new Double(va2));
+			    data.add(new Double(va3));
+			    data.add(new Double(va4));
+			    data.add(new Double(va5));
+			}
+
 			parameterSet.put(key, data);
+
 		} catch (NumberFormatException nfe) {
 			throw new IOException("setTorsion: Malformed Number due to:"+nfe);
 		}
@@ -430,22 +447,22 @@ public class MMFF94BasedParameterSetReader {
 				if (s.startsWith("atom") & nt <= 8) {
 					setAtomTypes();
 					a[0]++;
-				} else if (s.startsWith("bond") & nt == 8) {
+				} else if (s.startsWith("bond") & nt == 9) {
 					setBond();
 					a[1]++;
-				} else if (s.startsWith("angle") & nt <= 9) {
+				} else if (s.startsWith("angle") & nt <= 10) {
 					setAngle();
 					a[2]++;
-				} else if (s.startsWith("strbnd") & nt <= 7) {
+				} else if (s.startsWith("strbnd") & nt == 7) {
 					setStrBnd();
 					a[3]++;
-				} else if (s.startsWith("torsion") & nt == 10) {
+				} else if (s.startsWith("torsion") & nt == 11) {
 					setTorsion();
 					a[4]++;					
 				} else if (s.startsWith("opbend") & nt == 6) {
 					setOpBend();
 					a[5]++;
-				} else if (s.startsWith("data") & nt == 11) {
+				} else if (s.startsWith("data") & nt == 10) {
 					readatmmffvdw:
 						while (true) {
 							svdW = rvdW.readLine();
