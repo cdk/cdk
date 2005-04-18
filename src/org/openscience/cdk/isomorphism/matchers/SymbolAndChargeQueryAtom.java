@@ -34,6 +34,7 @@ public class SymbolAndChargeQueryAtom extends Atom implements QueryAtom {
     
     public SymbolAndChargeQueryAtom(Atom atom) {
         super(atom.getSymbol());
+        setFormalCharge(atom.getFormalCharge());
     }
     
     public boolean matches(Atom atom) {
