@@ -647,7 +647,7 @@
         <isotope id="Mo92" isotopeNumber="92" elementType="Mo">
             <abundance dictRef="cdk:relativeAbundance">61.5002</abundance>
             <scalar dictRef="cdk:exactMass">91.906809</scalar>
-            <scalar dictRef="cdk:atomicNumber">442</scalar>
+            <scalar dictRef="cdk:atomicNumber">42</scalar>
         </isotope>
         <isotope id="Mo94" isotopeNumber="94" elementType="Mo">
             <abundance dictRef="cdk:relativeAbundance">38.334</abundance>
