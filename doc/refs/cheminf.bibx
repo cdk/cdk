@@ -91,6 +91,17 @@
       <bibtex:pages>309-314</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+  
+  <bibtex:entry id="CHE03">
+    <bibtex:article>
+      <bibtex:author>Cherkasov, A.</bibtex:author>
+      <bibtex:title>Inductive Electronegativity Scale. Iterative Calculation of Inductive Partial Charges</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+      <bibtex:year>2003</bibtex:year>
+      <bibtex:volume>43</bibtex:volume>
+      <bibtex:pages>2039-2047</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
 
   <bibtex:entry id="DAL92">
     <bibtex:article>
