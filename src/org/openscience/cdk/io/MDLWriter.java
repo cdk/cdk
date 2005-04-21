@@ -35,7 +35,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
-import java.util.Locale;
+import java.util.*;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
@@ -71,6 +71,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
     private BufferedWriter writer;
     private LoggingTool logger;
     private IsotopeFactory isotopeFactory = null;
+    public Map sdFields=null;
 
     /**
      * Contructs a new MDLWriter that can write an array of
@@ -84,6 +85,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
     public ChemFormat getFormat() {
         return new MDLFormat();
+    }
+    
+    
+    public void setSdFields(Map map){
+      sdFields=map;
     }
     
     /**
@@ -276,6 +282,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
             }
             line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
             line += " 0  0  0  0  0  0  0  0  0  0  0  0";
+            if(atom.signals!=null)
+              line +=" "+atom.signals;
             writer.write(line);
             writer.newLine();
           }
@@ -359,6 +367,17 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // close molecule
         writer.write("M  END");
         writer.newLine();
+        //write sdfields, if any
+        if(sdFields!=null){
+          Set set = sdFields.keySet();
+          Iterator iterator = set.iterator();
+          while (iterator.hasNext()) {
+            Object element = iterator.next();
+            writer.write("> <"+(String)element+">");
+            writer.write("> "+(String)sdFields.get(element));
+            writer.newLine();
+          }
+        }
         writer.flush();
     }
 
