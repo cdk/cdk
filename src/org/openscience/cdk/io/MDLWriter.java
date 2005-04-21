@@ -94,7 +94,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      * &gt; value<br>
      * empty line<br>
      *
-     * @param  map The map to be used
+     * @param  map The map to be used, map of String-String pairs
      */
     public void setSdFields(Map map){
       sdFields=map;
