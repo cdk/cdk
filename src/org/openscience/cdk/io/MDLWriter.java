@@ -87,7 +87,15 @@ public class MDLWriter extends DefaultChemObjectWriter {
         return new MDLFormat();
     }
     
-    
+    /**
+     * Here you can set a map which will be used to build sd fields in the file.
+     * The entries will be translated to sd fields like this:br>
+     * &gt; &lt;key&gt;<br>
+     * &gt; value<br>
+     * empty line<br>
+     *
+     * @param  map The map to be used
+     */
     public void setSdFields(Map map){
       sdFields=map;
     }
