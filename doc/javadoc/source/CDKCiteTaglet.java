@@ -113,7 +113,7 @@ public class CDKCiteTaglet implements Taglet {
             StringTokenizer tokenizer = new StringTokenizer(citation, separator);
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken().trim();
-                result += "<a href=\"http://cdk.sf.net/biblio.html#"
+                result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/bib/"
                        + token + "\">" + token + "</a>";
                 if (tokenizer.hasMoreTokens()) {
                     result += ", ";
@@ -121,7 +121,7 @@ public class CDKCiteTaglet implements Taglet {
             }
         } else {
             citation = citation.trim();
-            result += "<a href=\"http://cdk.sf.net/biblio.html#"
+            result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/bib/"
                    + citation + "\">" + citation + "</a>";
         }
         return result;
