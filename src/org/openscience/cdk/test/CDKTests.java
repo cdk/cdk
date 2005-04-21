@@ -96,6 +96,8 @@ public class CDKTests
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
 	// from cdk.test.charges
         suite.addTest(MMFF94PartialChargesTest.suite());
+	// from cdk.test.charges
+        suite.addTest(InductivePartialChargesTest.suite());
 	// from cdk.test.modeling
         suite.addTest(ModelBuilder3dTest.suite());
         // from cdk.test.fingerprint
