@@ -397,7 +397,7 @@ public class LoggingToolTest extends CDKTestCase {
 	public void testIsDebugEnabled() {
         LoggingTool logger = new LoggingTool(this);
         try {
-            boolean enabled = logger.isDebugEnabled(); // NOPMD
+            logger.isDebugEnabled();
         } catch (Exception exception) {
             fail("Exception during test: " + exception.getMessage());
         }

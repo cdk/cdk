@@ -590,7 +590,7 @@ public class SmilesParserTest extends CDKTestCase
 	public void testSingleH() {
 		try {
 			String smiles = "H";
-            Molecule mol = sp.parseSmiles(smiles); // NOPMD (don't care about mol, should throw exception)
+            sp.parseSmiles(smiles);
 			fail("The SMILES string 'H' is not valid: H is not in the organic element subset");
 		} catch (Exception e) {
             // yes! it should fail
