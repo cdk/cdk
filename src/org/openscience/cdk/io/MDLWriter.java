@@ -290,8 +290,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
             }
             line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
             line += " 0  0  0  0  0  0  0  0  0  0  0  0";
-            if(atom.signals!=null)
-              line +=" "+atom.signals;
             writer.write(line);
             writer.newLine();
           }
