@@ -102,6 +102,8 @@ public class ConnectivityChecker
 	 *
 	 * @param   atomContainer  The AtomContainer to be partitioned into connected components, i.e. molecules
 	 * @return                 A SetOfMolecules.
+     *
+     * @cdk.dictref   bo:graphPartitioning
 	 */
 	public static SetOfMolecules partitionIntoMolecules(AtomContainer atomContainer) {
 		AtomContainer ac = new AtomContainer();
