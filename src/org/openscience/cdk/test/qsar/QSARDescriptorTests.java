@@ -81,6 +81,8 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(AtomHybridizationDescriptorTest.suite());
 	suite.addTest(EccentricConnectivityIndexDescriptorTest.suite());
 	suite.addTest(WeightDescriptorTest.suite());
+	suite.addTest(InductiveAtomicHardnessDescriptorTest.suite());
+	suite.addTest(InductiveAtomicSoftnessDescriptorTest.suite());
         return suite;
     }
     
