@@ -51,6 +51,8 @@ API changes:
   DescriptorResult.
 * Removed LoggingTool(boolean) and LoggingTool(Object, boolean)
   (closes #1150670) because configuration should be done at application level
+* Renamed ValencyCheckerInterface.calculateMissingHydrogen() to
+  .calculateNumberOfImplicitHydrogens()
 
 20050125 Release
 ------------------------------------
