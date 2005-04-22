@@ -1,0 +1,352 @@
+/*
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 1997-2005  The JChemPaint project
+ *
+ *  Contact: jchempaint-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All we ask is that proper credit is given for our work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.applications.jchempaint.action;
+
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.util.Hashtable;
+
+import javax.swing.AbstractAction;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.controller.CDKPopupMenu;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.applications.jchempaint.*;
+
+/**
+ * Superclass of all JChemPaint GUI actions
+ *
+ * @cdk.module jchempaint
+ * @author     steinbeck
+ * @created    22. April 2005
+ */
+public class JCPAction extends AbstractAction
+{
+
+	/**
+	 *  Description of the Field
+	 */
+	public final static String actionSuffix = "Action";
+	/**
+	 *  Description of the Field
+	 */
+	public final static String imageSuffix = "Image";
+	/**
+	 *  Description of the Field
+	 */
+	public final static String labelSuffix = "Label";
+
+	/**
+	 *  Description of the Field
+	 */
+	protected static LoggingTool logger = null;
+
+	// cache the actions
+	private static Hashtable actions = null;
+	private static Hashtable popupActions = null;
+
+	/**
+	 *  Description of the Field
+	 */
+	protected String type;
+
+	/**
+	 *  Description of the Field
+	 */
+	protected JChemPaintPanel jcpPanel = null;
+
+	/**
+	 *  Is this popup action assiociated with a PopupMenu or not.
+	 */
+	private boolean isPopupAction;
+
+
+	/**
+	 *  Constructor for the JCPAction object
+	 *
+	 *@param  jcpPanel       Description of the Parameter
+	 *@param  type           Description of the Parameter
+	 *@param  isPopupAction  Description of the Parameter
+	 */
+	public JCPAction(JChemPaintPanel jcpPanel, String type, boolean isPopupAction)
+	{
+		super();
+		if (this.logger == null)
+		{
+			this.logger = new LoggingTool(this);
+		}
+		if (this.actions == null)
+		{
+			this.actions = new Hashtable();
+		}
+		if (this.popupActions == null)
+		{
+			this.popupActions = new Hashtable();
+		}
+		this.type = "";
+		this.isPopupAction = isPopupAction;
+		this.jcpPanel = jcpPanel;
+	}
+
+
+	/**
+	 *  Constructor for the JCPAction object
+	 *
+	 *@param  jcpPanel       Description of the Parameter
+	 *@param  isPopupAction  Description of the Parameter
+	 */
+	public JCPAction(JChemPaintPanel jcpPanel, boolean isPopupAction)
+	{
+		this(jcpPanel, "", isPopupAction);
+	}
+
+
+	/**
+	 *  Constructor for the JCPAction object
+	 *
+	 *@param  jcpPanel  Description of the Parameter
+	 */
+	public JCPAction(JChemPaintPanel jcpPanel)
+	{
+		this(jcpPanel, false);
+	}
+
+
+	/**
+	 *  Constructor for the JCPAction object
+	 */
+	public JCPAction()
+	{
+		this(null);
+	}
+
+
+	/**
+	 *  Sets the type attribute of the JCPAction object
+	 *
+	 *@param  type  The new type value
+	 */
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+
+	/**
+	 *  Sets the jChemPaintPanel attribute of the JCPAction object
+	 *
+	 *@param  jcpPanel  The new jChemPaintPanel value
+	 */
+	public void setJChemPaintPanel(JChemPaintPanel jcpPanel)
+	{
+		this.jcpPanel = jcpPanel;
+	}
+
+
+	/**
+	 *  Is this action runnable?
+	 *
+	 *@return    The enabled value
+	 */
+	public boolean isEnabled()
+	{
+		return true;
+	}
+
+
+	/**
+	 *  Gets the popupAction attribute of the JCPAction object
+	 *
+	 *@return    The popupAction value
+	 */
+	public boolean isPopupAction()
+	{
+		return isPopupAction;
+	}
+
+
+	/**
+	 *  Sets the isPopupAction attribute of the JCPAction object
+	 *
+	 *@param  isPopupAction  The new isPopupAction value
+	 */
+	public void setIsPopupAction(boolean isPopupAction)
+	{
+		this.isPopupAction = isPopupAction;
+	}
+
+
+	/**
+	 *  Dummy method.
+	 *
+	 *@param  e  Description of the Parameter
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+	}
+
+
+	/**
+	 *  Gets the source attribute of the JCPAction object
+	 *
+	 *@param  event  Description of the Parameter
+	 *@return        The source value
+	 */
+	public ChemObject getSource(ActionEvent event)
+	{
+		Object source = event.getSource();
+		logger.debug("event source: ", source);
+		if (source instanceof JMenuItem)
+		{
+			Container parent = ((JMenuItem) source).getComponent().getParent();
+			// logger.debug("event source parent: " + parent);
+			if (parent instanceof CDKPopupMenu)
+			{
+				return ((CDKPopupMenu) parent).getSource();
+			} else if (parent instanceof JPopupMenu)
+			{
+				// assume that the top menu is indeed a CDKPopupMenu
+				logger.debug("Submenu... need to recurse into CDKPopupMenu...");
+				while (!(parent instanceof CDKPopupMenu))
+				{
+					logger.debug("  Parent instanceof ", parent.getClass().getName());
+					if (parent instanceof JPopupMenu)
+					{
+						parent = ((JPopupMenu) parent).getInvoker().getParent();
+					} else if (parent instanceof JChemPaintMenuBar)
+					{
+						logger.warn(" Source is MenuBar. MenuBar items don't know about the source");
+						return null;
+					} else
+					{
+						logger.error(" Cannot get parent!");
+						return null;
+					}
+				}
+				return ((CDKPopupMenu) parent).getSource();
+			}
+		}
+		return null;
+	}
+
+
+	/**
+	 *  Gets the action attribute of the JCPAction class
+	 *
+	 *@param  jcpPanel       Description of the Parameter
+	 *@param  actionname     Description of the Parameter
+	 *@param  isPopupAction  Description of the Parameter
+	 *@return                The action value
+	 */
+	public static JCPAction getAction(JChemPaintPanel jcpPanel, String actionname, boolean isPopupAction)
+	{
+		// make sure logger and actions are instantiated
+		JCPAction dummy = new JCPAction(jcpPanel);
+
+		// extract type
+		String type = "";
+		String classname = "";
+		int index = actionname.indexOf("@");
+		if (index >= 0)
+		{
+			classname = actionname.substring(0, index);
+			// FIXME: it should actually properly check wether there are more chars
+			// than just the "@".
+			type = actionname.substring(index + 1);
+		} else
+		{
+			classname = actionname;
+		}
+		logger.debug("Action class: ", classname);
+		logger.debug("Action type:  ", type);
+
+		// now get actual JCPAction class
+		if (!isPopupAction && actions.containsKey(actionname))
+		{
+			logger.debug("Taking JCPAction from action cache for:", actionname);
+			return (JCPAction) actions.get(actionname);
+		} else if (isPopupAction && popupActions.containsKey(actionname))
+		{
+			logger.debug("Taking JCPAction from popup cache for:", actionname);
+			return (JCPAction) popupActions.get(actionname);
+		} else
+		{
+			logger.debug("Loading JCPAction class for:", classname);
+			Object o = null;
+			try
+			{
+				// because 'this' is static, it cannot be used to get a classloader,
+				// therefore use logger instead
+				o = dummy.getClass().getClassLoader().loadClass(classname).newInstance();
+			} catch (Exception exc)
+			{
+				logger.error("Could not find/instantiate class: ", classname);
+				logger.debug(exc);
+				return dummy;
+			}
+			if (o instanceof JCPAction)
+			{
+				JCPAction a = (JCPAction) o;
+				a.setJChemPaintPanel(jcpPanel);
+				if (type.length() > 0)
+				{
+					a.setType(type);
+				}
+				if (isPopupAction)
+				{
+					popupActions.put(actionname, a);
+				} else
+				{
+					actions.put(actionname, a);
+				}
+				return a;
+			} else
+			{
+				logger.error("Action is not a JCPAction!");
+			}
+		}
+		return dummy;
+	}
+
+
+	/**
+	 *  Gets the action attribute of the JCPAction class
+	 *
+	 *@param  jcpPanel    Description of the Parameter
+	 *@param  actionname  Description of the Parameter
+	 *@return             The action value
+	 */
+	public static JCPAction getAction(JChemPaintPanel jcpPanel, String actionname)
+	{
+		return getAction(jcpPanel, actionname, false);
+	}
+}
+

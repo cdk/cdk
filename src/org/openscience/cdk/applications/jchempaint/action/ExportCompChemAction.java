@@ -1,0 +1,92 @@
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
+ *
+ * Copyright (C) 2003-2005  The JChemPaint project
+ *
+ * Contact: jchempaint-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package org.openscience.cdk.applications.jchempaint.action;
+
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileWriter;
+
+import javax.swing.JFileChooser;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.io.listener.SwingGUIListener;
+import org.openscience.cdk.io.program.GaussianInputWriter;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.io.JCPCompChemInputSaveFileFilter;
+import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
+
+/**
+ * Export current model to computational chemistry programs
+ * 
+ * cdk.module jchempaint
+ * @author Egon Willighagen
+ */
+public class ExportCompChemAction extends SaveAction {
+
+    /**
+    * Opens a dialog frame and manages the saving of a file.
+    */
+    public void actionPerformed(ActionEvent e) {
+        
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(JChemPaint.currentWorkDirectory);
+        JCPCompChemInputSaveFileFilter.addChoosableFileFilters(chooser);
+        chooser.setFileView(new JCPFileView());
+        int returnVal = chooser.showSaveDialog(JChemPaint.getInstance());
+        String type = null;
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            type = ((JCPCompChemInputSaveFileFilter)chooser.getFileFilter()).getType();
+            File outFile = chooser.getSelectedFile();
+
+            if (type.equals(JCPCompChemInputSaveFileFilter.gin)) {
+                logger.info("Saving the contents as Gaussian input...");
+                try {
+                    cow = new GaussianInputWriter(new FileWriter(outFile));
+                    if (cow != null) {
+                        cow.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+                    }
+                    AtomContainer ac = ChemModelManipulator.getAllInOneContainer(JChemPaint.getInstance().getCurrentModel().getChemModel());
+                    if (ac != null) {
+                        cow.write(new Molecule(ac));
+                    } else {
+                        logger.error("AtomContainer is empty!!!");
+                        System.err.println("AC == null!");
+                    }
+                } catch(Exception exception) {
+                    logger.error("Exception while trying to save Gaussian input");
+                    logger.debug(exception);
+                }
+            } // there is no else
+        }
+
+        JChemPaint.currentWorkDirectory = chooser.getCurrentDirectory();        
+    }
+}
+    
