@@ -410,7 +410,7 @@
                     <include name="${module}.javafiles" />
                </fileset>
                <fileset dir="${src}">
-                    <exclude name="**/*" />
+                    <exclude name="**/*" unless="module.datafiles.present"/>
                     <includesfile name="${metainf}/${module}.datafiles" if="module.datafiles.present" />
                </fileset>
             </jar>
