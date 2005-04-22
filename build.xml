@@ -725,7 +725,7 @@
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
         </target>
 
-        <target id="dist-core" name="dist-core" depends="compile-core, dist.init">
+        <target id="dist-core" name="dist-core">
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
         </target>
 
