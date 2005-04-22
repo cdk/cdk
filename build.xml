@@ -333,7 +333,7 @@
         
         <target id="compile" name="compile" 
             description="Compiles the CDK."
-            depends="compile-core, compile-standard, compile-extra, compile-io, 
+            depends="compile-standard, compile-extra, compile-io, 
                      compile-render, compile-render-with-java3d, compile-libio,
                      compile-qsar, compile-builder3d">
         </target>
