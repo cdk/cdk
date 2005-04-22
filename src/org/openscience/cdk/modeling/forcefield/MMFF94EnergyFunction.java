@@ -12,6 +12,7 @@ import org.openscience.cdk.*;
  *
  *@author     vlabarta
  *@cdk.created    March 14, 2005
+ *@cdk.module     builder3d
  *
  */
 public class MMFF94EnergyFunction implements PotentialFunction {

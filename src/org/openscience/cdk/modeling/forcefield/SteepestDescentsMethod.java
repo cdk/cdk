@@ -10,6 +10,7 @@ import org.openscience.cdk.*;
  *  Find a direction from a point of the coordinates space using the steepest descents approach.
  *
  *@author     vlabarta
+ *@cdk.module     builder3d
  *
  */
 public class SteepestDescentsMethod {

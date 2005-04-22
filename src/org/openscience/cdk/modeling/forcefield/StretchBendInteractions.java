@@ -15,6 +15,7 @@ import org.openscience.cdk.qsar.RDFProtonDescriptor;
  *
  * @author      vlabarta
  * @cdk.created 2005-02-15
+ *@cdk.module     builder3d
  */
 public class StretchBendInteractions {
 

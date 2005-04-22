@@ -19,6 +19,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  *  To work with the coordinates of the molecule, like get the 3d coordinates of the atoms or 
  *  calculate the distance between two atoms.
  *@author     vlabarta
+ *@cdk.module     builder3d
  *
  */
 public class ForceField extends GeometricMinimizer{

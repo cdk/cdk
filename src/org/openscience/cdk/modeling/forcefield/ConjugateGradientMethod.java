@@ -10,6 +10,7 @@ import org.openscience.cdk.*;
  *  Find a direction from a point of the 3xN coordinates space using the conjugate gradient approach.
  *
  *@author     vlabarta
+ *@cdk.module     builder3d
  *
  */
 public class ConjugateGradientMethod {

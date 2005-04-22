@@ -41,7 +41,6 @@ import java.util.zip.GZIPInputStream;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.io.formats.*;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -200,15 +199,6 @@ public class ReaderFactory {
             }
         } catch (NumberFormatException exception) {
             logger.info("No, it's not a XYZ file");
-        }
-        // is it a SMILES file?
-        try {
-            SmilesParser sp = new SmilesParser();
-            Molecule m = sp.parseSmiles(line);
-            return new org.openscience.cdk.io.formats.SMILESFormat();
-        } catch (Exception ise) {
-            // no, it is not
-            logger.info("No, it's not a SMILES file");
         }
 
         logger.warn("File format undetermined");

@@ -10,6 +10,7 @@ import org.openscience.cdk.*;
  *  The line-search method searches along the line containing the current point, xk, and parallel to the search direction
  *
  *@author     vlabarta
+ *@cdk.module     builder3d
  *
  */
 public class LineSearch {

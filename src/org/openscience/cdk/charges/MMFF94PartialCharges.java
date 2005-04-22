@@ -50,6 +50,7 @@ import java.util.Vector;
  *
  *@author     mfe4
  *@cdk.created    2004-11-03
+ *@cdk.module     builder3d
  */
 public class MMFF94PartialCharges {
 

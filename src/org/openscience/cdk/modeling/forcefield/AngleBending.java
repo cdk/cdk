@@ -15,6 +15,7 @@ import org.openscience.cdk.qsar.RDFProtonDescriptor;
  *
  *@author     vlabarta
  *@cdk.created    February 8, 2005
+ *@cdk.module     builder3d
  */
 public class AngleBending {
 

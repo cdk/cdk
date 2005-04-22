@@ -11,6 +11,7 @@ import org.openscience.cdk.*;
  *  Interface for a potential energy function to optimise in cdk/modeling/forcefield
  *
  * @author     vlabarta
+ *@cdk.module     builder3d
  * 
  */
 

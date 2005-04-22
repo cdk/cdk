@@ -29,7 +29,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 
 /**
- * @cdk.module extra
+ * @cdk.module standard
  */
 public class QueryAtomContainer extends AtomContainer {
 

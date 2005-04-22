@@ -11,6 +11,7 @@ import org.openscience.cdk.modeling.builder3d.*;
  *  Call the minimization methods. Check the convergence.
  *
  *@author     vlabarta
+ *@cdk.module     builder3d
  *
  */
 public class GeometricMinimizer {

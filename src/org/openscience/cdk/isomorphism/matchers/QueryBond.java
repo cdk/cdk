@@ -27,7 +27,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 
 /**
- * @cdk.module extra
+ * @cdk.module standard
  */
 public interface QueryBond {
 

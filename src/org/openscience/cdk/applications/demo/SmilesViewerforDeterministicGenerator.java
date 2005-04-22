@@ -49,7 +49,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.require applications
+ * @cdk.module  swing
  * @cdk.require swing
  */
 public class SmilesViewerforDeterministicGenerator extends JApplet implements ActionListener{

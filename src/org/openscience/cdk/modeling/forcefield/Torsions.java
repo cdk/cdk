@@ -14,6 +14,7 @@ import org.openscience.cdk.modeling.builder3d.*;
  *
  *@author     vlabarta
  *@cdk.created    March 2, 2005
+ *@cdk.module     builder3d
  */
 public class Torsions {
 

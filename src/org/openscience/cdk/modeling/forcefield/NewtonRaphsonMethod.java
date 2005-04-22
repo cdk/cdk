@@ -11,6 +11,7 @@ import org.openscience.cdk.*;
  *  Methods of Newton-Raphson approach.
  *
  *@author     vlabarta
+ *@cdk.module     builder3d
  *
  */
 public class NewtonRaphsonMethod {

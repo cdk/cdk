@@ -15,6 +15,7 @@ import org.openscience.cdk.geometry.GeometryTools;
  *
  *@author     vlabarta
  *@cdk.created    January 27, 2005
+ *@cdk.module     builder3d
  */
 public class BondStretching {
 

@@ -12,6 +12,7 @@ import org.openscience.cdk.*;
  *
  * @author      vlabarta
  * @cdk.created 2005-03-03
+ *@cdk.module     builder3d
  */
 public class ForceFieldTools {
 

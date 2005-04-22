@@ -45,7 +45,7 @@ import org.openscience.cdk.SetOfReactions;
  * Abstract validator that does nothing but provide all the methods that the
  * ValidatorInterface requires.
  *
- * @cdk.module experimental
+ * @cdk.module extra
  *
  * @author   Egon Willighagen
  * @cdk.created  2004-03-27

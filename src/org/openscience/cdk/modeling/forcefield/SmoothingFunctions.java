@@ -14,6 +14,7 @@ import org.openscience.cdk.modeling.builder3d.*;
  *
  *@author     vlabarta
  *@cdk.created    February 28, 2005
+ *@cdk.module     builder3d
  */
 public class SmoothingFunctions {
 	double[] s = null;	// Smoothing function
