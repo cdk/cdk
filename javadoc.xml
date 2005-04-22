@@ -65,6 +65,7 @@
             <taglet name="CDKModuleTaglet" path="doc/javadoc" />
             <taglet name="CDKCiteTaglet" path="doc/javadoc" />
             <taglet name="CDKBugTaglet" path="doc/javadoc" />
+            <taglet name="CDKDictRefTaglet" path="doc/javadoc" />
             <packageset dir="${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
                 <exclude name="org/openscience/cdk/test/**"/>
