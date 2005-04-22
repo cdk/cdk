@@ -39,7 +39,7 @@
         <property name="arg4" value="" />
         
         <!-- CLASSPATH -->
-        <path id="project.class.path">
+        <!-- path id="project.class.path">
                 <pathelement location="${java.ext.dirs}/rt.jar" />
 
                 <fileset dir="${lib}">
@@ -81,7 +81,7 @@
                 <fileset dir="${pathtojava3d}">
                         <include name="*.jar" />
                 </fileset>
-        </path>
+        </path -->
 
         <target id="info" name="info" depends="check"> 
             <!-- Gives information about the building process. -->
@@ -140,7 +140,6 @@
             <available file="${lib}/cmlAll_1.4.jar" 
                 property="cmllibs.present"/>
             <available classname="javax.media.j3d.Canvas3D"
-                classpathref="project.class.path"
                 property="java3D.present"/>
             <available classname="junit.framework.TestCase"
                 classpath="${ant.home}/lib/junit.jar"
@@ -331,17 +330,6 @@
         <target name="compile.init" id="compile.init" 
                 depends="init, customize, compileDoclet, runDoclet"/>
         
-        <target id="compile" name="compile" 
-            description="Compiles the CDK."
-            depends="compile-standard, compile-extra, compile-io, 
-                     compile-render, compile-render-with-java3d, compile-libio,
-                     compile-qsar, compile-builder3d">
-        </target>
-
-        <target id="compile-all" name="compile-all" depends="compile, compile-experimental, compile-apps"
-            description="Compiles the CDK, including experimental classes.">
-        </target>
-
         <target id="compile-libio" name="compile-libio" depends="dist-standard,
                                          compile-libio-joelib, compile-libio-cml" />
         
@@ -397,61 +385,6 @@
                     </fileset>
                 </classpath>
             </javac>
-        </target>
-
-        <target id="compile-apps" name="compile-apps" 
-                depends="dist-libio, dist-experimental, dist-render-with-java3d">
-            <!-- Task to build the applications classes. Some require extra
-                 jars, like those in ${lib}/libio -->
-            <echo message="Compiling classes defined in ${src}/applications.javafiles." />
-
-            <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <includesfile name="${src}/applications.javafiles"/>
-                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${dist}/jar">
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-standard.jar" />
-                        <include name="cdk-render.jar" />
-                        <include name="cdk-io.jar" />
-                        <include name="cdk-extra.jar" />
-                        <include name="cdk-libio.jar" />
-                        <include name="cdk-experimental.jar" />
-                    </fileset>
-                </classpath>
-                <classpath>
-                    <fileset dir="${lib}/libio">
-                        <include name="*.jar" />
-                    </fileset>
-                </classpath>
-            </javac>
-        </target>
-
-        <target id="compile-standard" name="compile-standard" depends="dist-core">
-                <echo message="Compiling classes for cdk-standard module." />
-
-                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <includesfile name="${src}/standard.javafiles"/>
-                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                    <classpath>
-                        <fileset dir="${lib}">
-                            <include name="vecmath1.2-1.14.jar" />
-                            <include name="log4j.jar" />
-                            <include name="gnujaxp.jar" />
-                            <include name="xerces-2.5.0.jar" />
-                            <include name="jgrapht-0.5.3.jar" />
-                        </fileset>
-                        <fileset dir="${dist}/jar">
-                            <include name="cdk-core.jar" />
-                        </fileset>
-                    </classpath>
-                </javac>
         </target>
 
         <target id="compile-io" name="compile-io" depends="init, dist-core, dist-standard">
@@ -519,7 +452,17 @@
 
         <target id="compile-module" name="compile-module" depends="compile.init, dist.init">
             <echo message="Compiling classes for CDK's ${module} module." />
+            
+            <!-- check for availability for meta info files -->
+            <available file="${metainf}/${module}.datafiles" property="module.datafiles.present"/>
+            <available file="${metainf}/${module}.cdkdepends" property="module.cdkdepends.present"/>
+            <available file="${metainf}/${module}.libdepends" property="module.libdepends.present"/>
         
+            <!-- be somewhat informative -->
+            <echo message="Datafiles defined: ${module.datafiles.present}"/>
+            <echo message="CDK dependencies defined: ${module.cdkdepends.present}"/>
+            <echo message="Library dependencies defined: ${module.libdepends.present}"/>
+            
             <!-- normally javac compiles not just the given files, but also missing
                  classes that are in the same src/ directory. By making a copy first,
                  we explicitely make it impossible to compile files that are not
@@ -534,13 +477,15 @@
             
             <!-- ok, now that we have a copy, compile this copy -->
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                debug="${debug}" deprecation="${deprecation}">
+                    debug="${debug}" deprecation="${deprecation}">
                 <classpath>
-                    <fileset dir="${lib}">
-                        <includesfile name="${metainf}/${module}.libdepends" />
+                    <fileset dir="${lib}" >
+                        <exclude name="**/*" unless="module.libdepends.present" />
+                        <includesfile name="${metainf}/${module}.libdepends" if="module.libdepends.present" />
                     </fileset>
                     <fileset dir="${dist}/jar">
-                        <includesfile name="${metainf}/${module}.cdkdepends" />
+                        <exclude name="**/*" unless="module.cdkdepends.present" />
+                        <includesfile name="${metainf}/${module}.cdkdepends" if="module.cdkdepends.present" />
                     </fileset>
                 </classpath>
             
@@ -561,6 +506,10 @@
                </fileset>
                <fileset dir="${src}">
                     <include name="${module}.javafiles" />
+               </fileset>
+               <fileset dir="${src}">
+                    <exclude name="**/*" />
+                    <includesfile name="${metainf}/${module}.datafiles" if="module.datafiles.present" />
                </fileset>
             </jar>
        </target>
@@ -587,26 +536,6 @@
             javacchome="${lib}"/>
         </target>
 
-        <target id="compile-extra" name="compile-extra" depends="dist-standard, dist-io, dist-render">
-            <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <includesfile name="${src}/extra.javafiles"/>
-                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${dist}/jar">
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-standard.jar" />
-                        <include name="cdk-render.jar" />
-                        <include name="cdk-io.jar" />
-                    </fileset>
-                </classpath>
-            </javac>
-        </target>
-
         <target id="compile-experimental" name="compile-experimental" 
                 depends="dist-extra">
             <echo message="Compiling classes for cdk-experimental module." />
@@ -630,8 +559,8 @@
             </javac>
         </target>
 
-        <target id="compile-test" name="compile-test" depends="dist-large">
-            <!-- Task to build the test classes. -->
+        <!-- target id="compile-test" name="compile-test" depends="dist-large">
+            <!- Task to build the test classes. ->
             <javac srcdir="${src}"
                    destdir="${build}" optimize="${optimization}" 
                    debug="${debug}" deprecation="${deprecation}">
@@ -652,7 +581,7 @@
                     <pathelement location="${dist}/jar/cdk-${version}.jar" />
                 </classpath>
             </javac>
-        </target>
+        </target -->
 
         
         <target name="compile-render-with-java3d" 
@@ -729,19 +658,8 @@
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
         </target>
 
-        <target id="dist-extra" name="dist-extra" depends="dist-core, compile-extra">
-                <jar jarfile="${dist}/jar/cdk-extra.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/extra.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                    <fileset dir="${build}">
-                        <include name="org/openscience/cdk/dict/data/*.xml" />
-                        <include name="org/openscience/cdk/modeling/forcefield/data/*.prm"/>
-                    </fileset>
-                </jar>
+        <target id="dist-extra" name="dist-extra">
+            <antcall target="compile-module"><param name="module" value="extra"/></antcall>
         </target>
 
         <target id="dist-experimental" name="dist-experimental" depends="compile-experimental, dist.init">
@@ -755,34 +673,12 @@
                 </jar>
         </target>
 
-        <target id="dist-apps" name="dist-apps" depends="compile-apps">
-                <jar jarfile="${dist}/jar/cdk-apps.jar" manifest="${src}/cdk-apps.manifest">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/applications.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                </jar>
+        <target id="dist-apps" name="dist-apps">
+            <antcall target="compile-module"><param name="module" value="applications"/></antcall>
         </target>
 
-        <target id="dist-test" name="dist-test" depends="compile-test">
-                <jar jarfile="${dist}/jar/cdk-test.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/test.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                        <excludesfile name="${src}/r-project.classes" unless="rispresent"/>
-                    </fileset>
-                    <fileset dir=".">
-                        <include name="data/**" />
-                    </fileset>
-                    <fileset dir="${src}">
-                        <include name="data.javafiles"/>
-                        <include name="core.javafiles"/>
-                    </fileset>
-                </jar>
+        <target id="dist-test" name="dist-test">
+            <antcall target="compile-module"><param name="module" value="test"/></antcall>
         </target>
 
         <target id="dist-libio" name="dist-libio" depends="compile-libio" unless="libio.present">
@@ -838,16 +734,8 @@
                 </jar>
         </target>
 
-        <target id="dist-standard" name="dist-standard" depends="compile-standard, dist.init">
-                <jar jarfile="${dist}/jar/cdk-standard.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/standard.classes" />
-                        <include name="org/openscience/cdk/config/**" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                </jar>
+        <target id="dist-standard" name="dist-standard">
+            <antcall target="compile-module"><param name="module" value="standard"/></antcall>
         </target>
 
         <target id="dist-qsar" name="dist-qsar" depends="compile-qsar, dist.init">
@@ -883,7 +771,7 @@
                 </jar>
         </target>
 
-        <target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
+        <!-- target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
             description="Builds on big jar file for the CDK, including experimental classes.">
                 <jar jarfile="${dist}/jar/cdk-${version}.jar">
                     <manifest>
@@ -914,17 +802,17 @@
                     <fileset dir="packages/tar/cdk">
                         <include name="AUTHORS" />
                     </fileset>
-                    <fileset dir="${src}"> <!-- from io and qsar module -->
+                    <fileset dir="${src}"> <!- from io and qsar module ->
                         <include name="io-formats.set"/>
                         <include name="qsar-descriptors.set"/>
                     </fileset>
-                    <fileset dir="data/templates"> <!-- from builder3d module -->
+                    <fileset dir="data/templates"> <!- from builder3d module ->
                         <include name="ringTemplateFingerprints.txt"/>
                         <include name="ringTemplateStructures.sdf"/>
                     </fileset>
                     <fileset dir="${appjars.dir}" includes="**/*.class"/>
                 </jar>
-        </target>
+        </target -->
 
         <target name="check.libjars" id="check.libjars">
             <uptodate property="libjars.uptodate" targetfile="${appjars.dir}">
@@ -981,16 +869,6 @@
             <unjar dest="${appjars.dir}" src="${lib}/xindice.jar"/>
             <unjar dest="${appjars.dir}" src="${lib}/xmldb.jar"/>
         </target>
-
-        <target id="dist-all" name="dist-all" depends="dist, dist-experimental, dist-apps"
-                description="Builds the jar files for the CDK, including experimental classes."/>
-
-        <target id="dist" name="dist" depends="dist-data, dist-core, dist-standard, 
-                                         dist-io, dist-render,
-                                         dist-extra, dist-libio,
-                                         dist-render-with-java3d,
-                                         dist-qsar, dist-builder3d" 
-                description="Builds the jar files for the CDK."/>
 
         <target id="sourcedist" name="sourcedist" depends="init"
                 description="Builds the source packages.">
@@ -1059,9 +937,9 @@
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
 
-        <target id="test-all" name="test-all" depends="test, test-experimental"/>
+        <!-- target id="test-all" name="test-all" depends="test, test-experimental"/ -->
         
-        <target id="test-experimental" name="test-experimental" depends="dist-large, noJunit"
+        <!-- target id="test-experimental" name="test-experimental" depends="dist-large, noJunit"
                 description="Performs a full JUnit test for the CDK, including experimental classes.">
                 <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
@@ -1085,13 +963,13 @@
                                 <formatter type="brief" />
                         </test>
                 </junit>
-        </target>
+        </target -->
 
         <target id="noJunit" name="noJunit" depends="check" unless="junit.present">
             <fail message="JUnit is not installed in Ant. Please copy cdk/develjar/junit.jar to ${ant.home}/lib/."/>
         </target>
         
-        <target id="test" name="test" depends="dist-test, dist-large, noJunit"
+        <!-- target id="test" name="test" depends="dist-test, dist-large, noJunit"
                 description="Performs a full JUnit test for the CDK." if="junit.present">
                 <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes" maxmemory="256m">
@@ -1115,9 +993,9 @@
                                 <formatter type="brief" />
                         </test>
                 </junit>
-        </target>
+        </target -->
 
-        <target id="limitations" name="limitations" depends="dist-large, dist-test, noJunit"
+        <!-- target id="limitations" name="limitations" depends="dist-large, dist-test, noJunit"
                 description="Performs a JUnit tests that indicate limitations of certain CDK algorithms/classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
@@ -1139,9 +1017,9 @@
                                 <formatter type="brief" />
                         </test>
                 </junit>
-        </target>
+        </target -->
 
-        <target id="test-libio" name="test-libio" depends="dist-large, dist-libio">
+        <!-- target id="test-libio" name="test-libio" depends="dist-large, dist-libio">
                 <java classname="org.openscience.cdk.test.libio.joelib.JOELibIOTest" fork="yes">
                         <classpath>
                                 <pathelement location="${dist}/jar/cdk-${version}.jar" />
@@ -1158,7 +1036,7 @@
                                 </fileset>
                         </classpath>
                 </java>
-        </target>
+        </target -->
 
         <target name="run-with-java3d"
         depends="dist-extra, dist-io, dist-extra, dist-render-with-java3d">
@@ -1186,7 +1064,7 @@
                 </java>
         </target>
 
-        <target id="run-test" name="run-test" depends="dist-large, dist-test" 
+        <!-- target id="run-test" name="run-test" depends="dist-large, dist-test" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) as a standalone application with -Dtestclass=&lt;class>.">
                 <echo message="Running test class: testclass=${testclass}"/>
                 <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
@@ -1205,9 +1083,9 @@
                         </fileset>
                     </classpath>
                 </java>
-        </target>
+        </target -->
 
-        <target id="junit-test" name="junit-test" depends="dist-large, dist-test, noJunit" 
+        <!-- target id="junit-test" name="junit-test" depends="dist-large, dist-test, noJunit" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) with -Dtestclass=&lt;class>.">
                 <echo message="JUnit tests class: testclass=${testclass}"/>
                 <junit printsummary="yes" haltonfailure="no" fork="yes">
@@ -1235,7 +1113,7 @@
                         <formatter type="brief" />
                     </test>
                 </junit>
-        </target>
+        </target -->
 
 	
         <target id="run" name="run" depends="dist-core, dist-extra, dist-test, dist-standard, dist-data" 
