@@ -256,7 +256,7 @@
 
         <target name="runDoclet" id="runDoclet" depends="reallyRunDoclet, failIfNoDocletResults"/>
 
-        <target name="checkDocletResults">
+        <target name="checkDocletResults" id="checkDocletResults">
             <condition property="dotjavafiles.uptodate">
                 <and>
                     <available file="${src}/data.javafiles" />
@@ -268,7 +268,7 @@
             </condition>
         </target>
 
-        <target name="failIfNoDocletResults" depends="checkDocletResults" unless="dotjavafiles.uptodate">
+        <target name="failIfNoDocletResults" id="failIfNoDocletResults" depends="checkDocletResults" unless="dotjavafiles.uptodate">
             <fail>
               There seems to be a problem with building the cdk/src/*.javafiles.
               Often this is caused by malformed java source code, so please check the output
@@ -280,7 +280,7 @@
             </fail>
         </target>
         
-        <target name="reallyRunDoclet" depends="compileDoclet" unless="dotjavafiles.uptodate">
+        <target name="reallyRunDoclet" id="reallyRunDoclet" depends="compileDoclet" unless="dotjavafiles.uptodate">
             <javadoc private="false" public="true">
                 <classpath>
                     <fileset dir="${lib}">
@@ -334,90 +334,6 @@
         <target name="compile.init" id="compile.init" 
                 depends="init, customize, compileDoclet, runDoclet"/>
         
-        <target id="compile-libio" name="compile-libio" depends="dist-standard,
-                                         compile-libio-joelib, compile-libio-cml" />
-        
-        <target name="dont-compile-libio-joelib" unless="joelib.present">
-            <echo message="Not compiling libio for JOELib, jar/libio/joelib.jar is not present" /> 
-        </target>
-        
-        <target name="dont-compile-libio-cml" unless="cmllibs.present">
-            <echo message="Not compiling libio for CMLDOM, jar/cmlAll.jar is not present" /> 
-        </target>
-        
-        <target name="compile-libio-joelib" if="joelib.present" depends="dont-compile-libio-joelib">
-            <!-- Task to build the libio classes for JOELib. -->
-            <echo message="Compiling libio for JOELib" /> 
-
-            <javac destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <src path="${src}/org/openscience/cdk/libio/joelib" />
-                
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${lib}/libio">
-                        <include name="joelib.jar" />
-                    </fileset>
-                </classpath>
-            </javac>
-        </target>
-
-        <target name="compile-libio-cml" if="cmllibs.present" 
-            depends="dont-compile-libio-cml, dist-data, dist-qsar, dist-extra">
-            <!-- Task to build the libio classes for CMLDOM. -->
-            <echo message="Compiling libio for CMLDOM" /> 
-
-            <javac destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <src path="${src}/org/openscience/cdk/libio/cml" />
-                
-                <classpath>
-                    <fileset dir="dist/jar">
-                        <include name="cdk-data.jar" />
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-extra.jar" />
-                        <include name="cdk-qsar.jar" />
-                    </fileset>
-                </classpath>
-                <classpath>
-                    <fileset dir="${lib}">
-                        <include name="base_1.4.jar" />
-                        <include name="cmlAll_1.4.jar" />
-                        <include name="euclid_1.4.jar" />
-                        <include name="pmrdom_1.4.jar" />
-                        <include name="vecmath1.2-1.14.jar" />
-                    </fileset>
-                </classpath>
-            </javac>
-        </target>
-
-        <target id="compile-qsar" name="compile-qsar" depends="compile.init">
-                <echo message="Compiling classes for cdk-qsar module." />
-
-                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <classpath refid="project.class.path" />
-                    <includesfile name="${src}/qsar.javafiles"/>
-                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                    <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
-                </javac>
-        </target>
-
-        <target id="compile-builder3d" name="compile-builder3d" depends="compile.init">
-                <echo message="Compiling classes for cdk-builder3d module." />
-
-                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <classpath refid="project.class.path" />
-                    <includesfile name="${src}/builder3d.javafiles"/>
-                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                </javac>
-        </target>
-
         <target id="compile-module" name="compile-module" depends="compile.init, dist.init">
             <echo message="Compiling classes for CDK's ${module} module." />
             
@@ -460,6 +376,7 @@
                 <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                 <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
                 <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
+                <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
             
                 <includesfile name="${src}/${module}.javafiles"/>
             </javac>
@@ -504,141 +421,21 @@
             javacchome="${lib}"/>
         </target>
 
-        <target id="compile-experimental" name="compile-experimental" 
-                depends="dist-extra">
-            <echo message="Compiling classes for cdk-experimental module." />
-
-            <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <includesfile name="${src}/experimental.javafiles"/>
-                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${dist}/jar">
-                        <include name="cdk-core.jar" />
-                        <include name="cdk-standard.jar" />
-                        <include name="cdk-render.jar" />
-                        <include name="cdk-io.jar" />
-                        <include name="cdk-extra.jar" />
-                    </fileset>
-                </classpath>
-            </javac>
-        </target>
-
-        <!-- target id="compile-test" name="compile-test" depends="dist-large">
-            <!- Task to build the test classes. ->
-            <javac srcdir="${src}"
-                   destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <includesfile name="${src}/test.javafiles"/>
-                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
-
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${devellib}">
-                        <include name="hansel-1.02.jar" />
-                        <include name="junit.jar" />
-                    </fileset>
-                </classpath>
-                <classpath>
-                    <pathelement location="${dist}/jar/cdk-${version}.jar" />
-                </classpath>
-            </javac>
-        </target -->
-
-        
-        <target name="compile-render-with-java3d" 
-                depends="dont-compile-render-with-java3d, do-compile-render-with-java3d"/>
-
-        <target name="dont-compile-render-with-java3d" depends="compile-render"
-                unless="java3D.present">
-                <echo message="Cannot compile Java3D based viewer classes. Java3D is not present" />
-        </target>
-        
-        <target name="do-compile-render-with-java3d" depends="compile-render"
-                if="java3D.present">
-                <mkdir dir="${build}" />
-
-                <javac srcdir="${src}"
-                       destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/java3d.javafiles">
-
-                        <classpath refid="project.class.path" />
-                </javac>
-        </target>
-
         <target id="dist.init" name="dist.init">
             <mkdir dir="${dist}/jar" />
-
-            <!-- copy data files -->
-
-            <mkdir dir="${build}/org/openscience/cdk/config/data" />
-            <mkdir dir="${build}/org/openscience/cdk/io/cml/data" />
-            <mkdir dir="${build}/org/openscience/cdk/dict/data" />
-            <mkdir dir="${build}/org/openscience/cdk/iupac/generator/data" />
-            <mkdir dir="${build}/org/openscience/cdk/qsar/model/R/data" />
-
-            <copy
-                file="${src}/org/openscience/cdk/config/data/isotopes.xml"
-                tofile="${build}/org/openscience/cdk/config/data/isotopes.xml" />
-            <copy todir="${build}/org/openscience/cdk/config/data/">
-                <fileset dir="${src}/org/openscience/cdk/config/data/" includes="*_atomtypes.xml"/>
-                <fileset dir="${src}/org/openscience/cdk/config/data/" includes="jmol_atomtypes.txt"/>
-            </copy>
-            <copy
-                file="${src}/org/openscience/cdk/config/data/log4j.properties"
-                tofile="${build}/org/openscience/cdk/config/data/log4j.properties" />
-            <copy
-                file="${src}/org/openscience/cdk/io/cml/data/cml1_0.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0.dtd" />
-            <copy
-                file="${src}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd"
-                tofile="${build}/org/openscience/cdk/io/cml/data/cml1_0_1.dtd" />
-
-            <copy
-                file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
-                tofile="${build}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
-
-            <copy todir="${build}/org/openscience/cdk/dict/data/">
-                <fileset dir="${src}/org/openscience/cdk/dict/data/" includes="*.xml"/>
-            </copy>
-
-            <copy todir="${build}/org/openscience/cdk/modeling/forcefield/data/">
-                <fileset dir="${src}/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
-            </copy>
-
-            <copy todir="${build}/org/openscience/cdk/qsar/model/data/">
-                <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
-            </copy>
         </target>
 
-        <target id="dist-data" name="dist-data">
+        <target id="dist-all" name="dist-all">
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
-        </target>
-
-        <target id="dist-core" name="dist-core">
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
-        </target>
-
-        <target id="dist-extra" name="dist-extra">
+            <antcall target="compile-module"><param name="module" value="standard"/></antcall>
+            <antcall target="compile-module"><param name="module" value="render"/></antcall>
+            <antcall target="compile-module"><param name="module" value="io"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
         </target>
 
-        <target id="dist-experimental" name="dist-experimental" depends="compile-experimental, dist.init">
-                <jar jarfile="${dist}/jar/cdk-experimental.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/experimental.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                </jar>
+        <target id="dist-experimental" name="dist-experimental">
+            <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
         </target>
 
         <target id="dist-apps" name="dist-apps">
@@ -649,63 +446,16 @@
             <antcall target="compile-module"><param name="module" value="test"/></antcall>
         </target>
 
-        <target id="dist-libio" name="dist-libio" depends="compile-libio" unless="libio.present">
-                <jar jarfile="${dist}/jar/cdk-libio.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/libio.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                    <fileset dir="${build}">
-                        <include name="org/openscience/jmol/**" />
-                    </fileset>
-                </jar>
+        <target id="dist-libio" name="dist-libio">
+            <antcall target="compile-module"><param name="module" value="libio"/></antcall>
         </target>
 
-        <target id="dist-io" name="dist-io">
-            <antcall target="compile-module"><param name="module" value="io"/></antcall>
+        <target id="dist-qsar" name="dist-qsar">
+            <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
         </target>
 
-        <target id="dist-render" name="dist-render">
-            <antcall target="compile-module"><param name="module" value="render"/></antcall>
-        </target>
-
-        <target id="dist-standard" name="dist-standard">
-            <antcall target="compile-module"><param name="module" value="standard"/></antcall>
-        </target>
-
-        <target id="dist-qsar" name="dist-qsar" depends="compile-qsar, dist.init">
-                <jar jarfile="${dist}/jar/cdk-qsar.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/qsar.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                        <excludesfile name="${src}/r-project.classes" unless="rispresent"/>
-                    </fileset>
-                    <fileset dir="${build}">
-                        <include name="org/openscience/cdk/qsar/model/data/*.R" if="rispresent"/>
-                    </fileset>
-                    <fileset dir="${src}">
-                        <include name="qsar-descriptors.set"/>
-                    </fileset>
-                </jar>
-        </target>
-
-        <target id="dist-builder3d" name="dist-builder3d" depends="compile-builder3d, dist.init">
-                <jar jarfile="${dist}/jar/cdk-builder3d.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/builder3d.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                    <fileset dir="data/templates">
-                        <include name="ringTemplateFingerprints.txt"/>
-                        <include name="ringTemplateStructures.sdf"/>
-                    </fileset>
-                </jar>
+        <target id="dist-builder3d" name="dist-builder3d">
+            <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
         </target>
 
         <!-- target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
@@ -975,7 +725,7 @@
                 </java>
         </target -->
 
-        <target name="run-with-java3d"
+        <!-- target name="run-with-java3d"
         depends="dist-extra, dist-io, dist-extra, dist-render-with-java3d">
                 <java
                 classname="org.openscience.cdk.test.OrbitalsRenderer3DTest"
@@ -999,7 +749,7 @@
                                 </fileset>
                         </classpath>
                 </java>
-        </target>
+        </target -->
 
         <!-- target id="run-test" name="run-test" depends="dist-large, dist-test" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) as a standalone application with -Dtestclass=&lt;class>.">
@@ -1053,7 +803,7 @@
         </target -->
 
 	
-        <target id="run" name="run" depends="dist-core, dist-extra, dist-test, dist-standard, dist-data" 
+        <target id="run" name="run" depends="dist-all" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
                    <arg value="${arg1}" />
