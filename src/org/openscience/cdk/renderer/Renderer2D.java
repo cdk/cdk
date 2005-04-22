@@ -1240,6 +1240,7 @@ public class Renderer2D implements MouseMotionListener   {
 
     private Point getScreenCoordinates(Point p) {
         graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
+        logger.debug("HEIGHT: " + graphicsHeight);
         Point screenCoordinate = new Point();
         double zoomFactor = r2dm.getZoomFactor();
         screenCoordinate.x = (int)((double)p.x * zoomFactor);
@@ -1253,6 +1254,7 @@ public class Renderer2D implements MouseMotionListener   {
      */
     protected int[] getScreenCoordinates(int[] coords) {
         graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
+        logger.debug("HEIGHT: " + graphicsHeight);
         int[] screenCoordinates = new int[coords.length];
         double zoomFactor = r2dm.getZoomFactor();
         final int coordCount = coords.length / 2;

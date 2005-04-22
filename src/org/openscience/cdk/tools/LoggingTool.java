@@ -130,8 +130,17 @@ public class LoggingTool {
         stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
         try {
+            /* Next line is required to not have the compiler trip over the
+             * the catch clause later, which in turn is needed on runtime when
+             * security is checked, which is with the PluginManager, as it
+             * uses the java.net.URLClassLoader. */
+            if (false) throw new ClassNotFoundException(); // NOPMD
+            
             log4jLogger = (org.apache.log4j.Category)org.apache.log4j.Category
                                                      .getInstance( classname );
+        } catch (ClassNotFoundException e) {
+            tostdout = true;
+            logger.debug("Log4J class not found!");
         } catch (NoClassDefFoundError e) {
             tostdout = true;
             logger.debug("Log4J class not found!");
