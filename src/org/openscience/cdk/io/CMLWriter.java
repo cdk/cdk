@@ -111,7 +111,7 @@ import org.xmlcml.cmlimpl.*;
  * <p>For atoms it outputs: coordinates, element type and formal charge.
  * For bonds it outputs: order, atoms (2, or more) and wedges.
  *
- * @cdk.module extra
+ * @cdk.module libio-cml
  * @cdk.depends base.jar
  * @cdk.depends pmrlib.jar
  * @cdk.depends cmlAll.jar

@@ -29,7 +29,7 @@ import org.openscience.cdk.Atom;
  * This matcher checks the formal charge of the Atom.
  * This cannot be matched with a unpreprocessed Atom!
  *
- * @cdk.module experimental
+ * @cdk.module extra
  */
 public class TotalHCountAtom extends SMARTSAtom {
     

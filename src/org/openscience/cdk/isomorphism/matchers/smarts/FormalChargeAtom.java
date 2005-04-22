@@ -28,7 +28,7 @@ import org.openscience.cdk.Atom;
 /**
  * This matcher checks the formal charge of the Atom.
  *
- * @cdk.module experimental
+ * @cdk.module extra
  */
 public class FormalChargeAtom extends SMARTSAtom {
     

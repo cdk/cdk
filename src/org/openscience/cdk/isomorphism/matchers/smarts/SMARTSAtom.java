@@ -30,7 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 /**
  * This is just a simple proof of concept, and far from a functional SMARTSAtom.
  *
- * @cdk.module experimental
+ * @cdk.module extra
  */
 public abstract class SMARTSAtom extends PseudoAtom implements QueryAtom {
     

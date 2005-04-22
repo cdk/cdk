@@ -44,16 +44,17 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.CMLReader;
 
 /**
-  * A command line application for administering the database
-  *
-  * @author unknown
-  * @author egonw
-  *
-  * @deprecated
-  * @cdk.keyword MySQL
-  * @cdk.depends postgresql7.0-1.2.jar
-  * @cdk.depends mysql-2.0.4.jar
-  */
+ * A command line application for administering the database
+ *
+ * @author egonw
+ *
+ * @deprecated
+ * @cdk.keyword MySQL
+ * @cdk.depends postgresql7.0-1.2.jar
+ * @cdk.depends mysql-2.0.4.jar
+ *
+ * @cdk.module orphaned
+ */
 public class DBAdmin {
 
     private org.openscience.cdk.tools.LoggingTool logger;

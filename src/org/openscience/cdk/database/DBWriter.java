@@ -26,7 +26,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.database;
 
 import java.io.IOException;
@@ -46,7 +45,9 @@ import org.openscience.cdk.io.formats.ChemFormat;
 
 /**
  *  Writer that is used to store molecules in JDBC databases.
- **/
+ *
+ * @cdk.module orphaned
+ */
 public class DBWriter {
 
 	private org.openscience.cdk.tools.LoggingTool logger;

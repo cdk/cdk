@@ -30,7 +30,7 @@ import org.openscience.cdk.CDKConstants;
  * This matcher any aromatic atom. This assumes that aromaticity in the molecule
  * has been perceived.
  *
- * @cdk.module experimental
+ * @cdk.module extra
  */
 public class AromaticAtom extends SMARTSAtom {
     

@@ -28,7 +28,7 @@ import org.openscience.cdk.Atom;
 /**
  * This matcher any Atom.
  *
- * @cdk.module experimental
+ * @cdk.module extra
  */
 public class AnyAtom extends SMARTSAtom {
     

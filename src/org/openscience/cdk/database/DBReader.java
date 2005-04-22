@@ -53,6 +53,8 @@ import org.openscience.cdk.io.formats.ChemFormat;
  *
  * @cdk.keyword database
  * @cdk.keyword JDBC
+ *
+ * @cdk.module orphaned
  */
 public class DBReader {
 

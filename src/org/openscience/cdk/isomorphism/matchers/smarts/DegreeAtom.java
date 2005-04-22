@@ -29,7 +29,7 @@ import org.openscience.cdk.Atom;
  * This matcher checks the number of connections of the checked Atom
  * with other Atom's. This cannot be matched with a unpreprocessed Atom!
  *
- * @cdk.module experimental
+ * @cdk.module extra
  */
 public class DegreeAtom extends SMARTSAtom {
     
