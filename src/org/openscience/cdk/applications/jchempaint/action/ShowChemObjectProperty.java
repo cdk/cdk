@@ -41,7 +41,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
  *  Shows the contect of a specified property (i.e. as defined in the type of
  *  this JCPAction).
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */

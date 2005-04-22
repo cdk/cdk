@@ -48,7 +48,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 /**
  * An action opening a validation frame
  * 
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     E.L. Willighagen <elw38@cam.ac.uk>
  * @created    22. April 2005
  */

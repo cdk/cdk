@@ -45,7 +45,7 @@ import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 /**
  * Export current model to computational chemistry programs
  * 
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author Egon Willighagen
  */
 public class ExportCompChemAction extends SaveAction {

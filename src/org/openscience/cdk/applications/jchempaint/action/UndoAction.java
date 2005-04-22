@@ -35,7 +35,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
  * An action for making things undone :-)
  * Beneficial in many situations in your life.
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */

@@ -38,7 +38,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 /**
  * Shows a dialog for editing the Display settings
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */

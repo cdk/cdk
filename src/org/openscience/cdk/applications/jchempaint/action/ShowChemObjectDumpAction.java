@@ -42,7 +42,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 /**
  * Allow to dump a ChemObject to a newly opened screen
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */

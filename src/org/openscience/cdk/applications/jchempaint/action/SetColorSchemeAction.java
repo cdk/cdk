@@ -39,7 +39,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
  * Opens a dialog allowing to adjust the coloring scheme for 
  * drawn molecules
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */

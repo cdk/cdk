@@ -61,7 +61,7 @@ import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
 /**
  * Opens a "Save as" dialog
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */

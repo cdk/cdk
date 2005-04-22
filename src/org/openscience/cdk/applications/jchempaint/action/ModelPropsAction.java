@@ -36,7 +36,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 /**
  * Shows an editor for editing the model properties
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  *@author     steinbeck
  *@created    22. April 2005
  */

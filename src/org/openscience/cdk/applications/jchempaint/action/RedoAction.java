@@ -34,7 +34,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 /**
  * Performce a Redo - a repeat of the last undone action
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */

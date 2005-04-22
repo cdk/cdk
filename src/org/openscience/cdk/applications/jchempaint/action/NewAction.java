@@ -37,7 +37,7 @@ import java.awt.*;
 /**
  * Opens a new empty JChemPaintFrame.
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  * @author     steinbeck
  * @created    1997
  */

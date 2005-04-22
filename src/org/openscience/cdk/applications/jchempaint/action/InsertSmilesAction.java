@@ -36,7 +36,7 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 /**
  * Inserts a SMILES
  *
- * cdk.module jchempaint
+ * @cdk.module jchempaint
  *@author     steinbeck
  *@created    22. April 2005
  */
