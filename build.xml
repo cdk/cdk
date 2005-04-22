@@ -282,8 +282,10 @@
         
         <target name="reallyRunDoclet" depends="compileDoclet" unless="dotjavafiles.uptodate">
             <javadoc private="false" public="true">
-                <classpath refid="project.class.path" />
                 <classpath>
+                    <fileset dir="${lib}">
+                        <include name="*.jar" />
+                    </fileset>
                     <fileset dir="${lib}/libio">
                         <include name="*.jar" />
                     </fileset>
@@ -300,8 +302,10 @@
 
             </javadoc>
             <javadoc private="false" public="true">
-                <classpath refid="project.class.path" />
                 <classpath>
+                    <fileset dir="${lib}">
+                        <include name="*.jar" />
+                    </fileset>
                     <fileset dir="${lib}/libio">
                         <include name="*.jar" />
                     </fileset>
@@ -387,42 +391,6 @@
             </javac>
         </target>
 
-        <target id="compile-io" name="compile-io" depends="init, dist-core, dist-standard">
-                <echo message="Compiling classes for cdk-io module." />
-
-                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <includesfile name="${src}/io.javafiles"/>
-                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                    <classpath refid="project.class.path" />
-                    <classpath>
-                        <fileset dir="${dist}/jar">
-                            <include name="cdk-core.jar" />
-                            <include name="cdk-standard.jar" />
-                        </fileset>
-                    </classpath>
-                </javac>
-        </target>
-
-        <target id="compile-render" name="compile-render" depends="init, dist-core, dist-standard">
-                <echo message="Compiling classes for cdk-render module." />
-
-                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}"
-                       includesfile="${src}/render.javafiles">
-
-                    <classpath refid="project.class.path" />
-                    <classpath>
-                        <fileset dir="${dist}/jar">
-                            <include name="cdk-core.jar" />
-                            <include name="cdk-standard.jar" />
-                        </fileset>
-                    </classpath>
-                </javac>
-        </target>
-        
         <target id="compile-qsar" name="compile-qsar" depends="compile.init">
                 <echo message="Compiling classes for cdk-qsar module." />
 
@@ -695,43 +663,12 @@
                 </jar>
         </target>
 
-        <target id="dist-io" name="dist-io" depends="compile-io">
-                <jar jarfile="${dist}/jar/cdk-io.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/io.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                        <include name="org/openscience/cdk/io/cml/data/**" />
-                    </fileset>
-                    <fileset dir="${src}">
-                        <include name="io-formats.set"/>
-                    </fileset>
-                </jar>
+        <target id="dist-io" name="dist-io">
+            <antcall target="compile-module"><param name="module" value="io"/></antcall>
         </target>
 
-        <target id="dist-render" name="dist-render" depends="compile-render">
-                <jar jarfile="${dist}/jar/cdk-render.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/render.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                </jar>
-        </target>
-
-        <target id="dist-render-with-java3d" name="dist-render-with-java3d" depends="compile-render-with-java3d"
-                if="java3D.present">
-                <jar jarfile="${dist}/jar/cdk-render.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/render.classes" />
-                        <includesfile name="${src}/java3d.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                </jar>
+        <target id="dist-render" name="dist-render">
+            <antcall target="compile-module"><param name="module" value="render"/></antcall>
         </target>
 
         <target id="dist-standard" name="dist-standard">
