@@ -1,4 +1,4 @@
-<project name="CDK" default="dist" basedir=".">
+<project name="CDK" default="dist-all" basedir=".">
 
         <property file="build.props"/>
 
@@ -341,11 +341,13 @@
             <available file="${metainf}/${module}.datafiles" property="module.datafiles.present"/>
             <available file="${metainf}/${module}.cdkdepends" property="module.cdkdepends.present"/>
             <available file="${metainf}/${module}.libdepends" property="module.libdepends.present"/>
+            <available file="${metainf}/${module}.devellibdepends" property="module.devellibdepends.present"/>
         
             <!-- be somewhat informative -->
             <echo message="Datafiles defined: ${module.datafiles.present}"/>
             <echo message="CDK dependencies defined: ${module.cdkdepends.present}"/>
             <echo message="Library dependencies defined: ${module.libdepends.present}"/>
+            <echo message="Developer Library dependencies defined: ${module.devellibdepends.present}"/>
             
             <!-- normally javac compiles not just the given files, but also missing
                  classes that are in the same src/ directory. By making a copy first,
@@ -366,6 +368,10 @@
                     <fileset dir="${lib}" >
                         <exclude name="**/*" unless="module.libdepends.present" />
                         <includesfile name="${metainf}/${module}.libdepends" if="module.libdepends.present" />
+                    </fileset>
+                    <fileset dir="${devellib}">
+                        <exclude name="**/*" unless="module.devellibdepends.present" />
+                        <includesfile name="${metainf}/${module}.devellibdepends" if="module.devellibdepends.present" />
                     </fileset>
                     <fileset dir="${dist}/jar">
                         <exclude name="**/*" unless="module.cdkdepends.present" />
@@ -428,14 +434,15 @@
         <target id="dist-all" name="dist-all">
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
+            <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
             <antcall target="compile-module"><param name="module" value="standard"/></antcall>
             <antcall target="compile-module"><param name="module" value="render"/></antcall>
             <antcall target="compile-module"><param name="module" value="io"/></antcall>
+            <antcall target="compile-module"><param name="module" value="io-jmol"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
-        </target>
-
-        <target id="dist-experimental" name="dist-experimental">
+            <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
+            <antcall target="compile-module"><param name="module" value="swing"/></antcall>
         </target>
 
         <target id="dist-apps" name="dist-apps">

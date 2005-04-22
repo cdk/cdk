@@ -40,14 +40,17 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
 
 /**
+ * Only converts Jmol objects to CDK objects; the CdkJmolAdapter is not used
+ * right now.
+ *
  * @author        egonw
  * @author        Miguel Howard
  * @cdk.created   2004-04-25
- * @cdk.module    libio
+ * @cdk.module    io-jmol
  * @cdk.keyword   adapter, Jmol
  *
- * @cdk.depends jmolApis.jar
- * @cdk.depends jmolIO.jar
+ * @cdk.depends   jmolApis.jar
+ * @cdk.depends   jmolIO.jar
  */
 public class Convertor {
 

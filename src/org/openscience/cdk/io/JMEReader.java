@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Reads a molecule from an JME file using Jmol's JME reader.
  *
- * @cdk.module experimental
+ * @cdk.module       io-jmol
  *
  * @author           Egon Willighagen
  * @author           Miguel Howard

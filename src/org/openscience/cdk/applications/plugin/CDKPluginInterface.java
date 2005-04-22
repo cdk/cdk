@@ -42,7 +42,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * using an <code>CDKEditBus</code> object. Check its API to see how to
  * interact with the application.
  *
- * @cdk.module applications
+ * @cdk.module interfaces
  *
  * @version $Revision$
  *

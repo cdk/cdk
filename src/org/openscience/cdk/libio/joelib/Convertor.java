@@ -42,9 +42,9 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
  * convert CDK classes to JOELib classes and visa versa.
  *
  * <p>JOELib is a Java implementation of the OELib classes and
- * can be found at: http://joelib.sourceforge.net/
+ * can be found at: <a href="http://joelib.sourceforge.net/">http://joelib.sourceforge.net/</a>.
  *
- * @cdk.module libio
+ * @cdk.module libio-joelib
  *
  * @author     egonw
  * @author     Joerg K. Wegner <wegnerj@informatik.uni-tuebingen.de>

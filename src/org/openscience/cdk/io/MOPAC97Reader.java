@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Reader for MOPAC 93, 97 and 2002 files. Only tested for MOPAC 93 files.
  * It uses Jmol IO classes.
  *
- * @cdk.module experimental
+ * @cdk.module       io-jmol
  * @cdk.keyword      file format, MOPAC
  * @cdk.builddepends jmolIO.jar
  * @cdk.builddepends jmolApis.jar

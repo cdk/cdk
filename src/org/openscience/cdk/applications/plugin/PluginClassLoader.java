@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * A class loader for loading classes from a plugin jar files.
  *
- * @cdk.module applications
+ * @cdk.module standard
  */
 public class PluginClassLoader extends URLClassLoader {
     
