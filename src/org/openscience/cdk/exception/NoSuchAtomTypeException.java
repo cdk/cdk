@@ -29,7 +29,7 @@
 package org.openscience.cdk.exception;
 
 /**
- * @cdk.module standard
+ * @cdk.module core
  */
 public class NoSuchAtomTypeException extends CDKException {
 
