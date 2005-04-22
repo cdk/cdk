@@ -34,7 +34,7 @@ import java.util.Enumeration;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import org.openscience.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 
 /**
  * Simple Dialog that shows information about JChemPaint's plugins.

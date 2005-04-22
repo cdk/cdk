@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint;
+package org.openscience.cdk.applications.jchempaint;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -47,11 +47,11 @@ import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.tools.manipulator.*;
 import org.openscience.cdk.validate.*;
-import org.openscience.jchempaint.*;
-import org.openscience.jchempaint.action.*;
-import org.openscience.jchempaint.application.*;
-import org.openscience.jchempaint.dialogs.*;
-import org.openscience.jchempaint.io.*;
+import org.openscience.cdk.applications.jchempaint.*;
+import org.openscience.cdk.applications.jchempaint.action.*;
+import org.openscience.cdk.applications.jchempaint.application.*;
+import org.openscience.cdk.applications.jchempaint.dialogs.*;
+import org.openscience.cdk.applications.jchempaint.io.*;
 
 /**
  *  JPanel that contains a full JChemPaint program, either viewer or full

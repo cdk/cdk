@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint.applet;
+package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -40,7 +40,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  * The canvas for a JChempaint applet

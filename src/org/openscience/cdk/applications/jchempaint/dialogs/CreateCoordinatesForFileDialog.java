@@ -58,9 +58,9 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 
-import org.openscience.jchempaint.application.JChemPaint;
-import org.openscience.jchempaint.application.JChemPaintFrame;
-import org.openscience.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaintFrame;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  * Dialog for coordinate creationg

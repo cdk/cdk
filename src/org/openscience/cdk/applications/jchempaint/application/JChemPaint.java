@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint.application;
+package org.openscience.cdk.applications.jchempaint.application;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -48,10 +48,10 @@ import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.jchempaint.*;
-import org.openscience.jchempaint.io.*;
-import org.openscience.jchempaint.action.*;
-import org.openscience.jchempaint.dialogs.*;
+import org.openscience.cdk.applications.jchempaint.*;
+import org.openscience.cdk.applications.jchempaint.io.*;
+import org.openscience.cdk.applications.jchempaint.action.*;
+import org.openscience.cdk.applications.jchempaint.dialogs.*;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -207,7 +207,7 @@ public class JChemPaint extends JFrame implements SwingConstants
 
 			if (line.hasOption("v"))
 			{
-				Package self = Package.getPackage("org.openscience.jchempaint");
+				Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 				String version = self.getImplementationVersion();
 
 				System.out.println("JChemPaint v." + version + "\n");
@@ -216,7 +216,7 @@ public class JChemPaint extends JFrame implements SwingConstants
 
 			if (line.hasOption("h"))
 			{
-				Package self = Package.getPackage("org.openscience.jchempaint");
+				Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 				String version = self.getImplementationVersion();
 
 				System.out.println("JChemPaint v." + version + "\n");
@@ -405,7 +405,7 @@ public class JChemPaint extends JFrame implements SwingConstants
 		JChemPaintModel jcpm = new JChemPaintModel();
 		jcpm.setTitle(getNewFrameName());
 		jcpm.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
-		Package self = Package.getPackage("org.openscience.jchempaint");
+		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 		String version = self.getImplementationVersion();
 		jcpm.setSoftware("JChemPaint " + version);
 		jcpm.setGendate((Calendar.getInstance()).getTime().toString());

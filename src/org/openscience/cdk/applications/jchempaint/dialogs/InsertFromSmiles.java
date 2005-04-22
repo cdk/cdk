@@ -47,9 +47,9 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import org.openscience.jchempaint.application.JChemPaint;
-import org.openscience.jchempaint.application.JChemPaintFrame;
-import org.openscience.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaintFrame;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  *  Internal frame to allow for changing the propterties.

@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint.application;
+package org.openscience.cdk.applications.jchempaint.application;
 
 import java.awt.*;
 import java.io.*;
@@ -44,8 +44,8 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
-import org.openscience.jchempaint.dnd.JCPTransferHandler;
-import org.openscience.jchempaint.*;
+import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * A JFrame the contains a JChemPaintPanel. It should contain as little

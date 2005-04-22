@@ -39,8 +39,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.openscience.jchempaint.application.JChemPaint;
-import org.openscience.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  * Internal frame to allow for changing the propterties.

@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint;
+package org.openscience.cdk.applications.jchempaint;
 
 import java.util.MissingResourceException;
 
@@ -35,8 +35,8 @@ import javax.swing.JMenuItem;
 
 import org.openscience.cdk.controller.CDKPopupMenu;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.jchempaint.JChemPaintPanel;
-import org.openscience.jchempaint.action.JCPAction;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
+import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 
 /**
  *  A pop-up menu for JChemPaint

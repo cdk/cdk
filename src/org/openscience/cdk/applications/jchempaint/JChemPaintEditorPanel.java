@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint;
+package org.openscience.cdk.applications.jchempaint;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -68,12 +68,12 @@ import org.openscience.cdk.applications.plugin.*;
 import org.openscience.cdk.controller.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.validate.*;
-import org.openscience.jchempaint.*;
-import org.openscience.jchempaint.io.*;
-import org.openscience.jchempaint.action.*;
-import org.openscience.jchempaint.dialogs.*;
-import org.openscience.jchempaint.dnd.JCPTransferHandler;
-import org.openscience.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.*;
+import org.openscience.cdk.applications.jchempaint.io.*;
+import org.openscience.cdk.applications.jchempaint.action.*;
+import org.openscience.cdk.applications.jchempaint.dialogs.*;
+import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 
 /**
  * This class implements an editing JChemPaintPanel.

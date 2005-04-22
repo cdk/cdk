@@ -37,7 +37,7 @@ import javax.swing.border.*;
 
 import org.openscience.cdk.applications.swing.editor.ChemObjectEditor;
 
-import org.openscience.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
   * Simple Dialog that shows the loaded dictionaries.

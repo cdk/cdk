@@ -37,7 +37,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
-import org.openscience.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 
 /**
  * Simple Dialog that shows the JCP logo and a textfield that allows
@@ -57,7 +57,7 @@ public class LicenseDialog extends JFrame {
     
     
     public void doInit(){
-        Package self = Package.getPackage("org.openscience.jchempaint");
+        Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
         String version = self.getImplementationVersion();
 
         String s1 = 

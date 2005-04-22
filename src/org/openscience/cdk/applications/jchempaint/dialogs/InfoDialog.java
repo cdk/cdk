@@ -34,8 +34,8 @@ import java.util.Enumeration;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import org.openscience.jchempaint.application.JChemPaint;
-import org.openscience.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 
 /**
  * Simple Dialog that shows information about this JChemPaints executable.

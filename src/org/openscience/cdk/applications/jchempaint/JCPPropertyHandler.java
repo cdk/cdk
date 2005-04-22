@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint;
+package org.openscience.cdk.applications.jchempaint;
 
 import java.io.*;
 import java.util.*;
@@ -255,7 +255,7 @@ public class JCPPropertyHandler
 			}
 			try
 			{
-				String resource = "org.openscience.jchempaint.resources.JCPGUI_" + guiString;
+				String resource = "org.openscience.cdk.applications.jchempaint.resources.JCPGUI_" + guiString;
 				guiDefinition = ResourceBundle.getBundle(resource, Locale.getDefault());
 			} catch (Exception exc)
 			{
@@ -278,7 +278,7 @@ public class JCPPropertyHandler
 		{
 			try
 			{
-				String resource = "org.openscience.jchempaint.resources.JChemPaintResources";
+				String resource = "org.openscience.cdk.applications.jchempaint.resources.JChemPaintResources";
 				resources = ResourceBundle.getBundle(resource);
 			} catch (Exception exc)
 			{

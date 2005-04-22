@@ -58,9 +58,9 @@ import org.openscience.cdk.validate.ProblemMarker;
 import org.openscience.cdk.validate.ValidationReport;
 import org.openscience.cdk.validate.ValidationTest;
 
-import org.openscience.jchempaint.application.JChemPaint;
-import org.openscience.jchempaint.application.JChemPaintFrame;
-import org.openscience.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaintFrame;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 
 /**
  * Frame to allows editing of dictionary references of 

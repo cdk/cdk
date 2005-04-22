@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.openscience.jchempaint;
+package org.openscience.cdk.applications.jchempaint;
 
 import java.io.*;
 import java.net.*;
@@ -35,7 +35,7 @@ import java.util.*;
 import javax.swing.*;
 
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.jchempaint.action.JCPAction;
+import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 
 /**
  *  JChemPaint menu bar
@@ -93,7 +93,7 @@ public class JChemPaintMenuBar extends JMenuBar
 	 *  file. <p>
 	 *
 	 *  The menu items in the bar are defined by the property 'menubar' in
-	 *  org.openscience.jchempaint.resources.JChemPaint.properties.
+	 *  org.openscience.cdk.applications.jchempaint.resources.JChemPaint.properties.
 	 *
 	 *@param  jcpPanel        Description of the Parameter
 	 *@param  addPluginMenu   Description of the Parameter

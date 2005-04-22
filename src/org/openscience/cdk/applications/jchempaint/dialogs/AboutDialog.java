@@ -39,7 +39,7 @@ import javax.swing.border.Border;
 
 import org.openscience.cdk.tools.LoggingTool;
 
-import org.openscience.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 
 /**
  * Simple Dialog that shows the JCP logo and a textfield that allows
@@ -61,7 +61,7 @@ public class AboutDialog extends JFrame {
     }
     
     public void doInit(){
-        Package self = Package.getPackage("org.openscience.jchempaint");
+        Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
         String version = self.getImplementationVersion();
         String s1 = "JChemPaint "  + version + "\n";
         s1 += "An open-source editor for 2D chemical structures.";
