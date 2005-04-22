@@ -333,8 +333,19 @@
         
         <target name="compile.init" id="compile.init" 
                 depends="init, customize, compileDoclet, runDoclet"/>
-        
-        <target id="compile-module" name="compile-module" depends="compile.init, dist.init">
+            
+        <target id="compile-needed-test" name="compile-needed-test">
+            <uptodate property="module-uptodate" targetfile="${dist}/jar/cdk-${module}.jar">
+                <srcfiles dir="${src}">
+                    <includesfile name="${src}/${module}.javafiles"/>
+                </srcfiles>
+            </uptodate>
+        </target>
+                
+        <target id="compile-module" name="compile-module" 
+                depends="compile.init, dist.init, compile-needed-test"
+                unless="module-uptodate">
+            
             <echo message="Compiling classes for CDK's ${module} module." />
             
             <!-- check for availability for meta info files -->
@@ -443,26 +454,17 @@
             <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
             <antcall target="compile-module"><param name="module" value="swing"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
+            <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
+            <antcall target="compile-module"><param name="module" value="test"/></antcall>
         </target>
 
         <target id="dist-apps" name="dist-apps">
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
         </target>
 
-        <target id="dist-test" name="dist-test">
-            <antcall target="compile-module"><param name="module" value="test"/></antcall>
-        </target>
-
         <target id="dist-libio" name="dist-libio">
             <antcall target="compile-module"><param name="module" value="libio"/></antcall>
-        </target>
-
-        <target id="dist-qsar" name="dist-qsar">
-            <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
-        </target>
-
-        <target id="dist-builder3d" name="dist-builder3d">
-            <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
         </target>
 
         <!-- target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
@@ -663,13 +665,15 @@
             <fail message="JUnit is not installed in Ant. Please copy cdk/develjar/junit.jar to ${ant.home}/lib/."/>
         </target>
         
-        <!-- target id="test" name="test" depends="dist-test, dist-large, noJunit"
-                description="Performs a full JUnit test for the CDK." if="junit.present">
+        <target id="test" name="test" depends="noJunit, dist-all"
+                description="Performs a full JUnit test for the CDK." 
+                if="junit.present">
                 <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes" maxmemory="256m">
                     <classpath>
-                        <pathelement location="${dist}/jar/cdk-${version}.jar" />
-                        <pathelement location="${dist}/jar/cdk-test.jar" />
+                        <fileset dir="${dist}/jar">
+                                <include name="cdk-*.jar" />
+                        </fileset>
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
@@ -687,7 +691,7 @@
                                 <formatter type="brief" />
                         </test>
                 </junit>
-        </target -->
+        </target>
 
         <!-- target id="limitations" name="limitations" depends="dist-large, dist-test, noJunit"
                 description="Performs a JUnit tests that indicate limitations of certain CDK algorithms/classes.">
