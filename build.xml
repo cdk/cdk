@@ -18,6 +18,7 @@
 
         <!-- directories -->
         <property name="build" value="build" />
+        <property name="build.src" value="${build}/src" />
         <property name="sourcedist" value="sourcedist" />
         <property name="dist" value="dist" />
         <property name="doc" value="doc" />
@@ -27,6 +28,7 @@
         <property name="src.tests" value="${src}/org/openscience/cdk/test" />
         <property name="reports.tests" value="reports" />
         <property name="appjars.dir" value="${dist}/appjars" />
+        <property name="metainf" value="${src}/META-INF" />
  
         <!-- class to run for testing-->
         <property name="testclass" value="CDKTests" />
@@ -429,32 +431,6 @@
             </javac>
         </target>
 
-        <target id="compile-data" name="compile-data" depends="compile.init">
-                <echo message="Compiling classes for cdk-data module." />
-
-                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <classpath refid="project.class.path" />
-                    <includesfile name="${src}/data.javafiles"/>
-                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                </javac>
-        </target>
-
-        <target id="compile-core" name="compile-core" depends="compile.init">
-                <echo message="Compiling classes for cdk-core module." />
-
-                <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-                       debug="${debug}" deprecation="${deprecation}">
-                    <classpath refid="project.class.path" />
-                    <includesfile name="${src}/core.javafiles"/>
-                    <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
-                    <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                </javac>
-        </target>
-
         <target id="compile-standard" name="compile-standard" depends="dist-core">
                 <echo message="Compiling classes for cdk-standard module." />
 
@@ -540,6 +516,54 @@
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 </javac>
         </target>
+
+        <target id="compile-module" name="compile-module" depends="compile.init, dist.init">
+            <echo message="Compiling classes for CDK's ${module} module." />
+        
+            <!-- normally javac compiles not just the given files, but also missing
+                 classes that are in the same src/ directory. By making a copy first,
+                 we explicitely make it impossible to compile files that are not
+                 marked for a specific module -->
+            <delete dir="${build.src}"/>
+            <mkdir dir="${build.src}"/>
+            <copy todir="${build.src}">
+                <fileset dir="${src}">
+                    <includesfile name="${src}/${module}.javafiles"/>
+                </fileset>
+            </copy>
+            
+            <!-- ok, now that we have a copy, compile this copy -->
+            <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+                debug="${debug}" deprecation="${deprecation}">
+                <classpath>
+                    <fileset dir="${lib}">
+                        <includesfile name="${metainf}/${module}.libdepends" />
+                    </fileset>
+                    <fileset dir="${dist}/jar">
+                        <includesfile name="${metainf}/${module}.cdkdepends" />
+                    </fileset>
+                </classpath>
+            
+                <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
+                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
+            
+                <includesfile name="${src}/${module}.javafiles"/>
+            </javac>
+            
+            <!-- and then jar things up into the module jar -->
+            <jar jarfile="${dist}/jar/cdk-${module}.jar">
+                <fileset dir="${build}">
+                    <includesfile name="${src}/${module}.classes" />
+                    <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
+                    <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                    <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
+               </fileset>
+               <fileset dir="${src}">
+                    <include name="${module}.javafiles" />
+               </fileset>
+            </jar>
+       </target>
 
         <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
         <target id="javacc" name="javacc" depends="init, check" if="hasAnt16" unless="dotjjfiles.uptodate">
@@ -697,32 +721,12 @@
             </copy>
         </target>
 
-        <target id="dist-data" name="dist-data" depends="compile-data, dist.init">
-                <jar jarfile="${dist}/jar/cdk-data.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/data.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                   </fileset>
-                   <fileset dir="${src}">
-                        <include name="data.javafiles" />
-                   </fileset>
-                </jar>
+        <target id="dist-data" name="dist-data">
+            <antcall target="compile-module"><param name="module" value="data"/></antcall>
         </target>
 
         <target id="dist-core" name="dist-core" depends="compile-core, dist.init">
-                <jar jarfile="${dist}/jar/cdk-core.jar">
-                    <fileset dir="${build}">
-                        <includesfile name="${src}/core.classes" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                   </fileset>
-                   <fileset dir="${src}">
-                        <include name="core.javafiles" />
-                   </fileset>
-                </jar>
+            <antcall target="compile-module"><param name="module" value="core"/></antcall>
         </target>
 
         <target id="dist-extra" name="dist-extra" depends="dist-core, compile-extra">
