@@ -29,12 +29,12 @@ import java.util.StringTokenizer;
  * Taglet that expands inline cdk.dictref tags into a weblink to the appropriate
  * dictionary. For example.
  * <pre>
- * @cdk.dictref bo:graphPartitioning
+ * @cdk.dictref blue-obelisk:graphPartitioning
  * </pre>
  *
  * <p>The known dictionaries are:
  * <ul>
- *  <li>bo: Blue Obelisk <a href=""></a>
+ *  <li>blue-obelisk: Blue Obelisk Chemoinformatics Dictionary <a href=""></a>
  * </ul>
  */
 public class CDKDictRefTaglet implements Taglet {
@@ -90,7 +90,7 @@ public class CDKDictRefTaglet implements Taglet {
             String dictCode = tokenizer.nextToken();
             String dictRef = tokenizer.nextToken();
             String output = "<DT><B>A pointer to a dictionary: </B><DD>";
-            if ("bo".equals(dictCode)) {
+            if ("blue-obelisk".equals(dictCode)) {
                 String url = "http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#" + dictRef;
                 output += "<a href=\"" + url + "\">" + dictRef + "</a></DD>\n";
             } else {
