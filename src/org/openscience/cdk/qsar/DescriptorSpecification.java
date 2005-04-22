@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar;
 /**
  * Class that is used to distribute descriptor specifications.
  *
- * @cdk.module qsar
+ * @cdk.module standard
  */
 public class DescriptorSpecification {
 

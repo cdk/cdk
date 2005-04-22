@@ -1,14 +1,15 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.io.*;
-import java.lang.*;
-import java.util.*;
+import java.lang.Math;
+import java.lang.Double;
+import java.lang.Exception;
+import java.lang.String;
+import java.util.Vector;
+import java.util.Hashtable;
 import javax.vecmath.*;
 import Jama.*;
-
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
-import org.openscience.cdk.qsar.RDFProtonDescriptor;
 
 /**
  *  Angle bending calculator for the potential energy function. Include function and derivatives.

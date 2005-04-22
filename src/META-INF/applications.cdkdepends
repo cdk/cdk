@@ -4,5 +4,6 @@ cdk-render.jar
 cdk-io.jar
 cdk-extra.jar
 cdk-libio.jar
-cdk-experimental.jar
+cdk-libio-cml.jar
+cdk-qsar.jar
 

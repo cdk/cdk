@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.result;
 /**
  * Object that provides access to the calculated descriptor value.
  *
- * @cdk.module qsar
+ * @cdk.module standard
  */
 public class BooleanResult implements DescriptorResult {
     

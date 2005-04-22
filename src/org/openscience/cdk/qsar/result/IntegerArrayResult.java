@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @cdk.module qsar
+ * @cdk.module standard
  */
 public class IntegerArrayResult implements DescriptorResult {
     

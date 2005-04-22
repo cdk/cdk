@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar.result;
  * Object that provides access to the calculated descriptor value.
  * The concept was taken from JOELib.
  *
- * @cdk.module qsar
+ * @cdk.module standard
  */
 public interface DescriptorResult {
 

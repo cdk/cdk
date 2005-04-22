@@ -24,7 +24,7 @@
 package org.openscience.cdk.qsar.result;
 
 /**
- * @cdk.module qsar
+ * @cdk.module standard
  */
 public class DoubleResult implements DescriptorResult {
     

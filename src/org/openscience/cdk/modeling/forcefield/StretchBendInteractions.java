@@ -8,7 +8,6 @@ import Jama.*;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
-import org.openscience.cdk.qsar.RDFProtonDescriptor;
 
 /**
  *  Stretch-Bend Interaction calculator for the potential energy function. Include function and derivatives.
