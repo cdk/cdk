@@ -48,8 +48,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
@@ -463,48 +461,6 @@ public class UniversalIsomorphismTester {
     return graphList;
   }
 
-
-  /**
-   * Test utility on command line
-   *
-   * Usage : java RTools g1.mol g2.mol
-   *
-   * @param  args  The command line arguments
-   */
-  public static void main(String[] args) {
-    // loading the source graphs
-    System.out.println("Loading... ");
-    AtomContainer g1 = loadFile(new File(args[0]));
-    AtomContainer g2 = loadFile(new File(args[1]));
-    System.out.println("Searching... ");
-    long start = System.currentTimeMillis();
-
-    // some trivial queries
-    start = System.currentTimeMillis();
-    System.out.println("isIsomorph(g1,g2) : " + isIsomorph(g1, g2) + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("isIsomorph(g1,g1) : " + isIsomorph(g1, g1) + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("isIsomorph(g2,g2) : " + isIsomorph(g2, g2) + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("isSubGraph(g1,g2) : " + isSubgraph(g1, g2) + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("isSubGraph(g2,g1) : " + isSubgraph(g2, g1) + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("isSubGraph(g1,g1) : " + isSubgraph(g1, g1) + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("isSubGraph(g2,g2) : " + isSubgraph(g2, g2) + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("getOverlaps(g1,g2) : " + getOverlaps(g1, g2).size() + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("getOverlaps(g2,g1) : " + getOverlaps(g2, g1).size() + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("getOverlaps(g1,g1) : " + getOverlaps(g1, g1).size() + " (" + (System.currentTimeMillis() - start) + " ms)");
-    start = System.currentTimeMillis();
-    System.out.println("getOverlaps(g1,g1) : " + getOverlaps(g2, g2).size() + " (" + (System.currentTimeMillis() - start) + " ms)");
-  }
-
-
   /**
    *  remove all redundant solution
    *
@@ -803,41 +759,5 @@ public class UniversalIsomorphismTester {
       
   }
   
-
-  /**
-   * Test purpose file reading method
-   * Load a molfile into an atom container
-   *
-   * @param  file  the file to load
-   * @return       Description of the Returned Value
-   */
-  private static AtomContainer loadFile(File file) {
-    ChemFile outFile = null;
-    ChemObjectReader reader = null;
-    ChemFile chemFile = new ChemFile();
-
-    try {
-      FileReader fileReader = null;
-
-      if (file.exists()) {
-        fileReader = new FileReader(file);
-        reader = new MDLReader(fileReader);
-      } else {
-        System.err.println("Target file doas not exist:" + file);
-      }
-
-      try {
-        outFile = (ChemFile) reader.read((ChemObject) new ChemFile());
-      } catch (CDKException ex) {
-        System.out.println(ex);
-      }
-
-      fileReader.close();
-    } catch (IOException e) {
-      System.out.println(e);
-    }
-
-    return ChemModelManipulator.getAllInOneContainer(outFile.getChemSequence(0).getChemModel(0));
-  }
 }
 
