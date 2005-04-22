@@ -15,6 +15,7 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 /**
  * @author uli
  *
+ * @cdk.module standard
  */
 public final class BFSShortestPath {
     private BFSShortestPath(  ) {} // ensure non-instantiability.

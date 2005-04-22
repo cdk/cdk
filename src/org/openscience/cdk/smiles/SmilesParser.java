@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  *
  * <p>See {@cdk.cite WEI88}.
  *
- * @cdk.module standard
+ * @cdk.module extra
  *
  * @author     Christoph Steinbeck
  * @author     Egon Willighagen

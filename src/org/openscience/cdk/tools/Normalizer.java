@@ -45,7 +45,7 @@ import org.w3c.dom.*;
  *
  * @author        shk3
  * @cdk.created   2004-03-04
- * @cdk.module    standard
+ * @cdk.module    extra
  */
 public class Normalizer {
 
