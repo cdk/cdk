@@ -366,7 +366,8 @@
                  classes that are in the same src/ directory. By making a copy first,
                  we explicitely make it impossible to compile files that are not
                  marked for a specific module -->
-            <delete dir="${build.src}"/>
+            <delete dir="${build}"/>
+            <mkdir dir="${build}"/>
             <mkdir dir="${build.src}"/>
             <copy todir="${build.src}">
                 <fileset dir="${src}">
