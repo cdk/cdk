@@ -650,6 +650,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		return "1.8";
 	}
 
+	public void runScript(String s1, String s2)
+	{
+		logger.info("runScript method currently not supported");
+	}
 
 	/**
 	 *  Mandatory because JChemPaint is a ChangeListener. Used by other classes to
