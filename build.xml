@@ -350,12 +350,14 @@
             
             <!-- check for availability for meta info files -->
             <available file="${metainf}/${module}.datafiles" property="module.datafiles.present"/>
+            <available file="${metainf}/${module}.extrafiles" property="module.extrafiles.present"/>
             <available file="${metainf}/${module}.cdkdepends" property="module.cdkdepends.present"/>
             <available file="${metainf}/${module}.libdepends" property="module.libdepends.present"/>
             <available file="${metainf}/${module}.devellibdepends" property="module.devellibdepends.present"/>
         
             <!-- be somewhat informative -->
             <echo message="Datafiles defined: ${module.datafiles.present}"/>
+            <echo message="Extra files defined: ${module.extrafiles.present}"/>
             <echo message="CDK dependencies defined: ${module.cdkdepends.present}"/>
             <echo message="Library dependencies defined: ${module.libdepends.present}"/>
             <echo message="Developer Library dependencies defined: ${module.devellibdepends.present}"/>
@@ -412,6 +414,10 @@
                <fileset dir="${src}">
                     <exclude name="**/*" unless="module.datafiles.present"/>
                     <includesfile name="${metainf}/${module}.datafiles" if="module.datafiles.present" />
+               </fileset>
+               <fileset dir=".">
+                    <exclude name="**/*" unless="module.extrafiles.present"/>
+                    <includesfile name="${metainf}/${module}.extrafiles" if="module.extrafiles.present" />
                </fileset>
             </jar>
        </target>
