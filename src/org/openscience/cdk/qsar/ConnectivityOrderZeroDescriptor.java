@@ -35,7 +35,6 @@ import org.openscience.cdk.qsar.result.*;
  *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
  *  returned values are:
  *  chi0 is the Atomic connectivity index (order 0),
- *  chi0C is the Carbon connectivity index (order 0);
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -57,7 +56,7 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chiValuesCOZ",
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi0",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");
@@ -90,13 +89,11 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 	 *  Description of the Method
 	 *
 	 *@param  atomContainer                AtomContainer
-	 *@return                   chiValuesCOZ is an arrayList that contains chi0 and chi0C
+	 *@return                   Atomic connectivity index (order 0)
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
-		DoubleArrayResult chiValuesCOZ = new DoubleArrayResult(2);
 		double chi0 = 0;
-		double chi0C = 0;
 		Atom[] atoms = atomContainer.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			int atomDegree = 0;
@@ -107,15 +104,10 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
 				}
 			}
 			if(atomDegree > 0) {
-				if(atoms[i].getSymbol().equals("C")) {
-					chi0C += 1/(Math.sqrt(atomDegree));
-				}
 				chi0 += 1/(Math.sqrt(atomDegree));
 			}
 		}
-		chiValuesCOZ.add(chi0);
-		chiValuesCOZ.add(chi0C);		
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), chiValuesCOZ);
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi0));
 	}
 
 

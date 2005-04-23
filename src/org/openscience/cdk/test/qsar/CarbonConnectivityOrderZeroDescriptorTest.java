@@ -40,22 +40,22 @@ import java.io.*;
  * @cdk.module test
  */
 
- public class ConnectivityOrderZeroDescriptorTest extends CDKTestCase {
+ public class CarbonConnectivityOrderZeroDescriptorTest extends CDKTestCase {
 	
-	public  ConnectivityOrderZeroDescriptorTest() {}
+	public  CarbonConnectivityOrderZeroDescriptorTest() {}
     
 	public static Test suite() {
-		return new TestSuite(ConnectivityOrderZeroDescriptorTest.class);
+		return new TestSuite(CarbonConnectivityOrderZeroDescriptorTest.class);
 	}
     
-	public void testConnectivityOrderZeroDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testCarbonConnectivityOrderZeroDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.2844572,2.284457};
-		Descriptor descriptor = new ConnectivityOrderZeroDescriptor();
+		Descriptor descriptor = new CarbonConnectivityOrderZeroDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 		DoubleResult retval = (DoubleResult)descriptor.calculate(mol).getValue();
-		// chi0
-		assertEquals(testResult[0], retval.doubleValue(), 0.0001);
+		// chi0_C
+		assertEquals(testResult[1], retval.doubleValue(), 0.0001);
 	}
 }
 

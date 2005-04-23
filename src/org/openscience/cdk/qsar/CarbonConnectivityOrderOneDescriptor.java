@@ -32,33 +32,33 @@ import org.openscience.cdk.qsar.result.*;
 import java.util.ArrayList;
 
 /**
- *  Connectivity index (order 1):
+ *  CarbonConnectivity index (order 1):
  *  http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html
  *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
  *  returned value is:
- *  chi1 is the Atomic connectivity index (order 1),
+ *  chi1C is the Carbon connectivity index (order 1);
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module	qsar
  * @cdk.set     qsar-descriptors
  */
-public class ConnectivityOrderOneDescriptor implements Descriptor {
+public class CarbonConnectivityOrderOneDescriptor implements Descriptor {
 
 	/**
-	 *  Constructor for the ConnectivityOrderOneDescriptor object
+	 *  Constructor for the CarbonConnectivityOrderOneDescriptor object
 	 */
-	public ConnectivityOrderOneDescriptor() { }
+	public CarbonConnectivityOrderOneDescriptor() { }
 
 
 	/**
-	 *  Gets the specification attribute of the ConnectivityOrderOneDescriptor object
+	 *  Gets the specification attribute of the CarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@return    The specification value
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi1",
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi1C",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");
@@ -66,7 +66,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the ConnectivityOrderOneDescriptor object
+	 *  Sets the parameters attribute of the CarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
@@ -77,7 +77,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameters attribute of the ConnectivityOrderOneDescriptor object
+	 *  Gets the parameters attribute of the CarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@return    The parameters value
 	 */
@@ -91,12 +91,12 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 	 *  Description of the Method
 	 *
 	 *@param  atomContainer                AtomContainer
-	 *@return                   Atomic connectivity index (order 1)
+	 *@return                   chi1C
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+		double chi1C = 0;
 		ArrayList degrees = new ArrayList(2);
-		double chi1 = 0;
 		double val0 = 0;
 		double val1 = 0;
 		int atomDegree = 0;
@@ -120,15 +120,17 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 				}
 				val0 = ( (Double)degrees.get(0) ).doubleValue();
 				val1 = ( (Double)degrees.get(1) ).doubleValue();
-				chi1 += 1/(Math.sqrt(val0 * val1));
+				if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
+					chi1C += 1/(Math.sqrt(val0 * val1));
+				}
 			}
-		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi1));
+		}		
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi1C));
 	}
 
 
 	/**
-	 *  Gets the parameterNames attribute of the ConnectivityOrderOneDescriptor object
+	 *  Gets the parameterNames attribute of the CarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -140,7 +142,7 @@ public class ConnectivityOrderOneDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterType attribute of the ConnectivityOrderOneDescriptor object
+	 *  Gets the parameterType attribute of the CarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value

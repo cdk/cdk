@@ -47,29 +47,14 @@ import java.io.*;
 	public static Test suite() {
 		return new TestSuite(ConnectivityOrderOneDescriptorTest.class);
 	}
-    
 	public void testConnectivityOrderOneDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={2.2700555,1.115355};
-		Descriptor descriptor = new ConnectivityOrderOneDescriptor();
-		SmilesParser sp = new SmilesParser();
-		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
-		// position 0 =  chi1
-		// positions 1 = chi1_C
-		// THIS IS OK: assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(), 0.0001);
-		assertEquals(testResult[1], retval.get(1), 0.0001);
-	}
-	
-	public void test2ConnectivityOrderOneDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={1.414,0};
+		double [] testResult={1.414};
 		Descriptor descriptor = new ConnectivityOrderOneDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("FCF");
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
+		DoubleResult retval = (DoubleResult)descriptor.calculate(mol).getValue();
 		// position 0 =  chi1
-		// positions 1 = chi1_C
-		assertEquals(testResult[0], retval.get(0), 0.001);
-		// THIS IS OK: assertEquals(testResult[1], retval.get(1), 0.0001);
+		assertEquals(testResult[0], retval.doubleValue(), 0.001);
 	}
 }
 

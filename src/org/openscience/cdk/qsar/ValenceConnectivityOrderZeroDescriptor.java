@@ -41,9 +41,8 @@ import java.util.Hashtable;
  *  <p>Returned values are:
  *  <ul>
  *    <li>chi0v is the Atomic valence connectivity index (order 0),
- *    <li>chi0vC is the Carbon valence connectivity index (order 0);
- *    <li>valence is the number of s and p valence electrons of atom.
  *  </ul>
+ *  where the valence is the number of s and p valence electrons of atom.
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -75,7 +74,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chiValuesVCOZ",
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi0v",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");
@@ -107,10 +106,10 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 
 
 	/**
-	 *  calculates the chiOv and chiOv_C descriptors for an atom container
+	 *  calculates the Atomic valence connectivity index (order 0) descriptors for an atom container
 	 *
 	 *@param  atomContainer                AtomContainer
-	 *@return                   chi0v and chi0C returned as arrayList
+	 *@return                   Atomic valence connectivity index (order 0)
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
@@ -118,9 +117,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 		int atomicNumber = 0;
 		int hcount = 0;
 		int atomValue = 0;
-		DoubleArrayResult chiValuesVCOZ = new DoubleArrayResult(2);
 		double chi0v = 0;
-		double chi0vC = 0;
 		Atom[] atoms = atomContainer.getAtoms();
 		Atom[] neighatoms = null;
 		Element element = null;
@@ -154,16 +151,11 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
                         hcount += atomContainer.getAtomAt(i).getHydrogenCount();
                         atomValue = (valence - hcount) / (atomicNumber - valence - 1);
                         if (atomValue > 0) {
-                            if(symbol.equals("C")) {
-                                chi0vC  += (1/(Math.sqrt(atomValue))); // chi0vC
-                            }
                             chi0v += (1/(Math.sqrt(atomValue))); // chi0v
                         }
                     }
                 }
-                chiValuesVCOZ.add(chi0v);
-                chiValuesVCOZ.add(chi0vC);
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), chiValuesVCOZ);
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi0v));
         }
 
 

@@ -42,24 +42,24 @@ import java.util.ArrayList;
  *
  *  <p>Returned value is:
  *  <ul>
- *    <li>chi0v is the Atomic valence connectivity index (order 1),
+ *    <li>chi0vC is the Carbon valence connectivity index (order 1),
  *  </ul>
- *  where the valence is the number of s and p valence electrons of the atom.
- *
+ *  where valence is the number of s and p valence electrons of atom.
+ * 
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module	qsar
  * @cdk.set     qsar-descriptors
  */
-public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
+public class ValenceCarbonConnectivityOrderOneDescriptor implements Descriptor {
 
     private LoggingTool logger;
     private static Hashtable valences;
     private AtomValenceDescriptor avd = null;
 	/**
-	 *  Constructor for the ValenceConnectivityOrderOneDescriptor object
+	 *  Constructor for the ValenceCarbonConnectivityOrderOneDescriptor object
 	 */
-	public ValenceConnectivityOrderOneDescriptor() { 
+	public ValenceCarbonConnectivityOrderOneDescriptor() { 
             logger = new LoggingTool(this);
 	    if (valences == null) { 
 		avd = new AtomValenceDescriptor();
@@ -70,13 +70,13 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
 	/**
 	 *  Gets the specification attribute of the
-	 *  ValenceConnectivityOrderOneDescriptor object
+	 *  ValenceCarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@return    The specification value
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi0v",
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi1vC",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");
@@ -85,7 +85,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
 	/**
 	 *  Sets the parameters attribute of the
-	 *  ValenceConnectivityOrderOneDescriptor object
+	 *  ValenceCarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
@@ -97,7 +97,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
 	/**
 	 *  Gets the parameters attribute of the
-	 *  ValenceConnectivityOrderOneDescriptor object
+	 *  ValenceCarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@return    The parameters value
 	 */
@@ -108,10 +108,10 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
 
 	/**
-	 *  calculates the Atomic valence connectivity index (order 1) descriptors for an atom container
+	 *  calculates the Carbon valence connectivity index (order 1) descriptor for an atom container
 	 *
 	 *@param  atomContainer                AtomContainer
-	 *@return                   Atomic valence connectivity index (order 1)
+	 *@return                   Carbon valence connectivity index (order 1)
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
@@ -123,6 +123,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 		double val1 = 0;
 		ArrayList chiAtom = new ArrayList(2);
 		double chi1v = 0;
+		double chi1vC = 0;
 		Atom[] atoms = null;
 		Atom[] neighatoms = null;
 		Element element = null;
@@ -169,18 +170,19 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 				val0 = ( (Double)chiAtom.get(0) ).doubleValue();
 				val1 = ( (Double)chiAtom.get(1) ).doubleValue();
 				if(val0 > 0 && val1 >0) {
-					chi1v += 1/(Math.sqrt(val0 * val1));
+					if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
+						chi1vC += 1/(Math.sqrt(val0 * val1));
+					}
 				}
-				//System.out.println("---");
 			}
-		}	
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi1v));
+		}		
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi1vC));
 	}
 
 
 	/**
 	 *  Gets the parameterNames attribute of the
-	 *  ValenceConnectivityOrderOneDescriptor object
+	 *  ValenceCarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -193,7 +195,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
 	/**
 	 *  Gets the parameterType attribute of the
-	 *  ValenceConnectivityOrderOneDescriptor object
+	 *  ValenceCarbonConnectivityOrderOneDescriptor object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
