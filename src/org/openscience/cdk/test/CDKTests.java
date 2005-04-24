@@ -135,7 +135,6 @@ public class CDKTests
         suite.addTest(RandomStructureGeneratorTest.suite());
         // from cdk.test.modeling.forcefield
         suite.addTest(ForceFieldTests.suite());
-	
 
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).
@@ -150,11 +149,9 @@ public class CDKTests
         }
 
         // from cdk.test.qsar.model
-        suite.addTest(QSARModelTests.suite());
         try {
-            Class testClass;
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.qsar.model.QSARRModelTests");
-            suite.addTest( ((QSARRModelTests)testClass.newInstance()).suite() );
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.qsar.model.QSARRModelTests");
+            suite.addTest(new TestSuite(testClass));
         } catch (Exception exception) {
             System.out.println("Could not load QSAR R based model tests:" + exception.getMessage());
         }
