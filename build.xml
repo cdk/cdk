@@ -38,51 +38,6 @@
         <property name="arg3" value="" />
         <property name="arg4" value="" />
         
-        <!-- CLASSPATH -->
-        <!-- path id="project.class.path">
-                <pathelement location="${java.ext.dirs}/rt.jar" />
-
-                <fileset dir="${lib}">
-                        <include name="batik-awt-util.jar" />
-                        <include name="batik-dom.jar" />
-                        <include name="batik-svggen.jar" />
-                        <include name="batik-util.jar" />
-                        <include name="batik-xml.jar" />
-                        <include name="baysmith-io.jar" />
-                        <include name="bcel-5.1.jar" />
-                        <include name="dadml.jar" />
-                        <include name="gnujaxp.jar" />
-                        <include name="hansel-1.02.jar" />
-                        <include name="junit.jar" />
-                        <include name="log4j.jar" />
-                        <include name="mysql-2.0.4.jar" />
-                        <include name="postgresql7.0-1.2.jar" />
-                        <include name="printf.jar" />
-                        <include name="vecmath1.2-1.14.jar" />
-                        <include name="xindice.jar" />
-                        <include name="xmldb.jar" />
-                        <include name="stmml.jar" />
-                        <include name="castor-0.9.5-xml.jar" />
-                        <include name="cmlAll_1.4.jar" />
-                        <include name="base_1.4.jar" />
-                        <include name="euclid_1.4.jar" />
-                        <include name="pmrdom_1.4.jar" />
-                        <include name="jmolApis.jar" />
-                        <include name="jmolIO.jar" />
-                        <include name="commons-cli-1.0.jar" />
-                        <include name="jfontchooser.jar" />
-                        <include name="jgrapht-0.5.3.jar" />
-                        <include name="Jama-1.0.1.jar" />
-
-                        <include name="antlr.jar" />
-                        <include name="sjava-0.68.jar" />
-                        <include name="jas.jar" />
-                </fileset>
-                <fileset dir="${pathtojava3d}">
-                        <include name="*.jar" />
-                </fileset>
-        </path -->
-
         <target id="info" name="info" depends="check"> 
             <!-- Gives information about the building process. -->
             <echo message="Platform:" />
