@@ -57,7 +57,7 @@ public class JCPLocalizationHandler
 	private JCPLocalizationHandler(Locale locale)
 	{
 		logger = new LoggingTool(this);
-		translations = ResourceBundle.getBundle("org/openscience/jchempaint/resources/JCPBundle", locale);
+		translations = ResourceBundle.getBundle("org/openscience/cdk/applications/jchempaint/resources/JCPBundle", locale);
 	}
 
 
