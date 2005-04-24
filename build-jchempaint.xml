@@ -28,10 +28,10 @@
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/swing.libdepends"/>
+		    <includesfile name="${metainf}/jchempaint.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
-                    <include name="cdk-applications.jar"/>
-                    <include name="cdk-builder3d.jar"/>
+		    <include name="cdk-applications.jar"/>		
                     <include name="cdk-core.jar"/>
                     <include name="cdk-data.jar"/>
                     <include name="cdk-experimental.jar"/>
