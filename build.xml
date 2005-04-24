@@ -427,7 +427,7 @@
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
         </target>
 
-        <target id="dist-large" name="dist-large"
+        <target id="dist-large" name="dist-large" depends="dist-all" 
             description="Builds on big jar file for the CDK, including experimental classes.">
             
             <!-- first unjar the CDK and other jars we need -->
