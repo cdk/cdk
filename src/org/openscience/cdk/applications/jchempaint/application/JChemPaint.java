@@ -64,7 +64,7 @@ import org.apache.commons.cli.UnrecognizedOptionException;
 /**
  *  JChemPaint main class.
  *
- * @cdk.module jchempaint
+ * @cdk.module jchempaint.application
  * @author     steinbeck
  * @author     egonw
  * @created    a long time ago

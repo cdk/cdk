@@ -52,7 +52,7 @@ import org.openscience.cdk.applications.jchempaint.*;
  * functionality as possible; all viewer/editing stuff should be in the
  * JChemPaintPanel; this class is only for framing it.
  *
- * @cdk.module jchempaint
+ * @cdk.module jchempaint.application
  * @author     steinbeck
  */
 public class JChemPaintFrame extends JFrame implements ChangeListener

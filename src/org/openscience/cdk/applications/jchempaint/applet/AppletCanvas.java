@@ -45,7 +45,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 /**
  * The canvas for a JChempaint applet
  *
- * @cdk.module jchempaint
+ * @cdk.module jchempaint.applet
  * @author     steinbeck
  * @created    22. April 2005
  */
