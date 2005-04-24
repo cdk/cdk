@@ -103,6 +103,7 @@ import org.openscience.cdk.tools.*;
  * @cdk.keyword   CML
  * @cdk.keyword   class convertor
  * @cdk.bug       905062
+ * @cdk.require   java1.4
  *
  * @cdk.builddepends base.jar
  * @cdk.builddepends pmrlib.jar

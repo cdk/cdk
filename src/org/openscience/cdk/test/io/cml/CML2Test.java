@@ -54,6 +54,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * in data/cmltest.
  *
  * @cdk.module test
+ * @cdk.require java1.4
  */
 public class CML2Test extends CDKTestCase {
 
