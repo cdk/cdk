@@ -49,7 +49,7 @@ import javax.vecmath.*;
  * @author       steinbeck
  * @author       egonw
  * @cdk.keyword  mouse events
- * @cdk.require  java1.4
+ * @cdk.require  java1.4+
  */
 public class Controller2D implements MouseMotionListener, MouseListener, KeyListener {
 
