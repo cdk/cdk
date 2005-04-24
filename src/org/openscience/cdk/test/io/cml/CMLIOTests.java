@@ -44,12 +44,19 @@ public class CMLIOTests {
         suite.addTest(JumboTest.suite());
         // suite.addTest(JmolTest.suite());
         suite.addTest(JChemPaintTest.suite());
-        suite.addTest(CML2Test.suite());
         suite.addTest(CMLFragmentsTest.suite());
         suite.addTest(Jumbo46CMLFragmentsTest.suite());
         
         // the following classes require Java 1.4
         if (System.getProperty("java.version").startsWith("1.4")) {
+            try {
+                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2Test");
+                suite.addTest(new TestSuite(testClass));
+            } catch (Exception exception) {
+                // ok, do without. Probably compiled not Java 1.4
+                System.out.println("Could not load the CML2 test: " + exception.getMessage());
+                exception.printStackTrace();
+            }
             try {
                 Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2WriterTest");
                 suite.addTest(new TestSuite(testClass));
