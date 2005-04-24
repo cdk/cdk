@@ -1,0 +1,75 @@
+<project name="JCPCDK" default="dist-jcp" basedir=".">
+	<import file="build.xml"/>
+
+        <target id="dist-jcp" name="dist-jcp" depends="dist-all" 
+            description="Builds the JChemPaint application">
+            <antcall target="compile-module"><param name="module" value="jchempaint"/></antcall>
+            <!-- first unjar the CDK and other jars we need -->
+            <delete dir="${build}"/>
+            <mkdir dir="${build}"/>
+            <mkdir dir="${appjars.dir}"/>
+	    <mkdir dir="${build}/org/openscience/cdk/applications/jchempaint/resources" />
+	    <copy todir="${build}/org/openscience/cdk/applications/jchempaint/resources" >
+	    <fileset dir="${src}/org/openscience/cdk/applications/jchempaint/resources">
+		<include name="*" />
+	    </fileset>
+	    </copy>
+
+            <unjar dest="${appjars.dir}">
+                <fileset dir="${lib}">
+                    <includesfile name="${metainf}/applications.libdepends"/>
+                    <includesfile name="${metainf}/builder3d.libdepends"/>
+                    <includesfile name="${metainf}/core.libdepends"/>
+                    <includesfile name="${metainf}/data.libdepends"/>
+                    <includesfile name="${metainf}/experimental.libdepends"/>
+                    <includesfile name="${metainf}/extra.libdepends"/>
+                    <includesfile name="${metainf}/io.libdepends"/>
+                    <includesfile name="${metainf}/io-jmol.libdepends"/>
+                    <includesfile name="${metainf}/libio-cml.libdepends"/>
+                    <includesfile name="${metainf}/qsar.libdepends"/>
+                    <includesfile name="${metainf}/render.libdepends"/>
+                    <includesfile name="${metainf}/standard.libdepends"/>
+                    <includesfile name="${metainf}/swing.libdepends"/>
+                </fileset>
+                <fileset dir="${dist}/jar">
+                    <include name="cdk-applications.jar"/>
+                    <include name="cdk-builder3d.jar"/>
+                    <include name="cdk-core.jar"/>
+                    <include name="cdk-data.jar"/>
+                    <include name="cdk-experimental.jar"/>
+                    <include name="cdk-extra.jar"/>
+                    <include name="cdk-interfaces.jar"/>
+                    <include name="cdk-io.jar"/>
+                    <include name="cdk-io-jmol.jar"/>
+                    <include name="cdk-libio-cml.jar"/>
+                    <include name="cdk-qsar.jar"/>
+                    <include name="cdk-render.jar"/>
+                    <include name="cdk-standard.jar"/>
+                    <include name="cdk-swing.jar"/>
+		    <include name="cdk-jchempaint.jar"/>
+                </fileset>
+            </unjar>
+            
+            <!-- then zip up things -->
+            <jar jarfile="${dist}/jar/jchempaint-${version}.jar">
+                <manifest>
+                    <attribute name="Main-Class" value="org.openscience.cdk.applications.jchempaint.application.JChemPaint"/>
+                    <section name="org.openscience.cdk">
+                        <attribute name="Specification-Title" value="JChemPaint"/>
+                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Vendor" value="The CDK Project"/>
+                        <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                    </section>
+                </manifest>
+                <fileset dir="${appjars.dir}">
+                    <include name="**/*" />
+                </fileset>
+            </jar>
+        </target>
+	
+</project>
+
+
+
