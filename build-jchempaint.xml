@@ -5,11 +5,9 @@
             description="Builds the JChemPaint application">
             <antcall target="compile-module"><param name="module" value="jchempaint"/></antcall>
             <!-- first unjar the CDK and other jars we need -->
-            <delete dir="${build}"/>
-            <mkdir dir="${build}"/>
             <mkdir dir="${appjars.dir}"/>
-	    <mkdir dir="${build}/org/openscience/cdk/applications/jchempaint/resources" />
-	    <copy todir="${build}/org/openscience/cdk/applications/jchempaint/resources" >
+	    <mkdir dir="${appjars.dir}/org/openscience/cdk/applications/jchempaint/resources" />
+	    <copy todir="${appjars.dir}/org/openscience/cdk/applications/jchempaint/resources" >
 	    <fileset dir="${src}/org/openscience/cdk/applications/jchempaint/resources">
 		<include name="*" />
 	    </fileset>
