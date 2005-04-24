@@ -11,65 +11,40 @@
       <title>CDK Modules</title>
       <para>
         All CDK classes are categorized into classes. Currently, these classes
-        are defined: cdk-core, cdk-standard, cdk-io, cdk-render,
-        cdk-libio and cdk-extra.
+        are defined: cdk-data, cdk-core, cdk-standard, cdk-io, cdk-render,
+        cdk-libio, cdk-extra, cdk-experimental, cdk-orphaned, and several more.
+      </para>
+      <para>
+        The data module contains the data classes of the CDK library. Nothing
+        more, nothing less.
+        The core module contains several of the more central algorithms in CDK,
+        i.e. algorithms that are used by many other algorithms. Both these classes
+        are now stable.
+      </para>
+      <para>
+        Many of these modules have dependencies on other modules. An overview
+        is available on the CDK website: <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/modules/">module
+        dependencies</ulink>.
       </para>
       <section>
-        <title>Core classes</title>
+        <title>Library IO modules</title>
         <para>
-          In the cdk-core module the core classes represent chemical entities, like 
-          bonds, atoms, molecules, and
-          more abstract entities, like connectivity tables, used for in common
-          computational and information chemistry.
+          CDK contains three modules that allow interaction with other libraries:
+          libio-cml for CMLDOM, libio-joelib for 
+          <ulink url="http://joelib.sf.net/">JOELib</ulink>, and io-jmol for the 
+          IO classes in <ulink url="http://www.jmol.org/">Jmol</ulink>.
         </para>
       </section>
       <section>
-        <title>Standard classes</title>
+        <title>Special modules</title>
         <para>
-          The standard classes found in the cdk-standard module are those classes that
-          do not store chemical data, but that are used by two or more of the modules
-          below, and that are considered basic.
+          There are a few special modules, which are normally not used by users.
+          The most obvious module is the test module. But others are: the experimental
+          module, which contains code not yet trusted or finished enough; and the
+          orphaned module with classes which can no longer be supported by the
+          CDK developers.
         </para>
       </section>
-      <section>
-        <title>IO classes</title>
-        <para>
-          The cdk-io module contains classes for file, internet and database input and
-          output.
-        </para>
-      </section>
-      <section>
-        <title>Rendering classes</title>
-        <para>
-          The cdk-render module provides classes for displaying 2D and 3D chemical
-          information, and classes that provide ways to have users interact with these
-          graphical representations.
-        </para>
-      </section>
-      <section>
-        <title>LibIO classes</title>
-        <para>
-          These classes interface to other (Java) libraries, like JOELib and CMLDOM.
-        </para>
-      </section>
-      <section>
-        <title>Extra classes</title>
-        <para>
-          These are classes that do not belong to either of the other two categories.
-        </para>
-      </section>
-      <section>
-        <title>Experimental  classes</title>
-        <para>
-          This package is for classes that provide experimental functionality. That is,
-          functions that are not fully implemented, or not for general use in any case.
-          Such classes may be used, however, in some programs to be able to be tested.
-          An example is the 'experimental' version of JChemPaint, which provides access
-          to the IUPAC name generator, which is only a proof of concept of a possible
-          design, and not really of production level quality.
-        </para>
-      </section>
-
     </chapter>
 
   <chapter id="sect:compiling">
@@ -81,34 +56,14 @@
     </para>
 
     <para>
-      CDK can be compiled with and without support for Java3D.
-      How to compile these, is explained in the next two sections.
+      CDK can be compiled with and without support for a number of libraries:
+      Java3D, JOELib and Xerces.
+      The availability of those libraries is normally autodetected. An overview
+      is given with the command:
+      <programlisting>
+cdk/$ ant info
+      </programlisting>
     </para>
-
-    <section>
-      <title>Compiling without Java3D installed</title>
-      <para>
-        If not Java3D is installed or available for your platform,
-        you can compile CDK with:
-        <programlisting>
-cdk/$ ant
-        </programlisting>
-      </para>
-    </section>
-
-    <section>
-      <title>Compiling with Java3D installed</title>
-      <para>
-        The build procedure will automatically detect a Java3D installtion.
-        If, however, Java3D is not installed in the Java SDK directory,
-        you can define the path like this:
-        <programlisting>
-cdk/$ ant -Dpathtojava3d=/some/path compile-with-java3d
-        </programlisting>
-        The parameter pathtojava3d can be used to tell Ant where
-        your Java3D installation (read: jar files) can be found.
-      </para>
-    </section>
 
     <section>
       <title>Debugging and Optimization</title>
@@ -200,21 +155,6 @@ test:
         Java versions.
       </para>
 
-      <para>
-        An alternative is to install the cdk-test package.
-        You can then do tests with
-        <programlisting>
-$ cdk-test org.openscience.cdk.test.CDKTests
-        </programlisting>
-      </para>
-
-      <para>
-        There are currently two major test suites:
-        <itemizedlist>
-          <listitem><para>org.openscience.cdk.test.CDKTests</para></listitem>
-          <listitem><para>org.openscience.cdk.test.io.cml.CMLIOTests</para></listitem>
-        </itemizedlist>
-      </para>
     </section>
     
     <section>
@@ -286,7 +226,7 @@ $ cdk-test org.openscience.cdk.test.CDKTests
             return new TestSuite(RingSearchTest.class);
         }
             </programlisting>
-            </example>			
+            </example>
 
 
     The nicest thing now is that JUnit automatically finds, by introspection, all methods in your 
@@ -304,7 +244,7 @@ $ cdk-test org.openscience.cdk.test.CDKTests
             assert(ringSet.size() == 2);
         }
             </programlisting>
-            </example>			
+            </example>
 
     Interestingly, the method testAlphaPinene() does not return anything. Somehow they do the evaluation
     of the assert method in a different way, also by introspection, supposedly. 
@@ -332,7 +272,7 @@ $ cdk-test org.openscience.cdk.test.CDKTests
             assert(IsomorphismChecker.areIsomorphic(reference, testMol));
         }
             </programlisting>
-            </example>			
+            </example>
 
     Finally, the CDKTests class is supposed to be a host for all the single TestCases that we write:
             <example>
@@ -360,7 +300,7 @@ $ cdk-test org.openscience.cdk.test.CDKTests
         }
     }
             </programlisting>
-            </example>			
+            </example>
 
     It makes a TestSuite and then adds all the single tests and runs them, evaluating the result and 
     printing a small summary. 

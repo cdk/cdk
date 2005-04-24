@@ -36,15 +36,15 @@
                 Update the website and add release notes to it. That is:
                 <orderedlist>
                   <listitem><para>update the API on <ulink url="http://cdk.sf.net/api/">http://cdk.sf.net/api/</ulink></para></listitem>
-                  <listitem><para>update the keyword list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/docu/featurefolder/">http://almost.cubic.uni-koeln.de/cdk/docu/featurefolder/</ulink></para></listitem>
-                  <listitem><para>update the ChangeLog list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/docu/changelog/">http://almost.cubic.uni-koeln.de/cdk/docu/changelog/</ulink></para></listitem>
-                  <listitem><para>update the library dependencies list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/docu/dep/">http://almost.cubic.uni-koeln.de/cdk/docu/dep//</ulink></para></listitem>
-                  <listitem><para>update the bibliography list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/bib/base_view">http://almost.cubic.uni-koeln.de/cdk/bib/base_view</ulink></para></listitem>
-                  <listitem><para>update the PMD results for the CDK modules on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/quality/pmd/">http://almost.cubic.uni-koeln.de/cdk/devel/quality/pmd/</ulink></para></listitem>
-                  <listitem><para>update the JavaDoc stats on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/quality/javadoc_stats/">http://almost.cubic.uni-koeln.de/cdk/devel/quality/javadoc_stats/</ulink></para></listitem>
-                  <listitem><para>update the source code stats on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/quality/source_stats/">http://almost.cubic.uni-koeln.de/cdk/devel/quality/source_stats/</ulink></para></listitem>
-                  <listitem><para>update the modules page on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/modules/">http://almost.cubic.uni-koeln.de/cdk/devel/modules/</ulink></para></listitem>
-                  <listitem><para>update all pages below the modules page on <ulink url="http://almost.cubic.uni-koeln.de/cdk/devel/modules/">http://almost.cubic.uni-koeln.de/cdk/devel/modules/</ulink></para></listitem>
+                  <listitem><para>update the keyword list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/featurefolder/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/featurefolder/</ulink></para></listitem>
+                  <listitem><para>update the ChangeLog list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/changelog/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/changelog/</ulink></para></listitem>
+                  <listitem><para>update the library dependencies list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/dep/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/dep//</ulink></para></listitem>
+                  <listitem><para>update the bibliography list on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/bib/base_view">http://almost.cubic.uni-koeln.de/cdk/cdk_top/bib/base_view</ulink></para></listitem>
+                  <listitem><para>update the PMD results for the CDK modules on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/quality/pmd/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/quality/pmd/</ulink></para></listitem>
+                  <listitem><para>update the JavaDoc stats on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/quality/javadoc_stats/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/quality/javadoc_stats/</ulink></para></listitem>
+                  <listitem><para>update the source code stats on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/quality/source_stats/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/quality/source_stats/</ulink></para></listitem>
+                  <listitem><para>update the modules page on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/modules/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/modules/</ulink></para></listitem>
+                  <listitem><para>update all pages below the modules page on <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/modules/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/modules/</ulink></para></listitem>
                 </orderedlist>
                 Preferably, a large set of these things goes in a semi-automatic mechanism. Hence, my
                 focus on the Plone FTP server!
