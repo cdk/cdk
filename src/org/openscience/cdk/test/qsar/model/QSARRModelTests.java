@@ -24,23 +24,31 @@
 package org.openscience.cdk.test.qsar.model;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.test.qsar.model.*;
 
 /**
  * TestSuite that runs all Model tests.
  *
- * @author Rajarshi Guha
- * @cdk.require r-project
+ * @author     Rajarshi Guha
  * @cdk.module test
  */
- 
- public class QSARRModelTests {
+public class QSARRModelTests {
+    
     public static Test suite() {
         TestSuite suite = new TestSuite("All QSAR R Based Modeling Tests");
-        suite.addTest(SJavaEnvironmentTest.suite());
-        suite.addTest(LinearRegressionModelTest.suite());
-        suite.addTest(CNNRegressionModelTest.suite());
-	return suite;
+        try {
+            Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.SJavaEnvironmentTest");
+            suite.addTest(new TestSuite(testClass));
+            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.LinearRegressionModelTest");
+            suite.addTest(new TestSuite(testClass));
+            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.CNNRegressionModelTest");
+            suite.addTest(new TestSuite(testClass));
+        } catch (Exception exception) {
+            System.out.println("Could not load the an R model test: " + exception.getMessage());
+            exception.printStackTrace();
+        }
+        return suite;
     }
 }

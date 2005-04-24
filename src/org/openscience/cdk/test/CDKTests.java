@@ -25,6 +25,7 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
@@ -149,12 +150,7 @@ public class CDKTests
         }
 
         // from cdk.test.qsar.model
-        try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.qsar.model.QSARRModelTests");
-            suite.addTest(new TestSuite(testClass));
-        } catch (Exception exception) {
-            System.out.println("Could not load QSAR R based model tests:" + exception.getMessage());
-        }
+        suite.addTest(QSARRModelTests.suite());
 
         return suite;
     }
