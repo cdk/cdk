@@ -1,9 +1,12 @@
 cdk-core.jar
-cdk-standard.jar
-cdk-render.jar
-cdk-io.jar
+cdk-data.jar
+cdk-experimental.jar
 cdk-extra.jar
+cdk-io.jar
+cdk-interfaces.jar
 cdk-libio.jar
 cdk-libio-cml.jar
 cdk-qsar.jar
+cdk-render.jar
+cdk-standard.jar
 
