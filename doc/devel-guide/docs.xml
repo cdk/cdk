@@ -79,6 +79,16 @@ to the SF bug list for the CDK project. One tag for one bug.
 </para>
 </listitem>
 </varlistentry>
+<varlistentry><term>@cdk.require</term>
+<listitem>
+<para>
+Defines a build requirement. Examples requirements are 'java1.4' indicting
+that the class can only be compiled with java1.4, 'java1.4+' that it can be
+compiled with Java 1.4 or better, 'ant1.6' which requires Ant 1.6 to get this
+class compiled, and 'r-project' which requires the R to be present.
+</para>
+</listitem>
+</varlistentry>
 </variablelist>
           </para>
         </section>

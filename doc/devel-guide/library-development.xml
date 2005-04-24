@@ -65,6 +65,17 @@ cdk/$ ant info
       </programlisting>
     </para>
 
+    <para>
+      CDK can be compiled into small module jars with:
+      <programlisting>
+cdk/$ ant clean dist-all
+      </programlisting>
+      Or, alternatively, into one big jar with:
+      <programlisting>
+cdk/$ ant clean dist-large
+      </programlisting>
+    </para>
+    
     <section>
       <title>Debugging and Optimization</title>
       <para>
