@@ -640,15 +640,16 @@
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
 
-        <!-- target id="test-all" name="test-all" depends="test, test-experimental"/ -->
+        <target id="test-all" name="test-all" depends="test, test-experimental"/>
         
-        <!-- target id="test-experimental" name="test-experimental" depends="dist-large, noJunit"
+        <target id="test-experimental" name="test-experimental" depends="noJunit, dist-all"
                 description="Performs a full JUnit test for the CDK, including experimental classes.">
                 <mkdir dir="${reports.tests}"/>
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
-                        <pathelement location="${dist}/jar/cdk-${version}.jar" />
-                        <pathelement location="${dist}/jar/cdk-test.jar" />
+                        <fileset dir="${dist}/jar">
+                                <include name="cdk-*.jar" />
+                        </fileset>
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
@@ -666,7 +667,7 @@
                                 <formatter type="brief" />
                         </test>
                 </junit>
-        </target -->
+        </target>
 
         <target id="noJunit" name="noJunit" depends="check" unless="junit.present">
             <fail message="JUnit is not installed in Ant. Please copy cdk/develjar/junit.jar to ${ant.home}/lib/."/>
@@ -700,11 +701,13 @@
                 </junit>
         </target>
 
-        <!-- target id="limitations" name="limitations" depends="dist-large, dist-test, noJunit"
+        <target id="limitations" name="limitations" depends="noJunit, dist-all"
                 description="Performs a JUnit tests that indicate limitations of certain CDK algorithms/classes.">
                 <junit printsummary="yes" haltonfailure="yes" fork="yes">
                     <classpath>
-                        <pathelement location="${dist}/jar/cdk-${version}.jar" />
+                        <fileset dir="${dist}/jar">
+                                <include name="cdk-*.jar" />
+                        </fileset>
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>
@@ -722,52 +725,7 @@
                                 <formatter type="brief" />
                         </test>
                 </junit>
-        </target -->
-
-        <!-- target id="test-libio" name="test-libio" depends="dist-large, dist-libio">
-                <java classname="org.openscience.cdk.test.libio.joelib.JOELibIOTest" fork="yes">
-                        <classpath>
-                                <pathelement location="${dist}/jar/cdk-${version}.jar" />
-                                <pathelement path="${java.class.path}" />
-                                <pathelement location="." />
-                                <fileset dir="${devellib}">
-                                        <include name="*.jar" />
-                                </fileset>
-                                <fileset dir="${lib}">
-                                        <include name="*.jar" />
-                                </fileset>
-                                <fileset dir="${lib}/libio">
-                                        <include name="*.jar" />
-                                </fileset>
-                        </classpath>
-                </java>
-        </target -->
-
-        <!-- target name="run-with-java3d"
-        depends="dist-extra, dist-io, dist-extra, dist-render-with-java3d">
-                <java
-                classname="org.openscience.cdk.test.OrbitalsRenderer3DTest"
-                 fork="yes">
-                        <arg value="data/reserpine.mol" />
-
-                        <classpath>
-                                <pathelement location="${dist}/jar/cdk-core.jar" />
-                                <pathelement location="${dist}/jar/cdk-standard.jar" />
-                                <pathelement location="${dist}/jar/cdk-extra.jar" />
-                                <pathelement location="${dist}/jar/cdk-io.jar" />
-                                <pathelement location="${dist}/jar/cdk-render.jar" />
-                                <pathelement location="${dist}/jar/cdk-render-with-java3d.jar" />
-                                <pathelement path="${java.class.path}" />
-                                <pathelement location="." />
-                                <fileset dir="${lib}">
-                                        <include name="*.jar" />
-                                </fileset>
-                                <fileset dir="${pathto3djava}">
-                                        <include name="*.jar" />
-                                </fileset>
-                        </classpath>
-                </java>
-        </target -->
+        </target>
 
         <!-- target id="run-test" name="run-test" depends="dist-large, dist-test" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) as a standalone application with -Dtestclass=&lt;class>.">
@@ -820,7 +778,6 @@
                 </junit>
         </target -->
 
-	
         <target id="run" name="run" depends="dist-all" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
@@ -829,17 +786,9 @@
                    <arg value="${arg3}" />
                    <arg value="${arg4}" />
                    <classpath>
-                        <pathelement location="${dist}/jar/cdk-core.jar" />
-                        <pathelement location="${dist}/jar/cdk-standard.jar" />
-                        <pathelement location="${dist}/jar/cdk-io.jar" />
-                        <pathelement location="${dist}/jar/cdk-render.jar" />
-                        <pathelement location="${dist}/jar/cdk-extra.jar" />
-                        <pathelement location="${dist}/jar/cdk-apps.jar" />
-                        <pathelement location="${dist}/jar/cdk-test.jar" />
-                        <pathelement location="${dist}/jar/cdk-libio.jar" />
-                        <pathelement location="${dist}/jar/cdk-data.jar" />
-                        <pathelement path="${java.class.path}" />
-                        <pathelement location="." />
+                        <fileset dir="${dist}/jar">
+                                <include name="*.jar" />
+                        </fileset>
                         <fileset dir="${lib}">
                                 <include name="*.jar" />
                         </fileset>

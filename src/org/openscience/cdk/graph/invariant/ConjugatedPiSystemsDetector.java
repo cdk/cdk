@@ -29,8 +29,8 @@ import org.openscience.cdk.*;
 
 /**
  *@author        kaihartmann
- *@cdk.created   17. September 2004
- *@cdk.module    experimental
+ *@cdk.created   2004-09-17
+ *@cdk.module    extra
  *
  *@cdk.todo add negatively charged atoms (e.g. O-) to the pi system
  */
@@ -41,8 +41,8 @@ public class ConjugatedPiSystemsDetector {
      *  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known 
      *  before calling this method.
      *
-     *  An example for detection of Radical Allyl:
-     *
+     *  <p>An example for detection of Radical Allyl:
+     *  <pre>
      *	Atom a0 = new Atom("C"); mol.addAtom(a0);
      *	Atom a1 = new Atom("C"); mol.addAtom(a1);
      *	Atom a2 = new Atom("C"); mol.addAtom(a2);
@@ -60,6 +60,7 @@ public class ConjugatedPiSystemsDetector {
      *	mol.addBond(2, 7, 1);
      *	SingleElectron se = new SingleElectron(a2);
      *	mol.addElectronContainer(se);
+     *  </pre>
      *
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
