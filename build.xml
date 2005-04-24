@@ -424,116 +424,70 @@
             <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
             <antcall target="compile-module"><param name="module" value="test"/></antcall>
-        </target>
-
-        <target id="dist-apps" name="dist-apps">
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
         </target>
 
-        <target id="dist-libio" name="dist-libio">
-            <antcall target="compile-module"><param name="module" value="libio"/></antcall>
-        </target>
-
-        <!-- target id="dist-large" name="dist-large" depends="compile-all, dist.init, libjars"
+        <target id="dist-large" name="dist-large"
             description="Builds on big jar file for the CDK, including experimental classes.">
-                <jar jarfile="${dist}/jar/cdk-${version}.jar">
-                    <manifest>
-                        <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
-                        <section name="org.openscience.cdk">
-                            <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
-                            <attribute name="Specification-Version" value="1.0"/>
-                            <attribute name="Specification-Vendor" value="The CDK Project"/>
-                            <attribute name="Implementation-Title" value="org.openscience.cdk"/>
-                            <attribute name="Implementation-Version" value="${version}"/>
-                            <attribute name="Implementation-Vendor" value="The CDK Project"/>
-                        </section>
-                    </manifest>
-                    <fileset dir="${build}">
-                        <include name="org/openscience/cdk/**" />
-                        <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                        <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
-                        <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                    </fileset>
-                    <fileset dir=".">
-                        <include name="CHANGELOG" />
-                        <include name="README" />
-                        <include name="BUGS" />
-                    </fileset>
-                    <fileset dir="${doc}">
-                        <include name="lgpl.license" />
-                    </fileset>
-                    <fileset dir="packages/tar/cdk">
-                        <include name="AUTHORS" />
-                    </fileset>
-                    <fileset dir="${src}"> <!- from io and qsar module ->
-                        <include name="io-formats.set"/>
-                        <include name="qsar-descriptors.set"/>
-                    </fileset>
-                    <fileset dir="data/templates"> <!- from builder3d module ->
-                        <include name="ringTemplateFingerprints.txt"/>
-                        <include name="ringTemplateStructures.sdf"/>
-                    </fileset>
-                    <fileset dir="${appjars.dir}" includes="**/*.class"/>
-                </jar>
-        </target -->
-
-        <target name="check.libjars" id="check.libjars">
-            <uptodate property="libjars.uptodate" targetfile="${appjars.dir}">
-                <srcfiles dir="${lib}" includes="base_1.4.jar"/>
-                <srcfiles dir="${lib}" includes="batik-dom.jar"/>
-                <srcfiles dir="${lib}" includes="batik-awt-util.jar"/>
-                <srcfiles dir="${lib}" includes="batik-svggen.jar"/>
-                <srcfiles dir="${lib}" includes="batik-util.jar"/>
-                <srcfiles dir="${lib}" includes="batik-xml.jar"/>
-                <srcfiles dir="${lib}" includes="castor-0.9.5-xml.jar"/>
-                <srcfiles dir="${lib}" includes="cmlAll_1.4.jar"/>
-                <srcfiles dir="${lib}" includes="commons-cli-1.0.jar"/>
-                <srcfiles dir="${lib}" includes="dadml.jar"/>
-                <srcfiles dir="${lib}" includes="euclid_1.4.jar"/>
-                <srcfiles dir="${lib}" includes="gnujaxp.jar"/>
-                <srcfiles dir="${lib}" includes="Jama-1.0.1.jar"/>
-                <srcfiles dir="${lib}" includes="jgrapht-0.5.3.jar"/>
-                <srcfiles dir="${lib}" includes="jmolApis.jar"/>
-                <srcfiles dir="${lib}" includes="jmolIO.jar"/>
-                <srcfiles dir="${lib}" includes="log4j.jar"/>
-                <srcfiles dir="${lib}" includes="mysql-2.0.4.jar"/>
-                <srcfiles dir="${lib}" includes="pmrdom_1.4.jar"/>
-                <srcfiles dir="${lib}" includes="postgresql7.0-1.2.jar"/>
-                <srcfiles dir="${lib}" includes="printf.jar"/>
-                <srcfiles dir="${lib}" includes="stmml.jar"/>
-                <srcfiles dir="${lib}" includes="vecmath1.2-1.14.jar"/>
-                <srcfiles dir="${lib}" includes="xindice.jar"/>
-                <srcfiles dir="${lib}" includes="xmldb.jar"/>
-            </uptodate>
-        </target>
-        
-        <target name="libjars" id="libjars" depends="check.libjars" unless="libjars.uptodate">
+            
+            <!-- first unjar the CDK and other jars we need -->
+            <delete dir="${build}"/>
+            <mkdir dir="${build}"/>
             <mkdir dir="${appjars.dir}"/>
-            <unjar dest="${appjars.dir}" src="${lib}/base_1.4.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/batik-dom.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/batik-awt-util.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/batik-svggen.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/batik-util.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/batik-xml.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/castor-0.9.5-xml.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/cmlAll_1.4.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/commons-cli-1.0.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/euclid_1.4.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/Jama-1.0.1.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/jgrapht-0.5.3.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/jmolApis.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/jmolIO.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/mysql-2.0.4.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/pmrdom_1.4.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/postgresql7.0-1.2.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/printf.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/stmml.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/vecmath1.2-1.14.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/xindice.jar"/>
-            <unjar dest="${appjars.dir}" src="${lib}/xmldb.jar"/>
+            <unjar dest="${appjars.dir}">
+                <fileset dir="${lib}">
+                    <includesfile name="${metainf}/applications.libdepends"/>
+                    <includesfile name="${metainf}/builder3d.libdepends"/>
+                    <includesfile name="${metainf}/core.libdepends"/>
+                    <includesfile name="${metainf}/data.libdepends"/>
+                    <includesfile name="${metainf}/experimental.libdepends"/>
+                    <includesfile name="${metainf}/extra.libdepends"/>
+                    <includesfile name="${metainf}/io.libdepends"/>
+                    <includesfile name="${metainf}/io-jmol.libdepends"/>
+                    <includesfile name="${metainf}/libio-cml.libdepends"/>
+                    <includesfile name="${metainf}/qsar.libdepends"/>
+                    <includesfile name="${metainf}/render.libdepends"/>
+                    <includesfile name="${metainf}/standard.libdepends"/>
+                    <includesfile name="${metainf}/swing.libdepends"/>
+                </fileset>
+                <fileset dir="${dist}/jar">
+                    <include name="cdk-applications.jar"/>
+                    <include name="cdk-builder3d.jar"/>
+                    <include name="cdk-core.jar"/>
+                    <include name="cdk-data.jar"/>
+                    <include name="cdk-experimental.jar"/>
+                    <include name="cdk-extra.jar"/>
+                    <include name="cdk-interfaces.jar"/>
+                    <include name="cdk-io.jar"/>
+                    <include name="cdk-io-jmol.jar"/>
+                    <include name="cdk-libio-cml.jar"/>
+                    <include name="cdk-qsar.jar"/>
+                    <include name="cdk-render.jar"/>
+                    <include name="cdk-standard.jar"/>
+                    <include name="cdk-swing.jar"/>
+                </fileset>
+            </unjar>
+            
+            <!-- then zip up things -->
+            <jar jarfile="${dist}/jar/cdk-${version}.jar">
+                <manifest>
+                    <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
+                    <section name="org.openscience.cdk">
+                        <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
+                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Vendor" value="The CDK Project"/>
+                        <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                    </section>
+                </manifest>
+                <fileset dir="${appjars.dir}">
+                    <include name="**/*" />
+                </fileset>
+            </jar>
         </target>
 
-        <target id="sourcedist" name="sourcedist" depends="init"
+        <!-- target id="sourcedist" name="sourcedist" depends="init"
                 description="Builds the source packages.">
                 <property name="package" value="cdk-source-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
@@ -598,7 +552,7 @@
                 <gzip zipfile="${package}.tar.gz" src="cdk-source-${version}.tar" />
                 <delete file="${package}.tar" />
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
-        </target>
+        </target -->
 
         <target id="test-all" name="test-all" depends="test, test-experimental"/>
         
