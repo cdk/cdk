@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module applications
  *
  * @author      Egon Willighagen
+ * @cdk.require java1.4
  * @cdk.created 2004-12-02
  * @cdk.keyword descriptor calculation
  */
