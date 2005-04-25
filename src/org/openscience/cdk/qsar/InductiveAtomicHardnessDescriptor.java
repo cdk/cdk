@@ -76,7 +76,6 @@ import java.io.*;
  *
  *
  *@author         mfe4
- *@created        18 aprile 2005
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
