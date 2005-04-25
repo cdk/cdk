@@ -85,7 +85,7 @@ public class TemplateHandler3D{
 		BufferedReader fin =null;
 			
 		try{	
-			ins = this.getClass().getClassLoader().getResourceAsStream("ringTemplateStructures.sdf");
+			ins = this.getClass().getClassLoader().getResourceAsStream("ringTemplateStructures.sdf.gz");
 			fin = new BufferedReader(new InputStreamReader(ins));
 			imdl=new IteratingMDLReader(fin);
 		}catch (Exception exc1){
@@ -106,7 +106,7 @@ public class TemplateHandler3D{
 		//System.out.println("TEMPLATE Finger");
 		try{
 			
-			ins = this.getClass().getClassLoader().getResourceAsStream("ringTemplateFingerprints.txt");
+			ins = this.getClass().getClassLoader().getResourceAsStream("ringTemplateFingerprints.txt.gz");
 			fin = new BufferedReader(new InputStreamReader(ins));
 		}catch (Exception exc3){
 			System.out.println("Could not read Fingerprints from FingerprintFile due to: "+exc3.getMessage());
