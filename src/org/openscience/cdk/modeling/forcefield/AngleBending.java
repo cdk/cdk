@@ -24,6 +24,7 @@ public class AngleBending {
 
 	double mmff94SumEA = 0;
 	GVector gradientMMFF94SumEA = new GVector(3);
+	GVector approximateGradientMMFF94SumEA = new GVector(3);
 	GMatrix hessianMMFF94SumEA = new GMatrix(3,3);
 
 	double[][] dDeltav = null;
@@ -130,7 +131,12 @@ public class AngleBending {
 		for (int i = 0; i < angleNumber; i++) {
 			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
 			//System.out.println("v[" + i + "] = " + v[i]);
+			//System.out.println("v0[" + i + "] = " + v0[i]);
 			deltav[i] = v[i] - v0[i];
+			if (deltav[i] > 0) {
+			deltav[i]=-deltav[i]; 
+			}
+			
 			//System.out.println("deltav[" + i + "]= " + deltav[i]);
 		}
 	}
@@ -149,12 +155,14 @@ public class AngleBending {
 			//System.out.println("k2[" + i + "]= " + k2[i]);
 			//System.out.println("k3[" + i + "]= " + k3[i]);
 			//System.out.println("deltav[" + i + "]= " + deltav[i]);
+			//System.out.println("For Angle " + i + " : " + k2[i] * Math.pow(deltav[i],2) + k3[i] * Math.pow(deltav[i],3));
 
 			mmff94SumEA = mmff94SumEA + k2[i] * Math.pow(deltav[i],2) 
 						+ k3[i] * Math.pow(deltav[i],3);
 			
 			//System.out.println("mmff94SumEA = " + mmff94SumEA);
 		}
+		//mmff94SumEA = Math.abs(mmff94SumEA);
 		//System.out.println("mmff94SumEA = " + mmff94SumEA);
 		return mmff94SumEA;
 	}
@@ -300,6 +308,41 @@ public class AngleBending {
 	 */
 	public GVector getGradientMMFF94SumEA() {
 		return gradientMMFF94SumEA;
+	}
+
+
+	/**
+	 *  Evaluate an approximation of the gradient, of the angle bending term, for a given atoms
+	 *  coordinates
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void setApproximateGradientMMFF94SumEA(GVector coord3d) {
+		approximateGradientMMFF94SumEA.setSize(coord3d.getSize());
+		double sigma = 0.005;
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		
+		for (int m = 0; m < approximateGradientMMFF94SumEA.getSize(); m++) {
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
+			approximateGradientMMFF94SumEA.setElement(m,(functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) / (2 * sigma));
+		}
+			
+		//System.out.println("approximateGradientMMFF94SumEA : " + approximateGradientMMFF94SumEA);
+	}
+
+
+	/**
+	 *  Get the approximate gradient of the angle bending term.
+	 *
+	 *
+	 *@return           Angle bending approximate gradient value
+	 */
+	public GVector getApproximateGradientMMFF94SumEA() {
+		return approximateGradientMMFF94SumEA;
 	}
 
 
@@ -731,7 +774,6 @@ public class AngleBending {
 	 */
 	public void setHessianMMFF94SumEA(GVector coord3d) {
 
-
 		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
 		
 		calculateDeltav(coord3d);
@@ -761,6 +803,10 @@ public class AngleBending {
 		hessianMMFF94SumEA.setSize(coord3d.getSize(), coord3d.getSize());
 		hessianMMFF94SumEA.set(forHessian); 
 		//System.out.println("hessianMMFF94SumEA : " + hessianMMFF94SumEA);
+		
+		NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
+		nrm.hessianEigenValues(forHessian, coord3d.getSize());
+		
 	}
 
 

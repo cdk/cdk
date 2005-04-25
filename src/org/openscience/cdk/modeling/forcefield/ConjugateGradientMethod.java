@@ -34,13 +34,10 @@ public class ConjugateGradientMethod {
 	 *  uk = gk gk / gk-1 gk-1
 	 *
 	 */
-	public void setuk(GVector xkminus1, GVector xk,  PotentialFunction forceFieldFunction) {
-		forceFieldFunction.setEnergyGradient(xk);
-		GVector temporalVector = new GVector(forceFieldFunction.getEnergyGradient());
-		uk = temporalVector.dot(temporalVector);
-		forceFieldFunction.setEnergyGradient(xkminus1);
-		temporalVector.set(forceFieldFunction.getEnergyGradient());
-		uk = uk / temporalVector.dot(temporalVector);
+	public void setuk(GVector gkminus1, GVector gk) {
+		
+		uk = gk.dot(gk) / gkminus1.dot(gkminus1);
+		
 		//System.out.println("uk = " + uk);
 		return;
 	}
@@ -63,9 +60,10 @@ public class ConjugateGradientMethod {
 		}
 		else {
 		vk.set(gk);
+		vk.normalize();
 		vk.scale(-1);
 		//System.out.println("vectorvk : " + vk);
-		}
+}
 		return;
 	}
 

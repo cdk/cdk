@@ -347,7 +347,6 @@ public class MMFF94BasedParameterSetReader {
 			double va4 = new Double(value4).doubleValue();
 			double va5 = new Double(value5).doubleValue();
 
-			
 			key = "torsion" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
 			if (parameterSet.containsKey(key)) {
 				data = (Vector) parameterSet.get(key);

@@ -15,7 +15,7 @@ import org.openscience.cdk.*;
  *
  */
 public class NewtonRaphsonMethod {
-	GVector gradientPerInverseHessianVector = new GVector(3);
+	GVector gradientPerInverseHessianVector = null;
 
 	/**
 	 *  Constructor for the NR object
@@ -23,25 +23,27 @@ public class NewtonRaphsonMethod {
 	public NewtonRaphsonMethod() { }
 
 
-	/**
-	 *  Constructor for the NewtonRaphsonMethod object
-	 *
-	 *@param  coords3d  Coordinates from current point
-	 */
-	public NewtonRaphsonMethod(GVector coords3d) {
-		gradientPerInverseHessianVector.setSize(coords3d.getSize());
+	public void hessianEigenValues(double[] forMatrix, int size) {
+		
+		Matrix matrixForEigenValuesCalculation = new Matrix(forMatrix, size);
+		EigenvalueDecomposition eigenValues = new EigenvalueDecomposition(matrixForEigenValuesCalculation);
+		eigenValues = matrixForEigenValuesCalculation.eig();
+		double[] realEigenvalues = eigenValues.getRealEigenvalues(); 
+		double[] imagEigenvalues = eigenValues.getImagEigenvalues(); 
+		for (int i=0; i<size ; i++) { 
+			System.out.println("Eigen values, real part, i=" + i + " : " + realEigenvalues[i]);
+			System.out.println("Eigen values, imaginary part, i=" + i + "  : " + imagEigenvalues[i]);
+		}
 	}
 
 
-	public void gradientPerInverseHessian(GVector gradientOfxk, GMatrix hessianOfxk) {
+	public void gradientPerInverseHessian(GVector gradientk, GMatrix hessiank) {
 		
-		int dimen = gradientOfxk.getSize();
-		
-		double [][] forDeterminatCalculation = new double[dimen][];
-		for (int i = 0; i < dimen; i++) {
-			forDeterminatCalculation[i] = new double[dimen];
+		double [][] forDeterminatCalculation = new double[gradientk.getSize()][];
+		for (int i = 0; i < gradientk.getSize(); i++) {
+			forDeterminatCalculation[i] = new double[gradientk.getSize()];
 			for (int j = 0; j < forDeterminatCalculation[i].length;j++) {
-				forDeterminatCalculation [i][j] = hessianOfxk.getElement(i,j);
+				forDeterminatCalculation [i][j] = hessiank.getElement(i,j);
 			}
 		}
 
@@ -61,9 +63,10 @@ public class NewtonRaphsonMethod {
 		//System.out.println("matrixForDeterminatCalculation.det() = " + matrixForDeterminatCalculation.det());
 		
 		if (matrixForDeterminatCalculation.det() != 0) {
-			hessianOfxk.invert();
-			//System.out.println("hessianOfxk.invert() = " + hessianOfxk);
-			gradientPerInverseHessianVector.mul(gradientOfxk, hessianOfxk);
+			hessiank.invert();
+			//System.out.println("hessiank.invert() = " + hessiank);
+			gradientPerInverseHessianVector = new GVector(gradientk.getSize());
+			gradientPerInverseHessianVector.mul(gradientk, hessiank);
 		}
 		else {System.out.println("The Newton-Raphson method can't be execute because the hessian can't be inverted");
 		}

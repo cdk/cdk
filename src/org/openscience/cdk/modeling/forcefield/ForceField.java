@@ -59,14 +59,15 @@ public class ForceField extends GeometricMinimizer{
 		GVector moleculeCoords = new GVector(3);
 		MMFF94EnergyFunction mmff94PF=null;
 		if (potentialFunction=="mmff94"){
-		    System.out.println("SET POTENTIAL FUNCTION TO MMFF94");
+		    //System.out.println("SET POTENTIAL FUNCTION TO MMFF94");
 		    setMMFF94Tables(molecule);
 		    mmff94PF=new MMFF94EnergyFunction((AtomContainer)molecule,getPotentialParameterSet());
 		}
 		moleculeCoords.setSize(molecule.getAtomCount() * 3);
 		moleculeCoords.set(ffTools.getCoordinates3xNVector((AtomContainer)molecule));
 		
-		System.out.println("PotentialFunction set:"+potentialFunction+"MoleculeCoords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
+		//System.out.println("PotentialFunction set:"+potentialFunction+"MoleculeCoords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
+		//System.out.println(moleculeCoords.toString());
 		
 		if (sdm_flag)steepestDescentsMinimization(moleculeCoords,mmff94PF);
 
@@ -74,7 +75,7 @@ public class ForceField extends GeometricMinimizer{
 		//conjugateGradientMinimization(moleculeCoords, tpf);
 	
 
-		System.out.println("Minimization READY");
+		//System.out.println("Minimization READY");
 		//ffTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule); 
 	}
 			

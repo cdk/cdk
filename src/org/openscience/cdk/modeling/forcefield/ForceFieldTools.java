@@ -183,7 +183,7 @@ public class ForceFieldTools {
 		double atomsDistance = 0;
 		double difference = 0;
 		for (int j = 0; j < 3; j++) {
-			difference = atomsCoordinatesVector2.getElement(atomNumM2 * 3 + j) - atomsCoordinatesVector1.getElement(atomNumM1 * 3 + j);
+			difference = atomsCoordinatesVector1.getElement(atomNumM1 * 3 + j) - atomsCoordinatesVector2.getElement(atomNumM2 * 3 + j);
 			difference = Math.pow(difference, 2);
 			atomsDistance = atomsDistance + difference;
 		}
@@ -269,13 +269,14 @@ public class ForceFieldTools {
 		v2.cross(xjk, xlk);
 		v2.normalize();
 
-		double torsion = Math.toDegrees(v1.angle(v2));
-		//System.out.println("torsion" + torsion);
+		double torsion = v1.dot(v2);
+		//Math.toDegrees(v1.angle(v2));
+		//System.out.println("torsion = " + torsion);
 
 		return torsion;
 	}
 
-
+	
 	/**
 	 *  Calculate the torsion angle from 4 atoms i,j,k and l positions, where i-j, j-k, and k-l are bonded pairs.
 	 *
@@ -307,11 +308,28 @@ public class ForceFieldTools {
 		Vector3d v2 = new Vector3d();	// v2 = xjk x xlk / |xjk x xlk|
 		v2.cross(xjk, xlk);
 		v2.normalize();
-
-		double torsion = Math.toDegrees(v1.angle(v2));
+		
+		double cosang = v1.dot(v2);
+		
+		if (cosang >1){
+			cosang = 1;
+		}
+		if (cosang < -1){
+			cosang=-1;
+		}
+		
+		double torsion = (double)Math.acos(cosang);
+		double dot=xji.dot(v2);
+		double absDot=Math.abs(dot);
+		torsion = (dot/absDot > 0) ? torsion : (2 * Math.PI - torsion);
+		
 		//System.out.println("torsion" + torsion);
 
 		return torsion;
+	}
+	
+	public double toDegrees(double angleRad){
+		return angleRad*180/Math.PI;
 	}
 
 

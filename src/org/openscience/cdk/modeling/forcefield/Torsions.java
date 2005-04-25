@@ -22,6 +22,7 @@ public class Torsions {
 
 	double mmff94SumET = 0;
 	GVector gradientMMFF94SumET = new GVector(3);
+	GVector approximateGradientMMFF94SumET = new GVector(3);
 	GMatrix hessianMMFF94SumET = new GMatrix(3,3);
 
 	GVector dPhi = new GVector(3);
@@ -147,7 +148,7 @@ public class Torsions {
 			
 			phi[m] = ffTools.torsionAngleFrom3xNCoordinates(coords3d, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
 						torsionAtomPosition[m][2], torsionAtomPosition[m][3]);
-			//System.out.println("phi : " + phi[m]);	
+			//System.out.println("phi[" + m + "] : " + phi[m]);	
 		}
 	}
 
@@ -161,8 +162,16 @@ public class Torsions {
 	public double functionMMFF94SumET(GVector coords3d) {
 		setPhi(coords3d);
 		mmff94SumET = 0;
+		double torsionEnergy=0;
 		for (int m = 0; m < torsionNumber; m++) {
-			mmff94SumET = mmff94SumET + 0.5 * (v1[m] * (1 + Math.cos(phi[m])) + v2[m] * (1 - Math.cos(2 * phi[m])) + v3[m] * (1 + Math.cos(3 * phi[m])));
+			torsionEnergy = v1[m] * (1 + Math.cos(phi[m])) + v2[m] * (1 - Math.cos(2 * phi[m])) + v3[m] * (1 + Math.cos(3 * phi[m]));
+			//System.out.println("phi[" + m + "] = " + Math.toDegrees(phi[m]) + ", cph" + Math.cos(phi[m]) + ", c2ph" + Math.cos(2 * phi[m]) + ", c3ph" + Math.cos(3 * phi[m]) + ", te=" + torsionEnergy);
+			//if (torsionEnergy < 0) {
+			//	torsionEnergy= (-1) * torsionEnergy;
+			//}
+			mmff94SumET = mmff94SumET + torsionEnergy;
+			
+			//mmff94SumET = mmff94SumET + v1[m] * (1 + phi[m]) + v2[m] * (1 - 2 * phi[m]) + v3[m] * (1 + 3 * phi[m]);
 		}
 		//System.out.println("mmff94SumET = " + mmff94SumET);
 		return mmff94SumET;
@@ -193,8 +202,6 @@ public class Torsions {
 					v2[m] * Math.sin(2 * phi[m]) * 2 * dPhi.getElement(i) - 
 					v3[m] * Math.sin(3 * phi[m]) * 3 * dPhi.getElement(i);
 			}
-			sumGradientET = sumGradientET * 0.5;
-			
 			gradientMMFF94SumET.setElement(i, sumGradientET);
 		}
 		//System.out.println("gradientMMFF94SumET = " + gradientMMFF94SumET);
@@ -209,6 +216,41 @@ public class Torsions {
 	 */
 	public GVector getGradientMMFF94SumET() {
 		return gradientMMFF94SumET;
+	}
+
+
+	/**
+	 *  Evaluate an approximation of the gradient, of the torsion term, for a given atoms
+	 *  coordinates
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void setApproximateGradientMMFF94SumET(GVector coord3d) {
+		approximateGradientMMFF94SumET.setSize(coord3d.getSize());
+		double sigma = 0.005;
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		
+		for (int m = 0; m < approximateGradientMMFF94SumET.getSize(); m++) {
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
+			approximateGradientMMFF94SumET.setElement(m,(functionMMFF94SumET(xplusSigma) - functionMMFF94SumET(xminusSigma)) / (2 * sigma));
+		}
+			
+		//System.out.println("approximateGradientMMFF94SumET : " + approximateGradientMMFF94SumET);
+	}
+
+
+	/**
+	 *  Get the approximate gradient of the torsion term.
+	 *
+	 *
+	 *@return           torsion approximate gradient value
+	 */
+	public GVector getApproximateGradientMMFF94SumET() {
+		return approximateGradientMMFF94SumET;
 	}
 
 

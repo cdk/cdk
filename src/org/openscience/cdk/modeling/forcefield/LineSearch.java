@@ -7,14 +7,18 @@ import javax.vecmath.*;
 import org.openscience.cdk.*;
 
 /**
- *  The line-search method searches along the line containing the current point, xk, and parallel to the search direction
- *
+ *  The LineSearch class include the first and second step of the line search approach: 
+ *  Bracket the minimum and interpolation. The interpolation is the quadratic.
+ *  
  *@author     vlabarta
  *@cdk.module     builder3d
  *
  */
 public class LineSearch {
 
+	GVector direction = new GVector(3);
+	GVector scaleDirection = new GVector(3);
+	int f = 1;
 	double lambdaa = 0;
 	double lambdab = 0;
 	double lambdac = 0;
@@ -23,6 +27,7 @@ public class LineSearch {
 	double fxc = 0;
 	double parabolMinimumLambda = 0;
 	double arbitraryStepSize = 0;
+	double lineSearchLambda = 0;
 
 	/**
 	 *  Constructor for the LineSearch object
@@ -45,35 +50,46 @@ public class LineSearch {
 		//System.out.print("X" + iterNum + " = " + kPoint + "	");
 		//System.out.println("f(X" + iterNum + ") = " + forceFieldFunction.energyFunction(kPoint));
 
+		direction.setSize(searchDirection.getSize());
+		direction.set(searchDirection);
+		scaleDirection.setSize(searchDirection.getSize());
+		
 		GVector xa = new GVector(kPoint);
 		lambdaa = 0;
+		fxa = forceFieldFunction.energyFunction(xa);
+
+		if (fxa < 0) {
+			direction.scale(-1);
+			f = -1;
+			fxa = f * fxa;
+		}
 
 		GVector xb = new GVector(kPoint);
 		lambdab = 2;
-		GVector direction = new GVector(searchDirection);
-		direction.scale(lambdab);
-		xb.add(direction);
+		scaleDirection.set(direction);
+		scaleDirection.scale(lambdab);
+		xb.add(scaleDirection);
+		fxb = f * forceFieldFunction.energyFunction(xb);
 
 		GVector xc = new GVector(kPoint.getSize());
-
-		fxa = forceFieldFunction.energyFunction(xa);
-		fxb = forceFieldFunction.energyFunction(xb);
 		
 		//System.out.print("lambdaa = " + lambdaa + "	");
 		//System.out.println("fxa = " + fxa);
 		//System.out.print("lambdab = " + lambdab + "	");
 		//System.out.println("fxb = " + fxb);
+		//System.out.println("f = " + f);
 
 		boolean finish = false;
+		
 		if (fxb < fxa) {
 
 			//System.out.println("The energy decrease with the current step size. The stepsize will be increase by 20%");
 			lambdac = 1.2 * lambdab;
 			xc.set(kPoint);
-			direction.set(searchDirection);
-			direction.scale(lambdac);
-			xc.add(direction);
-			fxc = forceFieldFunction.energyFunction(xc);
+			scaleDirection.set(direction);
+			scaleDirection.scale(lambdac);
+			xc.add(scaleDirection);
+			fxc = f * forceFieldFunction.energyFunction(xc);
 		
 			//System.out.print("lambdaa = " + lambdaa + "	");
 			//System.out.println("fxa = " + fxa);
@@ -99,10 +115,10 @@ public class LineSearch {
 					//System.out.println("The energy decrease with the current step size. The stepsize will be increase by 20%");
 					lambdac = 1.2 * lambdac;
 					xc.set(kPoint);
-					direction.set(searchDirection);
-					direction.scale(lambdac);
-					xc.add(direction);
-					fxc = forceFieldFunction.energyFunction(xc);
+					scaleDirection.set(direction);
+					scaleDirection.scale(lambdac);
+					xc.add(scaleDirection);
+					fxc = f * forceFieldFunction.energyFunction(xc);
 
 					//System.out.print("lambdaa = " + lambdaa + "	");
 					//System.out.println("fxa = " + fxa);
@@ -125,10 +141,10 @@ public class LineSearch {
 				
 				lambdab = lambdab / 2;
 				xb.set(kPoint);
-				direction.set(searchDirection);
-				direction.scale(lambdab);
-				xb.add(direction);
-				fxb = forceFieldFunction.energyFunction(xb);
+				scaleDirection.set(direction);
+				scaleDirection.scale(lambdab);
+				xb.add(scaleDirection);
+				fxb = f * forceFieldFunction.energyFunction(xb);
 
 				//System.out.print("lambdaa = " + lambdaa + "	");
 				//System.out.println("fxa = " + fxa);
@@ -140,12 +156,16 @@ public class LineSearch {
 				if (fxb < fxa) {
 					finish = true;
 				}
-				if (lambdab < 0.00001) {
+				if (lambdab < 0.0000000000000001) {
 					finish = true;
 				}
 			}
 		}
-		arbitraryStepSize = lambdab;
+		if (fxb < fxa) {
+			arbitraryStepSize = lambdab;
+		} else {
+			arbitraryStepSize = lambdaa;
+		}
 		//System.out.println("");
 		//System.out.println("ArbitraryStep: ");
 		//System.out.println("arbitraryStepSize = " + arbitraryStepSize);
@@ -157,6 +177,7 @@ public class LineSearch {
 		parabolMinimumLambda = fxa * (Math.pow(lambdac,2) - Math.pow(lambdab,2)) + fxb * (Math.pow(lambdaa,2) - Math.pow(lambdac,2)) + fxc * (Math.pow(lambdab,2) - Math.pow(lambdaa,2));
 		parabolMinimumLambda = parabolMinimumLambda / (fxa * (lambdac-lambdab) + fxb * (lambdaa-lambdac) + fxc * (lambdab-lambdaa));
 		parabolMinimumLambda = 0.5 * parabolMinimumLambda;
+		
 		//System.out.println("parabolMinimumLambda = " + parabolMinimumLambda);
 		return parabolMinimumLambda;
 	}
@@ -189,6 +210,66 @@ public class LineSearch {
 	 */
 	public void setStepSize() {
 		return;
+	}
+
+
+	/**
+	 *  Bracket the minimum and then iterative parabolic interpolation.
+	 *  
+	 *@param  kPoint              Current point, xk
+	 *@param  searchDirection     Search direction
+	 *@param  forceFieldFunction  Potential energy function
+	 */
+	public void setLineSearchLambda(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction, int iterNum) {
+		//System.out.println("");
+		//System.out.println("Start the line search: ");
+		bracketingTheMinimum(kPoint, searchDirection, forceFieldFunction, iterNum);
+		
+		if (arbitraryStepSize != 0) {
+			//System.out.print("xb = " + xb + "	");
+			//System.out.println("fxb = " + fxb);
+                        
+			//System.out.println("Parabolic interpolation : ");
+
+			GVector xI = new GVector(kPoint.getSize());
+			double fxI = 0;
+			direction.setSize(searchDirection.getSize());
+			double fMinimumMinus1 = fxa;
+			double fMinimum = fxb;
+			
+
+			do {
+				parabolicInterpolation();
+				xI.set(kPoint);
+				scaleDirection.set(direction);
+				scaleDirection.scale(parabolMinimumLambda);
+				xI.add(scaleDirection);
+				
+				fxI = f * forceFieldFunction.energyFunction(xI);
+				
+				//if (fxI<fxa & fxI < fxb & fxI<fxc) {
+				if (parabolMinimumLambda >lambdaa & fxI < fxb & parabolMinimumLambda < lambdac) {
+					if (fxa < fxc) {
+						fxc = fxb; lambdac = lambdab;
+						fxb = fxI; lambdab = parabolMinimumLambda;
+					} else {
+						fxa = fxb; lambdaa = lambdab;
+						fxb = fxI; lambdab = parabolMinimumLambda;
+					}
+				} else if (fxI > fxb) {
+					if (fxa < fxc) {
+						fxc = fxI; lambdac = parabolMinimumLambda;
+					} else {
+						fxa = fxI; lambdac = parabolMinimumLambda;
+					}
+					}
+				fMinimumMinus1 = fMinimum;
+				fMinimum = fxb;
+			} while (Math.abs(fMinimum - fMinimumMinus1) > 0.0001);
+			lineSearchLambda = lambdab;
+		} else {
+			lineSearchLambda = arbitraryStepSize;
+		}
 	}
 
 }

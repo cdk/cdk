@@ -110,6 +110,9 @@ public class BondStretching {
 		for (int i = 0; i < bondsNumber; i++) {
 			r[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
 			deltar[i] = r[i] - r0[i];
+			//if (deltar[i] > 0) {
+			//	deltar[i] = (-1) * deltar[i];
+			//}
 		}
 	}
 
@@ -154,7 +157,7 @@ public class BondStretching {
 		Double forAtomNumber = null;
 		int atomNumber = 0;
 		int coordinate;
-		for (int i = 0; i < coord3d.getSize(); i++) {
+		for (int i = 0; i < dDeltar.length; i++) {
 			
 			dDeltar[i] = new double[bondsNumber];
 			
@@ -169,12 +172,15 @@ public class BondStretching {
 
 				if ((bondAtomPosition[j][0] == atomNumber) | (bondAtomPosition[j][1] == atomNumber)) {
 					switch (coordinate) {
+						//x-coordinate
 						case 0: dDeltar[i][j] = (coord3d.getElement(3 * bondAtomPosition[j][0]) - coord3d.getElement(3 * bondAtomPosition[j][1]))
 								/ Math.sqrt(Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0]) - coord3d.getElement(3 * bondAtomPosition[j][1]),2) + Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0] + 1) - coord3d.getElement(3 * bondAtomPosition[j][1] + 1),2) + Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0] + 2) - coord3d.getElement(3 * bondAtomPosition[j][1] + 2),2)); 
 							break;
+						//y-coordinate
 						case 1:	dDeltar[i][j] = (coord3d.getElement(3 * bondAtomPosition[j][0] + 1) - coord3d.getElement(3 * bondAtomPosition[j][1] + 1))
 								/ Math.sqrt(Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0]) - coord3d.getElement(3 * bondAtomPosition[j][1]),2) + Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0] + 1) - coord3d.getElement(3 * bondAtomPosition[j][1] + 1),2) + Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0] + 2) - coord3d.getElement(3 * bondAtomPosition[j][1] + 2),2)); 
 							break;
+						//z-coordinate
 						case 2: dDeltar[i][j] = (coord3d.getElement(3 * bondAtomPosition[j][0] + 2) - coord3d.getElement(3 * bondAtomPosition[j][1] + 2))
 								/ Math.sqrt(Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0]) - coord3d.getElement(3 * bondAtomPosition[j][1]),2) + Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0] + 1) - coord3d.getElement(3 * bondAtomPosition[j][1] + 1),2) + Math.pow(coord3d.getElement(3 * bondAtomPosition[j][0] + 2) - coord3d.getElement(3 * bondAtomPosition[j][1] + 2),2)); 
 							break;
@@ -218,9 +224,12 @@ public class BondStretching {
 			
 			sumGradientEB = 0;
 			for (int j = 0; j < bondsNumber; j++) {
-
+				//System.out.println("dDeltar = " + dDeltar[i][j]);
+				//System.out.println("gradient " + i + "bond " + j + " : " + (k2[j] * 2 * deltar[j] + k3[j] * 3 * Math.pow(deltar[j],2) + k4[j] * 4 * Math.pow(deltar[j],3)) * dDeltar[i][j]);
 				sumGradientEB = sumGradientEB + (k2[j] * 2 * deltar[j] + k3[j] * 3 * Math.pow(deltar[j],2) + k4[j] * 4 * Math.pow(deltar[j],3)) * dDeltar[i][j];
+				//System.out.println(sumGradientEB);
 			}
+			//sumGradientEB = (-1) * sumGradientEB;
 			gradientMMFF94SumEB.setElement(i, sumGradientEB);
 		}
 		//System.out.println("gradientMMFF94 = " + gradientMMFF94SumEB);
@@ -250,8 +259,8 @@ public class BondStretching {
 		int atomNumberj;
 		int coordinatei;
 		int coordinatej;
-		double ddDeltar1;
-		double ddDeltar2;
+		double ddDeltar1=0;	// ddDeltar[i][j][k] = ddDeltar1 - ddDeltar2
+		double ddDeltar2=0;
 		
 		setBondLengthsFirstDerivative(coord3d);
 		
@@ -259,68 +268,88 @@ public class BondStretching {
 			ddDeltar[i] = new double[coord3d.getSize()][];
 			
 			forAtomNumber = new Double(i/3);
-			coordinatei = i % 3;
-			//System.out.println("coordinatei = " + coordinatei);
-				
+			
 			atomNumberi = forAtomNumber.intValue();
 			//System.out.println("atomNumberi = " + atomNumberi);
+				
+			coordinatei = i % 3;
+			//System.out.println("coordinatei = " + coordinatei);
 				
 			for (int j=0; j<coord3d.getSize(); j++) {
 				ddDeltar[i][j] = new double[bondsNumber];
 				
 				forAtomNumber = new Double(j/3);
+
+				atomNumberj = forAtomNumber.intValue();
+				//System.out.println("atomNumberj = " + atomNumberj);
+
 				coordinatej = j % 3;
 				//System.out.println("coordinatej = " + coordinatej);
 				
-				atomNumberj = forAtomNumber.intValue();
-				//System.out.println("atomNumberj = " + atomNumberj);
 				//System.out.println("atomj : " + molecule.getAtomAt(atomNumberj));
 				
 				for (int k=0; k < bondsNumber; k++) {
 					
 					if ((bondAtomPosition[k][0] == atomNumberj) | (bondAtomPosition[k][1] == atomNumberj)) {
 						if ((bondAtomPosition[k][0] == atomNumberi) | (bondAtomPosition[k][1] == atomNumberi)) {
-							ddDeltar1 = (-1) / Math.pow(r[k],3);
-							ddDeltar2 = 1 / r[k];
-							//System.out.println("OK: had d1 and have the atomNumberi");
 					
+							// ddDeltar1
+							if (bondAtomPosition[k][0] == atomNumberj) {
+								ddDeltar1 = 1;
+							}
+							if (bondAtomPosition[k][1] == atomNumberj) {
+								ddDeltar1 = -1;
+							}
+							if (bondAtomPosition[k][0] == atomNumberi) {
+								ddDeltar1 = ddDeltar1 * 1;
+							}
+							if (bondAtomPosition[k][1] == atomNumberi) {
+								ddDeltar1 = ddDeltar1 * (-1);
+							}
+							ddDeltar1 = ddDeltar1 / r[k];
+
+							// ddDeltar2
 							switch (coordinatej) {
-								case 0: ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1])) * ddDeltar[i][j][k];
+								case 0: ddDeltar2 = (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1]));
 									//System.out.println("OK: d1 x");
 									break;
-								case 1:	ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1)) * ddDeltar[i][j][k];
+								case 1:	ddDeltar2 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1));
 									//System.out.println("OK: d1 y");
 									break;
-								case 2:	ddDeltar1 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2)) * ddDeltar[i][j][k];
+								case 2:	ddDeltar2 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2));
 									//System.out.println("OK: d1 z");
 									break;
 							}
 						
 							if (bondAtomPosition[k][1] == atomNumberj) {
-								ddDeltar1 = (-1) * ddDeltar1;
 								ddDeltar2 = (-1) * ddDeltar2;
 								//System.out.println("OK: bond 1");
 							} 
 	
 							switch (coordinatei) {
-								case 0: ddDeltar1 = ddDeltar1 * (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1]));
+								case 0: ddDeltar2 = ddDeltar2 * (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1]));
 									//System.out.println("OK: have d2 x");
 									break;
-								case 1:	ddDeltar1 = ddDeltar1 * (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1));
+								case 1:	ddDeltar2 = ddDeltar2 * (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1));
 									//System.out.println("OK: have d2 y");
 									break;
-								case 2: ddDeltar1 = ddDeltar1 * (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2));
+								case 2: ddDeltar2 = ddDeltar2 * (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2));
 									//System.out.println("OK: have d2 z");
 									break;
 							}
 							
 							if (bondAtomPosition[k][1] == atomNumberi) {
-								ddDeltar1 = (-1) * ddDeltar1;
 								ddDeltar2 = (-1) * ddDeltar2;
 								//System.out.println("OK: d2 bond 1");
 							}
 							
-							ddDeltar[i][j][k] = ddDeltar1 + ddDeltar2;
+							ddDeltar2 = ddDeltar2 / Math.pow(r[k],2);
+							
+							// ddDeltar[i][j][k]
+							ddDeltar[i][j][k] = ddDeltar1 - ddDeltar2;
+						} else {
+							ddDeltar[i][j][k] = 0;
+							//System.out.println("OK: 0");
 						}
 					} else {
 						ddDeltar[i][j][k] = 0;
@@ -354,7 +383,6 @@ public class BondStretching {
 		
 		calculateDeltar(coord3d);
 		setBondLengthsSecondDerivative(coord3d);
-		calculateDeltar(coord3d);
 		
 		double sumHessianEB;
 		int forHessianIndex;
