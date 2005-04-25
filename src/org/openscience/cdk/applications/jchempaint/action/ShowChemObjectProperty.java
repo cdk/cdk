@@ -35,7 +35,7 @@ import javax.swing.JFrame;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  *  Shows the contect of a specified property (i.e. as defined in the type of
@@ -59,7 +59,8 @@ public class ShowChemObjectProperty extends JCPAction
 	public void actionPerformed(ActionEvent event)
 	{
 		ChemObject object = getSource(event);
-		JFrame frame = (JFrame) JChemPaint.getInstance().getFrame();
+		// XXX needs fixing JFrame frame = (JFrame) jcpPanel.getFrame();
+		JFrame frame = new JFrame();
 		if (dialog == null)
 		{
 			dialog = new TextViewDialog(frame,

@@ -42,11 +42,11 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.io.SVGWriter;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.io.JCPExportFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 import com.sun.media.jai.codec.JPEGEncodeParam;
 
@@ -66,13 +66,13 @@ public class ExportAction extends SaveAsAction {
     public void actionPerformed(ActionEvent e) {
         
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(JChemPaint.currentWorkDirectory);
+        chooser.setCurrentDirectory(jcpPanel.getCurrentWorkDirectory());
         JCPExportFileFilter.addChoosableFileFilters(chooser);
         if (currentFilter != null) {
             chooser.setFileFilter(currentFilter);
         }
         chooser.setFileView(new JCPFileView());
-        int returnVal = chooser.showSaveDialog(JChemPaint.getInstance());
+        int returnVal = chooser.showSaveDialog(jcpPanel);
         String type = null;
         currentFilter = chooser.getFileFilter();
         if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -82,18 +82,18 @@ public class ExportAction extends SaveAsAction {
 
             if (type.equals(JCPExportFileFilter.svg)) {
                 try {
-                    JChemPaintModel jcpm = JChemPaint.getInstance().getCurrentModel();
+                    JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
                     ChemModel model = (ChemModel)jcpm.getChemModel();
                     saveAsSVG(model, outFile);
                 } catch (Exception exc) {
                     String error = "Error while writing file: " + exc.getMessage();
                     logger.error(error);
                     logger.debug(exc);
-                    JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+                    JOptionPane.showMessageDialog(jcpPanel, error);
                 }
             } else {
                 // A binary image
-                Image awtImage = JChemPaint.getInstance().getCurrentFrame().jcpp.takeSnapshot();
+                Image awtImage = jcpPanel.takeSnapshot();
                 String filename = outFile.toString();
                 logger.debug("Creating binary image: ", filename);
                 RenderedOp image = JAI.create("AWTImage", awtImage);
@@ -112,7 +112,7 @@ public class ExportAction extends SaveAsAction {
             }
         }
 
-        JChemPaint.currentWorkDirectory = chooser.getCurrentDirectory();        
+        jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());        
     }
 }
     

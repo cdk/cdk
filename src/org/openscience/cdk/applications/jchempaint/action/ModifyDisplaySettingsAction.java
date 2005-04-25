@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ModifyRenderOptionsDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Shows a dialog for editing the Display settings
@@ -53,7 +53,7 @@ public class ModifyDisplaySettingsAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Modify display settings in mode");
-		JChemPaintModel jcpm = JChemPaint.getInstance().getCurrentFrame().getModel();
+		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 		Renderer2DModel renderModel = jcpm.getRendererModel();
 		ModifyRenderOptionsDialog frame =
 				new ModifyRenderOptionsDialog(jcpm, renderModel);

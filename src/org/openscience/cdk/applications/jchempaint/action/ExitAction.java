@@ -29,7 +29,8 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.*;
+
 
 /**
  * Triggers an exit of the application
@@ -48,7 +49,8 @@ public class ExitAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		JChemPaint.getInstance().exitJChemPaint();
+		//XXX needs fixing
+		//jcpPanel.exitJChemPaint();
 	}
 }
 

@@ -58,9 +58,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaintFrame;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Dialog for coordinate creationg
@@ -252,8 +250,9 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 				}
 			}
 			JChemPaintModel jcpm = new JChemPaintModel(chemModel);
-			JChemPaintFrame jcpf = JChemPaint.getInstance().getNewFrame(jcpm);
-			JChemPaint.getInstance().addAndShowJChemPaintFrame(jcpf);
+			// XXX needs to be fixed
+			//JChemPaintFrame jcpf = JChemPaint.getInstance().getNewFrame(jcpm);
+			//JChemPaint.getInstance().addAndShowJChemPaintFrame(jcpf);
 			closeFrame();
 		}
 

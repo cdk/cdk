@@ -36,7 +36,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.SaturationChecker;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Triggers the adjustment of BondOrders
@@ -61,38 +61,38 @@ public class AdjustBondOrdersAction extends JCPAction
 			try
 			{
 				SaturationChecker satChecker = new SaturationChecker();
-				ChemModel model = (ChemModel) JChemPaint.getInstance().getCurrentModel().getChemModel();
+				ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
 				AtomContainer[] containers = ChemModelManipulator.getAllAtomContainers(model);
 				for (int i = 0; i < containers.length; i++)
 				{
 					satChecker.unsaturate(containers[i].getBonds());
 				}
-				JChemPaint.getInstance().getCurrentModel().fireChange();
+				jcpPanel.getJChemPaintModel().fireChange();
 			} catch (Exception exc)
 			{
 				String error = "Could not adjust bondorders.";
 				logger.error(error);
 				logger.debug(exc);
-				JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+				JOptionPane.showMessageDialog(jcpPanel, error);
 			}
 		} else
 		{
 			try
 			{
 				SaturationChecker satChecker = new SaturationChecker();
-				ChemModel model = (ChemModel) JChemPaint.getInstance().getCurrentModel().getChemModel();
+				ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
 				AtomContainer[] containers = ChemModelManipulator.getAllAtomContainers(model);
 				for (int i = 0; i < containers.length; i++)
 				{
 					satChecker.saturate(containers[i]);
 				}
-				JChemPaint.getInstance().getCurrentModel().fireChange();
+				jcpPanel.getJChemPaintModel().fireChange();
 			} catch (Exception exc)
 			{
 				String error = "Could not adjust bondorders.";
 				logger.error(error);
 				logger.debug(exc);
-				JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+				JOptionPane.showMessageDialog(jcpPanel, error);
 			}
 		}
 	}

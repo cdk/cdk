@@ -40,8 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Internal frame to allow for changing the properties.
@@ -51,21 +50,20 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 public class GeneralFieldEditor extends JFrame {
     
     Properties props;
-    JChemPaint jcp;
     JChemPaintModel jcpm;
 
     String[] defaults;
     String[] currentValues;
     JTextField[] fields;
-    
+    JChemPaintPanel jcp;
     /**
      * IMPORTANT: the fieldTitles.length and defaults.length *must* be equal.
      */
-    public GeneralFieldEditor(JChemPaint jcp, String title,
+    public GeneralFieldEditor(JChemPaintPanel jcp, String title,
         String[] fieldTitles, String[] defaults) {
         super(title);
         this.jcp = jcp;
-        jcpm = jcp.getCurrentModel();
+        jcpm = jcp.getJChemPaintModel();
 
         getContentPane().setLayout(new BorderLayout());
         JPanel southPanel = new JPanel();

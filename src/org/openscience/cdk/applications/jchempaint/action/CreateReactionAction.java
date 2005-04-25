@@ -41,7 +41,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Creates a reaction object
@@ -64,7 +64,7 @@ public class CreateReactionAction extends JCPAction
 
 		logger.debug("CreateReaction action");
 
-		JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		ChemModel model = jcpmodel.getChemModel();
 		SetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
@@ -111,15 +111,17 @@ public class CreateReactionAction extends JCPAction
 				} else
 				{
 					Object[] ids = getReactionIDs(reactionSet);
-					String s = (String) JOptionPane.showInputDialog(
-							JChemPaint.getInstance().getFrame(),
+					//XXX needs fixing
+					/*String s = (String) JOptionPane.showInputDialog(
+							jcpPanel.getFrame(),
 							"Reaction Chooser",
 							"Choose reaction to add reaction to",
 							JOptionPane.PLAIN_MESSAGE,
 							null,
 							ids,
 							ids[0]
-							);
+							);*/
+					String s = "";
 
 					if ((s != null) && (s.length() > 0))
 					{
@@ -145,15 +147,17 @@ public class CreateReactionAction extends JCPAction
 				} else
 				{
 					Object[] ids = getReactionIDs(reactionSet);
-					String s = (String) JOptionPane.showInputDialog(
-							JChemPaint.getInstance().getFrame(),
+					//XXX needs fixing
+					/*String s = (String) JOptionPane.showInputDialog(
+							jcpPanel.getFrame(),
 							"Reaction Chooser",
 							"Choose reaction to add reaction to",
 							JOptionPane.PLAIN_MESSAGE,
 							null,
 							ids,
 							ids[0]
-							);
+							);*/
+					String s = "";
 
 					if ((s != null) && (s.length() > 0))
 					{

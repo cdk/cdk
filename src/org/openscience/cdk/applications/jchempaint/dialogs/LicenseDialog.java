@@ -37,7 +37,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Simple Dialog that shows the JCP logo and a textfield that allows
@@ -88,8 +88,9 @@ public class LicenseDialog extends JFrame {
         getContentPane().setLayout(new BorderLayout());
         setBackground(Color.white);
         try {
-            ImageIcon icon = new ImageIcon(JChemPaint.jcplogo);
-            label1 = new JLabel(icon);
+		// XXX needs to be fixed
+            //ImageIcon icon = new ImageIcon(JChemPaint.jcplogo);
+            //label1 = new JLabel(icon);
         } catch(Exception exc) {
             exc.printStackTrace();
         }

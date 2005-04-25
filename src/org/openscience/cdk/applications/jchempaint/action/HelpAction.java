@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.applications.jchempaint.dialogs.HelpDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * pops up the help

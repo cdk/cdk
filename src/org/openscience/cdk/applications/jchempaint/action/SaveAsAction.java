@@ -51,7 +51,7 @@ import org.openscience.cdk.io.SMILESWriter;
 import org.openscience.cdk.io.SVGWriter;
 import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilterInterface;
@@ -83,11 +83,11 @@ public class SaveAsAction extends NewAction
 	public void actionPerformed(ActionEvent event)
 	{
 
-		JChemPaintModel jcpm = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 		if (jcpm == null)
 		{
 			String error = "Nothing to save.";
-			JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+			JOptionPane.showMessageDialog(jcpPanel, error);
 		} else
 		{
 			saveAs(event);
@@ -103,14 +103,15 @@ public class SaveAsAction extends NewAction
 	protected void saveAs(ActionEvent event)
 	{
 
-		JChemPaintModel jcpm = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(JChemPaint.currentWorkDirectory);
+		chooser.setCurrentDirectory(jcpPanel.getCurrentWorkDirectory());
 		JCPSaveFileFilter.addChoosableFileFilters(chooser);
-		if (JChemPaint.currentSaveFileFilter != null)
+		if (jcpPanel.getCurrentSaveFileFilter() != null)
 		{
-			chooser.setFileFilter(JChemPaint.currentSaveFileFilter);
+			// XXX needs fixing
+			// chooser.setFileFilter(jcpPanel.getCurrentSaveFileFilter());
 		}
 		if (currentFilter != null)
 		{
@@ -118,7 +119,7 @@ public class SaveAsAction extends NewAction
 		}
 		chooser.setFileView(new JCPFileView());
 
-		int returnVal = chooser.showSaveDialog(JChemPaint.getInstance());
+		int returnVal = chooser.showSaveDialog(jcpPanel);
 		String type = null;
 
 		ChemObject object = getSource(event);
@@ -153,7 +154,7 @@ public class SaveAsAction extends NewAction
 					{
 						String error = "Cannot save file in this format: " + type;
 						logger.error(error);
-						JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+						JOptionPane.showMessageDialog(jcpPanel, error);
 						return;
 					}
 					jcpm.resetIsModified();
@@ -162,7 +163,7 @@ public class SaveAsAction extends NewAction
 					String error = "Error while writing file: " + exc.getMessage();
 					logger.error(error);
 					logger.debug(exc);
-					JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+					JOptionPane.showMessageDialog(jcpPanel, error);
 				}
 
 			} else if (object instanceof Reaction)
@@ -176,18 +177,18 @@ public class SaveAsAction extends NewAction
 					{
 						String error = "Cannot save reaction in this format: " + type;
 						logger.error(error);
-						JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+						JOptionPane.showMessageDialog(jcpPanel, error);
 					}
 				} catch (Exception exc)
 				{
 					String error = "Error while writing file: " + exc.getMessage();
 					logger.error(error);
 					logger.debug(exc);
-					JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+					JOptionPane.showMessageDialog(jcpPanel, error);
 				}
 			}
-			JChemPaint.currentWorkDirectory = chooser.getCurrentDirectory();
-			JChemPaint.currentSaveFileFilter = chooser.getFileFilter();
+			jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
+			// XXX needs fix jcpPanel.setCurrentSaveFileFilter(chooser.getFileFilter());
 		}
 	}
 
@@ -205,7 +206,7 @@ public class SaveAsAction extends NewAction
 		cow = new MDLWriter(new FileWriter(outFile));
 		if (cow != null)
 		{
-			cow.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
 		SetOfMolecules som = model.getSetOfMolecules();
 		cow.write(som);
@@ -226,7 +227,7 @@ public class SaveAsAction extends NewAction
 		cow = new CMLWriter(new FileWriter(outFile));
 		if (cow != null)
 		{
-			cow.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
 		cow.write(object);
 		cow.close();
@@ -246,7 +247,7 @@ public class SaveAsAction extends NewAction
 		cow = new SMILESWriter(new FileWriter(outFile));
 		if (cow != null)
 		{
-			cow.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
 		SetOfMolecules som = model.getSetOfMolecules();
 		cow.write(som);
@@ -267,7 +268,7 @@ public class SaveAsAction extends NewAction
 		cow = new CDKSourceCodeWriter(new FileWriter(outFile));
 		if (cow != null)
 		{
-			cow.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
 		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
 		if (ac != null)
@@ -294,7 +295,7 @@ public class SaveAsAction extends NewAction
 		cow = new SVGWriter(new FileWriter(outFile));
 		if (cow != null)
 		{
-			cow.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
 		AtomContainer ac = (AtomContainer) ChemModelManipulator.getAllInOneContainer(model);
 		if (ac != null)

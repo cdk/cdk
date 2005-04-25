@@ -38,7 +38,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.io.program.GaussianInputWriter;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 import org.openscience.cdk.applications.jchempaint.io.JCPCompChemInputSaveFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 
@@ -56,10 +56,10 @@ public class ExportCompChemAction extends SaveAction {
     public void actionPerformed(ActionEvent e) {
         
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(JChemPaint.currentWorkDirectory);
+        chooser.setCurrentDirectory(jcpPanel.getCurrentWorkDirectory());
         JCPCompChemInputSaveFileFilter.addChoosableFileFilters(chooser);
         chooser.setFileView(new JCPFileView());
-        int returnVal = chooser.showSaveDialog(JChemPaint.getInstance());
+        int returnVal = chooser.showSaveDialog(jcpPanel);
         String type = null;
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             type = ((JCPCompChemInputSaveFileFilter)chooser.getFileFilter()).getType();
@@ -70,9 +70,9 @@ public class ExportCompChemAction extends SaveAction {
                 try {
                     cow = new GaussianInputWriter(new FileWriter(outFile));
                     if (cow != null) {
-                        cow.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+                        cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
                     }
-                    AtomContainer ac = ChemModelManipulator.getAllInOneContainer(JChemPaint.getInstance().getCurrentModel().getChemModel());
+                    AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jcpPanel.getJChemPaintModel().getChemModel());
                     if (ac != null) {
                         cow.write(new Molecule(ac));
                     } else {
@@ -86,7 +86,7 @@ public class ExportCompChemAction extends SaveAction {
             } // there is no else
         }
 
-        JChemPaint.currentWorkDirectory = chooser.getCurrentDirectory();        
+        jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());        
     }
 }
     

@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.SetOfReactionsManipulator;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * An action triggering the addition of hydrogens to 
@@ -74,10 +74,10 @@ public class AddHydrogenAction extends JCPAction
 			hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
 		}
 
-		if (JChemPaint.getInstance().getCurrentModel() != null)
+		if (jcpPanel.getJChemPaintModel() != null)
 		{
 			// now add hydrogens
-			JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 			ChemModel model = jcpmodel.getChemModel();
 
 			ChemObject object = getSource(event);
@@ -133,7 +133,7 @@ public class AddHydrogenAction extends JCPAction
 	 */
 	private void addHydrogenToAllMolecules(SetOfMolecules som)
 	{
-		JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();
 		try
 		{
@@ -195,7 +195,7 @@ public class AddHydrogenAction extends JCPAction
 	 */
 	private void addHydrogenToOneAtom(AtomContainer container, Atom atom)
 	{
-		JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();
 		try
 		{

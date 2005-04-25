@@ -31,7 +31,8 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.dialogs.EditDictRefs;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+import org.openscience.cdk.applications.jchempaint.*;
+
 
 /**
  * Allows for editing dictionary references
@@ -44,9 +45,9 @@ public class EditDictRefsAction extends JCPAction {
     EditDictRefs frame = null;
 
     public void actionPerformed(ActionEvent event) {
-        if (JChemPaint.getInstance().getCurrentModel() != null) {
+        if (jcpPanel.getJChemPaintModel() != null) {
             if (frame == null) {
-                frame = new EditDictRefs(JChemPaint.getInstance());
+                frame = new EditDictRefs();
             }
             ChemObject object = getSource(event);
             logger.debug("Showing dictionary references for: ", object);

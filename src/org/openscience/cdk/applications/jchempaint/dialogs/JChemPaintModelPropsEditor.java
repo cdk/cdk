@@ -39,8 +39,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Internal frame to allow for changing the propterties.
@@ -50,17 +50,17 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 public class JChemPaintModelPropsEditor extends JFrame {
     
     Properties props;
-    JChemPaint jcp;
+    JChemPaintPanel jcp;
     JChemPaintModel jcpm;
 
     JTextField author;
     JTextField software;
     JTextField date;
     
-    public JChemPaintModelPropsEditor(JChemPaint jcp) {
+    public JChemPaintModelPropsEditor(JChemPaintPanel jcp) {
         super("Edit Model Properties...");
         this.jcp = jcp;
-        jcpm = jcp.getCurrentModel();
+        jcpm = jcp.getJChemPaintModel();
 
         getContentPane().setLayout(new BorderLayout());
         JPanel southPanel = new JPanel();

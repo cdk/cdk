@@ -44,8 +44,7 @@ import javax.swing.table.TableColumn;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.swing.DictRefEditorTableModel;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Frame to allows editing of dictionary references of 
@@ -57,7 +56,7 @@ public class EditDictRefs extends JFrame  {
     
     DictRefEditorTableModel tableModel;
     
-    public EditDictRefs(JChemPaint jcp) {
+    public EditDictRefs() {
         super("Edit Dictionary References");
         getContentPane().setLayout(new BorderLayout());
         JPanel southPanel = new JPanel();

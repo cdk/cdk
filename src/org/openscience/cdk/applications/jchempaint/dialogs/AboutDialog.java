@@ -39,7 +39,7 @@ import javax.swing.border.Border;
 
 import org.openscience.cdk.tools.LoggingTool;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Simple Dialog that shows the JCP logo and a textfield that allows
@@ -74,8 +74,8 @@ public class AboutDialog extends JFrame {
 		JLabel label1 = new JLabel(); 
 
 		try {
-	        ImageIcon icon = new ImageIcon(JChemPaint.jcplogo);
-			label1 = new JLabel(icon);
+	        //ImageIcon icon = new ImageIcon(JChemPaint.jcplogo);
+		//	label1 = new JLabel(icon);
 		} catch(Exception exception) {
             logger.error("Cannot add JCP logo: " + exception.getMessage());
 			logger.debug(exception);

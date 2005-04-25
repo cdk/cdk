@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  *  Description of the Class
@@ -52,7 +52,7 @@ public class ZoomAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Zooming in/out in mode: ", type);
-		JChemPaintModel jcpm = JChemPaint.getInstance().getCurrentFrame().getModel();
+		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 		Renderer2DModel renderModel = jcpm.getRendererModel();
 		if (type.equals("in"))
 		{

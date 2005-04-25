@@ -40,7 +40,7 @@ import org.openscience.cdk.applications.swing.editor.ReactionEditor;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ChemObjectPropertyDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Action for triggering an edit of a ChemObject
@@ -51,8 +51,8 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 public class EditChemObjectPropsAction extends JCPAction {
 
     public void actionPerformed(ActionEvent event) {
-        if (JChemPaint.getInstance().getCurrentModel() != null) {
-            JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+        if (jcpPanel.getJChemPaintModel() != null) {
+            JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
             ChemObject object = getSource(event);
             logger.debug("Showing object properties for: ", object);
             ChemObjectEditor editor = null;

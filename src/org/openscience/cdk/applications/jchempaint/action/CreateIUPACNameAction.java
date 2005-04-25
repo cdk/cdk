@@ -38,7 +38,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.iupac.generator.IUPACName;
 import org.openscience.cdk.iupac.generator.IUPACNameGenerator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Creates the IUPAC name for the active compound. It uses the
@@ -54,13 +54,13 @@ public class CreateIUPACNameAction extends JCPAction {
         logger.debug("Trying to create IUPAC name: ", type);
         Locale locale = new Locale("en", "US");
         IUPACNameGenerator generator = new IUPACNameGenerator(locale);
-        ChemModel model = (ChemModel)JChemPaint.getInstance().getCurrentModel().getChemModel();
+        ChemModel model = (ChemModel)jcpPanel.getJChemPaintModel().getChemModel();
         AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
         Molecule molecule = new Molecule(container);
         generator.generateName(molecule);
         IUPACName name = (IUPACName)generator.getName();
         String message = "IUPAC name: " + name.getName();
         logger.debug(message);
-        JOptionPane.showMessageDialog(JChemPaint.getInstance(), message);
+        JOptionPane.showMessageDialog(jcpPanel, message);
     }
 }

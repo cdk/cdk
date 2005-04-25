@@ -29,7 +29,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Performce a Redo - a repeat of the last undone action
@@ -47,7 +47,8 @@ public class RedoAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		JChemPaint.getInstance().getCurrentFrame().redo();
+		// XXX needs to be fixed
+		//jcpPanel.redo();
 	}
 
 }

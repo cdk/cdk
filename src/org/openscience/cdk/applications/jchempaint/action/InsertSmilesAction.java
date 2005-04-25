@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.applications.jchempaint.dialogs.InsertFromSmiles;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Inserts a SMILES
@@ -51,7 +51,7 @@ public class InsertSmilesAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Gonna show the InsertFromSmiles dialog...");
-		InsertFromSmiles ifs = new InsertFromSmiles(JChemPaint.getInstance());
+		InsertFromSmiles ifs = new InsertFromSmiles(jcpPanel);
 		ifs.pack();
 		ifs.show();
 		logger.debug("Should be visible now!...");

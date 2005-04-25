@@ -28,13 +28,15 @@
 package org.openscience.cdk.applications.jchempaint.dialogs;
 
 import org.openscience.cdk.applications.plugin.CDKPluginInterface;
+import org.openscience.cdk.applications.jchempaint.*;
+
 import java.awt.*;
 import java.net.URL;
 import java.util.Enumeration;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Simple Dialog that shows information about JChemPaint's plugins.
@@ -44,14 +46,13 @@ import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 public class PluginInfoDialog extends JFrame {
 
     private JEditorPane infoPane;
-    private JChemPaint mothership;
+    private JChemPaintPanel mothership;
     
 	/**
 	 * Displays the Plugin Info Dialog for JChemPaint. 
 	 */
-    public PluginInfoDialog(JChemPaint jcp) {
+    public PluginInfoDialog() {
         super("JChemPaint License");
-        this.mothership = jcp;
         createDialog();
         displayContent();
         pack();
@@ -95,8 +96,9 @@ public class PluginInfoDialog extends JFrame {
         content.append("<p>Plugins should be installed in: <i>" + 
                        System.getProperty("user.home") + "/.jchempaint/plugins</i><br>\n");
         content.append("They can be downloaded from http://cdk.sf.net/plugins.html");
-        Enumeration plugins = mothership.getPluginManager().getPlugins();
-        if (plugins.hasMoreElements()) {
+        // XXX needs fixing
+	/*Enumeration plugins = mothership.getPluginManager().getPlugins();
+	if (plugins.hasMoreElements()) {
             content.append("<p>These plugins are installed:\n");
             content.append("<table>");
             while (plugins.hasMoreElements()) {
@@ -113,7 +115,7 @@ public class PluginInfoDialog extends JFrame {
             content.append("</table>");
         } else {
             content.append("<p>No plugins are loaded.");
-        }
+        }*/
     }
     
 }

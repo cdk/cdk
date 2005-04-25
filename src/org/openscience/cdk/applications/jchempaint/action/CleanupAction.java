@@ -42,7 +42,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Triggers the invocation of the structure diagram generator
@@ -73,10 +73,10 @@ public class CleanupAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{	
 		logger.info("Going to performe a clean up...");
-		if (JChemPaint.getInstance().getCurrentModel() != null)
+		if (jcpPanel.getJChemPaintModel() != null)
 		{
 			if (diagramGenerator == null) diagramGenerator = new StructureDiagramGenerator();
-			JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 			Renderer2DModel renderModel = jcpmodel.getRendererModel();
 			double bondLength = renderModel.getBondLength() / renderModel.getScaleFactor();
 			diagramGenerator.setBondLength(bondLength * 2.0);
@@ -135,7 +135,7 @@ public class CleanupAction extends JCPAction
 	 */
 	private Molecule relayoutMolecule(Molecule molecule)
 	{
-		JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Molecule cleanedMol = molecule;
 		if (molecule != null)
 		{

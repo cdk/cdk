@@ -36,7 +36,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.dict.CDKDictionaryReferences;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Creates a dictionary entry for a selected entity
@@ -49,7 +49,7 @@ public class DictionaryAction extends JCPAction {
 
     public void actionPerformed(ActionEvent event) {
         logger.debug("Dictionary Action triggered");
-        JChemPaintModel jcpModel = JChemPaint.getInstance().getCurrentModel();
+        JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
         ChemModel chemModel = jcpModel.getChemModel();
         
         // make explicit references

@@ -37,7 +37,7 @@ import javax.swing.JFrame;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Allow to dump a ChemObject to a newly opened screen
@@ -60,7 +60,9 @@ public class ShowChemObjectDumpAction extends JCPAction
 	public void actionPerformed(ActionEvent event)
 	{
 		ChemObject object = getSource(event);
-		JFrame frame = (JFrame) JChemPaint.getInstance().getFrame();
+		// XXX needs fixing
+		// JFrame frame = (JFrame) jcpPanel.getFrame();
+		JFrame frame = new JFrame();
 		if (dialog == null)
 		{
 			dialog = new TextViewDialog(frame, "ChemObject Dump", new Dimension(500, 300));

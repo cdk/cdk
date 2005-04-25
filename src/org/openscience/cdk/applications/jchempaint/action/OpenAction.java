@@ -53,8 +53,7 @@ import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaintFrame;
+
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
@@ -73,6 +72,9 @@ public class OpenAction extends JCPAction
 	private ChemSequence chemSequence;
 	private ChemModel chemModel;
 	private FileFilter currentFilter = null;
+	private FileFilter currentOpenFileFilter = null;
+	private FileFilter currentSaveFileFilter = null;
+	
 
 
 	/**
@@ -84,15 +86,15 @@ public class OpenAction extends JCPAction
 	{
 
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(JChemPaint.currentWorkDirectory);
+		chooser.setCurrentDirectory(jcpPanel.getCurrentWorkDirectory());
 		JCPFileFilter.addChoosableFileFilters(chooser);
-		if (JChemPaint.currentOpenFileFilter != null)
+		if (jcpPanel.getCurrentOpenFileFilter() != null)
 		{
-			chooser.setFileFilter(JChemPaint.currentOpenFileFilter);
+			//XXX needs fix chooser.setFileFilter(jcpPanel.getCurrentOpenFileFilter());
 		}
-		if (JChemPaint.lastOpenedFile != null)
+		if (jcpPanel.getLastOpenedFile() != null)
 		{
-			chooser.setSelectedFile(JChemPaint.lastOpenedFile);
+			chooser.setSelectedFile(jcpPanel.getLastOpenedFile());
 		}
 		if (currentFilter != null)
 		{
@@ -100,7 +102,7 @@ public class OpenAction extends JCPAction
 		}
 		chooser.setFileView(new JCPFileView());
 
-		int returnVal = chooser.showOpenDialog(JChemPaint.getInstance());
+		int returnVal = chooser.showOpenDialog(jcpPanel);
 		String type = null;
 		ChemObjectReader cor = null;
 
@@ -108,11 +110,11 @@ public class OpenAction extends JCPAction
 
 		if (returnVal == JFileChooser.APPROVE_OPTION)
 		{
-			JChemPaint.currentWorkDirectory = chooser.getCurrentDirectory();
-			JChemPaint.currentOpenFileFilter = chooser.getFileFilter();
+			jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
+			//XXX needs fixjcpPanel.setCurrentOpenFileFilter(chooser.getFileFilter());
 
 			File inFile = chooser.getSelectedFile();
-			JChemPaint.lastOpenedFile = inFile;
+			jcpPanel.setLastOpenedFile(inFile);
 
 			/*
 			 *  Have the ReaderFactory determine the file format
@@ -167,7 +169,7 @@ public class OpenAction extends JCPAction
 
 			if (cor == null)
 			{
-				JOptionPane.showMessageDialog(JChemPaint.getInstance(), "Could not determine file format.");
+				JOptionPane.showMessageDialog(jcpPanel, "Could not determine file format.");
 				return;
 			}
 
@@ -196,7 +198,7 @@ public class OpenAction extends JCPAction
 			}
 			if (error != null)
 			{
-				JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+				JOptionPane.showMessageDialog(jcpPanel, error);
 				return;
 			}
 			if (cor.accepts(new ChemModel()))
@@ -224,7 +226,7 @@ public class OpenAction extends JCPAction
 			}
 			if (error != null)
 			{
-				JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+				JOptionPane.showMessageDialog(jcpPanel, error);
 			}
 		}
 	}
@@ -272,7 +274,7 @@ public class OpenAction extends JCPAction
 		{
 			String error = "Model does not have bonds. Cannot depict contents.";
 			logger.warn(error);
-			JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+			JOptionPane.showMessageDialog(jcpPanel, error);
 			return;
 		}
 
@@ -283,7 +285,7 @@ public class OpenAction extends JCPAction
 			String error = "Model does not have coordinates. Cannot open file.";
 			logger.warn(error);
 
-			//JOptionPane.showMessageDialog(JChemPaint.getInstance(), error);
+			//JOptionPane.showMessageDialog(jcpPanel, error);
 			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
 			frame.pack();
 			frame.show();
@@ -292,9 +294,9 @@ public class OpenAction extends JCPAction
 		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
 		jcpm.setTitle(input.getName());
 
-		JChemPaintFrame jcpf = JChemPaint.getInstance().getNewFrame(jcpm);
-		jcpf.setTitle(jcpm.getTitle());
-		JChemPaint.getInstance().addAndShowJChemPaintFrame(jcpf);
+		//XXX needs fix JChemPaintFrame jcpf = jcpPanel.getNewFrame(jcpm);
+		//jcpf.setTitle(jcpm.getTitle());
+		//jcpPanel.addAndShowJChemPaintFrame(jcpf);
 	}
 
 
@@ -312,7 +314,7 @@ public class OpenAction extends JCPAction
 		ChemObjectReader reader = factory.createReader(fileReader);
 		if (reader != null)
 		{
-			reader.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+			reader.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
 		return reader;
 	}

@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.*;
 import org.openscience.cdk.validate.*;
 import org.openscience.cdk.applications.jchempaint.*;
 import org.openscience.cdk.applications.jchempaint.action.*;
-import org.openscience.cdk.applications.jchempaint.application.*;
+//import org.openscience.cdk.applications.jchempaint.application.*;
 import org.openscience.cdk.applications.jchempaint.dialogs.*;
 import org.openscience.cdk.applications.jchempaint.io.*;
 
@@ -71,7 +71,13 @@ public abstract class JChemPaintPanel
 	 */
 	protected JChemPaintModel jcpm;
 	private LoggingTool logger;
-
+	private File currentWorkDirectory = null;
+	private File lastOpenedFile = null;
+	private File lastSavedFile = null;
+	private FileFilter currentOpenFileFilter = null;
+	private FileFilter currentSaveFileFilter = null;
+	protected CDKPluginManager pluginManager = null;
+	
 
 	/**
 	 *  Constructor for the JChemPaintPanel object
@@ -102,7 +108,116 @@ public abstract class JChemPaintPanel
 		return null;
 	}
 
+	public File getCurrentWorkDirectory()
+	{
+		return currentWorkDirectory;	
+	}
+	
+	public void setCurrentWorkDirectory(File cwd)
+	{
+		this.currentWorkDirectory = cwd;	
+	}
 
+	public FileFilter getCurrentOpenFileFilter()
+	{
+		return currentOpenFileFilter;	
+	}
+	
+	public void setCurrentOpenFileFilter(FileFilter ff)
+	{
+		this.currentOpenFileFilter = ff;	
+	}
+
+	public FileFilter getCurrentSaveFileFilter()
+	{
+		return currentSaveFileFilter;	
+	}
+	
+	public void setCurrentSaveFileFilter(FileFilter ff)
+	{
+		this.currentSaveFileFilter = ff;	
+	}
+	
+	public File getLastOpenedFile()
+	{
+		return lastOpenedFile;	
+	}
+	
+	public void setLastOpenedFile(File lof)
+	{
+		this.lastOpenedFile = lof;	
+	}
+	
+	public File getLastSavedFile()
+	{
+		return lastSavedFile;	
+	}
+	
+	public void setLastSavedFile(File lsf)
+	{
+		this.lastSavedFile = lsf;	
+	}
+	
+	/**
+	 *  Gets the pluginManager attribute of the JChemPaint object
+	 *
+	 *@return    The pluginManager value
+	 */
+	public CDKPluginManager getPluginManager()
+	{
+		return pluginManager;
+	}
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  jcpf  Description of the Parameter
+	 */
+	/*private void setupPluginManager(JChemPaintPanel jcpp)
+	{
+		try
+		{
+			// set up plugin manager
+			JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
+			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), jcpp);
+			// load the plugins that come with JCP itself
+			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+			// load the global plugins
+			if (!globalPluginDir.equals(""))
+			{
+				pluginManager.loadPlugins(globalPluginDir);
+			}
+			// load the user plugins
+			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
+			// load plugins given with -Dplugin.dir=bla
+			if (System.getProperty("plugin.dir") != null)
+			{
+				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
+			}
+		} catch (Exception exc)
+		{
+			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
+			logger.debug(exc);
+		}
+	}*/
+	
+	/**
+	 *  Description of the Method
+	 */
+	private void setupWorkingDirectory()
+	{
+		try
+		{
+			if (System.getProperty("user.dir") != null)
+			{
+				setCurrentWorkDirectory(new File(System.getProperty("user.dir")));
+			}
+		} catch (Exception exc)
+		{
+			logger.error("Could not read a system property. I might be in a sandbox.");
+		}
+	}
+
+	
 	/**
 	 *  Sets the jChemPaintModel attribute of the JChemPaintPanel object
 	 *
@@ -266,6 +381,16 @@ public abstract class JChemPaintPanel
 		}
 	}
 
+	/**
+	 *  Gets the jChemPaintModel attribute of the JChemPaintPanel object
+	 *
+	 *@return    The jChemPaintModel value
+	 */
+	public JChemPaintModel getJChemPaintModel()
+	{
+		return jcpm;
+	}
+	
 
 	/**
 	 *  Description of the Method
@@ -292,7 +417,8 @@ public abstract class JChemPaintPanel
 
 			//JOptionPane.showMessageDialog(jcp, error);
 			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
-			JChemPaint.getInstance().add(frame);
+			// XXX needs fixing
+			//JChemPaint.getInstance().add(frame);
 			frame.pack();
 			frame.show();
 			return;
@@ -316,8 +442,8 @@ public abstract class JChemPaintPanel
 		ReaderFactory factory = new ReaderFactory();
 		ChemObjectReader coReader = factory.createReader(reader);
 		if (coReader != null)
-		{
-			coReader.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
+		{	// XXX needs fixing
+			//coReader.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
 		}
 		return coReader;
 	}
@@ -375,7 +501,8 @@ public abstract class JChemPaintPanel
 			logger.warn(error);
 
 			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
-			JChemPaint.getInstance().add(frame);
+			// XXX needs fixing
+			//JChemPaint.getInstance().add(frame);
 			frame.pack();
 			frame.show();
 			frame.moveToFront();

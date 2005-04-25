@@ -36,7 +36,7 @@ import org.openscience.cdk.Isotope;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Changes the isotope for a selected atom
@@ -56,7 +56,7 @@ public class ChangeIsotopeAction extends JCPAction
 	public void actionPerformed(ActionEvent event)
 	{
 		logger.debug("About to change atom type of relevant atom!");
-		JChemPaintModel jcpm = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 		if (jcpm != null)
 		{
 			ChemObject object = getSource(event);

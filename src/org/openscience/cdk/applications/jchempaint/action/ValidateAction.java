@@ -43,7 +43,7 @@ import org.openscience.cdk.validate.ProblemMarker;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ValidateFrame;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * An action opening a validation frame
@@ -72,7 +72,7 @@ public class ValidateAction extends JCPAction
 			if (object == null)
 			{
 				// called from main menu
-				JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+				JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 
 				ChemModel model = jcpmodel.getChemModel();
 				if (model != null)
@@ -141,7 +141,7 @@ public class ValidateAction extends JCPAction
 	 */
 	private void clearValidate()
 	{
-		JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		ChemModel model = jcpmodel.getChemModel();
 		Atom[] atoms = ChemModelManipulator.getAllInOneContainer(model).getAtoms();
 		logger.info("Clearing errors on atoms: " + atoms.length);
@@ -162,9 +162,9 @@ public class ValidateAction extends JCPAction
 	{
 		logger.info("Running validation");
 		clearValidate();
-		if (JChemPaint.getInstance().getCurrentModel() != null)
+		if (jcpPanel.getJChemPaintModel() != null)
 		{
-			frame = new ValidateFrame(JChemPaint.getInstance(), JChemPaint.getInstance().getCurrentFrame());
+			frame = new ValidateFrame(jcpPanel);
 			frame.validate(object);
 			frame.pack();
 			frame.show();

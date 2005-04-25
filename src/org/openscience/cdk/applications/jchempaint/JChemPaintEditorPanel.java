@@ -73,7 +73,6 @@ import org.openscience.cdk.applications.jchempaint.io.*;
 import org.openscience.cdk.applications.jchempaint.action.*;
 import org.openscience.cdk.applications.jchempaint.dialogs.*;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
 
 /**
  * This class implements an editing JChemPaintPanel.
@@ -244,17 +243,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		inputAdapter.addCDKChangeListener(jcpm);
 		addMouseListener(inputAdapter);
 		addMouseMotionListener(inputAdapter);
-	}
-
-
-	/**
-	 *  Gets the jChemPaintModel attribute of the JChemPaintPanel object
-	 *
-	 *@return    The jChemPaintModel value
-	 */
-	public JChemPaintModel getJChemPaintModel()
-	{
-		return jcpm;
 	}
 
 

@@ -104,35 +104,12 @@ public class JChemPaint extends JFrame implements SwingConstants
 	 */
 	protected FileDialog fileDialog;
 
-	/**
-	 *  Description of the Field
-	 */
-	public static File currentWorkDirectory = null;
-	/**
-	 *  Description of the Field
-	 */
-	public static javax.swing.filechooser.FileFilter currentOpenFileFilter = null;
-	/**
-	 *  Description of the Field
-	 */
-	public static javax.swing.filechooser.FileFilter currentSaveFileFilter = null;
-	/**
-	 *  Description of the Field
-	 */
-	public static File lastOpenedFile = null;
-	/**
-	 *  Description of the Field
-	 */
-	public static File lastSavedFile = null;
+
+	
 
 	private Locale currentLocale = new Locale("en", "EN");
 
 	private static JChemPaintFrame frame;
-
-	/**
-	 *  Description of the Field
-	 */
-	protected CDKPluginManager pluginManager = null;
 
 	/*
 	 *  End of GUI declarations
@@ -294,29 +271,13 @@ public class JChemPaint extends JFrame implements SwingConstants
 		 *  }
 		 */
 		logger.debug(" ++++ ++++ ++++ ");
-		setupWorkingDirectory();
+		//XXX needs fixing setupWorkingDirectory();
 		logger.debug(" ++++ ++++ ");
 
 		logger.debug("End of JCP constructor");
 	}
 
 
-	/**
-	 *  Description of the Method
-	 */
-	private void setupWorkingDirectory()
-	{
-		try
-		{
-			if (System.getProperty("user.dir") != null)
-			{
-				currentWorkDirectory = new File(System.getProperty("user.dir"));
-			}
-		} catch (Exception exc)
-		{
-			logger.error("Could not read a system property. I might be in a sandbox.");
-		}
-	}
 
 
 	/**
@@ -360,38 +321,6 @@ public class JChemPaint extends JFrame implements SwingConstants
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  jcpf  Description of the Parameter
-	 */
-	private void setupPluginManager(JChemPaintFrame jcpf)
-	{
-		try
-		{
-			// set up plugin manager
-			JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
-			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), (JChemPaintEditorPanel) jcpf.getJChemPaintPanel());
-			// load the plugins that come with JCP itself
-			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
-			// load the global plugins
-			if (!globalPluginDir.equals(""))
-			{
-				pluginManager.loadPlugins(globalPluginDir);
-			}
-			// load the user plugins
-			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
-			// load plugins given with -Dplugin.dir=bla
-			if (System.getProperty("plugin.dir") != null)
-			{
-				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
-			}
-		} catch (Exception exc)
-		{
-			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-			logger.debug(exc);
-		}
-	}
 
 
 	/**
@@ -521,24 +450,12 @@ public class JChemPaint extends JFrame implements SwingConstants
 
 
 	/**
-	 *  Gets the pluginManager attribute of the JChemPaint object
-	 *
-	 *@return    The pluginManager value
-	 */
-	public CDKPluginManager getPluginManager()
-	{
-		return pluginManager;
-	}
-
-
-	/**
 	 *  Description of the Method
 	 */
 	public void exitJChemPaint()
 	{
 		jcpcounter--;
 		// first shut down the plugins
-		// pluginManager.closePlugins();
 		// close JVM
 		System.exit(0);
 	}

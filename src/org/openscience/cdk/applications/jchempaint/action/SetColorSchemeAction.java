@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Opens a dialog allowing to adjust the coloring scheme for 
@@ -63,9 +63,9 @@ public class SetColorSchemeAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.info("Changing color scheme to: ", type);
-		if (JChemPaint.getInstance().getCurrentModel() != null)
+		if (jcpPanel.getJChemPaintModel() != null)
 		{
-			JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 			Renderer2DModel renderModel = jcpmodel.getRendererModel();
 			if ("blackOnWhite".equals(type))
 			{

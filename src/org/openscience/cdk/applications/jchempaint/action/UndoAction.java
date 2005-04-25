@@ -29,7 +29,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * An action for making things undone :-)
@@ -48,7 +48,8 @@ public class UndoAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		JChemPaint.getInstance().getCurrentFrame().undo();
+		//XXX needs to be fixed
+		//jcpPanel.undo();
 	}
 
 }

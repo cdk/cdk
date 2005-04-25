@@ -32,7 +32,7 @@ import java.awt.Graphics;
 import java.awt.PrintJob;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Opens a print dialog
@@ -51,8 +51,10 @@ public class PrintAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent event)
 	{
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		PrintJob pJob = tk.getPrintJob(JChemPaint.getInstance().getFrame(), "JChemPaint Print Job", null);
+		// XXX needs fixing
+		/*Toolkit tk = Toolkit.getDefaultToolkit();
+		
+		PrintJob pJob = tk.getPrintJob(jcpPanel.getFrame(), "JChemPaint Print Job", null);
 		Graphics pg = pJob.getGraphics();
 
 		if (pg != null)
@@ -60,7 +62,7 @@ public class PrintAction extends JCPAction
 			jcpPanel.paint(pg);
 			pg.dispose();
 			// Flushes the print job
-		}
+		}*/
 	}
 }
 

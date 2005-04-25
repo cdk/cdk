@@ -38,7 +38,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Creates a SMILES from the current model
@@ -63,11 +63,11 @@ public class CreateSmilesAction extends JCPAction
 	{
 		logger.debug("Trying to create smile: ", type);
 		/*
-		 *  if (JChemPaint.getInstance().getFrame() != null)
+		 *  if (jcpPanel.getFrame() != null)
 		 *  {
 		 *  try
 		 *  {
-		 *  Frame frame = (Frame)JChemPaint.getInstance().getFrame();
+		 *  Frame frame = (Frame)jcpPanel.getFrame();
 		 *  }
 		 *  catch(Exception exc)
 		 *  {
@@ -83,7 +83,7 @@ public class CreateSmilesAction extends JCPAction
 		String smiles = "";
 		try
 		{
-			ChemModel model = (ChemModel) JChemPaint.getInstance().getCurrentModel().getChemModel();
+			ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
 			AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 			Molecule molecule = new Molecule(container);
 			smiles = generator.createSMILES(molecule);

@@ -47,9 +47,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaintFrame;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  *  Internal frame to allow for changing the propterties.
@@ -61,7 +59,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 public class InsertFromSmiles extends JInternalFrame
 {
 
-	JChemPaint jcp;
+	JChemPaintPanel jcp;
 	JTextField valueText;
 
 
@@ -70,7 +68,7 @@ public class InsertFromSmiles extends JInternalFrame
 	 *
 	 *@param  jcp  Description of the Parameter
 	 */
-	public InsertFromSmiles(JChemPaint jcp)
+	public InsertFromSmiles(JChemPaintPanel jcp)
 	{
 		super("Insert from SMILES", false, true);
 		this.jcp = jcp;
@@ -166,9 +164,11 @@ public class InsertFromSmiles extends JInternalFrame
 				chemModel.setSetOfMolecules(som);
 				JChemPaintModel jcpm = new JChemPaintModel(chemModel);
 				jcpm.setTitle("Created from SMILES: " + SMILES);
-				JChemPaintFrame jcpf = jcp.getNewFrame(jcpm);
-				jcp.addAndShowJChemPaintFrame(jcpf);
-				jcpf.show();
+				// XXX needs fixing 
+				//JChemPaintFrame jcpf = jcp.getNewFrame(jcpm);
+				
+				//jcp.addAndShowJChemPaintFrame(jcpf);
+				//jcpf.show();
 				System.out.println("Should show a new JCPFrame windows now!");
 				closeFrame();
 			} catch (InvalidSmilesException ise)

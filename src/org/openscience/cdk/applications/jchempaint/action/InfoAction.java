@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.applications.jchempaint.dialogs.InfoDialog;
 import org.openscience.cdk.applications.jchempaint.dialogs.PluginInfoDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Pops up an info dialog
@@ -53,12 +53,12 @@ public class InfoAction extends JCPAction
 	{
 		if (type.equals("general"))
 		{
-			InfoDialog ad = new InfoDialog(JChemPaint.getInstance());
+			InfoDialog ad = new InfoDialog();
 			ad.pack();
 			ad.show();
 		} else if (type.equals("plugin"))
 		{
-			PluginInfoDialog ad = new PluginInfoDialog(JChemPaint.getInstance());
+			PluginInfoDialog ad = new PluginInfoDialog();
 			ad.pack();
 			ad.show();
 		} else

@@ -35,7 +35,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * changes the atom symbol
@@ -54,7 +54,7 @@ public class ChangeAtomSymbolAction extends JCPAction
 	public void actionPerformed(ActionEvent event)
 	{
 		logger.debug("About to change atom type of relevant atom!");
-		JChemPaintModel jcpm = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 		if (jcpm != null)
 		{
 			Controller2DModel c2dm = jcpm.getControllerModel();

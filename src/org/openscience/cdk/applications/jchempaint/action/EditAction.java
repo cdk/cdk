@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * This class implements editing options from the 'Edit' menu.
@@ -61,7 +61,7 @@ public class EditAction extends JCPAction {
         logger.debug("Event source: ", event.getSource().getClass().getName());
         logger.debug("  ChemObject: ", getSource(event));
         
-        JChemPaintModel jcpModel = JChemPaint.getInstance().getCurrentModel();
+        JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
         Renderer2DModel renderModel = jcpModel.getRendererModel();
         ChemModel chemModel = jcpModel.getChemModel();
         if (type.equals("cut")) {

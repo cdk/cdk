@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Triggers the conversion of an Atom to a residueLocator 
@@ -62,7 +62,7 @@ public class ConvertToAction extends JCPAction
 	{
 		logger.debug("Converting to: ", type);
 		ChemObject object = getSource(event);
-		JChemPaintModel jcpmodel = JChemPaint.getInstance().getCurrentModel();
+		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		ChemModel model = jcpmodel.getChemModel();
 		if (object != null)
 		{

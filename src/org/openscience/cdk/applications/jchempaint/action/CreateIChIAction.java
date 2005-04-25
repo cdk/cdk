@@ -42,7 +42,7 @@ import javax.vecmath.*;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Invokes the creation of an IChI 
@@ -60,7 +60,7 @@ public class CreateIChIAction extends JCPAction {
         String IChI = "";
         logger.debug("IChI = ", IChI);
         try {
-            ChemModel model = (ChemModel)JChemPaint.getInstance().getCurrentModel().getChemModel();
+            ChemModel model = (ChemModel)jcpPanel.getJChemPaintModel().getChemModel();
             AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
             Molecule molecule = new Molecule(container);
             logger.debug("Before runing IChI generater: ");
@@ -68,7 +68,7 @@ public class CreateIChIAction extends JCPAction {
             String message = "Generated IChI: " + IChI;
             logger.debug(message);
 
-            //JOptionPane.showMessageDialog(JChemPaint.getInstance(), message);
+            //JOptionPane.showMessageDialog(jcpPanel, message);
             frame = new TextFrame(IChI);
             frame.pack();
             frame.setVisible(true);

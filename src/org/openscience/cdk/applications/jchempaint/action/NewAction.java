@@ -28,7 +28,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
-import org.openscience.cdk.applications.jchempaint.application.*;
+
 import org.openscience.cdk.applications.jchempaint.*;
 
 import javax.swing.*;
@@ -49,8 +49,9 @@ public class NewAction extends JCPAction {
      *@param  e  Description of the Parameter
      */
     public void actionPerformed(ActionEvent e) {
-        JChemPaintFrame newFrame = JChemPaint.getInstance().getEmptyFrameWithModel();
-        newFrame.show();
+	// XXX this needs fixing    
+        // JChemPaintFrame newFrame = jcpPanel.getEmptyFrameWithModel();
+        // newFrame.show();
     }
 }
 

@@ -38,7 +38,7 @@ import javax.swing.JOptionPane;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.io.MACiEReader;
 import org.openscience.cdk.applications.jchempaint.dialogs.WebDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  *  Action to follow a weblink
@@ -66,11 +66,13 @@ public class WebLinkAction extends JCPAction
 		{
 			logger.error("Method is normally called on ChemModel");
 			logger.debug(exception);
-			JOptionPane.showMessageDialog(JChemPaint.getInstance(), "Cannot display webinfo entry.");
+			JOptionPane.showMessageDialog(jcpPanel, "Cannot display webinfo entry.");
 			return;
 		}
 		WebDialog dialog = null;
-		JFrame frame = (JFrame) JChemPaint.getInstance().getFrame();
+		// XXX needs fixing
+		// JFrame frame = (JFrame) jcpPanel.getFrame();
+		JFrame frame = new JFrame();
 		URL url = null;
 		try
 		{

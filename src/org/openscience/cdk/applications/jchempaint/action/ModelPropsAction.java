@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.applications.jchempaint.dialogs.JChemPaintModelPropsEditor;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Shows an editor for editing the model properties
@@ -55,7 +55,7 @@ public class ModelPropsAction extends JCPAction
 	{
 		if (editor == null)
 		{
-			editor = new JChemPaintModelPropsEditor(JChemPaint.getInstance());
+			editor = new JChemPaintModelPropsEditor(jcpPanel);
 		}
 		editor.pack();
 		editor.show();

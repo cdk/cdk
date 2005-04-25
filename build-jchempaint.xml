@@ -4,31 +4,21 @@
         <target id="dist-jcp" name="dist-jcp" depends="dist-all" 
             description="Builds the JChemPaint application">
             <antcall target="compile-module"><param name="module" value="jchempaint"/></antcall>
+	    <antcall target="compile-module"><param name="module" value="jchempaint.application"/></antcall>
             <!-- first unjar the CDK and other jars we need -->
-            <mkdir dir="${appjars.dir}"/>
-	    <mkdir dir="${appjars.dir}/org/openscience/cdk/applications/jchempaint/resources" />
-	    <copy todir="${appjars.dir}/org/openscience/cdk/applications/jchempaint/resources" >
-	    <fileset dir="${src}/org/openscience/cdk/applications/jchempaint/resources">
-		<include name="*" />
-	    </fileset>
-	    </copy>
-
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
                     <includesfile name="${metainf}/applications.libdepends"/>
-                    <includesfile name="${metainf}/builder3d.libdepends"/>
                     <includesfile name="${metainf}/core.libdepends"/>
                     <includesfile name="${metainf}/data.libdepends"/>
                     <includesfile name="${metainf}/experimental.libdepends"/>
                     <includesfile name="${metainf}/extra.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
-                    <includesfile name="${metainf}/io-jmol.libdepends"/>
                     <includesfile name="${metainf}/libio-cml.libdepends"/>
                     <includesfile name="${metainf}/qsar.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/swing.libdepends"/>
-		    <includesfile name="${metainf}/jchempaint.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
 		    <include name="cdk-applications.jar"/>		
@@ -38,13 +28,13 @@
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
-                    <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libio-cml.jar"/>
                     <include name="cdk-qsar.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-swing.jar"/>
 		    <include name="cdk-jchempaint.jar"/>
+		    <include name="cdk-jchempaint.application.jar"/>
                 </fileset>
             </unjar>
             
@@ -63,6 +53,9 @@
                 </manifest>
                 <fileset dir="${appjars.dir}">
                     <include name="**/*" />
+                </fileset>
+                <fileset dir="${src}">
+                    <includesfile name="${metainf}/jchempaint.application.datafiles"/>
                 </fileset>
             </jar>
         </target>

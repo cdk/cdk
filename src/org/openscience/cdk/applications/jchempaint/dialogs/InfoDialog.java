@@ -34,8 +34,7 @@ import java.util.Enumeration;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Simple Dialog that shows information about this JChemPaints executable.
@@ -45,14 +44,12 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 public class InfoDialog extends JFrame {
 
     private JEditorPane infoPane;
-    private JChemPaint mothership;
     
 	/**
 	 * Displays the Info Dialog for JChemPaint. 
 	 */
-    public InfoDialog(JChemPaint jcp) {
+    public InfoDialog() {
         super("JChemPaint License");
-        this.mothership = jcp;
         createDialog();
         displayContent();
         pack();

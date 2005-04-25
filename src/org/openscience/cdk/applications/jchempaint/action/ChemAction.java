@@ -40,7 +40,7 @@ import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Changes the editing mode for the Controller2D in CDK.
@@ -82,7 +82,7 @@ public class ChemAction extends JCPAction
 		String type = s.substring(s.indexOf("@") + 1);
 		logger.info("  type  ", type);
 		logger.debug("  source ", e.getSource());
-		jcpm = JChemPaint.getInstance().getCurrentModel();
+		jcpm = jcpPanel.getJChemPaintModel();
 		if (jcpm != null)
 		{
 			c2dm = jcpm.getControllerModel();

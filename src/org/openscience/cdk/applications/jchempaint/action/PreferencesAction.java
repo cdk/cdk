@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
+
 
 /**
  * Shows the preferences dialog

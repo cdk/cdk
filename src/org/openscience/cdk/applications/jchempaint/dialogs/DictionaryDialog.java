@@ -35,8 +35,8 @@ import java.util.Enumeration;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
   * Simple Dialog that shows the loaded dictionaries.
@@ -46,19 +46,19 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 public class DictionaryDialog extends JFrame {
 
     private JEditorPane infoPane;
-    private JChemPaint mothership;
     
 	/**
 	 * Displays the Info Dialog for JChemPaint. 
 	 */
-    public DictionaryDialog(JChemPaint jcp) {
+    public DictionaryDialog() {
         super("Loaded Dictionaries");
-        this.mothership = jcp;
         createDialog();
         displayContent();
         pack();
         setVisible(true);
     }
+    
+    
     
     private void createDialog(){
         

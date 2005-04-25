@@ -58,9 +58,7 @@ import org.openscience.cdk.validate.ProblemMarker;
 import org.openscience.cdk.validate.ValidationReport;
 import org.openscience.cdk.validate.ValidationTest;
 
-import org.openscience.cdk.applications.jchempaint.application.JChemPaint;
-import org.openscience.cdk.applications.jchempaint.application.JChemPaintFrame;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Frame to allows editing of dictionary references of 
@@ -70,19 +68,18 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  */
 public class ValidateFrame extends JFrame  {
     
-    private JChemPaint jchempaint;
-    private JChemPaintFrame frame;
     private Renderer2DModel rendererModel;
     private JPanel errorTreePanel;
     private JPanel warningTreePanel;
     private JPanel cdkErrorTreePanel;
     private JTextArea detailText;
+    private JChemPaintPanel jcpp;
     
-    public ValidateFrame(JChemPaint jchempaint, JChemPaintFrame frame) {
+    public ValidateFrame(JChemPaintPanel jcpp) {
         super("Validation Results");
-        this.jchempaint = jchempaint;
-        this.frame = frame;
-        rendererModel = frame.getModel().getRendererModel();
+        this.jcpp = jcpp;
+   
+        rendererModel = jcpp.getJChemPaintModel().getRendererModel();
         getContentPane().setLayout(new BorderLayout());
         
         JPanel southPanel = new JPanel();
