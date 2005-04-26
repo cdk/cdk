@@ -146,7 +146,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
         mainContainer=new MainContainerPanel(inputAdapter, jcpm, this);
         add(mainContainer,BorderLayout.CENTER);
         
-        setPreferredSize(new Dimension(400, 600));
+        setPreferredSize(new Dimension(600, 400));
 		logger.debug("JCPPanel set and done...");
 	}
 
@@ -177,16 +177,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public JToolBar getToolBar()
 	{
 		return mainContainer.getToolbar();
-	}
-
-	/**
-	 *  Gets the preferredSize attribute of the JChemPaintPanel object
-	 *
-	 *@return    The preferredSize value
-	 */
-	public Dimension getPreferredSize()
-	{
-		return jcpm.getRendererModel().getBackgroundDimension();
 	}
 
 		/**

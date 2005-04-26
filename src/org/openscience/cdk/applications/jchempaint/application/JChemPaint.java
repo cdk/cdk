@@ -73,19 +73,7 @@ public class JChemPaint implements SwingConstants
 {
 
 	private static JChemPaint jchempaintInstance = null;
-
-	/*
-	 *  End of GUI declarations
-	 */
-	/**
-	 *  This is used for counting the jcp intances in order to be able to close the
-	 *  whole vm when the last window of a sdi application is closed
-	 */
-	private static int jcpcounter = 0;
-
 	private LoggingTool logger;
-
-
 
 	/**
 	 *  The main program for the JChemPaint class
@@ -196,13 +184,11 @@ public class JChemPaint implements SwingConstants
 	 */
 	private JChemPaint()
 	{
-		String locale = null;
 		logger = new LoggingTool(this);
 		logger.dumpSystemProperties();
 		JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
 		frame.pack();
 		frame.show();
-
 		logger.debug("End of JCP constructor");
 	}
 

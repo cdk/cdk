@@ -87,7 +87,7 @@ public abstract class JChemPaintPanel
 	{
   	logger = new LoggingTool(this);
 		jcpm = new JChemPaintModel();
-		setPreferredSize(new Dimension(800, 600));
+		setPreferredSize(new Dimension(600, 400));
 	}
 
 

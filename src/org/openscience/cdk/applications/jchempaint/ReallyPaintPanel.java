@@ -67,6 +67,16 @@ public class ReallyPaintPanel extends JPanel
         r2d.paintChemModel(jcpm.getChemModel(), g2d);
         drawingNow = false;
     }
+    	/**
+	 *  Gets the preferredSize attribute of the JChemPaintPanel object
+	 *
+	 *@return    The preferredSize value
+	 */
+	public Dimension getPreferredSize()
+	{
+		return jcpm.getRendererModel().getBackgroundDimension();
+	}
+
 
 }
 
