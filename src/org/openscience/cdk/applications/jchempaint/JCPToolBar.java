@@ -41,86 +41,86 @@ import javax.swing.JToolBar;
  */
 public class JCPToolBar extends JToolBar
 {
-	private int orientation = HORIZONTAL;
-
-
-	/**
-	 *  method invocation without parameter causes creation of a horizontal toolbar
-	 */
-	public JCPToolBar()
-	{
-		this(HORIZONTAL);
-	}
-
-
-	/**
-	 *  constructor method sets the layout for the toolbar
-	 *
-	 *@param  orientation  (of the toolbar)
-	 */
-	public JCPToolBar(int orientation)
-	{
-		checkOrientation(orientation);
-		this.orientation = orientation;
-
-		if (orientation == VERTICAL)
-		{
-			this.setLayout(new GridLayout(1, 10));
-		} else
-		{
-			this.setLayout(new GridLayout(6, 1));
-		}
-//    addPropertyChangeListener( new PropertyChangeHandler() );
-		updateUI();
-	}
-
-
-	/**
-	 *  Sets the orientation of the Toolbar
-	 *
-	 *@param  o
-	 */
-	public void setOrientation(int o)
-	{
-		checkOrientation(o);
-
-		if (orientation != o)
-		{
-			int old = orientation;
-			orientation = o;
-
-			if (o == VERTICAL)
-			{
-				setLayout(new GridLayout(1, 10));
-				//setLayout( new FlowLayout() );
-			} else
-			{
-				setLayout(new GridLayout(6, 1));
-				//setLayout( new FlowLayout() );
-			}
-			firePropertyChange("orientation", old, o);
-			revalidate();
-			repaint();
-		}
-	}
-
-
-	/**
-	 *  Exception handling for the JCPToolbar constructor.
-	 *
-	 *@param  orientation
-	 */
-	private void checkOrientation(int orientation)
-	{
-		switch (orientation)
-		{
-						case VERTICAL:
-						case HORIZONTAL:
-							break;
-						default:
-							throw new IllegalArgumentException("orientation must be one of: VERTICAL, HORIZONTAL");
-		}
-	}
+	// private int orientation = HORIZONTAL;
+// 
+// 
+	// /**
+	 // *  method invocation without parameter causes creation of a horizontal toolbar
+	 // */
+	// public JCPToolBar()
+	// {
+		// this(HORIZONTAL);
+	// }
+// 
+// 
+	// /**
+	 // *  constructor method sets the layout for the toolbar
+	 // *
+	 // *@param  orientation  (of the toolbar)
+	 // */
+	// public JCPToolBar(int orientation)
+	// {
+		// checkOrientation(orientation);
+		// this.orientation = orientation;
+// 
+		// if (orientation == VERTICAL)
+		// {
+			// this.setLayout(new GridLayout(1, 10));
+		// } else
+		// {
+			// this.setLayout(new GridLayout(6, 1));
+		// }
+// //    addPropertyChangeListener( new PropertyChangeHandler() );
+		// updateUI();
+	// }
+// 
+// 
+	// /**
+	 // *  Sets the orientation of the Toolbar
+	 // *
+	 // *@param  o
+	 // */
+	// public void setOrientation(int o)
+	// {
+		// checkOrientation(o);
+// 
+		// if (orientation != o)
+		// {
+			// int old = orientation;
+			// orientation = o;
+// 
+			// if (o == VERTICAL)
+			// {
+				// setLayout(new GridLayout(1, 10));
+				// //setLayout( new FlowLayout() );
+			// } else
+			// {
+				// setLayout(new GridLayout(6, 1));
+				// //setLayout( new FlowLayout() );
+			// }
+			// firePropertyChange("orientation", old, o);
+			// revalidate();
+			// repaint();
+		// }
+	// }
+// 
+// 
+	// /**
+	 // *  Exception handling for the JCPToolbar constructor.
+	 // *
+	 // *@param  orientation
+	 // */
+	// private void checkOrientation(int orientation)
+	// {
+		// switch (orientation)
+		// {
+						// case VERTICAL:
+						// case HORIZONTAL:
+							// break;
+						// default:
+							// throw new IllegalArgumentException("orientation must be one of: VERTICAL, HORIZONTAL");
+		// }
+	// }
 
 }
 

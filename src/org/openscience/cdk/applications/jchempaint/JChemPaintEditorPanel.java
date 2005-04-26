@@ -170,7 +170,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
         JScrollPane scrollPane = new JScrollPane(drawingPanel);
         add(scrollPane, BorderLayout.CENTER);
         
-        setPreferredSize(new Dimension(500, 400));
+        setPreferredSize(new Dimension(400, 600));
 		logger.debug("JCPPanel set and done...");
 	}
 
