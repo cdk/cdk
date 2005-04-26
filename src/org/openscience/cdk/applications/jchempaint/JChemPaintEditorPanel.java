@@ -139,16 +139,15 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 		// set the drag-n-drop/copy-paste handler
 		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
-        JChemPaintMenuBar menu=new JChemPaintMenuBar(this);
-        add(menu,BorderLayout.NORTH);
-        StatusBar statusBar=new StatusBar();
-        add(statusBar,BorderLayout.SOUTH);
-        mainContainer=new MainContainerPanel(inputAdapter, jcpm, this);
-        add(mainContainer,BorderLayout.CENTER);
-        
-        setPreferredSize(new Dimension(600, 400));
+    JChemPaintMenuBar menu=new JChemPaintMenuBar(this);
+    add(menu,BorderLayout.NORTH);
+    StatusBar statusBar=new StatusBar();
+    add(statusBar,BorderLayout.SOUTH);
+    mainContainer=new MainContainerPanel(inputAdapter, jcpm, this);
+    add(mainContainer,BorderLayout.CENTER);
+    setPreferredSize(new Dimension(400, 600));
 		logger.debug("JCPPanel set and done...");
-	}
+  }
 
 
 	/**
@@ -300,15 +299,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public void stateChanged(EventObject e)
 	{
-		try
-		{
-			logger.debug("State Change.");
-		} catch (Exception ex)
-		{
-			System.out.println(ex.toString());
-			ex.printStackTrace();
-		}
-		if (!mainContainer.drawingPanel.drawingNow) repaint();
+    //FIXME was dependant on ReallyPaintPanel.drawingnow
+    repaint();
 	}
 
 

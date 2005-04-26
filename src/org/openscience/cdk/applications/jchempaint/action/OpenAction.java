@@ -92,7 +92,7 @@ public class OpenAction extends JCPAction
 		JCPFileFilter.addChoosableFileFilters(chooser);
 		if (jcpPanel.getCurrentOpenFileFilter() != null)
 		{
-			//XXX needs fix chooser.setFileFilter(jcpPanel.getCurrentOpenFileFilter());
+			chooser.setFileFilter(jcpPanel.getCurrentOpenFileFilter());
 		}
 		if (jcpPanel.getLastOpenedFile() != null)
 		{
@@ -113,7 +113,7 @@ public class OpenAction extends JCPAction
 		if (returnVal == JFileChooser.APPROVE_OPTION)
 		{
 			jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
-			//XXX needs fixjcpPanel.setCurrentOpenFileFilter(chooser.getFileFilter());
+			jcpPanel.setCurrentOpenFileFilter(chooser.getFileFilter());
 
 			File inFile = chooser.getSelectedFile();
 			jcpPanel.setLastOpenedFile(inFile);
@@ -194,6 +194,7 @@ public class OpenAction extends JCPAction
 				} catch (Exception exception)
 				{
 					error = "Error while reading file: " + exception.getMessage();
+          exception.printStackTrace();
 					logger.warn(error);
 					logger.debug(exception);
 				}
@@ -222,6 +223,7 @@ public class OpenAction extends JCPAction
 				} catch (Exception exception)
 				{
 					error = "Error while reading file: " + exception.getMessage();
+          exception.printStackTrace();
 					logger.error(error);
 					logger.debug(exception);
 				}
@@ -297,10 +299,15 @@ public class OpenAction extends JCPAction
 		jcpm.setTitle(input.getName());
 
 		if(jcpPanel.isEmbedded()){
-      //FIXME: needs action
+      if(jcpPanel.clearWithWarning()){
+        //FIXME not working
+        jcpPanel.setJChemPaintModel(jcpm);
+        jcpPanel.repaint();
+      }
     }else{
       JFrame jcpf = ((JChemPaintEditorPanel)jcpPanel).getNewFrame(jcpm);
       jcpf.show();
+      jcpf.pack();
     }
 	}
 

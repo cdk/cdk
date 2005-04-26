@@ -30,11 +30,14 @@ package org.openscience.cdk.applications.jchempaint;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.JInternalFrame.*;
 import javax.swing.border.*;
+import javax.swing.filechooser.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 import org.openscience.cdk.*;
@@ -49,7 +52,6 @@ import org.openscience.cdk.tools.manipulator.*;
 import org.openscience.cdk.validate.*;
 import org.openscience.cdk.applications.jchempaint.*;
 import org.openscience.cdk.applications.jchempaint.action.*;
-//import org.openscience.cdk.applications.jchempaint.application.*;
 import org.openscience.cdk.applications.jchempaint.dialogs.*;
 import org.openscience.cdk.applications.jchempaint.io.*;
 
@@ -100,11 +102,11 @@ public abstract class JChemPaintPanel
   
   
   public void setEmbedded(){
-    isEmbedded=false;
+    isEmbedded=true;
   }
   
   public void setNotEmbedded(){
-    isEmbedded=true;
+    isEmbedded=false;
   }
   
   
@@ -415,6 +417,20 @@ public abstract class JChemPaintPanel
 	{
 		return jcpm;
 	}
+  
+  
+  public boolean clearWithWarning(){
+    //FIXME i18n
+    int answer=JOptionPane.showConfirmDialog(this, "This would delete your current content. Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+    if(answer==JOptionPane.CANCEL_OPTION){
+      return false;
+    }else{
+      if(answer==JOptionPane.YES_OPTION){
+        new SaveAction().actionPerformed(null);
+      }
+      return true;
+    }
+  }
 	
 
 	/**
