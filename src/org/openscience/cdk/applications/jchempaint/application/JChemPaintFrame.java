@@ -68,8 +68,6 @@ public class JChemPaintFrame extends JFrame implements ChangeListener
 	private LoggingTool logger;
 
 	private JPanel workPanel = null;
-	private GridBagLayout gridbag = null;
-	private GridBagConstraints gridBagConstraints = null;
 	private StatusBar statusBar;
 	private StatusBar develStatusBar;
 	private JMenuBar menubar;

@@ -90,8 +90,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	PopupController2D inputAdapter;
 
 	JPanel drawingPanel;
-	GridBagLayout gridbag = null;
-	GridBagConstraints gridBagConstraints = null;
 	private JToolBar toolbar2;
 	/**
 	 *  Description of the Field
@@ -172,6 +170,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
         drawingPanel = new JPanel();
 		drawingPanel.setOpaque(true);
         drawingPanel.setBackground(Color.white);
+    drawingPanel.addMouseListener(inputAdapter);
+    drawingPanel.addMouseMotionListener(inputAdapter);
         JScrollPane scrollPane = new JScrollPane(drawingPanel);
         add(scrollPane, BorderLayout.CENTER);
         
@@ -227,7 +227,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public void setJChemPaintModel(JChemPaintModel model)
 	{
-		this.jcpm = model;
+    this.jcpm = model;
 		String property = null;
 		try
 		{
@@ -241,8 +241,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				jcpm.getControllerModel());
 		jcpm.getRendererModel().addCDKChangeListener(this);
 		inputAdapter.addCDKChangeListener(jcpm);
-		addMouseListener(inputAdapter);
-		addMouseMotionListener(inputAdapter);
 	}
 
 

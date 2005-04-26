@@ -381,7 +381,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
             Object element = iterator.next();
             writer.write("> <"+(String)element+">");
             writer.newLine();
-            writer.write("> "+(String)sdFields.get(element));
+            writer.write((String)sdFields.get(element));
             writer.newLine();
             writer.newLine();
           }

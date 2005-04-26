@@ -90,7 +90,7 @@ public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
          *  The partial charge of the atom.
          */
         protected double charge;
-
+        
         /**
          * Constructs an completely unset Atom.
          */

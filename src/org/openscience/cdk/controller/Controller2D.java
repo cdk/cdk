@@ -274,7 +274,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 */
 	public void mousePressed(MouseEvent event)
 	{
-		isUndoableChange = false;
+    isUndoableChange = false;
 		int[] screenCoords = {event.getX(), event.getY()};
 		int[] mouseCoords = getWorldCoordinates(screenCoords);
 		int mouseX = mouseCoords[0];

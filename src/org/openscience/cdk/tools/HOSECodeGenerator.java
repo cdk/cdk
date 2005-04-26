@@ -764,6 +764,15 @@ public class HOSECodeGenerator implements java.io.Serializable
 			return s;
 		}
 	}
+  public Vector getNodesInSphere(int sphereNumber){
+			sphereNodes = spheres[sphereNumber-1];
+      Vector atoms=new Vector();
+			for (int g = 0; g < sphereNodes.size() ; g++)
+			{
+				atoms.add(((TreeNode) sphereNodes.elementAt(g)).atom);
+			}
+      return(atoms);
+  }
 }
 
 
