@@ -69,43 +69,10 @@ import org.apache.commons.cli.UnrecognizedOptionException;
  * @author     egonw
  * @created    a long time ago
  */
-public class JChemPaint extends JFrame implements SwingConstants
+public class JChemPaint implements SwingConstants
 {
 
 	private static JChemPaint jchempaintInstance = null;
-
-	/**
-	 *  Description of the Field
-	 */
-	public final static String globalPluginDir = "";
-
-	/**
-	 *  Description of the Field
-	 */
-	public static boolean standAlone = false;
-
-	/**
-	 *  Description of the Field
-	 */
-	public final static String tipSuffix = "Tooltip";
-
-	/**
-	 *  Description of the Field
-	 */
-	public static boolean debug = false;
-
-	/**
-	 *  Description of the Field
-	 */
-	public JButton selectButton;
-
-	/**
-	 *  Description of the Field
-	 */
-	protected FileDialog fileDialog;
-
-
-	
 
 	private Locale currentLocale = new Locale("en", "EN");
 
@@ -115,18 +82,6 @@ public class JChemPaint extends JFrame implements SwingConstants
 	 *  End of GUI declarations
 	 */
 	/**
-	 *  Description of the Field
-	 */
-	public static File jhome = null;
-	/**
-	 *  Description of the Field
-	 */
-	public static File curdir;
-	/**
-	 *  Description of the Field
-	 */
-	public static URL jcplogo;
-	/**
 	 *  This is used for counting the jcp intances in order to be able to close the
 	 *  whole vm when the last window of a sdi application is closed
 	 */
@@ -134,7 +89,6 @@ public class JChemPaint extends JFrame implements SwingConstants
 
 	private LoggingTool logger;
 
-	boolean embedded = false;
 
 
 	/**
@@ -233,10 +187,6 @@ public class JChemPaint extends JFrame implements SwingConstants
 
 			JChemPaint jcp = JChemPaint.getInstance();
 
-			if (contentToOpen != null)
-			{
-				jcp.getCurrentFrame().getJChemPaintPanel().showChemFile(contentToOpen);
-			}
 		} catch (Throwable t)
 		{
 			System.err.println("uncaught exception: " + t);
@@ -382,57 +332,6 @@ public class JChemPaint extends JFrame implements SwingConstants
 	}
 
 
-
-	/**
-	 *  Returns the JChemPaintModel of the JChemPaintFrame that is active.
-	 *
-	 *@return    JChemPaintModel
-	 */
-	public JChemPaintModel getCurrentModel()
-	{
-		JChemPaintFrame currentFrame = getCurrentFrame();
-		JChemPaintModel model = null;
-		if (currentFrame != null)
-		{
-			model = currentFrame.getModel();
-		} else
-		{
-			logger.warn("currentFrame == null!");
-		}
-		return model;
-	}
-
-
-	/**
-	 *  Retrieves the collection of JInternalFrames from JChemPaints JDesktopPane,
-	 *  searches for the one that is active and returns it.
-	 *
-	 *@return    JChemPaintFrame The current JChemPaintFrame
-	 */
-	public JChemPaintFrame getCurrentFrame()
-	{
-		return frame;
-	}
-
-
-	/**
-	 *  Returns the parent Frame. Needed if you want o open a FileDialog.
-	 *
-	 *@return    Frame The parent Frame
-	 */
-	public Frame getFrame()
-	{
-		for (Container p = getParent(); p != null; p = p.getParent())
-		{
-			if (p instanceof Frame)
-			{
-				return (Frame) p;
-			}
-		}
-		return null;
-	}
-
-
 	/**
 	 *  Tries to load the resources. If run in an applet, try to fail gracefully.
 	 */
@@ -494,24 +393,6 @@ public class JChemPaint extends JFrame implements SwingConstants
 		{
 			jcp.exitJChemPaint();
 		}
-	}
-
-
-
-	/**
-	 *  Gets the selection attribute of the JChemPaint object
-	 *
-	 *@return    The selection value
-	 */
-	public AtomContainer getSelection()
-	{
-		JChemPaintFrame frame = getCurrentFrame();
-		if (frame == null || frame.getModel() == null ||
-				frame.getModel().getRendererModel() == null)
-		{
-			return null;
-		}
-		return (frame.getModel().getRendererModel().getSelectedPart());
 	}
 
 
