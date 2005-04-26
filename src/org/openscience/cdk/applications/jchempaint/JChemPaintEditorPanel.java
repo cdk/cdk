@@ -214,7 +214,41 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		return jcpm.getRendererModel().getBackgroundDimension();
 	}
 
+		/**
+	 *  Creates a new JFrame that owns a new JChemPaintModel and returns
+	 *  it. 
+	 *
+	 *@return    The new JFrame containing the JChemPaintEditorPanel
+	 */
+	public static JFrame getEmptyFrameWithModel()
+	{
+		JChemPaintModel jcpm = new JChemPaintModel();
+		jcpm.setTitle(getNewFrameName());
+		jcpm.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
+		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
+		String version = self.getImplementationVersion();
+		jcpm.setSoftware("JChemPaint " + version);
+		jcpm.setGendate((Calendar.getInstance()).getTime().toString());
+		JFrame jcpf = getNewFrame(jcpm);
+		return jcpf;
+	}
 
+	
+	/**
+	 *  Creates a new JChemPaintEditorPanel and assigns a given Model to it.
+	 *
+	 *@param  jcpm  The model to be assigned to the new frame.
+	 *@return       The new JChemPaintFrame with its new JChemPaintModel
+	 */
+	public static JFrame getNewFrame(JChemPaintModel jcpm)
+	{
+		JFrame frame = new JFrame();
+		frame.getContentPane().add(new JChemPaintEditorPanel(jcpm));
+		frame.setTitle(jcpm.getTitle());
+		return frame;
+	}
+
+	
 	/**
 	 *  Sets the jChemPaintModel attribute of the JChemPaintPanel object
 	 *

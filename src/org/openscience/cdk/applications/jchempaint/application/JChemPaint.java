@@ -199,60 +199,12 @@ public class JChemPaint implements SwingConstants
 		String locale = null;
 		logger = new LoggingTool(this);
 		logger.dumpSystemProperties();
-		JFrame frame = getEmptyFrameWithModel();
+		JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
+		frame.pack();
 		frame.show();
 
 		logger.debug("End of JCP constructor");
 	}
-
-	/**
-	 *  Creates a new JFrame that owns a new JChemPaintModel and returns
-	 *  it. 
-	 *
-	 *@return    The new JFrame containing the JChemPaintEditorPanel
-	 */
-	public JFrame getEmptyFrameWithModel()
-	{
-		JChemPaintModel jcpm = new JChemPaintModel();
-		jcpm.setTitle(getNewFrameName());
-		jcpm.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
-		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
-		String version = self.getImplementationVersion();
-		jcpm.setSoftware("JChemPaint " + version);
-		jcpm.setGendate((Calendar.getInstance()).getTime().toString());
-		JFrame jcpf = getNewFrame(jcpm);
-		return jcpf;
-	}
-
-
-	/**
-	 *  Creates a new localized string that can be used as a title for the new
-	 *  frame.
-	 *
-	 *@return    The newFrameName value
-	 */
-	private String getNewFrameName()
-	{
-		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(1);
-	}
-
-
-	/**
-	 *  Creates a new JChemPaintFrame and assigns a given Model to it. Use
-	 *  addAndShowJChemPaintFrame to actually add it to the desktopPane
-	 *
-	 *@param  jcpm  The model to be assigned to the new frame.
-	 *@return       The new JChemPaintFrame with its new JChemPaintModel
-	 */
-	public JFrame getNewFrame(JChemPaintModel jcpm)
-	{
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new JChemPaintEditorPanel(jcpm));
-		frame.setTitle(jcpm.getTitle());
-		return frame;
-	}
-
-
 
 	/**
 	 *  Description of the Method

@@ -102,6 +102,16 @@ public abstract class JChemPaintPanel
 	{
 	}
 
+	/**
+	 *  Creates a new localized string that can be used as a title for the new
+	 *  frame.
+	 *
+	 *@return    The newFrameName value
+	 */
+	public static String getNewFrameName()
+	{
+		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(1);
+	}
 
 	/**
 	 *  Description of the Method
