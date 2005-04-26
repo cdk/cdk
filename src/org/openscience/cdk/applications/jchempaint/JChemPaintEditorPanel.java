@@ -81,29 +81,18 @@ import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
  * @see        JChemPaintViewerPanel
  */
 public class JChemPaintEditorPanel extends JChemPaintPanel
-		 implements ChangeListener, CDKChangeListener, SwingConstants, CDKEditBus
+		 implements ChangeListener, CDKChangeListener, CDKEditBus
 {
 
 	String recentSymbol = "C";
 	PopupController2D inputAdapter;
-
-	ReallyPaintPanel drawingPanel;
-	private JToolBar toolbar2;
-		
-	/**
-	 *  Description of the Field
-	 */
-	public JButton selectButton;
-
-	/**
-	 *  Description of the Field
-	 */
-	public final static String TIPSUFFIX = "Tooltip";
-
+	
 	private static DictionaryDatabase dictdb = null;
 	private static ValidatorEngine engine = null;
 
 	private static LoggingTool logger;
+  
+  MainContainerPanel mainContainer;
 
 	/**
 	 *  sets configurations for the layout of the panel, adds several listeners
@@ -150,25 +139,12 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 		// set the drag-n-drop/copy-paste handler
 		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
-
-		JPanel toolbarsPanel = new JPanel();
-		toolbarsPanel.setLayout(new BorderLayout());
-    JPanel toolbar1 = new JPanel();
-		toolbar1.add(createToolbar(HORIZONTAL, "toolbar"));
-		toolbarsPanel.add(toolbar1, BorderLayout.LINE_START);
-
-		JPanel chemtoolbar = new JPanel();
-		chemtoolbar.add(createToolbar(HORIZONTAL, "chemtoolbar"));
-		toolbarsPanel.add(chemtoolbar, BorderLayout.CENTER);
-        add(toolbarsPanel, BorderLayout.NORTH);
-        
-        drawingPanel = new ReallyPaintPanel(jcpm);
-		drawingPanel.setOpaque(true);
-        drawingPanel.setBackground(Color.white);
-    drawingPanel.addMouseListener(inputAdapter);
-    drawingPanel.addMouseMotionListener(inputAdapter);
-        JScrollPane scrollPane = new JScrollPane(drawingPanel);
-        add(scrollPane, BorderLayout.CENTER);
+        JChemPaintMenuBar menu=new JChemPaintMenuBar(this);
+        add(menu,BorderLayout.NORTH);
+        StatusBar statusBar=new StatusBar();
+        add(statusBar,BorderLayout.SOUTH);
+        mainContainer=new MainContainerPanel(inputAdapter, jcpm, this);
+        add(mainContainer,BorderLayout.CENTER);
         
         setPreferredSize(new Dimension(400, 600));
 		logger.debug("JCPPanel set and done...");
@@ -194,15 +170,14 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 
 	/**
-	 *  Gets the toolBar attribute of the JChemPaintEditorPanel object
+	 *  Gets the toolBar attribute of the JChemPaintPanel object
 	 *
 	 *@return    The toolBar value
 	 */
 	public JToolBar getToolBar()
 	{
-		return this.toolbar2;
+		return mainContainer.getToolbar();
 	}
-
 
 	/**
 	 *  Gets the preferredSize attribute of the JChemPaintPanel object
@@ -343,7 +318,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			System.out.println(ex.toString());
 			ex.printStackTrace();
 		}
-		if (!drawingPanel.drawingNow) repaint();
+		if (!mainContainer.drawingPanel.drawingNow) repaint();
 	}
 
 
@@ -406,161 +381,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				GeometryTools.translate2D(ac, 0, baseDim.height * (reactions.length - i));
 			}
 		}
-	}
-
-
-	/**
-	 *  Creates a JButton given by a String with an Image and adds the right
-	 *  ActionListener to it.
-	 *
-	 *@param  key  String The string used to identify the button
-	 *@return      JButton The JButton with already added ActionListener
-	 */
-	protected JButton createToolbarButton(String key)
-	{
-		JCPPropertyHandler jcpph = JCPPropertyHandler.getInstance();
-		logger.debug("Trying to find resource for key: ", key);
-		URL url = jcpph.getResource(key + JCPAction.imageSuffix);
-		logger.debug("Trying to find resource: ", url);
-		if (url == null)
-		{
-			logger.error("Cannot find resource: ", key, JCPAction.imageSuffix);
-			return null;
-		}
-		ImageIcon image = new ImageIcon(url);
-		if (image == null)
-		{
-			logger.error("Cannot find image: ", url);
-			return null;
-		}
-		JButton b =
-			new JButton(image)
-			{
-				public float getAlignmentY()
-				{
-					return 0.5f;
-				}
-			};
-		b.setRequestFocusEnabled(false);
-		b.setMargin(new Insets(1, 1, 1, 1));
-		String astr = jcpph.getResourceString(key + JCPAction.actionSuffix);
-		if (astr == null)
-		{
-			astr = key;
-		}
-		JCPAction a = JCPAction.getAction(this, astr);
-		if (a != null)
-		{
-			b.setActionCommand(astr);
-			logger.debug("Coupling action to button...");
-			b.addActionListener(a);
-			b.setEnabled(a.isEnabled());
-		} else
-		{
-			logger.error("Could not find JCPAction class for:", astr);
-			b.setEnabled(false);
-		}
-		try
-		{
-			String tip = JCPLocalizationHandler.getInstance().getString(key + TIPSUFFIX);
-			if (tip != null)
-			{
-				b.setToolTipText(tip);
-			}
-		} catch (MissingResourceException e)
-		{
-			logger.warn("Could not find Tooltip resource for: ", key);
-			logger.debug(e);
-		}
-		;
-		return b;
-	}
-
-
-	/**
-	 *  Creates a toolbar given by a String with all the buttons that are specified
-	 *  in the properties file.
-	 *
-	 *@param  orientation  int The orientation of the toolbar
-	 *@param  kind         String The String used to identify the toolbar
-	 *@return              Component The created toolbar
-	 */
-	private Component createToolbar(int orientation, String kind)
-	{
-		toolbar2 = new JToolBar(orientation);
-		String[] toolKeys = StringHelper.tokenize(getToolbarResourceString(kind));
-		JButton button = null;
-
-		if (toolKeys.length != 0)
-		{
-			String[] sdiToolKeys = new String[(toolKeys.length) - 4];
-			for (int i = 4; i < toolKeys.length; i++)
-			{
-				int j = i - 4;
-				sdiToolKeys[j] = toolKeys[i];
-			}
-			toolKeys = sdiToolKeys;
-		}
-
-		for (int i = 0; i < toolKeys.length; i++)
-		{
-			if (toolKeys[i].equals("-"))
-			{
-				if (orientation == HORIZONTAL)
-				{
-					toolbar2.add(Box.createHorizontalStrut(5));
-				} else if (orientation == VERTICAL)
-				{
-					toolbar2.add(Box.createVerticalStrut(5));
-				}
-			} else
-			{
-				button = (JButton) createToolbarButton(toolKeys[i]);
-				if (toolKeys[i].equals("lasso"))
-				{
-					selectButton = button;
-				}
-				if (button != null)
-				{
-					toolbar2.add(button);
-					if (i == 0)
-					{
-						button.setBackground(Color.GRAY);
-					} else
-					{
-						button.setBackground(Color.LIGHT_GRAY);
-					}
-				} else
-				{
-					logger.error("Could not create button");
-				}
-			}
-		}
-		if (orientation == HORIZONTAL)
-		{
-			toolbar2.add(Box.createHorizontalGlue());
-		}
-		return toolbar2;
-	}
-
-
-	/**
-	 *  Gets the menuResourceString attribute of the JChemPaint object
-	 *
-	 *@param  key  Description of the Parameter
-	 *@return      The menuResourceString value
-	 */
-	public String getToolbarResourceString(String key)
-	{
-		String str;
-		try
-		{
-			str = JCPPropertyHandler.getInstance().getGUIDefinition().getString(key);
-		} catch (MissingResourceException mre)
-		{
-			str = null;
-		}
-		return str;
 	}
 
 

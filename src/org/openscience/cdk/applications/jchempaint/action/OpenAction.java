@@ -38,6 +38,7 @@ import java.io.Reader;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import org.openscience.cdk.ChemFile;
@@ -55,6 +56,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 
@@ -285,7 +287,7 @@ public class OpenAction extends JCPAction
 			String error = "Model does not have coordinates. Cannot open file.";
 			logger.warn(error);
 
-			//JOptionPane.showMessageDialog(jcpPanel, error);
+			JOptionPane.showMessageDialog(jcpPanel, error);
 			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
 			frame.pack();
 			frame.show();
@@ -294,9 +296,12 @@ public class OpenAction extends JCPAction
 		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
 		jcpm.setTitle(input.getName());
 
-		//XXX needs fix JChemPaintFrame jcpf = jcpPanel.getNewFrame(jcpm);
-		//jcpf.setTitle(jcpm.getTitle());
-		//jcpPanel.addAndShowJChemPaintFrame(jcpf);
+		if(jcpPanel.isEmbedded()){
+      //FIXME: needs action
+    }else{
+      JFrame jcpf = ((JChemPaintEditorPanel)jcpPanel).getNewFrame(jcpm);
+      jcpf.show();
+    }
 	}
 
 

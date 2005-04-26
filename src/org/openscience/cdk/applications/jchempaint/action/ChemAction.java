@@ -68,10 +68,7 @@ public class ChemAction extends JCPAction
 			lastAction.setBackground(Color.LIGHT_GRAY);
 		} else
 		{
-			(
-					jcpPanel.getToolBar().
-					getComponentAtIndex(0)).
-					setBackground(Color.LIGHT_GRAY);
+			(jcpPanel.getToolBar().getComponentAtIndex(0)).setBackground(Color.LIGHT_GRAY);
 		}
 		((JComponent) e.getSource()).setBackground(Color.GRAY);
 		lastAction = (JComponent) e.getSource();

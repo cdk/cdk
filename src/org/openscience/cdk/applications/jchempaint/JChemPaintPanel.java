@@ -77,8 +77,7 @@ public abstract class JChemPaintPanel
 	private FileFilter currentOpenFileFilter = null;
 	private FileFilter currentSaveFileFilter = null;
 	protected CDKPluginManager pluginManager = null;
-	private Locale currentLocale = new Locale("en", "EN");	
-	public boolean drawingNow;
+  private boolean isEmbedded=false;
 	
 
 	/**
@@ -86,11 +85,8 @@ public abstract class JChemPaintPanel
 	 */
 	public JChemPaintPanel()
 	{
-		String locale = null;
-		logger = new LoggingTool(this);
+  	logger = new LoggingTool(this);
 		jcpm = new JChemPaintModel();
-		loadResources();
-		setupUserLanguage(locale);
 		setPreferredSize(new Dimension(800, 600));
 	}
 
@@ -101,6 +97,20 @@ public abstract class JChemPaintPanel
 	public void setupPopupMenus()
 	{
 	}
+  
+  
+  public void setEmbedded(){
+    isEmbedded=false;
+  }
+  
+  public void setNotEmbedded(){
+    isEmbedded=true;
+  }
+  
+  
+  public boolean isEmbedded(){
+    return isEmbedded;
+  }
 
 	/**
 	 *  Creates a new localized string that can be used as a title for the new
@@ -444,63 +454,7 @@ public abstract class JChemPaintPanel
 		setJChemPaintModel(jcpm);
 	}
 
-	
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  localeString  Description of the Parameter
-	 */
-	private void setupUserLanguage(String localeString)
-	{
-		currentLocale = new Locale("en");
-		try
-		{
-			if (localeString == null)
-			{
-				localeString = System.getProperty("user.language");
-			}
-			// Set the prefered language {{{
-			logger.info("User set language: ", localeString);
-			if (localeString != null)
-			{
-				StringTokenizer st = new StringTokenizer(localeString, "_");
-				if (st.hasMoreTokens())
-				{
-					String language = st.nextToken();
-					if (st.hasMoreTokens())
-					{
-						String country = st.nextToken();
-						currentLocale = new Locale(language, country);
-					} else
-					{
-						currentLocale = new Locale(language);
-					}
-				}
-			}
-		} catch (Exception exc)
-		{
-			logger.error("Could not read a system property. I might be in a sandbox.");
-			logger.debug(exc);
-		}
 
-	}
-
-	/**
-	 *  Tries to load the resources. If run in an applet, try to fail gracefully.
-	 */
-	private void loadResources()
-	{
-		try
-		{
-			UIManager.setLookAndFeel(
-					UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (Exception exception)
-		{
-			logger.error("Error loading L&F: " + exception);
-		}
-	}
-	
-	
 	/**
 	 *  Gets the chemObjectReader attribute of the JChemPaintPanel object
 	 *
