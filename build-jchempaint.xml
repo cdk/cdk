@@ -5,6 +5,7 @@
             description="Builds the JChemPaint application">
             <antcall target="compile-module"><param name="module" value="jchempaint"/></antcall>
 	    <antcall target="compile-module"><param name="module" value="jchempaint.application"/></antcall>
+	    <antcall target="compile-module"><param name="module" value="jchempaint.applet"/></antcall>
             <!-- first unjar the CDK and other jars we need -->
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
@@ -19,6 +20,7 @@
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/swing.libdepends"/>
+		    <includesfile name="${metainf}/jchempaint.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
 		    <include name="cdk-applications.jar"/>		
@@ -35,6 +37,7 @@
                     <include name="cdk-swing.jar"/>
 		    <include name="cdk-jchempaint.jar"/>
 		    <include name="cdk-jchempaint.application.jar"/>
+		    <include name="cdk-jchempaint.applet.jar"/>
                 </fileset>
             </unjar>
             
@@ -59,7 +62,6 @@
                 </fileset>
             </jar>
         </target>
-	
 </project>
 
 
