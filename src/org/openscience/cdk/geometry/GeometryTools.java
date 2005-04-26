@@ -357,6 +357,27 @@ public class GeometryTools {
 
 
 	/**
+	 *  Translates the geometric 2DCenter of the given 
+	 *  AtomContainer container to the specified Point2d p.
+	 *
+	 *@param  container  AtomContainer which should be translated.
+	 *@param  p          New Location of the geometric 2D Center.
+	 *@see get2DCenter(AtomContainer container)
+	 *@see translate2DCentreOfMassTo(AtomContainer atomCon, Point2d p)
+	 */
+	public static void translate2DCenterTo(AtomContainer container, Point2d p) {
+		Point2d com = get2DCenter(container);
+		Vector2d translation = new Vector2d(p.x - com.x, p.y - com.y);
+		Atom[] atoms = container.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+			if (atoms[i].getPoint2d() != null) {
+				atoms[i].getPoint2d().add(translation);
+			}
+		}
+	}
+
+
+	/**
 	 *  Calculates the center of mass for the <code>Atom</code>s in the
 	 *  AtomContainer for the 2D coordinates.
 	 *
