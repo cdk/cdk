@@ -74,10 +74,6 @@ public class JChemPaint implements SwingConstants
 
 	private static JChemPaint jchempaintInstance = null;
 
-	private Locale currentLocale = new Locale("en", "EN");
-
-	private static JChemPaintFrame frame;
-
 	/*
 	 *  End of GUI declarations
 	 */
@@ -200,86 +196,22 @@ public class JChemPaint implements SwingConstants
 	 */
 	private JChemPaint()
 	{
-
 		String locale = null;
-
-		// configure Logger
 		logger = new LoggingTool(this);
 		logger.dumpSystemProperties();
-
-		logger.debug(" ++++ ++++ ++++ ++++ ++++ ++++ ++++ ");
-		loadResources();
-		logger.debug(" ++++ ++++ ++++ ++++ ++++ ++++ ");
-		setupUserLanguage(locale);
-		logger.debug(" ++++ ++++ ++++ ++++ ++++ ");
-		JChemPaintFrame jcpf = getEmptyFrameWithModel();
-		addAndShowJChemPaintFrame(jcpf);
-		logger.debug(" ++++ ++++ ++++ ++++ ");
-		/*
-		 *  if (addPluginMenu) {
-		 *  setupPluginManager(jcpf);
-		 *  }
-		 */
-		logger.debug(" ++++ ++++ ++++ ");
-		//XXX needs fixing setupWorkingDirectory();
-		logger.debug(" ++++ ++++ ");
+		JFrame frame = getEmptyFrameWithModel();
+		frame.show();
 
 		logger.debug("End of JCP constructor");
 	}
 
-
-
-
 	/**
-	 *  Description of the Method
+	 *  Creates a new JFrame that owns a new JChemPaintModel and returns
+	 *  it. 
 	 *
-	 *@param  localeString  Description of the Parameter
+	 *@return    The new JFrame containing the JChemPaintEditorPanel
 	 */
-	private void setupUserLanguage(String localeString)
-	{
-		currentLocale = new Locale("en");
-		try
-		{
-			if (localeString == null)
-			{
-				localeString = System.getProperty("user.language");
-			}
-			// Set the prefered language {{{
-			logger.info("User set language: ", localeString);
-			if (localeString != null)
-			{
-				StringTokenizer st = new StringTokenizer(localeString, "_");
-				if (st.hasMoreTokens())
-				{
-					String language = st.nextToken();
-					if (st.hasMoreTokens())
-					{
-						String country = st.nextToken();
-						currentLocale = new Locale(language, country);
-					} else
-					{
-						currentLocale = new Locale(language);
-					}
-				}
-			}
-		} catch (Exception exc)
-		{
-			logger.error("Could not read a system property. I might be in a sandbox.");
-			logger.debug(exc);
-		}
-
-	}
-
-
-
-
-	/**
-	 *  Creates a new JChemPaintFrame that owns a new JChemPaintModel and returns
-	 *  it. Use addAndShowJChemPaintFrame to actually add it to the desktopPane
-	 *
-	 *@return    The new JChemPaintFrame with its new JChemPaintModel
-	 */
-	public JChemPaintFrame getEmptyFrameWithModel()
+	public JFrame getEmptyFrameWithModel()
 	{
 		JChemPaintModel jcpm = new JChemPaintModel();
 		jcpm.setTitle(getNewFrameName());
@@ -288,7 +220,7 @@ public class JChemPaint implements SwingConstants
 		String version = self.getImplementationVersion();
 		jcpm.setSoftware("JChemPaint " + version);
 		jcpm.setGendate((Calendar.getInstance()).getTime().toString());
-		JChemPaintFrame jcpf = getNewFrame(jcpm);
+		JFrame jcpf = getNewFrame(jcpm);
 		return jcpf;
 	}
 
@@ -312,40 +244,14 @@ public class JChemPaint implements SwingConstants
 	 *@param  jcpm  The model to be assigned to the new frame.
 	 *@return       The new JChemPaintFrame with its new JChemPaintModel
 	 */
-	public JChemPaintFrame getNewFrame(JChemPaintModel jcpm)
+	public JFrame getNewFrame(JChemPaintModel jcpm)
 	{
-		JChemPaintFrame jcpf = new JChemPaintFrame(jcpm);
-		jcpm.addChangeListener(jcpf);
-		return jcpf;
+		JFrame frame = new JFrame();
+		frame.getContentPane().add(new JChemPaintEditorPanel(jcpm));
+		frame.setTitle(jcpm.getTitle());
+		return frame;
 	}
 
-
-	/**
-	 *  Adds a given JChemPaintFrame to the central desktopPane of JChemPaint and
-	 *  configures it.
-	 *
-	 *@param  jcpf  The feature to be added to the AndShowJChemPaintFrame attribute
-	 */
-	public void addAndShowJChemPaintFrame(JChemPaintFrame jcpf)
-	{
-		jcpf.show();
-	}
-
-
-	/**
-	 *  Tries to load the resources. If run in an applet, try to fail gracefully.
-	 */
-	private void loadResources()
-	{
-		try
-		{
-			UIManager.setLookAndFeel(
-					UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (Exception exception)
-		{
-			logger.error("Error loading L&F: " + exception);
-		}
-	}
 
 
 	/**
