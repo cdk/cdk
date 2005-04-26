@@ -78,7 +78,7 @@ public class PopupController2D extends Controller2D {
 		int[] screenCoords = {event.getX(), event.getY()};
 		int[] mouseCoords = getWorldCoordinates(screenCoords);
 		int mouseX = mouseCoords[0];
-		int mouseY = mouseCoords[1]+c2dm.getOffsetY();
+		int mouseY = mouseCoords[1];
 
 		logger.debug("MousePressed Event Props: mode=", c2dm.getDrawModeString());
         if (logger.isDebugEnabled()) {

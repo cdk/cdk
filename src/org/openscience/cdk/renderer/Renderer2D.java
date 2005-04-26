@@ -1244,7 +1244,7 @@ public class Renderer2D implements MouseMotionListener   {
         Point screenCoordinate = new Point();
         double zoomFactor = r2dm.getZoomFactor();
         screenCoordinate.x = (int)((double)p.x * zoomFactor);
-        screenCoordinate.y = graphicsHeight - (int)((double)p.y * zoomFactor)+r2dm.getOffsetY();
+        screenCoordinate.y = graphicsHeight - (int)((double)p.y * zoomFactor);
         return screenCoordinate;
     }
 
@@ -1260,7 +1260,7 @@ public class Renderer2D implements MouseMotionListener   {
         final int coordCount = coords.length / 2;
         for (int i=0; i<coordCount; i++) {
             screenCoordinates[i*2] = (int)((double)coords[i*2] * zoomFactor);
-            screenCoordinates[i*2+1] = graphicsHeight - (int)((double)coords[i*2+1] * zoomFactor)+r2dm.getOffsetY();
+            screenCoordinates[i*2+1] = graphicsHeight - (int)((double)coords[i*2+1] * zoomFactor);
         }
         return screenCoordinates;
     }

@@ -32,7 +32,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Image;
 import java.util.EventObject;
 import javax.swing.JPanel;
@@ -49,7 +48,6 @@ import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -68,6 +66,7 @@ import org.openscience.cdk.applications.plugin.*;
 import org.openscience.cdk.controller.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.validate.*;
+import org.openscience.cdk.renderer.*;
 import org.openscience.cdk.applications.jchempaint.*;
 import org.openscience.cdk.applications.jchempaint.io.*;
 import org.openscience.cdk.applications.jchempaint.action.*;
@@ -86,12 +85,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 {
 
 	String recentSymbol = "C";
-	Renderer2D r2d;
 	PopupController2D inputAdapter;
 
-	JPanel drawingPanel;
+	ReallyPaintPanel drawingPanel;
 	private JToolBar toolbar2;
-  private JPanel toolbar1 = new JPanel();
 		
 	/**
 	 *  Description of the Field
@@ -108,9 +105,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 	private static LoggingTool logger;
 
-	private boolean drawingNow;
-
-
 	/**
 	 *  sets configurations for the layout of the panel, adds several listeners
 	 *
@@ -123,7 +117,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		{
 			logger = new LoggingTool(this);
 		}
-		drawingNow = false;
 		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jcpm.getChemModel());
 
 		setLayout(new BorderLayout());
@@ -160,6 +153,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 		JPanel toolbarsPanel = new JPanel();
 		toolbarsPanel.setLayout(new BorderLayout());
+    JPanel toolbar1 = new JPanel();
 		toolbar1.add(createToolbar(HORIZONTAL, "toolbar"));
 		toolbarsPanel.add(toolbar1, BorderLayout.LINE_START);
 
@@ -168,7 +162,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		toolbarsPanel.add(chemtoolbar, BorderLayout.CENTER);
         add(toolbarsPanel, BorderLayout.NORTH);
         
-        drawingPanel = new JPanel();
+        drawingPanel = new ReallyPaintPanel(jcpm);
 		drawingPanel.setOpaque(true);
         drawingPanel.setBackground(Color.white);
     drawingPanel.addMouseListener(inputAdapter);
@@ -237,7 +231,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		{
 			logger.info("Could not read System property. I might be in a sandbox");
 		}
-		r2d = new Renderer2D(jcpm.getRendererModel());
 		inputAdapter = new PopupController2D(jcpm.getChemModel(), jcpm.getRendererModel(),
 				jcpm.getControllerModel());
 		jcpm.getRendererModel().addCDKChangeListener(this);
@@ -272,26 +265,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 	}
 
-
-	/**
-	 *  Draws bonds, atoms; takes care of highlighting.
-	 *
-	 *@param  g  the Graphics object to paint to
-	 */
-	public void paint(Graphics g) {
-        drawingNow = true;
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D)g;
-        Renderer2DModel model = jcpm.getRendererModel();
-        if (model.getUseAntiAliasing()) {
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        model.setBackgroundDimension(drawingPanel.getSize());
-        model.setOffsetY((int)toolbar1.getSize().getHeight());
-        jcpm.getControllerModel().setOffsetY((int)toolbar1.getSize().getHeight());
-        r2d.paintChemModel(jcpm.getChemModel(), g2d);
-        drawingNow = false;
-    }
 
 	/**
 	 *  Description of the Method
@@ -336,7 +309,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			System.out.println(ex.toString());
 			ex.printStackTrace();
 		}
-		if (!drawingNow) repaint();
+		if (!drawingPanel.drawingNow) repaint();
 	}
 
 
