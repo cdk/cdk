@@ -207,54 +207,6 @@ public class JChemPaint implements SwingConstants
 	}
 
 	/**
-	 *  Description of the Method
-	 */
-	public void exitJChemPaint()
-	{
-		jcpcounter--;
-		// first shut down the plugins
-		// close JVM
-		System.exit(0);
-	}
-
-
-	/**
-	 *  Action that will close JChemPaint.
-	 *
-	 *@author     steinbeck
-	 *@created    February 18, 2004
-	 */
-	public final static class AppCloser extends WindowAdapter
-	{
-
-		private static JChemPaint jcp;
-
-
-		/**
-		 *  Constructor for the AppCloser object
-		 *
-		 *@param  jcp  Description of the Parameter
-		 */
-		public AppCloser(JChemPaint jcp)
-		{
-			this.jcp = jcp;
-		}
-
-
-		/**
-		 *  Terminates the currently running Java Virtual Machine. @ param e Window
-		 *  closing Event
-		 *
-		 *@param  e  Description of the Parameter
-		 */
-		public void windowClosing(WindowEvent e)
-		{
-			jcp.exitJChemPaint();
-		}
-	}
-
-
-	/**
 	 *  Gets the instance attribute of the JChemPaint class
 	 *
 	 *@return    The instance value
