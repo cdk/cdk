@@ -68,6 +68,8 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	private double ringPointerLength = 20;
 
     private boolean autoUpdateImplicitHydrogens = true;
+    
+    private int offsetY=0;
 
 	/**
 	 * Returns the draw mode.
@@ -241,7 +243,15 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 		this.snapCartesian = snapCartesian;
 	}
 
-	
+    public void setOffsetY(int y){
+      offsetY=y;
+    }
+
+
+    public int getOffsetY(){
+      return offsetY;
+    }
+    	
 
 	/**
 	 * Returns the ring size

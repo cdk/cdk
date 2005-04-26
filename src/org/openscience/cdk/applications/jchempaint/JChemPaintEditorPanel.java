@@ -91,6 +91,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 	JPanel drawingPanel;
 	private JToolBar toolbar2;
+  private JPanel toolbar1 = new JPanel();
+		
 	/**
 	 *  Description of the Field
 	 */
@@ -158,7 +160,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 		JPanel toolbarsPanel = new JPanel();
 		toolbarsPanel.setLayout(new BorderLayout());
-		JPanel toolbar1 = new JPanel();
 		toolbar1.add(createToolbar(HORIZONTAL, "toolbar"));
 		toolbarsPanel.add(toolbar1, BorderLayout.LINE_START);
 
@@ -286,6 +287,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
         model.setBackgroundDimension(drawingPanel.getSize());
+        model.setOffsetY((int)toolbar1.getSize().getHeight());
+        jcpm.getControllerModel().setOffsetY((int)toolbar1.getSize().getHeight());
         r2d.paintChemModel(jcpm.getChemModel(), g2d);
         drawingNow = false;
     }

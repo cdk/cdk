@@ -127,6 +127,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
     private Dimension backgroundDimension = new Dimension(500,1200);
     
+    private int offsetY=0;
+    
     private boolean showTooltip = false;
     
     private HashMap toolTipTextMap = new HashMap();
@@ -143,6 +145,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     public void setFont(Font font) {
         this.customFont = font;
         fireChange();
+    }
+    
+    public void setOffsetY(int y){
+      offsetY=y;
+    }
+    
+    public int getOffsetY(){
+      return offsetY;
     }
     
     public boolean getUseAntiAliasing() {
