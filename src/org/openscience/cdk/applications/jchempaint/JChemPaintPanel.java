@@ -77,7 +77,6 @@ public abstract class JChemPaintPanel
 	private FileFilter currentOpenFileFilter = null;
 	private FileFilter currentSaveFileFilter = null;
 	protected CDKPluginManager pluginManager = null;
-	public boolean drawingNow;
 	
 
 	/**
