@@ -42,15 +42,15 @@
             </unjar>
             
             <!-- then zip up things -->
-            <jar jarfile="${dist}/jar/jchempaint-${version}.jar">
+            <jar jarfile="${dist}/jar/jchempaint-${jcp.version}.jar">
                 <manifest>
                     <attribute name="Main-Class" value="org.openscience.cdk.applications.jchempaint.application.JChemPaint"/>
                     <section name="org.openscience.cdk">
                         <attribute name="Specification-Title" value="JChemPaint"/>
-                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Version" value="2.2"/>
                         <attribute name="Specification-Vendor" value="The CDK Project"/>
-                        <attribute name="Implementation-Title" value="org.openscience.cdk"/>
-                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Title" value="org.openscience.cdk.applications.jchempaint"/>
+                        <attribute name="Implementation-Version" value="${jcp.version}"/>
                         <attribute name="Implementation-Vendor" value="The CDK Project"/>
                     </section>
                 </manifest>
@@ -78,7 +78,7 @@
            </unjar>
             
             <!-- then zip up things -->
-            <jar jarfile="${dist}/jar/jchempaint-${version}.jar">
+            <jar jarfile="${dist}/jar/jchempaint-${jcp.version}.jar">
                 <manifest>
                     <attribute name="Main-Class" value="org.openscience.cdk.applications.jchempaint.application.JChemPaint"/>
                     <section name="org.openscience.cdk">
@@ -86,7 +86,7 @@
                         <attribute name="Specification-Version" value="1.0"/>
                         <attribute name="Specification-Vendor" value="The CDK Project"/>
                         <attribute name="Implementation-Title" value="org.openscience.cdk"/>
-                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Version" value="${jcp.version}"/>
                         <attribute name="Implementation-Vendor" value="The CDK Project"/>
                     </section>
                 </manifest>
