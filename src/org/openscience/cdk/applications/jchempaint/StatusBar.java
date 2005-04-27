@@ -55,11 +55,11 @@ public class StatusBar extends JPanel
 		super();
 
 		setLayout(new GridLayout(1, 3));
-		setPreferredSize(new Dimension(660, 20));
+		setPreferredSize(new Dimension(660, 30));
 		for (int i = 0; i <= 2; i++)
 		{
 			status[i] = new JLabel();
-			status[i].setPreferredSize(new Dimension(220, 20));
+			status[i].setPreferredSize(new Dimension(220, 30));
 			status[i].setBorder(BorderFactory.createEtchedBorder());
 			status[i].setHorizontalAlignment(JLabel.CENTER);
 			add(status[i]);
