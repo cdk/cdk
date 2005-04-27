@@ -269,7 +269,6 @@ public class OpenAction extends JCPAction {
 
 		if (jcpPanel.isEmbedded()) {
 			if (jcpPanel.showWarning()) {
-				//FIXME not working
 				jcpPanel.setJChemPaintModel(jcpm);
 				jcpPanel.repaint();
 				jcpPanel.setIsAlreadyAFile(input);

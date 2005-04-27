@@ -35,6 +35,7 @@ import java.io.FileWriter;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileFilter;
 
 import org.openscience.cdk.AtomContainer;
@@ -209,9 +210,10 @@ public class SaveAsAction extends JCPAction
 				}
 			}
 			jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
-			// XXX needs fix jcpPanel.setCurrentSaveFileFilter(chooser.getFileFilter());
+			jcpPanel.setCurrentSaveFileFilter(chooser.getFileFilter());
       jcpPanel.setIsAlreadyAFile(outFile);
-      jcpPanel.getJChemPaintModel().setTitle(outFile.getName());      
+      jcpPanel.getJChemPaintModel().setTitle(outFile.getName());
+      ((JFrame)jcpPanel.getParent().getParent().getParent().getParent()).setTitle(outFile.getName());
 		}
 	}
 

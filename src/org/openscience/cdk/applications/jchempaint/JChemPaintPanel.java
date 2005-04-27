@@ -618,27 +618,6 @@ public abstract class JChemPaintPanel
 		return jchemPaintModel;
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@return    Description of the Return Value
-	 */
-	public boolean clearWithWarning()
-	{
-		//FIXME i18n
-		int answer = JOptionPane.showConfirmDialog(this, "This would delete your current content. Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-		if (answer == JOptionPane.CANCEL_OPTION)
-		{
-			return false;
-		} else
-		{
-			if (answer == JOptionPane.YES_OPTION)
-			{
-				new SaveAction().actionPerformed(null);
-			}
-			return true;
-		}
-	}
 
 	/**
 	 *  Description of the Method
@@ -648,7 +627,7 @@ public abstract class JChemPaintPanel
 	public boolean showWarning()
 	{
 		//FIXME i18n
-		if (jchemPaintModel.getChemModel().getSetOfMolecules() != null && jchemPaintModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount() > 0)
+		if (jchemPaintModel.isModified())
 		{
 			int answer = JOptionPane.showConfirmDialog(this, "This would delete the current content of " + jchemPaintModel.getTitle() + ". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (answer == JOptionPane.CANCEL_OPTION)

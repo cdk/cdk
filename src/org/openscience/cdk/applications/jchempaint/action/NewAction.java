@@ -50,6 +50,10 @@ public class NewAction extends JCPAction {
      */
     public void actionPerformed(ActionEvent e) {
       if(jcpPanel.isEmbedded()){
+        boolean clear=jcpPanel.showWarning();
+        if(clear){
+          jcpPanel.setJChemPaintModel(null);
+        }
       }else{
         JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
         frame.show();
