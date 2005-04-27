@@ -80,7 +80,7 @@ public abstract class JChemPaintPanel
 	private FileFilter currentSaveFileFilter = null;
 	protected CDKPluginManager pluginManager = null;
   private static boolean isEmbedded=false;
-  private static int numberOfInstances=0;
+  protected static Vector instances=new Vector();
 	
 
 	/**
@@ -91,7 +91,6 @@ public abstract class JChemPaintPanel
   	logger = new LoggingTool(this);
 		jcpm = new JChemPaintModel();
 		setPreferredSize(new Dimension(600, 400));
-    numberOfInstances++;
 	}
 
 
@@ -102,6 +101,9 @@ public abstract class JChemPaintPanel
 	{
 	}
   
+  public Vector getInstances(){
+    return instances;
+  }
   
   public void setEmbedded(){
     isEmbedded=true;
@@ -421,17 +423,19 @@ public abstract class JChemPaintPanel
 	}
   
   
-  public boolean clearWithWarning(){
+  public boolean showWarning(){
     //FIXME i18n
-    //FIXME warning only if content
-    int answer=JOptionPane.showConfirmDialog(this, "This would delete your current content. Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-    if(answer==JOptionPane.CANCEL_OPTION){
-      return false;
-    }else{
-      if(answer==JOptionPane.YES_OPTION){
-        new SaveAction().actionPerformed(null);
+    if(jcpm.getChemModel().getSetOfMolecules()!=null && jcpm.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount()>0){
+      int answer=JOptionPane.showConfirmDialog(this, "This would delete the current content of "+jcpm.getTitle()+". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+      if(answer==JOptionPane.CANCEL_OPTION){
+        return false;
+      }else{
+        if(answer==JOptionPane.YES_OPTION){
+          new SaveAction().actionPerformed(null);
+        }
+        return true;
       }
-      //originally I wanted to put in a clear here, but this should be done by loading the new structure anyway?
+    }else{
       return true;
     }
   }
@@ -601,11 +605,26 @@ public abstract class JChemPaintPanel
 		 */
 		public void windowClosing(WindowEvent e)
 		{
-      numberOfInstances--;
-      if(numberOfInstances==0 && !isEmbedded)
+      ((JChemPaintPanel)((JFrame)e.getSource()).getContentPane().getComponents()[0]).showWarning();
+      for(int i=0;i<instances.size();i++){
+        if(instances.get(i)==e.getSource()){
+          instances.remove(i);
+          break;
+        }
+      }
+      if(instances.size()==0 && !isEmbedded)
         System.exit(0);
 		}
 	}
+  
+  public static void closeAllInstances(){
+    Iterator it=instances.iterator();
+    while(it.hasNext()){
+      JFrame frame=(JFrame)it.next();
+      frame.setVisible(false);
+      frame.dispose();
+    }
+  }
 }
 
 

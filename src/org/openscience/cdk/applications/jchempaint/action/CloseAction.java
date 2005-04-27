@@ -30,26 +30,31 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 import org.openscience.cdk.applications.jchempaint.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 
 /**
- * Triggers an exit of the application
+ * Triggers an exit of the current frame
  *
  * @cdk.module jchempaint
  * @author     steinbeck
  * @created    22. April 2005
  */
-public class ExitAction extends JCPAction
+public class CloseAction extends JCPAction
 {
 
 	/**
-	 *  Opens an empty JChemPaint frame.
+	 *  Closes the current frame
 	 *
 	 *@param  e  Description of the Parameter
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		JChemPaintPanel.closeAllInstances();
+      JFrame jframe=(JFrame)jcpPanel.getParent().getParent().getParent().getParent();
+      WindowListener[] wls = (WindowListener[])(jframe.getListeners(WindowListener.class));
+      wls[0].windowClosing(new WindowEvent(jframe,12));
+      jframe.setVisible(false);
+      jframe.dispose();
 	}
 }
-

@@ -299,7 +299,7 @@ public class OpenAction extends JCPAction
 		jcpm.setTitle(input.getName());
 
 		if(jcpPanel.isEmbedded()){
-      if(jcpPanel.clearWithWarning()){
+      if(jcpPanel.showWarning()){
         //FIXME not working
         jcpPanel.setJChemPaintModel(jcpm);
         jcpPanel.repaint();
