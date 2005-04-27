@@ -167,7 +167,7 @@ public class InsertFromSmiles extends JFrame
 				JChemPaintModel jcpm = new JChemPaintModel(chemModel);
 				jcpm.setTitle("Created from SMILES: " + SMILES);
 				
-				JFrame jcpf = ((JChemPaintEditorPanel)jcpPanel).getNewFrame(jcpm);
+				JFrame jcpf = JChemPaintEditorPanel.getNewFrame(jcpm);
 				jcpf.show();
 				jcpf.pack();
 				closeFrame();

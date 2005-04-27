@@ -86,7 +86,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 {
 
 	String recentSymbol = "C";
-	PopupController2D inputAdapter;
 
 	private static DictionaryDatabase dictdb = null;
 	private static ValidatorEngine engine = null;
@@ -154,7 +153,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 	void registerModel(JChemPaintModel model)
 	{
-		inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),
+		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),
 		model.getControllerModel());
 		model.getRendererModel().addCDKChangeListener(this);
 		inputAdapter.addCDKChangeListener(model);
@@ -262,7 +261,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	/**
 	 *  Description of the Method
 	 */
-	public void setupPopupMenus()
+	public void setupPopupMenus(PopupController2D inputAdapter)
 	{
 		if (inputAdapter.getPopupMenu(new Atom("H")) == null)
 		{
