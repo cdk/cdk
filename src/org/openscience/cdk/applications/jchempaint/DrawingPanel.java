@@ -56,16 +56,15 @@ public class DrawingPanel extends JPanel
 	 *
 	 *@param  jcpm  Description of the Parameter
 	 */
-	public DrawingPanel(JChemPaintModel model)
+	public DrawingPanel()
 	{
 		super();
-		this.jchemPaintModel = model;
-		r2d = new Renderer2D(jchemPaintModel.getRendererModel());
 	}
 
 	void setJChemPaintModel(JChemPaintModel model)
 	{
 		this.jchemPaintModel = model;
+		r2d = new Renderer2D(jchemPaintModel.getRendererModel());
 		r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
 			
 	}
@@ -77,7 +76,7 @@ public class DrawingPanel extends JPanel
 	 */
 	public void paint(Graphics g)
 	{
-		
+		if (jchemPaintModel == null) return;
 		drawingNow = true;
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;

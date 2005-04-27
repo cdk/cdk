@@ -71,7 +71,7 @@ public abstract class JChemPaintPanel
 	/**
 	 *  Description of the Field
 	 */
-	protected JChemPaintModel jcpm;
+	protected JChemPaintModel jchemPaintModel;
 	private LoggingTool logger;
 	private File currentWorkDirectory = null;
 	private File lastOpenedFile = null;
@@ -111,11 +111,10 @@ public abstract class JChemPaintPanel
 	public JChemPaintPanel()
 	{
 		logger = new LoggingTool(this);
-		jcpm = new JChemPaintModel();
 		setLayout(new BorderLayout());
 		mainContainer = new JPanel();
 		mainContainer.setLayout(new BorderLayout());
-		drawingPanel = new DrawingPanel(jcpm);
+		drawingPanel = new DrawingPanel();
 		drawingPanel.setOpaque(true);
 		drawingPanel.setBackground(Color.white);
 		JScrollPane scrollPane = new JScrollPane(drawingPanel);
@@ -452,7 +451,8 @@ public abstract class JChemPaintPanel
 	 */
 	public void setJChemPaintModel(JChemPaintModel model)
 	{
-		this.jcpm = model;
+		this.jchemPaintModel = model;
+		drawingPanel.setJChemPaintModel(model);
 	}
 
 
@@ -606,7 +606,7 @@ public abstract class JChemPaintPanel
 	 */
 	public JChemPaintModel getJChemPaintModel()
 	{
-		return jcpm;
+		return jchemPaintModel;
 	}
 
 	/**
@@ -639,9 +639,9 @@ public abstract class JChemPaintPanel
 	public boolean showWarning()
 	{
 		//FIXME i18n
-		if (jcpm.getChemModel().getSetOfMolecules() != null && jcpm.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount() > 0)
+		if (jchemPaintModel.getChemModel().getSetOfMolecules() != null && jchemPaintModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount() > 0)
 		{
-			int answer = JOptionPane.showConfirmDialog(this, "This would delete the current content of " + jcpm.getTitle() + ". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+			int answer = JOptionPane.showConfirmDialog(this, "This would delete the current content of " + jchemPaintModel.getTitle() + ". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (answer == JOptionPane.CANCEL_OPTION)
 			{
 				return false;
@@ -694,9 +694,9 @@ public abstract class JChemPaintPanel
 			return;
 		}
 
-		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
+		JChemPaintModel model = new JChemPaintModel(chemModel);
 
-		setJChemPaintModel(jcpm);
+		setJChemPaintModel(model);
 	}
 
 
@@ -780,7 +780,7 @@ public abstract class JChemPaintPanel
 			return;
 		}
 
-		this.jcpm = new JChemPaintModel(chemModel);
+		setJChemPaintModel(new JChemPaintModel(chemModel));
 	}
 
 
@@ -791,7 +791,7 @@ public abstract class JChemPaintPanel
 	 */
 	public ChemModel getChemModel()
 	{
-		return jcpm.getChemModel();
+		return jchemPaintModel.getChemModel();
 	}
 
 

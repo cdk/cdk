@@ -98,7 +98,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *
 	 *@param  model  Description of the Parameter
 	 */
-	public JChemPaintEditorPanel(JChemPaintModel model)
+	public JChemPaintEditorPanel()
 	{
 		super();
 		setShowToolbar(true);
@@ -106,10 +106,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		{
 			logger = new LoggingTool(this);
 		}
-		this.jcpm = model;
-		//setupIfModelNotEmpty();
-		//inputAdapter = new PopupController2D(jcpm.getChemModel(), jcpm.getRendererModel(),jcpm.getControllerModel());
-		registerModel(jcpm);
 		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
 		logger.debug("JCPPanel set and done...");
 	}
@@ -120,9 +116,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	void setupIfModelNotEmpty()
 	{
-		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jcpm.getChemModel());
+		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jchemPaintModel.getChemModel());
 
-		Renderer2DModel rendererModel = jcpm.getRendererModel();
+		Renderer2DModel rendererModel = jchemPaintModel.getRendererModel();
 		if (ac.getAtomCount() != 0)
 		{
 			logger.info("ChemModel is already non-empty! Sizing things to get it visible!");
@@ -130,7 +126,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			Dimension oneMoleculeDimension = new Dimension(700, 400);
 			// should be based on molecule/reaction size!
 			Dimension dimension = makeChemModelFit(
-					oneMoleculeDimension, jcpm.getChemModel()
+					oneMoleculeDimension, jchemPaintModel.getChemModel()
 					);
 			rendererModel.setBackgroundDimension(dimension);
 
@@ -141,20 +137,20 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			GeometryTools.translateAllPositive(ac);
 			double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 			GeometryTools.scaleMolecule(ac, scaleFactor);
-			layoutInTable(oneMoleculeDimension, jcpm.getChemModel());
+			layoutInTable(oneMoleculeDimension, jchemPaintModel.getChemModel());
 			// GeometryTools.center(ac, getPreferredSize());
 			// GeometryTools.center(ac, new Dimension(300,200));
 		}
-
-		jcpm.getControllerModel().setBondPointerLength(rendererModel.getBondLength());
-		jcpm.getControllerModel().setRingPointerLength(rendererModel.getBondLength());
-
 	}
 
 	void registerModel(JChemPaintModel model)
 	{
 		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),
 		model.getControllerModel());
+		Renderer2DModel rendererModel = model.getRendererModel();
+		model.getControllerModel().setBondPointerLength(rendererModel.getBondLength());
+		model.getControllerModel().setRingPointerLength(rendererModel.getBondLength());
+
 		model.getRendererModel().addCDKChangeListener(this);
 		inputAdapter.addCDKChangeListener(model);
 		drawingPanel.setJChemPaintModel(model);
@@ -201,9 +197,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public Color getBackground()
 	{
-		if (jcpm != null)
+		if (jchemPaintModel != null)
 		{
-			return jcpm.getRendererModel().getBackColor();
+			return jchemPaintModel.getRendererModel().getBackColor();
 		} else
 		{
 			return Color.WHITE;
@@ -244,14 +240,17 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	/**
 	 *  Creates a new JChemPaintEditorPanel and assigns a given Model to it.
 	 *
-	 *@param  jcpm  The model to be assigned to the new frame.
+	 *@param  jchemPaintModel  The model to be assigned to the new frame.
 	 *@return       The new JChemPaintFrame with its new JChemPaintModel
 	 */
 	public static JFrame getNewFrame(JChemPaintModel model)
 	{
 		JFrame frame = new JFrame();
 		frame.addWindowListener(new JChemPaintPanel.AppCloser());
-		frame.getContentPane().add(new JChemPaintEditorPanel(model));
+		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel();
+		jcpep.setJChemPaintModel(model);
+		jcpep.registerModel(model);
+		frame.getContentPane().add(jcpep);
 		instances.add(frame);
 		frame.setTitle(model.getTitle());
 		return frame;
