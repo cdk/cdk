@@ -113,7 +113,7 @@ public class JCPPropertyHandler
 		InputStream defaultStream;
 		try
 		{
-			defaultStream = JCPPropertyHandler.class.getResourceAsStream("resources/JChemPaintResources.properties");
+			defaultStream = JCPPropertyHandler.class.getResourceAsStream("resources/text/JChemPaintResources.properties");
 			defaultProps = new Properties();
 			defaultProps.load(defaultStream);
 			defaultStream.close();
@@ -255,7 +255,7 @@ public class JCPPropertyHandler
 			}
 			try
 			{
-				String resource = "org.openscience.cdk.applications.jchempaint.resources.JCPGUI_" + guiString;
+				String resource = "org.openscience.cdk.applications.jchempaint.resources.text.JCPGUI_" + guiString;
 				guiDefinition = ResourceBundle.getBundle(resource, Locale.getDefault());
 			} catch (Exception exc)
 			{
@@ -278,7 +278,7 @@ public class JCPPropertyHandler
 		{
 			try
 			{
-				String resource = "org.openscience.cdk.applications.jchempaint.resources.JChemPaintResources";
+				String resource = "org.openscience.cdk.applications.jchempaint.resources.text.JChemPaintResources";
 				resources = ResourceBundle.getBundle(resource);
 			} catch (Exception exc)
 			{

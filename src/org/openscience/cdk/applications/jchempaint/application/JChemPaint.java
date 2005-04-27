@@ -187,7 +187,7 @@ public class JChemPaint implements SwingConstants
 		logger.dumpSystemProperties();
 		JFrame frame = getEmptyFrameWithModel();
 		frame.show();
-    frame.pack();
+		frame.pack();
 		logger.debug("End of JCP constructor");
 	}
 
