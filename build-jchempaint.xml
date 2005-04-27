@@ -54,6 +54,7 @@
                         <attribute name="Implementation-Vendor" value="The CDK Project"/>
                     </section>
                 </manifest>
+		
                 <fileset dir="${appjars.dir}">
                     <include name="**/*" />
                 </fileset>
@@ -62,6 +63,41 @@
                 </fileset>
             </jar>
         </target>
+
+	<target id="jcp-only" name="jcp-only"
+            description="Builds the JChemPaint application">
+            <antcall target="compile-module"><param name="module" value="jchempaint"/></antcall>
+	    <antcall target="compile-module"><param name="module" value="jchempaint.application"/></antcall>
+	    <antcall target="compile-module"><param name="module" value="jchempaint.applet"/></antcall>
+            <unjar dest="${appjars.dir}">    
+	    	<fileset dir="${dist}/jar">
+		    <include name="cdk-jchempaint.jar"/>
+		    <include name="cdk-jchempaint.application.jar"/>
+		    <include name="cdk-jchempaint.applet.jar"/>
+                </fileset>
+           </unjar>
+            
+            <!-- then zip up things -->
+            <jar jarfile="${dist}/jar/jchempaint-${version}.jar">
+                <manifest>
+                    <attribute name="Main-Class" value="org.openscience.cdk.applications.jchempaint.application.JChemPaint"/>
+                    <section name="org.openscience.cdk">
+                        <attribute name="Specification-Title" value="JChemPaint"/>
+                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Vendor" value="The CDK Project"/>
+                        <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                    </section>
+                </manifest>
+                <fileset dir="${appjars.dir}">
+                    <include name="**/*" />
+                </fileset>
+                <fileset dir="${src}">
+                    <includesfile name="${metainf}/jchempaint.application.datafiles"/>
+                </fileset>
+            </jar>
+        </target>	
 </project>
 
 
