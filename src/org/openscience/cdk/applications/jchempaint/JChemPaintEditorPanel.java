@@ -74,11 +74,12 @@ import org.openscience.cdk.applications.jchempaint.dialogs.*;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 
 /**
- * This class implements an editing JChemPaintPanel.
- * @cdk.module jchempaint
- * @author     steinbeck
- * @created    16. Februar 2005
- * @see        JChemPaintViewerPanel
+ *  This class implements an editing JChemPaintPanel.
+ *
+ *@author        steinbeck
+ *@created       16. Februar 2005
+ *@cdk.module    jchempaint
+ *@see           JChemPaintViewerPanel
  */
 public class JChemPaintEditorPanel extends JChemPaintPanel
 		 implements ChangeListener, CDKChangeListener, CDKEditBus
@@ -86,34 +87,47 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 	String recentSymbol = "C";
 	PopupController2D inputAdapter;
-	
+
 	private static DictionaryDatabase dictdb = null;
 	private static ValidatorEngine engine = null;
-
 	private static LoggingTool logger;
-  
-  MainContainerPanel mainContainer;
+	private JToolBar toolbar;
+
 
 	/**
 	 *  sets configurations for the layout of the panel, adds several listeners
 	 *
-	 *@param  jcpm  The JChemPaintModel
+	 *@param  model  Description of the Parameter
 	 */
-	public JChemPaintEditorPanel(JChemPaintModel jcpm)
+	public JChemPaintEditorPanel(JChemPaintModel model)
 	{
 		super();
+		setShowToolbar(true);
 		if (logger == null)
 		{
 			logger = new LoggingTool(this);
 		}
+		this.jcpm = model;
+		System.out.println("***** model is " + model + " *****");
+		//setupIfModelNotEmpty();
+		//inputAdapter = new PopupController2D(jcpm.getChemModel(), jcpm.getRendererModel(),jcpm.getControllerModel());
+		registerModel(jcpm);
+		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
+		logger.debug("JCPPanel set and done...");
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
+	void setupIfModelNotEmpty()
+	{
 		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jcpm.getChemModel());
 
-		setLayout(new BorderLayout());
-		setJChemPaintModel(jcpm);
-        
-        Renderer2DModel rendererModel = jcpm.getRendererModel();
-		if (ac.getAtomCount() != 0) {
-            logger.info("ChemModel is already non-empty! Sizing things to get it visible!");
+		Renderer2DModel rendererModel = jcpm.getRendererModel();
+		if (ac.getAtomCount() != 0)
+		{
+			logger.info("ChemModel is already non-empty! Sizing things to get it visible!");
 			// do some magic to get it all in one page
 			Dimension oneMoleculeDimension = new Dimension(700, 400);
 			// should be based on molecule/reaction size!
@@ -137,17 +151,48 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		jcpm.getControllerModel().setBondPointerLength(rendererModel.getBondLength());
 		jcpm.getControllerModel().setRingPointerLength(rendererModel.getBondLength());
 
-		// set the drag-n-drop/copy-paste handler
-		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
-    JChemPaintMenuBar menu=new JChemPaintMenuBar(this);
-    add(menu,BorderLayout.NORTH);
-    StatusBar statusBar=new StatusBar();
-    add(statusBar,BorderLayout.SOUTH);
-    mainContainer=new MainContainerPanel(inputAdapter, jcpm, this);
-    add(mainContainer,BorderLayout.CENTER);
-    setPreferredSize(new Dimension(600, 400));
-		logger.debug("JCPPanel set and done...");
-  }
+	}
+
+	void registerModel(JChemPaintModel model)
+	{
+		inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),
+		model.getControllerModel());
+		model.getRendererModel().addCDKChangeListener(this);
+		inputAdapter.addCDKChangeListener(model);
+
+		drawingPanel.addMouseListener(inputAdapter);
+		drawingPanel.addMouseMotionListener(inputAdapter);
+	}
+		
+	
+	/**
+	 *  Returns the value of showToolbar.
+	 *
+	 *@return    The showToolbar value
+	 */
+	public boolean getShowToolbar()
+	{
+		return showToolbar;
+	}
+
+
+	/**
+	 *  Sets the value of showToolbar.
+	 *
+	 *@param  showToolbar  The value to assign showToolbar.
+	 */
+	public void setShowToolbar(boolean showToolbar)
+	{
+		this.showToolbar = showToolbar;
+		if (showToolbar)
+		{
+			if (toolbar == null)
+			{
+				toolbar = ToolBarMaker.getToolbar(this);
+			}
+			mainContainer.add(toolbar, BorderLayout.NORTH);
+		}
+	}
 
 
 	/**
@@ -175,66 +220,43 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public JToolBar getToolBar()
 	{
-		return mainContainer.getToolbar();
+		return toolbar;
 	}
 
-		/**
-	 *  Creates a new JFrame that owns a new JChemPaintModel and returns
-	 *  it. 
+
+	/**
+	 *  Creates a new JFrame that owns a new JChemPaintModel and returns it.
 	 *
 	 *@return    The new JFrame containing the JChemPaintEditorPanel
 	 */
 	public static JFrame getEmptyFrameWithModel()
 	{
-		JChemPaintModel jcpm = new JChemPaintModel();
-		jcpm.setTitle(getNewFrameName());
-		jcpm.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
+		JChemPaintModel model = new JChemPaintModel();
+		model.setTitle(getNewFrameName());
+		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
 		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 		String version = self.getImplementationVersion();
-		jcpm.setSoftware("JChemPaint " + version);
-		jcpm.setGendate((Calendar.getInstance()).getTime().toString());
-		JFrame jcpf = getNewFrame(jcpm);
+		model.setSoftware("JChemPaint " + version);
+		model.setGendate((Calendar.getInstance()).getTime().toString());
+		JFrame jcpf = getNewFrame(model);
 		return jcpf;
 	}
 
-	
+
 	/**
 	 *  Creates a new JChemPaintEditorPanel and assigns a given Model to it.
 	 *
 	 *@param  jcpm  The model to be assigned to the new frame.
 	 *@return       The new JChemPaintFrame with its new JChemPaintModel
 	 */
-	public static JFrame getNewFrame(JChemPaintModel jcpm)
+	public static JFrame getNewFrame(JChemPaintModel model)
 	{
 		JFrame frame = new JFrame();
-    frame.addWindowListener(new JChemPaintPanel.AppCloser());
-		frame.getContentPane().add(new JChemPaintEditorPanel(jcpm));
-    instances.add(frame);
-		frame.setTitle(jcpm.getTitle());
+		frame.addWindowListener(new JChemPaintPanel.AppCloser());
+		frame.getContentPane().add(new JChemPaintEditorPanel(model));
+		instances.add(frame);
+		frame.setTitle(model.getTitle());
 		return frame;
-	}
-
-	
-	/**
-	 *  Sets the jChemPaintModel attribute of the JChemPaintPanel object
-	 *
-	 *@param  model  The new jChemPaintModel value
-	 */
-	public void setJChemPaintModel(JChemPaintModel model)
-	{
-    this.jcpm = model;
-		String property = null;
-		try
-		{
-			property = System.getProperty("renderer", "default");
-		} catch (Exception exc)
-		{
-			logger.info("Could not read System property. I might be in a sandbox");
-		}
-		inputAdapter = new PopupController2D(jcpm.getChemModel(), jcpm.getRendererModel(),
-				jcpm.getControllerModel());
-		jcpm.getRendererModel().addCDKChangeListener(this);
-		inputAdapter.addCDKChangeListener(jcpm);
 	}
 
 
@@ -301,8 +323,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public void stateChanged(EventObject e)
 	{
-    //FIXME was dependant on ReallyPaintPanel.drawingnow
-    repaint();
+		//FIXME was dependant on ReallyPaintPanel.drawingnow
+		drawingPanel.repaint();
 	}
 
 
@@ -450,10 +472,18 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		return "1.8";
 	}
 
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  s1  Description of the Parameter
+	 *@param  s2  Description of the Parameter
+	 */
 	public void runScript(String s1, String s2)
 	{
 		logger.info("runScript method currently not supported");
 	}
+
 
 	/**
 	 *  Mandatory because JChemPaint is a ChangeListener. Used by other classes to

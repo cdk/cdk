@@ -34,40 +34,60 @@ import java.awt.RenderingHints;
 import org.openscience.cdk.renderer.*;
 
 /**
- * This class implements an editing JChemPaintPanel.
- * @cdk.module jchempaint
- * @author     steinbeck
- * @created    16. Februar 2005
- * @see        JChemPaintViewerPanel
+ *  This class implements an editing JChemPaintPanel.
+ *
+ *@author        steinbeck
+ *@created       16. Februar 2005
+ *@cdk.module    jchempaint
+ *@see           JChemPaintViewerPanel
  */
 public class ReallyPaintPanel extends JPanel
 {
-  private JChemPaintModel jcpm;
-  private Renderer2D r2d;
-  public boolean drawingNow=false;
-	  
-  public ReallyPaintPanel(JChemPaintModel jcpm){
-    super();
-    this.jcpm=jcpm;
+	private JChemPaintModel jcpm;
+	private Renderer2D r2d;
+	/**
+	 *  Description of the Field
+	 */
+	public boolean drawingNow = false;
+
+
+	/**
+	 *  Constructor for the ReallyPaintPanel object
+	 *
+	 *@param  jcpm  Description of the Parameter
+	 */
+	public ReallyPaintPanel(JChemPaintModel jcpm)
+	{
+		super();
+		this.jcpm = jcpm;
 		r2d = new Renderer2D(jcpm.getRendererModel());
-  } 
-  	/**
+	}
+
+
+	/**
 	 *  Draws bonds, atoms; takes care of highlighting.
 	 *
 	 *@param  g  the Graphics object to paint to
 	 */
-	public void paint(Graphics g) {
-        drawingNow = true;
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D)g;
-        Renderer2DModel model = jcpm.getRendererModel();
-        if (model.getUseAntiAliasing()) {
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        r2d.paintChemModel(jcpm.getChemModel(), g2d);
-        drawingNow = false;
-    }
-    	/**
+	public void paint(Graphics g)
+	{
+		
+		drawingNow = true;
+		super.paint(g);
+		Graphics2D g2d = (Graphics2D) g;
+		Renderer2DModel model = jcpm.getRendererModel();
+		if (model.getUseAntiAliasing())
+		{
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+		System.out.println("ReallyPaintPanel->before r2D call");
+		r2d.paintChemModel(jcpm.getChemModel(), g2d);
+		System.out.println("ReallyPaintPanel->after r2D call");
+		drawingNow = false;
+	}
+
+
+	/**
 	 *  Gets the preferredSize attribute of the JChemPaintPanel object
 	 *
 	 *@return    The preferredSize value
@@ -76,7 +96,6 @@ public class ReallyPaintPanel extends JPanel
 	{
 		return jcpm.getRendererModel().getBackgroundDimension();
 	}
-
 
 }
 

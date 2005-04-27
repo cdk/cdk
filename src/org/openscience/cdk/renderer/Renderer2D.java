@@ -102,7 +102,7 @@ public class Renderer2D implements MouseMotionListener   {
     final static BasicStroke stroke = new BasicStroke(1.0f);
     
     private LoggingTool logger;
-    boolean debug = false;
+    boolean debug = true;
     private IsotopeFactory isotopeFactory;
     private int[] tooltiparea=null;
 
@@ -150,9 +150,18 @@ public class Renderer2D implements MouseMotionListener   {
         if (model.getSetOfReactions() != null) {
             paintSetOfReactions(model.getSetOfReactions(), graphics);
         }
+	else
+	{
+		logger.debug("setOfReactions is null");
+	}
         if (model.getSetOfMolecules() != null) {
             paintSetOfMolecules(model.getSetOfMolecules(), graphics);
         }
+	else
+	{
+		logger.debug("setOfMolecules is null");
+	}
+
     }
     
     public void paintSetOfReactions(SetOfReactions reactionSet, Graphics2D graphics) {
@@ -163,8 +172,10 @@ public class Renderer2D implements MouseMotionListener   {
     }
     
     public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics2D graphics) {
+	    logger.debug("painting set of molecules");
         Molecule[] molecules = moleculeSet.getMolecules();
         for (int i=0; i<molecules.length; i++) {
+		logger.debug("painting molecule " + i);
             paintMolecule(molecules[i], graphics);
         }
     }
@@ -319,7 +330,8 @@ public class Renderer2D implements MouseMotionListener   {
 	 * @param  graphics        Description of the Parameter
 	 */
 	public void paintMolecule(AtomContainer atomCon, Graphics2D graphics) {
-        customizeRendering(graphics);
+		logger.debug("inside paintMolecule()");
+		customizeRendering(graphics);
 		RingSet ringSet = new RingSet();
 		Molecule[] molecules = null;
 		try {
@@ -376,6 +388,7 @@ public class Renderer2D implements MouseMotionListener   {
      }
 
 	public void paintAtom(AtomContainer container, Atom atom, Graphics2D graphics) {
+		logger.debug("Painting atom ");
         Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
         if (atom.equals(r2dm.getHighlightedAtom())) {
             paintColouredAtomBackground(atom, atomBackColor, graphics);

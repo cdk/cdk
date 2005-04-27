@@ -59,9 +59,9 @@ import org.openscience.cdk.applications.jchempaint.io.*;
  *  JPanel that contains a full JChemPaint program, either viewer or full
  *  editor.
  *
- * @cdk.module jchempaint
- * @author     steinbeck
- * @created    16. Februar 2005
+ *@author        steinbeck
+ *@created       16. Februar 2005
+ *@cdk.module    jchempaint
  */
 public abstract class JChemPaintPanel
 		 extends JPanel
@@ -78,10 +78,31 @@ public abstract class JChemPaintPanel
 	private File lastSavedFile = null;
 	private FileFilter currentOpenFileFilter = null;
 	private FileFilter currentSaveFileFilter = null;
+	/**
+	 *  Description of the Field
+	 */
 	protected CDKPluginManager pluginManager = null;
-  private static boolean isEmbedded=false;
-  protected static Vector instances=new Vector();
-  protected File isAlreadyAFile=null;
+
+	static boolean isEmbedded = false;
+	JPanel mainContainer;
+	StatusBar statusBar;
+	JChemPaintMenuBar menu;
+	boolean showMenu = true;
+	boolean showToolbar = true;
+	boolean showStatusBar = true;
+	DrawingPanel drawingPanel;
+	/**
+	 *  Description of the Field
+	 */
+	public JButton selectButton;
+	JToolBar chemjtoolbar;
+	JChemPaintPanel jcpp;
+
+	/**
+	 *  Description of the Field
+	 */
+	protected static Vector instances = new Vector();
+	protected File isAlreadyAFile=null;
 	
 
 	/**
@@ -89,9 +110,40 @@ public abstract class JChemPaintPanel
 	 */
 	public JChemPaintPanel()
 	{
-  	logger = new LoggingTool(this);
+		logger = new LoggingTool(this);
 		jcpm = new JChemPaintModel();
+		setLayout(new BorderLayout());
+		mainContainer = new JPanel();
+		mainContainer.setLayout(new BorderLayout());
+		drawingPanel = new DrawingPanel(jcpm);
+		drawingPanel.setOpaque(true);
+		drawingPanel.setBackground(Color.white);
+		JScrollPane scrollPane = new JScrollPane(drawingPanel);
+		
+		drawingPanel.setPreferredSize(new Dimension(800, 1000));
+		mainContainer.add(scrollPane, BorderLayout.CENTER);
+
+		add(mainContainer, BorderLayout.CENTER);
+		customizeView();
 		setPreferredSize(new Dimension(600, 400));
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void customizeView()
+	{
+		if (showMenu)
+		{
+			menu = new JChemPaintMenuBar(this);
+			add(menu, BorderLayout.NORTH);
+		}
+		if (showStatusBar)
+		{
+			statusBar = new StatusBar();
+			add(statusBar, BorderLayout.SOUTH);
+		}
 	}
 
 
@@ -100,6 +152,100 @@ public abstract class JChemPaintPanel
 	 */
 	public void setupPopupMenus()
 	{
+	}
+
+	/**
+	 *  Gets the toolBar attribute of the JChemPaintPanel object
+	 *
+	 *@return    The toolBar value
+	 */
+	public JToolBar getToolBar()
+	{
+		return null;
+	}
+
+
+	/**
+	 *  Gets the embedded attribute of the JChemPaintPanel object
+	 *
+	 *@return    The embedded value
+	 */
+	public boolean isEmbedded()
+	{
+		return isEmbedded;
+	}
+
+
+	/**
+	 *  Returns the value of showMenu.
+	 *
+	 *@return    The showMenu value
+	 */
+	public boolean getShowMenu()
+	{
+		return showMenu;
+	}
+
+
+	/**
+	 *  Sets the value of showMenu.
+	 *
+	 *@param  showMenu  The value to assign showMenu.
+	 */
+	public void setShowMenu(boolean showMenu)
+	{
+		this.showMenu = showMenu;
+	}
+
+
+	/**
+	 *  Returns the value of showStatusBar.
+	 *
+	 *@return    The showStatusBar value
+	 */
+	public boolean getShowStatusBar()
+	{
+		return showStatusBar;
+	}
+
+
+	/**
+	 *  Gets the instances attribute of the JChemPaintPanel object
+	 *
+	 *@return    The instances value
+	 */
+	public Vector getInstances()
+	{
+		return instances;
+	}
+
+
+	/**
+	 *  Sets the embedded attribute of the JChemPaintPanel object
+	 */
+	public void setEmbedded()
+	{
+		isEmbedded = true;
+	}
+
+
+	/**
+	 *  Sets the notEmbedded attribute of the JChemPaintPanel object
+	 */
+	public void setNotEmbedded()
+	{
+		isEmbedded = false;
+	}
+
+
+	/**
+	 *  Sets the value of showStatusBar.
+	 *
+	 *@param  showStatusBar  The value to assign showStatusBar.
+	 */
+	public void setShowStatusBar(boolean showStatusBar)
+	{
+		this.showStatusBar = showStatusBar;
 	}
   
   public Vector getInstances(){
@@ -139,6 +285,7 @@ public abstract class JChemPaintPanel
 		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(instances.size()+1);
 	}
 
+
 	/**
 	 *  Description of the Method
 	 *
@@ -149,56 +296,117 @@ public abstract class JChemPaintPanel
 		return null;
 	}
 
+
+	/**
+	 *  Gets the currentWorkDirectory attribute of the JChemPaintPanel object
+	 *
+	 *@return    The currentWorkDirectory value
+	 */
 	public File getCurrentWorkDirectory()
 	{
-		return currentWorkDirectory;	
+		return currentWorkDirectory;
 	}
-	
+
+
+	/**
+	 *  Sets the currentWorkDirectory attribute of the JChemPaintPanel object
+	 *
+	 *@param  cwd  The new currentWorkDirectory value
+	 */
 	public void setCurrentWorkDirectory(File cwd)
 	{
-		this.currentWorkDirectory = cwd;	
+		this.currentWorkDirectory = cwd;
 	}
 
+
+	/**
+	 *  Gets the currentOpenFileFilter attribute of the JChemPaintPanel object
+	 *
+	 *@return    The currentOpenFileFilter value
+	 */
 	public FileFilter getCurrentOpenFileFilter()
 	{
-		return currentOpenFileFilter;	
-	}
-	
-	public void setCurrentOpenFileFilter(FileFilter ff)
-	{
-		this.currentOpenFileFilter = ff;	
+		return currentOpenFileFilter;
 	}
 
+
+	/**
+	 *  Sets the currentOpenFileFilter attribute of the JChemPaintPanel object
+	 *
+	 *@param  ff  The new currentOpenFileFilter value
+	 */
+	public void setCurrentOpenFileFilter(FileFilter ff)
+	{
+		this.currentOpenFileFilter = ff;
+	}
+
+
+	/**
+	 *  Gets the currentSaveFileFilter attribute of the JChemPaintPanel object
+	 *
+	 *@return    The currentSaveFileFilter value
+	 */
 	public FileFilter getCurrentSaveFileFilter()
 	{
-		return currentSaveFileFilter;	
+		return currentSaveFileFilter;
 	}
-	
+
+
+	/**
+	 *  Sets the currentSaveFileFilter attribute of the JChemPaintPanel object
+	 *
+	 *@param  ff  The new currentSaveFileFilter value
+	 */
 	public void setCurrentSaveFileFilter(FileFilter ff)
 	{
-		this.currentSaveFileFilter = ff;	
+		this.currentSaveFileFilter = ff;
 	}
-	
+
+
+	/**
+	 *  Gets the lastOpenedFile attribute of the JChemPaintPanel object
+	 *
+	 *@return    The lastOpenedFile value
+	 */
 	public File getLastOpenedFile()
 	{
-		return lastOpenedFile;	
+		return lastOpenedFile;
 	}
-	
+
+
+	/**
+	 *  Sets the lastOpenedFile attribute of the JChemPaintPanel object
+	 *
+	 *@param  lof  The new lastOpenedFile value
+	 */
 	public void setLastOpenedFile(File lof)
 	{
-		this.lastOpenedFile = lof;	
+		this.lastOpenedFile = lof;
 	}
-	
+
+
+	/**
+	 *  Gets the lastSavedFile attribute of the JChemPaintPanel object
+	 *
+	 *@return    The lastSavedFile value
+	 */
 	public File getLastSavedFile()
 	{
-		return lastSavedFile;	
+		return lastSavedFile;
 	}
-	
+
+
+	/**
+	 *  Sets the lastSavedFile attribute of the JChemPaintPanel object
+	 *
+	 *@param  lsf  The new lastSavedFile value
+	 */
 	public void setLastSavedFile(File lsf)
 	{
-		this.lastSavedFile = lsf;	
+		this.lastSavedFile = lsf;
 	}
-	
+
+
 	/**
 	 *  Gets the pluginManager attribute of the JChemPaint object
 	 *
@@ -208,39 +416,40 @@ public abstract class JChemPaintPanel
 	{
 		return pluginManager;
 	}
+
+
 	/**
 	 *  Description of the Method
-	 *
-	 *@param  jcpf  Description of the Parameter
 	 */
-	/*private void setupPluginManager(JChemPaintPanel jcpp)
-	{
-		try
-		{
-			// set up plugin manager
-			JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
-			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), jcpp);
-			// load the plugins that come with JCP itself
-			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
-			// load the global plugins
-			if (!globalPluginDir.equals(""))
-			{
-				pluginManager.loadPlugins(globalPluginDir);
-			}
-			// load the user plugins
-			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
-			// load plugins given with -Dplugin.dir=bla
-			if (System.getProperty("plugin.dir") != null)
-			{
-				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
-			}
-		} catch (Exception exc)
-		{
-			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-			logger.debug(exc);
-		}
-	}*/
-	
+	/*
+	 *  private void setupPluginManager(JChemPaintPanel jcpp)
+	 *  {
+	 *  try
+	 *  {
+	 *  / set up plugin manager
+	 *  JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
+	 *  pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), jcpp);
+	 *  / load the plugins that come with JCP itself
+	 *  pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+	 *  / load the global plugins
+	 *  if (!globalPluginDir.equals(""))
+	 *  {
+	 *  pluginManager.loadPlugins(globalPluginDir);
+	 *  }
+	 *  / load the user plugins
+	 *  pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
+	 *  / load plugins given with -Dplugin.dir=bla
+	 *  if (System.getProperty("plugin.dir") != null)
+	 *  {
+	 *  pluginManager.loadPlugins(System.getProperty("plugin.dir"));
+	 *  }
+	 *  } catch (Exception exc)
+	 *  {
+	 *  logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
+	 *  logger.debug(exc);
+	 *  }
+	 *  }
+	 */
 	/**
 	 *  Description of the Method
 	 */
@@ -258,7 +467,7 @@ public abstract class JChemPaintPanel
 		}
 	}
 
-	
+
 	/**
 	 *  Sets the jChemPaintModel attribute of the JChemPaintPanel object
 	 *
@@ -266,17 +475,7 @@ public abstract class JChemPaintPanel
 	 */
 	public void setJChemPaintModel(JChemPaintModel model)
 	{
-	}
-
-
-	/**
-	 *  Gets the toolBar attribute of the JChemPaintPanel object
-	 *
-	 *@return    The toolBar value
-	 */
-	public JToolBar getToolBar()
-	{
-		return null;
+		this.jcpm = model;
 	}
 
 
@@ -422,6 +621,7 @@ public abstract class JChemPaintPanel
 		}
 	}
 
+
 	/**
 	 *  Gets the jChemPaintModel attribute of the JChemPaintPanel object
 	 *
@@ -431,6 +631,59 @@ public abstract class JChemPaintPanel
 	{
 		return jcpm;
 	}
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@return    Description of the Return Value
+	 */
+	public boolean clearWithWarning()
+	{
+		//FIXME i18n
+		int answer = JOptionPane.showConfirmDialog(this, "This would delete your current content. Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+		if (answer == JOptionPane.CANCEL_OPTION)
+		{
+			return false;
+		} else
+		{
+			if (answer == JOptionPane.YES_OPTION)
+			{
+				new SaveAction().actionPerformed(null);
+			}
+			return true;
+		}
+	}
+
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@return    Description of the Return Value
+	 */
+	public boolean showWarning()
+	{
+		//FIXME i18n
+		if (jcpm.getChemModel().getSetOfMolecules() != null && jcpm.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount() > 0)
+		{
+			int answer = JOptionPane.showConfirmDialog(this, "This would delete the current content of " + jcpm.getTitle() + ". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (answer == JOptionPane.CANCEL_OPTION)
+			{
+				return false;
+			} else
+			{
+				if (answer == JOptionPane.YES_OPTION)
+				{
+					new SaveAction().actionPerformed(null);
+				}
+				return true;
+			}
+		} else
+		{
+			return true;
+		}
+	}
+
   
   
   public boolean showWarning(){
@@ -449,7 +702,6 @@ public abstract class JChemPaintPanel
       return true;
     }
   }
-	
 
 	/**
 	 *  Description of the Method
@@ -501,7 +753,8 @@ public abstract class JChemPaintPanel
 		ReaderFactory factory = new ReaderFactory();
 		ChemObjectReader coReader = factory.createReader(reader);
 		if (coReader != null)
-		{	// XXX needs fixing
+		{
+			// XXX needs fixing
 			//coReader.addChemObjectIOListener(new SwingGUIListener(JChemPaint.getInstance(), 4));
 		}
 		return coReader;
@@ -615,26 +868,36 @@ public abstract class JChemPaintPanel
 		 */
 		public void windowClosing(WindowEvent e)
 		{
-      ((JChemPaintPanel)((JFrame)e.getSource()).getContentPane().getComponents()[0]).showWarning();
-      for(int i=0;i<instances.size();i++){
-        if(instances.get(i)==e.getSource()){
-          instances.remove(i);
-          break;
-        }
-      }
-      if(instances.size()==0 && !isEmbedded)
-        System.exit(0);
+			((JChemPaintPanel) ((JFrame) e.getSource()).getContentPane().getComponents()[0]).showWarning();
+			for (int i = 0; i < instances.size(); i++)
+			{
+				if (instances.get(i) == e.getSource())
+				{
+					instances.remove(i);
+					break;
+				}
+			}
+			if (instances.size() == 0 && !isEmbedded)
+			{
+				System.exit(0);
+			}
 		}
 	}
-  
-  public static void closeAllInstances(){
-    Iterator it=instances.iterator();
-    while(it.hasNext()){
-      JFrame frame=(JFrame)it.next();
-      frame.setVisible(false);
-      frame.dispose();
-    }
-  }
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public static void closeAllInstances()
+	{
+		Iterator it = instances.iterator();
+		while (it.hasNext())
+		{
+			JFrame frame = (JFrame) it.next();
+			frame.setVisible(false);
+			frame.dispose();
+		}
+	}
 }
 
 
