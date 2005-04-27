@@ -102,7 +102,6 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener
         }
         this.model = chemModel;
         controllerModel = new Controller2DModel();
-        controllerModel.setDrawMode(Controller2DModel.LASSO);
         rendererModel = new Renderer2DModel();
 	}
 

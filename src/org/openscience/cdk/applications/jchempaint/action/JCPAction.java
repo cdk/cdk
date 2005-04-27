@@ -69,7 +69,6 @@ public class JCPAction extends AbstractAction
 	 */
 	protected static LoggingTool logger = null;
 
-	// cache the actions
 	private Hashtable actions = null;
 	private Hashtable popupActions = null;
 

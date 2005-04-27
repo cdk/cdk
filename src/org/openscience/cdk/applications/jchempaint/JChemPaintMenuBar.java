@@ -239,7 +239,7 @@ public class JChemPaintMenuBar extends JMenuBar
 			astr = cmd;
 		}
 		mi.setActionCommand(astr);
-		JCPAction action = new JCPAction().getAction(jcpPanel, astr);
+		JCPAction action = jcpPanel.getJCPAction().getAction(jcpPanel, astr);
 		if (action != null)
 		{
 			// sync some action properties with menu

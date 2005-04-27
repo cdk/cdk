@@ -97,6 +97,7 @@ public abstract class JChemPaintPanel
 	public JButton selectButton;
 	JToolBar chemjtoolbar;
 	JChemPaintPanel jcpp;
+  JCPAction jcpaction=null;
 
 	/**
 	 *  Description of the Field
@@ -126,6 +127,14 @@ public abstract class JChemPaintPanel
 		customizeView();
 		setPreferredSize(new Dimension(600, 400));
 	}
+  
+  
+  
+  public JCPAction getJCPAction(){
+    if(jcpaction==null)
+      jcpaction=new JCPAction();
+    return jcpaction;
+  }
 
 
 	/**

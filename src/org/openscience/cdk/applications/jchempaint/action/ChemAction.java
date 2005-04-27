@@ -68,7 +68,7 @@ public class ChemAction extends JCPAction
 			lastAction.setBackground(Color.LIGHT_GRAY);
 		} else
 		{
-			(jcpPanel.getToolBar().getComponentAtIndex(0)).setBackground(Color.LIGHT_GRAY);
+      (jcpPanel.getToolBar().getComponentAtIndex(0)).setBackground(Color.LIGHT_GRAY);
 		}
 		((JComponent) e.getSource()).setBackground(Color.GRAY);
 		lastAction = (JComponent) e.getSource();
@@ -80,7 +80,7 @@ public class ChemAction extends JCPAction
 		logger.info("  type  ", type);
 		logger.debug("  source ", e.getSource());
 		jcpm = jcpPanel.getJChemPaintModel();
-		if (jcpm != null)
+    if (jcpm != null)
 		{
 			c2dm = jcpm.getControllerModel();
 			if (type.equals("bond"))

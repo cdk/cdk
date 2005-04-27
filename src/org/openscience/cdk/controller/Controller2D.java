@@ -331,19 +331,17 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 */
 	public void mouseReleased(MouseEvent event)
 	{
-		isUndoableChange = false;
+    isUndoableChange = false;
 		logger.debug("MouseReleased Event Props: mode=", c2dm.getDrawModeString());
         if (logger.isDebugEnabled()) {
             logger.debug("   trigger=" + event.isPopupTrigger(),
                          ", Click count: " + event.getClickCount());
         }
-
         if ((event.getModifiers() & MouseEvent.BUTTON1_MASK) != 0) {
 			int[] screenCoords = {event.getX(), event.getY()};
 			int[] mouseCoords = getWorldCoordinates(screenCoords);
 			int mouseX = mouseCoords[0];
 			int mouseY = mouseCoords[1];
-
 			if (c2dm.getDrawMode() == c2dm.SYMBOL) {
 
 				Atom atomInRange = r2dm.getHighlightedAtom();
@@ -509,7 +507,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
             
 			if (c2dm.getDrawMode() == c2dm.DRAWBOND)
 			{
-				Atom atomInRange;
+        Atom atomInRange;
 				Atom newAtom1;
 				Atom newAtom2;
 				Bond newBond;

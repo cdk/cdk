@@ -51,7 +51,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	public final static int BENZENERING=17;
 	public final static int MAPATOMATOM=18;
 	
-	private int drawMode = 6;
+	private int drawMode = 0;
 	private int ringSize = 6;
 	
 	private boolean snapToGridAngle = true;
