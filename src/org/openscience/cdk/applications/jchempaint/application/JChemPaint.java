@@ -1,13 +1,8 @@
 /*
  *  $RCSfile$
  *  $Author$
-<<<<<<< JChemPaint.java
  *  $Date$
  *  $Revision$
-=======
- *  $Date$
- *  $Revision$
->>>>>>> 1.9
  *
  *  Copyright (C) 1997-2005  The JChemPaint project
  *
@@ -102,7 +97,6 @@ public class JChemPaint implements SwingConstants
 			Options options = new Options();
 			options.addOption("h", "help", false, "give this help page");
 			options.addOption("v", "version", false, "gives JChemPaints version number");
-			options.addOption("1", "sdi", false, "starts JChemPaint with an Single Document Interface");
 			options.addOption(
 					OptionBuilder.withArgName("property=value").
 					hasArg().
