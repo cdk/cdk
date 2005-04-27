@@ -123,6 +123,7 @@ public class CleanupAction extends JCPAction
 			}
 
 			jcpmodel.fireChange();
+			jcpPanel.repaint();
 		}
 	}
 
