@@ -1,1 +1,13 @@
-empty
+org/openscience/cdk/applications/jchempaint/action/ChemAction$PTDialogChangeListener.class
+org/openscience/cdk/applications/jchempaint/dialogs/PTDialog.class
+org/openscience/cdk/applications/swing/PeriodicTablePanel.class
+org/openscience/cdk/applications/swing/PeriodicTablePanel$ElementButtonAction.class
+org/openscience/cdk/applications/swing/PeriodicTablePanel$ElementButton.class
+org/openscience/cdk/AtomEnumeration.class
+org/openscience/cdk/layout/HydrogenPlacer.class
+org/openscience/cdk/layout/OverlapResolver.class
+org/openscience/cdk/layout/OverlapResolver.class$OverlapPair.class
+org/openscience/cdk/layout/StructureDiagramGenerator.class
+org/openscience/cdk/layout/TemplateHandler.class
+org/openscience/cdk/ringsearch/RingPartitioner.class
+

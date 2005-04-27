@@ -1,4 +1,5 @@
 <project name="JCPAppletCDK" default="jcp-only-applet" basedir=".">
+	<property name="growing_list_file" value="${build}/growing.fileset" />
 	<import file="build-jchempaint.xml" />
 	<target id="jcp-only-applet" name="jcp-only-applet" depends="jcp-only, build-applet" description="Builds the JChemPaint applet jar files with jarindex" />
 	<target id="dist-applet" name="dist-applet" depends="dist-jcp, build-applet" description="Builds the JChemPaint applet jar files with jarindex" />
@@ -7,59 +8,75 @@
 		<!-- The file lists are generated from tomcat access log files with unpacked class files (and without jar files) -->
 		<!-- cat apache/jakarta-tomcat-5.0.28/logs/localhost_access_log.2005-04-27.txt | awk -v classdir="/jcpapplet/classes/" '$9 != 404 && substr($7,0,length(classdir)) == classdir { print substr($7,length(classdir)+1) }' | sort -->
 		<!-- hint: uncomment <Valve className="org.apache.catalina.valves.AccessLogValve" in conf/server.xml to switch on tomcat's access logging -->
-		<jar destfile="${dist}/jar/jchempaint-applet-editor-opts.jar">
-			<fileset dir="${appjars.dir}">
-				<includesfile name="${metainf}/applet-editor-opts.files" />
-			</fileset>
-		</jar>
-		<jar destfile="${dist}/jar/jchempaint-applet-editor.jar">
-			<fileset dir="${appjars.dir}">
-				<includesfile name="${metainf}/applet-editor.files" />
-			</fileset>
-		</jar>
-		<jar destfile="${dist}/jar/jchempaint-applet-viewer-opts.jar">
-			<fileset dir="${appjars.dir}">
-				<includesfile name="${metainf}/applet-viewer-opts.files" />
-			</fileset>
-		</jar>
-		<!-- this jar contains all resources in the resource directory which are not in one of the previously used lists -->
-		<jar jarfile="${dist}/jar/jchempaint-applet-resources.jar">
-			<fileset dir="${src}">
-				<includesfile name="${metainf}/jchempaint.application.datafiles" />
-				<excludesfile name="${metainf}/applet-editor-opts.files" />
-				<excludesfile name="${metainf}/applet-editor.files" />
-				<excludesfile name="${metainf}/applet-viewer-opts.files" />
-				<excludesfile name="${metainf}/applet-core.files" />
-			</fileset>
-		</jar>
+		<property name="growing_list_file" value="${build}/growing.fileset" />
+		<!-- <copy file="${metainf}/applet-core.files" tofile="${growing_list_file}" /> -->
+		<concat destfile="${growing_list_file}" fixlastline="yes" append="no">
+			<fileset file="${metainf}/applet-core.files" />
+		</concat>
+		<macrodef name="jar-from-list">
+			<attribute name="destfile" />
+			<attribute name="includesfile" />
+			<sequential>
+				<jar destfile="@{destfile}">
+					<fileset dir="${appjars.dir}">
+						<includesfile name="@{includesfile}" />
+						<excludesfile name="${growing_list_file}" />
+					</fileset>
+				</jar>
+				<concat destfile="${growing_list_file}" fixlastline="yes" append="yes">
+					<fileset file="@{includesfile}" />
+				</concat>
+			</sequential>
+		</macrodef>
+		<macrodef name="jar-from-pattern">
+			<attribute name="destfile" />
+			<attribute name="includepattern" />
+			<sequential>
+				<jar destfile="@{destfile}">
+					<fileset dir="${appjars.dir}">
+						<include name="@{includepattern}" />
+						<excludesfile name="${growing_list_file}" />
+					</fileset>
+				</jar>
+				<concat destfile="${growing_list_file}" fixlastline="yes" append="yes">@{includepattern}${line.separator}</concat>
+			</sequential>
+		</macrodef>
+
+		<jar-from-list destfile="${dist}/jar/jchempaint-applet-viewer-opts.jar" includesfile="${metainf}/applet-viewer-opts.files"/>
+		<jar-from-list destfile="${dist}/jar/jchempaint-applet-editor.jar" includesfile="${metainf}/applet-editor.files"/>
+		<jar-from-list destfile="${dist}/jar/jchempaint-applet-editor-opts.jar" includesfile="${metainf}/applet-editor-opts.files"/>
+		<jar-from-list destfile="${dist}/jar/jchempaint-applet-resources.jar" includesfile="${metainf}/jchempaint.application.datafiles"/>
+		<!-- the following jar files are packed from directory patterns -->
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_openscience_cdk_applications_jchempaint.jar" includepattern="org/openscience/cdk/applications/jchempaint/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_openscience_cdk_applications.jar" includepattern="org/openscience/cdk/applications/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_openscience_cdk.jar" includepattern="org/openscience/cdk/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_openscience.jar" includepattern="org/openscience/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org.jar" includepattern="org/**"/>
 		<!-- the following jar contains all other classes and resources -->
-		<jar jarfile="${dist}/jar/jchempaint-applet-others.jar">
-			<fileset dir="${appjars.dir}">
-				<include name="**/*" />
-				<excludesfile name="${metainf}/applet-editor-opts.files" />
-				<excludesfile name="${metainf}/applet-editor.files" />
-				<excludesfile name="${metainf}/applet-viewer-opts.files" />
-				<excludesfile name="${metainf}/applet-core.files" />
-				<excludesfile name="${metainf}/jchempaint.application.datafiles" />
-			</fileset>
-		</jar>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-others.jar" includepattern="**/*"/>
 		<!-- the main jar file is packed from a list, but it must be packed as last file because it contains INDEX.LIST -->
 		<jar destfile="${dist}/jar/jchempaint-applet-core.jar" index="true">
 			<fileset dir="${appjars.dir}">
-				<includesfile name="${metainf}/applet-core.files" />
+				<includesfile name="${metainf}/applet-core.files"/>
 			</fileset>
 			<indexjars>
-				<pathelement path="${dist}/jar/jchempaint-applet-others.jar" />
-				<pathelement path="${dist}/jar/jchempaint-applet-resources.jar" />
-				<pathelement path="${dist}/jar/jchempaint-applet-editor-opts.jar" />
-				<pathelement path="${dist}/jar/jchempaint-applet-editor.jar" />
-				<pathelement path="${dist}/jar/jchempaint-applet-viewer-opts.jar" />
+				<pathelement path="${dist}/jar/jchempaint-applet-viewer-opts.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-editor.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-editor-opts.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-resources.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-org_openscience_cdk_applications_jchempaint.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-org_openscience_cdk_applications.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-org_openscience_cdk.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-org_openscience.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-org.jar"/>
+				<pathelement path="${dist}/jar/jchempaint-applet-others.jar"/>
 			</indexjars>
 		</jar>
 	</target>
 	<target id="clean-applet" name="clean-applet" description="Removes applet files.">
 		<delete>
 			<fileset dir="${dist}/jar/" includes="jchempaint-applet-*.jar" />
+			<fileset file="${growing_list_file}"/>
 		</delete>
 	</target>
 </project>
