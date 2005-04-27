@@ -145,7 +145,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     add(statusBar,BorderLayout.SOUTH);
     mainContainer=new MainContainerPanel(inputAdapter, jcpm, this);
     add(mainContainer,BorderLayout.CENTER);
-    setPreferredSize(new Dimension(400, 600));
+    setPreferredSize(new Dimension(600, 400));
 		logger.debug("JCPPanel set and done...");
   }
 
