@@ -1,23 +1,12 @@
 <project name="JCPAppletCDK" default="jcp-only-applet" basedir=".">
 	<import file="build-jchempaint.xml" />
-	<target id="jcp-only-applet" name="jcp-only-applet" depends="jcp-only, build-applet" description="Builds the JChemPaint applet jar files with jarindex"/>
-	<target id="dist-applet" name="dist-applet" depends="dist-jcp, build-applet" description="Builds the JChemPaint applet jar files with jarindex"/>
+	<target id="jcp-only-applet" name="jcp-only-applet" depends="jcp-only, build-applet" description="Builds the JChemPaint applet jar files with jarindex" />
+	<target id="dist-applet" name="dist-applet" depends="dist-jcp, build-applet" description="Builds the JChemPaint applet jar files with jarindex" />
 	<target id="build-applet" name="build-applet" description="Builds the JChemPaint applet jar files with jarindex">
+		<!-- At first jars are packed from file lists -->
 		<!-- The file lists are generated from tomcat access log files with unpacked class files (and without jar files) -->
 		<!-- cat apache/jakarta-tomcat-5.0.28/logs/localhost_access_log.2005-04-27.txt | awk -v classdir="/jcpapplet/classes/" '$9 != 404 && substr($7,0,length(classdir)) == classdir { print substr($7,length(classdir)+1) }' | sort -->
 		<!-- hint: uncomment <Valve className="org.apache.catalina.valves.AccessLogValve" in conf/server.xml to switch on tomcat's access logging -->
-		<jar jarfile="${dist}/jar/jchempaint-applet-others.jar">
-			<fileset dir="${appjars.dir}">
-				<include name="**/*" />
-				<excludesfile name="${metainf}/applet-editor-opts.files" />
-				<excludesfile name="${metainf}/applet-editor.files" />
-				<excludesfile name="${metainf}/applet-viewer-opts.files" />
-				<excludesfile name="${metainf}/applet-core.files" />
-			</fileset>
-			<fileset dir="${src}">
-				<includesfile name="${metainf}/jchempaint.application.datafiles" />
-			</fileset>
-		</jar>
 		<jar destfile="${dist}/jar/jchempaint-applet-editor-opts.jar">
 			<fileset dir="${appjars.dir}">
 				<includesfile name="${metainf}/applet-editor-opts.files" />
@@ -33,12 +22,35 @@
 				<includesfile name="${metainf}/applet-viewer-opts.files" />
 			</fileset>
 		</jar>
+		<!-- this jar contains all resources in the resource directory which are not in one of the previously used lists -->
+		<jar jarfile="${dist}/jar/jchempaint-applet-resources.jar">
+			<fileset dir="${src}">
+				<includesfile name="${metainf}/jchempaint.application.datafiles" />
+				<excludesfile name="${metainf}/applet-editor-opts.files" />
+				<excludesfile name="${metainf}/applet-editor.files" />
+				<excludesfile name="${metainf}/applet-viewer-opts.files" />
+				<excludesfile name="${metainf}/applet-core.files" />
+			</fileset>
+		</jar>
+		<!-- the following jar contains all other classes and resources -->
+		<jar jarfile="${dist}/jar/jchempaint-applet-others.jar">
+			<fileset dir="${appjars.dir}">
+				<include name="**/*" />
+				<excludesfile name="${metainf}/applet-editor-opts.files" />
+				<excludesfile name="${metainf}/applet-editor.files" />
+				<excludesfile name="${metainf}/applet-viewer-opts.files" />
+				<excludesfile name="${metainf}/applet-core.files" />
+				<excludesfile name="${metainf}/jchempaint.application.datafiles" />
+			</fileset>
+		</jar>
+		<!-- the main jar file is packed from a list, but it must be packed as last file because it contains INDEX.LIST -->
 		<jar destfile="${dist}/jar/jchempaint-applet-core.jar" index="true">
 			<fileset dir="${appjars.dir}">
 				<includesfile name="${metainf}/applet-core.files" />
 			</fileset>
 			<indexjars>
 				<pathelement path="${dist}/jar/jchempaint-applet-others.jar" />
+				<pathelement path="${dist}/jar/jchempaint-applet-resources.jar" />
 				<pathelement path="${dist}/jar/jchempaint-applet-editor-opts.jar" />
 				<pathelement path="${dist}/jar/jchempaint-applet-editor.jar" />
 				<pathelement path="${dist}/jar/jchempaint-applet-viewer-opts.jar" />
@@ -51,7 +63,3 @@
 		</delete>
 	</target>
 </project>
-
-
-
-
