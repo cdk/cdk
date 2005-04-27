@@ -55,7 +55,7 @@ public class JChemPaintEditorApplet extends JApplet
 	public void init()
 	{
 		getContentPane().setLayout(new BorderLayout());
-		jcpep = new JChemPaintEditorPanel(new JChemPaintModel());
+		jcpep = new JChemPaintEditorPanel();
 		getContentPane().add(jcpep, BorderLayout.CENTER);
 	}
 	

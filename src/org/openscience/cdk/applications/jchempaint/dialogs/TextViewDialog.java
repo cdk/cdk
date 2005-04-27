@@ -87,11 +87,11 @@ public class TextViewDialog extends JDialog {
     public TextViewDialog(JFrame fr, String title, Dimension dim, boolean wrap,
                           int width, int height) {
         super(fr, title, true);
-        if (dim == null) {
+        /*if (dim == null) {
             this.dimension = new Dimension(width*10, height*15);
         } else {
             this.dimension = dim;
-        }
+        }*/
         
         textArea = new JTextArea(width,height);
         textArea.setEditable(false);
@@ -99,19 +99,14 @@ public class TextViewDialog extends JDialog {
             textArea.setLineWrap(wrap);
             textArea.setWrapStyleWord(true);
         }
-        JScrollPane scroller = new JScrollPane() {
-            public Dimension getPreferredSize() {
-                return dimension;
-            }
-            
-            public float getAlignmentX() {
-                return LEFT_ALIGNMENT;
-            }
-        };
+        JScrollPane scroller = new JScrollPane();
+	if (dim != null) scroller.setPreferredSize(dim);
+	else scroller.setPreferredSize(new Dimension(400,200));
+        //scroller.setAlignmentX(LEFT_ALIGMENT);
         scroller.getViewport().add(textArea);
         
         JPanel textViewer = new JPanel(new BorderLayout());
-        textViewer.setAlignmentX(LEFT_ALIGNMENT);
+        //textViewer.setAlignmentX(LEFT_ALIGNMENT);
         textViewer.add(scroller, BorderLayout.CENTER);
         
         JPanel buttonPanel = new JPanel();
