@@ -42,7 +42,6 @@ import org.openscience.cdk.applications.jchempaint.dialogs.InsertFromSmiles;
  */
 public class InsertSmilesAction extends JCPAction
 {
-
 	/**
 	 *  Description of the Method
 	 *
@@ -52,7 +51,7 @@ public class InsertSmilesAction extends JCPAction
 	{
 		logger.debug("Gonna show the InsertFromSmiles dialog...");
 		InsertFromSmiles ifs = new InsertFromSmiles(jcpPanel);
-		ifs.pack();
+		//ifs.pack();
 		ifs.show();
 		logger.debug("Should be visible now!...");
 	}

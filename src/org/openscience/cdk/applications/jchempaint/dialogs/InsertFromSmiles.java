@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -56,10 +56,10 @@ import org.openscience.cdk.applications.jchempaint.*;
  * @author     steinbeck
   *@created    22. April 2005
  */
-public class InsertFromSmiles extends JInternalFrame
+public class InsertFromSmiles extends JFrame
 {
 
-	JChemPaintPanel jcp;
+	JChemPaintPanel jcpPanel;
 	JTextField valueText;
 
 
@@ -68,10 +68,10 @@ public class InsertFromSmiles extends JInternalFrame
 	 *
 	 *@param  jcp  Description of the Parameter
 	 */
-	public InsertFromSmiles(JChemPaintPanel jcp)
+	public InsertFromSmiles(JChemPaintPanel jcpPanel)
 	{
-		super("Insert from SMILES", false, true);
-		this.jcp = jcp;
+		super("Insert from SMILES");
+		this.jcpPanel = jcpPanel;
 		getContentPane().setLayout(new BorderLayout());
 		JPanel southPanel = new JPanel();
 		JButton cancelButton = new JButton("Cancel");
@@ -87,12 +87,12 @@ public class InsertFromSmiles extends JInternalFrame
 		valueText.addActionListener(new OpenAction());
 		centerPanel.add(valueLabel);
 		centerPanel.add(valueText);
-
-		setSize(300, 500);
+		setSize(300,100);
 
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add("Center", centerPanel);
 		getContentPane().add("South", southPanel);
+		
 	}
 
 
@@ -164,16 +164,14 @@ public class InsertFromSmiles extends JInternalFrame
 				chemModel.setSetOfMolecules(som);
 				JChemPaintModel jcpm = new JChemPaintModel(chemModel);
 				jcpm.setTitle("Created from SMILES: " + SMILES);
-				// XXX needs fixing 
-				//JChemPaintFrame jcpf = jcp.getNewFrame(jcpm);
 				
-				//jcp.addAndShowJChemPaintFrame(jcpf);
-				//jcpf.show();
-				System.out.println("Should show a new JCPFrame windows now!");
+				JFrame jcpf = ((JChemPaintEditorPanel)jcpPanel).getNewFrame(jcpm);
+				jcpf.show();
+				jcpf.pack();
 				closeFrame();
 			} catch (InvalidSmilesException ise)
 			{
-				JOptionPane.showMessageDialog(jcp, "Invalid SMILES String.");
+				JOptionPane.showMessageDialog(jcpPanel, "Invalid SMILES String.");
 			}
 		}
 	}
