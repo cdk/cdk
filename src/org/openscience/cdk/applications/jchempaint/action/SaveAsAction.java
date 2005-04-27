@@ -53,6 +53,7 @@ import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilterInterface;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
@@ -192,6 +193,11 @@ public class SaveAsAction extends NewAction
 		}
 	}
 
+    private boolean askIOSettings() {
+        return JCPPropertyHandler.getInstance().getJCPProperties()
+            .getProperty("askForIOSettings", "true").equals("true");
+    }
+    
 
 	/**
 	 *  Description of the Method
@@ -204,7 +210,7 @@ public class SaveAsAction extends NewAction
 	{
 		logger.info("Saving the contents in a MDL molfile file...");
 		cow = new MDLWriter(new FileWriter(outFile));
-		if (cow != null)
+		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
@@ -225,7 +231,7 @@ public class SaveAsAction extends NewAction
 	{
 		logger.info("Saving the contents in a CML 2.0 file...");
 		cow = new CMLWriter(new FileWriter(outFile));
-		if (cow != null)
+		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
@@ -245,7 +251,7 @@ public class SaveAsAction extends NewAction
 	{
 		logger.info("Saving the contents in SMILES format...");
 		cow = new SMILESWriter(new FileWriter(outFile));
-		if (cow != null)
+		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
@@ -266,7 +272,7 @@ public class SaveAsAction extends NewAction
 	{
 		logger.info("Saving the contents as a CDK source code file...");
 		cow = new CDKSourceCodeWriter(new FileWriter(outFile));
-		if (cow != null)
+		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
@@ -281,7 +287,6 @@ public class SaveAsAction extends NewAction
 		}
 	}
 
-
 	/**
 	 *  Description of the Method
 	 *
@@ -293,7 +298,7 @@ public class SaveAsAction extends NewAction
 	{
 		logger.info("Saving the contents as a SVG file...");
 		cow = new SVGWriter(new FileWriter(outFile));
-		if (cow != null)
+		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
