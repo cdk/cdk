@@ -39,6 +39,7 @@ import org.openscience.cdk.ElectronContainer;
  *
  * @author      steinbeck
  * @cdk.created 2004-07-04
+ * @cdk.dictref blue-obelisk:calculateAdjecencyMatrix
  */
 public class AdjacencyMatrix implements GraphMatrix {
 

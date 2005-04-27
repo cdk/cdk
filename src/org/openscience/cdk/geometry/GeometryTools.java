@@ -384,6 +384,7 @@ public class GeometryTools {
 	 *@param  ac      AtomContainer for which the center of mass is calculated
 	 *@return         Description of the Return Value
 	 *@cdk.keyword    center of mass
+     * @cdk.dictref   blue-obelisk:calculate3DCenterOfMass
 	 */
 	public static Point3d get3DCentreOfMass(AtomContainer ac) {
 		double x = 0.0;

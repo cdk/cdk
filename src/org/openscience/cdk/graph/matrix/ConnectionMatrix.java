@@ -36,6 +36,7 @@ import org.openscience.cdk.ElectronContainer;
  *
  * @cdk.module  standard
  * @cdk.keyword connection matrix
+ * @cdk.dictref blue-obelisk:calculateConnectivityMatrix
  *
  * @author      steinbeck
  * @cdk.created 2004-07-04

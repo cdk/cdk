@@ -42,6 +42,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.keyword    rebonding
  * @cdk.keyword    bond, recalculation
+ * @cdk.dictref    blue-obelisk:rebondFrom3DCoordinates
  * 
  * @author  Miguel Howard
  * @cdk.created 2003-05-23
