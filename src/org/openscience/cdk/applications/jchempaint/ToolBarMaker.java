@@ -125,7 +125,7 @@ public class ToolBarMaker
 		{
 			astr = key;
 		}
-		JCPAction a = JCPAction.getAction(jcpp, astr);
+		JCPAction a = new JCPAction().getAction(jcpp, astr);
 		if (a != null)
 		{
 			b.setActionCommand(astr);

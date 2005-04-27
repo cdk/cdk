@@ -127,7 +127,7 @@ public class JChemPaintPopupMenu extends CDKPopupMenu
 			astr = cmd;
 		}
 		mi.setActionCommand(astr);
-		JCPAction a = JCPAction.getAction(jcpPanel, astr, true);
+		JCPAction a = new JCPAction().getAction(jcpPanel, astr, true);
 		if (a != null)
 		{
 			mi.addActionListener(a);

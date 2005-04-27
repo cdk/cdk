@@ -70,8 +70,8 @@ public class JCPAction extends AbstractAction
 	protected static LoggingTool logger = null;
 
 	// cache the actions
-	private static Hashtable actions = null;
-	private static Hashtable popupActions = null;
+	private Hashtable actions = null;
+	private Hashtable popupActions = null;
 
 	/**
 	 *  Description of the Field
@@ -266,7 +266,7 @@ public class JCPAction extends AbstractAction
 	 *@param  isPopupAction  Description of the Parameter
 	 *@return                The action value
 	 */
-	public static JCPAction getAction(JChemPaintPanel jcpPanel, String actionname, boolean isPopupAction)
+	public JCPAction getAction(JChemPaintPanel jcpPanel, String actionname, boolean isPopupAction)
 	{
 		// make sure logger and actions are instantiated
 		JCPAction dummy = new JCPAction(jcpPanel);
@@ -344,7 +344,7 @@ public class JCPAction extends AbstractAction
 	 *@param  actionname  Description of the Parameter
 	 *@return             The action value
 	 */
-	public static JCPAction getAction(JChemPaintPanel jcpPanel, String actionname)
+	public JCPAction getAction(JChemPaintPanel jcpPanel, String actionname)
 	{
 		return getAction(jcpPanel, actionname, false);
 	}
