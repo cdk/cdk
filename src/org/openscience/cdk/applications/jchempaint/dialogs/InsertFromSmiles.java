@@ -167,10 +167,27 @@ public class InsertFromSmiles extends JFrame
 				JChemPaintModel jcpm = new JChemPaintModel(chemModel);
 				jcpm.setTitle("Created from SMILES: " + SMILES);
 				
-				JFrame jcpf = JChemPaintEditorPanel.getNewFrame(jcpm);
-				jcpf.show();
-				jcpf.pack();
-				closeFrame();
+				//regarding an already existing structure open a new JChemPaintPanel or show structure in the actual one
+				if (jcpPanel.isEmbedded()) {
+					if (jcpPanel.showWarning()) {
+						jcpPanel.setJChemPaintModel(jcpm);
+						jcpPanel.repaint();
+						closeFrame();
+					}
+				}
+				else if (jcpPanel.getJChemPaintModel().getChemModel().getSetOfMolecules() == null) {
+					jcpPanel.setJChemPaintModel(jcpm);
+					jcpPanel.repaint();
+					closeFrame();
+				}
+				else {
+					JFrame jcpf = ((JChemPaintEditorPanel) jcpPanel).getNewFrame(jcpm);
+					jcpf.show();
+					jcpf.pack();
+					closeFrame();
+				}
+				
+
 			} catch (InvalidSmilesException ise)
 			{
 				JOptionPane.showMessageDialog(jcpPanel, "Invalid SMILES String.");
