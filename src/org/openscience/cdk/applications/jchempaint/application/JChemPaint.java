@@ -193,18 +193,6 @@ public class JChemPaint implements SwingConstants
 
 
 	/**
-	 *  Creates a new localized string that can be used as a title for the new
-	 *  frame.
-	 *
-	 *@return    The newFrameName value
-	 */
-	private String getNewFrameName()
-	{
-		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(1);
-	}
-
-
-	/**
 	 *  Gets the instance attribute of the JChemPaint class
 	 *
 	 *@return    The instance value

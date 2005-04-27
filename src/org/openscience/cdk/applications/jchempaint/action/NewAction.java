@@ -49,9 +49,12 @@ public class NewAction extends JCPAction {
      *@param  e  Description of the Parameter
      */
     public void actionPerformed(ActionEvent e) {
-	// XXX this needs fixing    
-        // JChemPaintFrame newFrame = jcpPanel.getEmptyFrameWithModel();
-        // newFrame.show();
+      if(jcpPanel.isEmbedded()){
+      }else{
+        JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
+        frame.show();
+        frame.pack();
+      }
     }
 }
 

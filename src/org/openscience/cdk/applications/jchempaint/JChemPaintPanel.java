@@ -126,7 +126,7 @@ public abstract class JChemPaintPanel
 	 */
 	public static String getNewFrameName()
 	{
-		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(1);
+		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(instances.size()+1);
 	}
 
 	/**
