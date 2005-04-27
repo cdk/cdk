@@ -79,7 +79,8 @@ public abstract class JChemPaintPanel
 	private FileFilter currentOpenFileFilter = null;
 	private FileFilter currentSaveFileFilter = null;
 	protected CDKPluginManager pluginManager = null;
-  private boolean isEmbedded=false;
+  private static boolean isEmbedded=false;
+  private static int numberOfInstances=0;
 	
 
 	/**
@@ -90,6 +91,7 @@ public abstract class JChemPaintPanel
   	logger = new LoggingTool(this);
 		jcpm = new JChemPaintModel();
 		setPreferredSize(new Dimension(600, 400));
+    numberOfInstances++;
 	}
 
 
@@ -421,6 +423,7 @@ public abstract class JChemPaintPanel
   
   public boolean clearWithWarning(){
     //FIXME i18n
+    //FIXME warning only if content
     int answer=JOptionPane.showConfirmDialog(this, "This would delete your current content. Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
     if(answer==JOptionPane.CANCEL_OPTION){
       return false;
@@ -428,6 +431,7 @@ public abstract class JChemPaintPanel
       if(answer==JOptionPane.YES_OPTION){
         new SaveAction().actionPerformed(null);
       }
+      //originally I wanted to put in a clear here, but this should be done by loading the new structure anyway?
       return true;
     }
   }
@@ -577,6 +581,30 @@ public abstract class JChemPaintPanel
 		sequence.addChemModel(getChemModel());
 		file.addChemSequence(sequence);
 		return file;
+	}
+
+
+	/**
+	 *  Action that will close JChemPaint.
+	 *
+	 *@author     steinbeck
+	 *@created    February 18, 2004
+	 */
+	public final static class AppCloser extends WindowAdapter
+	{
+
+		/**
+		 *  Terminates the currently running Java Virtual Machine. @ param e Window
+		 *  closing Event
+		 *
+		 *@param  e  Description of the Parameter
+		 */
+		public void windowClosing(WindowEvent e)
+		{
+      numberOfInstances--;
+      if(numberOfInstances==0 && !isEmbedded)
+        System.exit(0);
+		}
 	}
 }
 

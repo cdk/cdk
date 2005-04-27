@@ -185,29 +185,10 @@ public class JChemPaint implements SwingConstants
 	{
 		logger = new LoggingTool(this);
 		logger.dumpSystemProperties();
-		JFrame frame = getEmptyFrameWithModel();
+		JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
 		frame.show();
 		frame.pack();
 		logger.debug("End of JCP constructor");
-	}
-
-	/**
-	 *  Creates a new JFrame that owns a new JChemPaintModel and returns
-	 *  it. 
-	 *
-	 *@return    The new JFrame containing the JChemPaintEditorPanel
-	 */
-	public JFrame getEmptyFrameWithModel()
-	{
-		JChemPaintModel jcpm = new JChemPaintModel();
-		jcpm.setTitle(getNewFrameName());
-		jcpm.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
-		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
-		String version = self.getImplementationVersion();
-		jcpm.setSoftware("JChemPaint " + version);
-		jcpm.setGendate((Calendar.getInstance()).getTime().toString());
-		JFrame jcpf = getNewFrame(jcpm);
-		return jcpf;
 	}
 
 
@@ -220,70 +201,6 @@ public class JChemPaint implements SwingConstants
 	private String getNewFrameName()
 	{
 		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(1);
-	}
-
-
-	/**
-	 *  Creates a new JChemPaintFrame and assigns a given Model to it. Use
-	 *  addAndShowJChemPaintFrame to actually add it to the desktopPane
-	 *
-	 *@param  jcpm  The model to be assigned to the new frame.
-	 *@return       The new JChemPaintFrame with its new JChemPaintModel
-	 */
-	public JFrame getNewFrame(JChemPaintModel jcpm)
-	{
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new JChemPaintEditorPanel(jcpm));
-		frame.setTitle(jcpm.getTitle());
-		return frame;
-	}
-
-
-
-	/**
-	 *  Description of the Method
-	 */
-	public void exitJChemPaint()
-	{
-		// first shut down the plugins
-		// close JVM
-		System.exit(0);
-	}
-
-
-	/**
-	 *  Action that will close JChemPaint.
-	 *
-	 *@author     steinbeck
-	 *@created    February 18, 2004
-	 */
-	public final static class AppCloser extends WindowAdapter
-	{
-
-		private static JChemPaint jcp;
-
-
-		/**
-		 *  Constructor for the AppCloser object
-		 *
-		 *@param  jcp  Description of the Parameter
-		 */
-		public AppCloser(JChemPaint jcp)
-		{
-			this.jcp = jcp;
-		}
-
-
-		/**
-		 *  Terminates the currently running Java Virtual Machine. @ param e Window
-		 *  closing Event
-		 *
-		 *@param  e  Description of the Parameter
-		 */
-		public void windowClosing(WindowEvent e)
-		{
-			jcp.exitJChemPaint();
-		}
 	}
 
 

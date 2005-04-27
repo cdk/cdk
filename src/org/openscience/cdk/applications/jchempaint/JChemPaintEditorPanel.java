@@ -207,6 +207,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public static JFrame getNewFrame(JChemPaintModel jcpm)
 	{
 		JFrame frame = new JFrame();
+    frame.addWindowListener(new JChemPaintPanel.AppCloser());
 		frame.getContentPane().add(new JChemPaintEditorPanel(jcpm));
 		frame.setTitle(jcpm.getTitle());
 		return frame;
