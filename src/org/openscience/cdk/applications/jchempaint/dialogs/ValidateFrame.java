@@ -108,10 +108,9 @@ public class ValidateFrame extends JFrame  {
         tabbedPane.add("Warnings", warningTreePanel);
         tabbedPane.add("CDK Errors", cdkErrorTreePanel);
         
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add("North", tabbedPane);
-        getContentPane().add("Center", detailPanel);
-        getContentPane().add("South", southPanel);
+        getContentPane().add(tabbedPane, BorderLayout.NORTH);
+        getContentPane().add(detailPanel, BorderLayout.CENTER);
+        getContentPane().add(southPanel, BorderLayout.SOUTH);
         validate();
     }
     
