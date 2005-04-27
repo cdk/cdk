@@ -68,16 +68,48 @@ public class SaveAction extends SaveAsAction
 {
 
 	/**
-	 *  Opens a dialog frame and manages the saving of a file.
+	 *  Saves a file or calls save as, when current content was not yet saved.
 	 *
 	 *@param  event  Description of the Parameter
 	 */
 	public void actionPerformed(ActionEvent event)
 	{
-
-		String error = "Not implemented yet.";
-		JOptionPane.showMessageDialog(jcpPanel, error);
+    if(jcpPanel.isAlreadyAFile()==null){
+      new SaveAsAction(jcpPanel,false).actionPerformed(event);
+    }else{
+      try{
+        ChemModel model=jcpPanel.getJChemPaintModel().getChemModel();
+        File outFile=jcpPanel.isAlreadyAFile();
+        if (type.equals(JCPSaveFileFilter.mol))
+        {
+          saveAsMol(model, outFile);
+        } else if (type.equals(JCPSaveFileFilter.cml))
+        {
+          saveAsCML2(model, outFile);
+        } else if (type.equals(JCPSaveFileFilter.smiles))
+        {
+          saveAsSMILES(model, outFile);
+        } else if (type.equals(JCPSaveFileFilter.svg))
+        {
+          saveAsSVG(model, outFile);
+        } else if (type.equals(JCPSaveFileFilter.cdk))
+        {
+          saveAsCDKSourceCode(model, outFile);
+        } else
+        {
+          String error = "Cannot save file in this format: " + type;
+          logger.error(error);
+          JOptionPane.showMessageDialog(jcpPanel, error);
+          return;
+        }
+        jcpPanel.getJChemPaintModel().resetIsModified();
+      }catch(Exception ex){
+					String error = "Error while writing file: " + ex.getMessage();
+					logger.error(error);
+					logger.debug(ex);
+					JOptionPane.showMessageDialog(jcpPanel, error);
+      }
+    }
 	}
-
 }
 

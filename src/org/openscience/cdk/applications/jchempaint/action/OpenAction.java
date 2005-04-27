@@ -56,6 +56,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
@@ -303,9 +304,11 @@ public class OpenAction extends JCPAction
         //FIXME not working
         jcpPanel.setJChemPaintModel(jcpm);
         jcpPanel.repaint();
+        jcpPanel.setIsAlreadyAFile(input);
       }
     }else{
       JFrame jcpf = ((JChemPaintEditorPanel)jcpPanel).getNewFrame(jcpm);
+      ((JChemPaintPanel)jcpf.getContentPane().getComponents()[0]).setIsAlreadyAFile(input);
       jcpf.show();
       jcpf.pack();
     }

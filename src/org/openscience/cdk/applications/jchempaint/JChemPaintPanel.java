@@ -81,6 +81,7 @@ public abstract class JChemPaintPanel
 	protected CDKPluginManager pluginManager = null;
   private static boolean isEmbedded=false;
   protected static Vector instances=new Vector();
+  protected File isAlreadyAFile=null;
 	
 
 	/**
@@ -116,6 +117,15 @@ public abstract class JChemPaintPanel
   
   public boolean isEmbedded(){
     return isEmbedded;
+  }
+  
+  
+  public void setIsAlreadyAFile(File value){
+    isAlreadyAFile=value;
+  }
+  
+  public File isAlreadyAFile(){
+    return isAlreadyAFile;
   }
 
 	/**
@@ -425,7 +435,7 @@ public abstract class JChemPaintPanel
   
   public boolean showWarning(){
     //FIXME i18n
-    if(jcpm.getChemModel().getSetOfMolecules()!=null && jcpm.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount()>0){
+    if(jcpm.isModified()){
       int answer=JOptionPane.showConfirmDialog(this, "This would delete the current content of "+jcpm.getTitle()+". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
       if(answer==JOptionPane.CANCEL_OPTION){
         return false;

@@ -53,6 +53,7 @@ import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilterInterface;
@@ -66,14 +67,35 @@ import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
  * @author     steinbeck
  * @created    22. April 2005
  */
-public class SaveAsAction extends NewAction
+public class SaveAsAction extends JCPAction
 {
 
 	/**
 	 *  Description of the Field
 	 */
 	protected ChemObjectWriter cow;
+  protected static String type = null;
 	private FileFilter currentFilter = null;
+
+
+	/**
+	 *  Constructor for the SaveAsAction object
+	 */
+	public SaveAsAction()
+	{
+		super();
+	}
+
+	/**
+	 *  Constructor for the SaveAsAction object
+	 *
+	 *@param  jcpPanel       Description of the Parameter
+	 *@param  isPopupAction  Description of the Parameter
+	 */
+  public SaveAsAction(JChemPaintPanel jcpPanel, boolean isPopupAction)
+	{
+		super(jcpPanel, "", isPopupAction);
+	}
 
 
 	/**
@@ -105,7 +127,6 @@ public class SaveAsAction extends NewAction
 	{
 
 		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
-
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(jcpPanel.getCurrentWorkDirectory());
 		JCPSaveFileFilter.addChoosableFileFilters(chooser);
@@ -121,8 +142,7 @@ public class SaveAsAction extends NewAction
 		chooser.setFileView(new JCPFileView());
 
 		int returnVal = chooser.showSaveDialog(jcpPanel);
-		String type = null;
-
+		
 		ChemObject object = getSource(event);
 		currentFilter = chooser.getFileFilter();
 		if (returnVal == JFileChooser.APPROVE_OPTION)
@@ -190,6 +210,8 @@ public class SaveAsAction extends NewAction
 			}
 			jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
 			// XXX needs fix jcpPanel.setCurrentSaveFileFilter(chooser.getFileFilter());
+      jcpPanel.setIsAlreadyAFile(outFile);
+      jcpPanel.getJChemPaintModel().setTitle(outFile.getName());      
 		}
 	}
 
@@ -206,7 +228,7 @@ public class SaveAsAction extends NewAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	private void saveAsMol(ChemModel model, File outFile) throws Exception
+	protected void saveAsMol(ChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in a MDL molfile file...");
 		cow = new MDLWriter(new FileWriter(outFile));
@@ -227,7 +249,7 @@ public class SaveAsAction extends NewAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	private void saveAsCML2(ChemObject object, File outFile) throws Exception
+	protected void saveAsCML2(ChemObject object, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in a CML 2.0 file...");
 		cow = new CMLWriter(new FileWriter(outFile));
@@ -247,7 +269,7 @@ public class SaveAsAction extends NewAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	private void saveAsSMILES(ChemModel model, File outFile) throws Exception
+	protected void saveAsSMILES(ChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in SMILES format...");
 		cow = new SMILESWriter(new FileWriter(outFile));
@@ -268,7 +290,7 @@ public class SaveAsAction extends NewAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	private void saveAsCDKSourceCode(ChemModel model, File outFile) throws Exception
+	protected void saveAsCDKSourceCode(ChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents as a CDK source code file...");
 		cow = new CDKSourceCodeWriter(new FileWriter(outFile));
