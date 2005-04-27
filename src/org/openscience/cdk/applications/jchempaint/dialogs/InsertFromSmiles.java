@@ -87,11 +87,13 @@ public class InsertFromSmiles extends JFrame
 		valueText.addActionListener(new OpenAction());
 		centerPanel.add(valueLabel);
 		centerPanel.add(valueText);
-		setSize(300,100);
+		//setSize(300,100);
 
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add("Center", centerPanel);
 		getContentPane().add("South", southPanel);
+		pack();
+		
 		
 	}
 

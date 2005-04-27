@@ -58,6 +58,7 @@ public class LicenseDialog extends JFrame {
     
     public void doInit(){
         Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
+	System.out.println(self);
         String version = self.getImplementationVersion();
 
         String s1 = 
