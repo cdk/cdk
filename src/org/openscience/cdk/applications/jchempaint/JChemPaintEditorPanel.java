@@ -108,7 +108,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			logger = new LoggingTool(this);
 		}
 		this.jcpm = model;
-		System.out.println("***** model is " + model + " *****");
 		//setupIfModelNotEmpty();
 		//inputAdapter = new PopupController2D(jcpm.getChemModel(), jcpm.getRendererModel(),jcpm.getControllerModel());
 		registerModel(jcpm);
@@ -159,7 +158,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		model.getControllerModel());
 		model.getRendererModel().addCDKChangeListener(this);
 		inputAdapter.addCDKChangeListener(model);
-
+		drawingPanel.setJChemPaintModel(model);
 		drawingPanel.addMouseListener(inputAdapter);
 		drawingPanel.addMouseMotionListener(inputAdapter);
 	}

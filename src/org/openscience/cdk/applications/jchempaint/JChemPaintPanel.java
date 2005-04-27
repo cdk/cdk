@@ -210,17 +210,6 @@ public abstract class JChemPaintPanel
 
 
 	/**
-	 *  Gets the instances attribute of the JChemPaintPanel object
-	 *
-	 *@return    The instances value
-	 */
-	public Vector getInstances()
-	{
-		return instances;
-	}
-
-
-	/**
 	 *  Sets the embedded attribute of the JChemPaintPanel object
 	 */
 	public void setEmbedded()
@@ -252,19 +241,7 @@ public abstract class JChemPaintPanel
     return instances;
   }
   
-  public void setEmbedded(){
-    isEmbedded=true;
-  }
-  
-  public void setNotEmbedded(){
-    isEmbedded=false;
-  }
-  
-  
-  public boolean isEmbedded(){
-    return isEmbedded;
-  }
-  
+ 
   
   public void setIsAlreadyAFile(File value){
     isAlreadyAFile=value;
@@ -654,8 +631,6 @@ public abstract class JChemPaintPanel
 		}
 	}
 
-
-
 	/**
 	 *  Description of the Method
 	 *
@@ -686,22 +661,6 @@ public abstract class JChemPaintPanel
 
   
   
-  public boolean showWarning(){
-    //FIXME i18n
-    if(jcpm.isModified()){
-      int answer=JOptionPane.showConfirmDialog(this, "This would delete the current content of "+jcpm.getTitle()+". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-      if(answer==JOptionPane.CANCEL_OPTION){
-        return false;
-      }else{
-        if(answer==JOptionPane.YES_OPTION){
-          new SaveAction().actionPerformed(null);
-        }
-        return true;
-      }
-    }else{
-      return true;
-    }
-  }
 
 	/**
 	 *  Description of the Method

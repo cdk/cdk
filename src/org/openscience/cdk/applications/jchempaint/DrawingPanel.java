@@ -43,7 +43,7 @@ import org.openscience.cdk.renderer.*;
  */
 public class DrawingPanel extends JPanel
 {
-	private JChemPaintModel jcpm;
+	private JChemPaintModel jchemPaintModel;
 	private Renderer2D r2d;
 	/**
 	 *  Description of the Field
@@ -56,14 +56,20 @@ public class DrawingPanel extends JPanel
 	 *
 	 *@param  jcpm  Description of the Parameter
 	 */
-	public DrawingPanel(JChemPaintModel jcpm)
+	public DrawingPanel(JChemPaintModel model)
 	{
 		super();
-		this.jcpm = jcpm;
-		r2d = new Renderer2D(jcpm.getRendererModel());
+		this.jchemPaintModel = model;
+		r2d = new Renderer2D(jchemPaintModel.getRendererModel());
 	}
 
-
+	void setJChemPaintModel(JChemPaintModel model)
+	{
+		this.jchemPaintModel = model;
+		r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
+			
+	}
+	
 	/**
 	 *  Draws bonds, atoms; takes care of highlighting.
 	 *
@@ -75,14 +81,12 @@ public class DrawingPanel extends JPanel
 		drawingNow = true;
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
-		Renderer2DModel model = jcpm.getRendererModel();
+		Renderer2DModel model = jchemPaintModel.getRendererModel();
 		if (model.getUseAntiAliasing())
 		{
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
-		System.out.println("ReallyPaintPanel->before r2D call");
-		r2d.paintChemModel(jcpm.getChemModel(), g2d);
-		System.out.println("ReallyPaintPanel->after r2D call");
+		r2d.paintChemModel(jchemPaintModel.getChemModel(), g2d);
 		drawingNow = false;
 	}
 
@@ -94,7 +98,7 @@ public class DrawingPanel extends JPanel
 	 */
 	public Dimension getPreferredSize()
 	{
-		return jcpm.getRendererModel().getBackgroundDimension();
+		return jchemPaintModel.getRendererModel().getBackgroundDimension();
 	}
 
 }
