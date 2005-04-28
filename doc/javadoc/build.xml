@@ -51,6 +51,19 @@
         </javadoc>
     </target>
 
+    <target name="dictref.index" id="dictref.index" depends="compileDoclets">
+        <javadoc private="false" public="true">
+            <classpath refid="project.class.path" />
+
+            <doclet name="MakeDictionaryIndexDoclet" path="."/>
+
+            <packageset dir="../../src/">
+              <include name="org/openscience/cdk/**"/>
+              <exclude name="org/openscience/cdk/test/**"/>
+            </packageset>
+        </javadoc>
+    </target>
+
     <target name="classes.mod" id="classes.mod" depends="compileDoclets">
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
