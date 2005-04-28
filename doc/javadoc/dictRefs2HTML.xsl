@@ -20,10 +20,6 @@
 
   <xsl:template match="/">
 <div><div>
-<h2>Dictionary References</h2>
-</div></div>
-
-<div><div>
 <h3>Blue Obelisk Chemoinformatics Dictionary</h3>
 </div></div>
 <table>
