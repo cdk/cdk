@@ -51,7 +51,7 @@ import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
 public class ChemAction extends JCPAction
 {
 
-	static JComponent lastAction;
+	JComponent lastAction;
 
 	private PTDialog dialog = null;
 

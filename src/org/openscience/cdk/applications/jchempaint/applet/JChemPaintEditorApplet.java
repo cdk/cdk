@@ -56,6 +56,8 @@ public class JChemPaintEditorApplet extends JApplet
 	{
 		getContentPane().setLayout(new BorderLayout());
 		jcpep = new JChemPaintEditorPanel();
+    //embedded means that additional instances can't be created, which is needed for applet as well
+    jcpep.setEmbedded();
 		getContentPane().add(jcpep, BorderLayout.CENTER);
 	}
 	

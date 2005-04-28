@@ -71,8 +71,6 @@ import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 public class OpenAction extends JCPAction {
 
 	private ChemFile chemFile;
-	private ChemSequence chemSequence;
-	private ChemModel chemModel;
 	private FileFilter currentFilter = null;
 	private FileFilter currentOpenFileFilter = null;
 	private FileFilter currentSaveFileFilter = null;
@@ -116,7 +114,7 @@ public class OpenAction extends JCPAction {
 			 *  Have the ReaderFactory determine the file format
 			 */
 			try {
-				cor = getChemObjectReader(inFile);
+				cor = jcpPanel.getChemObjectReader(new FileReader(inFile));
 			} catch (IOException ioExc) {
 				logger.warn("IOException while determining file format.");
 				logger.debug(ioExc);
@@ -167,7 +165,7 @@ public class OpenAction extends JCPAction {
 				try {
 					chemFile = (ChemFile) cor.read((ChemObject) new ChemFile());
 					if (chemFile != null) {
-						processChemFile(chemFile, inFile);
+						jcpPanel.processChemFile(chemFile);
 						return;
 					}
 					else {
@@ -189,8 +187,12 @@ public class OpenAction extends JCPAction {
 				try {
 					chemModel = (ChemModel) cor.read((ChemObject) new ChemModel());
 					if (chemModel != null) {
-						processChemModel(chemModel, inFile);
-						return;
+						jcpPanel.processChemModel(chemModel);
+            //The following do apply eithet to the existing or the new frame
+            jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
+						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);
+            ((JFrame)jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());
+            return;
 					}
 					else {
 						logger.warn("The object chemModel was empty unexpectedly!");
@@ -209,102 +211,5 @@ public class OpenAction extends JCPAction {
 			}
 		}
 	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  chemFile  Description of the Parameter
-	 * @param  input     Description of the Parameter
-	 */
-	private void processChemFile(ChemFile chemFile, File input) {
-		logger.info("Information read from file:");
-
-		int chemSequenceCount = chemFile.getChemSequenceCount();
-		logger.info("  # sequences: ", chemSequenceCount);
-
-		for (int i = 0; i < chemSequenceCount; i++) {
-			chemSequence = chemFile.getChemSequence(i);
-
-			int chemModelCount = chemSequence.getChemModelCount();
-			logger.info("  # model in seq(" + i + "): ", chemModelCount);
-
-			for (int j = 0; j < chemModelCount; j++) {
-				chemModel = chemSequence.getChemModel(j);
-				processChemModel(chemModel, input);
-			}
-		}
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  chemModel  Description of the Parameter
-	 * @param  input      Description of the Parameter
-	 */
-	private void processChemModel(ChemModel chemModel, File input) {
-		// check for bonds
-		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
-			String error = "Model does not have bonds. Cannot depict contents.";
-			logger.warn(error);
-			JOptionPane.showMessageDialog(jcpPanel, error);
-			return;
-		}
-
-		// check for coordinates
-		if (!(GeometryTools.has2DCoordinates(ChemModelManipulator.getAllInOneContainer(chemModel)))) {
-
-			String error = "Model does not have coordinates. Cannot open file.";
-			logger.warn(error);
-
-			JOptionPane.showMessageDialog(jcpPanel, error);
-			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
-			frame.pack();
-			frame.show();
-			return;
-		}
-		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
-		jcpm.setTitle(input.getName());
-
-		if (jcpPanel.isEmbedded()) {
-			if (jcpPanel.showWarning()) {
-				jcpPanel.setJChemPaintModel(jcpm);
-				jcpPanel.repaint();
-				jcpPanel.setIsAlreadyAFile(input);
-			}
-		}
-		else if (jcpPanel.getJChemPaintModel().getChemModel().getSetOfMolecules() == null) {
-			jcpPanel.setJChemPaintModel(jcpm);
-			jcpPanel.repaint();
-			jcpPanel.setIsAlreadyAFile(input);
-		}
-		else {
-			JFrame jcpf = ((JChemPaintEditorPanel) jcpPanel).getNewFrame(jcpm);
-			((JChemPaintPanel) jcpf.getContentPane().getComponents()[0]).setIsAlreadyAFile(input);
-			jcpf.show();
-			jcpf.pack();
-		}
-
-	}
-
-
-	/**
-	 *  Gets the chemObjectReader attribute of the OpenAction object
-	 *
-	 * @param  file             Description of the Parameter
-	 * @return                  The chemObjectReader value
-	 * @exception  IOException  Description of the Exception
-	 */
-	private ChemObjectReader getChemObjectReader(File file) throws IOException {
-		Reader fileReader = new FileReader(file);
-		ReaderFactory factory = new ReaderFactory();
-		ChemObjectReader reader = factory.createReader(fileReader);
-		if (reader != null) {
-			reader.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
-		}
-		return reader;
-	}
-
 }
 
