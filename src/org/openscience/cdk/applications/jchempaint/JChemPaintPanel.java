@@ -601,7 +601,7 @@ public abstract class JChemPaintPanel
 		//FIXME i18n
 		if (jchemPaintModel.isModified())
 		{
-			int answer = JOptionPane.showConfirmDialog(this, "This would delete the current content of " + jchemPaintModel.getTitle() + ". Would you like to save it?", "Unsaved data", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+			int answer = JOptionPane.showConfirmDialog(this, jchemPaintModel.getTitle() + " " + JCPLocalizationHandler.getInstance().getString("warning"), JCPLocalizationHandler.getInstance().getString("warningheader"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (answer == JOptionPane.CANCEL_OPTION)
 			{
 				return false;
@@ -761,8 +761,6 @@ public abstract class JChemPaintPanel
 			logger.warn(error);
 
 			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
-			// XXX needs fixing
-			//JChemPaint.getInstance().add(frame);
 			frame.pack();
 			frame.show();
 			frame.moveToFront();
@@ -800,7 +798,7 @@ public abstract class JChemPaintPanel
 
 
 	/**
-	 *  Action that will close JChemPaint.
+	 *  Class for closing jcp
 	 *
 	 *@author     steinbeck
 	 *@created    February 18, 2004
@@ -809,8 +807,7 @@ public abstract class JChemPaintPanel
 	{
 
 		/**
-		 *  Terminates the currently running Java Virtual Machine. @ param e Window
-		 *  closing Event
+		 *  closing Event. Shows a warning if this window has unsaved data and terminates jvm, if last window.
 		 *
 		 *@param  e  Description of the Parameter
 		 */
@@ -834,7 +831,7 @@ public abstract class JChemPaintPanel
 
 
 	/**
-	 *  Description of the Method
+	 *  Closes all currently opened JCP instances.
 	 */
 	public static void closeAllInstances()
 	{
@@ -842,6 +839,8 @@ public abstract class JChemPaintPanel
 		while (it.hasNext())
 		{
 			JFrame frame = (JFrame) it.next();
+      WindowListener[] wls = (WindowListener[])(frame.getListeners(WindowListener.class));
+      wls[0].windowClosing(new WindowEvent(frame,12));
 			frame.setVisible(false);
 			frame.dispose();
 		}
