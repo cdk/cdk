@@ -166,6 +166,11 @@ public class OpenAction extends JCPAction {
 					chemFile = (ChemFile) cor.read((ChemObject) new ChemFile());
 					if (chemFile != null) {
 						jcpPanel.processChemFile(chemFile);
+						//The following do apply either to the existing or the new frame
+						
+						jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
+						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);
+						((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());
 						return;
 					}
 					else {
@@ -188,11 +193,12 @@ public class OpenAction extends JCPAction {
 					chemModel = (ChemModel) cor.read((ChemObject) new ChemModel());
 					if (chemModel != null) {
 						jcpPanel.processChemModel(chemModel);
-            //The following do apply eithet to the existing or the new frame
-            jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
+						//The following do apply either to the existing or the new frame
+						
+						jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
 						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);
-            ((JFrame)jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());
-            return;
+						((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());
+						return;
 					}
 					else {
 						logger.warn("The object chemModel was empty unexpectedly!");

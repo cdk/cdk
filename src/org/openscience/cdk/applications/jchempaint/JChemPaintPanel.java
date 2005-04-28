@@ -109,12 +109,12 @@ public abstract class JChemPaintPanel
 		drawingPanel.setBackground(Color.white);
 		JScrollPane scrollPane = new JScrollPane(drawingPanel);
 		
-		drawingPanel.setPreferredSize(new Dimension(800, 1000));
 		mainContainer.add(scrollPane, BorderLayout.CENTER);
 
 		add(mainContainer, BorderLayout.CENTER);
 		customizeView();
 		setPreferredSize(new Dimension(600, 400));
+		drawingPanel.setPreferredSize(this.getSize());
 	}
   
   
@@ -460,6 +460,7 @@ public abstract class JChemPaintPanel
 	 */
 	public void setJChemPaintModel(JChemPaintModel model)
 	{
+		lastUsedJCPP=this;
 		this.jchemPaintModel = model;
 		drawingPanel.setJChemPaintModel(model);
 	}
@@ -672,7 +673,7 @@ public abstract class JChemPaintPanel
 			return;
 		}
 		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
-    lastUsedJCPP=this;
+		lastUsedJCPP=this;
 		if (isEmbedded()) {
 			if (showWarning()) {
 				setJChemPaintModel(jcpm);
@@ -685,7 +686,7 @@ public abstract class JChemPaintPanel
 			JFrame jcpf = ((JChemPaintEditorPanel) this).getNewFrame(jcpm);
 			jcpf.show();
 			jcpf.pack();
-      lastUsedJCPP=(JChemPaintPanel) jcpf.getContentPane().getComponents()[0];
+			lastUsedJCPP=(JChemPaintPanel) jcpf.getContentPane().getComponents()[0];
 		}
 	}
 

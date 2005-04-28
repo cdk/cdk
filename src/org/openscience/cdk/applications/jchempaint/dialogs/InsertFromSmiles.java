@@ -46,6 +46,10 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import org.openscience.cdk.applications.jchempaint.*;
 
@@ -93,8 +97,6 @@ public class InsertFromSmiles extends JFrame
 		getContentPane().add("Center", centerPanel);
 		getContentPane().add("South", southPanel);
 		pack();
-		
-		
 	}
 
 
@@ -145,14 +147,13 @@ public class InsertFromSmiles extends JFrame
 				String SMILES = valueText.getText();
 				SmilesParser sp = new SmilesParser();
 				Molecule m = sp.parseSmiles(SMILES);
-				;
-
+				
 				// ok, now generate 2D coordinates
 				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 				try
 				{
 					sdg.setMolecule(m);
-					sdg.generateCoordinates(new Vector2d(0, 1));
+					sdg.generateCoordinates(new Vector2d(0,1));
 					m = sdg.getMolecule();
 				} catch (Exception exc)
 				{
@@ -165,27 +166,21 @@ public class InsertFromSmiles extends JFrame
 				ChemModel chemModel = new ChemModel();
 				chemModel.setSetOfMolecules(som);
 				JChemPaintModel jcpm = new JChemPaintModel(chemModel);
-				jcpm.setTitle("Created from SMILES: " + SMILES);
 				
-				//regarding an already existing structure open a new JChemPaintPanel or show structure in the actual one
-				if (jcpPanel.isEmbedded()) {
-					if (jcpPanel.showWarning()) {
-						jcpPanel.setJChemPaintModel(jcpm);
-						jcpPanel.repaint();
-						closeFrame();
-					}
-				}
-				else if (jcpPanel.getJChemPaintModel().getChemModel().getSetOfMolecules() == null) {
-					jcpPanel.setJChemPaintModel(jcpm);
-					jcpPanel.repaint();
-					closeFrame();
-				}
-				else {
-					JFrame jcpf = ((JChemPaintEditorPanel) jcpPanel).getNewFrame(jcpm);
-					jcpf.show();
-					jcpf.pack();
-					closeFrame();
-				}
+				//scale and center the structure in DrawingPanel
+				Renderer2DModel rendererModel = jcpm.getRendererModel();
+				AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
+				GeometryTools.translateAllPositive(ac);
+				double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
+				GeometryTools.scaleMolecule(ac, scaleFactor);
+				GeometryTools.center(ac, jcpPanel.getSize());
+				
+				jcpPanel.processChemModel(chemModel);
+				String title = "Created from SMILES: " + SMILES;
+				jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(title);
+				((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(title);
+				
+				closeFrame();
 				
 
 			} catch (InvalidSmilesException ise)
