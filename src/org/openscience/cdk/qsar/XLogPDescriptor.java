@@ -63,6 +63,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
+ * @cdk.dictref qsar-descriptors:xlogP
  */
 public class XLogPDescriptor implements Descriptor {
     

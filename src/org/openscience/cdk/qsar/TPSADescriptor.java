@@ -60,8 +60,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:tpsa
  */
-
 public class TPSADescriptor implements Descriptor {
 	private boolean checkAromaticity = false;
 	private static HashMap map;

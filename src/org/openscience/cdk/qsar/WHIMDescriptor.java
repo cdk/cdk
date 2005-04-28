@@ -97,6 +97,7 @@ import Jama.EigenvalueDecomposition;
  *
  * @cdk.module qsar
  * @cdk.set    qsar-descriptors
+ * @cdk.dictref qsar-descriptors:WHIM
  */
 public class WHIMDescriptor implements Descriptor {
 

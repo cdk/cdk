@@ -43,6 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created 2004-11-13
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:bpol
  */
 public class BPolDescriptor implements Descriptor {
     private LoggingTool logger;

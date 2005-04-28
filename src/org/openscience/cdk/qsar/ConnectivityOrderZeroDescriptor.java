@@ -40,6 +40,7 @@ import org.openscience.cdk.qsar.result.*;
  * @cdk.created 2004-11-03
  * @cdk.module	qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:chi0
  */
 public class ConnectivityOrderZeroDescriptor implements Descriptor {
 

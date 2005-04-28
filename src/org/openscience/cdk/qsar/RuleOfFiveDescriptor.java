@@ -58,6 +58,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:lipinskifailures
  */
 public class RuleOfFiveDescriptor implements Descriptor {
 	private boolean checkAromaticity = false;

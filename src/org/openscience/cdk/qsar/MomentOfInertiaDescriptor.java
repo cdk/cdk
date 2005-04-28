@@ -62,6 +62,7 @@ import Jama.EigenvalueDecomposition;
  *
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:momentOfInertia
  */
 public class MomentOfInertiaDescriptor implements Descriptor {
     

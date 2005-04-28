@@ -50,6 +50,7 @@ import java.util.ArrayList;
  * @cdk.created 2004-11-03
  * @cdk.module	qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:chi1v
  */
 public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 
@@ -76,7 +77,7 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi0v",
+            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi1v",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");

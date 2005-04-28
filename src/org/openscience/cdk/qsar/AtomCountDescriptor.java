@@ -59,6 +59,7 @@ import java.util.Hashtable;
  * @cdk.created 2004-11-13
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:atomCount
  */
 public class AtomCountDescriptor implements Descriptor {
 

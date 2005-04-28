@@ -30,12 +30,13 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
 
 /**
- *   Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
+ * Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:zagrebIndex
  */
 public class ZagrebIndexDescriptor implements Descriptor {
 

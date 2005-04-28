@@ -62,6 +62,7 @@ import javax.vecmath.*;
  *@cdk.created    2004-11-13
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
+ * @cdk.dictref qsar-descriptors:distanceToAtom
  */
 public class DistanceToAtomDescriptor implements Descriptor {
 

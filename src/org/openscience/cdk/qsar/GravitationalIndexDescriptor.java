@@ -59,6 +59,7 @@ import java.util.Vector;
  * @cdk.created     2004-11-23
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:gravitationalIndex
  */
 public class GravitationalIndexDescriptor implements Descriptor {
     

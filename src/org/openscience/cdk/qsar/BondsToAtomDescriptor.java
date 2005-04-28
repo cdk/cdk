@@ -60,6 +60,7 @@ import org.openscience.cdk.graph.matrix.*;
  * @cdk.created    2004-11-13
  * @cdk.module     qsar
  * @cdk.set        qsar-descriptors
+ * @cdk.dictref    qsar-descriptors:bondsToAtom
  */
 public class BondsToAtomDescriptor implements Descriptor {
 

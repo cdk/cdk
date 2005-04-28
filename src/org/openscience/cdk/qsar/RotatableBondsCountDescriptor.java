@@ -58,6 +58,7 @@ import java.util.Hashtable;
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:rotatableBondsCount
  */
 public class RotatableBondsCountDescriptor implements Descriptor {
 	private boolean includeTerminals = false;

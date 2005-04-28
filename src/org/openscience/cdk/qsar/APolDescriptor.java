@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created 2004-11-13
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:apol
  */
 public class APolDescriptor implements Descriptor {
 

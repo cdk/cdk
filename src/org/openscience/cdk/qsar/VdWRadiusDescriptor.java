@@ -55,6 +55,7 @@ import java.io.*;
  * @cdk.created    2004-11-13
  * @cdk.module     qsar
  * @cdk.set        qsar-descriptors
+ * @cdk.dictref qsar-descriptors:vdwradius
  */
 public class VdWRadiusDescriptor implements Descriptor {
 

@@ -39,6 +39,7 @@ import java.lang.Math;
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:vAdjMa
  */
 public class VAdjMaDescriptor implements Descriptor {
 

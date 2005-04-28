@@ -60,6 +60,7 @@ import java.util.Hashtable;
  * @cdk.created 2004-11-13
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:weight
  */
 public class WeightDescriptor implements Descriptor {
 

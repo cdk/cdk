@@ -42,6 +42,7 @@ import java.util.ArrayList;
  * @cdk.created 2004-11-03
  * @cdk.module	qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:chi1
  */
 public class ConnectivityOrderOneDescriptor implements Descriptor {
 

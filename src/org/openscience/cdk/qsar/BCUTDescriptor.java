@@ -94,8 +94,8 @@ import Jama.EigenvalueDecomposition;
  *
  * @cdk.module qsar
  * @cdk.set    qsar-descriptors
+ * @cdk.dictref qsar-descriptors:BCUT
  */
-
 public class BCUTDescriptor implements Descriptor {
 
     // the number of negative & positive eigenvalues

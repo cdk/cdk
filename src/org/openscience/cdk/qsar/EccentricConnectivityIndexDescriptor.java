@@ -51,6 +51,7 @@ import java.util.Vector;
  * @cdk.created     2005-03-19
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
  */
 public class EccentricConnectivityIndexDescriptor implements Descriptor {
     

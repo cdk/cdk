@@ -38,17 +38,17 @@ import org.openscience.cdk.CDKConstants;
 /**
  *  This class returns the hybridization of an atom.
  *
- *  This class try to find a SIMPLE WAY the molecular geometry for wollowing from
+ *  <p>This class try to find a SIMPLE WAY the molecular geometry for wollowing from
  *    Valence Shell ElectronPair Reupulsion or VSEPR model and at the same time its
  *    hybridization of atoms in a molecule.
  *
- *  The basic premise of the model is that the electrons are paired in a molecule 
+ *  <p>The basic premise of the model is that the electrons are paired in a molecule 
  *    and that the molecule geometry is determined only by the repulsion between the pairs. 
  *    The geomtry adopted by a molecule is then the one in which the reulsions are minimized.
  *
- *   It counts the number of electron pairs in the lewis dot diagram which
+ *  <p>It counts the number of electron pairs in the lewis dot diagram which
  *   are attached to an atom. Then uses the following table.
- *
+ * <pre>
  *    pairs on  	   hybridization 
  *    an atom              of the atom          geomtry             number for CDK.Constants
  *  ******************************************************************************************
@@ -60,9 +60,10 @@ import org.openscience.cdk.CDKConstants;
  *      7                     sp^3d^3       pentagonal bipyramid                6
  *      8                     sp^3d^4        square antiprim                    7
  *      9                     sp^3d^5     tricapped trigonal prism              8
+ * </pre>
  *
- *  This table only works if the central atom is a p-block element 
- *   (groups IIA trhough VIIIA), not a transition metal.
+ *  <p>This table only works if the central atom is a p-block element 
+ *   (groups IIA through VIIIA), not a transition metal.
  *
  *
  * <p>This descriptor uses these parameters:
@@ -83,6 +84,7 @@ import org.openscience.cdk.CDKConstants;
  *@cdk.created    2005-03-24
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
+ * @cdk.dictref qsar-descriptors:atomHybridization
  */
 public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 
