@@ -24,6 +24,7 @@ import com.sun.tools.doclets.Taglet;
 import com.sun.javadoc.*;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.Hashtable;
 
 /**
  * Taglet that expands inline cdk.dictref tags into a weblink to the appropriate
@@ -34,12 +35,27 @@ import java.util.StringTokenizer;
  *
  * <p>The known dictionaries are:
  * <ul>
- *  <li>blue-obelisk: Blue Obelisk Chemoinformatics Dictionary <a href=""></a>
+ *  <li>blue-obelisk: <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml">Blue Obelisk Chemoinformatics Dictionary</a>
+ *  <li>qsar-descriptors: <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors/index.xhtml">QSAR.sf.net Descriptors Dictionary</a>
  * </ul>
  */
 public class CDKDictRefTaglet implements Taglet {
     
     private static final String NAME = "cdk.dictref";
+    
+    private static final Map dictURLs;
+    private static final Map dictNames;
+    
+    static {
+        dictURLs = new Hashtable(5);
+        dictNames = new Hashtable(5);
+        
+        dictURLs.put("blue-obelisk", "http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml");
+        dictNames.put("blue-obelisk", "Blue Obelisk Chemoinformatics Dictionary");
+        
+        dictURLs.put("qsar-descriptors", "http://qsar.sourceforge.net/dicts/qsar-descriptors/index.xhtml");
+        dictNames.put("qsar-descriptors", "QSAR.sf.net Descriptors Dictionary");
+    }
     
     public String getName() {
         return NAME;
@@ -89,10 +105,13 @@ public class CDKDictRefTaglet implements Taglet {
             StringTokenizer tokenizer = new StringTokenizer(tagText, separator);
             String dictCode = tokenizer.nextToken();
             String dictRef = tokenizer.nextToken();
-            String output = "<DT><B>A pointer to a dictionary: </B><DD>";
-            if ("blue-obelisk".equals(dictCode)) {
-                String url = "http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#" + dictRef;
-                output += "<a href=\"" + url + "\">" + dictRef + "</a></DD>\n";
+            String output = "<DT><B>Dictionary pointer(s): </B><DD>";
+            if (dictURLs.containsKey(dictCode)) {
+                String url = dictURLs.get(dictCode) + "#" + dictRef;
+                output += "<a href=\"" + url + "\">" + dictRef +
+                          "</a> in the <a href=\"" + dictURLs.get(dictCode) + 
+                          "\">" + dictNames.get(dictCode) + "</a> [" + 
+                          tagText + "]</DD>\n";
             } else {
                 output += "Unknown code: " + tagText + "</DD>\n";
             }
