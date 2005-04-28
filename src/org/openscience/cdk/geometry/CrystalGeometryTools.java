@@ -92,6 +92,9 @@ public class CrystalGeometryTools {
         return fractCoords;
     };
 
+    /**
+     * @cdk.dictref blue-obelisk:convertCartesianIntoFractionalCoordinates
+     */
     public static Point3d cartesianToFractional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis,
                                                  Point3d cartPoint) {
         Vector3d[] invaxis = calcInvertedAxes(aAxis,bAxis,cAxis);
@@ -130,6 +133,9 @@ public class CrystalGeometryTools {
         return cart;
     }
     
+    /**
+     * @cdk.dictref blue-obelisk:convertFractionIntoCartesianCoordinates
+     */
     public static Point3d fractionalToCartesian(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis,
                                                  Point3d frac) {
         Point3d cart = new Point3d();
@@ -172,6 +178,7 @@ public class CrystalGeometryTools {
      *                  the unit cell axes.
      *
      * @cdk.keyword  notional coordinates
+     * @cdk.dictref  blue-obelisk:convertNotionalIntoCartesianCoordinates
      */
     public static Vector3d[] notionalToCartesian(double alength, double blength,
                                                  double clength, double alpha,
@@ -212,6 +219,9 @@ public class CrystalGeometryTools {
         return axes;
     }
     
+    /**
+     * @cdk.dictref  blue-obelisk:convertCartesianIntoNotionalCoordinates
+     */
     public static double[] cartesianToNotional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis) {
         double[] notionalCoords = new double[6];
         notionalCoords[0] = aAxis.length();

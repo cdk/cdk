@@ -51,12 +51,12 @@ import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
  * Additional related algorithms from {@cdk.cite BGdV04b}.
  *
  * @author Ulrich Bauer <baueru@cs.tum.edu>
- * 
  *
  * @cdk.module standard
  *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
+ * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings
  * 
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar

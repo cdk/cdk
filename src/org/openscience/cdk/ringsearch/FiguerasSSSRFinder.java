@@ -45,7 +45,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module extra
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
- * 
+ * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings
+ *
  * @deprecated Use SSSRFinder instead (exact algorithm).
  */
 public class FiguerasSSSRFinder {
