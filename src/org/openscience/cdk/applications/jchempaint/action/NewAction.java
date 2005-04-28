@@ -50,8 +50,8 @@ public class NewAction extends JCPAction {
      */
     public void actionPerformed(ActionEvent e) {
       if(jcpPanel.isEmbedded()){
-        boolean clear=jcpPanel.showWarning();
-        if(clear){
+        int clear=jcpPanel.showWarning();
+        if(clear==JOptionPane.YES_OPTION){
           jcpPanel.setJChemPaintModel(null);
         }
       }else{

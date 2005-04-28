@@ -54,7 +54,5 @@ public class CloseAction extends JCPAction
       JFrame jframe=(JFrame)jcpPanel.getParent().getParent().getParent().getParent();
       WindowListener[] wls = (WindowListener[])(jframe.getListeners(WindowListener.class));
       wls[0].windowClosing(new WindowEvent(jframe,12));
-      jframe.setVisible(false);
-      jframe.dispose();
 	}
 }

@@ -247,6 +247,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	{
 		JFrame frame = new JFrame();
 		frame.addWindowListener(new JChemPaintPanel.AppCloser());
+    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel();
 		jcpep.setJChemPaintModel(model);
 		jcpep.registerModel(model);

@@ -597,26 +597,18 @@ public abstract class JChemPaintPanel
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public boolean showWarning()
+	public int showWarning()
 	{
-		//FIXME i18n
 		if (jchemPaintModel.isModified())
 		{
 			int answer = JOptionPane.showConfirmDialog(this, jchemPaintModel.getTitle() + " " + JCPLocalizationHandler.getInstance().getString("warning"), JCPLocalizationHandler.getInstance().getString("warningheader"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-			if (answer == JOptionPane.CANCEL_OPTION)
+			if (answer == JOptionPane.YES_OPTION)
 			{
-				return false;
-			} else
-			{
-				if (answer == JOptionPane.YES_OPTION)
-				{
 					new SaveAction().actionPerformed(null);
-				}
-				return true;
 			}
-		} else
-		{
-			return true;
+			return answer;
+		} else {
+			return JOptionPane.YES_OPTION;
 		}
 	}
 
@@ -675,7 +667,7 @@ public abstract class JChemPaintPanel
 		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
 		lastUsedJCPP=this;
 		if (isEmbedded()) {
-			if (showWarning()) {
+			if (showWarning()==JOptionPane.YES_OPTION) {
 				setJChemPaintModel(jcpm);
 				repaint();
 			}
@@ -814,18 +806,22 @@ public abstract class JChemPaintPanel
 		 */
 		public void windowClosing(WindowEvent e)
 		{
-			((JChemPaintPanel) ((JFrame) e.getSource()).getContentPane().getComponents()[0]).showWarning();
-			for (int i = 0; i < instances.size(); i++)
-			{
-				if (instances.get(i) == e.getSource())
+			int clear=((JChemPaintPanel) ((JFrame) e.getSource()).getContentPane().getComponents()[0]).showWarning();
+      if(JOptionPane.CANCEL_OPTION!=clear){
+      	for (int i = 0; i < instances.size(); i++)
 				{
-					instances.remove(i);
-					break;
+  				if (instances.get(i) == e.getSource())
+	  			{
+		  		  instances.remove(i);
+						break;
+				  }
 				}
-			}
-			if (instances.size() == 0 && !isEmbedded)
-			{
-				System.exit(0);
+        ((JFrame) e.getSource()).setVisible(false);
+        ((JFrame) e.getSource()).dispose();
+				if (instances.size() == 0 && !isEmbedded)
+				{
+          System.exit(0);
+				}
 			}
 		}
 	}
