@@ -332,6 +332,10 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 		this.author = author;
 	}
 
+	public void setChemModel(ChemModel chemModel) {
+		this.model = chemModel;
+	}
+	
 	/**
 	 *  Returns a ChemModel for this JChemPaintModel
 	 *

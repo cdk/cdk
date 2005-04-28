@@ -123,7 +123,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		{
 			logger.info("ChemModel is already non-empty! Sizing things to get it visible!");
 			// do some magic to get it all in one page
-			Dimension oneMoleculeDimension = new Dimension(700, 400);
+			Dimension oneMoleculeDimension = new Dimension(600, 400);
 			// should be based on molecule/reaction size!
 			Dimension dimension = makeChemModelFit(
 					oneMoleculeDimension, jchemPaintModel.getChemModel()

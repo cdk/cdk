@@ -65,7 +65,7 @@ public class DrawingPanel extends JPanel
 	{
 		this.jchemPaintModel = model;
 		r2d = new Renderer2D(jchemPaintModel.getRendererModel());
-		r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
+		//r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
 			
 	}
 	

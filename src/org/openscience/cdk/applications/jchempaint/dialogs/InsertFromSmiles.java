@@ -165,7 +165,7 @@ public class InsertFromSmiles extends JFrame
 				som.addMolecule(m);
 				ChemModel chemModel = new ChemModel();
 				chemModel.setSetOfMolecules(som);
-				JChemPaintModel jcpm = new JChemPaintModel(chemModel);
+				JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 				
 				//scale and center the structure in DrawingPanel
 				Renderer2DModel rendererModel = jcpm.getRendererModel();
@@ -176,10 +176,10 @@ public class InsertFromSmiles extends JFrame
 				GeometryTools.center(ac, jcpPanel.getSize());
 				
 				jcpPanel.processChemModel(chemModel);
+				
 				String title = "Created from SMILES: " + SMILES;
 				jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(title);
 				((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(title);
-				
 				closeFrame();
 				
 
