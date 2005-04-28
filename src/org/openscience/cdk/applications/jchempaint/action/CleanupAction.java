@@ -122,6 +122,7 @@ public class CleanupAction extends JCPAction
 				model.setSetOfReactions(newSet);
 			}
 
+			
 			jcpmodel.fireChange();
 			jcpPanel.repaint();
 		}
