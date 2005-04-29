@@ -284,6 +284,8 @@ public class AtomPlacer
 		}
 		radius = bondLength;
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - atom.getX2d(), startAtom.getY2d() - atom.getY2d());
+    if(Double.compare(Double.NaN,startAngle)==0)
+            startAngle=0.0;
 		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, radius);
 
 	}
@@ -391,7 +393,7 @@ public class AtomPlacer
 	{
 		Atom connectAtom = null;
 		double angle = startAngle;
-		double newX;
+    double newX;
 		double newY;
 		double x;
 		double y;
@@ -406,11 +408,12 @@ public class AtomPlacer
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
       angle = angle + addAngle;
-			if (angle >= 2.0 * Math.PI)
+      if (angle >= 2.0 * Math.PI)
 			{
 				angle -= 2.0 * Math.PI;
+        angle *=-1;
 			}
-			logger.debug("populatePolygonCorners->angle: ", Math.toDegrees(angle));
+      logger.debug("populatePolygonCorners->angle: ", Math.toDegrees(angle));
 			x = Math.cos(angle) * radius;
 			y = Math.sin(angle) * radius;
       newX = x + rotationCenter.x;
