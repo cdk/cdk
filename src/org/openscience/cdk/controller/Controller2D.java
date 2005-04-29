@@ -623,12 +623,12 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						AtomPlacer atomPlacer = new AtomPlacer();
 						atomPlacer.setMolecule(new Molecule(atomCon));
 						Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
-						atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
+            atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
 								unplacedAtoms, bondLength);
 
 						// now add the new atom
 						atomCon.addAtom(newAtom2);
-						atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
+            atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
 
 						// update atoms
 						updateAtom(atomCon, atomInRange);

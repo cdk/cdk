@@ -171,7 +171,6 @@ public class OpenAction extends JCPAction {
 												
 						jcpPanel.processChemFile(chemFile);
 						//The following do apply either to the existing or the new frame
-						
 						jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
 						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);
 						((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());
@@ -198,7 +197,6 @@ public class OpenAction extends JCPAction {
 					if (chemModel != null) {
 						jcpPanel.processChemModel(chemModel);
 						//The following do apply either to the existing or the new frame
-						
 						jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
 						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);
 						((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());

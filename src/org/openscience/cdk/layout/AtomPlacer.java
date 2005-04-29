@@ -175,7 +175,7 @@ public class AtomPlacer
 			startAngle = GeometryTools.getAngle(xDiff, yDiff);
 			//- (Math.PI / 2.0);
 			logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
-
+      startAngle=0.0;
 			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
 			return;
 		} else if (placedNeighbours.getAtomCount() == 0)
@@ -192,7 +192,7 @@ public class AtomPlacer
 			 * start angle. Not done yet.
 			 */
 			startAngle = 0.0;
-			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
+      populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
 			return;
 		}
 
@@ -405,7 +405,7 @@ public class AtomPlacer
         
 		for (int i = 0; i < atomsToDraw.size(); i++)
 		{
-			angle = angle + addAngle;
+      angle = angle + addAngle;
 			if (angle >= 2.0 * Math.PI)
 			{
 				angle -= 2.0 * Math.PI;
@@ -413,11 +413,11 @@ public class AtomPlacer
 			logger.debug("populatePolygonCorners->angle: ", Math.toDegrees(angle));
 			x = Math.cos(angle) * radius;
 			y = Math.sin(angle) * radius;
-			newX = x + rotationCenter.x;
+      newX = x + rotationCenter.x;
 			newY = y + rotationCenter.y;
             logger.debug("  newX:", newX);
             logger.debug("  newY:", newY);
-			points.addElement(new Point2d(newX, newY));
+      points.addElement(new Point2d(newX, newY));
 			
       if (logger.isDebugEnabled())
       try
