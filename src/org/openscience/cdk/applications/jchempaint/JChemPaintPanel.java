@@ -632,7 +632,7 @@ public abstract class JChemPaintPanel
 				repaint();
 			}
 		}
-		else if (getJChemPaintModel().getChemModel().getSetOfMolecules() == null) {
+		else if (getJChemPaintModel().getChemModel().getSetOfMolecules() == null || getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecule(0).getAtoms().length == 0) {
 			((JChemPaintEditorPanel) this).registerModel(jcpm);
 			setJChemPaintModel(jcpm);
 			repaint();

@@ -29,6 +29,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -95,14 +96,17 @@ public class EditAction extends JCPAction {
 		}
 		else if (type.equals("cutSelected")) {
 			logger.debug("Deleting all selected atoms...");
-			Atom[] selected = renderModel.getSelectedPart().getAtoms();
-			logger.debug("Found # atoms to delete: ", selected.length);
-			for (int i = 0; i < selected.length; i++) {
-				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, selected[i]);
+			if (renderModel.getSelectedPart() == null || renderModel.getSelectedPart().getAtoms().length == 0) {
+				JOptionPane.showMessageDialog(jcpPanel, "No selection made. Please select some atoms first!", "Error warning", JOptionPane.WARNING_MESSAGE);
 			}
-			if (jcpModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtoms().length == 0) {
-				jcpModel.setChemModel(new ChemModel());
+			else {
+				Atom[] selected = renderModel.getSelectedPart().getAtoms();
+				logger.debug("Found # atoms to delete: ", selected.length);
+				for (int i = 0; i < selected.length; i++) {
+					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, selected[i]);
+				}
 			}
+			renderModel.setSelectedPart(new AtomContainer());
 			jcpModel.fireChange();
 		}
 		else if (type.equals("selectAll")) {
