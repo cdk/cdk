@@ -165,15 +165,6 @@ public class InsertFromSmiles extends JFrame
 				som.addMolecule(m);
 				ChemModel chemModel = new ChemModel();
 				chemModel.setSetOfMolecules(som);
-				JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
-				
-				//scale and center the structure in DrawingPanel
-				Renderer2DModel rendererModel = jcpm.getRendererModel();
-				AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
-				GeometryTools.translateAllPositive(ac);
-				double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
-				GeometryTools.scaleMolecule(ac, scaleFactor);
-				GeometryTools.center(ac, jcpPanel.getSize());
 				
 				jcpPanel.processChemModel(chemModel);
 				

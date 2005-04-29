@@ -229,7 +229,7 @@ public abstract class JChemPaintPanel
 	/**
 	 *  Sets the file currently used for saving this Panel.
 	 *
-	 * @param  value          The new isAlreadyAFile value
+	 * @param  value  The new isAlreadyAFile value
 	 */
 	public void setIsAlreadyAFile(File value) {
 		isAlreadyAFile = value;
@@ -582,6 +582,21 @@ public abstract class JChemPaintPanel
 
 
 	/**
+	 *  Scales and centers the structure in the dimensions of the DrawingPanel.
+	 *
+	 * @param  chemModel  The cheModel of the structure to be scaled and centered.
+	 */
+	void scaleAndCenterMolecule(ChemModel chemModel) {
+		JChemPaintModel jcpm = getJChemPaintModel();
+		Renderer2DModel rendererModel = jcpm.getRendererModel();
+		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
+		GeometryTools.translateAllPositive(ac);
+		double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
+		GeometryTools.scaleMolecule(ac, scaleFactor);
+		GeometryTools.center(ac, drawingPanel.getSize());
+	}
+
+	/**
 	 *  Description of the Method
 	 *
 	 * @param  chemModel  Description of the Parameter
@@ -608,6 +623,7 @@ public abstract class JChemPaintPanel
 			return;
 		}
 		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
+		scaleAndCenterMolecule(chemModel);
 		lastUsedJCPP = this;
 		if (isEmbedded()) {
 			if (showWarning() == JOptionPane.YES_OPTION) {

@@ -60,6 +60,9 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.AtomContainer;
 
 /**
  * Shows the open dialog
@@ -165,6 +168,7 @@ public class OpenAction extends JCPAction {
 				try {
 					chemFile = (ChemFile) cor.read((ChemObject) new ChemFile());
 					if (chemFile != null) {
+												
 						jcpPanel.processChemFile(chemFile);
 						//The following do apply either to the existing or the new frame
 						
