@@ -38,7 +38,7 @@ import org.openscience.cdk.test.exception.*;
 public class DataClassesTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.date Tests");
+        TestSuite suite= new TestSuite("The cdk.data Tests");
         suite.addTest(DataCoverageTest.suite());
         
         suite.addTest(AtomContainerTest.suite());
@@ -72,6 +72,7 @@ public class DataClassesTests {
         suite.addTest(SetOfMoleculesTest.suite());
         suite.addTest(SetOfReactionsTest.suite());
         suite.addTest(SingleElectronTest.suite());
+        suite.addTest(StrandTest.suite());
         suite.addTest(ChangeEventPropagationTest.suite());
         return suite;
     }

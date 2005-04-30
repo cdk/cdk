@@ -37,10 +37,10 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 
@@ -51,11 +51,11 @@ import com.baysmith.io.FileUtilities;
  *
  * @cdk.module test
  *
- * @author  Edgar Luttmann <edgar@uni-paderborn.de>
- * @cdk.created 2001-08-09 				$
- *
+ * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @cdk.created 2001-08-09
  */
-public class PDBReaderTest extends CDKTestCase {
+public class PDBReaderTest extends TestCase {
 
 	public PDBReaderTest(String name) {
 		super(name);
@@ -110,7 +110,7 @@ public class PDBReaderTest extends CDKTestCase {
 
             ChemModel oModel = oSeq.getChemModel(0);
             assertNotNull(oModel);
-            assertEquals(oModel.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(1, oModel.getSetOfMolecules().getMoleculeCount());
 
             oModel.setProperty(new String("test.chemmodel"), new String("test.chemmodel")); 
             assertEquals(new String("test.chemmodel"), oModel.getProperty("test.chemmodel"));
@@ -118,7 +118,7 @@ public class PDBReaderTest extends CDKTestCase {
             BioPolymer oMol = (BioPolymer)oModel.getSetOfMolecules().getMolecule(0);
             assertNotNull(oMol);
             assertEquals(oMol.getAtomCount(), 14);
-            assertNotNull(oMol.getMonomer("MOL1"));
+            assertNotNull(oMol.getMonomer("MOLA1", "A"));
 
             oMol.setProperty(new String("test.molecule"), new String("test.molecule")); 
             assertEquals(new String("test.molecule"), oMol.getProperty("test.molecule"));
@@ -202,10 +202,10 @@ public class PDBReaderTest extends CDKTestCase {
       assertNotNull(mol);
       assertEquals(327, mol.getAtomCount());
       assertEquals(46, mol.getMonomerCount());
-      assertNotNull(mol.getMonomer("THR1"));
-      assertEquals(7, mol.getMonomer("THR1").getAtomCount());
-      assertNotNull(mol.getMonomer("ILE7"));
-      assertEquals(8, mol.getMonomer("ILE7").getAtomCount());
+      assertNotNull(mol.getMonomer("THRA1", "A"));
+      assertEquals(7, mol.getMonomer("THRA1", "A").getAtomCount());
+      assertNotNull(mol.getMonomer("ILEA7", "A"));
+      assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
       
       Atom atom = mol.getAtomAt(94);
       assertNotNull(atom);
@@ -222,6 +222,14 @@ public class PDBReaderTest extends CDKTestCase {
       assertEquals(null, atom.getProperty("pdb.segID"));
       assertEquals(null, atom.getProperty("pdb.element"));
       assertEquals(null, atom.getProperty("pdb.charge"));
+      
+      Bond bond = mol.getBondAt(93);
+      assertNotNull(bond);
+      assertEquals("Test failed. Bond order not the same.", 2.0, bond.getOrder(), 0.001);
+      Atom[] atoms = bond.getAtoms();
+      assertEquals("C", atoms[0].getSymbol());
+      assertEquals("O", atoms[1].getSymbol());
+      assertEquals(true, bond.getProperties().isEmpty());
 
     } catch (Exception ex) {
       fail(ex.toString());

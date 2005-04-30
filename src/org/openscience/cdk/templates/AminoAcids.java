@@ -31,7 +31,8 @@ import org.openscience.cdk.SetOfMolecules;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  *
- * @author      mek
+ * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @cdk.module  standard
  * @cdk.keyword templates
  * @cdk.keyword amino acids, stuctures
  * @cdk.created 2005-02-08
