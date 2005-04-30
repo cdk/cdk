@@ -73,6 +73,20 @@ exit 0
         <entry>/cdk/cdk_top/docu/featurefolder</entry>
       </row>
       <row>
+        <entry>cdk/doc/website</entry>
+        <entry>javancss</entry>
+        <entry>javancss-tmp.xml</entry>
+        <entry>javancss2html.xsl</entry>
+        <entry>/cdk/cdk_top/devel/quality/source_stats</entry>
+      </row>
+      <row>
+        <entry>cdk/doc/website</entry>
+        <entry>javancss</entry>
+        <entry>javancss-tmp.xml</entry>
+        <entry>javancss-javadoc2html.xsl</entry>
+        <entry>/cdk/cdk_top/devel/quality/javadoc_stats</entry>
+      </row>
+      <row>
         <entry>cdk/</entry>
         <entry>pmd-data (in pmd.xml)</entry>
         <entry>reports/pmd/data.xml</entry>
@@ -91,7 +105,32 @@ exit 0
   </informaltable>
   <para>
     If you cleverly substitute the values in the above table in the commands
-    and scripts earlier in this chapter, you have a working system.
+    and scripts earlier in this chapter, you have a working system. And, for
+    brevity, I left out all lines for other CDK modules; with these two
+    examples, it should be clear what's going on there. To upload all PMD reports,
+    it's wise to setup a script, e.g. like:
+    <programlisting>
+#!/bin/sh
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/data.xml         > reports/pmd/data.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/core.xml         > reports/pmd/core.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/standard.xml     > reports/pmd/standard.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/extra.xml        > reports/pmd/extra.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/render.xml       > reports/pmd/render.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/applications.xml > reports/pmd/applications.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/io.xml           > reports/pmd/io.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/qsar.xml         > reports/pmd/qsar.html
+xsltproc doc/website/pmdReport2HTML.xsl reports/pmd/builder3d.xml    > reports/pmd/builder3d.html
+
+scp reports/pmd/data.html         almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.data.sh"
+scp reports/pmd/core.html         almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.core.sh"
+scp reports/pmd/standard.html     almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.standard.sh"
+scp reports/pmd/extra.html        almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.extra.sh"
+scp reports/pmd/render.html       almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.render.sh"
+scp reports/pmd/applications.html almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.applications.sh"
+scp reports/pmd/io.html           almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.io.sh"
+scp reports/pmd/qsar.html         almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.qsar.sh"
+scp reports/pmd/builder3d.html    almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.builder3d.sh"
+    </programlisting>
   </para>
   <para>
     For some files it's even simpler; for example for the ChangeLog which does
