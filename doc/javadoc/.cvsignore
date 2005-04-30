@@ -1,6 +1,8 @@
 *.class
 *.stats
 keyword.index.xml
+cdk.dictref.xml
 classes*.mod
 depends.xml
 builddepends.xml
+index_html

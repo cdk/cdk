@@ -56,9 +56,10 @@ public class MakeKeywordIndexDoclet {
         while (words.hasNext()) {
             String keyword = (String)words.next();
             out.println("  <indexentry>");
-            out.println("    <primaryie>" + keyword + " " +
-                        (String)keywords.get(keyword) +
-                        " </primaryie>");
+            out.println("    <primaryie>");
+            out.println("      <keyword>" + keyword + "</keyword>");
+            out.println("      " + (String)keywords.get(keyword));
+            out.println("    </primaryie>");
             if (this.primaryToSecondary.containsKey(keyword)) {
                 Vector v = (Vector)this.primaryToSecondary.get(keyword);
                 Enumeration secondaryWords = v.elements();
@@ -68,9 +69,10 @@ public class MakeKeywordIndexDoclet {
                     String primaryWord = st.nextToken().trim();
                     String secondaryWord = st.nextToken().trim();
                     // there are secondary words
-                    out.println("    <secondaryie>" + secondaryWord + " " +
-                                (String)secondaryKeywords.get(completeWord) +
-                                " </secondaryie>");
+                    out.println("    <secondaryie>");
+                    out.println("      <keyword>" + secondaryWord + "</keyword>");
+                    out.println("      " + (String)secondaryKeywords.get(completeWord));
+                    out.println("    </secondaryie>");
                 }
             }
             out.println("  </indexentry>");
@@ -111,7 +113,7 @@ public class MakeKeywordIndexDoclet {
             // what is done here?
             if (this.secondaryKeywords.containsKey(word)) {
                 this.secondaryKeywords.put(word,
-                        this.secondaryKeywords.get(word) + ", " +
+                        this.secondaryKeywords.get(word) + "\n      " +
                         markedUpName);
             } else {
                 this.secondaryKeywords.put(word, markedUpName);
@@ -120,7 +122,7 @@ public class MakeKeywordIndexDoclet {
             // "file format, CML" is placed as file format -> CML
             // and as CML
             if (this.keywords.containsKey(secondaryWord)) {
-                this.keywords.put(secondaryWord, this.keywords.get(secondaryWord) + ", " +
+                this.keywords.put(secondaryWord, this.keywords.get(secondaryWord) + "\n      " +
                                         markedUpName);
             } else {
                 this.keywords.put(secondaryWord, markedUpName);
@@ -129,7 +131,7 @@ public class MakeKeywordIndexDoclet {
             if (this.keywords.containsKey(word)) {
                 String text = (String)this.keywords.get(word);
                 if (text.length() > 0)
-                    markedUpName =  text + ", " + markedUpName;
+                    markedUpName =  text + "\n      " + markedUpName;
             }
             this.keywords.put(word, markedUpName);
         }
