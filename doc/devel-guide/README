@@ -1,4 +1,13 @@
-The DocBook XML 4.1.2 DTD and DocBook XSLT stylesheets.
+The DocBook XML 4.1.2 DTD and DocBook XSLT stylesheets are required
+to validate this source documents and to convert it into (X)HTML and sorts.
 
-Use xsltproc (or so) to create some non source version of the guide.
+Use xmllint to validate to document, e.g. on Debian:
 
+> xmllint --catalogs --valid --noout guide.xml
+
+Use xsltproc (or so) to create some non source version of the guide, e.g. on
+Debian:
+
+> mkdir build
+> cd build
+> xsltproc /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/chunk.xsl ../guide.xml

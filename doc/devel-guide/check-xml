@@ -1,2 +1,0 @@
-#! /bin/sh
-SGML_CATALOG_FILES=./catalog xmllint --catalogs --valid --noout guide.xml
