@@ -10,7 +10,7 @@
     <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/dictrefindex/">http://almost.cubic.uni-koeln.de/cdk/cdk_top/docu/dictrefindex/</ulink>
     page is created from CVS content, by doing:
     <programlisting>
-> cdk doc/javadoc
+> cdk cdk/doc/javadoc
 > ant dictref.index
 > xsltproc dictRefs2HTML.xsl index_html
     </programlisting>
@@ -52,19 +52,39 @@ exit 0
     <tgroup cols="3">
     <tbody>
       <row>
+        <entry>CDK dir</entry>
         <entry>ant target</entry>
+        <entry>XML file</entry>
         <entry>XSLT stylesheet</entry>
         <entry>Plone FTP directory</entry>
       </row>
       <row>
+        <entry>cdk/doc/javadoc</entry>
         <entry>dictref.index</entry>
+        <entry>dictref.index.xml</entry>
         <entry>dictRefs2HTML.xsl</entry>
         <entry>/cdk/cdk_top/docu/dictrefindex</entry>
       </row>
       <row>
+        <entry>cdk/doc/javadoc</entry>
         <entry>keyword.index</entry>
+        <entry>keyword.index.xml</entry>
         <entry>keywordIndex2HTML.xsl</entry>
         <entry>/cdk/cdk_top/docu/featurefolder</entry>
+      </row>
+      <row>
+        <entry>cdk/</entry>
+        <entry>pmd-data (in pmd.xml)</entry>
+        <entry>reports/pmd/data.xml</entry>
+        <entry>doc/website/pmdReport2HTML.xsl</entry>
+        <entry>/cdk/cdk_top/devel/modules/module-data/pmd</entry>
+      </row>
+      <row>
+        <entry>cdk/</entry>
+        <entry>pmd-core (in pmd.xml)</entry>
+        <entry>reports/pmd/core.xml</entry>
+        <entry>doc/website/pmdReport2HTML.xsl</entry>
+        <entry>/cdk/cdk_top/devel/modules/module-core/pmd</entry>
       </row>
     </tbody>
     </tgroup>
@@ -73,4 +93,34 @@ exit 0
     If you cleverly substitute the values in the above table in the commands
     and scripts earlier in this chapter, you have a working system.
   </para>
+  <para>
+    For some files it's even simpler; for example for the ChangeLog which does
+    not require any transformation, and which can simply be uploaded (At the time
+    of writing this is *NOT* working):
+    <programlisting>
+> cd cdk/
+> scp CHANGELOG almost.cubic.uni-koeln.de:~/index_html
+> ssh almost.cubic.uni-koeln.de "sh ~/upload.changelog.sh"
+    </programlisting>
+    Below is an overview of files that need to be uploaded. Again, make custom
+    upload scripts like <filename>upload.changelog.sh</filename> to make sure
+    the file is uploaded to the correct directory on the Plone FTP server.
+  </para>
+  <informaltable>
+    <tgroup cols="3">
+    <tbody>
+      <row>
+        <entry>CDK dir</entry>
+        <entry>file</entry>
+        <entry>Plone FTP directory</entry>
+      </row>
+      <row>
+        <entry>cdk/</entry>
+        <entry>CHANGELOG</entry>
+        <entry>/cdk/cdk_top/docu/changelog</entry>
+      </row>
+    </tbody>
+    </tgroup>
+  </informaltable>
+  
 </chapter>
