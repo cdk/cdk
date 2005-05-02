@@ -662,15 +662,16 @@
                 </java>
         </target -->
 
-        <!-- target id="junit-test" name="junit-test" depends="dist-large, dist-test, noJunit" 
+        <target id="junit-test" name="junit-test" depends="dist-all, noJunit" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) with -Dtestclass=&lt;class>.">
                 <echo message="JUnit tests class: testclass=${testclass}"/>
                 <junit printsummary="yes" haltonfailure="no" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
                     <jvmarg value="-Dcdk.debug.stdout=true"/>
                     <classpath>
-                        <pathelement location="${dist}/jar/cdk-${version}.jar" />
-                        <pathelement location="${dist}/jar/cdk-test.jar" />
+                        <fileset dir="${dist}/jar/">
+                                <include name="*.jar" />
+                        </fileset>
                         <pathelement path="${java.class.path}" />
                         <pathelement location="." />
                         <fileset dir="${lib}">
@@ -690,7 +691,7 @@
                         <formatter type="brief" />
                     </test>
                 </junit>
-        </target -->
+        </target>
 
         <target id="run" name="run" depends="dist-all" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
