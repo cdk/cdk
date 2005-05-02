@@ -157,6 +157,8 @@ public class Convertor {
         Element element = this.createElement("test");
         if (object instanceof SetOfMolecules) {
             writeSetOfMolecules((SetOfMolecules)object, element);
+        } else if (object instanceof Crystal) {
+            writeCrystal((Crystal)object, element);
         } else if (object instanceof Molecule) {
             // create CML atom and bond ids
             Molecule mol = (Molecule)object;
@@ -166,8 +168,6 @@ public class Convertor {
             writeMolecule(mol, element);
         } else if (object instanceof AtomContainer) {
             writeWrappedAtomContainer((AtomContainer)object, element);
-        } else if (object instanceof Crystal) {
-            writeCrystal((Crystal)object, element);
         } else if (object instanceof ChemSequence) {
             writeChemSequence((ChemSequence)object, element);
         } else if (object instanceof ChemFile) {
