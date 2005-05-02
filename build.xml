@@ -70,6 +70,7 @@
             <echo message="          debug: ${debug}" />
             <echo message="    deprecation: ${deprecation}" />
             <echo message="   optimization: ${optimization}" />
+            <echo message="     skipDoclet: ${doSkipDoclet}" />
         </target>
 
         <target id="checkPlatforms" name="checkPlatforms">
@@ -146,6 +147,9 @@
                     </or>
                 </and>
             </condition>
+            <condition property="doSkipDoclet">
+                <equals arg1="${skipDoclet}" arg2="true"/>
+            </condition>
         </target>
 
 
@@ -209,7 +213,8 @@
             </javac>
         </target>
 
-        <target name="runDoclet" id="runDoclet" depends="reallyRunDoclet, failIfNoDocletResults"/>
+        <target name="runDoclet" id="runDoclet" unless="doSkipDoclet"
+                depends="reallyRunDoclet, failIfNoDocletResults"/>
 
         <target name="checkDocletResults" id="checkDocletResults">
             <condition property="dotjavafiles.uptodate">
