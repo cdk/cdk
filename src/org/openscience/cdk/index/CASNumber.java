@@ -81,18 +81,22 @@ public class CASNumber {
 	                    overall = false; 
 			    // CAS numbers start at 50-00-0
 			} else {
-		  	    int total = 0;
-			    total = total + 1*Integer.parseInt(part2.substring(1,2));
-			    total = total + 2*Integer.parseInt(part2.substring(0,1));
-			    int length = part1.length();
-			    for (int i=0; i<length; i++) {
-				total = total + (3+i)*Integer.parseInt(part1.substring(length-1-i,length-i));
-			    }
-			    int digit = total % 10;
-			    overall = overall && (digit == Integer.parseInt(part3));
-                        }
-	}
+                int digit = CASNumber.calculateCheckDigit(part1, part2);
+                overall = overall && (digit == Integer.parseInt(part3));
+            }
+        }
         
         return overall;
-    }   
+    }
+    
+    public static int calculateCheckDigit(String part1, String part2) {
+        int total = 0;
+        total = total + 1*Integer.parseInt(part2.substring(1,2));
+        total = total + 2*Integer.parseInt(part2.substring(0,1));
+        int length = part1.length();
+        for (int i=0; i<length; i++) {
+            total = total + (3+i)*Integer.parseInt(part1.substring(length-1-i,length-i));
+        }
+        return total % 10;
+    }
 }

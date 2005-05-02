@@ -26,6 +26,7 @@ New:
 * Added writing and reading of radicals in CML2
 * Added getRelevantAtomContainer(ChemObject, Bond) to cdk.tools.manipulators
 * Implemented reading of data items from MDL SD files (closes RFE #1177112)
+* Added cdk.index.CASNumber.calculateCheckBit()
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
