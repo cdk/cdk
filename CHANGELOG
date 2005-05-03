@@ -4,6 +4,8 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* AtomPlacer now draws 180 deg geometry when encountering triple bonds
+* JChemPaint sources reintegrated to applications.jchempaint package
 * Added new method MFAnalyser.getHTMLMolecularFormulaWithCharge()
 * Added new methods SetOfAtomContainers.removeAtomContainer()
 * Added a CDKRXNWriter.

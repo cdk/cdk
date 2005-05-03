@@ -78,6 +78,7 @@ public class MoleculeListViewer extends JFrame
 		scrollPane.setPreferredSize(new Dimension(800, 600));
 		getContentPane().add("Center", scrollPane);
 		setTitle("MoleculeListViewer");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
 	}

@@ -340,7 +340,7 @@ public class AtomPlacer
 	 *@return                  A vector pointing to the location of the next atom
 	 *      to draw
 	 */
-	protected Vector2d getNextBondVector(Atom atom, Atom previousAtom, Point2d distanceMeasure)
+	public Vector2d getNextBondVector(Atom atom, Atom previousAtom, Point2d distanceMeasure)
 	{
     if (logger.isDebugEnabled())
     {
@@ -348,7 +348,9 @@ public class AtomPlacer
 		  logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
     }  
 		double angle = GeometryTools.getAngle(previousAtom.getX2d() - atom.getX2d(), previousAtom.getY2d() - atom.getY2d());
-		double addAngle = Math.toRadians(120);
+		double addAngle = Math.toRadians(120);;
+		if (hasTripleBond(atom, molecule)) addAngle = Math.toRadians(180);
+		
 		angle += addAngle;
 		Vector2d vec1 = new Vector2d(Math.cos(angle), Math.sin(angle));
 		Point2d point1 = new Point2d(atom.getPoint2d());
@@ -828,6 +830,15 @@ public class AtomPlacer
 		}
 		return tempMorganMatrix;
 	}
-
+	
+	public boolean hasTripleBond(Atom atom, Molecule molecule)
+	{
+		Bond[] bonds = molecule.getConnectedBonds(atom);
+		for (int g = 0; g < bonds.length; g++)
+		{
+			if (bonds[g].getOrder() == 3) return true;
+		}
+		return false;
+	}
 }
 

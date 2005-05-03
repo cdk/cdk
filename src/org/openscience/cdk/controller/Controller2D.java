@@ -676,8 +676,21 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
 						System.out.println("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
 						System.out.println("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
-						atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
+						if (placedAtoms.getAtomCount() == 1)
+						{
+							Vector2d bondVector = atomPlacer.getNextBondVector(atomInRange, placedAtoms.getAtomAt(0), GeometryTools.get2DCenter(new Molecule(atomCon)));
+							Point2d atomPoint = new Point2d(atomInRange.getPoint2d());
+							bondVector.normalize();
+							bondVector.scale(bondLength);
+							atomPoint.add(bondVector);
+							newAtom2.setPoint2d(atomPoint);
+
+						}
+						else
+						{
+							atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
 								unplacedAtoms, bondLength);
+						}
 
 						// now add the new atom
 						atomCon.addAtom(newAtom2);

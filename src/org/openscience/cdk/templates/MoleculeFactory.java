@@ -641,7 +641,7 @@ public class MoleculeFactory {
 		mol.addBond(6, 9, 1.0); // 9
 		mol.addBond(6, 10, 1.0); // 10
 		mol.addBond(10, 11, 1.0); // 11
-		mol.addBond(8, 12, 1.0); // 12
+		mol.addBond(8, 12, 3.0); // 12
 		mol.addBond(12, 13, 1.0); // 13
 		mol.addBond(11, 14, 1.0); // 14
 		
