@@ -49,6 +49,7 @@ Fixes:
 * CDK IO is now fully supports InputStream (closes #1169385)
 * Fixed error in isotope list (closes #1185991)
 * Fixed reading of Z from CrystClust files
+* AtomPlacer now draws linear geometries for C#C and C=C=C (closes #937743)
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
