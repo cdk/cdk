@@ -139,10 +139,6 @@ public class ReaderFactoryTest extends CDKTestCase {
         expectReader("data/coffeine.pdb", new PDBFormat());
     }
     
-    public void testSMILES() {
-        expectReader("data/smiles.txt", new SMILESFormat());
-    }
-    
     private void expectFormat(String filename, ChemFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
