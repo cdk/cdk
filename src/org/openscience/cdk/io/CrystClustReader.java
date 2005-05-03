@@ -101,8 +101,6 @@ public class CrystClustReader extends DefaultChemObjectReader {
         Crystal crystal = null;
         
         int lineNumber = 0;
-        int frames = 0;
-        
         Vector3d a, b, c;
         
         try {
@@ -111,7 +109,6 @@ public class CrystClustReader extends DefaultChemObjectReader {
                 logger.debug((lineNumber++) + ": ", line);
                 if (line.startsWith("frame:")) {
                     logger.debug("found new frame");
-                    frames++;
                     model = new ChemModel();
                     crystal = new Crystal();
                     
@@ -173,6 +170,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
                     int Z = Integer.parseInt(line);
+                    crystal.setZ(Z);
                     
                     String symbol;
                     double charge;

@@ -46,6 +46,7 @@ Fixes:
 * Fixed output of CML2 for reactions with IDs
 * CDK IO is now fully supports InputStream (closes #1169385)
 * Fixed error in isotope list (closes #1185991)
+* Fixed reading of Z from CrystClust files
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module

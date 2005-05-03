@@ -87,6 +87,7 @@ public class CrystClustReaderTest extends CDKTestCase {
             Crystal crystal = model.getCrystal();
             assertNotNull(crystal);
             assertEquals(42, crystal.getAtomCount());
+            assertEquals(1, crystal.getZ());
             
             // test reading of partial charges
             Atom atom = crystal.getAtomAt(0);
