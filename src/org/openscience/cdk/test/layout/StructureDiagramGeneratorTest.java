@@ -104,7 +104,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		/*showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/four-ring-5x10.mol"), "5x10 condensed four membered rings");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol"), "Polycarpol");
+		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol")
+		, "Polycarpol");*/
 		showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene");
 		showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl");
 		showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings");
@@ -115,7 +116,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - Was A Problem! - Solved :-)");
 		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");
 		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");		
-		showIt(makeBug736137(), "Bug 736137");*/
+		showIt(makeBug736137(), "Bug 736137");
 		showIt(makeBug891021(), "Bug 891021");
 
 	}

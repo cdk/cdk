@@ -1,4 +1,5 @@
-/*  $RCSfile$
+/*
+ *  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -44,23 +45,25 @@ import java.awt.event.*;
 import javax.vecmath.*;
 
 /**
- * Class that acts on MouseEvents and KeyEvents.
+ *  Class that acts on MouseEvents and KeyEvents.
  *
- * @author       steinbeck
- * @author       egonw
- * @cdk.keyword  mouse events
- * @cdk.require  java1.4+
+ *@author         steinbeck
+ *@author         egonw
+ *@created        2. Mai 2005
+ *@cdk.keyword    mouse events
+ *@cdk.require    java1.4+
  */
-public class Controller2D implements MouseMotionListener, MouseListener, KeyListener {
+public class Controller2D implements MouseMotionListener, MouseListener, KeyListener
+{
 
-    private static final int DRAG_UNSET = 0;
-    private static final int DRAG_MOVING_SELECTED = 1;
-    private static final int DRAG_DRAWING_PROPOSED_BOND = 2;
-    private static final int DRAG_DRAWING_PROPOSED_RING = 3;
-    private static final int DRAG_MAKING_SQUARE_SELECTION = 4;
-    private static final int DRAG_MAKING_LASSO_SELECTION = 5;
-    private static final int DRAG_DRAWING_PROPOSED_ATOMATOMMAP = 6;
-    
+	private final static int DRAG_UNSET = 0;
+	private final static int DRAG_MOVING_SELECTED = 1;
+	private final static int DRAG_DRAWING_PROPOSED_BOND = 2;
+	private final static int DRAG_DRAWING_PROPOSED_RING = 3;
+	private final static int DRAG_MAKING_SQUARE_SELECTION = 4;
+	private final static int DRAG_MAKING_LASSO_SELECTION = 5;
+	private final static int DRAG_DRAWING_PROPOSED_ATOMATOMMAP = 6;
+
 	Renderer2DModel r2dm;
 	ChemModel chemModel;
 	Controller2DModel c2dm;
@@ -73,12 +76,12 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 	private int prevDragCoordX = 0;
 	private int prevDragCoordY = 0;
-    private boolean draggingSelected = true;
+	private boolean draggingSelected = true;
 
 	private int dragMode = DRAG_UNSET;
 
 	private Vector commonElements;
-    private HashMap currentCommonElement = new HashMap();
+	private HashMap currentCommonElement = new HashMap();
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -201,11 +204,14 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	{
 		isUndoableChange = false;
 		logger.debug("MouseDragged Event Props: mode=", c2dm.getDrawModeString());
-        if (logger.isDebugEnabled()) {
-            logger.debug("   trigger=" + event.isPopupTrigger() +
-				/* ", Button number: " + event.getButton() + */
-				", Click count: " + event.getClickCount());
-        }
+		if (logger.isDebugEnabled())
+		{
+			logger.debug("   trigger=" + event.isPopupTrigger() +
+			/*
+			 *  ", Button number: " + event.getButton() +
+			 */
+					", Click count: " + event.getClickCount());
+		}
 
 		int[] screenCoords = {event.getX(), event.getY()};
 		int[] mouseCoords = getWorldCoordinates(screenCoords);
@@ -219,33 +225,37 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			wasDragged = true;
 		}
 
-
-		if (dragMode == DRAG_DRAWING_PROPOSED_BOND) {
+		if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
+		{
 			int startX = r2dm.getPointerVectorStart().x;
 			int startY = r2dm.getPointerVectorStart().y;
 			drawProposedBond(startX, startY, mouseX, mouseY);
-		} else if (dragMode == DRAG_MAKING_SQUARE_SELECTION) {
+		} else if (dragMode == DRAG_MAKING_SQUARE_SELECTION)
+		{
 			int startX = r2dm.getPointerVectorStart().x;
 			int startY = r2dm.getPointerVectorStart().y;
 			selectRectangularArea(startX, startY, mouseX, mouseY);
-		} else if (dragMode == DRAG_DRAWING_PROPOSED_RING) {
+		} else if (dragMode == DRAG_DRAWING_PROPOSED_RING)
+		{
 			int endX = 0;
 			int endY = 0;
 			double angle = 0;
 			double pointerVectorLength = c2dm.getRingPointerLength();
-            Point2d center = GeometryTools.get2DCenter(getHighlighted());
+			Point2d center = GeometryTools.get2DCenter(getHighlighted());
 			r2dm.setPointerVectorStart(new Point((int) center.x, (int) center.y));
 			angle = GeometryTools.getAngle(center.x - mouseX, center.y - mouseY);
 			endX = (int) center.x - (int) (Math.cos(angle) * pointerVectorLength);
 			endY = (int) center.y - (int) (Math.sin(angle) * pointerVectorLength);
 			r2dm.setPointerVectorEnd(new Point(endX, endY));
-		} else if (dragMode == DRAG_MAKING_LASSO_SELECTION) {
+		} else if (dragMode == DRAG_MAKING_LASSO_SELECTION)
+		{
 			/*
 			 *  Draw polygon in screencoordinates, convert them
 			 *  to world coordinates when mouse released
 			 */
 			r2dm.addLassoPoint(new Point(event.getX(), event.getY()));
-		} else if (dragMode == DRAG_MOVING_SELECTED) {
+		} else if (dragMode == DRAG_MOVING_SELECTED)
+		{
 			// all these are in model coordinates
 			logger.debug("Dragging selected atoms");
 			int deltaX = mouseX - prevDragCoordX;
@@ -274,53 +284,65 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 */
 	public void mousePressed(MouseEvent event)
 	{
-    isUndoableChange = false;
+		isUndoableChange = false;
 		int[] screenCoords = {event.getX(), event.getY()};
 		int[] mouseCoords = getWorldCoordinates(screenCoords);
 		int mouseX = mouseCoords[0];
 		int mouseY = mouseCoords[1];
 
 		logger.debug("MousePressed Event Props: mode=", c2dm.getDrawModeString());
-        if (logger.isDebugEnabled()) {
-            logger.debug("   trigger=" + event.isPopupTrigger() +
-				/* ", Button number: " + event.getButton() + */
-				", Click count: " + event.getClickCount());
-        }
+		if (logger.isDebugEnabled())
+		{
+			logger.debug("   trigger=" + event.isPopupTrigger() +
+			/*
+			 *  ", Button number: " + event.getButton() +
+			 */
+					", Click count: " + event.getClickCount());
+		}
 
-        int startX = 0;
-        int startY = 0;
-        r2dm.setPointerVectorStart(null);
-        r2dm.setPointerVectorEnd(null);
-        Atom atomInRange = getAtomInRange(mouseX, mouseY);
-        Bond bondInRange = getBondInRange(mouseX, mouseY);
-        if (atomInRange != null) {
-            startX = (int) atomInRange.getX2d();
-            startY = (int) atomInRange.getY2d();
-            r2dm.setPointerVectorStart(new Point(startX, startY));
-        } else {
-            r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
-        }
-        
-        if (c2dm.getDrawMode() == c2dm.MOVE) {
-            selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
-            dragMode = DRAG_MOVING_SELECTED;
-        } else if (c2dm.getDrawMode() == c2dm.DRAWBOND) {
-            if (bondInRange != null && atomInRange == null) {
-                // make sure we are not dragging a bond
-            } else {
-                dragMode = DRAG_DRAWING_PROPOSED_BOND;
-            }
-        } else if (c2dm.getDrawMode() == c2dm.MAPATOMATOM ) {
-            dragMode = DRAG_DRAWING_PROPOSED_ATOMATOMMAP;
-        } else if (c2dm.getDrawMode() == c2dm.SELECT) {
-            dragMode = DRAG_MAKING_SQUARE_SELECTION;
-        } else if (c2dm.getDrawMode() == c2dm.LASSO) {
-            dragMode = DRAG_MAKING_LASSO_SELECTION;
-        } else if (c2dm.getDrawMode() == c2dm.RING ||
-                   c2dm.getDrawMode() == c2dm.BENZENERING) {
-            dragMode = DRAG_DRAWING_PROPOSED_RING;
-        }
-        
+		int startX = 0;
+		int startY = 0;
+		r2dm.setPointerVectorStart(null);
+		r2dm.setPointerVectorEnd(null);
+		Atom atomInRange = getAtomInRange(mouseX, mouseY);
+		Bond bondInRange = getBondInRange(mouseX, mouseY);
+		if (atomInRange != null)
+		{
+			startX = (int) atomInRange.getX2d();
+			startY = (int) atomInRange.getY2d();
+			r2dm.setPointerVectorStart(new Point(startX, startY));
+		} else
+		{
+			r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
+		}
+
+		if (c2dm.getDrawMode() == c2dm.MOVE)
+		{
+			selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
+			dragMode = DRAG_MOVING_SELECTED;
+		} else if (c2dm.getDrawMode() == c2dm.DRAWBOND)
+		{
+			if (bondInRange != null && atomInRange == null)
+			{
+				// make sure we are not dragging a bond
+			} else
+			{
+				dragMode = DRAG_DRAWING_PROPOSED_BOND;
+			}
+		} else if (c2dm.getDrawMode() == c2dm.MAPATOMATOM)
+		{
+			dragMode = DRAG_DRAWING_PROPOSED_ATOMATOMMAP;
+		} else if (c2dm.getDrawMode() == c2dm.SELECT)
+		{
+			dragMode = DRAG_MAKING_SQUARE_SELECTION;
+		} else if (c2dm.getDrawMode() == c2dm.LASSO)
+		{
+			dragMode = DRAG_MAKING_LASSO_SELECTION;
+		} else if (c2dm.getDrawMode() == c2dm.RING ||
+				c2dm.getDrawMode() == c2dm.BENZENERING)
+		{
+			dragMode = DRAG_DRAWING_PROPOSED_RING;
+		}
 	}
 
 
@@ -331,92 +353,108 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 */
 	public void mouseReleased(MouseEvent event)
 	{
-    isUndoableChange = false;
+		isUndoableChange = false;
 		logger.debug("MouseReleased Event Props: mode=", c2dm.getDrawModeString());
-        if (logger.isDebugEnabled()) {
-            logger.debug("   trigger=" + event.isPopupTrigger(),
-                         ", Click count: " + event.getClickCount());
-        }
-        if ((event.getModifiers() & MouseEvent.BUTTON1_MASK) != 0) {
+		if (logger.isDebugEnabled())
+		{
+			logger.debug("   trigger=" + event.isPopupTrigger(),
+					", Click count: " + event.getClickCount());
+		}
+		if ((event.getModifiers() & MouseEvent.BUTTON1_MASK) != 0)
+		{
 			int[] screenCoords = {event.getX(), event.getY()};
 			int[] mouseCoords = getWorldCoordinates(screenCoords);
 			int mouseX = mouseCoords[0];
 			int mouseY = mouseCoords[1];
-			if (c2dm.getDrawMode() == c2dm.SYMBOL) {
+			if (c2dm.getDrawMode() == c2dm.SYMBOL)
+			{
 
 				Atom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null) {
-                    if(currentCommonElement.get(atomInRange)==null)
-                      currentCommonElement.put(atomInRange, new Integer(1));
-                    int oldCommonElement=((Integer)currentCommonElement.get(atomInRange)).intValue();
-                    String symbol = (String)commonElements.elementAt(oldCommonElement);
-                    if (!(atomInRange.getSymbol().equals(symbol))) {
-                        // only change symbol if needed
-                        
-                        atomInRange.setSymbol(symbol);
-                        // configure the atom, so that the atomic number matches the symbol
-                        try {
-                            IsotopeFactory.getInstance().configure(atomInRange);
-                        } catch (Exception exception) {
-                            logger.error("Error while configuring atom");
-                            logger.debug(exception);
-                        }
-                        // update atom
-                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-                        updateAtom(container, atomInRange);
-                        
-                        /*
-                        *  PRESERVE THIS. This notifies the
-                        *  the listener responsible for
-                        *  undo and redo storage that it
-                        *  should store this change of an atom symbol
-                        */
-                        isUndoableChange = true;
-                        /*
-                        *  ---
-                        */
-                        r2dm.fireChange();
-                        fireChange();
-                    }
-                    oldCommonElement++;
-                    if (oldCommonElement == commonElements.size())
-                        oldCommonElement = 0;
-                     currentCommonElement.put(atomInRange, new Integer(oldCommonElement));  
+				if (atomInRange != null)
+				{
+					if (currentCommonElement.get(atomInRange) == null)
+					{
+						currentCommonElement.put(atomInRange, new Integer(1));
+					}
+					int oldCommonElement = ((Integer) currentCommonElement.get(atomInRange)).intValue();
+					String symbol = (String) commonElements.elementAt(oldCommonElement);
+					if (!(atomInRange.getSymbol().equals(symbol)))
+					{
+						// only change symbol if needed
+
+						atomInRange.setSymbol(symbol);
+						// configure the atom, so that the atomic number matches the symbol
+						try
+						{
+							IsotopeFactory.getInstance().configure(atomInRange);
+						} catch (Exception exception)
+						{
+							logger.error("Error while configuring atom");
+							logger.debug(exception);
+						}
+						// update atom
+						AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+						updateAtom(container, atomInRange);
+
+						/*
+						 *  PRESERVE THIS. This notifies the
+						 *  the listener responsible for
+						 *  undo and redo storage that it
+						 *  should store this change of an atom symbol
+						 */
+						isUndoableChange = true;
+						/*
+						 *  ---
+						 */
+						r2dm.fireChange();
+						fireChange();
+					}
+					oldCommonElement++;
+					if (oldCommonElement == commonElements.size())
+					{
+						oldCommonElement = 0;
+					}
+					currentCommonElement.put(atomInRange, new Integer(oldCommonElement));
 				}
 			}
-			if (c2dm.getDrawMode() == c2dm.ELEMENT) {
+			if (c2dm.getDrawMode() == c2dm.ELEMENT)
+			{
 
 				Atom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null) {
-                    String symbol = c2dm.getDrawElement();
-                    if (!(atomInRange.getSymbol().equals(symbol))) {
-                        // only change symbol if needed
-                        
-                        atomInRange.setSymbol(symbol);
-                        // configure the atom, so that the atomic number matches the symbol
-                        try {
-                            IsotopeFactory.getInstance().configure(atomInRange);
-                        } catch (Exception exception) {
-                            logger.error("Error while configuring atom");
-                            logger.debug(exception);
-                        }
-                        // update atom
-                        AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-                        updateAtom(container, atomInRange);
-                        
-                        /*
-                        *  PRESERVE THIS. This notifies the
-                        *  the listener responsible for
-                        *  undo and redo storage that it
-                        *  should store this change of an atom symbol
-                        */
-                        isUndoableChange = true;
-                        /*
-                        *  ---
-                        */
-                        r2dm.fireChange();
-                        fireChange();
-                    }
+				if (atomInRange != null)
+				{
+					String symbol = c2dm.getDrawElement();
+					if (!(atomInRange.getSymbol().equals(symbol)))
+					{
+						// only change symbol if needed
+
+						atomInRange.setSymbol(symbol);
+						// configure the atom, so that the atomic number matches the symbol
+						try
+						{
+							IsotopeFactory.getInstance().configure(atomInRange);
+						} catch (Exception exception)
+						{
+							logger.error("Error while configuring atom");
+							logger.debug(exception);
+						}
+						// update atom
+						AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+						updateAtom(container, atomInRange);
+
+						/*
+						 *  PRESERVE THIS. This notifies the
+						 *  the listener responsible for
+						 *  undo and redo storage that it
+						 *  should store this change of an atom symbol
+						 */
+						isUndoableChange = true;
+						/*
+						 *  ---
+						 */
+						r2dm.fireChange();
+						fireChange();
+					}
 				}
 			}
 
@@ -470,44 +508,53 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				}
 			}
 
-            if (c2dm.getDrawMode() == c2dm.MAPATOMATOM) {
-                logger.debug("Should make new mapping...");
-				if (wasDragged) {
-                    int endX = r2dm.getPointerVectorEnd().x;
-                    int endY = r2dm.getPointerVectorEnd().y;
-                    Atom mappedToAtom = getAtomInRange(endX, endY);
-                    if (mappedToAtom != null) {
-                        int startX = r2dm.getPointerVectorStart().x;
-                        int startY = r2dm.getPointerVectorStart().y;
-                        Atom mappedFromAtom = getAtomInRange(startX, startY);
-                        if (mappedFromAtom != null) {
-                            Mapping mapping = new Mapping(mappedFromAtom, mappedToAtom);
-                            logger.debug("Created mapping: ", mapping);
-                            logger.debug("  between ", mappedFromAtom);
-                            logger.debug("  and ", mappedToAtom);
-                            // ok, now figure out if they are in one reaction
-                            Reaction reaction1 = ChemModelManipulator.getRelevantReaction(chemModel, mappedFromAtom);
-                            Reaction reaction2 = ChemModelManipulator.getRelevantReaction(chemModel, mappedToAtom);
-                            if (reaction1 != null && reaction2 != null && reaction1 == reaction2) {
-                                logger.debug("Adding mapping to reaction: ", reaction1.getID());
-                                reaction1.addMapping(mapping);
-                            } else {
-                                logger.warn("Reactions do not match, or one or both are reactions are null");
-                            }
-                        } else {
-                            logger.debug("Dragging did not start in atom...");
-                        }
-                    } else {
-                        logger.debug("Dragging did not end in atom...");
-                    }
-                } else {
-                    logger.debug("Not dragged in mapping mode");
-                }
-            }
-            
+			if (c2dm.getDrawMode() == c2dm.MAPATOMATOM)
+			{
+				logger.debug("Should make new mapping...");
+				if (wasDragged)
+				{
+					int endX = r2dm.getPointerVectorEnd().x;
+					int endY = r2dm.getPointerVectorEnd().y;
+					Atom mappedToAtom = getAtomInRange(endX, endY);
+					if (mappedToAtom != null)
+					{
+						int startX = r2dm.getPointerVectorStart().x;
+						int startY = r2dm.getPointerVectorStart().y;
+						Atom mappedFromAtom = getAtomInRange(startX, startY);
+						if (mappedFromAtom != null)
+						{
+							Mapping mapping = new Mapping(mappedFromAtom, mappedToAtom);
+							logger.debug("Created mapping: ", mapping);
+							logger.debug("  between ", mappedFromAtom);
+							logger.debug("  and ", mappedToAtom);
+							// ok, now figure out if they are in one reaction
+							Reaction reaction1 = ChemModelManipulator.getRelevantReaction(chemModel, mappedFromAtom);
+							Reaction reaction2 = ChemModelManipulator.getRelevantReaction(chemModel, mappedToAtom);
+							if (reaction1 != null && reaction2 != null && reaction1 == reaction2)
+							{
+								logger.debug("Adding mapping to reaction: ", reaction1.getID());
+								reaction1.addMapping(mapping);
+							} else
+							{
+								logger.warn("Reactions do not match, or one or both are reactions are null");
+							}
+						} else
+						{
+							logger.debug("Dragging did not start in atom...");
+						}
+					} else
+					{
+						logger.debug("Dragging did not end in atom...");
+					}
+				} else
+				{
+					logger.debug("Not dragged in mapping mode");
+				}
+			}
+
 			if (c2dm.getDrawMode() == c2dm.DRAWBOND)
 			{
-        Atom atomInRange;
+				Atom atomInRange;
 				Atom newAtom1;
 				Atom newAtom2;
 				Bond newBond;
@@ -570,39 +617,41 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						 */
 					}
 
-					if (wasDragged) {
-                        if (dragMode == DRAG_DRAWING_PROPOSED_BOND) {
-                            int endX = r2dm.getPointerVectorEnd().x;
-                            int endY = r2dm.getPointerVectorEnd().y;
-                            atomInRange = getAtomInRange(endX, endY);
-                            AtomContainer atomCon = null;
-                            if (atomInRange != null)
-                            {
-                                newAtom2 = atomInRange;
-                                atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom2);
-                            } else
-                            {
-                                newAtom2 = new Atom(c2dm.getDrawElement(), new Point2d(endX, endY));
-                                atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom1);
-                                atomCon.addAtom(newAtom2);
-                            }
-                            newBond = new Bond(newAtom1, newAtom2, 1);
-                            atomCon.addBond(newBond);
-                            
-                            // update atoms
-                            updateAtom(atomCon, newAtom2);
-                            
-                            /*
-                            *  PRESERVE THIS. This notifies the
-                            *  the listener responsible for
-                            *  undo and redo storage that it
-                            *  should store this change of an atom symbol
-                            */
-                            isUndoableChange = true;
-                            /*
-                            *  ---
-                            */
-                        }
+					if (wasDragged)
+					{
+						if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
+						{
+							int endX = r2dm.getPointerVectorEnd().x;
+							int endY = r2dm.getPointerVectorEnd().y;
+							atomInRange = getAtomInRange(endX, endY);
+							AtomContainer atomCon = null;
+							if (atomInRange != null)
+							{
+								newAtom2 = atomInRange;
+								atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom2);
+							} else
+							{
+								newAtom2 = new Atom(c2dm.getDrawElement(), new Point2d(endX, endY));
+								atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom1);
+								atomCon.addAtom(newAtom2);
+							}
+							newBond = new Bond(newAtom1, newAtom2, 1);
+							atomCon.addBond(newBond);
+
+							// update atoms
+							updateAtom(atomCon, newAtom2);
+
+							/*
+							 *  PRESERVE THIS. This notifies the
+							 *  the listener responsible for
+							 *  undo and redo storage that it
+							 *  should store this change of an atom symbol
+							 */
+							isUndoableChange = true;
+							/*
+							 *  ---
+							 */
+						}
 					} else if (atomInRange != null)
 					{
 						// add a new atom to the current atom in some random
@@ -613,9 +662,11 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						// now create 2D coords for new atom
 						double bondLength = r2dm.getBondLength();
 						Atom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
+						System.out.println("connectedAtoms.length: " + connectedAtoms.length);
 						AtomContainer placedAtoms = new AtomContainer();
-                        placedAtoms.addAtom(atomInRange);
-						for (int i = 0; i < connectedAtoms.length; i++) {
+						//placedAtoms.addAtom(atomInRange);
+						for (int i = 0; i < connectedAtoms.length; i++)
+						{
 							placedAtoms.addAtom(connectedAtoms[i]);
 						}
 						AtomContainer unplacedAtoms = new AtomContainer();
@@ -623,12 +674,14 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						AtomPlacer atomPlacer = new AtomPlacer();
 						atomPlacer.setMolecule(new Molecule(atomCon));
 						Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
-            atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
+						System.out.println("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
+						System.out.println("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
+						atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
 								unplacedAtoms, bondLength);
 
 						// now add the new atom
 						atomCon.addAtom(newAtom2);
-            atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
+						atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
 
 						// update atoms
 						updateAtom(atomCon, atomInRange);
@@ -738,10 +791,11 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					logger.debug("Atoms before delete: ", container.getAtomCount());
 					// update atoms
 					Atom[] atoms = container.getConnectedAtoms(highlightedAtom);
-                    if (atoms.length > 0) {
-                        AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-                        updateAtoms(atomCon, atoms);
-                    }
+					if (atoms.length > 0)
+					{
+						AtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+						updateAtoms(atomCon, atoms);
+					}
 				} else if (highlightedBond != null)
 				{
 					logger.info("User asks to delete a Bond");
@@ -1009,7 +1063,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						screenLassoCoords[i * 2] = currentPoint.x;
 						screenLassoCoords[i * 2 + 1] = currentPoint.y;
 						logger.debug("ScreenLasso.x = ", screenLassoCoords[i * 2]);
-                        logger.debug("ScreenLasso.y = ", screenLassoCoords[i * 2 + 1]);
+						logger.debug("ScreenLasso.y = ", screenLassoCoords[i * 2 + 1]);
 					}
 					/*
 					 *  Convert points to world coordinates as they are
@@ -1025,9 +1079,9 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						xPoints[i] = worldCoords[i * 2];
 						yPoints[i] = worldCoords[i * 2 + 1];
 						logger.debug("WorldCoords.x  = ", worldCoords[i * 2]);
-                        logger.debug("WorldCoords.y  = ", worldCoords[i * 2 + 1]);
+						logger.debug("WorldCoords.y  = ", worldCoords[i * 2 + 1]);
 						logger.debug("Polygon.x = ", xPoints[i]);
-                        logger.debug("Polygon.y = ", yPoints[i]);
+						logger.debug("Polygon.y = ", yPoints[i]);
 					}
 					Polygon polygon = new Polygon(xPoints, yPoints, number);
 					r2dm.setSelectedPart(getContainedAtoms(polygon));
@@ -1061,20 +1115,22 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 			if (c2dm.getDrawMode() == c2dm.MOVE)
 			{
-				if (draggingSelected == false) {
+				if (draggingSelected == false)
+				{
 					// then it was dragging nearest Bond or Atom
 					r2dm.setSelectedPart(new AtomContainer());
 				}
 			}
 
-			if (wasDragged) {
+			if (wasDragged)
+			{
 				prevDragCoordX = 0;
 				prevDragCoordY = 0;
 				wasDragged = false;
 			}
-            dragMode = DRAG_UNSET;
-            r2dm.setPointerVectorStart(null);
-            r2dm.setPointerVectorEnd(null);
+			dragMode = DRAG_UNSET;
+			r2dm.setPointerVectorStart(null);
+			r2dm.setPointerVectorEnd(null);
 		}
 	}
 
@@ -1508,10 +1564,11 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		{
 			worldCoords[i * 2] = (int) ((double) coords[i * 2] / r2dm.getZoomFactor());
 			worldCoords[i * 2 + 1] = (int) ((double) (height - coords[i * 2 + 1]) / r2dm.getZoomFactor());
-            if (logger.isDebugEnabled()) {
-                logger.debug("getWorldCoord: " + coords[i * 2] + " -> " + worldCoords[i * 2]);
-                logger.debug("getWorldCoord: " + coords[i * 2 + 1] + " -> " + worldCoords[i * 2 + 1]);
-            }
+			if (logger.isDebugEnabled())
+			{
+				logger.debug("getWorldCoord: " + coords[i * 2] + " -> " + worldCoords[i * 2]);
+				logger.debug("getWorldCoord: " + coords[i * 2 + 1] + " -> " + worldCoords[i * 2 + 1]);
+			}
 		}
 		return worldCoords;
 	}
@@ -1552,6 +1609,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			((CDKChangeListener) listeners.get(i)).stateChanged(event);
 		}
 	}
+
 
 	// ------------ CHEMICAL OPERATIONS -------------- //
 
@@ -1617,7 +1675,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		Atom atomInRange;
 
 		angle = GeometryTools.getAngle(startX - mouseX, startY - mouseY);
-		if (c2dm.getSnapToGridAngle()) {
+		if (c2dm.getSnapToGridAngle())
+		{
 			angle = snapAngle(angle);
 		}
 		atomInRange = getAtomInRange(mouseX, mouseY);
@@ -1673,6 +1732,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			}
 		}
 	}
+
 
 	/**
 	 *  Description of the Method
