@@ -45,6 +45,7 @@ import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -273,6 +274,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeAlphaPinene();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -285,6 +287,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeBiphenyl();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -297,6 +300,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.make4x3CondensedRings();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -309,6 +313,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makePhenylEthylBenzene();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -321,6 +326,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeSpiroRings();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 		if (standAlone)MoleculeViewer2D.display(new Molecule(ac), false);
 	}
 
@@ -334,6 +340,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeMethylDecaline();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -346,6 +353,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeBranchedAliphatic();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -358,6 +366,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeDiamantane();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -370,6 +379,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeEthylCyclohexane();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -382,6 +392,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeBicycloRings();
 		AtomContainer ac = generateCoordinates(m);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -400,6 +411,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testBug923825() {
         try {
             Molecule mol = makeBug923825();	
+            assertTrue(GeometryTools.has2DCoordinates(mol));
         } catch (Exception exception) {
             fail(exception.getMessage());
             exception.printStackTrace();
@@ -418,6 +430,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("c1ccccc1");
 		AtomContainer ac = generateCoordinates(mol);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -431,6 +444,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C"));
 		AtomContainer ac = generateCoordinates(mol);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 	
 	
@@ -445,6 +459,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		Molecule mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
 		try{
 			AtomContainer ac = generateCoordinates(mol);
+            assertTrue(GeometryTools.has2DCoordinates(ac));
 		}
 		catch(Exception exc)
 		{
