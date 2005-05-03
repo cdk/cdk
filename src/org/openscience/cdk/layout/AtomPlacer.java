@@ -119,6 +119,10 @@ public class AtomPlacer
 	/**
 	 *  Distribute the bonded atoms (neighbours) of an atom such that they fill the
 	 *  remaining space around an atom in a geometrically nice way.
+	 *  IMPORTANT: This method is not supposed to handle the 
+	 *  case of one or no place neighbor. In the case of 
+	 *  one placed neigbor, the chain placement methods 
+	 *  should be used.
 	 *
 	 *@param  atom                The atom whose partners are to be placed
 	 *@param  placedNeighbours    The atoms which are already placed
@@ -147,9 +151,17 @@ public class AtomPlacer
 		Vector2d newDirection = new Vector2d(atom.getPoint2d());
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
+		logger.debug("distributePartners->occupiedDirection.lenght(): " + occupiedDirection.length());
 		Vector atomsToDraw = new Vector();
 
 		logger.debug("Number of shared atoms: ", placedNeighbours.getAtomCount());
+		
+		/* 
+		 *    IMPORTANT: This method is not supposed to handle the 
+		 *    case of one or no place neighbor. In the case of 
+		 *    one placed neigbor, the chain placement methods 
+		 *    should be used.
+		 */
 		if (placedNeighbours.getAtomCount() == 1)
 		{
 			logger.debug("Only one neighbour...");
@@ -205,6 +217,7 @@ public class AtomPlacer
 		newDirection.normalize();
 		newDirection.scale(bondLength);
 		newDirection.negate();
+		logger.debug("distributePartners->newDirection.lenght(): " + newDirection.length());
 		Point2d distanceMeasure = new Point2d(atom.getPoint2d());
 		distanceMeasure.add(newDirection);
 
@@ -284,6 +297,13 @@ public class AtomPlacer
 		}
 		radius = bondLength;
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - atom.getX2d(), startAtom.getY2d() - atom.getY2d());
+		logger.debug("Before check: distributePartners->startAngle: " + startAngle);
+		if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
+			-0.001))
+		{
+			startAngle = Math.PI/placedNeighbours.getAtomCount();
+		}
+		logger.debug("After check: distributePartners->startAngle: " + startAngle);
 		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, radius);
 
 	}
