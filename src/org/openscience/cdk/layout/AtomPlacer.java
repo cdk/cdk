@@ -349,7 +349,7 @@ public class AtomPlacer
     }  
 		double angle = GeometryTools.getAngle(previousAtom.getX2d() - atom.getX2d(), previousAtom.getY2d() - atom.getY2d());
 		double addAngle = Math.toRadians(120);;
-		if (hasTripleBond(atom, molecule)) addAngle = Math.toRadians(180);
+		if (shouldBeLinear(atom, molecule)) addAngle = Math.toRadians(180);
 		
 		angle += addAngle;
 		Vector2d vec1 = new Vector2d(Math.cos(angle), Math.sin(angle));
@@ -831,13 +831,17 @@ public class AtomPlacer
 		return tempMorganMatrix;
 	}
 	
-	public boolean hasTripleBond(Atom atom, Molecule molecule)
+	public boolean shouldBeLinear(Atom atom, Molecule molecule)
 	{
+		int sum = 0;
 		Bond[] bonds = molecule.getConnectedBonds(atom);
 		for (int g = 0; g < bonds.length; g++)
 		{
-			if (bonds[g].getOrder() == 3) return true;
+			if (bonds[g].getOrder() == 3) sum += 10;
+			if (bonds[g].getOrder() == 1) sum += 1;
+			if (bonds[g].getOrder() == 2) sum += 5;
 		}
+		if (sum >= 10) return true;
 		return false;
 	}
 }
