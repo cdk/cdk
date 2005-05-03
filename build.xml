@@ -213,8 +213,12 @@
             </javac>
         </target>
 
-        <target name="runDoclet" id="runDoclet" unless="doSkipDoclet"
-                depends="reallyRunDoclet, failIfNoDocletResults"/>
+        <target name="runDoclet" id="runDoclet" 
+                depends="check, customize" unless="doSkipDoclet">
+          <echo>Not skipping doclet run...</echo>
+          <antcall target="reallyRunDoclet"/>
+          <antcall target="failIfNoDocletResults"/>
+        </target>
 
         <target name="checkDocletResults" id="checkDocletResults">
             <condition property="dotjavafiles.uptodate">
@@ -291,9 +295,6 @@
             </move>
         </target>
         
-        <target name="compile.init" id="compile.init" 
-                depends="init, customize, compileDoclet, runDoclet"/>
-            
         <target id="compile-needed-test" name="compile-needed-test">
             <uptodate property="module-uptodate" targetfile="${dist}/jar/cdk-${module}.jar">
                 <srcfiles dir="${src}">
@@ -301,9 +302,12 @@
                 </srcfiles>
             </uptodate>
         </target>
-                
+
+        <target id="compile-init" name="compile-init" 
+                depends="init, runDoclet"/>
+
         <target id="compile-module" name="compile-module" 
-                depends="compile.init, dist.init, compile-needed-test"
+                depends="dist.init, compile-needed-test"
                 unless="module-uptodate">
             
             <echo message="Compiling classes for CDK's ${module} module." />
@@ -415,6 +419,7 @@
         </target>
 
         <target id="dist-all" name="dist-all">
+            <antcall target="compile-init"/>
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
             <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
