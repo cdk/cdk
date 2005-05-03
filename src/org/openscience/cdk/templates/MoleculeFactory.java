@@ -676,7 +676,7 @@ public class MoleculeFactory {
 		return mol;
 	}
 	
-		public static Molecule makeQuinone()
+	public static Molecule makeQuinone()
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("O")); // 0
@@ -698,7 +698,6 @@ public class MoleculeFactory {
 		mol.addBond(4, 7, 2.0); // 8
 		return mol;
 	}
-	
 	
 	
 	public static Molecule loadMolecule(String inFile)

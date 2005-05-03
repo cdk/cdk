@@ -83,13 +83,13 @@ public abstract class JChemPaintPanel
 	JPanel mainContainer;
 	StatusBar statusBar;
 	JChemPaintMenuBar menu;
+	JToolBar toolBar;
 	boolean showMenu = true;
-	boolean showToolbar = true;
+	boolean showToolBar = true;
 	boolean showStatusBar = true;
 	DrawingPanel drawingPanel;
 	/**  Description of the Field */
 	public JButton selectButton;
-	JToolBar chemjtoolbar;
 	JChemPaintPanel jcpp;
 	JCPAction jcpaction = null;
 	/**  Description of the Field */
@@ -134,12 +134,34 @@ public abstract class JChemPaintPanel
 	/**  Description of the Method */
 	public void customizeView() {
 		if (showMenu) {
-			menu = new JChemPaintMenuBar(this);
+			if (menu == null) menu = new JChemPaintMenuBar(this);
 			add(menu, BorderLayout.NORTH);
 		}
+		else
+		{
+			try
+			{
+				remove(menu);
+			}
+			catch(Exception exc)
+			{
+				
+			}
+		}
 		if (showStatusBar) {
-			statusBar = new StatusBar();
+			if (statusBar == null) statusBar = new StatusBar();
 			add(statusBar, BorderLayout.SOUTH);
+		}
+		else
+		{
+			try
+			{
+				remove(statusBar);
+			}
+			catch(Exception exc)
+			{
+				
+			}
 		}
 	}
 
@@ -153,6 +175,26 @@ public abstract class JChemPaintPanel
 		return isEmbedded;
 	}
 
+
+	/**
+	 *  Tells if a toolbar is shown
+	 *
+	 * @return    The showToolBar value
+	 */
+	public boolean getShowToolBar() {
+		return showToolBar;
+	}
+
+
+	/**
+	 *  Sets if a toolbar is shown
+	 *
+	 * @param  showMenu  The value to assign showMenu.
+	 */
+	public void setShowToolBar(boolean showToolBar) {
+		this.showToolBar = showToolBar;
+		customizeView();
+	}
 
 	/**
 	 *  Tells if a menu is shown
@@ -171,6 +213,7 @@ public abstract class JChemPaintPanel
 	 */
 	public void setShowMenu(boolean showMenu) {
 		this.showMenu = showMenu;
+		customizeView();
 	}
 
 
@@ -190,7 +233,7 @@ public abstract class JChemPaintPanel
 	 * @return    The toolBar value
 	 */
 	public JToolBar getToolBar() {
-		return null;
+		return toolBar;
 	}
 
 
@@ -213,6 +256,7 @@ public abstract class JChemPaintPanel
 	 */
 	public void setShowStatusBar(boolean showStatusBar) {
 		this.showStatusBar = showStatusBar;
+		customizeView();
 	}
 
 

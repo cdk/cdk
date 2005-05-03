@@ -90,9 +90,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	private static DictionaryDatabase dictdb = null;
 	private static ValidatorEngine engine = null;
 	private static LoggingTool logger;
-	private JToolBar toolbar;
-
-
+	
 	/**
 	 *  sets configurations for the layout of the panel, adds several listeners
 	 *
@@ -101,7 +99,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public JChemPaintEditorPanel()
 	{
 		super();
-		setShowToolbar(true);
+		setShowToolBar(true);
 		if (logger == null)
 		{
 			logger = new LoggingTool(this);
@@ -164,9 +162,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *
 	 *@return    The showToolbar value
 	 */
-	public boolean getShowToolbar()
+	public boolean getShowToolBar()
 	{
-		return showToolbar;
+		return showToolBar;
 	}
 
 
@@ -175,17 +173,29 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *
 	 *@param  showToolbar  The value to assign showToolbar.
 	 */
-	public void setShowToolbar(boolean showToolbar)
+	public void setShowToolBar(boolean showToolBar)
 	{
-		this.showToolbar = showToolbar;
-		if (showToolbar)
+		this.showToolBar = showToolBar;
+		if (showToolBar)
 		{
-			if (toolbar == null)
+			if (toolBar == null)
 			{
-				toolbar = ToolBarMaker.getToolbar(this);
+				toolBar = ToolBarMaker.getToolbar(this);
 			}
-			mainContainer.add(toolbar, BorderLayout.NORTH);
+			mainContainer.add(toolBar, BorderLayout.NORTH);
 		}
+		else
+		{
+			try
+			{
+				remove(toolBar);
+			}
+			catch(Exception exc)
+			{
+				
+			}
+		}
+
 	}
 
 
@@ -214,7 +224,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public JToolBar getToolBar()
 	{
-		return toolbar;
+		return toolBar;
 	}
 
 

@@ -116,9 +116,20 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - Was A Problem! - Solved :-)");
 		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");
 		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");		
-		showIt(makeBug736137(), "Bug 736137");
-		showIt(makeBug891021(), "Bug 891021");
-
+		//showIt(makeBug736137(), "Bug 736137");
+		//showIt(makeBug891021(), "Bug 891021");
+		showIt(makeJhao1(), "Bug jhao1");
+		showIt(makeJhao2(), "Bug jhao2");
+		try
+		{
+			showIt(makeJhao3(), "Bug jhao3");
+			showIt(makeJhao4(), "Bug jhao4");
+		}catch(Exception exc)
+		{
+			System.out.println("test jhao3 and 4 failed");	
+			exc.printStackTrace();
+		}
+		
 	}
 
 
@@ -408,6 +419,30 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		Molecule mol = sp.parseSmiles("c1ccccc1");
 		return mol;
 	}
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public Molecule makeJhao3() throws Exception
+	{
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=C1C2=CC13(CC23)");
+		return mol;
+	}
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public Molecule makeJhao4() throws Exception
+	{
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CCC3C1CC23(CC12)");
+		return mol;
+	}
 	
 	public void testBug923825() {
         try {
@@ -466,6 +501,63 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		{
 			if (!(exc.toString().indexOf("Molecule not connected")>= 0)) fail();
 		}
+	}
+	
+	
+	Molecule makeJhao1()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("C")); // 7
+		mol.addAtom(new Atom("O")); // 8
+		mol.addAtom(new Atom("C")); // 9
+		
+		mol.addBond(0, 1, 1.0); // 1
+		mol.addBond(0, 3, 1.0); // 2
+		mol.addBond(0, 4, 1.0); // 3
+		mol.addBond(0, 7, 1.0); // 4
+		mol.addBond(1, 4, 1.0); // 5
+		mol.addBond(1, 5, 1.0); // 6
+		mol.addBond(1, 6, 1.0); // 7
+		mol.addBond(2, 3, 1.0); // 8
+		mol.addBond(2, 5, 1.0); // 9
+		mol.addBond(2, 6, 1.0); // 10
+		mol.addBond(2, 7, 1.0); // 11
+		mol.addBond(3, 8, 1.0); // 12
+		return mol;
+	}
+
+	Molecule makeJhao2()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("C")); // 7
+		mol.addAtom(new Atom("O")); // 8
+		mol.addAtom(new Atom("C")); // 9
+		
+		mol.addBond(0, 1, 1.0); // 1
+		mol.addBond(0, 3, 1.0); // 2
+		mol.addBond(0, 4, 1.0); // 3
+		mol.addBond(0, 7, 1.0); // 4
+		mol.addBond(1, 5, 1.0); // 5
+		mol.addBond(1, 6, 1.0); // 6
+		mol.addBond(1, 7, 1.0); // 7
+		mol.addBond(2, 3, 1.0); // 8
+		mol.addBond(2, 4, 1.0); // 9
+		mol.addBond(2, 5, 1.0); // 10
+		mol.addBond(2, 6, 1.0); // 11
+		mol.addBond(3, 8, 1.0); // 12
+		return mol;
 	}
 }
 
