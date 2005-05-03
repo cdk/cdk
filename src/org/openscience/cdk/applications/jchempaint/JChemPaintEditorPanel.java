@@ -183,12 +183,14 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				toolBar = ToolBarMaker.getToolbar(this);
 			}
 			mainContainer.add(toolBar, BorderLayout.NORTH);
+			mainContainer.revalidate();
 		}
 		else
 		{
 			try
 			{
-				remove(toolBar);
+				mainContainer.remove(toolBar);
+				mainContainer.revalidate();
 			}
 			catch(Exception exc)
 			{

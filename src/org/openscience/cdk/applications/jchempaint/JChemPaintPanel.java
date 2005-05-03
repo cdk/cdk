@@ -84,7 +84,7 @@ public abstract class JChemPaintPanel
 	StatusBar statusBar;
 	JChemPaintMenuBar menu;
 	JToolBar toolBar;
-	boolean showMenu = true;
+	boolean showMenuBar = true;
 	boolean showToolBar = true;
 	boolean showStatusBar = true;
 	DrawingPanel drawingPanel;
@@ -133,15 +133,17 @@ public abstract class JChemPaintPanel
 
 	/**  Description of the Method */
 	public void customizeView() {
-		if (showMenu) {
+		if (showMenuBar) {
 			if (menu == null) menu = new JChemPaintMenuBar(this);
 			add(menu, BorderLayout.NORTH);
+			revalidate();
 		}
 		else
 		{
 			try
 			{
 				remove(menu);
+				revalidate();
 			}
 			catch(Exception exc)
 			{
@@ -151,12 +153,14 @@ public abstract class JChemPaintPanel
 		if (showStatusBar) {
 			if (statusBar == null) statusBar = new StatusBar();
 			add(statusBar, BorderLayout.SOUTH);
+			revalidate();
 		}
 		else
 		{
 			try
 			{
 				remove(statusBar);
+				revalidate();
 			}
 			catch(Exception exc)
 			{
@@ -186,6 +190,7 @@ public abstract class JChemPaintPanel
 	}
 
 
+
 	/**
 	 *  Sets if a toolbar is shown
 	 *
@@ -201,8 +206,8 @@ public abstract class JChemPaintPanel
 	 *
 	 * @return    The showMenu value
 	 */
-	public boolean getShowMenu() {
-		return showMenu;
+	public boolean getShowMenuBar() {
+		return showMenuBar;
 	}
 
 
@@ -211,8 +216,8 @@ public abstract class JChemPaintPanel
 	 *
 	 * @param  showMenu  The value to assign showMenu.
 	 */
-	public void setShowMenu(boolean showMenu) {
-		this.showMenu = showMenu;
+	public void setShowMenuBar(boolean showMenuBar) {
+		this.showMenuBar = showMenuBar;
 		customizeView();
 	}
 
