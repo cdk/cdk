@@ -76,11 +76,11 @@ public class SwingGUIListener implements ReaderListener, WriterListener {
      */
     public void setInputReader(Reader reader) {
         if (reader instanceof BufferedReader) {
-            this.in = (BufferedReader)reader;
+            in = (BufferedReader)reader;
         } else if (reader == null) {
-            this.in = null;
+            in = null;
         } else {
-            this.in = new BufferedReader(reader);
+            in = new BufferedReader(reader);
         }
     }
     

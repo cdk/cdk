@@ -148,7 +148,6 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
             String str = new String(currentLine);
             if (str.startsWith("> ")) {
                 // ok, should extract the field name
-                String content = str.substring(2);
                 int index = str.indexOf("<");
                 if (index != -1) {
                     int index2 = str.substring(index).indexOf(">");

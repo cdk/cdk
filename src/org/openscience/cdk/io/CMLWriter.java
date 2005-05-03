@@ -144,7 +144,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private String prefix = "";
     
     private LoggingTool logger;
-    private IsotopeFactory isotopeFactory = null;
 
     /**
      * Constructs a new CMLWriter class. Output will be stored in the Writer
@@ -186,12 +185,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
         logger = new LoggingTool(this);
         this.fragment = fragment;
         this.done = false;
-        try {
-            isotopeFactory = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            logger.error("Failed to initiate isotope factory: ", exception.getMessage());
-            logger.debug(exception);
-        }
         initIOSettings();
     }
 

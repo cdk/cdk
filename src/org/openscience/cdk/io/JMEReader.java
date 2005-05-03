@@ -43,7 +43,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads a molecule from an JME file using Jmol's JME reader.
@@ -62,7 +61,6 @@ import org.openscience.cdk.tools.LoggingTool;
 public class JMEReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    private LoggingTool logger = null;
     
     public JMEReader() {
         this(new StringReader(""));
@@ -73,7 +71,6 @@ public class JMEReader extends DefaultChemObjectReader {
 	}
 
 	public JMEReader(Reader in) {
-        logger = new LoggingTool(this);
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
         } else {

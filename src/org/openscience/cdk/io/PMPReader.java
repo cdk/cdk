@@ -159,8 +159,6 @@ public class PMPReader extends DefaultChemObjectReader {
         ChemModel chemModel = new ChemModel();
         Crystal crystal = new Crystal();
 
-        StringTokenizer tokenizer;
-
         try {
             String line = input.readLine();
             while (input.ready() && line != null) {

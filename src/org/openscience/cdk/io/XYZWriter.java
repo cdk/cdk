@@ -95,8 +95,6 @@ public class XYZWriter extends DefaultChemObjectWriter {
     */
     public void writeMolecule(Molecule mol) throws IOException {
         
-        int na = 0;
-        String info = "";
         String st = "";
         boolean writecharge = true;
         

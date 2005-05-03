@@ -169,7 +169,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                 if (line.startsWith("@<TRIPOS>MOLECULE")) {
                     logger.info("Reading molecule block");
                     // second line has atom/bond counts?
-                    String name = input.readLine();
+                    input.readLine(); // disregard the name line
                     String counts = input.readLine();
                     StringTokenizer tokenizer = new StringTokenizer(counts);
                     try {
@@ -201,7 +201,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     for (int i=0; i<atomCount; i++) {
                         line = input.readLine().trim();
                         StringTokenizer tokenizer = new StringTokenizer(line);
-                        String idStr = tokenizer.nextToken();
+                        tokenizer.nextToken(); // disregard the id token
                         String nameStr = tokenizer.nextToken();
                         String xStr = tokenizer.nextToken();
                         String yStr = tokenizer.nextToken();
@@ -234,7 +234,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     for (int i=0; i<bondCount; i++) {
                         line = input.readLine();
                         StringTokenizer tokenizer = new StringTokenizer(line);
-                        String bondId = tokenizer.nextToken();
+                        tokenizer.nextToken(); // disregard the id token
                         String atom1Str = tokenizer.nextToken();
                         String atom2Str = tokenizer.nextToken();
                         String orderStr = tokenizer.nextToken();

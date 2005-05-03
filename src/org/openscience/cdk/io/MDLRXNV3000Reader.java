@@ -143,10 +143,10 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     
     private Reaction readReaction() throws CDKException {
         Reaction reaction = new Reaction();
-        String firstLine = readLine(); // should be $RXN
-        String secondLine = readLine();
-        String thirdLine = readLine();
-        String fourthLine = readLine();
+        readLine(); // first line should be $RXN
+        readLine(); // second line
+        readLine(); // third line
+        readLine(); // fourth line
 
         int reactantCount = 0;
         int productCount = 0;

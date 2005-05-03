@@ -91,15 +91,13 @@ public class CDKTests
         suite.addTest(APIVersionTesterTest.suite());
         // from cdk.test.aromaticity
         suite.addTest(HueckelAromaticityDetectorTest.suite());
-	// from cdk.test.atomtype
+        // from cdk.test.atomtype
         suite.addTest(HybridizationStateATMatcherTest.suite());
         // from cdk.test.charges
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
-	// from cdk.test.charges
         suite.addTest(MMFF94PartialChargesTest.suite());
-	// from cdk.test.charges
         suite.addTest(InductivePartialChargesTest.suite());
-	// from cdk.test.modeling
+        // from cdk.test.modeling
         suite.addTest(ModelBuilder3dTest.suite());
         // from cdk.test.fingerprint
         suite.addTest(FingerprinterTest.suite());

@@ -150,10 +150,10 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     private Reaction readReaction() throws CDKException {
         Reaction reaction = new Reaction();
         try {
-            String firstLine = input.readLine(); // should be $RXN
-            String secondLine = input.readLine();
-            String thirdLine = input.readLine();
-            String fourthLine = input.readLine();
+            input.readLine(); // first line should be $RXN
+            input.readLine(); // second line
+            input.readLine(); // third line
+            input.readLine(); // fourth line
         } catch (IOException exception) {
             logger.debug(exception);
             throw new CDKException("Error while reading header of RXN file");
