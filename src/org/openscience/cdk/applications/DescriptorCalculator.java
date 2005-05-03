@@ -48,9 +48,6 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class DescriptorCalculator {
 
-    /** The output format. */
-    private String ouputFormat;
-    
     private LoggingTool logger;
     
     private boolean inputIsSMILES;
@@ -63,7 +60,6 @@ public class DescriptorCalculator {
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
 
-        ouputFormat = "cml";
         inputIsSMILES = false;
         
         Properties props = new Properties();

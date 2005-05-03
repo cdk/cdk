@@ -87,7 +87,8 @@ public class CDKDictionaryReferences {
         bond.setProperty(prefix + ":field:order", "chemical:bondOrder");
     }
 
-    private static void makeReferencesExplicitForChemModel(ChemModel model) {
+    private static void makeReferencesExplicitForChemModel(ChemModel model) { // NOPMD
+        // nothing to do
     }
 
     private static void makeReferencesExplicitForElement(Element element) {

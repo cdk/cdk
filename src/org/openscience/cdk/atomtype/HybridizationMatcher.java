@@ -75,8 +75,6 @@ public class HybridizationMatcher implements AtomTypeMatcher {
             AtomType type = types[i];
             logger.debug("   ... matching atom ", atom, " vs ", type);
             int charge = atom.getFormalCharge();
-            double bondOrderSum = atomContainer.getBondOrderSum(atom);
-            double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
             if (charge == type.getFormalCharge()) {
                 logger.debug("     formal charge matches...");
                 if (atom.getHybridization() == type.getHybridization()) {

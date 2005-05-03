@@ -72,7 +72,7 @@ public class MMFF94PartialCharges {
 	public AtomContainer assignMMFF94PartialCharges(AtomContainer ac) throws Exception {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
-		RingSet rs = ffc.assignAtomTyps((Molecule)ac);
+		ffc.assignAtomTyps((Molecule)ac);
 		Hashtable parameterSet = ffc.getParameterSet();
 		// for this calculation,
 		// we need some values stored in the vector "data" in the

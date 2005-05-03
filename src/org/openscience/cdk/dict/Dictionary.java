@@ -56,12 +56,6 @@ public class Dictionary {
         entries = new Hashtable();
     }
     
-    /**
-     * Initializes this reader.
-     */
-    private void initUnmarshall() {
-    }
-    
     public static Dictionary unmarshal(Reader reader) {
         LoggingTool logger = new LoggingTool(Dictionary.class);
         DictionaryHandler handler = new DictionaryHandler();

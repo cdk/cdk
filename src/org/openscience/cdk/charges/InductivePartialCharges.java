@@ -50,7 +50,6 @@ public class InductivePartialCharges {
 
 	private static double[] pauling;
 	private IsotopeFactory ifac = null;
-	private Element element = null;
 	private AtomTypeFactory factory = null;
 	private LoggingTool logger;
 

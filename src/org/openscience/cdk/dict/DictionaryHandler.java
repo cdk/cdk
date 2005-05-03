@@ -33,7 +33,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class DictionaryHandler extends DefaultHandler {
 
-    private LoggingTool logger;
     private boolean inEntry = false;
     private boolean inMetadataList = false;
     Entry entry;
@@ -43,9 +42,7 @@ public class DictionaryHandler extends DefaultHandler {
 
     Dictionary dict;
     
-    public DictionaryHandler() {
-        logger = new LoggingTool(this);
-    }
+    public DictionaryHandler() {}
 
     public void doctypeDecl(String name, String publicId, String systemId)
         throws Exception {
@@ -53,9 +50,6 @@ public class DictionaryHandler extends DefaultHandler {
 
     public void startDocument() {
         dict = new Dictionary();
-    }
-
-    public void endDocument() {
     }
 
     public void endElement(String uri, String local, String raw) {
