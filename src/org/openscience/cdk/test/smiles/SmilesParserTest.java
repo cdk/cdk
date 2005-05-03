@@ -471,6 +471,18 @@ public class SmilesParserTest extends CDKTestCase
 		}
 	}
 
+   public void testExplicitSingleBond() {
+       try {
+           String smiles = "C-C";
+           Molecule mol = sp.parseSmiles(smiles);
+           assertEquals(2, mol.getAtomCount());
+           assertEquals(1, mol.getBondCount());
+           assertEquals(1.0, mol.getBondAt(0).getOrder(), 0.0001);
+       } catch (Exception e) {
+           fail(e.toString());
+       }
+   }
+
 
 	/**
 	 *  A unit test for JUnit
