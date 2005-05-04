@@ -483,6 +483,17 @@ public class SmilesParserTest extends CDKTestCase
        }
    }
 
+   public void testSFBug1175478() {
+       try {
+           String smiles = "c1cc-2c(cc1)C(c3c4c2onc4c(cc3N5CCCC5)N6CCCC6)=O";
+           Molecule mol = sp.parseSmiles(smiles);
+           assertEquals(27, mol.getAtomCount());
+           assertEquals(32, mol.getBondCount());
+       } catch (Exception e) {
+           fail(e.toString());
+       }
+   }
+
 
 	/**
 	 *  A unit test for JUnit
