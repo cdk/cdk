@@ -53,6 +53,7 @@ import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
@@ -66,6 +67,22 @@ import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
  */
 public class SaveAction extends SaveAsAction
 {
+
+  public SaveAction(){
+          super();
+  }
+        
+	/**
+	 *  Constructor for the SaveAsAction object
+	 *
+	 *@param  jcpPanel       Description of the Parameter
+	 *@param  isPopupAction  Description of the Parameter
+	 */
+  public SaveAction(JChemPaintPanel jcpPanel, boolean isPopupAction)
+	{
+		super(jcpPanel, isPopupAction);
+	}
+
 
 	/**
 	 *  Saves a file or calls save as, when current content was not yet saved.

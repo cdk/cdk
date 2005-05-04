@@ -600,7 +600,7 @@ public abstract class JChemPaintPanel
 		if (jchemPaintModel.isModified()) {
 			int answer = JOptionPane.showConfirmDialog(this, jchemPaintModel.getTitle() + " " + JCPLocalizationHandler.getInstance().getString("warning"), JCPLocalizationHandler.getInstance().getString("warningheader"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (answer == JOptionPane.YES_OPTION) {
-				new SaveAction().actionPerformed(null);
+				new SaveAction(this,false).actionPerformed(new ActionEvent(this,12,""));
 			}
 			return answer;
 		}

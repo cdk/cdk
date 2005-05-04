@@ -200,7 +200,7 @@ public class AtomPlacer
 
 			addAngle = Math.PI * 2.0 / unplacedNeighbours.getAtomCount();
 			/*
-             * IMPORTANT: At this point we need a calculation of the
+       * IMPORTANT: At this point we need a calculation of the
 			 * start angle. Not done yet.
 			 */
 			startAngle = 0.0;
