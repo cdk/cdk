@@ -427,6 +427,7 @@
             <antcall target="compile-module"><param name="module" value="render"/></antcall>
             <antcall target="compile-module"><param name="module" value="io"/></antcall>
             <antcall target="compile-module"><param name="module" value="io-jmol"/></antcall>
+            <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
@@ -470,6 +471,7 @@
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
                     <include name="cdk-io-jmol.jar"/>
+                    <include name="cdk-pdb.jar"/>
                     <include name="cdk-libio-cml.jar"/>
                     <include name="cdk-qsar.jar"/>
                     <include name="cdk-render.jar"/>

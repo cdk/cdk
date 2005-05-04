@@ -29,6 +29,7 @@ New:
 * Added getRelevantAtomContainer(ChemObject, Bond) to cdk.tools.manipulators
 * Implemented reading of data items from MDL SD files (closes RFE #1177112)
 * Added cdk.index.CASNumber.calculateCheckBit()
+* Added the new class PDBAtom with field for PDB specific information
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
@@ -59,6 +60,8 @@ API changes:
   (closes #1150670) because configuration should be done at application level
 * Renamed ValencyCheckerInterface.calculateMissingHydrogen() to
   .calculateNumberOfImplicitHydrogens()
+* PDB fields are now read into the new PDBAtom fields instead of the previously
+  used ChemObject properties defined in CDKConstants
 
 20050125 Release
 ------------------------------------

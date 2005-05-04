@@ -1,0 +1,210 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2005  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
+package org.openscience.cdk;
+
+import javax.vecmath.Point3d;
+
+/**
+ * Represents the idea of an atom as used in PDB files. It contains extra fields
+ * normally associated with atoms in such files.
+ *
+ * @cdk.module pdb
+ *
+ * @see  Atom
+ */
+public class PDBAtom extends Atom implements java.io.Serializable, Cloneable {
+
+    private String record;
+    private double tempFactor;
+    private String resName;
+    private String iCode;
+    private double occupancy;
+    private String name;
+    private String chainID;
+    private String altLoc;
+    private String segID;
+    private int serial;
+    private String resSeq;
+    private boolean oxt;
+    private boolean hetAtom;
+    
+    public PDBAtom(String symbol, Point3d coordinate) {
+        super(symbol, coordinate);
+        record = null;
+        tempFactor = -1.0;
+        resName = null;
+        iCode = null;
+        occupancy = -1.0;
+        name = null;
+        chainID = null;
+        altLoc = null;
+        segID = null;
+        serial = 0;
+        resSeq = null;
+        
+        oxt = false;
+        hetAtom = false;
+    }
+    
+    public String getRecord() {
+        return record;
+    }
+    
+    public void setRecord(String newRecord) {
+        record = newRecord;
+    }
+    
+    public double getTempFactor() {
+        return tempFactor;
+    }
+    
+    public void setTempFactor(double newTempFactor) {
+        tempFactor = newTempFactor;
+    }
+    
+    public void setResName(String newResName) {
+        resName = newResName;
+    }
+    
+    public String getResName() {
+        return resName;
+    }
+    
+    public void setICode(String newICode) {
+        iCode = newICode;
+    }
+    
+    public String getICode() {
+        return iCode;
+    }
+    
+    public void setName(String newName) {
+        name = newName;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setChainID(String newChainID) {
+        chainID = newChainID;
+    }
+    
+    public String getChainID() {
+        return chainID;
+    }
+    
+    public void setAltLoc(String newAltLoc) {
+        altLoc = newAltLoc;
+    }
+    
+    public String getAltLoc() {
+        return altLoc;
+    }
+    
+    public void setSegID(String newSegID) {
+        segID = newSegID;
+    }
+    
+    public String getSegID() {
+        return segID;
+    }
+    
+    public void setSerial(int newSerial) {
+        serial = newSerial;
+    }
+    
+    public int getSerial() {
+        return serial;
+    }
+    
+    public void setResSeq(String newResSeq) {
+        resSeq = newResSeq;
+    }
+    
+    public String getResSeq() {
+        return resSeq;
+    }
+    
+    public void setOxt(boolean newOxt) {
+        oxt = newOxt;
+    }
+    
+    public boolean getOxt() {
+        return oxt;
+    }
+    
+    public void setHetAtom(boolean newHetAtom) {
+        hetAtom = newHetAtom;
+    }
+    
+    public boolean getHetAtom() {
+        return hetAtom;
+    }
+    
+    public void setOccupancy(double newOccupancy) {
+        occupancy = newOccupancy;
+    }
+    
+    public double getOccupancy() {
+        return occupancy;
+    }
+    
+    /**
+     * Returns a one line string representation of this Atom.
+     * Methods is conform RFC #9.
+     *
+     * @return  The string representation of this Atom
+     */
+    public String toString() {
+        StringBuffer description = new StringBuffer();
+        description.append("PDBAtom(");
+        description.append(this.hashCode()).append(", ");
+        description.append("altLoc=").append(getAltLoc()).append(", ");
+        description.append("chainID=").append(getChainID()).append(", ");
+        description.append("iCode=").append(getICode()).append(", ");
+        description.append("name=").append(getName()).append(", ");
+        description.append("resName=").append(getResName()).append(", ");
+        description.append("resSeq=").append(getResSeq()).append(", ");
+        description.append("segID=").append(getSegID()).append(", ");
+        description.append("serial=").append(getSerial()).append(", ");
+        description.append("tempFactor=").append(getTempFactor()).append(", ");
+        description.append("oxt=").append(getOxt()).append(", ");
+        description.append("hetatm=").append(getHetAtom()).append(", ");
+        description.append(super.toString());
+        description.append(")");
+        return description.toString();
+    }
+
+}
+
+
+
+
+

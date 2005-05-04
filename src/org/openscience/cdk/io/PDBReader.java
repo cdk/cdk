@@ -48,6 +48,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Monomer;
+import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.Strand;
 import org.openscience.cdk.exception.CDKException;
@@ -61,7 +62,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>A description can be found at <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">
  * http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html</a>.
  *
- * @cdk.module io
+ * @cdk.module  pdb
  *
  * @author      Edgar Luttmann
  * @author      Bradley Smith <bradley@baysmith.com>
@@ -162,10 +163,10 @@ public class PDBReader extends DefaultChemObjectReader {
 		// some variables needed
 		StringBuffer cLine;
 		String cCol;
-		Atom oAtom;
+		PDBAtom oAtom;
 		BioPolymer oBP = new BioPolymer();
 		StringBuffer cResidue;
-		Object oObj;
+		String oObj;
 		Monomer oMonomer;
 		String cRead;
 		char chain = 'A';	// To ensure stringent name giving of monomers
@@ -190,18 +191,18 @@ public class PDBReader extends DefaultChemObjectReader {
 						
 						// construct a string describing the residue
 						cResidue = new StringBuffer(8);
-						oObj = oAtom.getProperty(CDKConstants.PDB_RESNAME);
+						oObj = oAtom.getResName();
 						if (oObj != null) {
-							cResidue = cResidue.append(((String)oObj).trim());
+							cResidue = cResidue.append(oObj.trim());
 						}
-						oObj = oAtom.getProperty(CDKConstants.PDB_CHAINID);
+						oObj = oAtom.getChainID();
 						if (oObj != null) {
 							// cResidue = cResidue.append(((String)oObj).trim());
 							cResidue = cResidue.append(String.valueOf(chain));
 						}
-						oObj = oAtom.getProperty(CDKConstants.PDB_RESSEQ);
+						oObj = oAtom.getResSeq();
 						if (oObj != null) {
-							cResidue = cResidue.append(((String)oObj).trim());
+							cResidue = cResidue.append(oObj.trim());
 						}
 						
 						// search for an existing strand or create a new one.
@@ -216,7 +217,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						if (oMonomer == null) {
 							oMonomer = new Monomer();
 							oMonomer.setMonomerName(cResidue.toString());
-							oMonomer.setMonomerType((String)oAtom.getProperty(CDKConstants.PDB_RESNAME));
+							oMonomer.setMonomerType(oAtom.getResName());
 						}
 						
 						// add the atom
@@ -349,7 +350,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * 
 	 * @param oFile
 	 */
-	public static boolean createBonds(BioPolymer pol)	{
+	public boolean createBonds(BioPolymer pol){
 		SetOfMolecules AAs = AminoAcids.createAAs();
 		int[][] AABondInfo = AminoAcids.aaBondInfo();
 		Hashtable strands = pol.getStrands();
@@ -361,12 +362,12 @@ public class PDBReader extends DefaultChemObjectReader {
 			int atomsInLastResidue = 0;
 			
 			while (atoms < strand.getAtomCount() - 1) {
-				Atom anAtom = strand.getAtomAt(atoms);
+				PDBAtom anAtom = (PDBAtom)strand.getAtomAt(atoms);
 				int residue = 0;
 				
 				// Which residue/molecule?
 				while (residue < AAs.getAtomContainerCount() && 
- 						!anAtom.getProperty("pdb.resName").equals(AAs.getMolecule(residue).getProperty("molecule_name"))) {
+ 						!anAtom.getResName().equals(AAs.getMolecule(residue).getProperty("molecule_name"))) {
 					residue++;
 				}
 				// If residue/molecule wasn't found, bonds cannot be created => exit method
@@ -392,7 +393,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				 * correct number of atom records). */
 				int counter = 1;
 				while (atoms + counter < strand.getAtomCount() &&
-						anAtom.getProperty("pdb.resName").equals(strand.getAtomAt(atoms + counter).getProperty("pdb.resName"))) {
+						anAtom.getResName().equals(strand.getAtomAt(atoms + counter).getProperty("pdb.resName"))) {
 					counter++;
 				}
 				// Remember to handle OXT-atom... And to check if there's something wrong
@@ -424,7 +425,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * @return the <code>Atom</code> created from the record.
 	 * @throws RuntimeException if the line is too short (less than 59 characters).
 	 */
-	private Atom readAtom(String cLine) {
+	private PDBAtom readAtom(String cLine) {
 		if (cLine.length() < 59) {
 			throw new RuntimeException("PDBReader error during readAtom(): line too short");
 		}
@@ -435,33 +436,44 @@ public class PDBReader extends DefaultChemObjectReader {
 			elementSymbol = elementSymbol.charAt(0) + elementSymbol.substring(1).toLowerCase();
 		}
 		String rawAtomName = cLine.substring(12, 16).trim();
-		Atom oAtom = new Atom(elementSymbol, 
-				new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
-						new Double(cLine.substring(38, 46)).doubleValue(),
-						new Double(cLine.substring(46, 54)).doubleValue()));
+		PDBAtom oAtom = new PDBAtom(elementSymbol, 
+			new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
+				new Double(cLine.substring(38, 46)).doubleValue(),
+				new Double(cLine.substring(46, 54)).doubleValue()
+			)
+		);
 		oAtom.setAtomTypeName(rawAtomName);
-		oAtom.setProperty(CDKConstants.PDB_RECORD, cLine);
-		oAtom.setProperty(CDKConstants.PDB_SERIAL, new Integer(cLine.substring(6, 11).trim()));
-		oAtom.setProperty(CDKConstants.PDB_NAME, (new String(cLine.substring(12, 16))).trim());
-		oAtom.setProperty(CDKConstants.PDB_ALTLOC, (new String(cLine.substring(16, 17))).trim());
-		oAtom.setProperty(CDKConstants.PDB_RESNAME, (new String(cLine.substring(17, 20))).trim());
-		oAtom.setProperty(CDKConstants.PDB_CHAINID, (new String(cLine.substring(21, 22))).trim());
-		oAtom.setProperty(CDKConstants.PDB_RESSEQ, (new String(cLine.substring(22, 26))).trim());
-		oAtom.setProperty(CDKConstants.PDB_ICODE, (new String(cLine.substring(26, 27))).trim());
+        oAtom.setRecord(cLine);
+        oAtom.setSerial(Integer.parseInt(cLine.substring(6, 11).trim()));
+        oAtom.setName((new String(cLine.substring(12, 16))).trim());
+        oAtom.setAltLoc((new String(cLine.substring(16, 17))).trim());
+        oAtom.setResName((new String(cLine.substring(17, 20))).trim());
+        oAtom.setChainID((new String(cLine.substring(21, 22))).trim());
+        oAtom.setResSeq((new String(cLine.substring(22, 26))).trim());
+        oAtom.setICode((new String(cLine.substring(26, 27))).trim());
 		if (cLine.length() >= 59) {
-			oAtom.setProperty(CDKConstants.PDB_OCCOPANCY, new Double(cLine.substring(54, 60)));
+            String frag = cLine.substring(54, 60).trim();
+            if (frag.length() > 0) {
+                oAtom.setOccupancy(Double.parseDouble(frag));
+            }
 		}
 		if (cLine.length() >= 65) {
-			oAtom.setProperty(CDKConstants.PDB_TEMPFACTOR, new Double(cLine.substring(60, 66)));
+            String frag = cLine.substring(60, 66).trim();
+            if (frag.length() > 0) {
+                oAtom.setTempFactor(Double.parseDouble(frag));
+            }
 		}
 		if (cLine.length() >= 75) {
-			oAtom.setProperty(CDKConstants.PDB_SEGID, (new String(cLine.substring(72, 76))).trim());
+            oAtom.setSegID((new String(cLine.substring(72, 76))).trim());
 		}
 		if (cLine.length() >= 78) {
-			oAtom.setProperty(CDKConstants.PDB_ELEMENT, (new String(cLine.substring(76, 78))).trim());
+            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
 		}
 		if (cLine.length() >= 79) {
-			oAtom.setProperty(CDKConstants.PDB_CHARGE, (new String(cLine.substring(78, 80))).trim());
+            String frag = cLine.substring(78, 80).trim();
+            if (frag.length() > 0) {
+                oAtom.setCharge(Double.parseDouble(frag));
+            }
 		}
 		
 		/*************************************************************************************
@@ -472,19 +484,19 @@ public class PDBReader extends DefaultChemObjectReader {
 		String oxt = cLine.substring(13, 16).trim();
 		
 		if(oxt.equals("OXT"))	{
-			oAtom.setProperty("oxt", "1");
+			oAtom.setOxt(true);
 		}
 		else	{
-			oAtom.setProperty("oxt", "0");
+			oAtom.setOxt(false);
 		}
 		/*************************************************************************************
 		 * Set hetatm property flag. 
 		 */
 		if(cLine.substring(0,6).toUpperCase().equals("HETATM"))	{
-			oAtom.setProperty("hetatm", "1");
+			oAtom.setHetAtom(true);
 		}
 		else	{
-			oAtom.setProperty("hetatm", "0");
+			oAtom.setHetAtom(false);
 		}
 		/*************************************************************************************/
 		

@@ -5,6 +5,7 @@ cdk-io.jar
 cdk-experimental.jar
 cdk-extra.jar
 cdk-libio-cml.jar
+cdk-pdb.jar
 cdk-render.jar
 cdk-swing.jar
 cdk-builder3d.jar
