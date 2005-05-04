@@ -59,14 +59,15 @@ public class DrawingPanel extends JPanel
 	public DrawingPanel()
 	{
 		super();
+		
 	}
 
 	void setJChemPaintModel(JChemPaintModel model)
 	{
 		this.jchemPaintModel = model;
 		r2d = new Renderer2D(jchemPaintModel.getRendererModel());
-		//r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
-			
+		r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
+		revalidate();
 	}
 	
 	/**
@@ -97,6 +98,7 @@ public class DrawingPanel extends JPanel
 	 */
 	public Dimension getPreferredSize()
 	{
+		if (jchemPaintModel == null) return new Dimension(794,1123);
 		return jchemPaintModel.getRendererModel().getBackgroundDimension();
 	}
 

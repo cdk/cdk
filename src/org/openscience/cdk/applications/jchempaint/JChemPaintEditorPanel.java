@@ -151,7 +151,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 		model.getRendererModel().addCDKChangeListener(this);
 		inputAdapter.addCDKChangeListener(model);
-		drawingPanel.setJChemPaintModel(model);
+		//drawingPanel.setJChemPaintModel(model);
 		drawingPanel.addMouseListener(inputAdapter);
 		drawingPanel.addMouseMotionListener(inputAdapter);
 	}
@@ -259,7 +259,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	{
 		JFrame frame = new JFrame();
 		frame.addWindowListener(new JChemPaintPanel.AppCloser());
-    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel();
 		jcpep.setJChemPaintModel(model);
 		jcpep.registerModel(model);

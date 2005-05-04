@@ -108,14 +108,17 @@ public abstract class JChemPaintPanel
 		drawingPanel = new DrawingPanel();
 		drawingPanel.setOpaque(true);
 		drawingPanel.setBackground(Color.white);
-		JScrollPane scrollPane = new JScrollPane(drawingPanel);
+		JScrollPane scrollPane = new JScrollPane(drawingPanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
 
 		mainContainer.add(scrollPane, BorderLayout.CENTER);
 
 		add(mainContainer, BorderLayout.CENTER);
 		customizeView();
-		setPreferredSize(new Dimension(600, 400));
-		drawingPanel.setPreferredSize(this.getSize());
+		setSize(new Dimension(500, 350));
+		setPreferredSize(new Dimension(500, 350));
+		//scrollPane.getViewport().setViewSize(this.getSize());
+		//scrollPane.getViewport().setExtentSize(this.getSize());
 	}
 
 
@@ -475,6 +478,8 @@ public abstract class JChemPaintPanel
 	public void setJChemPaintModel(JChemPaintModel model) {
 		lastUsedJCPP = this;
 		this.jchemPaintModel = model;
+		ChemModel chemModel = model.getChemModel();
+		scaleAndCenterMolecule(chemModel);
 		drawingPanel.setJChemPaintModel(model);
 	}
 
@@ -628,7 +633,7 @@ public abstract class JChemPaintPanel
 			}
 		}
 	}
-
+	
 
 	/**
 	 *  Scales and centers the structure in the dimensions of the DrawingPanel.
@@ -642,7 +647,22 @@ public abstract class JChemPaintPanel
 		GeometryTools.translateAllPositive(ac);
 		double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 		GeometryTools.scaleMolecule(ac, scaleFactor);
-		GeometryTools.center(ac, drawingPanel.getSize());
+		Rectangle view = ( (JViewport) drawingPanel.getParent()).getViewRect();
+		double x = view.getX() + view.getWidth();
+		double y = view.getY() + view.getHeight();
+		Renderer2DModel model = jchemPaintModel.getRendererModel();
+		double relocatedY = model.getBackgroundDimension().getSize().getHeight() - (y + view.getY()/2);
+		double relocatedX = view.getX()/2; 
+		Dimension viewablePart = new Dimension( (int) x, (int) y);
+		GeometryTools.center(ac, viewablePart);
+		//fixing the coords regarding the position of the viewablePart
+		Atom[] atoms = ac.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+			if (atoms[i].getPoint2d() != null) {
+				atoms[i].getPoint2d().x = atoms[i].getPoint2d().x + relocatedX;
+				atoms[i].getPoint2d().y = atoms[i].getPoint2d().y + relocatedY;
+			}
+		}
 	}
 
 	/**
@@ -661,18 +681,17 @@ public abstract class JChemPaintPanel
 
 		// check for coordinates
 		if (!(GeometryTools.has2DCoordinates(ChemModelManipulator.getAllInOneContainer(chemModel)))) {
-
 			String error = "Model does not have coordinates. Cannot open file.";
 			logger.warn(error);
-
 			JOptionPane.showMessageDialog(this, error);
 			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
 			frame.pack();
 			frame.show();
 			return;
 		}
+		
+		
 		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
-		scaleAndCenterMolecule(chemModel);
 		lastUsedJCPP = this;
 		if (isEmbedded()) {
 			if (showWarning() == JOptionPane.YES_OPTION) {
@@ -689,6 +708,7 @@ public abstract class JChemPaintPanel
 		else {
 			JFrame jcpf = ((JChemPaintEditorPanel) this).getNewFrame(jcpm);
 			jcpf.show();
+			scaleAndCenterMolecule(chemModel);
 			jcpf.pack();
 			lastUsedJCPP = (JChemPaintPanel) jcpf.getContentPane().getComponents()[0];
 		}
