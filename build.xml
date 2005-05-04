@@ -709,7 +709,10 @@
         <target id="run" name="run" depends="dist-all" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
-                   <arg value="${arg1}" />
+                    <jvmarg value="-Dcdk.debugging=true"/>
+                    <jvmarg value="-Dcdk.debug.stdout=true"/>
+ 
+		    <arg value="${arg1}" />
                    <arg value="${arg2}" />
                    <arg value="${arg3}" />
                    <arg value="${arg4}" />

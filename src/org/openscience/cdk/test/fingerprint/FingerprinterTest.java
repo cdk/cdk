@@ -30,7 +30,7 @@
 
 package org.openscience.cdk.test.fingerprint;
 
-
+import org.openscience.cdk.tools.LoggingTool;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.BitSet;
@@ -55,6 +55,7 @@ public class FingerprinterTest extends CDKTestCase
 {
 	
 	boolean standAlone = false;
+	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
 	
 	public FingerprinterTest(String name)
 	{
@@ -176,6 +177,48 @@ public class FingerprinterTest extends CDKTestCase
 		assertTrue(isSubset);
 	}
 
+	/** This is a test for bug [ 931608 ] "Fingerprinter gives different fingerprints for same molecule" */
+	public void testBug931608() throws java.lang.Exception
+	{
+		Molecule structure1 = null;
+		Molecule structure2 = null;
+		/* We make a specifically substituted chromane here 
+		 * as well as the pure chromane skeleton, which should
+		 * be a substructure of the first.
+		 */
+		String filename = "data/mdl/bug931608-1.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		structure1 = (Molecule) reader.read((ChemObject) new Molecule());
+		filename = "data/mdl/bug931608-2.mol";
+		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		reader = new MDLReader(new InputStreamReader(ins));
+		structure2 = (Molecule) reader.read((ChemObject) new Molecule());
+		/* now we've read the two molecules and we are going to check now
+		 * whether the two give the same bitstring.
+		*/
+		
+		BitSet bs1 = Fingerprinter.getFingerprint(structure1);
+		BitSet bs2 = Fingerprinter.getFingerprint(structure2);
+		// now we do the boolean XOR on the two bitsets, leading
+		// to a bitset that has all the bits set to "true" which differ
+		// between the two original bitsets
+		bs1.xor(bs2);
+		// cardinality gives us the number of "true" bits in the 
+		// result of the XOR operation.
+		int cardinality = bs1.cardinality();
+		if (standAlone)
+		{
+			//MoleculeViewer2D.display(structure1, false);
+			//MoleculeViewer2D.display(structure1, false);
+
+			logger.debug("differing bits: " + bs1);
+			logger.debug("number of differing bits: " + cardinality);
+		}
+		assertTrue(cardinality==0);
+	}
+
+
 	public void testFingerprinter() throws java.lang.Exception
 	{
 		Molecule mol = MoleculeFactory.makeIndole();
@@ -271,12 +314,12 @@ public class FingerprinterTest extends CDKTestCase
 		try{
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
-			fpt.testFingerprinter();
-			fpt.testFingerprinterArguments();
-			fpt.testBug706786();
-			fpt.testBug771485();
-			fpt.testBug853254();
-			
+			//fpt.testFingerprinter();
+			//fpt.testFingerprinterArguments();
+			//fpt.testBug706786();
+			//fpt.testBug771485();
+			//fpt.testBug853254();
+			fpt.testBug931608();
 		}
 		catch(Exception exc)
 		{
