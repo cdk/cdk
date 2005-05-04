@@ -40,6 +40,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.*;
 
 import javax.swing.JApplet;
+import java.util.Calendar;
 
 /**
  * The
@@ -56,8 +57,19 @@ public class JChemPaintEditorApplet extends JApplet
 	{
 		getContentPane().setLayout(new BorderLayout());
 		jcpep = new JChemPaintEditorPanel();
-    //embedded means that additional instances can't be created, which is needed for applet as well
-    jcpep.setEmbedded();
+		
+		JChemPaintModel model = new JChemPaintModel();
+		model.setTitle("JCP Applet" /*getNewFrameName()*/);
+		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
+		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
+		String version = self.getImplementationVersion();
+		model.setSoftware("JChemPaint " + version);
+		model.setGendate((Calendar.getInstance()).getTime().toString());
+		jcpep.setJChemPaintModel(model);
+		jcpep.registerModel(model);
+
+		//embedded means that additional instances can't be created, which is needed for applet as well
+		jcpep.setEmbedded();
 		getContentPane().add(jcpep, BorderLayout.CENTER);
 	}
 	
