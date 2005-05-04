@@ -51,8 +51,6 @@ import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
 public class ChemAction extends JCPAction
 {
 
-	JComponent lastAction;
-
 	private PTDialog dialog = null;
 
 
@@ -63,15 +61,15 @@ public class ChemAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		if (lastAction != null)
+    if (jcpPanel.lastAction != null)
 		{
-			lastAction.setBackground(Color.LIGHT_GRAY);
+			jcpPanel.lastAction.setBackground(Color.LIGHT_GRAY);
 		} else
 		{
       (jcpPanel.getToolBar().getComponentAtIndex(0)).setBackground(Color.LIGHT_GRAY);
 		}
 		((JComponent) e.getSource()).setBackground(Color.GRAY);
-		lastAction = (JComponent) e.getSource();
+		jcpPanel.lastAction = (JComponent) e.getSource();
 		logger.debug("ChemAction performed!");
 		JChemPaintModel jcpm;
 		Controller2DModel c2dm;

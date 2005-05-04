@@ -94,9 +94,11 @@ public abstract class JChemPaintPanel
 	JCPAction jcpaction = null;
 	/**  Description of the Field */
 	protected File isAlreadyAFile = null;
-	//this is only needed in open action immediately after opening a file
-	/**  Description of the Field */
+	/**  this is only needed in open action immediately after opening a file */
 	public JChemPaintPanel lastUsedJCPP = null;
+	/**  remembers last action in toolbar for switching on/off buttons */ 
+  public JComponent lastAction;
+
 
 
 	/**  Constructor for the JChemPaintPanel object */
