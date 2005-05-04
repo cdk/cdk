@@ -34,6 +34,9 @@ import java.util.*;
 
 import javax.swing.*;
 
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 
@@ -199,7 +202,38 @@ public class JChemPaintMenuBar extends JMenuBar
 		}
 		return str;
 	}
-
+	
+	
+	private void addShortCuts(String cmd, JMenuItem mi) {
+		Properties shortCutProps = JCPPropertyHandler.getInstance().getJCPShort_Cuts();
+		String shortCuts = shortCutProps.getProperty(cmd);
+		String charString = null;
+		if (shortCuts != null) {
+			String[] scStrings = shortCuts.trim().split(",");
+			if (scStrings.length > 1) {
+				charString = scStrings[1];
+				
+				if (scStrings[0].contentEquals(new StringBuffer("ALT"))) {
+					mi.setAccelerator(KeyStroke.getKeyStroke(charString.charAt(0), InputEvent.ALT_MASK));
+				}
+				else if (scStrings[0].contentEquals(new StringBuffer("CTRL"))) {
+					mi.setAccelerator(KeyStroke.getKeyStroke(charString.charAt(0), InputEvent.CTRL_MASK));
+				}
+			}
+			else {
+				charString = scStrings[0];
+				if (charString.contentEquals(new StringBuffer("+"))) {
+					mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, 0));
+				}
+				else if (charString.contentEquals(new StringBuffer("-"))) {
+					mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, 0));
+				}
+				else {
+					mi.setAccelerator(KeyStroke.getKeyStroke(charString));
+				}
+			}
+		}
+	}
 
 	/**
 	 *  Craetes a JMenuItem given by a String and adds the right ActionListener to
@@ -232,6 +266,7 @@ public class JChemPaintMenuBar extends JMenuBar
 		{
 			mi = new JMenuItem(translation);
 		}
+		addShortCuts(cmd, mi);
 		logger.debug("Created new menu item...");
 		String astr = JCPPropertyHandler.getInstance().getResourceString(cmd + JCPAction.actionSuffix);
 		if (astr == null)

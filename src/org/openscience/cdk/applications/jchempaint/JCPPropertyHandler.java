@@ -55,6 +55,7 @@ public class JCPPropertyHandler
 	private File ujcpdir;
 	private ResourceBundle guiDefinition;
 	private ResourceBundle resources;
+	private Properties shortCutProps;
 
 
 	/**
@@ -266,6 +267,18 @@ public class JCPPropertyHandler
 		return guiDefinition;
 	}
 
+	public Properties getJCPShort_Cuts() {
+		if (shortCutProps == null) {
+			try {
+				String propertiesFile = "org/openscience/cdk/applications/jchempaint/resources/text/JCPShort_Cuts.properties";
+				shortCutProps = new Properties();
+				InputStream appStream = this.getClass().getClassLoader().getResourceAsStream(propertiesFile);
+				shortCutProps.load(appStream);
+				appStream.close();
+			} catch (FileNotFoundException fnfe) {fnfe.printStackTrace();} catch (IOException ioe) {}
+		}
+		return shortCutProps;
+	}
 
 	/**
 	 *  Gets the resources attribute of the JCPPropertyHandler object
