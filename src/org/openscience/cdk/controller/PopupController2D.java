@@ -141,7 +141,7 @@ public class PopupController2D extends Controller2D {
 	{
 		ChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
 		CDKPopupMenu popupMenu = getPopupMenu(objectInRange);
-		if (popupMenu != null)
+    if (popupMenu != null)
 		{
 			popupMenu.setSource(objectInRange);
 			logger.debug("Set popup menu source to: ", objectInRange);

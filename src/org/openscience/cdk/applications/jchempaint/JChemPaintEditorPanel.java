@@ -143,8 +143,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 	public void registerModel(JChemPaintModel model)
 	{
-		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),
-		model.getControllerModel());
+		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),model.getControllerModel());
+    setupPopupMenus(inputAdapter);
 		Renderer2DModel rendererModel = model.getRendererModel();
 		model.getControllerModel().setBondPointerLength(rendererModel.getBondLength());
 		model.getControllerModel().setRingPointerLength(rendererModel.getBondLength());
@@ -275,7 +275,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public void setupPopupMenus(PopupController2D inputAdapter)
 	{
-		if (inputAdapter.getPopupMenu(new Atom("H")) == null)
+    if (inputAdapter.getPopupMenu(new Atom("H")) == null)
 		{
 			inputAdapter.setPopupMenu(new Atom("H"), new JChemPaintPopupMenu(this, "atom"));
 		}
