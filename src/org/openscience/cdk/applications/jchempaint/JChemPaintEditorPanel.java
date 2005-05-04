@@ -141,7 +141,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 	}
 
-	void registerModel(JChemPaintModel model)
+	public void registerModel(JChemPaintModel model)
 	{
 		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),
 		model.getControllerModel());
