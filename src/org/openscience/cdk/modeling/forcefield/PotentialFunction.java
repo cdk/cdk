@@ -7,6 +7,7 @@ import javax.vecmath.*;
 import Jama.*;
 import org.openscience.cdk.*;
 
+
 /**
  *  Interface for a potential energy function to optimise in cdk/modeling/forcefield
  *
@@ -21,8 +22,9 @@ public interface PotentialFunction {
 	GVector energyGradient = new GVector(3);		//Gradient of the energy function in a 3xN point.
 	GMatrix energyHessian = null;
 
+
 	/**
-	 *  Evaluate the potential energy function in a given point
+	 *  Evaluate the potential energy function for a given point
 	 *
 	 *@param  coords3d  Current molecule 3xN coordinates.
 	 * @return    Energy function value in the wished 3xN point.

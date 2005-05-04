@@ -5,6 +5,8 @@ import java.lang.*;
 import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  To work with the coordinates of the molecule, like get the 3d coordinates of
@@ -16,10 +18,15 @@ import org.openscience.cdk.*;
  */
 public class ForceFieldTools {
 
+	private LoggingTool logger;
+	
+	
 	/**
 	 *  Constructor for the ForceFieldTools object
 	 */
-	public ForceFieldTools() { }
+	public ForceFieldTools() {        
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -31,18 +38,18 @@ public class ForceFieldTools {
 	 */
 	public GVector getCoordinates3xNVector(AtomContainer molecule) {
 
-		//System.out.println("molecule: " + molecule.toString());
-		//System.out.println("Atoms number = " + molecule.getAtomCount());
+		//logger.debug("molecule: " + molecule.toString());
+		//logger.debug("Atoms number = " + molecule.getAtomCount());
 		GVector coords3d_0 = new GVector(3 * (molecule.getAtomCount()));
-		//System.out.println("coords3d_0 = " + coords3d_0);
+		//logger.debug("coords3d_0 = " + coords3d_0);
 
 		Atom thisAtom = new Atom();
 		int j = 0;
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			thisAtom = molecule.getAtomAt(i);
-			//System.out.println("thisAtom = " + thisAtom);
-			//System.out.println("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
+			//logger.debug("thisAtom = " + thisAtom);
+			//logger.debug("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
 
 			j = 3 * i;
 			coords3d_0.setElement(j, thisAtom.getX3d());
@@ -50,7 +57,7 @@ public class ForceFieldTools {
 			coords3d_0.setElement(j + 2, thisAtom.getZ3d());
 		}
 
-		//System.out.println("Atoms coordinates vector: " + coords3d_0);
+		//logger.debug("Atoms coordinates vector: " + coords3d_0);
 
 		return coords3d_0;
 	}
@@ -65,23 +72,23 @@ public class ForceFieldTools {
 	 */
 	public Vector getPoint3dCoordinates(AtomContainer molecule) {
 
-		//System.out.println("molecule: " + molecule.toString());
-		//System.out.println("Atoms number = " + molecule.getAtomCount());
+		//logger.debug("molecule: " + molecule.toString());
+		//logger.debug("Atoms number = " + molecule.getAtomCount());
 		Vector point3dCoordinates = new Vector();
 
 		Atom thisAtom = new Atom();
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			thisAtom = molecule.getAtomAt(i);
-			//System.out.println("thisAtom = " + thisAtom);
-			//System.out.println("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
+			//logger.debug("thisAtom = " + thisAtom);
+			//logger.debug("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
 
 			point3dCoordinates.add(new Point3d(thisAtom.getPoint3d()));
 			//Point3d ia = (Point3d)point3dCoordinates.get(i);
-			//System.out.println(i + "a = " + ia);
+			//logger.debug(i + "a = " + ia);
 		}
 
-		//System.out.println("Atoms 3d coordinates : " + point3dCoordinates);
+		//logger.debug("Atoms 3d coordinates : " + point3dCoordinates);
 
 		return point3dCoordinates;
 	}
@@ -100,7 +107,7 @@ public class ForceFieldTools {
 		Point3d atom2Coordinates = new Point3d(atom2.getPoint3d());
 		double atomsDistance = 0;
 		atomsDistance = atom1Coordinates.distance(atom2Coordinates);
-		//System.out.println("atomsDistance = " + atomsDistance);
+		//logger.debug("atomsDistance = " + atomsDistance);
 
 		return atomsDistance;
 	}
@@ -121,7 +128,7 @@ public class ForceFieldTools {
 		Point3d atom2Coordinates = new Point3d(coords3d.getElement(3 * atom2Position), coords3d.getElement(3 * atom2Position + 1), coords3d.getElement(3 * atom2Position + 2));
 		double atomsDistance = 0;
 		atomsDistance = atom1Coordinates.distance(atom2Coordinates);
-		//System.out.println("atomsDistance = " + atomsDistance);
+		//logger.debug("atomsDistance = " + atomsDistance);
 
 		return atomsDistance;
 	}
@@ -145,7 +152,7 @@ public class ForceFieldTools {
 
 		double atomsDistance = 0;
 		atomsDistance = atom13dCoord.distance(atom23dCoord);
-		//System.out.println("atomsDistance = " + atomsDistance);
+		//logger.debug("atomsDistance = " + atomsDistance);
 
 		return atomsDistance;
 	}
@@ -188,7 +195,7 @@ public class ForceFieldTools {
 			atomsDistance = atomsDistance + difference;
 		}
 		atomsDistance = Math.sqrt(atomsDistance);
-		//System.out.println("atomsDistance = " + atomsDistance);
+		//logger.debug("atomsDistance = " + atomsDistance);
 		return atomsDistance;
 	}
 
@@ -271,7 +278,7 @@ public class ForceFieldTools {
 
 		double torsion = v1.dot(v2);
 		//Math.toDegrees(v1.angle(v2));
-		//System.out.println("torsion = " + torsion);
+		//logger.debug("torsion = " + torsion);
 
 		return torsion;
 	}
@@ -323,7 +330,7 @@ public class ForceFieldTools {
 		double absDot=Math.abs(dot);
 		torsion = (dot/absDot > 0) ? torsion : (2 * Math.PI - torsion);
 		
-		//System.out.println("torsion" + torsion);
+		//logger.debug("torsion" + torsion);
 
 		return torsion;
 	}

@@ -41,6 +41,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.AtomTools;
 import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Check results of GeometricMinimizer using some examples.
@@ -66,12 +68,15 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	ForceFieldTools ffTools = new ForceFieldTools();
 
+	private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for GeometricMinimizerTest object
 	 */
-	public ForceFieldTests() { }
+	public ForceFieldTests() {
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -88,14 +93,14 @@ public class ForceFieldTests extends CDKTestCase {
 	 *  A unit test for JUnit (Steepest Descents Method minimization)
 	 */
 	public void testSteepestDescentsMinimization() {
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with Steepest Descents Minimization");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with Steepest Descents Minimization");
 
-		gm.setConvergenceParametersForSDM(10, 0.0001);
+		gm.setConvergenceParametersForSDM(100, 0.00000001);
 		gm.steepestDescentsMinimization(molecule3Coordinates, tpf);
 
 		for (int i = 0; i < molecule3Coordinates.getSize(); i++) {
-			assertEquals(testResult3C[i], gm.getSteepestDescentsMinimum().getElement(i), 0.1);
+			assertEquals(testResult3C[i], gm.getSteepestDescentsMinimum().getElement(i), 0.00001);
 		}
 	}
 
@@ -103,34 +108,34 @@ public class ForceFieldTests extends CDKTestCase {
     	/**
 	 *  A unit test for JUnit (MMFF94EnergyFunction minimization with Steepest Descents Method)
 	 */
-	public void testMMFF94EnergyFunctionMinimizationWithSteepestDescentsMethod()  throws Exception {
-		//System.out.println("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Steepest Descents Method");
+/*	public void testMMFF94EnergyFunctionMinimizationWithSteepestDescentsMethod()  throws Exception {
+		//logger.debug("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Steepest Descents Method");
 		
 		createTestMoleculeAndSetMMFF94Parameters();
 
-		System.out.println("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
+		//logger.debug("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
 		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
-		System.out.println("EnergyFunction is set");
+		//logger.debug("EnergyFunction is set");
 		
-		gm.setConvergenceParametersForSDM(10000, 0.0000000000001);
-		System.out.println("SDM Parameters are set");
+		gm.setConvergenceParametersForSDM(100000, 0.0000000000000001);
+		//logger.debug("SDM Parameters are set");
 		gm.steepestDescentsMinimization(acCoordinates, mmff94EF);
 		
-		//System.out.println("gm.getSteepestDescentsMinimum() : " + gm.getSteepestDescentsMinimum());
+*/		//logger.debug("gm.getSteepestDescentsMinimum() : " + gm.getSteepestDescentsMinimum());
 		/*for (int i = 0; i < acCoordinates.getSize(); i++) {
 			assertEquals(testResult3C[i], gm.getSteepestDescentsMinimum().getElement(i), 0.1);
 		}*/
-	}
+//	}
 
 
 	/**
 	 *  A unit test for JUnit (Conjugate Gradient Method minimization)
 	 */
 	public void testConjugateGradientMinimization() {
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with Conjugate Gradient Minimization");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with Conjugate Gradient Minimization");
 
-		gm.setConvergenceParametersForCGM(10, 0.0001);
+		gm.setConvergenceParametersForCGM(100, 0.00000001);
 		gm.conjugateGradientMinimization(molecule3Coordinates, tpf);
 
 		for (int i = 0; i < molecule3Coordinates.getSize(); i++) {
@@ -142,55 +147,61 @@ public class ForceFieldTests extends CDKTestCase {
     	/**
 	 *  A unit test for JUnit (MMFF94EnergyFunction minimization with Conjugate Gradient Method)
 	 */
-/*	public void testMMFF94EnergyFunctionMinimizationWithConjugateGradientMethod()  throws Exception {
-		System.out.println("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Conjugate Gradient Method");
+	public void testMMFF94EnergyFunctionMinimizationWithConjugateGradientMethod()  throws Exception {
+		double[] testResult = {-0.07595612546512087,-0.2802911393253983,0.07600307966977722,0.39068800204256576,
+			-1.059191412353933,-1.1279995182727496,-0.8886677181682512,-0.8100194941301619,0.5795261081533215,
+			0.7455735487932257,-0.14810094365682494,0.7847092409972136,-0.43744626781215895,0.7059121981158619,
+			-0.2262853680234533,0.752138588967976,-2.0454101668080065,-0.8257161752480399,-0.43083068038259337,
+			-1.1913450770810514,-1.836724982022171,1.2034283588944206,-0.5294834493958368,-1.6314983633569509};
+	
+		logger.debug("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Conjugate Gradient Method");
 		
 		createTestMoleculeAndSetMMFF94Parameters();
 
-		System.out.println("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
+		//logger.debug("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
 		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
-		System.out.println("EnergyFunction is set");
+		//logger.debug("EnergyFunction is set");
 		
-		gm.setConvergenceParametersForCGM(10000, 0.0000000000001);
-		System.out.println("CGM Parameters are set");
+		gm.setConvergenceParametersForCGM(100000, 0.000000001);
+		//logger.debug("CGM Parameters are set");
 		gm.conjugateGradientMinimization(acCoordinates, mmff94EF);
 		
-		System.out.println("gm.getConjugateGradientMinimum() : " + gm.getConjugateGradientMinimum());
-*/		/*for (int i = 0; i < acCoordinates.getSize(); i++) {
-			assertEquals(testResult3C[i], gm.getConjugateGradientMinimum().getElement(i), 0.1);
-		}*/
-/*	}
-*/
+		//logger.debug("gm.getConjugateGradientMinimum() : " + gm.getConjugateGradientMinimum());
+		for (int i = 0; i < acCoordinates.getSize(); i++) {
+			assertEquals(testResult[i], gm.getConjugateGradientMinimum().getElement(i), 0.1);
+		}
+	}
+
 
     	/**
 	 *  A unit test for JUnit (It compare minimization of MMFF94EnergyFunction with SDM And CGM)
 	 */
 /*	public void testMMFF94EnergyFunctionCompareMinimizationWithSDMAndCGM()  throws Exception {
-		System.out.println("\n\nFORCEFIELDTESTS: Compare minimization of MMFF94EnergyFunction with SDM And CGM");
+		logger.debug("\n\nFORCEFIELDTESTS: Compare minimization of MMFF94EnergyFunction with SDM And CGM");
 		
 		createTestMoleculeAndSetMMFF94Parameters();
 
-		System.out.println("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
+		logger.debug("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
 		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
-		System.out.println("EnergyFunction is set");
+		logger.debug("EnergyFunction is set");
 		
 		gm.setConvergenceParametersForSDM(20, 0.0001);
-		System.out.println("SDM Parameters are set");
+		logger.debug("SDM Parameters are set");
 		gm.steepestDescentsMinimization(acCoordinates, mmff94EF);
 		GVector steepestDescentsMinimum = new GVector(gm.getSteepestDescentsMinimum());
 		
 		gm.setConvergenceParametersForCGM(20, 0.0001);
-		System.out.println("CGM Parameters are set");
+		logger.debug("CGM Parameters are set");
 		gm.conjugateGradientMinimization(acCoordinates, mmff94EF);
 		GVector conjugateGradientMinimum = new GVector(gm.getConjugateGradientMinimum());
 
-		System.out.println("steepestDescentsMinimum = " + steepestDescentsMinimum);
-		System.out.println("conjugateGradientMinimum = " + conjugateGradientMinimum);
+		logger.debug("steepestDescentsMinimum = " + steepestDescentsMinimum);
+		logger.debug("conjugateGradientMinimum = " + conjugateGradientMinimum);
 
 		double RMSD = 0;
 		double d = 0;
 		int atomNumbers = steepestDescentsMinimum.getSize() / 3;
-		System.out.println("atomNumbers = " + atomNumbers);
+		logger.debug("atomNumbers = " + atomNumbers);
 		for (int i = 0; i < atomNumbers; i++) {
 			d = ffTools.distanceBetweenTwoAtomFromTwo3xNCoordinates(steepestDescentsMinimum, conjugateGradientMinimum, i, i);
 			RMSD = RMSD + Math.pow(d, 2);
@@ -205,10 +216,10 @@ public class ForceFieldTests extends CDKTestCase {
 	 *  A unit test for JUnit (Newton-Raphson Method minimization)
 	 */
 	public void testNewtonRaphsonMinimization() {
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with Newton-Raphson Minimization");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with Newton-Raphson Minimization");
 
-		gm.setConvergenceParametersForNRM(1, 0.0001);
+		gm.setConvergenceParametersForNRM(1000, 0.000000000000001);
 		gm.newtonRaphsonMinimization(molecule3Coordinates, tpf);
 
 		for (int i = 0; i < molecule3Coordinates.getSize(); i++) {
@@ -221,23 +232,23 @@ public class ForceFieldTests extends CDKTestCase {
 	 *  A unit test for JUnit (MMFF94EnergyFunction minimization with Newton-Raphson Method)
 	 */
 /*	public void testMMFF94EnergyFunctionMinimizationWithNewtonRaphsonMethod()  throws Exception {
-		System.out.println("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Newton-Raphson Method");
+		logger.debug("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Newton-Raphson Method");
 		
 		createTestMoleculeAndSetMMFF94Parameters();
 
-		System.out.println("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
+		logger.debug("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
 		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
-		System.out.println("EnergyFunction is set");
+		logger.debug("EnergyFunction is set");
 		
 		gm.setConvergenceParametersForSDM(5, 0.001);
-		System.out.println("SDM Parameters are set");
+		logger.debug("SDM Parameters are set");
 		gm.steepestDescentsMinimization(acCoordinates, mmff94EF);
 		
 		gm.setConvergenceParametersForNRM(20, 0.0001);
-		System.out.println("NRM Parameters are set");
+		logger.debug("NRM Parameters are set");
 		gm.newtonRaphsonMinimization(acCoordinates, mmff94EF);
 		
-		System.out.println("gm.getNewtonRaphsonMinimum() : " + gm.getNewtonRaphsonMinimum());
+		logger.debug("gm.getNewtonRaphsonMinimum() : " + gm.getNewtonRaphsonMinimum());
 */		/*for (int i = 0; i < acCoordinates.getSize(); i++) {
 			assertEquals(testResult3C[i], gm.getConjugateGradientMinimum().getElement(i), 0.1);
 		}*/
@@ -297,7 +308,7 @@ public class ForceFieldTests extends CDKTestCase {
 		m[22] = -0.4450;
 		m[23] = -1.4320;
 		acCoordinates.set(m);
-		//System.out.println("acCoordinates : " + acCoordinates);
+		//logger.debug("acCoordinates : " + acCoordinates);
 
 		gm.setMMFF94Tables(ac);
 		mmff94Tables = gm.getPotentialParameterSet();
@@ -313,8 +324,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testBondStretching() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with Bond Stretching");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with Bond Stretching");
 
 		double testResult_SumEB = 164.37972112718;
 		double[] testResult_gradientSumEB = {-5.455159324048518,-6.483014473192981,62.37549096020401,205.23205964792473,
@@ -388,17 +399,17 @@ public class ForceFieldTests extends CDKTestCase {
 		BondStretching bs = new BondStretching();
 		bs.setMMFF94BondStretchingParameters(ac, mmff94Tables);
 
-		//System.out.println("bs.functionMMFF94SumEB(acCoordinates) = " + bs.functionMMFF94SumEB(acCoordinates));
+		//logger.debug("bs.functionMMFF94SumEB(acCoordinates) = " + bs.functionMMFF94SumEB(acCoordinates));
 		assertEquals(testResult_SumEB, bs.functionMMFF94SumEB(acCoordinates), 0.00001);
 
 		bs.setGradientMMFF94SumEB(acCoordinates);
-		//System.out.println("gradientMMFF94SumEB = " + bs.getGradientMMFF94SumEB());
+		//logger.debug("gradientMMFF94SumEB = " + bs.getGradientMMFF94SumEB());
 		for (int i = 0; i < testResult_gradientSumEB.length; i++) {
 			assertEquals(testResult_gradientSumEB[i], bs.getGradientMMFF94SumEB().getElement(i), 0.00001);
 		}
 
 		//bs.setHessianMMFF94SumEB(acCoordinates);
-		//System.out.println("HessianMMFF94SumEB = " + bs.getHessianMMFF94SumEB());
+		//logger.debug("HessianMMFF94SumEB = " + bs.getHessianMMFF94SumEB());
 		/*for (int i = 0; i < 24; i++) {
 			for (int j = 0; j < 24; j++) {
 				assertEquals(testResult_hessianSumEB[i * 24 + j], bs.getHessianMMFF94SumEB().getElement(i, j), 0.00001);
@@ -416,8 +427,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testAngleBending() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with Angle Bending");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with Angle Bending");
 
 		double testResult_SumEA = 5187817.002469799;
 		double[] testResult_gradientSumEA = {4568.596414777739,27508.49758516811,-142367.70349663895,7166.3094395713815,
@@ -528,17 +539,17 @@ public class ForceFieldTests extends CDKTestCase {
 		AngleBending ab = new AngleBending();
 		ab.setMMFF94AngleBendingParameters(ac, mmff94Tables);
 
-		//System.out.println("ab.functionMMFF94SumEA(acCoordinates) = " + ab.functionMMFF94SumEA(acCoordinates));
+		//logger.debug("ab.functionMMFF94SumEA(acCoordinates) = " + ab.functionMMFF94SumEA(acCoordinates));
 		assertEquals(testResult_SumEA, ab.functionMMFF94SumEA(acCoordinates), 0.00001);
 
 		ab.setGradientMMFF94SumEA(acCoordinates);
-		//System.out.println("ab.getGradientMMFF94SumEA() = " + ab.getGradientMMFF94SumEA());
+		//logger.debug("ab.getGradientMMFF94SumEA() = " + ab.getGradientMMFF94SumEA());
 		for (int i = 0; i < testResult_gradientSumEA.length; i++) {
 			assertEquals(testResult_gradientSumEA[i], ab.getGradientMMFF94SumEA().getElement(i), 0.00001);
 		}
 
 		//ab.setHessianMMFF94SumEA(acCoordinates);
-		//System.out.println("HessianMMFF94SumEA = " + ab.getHessianMMFF94SumEA());
+		//logger.debug("HessianMMFF94SumEA = " + ab.getHessianMMFF94SumEA());
 		/*for (int i = 0; i < 24; i++) {
 			for (int j = 0; j < 24; j++) {
 				assertEquals(testResult_hessianSumEA[i * 24 + j], ab.getHessianMMFF94SumEA().getElement(i, j), 0.00001);
@@ -557,8 +568,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testStretchBendInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with StretchBendInteraction");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with StretchBendInteraction");
 
 		double testResult_SumEBA = 241.0516463157123;
 		double[] testResult_gradientSumEBA = {-424.4366745401653,-424.4366745401653,-424.4366745401653,
@@ -574,16 +585,16 @@ public class ForceFieldTests extends CDKTestCase {
 		StretchBendInteractions sbi = new StretchBendInteractions();
 		sbi.setMMFF94StretchBendParameters(ac, mmff94Tables);
 
-		//System.out.println("sbi.functionMMFF94SumEBA(acCoordinates) = " + sbi.functionMMFF94SumEBA(acCoordinates));
+		//logger.debug("sbi.functionMMFF94SumEBA(acCoordinates) = " + sbi.functionMMFF94SumEBA(acCoordinates));
 		//assertEquals(testResult_SumEBA, sbi.functionMMFF94SumEBA(acCoordinates), 0.00001);
 
 		sbi.setGradientMMFF94SumEBA(acCoordinates);
-		//System.out.println("sbi.getGradientMMFF94SumEBA() = " + sbi.getGradientMMFF94SumEBA());
+		//logger.debug("sbi.getGradientMMFF94SumEBA() = " + sbi.getGradientMMFF94SumEBA());
 		/*for (int i = 0; i < testResult_gradientSumEBA.length; i++) {
 			assertEquals(testResult_gradientSumEBA[i], sbi.getGradientMMFF94SumEBA().getElement(i), 0.00001);
 		}*/
 
-		//System.out.println("HessianMMFF94SumEBA = " + sbi.HessianMMFF94SumEBA(acCoordinates));
+		//logger.debug("HessianMMFF94SumEBA = " + sbi.HessianMMFF94SumEBA(acCoordinates));
 	}
 
 
@@ -599,7 +610,7 @@ public class ForceFieldTests extends CDKTestCase {
 	public AtomContainer coordinateScrambler(AtomContainer molecule, int min, double positiveShift, double negativeShift) {
 		double nPertubatedAtoms = min + Math.random() * molecule.getAtomCount();
 		double coord = 0.0;
-		System.out.println("Number of pertubated Atoms:" + nPertubatedAtoms);
+		logger.debug("Number of pertubated Atoms:" + nPertubatedAtoms);
 		for (int i = 0; i < nPertubatedAtoms; i++) {
 			coord = Math.random();
 			if (coord <= 0.33) {
@@ -646,8 +657,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testTorsions() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with Torsions");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with Torsions");
 
 		double testResult_MMFF94SumET = 11.369615843222473;
 		double[] testResult_gradientSumET = {-2.901989311786579,0.3658878178439906,-1.3797882642835546,1.9171845133845622,
@@ -661,17 +672,17 @@ public class ForceFieldTests extends CDKTestCase {
 		Torsions t = new Torsions();
 		t.setMMFF94TorsionsParameters(ac, mmff94Tables);
 
-		//System.out.println("functionMMFF94SumET = " + t.functionMMFF94SumET(acCoordinates));
+		//logger.debug("functionMMFF94SumET = " + t.functionMMFF94SumET(acCoordinates));
 
 		assertEquals(testResult_MMFF94SumET, t.functionMMFF94SumET(acCoordinates), 0.00001);
 
-		t.setApproximateGradientMMFF94SumET(acCoordinates);
-		//System.out.println("t.getApproximateGradientMMFF94SumET() = " + t.getApproximateGradientMMFF94SumET());
+		t.set2ndOrderApproximateGradientMMFF94SumET(acCoordinates);
+		//logger.debug("t.getApproximateGradientMMFF94SumET() = " + t.getApproximateGradientMMFF94SumET());
 		for (int i = 0; i < testResult_gradientSumET.length; i++) {
-			assertEquals(testResult_gradientSumET[i], t.getApproximateGradientMMFF94SumET().getElement(i), 0.00001);
+			assertEquals(testResult_gradientSumET[i], t.get2ndOrderApproximateGradientMMFF94SumET().getElement(i), 0.00001);
 		}
 
-		//System.out.println("HessianMMFF94SumET = " + t.HessianMMFF94SumET(acCoordinates));
+		//logger.debug("HessianMMFF94SumET = " + t.HessianMMFF94SumET(acCoordinates));
 	}
 
 
@@ -684,8 +695,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testVanDerWaalsInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS with VanDerWaalsInteraction");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS with VanDerWaalsInteraction");
 
 		double testResult_MMFF94SumEvdW = 19.781709492460102;
 		double testResult_CCGSumEvdWSK = 19.781709492460102;
@@ -707,21 +718,21 @@ public class ForceFieldTests extends CDKTestCase {
 		SmoothingFunctions sf = new SmoothingFunctions();
 		sf.setSmoothingFunction(vdwi.getAtomDistance());
 
-		//System.out.println("functionMMFF94SumEvdW = " + vdwi.functionMMFF94SumEvdW(acCoordinates));
-		//System.out.println("functionCCGSumEvdWSK = " + vdwi.functionCCGSumEvdWSK(ac,sf.getSmoothingFunction()));
-		//System.out.println("functionCCGSumEvdWAv = " + vdwi.functionCCGSumEvdWAv(ac,sf.getSmoothingFunction()));
+		//logger.debug("functionMMFF94SumEvdW = " + vdwi.functionMMFF94SumEvdW(acCoordinates));
+		//logger.debug("functionCCGSumEvdWSK = " + vdwi.functionCCGSumEvdWSK(ac,sf.getSmoothingFunction()));
+		//logger.debug("functionCCGSumEvdWAv = " + vdwi.functionCCGSumEvdWAv(ac,sf.getSmoothingFunction()));
 
 		//assertEquals(testResult_MMFF94SumEvdW, vdwi.functionMMFF94SumEvdW(acCoordinates), 0.00001);
 		//assertEquals(testResult_CCGSumEvdWSK, vdwi.functionCCGSumEvdWSK(acCoordinates, sf.getSmoothingFunction()), 0.00001);
 		//assertEquals(testResult_CCGSumEvdWAv, vdwi.functionCCGSumEvdWAv(acCoordinates, sf.getSmoothingFunction()), 0.00001);
 
 		vdwi.setGradientMMFF94SumEvdW(acCoordinates);
-		//System.out.println("vdwi.gradientMMFF94SumEvdW(acCoordinates) = " + vdwi.gradientMMFF94SumEvdW(acCoordinates));
+		//logger.debug("vdwi.gradientMMFF94SumEvdW(acCoordinates) = " + vdwi.gradientMMFF94SumEvdW(acCoordinates));
 		/*for (int i = 0; i < testResult_gradientSumEwdW.length; i++) {
 			assertEquals(testResult_gradientSumEwdW[i], vdwi.getGradientMMFF94SumEvdW().getElement(i), 0.00001);
 		}*/
 
-		//System.out.println("HessianMMFF94SumEvdW = " + vdwi.HessianMMFF94SumEvdW(acCoordinates));
+		//logger.debug("HessianMMFF94SumEvdW = " + vdwi.HessianMMFF94SumEvdW(acCoordinates));
 	}
 
 }

@@ -6,6 +6,8 @@ import java.util.*;
 import javax.vecmath.*;
 import Jama.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Methods of Newton-Raphson approach.
@@ -16,11 +18,15 @@ import org.openscience.cdk.*;
  */
 public class NewtonRaphsonMethod {
 	GVector gradientPerInverseHessianVector = null;
+	private LoggingTool logger;
+
 
 	/**
 	 *  Constructor for the NR object
 	 */
-	public NewtonRaphsonMethod() { }
+	public NewtonRaphsonMethod() {        
+		logger = new LoggingTool(this);
+	}
 
 
 	public void hessianEigenValues(double[] forMatrix, int size) {
@@ -31,8 +37,8 @@ public class NewtonRaphsonMethod {
 		double[] realEigenvalues = eigenValues.getRealEigenvalues(); 
 		double[] imagEigenvalues = eigenValues.getImagEigenvalues(); 
 		for (int i=0; i<size ; i++) { 
-			System.out.println("Eigen values, real part, i=" + i + " : " + realEigenvalues[i]);
-			System.out.println("Eigen values, imaginary part, i=" + i + "  : " + imagEigenvalues[i]);
+			logger.debug("Eigen values, real part, i=" + i + " : " + realEigenvalues[i]);
+			logger.debug("Eigen values, imaginary part, i=" + i + "  : " + imagEigenvalues[i]);
 		}
 	}
 
@@ -48,27 +54,27 @@ public class NewtonRaphsonMethod {
 		}
 
 		/*
-		System.out.println();
+		logger.debug();
 		for (int i = 0; i < forDeterminatCalculation.length; i++) {
 			for (int j = 0; j < forDeterminatCalculation[i].length; j++) {
-				System.out.print(forDeterminatCalculation[i][j] + " ");
+				logger.debug(forDeterminatCalculation[i][j] + " ");
 			}
-			System.out.println();
+			logger.debug();
 		}		
 		*/
 		
 		Matrix matrixForDeterminatCalculation = new Matrix(forDeterminatCalculation);
 		//matrixForDeterminatCalculation.print(dimen, dimen);
 			
-		//System.out.println("matrixForDeterminatCalculation.det() = " + matrixForDeterminatCalculation.det());
+		//logger.debug("matrixForDeterminatCalculation.det() = " + matrixForDeterminatCalculation.det());
 		
 		if (matrixForDeterminatCalculation.det() != 0) {
 			hessiank.invert();
-			//System.out.println("hessiank.invert() = " + hessiank);
+			//logger.debug("hessiank.invert() = " + hessiank);
 			gradientPerInverseHessianVector = new GVector(gradientk.getSize());
 			gradientPerInverseHessianVector.mul(gradientk, hessiank);
 		}
-		else {System.out.println("The Newton-Raphson method can't be execute because the hessian can't be inverted");
+		else {logger.debug("The Newton-Raphson method can't be execute because the hessian can't be inverted");
 		}
 		return;
 	}

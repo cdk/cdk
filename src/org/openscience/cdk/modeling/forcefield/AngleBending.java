@@ -10,6 +10,8 @@ import javax.vecmath.*;
 import Jama.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Angle bending calculator for the potential energy function. Include function and derivatives.
@@ -24,7 +26,8 @@ public class AngleBending {
 
 	double mmff94SumEA = 0;
 	GVector gradientMMFF94SumEA = new GVector(3);
-	GVector approximateGradientMMFF94SumEA = new GVector(3);
+	GVector order2ndApproximateGradientMMFF94SumEA = new GVector(3);
+	GVector order5ApproximateGradientMMFF94SumEA = new GVector(3);
 	GMatrix hessianMMFF94SumEA = new GMatrix(3,3);
 
 	double[][] dDeltav = null;
@@ -42,12 +45,15 @@ public class AngleBending {
 	double[] deltav = null;
 
 	ForceFieldTools ffTools = new ForceFieldTools();
+	private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the AngleBending object
 	 */
-	public AngleBending() { }
+	public AngleBending() {
+	        logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -72,7 +78,7 @@ public class AngleBending {
 				}
 			}
 		}
-		//System.out.println("angleNumber = " + angleNumber);
+		//logger.debug("angleNumber = " + angleNumber);
 
 		Vector angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
@@ -92,17 +98,17 @@ public class AngleBending {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {
 						angleData = pc.getAngleData(atomConnected[j].getID(), molecule.getAtomAt(i).getID(), atomConnected[k].getID());
-						//System.out.println("angleData : " + angleData);
+						//logger.debug("angleData : " + angleData);
 						l += 1;
 						v0[l] = ((Double) angleData.get(0)).doubleValue();
 						k2[l] = ((Double) angleData.get(1)).doubleValue();
 						k3[l] = ((Double) angleData.get(2)).doubleValue();
 						//k4[l] = ((Double) angleData.get(3)).doubleValue();
 
-						//System.out.println("v0[" + l + "] = " + v0[l]);
-						//System.out.println("k2[" + l + "] = " + k2[l]);
-						//System.out.println("k3[" + l + "] = " + k3[l]);
-						//System.out.println("k4[" + l + "] = " + k4[l]);
+						//logger.debug("v0[" + l + "] = " + v0[l]);
+						//logger.debug("k2[" + l + "] = " + k2[l]);
+						//logger.debug("k3[" + l + "] = " + k3[l]);
+						//logger.debug("k4[" + l + "] = " + k4[l]);
 						
 						angleAtomPosition[l] = new int[3];
 						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[j]);
@@ -127,17 +133,18 @@ public class AngleBending {
 	 */
 	public void calculateDeltav(GVector coord3d) {
 		
-		//System.out.println("deltav.length = " + deltav.length);
+		//logger.debug("deltav.length = " + deltav.length);
 		for (int i = 0; i < angleNumber; i++) {
 			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
-			//System.out.println("v[" + i + "] = " + v[i]);
-			//System.out.println("v0[" + i + "] = " + v0[i]);
+			//logger.debug("v[" + i + "] = " + v[i]);
+			//logger.debug("v0[" + i + "] = " + v0[i]);
 			deltav[i] = v[i] - v0[i];
 			if (deltav[i] > 0) {
-			deltav[i]=-deltav[i]; 
+				deltav[i]= (-1) * deltav[i]; 
 			}
-			
-			//System.out.println("deltav[" + i + "]= " + deltav[i]);
+			/*if (Math.abs(deltav[i]) < 0.05) {
+				logger.debug("deltav[" + i + "]= " + deltav[i]);
+			}*/
 		}
 	}
 
@@ -152,18 +159,20 @@ public class AngleBending {
 		calculateDeltav(coord3d);
 		mmff94SumEA = 0;
 		for (int i = 0; i < angleNumber; i++) {
-			//System.out.println("k2[" + i + "]= " + k2[i]);
-			//System.out.println("k3[" + i + "]= " + k3[i]);
-			//System.out.println("deltav[" + i + "]= " + deltav[i]);
-			//System.out.println("For Angle " + i + " : " + k2[i] * Math.pow(deltav[i],2) + k3[i] * Math.pow(deltav[i],3));
+			//logger.debug("k2[" + i + "]= " + k2[i]);
+			//logger.debug("k3[" + i + "]= " + k3[i]);
+			//logger.debug("deltav[" + i + "]= " + deltav[i]);
+			//logger.debug("For Angle " + i + " : " + k2[i] * Math.pow(deltav[i],2) + k3[i] * Math.pow(deltav[i],3));
 
 			mmff94SumEA = mmff94SumEA + k2[i] * Math.pow(deltav[i],2) 
 						+ k3[i] * Math.pow(deltav[i],3);
+						
+			//mmff94SumEA = Math.abs(mmff94SumEA);
 			
-			//System.out.println("mmff94SumEA = " + mmff94SumEA);
+			//logger.debug("mmff94SumEA = " + mmff94SumEA);
 		}
 		//mmff94SumEA = Math.abs(mmff94SumEA);
-		//System.out.println("mmff94SumEA = " + mmff94SumEA);
+		//logger.debug("mmff94SumEA = " + mmff94SumEA);
 		return mmff94SumEA;
 	}
 
@@ -187,33 +196,33 @@ public class AngleBending {
 			
 			forAtomNumber = new Double(m/3);
 			coordinate = m % 3;
-			//System.out.println("coordinate = " + coordinate);
+			//logger.debug("coordinate = " + coordinate);
 
 			atomNumber = forAtomNumber.intValue();
-			//System.out.println("atomNumber = " + atomNumber);
+			//logger.debug("atomNumber = " + atomNumber);
 
 			for (int l = 0; l < angleNumber; l++) {
 				
 				if ((angleAtomPosition[l][0] == atomNumber) | (angleAtomPosition[l][1] == atomNumber) | (angleAtomPosition[l][2] == atomNumber)) {
 
 					Point3d xi = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][0]), coord3d.getElement(3 * angleAtomPosition[l][0] + 1),coord3d.getElement( 3 * angleAtomPosition[l][0] + 2));
-					//System.out.println("xi = " + xi);
+					//logger.debug("xi = " + xi);
 					Point3d xj = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][1]), coord3d.getElement(3 * angleAtomPosition[l][1] + 1),coord3d.getElement( 3 * angleAtomPosition[l][1] + 2));
-					//System.out.println("xj = " + xj);
+					//logger.debug("xj = " + xj);
 					Point3d xk = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][2]), coord3d.getElement(3 * angleAtomPosition[l][2] + 1),coord3d.getElement( 3 * angleAtomPosition[l][2] + 2));
-					//System.out.println("xk = " + xk);
+					//logger.debug("xk = " + xk);
 				
 					Vector3d xij = new Vector3d();
 					xij.sub(xi,xj);
-					//System.out.println("xij = " + xij);
+					//logger.debug("xij = " + xij);
 					Vector3d xkj = new Vector3d();
 					xkj.sub(xk,xj);
-					//System.out.println("xkj = " + xkj);
+					//logger.debug("xkj = " + xkj);
 					
 					double rji = xj.distance(xi);
-					//System.out.println("rji = " + rji);
+					//logger.debug("rji = " + rji);
 					double rjk = xj.distance(xk);
-					//System.out.println("rji = " + rjk);
+					//logger.debug("rji = " + rjk);
 
 					dDeltav[m][l] = (-1/Math.sqrt(1-Math.pow(xij.dot(xkj)/(rji * rjk),2))) * (1/(Math.pow(rji,2) * Math.pow(rjk,2))); 
 
@@ -256,7 +265,7 @@ public class AngleBending {
 				else {
 					dDeltav[m][l] = 0;
 				}
-				//System.out.println("dDeltav[" + m + "][" + l + "] = " + dDeltav[m][l]);
+				//logger.debug("dDeltav[" + m + "][" + l + "] = " + dDeltav[m][l]);
 			}
 		}
 		
@@ -296,7 +305,7 @@ public class AngleBending {
 			gradientMMFF94SumEA.setElement(m, sumGradientEA);
 		}
 
-		//System.out.println("gradientMMFF94SumEA : " + gradientMMFF94SumEA);
+		//logger.debug("gradientMMFF94SumEA : " + gradientMMFF94SumEA);
 	}
 
 
@@ -312,37 +321,77 @@ public class AngleBending {
 
 
 	/**
-	 *  Evaluate an approximation of the gradient, of the angle bending term, for a given atoms
+	 *  Evaluate a 2nd order approximation of the gradient, of the angle bending term, for a given atoms
 	 *  coordinates
 	 *
 	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void setApproximateGradientMMFF94SumEA(GVector coord3d) {
-		approximateGradientMMFF94SumEA.setSize(coord3d.getSize());
-		double sigma = 0.005;
+	public void set2ndOrderApproximateGradientMMFF94SumEA(GVector coord3d) {
+		order2ndApproximateGradientMMFF94SumEA.setSize(coord3d.getSize());
+		double sigma = Math.pow(0.000000000000001,0.33);
 		GVector xplusSigma = new GVector(coord3d.getSize());
 		GVector xminusSigma = new GVector(coord3d.getSize());
 		
-		for (int m = 0; m < approximateGradientMMFF94SumEA.getSize(); m++) {
+		for (int m = 0; m < order2ndApproximateGradientMMFF94SumEA.getSize(); m++) {
 			xplusSigma.set(coord3d);
 			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
 			xminusSigma.set(coord3d);
 			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
-			approximateGradientMMFF94SumEA.setElement(m,(functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) / (2 * sigma));
+			order2ndApproximateGradientMMFF94SumEA.setElement(m,(functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) / (2 * sigma));
 		}
 			
-		//System.out.println("approximateGradientMMFF94SumEA : " + approximateGradientMMFF94SumEA);
+		//logger.debug("order2ndApproximateGradientMMFF94SumEA : " + order2ndApproximateGradientMMFF94SumEA);
 	}
 
 
 	/**
-	 *  Get the approximate gradient of the angle bending term.
+	 *  Get the 2nd order approximate gradient of the angle bending term.
 	 *
 	 *
-	 *@return           Angle bending approximate gradient value
+	 *@return           Angle bending 2nd order approximate gradient value.
 	 */
-	public GVector getApproximateGradientMMFF94SumEA() {
-		return approximateGradientMMFF94SumEA;
+	public GVector get2ndOrderApproximateGradientMMFF94SumEA() {
+		return order2ndApproximateGradientMMFF94SumEA;
+	}
+
+
+	/**
+	 *  Evaluate an 5 order approximation of the gradient, of the angle bending term, for a given atoms
+	 *  coordinates
+	 *
+	 *@param  coords3d  Current molecule coordinates.
+	 */
+	public void set5OrderApproximateGradientMMFF94SumEA(GVector coord3d) {
+		order5ApproximateGradientMMFF94SumEA.setSize(coord3d.getSize());
+		double sigma = Math.pow(0.000000000000001,0.2);
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		GVector xplus2Sigma = new GVector(coord3d.getSize());
+		GVector xminus2Sigma = new GVector(coord3d.getSize());
+		
+		for (int m=0; m < order5ApproximateGradientMMFF94SumEA.getSize(); m++) {
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
+			xplus2Sigma.set(coord3d);
+			xplus2Sigma.setElement(m,coord3d.getElement(m) + 2 * sigma);
+			xminus2Sigma.set(coord3d);
+			xminus2Sigma.setElement(m,coord3d.getElement(m) - 2 * sigma);
+			order5ApproximateGradientMMFF94SumEA.setElement(m, (8 * (functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) - (functionMMFF94SumEA(xplus2Sigma) - functionMMFF94SumEA(xminus2Sigma))) / (12 * sigma));
+		}
+			
+		//logger.debug("order5ApproximateGradientMMFF94SumEA : " + order5ApproximateGradientMMFF94SumEA);
+	}
+
+
+	/**
+	 *  Get the 5 order approximate gradient of the angle bending term.
+	 *
+	 *@return        Angle bending 5 order approximate gradient value.
+	 */
+	public GVector get5OrderApproximateGradientMMFF94SumEA() {
+		return order5ApproximateGradientMMFF94SumEA;
 	}
 
 
@@ -398,10 +447,10 @@ public class AngleBending {
 			
 			forAtomNumber = new Double(n/3);
 			coordinaten = n % 3;
-			//System.out.println("coordinaten = " + coordinaten);
+			//logger.debug("coordinaten = " + coordinaten);
 				
 			atomNumbern = forAtomNumber.intValue();
-			//System.out.println("atomNumbern = " + atomNumbern);
+			//logger.debug("atomNumbern = " + atomNumbern);
 				
 			for (int m = 0; m < coord3d.getSize(); m++) {
 			
@@ -409,10 +458,10 @@ public class AngleBending {
 			
 				forAtomNumber = new Double(m/3);
 				coordinatem = m % 3;
-				//System.out.println("coordinatem = " + coordinatem);
+				//logger.debug("coordinatem = " + coordinatem);
 
 				atomNumberm = forAtomNumber.intValue();
-				//System.out.println("atomNumberm = " + atomNumberm);
+				//logger.debug("atomNumberm = " + atomNumberm);
 
 				for (int l = 0; l < angleNumber; l++) {
 				
@@ -420,23 +469,23 @@ public class AngleBending {
 						if ((angleAtomPosition[l][0] == atomNumbern) | (angleAtomPosition[l][1] == atomNumbern) | (angleAtomPosition[l][2] == atomNumbern)) {
 
 							Point3d xi = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][0]), coord3d.getElement(3 * angleAtomPosition[l][0] + 1),coord3d.getElement( 3 * angleAtomPosition[l][0] + 2));
-							//System.out.println("xi = " + xi);
+							//logger.debug("xi = " + xi);
 							Point3d xj = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][1]), coord3d.getElement(3 * angleAtomPosition[l][1] + 1),coord3d.getElement( 3 * angleAtomPosition[l][1] + 2));
-							//System.out.println("xj = " + xj);
+							//logger.debug("xj = " + xj);
 							Point3d xk = new Point3d(coord3d.getElement(3 * angleAtomPosition[l][2]), coord3d.getElement(3 * angleAtomPosition[l][2] + 1),coord3d.getElement( 3 * angleAtomPosition[l][2] + 2));
-							//System.out.println("xk = " + xk);
+							//logger.debug("xk = " + xk);
 				
 							Vector3d xij = new Vector3d();
 							xij.sub(xi,xj);
-							//System.out.println("xij = " + xij);
+							//logger.debug("xij = " + xij);
 							Vector3d xkj = new Vector3d();
 							xkj.sub(xk,xj);
-							//System.out.println("xkj = " + xkj);
+							//logger.debug("xkj = " + xkj);
 					
 							double rij = xi.distance(xj);
-							//System.out.println("rij = " + rij);
+							//logger.debug("rij = " + rij);
 							double rkj = xk.distance(xj);
-							//System.out.println("rkj = " + rkj);
+							//logger.debug("rkj = " + rkj);
 
 							ddDeltav1 = (-1/Math.sqrt(Math.pow(1-Math.pow(xij.dot(xkj)/(rij * rkj),2),3)))
 									* (xij.dot(xkj)/(rij * rkj))
@@ -471,7 +520,7 @@ public class AngleBending {
 
 							ddDeltav2a4d = 0;
 
-							//System.out.println("OK: had d1 and have the atomNumbern");
+							//logger.debug("OK: had d1 and have the atomNumbern");
 						
 							if (angleAtomPosition[l][0] == atomNumberm) {
 
@@ -749,7 +798,7 @@ public class AngleBending {
 					else {
 						ddDeltav[n][m][l] = 0;
 					}
-					//System.out.println("ddDeltav[" + n + "][" + m + "][" + l + "] = " + ddDeltav[n][m][l]);
+					//logger.debug("ddDeltav[" + n + "][" + m + "][" + l + "] = " + ddDeltav[n][m][l]);
 				}
 			}
 		}
@@ -795,14 +844,14 @@ public class AngleBending {
 			}
 		}
 		/*for (int n = 0; n < forHessian.length; n++) {
-			System.out.print(forHessian[n] + ", ");
+			logger.debug(forHessian[n] + ", ");
 			if (n % 6 == 5) {
-				System.out.println("");
+				logger.debug("");
 			}
 		}*/
 		hessianMMFF94SumEA.setSize(coord3d.getSize(), coord3d.getSize());
 		hessianMMFF94SumEA.set(forHessian); 
-		//System.out.println("hessianMMFF94SumEA : " + hessianMMFF94SumEA);
+		//logger.debug("hessianMMFF94SumEA : " + hessianMMFF94SumEA);
 		
 		NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
 		nrm.hessianEigenValues(forHessian, coord3d.getSize());

@@ -11,6 +11,8 @@ import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.qsar.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.Descriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**			
  *  Van Der Waals Interactions calculator for the potential energy function. Include function and derivatives.
@@ -69,11 +71,14 @@ public class VanDerWaalsInteractions {
 	double vdwScale14 = 1;	// Scale factor for 1-4 interactions. To take in the future from mmff94.prm files.
 	
 	ForceFieldTools ffTools = new ForceFieldTools();
+	private LoggingTool logger;
 	
 	/**
 	 *  Constructor for the VanDerWaalsInteractions object
 	 */
-	public VanDerWaalsInteractions() {}
+	public VanDerWaalsInteractions() {        
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -100,7 +105,7 @@ public class VanDerWaalsInteractions {
 				}
 			}
 		}
-		//System.out.println("vdwInteractionNumber : " + vdwInteractionNumber);
+		//logger.debug("vdwInteractionNumber : " + vdwInteractionNumber);
 		
 		Vector vdwInteractionData = null;
 
@@ -149,7 +154,7 @@ public class VanDerWaalsInteractions {
 					asteriskRI = aaI * Math.pow(alphaI,0.25);
 					
 					vdwInteractionData = (Vector) parameterSet.get("data" + molecule.getAtomAt(j).getID());
-					//System.out.println("vdwInteractionData : " + vdwInteractionData);
+					//logger.debug("vdwInteractionData : " + vdwInteractionData);
 					aaJ = ((Double) vdwInteractionData.get(6)).doubleValue();
 					gJ = ((Double) vdwInteractionData.get(7)).doubleValue();
 					alphaJ = ((Double) vdwInteractionData.get(1)).doubleValue();
@@ -165,7 +170,7 @@ public class VanDerWaalsInteractions {
 					}
 
 					eSK[l] = ((181.16 * gI * gJ * alphaI * alphaJ) / (Math.sqrt(alphaI/nI) + Math.sqrt(alphaJ/nJ))) * 1 / Math.pow(asteriskR[l], 6);
-					//System.out.println("eSK = " + eSK[l]);
+					//logger.debug("eSK = " + eSK[l]);
 					
 					vdwInteractionData = (Vector) parameterSet.get("vdw" + molecule.getAtomAt(i).getID());
 					atomRadiu0[i] = ((Double) vdwInteractionData.get(0)).doubleValue();
@@ -210,7 +215,7 @@ public class VanDerWaalsInteractions {
 		for (int l = 0; l < vdwInteractionNumber; l++) {
 
 			r[l] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, vdWiAtomPosition[l][0], vdWiAtomPosition[l][1]);
-			//System.out.println("r[" + l + "]= " + r[l]);
+			//logger.debug("r[" + l + "]= " + r[l]);
 		}
 	}
 
@@ -240,7 +245,7 @@ public class VanDerWaalsInteractions {
 							(Math.pow(1.07 * asteriskR[l] / (r[l] + 0.07 * asteriskR[l]) ,7)) *
 							((1.12 * Math.pow(asteriskR[l],7) / (Math.pow(r[l],7) + 0.12 * Math.pow(asteriskR[l],7))) - 2);
 		}
-		//System.out.println("mmff94SumEvdW = " + mmff94SumEvdW);
+		//logger.debug("mmff94SumEvdW = " + mmff94SumEvdW);
 		return mmff94SumEvdW;
 	}
 
@@ -263,7 +268,7 @@ public class VanDerWaalsInteractions {
 							((nij/mij) * ((1+b) * Math.pow(asteriskR[l],mij) / (Math.pow(r[l],mij) + b * Math.pow(asteriskR[l],mij)))   - (mij + nij)/mij) *
 							s[l] * t[l] * ivdw[l]);
 		}
-		//System.out.println("ccgSumEvdWSlaterKirkwood = " + ccgSumEvdWSlaterKirkwood);
+		//logger.debug("ccgSumEvdWSlaterKirkwood = " + ccgSumEvdWSlaterKirkwood);
 		return ccgSumEvdWSlaterKirkwood;
 	}
 
@@ -287,7 +292,7 @@ public class VanDerWaalsInteractions {
 							s[l] * t[l] * ivdw[l]);
 							
 		}
-		//System.out.println("ccgSumEvdWAverage = " + ccgSumEvdWAverage);
+		//logger.debug("ccgSumEvdWAverage = " + ccgSumEvdWAverage);
 		return ccgSumEvdWAverage;
 	}
 
@@ -321,7 +326,7 @@ public class VanDerWaalsInteractions {
 			}
 			gradientMMFF94SumEvdW.setElement(i, sumGradientEvdW);
 		}
-		//System.out.println("gradientMMFF94SumEvdW = " + gradientMMFF94SumEvdW);
+		//logger.debug("gradientMMFF94SumEvdW = " + gradientMMFF94SumEvdW);
 	}
 
 
@@ -378,7 +383,7 @@ public class VanDerWaalsInteractions {
 			
 			gradientCCGSumEvdWSlaterKirkwood.setElement(i, sumGradientEvdW);
 		}
-		//System.out.println("gradientCCGSumEvdWSlaterKirkwood = " + gradientCCGSumEvdWSlaterKirkwood);
+		//logger.debug("gradientCCGSumEvdWSlaterKirkwood = " + gradientCCGSumEvdWSlaterKirkwood);
 		return gradientCCGSumEvdWSlaterKirkwood;
 	}*/
 
@@ -407,7 +412,7 @@ public class VanDerWaalsInteractions {
 
 		hessianMMFF94SumEvdW.setSize(coords3d.getSize(), coords3d.getSize());
 		hessianMMFF94SumEvdW.set(forHessian); 
-		//System.out.println("hessianMMFF94SumEvdW : " + hessianMMFF94SumEvdW);
+		//logger.debug("hessianMMFF94SumEvdW : " + hessianMMFF94SumEvdW);
 		return hessianMMFF94SumEvdW;
 	}*/
 

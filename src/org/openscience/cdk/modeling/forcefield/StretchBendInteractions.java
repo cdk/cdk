@@ -8,6 +8,8 @@ import Jama.*;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Stretch-Bend Interaction calculator for the potential energy function. Include function and derivatives.
@@ -44,12 +46,15 @@ public class StretchBendInteractions {
 	double[] deltarkj = null;
 
 	ForceFieldTools ffTools = new ForceFieldTools();
+	private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the StretchBendInteractions object
 	 */
-	public StretchBendInteractions() { }
+	public StretchBendInteractions() {        
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -75,7 +80,7 @@ public class StretchBendInteractions {
 				}
 			}
 		}
-		//System.out.println("angleNumber = " + angleNumber);
+		//logger.debug("angleNumber = " + angleNumber);
 
 		Vector stretchBendInteractionsData = null;
 		Vector bondData = null;
@@ -98,13 +103,13 @@ public class StretchBendInteractions {
 				for (int i = 0; i < atomConnected.length; i++) {
 					for (int k = i+1; k < atomConnected.length; k++) {
 						stretchBendInteractionsData = pc.getBondAngleInteractionData(atomConnected[i].getID(), molecule.getAtomAt(j).getID(), atomConnected[k].getID());
-						//System.out.println("stretchBendInteractionsData : " + stretchBendInteractionsData);
+						//logger.debug("stretchBendInteractionsData : " + stretchBendInteractionsData);
 						l += 1;
 						kbaIJK[l] = ((Double) stretchBendInteractionsData.get(0)).doubleValue();
 						kbaKJI[l] = ((Double) stretchBendInteractionsData.get(1)).doubleValue();
 
-						//System.out.println("kbaIJK[" + l + "] = " + kbaIJK[l]);
-						//System.out.println("kbaKJI[" + l + "] = " + kbaKJI[l]);
+						//logger.debug("kbaIJK[" + l + "] = " + kbaIJK[l]);
+						//logger.debug("kbaKJI[" + l + "] = " + kbaKJI[l]);
 						
 						angleData = pc.getAngleData(atomConnected[i].getID(), molecule.getAtomAt(j).getID(), atomConnected[k].getID());		
 						v0[l] = ((Double) angleData.get(0)).doubleValue();
@@ -143,7 +148,7 @@ public class StretchBendInteractions {
 
 		for (int i = 0; i < angleNumber; i++) {
 			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coords3d, angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
-			//System.out.println("v[" + i + "]= " + v[i]);
+			//logger.debug("v[" + i + "]= " + v[i]);
 			deltav[i] = v[i] - v0[i];
 
 			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][1], angleAtomPosition[i][0]);
@@ -167,7 +172,7 @@ public class StretchBendInteractions {
 		for (int j = 0; j < angleNumber; j++) {
 			mmff94SumEBA = mmff94SumEBA + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * deltav[j];
 		}
-		//System.out.println("mmff94SumEBA = " + mmff94SumEBA);
+		//logger.debug("mmff94SumEBA = " + mmff94SumEBA);
 		return mmff94SumEBA;
 	}
 
@@ -203,7 +208,7 @@ public class StretchBendInteractions {
 			
 			gradientMMFF94SumEBA.setElement(i, sumGradientEBA);
 		}
-		//System.out.println("gradientMMFF94SumEBA = " + gradientMMFF94SumEBA);
+		//logger.debug("gradientMMFF94SumEBA = " + gradientMMFF94SumEBA);
 	}
 
 
@@ -248,7 +253,7 @@ public class StretchBendInteractions {
 
 		hessianMMFF94SumEBA.setSize(coords3d.getSize(), coords3d.getSize());
 		hessianMMFF94SumEBA.set(forHessian); 
-		//System.out.println("hessianMMFF94SumEBA : " + hessianMMFF94SumEBA);
+		//logger.debug("hessianMMFF94SumEBA : " + hessianMMFF94SumEBA);
 	}
 
 

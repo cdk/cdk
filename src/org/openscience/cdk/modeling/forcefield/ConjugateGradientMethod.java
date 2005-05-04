@@ -5,6 +5,8 @@ import java.lang.*;
 import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Find a direction from a point of the 3xN coordinates space using the conjugate gradient approach.
@@ -15,18 +17,18 @@ import org.openscience.cdk.*;
  */
 public class ConjugateGradientMethod {
 	double uk = 0;
-	GVector vk = new GVector(3);
-	GVector vkminus1 = new GVector(3);
+	GVector vk = null;
+	GVector vkminus1 = null;
+	GVector gkminus1 = null;
+
+	private LoggingTool logger;
+
 
 	/**
 	 *  Constructor for the ConjugateGradientMethod object
 	 */
-	public ConjugateGradientMethod() { }
-
-
-	public ConjugateGradientMethod(GVector coords3d) {
-		vk.setSize(coords3d.getSize());
-		vkminus1.setSize(coords3d.getSize());
+	public ConjugateGradientMethod() {
+		logger = new LoggingTool(this);
 	}
 
 
@@ -38,7 +40,7 @@ public class ConjugateGradientMethod {
 		
 		uk = gk.dot(gk) / gkminus1.dot(gkminus1);
 		
-		//System.out.println("uk = " + uk);
+		//logger.debug("uk = " + uk);
 		return;
 	}
 
@@ -51,21 +53,34 @@ public class ConjugateGradientMethod {
 	public void setvk(GVector gk, int iterNumber) {
 
 		if (iterNumber != 1) {
-			vkminus1.set(vk);
-			vk.set(gk);
+			if (gk.angle(gkminus1) > 1) {
+				vkminus1.set(vk);
+				setuk(gkminus1,gk);
+				vkminus1.scale(uk);
+				vk.set(gk);
+				vk.scale(-1);
+				vk.add(vkminus1);
+				//vk.normalize();
+				gkminus1.set(gk);
+				//logger.debug("vector vk : " + vk);
+			} else {
+				vk.set(gk);
+				vk.normalize();
+				vk.scale(-1);
+				//logger.debug("vectorvk : " + vk);
+				
+				gkminus1.set(gk);
+			}
+		} else {
+			vk = new GVector(gk);
+			vkminus1 = new GVector(gk.getSize());
+			gkminus1 = new GVector(gk);
+		
+			vk.normalize();
 			vk.scale(-1);
-			vkminus1.scale(uk);
-			vk.add(vkminus1);
-			//System.out.println("vector vk : " + vk);
+			//logger.debug("vectorvk : " + vk);
 		}
-		else {
-		vk.set(gk);
-		vk.normalize();
-		vk.scale(-1);
-		//System.out.println("vectorvk : " + vk);
-}
 		return;
 	}
-
 }
 

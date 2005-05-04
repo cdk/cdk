@@ -7,6 +7,7 @@ import javax.vecmath.*;
 
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 
 /**			
@@ -21,12 +22,15 @@ public class SmoothingFunctions {
 	double cutoffr0 = 5;	// For Smoothing function (s)
 	double cutoffr1 = 6;	// For Smoothing function (s)
 	double dampingFactor = 1;	// For Smoothing function (s)
+	private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the SmoothingFunctions object
 	 */
-	public SmoothingFunctions() { }
+	public SmoothingFunctions() {        
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -48,7 +52,7 @@ public class SmoothingFunctions {
 			} else {
 				s[i] = 1 - dampingFactor * ((atomDistances[i] - cutoffr0) / (cutoffr1 - cutoffr0));
 			}
-			//System.out.println("s[" + i + "] = " + s[i]);
+			//logger.debug("s[" + i + "] = " + s[i]);
 		}
 	}
 

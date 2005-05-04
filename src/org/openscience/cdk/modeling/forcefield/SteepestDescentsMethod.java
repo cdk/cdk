@@ -5,6 +5,8 @@ import java.lang.*;
 import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Find a direction from a point of the coordinates space using the steepest descents approach.
@@ -15,9 +17,12 @@ import org.openscience.cdk.*;
  */
 public class SteepestDescentsMethod {
 	GVector sk = new GVector(3);
+	private LoggingTool logger;
 
 
-	public SteepestDescentsMethod() {}
+	public SteepestDescentsMethod() {        
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -41,7 +46,7 @@ public class SteepestDescentsMethod {
 		sk.set(gk);
 		sk.normalize();
 		sk.scale(-1);
-		//System.out.println("vectorS" + iterNumber + " = " + sk);
+		//logger.debug("vectorS" + iterNumber + " = " + sk);
 		return;
 	}
 

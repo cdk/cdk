@@ -32,7 +32,7 @@ public class TestPotentialFunction implements PotentialFunction {
 
 
 	/**
-	 *  Evaluate the potential energy function in a given point
+	 *  Evaluate the potential energy function in a given point.
 	 *
 	 *@param  point  Current molecule coordinates.
 	 *@return        Function value

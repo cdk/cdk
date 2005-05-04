@@ -6,6 +6,8 @@ import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Call the minimization methods. Check the convergence.
@@ -28,6 +30,9 @@ public class GeometricMinimizer {
         GVector kCoordinates = null;
 	GVector kplus1Coordinates = null;
 	int atomNumbers = 1;
+	
+	double fxk = 0;
+	double fxkplus1 = 0;
 
 	GVector gradientk = null;
 	GVector gradientkplus1 = null;
@@ -44,6 +49,7 @@ public class GeometricMinimizer {
 	double d = 0;
 	
 	ForceFieldTools ffTools = new ForceFieldTools();
+	private LoggingTool logger;
 
 	Molecule molecule;
 
@@ -51,7 +57,9 @@ public class GeometricMinimizer {
 	/**
 	 *  Constructor for the GeometricMinimizer object
 	 */
-	public GeometricMinimizer() { }
+	public GeometricMinimizer() {
+		logger = new LoggingTool(this);
+	}
 
 
 	public void setMolecule(Molecule mol, boolean clone) {
@@ -105,7 +113,7 @@ public class GeometricMinimizer {
 		//kCoordinates.setSize(dimension);
 		//kCoordinates.set(initialCoord);
 		kCoordinates=initialCoord;
-		//System.out.println("Coordinates at iteration 1: X1 = " + kCoordinates);
+		//logger.debug("Coordinates at iteration 1: X1 = " + kCoordinates);
 		gradientk = new GVector(kCoordinates.getSize());
 		kplus1Coordinates = new GVector(kCoordinates.getSize());
 		gradientkplus1 = new GVector(kCoordinates.getSize());
@@ -129,11 +137,11 @@ public class GeometricMinimizer {
 		RMS = gradientkplus1.dot(gradientkplus1);
 		RMS = RMS / kCoordinates.getSize();
 		RMS = Math.sqrt(RMS);
-		//System.out.print("RMS = " + RMS);
+		//logger.debug("RMS = " + RMS);
 
 		if (RMS < convergenceCriterion) {
 			convergence = true;
-			//System.out.println("RMS convergence");
+			logger.debug("RMS convergence");
 		}
 
 		RMSD = 0;
@@ -143,11 +151,11 @@ public class GeometricMinimizer {
 		}
 		RMSD = RMSD / kCoordinates.getSize();
 		RMSD = Math.sqrt(RMSD);
-		//System.out.print("RMSD = " + RMSD);
+		//logger.debug("RMSD = " + RMSD);
 
 		if (RMSD < convergenceCriterion) {
 			convergence = true;
-			//System.out.println("RMSD convergence");
+			logger.debug("RMSD convergence");
 		}
 	}
 
@@ -181,13 +189,14 @@ public class GeometricMinimizer {
     public void steepestDescentsMinimization(GVector initialCoordinates, PotentialFunction forceField) {
 		
 		initializeMinimizationParameters(initialCoordinates);
-
-		//System.out.println("STEEPESTDM: initial coords:"+initialCoordinates);
-		//System.out.println("STEEPESTDM: kcoordinates coords:"+kCoordinates);
+		fxk = forceField.energyFunction(initialCoordinates);
+		//logger.debug("STEEPESTDM: initial coords:"+initialCoordinates);
+		//logger.debug("STEEPESTDM: kcoordinates coords:"+kCoordinates);
+		logger.debug("f(x0) = " + fxk);
 				
 		forceField.setEnergyGradient(kCoordinates);
 		gradientk.set(forceField.getEnergyGradient());
-		//System.out.println("Initial gradient : g0 = " + gradientk);
+		//logger.debug("Initial gradient : g0 = " + gradientk);
 
 		steepestDescentsMinimum = new GVector(kCoordinates);
 		GVector sk = new GVector(gradientk.getSize());
@@ -195,8 +204,8 @@ public class GeometricMinimizer {
 
 		LineSearch ls = new LineSearch();
 
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS steepestDescentTest");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS steepestDescentTest");
 		
 		SteepestDescentsMethod sdm = new SteepestDescentsMethod(kCoordinates);
 				
@@ -206,40 +215,46 @@ public class GeometricMinimizer {
 			iterationNumberk += 1;
 			
 
-			//System.out.println("");
-			//System.out.println("SD Iteration number: " + iterationNumberkplus1);
-			//System.out.println("gm.steepestDescentsMinimisation, Energy Gradient:"+forceField.getEnergyGradient());
+			//logger.debug("");
+			//logger.debug("SD Iteration number: " + iterationNumberkplus1);
+			//logger.debug("gm.steepestDescentsMinimisation, Energy Gradient:"+forceField.getEnergyGradient());
 			
 			if (iterationNumberkplus1 != 1) {
 				kCoordinates.set(kplus1Coordinates);
+				fxk = fxkplus1;
 				gradientk.set(gradientkplus1);
 				sk.set(skplus1);
 			} 			
-			//System.out.println("Search direction: ");
+			//logger.debug("Search direction: ");
 			sdm.setSk(gradientk, iterationNumberkplus1);
 			skplus1.set(sdm.sk);
 			
-			ls.setLineSearchLambda(kCoordinates, sdm.sk, forceField, iterationNumberk);
-			setkplus1Coordinates(sdm.sk, ls.lineSearchLambda);			
-			//System.out.print("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
-			//System.out.println("f(x" + iterationNumberkplus1 + ") = " + forceField.energyFunction(kplus1Coordinates));
+			ls.setLineSearchLambda(kCoordinates, sdm.sk, forceField);
+			setkplus1Coordinates(sdm.sk, ls.lineSearchLambda);
+			fxkplus1 = forceField.energyFunction(kplus1Coordinates); 			
+			//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
+			//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
 
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradientkplus1.set(forceField.getEnergyGradient());
 			
 			checkConvergence(SDconvergenceCriterion);
 
-			//System.out.println("");
-			//System.out.println("f(x" + iterationNumberk + ") = " + forceField.energyFunction(kCoordinates));
-			//System.out.println("f(x" + iterationNumberkplus1 + ") = " + forceField.energyFunction(kplus1Coordinates));
-			//System.out.println("gradientkplus1 = " + gradientkplus1);
-			if (iterationNumberkplus1 != 1) {
-				//System.out.println("sk+1.sk = " + skplus1.dot(sk));
-				//System.out.println("gk+1.gk = " + gradientkplus1.dot(gradientk));
+			if (iterationNumberkplus1 % 50 == 0) {
+				logger.debug("");
+				//logger.debug("f(x" + iterationNumberk + ") = " + fxk);
+				logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
+				logger.debug("fxkplus1 - fxk = " + (fxkplus1 - fxk));
+				logger.debug("gradientkplus1, gradientk angle = " + gradientkplus1.angle(gradientk));
 			}
+
+			/*if (iterationNumberkplus1 != 1) {
+				logger.debug("sk+1.sk = " + skplus1.dot(sk));
+				logger.debug("gk+1.gk = " + gradientkplus1.dot(gradientk));
+			}*/
 			
 			if (molecule != null){
-			    //System.out.println("STEEPESTDM: kplus1Coordinates:"+kplus1Coordinates);
+			    //logger.debug("STEEPESTDM: kplus1Coordinates:"+kplus1Coordinates);
 			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
 			}
 		}
@@ -251,11 +266,11 @@ public class GeometricMinimizer {
 		//kCoordinates.set(kplus1Coordinates);
 		//nrm.gradientPerInverseHessian(forceField.getEnergyGradient(),forceField.getEnergyHessian());
 		//setkplus1Coordinates(nrm.getGradientPerInverseHessian(), -1);
-		//System.out.println("x" + iterationNumberkplus1 + " = " + kplus1Coordinates);
-		//System.out.println("f(x" + iterationNumberkplus1 + ") = " + forceField.energyFunction(kplus1Coordinates));
+		//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates);
+		//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
 
 		
-		//System.out.println("The SD minimum energy is at: " + steepestDescentsMinimum);
+		//logger.debug("The SD minimum energy is at: " + steepestDescentsMinimum);
 		
 		return;
 	}
@@ -288,57 +303,63 @@ public class GeometricMinimizer {
 	 *
 	 * @param  forceField		The potential function to be used
 	 */
-	public void conjugateGradientMinimization(GVector initialCoordinates,  PotentialFunction forceField) {
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS ConjugatedGradientTest");
+	public void conjugateGradientMinimization(GVector initialCoordinates, PotentialFunction forceField) {
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS ConjugatedGradientTest");
 		
 		initializeMinimizationParameters(initialCoordinates);
+		fxk = forceField.energyFunction(initialCoordinates);
+		logger.debug("f(x0) = " + fxk);
 		
 		forceField.setEnergyGradient(kCoordinates);
 		gradientk.set(forceField.getEnergyGradient());
-		//System.out.println("gradient at iteration 1 : g1 = " + gradientk);
+		//logger.debug("gradient at iteration 1 : g1 = " + gradientk);
 
 		conjugateGradientMinimum = new GVector(kCoordinates);
 		LineSearch ls = new LineSearch();
 		
-		ConjugateGradientMethod cgm = new ConjugateGradientMethod(kCoordinates);
+		ConjugateGradientMethod cgm = new ConjugateGradientMethod();
 		       
 		while ((iterationNumberkplus1 < CGMaximumIteration) & (convergence == false)) {
 			
 			iterationNumberkplus1 += 1;
 			iterationNumberk += 1;
-			//System.out.println("");
-			//System.out.println("");
-			//System.out.println("CG Iteration number: " + iterationNumberkplus1);
+			//logger.debug("");
+			//logger.debug("");
+			//logger.debug("CG Iteration number: " + iterationNumberkplus1);
 			
 			if (iterationNumberkplus1 != 1) {
-				cgm.setuk(gradientk, gradientkplus1);
 				kCoordinates.set(kplus1Coordinates);
+				fxk = fxkplus1;
 				gradientk.set(gradientkplus1);
 			}
-			//System.out.println("Search direction: ");
+			//logger.debug("Search direction: ");
 			cgm.setvk(gradientk, iterationNumberkplus1);
 
-			ls.setLineSearchLambda(kCoordinates, cgm.vk, forceField, iterationNumberk);
+			ls.setLineSearchLambda(kCoordinates, cgm.vk, forceField);
 			setkplus1Coordinates(cgm.vk, ls.lineSearchLambda);			
-			//System.out.print("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
-			//System.out.println("f(x" + iterationNumberkplus1 + ") = " + forceField.energyFunction(kplus1Coordinates));
+			fxkplus1 = forceField.energyFunction(kplus1Coordinates); 			
+			//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
+			//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
 			
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradientkplus1.set(forceField.getEnergyGradient());
 			
 			checkConvergence(CGconvergenceCriterion);
 			
-			//System.out.println("");
-			//System.out.println("f(x" + iterationNumberk + ") = " + forceField.energyFunction(kCoordinates));
-			//System.out.println("f(x" + iterationNumberkplus1 + ") = " + forceField.energyFunction(kplus1Coordinates));
-			//System.out.println("gradientkplus1 = " + gradientkplus1);
-			if (iterationNumberkplus1 != 1) {
-				//System.out.println("gk+1.gk = " + gradientkplus1.dot(gradientk));
+			if (iterationNumberkplus1 % 50 == 0 | iterationNumberkplus1 % 50 == 49 | iterationNumberkplus1 % 50 == 1) {
+				logger.debug("");
+				//logger.debug("f(x" + iterationNumberk + ") = " + fxk);
+				logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
+				logger.debug("fxkplus1 - fxk = " + (fxkplus1 - fxk));
+				logger.debug("gradientkplus1, gradientk angle = " + gradientkplus1.angle(gradientk));
 			}
+			/*if (iterationNumberkplus1 != 1) {
+				logger.debug("gk+1.gk = " + gradientkplus1.dot(gradientk));
+			}*/
 			
 			if (molecule !=null){
-			    //System.out.println("CGM: kplus1Coordinates:"+kplus1Coordinates);
+			    //logger.debug("CGM: kplus1Coordinates:"+kplus1Coordinates);
 			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
 			}
 			
@@ -346,7 +367,8 @@ public class GeometricMinimizer {
 		 
 		 conjugateGradientMinimum.set(kplus1Coordinates);
 		 forceField.setEnergyGradient(conjugateGradientMinimum);
-		 //System.out.println("The CG minimum energy is at: " + conjugateGradientMinimum);
+		 //logger.debug("The CG minimum energy is at: " + conjugateGradientMinimum);
+		 //logger.debug("f(minimum) = " + fxkplus1);
 		 
 		return;
 	}
@@ -386,12 +408,12 @@ public class GeometricMinimizer {
 
 		forceField.setEnergyGradient(kCoordinates);
 		gradientk.set(forceField.getEnergyGradient());
-		//System.out.println("gradient at iteration 1 : g1 = " + gradientk);
+		//logger.debug("gradient at iteration 1 : g1 = " + gradientk);
 
 		newtonRaphsonMinimum = new GVector(kCoordinates);
 
-		//System.out.println("");
-		//System.out.println("FORCEFIELDTESTS NewtonRaphsonTest");
+		//logger.debug("");
+		//logger.debug("FORCEFIELDTESTS NewtonRaphsonTest");
 		
 		NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
 		GMatrix hessian = new GMatrix(initialCoordinates.getSize(),initialCoordinates.getSize());
@@ -400,8 +422,8 @@ public class GeometricMinimizer {
 			
 			iterationNumberkplus1 += 1;
 			iterationNumberk += 1;
-			//System.out.println("");
-			//System.out.println("NR Iteration number: " + iterationNumberkplus1);
+			//logger.debug("");
+			//logger.debug("NR Iteration number: " + iterationNumberkplus1);
 
 			if (iterationNumberkplus1 != 1) {
 				kCoordinates.set(kplus1Coordinates);
@@ -409,27 +431,27 @@ public class GeometricMinimizer {
 			}
  			forceField.setEnergyHessian(kCoordinates);
 			hessian.set(forceField.getEnergyHessian());
-			//System.out.println("hessian = " + hessian);
+			//logger.debug("hessian = " + hessian);
 			nrm.gradientPerInverseHessian(gradientk,hessian);
-			//System.out.println("GradientPerInverseHessian = " + nrm.getGradientPerInverseHessian());
+			//logger.debug("GradientPerInverseHessian = " + nrm.getGradientPerInverseHessian());
 			
 			setkplus1Coordinates(nrm.getGradientPerInverseHessian(), -1);
-			//System.out.println("x" + iterationNumberkplus1 + " = " + kplus1Coordinates);
-			//System.out.println("f(x" + iterationNumberkplus1 + ") = " + forceField.energyFunction(kplus1Coordinates));
+			//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates);
+			//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
 
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradientkplus1.set(forceField.getEnergyGradient());
 
 			checkConvergence(NRconvergenceCriterion);
-			//System.out.println("convergence: " + convergence);
+			//logger.debug("convergence: " + convergence);
 
-			//System.out.println("");
-			//System.out.println("f(x" + iterationNumberk + ") = " + forceField.energyFunction(kCoordinates));
-			//System.out.println("f(x" + iterationNumberkplus1 + ") = " + forceField.energyFunction(kplus1Coordinates));
-			//System.out.println("gradientkplus1 = " + gradientkplus1);
+			//logger.debug("");
+			//logger.debug("f(x" + iterationNumberk + ") = " + fxk);
+			//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
+			//logger.debug("gradientkplus1 = " + gradientkplus1);
 		}
 		   newtonRaphsonMinimum.set(kplus1Coordinates);
-		   //System.out.println("The NR minimum energy is at: " + newtonRaphsonMinimum);
+		   //logger.debug("The NR minimum energy is at: " + newtonRaphsonMinimum);
 		 
 		return;
 	}

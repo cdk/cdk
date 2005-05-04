@@ -9,6 +9,8 @@ import Jama.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Bond Stretching calculator for the potential energy function. Include function and derivatives.
@@ -42,11 +44,15 @@ public class BondStretching {
 	double[][] dDeltar = null;
 	double[][][] ddDeltar = null;
 
+	private LoggingTool logger;
+
 
 	/**
 	 *  Constructor for the BondStretching object
 	 */
-	public BondStretching() { }
+	public BondStretching() {        
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -61,7 +67,7 @@ public class BondStretching {
 
 		Bond[] bonds = molecule.getBonds();
 		bondsNumber = bonds.length;
-		//System.out.println("bondsNumber = " + bondsNumber);
+		//logger.debug("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[bondsNumber][];
 		Atom[] atomsInBond = null;
 
@@ -83,9 +89,9 @@ public class BondStretching {
 				bondAtomPosition[i][j] = molecule.getAtomNumber(atomsInBond[j]);
 			}
 			
-			//System.out.println("atomsInBond " + i + " : " + atomsInBond);
+			//logger.debug("atomsInBond " + i + " : " + atomsInBond);
 			bondData = pc.getBondData(atomsInBond[0].getID(), atomsInBond[1].getID());
-			//System.out.println("bondData : " + bondData);
+			//logger.debug("bondData : " + bondData);
 			r0[i] = ((Double) bondData.get(0)).doubleValue();
 			k2[i] = ((Double) bondData.get(1)).doubleValue();
 			k3[i] = ((Double) bondData.get(2)).doubleValue();
@@ -106,7 +112,7 @@ public class BondStretching {
 	 */
 	public void calculateDeltar(GVector coord3d) {
 
-		//System.out.println("deltar.length = " + deltar.length);
+		//logger.debug("deltar.length = " + deltar.length);
 		for (int i = 0; i < bondsNumber; i++) {
 			r[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
 			deltar[i] = r[i] - r0[i];
@@ -125,13 +131,13 @@ public class BondStretching {
 	 */
 	public double functionMMFF94SumEB(GVector coord3d) {
 		/*for (int i=0; i < bondsNumber; i++) {
-			System.out.println("before:	deltar[" + i + "] = " + deltar[i]);
+			logger.debug("before:	deltar[" + i + "] = " + deltar[i]);
 		}*/
 		
 		calculateDeltar(coord3d);
 
 		/*for (int i=0; i < bondsNumber; i++) {
-			System.out.println("after:	deltar[" + i + "] = " + deltar[i]);
+			logger.debug("after:	deltar[" + i + "] = " + deltar[i]);
 		}*/
 		
 		mmff94SumEB = 0;
@@ -163,10 +169,10 @@ public class BondStretching {
 			
 			forAtomNumber = new Double(i/3);
 			coordinate = i % 3;
-			//System.out.println("coordinate = " + coordinate);
+			//logger.debug("coordinate = " + coordinate);
 
 			atomNumber = forAtomNumber.intValue();
-			//System.out.println("atomNumber = " + atomNumber);
+			//logger.debug("atomNumber = " + atomNumber);
 
 			for (int j = 0; j < bondsNumber; j++) {
 
@@ -191,7 +197,7 @@ public class BondStretching {
 				} else {
 					dDeltar[i][j] = 0;
 				}
-				//System.out.println("bond " + j + " : " + "dDeltar[" + i + "][" + j + "] = " + dDeltar[i][j]);
+				//logger.debug("bond " + j + " : " + "dDeltar[" + i + "][" + j + "] = " + dDeltar[i][j]);
 			}
 		}
 	}
@@ -224,15 +230,15 @@ public class BondStretching {
 			
 			sumGradientEB = 0;
 			for (int j = 0; j < bondsNumber; j++) {
-				//System.out.println("dDeltar = " + dDeltar[i][j]);
-				//System.out.println("gradient " + i + "bond " + j + " : " + (k2[j] * 2 * deltar[j] + k3[j] * 3 * Math.pow(deltar[j],2) + k4[j] * 4 * Math.pow(deltar[j],3)) * dDeltar[i][j]);
+				//logger.debug("dDeltar = " + dDeltar[i][j]);
+				//logger.debug("gradient " + i + "bond " + j + " : " + (k2[j] * 2 * deltar[j] + k3[j] * 3 * Math.pow(deltar[j],2) + k4[j] * 4 * Math.pow(deltar[j],3)) * dDeltar[i][j]);
 				sumGradientEB = sumGradientEB + (k2[j] * 2 * deltar[j] + k3[j] * 3 * Math.pow(deltar[j],2) + k4[j] * 4 * Math.pow(deltar[j],3)) * dDeltar[i][j];
-				//System.out.println(sumGradientEB);
+				//logger.debug(sumGradientEB);
 			}
 			//sumGradientEB = (-1) * sumGradientEB;
 			gradientMMFF94SumEB.setElement(i, sumGradientEB);
 		}
-		//System.out.println("gradientMMFF94 = " + gradientMMFF94SumEB);
+		//logger.debug("gradientMMFF94 = " + gradientMMFF94SumEB);
 	}
 
 
@@ -270,10 +276,10 @@ public class BondStretching {
 			forAtomNumber = new Double(i/3);
 			
 			atomNumberi = forAtomNumber.intValue();
-			//System.out.println("atomNumberi = " + atomNumberi);
+			//logger.debug("atomNumberi = " + atomNumberi);
 				
 			coordinatei = i % 3;
-			//System.out.println("coordinatei = " + coordinatei);
+			//logger.debug("coordinatei = " + coordinatei);
 				
 			for (int j=0; j<coord3d.getSize(); j++) {
 				ddDeltar[i][j] = new double[bondsNumber];
@@ -281,12 +287,12 @@ public class BondStretching {
 				forAtomNumber = new Double(j/3);
 
 				atomNumberj = forAtomNumber.intValue();
-				//System.out.println("atomNumberj = " + atomNumberj);
+				//logger.debug("atomNumberj = " + atomNumberj);
 
 				coordinatej = j % 3;
-				//System.out.println("coordinatej = " + coordinatej);
+				//logger.debug("coordinatej = " + coordinatej);
 				
-				//System.out.println("atomj : " + molecule.getAtomAt(atomNumberj));
+				//logger.debug("atomj : " + molecule.getAtomAt(atomNumberj));
 				
 				for (int k=0; k < bondsNumber; k++) {
 					
@@ -311,36 +317,36 @@ public class BondStretching {
 							// ddDeltar2
 							switch (coordinatej) {
 								case 0: ddDeltar2 = (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1]));
-									//System.out.println("OK: d1 x");
+									//logger.debug("OK: d1 x");
 									break;
 								case 1:	ddDeltar2 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1));
-									//System.out.println("OK: d1 y");
+									//logger.debug("OK: d1 y");
 									break;
 								case 2:	ddDeltar2 = (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2));
-									//System.out.println("OK: d1 z");
+									//logger.debug("OK: d1 z");
 									break;
 							}
 						
 							if (bondAtomPosition[k][1] == atomNumberj) {
 								ddDeltar2 = (-1) * ddDeltar2;
-								//System.out.println("OK: bond 1");
+								//logger.debug("OK: bond 1");
 							} 
 	
 							switch (coordinatei) {
 								case 0: ddDeltar2 = ddDeltar2 * (coord3d.getElement(3 * bondAtomPosition[k][0]) - coord3d.getElement(3 * bondAtomPosition[k][1]));
-									//System.out.println("OK: have d2 x");
+									//logger.debug("OK: have d2 x");
 									break;
 								case 1:	ddDeltar2 = ddDeltar2 * (coord3d.getElement(3 * bondAtomPosition[k][0] + 1) - coord3d.getElement(3 * bondAtomPosition[k][1] + 1));
-									//System.out.println("OK: have d2 y");
+									//logger.debug("OK: have d2 y");
 									break;
 								case 2: ddDeltar2 = ddDeltar2 * (coord3d.getElement(3 * bondAtomPosition[k][0] + 2) - coord3d.getElement(3 * bondAtomPosition[k][1] + 2));
-									//System.out.println("OK: have d2 z");
+									//logger.debug("OK: have d2 z");
 									break;
 							}
 							
 							if (bondAtomPosition[k][1] == atomNumberi) {
 								ddDeltar2 = (-1) * ddDeltar2;
-								//System.out.println("OK: d2 bond 1");
+								//logger.debug("OK: d2 bond 1");
 							}
 							
 							ddDeltar2 = ddDeltar2 / Math.pow(r[k],2);
@@ -349,13 +355,13 @@ public class BondStretching {
 							ddDeltar[i][j][k] = ddDeltar1 - ddDeltar2;
 						} else {
 							ddDeltar[i][j][k] = 0;
-							//System.out.println("OK: 0");
+							//logger.debug("OK: 0");
 						}
 					} else {
 						ddDeltar[i][j][k] = 0;
-						//System.out.println("OK: 0");
+						//logger.debug("OK: 0");
 					}
-					//System.out.println("bond " + k + " : " + "ddDeltar[" + i + "][" + j + "][" + k + "] = " + ddDeltar[i][j][k]);
+					//logger.debug("bond " + k + " : " + "ddDeltar[" + i + "][" + j + "][" + k + "] = " + ddDeltar[i][j][k]);
 				}
 			}
 		}	
@@ -400,7 +406,7 @@ public class BondStretching {
 
 		hessianMMFF94SumEB.setSize(coord3d.getSize(), coord3d.getSize());
 		hessianMMFF94SumEB.set(forHessian); 
-		//System.out.println("hessianMMFF94SumEB : " + hessianMMFF94SumEB);
+		//logger.debug("hessianMMFF94SumEB : " + hessianMMFF94SumEB);
 	}
 
 
