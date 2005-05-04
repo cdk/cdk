@@ -51,6 +51,7 @@ Fixes:
 * Fixed error in isotope list (closes #1185991)
 * Fixed reading of Z from CrystClust files
 * AtomPlacer now draws linear geometries for C#C and C=C=C (closes #937743)
+* Fixed reading of explicit single bonds in SMILES (closes #1175478)
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module

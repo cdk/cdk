@@ -311,6 +311,9 @@ public class SmilesParser {
                 } else if (mychar == '.'){
                     bondExists = false;
                     position++;
+                } else if (mychar == '-'){
+                    bondExists = true; // a simple single bond
+                    position++;
 				} else if (mychar == '/' || mychar == '\\') {
                     logger.warn("Ignoring stereo information for double bond");
                     position++;
