@@ -33,8 +33,28 @@ $ ./configure &amp;&amp; make &amp;&amp; install
       <section>
         <title>Debian packages</title>
         <para>
-          Debian packages are available from the SourceForge website and
-          can be build from CVS. To build Debian packages, first recompile
+          Debian packages are available from 
+          <ulink url="http://debian.wgdd.de/debian/">debian.wgdd.de</ulink>.
+          can be build from CVS.
+          The can be apt-geted by adding these lines to your
+          <filename>/etc/apt/sources.list</filename> file:
+          <programlisting>
+deb     http://debian.wgdd.de/debian testing main contrib non-free
+deb-src http://debian.wgdd.de/debian testing main contrib non-free
+deb     http://debian.wgdd.de/debian sarge main contrib non-free
+deb-src http://debian.wgdd.de/debian sarge main contrib non-free
+
+deb     http://debian.wgdd.de/debian unstable main contrib non-free
+deb-src http://debian.wgdd.de/debian unstable main contrib non-free
+deb     http://debian.wgdd.de/debian sid main contrib non-free
+deb-src http://debian.wgdd.de/debian sid main contrib non-free
+
+deb     http://debian.wgdd.de/debian experimental main contrib non-free
+deb-src http://debian.wgdd.de/debian experimental main contrib non-free
+          </programlisting>
+        </para>
+        <para>
+          To build Debian packages, first recompile
           CDK with "ant dist-all" to make fresh and up to data jar's.
           Then build the Debian packages in the directory packages/debian.
           First build libcdkextra which is the Debian package for CDK's
