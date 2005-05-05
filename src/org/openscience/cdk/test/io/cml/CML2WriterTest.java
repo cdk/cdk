@@ -140,6 +140,7 @@ public class CML2WriterTest extends CDKTestCase {
         } catch (Exception exception) {
             logger.error("Error while creating an CML2 file: ", exception.getMessage());
             logger.debug(exception);
+            exception.printStackTrace();
             fail(exception.getMessage());
         }
         String cmlContent = writer.toString();

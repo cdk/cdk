@@ -44,21 +44,11 @@ import org.w3c.dom.Element;
  */
 public class PDBAtomCustomizer implements Customizer {
 
-    private Convertor convertor = null;
-    
-    public void setConvertor(Object convertor) throws Exception {
-        if (convertor instanceof Convertor) {
-            this.convertor = (Convertor)convertor;
-        } else {
-            throw new CDKException("The convertor is not instanceof Convertor!");
-        }
-    }
-    
-    public void customize(Atom atom, Element nodeToAdd) throws Exception {
+    public void customize(Object object, Atom atom, Element nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
 
-    public void customize(Molecule molecule, Element nodeToAdd) throws Exception {
+    public void customize(Object object, Molecule molecule, Element nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
 }

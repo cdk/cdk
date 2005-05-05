@@ -59,22 +59,17 @@ public class QSARCustomizer implements Customizer {
     private final static String QSARMETA_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata";
 
     private String namespace = "http://www.xml-cml.org/schema/cml2/core";
-
-    private Convertor convertor = null;
     
-    public void setConvertor(Object convertor) throws Exception {
-        if (convertor instanceof Convertor) {
-            this.convertor = (Convertor)convertor;
-        } else {
-            throw new CDKException("The convertor is not instanceof Convertor!");
-        }
-    }
-    
-    public void customize(Atom atom, Element nodeToAdd) throws Exception {
+    public void customize(Object convertor, Atom atom, Element nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
     
-    public void customize(Molecule molecule, Element nodeToAdd) throws Exception {
+    public void customize(Object object, Molecule molecule, Element nodeToAdd) throws Exception {
+        if (!(object instanceof Convertor)) {
+            throw new CDKException("The convertor is not instanceof Convertor!");
+        }
+        Convertor convertor = (Convertor)object;
+
         Hashtable props = molecule.getProperties();
         Enumeration keys = props.keys();
         Element propList = null;
@@ -131,7 +126,7 @@ public class QSARCustomizer implements Customizer {
                     metadataList.appendChild(paramSettings);
                 }
                 property.appendChild(metadataList);
-                Element scalar = this.createScalar(result);
+                Element scalar = this.createScalar(convertor, result);
                 scalar.setAttribute("dictRef", specsRef);
                 // add the actual descriptor value
                 property.appendChild(scalar);
@@ -143,7 +138,7 @@ public class QSARCustomizer implements Customizer {
         }
     }
 
-    private Element createScalar(DescriptorResult value) {
+    private Element createScalar(Convertor convertor, DescriptorResult value) {
         Element scalar = null;
         if (value instanceof DoubleResult) {
             scalar = convertor.createElement("scalar");

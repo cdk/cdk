@@ -44,11 +44,7 @@ import org.w3c.dom.Element;
  */
 public interface Customizer {
 
-    /** @param convertor Instance of Convertor
-     */
-    public void setConvertor(Object convertor) throws Exception;
-    
-    public void customize(Atom atom, Element nodeToAdd) throws Exception;
-    public void customize(Molecule molecule, Element nodeToAdd) throws Exception;
+    public void customize(Object convertor, Atom atom, Element nodeToAdd) throws Exception;
+    public void customize(Object convertor, Molecule molecule, Element nodeToAdd) throws Exception;
 }
 

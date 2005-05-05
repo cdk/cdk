@@ -167,7 +167,6 @@ public class Convertor {
                     try {
                         Customizer customizer = (Customizer)this.getClass().getClassLoader().
                             loadClass(customizerName).newInstance();
-                        customizer.setConvertor(this);
                         customizers.addElement(customizer);
                         logger.info("Loaded Customizer: " + customizer.getClass().getName());
                     } catch (ClassNotFoundException exception) {
@@ -452,8 +451,7 @@ public class Convertor {
         while (elements.hasMoreElements()) {
             Customizer customizer = (Customizer)elements.nextElement();
             try {
-                customizer.setConvertor(this);
-                customizer.customize(mol, molecule);
+                customizer.customize(this, mol, molecule);
             } catch (Exception exception) {
                 logger.error("Error while customizing CML output with customizer: ",
                     customizer.getClass().getName());
