@@ -162,8 +162,8 @@ public class FingerprinterTest extends CDKTestCase
 		 * using the fingerprinter.
 		*/
 		
-		BitSet superBS = Fingerprinter.getFingerprint(structure1);
-		BitSet subBS = Fingerprinter.getFingerprint(structure2);
+		BitSet superBS = Fingerprinter.getFingerprint(structure2);
+		BitSet subBS = Fingerprinter.getFingerprint(structure1);
 		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
 		if (standAlone)
 		{
@@ -177,7 +177,45 @@ public class FingerprinterTest extends CDKTestCase
 		assertTrue(isSubset);
 	}
 
-	/** This is a test for bug [ 931608 ] "Fingerprinter gives different fingerprints for same molecule" */
+	/** This is a test for bug [ 934819 ] Fingerprint not subset */
+	public void testBug934819() throws java.lang.Exception
+	{
+		Molecule superstructure = null;
+		Molecule substructure = null;
+		/* We make a specifically substituted chromane here 
+		 * as well as the pure chromane skeleton, which should
+		 * be a substructure of the first.
+		 */
+		String filename = "data/mdl/bug934819-1.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		substructure = (Molecule) reader.read((ChemObject) new Molecule());
+		filename = "data/mdl/bug934819-2.mol";
+		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		reader = new MDLReader(new InputStreamReader(ins));
+		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
+		/* now we've read the two molecules and we are going to check now
+		 * whether the latter is likely to be a substructure of the first by
+		 * using the fingerprinter.
+		*/
+		
+		BitSet superBS = Fingerprinter.getFingerprint(superstructure);
+		BitSet subBS = Fingerprinter.getFingerprint(substructure);
+		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
+		if (standAlone)
+		{
+			//MoleculeViewer2D.display(superstructure, false);
+			//MoleculeViewer2D.display(substructure, false);
+
+			logger.debug("BitString 1: " + superBS);
+			logger.debug("BitString 2: " + subBS);
+			logger.debug("isSubset? " + isSubset);
+		}
+		assertTrue(isSubset);
+	}
+
+
+	/** This is a test for bug [ 934819 ] "Fingerprinter gives different fingerprints for same molecule" */
 	public void testBug931608() throws java.lang.Exception
 	{
 		Molecule structure1 = null;
@@ -319,7 +357,8 @@ public class FingerprinterTest extends CDKTestCase
 			//fpt.testBug706786();
 			//fpt.testBug771485();
 			//fpt.testBug853254();
-			fpt.testBug931608();
+			//fpt.testBug931608();
+			fpt.testBug934819();
 		}
 		catch(Exception exc)
 		{
