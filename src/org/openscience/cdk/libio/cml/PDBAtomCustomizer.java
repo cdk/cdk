@@ -30,6 +30,7 @@ package org.openscience.cdk.libio.cml;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.w3c.dom.Element;
 
@@ -45,7 +46,99 @@ import org.w3c.dom.Element;
 public class PDBAtomCustomizer implements Customizer {
 
     public void customize(Object object, Atom atom, Element nodeToAdd) throws Exception {
-        // nothing to do at this moment
+        if (!(object instanceof Convertor)) {
+            throw new CDKException("The convertor is not instanceof Convertor!");
+        }
+        Convertor convertor = (Convertor)object;
+        
+        if (atom instanceof PDBAtom) {
+            PDBAtom pdbAtom = (PDBAtom)atom;
+            if (pdbAtom.getAltLoc() != null) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:altLoc");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getAltLoc()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getChainID() != null) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:chainID");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getChainID()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:hetAtom");
+                scalar.appendChild(convertor.createTextNode("" + pdbAtom.getHetAtom()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getICode() != null) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:iCode");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getICode()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getName() != null) {
+                Element scalar = convertor.createElement("label");
+                scalar.setAttribute("dictRef", "pdb:name");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getName()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:oxt");
+                scalar.appendChild(convertor.createTextNode("" + pdbAtom.getOxt()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getRecord() != null) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:record");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getRecord()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getResName() != null) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:resName");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getResName()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getResSeq() != null) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:resSeq");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getResSeq()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getSegID() != null) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:segID");
+                scalar.appendChild(convertor.createTextNode(pdbAtom.getSegID()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getSerial() != 0) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:serial");
+                scalar.appendChild(convertor.createTextNode("" + pdbAtom.getSerial()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            if (pdbAtom.getTempFactor() != -1.0) {
+                Element scalar = convertor.createElement("scalar");
+                scalar.setAttribute("dictRef", "pdb:tempFactor");
+                scalar.appendChild(convertor.createTextNode("" + pdbAtom.getTempFactor()));
+                nodeToAdd.appendChild(scalar);
+            }
+            
+            nodeToAdd.setAttribute("occupancy", "" + pdbAtom.getOccupancy());
+        }
     }
 
     public void customize(Object object, Molecule molecule, Element nodeToAdd) throws Exception {

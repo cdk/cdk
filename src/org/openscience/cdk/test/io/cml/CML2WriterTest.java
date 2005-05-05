@@ -43,6 +43,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
@@ -140,7 +141,6 @@ public class CML2WriterTest extends CDKTestCase {
         } catch (Exception exception) {
             logger.error("Error while creating an CML2 file: ", exception.getMessage());
             logger.debug(exception);
-            exception.printStackTrace();
             fail(exception.getMessage());
         }
         String cmlContent = writer.toString();
@@ -150,4 +150,29 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("<property xmlns:qsardict") != -1);
         assertTrue(cmlContent.indexOf("<metadataList xmlns:qsarmeta") != -1);
     }
+    
+    public void testPDBAtomCustomization() {
+        StringWriter writer = new StringWriter();
+        Molecule molecule = new Molecule();
+        PDBAtom atom = new PDBAtom("C");
+        atom.setName("CA");
+        atom.setResName("PHE");
+        molecule.addAtom(atom);
+        
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        try {
+            cmlWriter.write(molecule);
+        } catch (Exception exception) {
+            logger.error("Error while creating an CML2 file: ", exception.getMessage());
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+        String cmlContent = writer.toString();
+        logger.debug("******************************");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
+        assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
+    }
+    
 }

@@ -172,10 +172,12 @@ public class Convertor {
                     } catch (ClassNotFoundException exception) {
                         logger.error("Could not find this Customizer: ", customizerName);
                         logger.debug(exception);
+                        exception.printStackTrace();
                     } catch (Exception exception) {
                         logger.error("Could not load this Customizer: ", customizerName);
                         logger.error(exception.getMessage());
                         logger.debug(exception);
+                        exception.printStackTrace();
                     }
                 }
                 logger.info("Number of loaded customizers: ", customizerCount);
@@ -590,6 +592,17 @@ public class Convertor {
             );
         }
         writeProperties(atom, atomimpl);
+        Enumeration elements = customizers.elements();
+        while (elements.hasMoreElements()) {
+            Customizer customizer = (Customizer)elements.nextElement();
+            try {
+                customizer.customize(this, atom, atomimpl);
+            } catch (Exception exception) {
+                logger.error("Error while customizing CML output with customizer: ",
+                    customizer.getClass().getName());
+                logger.debug(exception);
+            }
+        }
     }
 
     private void writeBond(Bond bond, Element nodeToAdd) throws CMLException {
