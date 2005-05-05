@@ -4,6 +4,7 @@ CHANGELOG $Date$
 Changes in CVS
 ------------------------------------
 New:
+* Added classes for permuting the order of atoms in an AtomContainer (graph.AtomContainerAtomPermutor)
 * AtomPlacer now draws 180 deg geometry when encountering triple bonds
 * JChemPaint sources reintegrated to applications.jchempaint package
 * Added new method MFAnalyser.getHTMLMolecularFormulaWithCharge()

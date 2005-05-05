@@ -39,6 +39,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
+
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.test.CDKTestCase;
@@ -52,6 +54,8 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+
 
 /**
  *@author        steinbeck
@@ -684,6 +688,34 @@ public class SmilesGeneratorTest extends CDKTestCase
 		assertEquals("c1ccccc1", smiles);
 	}
 
+	public void testPermutation()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("S"));
+		mol.addAtom(new Atom("O"));
+		mol.addAtom(new Atom("O"));
+		mol.addAtom(new Atom("O"));
+		mol.addAtom(new Atom("O"));
+		mol.addBond(0, 1, 2.0);
+		mol.addBond(0, 2, 2.0);
+		mol.addBond(0, 3, 1.0);
+		mol.addBond(0, 4, 1.0);
+		mol.getAtomAt(3).setHydrogenCount(1);
+		mol.getAtomAt(4).setHydrogenCount(1);
+		AtomContainerAtomPermutor acap = new
+		AtomContainerAtomPermutor(mol);
+		SmilesGenerator sg = new SmilesGenerator();
+		String smiles = "";
+		String oldSmiles = sg.createSMILES(mol);
+		while(acap.hasNext())
+		{
+			smiles = sg.createSMILES(new Molecule((AtomContainer)acap.next()));
+			//System.out.println(smiles);
+			assertTrue(smiles.equals(oldSmiles));
+		}
+				
+	}
+	
 	private void fixCarbonHCount(Molecule mol)
 	{
 		/*
@@ -856,9 +888,9 @@ public class SmilesGeneratorTest extends CDKTestCase
 	 */
 	public static void main(String[] args)
 	{
-		SmilesGeneratorTest sgt = new SmilesGeneratorTest("AllRingsFinderTest");
+		SmilesGeneratorTest sgt = new SmilesGeneratorTest("SmilesGeneratorTest");
 		sgt.setStandAlone(true);
-		sgt.testSmilesGenerator();
+		sgt.testPermutation();
 	}
 
   

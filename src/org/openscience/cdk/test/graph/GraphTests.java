@@ -41,6 +41,7 @@ public class GraphTests {
         TestSuite suite = new TestSuite("The cdk.graph Tests");
         suite.addTest(ConnectivityCheckerTest.suite());
         suite.addTest(PathToolsTest.suite());
+	suite.addTest(AtomContainerPermutorTest.suite());
         //suite.addTest(BiconnectivityInspectorTest.suite());
         //suite.addTest(MinimalPathIteratorTest.suite());
         //suite.addTest(RebondToolTest.suite());
