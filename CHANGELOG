@@ -60,6 +60,8 @@ Fixes:
 * Fixed false handling of terminal branched groups in Fingerprinter (closes #934819 and #931608)
 * No overlapping atoms in layout (fixes #938761)
 * CML is now available for Java1.5 too
+* Fixed misuse of ready() in MDLReader which cause problems when reading
+  over the internet (closes #1185551)
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
