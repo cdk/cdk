@@ -51,6 +51,7 @@ import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.qsar.*;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -125,4 +126,27 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("<atom") != -1); // an Atom has to be present
 	}
 	
+    public void testQSARCustomization() {
+        StringWriter writer = new StringWriter();
+        Molecule molecule = MoleculeFactory.makeBenzene();
+        Descriptor descriptor = new WeightDescriptor();
+
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        try {
+            DescriptorValue value = descriptor.calculate(molecule);
+            molecule.setProperty(value.getSpecification(), value);
+        
+            cmlWriter.write(molecule);
+        } catch (Exception exception) {
+            logger.error("Error while creating an CML2 file: ", exception.getMessage());
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+        String cmlContent = writer.toString();
+        logger.debug("******************************");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<property xmlns:qsardict") != -1);
+        assertTrue(cmlContent.indexOf("<metadataList xmlns:qsarmeta") != -1);
+    }
 }
