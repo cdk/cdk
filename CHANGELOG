@@ -59,6 +59,7 @@ Fixes:
 * Fixed reading of explicit single bonds in SMILES (closes #1175478)
 * Fixed false handling of terminal branched groups in Fingerprinter (closes #934819 and #931608)
 * No overlapping atoms in layout (fixes #938761)
+* CML is now available for Java1.5 too
 
 API changes:
 * Moved IsotopeFactory from cdk-standard to the cdk-core module
