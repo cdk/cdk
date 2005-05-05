@@ -857,6 +857,8 @@ public abstract class JChemPaintPanel
 			frame.dispose();
 		}
 	}
+	public void registerModel(JChemPaintModel model) {
+	}
 }
 
 

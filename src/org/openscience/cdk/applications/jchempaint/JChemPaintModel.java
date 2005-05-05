@@ -403,7 +403,5 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 
 		isModified = true;
 	}
-	public void registerModel(JChemPaintModel model) {
-	}
 }
 
