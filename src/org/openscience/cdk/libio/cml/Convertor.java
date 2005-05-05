@@ -31,12 +31,16 @@ package org.openscience.cdk.libio.cml;
 import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.Text;
 import org.xmlcml.cmlimpl.*;
 import org.xmlcml.cml.*;
 import org.openscience.cdk.Molecule;
@@ -122,10 +126,9 @@ public class Convertor {
     private String prefix;
     private String instanceLocation;
     private String namespace = "http://www.xml-cml.org/schema/cml2/core";
-    private final String QSARDICT_NAMESPACE = "qsardict";
-    private final String QSARDICT_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors";
-    private final String QSARMETA_NAMESPACE = "qsarmeta";
-    private final String QSARMETA_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata";
+    
+    private final static String CUSTOMIZERS_LIST = "libio-cml-customizers.set";
+    private static Vector customizers = null;
 
     public Convertor() {
         this(true, false, false, "", "");
@@ -144,7 +147,45 @@ public class Convertor {
         this.schemaInstanceOutput = schemaInstanceOutput;
         this.instanceLocation = instanceLocation;
         this.prefix = prefix;
+        
+        setupCustomizers();
     }
+    
+    private void setupCustomizers() {
+         if (customizers == null) {
+            customizers = new Vector();
+            try {
+                logger.debug("Starting loading Customizers...");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    this.getClass().getClassLoader().getResourceAsStream(CUSTOMIZERS_LIST)
+                ));
+                int customizerCount = 0;
+                while (reader.ready()) {
+                    // load them one by one
+                    String customizerName = reader.readLine();
+                    customizerCount++;
+                    try {
+                        Customizer customizer = (Customizer)this.getClass().getClassLoader().
+                            loadClass(customizerName).newInstance();
+                        customizer.setConvertor(this);
+                        customizers.addElement(customizer);
+                        logger.info("Loaded Customizer: " + customizer.getClass().getName());
+                    } catch (ClassNotFoundException exception) {
+                        logger.error("Could not find this Customizer: ", customizerName);
+                        logger.debug(exception);
+                    } catch (Exception exception) {
+                        logger.error("Could not load this Customizer: ", customizerName);
+                        logger.error(exception.getMessage());
+                        logger.debug(exception);
+                    }
+                }
+                logger.info("Number of loaded customizers: ", customizerCount);
+            } catch (Exception exception) {
+                logger.error("Could not load this list: ", CUSTOMIZERS_LIST);
+                logger.debug(exception);
+            }
+        }
+   }
     
     /**
      * Serializes the ChemObject to CML and redirects it to the output Writer.
@@ -407,6 +448,18 @@ public class Convertor {
         addTitle(mol, molecule);
         nodeToAppend.appendChild(molecule);
         writeAtomContainer(mol,molecule);
+        Enumeration elements = customizers.elements();
+        while (elements.hasMoreElements()) {
+            Customizer customizer = (Customizer)elements.nextElement();
+            try {
+                customizer.setConvertor(this);
+                customizer.customize(mol, molecule);
+            } catch (Exception exception) {
+                logger.error("Error while customizing CML output with customizer: ",
+                    customizer.getClass().getName());
+                logger.debug(exception);
+            }
+        }
     }
 
     private void writeAtomArray(AtomContainer container, Atom atoms[], Element nodeToAppend) throws CMLException {
@@ -439,62 +492,6 @@ public class Convertor {
                 scalar.setAttribute("dictRef",((DictRef)key).getType());
                 nodeToAppend.appendChild(scalar);
                 scalar.appendChild(doc.createTextNode(value.toString()));
-            } else if (key instanceof DescriptorSpecification) {
-                DescriptorSpecification specs = (DescriptorSpecification)key;
-                DescriptorValue value = (DescriptorValue)props.get(key);
-                DescriptorResult result = value.getValue();
-                if (propList == null) {
-                    propList = this.createElement("propertyList");
-                }
-                Element property = this.createElement("property");
-                // setup up the metadata list
-                Element metadataList = this.createElement("metadataList");
-                metadataList.setAttribute("xmlns:" + QSARMETA_NAMESPACE, QSARMETA_URI);
-                String specsRef = specs.getSpecificationReference();
-                if (specsRef.startsWith(QSARDICT_URI)) {
-                    specsRef = QSARDICT_NAMESPACE + ":" + specsRef.substring(QSARDICT_URI.length()+1);
-                    property.setAttribute("xmlns:" + QSARDICT_NAMESPACE, QSARDICT_URI);
-                }
-                Element metaData = this.createElement("metadata");
-                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationTitle");
-                metaData.setAttribute("content", specs.getImplementationTitle());
-                metadataList.appendChild(metaData);
-                metaData = this.createElement("metadata");
-                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationIdentifier");
-                metaData.setAttribute("content", specs.getImplementationIdentifier());
-                metadataList.appendChild(metaData);
-                metaData = this.createElement("metadata");
-                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationVendor");
-                metaData.setAttribute("content", specs.getImplementationVendor());
-                metadataList.appendChild(metaData);
-                // add parameter setting to the metadata list
-                Object[] params = value.getParameters();
-                if (params != null && params.length > 0) {
-                    String[] paramNames = value.getParameterNames();
-                    Element paramSettings = this.createElement("metadataList");
-                    paramSettings.setAttribute("title", QSARMETA_NAMESPACE + ":" + "descriptorParameters");
-                    for (int i=0; i<params.length; i++) {
-                        Element paramSetting = this.createElement("metadata");
-                        String paramName = paramNames[i];
-                        Object paramVal = params[i];
-                        if (paramName == null) {
-                            logger.error("Parameter name was null! Cannot output to CML.");
-                        } else if (paramVal == null) {
-                            logger.error("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
-                        } else {
-                            paramSetting.setAttribute("title", paramNames[i]);
-                            paramSetting.setAttribute("content", params[i].toString());
-                            paramSettings.appendChild(paramSetting);
-                        }
-                    }
-                    metadataList.appendChild(paramSettings);
-                }
-                property.appendChild(metadataList);
-                Element scalar = this.createScalar(result);
-                scalar.setAttribute("dictRef", specsRef);
-                // add the actual descriptor value
-                property.appendChild(scalar);
-                propList.appendChild(property);
             } else if (key instanceof String) {
                 String stringKey = (String)key;
                 if (stringKey.equals(CDKConstants.TITLE)) {
@@ -517,47 +514,6 @@ public class Convertor {
         }
     }
 
-    private Element createScalar(DescriptorResult value) {
-        Element scalar = null;
-        if (value instanceof DoubleResult) {
-            scalar = this.createElement("scalar");
-            scalar.setAttribute("dataType", "xsd:double");
-            scalar.appendChild(doc.createTextNode("" + ((DoubleResult)value).doubleValue()));
-        } else if (value instanceof IntegerResult) {
-            scalar = this.createElement("scalar");
-            scalar.setAttribute("dataType", "xsd:int");
-            scalar.appendChild(doc.createTextNode("" + ((IntegerResult)value).intValue()));
-        } else if (value instanceof BooleanResult) {
-            scalar = this.createElement("scalar");
-            scalar.setAttribute("dataType", "xsd:boolean");
-            scalar.appendChild(doc.createTextNode("" + ((BooleanResult)value).booleanValue()));
-        } else if (value instanceof IntegerArrayResult) {
-            IntegerArrayResult result = (IntegerArrayResult)value;
-            scalar = this.createElement("array");
-            scalar.setAttribute("dataType", "xsd:int");
-            scalar.setAttribute("size", "" + result.size());
-            StringBuffer buffer = new StringBuffer();
-            for (int i=0; i<result.size(); i++) {
-                buffer.append(result.get(i) + " ");
-            }
-            scalar.appendChild(doc.createTextNode(buffer.toString()));
-        } else if (value instanceof DoubleArrayResult) {
-            DoubleArrayResult result = (DoubleArrayResult)value;
-            scalar = this.createElement("array");
-            scalar.setAttribute("dataType", "xsd:double");
-            scalar.setAttribute("size", "" + result.size());
-            StringBuffer buffer = new StringBuffer();
-            for (int i=0; i<result.size(); i++) {
-                buffer.append(result.get(i) + " ");
-            }
-            scalar.appendChild(doc.createTextNode(buffer.toString()));
-        } else {
-            logger.error("Could not convert this object to a scalar element: ", value);
-            scalar.appendChild(doc.createTextNode(value.toString()));
-        }
-        return scalar;
-     }
-    
     /**
      * Picks the first dictRef it finds. CML support only one, but CDK 
      * tends to have more than one, i.e. also dictRefs for fields.
@@ -722,7 +678,7 @@ public class Convertor {
         }
     }  
     
-    private String write(double[] da) {
+    protected String write(double[] da) {
         StringBuffer sb=new StringBuffer();
         for (int i=0; i < da.length; i++) {
             sb.append(new Double(da[i]).toString());
@@ -733,7 +689,7 @@ public class Convertor {
         return(sb.toString());
     }
     
-    private Element createElement(String elementName) {
+    protected Element createElement(String elementName) {
         logger.debug("Creating element: ", elementName);
         Element element = null;
         if (setNamespaceUri) {
@@ -747,5 +703,10 @@ public class Convertor {
         }
         return element;
     }
+
+    protected Text createTextNode(String text) {
+        return doc.createTextNode(text);
+    }
+    
 }
 

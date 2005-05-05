@@ -30,6 +30,11 @@ New:
 * Implemented reading of data items from MDL SD files (closes RFE #1177112)
 * Added cdk.index.CASNumber.calculateCheckBit()
 * Added the new class PDBAtom with field for PDB specific information
+* Added a CML Customizer interface which reduces the CDK module dependency
+  of the libio-cml module
+* Added two new module for outputting data for specific CDK modules:
+  pdb-cml for outputing PDBAtom information, and qsar-cml for outputing
+  QSAR-descriptor information
 
 Fixes:
 * Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
