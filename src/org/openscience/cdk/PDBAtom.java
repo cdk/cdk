@@ -54,8 +54,17 @@ public class PDBAtom extends Atom implements java.io.Serializable, Cloneable {
     private boolean oxt;
     private boolean hetAtom;
     
+    public PDBAtom(String symbol) {
+        super(symbol);
+        initValues();
+    }
+
     public PDBAtom(String symbol, Point3d coordinate) {
         super(symbol, coordinate);
+        initValues();
+    }
+        
+    private void initValues() {
         record = null;
         tempFactor = -1.0;
         resName = null;
