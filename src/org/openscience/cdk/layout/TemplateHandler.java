@@ -41,7 +41,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 
@@ -95,8 +95,10 @@ public class TemplateHandler
 			{
 				line = reader.readLine();
 				line = "data/templates/" + line;
-				MDLReader structureReader = new MDLReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(line)));
-				templates.addElement((Molecule) structureReader.read((ChemObject) new Molecule()));
+				CMLReader structureReader = new CMLReader(
+                    this.getClass().getClassLoader().getResourceAsStream(line)
+                );
+				templates.addElement((Molecule) structureReader.read(new Molecule()));
 				logger.debug("Successfully read template " + line);
 			}
 		} catch (Exception exc)

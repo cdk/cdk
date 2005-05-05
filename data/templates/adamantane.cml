@@ -2,7 +2,7 @@
 <molecule id="adamantane" dictRef="cdk:layoutTemplate"
   xmlns="http://www.xml-cml.org/schema/cml2/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../src/org/openscience/cdk/io/cml/data/cmlCore.xsd">
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../src/org/openscience/cdk/io/cml/data/cmlAll.xsd">
   <atomArray>
     <atom id="a1" elementType="C" x2="-1.0019" y2="-0.1598"/>
     <atom id="a2" elementType="C" x2="-0.5894" y2="-0.8743"/>
@@ -14,7 +14,6 @@
     <atom id="a8" elementType="C" x2=" 0.5895" y2="0.6652"/>
     <atom id="a9" elementType="C" x2="0.2087" y2="0.1598"/>
     <atom id="a10" elementType="C" x2="-0.2038" y2="0.8743"/>
-    <atom id="a11" dictRef="cdk:attachmentPoint" elementType="Dummy" x2="-4" y2="-5"/>
   </atomArray>
   <bondArray>
     <bond id="b1" atomRefs2="a1 a2" order="1"/>
@@ -29,6 +28,5 @@
     <bond id="b10" atomRefs2="a9 a10" order="1"/>
     <bond id="b11" atomRefs2="a10 a7" order="1"/>
     <bond id="b12" atomRefs2="a10 a8" order="1"/>
-    <bond id="b13" atomRefs2="a10 a11" order="1"/>
   </bondArray>
 </molecule>
