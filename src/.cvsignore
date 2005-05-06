@@ -1,24 +1,6 @@
 *.entitylist
 *.set
 *.classes
-ant1.6.javafiles
-applications.javafiles
-builder3d.javafiles
-core.javafiles
-data.javafiles
-experimental.javafiles
-extra.javafiles
-io.javafiles
-java1.4.javafiles
-java1.4+.javafiles
-java3d.javafiles
-libio.javafiles
-qsar.javafiles
-r-project.javafiles
-render.javafiles
-standard.javafiles
-swing.javafiles
-test-java3d.javafiles
-test-libio.javafiles
-test.javafiles
+*.javafiles
+
 
