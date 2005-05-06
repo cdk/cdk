@@ -31,8 +31,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.hansel.CoverageDecorator;
-
 /**
  * This test class is <b>not</b> intended to be tested directly,
  * but serve as helper class for actual coverage testers.
@@ -52,7 +50,7 @@ abstract public class CoverageTest extends CDKTestCase {
         classesToTest = null;
     }
 
-    public void setUp() {
+    protected void setUp() {
         classLoader = this.getClass().getClassLoader();
     }
 
@@ -165,28 +163,13 @@ abstract public class CoverageTest extends CDKTestCase {
         }
     }
     
-    protected Test createHanselTestSuite() {
-        TestSuite suite = new TestSuite("Hansel tests for some module");
-        Enumeration classes = classesToTest.elements();
-        while (classes.hasMoreElements()) {
-            String className = (String)classes.nextElement();
-            suite.addTest(createHanselTest(className));
-        }
-        return suite;
-    }
-    
-    protected Test createHanselTest(String className) {
-        Class coreClass = loadClass(getClassName(className));
-        Class testClass = loadClass(getTestClassName(className));
-        return new CoverageDecorator(testClass, new Class[] { coreClass });
-    }
-    
     private Class loadClass(String className) {
         Class loadedClass = null;
         try {
             loadedClass = classLoader.loadClass(className);
         } catch (ClassNotFoundException exception) {
             fail("Could not find class: " + exception.getMessage());
+            exception.printStackTrace();
         } catch (NoSuchMethodError error) {
             fail("No such method in class: " + error.getMessage());
         }

@@ -46,7 +46,7 @@ public class CoreCoverageTest extends CoverageTest {
         super(name);
     }
 
-    public void setUp() {
+    protected void setUp() {
         super.setUp();
         try {
             super.loadClassList(CLASS_LIST);
@@ -56,7 +56,9 @@ public class CoreCoverageTest extends CoverageTest {
     }
 
     public static Test suite() {
-        return new TestSuite(CoreCoverageTest.class);
+        TestSuite suite = new TestSuite();
+        suite.addTestSuite(CoreCoverageTest.class);
+        return suite;
     }
 
     public void testCoverage() {
