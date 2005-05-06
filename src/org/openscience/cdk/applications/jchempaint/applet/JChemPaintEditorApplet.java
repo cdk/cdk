@@ -28,19 +28,7 @@
  */
 package org.openscience.cdk.applications.jchempaint.applet;
 
-import java.awt.*;
-
-import javax.vecmath.Point2d;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.renderer.Renderer2D;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.applications.jchempaint.*;
-
-import javax.swing.JApplet;
-import java.util.Calendar;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 
 /**
  * The
@@ -49,40 +37,28 @@ import java.util.Calendar;
  * @author     steinbeck
  * @created    22. April 2005
  */
-public class JChemPaintEditorApplet extends JApplet
+public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 {
 	JChemPaintEditorPanel jcpep = null;
 	
-	public void init()
-	{
-		getContentPane().setLayout(new BorderLayout());
-		jcpep = new JChemPaintEditorPanel();
-		
-		JChemPaintModel model = new JChemPaintModel();
-		model.setTitle("JCP Applet" /*getNewFrameName()*/);
-		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
-		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
-		String version = self.getImplementationVersion();
-		model.setSoftware("JChemPaint " + version);
-		model.setGendate((Calendar.getInstance()).getTime().toString());
-		jcpep.setJChemPaintModel(model);
-		jcpep.registerModel(model);
-
-		//embedded means that additional instances can't be created, which is needed for applet as well
-		jcpep.setEmbedded();
-		getContentPane().add(jcpep, BorderLayout.CENTER);
+	/* (non-Javadoc)
+	 * @see java.applet.Applet#init()
+	 */
+	public void init() {
+		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel();
+		setTheJcpp(jcpep);
 	}
 	
-	public void start()
-	{
-		//Parameter parsing goes here
-	
+	/* (non-Javadoc)
+	 * @see java.applet.Applet#start()
+	 */
+	public void start() {
+		super.start();
 	}
-	
-	public void stop()
-	{
-	
+	/* (non-Javadoc)
+	 * @see java.applet.Applet#stop()
+	 */
+	public void stop() {
+		super.stop();
 	}
-
 }
-

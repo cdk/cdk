@@ -33,7 +33,6 @@ import java.util.PropertyResourceBundle;
 import javax.swing.JApplet;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.io.ChemObjectReader;
@@ -56,8 +55,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			+ "for more information";
 
 	private static String[][] paramInfo = {
-			{ "bgcolor", "color",
-					"Background color to HTML color name or #RRGGBB" },
+			/* { "bgcolor", "color",
+					"Background color to HTML color name or #RRGGBB" },*/
 			{ "load", "url", "URL of the chemical data" }, };
 
 	public String getAppletInfo() {
@@ -101,7 +100,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 				return (new Double(stringValue)).doubleValue();
 			} catch (NumberFormatException ex) {
 				System.out.println(propertyName + ":" + stringValue
-						+ " is not an integer");
+						+ " is not a floating point number");
 			}
 		return defaultValue;
 	}
@@ -111,14 +110,13 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		getContentPane().setLayout(new BorderLayout());
 		model.setTitle("JCP Applet" /* getNewFrameName() */);
 		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
-		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
-		String version = self.getImplementationVersion();
-		model.setSoftware("JChemPaint " + version);
+		// Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
+		// String version = self.getImplementationVersion();
+		// model.setSoftware("JChemPaint " + version);
+		model.setSoftware("JChemPaint " /*+  version */);
 		model.setGendate((Calendar.getInstance()).getTime().toString());
 		jcpp.setJChemPaintModel(model);
-		// TODO implement empty method registerModel in JChemPaintViewerOnlyPanel or JChemPaintModel
-		if (jcpp instanceof JChemPaintEditorPanel)
-			((JChemPaintEditorPanel) jcpp).registerModel(model);
+		jcpp.registerModel(model);
 
 		//embedded means that additional instances can't be created, which is
 		// needed for applet as well
@@ -126,16 +124,30 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		getContentPane().add(jcpp, BorderLayout.CENTER);
 	}
 
-	public void loadModel() {
+	// Code for both loadModel methods taken from JCPCDK applet
+	
+	/**
+	 * @param theModel
+	 */
+	protected void loadModelFromParam(JChemPaintModel theModel) {
 		URL fileURL = null;
-		theModel = new JChemPaintModel();
 		try {
 			URL documentBase = getDocumentBase();
-			fileURL = new URL(documentBase, getParameter("load"));
+			String load = getParameter("load");
+			if (load != null)
+				fileURL = new URL(documentBase, load);
 		} catch (Exception exception) {
 			System.out.println("Cannot load model: " + exception.toString());
 			exception.printStackTrace();
 		}
+		loadModelFromUrl(theModel, fileURL);
+	}
+
+	/**
+	 * @param theModel
+	 * @param fileURL
+	 */
+	public void loadModelFromUrl(JChemPaintModel theModel, URL fileURL) {
 		if (fileURL != null) {
 			try {
 				InputStreamReader isReader = new InputStreamReader(fileURL.openStream());
@@ -149,14 +161,13 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		}
 		initPanelAndModel(theJcpp, theModel);
 	}
-
+	
 	public void start() {
 		//Parameter parsing goes here
-		loadModel();
+		loadModelFromParam(new JChemPaintModel());
 	}
 
 	public void stop() {
-
 	}
 	/**
 	 * @return Returns the theJcpp.

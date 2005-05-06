@@ -26,9 +26,7 @@ package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.Component;
 import java.awt.Container;
-
 import javax.swing.JScrollPane;
-
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 
 /**
@@ -56,7 +54,6 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
 				removeScrollBars((Container) theCont.getComponent(i));
 		}
 	}
-	
 	/* (non-Javadoc)
 	 * @see java.applet.Applet#init()
 	 */
@@ -67,7 +64,6 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
 		jcpvop.setShowToolBar(false);
 		// ugly ...
 		removeScrollBars(jcpvop);
-		Component comps[] = jcpvop.getComponents();
 		setTheJcpp(jcpvop);
 	}
 	
@@ -76,5 +72,11 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
 	 */
 	public void start() {
 		super.start();
+	}
+	/* (non-Javadoc)
+	 * @see java.applet.Applet#stop()
+	 */
+	public void stop() {
+		super.stop();
 	}
 }
