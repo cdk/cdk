@@ -27,9 +27,7 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
  */
-
 package org.openscience.cdk.isomorphism.mcss;
 
 import java.util.ArrayList;
@@ -55,11 +53,12 @@ import java.util.ListIterator;
   *         1 2 3           1 2 3 4
   * </pre>
   *
-  *  The resulting RGraph(G1,G2) will contain 3 nodes:
-  *
-  *  <p>Node A : association between bond C-C :  1-2 in G1 and 1-2 in G2
-  *  Node B : association between bond C-C :  1-2 in G1 and 2-3 in G2
-  *  Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2
+  *  <p>The resulting RGraph(G1,G2) will contain 3 nodes:
+  *  <ul>
+  *    <li>Node A : association between bond C-C :  1-2 in G1 and 1-2 in G2
+  *    <li>Node B : association between bond C-C :  1-2 in G1 and 2-3 in G2
+  *    <li>Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2
+  *  </ul>
   *  The RGraph will also contain one edge representing the 
   *  adjacency between node B and C  that is : bonds 1-2 and 2-3 in G1 
   *  and bonds 2-3 and 3-4 in G2.
@@ -90,16 +89,11 @@ import java.util.ListIterator;
   *                      room for optimization in many ways including the
   *                      the algorithm itself. 
   *
-  *  <p>The general algoritm derives from "Machine Learning of
-  *  of generic Reactions : 3. An efficient Algorithm for Maximal Common 
-  *  Substructure determination" C. Tonnelier, Ph. Jauffret, T. Hanser
-  *  and G. Kaufmann. Tetrahedron Vol. 3, No 6, pp. 351-358, 1990.
-  *  and modified in the These of T. Hanser "Apprentissage automatique 
-  *  de m?thodes de synth?se ? partir d'exemples". Universit? Louis Pasteur
-  *  STRASBOURG 1993.
+ *  <p>This algorithm derives from the algorithm described in
+ *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite Han93}.
   *
-  * @author     Stephane Werner from IXELIS mail@ixelis.net
-  * @cdk.created    2002-07-17
+  * @author      Stephane Werner from IXELIS mail@ixelis.net
+  * @cdk.created 2002-07-17
   * @cdk.require java1.4+
   * @cdk.module  standard
   */
@@ -111,8 +105,8 @@ public class RGraph
     List graph = null;
 
     // maximal number of iterations before
-    // search break.
-    int maxIteration = 10000;  
+    // search break
+    int maxIteration = 10000;
     
     // dimensions of the compared graphs
     int firstGraphSize = 0;
@@ -137,8 +131,7 @@ public class RGraph
     BitSet graphBitSet = null;
     
     /**
-     * Constructor for the RGraph object
-     * Create an empty RGraph.
+     * Constructor for the RGraph object and creates an empty RGraph.
      */
     public RGraph()
     {
@@ -149,7 +142,7 @@ public class RGraph
 
     /**
      *  Returns the size of the first of the two
-     *  compared graphs
+     *  compared graphs.
      * @return The size of the first of the two compared graphs         
      */
     public int getFirstGraphSize()
@@ -159,7 +152,7 @@ public class RGraph
     
     /**
      *  Returns the size of the second of the two
-     *  compared graphs
+     *  compared graphs.
      * @return The size of the second of the two compared graphs         
      */
     public int getSecondGraphSize()
@@ -170,7 +163,7 @@ public class RGraph
     
     /**
      *  Sets the size of the first of the two
-     *  compared graphs
+     *  compared graphs.
      * @param n1 The size of the second of the two compared graphs         
      */
     public void setFirstGraphSize(int n1)
@@ -180,7 +173,7 @@ public class RGraph
     
     /**
      *  Returns the size of the second of the two
-     *  compared graphs
+     *  compared graphs.
      * @param n2 The size of the second of the two compared graphs         
      */
     public void setSecondGraphSize(int n2)
@@ -189,7 +182,7 @@ public class RGraph
     }
 
     /**
-     *  Reinitialisation of the TGraph
+     *  Reinitialisation of the TGraph.
      */
     public void clear()
     {
@@ -198,7 +191,7 @@ public class RGraph
     }
 
     /**
-     *  Returns the graph object of this RGraph
+     *  Returns the graph object of this RGraph.
      * @return      The graph object, a list         
      */
     public List getGraph()
@@ -207,7 +200,7 @@ public class RGraph
     }
     
     /**
-     *  Adds a new node to the RGraph
+     *  Adds a new node to the RGraph.
      * @param  newNode  The node to add to the graph
      */
     public void addNode(RNode newNode)
@@ -285,6 +278,7 @@ public class RGraph
             {
                 // carry on research and update iteration count
                 nbIteration++;
+                System.out.println("iter: " + nbIteration);
 
                 // for each node in the set of possible extension (neighbours of 
                 // the current partial solution, include the node to the solution
@@ -400,7 +394,7 @@ public class RGraph
     }
 
     /**
-     *  Determine if there are potential soltution remaining
+     *  Determine if there are potential soltution remaining.
      * @param       potentialNode  set of remaining potential nodes
      * @return      true if it is worse to continue the search         
      */
@@ -477,7 +471,7 @@ public class RGraph
     }
     
     /**
-     *  Returns the list of solutions  
+     *  Returns the list of solutions.
      *
      * @return    The solution list 
      */
@@ -491,7 +485,7 @@ public class RGraph
      * to a list of RMap that represents the 
      * mapping between to substructures in G1 and G2
      * (the projection of the RGraph bitset on G1
-     * and G2)
+     * and G2).
      *
      * @param  set  the BitSet
      * @return      the RMap list
@@ -513,7 +507,7 @@ public class RGraph
      * all possible solutions will be generated. If false
      * the search will stop as soon as a solution is found.
      * (e.g. when we just want to know if a G2 is
-     *  a substructure of G1 or not)
+     *  a substructure of G1 or not).
      *
      * @param  findAllStructure  
      */
@@ -536,7 +530,8 @@ public class RGraph
     }
 
     /**
-     *  Sets the maxIteration for the RGraph parsing
+     * Sets the maxIteration for the RGraph parsing. If set to -1,
+     * then no iteration maximum is taken into account.
      *
      * @param  it  The new maxIteration value
      */
@@ -546,7 +541,7 @@ public class RGraph
     }
     
    /**
-    *  Returns a string representation of the RGraph
+    *  Returns a string representation of the RGraph.
     * @return the string representation of the RGraph
     */
     public String toString()
@@ -567,7 +562,7 @@ public class RGraph
     /////////////////////////////////
     // BitSet tools
     /**
-     *  Projects a RGraph bitset on the source graph G1
+     *  Projects a RGraph bitset on the source graph G1.
      * @param  set  RGraph BitSet to project
      * @return      The associate BitSet in G1 
      */
@@ -585,7 +580,7 @@ public class RGraph
     }
 
     /**
-     *  Projects a RGraph bitset on the source graph G2
+     *  Projects a RGraph bitset on the source graph G2.
      * @param  set  RGraph BitSet to project
      * @return      The associate BitSet in G2 
      */
@@ -603,7 +598,7 @@ public class RGraph
     }
 
     /**
-     *  Test if set A is contained in  set B
+     *  Test if set A is contained in  set B.
      * @param  A  a bitSet 
      * @param  B  a bitSet 
      * @return    true if  A is contained in  B 
