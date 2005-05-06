@@ -21,13 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.tools.*;
+import org.openscience.cdk.test.exception.*;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -39,6 +38,7 @@ public class CoreClassesTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.core Tests");
         suite.addTest(CoreCoverageTest.suite());
+        suite.addTest(NoSuchAtomTypeExceptionTest.suite());
         
         return suite;
     }

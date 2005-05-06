@@ -32,7 +32,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol, 
+ * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol,
  * formal charge and hybridization state.
  *
  * @author         egonw

@@ -67,6 +67,7 @@ public class HybridizationMatcherTest extends CDKTestCase {
 
         HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
         AtomType matched = atm.findMatchingAtomType(mol, atom);
+        assertNotNull(matched);
         
         assertEquals(thisHybridization, matched.getHybridization());
         assertEquals("C", matched.getSymbol());
