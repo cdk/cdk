@@ -74,6 +74,7 @@ API changes:
   .calculateNumberOfImplicitHydrogens()
 * PDB fields are now read into the new PDBAtom fields instead of the previously
   used ChemObject properties defined in CDKConstants
+* The cdk.layout.TemplateHandler now uses CML2 files (implementing RFE #1175952)
 
 20050125 Release
 ------------------------------------
