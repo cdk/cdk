@@ -106,7 +106,7 @@ public class RGraph
 
     // maximal number of iterations before
     // search break
-    int maxIteration = 10000;
+    int maxIteration = -1;
     
     // dimensions of the compared graphs
     int firstGraphSize = 0;
@@ -407,7 +407,7 @@ public class RGraph
 
         // if we reached the maximum number of
         // serach iterations than do not continue
-        if(nbIteration >= maxIteration)
+        if(maxIteration != -1 && nbIteration >= maxIteration)
         {
             return false;
         }
