@@ -234,12 +234,14 @@ public class MDLReader extends DefaultChemObjectReader {
 				}
 			    }
 			    // end skip all other lines
-			    while ((line = input.readLine()) != null &&
-				   line.startsWith(">")) {
-				logger.debug("data header line: ", line);
+			    while ((line = input.readLine()) != null && line.startsWith(">")) {
+                    logger.debug("data header line: ", line);
 			    }
 			}
-			String data = "";
+            if (line == null) {
+                throw new CDKException("Expecting data line here, but found null!");
+            }
+			String data = line;
 			while ((line = input.readLine()) != null &&
 			       line.trim().length() > 0) {
 			    logger.debug("data line: ", line);
