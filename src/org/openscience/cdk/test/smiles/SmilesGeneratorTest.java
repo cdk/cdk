@@ -730,7 +730,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			smiles = sg.createSMILES(new Molecule((AtomContainer) acap.next()));
 			//System.out.println(smiles);
-			assertTrue(smiles.equals(oldSmiles));
+			assertEquals(smiles, oldSmiles);
 		}
 
 	}
@@ -762,7 +762,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			smiles = sg.createSMILES(new Molecule((AtomContainer) acbp.next()));
 			//System.out.println(smiles);
-			assertTrue(smiles.equals(oldSmiles));
+			assertEquals(smiles, oldSmiles);
 		}
 
 	}

@@ -81,7 +81,7 @@ public class AtomContainerPermutorTest extends CDKTestCase
 				atoms += result.getAtomAt(f).getSymbol(); 
 			}
 		}
-		assertTrue(counter == 719);
+		assertEquals(counter, 719);
 	}
 
 	public void testBondPermutation() 
@@ -114,7 +114,7 @@ public class AtomContainerPermutorTest extends CDKTestCase
 			}
 			System.out.println(bonds);
 		}
-		assertTrue(counter == 119);
+		assertEquals(counter, 119);
 	}
 
 	
