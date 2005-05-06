@@ -65,7 +65,7 @@ public class HybridizationMatcherTest extends CDKTestCase {
         atom.setHybridization(thisHybridization);
         mol.addAtom(atom);
 
-        HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
+        HybridizationMatcher atm = new HybridizationMatcher();
         AtomType matched = atm.findMatchingAtomType(mol, atom);
         assertNotNull(matched);
         
