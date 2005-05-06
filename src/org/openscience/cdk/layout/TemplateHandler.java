@@ -38,12 +38,15 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  *  Helper class for Structure Diagram Generation. Handles templates. This is
@@ -59,7 +62,7 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 public class TemplateHandler
 {
 
-	private org.openscience.cdk.tools.LoggingTool logger;
+	private LoggingTool logger;
 
 	Molecule molecule;
 	RingSet sssr;
@@ -73,7 +76,7 @@ public class TemplateHandler
 	 */
 	public TemplateHandler()
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this);
+		logger = new LoggingTool(this);
 		templates = new Vector();
 		loadTemplates();
 	}
@@ -95,11 +98,15 @@ public class TemplateHandler
 			{
 				line = reader.readLine();
 				line = "data/templates/" + line;
+                logger.debug("Attempting to read template ", line);
 				CMLReader structureReader = new CMLReader(
                     this.getClass().getClassLoader().getResourceAsStream(line)
                 );
-				templates.addElement((Molecule) structureReader.read(new Molecule()));
-				logger.debug("Successfully read template " + line);
+                ChemFile file = (ChemFile)structureReader.read(new ChemFile());
+				templates.addElement(new Molecule(
+                    ChemFileManipulator.getAllInOneContainer(file)
+                ));
+				logger.debug("Successfully read template ", line);
 			}
 		} catch (Exception exc)
 		{
