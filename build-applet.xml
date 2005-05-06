@@ -9,7 +9,8 @@
 		<!-- The file lists are generated from tomcat access log files with unpacked class files (and without jar files) -->
 		<!-- cat apache/jakarta-tomcat-5.0.28/logs/localhost_access_log.2005-04-27.txt | awk -v classdir="/jcpapplet/classes/" '$9 != 404 && substr($7,0,length(classdir)) == classdir { print substr($7,length(classdir)+1) }' | sort -->
 		<!-- hint: uncomment <Valve className="org.apache.catalina.valves.AccessLogValve" in conf/server.xml to switch on tomcat's access logging -->
-		<concat destfile="${growing_list_file}" fixlastline="yes" append="no">
+		<concat destfile="${growing_list_file}" fixlastline="yes" append="no">org/apache/log4j/**${line.separator}</concat>
+		<concat destfile="${growing_list_file}" fixlastline="yes" append="yes">
 			<fileset file="${metainf}/applet-core.files"/>
 		</concat>
 		<concat destfile="${growing_classpath}" fixlastline="no" append="no">${dist}/jar/jchempaint-applet-core.jar${line.separator}</concat>
@@ -60,6 +61,7 @@
 		<jar destfile="${dist}/jar/jchempaint-applet-core.jar" index="true">
 			<fileset dir="${appjars.dir}">
 				<includesfile name="${metainf}/applet-core.files"/>
+				<exclude name="org/apache/log4j/**"/>
 			</fileset>
 			<indexjars>
 				<fileset dir=".">
