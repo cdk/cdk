@@ -170,9 +170,9 @@ public class TemplateHandlerTest extends CDKTestCase
 			TemplateHandlerTest tht = new TemplateHandlerTest("TemplateHandlerTest");
 			tht.setUp();
 			tht.standAlone = true;
-			//tht.testInit();
-			//tht.testDetection();
-			//tht.visualLayout();
+			tht.testInit();
+			tht.testDetection();
+			tht.visualLayout();
 			tht.testAddMolecule();
 			tht.testRemoveMolecule();
 		} catch (Exception exc)
