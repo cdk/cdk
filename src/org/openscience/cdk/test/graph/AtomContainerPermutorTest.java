@@ -52,7 +52,7 @@ public class AtomContainerPermutorTest extends CDKTestCase
 		return new TestSuite(AtomContainerPermutorTest.class);
 	}
 
-	public void testPermutation() 
+	public void testAtomPermutation() 
 	{
 		AtomContainer ac = new AtomContainer();
 		AtomContainer result;
@@ -70,7 +70,7 @@ public class AtomContainerPermutorTest extends CDKTestCase
 		ac.addBond(4, 5, 1.0);
 		AtomContainerAtomPermutor acap = new
 		AtomContainerAtomPermutor(ac);
-		int counter = 1;
+		int counter = 0;
 		while(acap.hasNext())
 		{
 			counter ++;
@@ -81,14 +81,49 @@ public class AtomContainerPermutorTest extends CDKTestCase
 				atoms += result.getAtomAt(f).getSymbol(); 
 			}
 		}
-		assertTrue(counter == 720);
+		assertTrue(counter == 719);
 	}
+
+	public void testBondPermutation() 
+	{
+		AtomContainer ac = new AtomContainer();
+		AtomContainer result;
+		String bonds = new String("");
+		ac.addAtom(new Atom("C"));
+		ac.addAtom(new Atom("N"));
+		ac.addAtom(new Atom("P"));
+		ac.addAtom(new Atom("O"));
+		ac.addAtom(new Atom("S"));
+		ac.addAtom(new Atom("Br"));
+		ac.addBond(0, 1, 1.0);
+		ac.addBond(1, 2, 2.0);
+		ac.addBond(2, 3, 3.0);
+		ac.addBond(3, 4, 4.0);
+		ac.addBond(4, 5, 5.0);
+		AtomContainerBondPermutor acap = new
+		AtomContainerBondPermutor(ac);
+		int counter = 0;
+		while(acap.hasNext())
+		{
+			counter ++;
+			bonds = "";
+			result = (AtomContainer)acap.next();
+			for (int f = 0; f < result.getBondCount(); f++)
+			{
+				bonds += result.getBondAt(f).getOrder(); 
+			}
+			System.out.println(bonds);
+		}
+		assertTrue(counter == 119);
+	}
+
 	
 	public static void main(String[] args)
 	{
 		AtomContainerPermutorTest acpt = new
 		AtomContainerPermutorTest("AtomContainerPermutorTest");
-		acpt.testPermutation();
+		//acpt.testAtomPermutation();
+		acpt.testBondPermutation();
 	}
 }
 

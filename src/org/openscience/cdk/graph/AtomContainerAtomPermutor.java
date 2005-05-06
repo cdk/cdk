@@ -47,6 +47,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 	public AtomContainerAtomPermutor(AtomContainer ac)
 	{
 		setAtomContainer(ac);
+		N = atomContainer.getAtomCount();
 		initBookkeeping();
 		initObjectArray();
 	}

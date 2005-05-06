@@ -63,10 +63,8 @@ public abstract class AtomContainerPermutor implements Iterator
 
 	public void initBookkeeping()
 	{
-		N = atomContainer.getAtomCount();
-		logger.debug("Got assignment of AtomContainer with " + N + " atoms");
-		bookkeeping = new int[N+1];
-		for (int f = 0; f <=N ; f++)
+		bookkeeping = new int[N + 1];
+		for (int f = 0; f <= N ; f++)
 		{
 			bookkeeping[f] = f;	
 		}
