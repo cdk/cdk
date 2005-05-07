@@ -112,8 +112,17 @@ public class EditAction extends JCPAction {
 		else if (type.equals("selectAll")) {
 			renderModel.setSelectedPart(ChemModelManipulator.getAllInOneContainer(jcpModel.getChemModel()));
 			jcpModel.fireChange();
-		}
-		else if (type.equals("selectFromChemObject")) {
+		} else if (type.equals("selectMolecule")) {
+			ChemObject object = getSource(event);
+			if (object instanceof Atom) {
+				renderModel.setSelectedPart(ChemModelManipulator.getRelevantAtomContainer(jcpModel.getChemModel(),(Atom)object));
+			} else if (object instanceof Bond) {
+				renderModel.setSelectedPart(ChemModelManipulator.getRelevantAtomContainer(jcpModel.getChemModel(),(Bond)object));
+			} else {
+				logger.warn("selectMolecule not defined for the calling object ", object);
+			}
+			jcpModel.fireChange();
+		} else if (type.equals("selectFromChemObject")) {
 			// FIXME: implement for others than Reaction, Atom, Bond
 			ChemObject object = getSource(event);
 			if (object instanceof Atom) {

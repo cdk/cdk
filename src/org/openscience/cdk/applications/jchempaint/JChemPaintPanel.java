@@ -480,6 +480,7 @@ public abstract class JChemPaintPanel
 	public void setJChemPaintModel(JChemPaintModel model) {
 		lastUsedJCPP = this;
 		this.jchemPaintModel = model;
+		jchemPaintModel.addChangeListener(this);
 		ChemModel chemModel = model.getChemModel();
 		scaleAndCenterMolecule(chemModel);
 		drawingPanel.setJChemPaintModel(model);
@@ -859,6 +860,7 @@ public abstract class JChemPaintPanel
 	}
 	public void registerModel(JChemPaintModel model) {
 	}
+		
 }
 
 

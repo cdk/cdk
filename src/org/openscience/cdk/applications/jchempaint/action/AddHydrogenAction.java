@@ -88,8 +88,10 @@ public class AddHydrogenAction extends JCPAction
 					logger.debug("Adding hydrogens to this specific atom");
 					Atom atom = (Atom) object;
 					addHydrogenToOneAtom(ChemModelManipulator.getRelevantAtomContainer(model, atom), atom);
-				} else
-				{
+				} else if (object instanceof ChemModel) {
+					logger.debug("Adding hydrogens to all atoms");
+					addHydrogenToAllAtoms(model);
+				} else {
 					logger.error("Can only add hydrogens to Atom's");
 				}
 			} else
