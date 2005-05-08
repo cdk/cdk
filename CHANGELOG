@@ -166,6 +166,7 @@ New:
 Fixes:
 * Split file format matching from file reading reducing the requirements
   for format detection
+* More JavaDoc cleanup
 * Fixed wrong element types in the valency atom type list (closes #1057016)
 * Extended build/test system to conditionally build/test non-Java5 stuff 
   with Java5 (closes #1038316)
