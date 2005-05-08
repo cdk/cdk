@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="http://cdk.sf.net/schema/changelog"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://cdk.sf.net/schema/changelog"
+  elementFormDefault="qualified">
+
+   <xsd:attributeGroup name="changeGrp">
+     <xsd:attribute name="contributor" type="contributorType" default="unknown"/>
+     <xsd:attribute name="date" type="xsd:date" use="optional"/>
+   </xsd:attributeGroup>
+
+  <xsd:simpleType name="contributorType">
+    <xsd:restriction base="xsd:string">
+      <!-- This is a alphabetical list of contributors to CDK.
+           The id's used are (if possible) the SF accounts. -->
+      
+      <!-- Chris Pudney <??> -->
+      <xsd:enumeration value="cpudney"/>
+      <!-- Egon Willighagen <e.willighagen@science.ru.nl> -->
+      <xsd:enumeration value="egonw"/>
+      <!-- Martin Eklund <??> -->
+      <xsd:enumeration value="meklund"/>
+      <!-- Christoph Steinbeck <??> -->
+      <xsd:enumeration value="steinbeck"/>
+      
+      <!-- Contributor was untracable -->
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="closesType">
+    <xsd:list itemType="xsd:positiveInteger"/>
+  </xsd:simpleType>
+  
+  <xsd:element name="changelog">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="release" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="release">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:choice>
+          <xsd:element ref="addition" />
+          <xsd:element ref="bugfix"   />
+          <xsd:element ref="apiChange"/>
+        </xsd:choice>
+      </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="addition">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attributeGroup ref="changeGrp"/>
+          <xsd:attribute name="implements" type="closesType" use="optional"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="bugfix">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attributeGroup ref="changeGrp"/>
+          <xsd:attribute name="closes" type="closesType" use="optional"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="apiChange">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attributeGroup ref="changeGrp"/>
+          <xsd:attribute name="implements" type="closesType" use="optional"/>
+          <xsd:attribute name="closes" type="closesType" use="optional"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

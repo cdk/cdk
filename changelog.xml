@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog xmlns="http://cdk.sf.net/schema/changelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
+  
+  <release id="CVS">
+    <addition contributor="steinbeck">
+      Added classes for permuting the order of atoms in an AtomContainer 
+      (graph.AtomContainerAtomPermutor)
+    </addition>
+    <addition>
+      AtomPlacer now draws 180 deg geometry when encountering triple bonds
+    </addition>
+    <addition contributor="steinbeck">
+      JChemPaint sources reintegrated to applications.jchempaint package
+    </addition>
+    <addition>
+      Added new method MFAnalyser.getHTMLMolecularFormulaWithCharge()
+    </addition>
+    <addition>
+      Added new methods SetOfAtomContainers.removeAtomContainer()
+    </addition>
+    <addition>
+      Added a CDKRXNWriter.
+    </addition>
+    <addition contributor="egonw" implements="1062516">
+      Atom type list for PDB atom codes
+    </addition>
+    <addition contributor="egonw" implements="824133">
+      Implemented an iterating (event based) CML reader
+    </addition>
+    <addition contributor="egonw">
+      ReaderFactory now uses the new CDK set io-formats instead of
+      hardcoding the recognized formats
+    </addition>
+    <addition contributor="egonw" implements="954356">
+      The PluginManager now adds the plugin menu to the plugin window
+    </addition>
+    <addition contributor="egonw">
+      Jmol API and IO from CVS HEAD on 10.05
+    </addition>
+    <addition contributor="meklund">
+      Added AminoAcid templates
+    </addition>
+    <addition>
+      The libio.cml.Convertor now also accepts AtomContainer
+    </addition>
+    <addition implements="949751">
+      Added customization of atom color for Renderer[2D|3D]Model
+    </addition>
+    <addition contributor="egonw">
+      Added the new method CDKPluginInterface.getPluginLicense()
+    </addition>
+    <addition contributor="egonw">
+      Added the new method CDKEditBus.runScript()
+    </addition>
+    <addition contributor="egonw">
+      CML2 from Jumbo 4.6 was uploaded (for Java 1.4 and 1.5)
+    </addition>
+    <addition contributor="egonw">
+      Added rendering of radicals (SingleElectron)
+    </addition>
+    <addition contributor="egonw">
+      Added reading of 'M  RAD' from MDL molfiles
+    </addition>
+    <addition contributor="egonw">
+      Added writing and reading of radicals in CML2
+    </addition>
+    <addition>
+      Added getRelevantAtomContainer(ChemObject, Bond) to cdk.tools.manipulators
+    </addition>
+    <addition contributor="egonw" implements="1177112">
+      Implemented reading of data items from MDL SD files (closes RFE #1177112)
+    </addition>
+    <addition contributor="egonw">
+      Added cdk.index.CASNumber.calculateCheckBit()
+    </addition>
+    <addition contributor="egonw">
+      Added the new class PDBAtom with field for PDB specific information
+    </addition>
+    <addition contributor="egonw">
+      Added a CML Customizer interface which reduces the CDK module dependency
+      of the libio-cml module
+    </addition>
+    <addition contributor="egonw">
+      Added two new module for outputting data for specific CDK modules:
+      pdb-cml for outputing PDBAtom information, and qsar-cml for outputing
+      QSAR-descriptor information
+    </addition>
+    <bugfix>
+      Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
+    </bugfix>
+    <bugfix>
+      Fixed junit-test and run-test: missing cdk-data.jar
+    </bugfix>
+    <bugfix>
+      Don't consume Exceptions while writing MDL
+    </bugfix>
+    <bugfix closes="1118689">
+      Removed entry for 'D' in the isotope list; '2H' is still present
+    </bugfix>
+    <bugfix>
+      Fail more informative on (corrupt) MDL files that lack the property block
+    </bugfix>
+    <bugfix contributor="egonw">
+      Fixed API detection in CDKPluginManager when distributing change events
+    </bugfix>
+    <bugfix>
+      Fixed returning of SingleElectron's with AtomContainer
+      .getConnectedElectronContainers(Atom)
+    </bugfix>
+    <bugfix>
+      Fixed retaining LonePair's and SingleElectron's when using
+      ConnectivityChecker.partitionIntoMolecules()
+    </bugfix>
+    <bugfix>
+      Fixed showing ElectronContainers in the cdk.apps.swing.ChemObectTree
+    </bugfix>
+    <bugfix contributor="egonw" closes="1172425">
+      The IteratingMDLReader can now also read MDL molfiles with only one
+      molecule
+    </bugfix>
+    <bugfix>
+      Fixed output of CML2 for reactions with IDs
+    </bugfix>
+    <bugfix closes="1169385" contributor="egonw">
+      CDK IO is now fully supports InputStream
+    </bugfix>
+    <bugfix closes="1185991">
+      Fixed error in isotope list
+    </bugfix>
+    <bugfix>
+      Fixed reading of Z from CrystClust files
+    </bugfix>
+    <bugfix closes="937743" contributor="steinbeck">
+      AtomPlacer now draws linear geometries for C#C and C=C=C
+    </bugfix>
+    <bugfix contributor="egonw" closes="1175478">
+      Fixed reading of explicit single bonds in SMILES
+    </bugfix>
+    <bugfix contributor="steinbeck" closes="934819 931608">
+      Fixed false handling of terminal branched groups in Fingerprinter
+    </bugfix>
+    <bugfix contributor="steinbeck" closes="938761">
+      No overlapping atoms in layout
+    </bugfix>
+    <bugfix contributor="cpudney" closes="1185551">
+      Fixed misuse of ready() in MDLReader which cause problems when reading
+      over the internet
+    </bugfix>
+    <apiChange>
+      Moved IsotopeFactory from cdk-standard to the cdk-core module
+    </apiChange>
+    <apiChange contributor="egonw">
+      Descriptor.calculate() now returns a DescriptorValue instead of 
+      DescriptorResult
+    </apiChange>
+    <apiChange contributor="egonw" closes="1150670">
+      Removed LoggingTool(boolean) and LoggingTool(Object, boolean)
+      because configuration should be done at application level
+    </apiChange>
+    <apiChange>
+      Renamed ValencyCheckerInterface.calculateMissingHydrogen() to
+      .calculateNumberOfImplicitHydrogens()
+    </apiChange>
+    <apiChange contributor="egonw">
+      PDB fields are now read into the new PDBAtom fields instead of the previously
+      used ChemObject properties defined in CDKConstants
+    </apiChange>
+    <apiChange implements="1175952">
+      The cdk.layout.TemplateHandler now uses CML2 files
+    </apiChange>
+  </release>
+</changelog>
