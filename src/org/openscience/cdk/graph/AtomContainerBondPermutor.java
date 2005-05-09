@@ -36,7 +36,15 @@ import org.openscience.cdk.graph.AtomContainerPermutor;;
 
 
 /**
+ * This class allows to iterate trough the set of all possible
+ * permutations of the bond order in a given atom container. 
+ * It allows to check for a dependency of algorithm results 
+ * on the bond order.
  *
+ * The permutation code here is based on a pseudo code example 
+ * on a tutorial site created and maintained by Phillip P. Fuchs:
+ * http://www.geocities.com/permute_it/pseudo2.html
+ * 
  *@author         steinbeck
  *@created        4. Mai 2005
  *@cdk.created    2002-02-24

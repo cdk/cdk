@@ -38,7 +38,10 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- *
+ * The permutation code here is based on a pseudo code example 
+ * on a tutorial site created and maintained by Phillip P. Fuchs:
+ * http://www.geocities.com/permute_it/pseudo2.html
+ * 
  *@author         steinbeck
  *@created        4. Mai 2005
  *@cdk.created    2002-02-24
