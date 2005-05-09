@@ -648,6 +648,19 @@
       <bibtex:pages>726-735</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+  
+  <bibtex:entry id="EIS95">
+    <bibtex:article>
+        <bibtex:author>Eisenhaber, F. and Lijnzaad, P. and Argos, P. and Sander, C. and Scharf, M.
+        </bibtex:author>
+        <bibtex:title>The Double Cubic Lattice Method: Efficient Approaches to Numerical Integration of Surface Area and Volume
+        and to Dot Surface Contourin gof Molecular Assemblies</bibtex:title>
+      <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
+      <bibtex:year>1995</bibtex:year>
+      <bibtex:volume>16</bibtex:volume>
+      <bibtex:pages>273-284</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
 
   <bibtex:entry id="WIL01">
     <bibtex:article>
