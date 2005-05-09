@@ -501,29 +501,15 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *
 	 *@param  e  ChangeEvent
 	 */
-	public void stateChanged(ChangeEvent e)
+	//As long there is nothing it it, it shouldn't overwrite the function of JChemPaintPanel
+	 /*public void stateChanged(ChangeEvent e)
 	{
-
-		if (jchemPaintModel != null)
-		{
-			for (int i = 0; i < 3; i++)
-			{
-				String status = jchemPaintModel.getStatus(i);
-				statusBar.setStatus(i + 1, status);
-			}
-		} else
-		{
-			if (statusBar != null)
-			{
-				statusBar.setStatus(1, "no model");
-			}
-		}
 		// send event to plugins
 		/*if (pluginManager != null)
 		{
 			pluginManager.stateChanged(new ChemObjectChangeEvent(this));
 		}*/
-	}
+	//}*/
 
 
 

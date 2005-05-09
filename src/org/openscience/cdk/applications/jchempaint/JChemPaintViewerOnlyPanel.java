@@ -60,9 +60,10 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel
 	 *
 	 *@param  event  ChangeEvent
 	 */
-	public void stateChanged(ChangeEvent event)
+	//As long there is nothing it it, it shouldn't overwrite the function of JChemPaintPanel	 
+	/*public void stateChanged(ChangeEvent event)
 	{
-	}
+	}*/
 }
 
 
