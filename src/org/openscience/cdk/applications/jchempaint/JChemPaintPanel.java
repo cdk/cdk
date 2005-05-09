@@ -117,10 +117,8 @@ public abstract class JChemPaintPanel
 
 		add(mainContainer, BorderLayout.CENTER);
 		customizeView();
-		setSize(new Dimension(500, 350));
-		setPreferredSize(new Dimension(500, 350));
-		//scrollPane.getViewport().setViewSize(this.getSize());
-		//scrollPane.getViewport().setExtentSize(this.getSize());
+		setSize(new Dimension(600, 400));
+		setPreferredSize(new Dimension(600, 400));
 	}
 
 
@@ -135,7 +133,7 @@ public abstract class JChemPaintPanel
 		return jcpaction;
 	}
 
-
+	
 	/**  Description of the Method */
 	public void customizeView() {
 		if (showMenuBar) {
@@ -643,7 +641,7 @@ public abstract class JChemPaintPanel
 	 *
 	 * @param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
-	void scaleAndCenterMolecule(ChemModel chemModel) {
+	public void scaleAndCenterMolecule(ChemModel chemModel) {
 		JChemPaintModel jcpm = getJChemPaintModel();
 		Renderer2DModel rendererModel = jcpm.getRendererModel();
 		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
