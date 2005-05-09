@@ -816,6 +816,16 @@ public abstract class JChemPaintPanel
 
 
 	/**
+	 *  Creates a JMenu which can be part of the menu of an application embedding jcp.
+	 *
+	 *@return           The created JMenu
+	 */
+  public JMenu getMenuForEmbedded(){
+    return(menu.getMenuForEmbedded(this));
+	}
+
+
+	/**
 	 *  Class for closing jcp
 	 *
 	 * @author     steinbeck

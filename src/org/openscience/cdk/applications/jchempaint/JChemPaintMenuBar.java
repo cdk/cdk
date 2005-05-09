@@ -34,22 +34,18 @@ import java.util.*;
 
 import javax.swing.*;
 
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-
-import java.lang.reflect.Field;
-
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 
 /**
  *  JChemPaint menu bar
  *
- * @author        steinbeck
- * @created       22. April 2005
- * @cdk.module    jchempaint
+ * @cdk.module jchempaint
+ * @author     steinbeck
+ * @created    22. April 2005
  */
-public class JChemPaintMenuBar extends JMenuBar {
+public class JChemPaintMenuBar extends JMenuBar
+{
 
 	private LoggingTool logger;
 
@@ -57,9 +53,10 @@ public class JChemPaintMenuBar extends JMenuBar {
 	/**
 	 *  The default constructor method. Adds the plugin menu.
 	 *
-	 * @param  jcpPanel  Description of the Parameter
+	 *@param  jcpPanel  Description of the Parameter
 	 */
-	public JChemPaintMenuBar(JChemPaintPanel jcpPanel) {
+	public JChemPaintMenuBar(JChemPaintPanel jcpPanel)
+	{
 		this(jcpPanel, true);
 	}
 
@@ -67,10 +64,11 @@ public class JChemPaintMenuBar extends JMenuBar {
 	/**
 	 *  The more flexible constructor method.
 	 *
-	 * @param  jcpPanel       Description of the Parameter
-	 * @param  addPluginMenu  Description of the Parameter
+	 *@param  jcpPanel       Description of the Parameter
+	 *@param  addPluginMenu  Description of the Parameter
 	 */
-	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu) {
+	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu)
+	{
 		this(jcpPanel, addPluginMenu, null);
 	}
 
@@ -78,12 +76,13 @@ public class JChemPaintMenuBar extends JMenuBar {
 	/**
 	 *  Constructor for the JChemPaintMenuBar object
 	 *
-	 * @param  jcpPanel        Description of the Parameter
-	 * @param  addPluginMenu   Description of the Parameter
-	 * @param  menuDefinition  Description of the Parameter
+	 *@param  jcpPanel        Description of the Parameter
+	 *@param  addPluginMenu   Description of the Parameter
+	 *@param  menuDefinition  Description of the Parameter
 	 */
 	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu,
-			String menuDefinition) {
+			String menuDefinition)
+	{
 		logger = new LoggingTool(this);
 		createMenubar(jcpPanel, addPluginMenu, menuDefinition);
 	}
@@ -96,11 +95,12 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 *  The menu items in the bar are defined by the property 'menubar' in
 	 *  org.openscience.cdk.applications.jchempaint.resources.JChemPaint.properties.
 	 *
-	 * @param  jcpPanel        Description of the Parameter
-	 * @param  addPluginMenu   Description of the Parameter
-	 * @param  menuDefinition  Description of the Parameter
+	 *@param  jcpPanel        Description of the Parameter
+	 *@param  addPluginMenu   Description of the Parameter
+	 *@param  menuDefinition  Description of the Parameter
 	 */
-	protected void createMenubar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition) {
+	protected void createMenubar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition)
+	{
 		addNormalMenuBar(jcpPanel, menuDefinition);
 		/*
 		 *  if (addPluginMenu && jcp.getPluginManager() != null) {
@@ -117,55 +117,85 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 *  Adds a feature to the NormalMenuBar attribute of the JChemPaintMenuBar
 	 *  object
 	 *
-	 * @param  jcpPanel        The feature to be added to the NormalMenuBar
+	 *@param  jcpPanel        The feature to be added to the NormalMenuBar
 	 *      attribute
-	 * @param  menuDefinition  The feature to be added to the NormalMenuBar
+	 *@param  menuDefinition  The feature to be added to the NormalMenuBar
 	 *      attribute
 	 */
-	private void addNormalMenuBar(JChemPaintPanel jcpPanel, String menuDefinition) {
+	private void addNormalMenuBar(JChemPaintPanel jcpPanel, String menuDefinition)
+	{
 		String definition = menuDefinition;
-		if (definition == null) {
+		if (definition == null)
+		{
 			definition = getMenuResourceString("menubar");
 		}
 		String[] menuKeys = StringHelper.tokenize(definition);
-		for (int i = 0; i < menuKeys.length; i++) {
+		for (int i = 0; i < menuKeys.length; i++)
+		{
 			JMenu m = createMenu(jcpPanel, menuKeys[i]);
-			if (m != null) {
+			if (m != null)
+			{
 				this.add(m);
 			}
 		}
 	}
+  
+  
+	/**
+	 *  Creates a JMenu which can be part of the menu of an application embedding jcp.
+	 *
+	 *@param  jcppPanel The jcpPanel to be controlled by the menu
+	 *@return           The created JMenu
+	 */
+  public JMenu getMenuForEmbedded(JChemPaintPanel jcpPanel){
+		String definition = getMenuResourceString("menubar");
+		String[] menuKeys = StringHelper.tokenize(definition);
+    JMenu superMenu=new JMenu();
+		for (int i = 0; i < menuKeys.length; i++)
+		{
+			JMenu m = createMenu(jcpPanel, menuKeys[i]);
+			if (m != null)
+			{
+				superMenu.add(m);
+			}
+		}
+    return(superMenu);
+	}
+          
 
 
 	/**
 	 *  Creates a JMenu given by a String with all the MenuItems specified in the
 	 *  properties file.
 	 *
-	 * @param  key       The String used to identify the Menu
-	 * @param  jcpPanel  Description of the Parameter
-	 * @return           The created JMenu
+	 *@param  key       The String used to identify the Menu
+	 *@param  jcpPanel  Description of the Parameter
+	 *@return           The created JMenu
 	 */
-	protected JMenu createMenu(JChemPaintPanel jcpPanel, String key) {
+	protected JMenu createMenu(JChemPaintPanel jcpPanel, String key)
+	{
 		logger.debug("Creating menu: ", key);
 		String[] itemKeys = StringHelper.tokenize(getMenuResourceString(key));
 		JMenu menu = new JMenu(JCPLocalizationHandler.getInstance().getString(key));
-		for (int i = 0; i < itemKeys.length; i++) {
-			if (itemKeys[i].equals("-")) {
+		for (int i = 0; i < itemKeys.length; i++)
+		{
+			if (itemKeys[i].equals("-"))
+			{
 				menu.addSeparator();
-			}
-			else if (itemKeys[i].startsWith("@")) {
+			} else if (itemKeys[i].startsWith("@"))
+			{
 				JMenu me = createMenu(jcpPanel, itemKeys[i].substring(1));
 				menu.add(me);
-			}
-			else if (itemKeys[i].endsWith("+")) {
+			} else if (itemKeys[i].endsWith("+"))
+			{
 				JMenuItem mi = createMenuItem(jcpPanel,
 						itemKeys[i].substring(0, itemKeys[i].length() - 1),
 						true, false
 						);
 				// default off, because we cannot turn it on anywhere (yet)
 				menu.add(mi);
-			}
-			else {
+			} else
+			{
 				JMenuItem mi = createMenuItem(jcpPanel, itemKeys[i], false, false);
 				menu.add(mi);
 			}
@@ -177,14 +207,17 @@ public class JChemPaintMenuBar extends JMenuBar {
 	/**
 	 *  Gets the menuResourceString attribute of the JChemPaint object
 	 *
-	 * @param  key  Description of the Parameter
-	 * @return      The menuResourceString value
+	 *@param  key  Description of the Parameter
+	 *@return      The menuResourceString value
 	 */
-	public String getMenuResourceString(String key) {
+	public String getMenuResourceString(String key)
+	{
 		String str;
-		try {
+		try
+		{
 			str = JCPPropertyHandler.getInstance().getGUIDefinition().getString(key);
-		} catch (MissingResourceException mre) {
+		} catch (MissingResourceException mre)
+		{
 			str = null;
 		}
 		return str;
@@ -192,83 +225,52 @@ public class JChemPaintMenuBar extends JMenuBar {
 
 
 	/**
-	 *  Adds ShortCuts to the JChemPaintMenuBar object
-	 *
-	 * @param  cmd  String The Strin to identify the MenuItem
-	 * @param  mi   the regarding MenuItem
-	 */
-	private void addShortCuts(String cmd, JMenuItem mi) {
-		Properties shortCutProps = JCPPropertyHandler.getInstance().getJCPShort_Cuts();
-		String shortCuts = shortCutProps.getProperty(cmd);
-		String charString = null;
-		if (shortCuts != null) {
-			try {
-				String[] scStrings = shortCuts.trim().split(",");
-				if (scStrings.length > 1) {
-					charString = scStrings[1];
-					String altKey = scStrings[0] + "_MASK";
-					Field field = Class.forName("java.awt.event.InputEvent").getField(altKey);
-					int i = field.getInt(Class.forName("java.awt.event.InputEvent"));
-					mi.setAccelerator(KeyStroke.getKeyStroke(charString.charAt(0), i));
-				}
-				else {
-					charString = "VK_" + scStrings[0];
-					Field field = Class.forName("java.awt.event.KeyEvent").getField(charString);
-					int i = field.getInt(Class.forName("java.awt.event.KeyEvent"));
-					mi.setAccelerator(KeyStroke.getKeyStroke(i, 0));
-				}
-			} catch (ClassNotFoundException cnfe) {
-				cnfe.printStackTrace();
-			} catch (NoSuchFieldException nsfe) {
-				nsfe.printStackTrace();
-			} catch (IllegalAccessException iae) {
-				iae.printStackTrace();
-			}
-		}
-	}
-
-	/**
 	 *  Craetes a JMenuItem given by a String and adds the right ActionListener to
 	 *  it.
 	 *
-	 * @param  cmd         String The Strin to identify the MenuItem
-	 * @param  jcpPanel    Description of the Parameter
-	 * @param  isCheckBox  Description of the Parameter
-	 * @param  isChecked   Description of the Parameter
-	 * @return             JMenuItem The created JMenuItem
+	 *@param  cmd         String The Strin to identify the MenuItem
+	 *@param  jcpPanel    Description of the Parameter
+	 *@param  isCheckBox  Description of the Parameter
+	 *@param  isChecked   Description of the Parameter
+	 *@return             JMenuItem The created JMenuItem
 	 */
-	protected JMenuItem createMenuItem(JChemPaintPanel jcpPanel, String cmd, boolean isCheckBox, boolean isChecked) {
+	protected JMenuItem createMenuItem(JChemPaintPanel jcpPanel, String cmd, boolean isCheckBox, boolean isChecked)
+	{
 		logger.debug("Creating menu item: ", cmd);
 		String translation = "***" + cmd + "***";
-		try {
+		try
+		{
 			translation = JCPLocalizationHandler.getInstance().getString(cmd);
 			logger.debug("Found translation: ", translation);
-		} catch (MissingResourceException mre) {
+		} catch (MissingResourceException mre)
+		{
 			logger.error("Could not find translation for: " + cmd);
 		}
 		JMenuItem mi = null;
-		if (isCheckBox) {
+		if (isCheckBox)
+		{
 			mi = new JCheckBoxMenuItem(translation);
 			mi.setSelected(isChecked);
-		}
-		else {
+		} else
+		{
 			mi = new JMenuItem(translation);
 		}
-		addShortCuts(cmd, mi);
 		logger.debug("Created new menu item...");
 		String astr = JCPPropertyHandler.getInstance().getResourceString(cmd + JCPAction.actionSuffix);
-		if (astr == null) {
+		if (astr == null)
+		{
 			astr = cmd;
 		}
 		mi.setActionCommand(astr);
 		JCPAction action = jcpPanel.getJCPAction().getAction(jcpPanel, astr);
-		if (action != null) {
+		if (action != null)
+		{
 			// sync some action properties with menu
 			mi.setEnabled(action.isEnabled());
 			mi.addActionListener(action);
 			logger.debug("Coupled action to new menu item...");
-		}
-		else {
+		} else
+		{
 			logger.error("Could not find JCPAction class for:" + astr);
 			mi.setEnabled(false);
 		}
