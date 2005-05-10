@@ -1,4 +1,5 @@
 org/openscience/cdk/config/data/*_atomtypes.txt
 org/openscience/cdk/config/data/*_atomtypes.xml
 org/openscience/cdk/config/data/isotopes.xml
+org/openscience/cdk/config/data/chemicalElements.xml
 org/openscience/cdk/config/data/log4j.properties
