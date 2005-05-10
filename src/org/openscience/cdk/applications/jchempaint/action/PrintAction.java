@@ -29,40 +29,72 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.Printable;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
 import java.awt.PrintJob;
+import java.awt.print.PrinterJob;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 
+import org.openscience.cdk.AtomContainer;
 
 /**
  * Opens a print dialog
  *
- * @cdk.module jchempaint
- * @author     steinbeck
- * @created    22. April 2005
+ * @author        steinbeck
+ * @created       22. April 2005
+ * @cdk.module    jchempaint
  */
-public class PrintAction extends JCPAction
-{
+public class PrintAction extends JCPAction implements Printable {
 
 	/**
-	 *  Opens a dialog frame and manages the saving of a file.
+	 *  Opens a dialog frame and manages the printing of a file.
 	 *
-	 *@param  event  Description of the Parameter
+	 * @param  event  Description of the Parameter
 	 */
-	public void actionPerformed(ActionEvent event)
-	{
-		// XXX needs fixing
-		/*Toolkit tk = Toolkit.getDefaultToolkit();
+	public void actionPerformed(ActionEvent event) {
 		
-		PrintJob pJob = tk.getPrintJob(jcpPanel.getFrame(), "JChemPaint Print Job", null);
-		Graphics pg = pJob.getGraphics();
+		PrinterJob printJob = PrinterJob.getPrinterJob();
+		printJob.setPrintable(this);
+		if (printJob.printDialog()) {
+			try {
+				printJob.print();
+			} catch (PrinterException pe) {
+				System.out.println("Error printing: " + pe);
+			}
+		}
+	}
 
-		if (pg != null)
-		{
-			jcpPanel.paint(pg);
-			pg.dispose();
-			// Flushes the print job
-		}*/
+	/**
+	 *  Prints the actual drawingPanel
+	 *
+	 * @param  g           Graphics object of drawinPanel
+	 * @param  pageFormat  Description of the Parameter
+	 * @param  pageIndex   Description of the Parameter
+	 * @return             Description of the Return Value
+	 */
+	public int print(Graphics g, PageFormat pageFormat, int pageIndex) {
+		//get eventually selected parts
+		AtomContainer beforePrinting = jcpPanel.getJChemPaintModel().getRendererModel().getSelectedPart();
+		//disable selection for printing
+		jcpPanel.getJChemPaintModel().getRendererModel().setSelectedPart(new AtomContainer());
+		if (pageIndex > 0) {
+			//enable selection again
+			jcpPanel.getJChemPaintModel().getRendererModel().setSelectedPart(beforePrinting);
+			return (NO_SUCH_PAGE);
+		}
+		else {
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+			jcpPanel.getDrawingPanel().setDoubleBuffered(false);
+			jcpPanel.getDrawingPanel().paint(g2d);
+			jcpPanel.getDrawingPanel().setDoubleBuffered(true);
+			//enable selection again
+			jcpPanel.getJChemPaintModel().getRendererModel().setSelectedPart(beforePrinting);
+			return (PAGE_EXISTS);
+		}
 	}
 }
 

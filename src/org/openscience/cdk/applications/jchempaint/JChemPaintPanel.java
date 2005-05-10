@@ -97,7 +97,7 @@ public abstract class JChemPaintPanel
 	/**  this is only needed in open action immediately after opening a file */
 	public JChemPaintPanel lastUsedJCPP = null;
 	/**  remembers last action in toolbar for switching on/off buttons */ 
-  public JComponent lastAction;
+	public JComponent lastAction;
 
 
 
@@ -820,6 +820,10 @@ public abstract class JChemPaintPanel
 	 */
   public JMenu getMenuForEmbedded(){
     return(menu.getMenuForEmbedded(this));
+	}
+	
+	public JPanel getDrawingPanel() {
+		return drawingPanel;
 	}
 
 
