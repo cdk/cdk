@@ -32,20 +32,17 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Reads an isotope list in CML2 format. An example definition is:
+ * Reads an element list in CML2 format. An example definition is:
  * <pre>
- * <isotopeList id="H">
- *   <isotope id="H1" isotopeNumber="1" elementTyp="H">
- *     <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
- *     <scalar dictRef="cdk:exactMass">1.00782504</scalar>
- *     <scalar dictRef="cdk:atomicNumber">1</scalar>
- *   </isotope>
- *   <isotope id="H2" isotopeNumber="2" elementTyp="H">
- *     <abundance dictRef="cdk:relativeAbundance">0.015</abundance>
- *     <scalar dictRef="cdk:exactMass">2.01410179</scalar>
- *     <scalar dictRef="cdk:atomicNumber">1</scalar>
- *   </isotope>
- * </isotopeList>
+ * <elementType id="Li">
+ *     <label dictRef="cas:id">7439-93-2</label>
+ *     <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
+ *     <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
+ *     <scalar dataType="xsd:String" dictRef="cdk:name">Lithium</scalar>
+ *     <scalar dataType="xsd:Integer" dictRef="cdk:atomicNumber">3</scalar>
+ *     <scalar dataType="xsd:String" dictRef="cdk:chemicalSerie">Alkali Metals</scalar>
+ *     <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
+ * </elementType>
  * </pre> 
  *
  * @author     	   Miguel Rojas
@@ -55,12 +52,13 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ElementPTHandler extends DefaultHandler 
 {
 	private final int SCALAR_UNSET = 0;
-	private final int SCALAR_NAME = 1; 
-	private final int SCALAR_ATOMICNUMBER = 2;
-	private final int SCALAR_CHEMICALSERIE = 3;
-	private final int SCALAR_PERIOD = 4;
-	private final int SCALAR_GROUP = 5;
-	private final int SCALAR_PHASE = 6;
+	private final int LABEL_CAS = 1; 
+	private final int SCALAR_NAME = 2; 
+	private final int SCALAR_ATOMICNUMBER = 3;
+	private final int SCALAR_CHEMICALSERIE = 4;
+	private final int SCALAR_PERIOD = 5;
+	private final int SCALAR_GROUP = 6;
+	private final int SCALAR_PHASE = 7;
 	private int scalarType;
 	private LoggingTool logger;
 	private String currentChars;
@@ -103,8 +101,9 @@ public class ElementPTHandler extends DefaultHandler
 		} else if ("scalar".equals(local)) {
 			currentChars.trim();
 			try {
-				if (scalarType == SCALAR_NAME){
-					
+				if (scalarType == LABEL_CAS){
+					elementType.setCASid(currentChars);
+				} else if (scalarType == SCALAR_NAME){
 					elementType.setName(currentChars);
 				} else if (scalarType == SCALAR_ATOMICNUMBER) {
 					elementType.setAtomicNumber(Integer.parseInt(currentChars));
@@ -140,14 +139,13 @@ public class ElementPTHandler extends DefaultHandler
 				if ("id".equals(atts.getQName(i))) {
 					elementType = new PeriodicTableElement(atts.getValue(i));
 				}
-				else if ("idCAS".equals(atts.getQName(i))) {
-					elementType.setCASid(atts.getValue(i));
-				}
 			}
 		} else if ("scalar".equals(local)) 
 			for (int i = 0; i < atts.getLength(); i++) {
 				if ("dictRef".equals(atts.getQName(i))) {
-					if ("cdk:name".equals(atts.getValue(i))) {
+					if ("cas:id".equals(atts.getValue(i))) {
+						scalarType = LABEL_CAS;
+					} else if ("cdk:name".equals(atts.getValue(i))) {
 						scalarType = SCALAR_NAME;
 					} else if ("cdk:atomicNumber".equals(atts.getValue(i))) {
 						scalarType = SCALAR_ATOMICNUMBER;
@@ -162,6 +160,7 @@ public class ElementPTHandler extends DefaultHandler
 					} else if ("cdk:phase".equals(atts.getValue(i))) {
 						scalarType = SCALAR_PHASE;
 					}
+					
 				}
 			}
 				

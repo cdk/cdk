@@ -9,7 +9,8 @@
     <metadata name="cvs:revision" content="$Revision$"/>
   </metadataList>
   
-  <elementType id="H" idCAS="1333-74-0">
+  <elementType id="H">
+      <label dictRef="cas:id">1333-74-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">1</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Hydrogen</scalar>
@@ -19,7 +20,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="He" idCAS="7440-59-7">
+  <elementType id="He">
+      <label dictRef="cas:id">7440-59-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">18</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">1</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Helium</scalar>
@@ -28,7 +30,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="Li" idCAS="7439-93-2">
+  <elementType id="Li">
+      <label dictRef="cas:id">7439-93-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Lithium</scalar>
@@ -37,7 +40,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Be" idCAS="7440-41-7">
+  <elementType id="Be">
+      <label dictRef="cas:id">7440-41-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">2</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Beryllium</scalar>
@@ -46,7 +50,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="B" idCAS="7440-42-8">
+  <elementType id="B">
+      <label dictRef="cas:id">7440-42-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">13</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Boron</scalar>
@@ -55,7 +60,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="C" idCAS="7440-44-0">
+  <elementType id="C">
+      <label dictRef="cas:id">7440-44-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">14</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Carbon</scalar>
@@ -64,7 +70,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="N" idCAS="7727-37-9">
+  <elementType id="N">
+      <label dictRef="cas:id">7727-37-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">15</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Nitrogen</scalar>
@@ -73,7 +80,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="O" idCAS="7782-44-7">
+  <elementType id="O">
+      <label dictRef="cas:id">7782-44-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">16</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Oxygen</scalar>
@@ -82,7 +90,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="F" idCAS="7782-41-4">
+  <elementType id="F">
+      <label dictRef="cas:id">7782-41-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">17</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Fluorine</scalar>
@@ -91,7 +100,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="Ne" idCAS="7440-01-9">
+  <elementType id="Ne">
+      <label dictRef="cas:id">7440-01-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">18</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">2</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Neon</scalar>
@@ -100,7 +110,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="Na" idCAS="7440-23-5">
+  <elementType id="Na">
+      <label dictRef="cas:id">7440-23-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Sodium</scalar>
@@ -109,7 +120,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Mg" idCAS="7439-95-4">
+  <elementType id="Mg">
+      <label dictRef="cas:id">7439-95-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">2</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Magnesium</scalar>
@@ -118,7 +130,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Al" idCAS="7429-90-5">
+  <elementType id="Al">
+      <label dictRef="cas:id">7429-90-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">13</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Aluminum</scalar>
@@ -127,7 +140,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Si" idCAS="7440-21-3">
+  <elementType id="Si">
+      <label dictRef="cas:id">7440-21-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">14</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Silicon</scalar>
@@ -136,7 +150,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="P" idCAS="7723-14-0">
+  <elementType id="P">
+      <label dictRef="cas:id">7723-14-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">15</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Phosphorus</scalar>
@@ -145,7 +160,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="S" idCAS="7704-34-9">
+  <elementType id="S">
+      <label dictRef="cas:id">7704-34-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">16</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Sulfur</scalar>
@@ -154,7 +170,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Cl" idCAS="7782-50-5">
+  <elementType id="Cl">
+      <label dictRef="cas:id">7782-50-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">17</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Chlorine</scalar>
@@ -163,7 +180,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="Ar" idCAS="7440-37-1">
+  <elementType id="Ar">
+      <label dictRef="cas:id">7440-37-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">18</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">3</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Argon</scalar>
@@ -172,7 +190,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="K" idCAS="7440-09-7">
+  <elementType id="K">
+      <label dictRef="cas:id">7440-09-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Potassium</scalar>
@@ -181,7 +200,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Ca" idCAS="7440-70-2">
+  <elementType id="Ca">
+      <label dictRef="cas:id">7440-70-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">2</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Calcium</scalar>
@@ -190,7 +210,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Ga" idCAS="7440-55-3">
+  <elementType id="Ga">
+      <label dictRef="cas:id">7440-55-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">13</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Gallium</scalar>
@@ -199,7 +220,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Ge" idCAS="7440-56-4">
+  <elementType id="Ge">
+      <label dictRef="cas:id">7440-56-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">14</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Germanium</scalar>
@@ -208,7 +230,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="As" idCAS="7440-38-2">
+  <elementType id="As">
+      <label dictRef="cas:id">7440-38-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">15</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Arsenic</scalar>
@@ -217,7 +240,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Se" idCAS="7782-49-2">
+  <elementType id="Se">
+      <label dictRef="cas:id">7782-49-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">16</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Selenium</scalar>
@@ -226,7 +250,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Br" idCAS="7726-95-6">
+  <elementType id="Br">
+      <label dictRef="cas:id">7726-95-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">17</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Bromine</scalar>
@@ -235,7 +260,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Liquid</scalar>
   </elementType>
 
-  <elementType id="Kr" idCAS="7439-90-9">
+  <elementType id="Kr">
+      <label dictRef="cas:id">7439-90-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">18</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Krypton</scalar>
@@ -244,7 +270,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="Rb" idCAS="7440-17-7">
+  <elementType id="Rb">
+      <label dictRef="cas:id">7440-17-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Rubidium</scalar>
@@ -253,7 +280,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Sr" idCAS="7440-24-6">
+  <elementType id="Sr">
+      <label dictRef="cas:id">7440-24-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">2</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Strontium</scalar>
@@ -262,7 +290,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="In" idCAS="7440-74-6">
+  <elementType id="In">
+      <label dictRef="cas:id">7440-74-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">13</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Indium</scalar>
@@ -271,7 +300,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Sn" idCAS="7440-31-5">
+  <elementType id="Sn">
+      <label dictRef="cas:id">7440-31-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">14</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Tin</scalar>
@@ -280,7 +310,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Sb" idCAS="7440-36-0">
+  <elementType id="Sb">
+      <label dictRef="cas:id">7440-36-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">15</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Antimony</scalar>
@@ -289,7 +320,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Te" idCAS="13494-80-9">
+  <elementType id="Te">
+      <label dictRef="cas:id">13494-80-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">16</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Tellurium</scalar>
@@ -298,7 +330,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="I" idCAS="7553-56-2">
+  <elementType id="I">
+      <label dictRef="cas:id">7553-56-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">17</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Iodine</scalar>
@@ -307,7 +340,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Xe" idCAS="7440-63-3">
+  <elementType id="Xe">
+      <label dictRef="cas:id">7440-63-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">18</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Xenon</scalar>
@@ -316,7 +350,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="Cs" idCAS="7440-46-2">
+  <elementType id="Cs">
+      <label dictRef="cas:id">7440-46-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Cesium</scalar>
@@ -325,7 +360,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Ba" idCAS="7440-39-3">
+  <elementType id="Ba">
+      <label dictRef="cas:id">7440-39-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">2</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Barium</scalar>
@@ -334,7 +370,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Tl" idCAS="7440-28-0">
+  <elementType id="Tl">
+      <label dictRef="cas:id">7440-28-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">13</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Thallium</scalar>
@@ -343,7 +380,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Pb" idCAS="7439-92-1">
+  <elementType id="Pb">
+      <label dictRef="cas:id">7439-92-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">14</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Lead</scalar>
@@ -352,7 +390,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Bi" idCAS="7440-69-9">
+  <elementType id="Bi">
+      <label dictRef="cas:id">7440-69-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">15</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Bismuth</scalar>
@@ -361,7 +400,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Po" idCAS="7440-08-6">
+  <elementType id="Po">
+      <label dictRef="cas:id">7440-08-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">16</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Polonium</scalar>
@@ -370,7 +410,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="At" idCAS="7440-08-6">
+  <elementType id="At">
+      <label dictRef="cas:id">7440-08-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">17</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Astatine</scalar>
@@ -379,7 +420,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Rn" idCAS="10043-92-2">
+  <elementType id="Rn">
+      <label dictRef="cas:id">10043-92-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">18</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Radon</scalar>
@@ -388,7 +430,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Gas</scalar>
   </elementType>
 
-  <elementType id="Fr" idCAS="7440-73-5">
+  <elementType id="Fr">
+      <label dictRef="cas:id">7440-73-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">1</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Francium</scalar>
@@ -397,7 +440,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
 
-  <elementType id="Ra" idCAS="7440-14-4">
+  <elementType id="Ra">
+      <label dictRef="cas:id">7440-14-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">2</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Radium</scalar>
@@ -406,7 +450,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Sc" idCAS="7440-20-2">
+  <elementType id="Sc">
+      <label dictRef="cas:id">7440-20-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">3</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Scandium</scalar>
@@ -415,7 +460,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Ti" idCAS="7440-32-6">
+  <elementType id="Ti">
+      <label dictRef="cas:id">7440-32-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">4</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Titanium</scalar>
@@ -424,7 +470,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="V" idCAS="7440-62-2">
+  <elementType id="V">
+      <label dictRef="cas:id">7440-62-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">5</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Vanadium</scalar>
@@ -433,7 +480,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Cr" idCAS="7440-47-3">
+  <elementType id="Cr">
+      <label dictRef="cas:id">7440-47-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">6</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Chromium</scalar>
@@ -442,7 +490,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Mn" idCAS="7439-96-5">
+  <elementType id="Mn">
+      <label dictRef="cas:id">7439-96-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">7</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Manganese</scalar>
@@ -451,7 +500,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Fe" idCAS="7439-89-6">
+  <elementType id="Fe">
+      <label dictRef="cas:id">7439-89-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">8</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Iron</scalar>
@@ -460,7 +510,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Co" idCAS="7440-48-4">
+  <elementType id="Co">
+      <label dictRef="cas:id">7440-48-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">9</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Cobalt</scalar>
@@ -469,7 +520,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Ni" idCAS="7440-02-0">
+  <elementType id="Ni">
+      <label dictRef="cas:id">7440-02-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">10</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Nickel</scalar>
@@ -478,7 +530,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Cu" idCAS="7440-50-8">
+  <elementType id="Cu">
+      <label dictRef="cas:id">7440-50-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">11</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Copper</scalar>
@@ -487,7 +540,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Zn" idCAS="7440-66-6">
+  <elementType id="Zn">
+      <label dictRef="cas:id">7440-66-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">12</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">4</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Zinc</scalar>
@@ -496,7 +550,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Y" idCAS="7440-65-5">
+  <elementType id="Y">
+      <label dictRef="cas:id">7440-65-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">3</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Yttrium</scalar>
@@ -505,7 +560,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Zr" idCAS="7440-67-7">
+  <elementType id="Zr">
+      <label dictRef="cas:id">7440-67-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">4</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Zirconium</scalar>
@@ -514,7 +570,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Nb" idCAS="7440-03-1">
+  <elementType id="Nb">
+      <label dictRef="cas:id">7440-03-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">5</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Niobium</scalar>
@@ -523,7 +580,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Mo" idCAS="7439-98-7">
+  <elementType id="Mo">
+      <label dictRef="cas:id">7439-98-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">6</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Molybdenum</scalar>
@@ -532,7 +590,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Tc" idCAS="7440-26-8">
+  <elementType id="Tc">
+      <label dictRef="cas:id">7440-26-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">7</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Technetium</scalar>
@@ -541,7 +600,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Ru" idCAS="7440-18-8">
+  <elementType id="Ru">
+      <label dictRef="cas:id">7440-18-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">8</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Ruthenium</scalar>
@@ -550,7 +610,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Rh" idCAS="7440-16-6">
+  <elementType id="Rh">
+      <label dictRef="cas:id">7440-16-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">9</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Rhodium</scalar>
@@ -559,7 +620,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Pd" idCAS="7440-05-3">
+  <elementType id="Pd">
+      <label dictRef="cas:id">7440-05-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">10</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Palladium</scalar>
@@ -568,7 +630,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Ag" idCAS="7440-22-4">
+  <elementType id="Ag">
+      <label dictRef="cas:id">7440-22-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">11</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Silver</scalar>
@@ -577,7 +640,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Cd" idCAS="7440-43-9">
+  <elementType id="Cd">
+      <label dictRef="cas:id">7440-43-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">12</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">5</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Cadmium</scalar>
@@ -586,7 +650,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="La" idCAS="7439-91-0">
+  <elementType id="La">
+      <label dictRef="cas:id">7439-91-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">3</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Lanthanum</scalar>
@@ -595,7 +660,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Hf" idCAS="7440-58-6">
+  <elementType id="Hf">
+      <label dictRef="cas:id">7440-58-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">4</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Hafnium</scalar>
@@ -604,7 +670,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Ta" idCAS="7440-25-7">
+  <elementType id="Ta">
+      <label dictRef="cas:id">7440-25-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">5</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Tantalum</scalar>
@@ -613,7 +680,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="W" idCAS="7440-33-7">
+  <elementType id="W">
+      <label dictRef="cas:id">7440-33-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">6</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Tungsten</scalar>
@@ -622,7 +690,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Re" idCAS="7440-15-5">
+  <elementType id="Re">
+      <label dictRef="cas:id">7440-15-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">7</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Rhenium</scalar>
@@ -631,7 +700,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Os" idCAS="7440-04-2">
+  <elementType id="Os">
+      <label dictRef="cas:id">7440-04-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">8</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Osmium</scalar>
@@ -640,7 +710,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Ir" idCAS="7439-88-5">
+  <elementType id="Ir">
+      <label dictRef="cas:id">7439-88-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">9</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Iridium</scalar>
@@ -649,7 +720,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Pt" idCAS="7440-06-4">
+  <elementType id="Pt">
+      <label dictRef="cas:id">7440-06-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">10</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Platinum</scalar>
@@ -658,7 +730,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Au" idCAS="7440-57-5">
+  <elementType id="Au">
+      <label dictRef="cas:id">7440-57-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">11</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Gold</scalar>
@@ -667,7 +740,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Hg" idCAS="7439-97-6">
+  <elementType id="Hg">
+      <label dictRef="cas:id">7439-97-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">12</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Mercury</scalar>
@@ -676,7 +750,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Liquid</scalar>
   </elementType>
   
-  <elementType id="Ac" idCAS="7440-34-8">
+  <elementType id="Ac">
+      <label dictRef="cas:id">7440-34-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">3</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Actinium</scalar>
@@ -685,7 +760,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Rf" idCAS="53850-36-5">
+  <elementType id="Rf">
+      <label dictRef="cas:id">53850-36-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">4</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Rutherfordium</scalar>
@@ -694,7 +770,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Db" idCAS="53850-35-4">
+  <elementType id="Db">
+      <label dictRef="cas:id">53850-35-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">5</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Dubnium</scalar>
@@ -703,7 +780,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Sg" idCAS="54038-81-2">
+  <elementType id="Sg">
+      <label dictRef="cas:id">54038-81-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">6</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Seaborgium</scalar>
@@ -712,7 +790,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Bh" idCAS="54037-14-8">
+  <elementType id="Bh">
+      <label dictRef="cas:id">54037-14-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">7</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Bohrium</scalar>
@@ -721,7 +800,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Hs" idCAS="54037-57-9">
+  <elementType id="Hs">
+      <label dictRef="cas:id">54037-57-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">8</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Hassium</scalar>
@@ -730,7 +810,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Mt" idCAS="54038-01-6">
+  <elementType id="Mt">
+      <label dictRef="cas:id">54038-01-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">9</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Meitnerium</scalar>
@@ -739,7 +820,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Ds" idCAS="54083-77-1">
+  <elementType id="Ds">
+      <label dictRef="cas:id">54083-77-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">9</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Darmstadtium</scalar>
@@ -748,7 +830,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Rg" idCAS="54386-24-2">
+  <elementType id="Rg">
+      <label dictRef="cas:id">54386-24-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">11</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Roentgenium</scalar>
@@ -757,7 +840,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Uub" idCAS="">
+  <elementType id="Uub">
+      <label dictRef="cas:id"></label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group">12</scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Ununbium</scalar>
@@ -766,7 +850,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Ce" idCAS="7440-45-1">
+  <elementType id="Ce">
+      <label dictRef="cas:id">7440-45-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Cerium</scalar>
@@ -775,7 +860,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Pr" idCAS="7440-10-0">
+  <elementType id="Pr">
+      <label dictRef="cas:id">7440-10-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Praseodymium</scalar>
@@ -784,7 +870,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Nd" idCAS="7440-00-8">
+  <elementType id="Nd">
+      <label dictRef="cas:id">7440-00-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Neodymium</scalar>
@@ -793,7 +880,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Pm" idCAS="7440-12-2">
+  <elementType id="Pm">
+      <label dictRef="cas:id">7440-12-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Promethium</scalar>
@@ -802,7 +890,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Sm" idCAS="7440-19-9">
+  <elementType id="Sm">
+      <label dictRef="cas:id">7440-19-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Samarium</scalar>
@@ -811,7 +900,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Eu" idCAS="7440-53-1">
+  <elementType id="Eu">
+      <label dictRef="cas:id">7440-53-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Europium</scalar>
@@ -820,7 +910,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Gd" idCAS="7440-54-2">
+  <elementType id="Gd">
+      <label dictRef="cas:id">7440-54-2</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Gadolinium</scalar>
@@ -829,7 +920,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Tb" idCAS="7440-27-9">
+  <elementType id="Tb">
+      <label dictRef="cas:id">7440-27-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Terbium</scalar>
@@ -838,7 +930,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Dy" idCAS="7429-91-6">
+  <elementType id="Dy">
+      <label dictRef="cas:id">7429-91-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Dysprosium</scalar>
@@ -847,7 +940,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Ho" idCAS="7440-60-0">
+  <elementType id="Ho">
+      <label dictRef="cas:id">7440-60-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Holmium</scalar>
@@ -856,7 +950,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Er" idCAS="7440-52-0">
+  <elementType id="Er">
+      <label dictRef="cas:id">7440-52-0</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Erbium</scalar>
@@ -865,7 +960,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Tm" idCAS="7440-30-4">
+  <elementType id="Tm">
+      <label dictRef="cas:id">7440-30-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Thulium</scalar>
@@ -874,7 +970,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Yb" idCAS="7440-64-4">
+  <elementType id="Yb">
+      <label dictRef="cas:id">7440-64-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Ytterbium</scalar>
@@ -883,7 +980,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Lu" idCAS="7439-94-3">
+  <elementType id="Lu">
+      <label dictRef="cas:id">7439-94-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">6</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Lutetium</scalar>
@@ -892,7 +990,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Th" idCAS="7440-29-1">
+  <elementType id="Th">
+      <label dictRef="cas:id">7440-29-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Thorium</scalar>
@@ -901,7 +1000,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Pa" idCAS="7440-13-3">
+  <elementType id="Pa">
+      <label dictRef="cas:id">7440-13-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Protactinium</scalar>
@@ -910,7 +1010,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="U" idCAS="7440-61-1">
+  <elementType id="U">
+      <label dictRef="cas:id">7440-61-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Uranium</scalar>
@@ -919,7 +1020,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Solid</scalar>
   </elementType>
   
-  <elementType id="Np" idCAS="7439-99-8">
+  <elementType id="Np">
+      <label dictRef="cas:id">7439-99-8</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Neptunium</scalar>
@@ -928,7 +1030,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Pu" idCAS="7440-07-5">
+  <elementType id="Pu">
+      <label dictRef="cas:id">7440-07-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Plutonium</scalar>
@@ -937,7 +1040,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Am" idCAS="7440-35-9">
+  <elementType id="Am">
+      <label dictRef="cas:id">7440-35-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Americium</scalar>
@@ -946,7 +1050,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Cm" idCAS="7440-51-9">
+  <elementType id="Cm">
+      <label dictRef="cas:id">7440-51-9</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Curium</scalar>
@@ -955,7 +1060,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Bk" idCAS="7440-40-6">
+  <elementType id="Bk">
+      <label dictRef="cas:id">7440-40-6</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Berkelium</scalar>
@@ -964,7 +1070,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Cf" idCAS="7440-71-3">
+  <elementType id="Cf">
+      <label dictRef="cas:id">7440-71-3</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Californium</scalar>
@@ -973,7 +1080,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Es" idCAS="7429-92-7">
+  <elementType id="Es">
+      <label dictRef="cas:id">7429-92-7</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Einsteinium</scalar>
@@ -982,7 +1090,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Fm" idCAS="7440-72-4">
+  <elementType id="Fm">
+      <label dictRef="cas:id">7440-72-4</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Fermium</scalar>
@@ -991,7 +1100,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Md" idCAS="7440-11-1">
+  <elementType id="Md">
+      <label dictRef="cas:id">7440-11-1</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Mendelevium</scalar>
@@ -1000,7 +1110,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="No" idCAS="10028-14-5">
+  <elementType id="No">
+      <label dictRef="cas:id">10028-14-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Nobelium</scalar>
@@ -1009,7 +1120,8 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
   
-  <elementType id="Lr" idCAS="22537-19-5">
+  <elementType id="Lr">
+      <label dictRef="cas:id">22537-19-5</label>
       <scalar dataType="xsd:Integer" dictRef="cdk:group"></scalar>
       <scalar dataType="xsd:Integer" dictRef="cdk:period">7</scalar>
       <scalar dataType="xsd:String" dictRef="cdk:name">Lawrencium</scalar>

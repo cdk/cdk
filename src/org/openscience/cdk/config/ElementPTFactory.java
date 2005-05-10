@@ -31,16 +31,15 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.Element;
 import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.config.elements.ElementPTReader;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Used to store and return data of a particular chemistryelement. As this class is a
+ * Used to store and return data of a particular chemicalElement. As this class is a
  * singleton class, one gets an instance with: 
  * <pre>
- * ElementPTFactory efac = ElementPTFactory.getInstance();
+ *   ElementPTFactory efac = ElementPTFactory.getInstance();
  * </pre>
  *
  * @author     	   Miguel Rojas
@@ -57,9 +56,9 @@ public class ElementPTFactory
 	private LoggingTool logger;
 
 	/**
-	 * Private constructor for the IsotopeFactory object.
+	 * Private constructor for the ElementPTFactory object.
 	 *
-	 *@exception  IOException  A problem with reading the isotopes.xml file
+	 *@exception  IOException  A problem with reading the chemicalElements.xml file
 	 *@exception  OptionalDataException   Unexpected data appeared in the isotope ObjectInputStream
 	 *@exception  ClassNotFoundException  A problem instantiating the isotopes
 	 */
@@ -86,7 +85,7 @@ public class ElementPTFactory
 		}
 		ElementPTReader reader = new ElementPTReader(new InputStreamReader(ins));
 		elements = reader.readElements();
-		if (debug) logger.debug("Found #isotopes in file: ", elements.size());
+		if (debug) logger.debug("Found #elements in file: ", elements.size());
 		
 		majorIsotopes = new Hashtable();
 	}
@@ -123,7 +122,7 @@ public class ElementPTFactory
 	 * Returns an Element with a given element symbol.
 	 *
 	 *@param  symbol  An element symbol to search for
-	 *@return         An array of isotopes that matches the given element symbol
+	 *@return         An array of element that matches the given element symbol
 	 */
 	public PeriodicTableElement getElement(String symbol)
 	{
