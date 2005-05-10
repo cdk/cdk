@@ -25,183 +25,364 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import java.awt.Button;
-import java.awt.GridLayout;
-
-import javax.swing.JPanel;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import java.util.Vector;
-import java.util.EventObject;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.*;
+import javax.accessibility.*;
+import java.net.*;
 
 import org.openscience.cdk.Element;
+import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.config.ElementPTFactory;
 import org.openscience.cdk.event.CDKChangeListener;
-
+import org.openscience.cdk.tools.LoggingTool;
 /**
  * JPanel version of the periodic system.
  *
  * @author        Egon Willighagen
  * @author        Geert Josten
- * @cdk.created       February 10, 2004
+ * @author        Miguel Rojas
+ * @cdk.created   May 9, 2005
  * @cdk.module    applications
- * @cdk.require swing
+ * @cdk.require   swing
  */
 public class PeriodicTablePanel extends JPanel
 {
+	
 	Vector listeners = null;
-	Element selectedElement = null;
-
-
+	PeriodicTableElement selectedElement = null;
+	
+	private JPanel panel;
+	private JLabel label;
+	private JLayeredPane layeredPane;
+	
+	private ElementPTFactory factory;
+	private LoggingTool logger;
+	
 	/**
-	 *  Constructor for the PeriodicTablePanel object
-	 */
+	*  Constructor of the PeriodicTablePanel object
+	*/
 	public PeriodicTablePanel()
 	{
 		super();
-		listeners = new Vector();
-		setLayout(new GridLayout(0, 32));
-
-		add(new ElementButton(new Element("H", 1), new ElementButtonAction()));
-		for (int i = 0; i < 30; i++)
+		setLayout( new BorderLayout());
+		try {
+			factory = ElementPTFactory.getInstance();
+		} catch (Exception ex1) 
 		{
-			add(new Button());
+			logger.error(ex1.getMessage());
+			logger.debug(ex1);
 		}
-		add(new ElementButton(new Element("He", 2), new ElementButtonAction()));
-
-		add(new ElementButton(new Element("Li", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Be", 4), new ElementButtonAction()));
-		for (int i = 0; i < 24; i++)
-		{
-			add(new Button());
-		}
-		add(new ElementButton(new Element("B", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("C", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("N", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("O", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("F", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ne", 0), new ElementButtonAction()));
-
-		add(new ElementButton(new Element("Na", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("Mg", 2), new ElementButtonAction()));
-		for (int i = 0; i < 24; i++)
-		{
-			add(new Button());
-		}
-		add(new ElementButton(new Element("Al", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Si", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("P", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("S", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("Cl", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ar", 8), new ElementButtonAction()));
-
-		add(new ElementButton(new Element("K", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ca", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Sc", 1), new ElementButtonAction()));
-		for (int i = 0; i < 14; i++)
-		{
-			add(new Button());
-		}
-		add(new ElementButton(new Element("Ti", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("V", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Cr", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("Mn", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Fe", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("Co", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ni", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("Cu", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Zn", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ga", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ge", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("As", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Se", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("Br", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Kr", 6), new ElementButtonAction()));
-
-		add(new ElementButton(new Element("Rb", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Sr", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("Y", 9), new ElementButtonAction()));
-		for (int i = 0; i < 14; i++)
-		{
-			add(new Button());
-		}
-		add(new ElementButton(new Element("Zr", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Nb", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("Mo", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("Tc", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ru", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("Rh", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Pd", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ag", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Cd", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("In", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Sn", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Sb", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("Te", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("I", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Xe", 4), new ElementButtonAction()));
-
-		add(new ElementButton(new Element("Cs", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ba", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("La", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ce", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("Pr", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Nd", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Pm", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("Sm", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("Eu", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Gd", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("Tb", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Dy", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ho", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Er", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("Tm", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Yb", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Lu", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("Hf", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ta", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("W", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("Re", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Os", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ir", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Pt", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("Au", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Hg", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Tl", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("Pb", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("Bi", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Po", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("At", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Rn", 6), new ElementButtonAction()));
-
-		add(new ElementButton(new Element("Fr", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ra", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("Ac", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Th", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Pa", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("U", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("Np", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Pu", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("Am", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Cm", 6), new ElementButtonAction()));
-		add(new ElementButton(new Element("Bk", 7), new ElementButtonAction()));
-		add(new ElementButton(new Element("Cf", 8), new ElementButtonAction()));
-		add(new ElementButton(new Element("Es", 9), new ElementButtonAction()));
-		add(new ElementButton(new Element("Fm", 0), new ElementButtonAction()));
-		add(new ElementButton(new Element("Md", 1), new ElementButtonAction()));
-		add(new ElementButton(new Element("No", 2), new ElementButtonAction()));
-		add(new ElementButton(new Element("Lr", 3), new ElementButtonAction()));
-		add(new ElementButton(new Element("Unq", 4), new ElementButtonAction()));
-		add(new ElementButton(new Element("Unp", 5), new ElementButtonAction()));
-		add(new ElementButton(new Element("Unh", 6), new ElementButtonAction()));
+		layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(new Dimension(611, 515));
+		layeredPane.setBorder(BorderFactory.createTitledBorder(
+                                    "Periodic Table for CDK"));
+		JPanel tp = PTPanel();
+		tp.setBounds(8,85,600, 420);
+		
+		JButton button = new JButton("Reload");
+		button.setVerticalTextPosition(AbstractButton.BOTTOM);
+		button.setHorizontalTextPosition(AbstractButton.CENTER);
+		button.setMnemonic(KeyEvent.VK_R);
+		button.setToolTipText("Click this button to back to PeriodicTable.");
+		button.setFont(new Font("Times-Roman",Font.BOLD, 10));
+		button.setBounds(510, 20, 90, 20);
+		button.addActionListener( new BackAction() );
+		panel = CreateLabelProperties(null);
+		
+		
+		layeredPane.add(button, new Integer(1));
+		layeredPane.add(tp, new Integer(0));
+		layeredPane.add(panel, new Integer(1));
+		add(layeredPane);
 	}
 
-
+	private JPanel PTPanel()
+	{
+		JPanel panel = new JPanel();
+		listeners = new Vector();
+		panel.setLayout(new GridLayout(0, 18));
+		
+		//--------------------------------
+		
+		JButton butt = new JButton("<html><p></p><p>IA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		//--------------------------------
+		for (int i = 0; i < 16; i++)
+		{
+			Box.createHorizontalGlue();
+			panel.add(Box.createHorizontalGlue());
+		}
+		butt = new JButton("<html><p></p><p>VIIIA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		
+		panel.add(createButton("H"));
+		
+		butt = new JButton("<html><p></p><p>IIA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		for (int i = 0; i < 10; i++)
+		{
+			panel.add(Box.createHorizontalGlue());
+		}
+		butt = new JButton("<html><p></p><p>IIIA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		
+		butt = new JButton("<html><p></p><p>VIA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		
+		butt = new JButton("<html><p></p><p>VA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		
+		butt = new JButton("<html><p></p><p>VIA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		
+		butt = new JButton("<html><p></p><p>VIIA</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		//
+		panel.add(createButton("He"));
+		
+		panel.add(createButton("Li"));
+		
+		panel.add(createButton("Be"));
+		for (int i = 0; i < 10; i++)
+		{
+			panel.add(Box.createHorizontalGlue());
+		}
+		//no metall
+		panel.add(createButton("B"));
+		panel.add(createButton("C"));
+		panel.add(createButton("N"));
+		panel.add(createButton("O"));
+		panel.add(createButton("F"));
+		//
+		panel.add(createButton("Ne"));
+		
+		panel.add(createButton("Na"));
+		panel.add(createButton("Mg"));
+		
+		butt = new JButton("<html><p></p><p>IIIB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>IVB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>VB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>VIB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>VIIB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>--</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>VIIIB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>--</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>IB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		butt = new JButton("<html><p></p><p>IIB</p></html>");
+		butt.setBorder(new EmptyBorder(2,2,2,2));
+		panel.add(butt);
+		//no metall
+		panel.add(createButton("Al"));
+		panel.add(createButton("Si"));
+		panel.add(createButton("P"));
+		panel.add(createButton("S"));
+		panel.add(createButton("Cl"));
+		//
+		panel.add(createButton("Ar"));
+		
+		panel.add(createButton("K"));
+		panel.add(createButton("Ca"));
+		//transition
+		panel.add(createButton("Sc"));
+		panel.add(createButton("Ti"));
+		panel.add(createButton("V"));
+		panel.add(createButton("Cr"));
+		panel.add(createButton("Mn"));
+		panel.add(createButton("Fe"));
+		panel.add(createButton("Co"));
+		panel.add(createButton("Ni"));
+		panel.add(createButton("Cu"));
+		panel.add(createButton("Zn"));
+		//no metall
+		panel.add(createButton("Ga"));
+		panel.add(createButton("Ge"));
+		panel.add(createButton("As"));
+		panel.add(createButton("Se"));
+		panel.add(createButton("Br"));
+		//
+		panel.add(createButton("Kr"));
+		
+		panel.add(createButton("Rb"));
+		panel.add(createButton("Sr"));
+		//transition
+		panel.add(createButton("Y"));
+		panel.add(createButton("Zr"));
+		panel.add(createButton("Nb"));
+		panel.add(createButton("Mo"));
+		panel.add(createButton("Tc"));
+		panel.add(createButton("Ru"));
+		panel.add( createButton("Rh"));
+		panel.add(createButton("Pd"));
+		panel.add(createButton("Ag"));
+		panel.add(createButton("Cd"));
+		//no metall
+		panel.add(createButton("In"));
+		panel.add(createButton("Sn"));
+		panel.add(createButton("Sb"));
+		panel.add(createButton("Te"));
+		panel.add(createButton("I"));
+		//
+		panel.add(createButton("Xe"));
+		
+		panel.add(createButton("Cs"));
+		panel.add(createButton("Ba"));
+		//transition
+		panel.add(createButton("La"));
+		panel.add(createButton("Hf"));
+		panel.add(createButton("Ta"));
+		panel.add(createButton("W"));
+		panel.add(createButton("Re"));
+		panel.add(createButton("Os"));
+		panel.add(createButton("Ir"));
+		panel.add(createButton("Pt"));
+		panel.add(createButton("Au"));
+		panel.add(createButton("Hg"));
+		//no metall
+		panel.add(createButton("Tl"));
+		panel.add(createButton("Pb"));
+		panel.add(createButton("Bi"));
+		panel.add(createButton("Po"));
+		panel.add(createButton("At"));
+		//
+		panel.add(createButton("Rn"));
+		
+		panel.add(createButton("Fr"));
+		panel.add(createButton("Ra"));
+		//transition
+		panel.add(createButton("Ac"));
+		panel.add(createButton("Rf"));
+		panel.add(createButton("Db"));
+		panel.add(createButton("Sg"));
+		panel.add(createButton("Bh"));
+		panel.add(createButton("Hs"));
+		panel.add(createButton("Mt"));
+		panel.add(createButton("Ds"));
+		panel.add(createButton("Rg"));
+		for (int i = 0; i < 9; i++)
+		{
+			panel.add(Box.createHorizontalGlue());
+		}
+		//Acti
+		panel.add(createButton("Ce"));
+		panel.add(createButton("Pr"));
+		panel.add(createButton("Nd"));
+		panel.add(createButton("Pm"));
+		panel.add(createButton("Sm"));
+		panel.add(createButton("Eu"));
+		panel.add(createButton("Gd"));
+		panel.add(createButton("Tb"));
+		panel.add(createButton("Dy"));
+		panel.add(createButton("Ho"));
+		panel.add(createButton("Er"));
+		panel.add(createButton("Tm"));
+		panel.add(createButton("Yb"));
+		panel.add(createButton("Lu"));
+		for (int i = 0; i < 4; i++)
+		{
+			panel.add(Box.createHorizontalGlue());
+		}
+		//Lacti
+		panel.add( createButton("Th"));
+		panel.add(createButton("Pa"));
+		panel.add(createButton("U"));
+		panel.add(createButton("Np"));
+		panel.add(createButton("Pu"));
+		panel.add(createButton("Am"));
+		panel.add(createButton("Cm"));
+		panel.add(createButton("Bk"));
+		panel.add(createButton("Cf"));
+		panel.add(createButton("Es"));
+		panel.add(createButton("Fm"));
+		panel.add(createButton("Md"));
+		panel.add(createButton("No"));
+		panel.add(createButton("Lr"));
+		//End
+		panel.setVisible(true);
+		return panel;
+	    }
+	    
+	/**
+	* create button. Difine the color of the font and background
+	*
+	*@param elementS  String of the element
+	*@return button   JButton
+	*/
+	private JButton createButton(String elementS)
+	{
+		PeriodicTableElement element = factory.configure(new PeriodicTableElement(elementS));
+		String colorF = "000000";
+		if(element.getPhase().equals("Solid"))
+			colorF = "000000"; 
+		else if(element.getPhase().equals("Gas"))
+			colorF = "CC0033"; 
+		else if(element.getPhase().equals("Liquid"))
+			colorF = "3300CC"; 
+		else if(element.getPhase().equals("Synthetic"))
+			colorF = "FFCC00";
+		
+		Color colorB = null;
+		if(element.getChemicalSerie().equals("Noble Gasses"))
+			colorB = new Color(255,153,255);
+		else if(element.getChemicalSerie().equals("Halogens"))
+			colorB = new Color(255,153,153); 
+		else if(element.getChemicalSerie().equals("Nonmetals"))
+			colorB = new Color(255,152,90);
+		else if(element.getChemicalSerie().equals("Metalloids"))
+			colorB = new Color(255,80,80);
+		else if(element.getChemicalSerie().equals("Metals"))
+			colorB = new Color(255,50,0);
+		else if(element.getChemicalSerie().equals("Alkali Earth Metals"))
+			colorB = new Color(102,150,255);
+		else if(element.getChemicalSerie().equals("Alkali Metals"))
+			colorB = new Color(130,130,255);
+		else if(element.getChemicalSerie().equals("Transition metals"))
+			colorB = new Color(255,255,110);
+		else if(element.getChemicalSerie().equals("Lanthanides"))
+			colorB = new Color(255,255,150);
+		else if(element.getChemicalSerie().equals("Actinides"))
+			colorB = new Color(255,255,200);
+		
+		JButton button = new ElementButton(element, new ElementButtonAction(), colorF);
+		button.setBackground(colorB);
+		
+		return button;
+	}
 	/**
 	 *  Sets the selectedElement attribute of the PeriodicTablePanel object
 	 *
 	 *@param  selectedElement  The new selectedElement value
 	 */
-	public void setSelectedElement(Element selectedElement)
+	public void setSelectedElement(PeriodicTableElement selectedElement)
 	{
 		this.selectedElement = selectedElement;
 	}
@@ -214,7 +395,7 @@ public class PeriodicTablePanel extends JPanel
 	 */
 	public Element getSelectedElement()
 	{
-		return selectedElement;
+		return PeriodicTableElement.configure(selectedElement);
 	}
 
 
@@ -273,22 +454,46 @@ public class PeriodicTablePanel extends JPanel
 		{
 			ElementButton button = (ElementButton) e.getSource();
 			setSelectedElement(button.getElement());
-			// System.out.println(getSelectedElement());
-            fireChange();
+			
+			layeredPane.remove(panel);
+			panel = CreateLabelProperties(button.getElement());
+			layeredPane.add(panel, new Integer(1));
+			layeredPane.repaint();
+			
+			fireChange();
 		}
 	}
-
-
 	/**
+	 * This action fragment a molecule which is on the frame JChemPaint
+	 *
+	 */
+	 class BackAction extends AbstractAction 
+	 {
+		 /**
+		 *  Description of the Method
+		 *
+		 * @param  e  Description of the Parameter
+		 *
+		 */
+		 public void actionPerformed(ActionEvent e)
+		 {
+			 layeredPane.remove(panel);
+			 panel = CreateLabelProperties(null);
+			 layeredPane.add(panel, new Integer(1));
+			 layeredPane.repaint();
+		 }
+	 }
+	 
+	 /**
 	 *  Description of the Class
 	 *
 	 *@author     steinbeck
 	 *@cdk.created    February 10, 2004
 	 */
-	class ElementButton extends Button
-	{
+	 class ElementButton extends JButton
+	 {
 
-		private Element element;
+		private PeriodicTableElement element;
 
 
 		/**
@@ -296,10 +501,10 @@ public class PeriodicTablePanel extends JPanel
 		 *
 		 *@param  element  Description of the Parameter
 		 */
-		public ElementButton(Element element)
+		public ElementButton(PeriodicTableElement element)
 		{
-			super(element.getSymbol());
-			this.element = element;
+			super("H");
+			this.element = factory.configure(element);
 		}
 
 
@@ -309,10 +514,17 @@ public class PeriodicTablePanel extends JPanel
 		 *@param  element  Description of the Parameter
 		 *@param  e        Description of the Parameter
 		 */
-		public ElementButton(Element element, ElementButtonAction e)
+		public ElementButton(
+			PeriodicTableElement element, ElementButtonAction e, String color)
 		{
-			super(element.getSymbol());
+			super("<html><p><u><FONT SIZE=-2>"+element.getAtomicNumber()+
+				"</FONT></u></p><p><font COLOR="+color+">"
+				+element.getSymbol()+"<font></p></html>");
+			
 			this.element = element;
+			setFont(new Font("Times-Roman",Font.BOLD, 15));
+			setBorder( new BevelBorder(BevelBorder.RAISED) );
+			setToolTipText(element.getName());
 			addActionListener(e);
 		}
 
@@ -322,12 +534,94 @@ public class PeriodicTablePanel extends JPanel
 		 *
 		 *@return    The element value
 		 */
-		public Element getElement()
+		public PeriodicTableElement getElement()
 		{
 			return this.element;
 		}
-
 	}
-
+	/**
+	*  create the Label
+	*
+	*@param element   PeriodicTableElement
+	*@return pan      JPanel
+	*/
+	private JPanel CreateLabelProperties(PeriodicTableElement element) 
+	{
+		JPanel pan = new JPanel();
+		pan.setLayout(new BorderLayout());
+		Color color = new Color(255,255,255);
+		Point origin = new Point(90, 20);   	
+		JLabel label;
+		if(element != null)
+		{
+			label = new JLabel("<html><PRE>   <FONT SIZE=+2>"
+				+element.getSymbol()+"</FONT>"
+				+":   At.No "+element.getAtomicNumber()
+				+", Group "+element.getGroup()+", Period "
+				+ element.getPeriod()+"</PRE></html>");
+			pan.add(label,BorderLayout.NORTH);
+			
+			label = new JLabel("<html><PRE><FONT SIZE=-2>"
+				+" CAS id: "+element.getCASid()+"<br>"
+				+" Name: "+element.getName()+"<br>"
+				+" Serie: "+element.getChemicalSerie()+"<br>"
+				+" State: "+element.getPhase()+"<br>"
+				+" Appar: XXXX<br>"
+				+" Mp: 0.0000<br>"
+				+" Bp: 0.0000<br>"
+				+" Conduc: 0.0000<br>"
+				+" Densit: 0.0000<br>"
+				+" VaporH: 0.0000<br>"
+				+" XXXX: 0.0000<br>"
+				+" XXXX: 0.0000<br>"
+				+"</FONT></PRE></html>");
+			label.setMinimumSize(new Dimension(145,150));
+			pan.add(label,BorderLayout.WEST);
+			
+			label = new JLabel("<html><PRE><FONT SIZE=-2>"
+				+" At. Weight: 0.000000<br>"
+				+" At. Radius: 0.0000<br>"
+				+" Cov Radius: 0.0000<br>"
+				+" VW Radius: 0.0000<br>"
+				+" Io Radius: 0.0000<br>"
+				+" e config: 1s1<br>"
+				+" Valency e: 1s1<br>"
+				+" Electro: 0.0<br>"
+				+" Oxid: 1<br>"
+				+" IP: 0.0000<br>"
+				+" Crist: XXXXXX<br>"
+				+" XXXX: 0.0000<br>"
+				+"</FONT></PRE></html>");
+			label.setMinimumSize(new Dimension(145,150));
+			pan.add(label,BorderLayout.EAST);
+		}
+		else
+		{
+			label = new JLabel("<html></head><br><br>"
+				+"<p><FONT><pre>   PERIODIC TABLE<pre></FONT></p>"
+				+"<p><PRE>    of elements</PRE></p><br><br><br><br>"
+				+"<FONT SIZE=-2>D.I. Mendeleev(1834-1907)</FONT></html>");
+			
+			label.setOpaque(true);
+			label.setBackground(color);
+			pan.add(label,BorderLayout.EAST);
+			URL url = this.getClass().getResource(
+				"/org/openscience/cdk/applications/swing/periodicTable_Mendeleev.jpg");
+			if(url!=null)
+			{
+				ImageIcon image = new ImageIcon(url);
+				
+				label = new JLabel(image,JLabel.CENTER);
+				
+				pan.add(label,BorderLayout.WEST);
+			}
+		}
+		
+		pan.setBackground(color);
+		pan.setForeground(Color.black);
+		pan.setBorder(BorderFactory.createLineBorder(Color.black));
+		pan.setBounds(origin.x, origin.y, 295, 210);
+		return pan;
+	}
 }
 
