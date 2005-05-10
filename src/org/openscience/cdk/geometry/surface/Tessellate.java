@@ -41,7 +41,7 @@ import java.lang.Math;
  * @cdk.created 2005-05-08  
  * @cdk.module extra
  */
-public  class Tessellate {
+class Tessellate {
 
     Triangle[] oldtess;
     int maxlevel;
