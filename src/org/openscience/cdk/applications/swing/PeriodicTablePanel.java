@@ -93,7 +93,6 @@ public class PeriodicTablePanel extends JPanel
 		button.addActionListener( new BackAction() );
 		panel = CreateLabelProperties(null);
 		
-		
 		layeredPane.add(button, new Integer(1));
 		layeredPane.add(tp, new Integer(0));
 		layeredPane.add(panel, new Integer(1));
@@ -107,7 +106,6 @@ public class PeriodicTablePanel extends JPanel
 		panel.setLayout(new GridLayout(0, 18));
 		
 		//--------------------------------
-		
 		JButton butt = new JButton("<html><p></p><p>IA</p></html>");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
@@ -150,6 +148,7 @@ public class PeriodicTablePanel extends JPanel
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		//
+		
 		panel.add(createButton("He"));
 		
 		panel.add(createButton("Li"));
@@ -341,35 +340,37 @@ public class PeriodicTablePanel extends JPanel
 	{
 		PeriodicTableElement element = factory.configure(new PeriodicTableElement(elementS));
 		String colorF = "000000";
-		if(element.getPhase().equals("Solid"))
+		String colorPh = element.getPhase();
+		if(colorPh.equals("Solid"))
 			colorF = "000000"; 
-		else if(element.getPhase().equals("Gas"))
+		else if(colorPh.equals("Gas"))
 			colorF = "CC0033"; 
-		else if(element.getPhase().equals("Liquid"))
+		else if(colorPh.equals("Liquid"))
 			colorF = "3300CC"; 
-		else if(element.getPhase().equals("Synthetic"))
+		else if(colorPh.equals("Synthetic"))
 			colorF = "FFCC00";
 		
 		Color colorB = null;
-		if(element.getChemicalSerie().equals("Noble Gasses"))
+		String serie = element.getChemicalSerie();
+		if(serie.equals("Noble Gasses"))
 			colorB = new Color(255,153,255);
-		else if(element.getChemicalSerie().equals("Halogens"))
+		else if(serie.equals("Halogens"))
 			colorB = new Color(255,153,153); 
-		else if(element.getChemicalSerie().equals("Nonmetals"))
+		else if(serie.equals("Nonmetals"))
 			colorB = new Color(255,152,90);
-		else if(element.getChemicalSerie().equals("Metalloids"))
+		else if(serie.equals("Metalloids"))
 			colorB = new Color(255,80,80);
-		else if(element.getChemicalSerie().equals("Metals"))
+		else if(serie.equals("Metals"))
 			colorB = new Color(255,50,0);
-		else if(element.getChemicalSerie().equals("Alkali Earth Metals"))
+		else if(serie.equals("Alkali Earth Metals"))
 			colorB = new Color(102,150,255);
-		else if(element.getChemicalSerie().equals("Alkali Metals"))
+		else if(serie.equals("Alkali Metals"))
 			colorB = new Color(130,130,255);
-		else if(element.getChemicalSerie().equals("Transition metals"))
+		else if(serie.equals("Transition metals"))
 			colorB = new Color(255,255,110);
-		else if(element.getChemicalSerie().equals("Lanthanides"))
+		else if(serie.equals("Lanthanides"))
 			colorB = new Color(255,255,150);
-		else if(element.getChemicalSerie().equals("Actinides"))
+		else if(serie.equals("Actinides"))
 			colorB = new Color(255,255,200);
 		
 		JButton button = new ElementButton(element, new ElementButtonAction(), colorF);
