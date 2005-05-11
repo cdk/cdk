@@ -77,7 +77,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit with methylenfluoride
 	 */
-	public void testModelBuilder3D(){
+	public void testModelBuilder3D_CF(){
 		ModelBuilder3D mb3d=new ModelBuilder3D();
 		HydrogenAdder hAdder=new HydrogenAdder();
 		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
@@ -116,6 +116,11 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			}
 			fail(exc.toString());
 		}
+    }
+    
+    public void testModelBuilder3D_CccccC(){
+		ModelBuilder3D mb3d=new ModelBuilder3D();
+		HydrogenAdder hAdder=new HydrogenAdder();
 		String smile="CccccC";
 		try{
 			SmilesParser sp = new SmilesParser();
@@ -129,15 +134,29 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			for (int i=0;i<mol.getAtomCount();i++){
 				assertNotNull(mol.getAtomAt(i).getPoint3d());
 			}
-			System.out.println("Layout molecule with SMILE:"+smile);	
-      smile="c1ccccc1C=0";
-			mol = sp.parseSmiles(smile);
+			System.out.println("Layout molecule with SMILE:"+smile);
+		} catch (Exception exc) {
+			System.out.println("Cannot layout molecule with SMILE:"+smile);
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+        }
+    }
+    
+    public void testModelBuilder3D_c1ccccc1C0(){
+		ModelBuilder3D mb3d=new ModelBuilder3D();
+		HydrogenAdder hAdder=new HydrogenAdder();
+        String smile="c1ccccc1C=0";
+		try {
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			mb3d.setTemplateHandler();
 			mb3d.setMolecule(mol,false);
 			mb3d.generate3DCoordinates();
-		} catch (Exception exc)
-		{
+		} catch (Exception exc) {
 			System.out.println("Cannot layout molecule with SMILE:"+smile);
 			if (standAlone)
 			{
