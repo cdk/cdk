@@ -130,6 +130,12 @@ public class ModelBuilder3dTest extends CDKTestCase {
 				assertNotNull(mol.getAtomAt(i).getPoint3d());
 			}
 			System.out.println("Layout molecule with SMILE:"+smile);	
+      smile="c1ccccc1C=0";
+			mol = sp.parseSmiles(smile);
+			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+			mb3d.setTemplateHandler();
+			mb3d.setMolecule(mol,false);
+			mb3d.generate3DCoordinates();
 		} catch (Exception exc)
 		{
 			System.out.println("Cannot layout molecule with SMILE:"+smile);

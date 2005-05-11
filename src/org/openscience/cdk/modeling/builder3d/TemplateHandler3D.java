@@ -107,7 +107,7 @@ public class TemplateHandler3D{
 		//System.out.println("TEMPLATE Finger");
 		try{
 			
-			ins = this.getClass().getClassLoader().getResourceAsStream("ringTemplateFingerprints.txt.gz");
+			ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz");
 			fin = new BufferedReader(new InputStreamReader(ins));
 		}catch (Exception exc3){
 			System.out.println("Could not read Fingerprints from FingerprintFile due to: "+exc3.getMessage());
