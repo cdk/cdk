@@ -278,7 +278,6 @@ public class RGraph
             {
                 // carry on research and update iteration count
                 nbIteration++;
-                System.out.println("iter: " + nbIteration);
 
                 // for each node in the set of possible extension (neighbours of 
                 // the current partial solution, include the node to the solution
