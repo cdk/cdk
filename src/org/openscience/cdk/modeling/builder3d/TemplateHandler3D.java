@@ -86,7 +86,7 @@ public class TemplateHandler3D{
 		BufferedReader fin =null;
 			
 		try{	
-			ins = this.getClass().getClassLoader().getResourceAsStream("ringTemplateStructures.sdf.gz");
+			ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz");
 			fin = new BufferedReader(new InputStreamReader(ins));
 			imdl=new IteratingMDLReader(fin);
 		}catch (Exception exc1){
