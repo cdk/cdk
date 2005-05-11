@@ -41,6 +41,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
@@ -76,7 +77,7 @@ public class TemplateHandler3D{
 	 *  Loads all existing templates into memory To add templates to be used in
 	 *  Template file is a mdl file. Creates a Object Set of Molecules
 	 */
-	public void loadTemplates() {
+	public void loadTemplates() throws CDKException{
 		//System.out.println("TEMPLATE START");
 		IteratingMDLReader imdl=null;
 		int [] statistics=new int [13];
@@ -89,7 +90,7 @@ public class TemplateHandler3D{
 			fin = new BufferedReader(new InputStreamReader(ins));
 			imdl=new IteratingMDLReader(fin);
 		}catch (Exception exc1){
-			System.out.println("Could not read Molecules from TemplateFile due to: "+exc1.getMessage());
+			throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz");
 		}
 		//System.out.println("TEMPLATE addMolecule");
 		Molecule molecule=null;

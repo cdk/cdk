@@ -40,6 +40,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.layout.AtomPlacer;
@@ -100,7 +101,7 @@ public class ModelBuilder3D {
 	 *@param  templateHandler  templateHandler Object
 	 *@param  ffname           name of force field
 	 */
-	public ModelBuilder3D(Molecule molecule, TemplateHandler3D templateHandler, String ffname) {
+	public ModelBuilder3D(Molecule molecule, TemplateHandler3D templateHandler, String ffname)  throws CDKException{
 		setMolecule(molecule, false);
 		setTemplateHandler(templateHandler);
 		setForceField(ffname);
@@ -659,7 +660,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  templateHandler  The new templateHandler value
 	 */
-	public void setTemplateHandler(TemplateHandler3D templateHandler) {
+	public void setTemplateHandler(TemplateHandler3D templateHandler) throws CDKException{
 		this.templateHandler = templateHandler;
 		this.templateHandler.loadTemplates();
 	}
@@ -668,7 +669,7 @@ public class ModelBuilder3D {
 	/**
 	 *  Sets the templateHandler attribute of the ModelBuilder3D object
 	 */
-	public void setTemplateHandler() {
+	public void setTemplateHandler() throws CDKException{
 		this.templateHandler = DEFAULT_TEMPLATE_HANDLER;
 		this.templateHandler.loadTemplates();
 	}
