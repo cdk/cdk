@@ -169,12 +169,12 @@ public class Convertor {
                         customizers.addElement(customizer);
                         logger.info("Loaded Customizer: " + customizer.getClass().getName());
                     } catch (ClassNotFoundException exception) {
-                        logger.error("Could not find this Customizer: ", customizerName);
+                        logger.info("Could not find this Customizer: ", customizerName);
                         logger.debug(exception);
                         exception.printStackTrace();
                     } catch (Exception exception) {
-                        logger.error("Could not load this Customizer: ", customizerName);
-                        logger.error(exception.getMessage());
+                        logger.warn("Could not load this Customizer: ", customizerName);
+                        logger.warn(exception.getMessage());
                         logger.debug(exception);
                         exception.printStackTrace();
                     }
