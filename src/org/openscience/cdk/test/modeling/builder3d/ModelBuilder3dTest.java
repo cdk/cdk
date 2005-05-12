@@ -147,8 +147,8 @@ public class ModelBuilder3dTest extends CDKTestCase {
     
     public void testModelBuilder3D_c1ccccc1C0(){
 		ModelBuilder3D mb3d=new ModelBuilder3D();
-		HydrogenAdder hAdder=new HydrogenAdder();
-        String smile="c1ccccc1C=0";
+    HydrogenAdder hAdder=new HydrogenAdder();
+    String smile="c1ccccc1C=0";
 		try {
 			SmilesParser sp = new SmilesParser();
 			Molecule mol = sp.parseSmiles(smile);
@@ -162,7 +162,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			{
 				exc.printStackTrace();
 			}
-			fail(exc.toString());
+    	fail(exc.toString());
 		}
 		
 	}

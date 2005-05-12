@@ -91,7 +91,9 @@ public class ModelBuilder3D {
 	/**
 	 *  Constructor for the ModelBuilder3D object
 	 */
-	public ModelBuilder3D() { }
+	public ModelBuilder3D() {
+    setForceField(null);
+  }
 
 
 	/**
@@ -116,6 +118,7 @@ public class ModelBuilder3D {
 	 */
 	public ModelBuilder3D(Molecule molecule) {
 		setMolecule(molecule, false);
+    setForceField(null);
 	}
 
 

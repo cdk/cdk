@@ -141,7 +141,7 @@ public class JChemPaintMenuBar extends JMenuBar {
 	public JMenu getMenuForEmbedded(JChemPaintPanel jcpPanel) {
 		String definition = getMenuResourceString("menubar");
 		String[] menuKeys = StringHelper.tokenize(definition);
-		JMenu superMenu = new JMenu();
+		JMenu superMenu = new JMenu("JChemPaint");
 		for (int i = 0; i < menuKeys.length; i++) {
 			JMenu m = createMenu(jcpPanel, menuKeys[i]);
 			if (m != null) {

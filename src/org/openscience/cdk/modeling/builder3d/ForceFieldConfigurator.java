@@ -181,7 +181,7 @@ public class ForceFieldConfigurator {
 		mm2.readParameterSets();
 		parameterSet = mm2.getParamterSet();
 		atomTypes = mm2.getAtomTypes();
-	}
+  }
 	
 	public void setMMFF94Parameters() throws Exception{
 		mmff94.readParameterSets();
@@ -216,7 +216,7 @@ public class ForceFieldConfigurator {
 	 */
 	private AtomType getAtomType(String ID) throws NoSuchAtomTypeException {
 		AtomType at = null;
-		for (int i = 0; i < atomTypes.size(); i++) {
+    for (int i = 0; i < atomTypes.size(); i++) {
 			at = (AtomType) atomTypes.get(i);
 			if (at.getID().equals(ID)) {
 				return at;

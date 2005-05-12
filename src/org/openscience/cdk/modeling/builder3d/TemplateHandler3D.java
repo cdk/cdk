@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.BitSet;
 import java.util.StringTokenizer;
+import java.util.zip.*;
 
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.Atom;
@@ -87,7 +88,7 @@ public class TemplateHandler3D{
 			
 		try{	
 			ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz");
-			fin = new BufferedReader(new InputStreamReader(ins));
+			fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
 			imdl=new IteratingMDLReader(fin);
 		}catch (Exception exc1){
 			throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz");
@@ -108,7 +109,7 @@ public class TemplateHandler3D{
 		try{
 			
 			ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz");
-			fin = new BufferedReader(new InputStreamReader(ins));
+			fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
 		}catch (Exception exc3){
 			System.out.println("Could not read Fingerprints from FingerprintFile due to: "+exc3.getMessage());
 		}
