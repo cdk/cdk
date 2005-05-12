@@ -281,7 +281,13 @@ public class CDKPluginManager {
             while (plugins.hasMoreElements()) {
                 CDKPluginInterface plugin = (CDKPluginInterface)plugins.nextElement();
                 if (APIVersionTester.isBiggerOrEqual("1.6", plugin.getAPIVersion())) {
-                    plugin.stateChanged(sourceEvent);
+                    try {
+                        plugin.stateChanged(sourceEvent);
+                    } catch (Exception exception) {
+                        logger.warn("Exception thrown in plugin. Ignore, but user is invited to report the problem:");
+                        logger.warn("  ", exception.getMessage());
+                        logger.debug(exception);
+                    }
                 } else {
                     logger.debug("Plugin API ", plugin.getAPIVersion() , " is not bigger than 1.6.",
                         "Not sending it the change event: ", plugin.getName());
