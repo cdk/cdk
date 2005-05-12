@@ -354,8 +354,7 @@ public class GeometryTools {
 		Point2d point = new Point2d(centerX / (counter), centerY / (counter));
 		return point;
 	}
-
-
+	
 	/**
 	 *  Translates the geometric 2DCenter of the given 
 	 *  AtomContainer container to the specified Point2d p.

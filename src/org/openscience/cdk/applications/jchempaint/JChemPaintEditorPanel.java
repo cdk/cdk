@@ -502,14 +502,15 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *@param  e  ChangeEvent
 	 */
 	//As long there is nothing it it, it shouldn't overwrite the function of JChemPaintPanel
-	 /*public void stateChanged(ChangeEvent e)
+	 public void stateChanged(ChangeEvent e)
 	{
+		super.stateChanged(e);
 		// send event to plugins
 		/*if (pluginManager != null)
 		{
 			pluginManager.stateChanged(new ChemObjectChangeEvent(this));
 		}*/
-	//}*/
+	}
 
 
 
