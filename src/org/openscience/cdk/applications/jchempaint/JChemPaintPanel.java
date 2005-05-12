@@ -43,6 +43,7 @@ import javax.swing.text.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.applications.plugin.*;
 import org.openscience.cdk.controller.*;
+import org.openscience.cdk.event.*;
 import org.openscience.cdk.geometry.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.io.listener.*;
@@ -65,7 +66,7 @@ import org.openscience.cdk.applications.jchempaint.io.*;
  */
 public abstract class JChemPaintPanel
 		 extends JPanel
-		 implements ChangeListener {
+		 implements ChangeListener, CDKEditBus {
 
 	//Static variables hold information if the application is embedded and keep track of instances of JCPPanel
 	static boolean isEmbedded = false;
@@ -104,6 +105,7 @@ public abstract class JChemPaintPanel
 	/**  Constructor for the JChemPaintPanel object */
 	public JChemPaintPanel() {
 		logger = new LoggingTool(this);
+        setupPluginManager();
 		setLayout(new BorderLayout());
 		mainContainer = new JPanel();
 		mainContainer.setLayout(new BorderLayout());
@@ -428,36 +430,32 @@ public abstract class JChemPaintPanel
 	}
 
 
-	/**  Description of the Method */
-	/*
-	 *  private void setupPluginManager(JChemPaintPanel jcpp)
-	 *  {
-	 *  try
-	 *  {
-	 *  / set up plugin manager
-	 *  JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
-	 *  pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), jcpp);
-	 *  / load the plugins that come with JCP itself
-	 *  pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
-	 *  / load the global plugins
-	 *  if (!globalPluginDir.equals(""))
-	 *  {
-	 *  pluginManager.loadPlugins(globalPluginDir);
-	 *  }
-	 *  / load the user plugins
-	 *  pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
-	 *  / load plugins given with -Dplugin.dir=bla
-	 *  if (System.getProperty("plugin.dir") != null)
-	 *  {
-	 *  pluginManager.loadPlugins(System.getProperty("plugin.dir"));
-	 *  }
-	 *  } catch (Exception exc)
-	 *  {
-	 *  logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-	 *  logger.debug(exc);
-	 *  }
-	 *  }
-	 */
+	/**
+     * Sets up the plugin manager.
+     */
+    private void setupPluginManager() {
+        try {
+            // set up plugin manager
+            JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
+            pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), jcpp);
+            
+            // load the plugins that come with JCP itself
+            // pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+            
+            // load the user plugins
+            pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
+            
+            // load plugins given with -Dplugin.dir=bla
+            if (System.getProperty("plugin.dir") != null) {
+                pluginManager.loadPlugins(System.getProperty("plugin.dir"));
+            }
+        } catch (Exception exc) {
+            logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
+            logger.debug(exc);
+        }
+    }
+    
+     
 	/**  Description of the Method */
 	private void setupWorkingDirectory() {
 		try {
@@ -790,7 +788,8 @@ public abstract class JChemPaintPanel
 
 
 	/**
-	 *  Gets the chemModel attribute of the JChemPaint object
+	 *  Gets the chemModel attribute of the JChemPaint object.  This method implements
+     *  part of the CDKEditBus interface.
 	 *
 	 * @return    The chemModel value
 	 */
@@ -800,7 +799,8 @@ public abstract class JChemPaintPanel
 
 
 	/**
-	 *  Gets the chemFile attribute of the JChemPaint object
+	 *  Gets the chemFile attribute of the JChemPaint object. This method implements
+     *  part of the CDKEditBus interface.
 	 *
 	 * @return    The chemFile value
 	 */
@@ -898,12 +898,21 @@ public abstract class JChemPaintPanel
 		}
 		repaint();
 		// send event to plugins
-		/*if (pluginManager != null)
-		{
+		if (pluginManager != null) {
 			pluginManager.stateChanged(new ChemObjectChangeEvent(this));
-		}*/
+		}
 	}
-		
+
+    // Here are the CDKEditBus methods
+    
+    public String getAPIVersion() {
+        return "1.11";
+    }
+    
+    public void runScript(String mimeType, String script) {
+        logger.error("JChemPaintPanel's CDKEditBus.runScript() implementation called but not implemented!");
+    }
+    
 }
 
 
