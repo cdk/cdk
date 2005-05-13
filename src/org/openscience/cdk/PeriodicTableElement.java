@@ -35,6 +35,9 @@ package org.openscience.cdk;
  */
 public class PeriodicTableElement extends Element
 {
+	
+	private static LoggingTool logger
+	
 	/** The name for this element. */
 	protected String name;
 	
@@ -80,6 +83,7 @@ public class PeriodicTableElement extends Element
 	public PeriodicTableElement(String symbol)
 	{
 		this.symbol = symbol;
+		logger = new LoggingTool(this);
 	}
 	/**
 	* Returns the name of this element.
@@ -242,7 +246,7 @@ public class PeriodicTableElement extends Element
 		 try {
 			 clone = super.clone();
 		 } catch (Exception e) {
-			 e.printStackTrace(System.err);
+			 logger.debug(exception);
 		 }
 		 return clone;
 	 }

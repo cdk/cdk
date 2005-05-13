@@ -64,9 +64,9 @@ public class ElementPTHandler extends DefaultHandler
 	private String currentChars;
 	private Vector elements;
 	
-	private PeriodicTableElement elementType;
-	private String currentElement;
-	private String dictRef;
+	public PeriodicTableElement elementType;
+	public String currentElement;
+	public String dictRef;
 	
 	public ElementPTHandler() 
 	{

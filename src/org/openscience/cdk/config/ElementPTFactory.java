@@ -51,7 +51,6 @@ public class ElementPTFactory
 
 	private static ElementPTFactory efac = null;
 	private Vector elements = null;
-	private Hashtable majorIsotopes = null;
 	private boolean debug = false;
 	private LoggingTool logger;
 
@@ -87,7 +86,6 @@ public class ElementPTFactory
 		elements = reader.readElements();
 		if (debug) logger.debug("Found #elements in file: ", elements.size());
 		
-		majorIsotopes = new Hashtable();
 	}
 
 	/**
@@ -155,16 +153,16 @@ public class ElementPTFactory
 	 */
 	public PeriodicTableElement configure(PeriodicTableElement element)
 	{
-		PeriodicTableElement ElementInt = getElement(element.getSymbol());
+		PeriodicTableElement elementInt = getElement(element.getSymbol());
 		
-		element.setSymbol(ElementInt.getSymbol());
-		element.setAtomicNumber(ElementInt.getAtomicNumber());
-		element.setName(ElementInt.getName());
-		element.setChemicalSerie(ElementInt.getChemicalSerie());
-		element.setPeriod(ElementInt.getPeriod());
-		element.setGroup(ElementInt.getGroup());
-		element.setPhase(ElementInt.getPhase());
-		element.setCASid(ElementInt.getCASid());
+		element.setSymbol(elementInt.getSymbol());
+		element.setAtomicNumber(elementInt.getAtomicNumber());
+		element.setName(elementInt.getName());
+		element.setChemicalSerie(elementInt.getChemicalSerie());
+		element.setPeriod(elementInt.getPeriod());
+		element.setGroup(elementInt.getGroup());
+		element.setPhase(elementInt.getPhase());
+		element.setCASid(elementInt.getCASid());
 		return element;
 	}
 
