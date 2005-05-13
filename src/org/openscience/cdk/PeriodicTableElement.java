@@ -24,6 +24,7 @@
  *  02111-1307  USA.
  */
 package org.openscience.cdk;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * subclass of Elements for PeriodicTable.
@@ -36,7 +37,7 @@ package org.openscience.cdk;
 public class PeriodicTableElement extends Element
 {
 	
-	private static LoggingTool logger
+	private static LoggingTool logger;
 	
 	/** The name for this element. */
 	protected String name;
@@ -245,7 +246,7 @@ public class PeriodicTableElement extends Element
 		 Object clone = null;
 		 try {
 			 clone = super.clone();
-		 } catch (Exception e) {
+		 } catch (Exception exception) {
 			 logger.debug(exception);
 		 }
 		 return clone;
