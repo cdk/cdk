@@ -87,6 +87,10 @@
       pdb-cml for outputing PDBAtom information, and qsar-cml for outputing
       QSAR-descriptor information
     </addition>
+    <bugfix contributor="thanser" closes="1110537">
+      Fixed problem with UniversalIsomorphism. Under certain conditions extra subgraphs
+      were found, breaking symmetry.
+    </bugfix>
     <bugfix>
       Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
     </bugfix>

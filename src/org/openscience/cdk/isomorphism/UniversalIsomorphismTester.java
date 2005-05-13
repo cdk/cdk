@@ -476,12 +476,12 @@ public class UniversalIsomorphismTester {
       for (int j = i + 1; j < graphList.size(); j++) {
         AtomContainer gj = (AtomContainer) graphList.get(j);
 
-        if (i != j) {
-          // if G1 isomorph to G2 or G1 included in G2 then Gi
-          // is discarded (redondant or irrevelant)
-          if (isIsomorph(gi, gj) || isSubgraph(gi, gj)) {
+        // Gi included in Gj or Gj included in Gi then
+        // reduce the irrelevant solution
+        if (isSubgraph(gj, gi)) {
+            reducedGraphList.remove(gi);
+        } else if (isSubgraph(gi, gj)) {
             reducedGraphList.remove(gj);
-          }
         }
       }
     }

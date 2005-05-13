@@ -22,6 +22,8 @@
       <xsd:enumeration value="meklund"/>
       <!-- Christoph Steinbeck <??> -->
       <xsd:enumeration value="steinbeck"/>
+      <!-- Thierry Hanser <thierry.hanser@ixelis.com> -->
+      <xsd:enumeration value="thanser"/>
       
       <!-- Contributor was untracable -->
       <xsd:enumeration value="unknown"/>

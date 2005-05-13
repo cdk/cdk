@@ -189,26 +189,12 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         }
         
         List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
-        assertEquals(2, list.size()); // two MCSS are found
-        // we don't know the order. So:
-        if (((AtomContainer)list.get(0)).getAtomCount() == 11) {
-            assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
-            assertEquals(2, ((AtomContainer)list.get(1)).getAtomCount());
-        } else {
-            assertEquals(2, ((AtomContainer)list.get(0)).getAtomCount());
-            assertEquals(11, ((AtomContainer)list.get(1)).getAtomCount());
-        }
+        assertEquals(1, list.size()); // two MCSS are found
+        assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
         
         list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
-        assertEquals(2, list.size());
-        // we don't know the order. So:
-        if (((AtomContainer)list.get(0)).getAtomCount() == 11) {
-            assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
-            assertEquals(2, ((AtomContainer)list.get(1)).getAtomCount());
-        } else {
-            assertEquals(2, ((AtomContainer)list.get(0)).getAtomCount());
-            assertEquals(11, ((AtomContainer)list.get(1)).getAtomCount());
-        }
+        assertEquals(1, list.size());
+        assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
     }
     
 	public static void main(String[] args)
