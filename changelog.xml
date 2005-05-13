@@ -87,7 +87,7 @@
       pdb-cml for outputing PDBAtom information, and qsar-cml for outputing
       QSAR-descriptor information
     </addition>
-    <bugfix contributor="thanser" closes="1110537">
+    <bugfix contributor="thanser" closes="1110537 999330">
       Fixed problem with UniversalIsomorphism. Under certain conditions extra subgraphs
       were found, breaking symmetry.
     </bugfix>
