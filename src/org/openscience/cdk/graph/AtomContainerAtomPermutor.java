@@ -33,20 +33,18 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.graph.AtomContainerPermutor;;
 
-
 /**
  * This class allows to iterate trough the set of all possible
  * permutations of the atom order in a given atom container. 
  * It allows to check for a dependency of algorithm results 
  * on the atom order.
  * 
- * The permutation code here is based on a pseudo code example 
+ * <p>The permutation code here is based on a pseudo code example 
  * on a tutorial site created and maintained by Phillip P. Fuchs:
- * http://www.geocities.com/permute_it/pseudo2.html
+ * <a href="http://www.geocities.com/permute_it/pseudo2.html">http://www.geocities.com/permute_it/pseudo2.html</a>.
  * 
  *@author         steinbeck
- *@created        4. Mai 2005
- *@cdk.created    2002-02-24
+ *@cdk.created    2005-05-04
  *@cdk.keyword    permutation
  */
 public class AtomContainerAtomPermutor extends AtomContainerPermutor
