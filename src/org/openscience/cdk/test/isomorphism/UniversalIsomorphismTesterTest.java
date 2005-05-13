@@ -53,6 +53,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.*;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 
 /**
  * @cdk.module test
@@ -189,12 +190,36 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         }
         
         List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
-        assertEquals(1, list.size()); // two MCSS are found
+        assertEquals(1, list.size());
         assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
         
         list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
         assertEquals(1, list.size());
         assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
+    }
+    
+    public void testSFBug999330() {
+        String file1 = "data/mdl/5SD.mol";
+        String file2 = "data/mdl/ADN.mol";
+        Molecule mol1 = new Molecule();
+        Molecule mol2 = new Molecule();
+        
+        try {
+            new MDLReader(new FileReader(file1)).read(mol1);
+            new MDLReader(new FileReader(file2)).read(mol2);
+        } catch (Exception ex) {
+            System.err.println("testQueryAtomContainer: " + ex.getMessage());
+            fail(ex.getMessage());
+        }
+        AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
+        mol2 = new Molecule((AtomContainer)permutor.next());
+        
+        List list1 = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
+        List list2 = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
+        assertEquals(1, list1.size());
+        assertEquals(1, list2.size());
+        assertEquals(((AtomContainer)list1.get(0)).getAtomCount(),
+                     ((AtomContainer)list2.get(0)).getAtomCount());
     }
     
 	public static void main(String[] args)
