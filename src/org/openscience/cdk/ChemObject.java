@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk;
 
+import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -62,7 +63,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
 	 *  per object should be more than enough.
 	 */
-	private boolean[] flags;
+	private BitSet flags;
 
 	/**
 	 *  The ID is null by default.
@@ -75,7 +76,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 */
 	public ChemObject()
 	{
-		flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+		flags=new BitSet(CDKConstants.MAX_FLAG_INDEX + 1);
 		chemObjectListeners = null;
 		properties = null;
 		identifier = null;
@@ -277,11 +278,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 			e.printStackTrace(System.err);
 		}
 		// clone the flags
-		((ChemObject) clone).flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-		for (int f = 0; f < flags.length; f++)
-		{
-			((ChemObject) clone).flags[f] = flags[f];
-		}
+		((ChemObject) clone).flags=(BitSet) flags.clone();
 		// clone the properties
 		if (properties != null)
 		{
@@ -364,7 +361,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 */
 	public void setFlag(int flag_type, boolean flag_value)
 	{
-		flags[flag_type] = flag_value;
+		flags.set(flag_type, flag_value);
 		notifyChanged();
 	}
 
@@ -378,7 +375,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 */
 	public boolean getFlag(int flag_type)
 	{
-		return flags[flag_type];
+		return flags.get(flag_type);
 	}
 
 
@@ -406,19 +403,21 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 * @param  flagsNew    the new flags.
 	 * @see                #getFlags
 	 */
-    public void setFlags(boolean[] flagsNew){
-        flags=flagsNew;
-    }
-
+	public void setFlags(BitSet newFlags)
+	{
+		flags=newFlags;
+	}
+	
 	/**
 	 * Returns the whole set of flags.
 	 *
 	 *@return    the flags.
 	 *@see       #setFlags
 	 */
-    public boolean[] getFlags(){
-        return(flags);
-    }
+	public BitSet getFlags()
+	{
+		return flags;
+	}
 
 	/**
      * Clones this <code>ChemObject</code>, but preserves references to <code>Object</code>s.
