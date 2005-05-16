@@ -648,6 +648,18 @@
       <bibtex:pages>726-735</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+
+  <bibtex:entry id="STA90">
+    <bibtex:article>
+        <bibtex:author>Stanton, D.T. and Jurs, P.C.
+        </bibtex:author>
+        <bibtex:title>{Development and Use of Charged Partial Surface Area Structural Descriptors in Computer Assissted Quantitative Structure Property Relationship Studies</bibtex:title>
+      <bibtex:journal>Analytical Chemistry</bibtex:journal>
+      <bibtex:year>1990</bibtex:year>
+      <bibtex:volume>62</bibtex:volume>
+      <bibtex:pages>2323-2329</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
   
   <bibtex:entry id="EIS95">
     <bibtex:article>
