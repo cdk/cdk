@@ -222,6 +222,7 @@ public class NumericalSurface {
 
     private void translatePoints(int atmIdx, Point3d[][] points, int point_density, Atom atom, Point3d cp) {
         double total_radius = atom.getVanderwaalsRadius() + solvent_radius;
+
         double area = 4 * Math.PI * (total_radius*total_radius) * points.length / point_density;
 
         double sumx = 0.0;
@@ -294,6 +295,10 @@ public class NumericalSurface {
                 points.add( tmp );
             }
         }
+
+        // the first column contains the transformed points
+        // and the second column contains the points from the
+        // original unit tesselation
         Point3d[][] ret = new Point3d[ points.size() ][2];
         for (int i = 0; i < points.size(); i++) {
             Point3d[] tmp = (Point3d[])points.get(i);
