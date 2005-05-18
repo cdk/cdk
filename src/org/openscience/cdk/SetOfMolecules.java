@@ -114,6 +114,21 @@ public class SetOfMolecules extends SetOfAtomContainers {
     public int getMoleculeCount() {
         return super.getAtomContainerCount();
     }
+	
+	
+	/**
+	 *  Clones this SetOfMolecules and its content
+	 *
+	 *@return    the cloned object
+	 */
+	public Object clone() {
+		SetOfMolecules clone = new SetOfMolecules();
+		Molecule[] result = getMolecules();
+		for (int i = 0; i < result.length; i++) {
+			clone.addMolecule((Molecule) result[i].clone());
+		}
+		return (Object) clone;
+	}
     
     public String toString() {
         StringBuffer buffer = new StringBuffer();
