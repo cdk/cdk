@@ -302,15 +302,10 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @return    the cloned Object
 	 */
 	public Object clone() {
-		SetOfAtomContainers clone = new SetOfMolecules();
+		SetOfAtomContainers clone = new SetOfAtomContainers();
 		AtomContainer[] result = getAtomContainers();
 		for (int i = 0; i < result.length; i++) {
-			if (this instanceof SetOfMolecules) {
-				((SetOfMolecules) clone).addMolecule((Molecule) result[i].clone());
-			}
-			else {
 				clone.addAtomContainer((AtomContainer) result[i].clone(), 1.0);
-			}
 		}
 		return (Object) clone;
 	}
