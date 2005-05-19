@@ -88,8 +88,8 @@ public class ReactionBalancerTest extends CDKTestCase {
 	}
 	
     public void testMakeDiffHashtable() {
-        ReactionBalancer rb = new ReactionBalancer(reaction1);
-		
+        ReactionBalancer rb = new ReactionBalancer();
+		boolean balanced = rb.isBalanced(reaction1);
 		Hashtable hash = rb.getDiffHashtable();
 		
 		assertFalse(hash.containsKey("O"));
@@ -100,7 +100,8 @@ public class ReactionBalancerTest extends CDKTestCase {
 	public void testGetMoleculePosition() {
         Molecule mol = new Molecule();
 		mol.addAtom(new Atom("H"));
-		ReactionBalancer rb = new ReactionBalancer(reaction4);
+		ReactionBalancer rb = new ReactionBalancer();
+        boolean balanced = rb.isBalanced(reaction4);
 		int notFound = rb.getMoleculePosition(reaction4.getProducts(), mol);
 		assertEquals(-1, notFound);
 		
@@ -145,8 +146,8 @@ public class ReactionBalancerTest extends CDKTestCase {
 				
 			}
 		}
-		ReactionBalancer rb = new ReactionBalancer(reaction3);
-		boolean success = rb.balance();
+		ReactionBalancer rb = new ReactionBalancer();
+		boolean success = rb.balance(reaction3);
 		Reaction newReaction = rb.getReaction();
 		
 		assertTrue(success);
@@ -156,8 +157,8 @@ public class ReactionBalancerTest extends CDKTestCase {
 	}
 	
 	public void testBalance_charge() {
-		ReactionBalancer rb = new ReactionBalancer(reaction4);
-		boolean success = rb.balance();
+		ReactionBalancer rb = new ReactionBalancer();
+		boolean success = rb.balance(reaction4);
 		Reaction newReaction = rb.getReaction();
 		
 		assertTrue(success);
@@ -168,8 +169,8 @@ public class ReactionBalancerTest extends CDKTestCase {
 	}
 	
 	public void testBalance_hydrogen() {
-		ReactionBalancer rb = new ReactionBalancer(reaction4);
-		boolean success = rb.balance();
+		ReactionBalancer rb = new ReactionBalancer();
+		boolean success = rb.balance(reaction4);
 		Reaction newReaction = rb.getReaction();
 		
 		assertTrue(success);
@@ -188,11 +189,10 @@ public class ReactionBalancerTest extends CDKTestCase {
 		mol.addAtom(h);
 		mol.addAtom(o);
 		r.addReactant(mol);
-		ReactionBalancer rb = new ReactionBalancer(r);
-		boolean success = rb.balance();
+		ReactionBalancer rb = new ReactionBalancer();
+		boolean success = rb.balance(r);
 		assertTrue(success);
-		assertEquals(0, r.getProductCount());
-		assertEquals(1, rb.getReaction().getProductCount());
+		assertEquals(1, r.getProductCount());
 	}
 	
 	public void testBalance_wrongstoichiometry() {
@@ -215,8 +215,8 @@ public class ReactionBalancerTest extends CDKTestCase {
 		mol2.addAtom(o3);
 		r.addReactant(mol1);
 		r.addProduct(mol2);
-		ReactionBalancer rb = new ReactionBalancer(r);
-		boolean success = rb.balance();
+		ReactionBalancer rb = new ReactionBalancer();
+		boolean success = rb.balance(r);
 		assertTrue(success);
 		//assertEquals(1.0, r.getProductCoefficient(mol2), 0.000001);
 		assertEquals(2.0, rb.getReaction().getProductCoefficients()[0], 0.000001);

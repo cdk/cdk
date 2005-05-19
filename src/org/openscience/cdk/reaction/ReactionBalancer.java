@@ -42,13 +42,15 @@ import java.util.*;
  * remaining hydrogens. If any other elements have to be balanced, permutations of stoichiometric
  * coefficients up to five are tested.
  * 
- * The original reaction is not modified. It is cloned instead. To retrieve the corrected reaction,
- * use getReaction(). A sample usage:
+ * Warning: If the reaction cannot be balanced, the method balance returns false. 
+ * Nevertheless the original reaction is modified. Use a copy of the reaction to
+ * avoid this behaviour.
  * 
  * <code><pre>
  * Reaction reaction;
- * ReactionBalancer rb = new ReactionBalancer(reaction);
- * if(rb.balance()) { Reaction balancedReaction = rb.getReaction() }
+ * ReactionBalancer rb = new ReactionBalancer();
+ * boolean balanced;
+ * if(!rb.isBalanced(reaction)) balanced = rb.balance(reaction);
  * </pre></code>
  *
  * @author        Kai Hartmann
@@ -61,45 +63,29 @@ public class ReactionBalancer {
 	private static Molecule water = new Molecule();
 	private static Molecule hydrogen = new Molecule();
 	private static Molecule proton = new Molecule();
-	private Reaction reaction = new Reaction();
+	private Reaction reaction = null;
 	private Hashtable diff = new Hashtable();
 
 
 	/**
 	 *  Constructor for the ReactionBalancer object
-	 *
-	 *@param  r  the reaction that should be balanced.
 	 */
-	public ReactionBalancer(Reaction r) {
-		SetOfMolecules ed = (SetOfMolecules) (r.getReactants().clone());
-		SetOfMolecules pr = (SetOfMolecules) (r.getProducts().clone());
-		reaction.setReactants(ed);
-		reaction.setProducts(pr);
-		makeDiffHashtable();
-		if (water.getAtomCount() == 0) {
-			init();
-		}
-	}
-
-
-	/**
-	 *  Initialise the Molecules needed for balancing.
-	 */
-	public void init() {
-
-		water.addAtom(new Atom("H"));
-		water.addAtom(new Atom("H"));
-		water.addAtom(new Atom("O"));
-		water.addBond(0, 2, 1.0);
-		water.addBond(1, 2, 1.0);
-		water.setProperty("name", "H2O");
-		hydrogen.addAtom(new Atom("H"));
-		hydrogen.addAtom(new Atom("H"));
-		hydrogen.addBond(0, 1, 1.0);
-		hydrogen.setProperty("name", "H2");
-		proton.addAtom(new Atom("H"));
-		proton.getAtomAt(0).setFormalCharge(1);
-		proton.setProperty("name", "H+");
+	public ReactionBalancer() {
+        if (water.getAtomCount() == 0) {
+            water.addAtom(new Atom("H"));
+            water.addAtom(new Atom("H"));
+            water.addAtom(new Atom("O"));
+            water.addBond(0, 2, 1.0);
+            water.addBond(1, 2, 1.0);
+            water.setProperty("name", "H2O");
+            hydrogen.addAtom(new Atom("H"));
+            hydrogen.addAtom(new Atom("H"));
+            hydrogen.addBond(0, 1, 1.0);
+            hydrogen.setProperty("name", "H2");
+            proton.addAtom(new Atom("H"));
+            proton.getAtomAt(0).setFormalCharge(1);
+            proton.setProperty("name", "H+");
+        }
 	}
 
 
@@ -131,7 +117,11 @@ public class ReactionBalancer {
 	 *
 	 * @return    true if reaction is balanced.
 	 */
-	public boolean isBalanced() {
+	public boolean isBalanced(Reaction reaction) {
+        if (reaction != this.reaction) {
+            this.reaction = reaction;
+            makeDiffHashtable();
+        }
 		if (SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getProducts())
 				 - SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getReactants()) == 0
 				 && diff.isEmpty()) {
@@ -146,8 +136,13 @@ public class ReactionBalancer {
 	 *
 	 *@return    true if Reaction could be balanced.
 	 */
-	public boolean balance() {
+	public boolean balance(Reaction reaction) {
 
+        if (reaction != this.reaction) {
+            this.reaction = reaction;
+            makeDiffHashtable();
+        }
+        
 		double chargeDifference =
 				SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getProducts())
 				 - SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getReactants());

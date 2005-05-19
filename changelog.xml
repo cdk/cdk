@@ -174,5 +174,9 @@
     <apiChange implements="1175952">
       The cdk.layout.TemplateHandler now uses CML2 files
     </apiChange>
+    <apiChange>
+      reaction.ReactionBalancer: removed init method, constructor no longer takes a
+      Reaction object, the isBalanced and balance method do so now.
+    </apiChange>
   </release>
 </changelog>
