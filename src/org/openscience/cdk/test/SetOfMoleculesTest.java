@@ -151,6 +151,13 @@ public class SetOfMoleculesTest extends CDKTestCase {
         }
     }
 
+    public void testClone() {
+        SetOfMolecules som = new SetOfMolecules();
+        Object clone = som.clone();
+        assertTrue(clone instanceof SetOfMolecules);
+	assertNotSame(som, clone);
+    }   
+    
     public void testStateChanged_ChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         SetOfMolecules chemObject = new SetOfMolecules();

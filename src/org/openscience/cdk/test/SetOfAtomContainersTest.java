@@ -214,6 +214,13 @@ public class SetOfAtomContainersTest extends CDKTestCase {
             assertTrue(description.charAt(i) != '\r');
         }
     }
+    
+     public void testClone() {
+        SetOfAtomContainers containerSet = new SetOfAtomContainers();
+        Object clone = containerSet.clone();
+        assertTrue(clone instanceof SetOfAtomContainers);
+	assertNotSame(containerSet, clone);
+    } 
 
     public void testStateChanged_ChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
