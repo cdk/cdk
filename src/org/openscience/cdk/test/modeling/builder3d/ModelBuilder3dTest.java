@@ -164,6 +164,5 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			}
     	fail(exc.toString());
 		}
-		
 	}
 }

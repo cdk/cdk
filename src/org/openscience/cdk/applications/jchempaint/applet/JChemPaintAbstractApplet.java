@@ -26,6 +26,7 @@ package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.BorderLayout;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.MissingResourceException;
@@ -37,6 +38,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.MDLWriter;
 
 /**
  * The
@@ -181,4 +183,15 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	public void setTheJcpp(JChemPaintPanel theJcpp) {
 		this.theJcpp = theJcpp;
 	}
+  
+  public void setTheModel(JChemPaintModel theModel){
+    this.theModel=theModel;
+  }
+  
+  public String getMolFile() throws Exception{
+    StringWriter sw = new StringWriter();
+    MDLWriter mdlwriter = new MDLWriter(sw);
+    mdlwriter.write(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules());
+    return(sw.toString());
+  }
 }
