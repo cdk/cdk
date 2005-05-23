@@ -361,6 +361,22 @@ public class LinearRegressionModel extends RModel {
         }
     }
 
+    /**
+     * Loads an LinearRegressionModel object from disk in to the current session.
+     *
+     * @param filename The disk file containing the model
+     */
+    public void  loadModel(String fileName) throws QSARModelException {
+        // should probably check that the fileName does exist
+        Object model = (Object)revaluator.call("loadModel", new Object[]{ (Object)fileName });
+        String modelName = (String)revaluator.call("loadModel.getName", new Object[] { (Object)fileName });
+
+        if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit")) {
+            this.modelfit =(LinearRegressionModelFit)model;
+            this.setModelName(modelName);
+        } else throw new QSARModelException("The loaded model was not a LinearRegressionModel");
+    }
+
     /* interface to fit object */
 
     /**

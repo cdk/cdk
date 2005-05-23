@@ -152,7 +152,7 @@ public abstract class RModel implements Model {
      * @param modelname The name of the model as returned by \code{getModelName}.
      * @param filename The file to which the model should be saved
      */
-    public void saveModel(String modelname, String filename) throws QSARModelException {
+    public static void saveModel(String modelname, String filename) throws QSARModelException {
         if (filename.equals("") || filename == null) {
             filename = modelname+".rda";
         }
@@ -166,17 +166,7 @@ public abstract class RModel implements Model {
         }
     }
 
-    /**
-     * Loads an R model from disk in to the current session.
-     *
-     * @param filename The disk file containing the model
-     * @return A String containing the model name
-     */
-    public String loadModel(String filename) {
-        // should probably check that the filename does exist
-        String modelName = (String)revaluator.call("loadModel", new Object[]{ (Object)filename });
-        return(modelName);
-    }
+
     /**
      * Get the name of the model.
      *
@@ -199,26 +189,23 @@ public abstract class RModel implements Model {
      * to disk (see {@link RModel.saveModel}) and then later loads it, the loaded
      * model may overwrite a model in that session. In this situation, this method
      * can be used to assign a name to the model.
-     *<p>
-     * TODO: Code needs to be included to check that the object referred to
-     * by modelName does exist in the R session, otherwise the reassignment
-     * will fail.
      *
      * @param modelName The name of the model
      *
      */
-    public void setModelName(String modelName) {
+    public void setModelName(String newName) {
+        if (this.modelName != null && this.modelName.equals(newName)) return;
         String oldName = this.modelName;
         if (oldName != null) {
-            revaluator.voidEval(modelName + " <- " + oldName +";");
-            revaluator.voidEval("rm("+oldName+");");
+            revaluator.voidEval("if ('"+oldName+"' %in% ls()) {"+newName+"<-"+oldName+";rm("+oldName+")}");
         }
-        this.modelName = modelName;
+        this.modelName = newName;
     }
 
     abstract public void build() throws QSARModelException;
     abstract public void predict() throws QSARModelException;
     abstract public void setParameters(String key, Object obj) throws QSARModelException;
+    abstract public void loadModel(String fileName) throws QSARModelException;
 }
 
 

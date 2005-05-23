@@ -411,6 +411,23 @@ public class CNNRegressionModel extends RModel {
     }
         
     /**
+     * Loads a CNNRegresionModel object from disk in to the current session.
+     * 
+     *
+     * @param filename The disk file containing the model
+     */
+    public void loadModel(String fileName) throws QSARModelException {
+        // should probably check that the filename does exist
+        Object model = (Object)revaluator.call("loadModel", new Object[]{ (Object)fileName });
+        String modelName = (String)revaluator.call("loadModel.getName", new Object[] { (Object)fileName });
+
+        if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.CNNRegressionModelFit")) {
+            this.modelfit = (CNNRegressionModelFit)model;
+            this.setModelName(modelName);
+        } else throw new QSARModelException("The loaded model was not a CNNRegressionModel");
+    }
+
+    /**
      * Gets final value of the fitting criteria.
      *
      * This method only returns meaningful results if the <code>build</code>

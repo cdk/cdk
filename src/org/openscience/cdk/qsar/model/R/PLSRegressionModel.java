@@ -283,6 +283,23 @@ public class PLSRegressionModel extends RModel {
         }
     }
 
+    /**
+     * Loads a PLSRegressionModel object from disk in to the current session.
+     *
+     * @param filename The disk file containing the model
+     */
+    public void  loadModel(String fileName) throws QSARModelException {
+        // should probably check that the filename does exist
+        Object model = (Object)revaluator.call("loadModel", new Object[]{ (Object)fileName });
+        String modelName = (String)revaluator.call("loadModel.getName", new Object[] { (Object)fileName });
+
+        if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.PLSRegressionModelFit")) {
+            this.modelfit = (PLSRegressionModelFit)model;
+            this.setModelName(modelName);
+        } else throw new QSARModelException("The loaded model was not a PLSRegressionModel");
+    }
+
+
 
     /**
      * Sets parameters required for building a PLS model or using one for prediction.

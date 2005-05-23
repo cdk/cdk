@@ -83,8 +83,12 @@ saveModel <- function(modelname, filename) {
 }
 
 loadModel <- function(filename) {
-    modelname <- load(filename)
-    modelname
+    modelname <- load(filename, .GlobalEnv)
+    get(modelname)
+}
+loadModel.getName <- function(filename) {
+   modelname <- load(filename)
+   modelname
 }
 
 #############################################
