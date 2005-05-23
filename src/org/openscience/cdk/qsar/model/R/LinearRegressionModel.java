@@ -129,6 +129,7 @@ public class LinearRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkLMModel"+this.currentID);
     }
 
     /**
@@ -155,6 +156,7 @@ public class LinearRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkLMModel"+this.currentID);
 
         int nrow = yy.length;
         this.nvar = xx[0].length;
@@ -211,6 +213,7 @@ public class LinearRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkLMModel"+this.currentID);
 
         int nrow = yy.length;
         this.nvar = xx[0].length;
@@ -244,20 +247,6 @@ public class LinearRegressionModel extends RModel {
     }
         
     
-    /**
-     * Get the name of the model.
-     *
-     * This function returns the name of the variable that the actual
-     * linear model is stored in within the R session. In general this is 
-     * not used for the end user. In the future this might be changed 
-     * to a private method.
-     *
-     * @return String containing the name of the R variable
-     */
-    public String getModelName() {
-        return("cdkLMModel"+currentID);
-    }
-
     /**
      * Fits a linear regression model.
      *

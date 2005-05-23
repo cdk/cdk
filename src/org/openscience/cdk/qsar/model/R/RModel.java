@@ -26,6 +26,7 @@ import org.openscience.cdk.qsar.model.Model;
 import org.openscience.cdk.tools.LoggingTool;
 import org.omegahat.R.Java.REvaluator;
 import org.omegahat.R.Java.ROmegahatInterpreter;
+import org.omegahat.R.Java.RException;
 
 import java.io.*;
 
@@ -55,6 +56,8 @@ import java.io.*;
  * @cdk.module qsar
  */
 public abstract class RModel implements Model {
+
+    private String modelName = null;
 
     /**
      * The object that performs the calls to the R engine
@@ -137,6 +140,80 @@ public abstract class RModel implements Model {
         } else {
             logger.info("SJava already initialized");
         }
+    }
+
+
+    /**
+     * Saves a R model to disk.
+     *
+     * This function can be used to save models built in a session, and then loaded
+     * again in a different session. 
+     *
+     * @param modelname The name of the model as returned by \code{getModelName}.
+     * @param filename The file to which the model should be saved
+     */
+    public void saveModel(String modelname, String filename) throws QSARModelException {
+        if (filename.equals("") || filename == null) {
+            filename = modelname+".rda";
+        }
+        Boolean result = null;
+        try {
+        result = (Boolean)revaluator.call("saveModel",
+                new Object[] { (Object)modelname, (Object)filename });
+        } catch (Exception e) {
+            System.out.println("Caught the exception");
+            throw new QSARModelException("Error saving model");
+        }
+    }
+
+    /**
+     * Loads an R model from disk in to the current session.
+     *
+     * @param filename The disk file containing the model
+     * @return A String containing the model name
+     */
+    public String loadModel(String filename) {
+        // should probably check that the filename does exist
+        String modelName = (String)revaluator.call("loadModel", new Object[]{ (Object)filename });
+        return(modelName);
+    }
+    /**
+     * Get the name of the model.
+     *
+     * This function returns the name of the variable that the actual
+     * model is stored in within the R session. In general this is 
+     * not used for the end user. In the future this might be changed 
+     * to a private method.
+     *
+     * @return A String containing the name of the R variable
+     */
+    public String getModelName() {
+        return(this.modelName);
+    }
+
+    /**
+     * Set the name of the model.
+     *
+     * Ordinarily the user does not need to call this function as each model
+     * is assigned a unique ID at instantiation. However, if a user saves a model
+     * to disk (see {@link RModel.saveModel}) and then later loads it, the loaded
+     * model may overwrite a model in that session. In this situation, this method
+     * can be used to assign a name to the model.
+     *<p>
+     * TODO: Code needs to be included to check that the object referred to
+     * by modelName does exist in the R session, otherwise the reassignment
+     * will fail.
+     *
+     * @param modelName The name of the model
+     *
+     */
+    public void setModelName(String modelName) {
+        String oldName = this.modelName;
+        if (oldName != null) {
+            revaluator.voidEval(modelName + " <- " + oldName +";");
+            revaluator.voidEval("rm("+oldName+");");
+        }
+        this.modelName = modelName;
     }
 
     abstract public void build() throws QSARModelException;

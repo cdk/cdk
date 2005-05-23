@@ -156,6 +156,8 @@ public class LinearRegressionModelTest extends CDKTestCase {
             LinearRegressionModel lrm = new LinearRegressionModel(x,y);
             assertTrue(lrm.revaluator != null);
 
+            //lrm.saveModel(lrm.getModelName(), "lmodel.rda");
+
             lrm.build();
             double[] coeff = lrm.getFitCoefficients();
             assertTrue(coeff != null);
@@ -186,6 +188,16 @@ public class LinearRegressionModelTest extends CDKTestCase {
             assertEquals(preds[4], 0.5436967, 0.0000001);
 
             assertEquals(lrm.getPredictDF(), 96, 0.1);
+
+            System.out.print(lrm.getModelName());
+            Object[] lsval = (String[]) lrm.revaluator.call("ls", new Object[] {});
+            for (int i = 0; i < lsval.length; i++) System.out.println(lsval[i]);
+            lrm.setModelName("newModel");
+            System.out.println("#@#@#@");
+            lsval = (String[]) lrm.revaluator.call("ls", new Object[] {});
+            for (int i = 0; i < lsval.length; i++) System.out.println(lsval[i]);
+            lrm.saveModel(lrm.getModelName(), "lmodel.rda");
+            lrm.loadModel("lmodel.rda");
         }
 
 }

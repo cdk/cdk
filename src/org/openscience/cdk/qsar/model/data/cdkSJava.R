@@ -76,6 +76,16 @@ require(SJava)
 if (!isJavaInitialized()) {
     .JavaInit()
 }
+options(show.error.messages=FALSE)
+
+saveModel <- function(modelname, filename) {
+    resp <- try( do.call('save',list(modelname,file=filename)), silent=TRUE )
+}
+
+loadModel <- function(filename) {
+    modelname <- load(filename)
+    modelname
+}
 
 #############################################
 # Linear regression fit/predict converters

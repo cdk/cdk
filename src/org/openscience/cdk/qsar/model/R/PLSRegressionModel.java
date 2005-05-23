@@ -128,6 +128,7 @@ public class PLSRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkPLSRegressionModel"+this.currentID);
         this.setDefaults();
     }
 
@@ -150,6 +151,7 @@ public class PLSRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkPLSRegressionModel"+this.currentID);
         this.setDefaults();
 
         int nrow = yy.length;
@@ -195,6 +197,7 @@ public class PLSRegressionModel extends RModel {
 
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkPLSRegressionModel"+this.currentID);
         this.setDefaults();
 
         int nrow = yy.length;
@@ -227,19 +230,6 @@ public class PLSRegressionModel extends RModel {
     }
         
     
-    /**
-     * Get the name of the model.
-     *
-     * This function returns the name of the variable that the actual
-     * linear model is stored in within the R session. In general this is 
-     * not used for the end user. In the future this might be changed 
-     * to a private method.
-     *
-     * @return String containing the name of the R variable
-     */
-    public String getModelName() {
-        return("cdkPLSRegressionModel"+currentID);
-    }
 
     /**
      * Fits a PLS model.

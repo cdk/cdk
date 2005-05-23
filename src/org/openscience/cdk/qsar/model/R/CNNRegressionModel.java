@@ -157,6 +157,7 @@ public class CNNRegressionModel extends RModel {
         this.params = new HashMap();
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkCNNModel"+this.currentID);
         this.setDefaults();
     }
 
@@ -184,6 +185,7 @@ public class CNNRegressionModel extends RModel {
         this.params = new HashMap();
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkCNNModel"+this.currentID);
 
         int nrow = y.length;
         int ncol = x[0].length;
@@ -234,6 +236,7 @@ public class CNNRegressionModel extends RModel {
         this.params = new HashMap();
         this.currentID = this.globalID;
         this.globalID++;
+        this.setModelName("cdkCNNModel"+this.currentID);
 
         int nrow = y.length;
         int ncol = x[0].length;
@@ -264,19 +267,6 @@ public class CNNRegressionModel extends RModel {
         this.setDefaults();
     }
 
-    /**
-     * Get the name of the model.
-     *
-     * This function returns the name of the variable that the actual
-     * CNN model is stored in within the R session. In general this is 
-     * not used for the end user. In the future this might be changed 
-     * to a private method.
-     *
-     * @return String containing the name of the R variable
-     */
-    public String getModelName() {
-        return("cdkCNNModel"+currentID);
-    }
     
     /**
      * Sets parameters required for building a linear model or using one for prediction.
