@@ -87,6 +87,7 @@ import org.openscience.cdk.test.qsar.*;
 	suite.addTest(WeightDescriptorTest.suite());
 	suite.addTest(InductiveAtomicHardnessDescriptorTest.suite());
 	suite.addTest(InductiveAtomicSoftnessDescriptorTest.suite());
+	suite.addTest(CPSADescriptorTest.suite());
         return suite;
     }
     
