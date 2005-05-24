@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
+import java.io.*;
 import javax.vecmath.Vector2d;
 
 import junit.framework.Test;
@@ -36,12 +37,17 @@ import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.io.*;
 
 /**
  * @cdk.module test
@@ -117,6 +123,35 @@ public class AllRingsFinderTest extends CDKTestCase
 		}
 	}
 	
+    public void testBigMoleculeWithIsolatedRings()
+    {
+        RingSet ringSet = null;
+        AllRingsFinder arf = new AllRingsFinder();
+		if (standAlone) arf.debug = true;
+        
+        String filename = "data/isolated_ringsystems.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		try {
+		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
+		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		    ChemSequence seq = chemFile.getChemSequence(0);
+		    ChemModel model = seq.getChemModel(0);
+		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
+		    //System.out.println("Constructed Molecule");
+		    //System.out.println("Starting AllRingsFinder");
+		    ringSet = new AllRingsFinder().findAllRings(mol);
+		    //System.out.println("Finished AllRingsFinder");
+            assertEquals(24, ringSet.size());
+		    //display(mol);
+		
+		} catch (Exception e) 
+		{
+		    if (standAlone) e.printStackTrace();
+		    fail(e.toString());
+		}
+        
+    }
+    
 	/* This test takes a very long time. It was to ensure that 
 	   AllRingsFinder acually stops for the given examples. 
 	   And it does, after a very long time. 
@@ -175,8 +210,9 @@ public class AllRingsFinderTest extends CDKTestCase
 	{
 		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
 		arft.setStandAlone(true);
-		arft.testAllRingsFinder();
+		//arft.testAllRingsFinder();
 		//arft.testBug777488();
+        arft.testBigMoleculeWithIsolatedRings();
 	}	
 }
 

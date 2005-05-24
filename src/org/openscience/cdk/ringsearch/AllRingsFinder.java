@@ -62,16 +62,21 @@ public class AllRingsFinder
 	Vector potentialRings = new Vector();
 	Vector removePathes = new Vector();
 	
+    public RingSet findAllRings(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
+    {
+        return findAllRings(atomContainer, true);
+    }
+    
 	/**
 	 * Fings the set of all rings in a molecule 
 	 *
-	 * @param   atomContainer the molecule to be searched for rings 
+	 * @param   atomContainer the molecule to be searched for rings
+     * @param   useSSSR       use the SSSRFinder & RingPartitioner as pre-filter
 	 * @return                a RingSet containing the rings in molecule    
 	 */
-	public  RingSet findAllRings(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
+	public RingSet findAllRings(AtomContainer atomContainer, boolean useSSSR) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		Vector pathes = new Vector();
-		Atom atom = null;
 		RingSet ringSet = new RingSet();
 		AtomContainer ac = new AtomContainer();
 		originalAc = atomContainer;
@@ -79,23 +84,41 @@ public class AllRingsFinder
 		if (debug) System.out.println("AtomCount before removal of aliphatic atoms: " + ac.getAtomCount());
 		removeAliphatic(ac);
 		if (debug) System.out.println("AtomCount after removal of aliphatic atoms: " + ac.getAtomCount());
-		/*
-		 * First we convert the molecular graph into a a path graph by
-		 * creating a set of two membered pathes from all the bonds in the molecule
-		 */
-		initPathGraph(ac, pathes);
-		if (debug) System.out.println("BondCount: " + ac.getBondCount() + ", PathCount: " + pathes.size());
-		do
-		{
-			atom = selectAtom(ac);
-			if (atom != null) remove(atom, ac, pathes, ringSet);
-		}
-		while(pathes.size() > 0 && atom != null);
-		if (debug) System.out.println("pathes.size(): " + pathes.size());
-		if (debug) System.out.println("ringSet.size(): " + ringSet.size());
+		
+        if (useSSSR) {
+            SSSRFinder sssrf = new SSSRFinder(atomContainer);
+            RingSet sssr = sssrf.findSSSR();
+            Vector ringSets = RingPartitioner.partitionRings(sssr);
+            
+            for (int r = 0; r < ringSets.size(); r++) {
+                AtomContainer tempAC = RingPartitioner.convertToAtomContainer((RingSet)ringSets.get(r));
+                doSearch(tempAC, pathes, ringSet);
+            }
+        } else {
+            doSearch(ac, pathes, ringSet);
+        }
 		return ringSet;	  
 	}
 
+    private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws org.openscience.cdk.exception.NoSuchAtomException
+    {
+        Atom atom = null;
+        /*
+        * First we convert the molecular graph into a a path graph by
+        * creating a set of two membered pathes from all the bonds in the molecule
+        */
+        initPathGraph(ac, pathes);
+        if (debug) System.out.println("BondCount: " + ac.getBondCount() + ", PathCount: " + pathes.size());
+        do
+        {
+            atom = selectAtom(ac);
+            if (atom != null) remove(atom, ac, pathes, ringSet);
+        }
+        while(pathes.size() > 0 && atom != null);
+        if (debug) System.out.println("pathes.size(): " + pathes.size());
+        if (debug) System.out.println("ringSet.size(): " + ringSet.size());
+    }
+    
 	private void removeAliphatic(AtomContainer ac) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		boolean removedSomething;

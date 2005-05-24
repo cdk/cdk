@@ -35,7 +35,7 @@ import java.util.List;
 
 import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -64,7 +64,7 @@ import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 
 public class SSSRFinder {
 
-	private Molecule mol;
+	private AtomContainer atomContainer;
 	private CycleBasis cycleBasis;
 	
 	/**
@@ -80,8 +80,8 @@ public class SSSRFinder {
 	 *
 	 * @param   mol the molecule to be searched for rings 
 	 */
-	public SSSRFinder(Molecule mol) {
-		this.mol = mol;
+	public SSSRFinder(AtomContainer ac) {
+		this.atomContainer = ac;
 	}
 	
 	/**
@@ -91,11 +91,11 @@ public class SSSRFinder {
 	 * @return      a RingSet containing the SSSR   
 	 */
 	public RingSet findSSSR() {
-		if (mol==null) {
+		if (atomContainer==null) {
 			return null;
 		}
 		
-		return toRingSet(mol, cycleBasis().cycles());	  
+		return toRingSet(atomContainer, cycleBasis().cycles());	  
 
 	}
 	
@@ -107,11 +107,11 @@ public class SSSRFinder {
 	 * @return      a RingSet containing the Essential Rings
 	 */
 	public RingSet findEssentialRings() {
-		if (mol==null) {
+		if (atomContainer==null) {
 			return null;
 		}
 		
-		return toRingSet(mol, cycleBasis().essentialCycles());	  
+		return toRingSet(atomContainer, cycleBasis().essentialCycles());	  
 
 	}
 	
@@ -123,11 +123,11 @@ public class SSSRFinder {
 	 * @return      a RingSet containing the Relevant Rings
 	 */
 	public RingSet findRelevantRings() {
-		if (mol==null) {
+		if (atomContainer==null) {
 			return null;
 		}
 		
-		return toRingSet(mol, cycleBasis().relevantCycles().keySet());	  
+		return toRingSet(atomContainer, cycleBasis().relevantCycles().keySet());	  
 
 	}
 	
@@ -138,13 +138,13 @@ public class SSSRFinder {
 	 * @return      a List of RingSets containing the rings in an equivalence class    
 	 */
 	public List findEquivalenceClasses() {
-		if (mol==null) {
+		if (atomContainer==null) {
 			return null;
 		}
 		
 		List equivalenceClasses = new ArrayList();
 		for (Iterator i=cycleBasis().equivalenceClasses().iterator(); i.hasNext();) {
-			equivalenceClasses.add(toRingSet(mol, (Collection) i.next()));
+			equivalenceClasses.add(toRingSet(atomContainer, (Collection) i.next()));
 		}
 		
 		return equivalenceClasses;	  
@@ -186,25 +186,25 @@ public class SSSRFinder {
 	 * @param   mol the molecule to be searched for rings 
 	 * @return      a RingSet containing the SSSR
 	 */
-	static public RingSet findSSSR(Molecule mol)
+	static public RingSet findSSSR(AtomContainer ac)
 	{
-		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(mol);
+		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(ac);
 		
 		CycleBasis cycleBasis = new CycleBasis(molGraph);
 		
-		return toRingSet(mol, cycleBasis.cycles());  
+		return toRingSet(ac, cycleBasis.cycles());  
 	}
 	
 	private CycleBasis cycleBasis() {
 		if (cycleBasis==null) {
-			UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(mol);
+			UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(atomContainer);
 			
 			cycleBasis = new CycleBasis(molGraph);
 		}
 		return cycleBasis;
 	}
 	
-	private static RingSet toRingSet(Molecule mol, Collection cycles) {
+	private static RingSet toRingSet(AtomContainer ac, Collection cycles) {
 		
 		RingSet ringSet = new RingSet();
 
@@ -221,9 +221,9 @@ public class SSSRFinder {
 			atoms[0] = (Atom) vertices.get(0);
 			for (int i = 1; i < vertices.size(); i++) {
 				atoms[i] = (Atom) vertices.get(i);
-				ring.addElectronContainer(mol.getBond(atoms[i-1], atoms[i]));
+				ring.addElectronContainer(ac.getBond(atoms[i-1], atoms[i]));
 			}
-			ring.addElectronContainer(mol.getBond(atoms[vertices.size() - 1], atoms[0]));
+			ring.addElectronContainer(ac.getBond(atoms[vertices.size() - 1], atoms[0]));
 			ring.setAtoms(atoms);
 
 			ringSet.add(ring);

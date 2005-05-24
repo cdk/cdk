@@ -31,7 +31,7 @@ package org.openscience.cdk.graph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 
 /**
  * Utility class to create a molecule graph for use with jgrapht.
@@ -55,7 +55,7 @@ public class MoleculeGraphs {
 	 * @param molecule the specified molecule
 	 * @return a graph representing the molecule
 	 */
-	static public SimpleGraph getMoleculeGraph(Molecule molecule) {
+	static public SimpleGraph getMoleculeGraph(AtomContainer molecule) {
 		SimpleGraph graph = new SimpleGraph();
 		for (int i=0; i<molecule.getAtomCount(); i++	) {
 			Atom atom = molecule.getAtoms()[i];

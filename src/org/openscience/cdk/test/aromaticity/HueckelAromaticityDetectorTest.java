@@ -273,13 +273,14 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	public void testTetraDehydroDecaline()
 	{
 		boolean isAromatic = false;
-		boolean testResults[] = {false, true, false};
+		boolean testResults[] = {true, false, false};
 		try
 		{
 			SmilesParser sp = new SmilesParser();
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+            System.out.println("rs.size(): " + rs.size());
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			Iterator iter = rs.iterator();
 			Ring r = null;
@@ -569,8 +570,6 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		if (standAlone) MoleculeViewer2D.display(molecule, true);
 
 	}
-	
-	
 
 	/**
 	 *  The main program for the HueckelAromaticityDetectorTest class
@@ -582,14 +581,14 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		HueckelAromaticityDetectorTest hadt = new HueckelAromaticityDetectorTest("HueckelAromaticityDetectorTest");
 		hadt.setStandAlone(true);
 		//hadt.testAzulene();
-		//hadt.testTetraDehydroDecaline();
+		hadt.testTetraDehydroDecaline();
 		//hadt.testIndole();
 		//hadt.testThiazole();
 		//hadt.testBug698152();
 		//hadt.testPorphyrine();
 		//hadt.testQuinone();
 		//hadt.testBenzene();
-		hadt.testBug716259();
+		//hadt.testBug716259();
 	}
 }
 
