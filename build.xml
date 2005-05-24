@@ -187,6 +187,7 @@
                     <fileset dir="." includes="**/*~" />
                     <fileset dir="." includes="*.tar.gz" />
                     <fileset dir="." includes="*.zip" />
+                    <fileset dir="." includes="*.rda" />
                     <fileset dir="${src}" includes="*.classes" />
                     <fileset dir="${src}" includes="*.javafiles">
                         <exclude name="jmol*.javafiles" />
