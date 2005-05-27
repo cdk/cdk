@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>The JChemPaint Applet Demo</title>
+</head>
+<body BGCOLOR="#ffffff" LINK="#000099">
+
+<h2>
+The JChemPaint Applet
+</h2>
+
+<applet name="Viewer" code="org.openscience.cdk.applications.jchempaint.applet.JChemPaintViewerOnlyApplet" archive="dist/jar/jchempaint-applet-core.jar"
+        width="600" height="500">
+<param name="load" value="data/mdl/a-pinene.mol">
+<param name="atomNumbersVisible" value="true">
+<param name="background" value="12632256">
+</applet>
+<a href="javascript:document.Viewer.selectAtom(6)">select atom 6</a>
+<a href="javascript:alert(document.Viewer.getMolFile())">show mol file</a>
+<blockquote>
+<hr>
+
+</body>
+</html>
+
+
+

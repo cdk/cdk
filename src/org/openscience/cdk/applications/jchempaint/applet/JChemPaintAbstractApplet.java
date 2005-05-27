@@ -25,6 +25,7 @@
 package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
@@ -57,8 +58,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			+ "for more information";
 
 	private static String[][] paramInfo = {
-			/* { "bgcolor", "color",
-					"Background color to HTML color name or #RRGGBB" },*/
+			{ "background", "color", 	"Background color as integer" },
+      { "atomNumbersVisible", "true or false", "should atom numbers be shown"},
 			{ "load", "url", "URL of the chemical data" }, };
 
 	public String getAppletInfo() {
@@ -167,6 +168,15 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	public void start() {
 		//Parameter parsing goes here
 		loadModelFromParam(new JChemPaintModel());
+    String atomNumbers=getParameter("atomNumbersVisible");
+    if(atomNumbers!=null){
+      if(atomNumbers.equals("true"))
+        theJcpp.getJChemPaintModel().getRendererModel().setDrawNumbers(true);
+    }
+    String background = getParameter("background");
+    if(background!=null){
+      theJcpp.getJChemPaintModel().getRendererModel().setBackColor(new Color(Integer.parseInt(background)));
+    }
 	}
 
 	public void stop() {
@@ -193,5 +203,9 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
     MDLWriter mdlwriter = new MDLWriter(sw);
     mdlwriter.write(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules());
     return(sw.toString());
+  }
+  
+  public void selectAtom(int atom){
+    theJcpp.getJChemPaintModel().getRendererModel().setHighlightedAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(atom));
   }
 }
