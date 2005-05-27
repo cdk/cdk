@@ -466,9 +466,9 @@ public class PDBReader extends DefaultChemObjectReader {
 		if (cLine.length() >= 75) {
             oAtom.setSegID((new String(cLine.substring(72, 76))).trim());
 		}
-		if (cLine.length() >= 78) {
-            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
-		}
+//		if (cLine.length() >= 78) {
+//            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
+//		}
 		if (cLine.length() >= 79) {
             String frag = cLine.substring(78, 80).trim();
             if (frag.length() > 0) {

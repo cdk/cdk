@@ -4,6 +4,10 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
+    <bugfix contributor="meklund" closes="1193703">
+      Fixed broken Junit test when coffein.pdb is read. Corrected way of setting
+      element symbol in PDBAtom.
+    </bugfix>
     <addition contributor="steinbeck">
       Added classes for permuting the order of atoms in an AtomContainer 
       (graph.AtomContainerAtomPermutor)
