@@ -198,6 +198,27 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
     }
     
+    public void testSFBug1208740() {
+        String file1 = "data/mdl/bug1208740_1.mol";
+        String file2 = "data/mdl/bug1208740_2.mol";
+        Molecule mol1 = new Molecule();
+        Molecule mol2 = new Molecule();
+        
+        try {
+            new MDLReader(new FileReader(file1)).read(mol1);
+            new MDLReader(new FileReader(file2)).read(mol2);
+        } catch (Exception ex) {
+            System.err.println("testQueryAtomContainer: " + ex.getMessage());
+            fail(ex.getMessage());
+        }
+        
+        List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
+        assertEquals(5, list.size());
+        
+        list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
+        assertEquals(5, list.size());
+    }
+    
     public void testSFBug999330() {
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
