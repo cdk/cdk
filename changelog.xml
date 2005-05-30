@@ -4,6 +4,14 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
+    <apiChange closes="1208740">
+      Deprecated RTools which should be removed in the first release after the
+      next; it's outdated, contains a few bugs, and redundant. Use 
+      UniversalIsomorphismTester instead.
+    </apiChange>
+    <bugfix contributor="irilenia,thierry" closes="1208740">
+      Fixed copying and matching of aromatic bonds.
+    </bugfix>
     <bugfix contributor="meklund" closes="1193703">
       Fixed broken Junit test when coffein.pdb is read. Corrected way of setting
       element symbol in PDBAtom.
