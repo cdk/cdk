@@ -77,6 +77,7 @@ public class DrawingPanel extends JPanel
 	 */
 	public void paint(Graphics g)
 	{
+    this.setBackground(jchemPaintModel.getRendererModel().getBackColor());
 		if (jchemPaintModel == null) return;
 		drawingNow = true;
 		super.paint(g);
