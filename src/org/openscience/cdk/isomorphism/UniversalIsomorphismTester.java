@@ -435,8 +435,12 @@ public class UniversalIsomorphismTester {
         ac.addAtom(a2);
         table.put(a, a2);
       }
-
-      ac.addBond(new Bond(a1, a2, bond.getOrder()));
+      Bond newBond = new Bond(a1, a2, bond.getOrder());
+      newBond.setFlag(
+        CDKConstants.ISAROMATIC,
+        bond.getFlag(CDKConstants.ISAROMATIC)
+      );
+      ac.addBond(newBond);
     }
     return ac;
   }
@@ -605,12 +609,32 @@ public class UniversalIsomorphismTester {
           } else {
               // if both bonds are compatible then create an association node
               // in the resolution graph
-              if ((bondsA1[i].getOrder() == bondsA2[j].getOrder() || 
-                   (bondsA1[i].getFlag(CDKConstants.ISAROMATIC) && bondsA2[j].getFlag(CDKConstants.ISAROMATIC)))
-                  && ((bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol())
-                       && bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol()))
-                       || (bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol())
-                       && bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol())))) {
+              if (
+                ( // bond type conditions
+                  ( // same bond order and same aromaticity flag (either both on or off)
+                    bondsA1[i].getOrder() == bondsA2[j].getOrder() &&
+                    bondsA1[i].getFlag(CDKConstants.ISAROMATIC) ==
+                    bondsA2[j].getFlag(CDKConstants.ISAROMATIC)
+                  )
+                  ||
+                  ( // both bond are aromatic
+                    bondsA1[i].getFlag(CDKConstants.ISAROMATIC) &&
+                    bondsA2[j].getFlag(CDKConstants.ISAROMATIC)
+                  )
+                )
+                &&
+                ( // atome type conditions 
+                  ( // a1 = a2 && b1 = b2 
+                    bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol()) &&
+                    bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol())
+                  )
+                  ||
+                  ( // a1 = b2 && b1 = a2
+                    bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol()) &&
+                    bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol())
+                  )
+                )
+              ) {
                   gr.addNode(new RNode(i, j));
               }
           }
