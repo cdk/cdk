@@ -391,7 +391,7 @@ public class Renderer2D implements MouseMotionListener   {
 		logger.debug("Painting atom ");
         Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
         if (atom.equals(r2dm.getHighlightedAtom())) {
-            paintColouredAtomBackground(atom, atomBackColor, graphics);
+            paintColouredAtomBackground(atom, r2dm.getHighlightColor(), graphics);
         }
         
         int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
