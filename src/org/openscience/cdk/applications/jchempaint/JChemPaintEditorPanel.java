@@ -92,14 +92,22 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	private static LoggingTool logger;
 	
 	/**
-	 *  sets configurations for the layout of the panel, adds several listeners
+	 *  Constructor for the panel
 	 *
-	 *@param  model  Description of the Parameter
 	 */
-	public JChemPaintEditorPanel()
+	public JChemPaintEditorPanel(){
+    this(1);
+  }
+
+	/**
+	 *  Constructor for the panel
+	 *
+	 *@param  lines  How many lines should the horizontal toolbar have?
+	 */
+	public JChemPaintEditorPanel(int lines)
 	{
 		super();
-		setShowToolBar(true);
+		setShowToolBar(true, lines);
 		if (logger == null)
 		{
 			logger = new LoggingTool(this);
@@ -175,12 +183,21 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public void setShowToolBar(boolean showToolBar)
 	{
+    setShowToolBar(showToolBar, 1);
+  }
+	/**
+	 *  Sets the value of showToolbar.
+	 *
+	 *@param  showToolbar  The value to assign showToolbar.
+	 */
+	public void setShowToolBar(boolean showToolBar, int lines)
+	{
 		this.showToolBar = showToolBar;
 		if (showToolBar)
 		{
 			if (toolBar == null)
 			{
-				toolBar = ToolBarMaker.getToolbar(this);
+    		toolBar = ToolBarMaker.getToolbar(this, lines);
 			}
 			mainContainer.add(toolBar, BorderLayout.NORTH);
 			mainContainer.revalidate();

@@ -54,14 +54,14 @@ public class ToolBarMaker
 	 *
 	 *@return    The toolbar value
 	 */
-	public static JToolBar getToolbar(JChemPaintPanel jcpp)
+	public static JToolBar getToolbar(JChemPaintPanel jcpp, int lines)
 	{
 		if (logger == null)
 		{
 			logger = new LoggingTool(ToolBarMaker.class);
 		}
 
-		return (JToolBar)createToolbar(SwingConstants.HORIZONTAL, "toolbar", jcpp);
+		return (JToolBar)createToolbar(SwingConstants.HORIZONTAL, "toolbar", jcpp, lines);
 	}
 
 
@@ -161,9 +161,9 @@ public class ToolBarMaker
 	 *@param  kind         String The String used to identify the toolbar
 	 *@return              Component The created toolbar
 	 */
-	public static Component createToolbar(int orientation, String kind, JChemPaintPanel jcpp)
+	public static Component createToolbar(int orientation, String kind, JChemPaintPanel jcpp, int lines)
 	{
-		JToolBar toolbar2 = new JToolBar(orientation);
+    JToolBar toolbar2 = new JToolBar(orientation);
 		String[] toolKeys = StringHelper.tokenize(getToolbarResourceString(kind));
 		JButton button = null;
 
@@ -178,10 +178,13 @@ public class ToolBarMaker
 			toolKeys = sdiToolKeys;
 		}
 
+    Box box=null;
+    int counter=0;
 		for (int i = 0; i < toolKeys.length; i++)
 		{
 			if (toolKeys[i].equals("-"))
 			{
+        toolbar2.add(box);
 				if (orientation == SwingConstants.HORIZONTAL)
 				{
 					toolbar2.add(Box.createHorizontalStrut(5));
@@ -189,8 +192,14 @@ public class ToolBarMaker
 				{
 					toolbar2.add(Box.createVerticalStrut(5));
 				}
+        counter=0;
 			} else
 			{
+        if(counter % lines==0){
+          if(box!=null)
+            toolbar2.add(box);
+          box=new Box(BoxLayout.Y_AXIS);
+        }
 				button = (JButton) createToolbarButton(toolKeys[i], jcpp);
 				/*if (toolKeys[i].equals("lasso"))
 				{
@@ -198,7 +207,7 @@ public class ToolBarMaker
 				}*/
 				if (button != null)
 				{
-					toolbar2.add(button);
+          box.add(button);
 					if (i == 0)
 					{
 						button.setBackground(Color.GRAY);
@@ -210,6 +219,7 @@ public class ToolBarMaker
 				{
 					logger.error("Could not create button");
 				}
+        counter++;
 			}
 		}
 		if (orientation == SwingConstants.HORIZONTAL)
