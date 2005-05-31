@@ -413,8 +413,8 @@ public class AtomTest extends CDKTestCase {
         Atom atom = new Atom("C");
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
-            assertNotSame('\n', description.charAt(i));
-            assertNotSame('\r', description.charAt(i));
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
         }
     }
 }
