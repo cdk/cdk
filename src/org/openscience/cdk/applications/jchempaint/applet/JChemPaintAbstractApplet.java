@@ -28,18 +28,22 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import javax.swing.JApplet;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.MDLReader;
 
 /**
  * The
@@ -205,6 +209,11 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
     return(sw.toString());
   }
   
+  public void setMolFile(String mol) throws Exception{
+    theJcpp.showChemFile(new StringReader(mol));
+    repaint();
+  }
+
   public void selectAtom(int atom){
     theJcpp.getJChemPaintModel().getRendererModel().setHighlightColor(Color.RED);
     theJcpp.getJChemPaintModel().getRendererModel().setHighlightedAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(atom));
