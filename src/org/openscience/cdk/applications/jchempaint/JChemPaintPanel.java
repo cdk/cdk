@@ -727,11 +727,15 @@ public abstract class JChemPaintPanel
 		double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 		GeometryTools.scaleMolecule(ac, scaleFactor);
 		Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
-		double x = view.getX() + view.getWidth();
+    double x = view.getX() + view.getWidth();
 		double y = view.getY() + view.getHeight();
 		Renderer2DModel model = jchemPaintModel.getRendererModel();
 		double relocatedY = model.getBackgroundDimension().getSize().getHeight() - (y + view.getY() / 2);
 		double relocatedX = view.getX() / 2;
+    if(view.getWidth()==0 && view.getHeight()==0 && view.getX()==0 && view.getY()==0){
+      relocatedX=0;
+      relocatedY=0;
+    }
 		Dimension viewablePart = new Dimension((int) x, (int) y);
 		//to be fixed - check if molDim is reaching over viewablePart borders...
 		if (this instanceof JChemPaintViewerOnlyPanel) {
@@ -744,7 +748,7 @@ public abstract class JChemPaintPanel
 		Atom[] atoms = ac.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i].getPoint2d() != null) {
-				atoms[i].getPoint2d().x = atoms[i].getPoint2d().x + relocatedX;
+        atoms[i].getPoint2d().x = atoms[i].getPoint2d().x + relocatedX;
 				atoms[i].getPoint2d().y = atoms[i].getPoint2d().y + relocatedY;
 			}
 		}

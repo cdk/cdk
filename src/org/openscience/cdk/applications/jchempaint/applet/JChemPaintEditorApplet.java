@@ -45,7 +45,7 @@ public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 	 * @see java.applet.Applet#init()
 	 */
 	public void init() {
-		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel(2);
+    JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel(2);
     jcpep.setShowStatusBar(false);
 		setTheJcpp(jcpep);
 	}

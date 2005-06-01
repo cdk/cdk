@@ -587,7 +587,6 @@ public class Renderer2D implements MouseMotionListener   {
 
         int labelX = 0;
         int labelY = 0;
-
         if (alignment == 1) { // left alignment
             labelX = (int)(atom.getPoint2d().x - (atomSymbolXOffset + isotopeW));
         } else { // right alignment

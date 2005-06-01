@@ -26,6 +26,7 @@ package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.StringReader;
@@ -115,6 +116,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	public void initPanelAndModel(JChemPaintPanel jcpp, JChemPaintModel model) {
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
+    jcpp.scaleAndCenterMolecule(model.getChemModel());
 		model.setTitle("JCP Applet" /* getNewFrameName() */);
 		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
 		// Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
@@ -171,8 +173,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	
 	public void start() {
 		//Parameter parsing goes here
-		loadModelFromParam(new JChemPaintModel());
-    String atomNumbers=getParameter("atomNumbersVisible");
+    loadModelFromParam(new JChemPaintModel());
+		String atomNumbers=getParameter("atomNumbersVisible");
     if(atomNumbers!=null){
       if(atomNumbers.equals("true"))
         theJcpp.getJChemPaintModel().getRendererModel().setDrawNumbers(true);

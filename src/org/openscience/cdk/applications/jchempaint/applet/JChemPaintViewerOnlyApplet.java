@@ -28,6 +28,7 @@ import java.awt.Component;
 import java.awt.Container;
 import javax.swing.JScrollPane;
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  * The
@@ -58,7 +59,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
 	 * @see java.applet.Applet#init()
 	 */
 	public void init() {
-		JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel();
+    JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(this.getSize());
 		jcpvop.setShowMenuBar(false);
 		jcpvop.setShowStatusBar(false);
 		jcpvop.setShowToolBar(false);
