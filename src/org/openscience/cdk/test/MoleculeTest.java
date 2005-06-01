@@ -90,6 +90,7 @@ public class MoleculeTest extends CDKTestCase {
         Molecule molecule = new Molecule();
         Object clone = molecule.clone();
         assertTrue(clone instanceof Molecule);
+	assertNotSame(molecule, clone);
     }    
 
     /** Test for RFC #9 */

@@ -96,8 +96,9 @@ public class SaveAction extends SaveAsAction
     }else{
       try{
         ChemModel model=jcpPanel.getJChemPaintModel().getChemModel();
-        File outFile=jcpPanel.isAlreadyAFile();
-        if (type.equals(JCPSaveFileFilter.mol))
+	File outFile=jcpPanel.isAlreadyAFile();
+	type = JCPFileFilter.getExtension(outFile);
+	if (type.equals(JCPSaveFileFilter.mol))
         {
           saveAsMol(model, outFile);
         } else if (type.equals(JCPSaveFileFilter.cml))

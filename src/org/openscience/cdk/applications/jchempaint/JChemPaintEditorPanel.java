@@ -85,11 +85,18 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		 implements ChangeListener, CDKChangeListener, CDKEditBus
 {
 
+	static String JCP_MODEL_CHANGED = "1";
+	static String JCP_CLOSING = "2";
+	
+	String lastEventReason;	
+	
 	String recentSymbol = "C";
 
 	private static DictionaryDatabase dictdb = null;
 	private static ValidatorEngine engine = null;
 	private static LoggingTool logger;
+	
+	protected EventListenerList changeListeners = null;
 	
 	/**
 	 *  Constructor for the panel
@@ -173,6 +180,23 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public boolean getShowToolBar()
 	{
 		return showToolBar;
+	}
+	
+		/**
+	 * Returns the value of lastEventReason.
+	 */
+	public String getLastEventReason()
+	{
+		return lastEventReason;
+	}
+
+	/**
+	 * Sets the value of lastEventReason.
+	 * @param lastEventReason The value to assign lastEventReason.
+	 */
+	public void setLastEventReason(String lastEventReason)
+	{
+		this.lastEventReason = lastEventReason;
 	}
 
 
@@ -278,9 +302,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		frame.addWindowListener(new JChemPaintPanel.AppCloser());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel();
-		jcpep.setJChemPaintModel(model);
-		jcpep.registerModel(model);
 		frame.getContentPane().add(jcpep);
+		jcpep.registerModel(model);
+		jcpep.setJChemPaintModel(model);
 		instances.add(frame);
 		frame.setTitle(model.getTitle());
 		return frame;
@@ -513,35 +537,75 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 
 	/**
-	 *  Mandatory because JChemPaint is a ChangeListener. Used by other classes to
-	 *  update the information in one of the three statusbar fields.
-	 *
-	 *@param  e  ChangeEvent
-	 */
-	//As long there is nothing it it, it shouldn't overwrite the function of JChemPaintPanel
-	 public void stateChanged(ChangeEvent e)
-	{
-		super.stateChanged(e);
-		// send event to plugins
-		/*if (pluginManager != null)
-		{
-			pluginManager.stateChanged(new ChemObjectChangeEvent(this));
-		}*/
-	}
+    *  Mandatory because JChemPaint is a ChangeListener. Used by other classes to
+    *  update the information in one of the three statusbar fields.
+    *
+    *@param  e  ChangeEvent
+    */
+   //As long there is nothing it it, it shouldn't overwrite the function of JChemPaintPanel
+    public void stateChanged(ChangeEvent e)
+   {
+       super.stateChanged(e);
+       // send event to plugins
+       /*if (pluginManager != null)
+       {
+           pluginManager.stateChanged(new ChemObjectChangeEvent(this));
+       }*/
+   }
 
 
 
-	/**
-	 *  Adds a feature to the ChangeListener attribute of the JChemPaint object
-	 *
-	 *@param  listener  The feature to be added to the ChangeListener attribute
-	 */
-	public void addChangeListener(ChangeListener listener)
-	{
-		/*
-		 *  getCurrentModel().addChangeListener(listener);
-		 */
-	}
+       /*
+    *  Listener notification support methods START here
+    */
+   /**
+    *  Adds a feature to the ChangeListener attribute of the SenecaDataset object
+    *
+    * @param  x  The feature to be added to the ChangeListener attribute
+    */
+   public void addChangeListener(ChangeListener x)
+   {
+       if (changeListeners == null) changeListeners = new EventListenerList();
+       changeListeners.add(ChangeListener.class, x);
+       // bring it up to date with current state
+       x.stateChanged(new ChangeEvent(this));
+   }
+
+
+   /**
+    *  Description of the Method
+    *
+    * @param  x  Description of Parameter
+    */
+   public void removeChangeListener(ChangeListener x)
+   {
+       changeListeners.remove(ChangeListener.class, x);
+   }
+
+
+   /**
+    *  Description of the Method
+    */
+   protected void fireChange(String reason)
+   {
+       lastEventReason = reason;
+       // Create the event:
+       ChangeEvent c = new ChangeEvent(this);
+       // Get the listener list
+	   if (changeListeners != null) {
+		   Object[] listeners = changeListeners.getListenerList();
+		   // Process the listeners last to first
+		   // List is in pairs, Class and instance
+		   for (int i = listeners.length - 2; i >= 0; i -= 2)
+		   {
+			   if (listeners[i] == ChangeListener.class)
+			   {
+				   ChangeListener cl = (ChangeListener) listeners[i + 1];
+				   cl.stateChanged(c);
+			   }
+		   }
+	   }
+   }
 
 }
 
