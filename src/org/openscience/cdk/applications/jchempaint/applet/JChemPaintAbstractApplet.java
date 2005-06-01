@@ -116,7 +116,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	public void initPanelAndModel(JChemPaintPanel jcpp, JChemPaintModel model) {
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
-    jcpp.scaleAndCenterMolecule(model.getChemModel());
+    if(theJcpp.getJChemPaintModel()!=null)
+      jcpp.scaleAndCenterMolecule(model.getChemModel());
 		model.setTitle("JCP Applet" /* getNewFrameName() */);
 		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
 		// Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
