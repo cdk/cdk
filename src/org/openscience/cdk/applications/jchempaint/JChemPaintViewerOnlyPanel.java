@@ -227,7 +227,8 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		if (event.getSource() instanceof JChemPaintEditorPanel) {
 			JChemPaintEditorPanel editorPanel = (JChemPaintEditorPanel) event.getSource();
 			if (editorPanel.getLastEventReason() == editorPanel.JCP_CLOSING) {
-				this.setJChemPaintModel(editorPanel.getJChemPaintModel());
+				setJChemPaintModel(editorPanel.getJChemPaintModel());
+				setViewerOnly();
 			}
 		}
 		super.stateChanged(event);
