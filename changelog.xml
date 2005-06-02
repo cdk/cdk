@@ -9,7 +9,7 @@
       next; it's outdated, contains a few bugs, and redundant. Use 
       UniversalIsomorphismTester instead.
     </apiChange>
-    <bugfix contributor="irilenia,thierry" closes="1208740">
+    <bugfix contributor="irilenia thanser" closes="1208740">
       Fixed copying and matching of aromatic bonds.
     </bugfix>
     <bugfix contributor="meklund" closes="1193703">
