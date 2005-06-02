@@ -5,7 +5,7 @@
   elementFormDefault="qualified">
 
    <xsd:attributeGroup name="changeGrp">
-     <xsd:attribute name="contributor" type="contributorType" default="unknown"/>
+     <xsd:attribute name="contributor" type="contributorListType" default="unknown"/>
      <xsd:attribute name="date" type="xsd:date" use="optional"/>
    </xsd:attributeGroup>
 
@@ -14,16 +14,20 @@
       <!-- This is a alphabetical list of contributors to CDK.
            The id's used are (if possible) the SF accounts. -->
       
-      <!-- Chris Pudney <??> -->
+      <!-- Chris Pudney <cpudney@users.sf.net> -->
       <xsd:enumeration value="cpudney"/>
       <!-- Egon Willighagen <e.willighagen@science.ru.nl> -->
       <xsd:enumeration value="egonw"/>
-      <!-- Martin Eklund <??> -->
+      <!-- Irilenia Nobeli <nobeli@ebi.ac.uk> -->
+      <xsd:enumeration value="irilenia"/>
+      <!-- Martin Eklund <martin.eklund@farmbio.uu.se> -->
       <xsd:enumeration value="meklund"/>
-      <!-- Christoph Steinbeck <??> -->
+      <!-- Christoph Steinbeck <c.steinbeck@uni-koeln.de> -->
       <xsd:enumeration value="steinbeck"/>
       <!-- Thierry Hanser <thierry.hanser@ixelis.com> -->
       <xsd:enumeration value="thanser"/>
+      <!-- Uli Fechner <u.fechner@chemie.uni-frankfurt.de> -->
+      <xsd:enumeration value="ulif"/>
       
       <!-- Contributor was untracable -->
       <xsd:enumeration value="unknown"/>
@@ -32,6 +36,10 @@
 
   <xsd:simpleType name="closesType">
     <xsd:list itemType="xsd:positiveInteger"/>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="contributorListType">
+    <xsd:list itemType="contributorType"/>
   </xsd:simpleType>
   
   <xsd:element name="changelog">
