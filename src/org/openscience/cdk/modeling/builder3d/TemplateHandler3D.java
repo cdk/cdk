@@ -147,7 +147,7 @@ public class TemplateHandler3D{
 	 *@param  NumberOfRingAtoms double
 	 */
 	public void mapTemplates(AtomContainer ringSystems, double NumberOfRingAtoms) throws Exception{
-		System.out.println("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
+		//System.out.println("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
 		int mapped = 0;
 		AtomContainer template=null;
 		QueryAtomContainer queryRingSystem=QueryAtomContainerCreator.createAnyAtomContainer(ringSystems,false);

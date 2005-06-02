@@ -166,13 +166,47 @@ public class SmilesGeneratorTest extends CDKTestCase
 		assertTrue(smiles1.equals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC"));
 	}
 
+	
+	
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testPropylCycloPropane()
+	{
+		SmilesGenerator sg = new SmilesGenerator();
+		Molecule mol1 = MoleculeFactory.makePropylCycloPropane();
+		fixCarbonHCount(mol1);
+		String smiles1 = null;
+		if (standAlone)
+		{
+			display(mol1);
+		}
+		try
+		{
+			smiles1 = sg.createSMILES(mol1);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
+		assertNotNull(smiles1);
+		assertTrue(smiles1.equals("CCCC1CC1"));
+	}
+	
+	
 
 	/**
 	 *  A unit test for JUnit
 	 *
-	 *@exception  Exception  Description of the Exception
 	 */
-	public void testAlanin() throws Exception
+	public void testAlanin()
 	{
 		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
 		SmilesGenerator sg = new SmilesGenerator();
@@ -209,10 +243,9 @@ public class SmilesGeneratorTest extends CDKTestCase
 			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 			IsotopeFactory ifac = IsotopeFactory.getInstance();
 			ifac.configureAtoms(mol1);
-		} catch (IOException ex)
+		} catch (Exception ex)
 		{
-		} catch (ClassNotFoundException ex)
-		{
+			fail();
 		}
 
 		String smiles1 = null;
@@ -853,7 +886,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		try
 		{
 			String smiles = sg.createSMILES(reaction);
-			System.out.println("Generated SMILES: " + smiles);
+			//System.out.println("Generated SMILES: " + smiles);
 			assertEquals("C>[*]>[Au]", smiles);
 		} catch (Exception exc)
 		{
@@ -945,20 +978,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
 		}
-	}
-
-
-	/**
-	 *  The main program for the SmilesGeneratorTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args)
-	{
-		SmilesGeneratorTest sgt = new SmilesGeneratorTest("SmilesGeneratorTest");
-		sgt.setStandAlone(true);
-		//sgt.testAtomPermutation();
-		sgt.testBondPermutation();
 	}
 
 
@@ -1077,5 +1096,23 @@ public class SmilesGeneratorTest extends CDKTestCase
 			fail(exc.getMessage());
 		}
 	}
+
+	/**
+	 *  The main program for the SmilesGeneratorTest class
+	 *
+	 *@param  args  The command line arguments
+	 */
+	public static void main(String[] args)
+	{
+		SmilesGeneratorTest sgt = new SmilesGeneratorTest("SmilesGeneratorTest");
+		sgt.setStandAlone(true);
+		//sgt.testAtomPermutation();
+		//sgt.testBondPermutation();
+		//sgt.testSmilesGenerator();
+		//sgt.testAlanin();
+		sgt.testPropylCycloPropane();
+		
+	}
+
 }
 

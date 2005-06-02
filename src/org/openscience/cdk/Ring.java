@@ -45,6 +45,11 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 		super();
 	}
 	
+	public Ring(AtomContainer ac)
+	{
+		super(ac);
+	}
+	
 	/**
 	 * Constructs a ring that will have a certain number of atoms of the given elements.
 	 *

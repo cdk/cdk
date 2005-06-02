@@ -134,9 +134,9 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			for (int i=0;i<mol.getAtomCount();i++){
 				assertNotNull(mol.getAtomAt(i).getPoint3d());
 			}
-			System.out.println("Layout molecule with SMILE:"+smile);
+			//System.out.println("Layout molecule with SMILE: "+smile);
 		} catch (Exception exc) {
-			System.out.println("Cannot layout molecule with SMILE:"+smile);
+			System.out.println("Cannot layout molecule with SMILES: "+smile);
 			if (standAlone)
 			{
 				exc.printStackTrace();

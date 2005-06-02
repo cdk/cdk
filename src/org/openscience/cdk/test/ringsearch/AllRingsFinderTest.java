@@ -156,10 +156,10 @@ public class AllRingsFinderTest extends CDKTestCase
 	   AllRingsFinder acually stops for the given examples. 
 	   And it does, after a very long time. 
 	   So, the test is commented our because of its long runtime */
-	/* public void testBug777488()
+	public void testBug777488()
 	{
-	        //String filename = "data/Bug646963.cml";
-                String filename = "data/NCI_diversity_292.mol.cml";
+	        //String filename = "data/Bug646.cml";
+                String filename = "data/testBug777488-1-AllRingsFinder.cml";
 		//String filename = "data/NCI_diversity_528.mol.cml";
 		//String filename = "data/NCI_diversity_978.mol.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -169,19 +169,20 @@ public class AllRingsFinderTest extends CDKTestCase
 		    ChemSequence seq = chemFile.getChemSequence(0);
 		    ChemModel model = seq.getChemModel(0);
 		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
-		    System.out.println("Constructed Molecule");
-		    System.out.println("Starting AllRingsFinder");
+		    if (standAlone) System.out.println("Constructed Molecule");
+		    if (standAlone) System.out.println("Starting AllRingsFinder");
 		    RingSet ringSet = new AllRingsFinder().findAllRings(mol);
-		    System.out.println("Finished AllRingsFinder");
+		    if (standAlone) System.out.println("Finished AllRingsFinder");
+		    if (standAlone) System.out.println("Found " + ringSet.size() + " rings.");
 	
-		    //display(mol);
+		   display(mol);
 		
 		} catch (Exception e) 
 		{
 		    e.printStackTrace();
 		    fail(e.toString());
 		}
-	}*/
+	}
 
 	
 	private void display(Molecule molecule)
@@ -211,8 +212,8 @@ public class AllRingsFinderTest extends CDKTestCase
 		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
 		arft.setStandAlone(true);
 		//arft.testAllRingsFinder();
-		//arft.testBug777488();
-        arft.testBigMoleculeWithIsolatedRings();
+		arft.testBug777488();
+		//arft.testBigMoleculeWithIsolatedRings();
 	}	
 }
 

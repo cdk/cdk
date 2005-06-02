@@ -706,7 +706,7 @@ public class ForceFieldConfigurator {
 				}
 				
 				atomTypeFlag = true;
-				System.out.println("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
+				//System.out.println("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
 				break;
 			}//IF
 		}//for end

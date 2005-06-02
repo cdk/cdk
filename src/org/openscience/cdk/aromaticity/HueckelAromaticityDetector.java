@@ -61,7 +61,7 @@ public class HueckelAromaticityDetector {
 	 *
 	 * @return  True if molecule is aromatic
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException {
+	public static boolean detectAromaticity(AtomContainer atomContainer) throws org.openscience.cdk.exception.CDKException {
 		return (detectAromaticity(atomContainer, true));
 	}
 	
@@ -73,7 +73,7 @@ public class HueckelAromaticityDetector {
 	 * @param   ringSet  set of ALL rings
 	 * @return  True if molecule is aromatic
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet) throws org.openscience.cdk.exception.NoSuchAtomException {
+	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet) throws org.openscience.cdk.exception.CDKException {
 		return (detectAromaticity(atomContainer, ringSet, true));
 	}
 	
@@ -85,7 +85,7 @@ public class HueckelAromaticityDetector {
 	 * @param   removeAromatictyFlags  Leaves ChemObjects that are already marked as aromatic as they are
 	 * @return                         True if molecule is aromatic
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.NoSuchAtomException {
+	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.CDKException {
 		logger.debug("Entered Aromaticity Detection");
 		logger.debug("Starting AllRingsFinder");
 		long before = System.currentTimeMillis();

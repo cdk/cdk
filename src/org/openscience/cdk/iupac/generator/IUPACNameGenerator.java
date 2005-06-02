@@ -220,7 +220,7 @@ public class IUPACNameGenerator {
                         if (prop != null && prop.equals("yes")) {
                             fwav.addValencyAtAtom(a);
                         }
-                    } catch (NoSuchAtomException e) {
+                    } catch (Exception e) {
                         logger.error("Error in program!");
                         logger.error(e.toString());
                     }

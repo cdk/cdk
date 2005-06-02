@@ -68,9 +68,9 @@ public class WHIMDescriptorTest extends CDKTestCase {
             params[0] = new String("unity");
             descriptor.setParameters(params);
             DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac).getValue();
-            System.out.println("Num ret = "+retval.size());
+            //System.out.println("Num ret = "+retval.size());
             for (int i = 0; i < retval.size(); i++) {
-                System.out.println( retval.get(i) );
+                //System.out.println( retval.get(i) );
             }
 
             /*

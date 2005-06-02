@@ -180,6 +180,24 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	public static Molecule makePropylCycloPropane()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 4
+		mol.addBond(0, 1, 1.0); // 1
+		mol.addBond(1, 2, 1.0); // 2
+		mol.addBond(2, 0, 1.0); // 3
+		mol.addBond(2, 3, 1.0); // 4
+		mol.addBond(3, 4, 1.0); // 4
+		mol.addBond(4, 5, 1.0); // 4
+		
+		return mol;
+	}
 	
 	
 	public static Molecule makeBiphenyl()

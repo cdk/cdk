@@ -36,6 +36,8 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.exception.CDKException;
 
 /** 
  * Finds the Set of all Rings.
@@ -53,6 +55,8 @@ import org.openscience.cdk.RingSet;
 public class AllRingsFinder
 {
 	public boolean debug = false;
+	private long timeout = 5000;
+	private long startTime;
 	
 	/* used for storing the original atomContainer for 
 	 * reference purposes (printing)
@@ -62,9 +66,16 @@ public class AllRingsFinder
 	Vector potentialRings = new Vector();
 	Vector removePathes = new Vector();
 	
-    public RingSet findAllRings(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
+    public RingSet findAllRings(AtomContainer atomContainer) throws CDKException
     {
-        return findAllRings(atomContainer, true);
+	    startTime = System.currentTimeMillis();
+	    SpanningTree spanningTree = new SpanningTree((AtomContainer)atomContainer.clone());
+	    spanningTree.identifyBonds();
+	    if (spanningTree.getBondsCyclicCount() < 37)
+	    {
+		    findAllRings(atomContainer, false);
+	    }
+	    return findAllRings(atomContainer, true);
     }
     
 	/**
@@ -74,8 +85,9 @@ public class AllRingsFinder
      * @param   useSSSR       use the SSSRFinder & RingPartitioner as pre-filter
 	 * @return                a RingSet containing the rings in molecule    
 	 */
-	public RingSet findAllRings(AtomContainer atomContainer, boolean useSSSR) throws org.openscience.cdk.exception.NoSuchAtomException
+	public RingSet findAllRings(AtomContainer atomContainer, boolean useSSSR) throws CDKException
 	{
+		if (startTime == 0) startTime = System.currentTimeMillis();
 		Vector pathes = new Vector();
 		RingSet ringSet = new RingSet();
 		AtomContainer ac = new AtomContainer();
@@ -84,23 +96,25 @@ public class AllRingsFinder
 		if (debug) System.out.println("AtomCount before removal of aliphatic atoms: " + ac.getAtomCount());
 		removeAliphatic(ac);
 		if (debug) System.out.println("AtomCount after removal of aliphatic atoms: " + ac.getAtomCount());
-		
-        if (useSSSR) {
-            SSSRFinder sssrf = new SSSRFinder(atomContainer);
-            RingSet sssr = sssrf.findSSSR();
-            Vector ringSets = RingPartitioner.partitionRings(sssr);
-            
-            for (int r = 0; r < ringSets.size(); r++) {
-                AtomContainer tempAC = RingPartitioner.convertToAtomContainer((RingSet)ringSets.get(r));
-                doSearch(tempAC, pathes, ringSet);
-            }
-        } else {
+		if (useSSSR) {
+			SSSRFinder sssrf = new SSSRFinder(atomContainer);
+			RingSet sssr = sssrf.findSSSR();
+			Vector ringSets = RingPartitioner.partitionRings(sssr);
+		    
+			for (int r = 0; r < ringSets.size(); r++) {
+			AtomContainer tempAC
+			= RingPartitioner.convertToAtomContainer((RingSet)ringSets.get(r));
+	
+			doSearch(tempAC, pathes, ringSet);
+	
+		    }
+		} else {
             doSearch(ac, pathes, ringSet);
         }
 		return ringSet;	  
 	}
 
-    private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws org.openscience.cdk.exception.NoSuchAtomException
+    private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws CDKException
     {
         Atom atom = null;
         /*
@@ -119,7 +133,7 @@ public class AllRingsFinder
         if (debug) System.out.println("ringSet.size(): " + ringSet.size());
     }
     
-	private void removeAliphatic(AtomContainer ac) throws org.openscience.cdk.exception.NoSuchAtomException
+	private void removeAliphatic(AtomContainer ac) throws CDKException
 	{
 		boolean removedSomething;
 		Atom atom = null;
@@ -138,7 +152,7 @@ public class AllRingsFinder
 		}while(removedSomething);
 	}
 	
-	private void remove(Atom atom, AtomContainer ac, Vector pathes, RingSet	rings) throws org.openscience.cdk.exception.NoSuchAtomException
+	private void remove(Atom atom, AtomContainer ac, Vector pathes, RingSet	rings) throws CDKException
 	{
 		Path path1 = null;
 		Path path2 = null;
@@ -182,6 +196,7 @@ public class AllRingsFinder
 							 removePathes.addElement(path2);
 						}
 					}
+					checkTimeout();
 				}
 			}
 		}
@@ -233,7 +248,7 @@ public class AllRingsFinder
 	{
 		Bond bond = null;
 		Path path = null;
-        Bond[] bonds = ac.getBonds();
+		Bond[] bonds = ac.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
@@ -270,5 +285,21 @@ public class AllRingsFinder
 		}
 		
 		return minAtom;
+	}
+	
+	public void checkTimeout() throws CDKException
+	{
+		long time = System.currentTimeMillis();
+		if (time - startTime > timeout) throw new CDKException("Timeout for AllringsFinder exceeded");
+	}
+	
+	public void setTimeout(long timeout)
+	{
+		this.timeout = timeout;
+	}
+	
+	public long getTimeout()
+	{
+		return timeout;	
 	}
 }

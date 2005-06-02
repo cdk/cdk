@@ -31,7 +31,6 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.templates.*;
 import java.util.*;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.iupac.parser.Token;
 
 /**
@@ -289,7 +288,7 @@ public class MoleculeBuilder
             {
                 HueckelAromaticityDetector.detectAromaticity(benzene);
             }
-            catch (NoSuchAtomException nsae)
+            catch (Exception exc)
             {
                 System.out.println("No atom detected");
             }
@@ -516,7 +515,9 @@ public class MoleculeBuilder
      * @param isMainCyclic An indiacation of if the main chain is cyclic.
      * @return The molecule as built from the parsed tokens.
      */
-    protected Molecule buildMolecule(int mainChain, Vector attachedSubstituents, Vector attachedGroups, boolean isMainCyclic, String name) throws CDKException
+    protected Molecule buildMolecule(int mainChain, Vector attachedSubstituents
+    , Vector attachedGroups, boolean isMainCyclic, String name) throws
+    ParseException, CDKException
     {
         //Set up the molecle's name
         currentMolecule.setID(name);

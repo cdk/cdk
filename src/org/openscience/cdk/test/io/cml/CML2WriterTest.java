@@ -79,7 +79,7 @@ public class CML2WriterTest extends CDKTestCase {
         Molecule molecule = MoleculeFactory.makeBenzene();
 		try {
 			HueckelAromaticityDetector.detectAromaticity(molecule);
-		} catch (NoSuchAtomException exception) {
+		} catch (Exception exception) {
             logger.error("Error while detecting aromaticity: ", exception.getMessage());
             logger.debug(exception);
 			fail(exception.getMessage());

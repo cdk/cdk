@@ -80,7 +80,7 @@ public class Rule2dot1 extends NamingRule {
                     } else {
                         m.setProperty(COMPLETED_FLAG, "no");
                     };
-                } catch (NoSuchAtomException e) {
+                } catch (Exception e) {
                     // do nothing special
                 }
             }
@@ -118,7 +118,7 @@ public class Rule2dot1 extends NamingRule {
                         longestChain.getAtomAt(i).setProperty(ATOM_MUST_BE_NUMBERED_FLAG, "yes");
                     }
                 }
-            } catch (CDKException e) {
+            } catch (Exception e) {
                 System.err.println(e.toString());
                 e.printStackTrace(System.err);
             }
@@ -126,7 +126,7 @@ public class Rule2dot1 extends NamingRule {
         return inp;
     };
 
-    private AtomContainer deleteNonCarbonAtoms(AtomContainer ac) throws NoSuchAtomException {
+    private AtomContainer deleteNonCarbonAtoms(AtomContainer ac) throws Exception {
         AtomContainer result = (AtomContainer)ac.clone();
 //        System.out.println("Deleting non carbon atoms...");
         Atom[] atoms = ac.getAtoms();

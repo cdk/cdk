@@ -280,7 +280,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
-            System.out.println("rs.size(): " + rs.size());
+			//System.out.println("rs.size(): " + rs.size());
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			Iterator iter = rs.iterator();
 			Ring r = null;

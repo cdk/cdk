@@ -56,8 +56,17 @@ import org.openscience.cdk.tools.LoggingTool;
  * </pre> <p>
  *
  *  The FingerPrinter assumes that hydrogens are explicitely given! <p>
+ * 
+ * <font color="#FF0000">Warning: The aromaticity detection for this SmilesGenerator relies on
+ * AllRingsFinder, which is known to take very long for some molecules with 
+ * many cycles or special cyclic topologies. Thus, the AllRingsFinder has a
+ * built-in timeout of 5 seconds after which it aborts and throws an Exception.
+ * If you want your SMILES generated at any expense, you need to create your own
+ * AllRingsFinder, set the timeout to a higher value, and assign it to this
+ * SmilesGenerator. In the vast majority of cases, however, the defaults will be
+ * fine. </font><p>
  *
- *  <font color="#FF0000"> warning : The daylight manual says: "Fingerprints are
+ *  <font color="#FF0000">Another Warning : The daylight manual says: "Fingerprints are
  *  not so definite: if a fingerprint indicates a pattern is missing then it
  *  certainly is, but it can only indicate a pattern's presence with some
  *  probability." In the case of very small molecules, the probability that you
@@ -90,7 +99,7 @@ public class Fingerprinter
 	 *      array)
 	 *@exception  NoSuchAtomException  Description of the Exception
 	 */
-	public static BitSet getFingerprint(AtomContainer ac) throws NoSuchAtomException
+	public static BitSet getFingerprint(AtomContainer ac) throws Exception
 	{
 		return getFingerprint(ac, defaultSize, defaultSearchDepth);
 	}
@@ -106,7 +115,7 @@ public class Fingerprinter
 	 *      array)
 	 *@exception  NoSuchAtomException  Description of the Exception
 	 */
-	public static BitSet getFingerprint(AtomContainer ac, int size) throws NoSuchAtomException
+	public static BitSet getFingerprint(AtomContainer ac, int size) throws Exception
 	{
 		return getFingerprint(ac, size, defaultSearchDepth);
 	}
@@ -123,7 +132,7 @@ public class Fingerprinter
 	 *      array)
 	 *@exception  NoSuchAtomException  Description of the Exception
 	 */
-	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth) throws NoSuchAtomException
+	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth) throws Exception
 	{
 		String path = null;
 		int position = -1;

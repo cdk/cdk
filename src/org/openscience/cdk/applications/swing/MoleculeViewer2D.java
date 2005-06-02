@@ -178,7 +178,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
      */
     public void display() {
         setPreferredSize(preferredSize);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(this);
         frame.setTitle(title);
         frame.pack();
@@ -192,10 +192,18 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
     }
 
     public static void display(Molecule molecule, boolean generateCoordinates, boolean drawNumbers)
+    {
+	 display(molecule, generateCoordinates, drawNumbers
+	 , JFrame.DISPOSE_ON_CLOSE);
+    
+    }
+
+
+    public static void display(Molecule molecule, boolean generateCoordinates, boolean drawNumbers, int closeOperation)
     {	
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         MoleculeViewer2D moleculeViewer = new MoleculeViewer2D();
-        moleculeViewer.getFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        moleculeViewer.getFrame().setDefaultCloseOperation(closeOperation);
         Renderer2DModel r2dm = moleculeViewer.getRenderer2DModel();
         r2dm.setDrawNumbers(drawNumbers);
 
