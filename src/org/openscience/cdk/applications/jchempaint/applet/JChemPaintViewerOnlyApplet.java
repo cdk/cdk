@@ -26,6 +26,7 @@ package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -39,32 +40,14 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
  */
 public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
 
-	/**
-	 * ugly method to remove scrollbars from the applet
-	 * @param comp
-	 */
-	private void removeScrollBars(Container theCont) {
-		Component comps[] = theCont.getComponents();
-		for (int i=0; i < comps.length; i++) {
-			if (theCont.getComponent(i) instanceof JScrollPane) {
-				JScrollPane theJSP = (JScrollPane) theCont.getComponent(i);
-				theJSP.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-				theJSP.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-			}
-			if (theCont.getComponent(i) instanceof Container)
-				removeScrollBars((Container) theCont.getComponent(i));
-		}
-	}
 	/* (non-Javadoc)
 	 * @see java.applet.Applet#init()
 	 */
 	public void init() {
-    JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(this.getSize());
+    JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
 		jcpvop.setShowMenuBar(false);
 		jcpvop.setShowStatusBar(false);
 		jcpvop.setShowToolBar(false);
-		// ugly ...
-		removeScrollBars(jcpvop);
 		setTheJcpp(jcpvop);
 	}
 	
