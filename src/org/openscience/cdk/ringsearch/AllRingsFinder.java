@@ -1,30 +1,31 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
- * 
- * Contact: cdk-devel@lists.sourceforge.net
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
- * 
+/*
+ *  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
+ *  Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All we ask is that proper credit is given for our work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
  */
 package org.openscience.cdk.ringsearch;
 
@@ -39,100 +40,157 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.exception.CDKException;
 
-/** 
- * Finds the Set of all Rings.
- *  This is an implementation of the algorithm published in {@cdk.cite HAN96}.
- *  Some of the comments refer to pseudo code fragments listed in this article.
- *  The concept is that a regular molecular graph is converted into a path graph first,
- *  i.e. a graph where the edges are actually pathes, i.e. can list several
- *  nodes that are implicitly connecting the two nodes between the path is formed.
- *  The pathes that join one endnode are step by step fused and the joined nodes
- *  deleted from the pathgraph. What remains is a graph of pathes that have the
- *  same start and endpoint and are thus rings.
+/**
+ *  Finds the Set of all Rings. This is an implementation of the algorithm
+ *  published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
+ *  fragments listed in this article. The concept is that a regular molecular
+ *  graph is converted into a path graph first, i.e. a graph where the edges are
+ *  actually pathes, i.e. can list several nodes that are implicitly connecting
+ *  the two nodes between the path is formed. The pathes that join one endnode
+ *  are step by step fused and the joined nodes deleted from the pathgraph. What
+ *  remains is a graph of pathes that have the same start and endpoint and are
+ *  thus rings.
  *
- * @cdk.module standard
+ *  WARNING: This class has now a timeout of 5 seconds, after which it aborts
+ *  its ringsearch. The timeout value can be customized by the setTimeout()
+ *  method of this class.  
+ *
+ *@author        steinbeck
+ *@created       3. Juni 2005
+ *@cdk.module    standard
  */
 public class AllRingsFinder
 {
 	public boolean debug = false;
 	private long timeout = 5000;
 	private long startTime;
-	
-	/* used for storing the original atomContainer for 
-	 * reference purposes (printing)
+
+	/*
+	 *  used for storing the original atomContainer for
+	 *  reference purposes (printing)
 	 */
-	AtomContainer originalAc = null; 
+	AtomContainer originalAc = null;
 	Vector newPathes = new Vector();
 	Vector potentialRings = new Vector();
 	Vector removePathes = new Vector();
-	
-    public RingSet findAllRings(AtomContainer atomContainer) throws CDKException
-    {
-	    startTime = System.currentTimeMillis();
-	    SpanningTree spanningTree = new SpanningTree((AtomContainer)atomContainer.clone());
-	    spanningTree.identifyBonds();
-	    if (spanningTree.getBondsCyclicCount() < 37)
-	    {
-		    findAllRings(atomContainer, false);
-	    }
-	    return findAllRings(atomContainer, true);
-    }
-    
+
+
 	/**
-	 * Fings the set of all rings in a molecule 
+	 *  Returns a ringset containing all rings in the given AtomContainer
 	 *
-	 * @param   atomContainer the molecule to be searched for rings
-     * @param   useSSSR       use the SSSRFinder & RingPartitioner as pre-filter
-	 * @return                a RingSet containing the rings in molecule    
+	 *@param  atomContainer     The AtomContainer to be searched for rings
+	 *@return                   A RingSet with all rings in the AtomContainer
+	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
+	 */
+	public RingSet findAllRings(AtomContainer atomContainer) throws CDKException
+	{
+		startTime = System.currentTimeMillis();
+		SpanningTree spanningTree = new SpanningTree((AtomContainer) atomContainer.clone());
+		spanningTree.identifyBonds();
+		if (spanningTree.getBondsCyclicCount() < 37)
+		{
+			findAllRings(atomContainer, false);
+		}
+		return findAllRings(atomContainer, true);
+	}
+
+
+	/**
+	 *  Fings the set of all rings in a molecule
+	 *
+	 *@param  atomContainer     the molecule to be searched for rings
+	 *@param  useSSSR           use the SSSRFinder & RingPartitioner as pre-filter
+	 *@return                   a RingSet containing the rings in molecule
+	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
 	public RingSet findAllRings(AtomContainer atomContainer, boolean useSSSR) throws CDKException
 	{
-		if (startTime == 0) startTime = System.currentTimeMillis();
+		if (startTime == 0)
+		{
+			startTime = System.currentTimeMillis();
+		}
 		Vector pathes = new Vector();
 		RingSet ringSet = new RingSet();
 		AtomContainer ac = new AtomContainer();
 		originalAc = atomContainer;
 		ac.add(atomContainer);
-		if (debug) System.out.println("AtomCount before removal of aliphatic atoms: " + ac.getAtomCount());
+		if (debug)
+		{
+			System.out.println("AtomCount before removal of aliphatic atoms: " + ac.getAtomCount());
+		}
 		removeAliphatic(ac);
-		if (debug) System.out.println("AtomCount after removal of aliphatic atoms: " + ac.getAtomCount());
-		if (useSSSR) {
+		if (debug)
+		{
+			System.out.println("AtomCount after removal of aliphatic atoms: " + ac.getAtomCount());
+		}
+		if (useSSSR)
+		{
 			SSSRFinder sssrf = new SSSRFinder(atomContainer);
 			RingSet sssr = sssrf.findSSSR();
 			Vector ringSets = RingPartitioner.partitionRings(sssr);
-		    
-			for (int r = 0; r < ringSets.size(); r++) {
-			AtomContainer tempAC
-			= RingPartitioner.convertToAtomContainer((RingSet)ringSets.get(r));
-	
-			doSearch(tempAC, pathes, ringSet);
-	
-		    }
-		} else {
-            doSearch(ac, pathes, ringSet);
-        }
-		return ringSet;	  
+
+			for (int r = 0; r < ringSets.size(); r++)
+			{
+				AtomContainer tempAC
+						 = RingPartitioner.convertToAtomContainer((RingSet) ringSets.get(r));
+
+				doSearch(tempAC, pathes, ringSet);
+
+			}
+		} else
+		{
+			doSearch(ac, pathes, ringSet);
+		}
+		return ringSet;
 	}
 
-    private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws CDKException
-    {
-        Atom atom = null;
-        /*
-        * First we convert the molecular graph into a a path graph by
-        * creating a set of two membered pathes from all the bonds in the molecule
-        */
-        initPathGraph(ac, pathes);
-        if (debug) System.out.println("BondCount: " + ac.getBondCount() + ", PathCount: " + pathes.size());
-        do
-        {
-            atom = selectAtom(ac);
-            if (atom != null) remove(atom, ac, pathes, ringSet);
-        }
-        while(pathes.size() > 0 && atom != null);
-        if (debug) System.out.println("pathes.size(): " + pathes.size());
-        if (debug) System.out.println("ringSet.size(): " + ringSet.size());
-    }
-    
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  ac                The AtomContainer to be searched
+	 *@param  pathes            A vectoring storing all the pathes
+	 *@param  ringSet           A ringset to be extended while we search
+	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
+	 */
+	private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws CDKException
+	{
+		Atom atom = null;
+		/*
+		 *  First we convert the molecular graph into a a path graph by
+		 *  creating a set of two membered pathes from all the bonds in the molecule
+		 */
+		initPathGraph(ac, pathes);
+		if (debug)
+		{
+			System.out.println("BondCount: " + ac.getBondCount() + ", PathCount: " + pathes.size());
+		}
+		do
+		{
+			atom = selectAtom(ac);
+			if (atom != null)
+			{
+				remove(atom, ac, pathes, ringSet);
+			}
+		} while (pathes.size() > 0 && atom != null);
+		if (debug)
+		{
+			System.out.println("pathes.size(): " + pathes.size());
+		}
+		if (debug)
+		{
+			System.out.println("ringSet.size(): " + ringSet.size());
+		}
+	}
+
+
+	/**
+	 *  Removes all external aliphatic chains by chopping them off from the
+	 *  ends
+	 *
+	 *@param  ac                The AtomContainer to work with
+	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
+	 */
 	private void removeAliphatic(AtomContainer ac) throws CDKException
 	{
 		boolean removedSomething;
@@ -140,19 +198,31 @@ public class AllRingsFinder
 		do
 		{
 			removedSomething = false;
-			for (Enumeration e = ac.atoms(); e.hasMoreElements();)
+			for (Enumeration e = ac.atoms(); e.hasMoreElements(); )
 			{
-				atom = (Atom)e.nextElement();
+				atom = (Atom) e.nextElement();
 				if (ac.getBondCount(atom) == 1)
 				{
 					ac.removeAtomAndConnectedElectronContainers(atom);
 					removedSomething = true;
 				}
 			}
-		}while(removedSomething);
+		} while (removedSomething);
 	}
-	
-	private void remove(Atom atom, AtomContainer ac, Vector pathes, RingSet	rings) throws CDKException
+
+
+	/**
+	 *  Removes an atom from the AtomContainer under certain conditions.
+	 *  See {@cdk.cite HAN96} for details
+	 *  
+	 *
+	 *@param  atom              The atom to be removed
+	 *@param  ac                The AtomContainer to work on
+	 *@param  pathes            The pathes to manipulate
+	 *@param  rings             The ringset to be extended
+	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
+	 */
+	private void remove(Atom atom, AtomContainer ac, Vector pathes, RingSet rings) throws CDKException
 	{
 		Path path1 = null;
 		Path path2 = null;
@@ -161,17 +231,20 @@ public class AllRingsFinder
 		newPathes.removeAllElements();
 		removePathes.removeAllElements();
 		potentialRings.removeAllElements();
-		if (debug) System.out.println("*** Removing atom " + originalAc.getAtomNumber(atom) +  " ***");
-				
+		if (debug)
+		{
+			System.out.println("*** Removing atom " + originalAc.getAtomNumber(atom) + " ***");
+		}
+
 		for (int i = 0; i < pathes.size(); i++)
 		{
-			path1 = (Path)pathes.elementAt(i);
+			path1 = (Path) pathes.elementAt(i);
 			if (path1.firstElement() == atom || path1.lastElement() == atom)
 			{
 				for (int j = i + 1; j < pathes.size(); j++)
 				{
 					//System.out.print(".");
-					path2 = (Path)pathes.elementAt(j);
+					path2 = (Path) pathes.elementAt(j);
 					if (path2.firstElement() == atom || path2.lastElement() == atom)
 					{
 						intersectionSize = path1.getIntersectionSize(path2);
@@ -182,18 +255,18 @@ public class AllRingsFinder
 							if (intersectionSize == 1)
 							{
 								newPathes.addElement(union);
-							}
-							else
+							} else
 							{
-								potentialRings.add(union);	
+								potentialRings.add(union);
 							}
 							//if (debug) System.out.println("Intersection Size: " + intersectionSize);
 							//if (debug) System.out.println("Union: " + union.toString(originalAc));
-							/* Now we know that path1 and
-							 * path2 share the Atom atom. 
+							/*
+							 *  Now we know that path1 and
+							 *  path2 share the Atom atom.
 							 */
-							 removePathes.addElement(path1);
-							 removePathes.addElement(path2);
+							removePathes.addElement(path1);
+							removePathes.addElement(path2);
 						}
 					}
 					checkTimeout();
@@ -202,33 +275,47 @@ public class AllRingsFinder
 		}
 		for (int f = 0; f < removePathes.size(); f++)
 		{
-			pathes.remove(removePathes.elementAt(f));	
+			pathes.remove(removePathes.elementAt(f));
 		}
 		for (int f = 0; f < newPathes.size(); f++)
 		{
-			pathes.addElement(newPathes.elementAt(f));	
+			pathes.addElement(newPathes.elementAt(f));
 		}
 		detectRings(potentialRings, rings, originalAc);
 		ac.removeAtomAndConnectedElectronContainers(atom);
-		if (debug) System.out.println("\n" + pathes.size() + " pathes and " + ac.getAtomCount() + " atoms left.");
+		if (debug)
+		{
+			System.out.println("\n" + pathes.size() + " pathes and " + ac.getAtomCount() + " atoms left.");
+		}
 	}
-	
+
+
+	/**
+	 *  Checks the pathes if a ring has been found
+	 *
+	 *@param  pathes   The pathes to check for rings
+	 *@param  ringSet  The ringset to add the detected rings to
+	 *@param  ac       The AtomContainer with the original structure
+	 */
 	private void detectRings(Vector pathes, RingSet ringSet, AtomContainer ac)
 	{
 		Path path = null;
 		Ring ring = null;
 		Bond bond = null;
-		for (int f = 0; f < pathes.size(); f ++)
+		for (int f = 0; f < pathes.size(); f++)
 		{
-			path = (Path)pathes.elementAt(f);
+			path = (Path) pathes.elementAt(f);
 			if (path.size() > 3 && path.lastElement() == path.firstElement())
 			{
-				if (debug) System.out.println("Removing path " + path.toString(originalAc) + " which is a ring.");
+				if (debug)
+				{
+					System.out.println("Removing path " + path.toString(originalAc) + " which is a ring.");
+				}
 				path.removeElementAt(0);
 				ring = new Ring();
 				for (int g = 0; g < path.size(); g++)
 				{
-					ring.addAtom((Atom)path.elementAt(g));
+					ring.addAtom((Atom) path.elementAt(g));
 				}
 				Bond[] bonds = ac.getBonds();
 				for (int g = 0; g < bonds.length; g++)
@@ -243,7 +330,15 @@ public class AllRingsFinder
 			}
 		}
 	}
-	
+
+
+	/**
+	 *  Initialized the path graph
+	 *  See {@cdk.cite HAN96} for details
+	 *
+	 *@param  ac      The AtomContainer with the original structure
+	 *@param  pathes  The pathes to initialize
+	 */
 	private void initPathGraph(AtomContainer ac, Vector pathes)
 	{
 		Bond bond = null;
@@ -254,13 +349,25 @@ public class AllRingsFinder
 			bond = bonds[f];
 			path = new Path(bond.getAtomAt(0), bond.getAtomAt(1));
 			pathes.add(path);
-			if (debug) System.out.println("initPathGraph: " + path.toString(originalAc));
+			if (debug)
+			{
+				System.out.println("initPathGraph: " + path.toString(originalAc));
+			}
 		}
 	}
-	
+
+
+	/**
+	 *  Selects an optimal atom for removal
+	 *  See {@cdk.cite HAN96} for details
+	 *
+	 *@param  ac  The AtomContainer to search
+	 *@return     The selected Atom
+	 */
 	private Atom selectAtom(AtomContainer ac)
 	{
-		int minDegree = 999; // :-)
+		int minDegree = 999;
+		// :-)
 		int degree = minDegree;
 		Atom minAtom = null;
 		Atom atom = null;
@@ -268,38 +375,65 @@ public class AllRingsFinder
 		{
 			atom = ac.getAtomAt(f);
 			degree = ac.getBondCount(atom);
-			
+
 			if (degree < minDegree)
 			{
 				minAtom = atom;
-				minDegree = degree; 
+				minDegree = degree;
 			}
 		}
 		try
 		{
 			//if (debug) System.out.println("Selected atom no " + originalAc.getAtomNumber(minAtom) + " for removal.");
-		}
-		catch(Exception exc)
+		} catch (Exception exc)
 		{
 			exc.printStackTrace();
 		}
-		
+
 		return minAtom;
 	}
-	
+
+
+	/**
+	 *  Checks if the timeout has been reached and throws an 
+	 *  exception if so. This is used to prevent this AllRingsFinder
+	 *  to run for ages in certain rare cases with ring systems of
+	 *  large size or special topology.
+	 *
+	 *@exception  CDKException  The exception thrown in case of hitting the timeout
+	 */
 	public void checkTimeout() throws CDKException
 	{
 		long time = System.currentTimeMillis();
-		if (time - startTime > timeout) throw new CDKException("Timeout for AllringsFinder exceeded");
+		if (time - startTime > timeout)
+		{
+			throw new CDKException("Timeout for AllringsFinder exceeded");
+		}
 	}
-	
+
+
+	/**
+	 *  Sets the timeout value in milliseconds of the AllRingsFinder object
+	 *  This is used to prevent this AllRingsFinder
+	 *  to run for ages in certain rare cases with ring systems of
+	 *  large size or special topology
+	 *
+	 *@param  timeout  The new timeout value
+	 */
 	public void setTimeout(long timeout)
 	{
 		this.timeout = timeout;
 	}
-	
+
+
+	/**
+	 *  Gets the timeout values in milliseconds of the AllRingsFinder object
+	 *
+	 *@return    The timeout value
+	 */
 	public long getTimeout()
 	{
-		return timeout;	
+		return timeout;
 	}
 }
+

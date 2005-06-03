@@ -175,7 +175,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		    if (standAlone) System.out.println("Finished AllRingsFinder");
 		    if (standAlone) System.out.println("Found " + ringSet.size() + " rings.");
 	
-		   display(mol);
+		   //display(mol);
 		
 		} catch (Exception e) 
 		{

@@ -2229,9 +2229,9 @@ public class SmilesGenerator
 
 
 	/**
-	 *  Returns the value of ringFinder.
+	 *  Returns the current AllRingsFinder instance
 	 *
-	 *@return    The ringFinder value
+	 *@return   the current AllRingsFinder instance
 	 */
 	public AllRingsFinder getRingFinder()
 	{
@@ -2240,9 +2240,14 @@ public class SmilesGenerator
 
 
 	/**
-	 *  Sets the value of ringFinder.
+	 *  Sets the current AllRingsFinder instance
+	 * Use this if you want to customize the timeout for 
+	 * the AllRingsFinder. AllRingsFinder is stopping its 
+	 * quest to find all rings after a default of 5 seconds.
 	 *
-	 *@param  ringFinder  The value to assign ringFinder.
+	 * @see org.openscience.cdk.ringsearch.AllRingsFinder
+	 * 
+	 * @param  ringFinder  The value to assign ringFinder.
 	 */
 	public void setRingFinder(AllRingsFinder ringFinder)
 	{

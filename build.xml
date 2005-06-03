@@ -437,7 +437,7 @@
             <mkdir dir="${dist}/jar" />
         </target>
 
-        <target id="dist-all" name="dist-all">
+        <target id="dist-all" name="dist-all" description="dist-all">
             <antcall target="compile-init"/>
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
@@ -733,8 +733,8 @@
         <target id="run" name="run" depends="dist-all" 
                 description="Runs an application (org.openscience.cdk.&lt;class>) with -Drunclass=&lt;class>.">
                 <java classname="org.openscience.cdk.${runclass}" fork="yes" >
-                    <jvmarg value="-Dcdk.debugging=true"/>
-                    <jvmarg value="-Dcdk.debug.stdout=true"/>
+                    <!--jvmarg value="-Dcdk.debugging=true"/>
+                    <jvmarg value="-Dcdk.debug.stdout=true"/-->
  
 		    <arg value="${arg1}" />
                    <arg value="${arg2}" />
