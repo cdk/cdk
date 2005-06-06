@@ -47,6 +47,8 @@ public class QSARRModelTests {
             suite.addTest(new TestSuite(testClass));
             testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.ModelLoadSaveTest");
             suite.addTest(new TestSuite(testClass));
+            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.CNNClassificationModelTest");
+            suite.addTest(new TestSuite(testClass));
         } catch (ClassNotFoundException exception) {
             System.out.println("SJava is not found, skipping R tests...");
             exception.printStackTrace();
