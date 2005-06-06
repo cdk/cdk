@@ -45,7 +45,7 @@ public class JExternalFrame extends JFrame {
 	private JPanel dummyPanel = null;
 	private boolean initialized = false;
 	private Dimension embeddedSize = null;
-	private Point embeddedScreenLocation = null;
+
 	/**
 	 * @return Returns the dummyPanel.
 	 */
@@ -59,6 +59,12 @@ public class JExternalFrame extends JFrame {
 	 * @param comp Component that is transfered to the external frame
 	 */
 	public void show(Component comp) {
+		int deltaW = 0;
+		int deltaH = 0;
+		int deltaX = 0;
+		int deltaY = 0;
+		Point embeddedScreenLocation = null;
+	
 		theComponent = comp;
 		if (comp == null)
 			return;
@@ -67,31 +73,38 @@ public class JExternalFrame extends JFrame {
 			return;
 		
 		if (!initialized) {
-			embeddedScreenLocation = theComponent.getLocationOnScreen();
-		}
-		
-		embeddedSize = theComponent.getSize(embeddedSize);
-		theParent.remove(theComponent);
-		theParent.add(getDummyPanel());
-		theParent.repaint();
-		if (!initialized) {
+			embeddedScreenLocation = new Point(theComponent.getLocationOnScreen());
+			embeddedSize = theComponent.getSize(embeddedSize);
 			getContentPane().setLayout(new BorderLayout());
 			this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 			this.setSize(200,150);
 		}
-		
+
 		super.show();
-		
+
 		if (!initialized) {
-			int deltaW = this.getWidth() - getContentPane().getWidth();
-			int deltaH = this.getHeight() - getContentPane().getHeight();
-			int deltaX = embeddedScreenLocation.x - getContentPane().getLocationOnScreen().x;
-			int deltaY = embeddedScreenLocation.y - getContentPane().getLocationOnScreen().y;
+			this.validate();
+			this.repaint();
+			deltaW = this.getWidth() - getContentPane().getWidth();
+			deltaH = this.getHeight() - getContentPane().getHeight();
+			deltaX = embeddedScreenLocation.x - getContentPane().getLocationOnScreen().x;
+			deltaY = embeddedScreenLocation.y - getContentPane().getLocationOnScreen().y;
+		}
+		
+		theParent.remove(theComponent);
+		theParent.add(getDummyPanel());
+		theParent.validate();
+		theParent.repaint();
+				
+		if (!initialized) {
 			this.setBounds(this.getLocationOnScreen().x + deltaX, + this.getLocationOnScreen().y + deltaY, 
 				embeddedSize.width + deltaW, embeddedSize.height + deltaH);
 		}
+		
 		getContentPane().add(theComponent, BorderLayout.CENTER);
 		initialized = true;
+		this.validate();
+		this.toFront();
 		this.repaint();
 	}
 
@@ -104,7 +117,7 @@ public class JExternalFrame extends JFrame {
 		theComponent.setSize(embeddedSize);
 		theParent.add(theComponent, BorderLayout.CENTER);
 		super.dispose();
-		theComponent.validate();
+		theParent.validate();
 		theParent.repaint();
 	}
 }
