@@ -30,8 +30,6 @@ package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.swing.JExternalFrame;
 
@@ -79,7 +77,13 @@ public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 		return jexf;
 	}
 
+	/**
+	 * sets title for external frame
+	 * adds listener for double clicks in order to open external frame
+	 */
 	private void prepareExternalFrame() { 
+		if (this.getName() != null)
+			getJexf().setTitle(this.getName());
 		getTheJcpp().getDrawingPanel().addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == 1 && e.getClickCount() == 2)
