@@ -82,8 +82,8 @@ public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 	 * adds listener for double clicks in order to open external frame
 	 */
 	private void prepareExternalFrame() { 
-		if (this.getName() != null)
-			getJexf().setTitle(this.getName());
+		if (this.getParameter("name") != null)
+			getJexf().setTitle(this.getParameter("name"));
 		getTheJcpp().getDrawingPanel().addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == 1 && e.getClickCount() == 2)
