@@ -43,10 +43,9 @@ public class JExternalFrame extends JFrame {
 	private Component theComponent = null;
 	private Container theParent = null;
 	private JPanel dummyPanel = null;
+	private boolean initialized = false;
 	private Dimension embeddedSize = null;
-	private Dimension oldFrameSize = null;
-	private Point oldFrameLocation = null;
-	
+	private Point embeddedScreenLocation = null;
 	/**
 	 * @return Returns the dummyPanel.
 	 */
@@ -66,21 +65,33 @@ public class JExternalFrame extends JFrame {
 		theParent = comp.getParent();
 		if (theParent == null)
 			return;
+		
+		if (!initialized) {
+			embeddedScreenLocation = theComponent.getLocationOnScreen();
+		}
+		
 		embeddedSize = theComponent.getSize(embeddedSize);
 		theParent.remove(theComponent);
 		theParent.add(getDummyPanel());
 		theParent.repaint();
-		if (oldFrameSize == null) {
-			this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		if (!initialized) {
 			getContentPane().setLayout(new BorderLayout());
+			this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+			this.setSize(200,150);
 		}
+		
 		super.show();
-		if (oldFrameSize == null) {
+		
+		if (!initialized) {
 			int deltaW = this.getWidth() - getContentPane().getWidth();
 			int deltaH = this.getHeight() - getContentPane().getHeight();
-			this.setSize(embeddedSize.width + deltaW, embeddedSize.height + deltaH);
+			int deltaX = embeddedScreenLocation.x - getContentPane().getLocationOnScreen().x;
+			int deltaY = embeddedScreenLocation.y - getContentPane().getLocationOnScreen().y;
+			this.setBounds(this.getLocationOnScreen().x + deltaX, + this.getLocationOnScreen().y + deltaY, 
+				embeddedSize.width + deltaW, embeddedSize.height + deltaH);
 		}
 		getContentPane().add(theComponent, BorderLayout.CENTER);
+		initialized = true;
 		this.repaint();
 	}
 
@@ -89,12 +100,11 @@ public class JExternalFrame extends JFrame {
 	 */
 	public void dispose() {
 		theParent.remove(getDummyPanel());
-		oldFrameSize = this.getSize(oldFrameSize);
-		oldFrameLocation = this.getLocation(oldFrameLocation);
 		this.getContentPane().remove(theComponent);
 		theComponent.setSize(embeddedSize);
 		theParent.add(theComponent, BorderLayout.CENTER);
 		super.dispose();
+		theComponent.validate();
 		theParent.repaint();
 	}
 }
