@@ -113,20 +113,20 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		return defaultValue;
 	}
 
-	public void initPanelAndModel(JChemPaintPanel jcpp, JChemPaintModel model) {
+	public void initPanelAndModel(JChemPaintPanel jcpp) {
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
     if(theJcpp.getJChemPaintModel()!=null)
-      jcpp.scaleAndCenterMolecule(model.getChemModel());
-		model.setTitle("JCP Applet" /* getNewFrameName() */);
-		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
+      jcpp.scaleAndCenterMolecule(theModel.getChemModel());
+		theModel.setTitle("JCP Applet" /* getNewFrameName() */);
+		theModel.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
 		// Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 		// String version = self.getImplementationVersion();
 		// model.setSoftware("JChemPaint " + version);
-		model.setSoftware("JChemPaint " /*+  version */);
-		model.setGendate((Calendar.getInstance()).getTime().toString());
-		jcpp.setJChemPaintModel(model);
-		jcpp.registerModel(model);
+		theModel.setSoftware("JChemPaint " /*+  version */);
+		theModel.setGendate((Calendar.getInstance()).getTime().toString());
+		jcpp.setJChemPaintModel(theModel);
+		jcpp.registerModel(theModel);
 
 		//embedded means that additional instances can't be created, which is
 		// needed for applet as well
@@ -139,7 +139,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	/**
 	 * @param theModel
 	 */
-	protected void loadModelFromParam(JChemPaintModel theModel) {
+	protected void loadModelFromParam() {
 		URL fileURL = null;
 		try {
 			URL documentBase = getDocumentBase();
@@ -150,14 +150,14 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			System.out.println("Cannot load model: " + exception.toString());
 			exception.printStackTrace();
 		}
-		loadModelFromUrl(theModel, fileURL);
+		loadModelFromUrl(fileURL);
 	}
 
 	/**
 	 * @param theModel
 	 * @param fileURL
 	 */
-	public void loadModelFromUrl(JChemPaintModel theModel, URL fileURL) {
+	public void loadModelFromUrl(URL fileURL) {
 		if (fileURL != null) {
 			try {
 				InputStreamReader isReader = new InputStreamReader(fileURL.openStream());
@@ -168,13 +168,15 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 				System.out.println("Cannot parse model: " + exception.toString());
 				exception.printStackTrace();
 			}
-		}
-		initPanelAndModel(theJcpp, theModel);
+		}else{
+      theModel=new JChemPaintModel();
+    }
+		initPanelAndModel(theJcpp);
 	}
 	
 	public void start() {
 		//Parameter parsing goes here
-    loadModelFromParam(new JChemPaintModel());
+    loadModelFromParam();
 		String atomNumbers=getParameter("atomNumbersVisible");
     if(atomNumbers!=null){
       if(atomNumbers.equals("true"))

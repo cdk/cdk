@@ -103,7 +103,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *
 	 */
 	public JChemPaintEditorPanel(){
-    this(1);
+    this(1, null);
   }
 
 	/**
@@ -111,9 +111,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *
 	 *@param  lines  How many lines should the horizontal toolbar have?
 	 */
-	public JChemPaintEditorPanel(int lines)
+	public JChemPaintEditorPanel(int lines, Dimension panelDimension)
 	{
 		super();
+		super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
 		if (logger == null)
 		{
@@ -121,6 +122,11 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
 		logger.debug("JCPPanel set and done...");
+		if (panelDimension != null) {
+			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
+			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
+			super.setPreferredSize(viewerDimension);
+		}
 	}
 
 

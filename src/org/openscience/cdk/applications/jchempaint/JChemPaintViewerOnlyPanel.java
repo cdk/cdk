@@ -50,8 +50,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 
 	private LoggingTool logger;
 	JPopupMenu viewerPanelPopupMenu;
-	Dimension viewerDimension;
-
+	
 
 	/**
 	 *  Constructor for the JChemPaintViewerOnlyPanel object
@@ -141,24 +140,6 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		return str;
 	}
 	
-	
-	/**
-	 * Returns the value of viewerDimension.
-	 */
-	public Dimension getViewerDimension()
-	{
-		return viewerDimension;
-	}
-
-	/**
-	 * Sets the value of viewerDimension.
-	 * @param viewerDimension The value to assign viewerDimension.
-	 */
-	public void setViewerDimension(Dimension viewerDimension)
-	{
-		this.viewerDimension = viewerDimension;
-	}
-
 
 	/**
 	 *  Description of the Class

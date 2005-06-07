@@ -113,6 +113,7 @@ public abstract class JChemPaintPanel
 	 *  remembers last action in toolbar for switching on/off buttons
 	 */
 	public JComponent lastAction;
+  Dimension viewerDimension;
 
 
 
@@ -540,7 +541,7 @@ public abstract class JChemPaintPanel
 				Dimension viewerDim = null;
 				//for some reason an EditorPanel opened by a ViewerPanel gets thet isViewerOnly flag set to true -- to be solved!!
 				try {
-					viewerDim = ((JChemPaintViewerOnlyPanel) this ).getViewerDimension();
+					viewerDim = getViewerDimension();
 				}
 				catch (ClassCastException cce) {}
 				if (viewerDim != null) {
@@ -727,22 +728,26 @@ public abstract class JChemPaintPanel
 		double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 		GeometryTools.scaleMolecule(ac, scaleFactor);
 		Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
+    System.err.println(view+" view");
     double x = view.getX() + view.getWidth();
 		double y = view.getY() + view.getHeight();
 		Renderer2DModel model = jchemPaintModel.getRendererModel();
 		double relocatedY = model.getBackgroundDimension().getSize().getHeight() - (y + view.getY() / 2);
 		double relocatedX = view.getX() / 2;
-    if(view.getWidth()==0 && view.getHeight()==0 && view.getX()==0 && view.getY()==0){
-      relocatedX=0;
-      relocatedY=0;
-    }
-		Dimension viewablePart = new Dimension((int) x, (int) y);
+  	Dimension viewablePart = new Dimension((int) x, (int) y);
 		//to be fixed - check if molDim is reaching over viewablePart borders...
 		if (this instanceof JChemPaintViewerOnlyPanel) {
-			GeometryTools.center(ac, model.getBackgroundDimension());
-		}
-		else {
-			GeometryTools.center(ac, viewablePart);
+      GeometryTools.center(ac, model.getBackgroundDimension());
+      relocatedX=0;
+      relocatedY=0;
+		} else {
+      if(viewablePart.getWidth()==0 && viewablePart.getHeight()==0){
+        relocatedX=0;
+        relocatedY=0;
+        GeometryTools.center(ac, model.getBackgroundDimension());
+      }else{
+        GeometryTools.center(ac, viewablePart);
+      }
 		}
 		//fixing the coords regarding the position of the viewablePart
 		Atom[] atoms = ac.getAtoms();
@@ -1030,6 +1035,24 @@ public abstract class JChemPaintPanel
 	 */
 	public void runScript(String mimeType, String script) {
 		logger.error("JChemPaintPanel's CDKEditBus.runScript() implementation called but not implemented!");
+	}
+
+	
+	/**
+	 * Returns the value of viewerDimension.
+	 */
+	public Dimension getViewerDimension()
+	{
+		return viewerDimension;
+	}
+
+	/**
+	 * Sets the value of viewerDimension.
+	 * @param viewerDimension The value to assign viewerDimension.
+	 */
+	public void setViewerDimension(Dimension viewerDimension)
+	{
+		this.viewerDimension = viewerDimension;
 	}
 
 }

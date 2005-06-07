@@ -30,6 +30,7 @@ package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.swing.JExternalFrame;
 
@@ -44,12 +45,12 @@ public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 {
 	JChemPaintEditorPanel jcpep = null;
 	JExternalFrame jexf = null;
-	
+  
 	/* (non-Javadoc)
 	 * @see java.applet.Applet#init()
 	 */
 	public void init() {
-		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel(2);
+		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel(2,new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
 		jcpep.setShowStatusBar(false);
 		setTheJcpp(jcpep);
 		prepareExternalFrame();
