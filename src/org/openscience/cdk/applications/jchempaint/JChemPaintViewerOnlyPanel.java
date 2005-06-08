@@ -78,6 +78,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);
+			viewerDimension = getJChemPaintModel().getRendererModel().getBackgroundDimension();
 		}
 	}
 
@@ -139,9 +140,12 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		}
 		return str;
 	}
-	
+
+
 
 	/**
+	 *  If event is an closing event from JChemPaintEditorPanel which was opened by this viewer,
+	 *  sync the JChemPaintModels
 	 *  Description of the Class
 	 *
 	 *@author     thelmus
@@ -189,8 +193,8 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 					editorPanel.setIsOpenedByViewer(true);
 					frame.show();
 					frame.pack();
+					JChemPaintPanel.isViewerOnly = false;
 					editorPanel.setJChemPaintModel(thisModel);
-					editorPanel.isViewerOnly = false;
 				}
 			}
 		}
@@ -207,9 +211,9 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	public void stateChanged(ChangeEvent event) {
 		if (event.getSource() instanceof JChemPaintEditorPanel) {
 			JChemPaintEditorPanel editorPanel = (JChemPaintEditorPanel) event.getSource();
-			if (editorPanel.getLastEventReason() == editorPanel.JCP_CLOSING) {
-				setJChemPaintModel(editorPanel.getJChemPaintModel());
+			if (editorPanel.getLastEventReason() == JChemPaintEditorPanel.JCP_CLOSING) {
 				setViewerOnly();
+				setJChemPaintModel(editorPanel.getJChemPaintModel());
 			}
 		}
 		super.stateChanged(event);

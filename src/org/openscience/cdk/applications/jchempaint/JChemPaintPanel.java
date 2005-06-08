@@ -733,7 +733,8 @@ public abstract class JChemPaintPanel
 		Renderer2DModel model = jchemPaintModel.getRendererModel();
 		double relocatedY = model.getBackgroundDimension().getSize().getHeight() - (y + view.getY() / 2);
 		double relocatedX = view.getX() / 2;
-  	Dimension viewablePart = new Dimension((int) x, (int) y);
+		Dimension viewablePart = new Dimension((int) x, (int) y);
+		//GeometryTools.center(ac, viewablePart);
 		//to be fixed - check if molDim is reaching over viewablePart borders...
 		if (this instanceof JChemPaintViewerOnlyPanel) {
       GeometryTools.center(ac, model.getBackgroundDimension());
