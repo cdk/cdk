@@ -29,9 +29,12 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.net.URL;
+
+import javax.help.*;
 
 import org.openscience.cdk.applications.jchempaint.dialogs.HelpDialog;
-
+import org.openscience.cdk.applications.jchempaint.dialogs.JavaHelpDialog;
 
 /**
  * pops up the help
@@ -53,9 +56,18 @@ public class HelpAction extends JCPAction
 		if (type.equals("tutorial"))
 		{
 			new HelpDialog(null, "doc/userhelp/ch02.html").show();
-		} else
+		}  else
 		{
-			new HelpDialog(null, "doc/userhelp/ch03.html").show();
+		    try
+			{
+		        JavaHelpDialog jHD = new JavaHelpDialog("jhug.hs");
+		        jHD.getDisplayHelp().actionPerformed(e);
+		        
+			}catch (Exception ee)
+			{
+				System.out.println("HelpSet: "+ee.getMessage());
+				System.out.println("HelpSet: "+" not found");
+			}
 		}
 	}
 }
