@@ -133,6 +133,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     private Font customFont = null;
     
+    private boolean compact=false;
+    
     /**
      * @return null if no custom font set
      */
@@ -145,6 +147,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
         fireChange();
     }
     
+    public boolean getIsCompact() {
+        return compact;
+    }
+    
+    public void setIsCompact(boolean compact) {
+        this.compact=compact;
+    }
+
     public boolean getUseAntiAliasing() {
         return useAntiAliasing;
     }

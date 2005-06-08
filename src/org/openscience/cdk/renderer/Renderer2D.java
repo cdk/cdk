@@ -487,6 +487,17 @@ public class Renderer2D implements MouseMotionListener   {
             return;
         }
         
+        //This is for the compact version just with a square in the right color
+        if(r2dm.getIsCompact()){
+          if(!atom.getSymbol().equals("C")){
+            int labelX = (int)(atom.getPoint2d().x - 2);
+            int labelY = (int)(atom.getPoint2d().y + 2);
+            Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
+            paintEmptySpace(labelX, labelY, 5, 5, 0, atomColor, graphics);
+          }
+          return;
+        }
+        
         // The fonts for calculating geometries
         float subscriptFraction = 0.7f;
         Font normalFont = r2dm.getFont();
