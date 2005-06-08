@@ -728,7 +728,6 @@ public abstract class JChemPaintPanel
 		double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 		GeometryTools.scaleMolecule(ac, scaleFactor);
 		Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
-    System.err.println(view+" view");
     double x = view.getX() + view.getWidth();
 		double y = view.getY() + view.getHeight();
 		Renderer2DModel model = jchemPaintModel.getRendererModel();
