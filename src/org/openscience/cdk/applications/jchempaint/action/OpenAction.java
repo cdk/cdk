@@ -173,7 +173,10 @@ public class OpenAction extends JCPAction {
 						//The following do apply either to the existing or the new frame
 						jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
 						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);
-						((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());
+						if (jcpPanel.isEmbedded() == false) {
+							((JFrame)
+							jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(inFile.getName());
+						}
 						return;
 					}
 					else {
