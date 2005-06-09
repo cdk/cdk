@@ -560,6 +560,17 @@ public abstract class JChemPaintPanel
 			}
 			model.getRendererModel().setBackgroundDimension(new Dimension(width, height));
 		}
+		else if (model.getChemModel().getSetOfMolecules() == null && isViewerOnly) {
+			Dimension viewerDim = null;
+			try {
+				viewerDim = getViewerDimension();
+			}
+			catch (ClassCastException cce) {}
+			if (viewerDim != null) {
+				//sets BackgroundDim to default dim if using ViewerOnlyPanel
+				model.getRendererModel().setBackgroundDimension(viewerDim);
+				}
+		}
 		this.jchemPaintModel = model;
 		jchemPaintModel.addChangeListener(this);
 		ChemModel chemModel = model.getChemModel();

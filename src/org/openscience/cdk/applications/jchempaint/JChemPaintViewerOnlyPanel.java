@@ -80,8 +80,10 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 			super.setPreferredSize(viewerDimension);
 			viewerDimension = getJChemPaintModel().getRendererModel().getBackgroundDimension();
 		}
+		else {
+			viewerDimension = panelDimension;
+		}
 	}
-
 
 	/**
 	 *  Description of the Method
