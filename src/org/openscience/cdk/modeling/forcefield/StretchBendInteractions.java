@@ -10,12 +10,13 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.tools.LoggingTool;
 
-
 /**
- *  Stretch-Bend Interaction calculator for the potential energy function. Include function and derivatives.
+ *  Stretch-Bend Interaction calculator for the potential energy function.
+ *  Include function and derivatives.
  *
- * @author      vlabarta
- * @cdk.created 2005-02-15
+ *@author         vlabarta
+ *@created        June 6, 2005
+ *@cdk.created    2005-02-15
  *@cdk.module     builder3d
  */
 public class StretchBendInteractions {
@@ -23,44 +24,44 @@ public class StretchBendInteractions {
 	String functionShape = " Stretch-Bend Interactions ";
 
 	double mmff94SumEBA = 0;
-	GVector gradientMMFF94SumEBA = new GVector(3);
-	GMatrix hessianMMFF94SumEBA = new GMatrix(3,3);
+	GVector gradientMMFF94SumEBA = null;
+	GMatrix hessianMMFF94SumEBA = null;
+	GVector currentCoordinates = null;
+	GVector gradientCurrentCoordinates = null;
 
-	GVector dDeltav = new GVector(3);
-	GVector dDeltarij = new GVector(3);
-	GVector dDeltarkj = new GVector(3);
-	
-	int angleNumber = 0;
-	int[][] angleAtomPosition = null;
+	double[][] dDeltarij = null;
+	double[][] dDeltarkj = null;
+	double[][] dDeltav = null;
 
-	double[] v0 = null;
+	int[][] bondijAtomPosition = null;
+	int[][] bondkjAtomPosition = null;
 	double[] r0IJ = null;
 	double[] r0KJ = null;
 	double[] kbaIJK = null;
 	double[] kbaKJI = null;
-	double[] v = null;
-	double[] deltav = null;
 	double[] rij = null;
 	double[] rkj = null;
 	double[] deltarij = null;
 	double[] deltarkj = null;
 
 	ForceFieldTools ffTools = new ForceFieldTools();
+	BondStretching bs = new BondStretching();
+	AngleBending ab = new AngleBending();
 	private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the StretchBendInteractions object
 	 */
-	public StretchBendInteractions() {        
+	public StretchBendInteractions() {
 		logger = new LoggingTool(this);
 	}
 
 
 	/**
-	 *  Set MMFF94 reference angle v0IJK, reference bond lengths r0IJ and r0JK,
-	 *  and the constants kbaIJK and kbaKJI for each i-j-k angle in the molecule.
-	 *
+	 *  Set MMFF94 reference bond lengths r0IJ and r0JK and stretch-bend
+	 *  interaction constants kbaIJK and kbaKJI for each i-j-k angle in the
+	 *  molecule.
 	 *
 	 *@param  molecule       The molecule like an AtomContainer object.
 	 *@param  parameterSet   MMFF94 parameters set
@@ -68,40 +69,28 @@ public class StretchBendInteractions {
 	 */
 	public void setMMFF94StretchBendParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
 
+		ab.setMMFF94AngleBendingParameters(molecule, parameterSet);
+
 		Atom[] atomConnected = null;
-		
-		for (int j = 0; j < molecule.getAtomCount(); j++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(j));
-			if (atomConnected.length > 1) {
-				for (int i = 0; i < atomConnected.length; i++) {
-					for (int k = i+1; k < atomConnected.length; k++) {
-						angleNumber += 1;
-					}
-				}
-			}
-		}
-		//logger.debug("angleNumber = " + angleNumber);
 
 		Vector stretchBendInteractionsData = null;
 		Vector bondData = null;
-		Vector angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
 		pc.initilize(parameterSet);
-		
-		v0 = new double[angleNumber];
-		r0IJ = new double[angleNumber];
-		r0KJ = new double[angleNumber];
-		kbaIJK = new double[angleNumber];
-		kbaKJI = new double[angleNumber];
 
-		angleAtomPosition = new int[angleNumber][];
+		bondijAtomPosition = new int[ab.angleNumber][];
+		bondkjAtomPosition = new int[ab.angleNumber][];
+		r0IJ = new double[ab.angleNumber];
+		r0KJ = new double[ab.angleNumber];
+		kbaIJK = new double[ab.angleNumber];
+		kbaKJI = new double[ab.angleNumber];
 
 		int l = -1;
 		for (int j = 0; j < molecule.getAtomCount(); j++) {
 			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(j));
 			if (atomConnected.length > 1) {
 				for (int i = 0; i < atomConnected.length; i++) {
-					for (int k = i+1; k < atomConnected.length; k++) {
+					for (int k = i + 1; k < atomConnected.length; k++) {
 						stretchBendInteractionsData = pc.getBondAngleInteractionData(atomConnected[i].getID(), molecule.getAtomAt(j).getID(), atomConnected[k].getID());
 						//logger.debug("stretchBendInteractionsData : " + stretchBendInteractionsData);
 						l += 1;
@@ -110,113 +99,140 @@ public class StretchBendInteractions {
 
 						//logger.debug("kbaIJK[" + l + "] = " + kbaIJK[l]);
 						//logger.debug("kbaKJI[" + l + "] = " + kbaKJI[l]);
-						
-						angleData = pc.getAngleData(atomConnected[i].getID(), molecule.getAtomAt(j).getID(), atomConnected[k].getID());		
-						v0[l] = ((Double) angleData.get(0)).doubleValue();
 
 						bondData = pc.getBondData(atomConnected[i].getID(), molecule.getAtomAt(j).getID());
 						r0IJ[l] = ((Double) bondData.get(0)).doubleValue();
 						bondData = pc.getBondData(atomConnected[k].getID(), molecule.getAtomAt(j).getID());
 						r0KJ[l] = ((Double) bondData.get(0)).doubleValue();
 						
-						angleAtomPosition[l] = new int[3];
-						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[i]);
-						angleAtomPosition[l][1] = j;
-						angleAtomPosition[l][2] = molecule.getAtomNumber(atomConnected[k]);
-
+						bondijAtomPosition[l] = new int[2];
+						bondijAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[i]);
+						bondijAtomPosition[l][1] = j;
+						
+						bondkjAtomPosition[l] = new int[2];
+						bondkjAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[k]);
+						bondkjAtomPosition[l][1] = j;
 					}
 				}
 			}
 		}
-		v = new double[angleNumber];
-		deltav = new double[angleNumber];
-		rij = new double[angleNumber];
-		rkj = new double[angleNumber];
-		deltarij = new double[angleNumber];
-		deltarkj = new double[angleNumber];
-
+		rij = new double[ab.angleNumber];
+		rkj = new double[ab.angleNumber];
+		deltarij = new double[ab.angleNumber];
+		deltarkj = new double[ab.angleNumber];
+		currentCoordinates = new GVector(3 * molecule.getAtomCount());
+		gradientCurrentCoordinates = new GVector(3 * molecule.getAtomCount());
+		gradientMMFF94SumEBA = new GVector(3 * molecule.getAtomCount());
+		dDeltarij = new double[3 * molecule.getAtomCount()][];
+		dDeltarkj = new double[3 * molecule.getAtomCount()][];
+		dDeltav = new double[3 * molecule.getAtomCount()][];
+		hessianMMFF94SumEBA = new GMatrix(3 * molecule.getAtomCount(), 3 * molecule.getAtomCount());
+		for (int i = 0; i < 3 * molecule.getAtomCount(); i++) {
+			dDeltarij[i] = new double[ab.angleNumber];
+			dDeltarkj[i] = new double[ab.angleNumber];
+			dDeltav[i] = new double[ab.angleNumber];
+		}
 
 	}
 
 
 	/**
-	 *  Calculate the actual bond angles vijk, bond distances rij and rkj, and the difference with the reference angles and bonds
+	 *  Calculate the current bond distances rij and rkj for each angle j, and the
+	 *  difference with the reference bonds.
 	 *
 	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void calculateDeltarAndv(GVector coords3d) {
+	public void setDeltarijAndDeltarkj(GVector coords3d) {
 
-		for (int i = 0; i < angleNumber; i++) {
-			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coords3d, angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
-			//logger.debug("v[" + i + "]= " + v[i]);
-			deltav[i] = v[i] - v0[i];
-
-			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][1], angleAtomPosition[i][0]);
+		for (int i = 0; i < ab.angleNumber; i++) {
+			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, ab.angleAtomPosition[i][1], ab.angleAtomPosition[i][0]);
 			deltarij[i] = rij[i] - r0IJ[i];
+			//logger.debug("deltarij[" + i + "] = " + deltarij[i]);
 
-			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, angleAtomPosition[i][1], angleAtomPosition[i][2]);
+			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, ab.angleAtomPosition[i][1], ab.angleAtomPosition[i][2]);
 			deltarkj[i] = rkj[i] - r0KJ[i];
+			//logger.debug("deltarkj[" + i + "] = " + deltarkj[i]);
 		}
 	}
 
 
 	/**
-	 *  Evaluate the MMFF94 stretch-bend interaction term.
+	 *  Set the MMFF94 stretch-bend interaction term given the atoms cartesian
+	 *  coordinates.
 	 *
 	 *@param  coords3d  Current molecule coordinates.
-	 *@return        MMFF94 stretch-bend interaction term value.
 	 */
-	public double functionMMFF94SumEBA(GVector coords3d) {
-		calculateDeltarAndv(coords3d);
-		mmff94SumEBA = 0;
-		for (int j = 0; j < angleNumber; j++) {
-			mmff94SumEBA = mmff94SumEBA + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * deltav[j];
+	public void setFunctionMMFF94SumEBA(GVector coords3d) {
+		if (currentCoordinates.equals(coords3d)) {
+		} else {
+			setDeltarijAndDeltarkj(coords3d);
+			ab.setDeltav(coords3d);
+			mmff94SumEBA = 0;
+			for (int j = 0; j < ab.angleNumber; j++) {
+				//logger.debug("kbaIJK[" + j + "] = " + kbaIJK[j]);
+				//logger.debug("kbaKJI[" + j + "] = " + kbaKJI[j]);
+				//logger.debug("deltarij[" + j + "] = " + deltarij[j]);
+				//logger.debug("deltarkj[" + j + "] = " + deltarkj[j]);
+				//logger.debug("ab.deltav[" + j + "] = " + ab.deltav[j]);
+				mmff94SumEBA = mmff94SumEBA + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * ab.deltav[j];
+				//logger.debug("mmff94SumEBA = " + mmff94SumEBA);
+			}
+			//logger.debug("mmff94SumEBA = " + mmff94SumEBA);
+			currentCoordinates.set(coords3d);
 		}
-		//logger.debug("mmff94SumEBA = " + mmff94SumEBA);
+	}
+
+
+	/**
+	 *  Get the MMFF94 stretch-bend interaction term.
+	 *
+	 *@return    MMFF94 stretch-bend interaction term value.
+	 */
+	public double getFunctionMMFF94SumEBA() {
 		return mmff94SumEBA;
 	}
 
 
 	/**
-	 *  Evaluate the gradient of the stretch-bend interaction term. 
-	 *  
+	 *  Evaluate the gradient of the stretch-bend interaction term.
 	 *
 	 *@param  coords3d  Current molecule coordinates.
 	 */
 	public void setGradientMMFF94SumEBA(GVector coords3d) {
 
-		gradientMMFF94SumEBA.setSize(coords3d.getSize());
-		calculateDeltarAndv(coords3d);
-		dDeltav.setSize(coords3d.getSize());
-		dDeltarij.setSize(coords3d.getSize());
-		dDeltarkj.setSize(coords3d.getSize());
+		if (currentCoordinates.equals(coords3d)) {
+		} else {
+			setFunctionMMFF94SumEBA(coords3d);
+		}
 
+		bs.setBondLengthsFirstDerivative(coords3d, deltarij, bondijAtomPosition);
+		dDeltarij = bs.getBondLengthsFirstDerivative();
+		bs.setBondLengthsFirstDerivative(coords3d, deltarkj, bondkjAtomPosition);
+		dDeltarkj = bs.getBondLengthsFirstDerivative();
+		ab.setAngleBending2ndOrderErrorApproximateGradient(coords3d);
+		dDeltav = ab.getAngleBending2ndOrderErrorApproximateGradient();
+
+		if (dDeltav == null) {logger.debug("setGradient: dDeltav null");} 
 		double sumGradientEBA;
 		for (int i = 0; i < gradientMMFF94SumEBA.getSize(); i++) {
-
 			sumGradientEBA = 0;
-			dDeltav.setElement(i,1);                 // dDeltav : partial derivative of deltav. To change in the future
-			dDeltarij.setElement(i,1);                 // dDeltarij : partial derivative of deltav. To change in the future
-			dDeltarkj.setElement(i,1);                 // dDeltarkj : partial derivative of deltav. To change in the future
-
-			for (int j = 0; j < angleNumber; j++) {
-
-				sumGradientEBA = sumGradientEBA + (kbaIJK[j] * dDeltarij.getElement(i) + kbaKJI[j] * dDeltarkj.getElement(i)) * deltav[j] 
-							+ (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * dDeltav.getElement(i);
+			for (int j = 0; j < ab.angleNumber; j++) {
+				sumGradientEBA = sumGradientEBA + (kbaIJK[j] * dDeltarij[i][j] + kbaKJI[j] * dDeltarkj[i][j]) * ab.deltav[j]
+						 + (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * ab.angleBendingOrder2ndErrorApproximateGradient[i][j];
 			}
 			sumGradientEBA = sumGradientEBA * 2.51210;
-			
+
 			gradientMMFF94SumEBA.setElement(i, sumGradientEBA);
+			gradientCurrentCoordinates.set(coords3d);
 		}
 		//logger.debug("gradientMMFF94SumEBA = " + gradientMMFF94SumEBA);
 	}
 
 
 	/**
-	 *  Get the gradient of the stretch-bend interaction term. 
-	 *  
+	 *  Get the gradient of the stretch-bend interaction term.
 	 *
-	 *@return           stretch-bend interaction gradient value.
+	 *@return    stretch-bend interaction gradient value.
 	 */
 	public GVector getGradientMMFF94SumEBA() {
 		return gradientMMFF94SumEBA;
@@ -231,28 +247,56 @@ public class StretchBendInteractions {
 	public void setHessianMMFF94SumEBA(GVector coords3d) {
 
 		double[] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
-		calculateDeltarAndv(coords3d);
-		double sumHessianEBA = 0;
 
-		GMatrix ddDeltav = new GMatrix(coords3d.getSize(),coords3d.getSize());
-		ddDeltav.setZero();
-		GMatrix ddDeltarij = new GMatrix(coords3d.getSize(),coords3d.getSize());
-		ddDeltarij.setZero();
-		GMatrix ddDeltarkj = new GMatrix(coords3d.getSize(),coords3d.getSize());
-		ddDeltarkj.setZero();
+		if (currentCoordinates.equals(coords3d)) {
+		} else {
+			setFunctionMMFF94SumEBA(coords3d);
+		}
 
-		for (int i = 0; i < forHessian.length; i++) {
-			for (int j = 0; j < angleNumber; j++) {
-				sumHessianEBA = sumHessianEBA + (kbaIJK[j] * ddDeltarij.getElement(0,0) + kbaKJI[j] * ddDeltarkj.getElement(0,0)) * deltav[j] 
-							+ (kbaIJK[j] * dDeltarij.getElement(0) + kbaKJI[j] * dDeltarkj.getElement(0)) * dDeltav.getElement(0) 
-							+ (kbaIJK[j] * dDeltarij.getElement(0) + kbaKJI[j] * dDeltarkj.getElement(0)) * dDeltav.getElement(0) 
-							+ (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * ddDeltav.getElement(0,0);
+		if (dDeltarij == null) {logger.debug("dDeltarij null");} 
+		if (gradientCurrentCoordinates.equals(coords3d) == false) {
+			bs.setBondLengthsFirstDerivative(coords3d, deltarij, bondijAtomPosition);
+			dDeltarij = bs.getBondLengthsFirstDerivative();
+		}
+		if (dDeltarkj == null) {logger.debug("dDeltarkj null");} 
+		if (gradientCurrentCoordinates.equals(coords3d) == false) {
+			bs.setBondLengthsFirstDerivative(coords3d, deltarkj, bondkjAtomPosition);
+			dDeltarkj = bs.getBondLengthsFirstDerivative();
+		}
+		if (dDeltav == null) {logger.debug("setHessian: dDeltav null");} 
+		if (gradientCurrentCoordinates.equals(coords3d) == false) {
+			//logger.debug("ab.setAngleBending2ndOrderErrorApproximateGradient()");
+			ab.setAngleBending2ndOrderErrorApproximateGradient(coords3d);
+			dDeltav = ab.getAngleBending2ndOrderErrorApproximateGradient();
+		}
+		
+		ab.setAngleBending2ndOrderErrorApproximateHessian(coords3d);
+		double[][][] ddDeltav = ab.getAngleBending2ndOrderErrorApproximateHessian();
+		bs.setBondLengthsSecondDerivative(coords3d, deltarij, bondijAtomPosition);
+		double[][][] ddDeltarij = bs.getBondLengthsSecondDerivative();
+		bs.setBondLengthsSecondDerivative(coords3d, deltarkj, bondkjAtomPosition);
+		double[][][] ddDeltarkj = bs.getBondLengthsSecondDerivative();
+		
+		if (dDeltav == null) {logger.debug("setHessian: dDeltav null");} 
+		//logger.debug("ab.angleNumber = " + ab.angleNumber);
+		double sumHessianEBA;
+		int forHessianIndex;
+		for (int i = 0; i < coords3d.getSize(); i++) {
+			for (int j = 0; j < coords3d.getSize(); j++) {
+				forHessianIndex = i*coords3d.getSize()+j;
+				sumHessianEBA = 0;
+				for (int k = 0; k < ab.angleNumber; k++) {
+					sumHessianEBA = sumHessianEBA + (kbaIJK[k] * ddDeltarij[i][j][k] + kbaKJI[k] * ddDeltarkj[i][j][k]) * ab.deltav[k]
+						 + (kbaIJK[k] * dDeltarij[j][k] + kbaKJI[k] * dDeltarkj[j][k]) * dDeltav[j][k]
+						 + (kbaIJK[k] * dDeltarij[j][k] + kbaKJI[k] * dDeltarkj[j][k]) * dDeltav[j][k]
+						 + (kbaIJK[k] * deltarij[k] + kbaKJI[k] * deltarkj[k]) * ddDeltav[i][j][k];
+				}
+				forHessian[forHessianIndex] = sumHessianEBA;
 			}
-			forHessian[i] = sumHessianEBA;
 		}
 
 		hessianMMFF94SumEBA.setSize(coords3d.getSize(), coords3d.getSize());
-		hessianMMFF94SumEBA.set(forHessian); 
+		hessianMMFF94SumEBA.set(forHessian);
 		//logger.debug("hessianMMFF94SumEBA : " + hessianMMFF94SumEBA);
 	}
 
@@ -260,7 +304,7 @@ public class StretchBendInteractions {
 	/**
 	 *  Get the hessian of the stretch-bend interaction.
 	 *
-	 *@return        Hessian value of the stretch-bend interaction term.
+	 *@return    Hessian value of the stretch-bend interaction term.
 	 */
 	public GMatrix getHessianMMFF94SumEBA() {
 		return hessianMMFF94SumEBA;

@@ -20,20 +20,22 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MMFF94EnergyFunction implements PotentialFunction {
 	String energyFunctionShape = " MMFF94 energy ";
 	double energy = 0;
-	GVector energyGradient = new GVector(3);
-	GVector order2ndApproximateEnergyGradient = new GVector(3);
-	GVector order5ApproximateEnergyGradient = new GVector(3);
+	GVector energyGradient = null;
+	GVector order2ndErrorApproximateEnergyGradient = new GVector(3);
+	GVector order5thErrorApproximateEnergyGradient = new GVector(3);
 	GMatrix energyHessian = null;
-	
+	double[] forHessian = null;
 	
 	ForceFieldTools fft = new ForceFieldTools();
 	private LoggingTool logger;
 	
 	BondStretching bs = new BondStretching();
 	AngleBending ab = new AngleBending();
-	//StretchBendInteractions sbi = new StretchBendInteractions();
+	StretchBendInteractions sbi = new StretchBendInteractions();
 	Torsions t =new Torsions();
-	//VanDerWaalsInteractions vdwi = new VanDerWaalsInteractions();
+	VanDerWaalsInteractions vdwi = new VanDerWaalsInteractions();
+	ElectrostaticInteractions ei = new ElectrostaticInteractions();
+	int count = 0;
 
 
 	/**
@@ -44,9 +46,10 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 		//logger.debug(molecule.getAtomCount() + " "+mmff94Tables.size());
 		bs.setMMFF94BondStretchingParameters(molecule, mmff94Tables);
 		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables);
-		//sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables);
+		sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables);
 		t.setMMFF94TorsionsParameters(molecule, mmff94Tables);
-		//vdwi.setMMFF94VanDerWaalsParameters(molecule, mmff94Tables);        
+		vdwi.setMMFF94VanDerWaalsParameters(molecule, mmff94Tables);        
+		ei.setMMFF94ElectrostaticParameters(molecule, mmff94Tables);        
 		logger = new LoggingTool(this);
 	}
 
@@ -58,17 +61,28 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	 *@return        MMFF94 energy function value.
 	 */
 	public double energyFunction(GVector coords3d) {
-		//logger.debug("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
-		//logger.debug("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
-		//logger.debug("sbi.functionMMFF94SumEBA(coords3d) = " + sbi.functionMMFF94SumEBA(coords3d));
-		//logger.debug("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
-		//logger.debug("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.functionMMFF94SumEvdW(coords3d));
+		vdwi.setFunctionMMFF94SumEvdW(coords3d);
+		sbi.setFunctionMMFF94SumEBA(coords3d);
 		
-		energy = bs.functionMMFF94SumEB(coords3d) 
-			+ ab.functionMMFF94SumEA(coords3d) // + sbi.functionMMFF94SumEBA(coords3d)
-			+ t.functionMMFF94SumET(coords3d) ; //+ vdwi.functionMMFF94SumEvdW(coords3d);
+		energy = bs.functionMMFF94SumEB(coords3d)
+			+ ab.functionMMFF94SumEA(coords3d) 
+			+ sbi.getFunctionMMFF94SumEBA()
+			+ t.functionMMFF94SumET(coords3d)
+			+ vdwi.getFunctionMMFF94SumEvdW()
+			+ ei.functionMMFF94SumEQ(coords3d)
+			;
 		
-		//logger.debug("energy = " + energy);
+		count += 1;
+		if (count == 0 | count % 20 == 0) {
+			logger.debug("count = " + count);
+			logger.debug("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
+			logger.debug("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
+			logger.debug("sbi.functionMMFF94SumEBA(coords3d) = " + sbi.getFunctionMMFF94SumEBA());
+			logger.debug("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
+			logger.debug("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.getFunctionMMFF94SumEvdW());
+			logger.debug("ei.functionMMFF94SumEQ(coords3d) = " + ei.functionMMFF94SumEQ(coords3d));
+			logger.debug("energy = " + energy);
+		}
 		return energy;
 	}
 
@@ -79,18 +93,19 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	 *@param  coords3d  Current molecule coordinates.
 	 */
 	public void setEnergyGradient(GVector coords3d) {
-		//setOrder2ndApproximateEnergyGradient(coords3d);
+		//setOrder2ndErrorApproximateEnergyGradient(coords3d);
 		
 		//logger.debug("coords3d : " + coords3d);
-		energyGradient.setSize(coords3d.getSize());
+		energyGradient = new GVector(coords3d.getSize());
 		
 		bs.setGradientMMFF94SumEB(coords3d);
-		ab.set2ndOrderApproximateGradientMMFF94SumEA(coords3d);
-		//ab.set5thOrderApproximateGradientMMFF94SumEA(coords3d);
-		//sbi.setGradientMMFF94SumEBA(coords3d);
-		t.set2ndOrderApproximateGradientMMFF94SumET(coords3d);
-		//t.set5thOrderApproximateGradientMMFF94SumET(coords3d);
-		//vdwi.setGradientMMFF94SumEvdW(coords3d);
+		ab.set2ndOrderErrorApproximateGradientMMFF94SumEA(coords3d);
+		//ab.set5thOrderErrorApproximateGradientMMFF94SumEA(coords3d);
+		sbi.setGradientMMFF94SumEBA(coords3d);
+		t.set2ndOrderErrorApproximateGradientMMFF94SumET(coords3d);
+		//t.set5thOrderErrorApproximateGradientMMFF94SumET(coords3d);
+		vdwi.setGradientMMFF94SumEvdW(coords3d);
+		ei.setGradientMMFF94SumEQ(coords3d);
 		
 		//logger.debug("bs.getGradientMMFF94SumEB() = " + bs.getGradientMMFF94SumEB());
 		//logger.debug("ab.getGradientMMFF94SumEA() = " + ab.getGradientMMFF94SumEA());
@@ -98,8 +113,12 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 		for (int i=0; i < energyGradient.getSize(); i++) {
 			energyGradient.setElement(i, 
 				bs.getGradientMMFF94SumEB().getElement(i) 
-				+ ab.get2ndOrderApproximateGradientMMFF94SumEA().getElement(i) // + sbi.getGradientMMFF94SumEBA().getElement(i)
-				+ t.get2ndOrderApproximateGradientMMFF94SumET().getElement(i) ); // + vdwi.getGradientMMFF94SumEvdW().getElement(i));
+				+ ab.get2ndOrderErrorApproximateGradientMMFF94SumEA().getElement(i)
+				+ sbi.getGradientMMFF94SumEBA().getElement(i)
+				+ t.get2ndOrderErrorApproximateGradientMMFF94SumET().getElement(i)
+				+ vdwi.getGradientMMFF94SumEvdW().getElement(i)
+				+ ei.getGradientMMFF94SumEQ().getElement(i)
+				);
 		}
 	}
 
@@ -111,58 +130,58 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	 */
 	public GVector getEnergyGradient() {
 		return energyGradient;
-		//return order2ndApproximateEnergyGradient;
+		//return order2ndErrorApproximateEnergyGradient;
 	}
 
 
 	/**
-	 *  Evaluate the order 2 approximate gradient for the MMFF94 energy function in a given 3xN point.
+	 *  Evaluate the 2nd order error approximate gradient for the MMFF94 energy function in a given 3xN point.
 	 *
 	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setOrder2ndApproximateEnergyGradient(GVector coords3d) {
+	public void setOrder2ndErrorApproximateEnergyGradient(GVector coords3d) {
 		//logger.debug("coords3d : " + coords3d);
-		order2ndApproximateEnergyGradient.setSize(coords3d.getSize());
+		order2ndErrorApproximateEnergyGradient.setSize(coords3d.getSize());
 		double sigma = Math.pow(0.0000000000000001,0.3333);
 		GVector xplusSigma = new GVector(coords3d.getSize());
 		GVector xminusSigma = new GVector(coords3d.getSize());
 		
-		for (int i=0; i < order2ndApproximateEnergyGradient.getSize(); i++) {
+		for (int i=0; i < order2ndErrorApproximateEnergyGradient.getSize(); i++) {
 			xplusSigma.set(coords3d);
 			xplusSigma.setElement(i,coords3d.getElement(i) + sigma);
 			xminusSigma.set(coords3d);
 			xminusSigma.setElement(i,coords3d.getElement(i) - sigma);
-			order2ndApproximateEnergyGradient.setElement(i, (energyFunction(xplusSigma) - energyFunction(xminusSigma)) / (2 * sigma));
+			order2ndErrorApproximateEnergyGradient.setElement(i, (energyFunction(xplusSigma) - energyFunction(xminusSigma)) / (2 * sigma));
 		}
-		//logger.debug("order2ndApproximateEnergyGradient : " + order2ndApproximateEnergyGradient);
+		//logger.debug("order2ndErrorApproximateEnergyGradient : " + order2ndErrorApproximateEnergyGradient);
 	}
 
 
 	/**
-	 *  Get the order 2 approximate gradient for the MMFF94 energy function in a given 3xN point.
+	 *  Get the 2nd order error approximate gradient for the MMFF94 energy function.
 	 *
-	 *@return        Order 2 approximate MMFF94 energy gradient value
+	 *@return        2nd order error approximate MMFF94 energy gradient value
 	 */
-	public GVector getOrder2ndApproximateEnergyGradient() {
-		return order2ndApproximateEnergyGradient;
+	public GVector getOrder2ndErrorApproximateEnergyGradient() {
+		return order2ndErrorApproximateEnergyGradient;
 	}
 
 
 	/**
-	 *  Evaluate the order 5 approximate gradient for the MMFF94 energy function in a given 3xN point
+	 *  Evaluate the 5th order error approximate gradient for the MMFF94 energy function, given a 3xN point
 	 *
 	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void setOrder5ApproximateEnergyGradient(GVector coords3d) {
+	public void setOrder5thErrorApproximateEnergyGradient(GVector coords3d) {
 		//logger.debug("coords3d : " + coords3d);
-		order5ApproximateEnergyGradient.setSize(coords3d.getSize());
+		order5thErrorApproximateEnergyGradient.setSize(coords3d.getSize());
 		double sigma = Math.pow(0.0000000000000001,0.2);
 		GVector xplusSigma = new GVector(coords3d.getSize());
 		GVector xminusSigma = new GVector(coords3d.getSize());
 		GVector xplus2Sigma = new GVector(coords3d.getSize());
 		GVector xminus2Sigma = new GVector(coords3d.getSize());
 		
-		for (int i=0; i < order5ApproximateEnergyGradient.getSize(); i++) {
+		for (int i=0; i < order5thErrorApproximateEnergyGradient.getSize(); i++) {
 			xplusSigma.set(coords3d);
 			xplusSigma.setElement(i,coords3d.getElement(i) + sigma);
 			xminusSigma.set(coords3d);
@@ -171,20 +190,20 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 			xplus2Sigma.setElement(i,coords3d.getElement(i) + 2 * sigma);
 			xminus2Sigma.set(coords3d);
 			xminus2Sigma.setElement(i,coords3d.getElement(i) - 2 * sigma);
-			order5ApproximateEnergyGradient.setElement(i, (8 * (energyFunction(xplusSigma) - energyFunction(xminusSigma)) - (energyFunction(xplus2Sigma) - energyFunction(xminus2Sigma))) / (12 * sigma));
+			order5thErrorApproximateEnergyGradient.setElement(i, (8 * (energyFunction(xplusSigma) - energyFunction(xminusSigma)) - (energyFunction(xplus2Sigma) - energyFunction(xminus2Sigma))) / (12 * sigma));
 		}
 			
-		//logger.debug("order5ApproximateEnergyGradient : " + order5ApproximateEnergyGradient);
+		//logger.debug("order5thErrorApproximateEnergyGradient : " + order5thErrorApproximateEnergyGradient);
 	}
 
 
 	/**
-	 *  Get the order 5 approximate gradient for the MMFF94 energy function in a given 3xN point
+	 *  Get the 5th order error approximate gradient for the MMFF94 energy function.
 	 *
-	 *@return        Order 5 approximate MMFF94 energy gradient value
+	 *@return        5th order error approximate MMFF94 energy gradient value.
 	 */
-	public GVector getOrder5ApproximateEnergyGradient() {
-		return order5ApproximateEnergyGradient;
+	public GVector getOrder5thErrorApproximateEnergyGradient() {
+		return order5thErrorApproximateEnergyGradient;
 	}
 
 
@@ -195,20 +214,31 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	 */
 	public void setEnergyHessian(GVector coords3d) {
 		
-		double [] forHessian = new double[coords3d.getSize() * coords3d.getSize()];
+		forHessian = new double[coords3d.getSize() * coords3d.getSize()];
 		
 		bs.setHessianMMFF94SumEB(coords3d);
-		ab.setHessianMMFF94SumEA(coords3d);
-		//sbi.setHessianMMFF94SumEBA(coords3d);
+		//bs.set2ndOrderErrorApproximateHessianMMFF94SumEB(coords3d);
+		//ab.setHessianMMFF94SumEA(coords3d);
+		ab.set2ndOrderErrorApproximateHessianMMFF94SumEA(coords3d);
+		sbi.setHessianMMFF94SumEBA(coords3d);
 		//t.setHessianMMFF94SumET(coords3d);
-		//vdwi.setHessianMMFF94SumEvdW(coords3d);
+		t.set2ndOrderErrorApproximateHessianMMFF94SumET(coords3d);
+		vdwi.setHessianMMFF94SumEvdW(coords3d);
+		ei.setHessianMMFF94SumEQ(coords3d);
 		
 		for (int i = 0; i < coords3d.getSize(); i++) {
 			for (int j = 0; j < coords3d.getSize(); j++) {
-				forHessian [i*coords3d.getSize()+j] = 
-					bs.getHessianMMFF94SumEB().getElement(i,j) 
-					+ ab.getHessianMMFF94SumEA().getElement(i,j)// + sbi.getHessianMMFF94SumEBA().getElement(i,j) 
-					;//+ t.getHessianMMFF94SumET().getElement(i,j) ;//+ vdwi.getHessianMMFF94SumEvdW().getElement(i,j);
+				forHessian[i*coords3d.getSize()+j] = 
+					bs.getHessianMMFF94SumEB().getElement(i,j)
+					//bs.get2ndOrderErrorApproximateHessianMMFF94SumEB().getElement(i,j);
+					//+ ab.getHessianMMFF94SumEA().getElement(i,j)	//not working
+					+ ab.get2ndOrderErrorApproximateHessianMMFF94SumEA().getElement(i,j)
+					+ sbi.getHessianMMFF94SumEBA().getElement(i,j)
+					//+ t.getHessianMMFF94SumET().getElement(i,j)	//not working
+					+ t.get2ndOrderErrorApproximateHessianMMFF94SumET().getElement(i,j)
+					+ vdwi.getHessianMMFF94SumEvdW().getElement(i,j)
+					+ ei.getHessianMMFF94SumEQ().getElement(i,j)
+					;
 			}		
 		}
 		energyHessian = new GMatrix(coords3d.getSize(), coords3d.getSize(), forHessian);
@@ -216,12 +246,22 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 
 
 	/**
-	 *  Get the hessian for the MMFF94 energy function in a given 3xN point.
+	 *  Get the hessian for the MMFF94 energy function.
 	 *
 	 *@return        MMFF94 energy hessian value
 	 */
 	public GMatrix getEnergyHessian() {
 		return energyHessian;
+	}
+
+
+	/**
+	 *  Get the hessian for the MMFF94 energy function.
+	 *
+	 *@return        MMFF94 energy hessian value
+	 */
+	public double[] getForEnergyHessian() {
+		return forHessian;
 	}
 
 }

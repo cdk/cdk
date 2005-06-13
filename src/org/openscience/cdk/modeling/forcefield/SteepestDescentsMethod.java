@@ -16,7 +16,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  */
 public class SteepestDescentsMethod {
-	GVector sk = new GVector(3);
+	GVector sk = null;
 	private LoggingTool logger;
 
 
@@ -31,7 +31,7 @@ public class SteepestDescentsMethod {
 	 *@param  coords3d  Coordinates from current point
 	 */
 	public SteepestDescentsMethod(GVector coords3d) {
-		sk.setSize(coords3d.getSize());
+		sk = new GVector(coords3d.getSize());
 	}
 
 
@@ -39,14 +39,12 @@ public class SteepestDescentsMethod {
 	 *  sk=-gK/|gk|
 	 *
 	 * @param  gk  Gradient at coordinates Xk
-	 * @param  iterNumber  Iteration number
 	 */
-	public void setSk(GVector gk, int iterNumber) {
-
+	public void setSk(GVector gk) {
 		sk.set(gk);
 		sk.normalize();
 		sk.scale(-1);
-		//logger.debug("vectorS" + iterNumber + " = " + sk);
+		//logger.debug("vectorS = " + sk);
 		return;
 	}
 

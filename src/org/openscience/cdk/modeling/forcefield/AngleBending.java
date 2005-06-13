@@ -25,13 +25,18 @@ public class AngleBending {
 	String functionShape = " Angle bending ";
 
 	double mmff94SumEA = 0;
-	GVector gradientMMFF94SumEA = new GVector(3);
-	GVector order2ndApproximateGradientMMFF94SumEA = new GVector(3);
-	GVector order5ApproximateGradientMMFF94SumEA = new GVector(3);
-	GMatrix hessianMMFF94SumEA = new GMatrix(3,3);
+	GVector gradientMMFF94SumEA = null;
+	GVector order2ndErrorApproximateGradientMMFF94SumEA = null;
+	GVector order5thErrorApproximateGradientMMFF94SumEA = null;
+	GMatrix hessianMMFF94SumEA = null;
+	double[] forHessian = null;
+	GMatrix order2ndErrorApproximateHessianMMFF94SumEA = null;
+	double[] forOrder2ndErrorApproximateHessian = null;
 
 	double[][] dDeltav = null;
+	double[][] angleBendingOrder2ndErrorApproximateGradient = null;
 	double[][][] ddDeltav = null;
+	double[][][] angleBendingOrder2ndErrorApproximateHessian = null;
 
 	int angleNumber = 0;
 	int[][] angleAtomPosition = null;
@@ -122,7 +127,6 @@ public class AngleBending {
 		v = new double[angleNumber];
 		deltav = new double[angleNumber];
 
-
 	}
 
 
@@ -131,7 +135,7 @@ public class AngleBending {
 	 *
 	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void calculateDeltav(GVector coord3d) {
+	public void setDeltav(GVector coord3d) {
 		
 		//logger.debug("deltav.length = " + deltav.length);
 		for (int i = 0; i < angleNumber; i++) {
@@ -150,13 +154,23 @@ public class AngleBending {
 
 
 	/**
+	 *  Get the current difference between the bond angles vijk and the reference angles.
+	 *
+	 *@return  Difference between the current bond angles vijk and the reference angles.
+	 */
+	public double[] getDeltav() {
+		return deltav;	
+	}
+
+
+	/**
 	 *  Evaluate the MMFF94 angle bending term for the given atoms coordinates
 	 *
 	 *@param  coord3d  Current molecule coordinates.
 	 *@return        MMFF94 angle bending term value
 	 */
 	public double functionMMFF94SumEA(GVector coord3d) {
-		calculateDeltav(coord3d);
+		setDeltav(coord3d);
 		mmff94SumEA = 0;
 		for (int i = 0; i < angleNumber; i++) {
 			//logger.debug("k2[" + i + "]= " + k2[i]);
@@ -283,14 +297,58 @@ public class AngleBending {
 
 
 	/**
+	 *  Set a 2nd order approximation of the gradient, for the angle bending, given the atoms
+	 *  coordinates
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void setAngleBending2ndOrderErrorApproximateGradient(GVector coord3d) {
+		angleBendingOrder2ndErrorApproximateGradient = new double[coord3d.getSize()][];
+		double sigma = Math.pow(0.000000000000001,0.33);
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		
+		double[] deltavInXplusSigma = null;
+		double[] deltavInXminusSigma = null;
+		for (int m = 0; m < angleBendingOrder2ndErrorApproximateGradient.length; m++) {
+			angleBendingOrder2ndErrorApproximateGradient[m] = new double[angleNumber];
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
+			setDeltav(xplusSigma);
+			deltavInXplusSigma = getDeltav();
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
+			setDeltav(xminusSigma);
+			deltavInXminusSigma = getDeltav();
+			for (int l=0; l < angleNumber; l++) {
+				angleBendingOrder2ndErrorApproximateGradient[m][l] = (deltavInXplusSigma[l] - deltavInXminusSigma[l]) / (2 * sigma);
+			}
+		}
+			
+		//logger.debug("order2ndErrorApproximateGradientMMFF94SumEA : " + order2ndErrorApproximateGradientMMFF94SumEA);
+	}
+
+
+	/**
+	 *  Get the angle bending 2nd order error approximate gradient.
+	 *
+	 *
+	 *@return           Angle bending 2nd order error approximate gradient value.
+	 */
+	public double[][] getAngleBending2ndOrderErrorApproximateGradient() {
+		return angleBendingOrder2ndErrorApproximateGradient;
+	}
+
+
+	/**
 	 *  Evaluate the gradient of the angle bending term for a given atoms
 	 *  coordinates
 	 *
 	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void setGradientMMFF94SumEA(GVector coord3d) {
-		gradientMMFF94SumEA.setSize(coord3d.getSize());
-		calculateDeltav(coord3d);
+		gradientMMFF94SumEA = new GVector(coord3d.getSize());
+		setDeltav(coord3d);
 		setAngleBendingFirstDerivative(coord3d);
 		
 		double sumGradientEA;
@@ -326,50 +384,50 @@ public class AngleBending {
 	 *
 	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void set2ndOrderApproximateGradientMMFF94SumEA(GVector coord3d) {
-		order2ndApproximateGradientMMFF94SumEA.setSize(coord3d.getSize());
+	public void set2ndOrderErrorApproximateGradientMMFF94SumEA(GVector coord3d) {
+		order2ndErrorApproximateGradientMMFF94SumEA = new GVector(coord3d.getSize());
 		double sigma = Math.pow(0.000000000000001,0.33);
 		GVector xplusSigma = new GVector(coord3d.getSize());
 		GVector xminusSigma = new GVector(coord3d.getSize());
 		
-		for (int m = 0; m < order2ndApproximateGradientMMFF94SumEA.getSize(); m++) {
+		for (int m = 0; m < order2ndErrorApproximateGradientMMFF94SumEA.getSize(); m++) {
 			xplusSigma.set(coord3d);
 			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
 			xminusSigma.set(coord3d);
 			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
-			order2ndApproximateGradientMMFF94SumEA.setElement(m,(functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) / (2 * sigma));
+			order2ndErrorApproximateGradientMMFF94SumEA.setElement(m,(functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) / (2 * sigma));
 		}
 			
-		//logger.debug("order2ndApproximateGradientMMFF94SumEA : " + order2ndApproximateGradientMMFF94SumEA);
+		//logger.debug("order2ndErrorApproximateGradientMMFF94SumEA : " + order2ndErrorApproximateGradientMMFF94SumEA);
 	}
 
 
 	/**
-	 *  Get the 2nd order approximate gradient of the angle bending term.
+	 *  Get the 2nd order error approximate gradient of the angle bending term.
 	 *
 	 *
-	 *@return           Angle bending 2nd order approximate gradient value.
+	 *@return           Angle bending 2nd order error approximate gradient value.
 	 */
-	public GVector get2ndOrderApproximateGradientMMFF94SumEA() {
-		return order2ndApproximateGradientMMFF94SumEA;
+	public GVector get2ndOrderErrorApproximateGradientMMFF94SumEA() {
+		return order2ndErrorApproximateGradientMMFF94SumEA;
 	}
 
 
 	/**
-	 *  Evaluate an 5 order approximation of the gradient, of the angle bending term, for a given atoms
+	 *  Evaluate a 5th order error approximation of the gradient, of the angle bending term, for a given atoms
 	 *  coordinates
 	 *
 	 *@param  coords3d  Current molecule coordinates.
 	 */
-	public void set5OrderApproximateGradientMMFF94SumEA(GVector coord3d) {
-		order5ApproximateGradientMMFF94SumEA.setSize(coord3d.getSize());
+	public void set5thOrderErrorApproximateGradientMMFF94SumEA(GVector coord3d) {
+		order5thErrorApproximateGradientMMFF94SumEA = new GVector(coord3d.getSize());
 		double sigma = Math.pow(0.000000000000001,0.2);
 		GVector xplusSigma = new GVector(coord3d.getSize());
 		GVector xminusSigma = new GVector(coord3d.getSize());
 		GVector xplus2Sigma = new GVector(coord3d.getSize());
 		GVector xminus2Sigma = new GVector(coord3d.getSize());
 		
-		for (int m=0; m < order5ApproximateGradientMMFF94SumEA.getSize(); m++) {
+		for (int m=0; m < order5thErrorApproximateGradientMMFF94SumEA.getSize(); m++) {
 			xplusSigma.set(coord3d);
 			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
 			xminusSigma.set(coord3d);
@@ -378,10 +436,10 @@ public class AngleBending {
 			xplus2Sigma.setElement(m,coord3d.getElement(m) + 2 * sigma);
 			xminus2Sigma.set(coord3d);
 			xminus2Sigma.setElement(m,coord3d.getElement(m) - 2 * sigma);
-			order5ApproximateGradientMMFF94SumEA.setElement(m, (8 * (functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) - (functionMMFF94SumEA(xplus2Sigma) - functionMMFF94SumEA(xminus2Sigma))) / (12 * sigma));
+			order5thErrorApproximateGradientMMFF94SumEA.setElement(m, (8 * (functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) - (functionMMFF94SumEA(xplus2Sigma) - functionMMFF94SumEA(xminus2Sigma))) / (12 * sigma));
 		}
 			
-		//logger.debug("order5ApproximateGradientMMFF94SumEA : " + order5ApproximateGradientMMFF94SumEA);
+		//logger.debug("order5thErrorApproximateGradientMMFF94SumEA : " + order5thErrorApproximateGradientMMFF94SumEA);
 	}
 
 
@@ -390,8 +448,8 @@ public class AngleBending {
 	 *
 	 *@return        Angle bending 5 order approximate gradient value.
 	 */
-	public GVector get5OrderApproximateGradientMMFF94SumEA() {
-		return order5ApproximateGradientMMFF94SumEA;
+	public GVector get5thOrderErrorApproximateGradientMMFF94SumEA() {
+		return order5thErrorApproximateGradientMMFF94SumEA;
 	}
 
 
@@ -807,12 +865,58 @@ public class AngleBending {
 
 
 	/**
-	 *  Get the bond lengths second derivative respect to the cartesian coordinates of the atoms.
+	 *  Get the angle bending second derivative respect to the cartesian coordinates of the atoms.
 	 *
 	 *@return        Delta angle bending second derivative value [dimension(3xN)] [angles Number]
 	 */
 	public double[][][] getAngleBendingSecondDerivative() {
 		return ddDeltav;
+	}
+
+
+	/**
+	 *  Evaluate a 2nd order approximation of the Hessian, for the angle bending,
+	 *  given the atoms coordinates.
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void setAngleBending2ndOrderErrorApproximateHessian(GVector coord3d) {
+		angleBendingOrder2ndErrorApproximateHessian = new double[coord3d.getSize()][][];
+		
+		double sigma = Math.pow(0.000000000000001,0.33);
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		double[][] gradientAtXminusSigma = null;
+		double[][] gradientAtXplusSigma = null;
+		
+		for (int i = 0; i < coord3d.getSize(); i++) {
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(i,coord3d.getElement(i) - sigma);
+			setAngleBending2ndOrderErrorApproximateGradient(xminusSigma);
+			gradientAtXminusSigma = this.getAngleBending2ndOrderErrorApproximateGradient();
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(i,coord3d.getElement(i) + sigma);
+			setAngleBending2ndOrderErrorApproximateGradient(xplusSigma);
+			gradientAtXplusSigma = this.getAngleBending2ndOrderErrorApproximateGradient();
+			angleBendingOrder2ndErrorApproximateHessian[i] = new double[coord3d.getSize()][];
+			for (int j = 0; j < coord3d.getSize(); j++) {
+				angleBendingOrder2ndErrorApproximateHessian[i][j] = new double[angleNumber];
+				for (int k=0; k < angleNumber; k++) {
+					angleBendingOrder2ndErrorApproximateHessian[i][j][k] = (gradientAtXplusSigma[j][k] - gradientAtXminusSigma[j][k]) / (2 * sigma);
+				}
+			}
+		}
+	}
+
+
+	/**
+	 *  Get the 2nd order error approximate Hessian for the angle bending.
+	 *
+	 *
+	 *@return           Angle bending 2nd order error approximate Hessian values.
+	 */
+	public double[][][] getAngleBending2ndOrderErrorApproximateHessian() {
+		return angleBendingOrder2ndErrorApproximateHessian;
 	}
 
 
@@ -825,7 +929,7 @@ public class AngleBending {
 
 		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
 		
-		calculateDeltav(coord3d);
+		setDeltav(coord3d);
 		setAngleBendingSecondDerivative(coord3d);
 		
 		double sumHessianEA = 0;
@@ -866,6 +970,55 @@ public class AngleBending {
 	 */
 	public GMatrix getHessianMMFF94SumEA() {
 		return hessianMMFF94SumEA;
+	}
+
+
+	/**
+	 *  Evaluate a 2nd order approximation of the Hessian, for the angle bending energy term,
+	 *  given the atoms coordinates.
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void set2ndOrderErrorApproximateHessianMMFF94SumEA(GVector coord3d) {
+		forOrder2ndErrorApproximateHessian = new double[coord3d.getSize() * coord3d.getSize()];
+		
+		double sigma = Math.pow(0.000000000000001,0.33);
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector gradientAtXminusSigma = new GVector(coord3d.getSize());
+		GVector gradientAtXplusSigma = new GVector(coord3d.getSize());
+		
+		int forHessianIndex;
+		for (int i = 0; i < coord3d.getSize(); i++) {
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(i,coord3d.getElement(i) - sigma);
+			setGradientMMFF94SumEA(xminusSigma);
+			gradientAtXminusSigma.set(gradientMMFF94SumEA);
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(i,coord3d.getElement(i) + sigma);
+			setGradientMMFF94SumEA(xplusSigma);
+			gradientAtXplusSigma.set(gradientMMFF94SumEA);
+			for (int j = 0; j < coord3d.getSize(); j++) {
+				forHessianIndex = i*coord3d.getSize()+j;
+				forOrder2ndErrorApproximateHessian[forHessianIndex] = (gradientAtXplusSigma.getElement(j) - gradientAtXminusSigma.getElement(j)) / (2 * sigma);
+				//(functionMMFF94SumEA(xplusSigma) - 2 * fx + functionMMFF94SumEA(xminusSigma)) / Math.pow(sigma,2);
+			}
+		}
+		
+		order2ndErrorApproximateHessianMMFF94SumEA = new GMatrix(coord3d.getSize(), coord3d.getSize());
+		order2ndErrorApproximateHessianMMFF94SumEA.set(forOrder2ndErrorApproximateHessian);
+		//logger.debug("order2ndErrorApproximateHessianMMFF94SumEA : " + order2ndErrorApproximateHessianMMFF94SumEA);
+	}
+
+
+	/**
+	 *  Get the 2nd order error approximate Hessian for the angle bending energy term.
+	 *
+	 *
+	 *@return           Angle bending energy 2nd order error approximate Hessian value.
+	 */
+	public GMatrix get2ndOrderErrorApproximateHessianMMFF94SumEA() {
+		return order2ndErrorApproximateHessianMMFF94SumEA;
 	}
 
 }

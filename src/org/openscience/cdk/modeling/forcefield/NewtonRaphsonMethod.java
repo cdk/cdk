@@ -8,79 +8,116 @@ import Jama.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.tools.LoggingTool;
 
-
 /**
  *  Methods of Newton-Raphson approach.
  *
- *@author     vlabarta
- *@cdk.module     builder3d
- *
+ *@author        vlabarta
+ *@created       June 1, 2005
+ *@cdk.module    builder3d
  */
 public class NewtonRaphsonMethod {
 	GVector gradientPerInverseHessianVector = null;
+	Matrix matrixForDeterminatCalculation = null;
 	private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the NR object
 	 */
-	public NewtonRaphsonMethod() {        
+	public NewtonRaphsonMethod() {
 		logger = new LoggingTool(this);
 	}
 
 
+	/**
+	 *  Calculate the eigen values for the hessian matrix.
+	 *
+	 *@param  forMatrix  Hessian matrix
+	 *@param  size       coordinates dimension
+	 */
 	public void hessianEigenValues(double[] forMatrix, int size) {
-		
-		Matrix matrixForEigenValuesCalculation = new Matrix(forMatrix, size);
-		EigenvalueDecomposition eigenValues = new EigenvalueDecomposition(matrixForEigenValuesCalculation);
-		eigenValues = matrixForEigenValuesCalculation.eig();
-		double[] realEigenvalues = eigenValues.getRealEigenvalues(); 
-		double[] imagEigenvalues = eigenValues.getImagEigenvalues(); 
-		for (int i=0; i<size ; i++) { 
-			logger.debug("Eigen values, real part, i=" + i + " : " + realEigenvalues[i]);
-			logger.debug("Eigen values, imaginary part, i=" + i + "  : " + imagEigenvalues[i]);
-		}
+		Matrix A = new Matrix(forMatrix, size);
+		Matrix As = A.plus(A.transpose());	// Simetric matrix: As = 1/2 * (A + AT);
+		As.timesEquals(0.5); 
+		//logger.debug("Simetric matrix Hs = 1/2 * (H + HT) = ");
+		//As.print(As.getRowDimension(), As.getColumnDimension());
+		double[] realEigenvalues = As.eig().getRealEigenvalues();
+		double[] imagEigenvalues = As.eig().getImagEigenvalues();
+		//logger.debug(" ");
+		//logger.debug("Hs EigenValues :");
+		/*for (int i=0; i < As.getColumnDimension(); i++) {
+			 logger.debug("Eigen value " + i + ": real part = " + realEigenvalues[i]);
+			 logger.debug(", imaginary part = " + imagEigenvalues[i]);
+		 }*/
+
 	}
 
 
-	public void gradientPerInverseHessian(GVector gradientk, GMatrix hessiank) {
-		
-		double [][] forDeterminatCalculation = new double[gradientk.getSize()][];
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  gradientk  Description of the Parameter
+	 *@param  hessiank   Description of the Parameter
+	 */
+	public void determinat(GVector gradientk, GMatrix hessiank) {
+		//logger.debug(" ");
+		//logger.debug("calculate hessian determinat: ");
+		double[][] forDeterminatCalculation = new double[gradientk.getSize()][];
 		for (int i = 0; i < gradientk.getSize(); i++) {
 			forDeterminatCalculation[i] = new double[gradientk.getSize()];
-			for (int j = 0; j < forDeterminatCalculation[i].length;j++) {
-				forDeterminatCalculation [i][j] = hessiank.getElement(i,j);
+			for (int j = 0; j < forDeterminatCalculation[i].length; j++) {
+				forDeterminatCalculation[i][j] = hessiank.getElement(i, j);
 			}
 		}
 
+		//logger.debug("gradientk.getSize() = " + gradientk.getSize());
 		/*
-		logger.debug();
-		for (int i = 0; i < forDeterminatCalculation.length; i++) {
-			for (int j = 0; j < forDeterminatCalculation[i].length; j++) {
-				logger.debug(forDeterminatCalculation[i][j] + " ");
-			}
-			logger.debug();
-		}		
-		*/
-		
-		Matrix matrixForDeterminatCalculation = new Matrix(forDeterminatCalculation);
-		//matrixForDeterminatCalculation.print(dimen, dimen);
-			
+		 *  if (gradientk.getSize() == 36) {
+		 *  logger.debug();
+		 *  for (int i = 0; i < forDeterminatCalculation.length; i++) {
+		 *  for (int j = 0; j < forDeterminatCalculation[i].length; j++) {
+		 *  logger.debug(forDeterminatCalculation[i][j] + " ");
+		 *  }
+		 *  logger.debug();
+		 *  }
+		 *  }
+		 */
+		matrixForDeterminatCalculation = new Matrix(forDeterminatCalculation);
+		//matrixForDeterminatCalculation.print(gradientk.getSize(), gradientk.getSize());
+
 		//logger.debug("matrixForDeterminatCalculation.det() = " + matrixForDeterminatCalculation.det());
-		
+
+		return;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  gradientk  Description of the Parameter
+	 *@param  hessiank   Description of the Parameter
+	 */
+	public void gradientPerInverseHessian(GVector gradientk, GMatrix hessiank) {
+		this.determinat(gradientk, hessiank);
 		if (matrixForDeterminatCalculation.det() != 0) {
 			hessiank.invert();
 			//logger.debug("hessiank.invert() = " + hessiank);
 			gradientPerInverseHessianVector = new GVector(gradientk.getSize());
 			gradientPerInverseHessianVector.mul(gradientk, hessiank);
-		}
-		else {logger.debug("The Newton-Raphson method can't be execute because the hessian can't be inverted");
+		} else {
+			logger.debug("The Newton-Raphson method can't be execute because the hessian can't be inverted");
 		}
 		return;
 	}
-	
-	
-	public GVector getGradientPerInverseHessian(){
+
+
+	/**
+	 *  Gets the gradientPerInverseHessian attribute of the NewtonRaphsonMethod
+	 *  object
+	 *
+	 *@return    The gradientPerInverseHessian value
+	 */
+	public GVector getGradientPerInverseHessian() {
 		return gradientPerInverseHessianVector;
 	}
 

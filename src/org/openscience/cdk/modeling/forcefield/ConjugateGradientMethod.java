@@ -53,7 +53,9 @@ public class ConjugateGradientMethod {
 	public void setvk(GVector gk, int iterNumber) {
 
 		if (iterNumber != 1) {
-			if (gk.angle(gkminus1) > 1) {
+		//logger.debug("gk.angle(gkminus1) = " + gk.angle(gkminus1));
+			//if (gk.angle(gkminus1) > 1) {
+			if (iterNumber % 25 != 0) {
 				vkminus1.set(vk);
 				setuk(gkminus1,gk);
 				vkminus1.scale(uk);

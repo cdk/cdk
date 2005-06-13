@@ -24,9 +24,12 @@ public class Torsions {
 
 	double mmff94SumET = 0;
 	GVector gradientMMFF94SumET = new GVector(3);
-	GVector order2ndApproximateGradientMMFF94SumET = new GVector(3);
-	GVector order5thApproximateGradientMMFF94SumET = new GVector(3);
-	GMatrix hessianMMFF94SumET = new GMatrix(3,3);
+	GVector order2ndErrorApproximateGradientMMFF94SumET = new GVector(3);
+	GVector order5thErrorApproximateGradientMMFF94SumET = new GVector(3);
+	GMatrix hessianMMFF94SumET = null;
+	double[] forHessian = null;
+	GMatrix order2ndErrorApproximateHessianMMFF94SumET = null;
+	double[] forOrder2ndErrorApproximateHessian = null;
 
 	GVector dPhi = new GVector(3);
 	
@@ -90,7 +93,7 @@ public class Torsions {
 				}
 			}
 		}
-		logger.debug("torsionNumber = " + torsionNumber);
+		//logger.debug("torsionNumber = " + torsionNumber);
 
 		Vector torsionsData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
@@ -122,9 +125,9 @@ public class Torsions {
 									torsionAtomPosition[m][2] = molecule.getAtomNumber(atomInBond[1]);
 									torsionAtomPosition[m][3] = molecule.getAtomNumber(bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]));
 									
-									logger.debug("torsionAtomPosition[" + m + "]: " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getSymbol() 
-											+ ", "+ atomInBond[0].getSymbol() + ", " + atomInBond[1].getSymbol() + ", " 
-											+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getSymbol());
+									//logger.debug("torsionAtomPosition[" + m + "]: " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getSymbol() 
+											//+ ", "+ atomInBond[0].getSymbol() + ", " + atomInBond[1].getSymbol() + ", " 
+											//+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getSymbol());
 									
 									torsionsData = (Vector)parameterSet.get("torsion" + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getID() + ";" 
 																+ atomInBond[0].getID() + ";" 
@@ -137,7 +140,7 @@ public class Torsions {
 																+ bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getID());
 									}
 									
-									logger.debug("torsionsData " + m + ": " + torsionsData);
+									//logger.debug("torsionsData " + m + ": " + torsionsData);
 									v1[m] = ((Double) torsionsData.get(0)).doubleValue();
 									v2[m] = ((Double) torsionsData.get(1)).doubleValue();
 									v3[m] = ((Double) torsionsData.get(2)).doubleValue();
@@ -238,55 +241,55 @@ public class Torsions {
 
 
 	/**
-	 *  Evaluate an approximation of the gradient, of the torsion term, for a given atoms
-	 *  coordinates
+	 *  Evaluate a 2nd order error approximation of the gradient, for the torsion term, 
+	 *  given the atoms coordinates.
 	 *
 	 *@param  coord3d  Current molecule coordinates.
 	 */
-	public void set2ndOrderApproximateGradientMMFF94SumET(GVector coord3d) {
-		order2ndApproximateGradientMMFF94SumET.setSize(coord3d.getSize());
-		double sigma = 0.005;
+	public void set2ndOrderErrorApproximateGradientMMFF94SumET(GVector coord3d) {
+		order2ndErrorApproximateGradientMMFF94SumET.setSize(coord3d.getSize());
+		double sigma = Math.pow(0.000000000000001,0.33);
 		GVector xplusSigma = new GVector(coord3d.getSize());
 		GVector xminusSigma = new GVector(coord3d.getSize());
 		
-		for (int m = 0; m < order2ndApproximateGradientMMFF94SumET.getSize(); m++) {
+		for (int m = 0; m < order2ndErrorApproximateGradientMMFF94SumET.getSize(); m++) {
 			xplusSigma.set(coord3d);
 			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
 			xminusSigma.set(coord3d);
 			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
-			order2ndApproximateGradientMMFF94SumET.setElement(m,(functionMMFF94SumET(xplusSigma) - functionMMFF94SumET(xminusSigma)) / (2 * sigma));
+			order2ndErrorApproximateGradientMMFF94SumET.setElement(m,(functionMMFF94SumET(xplusSigma) - functionMMFF94SumET(xminusSigma)) / (2 * sigma));
 		}
 			
-		//logger.debug("approximateGradientMMFF94SumET : " + approximateGradientMMFF94SumET);
+		//logger.debug("order2ndErrorApproximateGradientMMFF94SumET : " + order2ndErrorApproximateGradientMMFF94SumET);
 	}
 
 
 	/**
-	 *  Get the approximate gradient of the torsion term.
+	 *  Get the 2nd order error approximate gradient of the torsion term.
 	 *
 	 *
 	 *@return           torsion approximate gradient value
 	 */
-	public GVector get2ndOrderApproximateGradientMMFF94SumET() {
-		return order2ndApproximateGradientMMFF94SumET;
+	public GVector get2ndOrderErrorApproximateGradientMMFF94SumET() {
+		return order2ndErrorApproximateGradientMMFF94SumET;
 	}
 
 
 	/**
-	 *  Evaluate an 5 order approximation of the gradient, of the torsion term, for a given atoms
-	 *  coordinates
+	 *  Evaluate an 5 order approximation of the gradient, of the torsion term, 
+	 *  given the atoms coordinates
 	 *
 	 *@param  coords3d  Current molecule coordinates.
 	 */
 	public void set5thOrderApproximateGradientMMFF94SumET(GVector coord3d) {
-		order5thApproximateGradientMMFF94SumET.setSize(coord3d.getSize());
+		order5thErrorApproximateGradientMMFF94SumET.setSize(coord3d.getSize());
 		double sigma = Math.pow(0.000000000000001,0.2);
 		GVector xplusSigma = new GVector(coord3d.getSize());
 		GVector xminusSigma = new GVector(coord3d.getSize());
 		GVector xplus2Sigma = new GVector(coord3d.getSize());
 		GVector xminus2Sigma = new GVector(coord3d.getSize());
 		
-		for (int m=0; m < order5thApproximateGradientMMFF94SumET.getSize(); m++) {
+		for (int m=0; m < order5thErrorApproximateGradientMMFF94SumET.getSize(); m++) {
 			xplusSigma.set(coord3d);
 			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
 			xminusSigma.set(coord3d);
@@ -295,20 +298,20 @@ public class Torsions {
 			xplus2Sigma.setElement(m,coord3d.getElement(m) + 2 * sigma);
 			xminus2Sigma.set(coord3d);
 			xminus2Sigma.setElement(m,coord3d.getElement(m) - 2 * sigma);
-			order5thApproximateGradientMMFF94SumET.setElement(m, (8 * (functionMMFF94SumET(xplusSigma) - functionMMFF94SumET(xminusSigma)) - (functionMMFF94SumET(xplus2Sigma) - functionMMFF94SumET(xminus2Sigma))) / (12 * sigma));
+			order5thErrorApproximateGradientMMFF94SumET.setElement(m, (8 * (functionMMFF94SumET(xplusSigma) - functionMMFF94SumET(xminusSigma)) - (functionMMFF94SumET(xplus2Sigma) - functionMMFF94SumET(xminus2Sigma))) / (12 * sigma));
 		}
 			
-		//logger.debug("order5ApproximateGradientMMFF94SumET : " + order5ApproximateGradientMMFF94SumET);
+		//logger.debug("order5thErrorApproximateGradientMMFF94SumET : " + order5thErrorApproximateGradientMMFF94SumET);
 	}
 
 
 	/**
-	 *  Get the 5 order approximate gradient of the torsion term.
+	 *  Get the 5th order error approximate gradient of the torsion term.
 	 *
-	 *@return        Torsion 5 order approximate gradient value.
+	 *@return        Torsion 5th order error approximate gradient value.
 	 */
-	public GVector get5OrderApproximateGradientMMFF94SumET() {
-		return order5thApproximateGradientMMFF94SumET;
+	public GVector get5thOrderErrorApproximateGradientMMFF94SumET() {
+		return order5thErrorApproximateGradientMMFF94SumET;
 	}
 
 
@@ -349,6 +352,55 @@ public class Torsions {
 	 */
 	public GMatrix getHessianMMFF94SumET() {
 		return hessianMMFF94SumET;
+	}
+
+
+	/**
+	 *  Evaluate a 2nd order approximation of the Hessian, for the torsion energy term,
+	 *  given the atoms coordinates.
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void set2ndOrderErrorApproximateHessianMMFF94SumET(GVector coord3d) {
+		forOrder2ndErrorApproximateHessian = new double[coord3d.getSize() * coord3d.getSize()];
+		
+		double sigma = Math.pow(0.000000000000001,0.33);
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector gradientAtXminusSigma = new GVector(coord3d.getSize());
+		GVector gradientAtXplusSigma = new GVector(coord3d.getSize());
+		
+		int forHessianIndex;
+		for (int i = 0; i < coord3d.getSize(); i++) {
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(i,coord3d.getElement(i) - sigma);
+			setGradientMMFF94SumET(xminusSigma);
+			gradientAtXminusSigma.set(gradientMMFF94SumET);
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(i,coord3d.getElement(i) + sigma);
+			setGradientMMFF94SumET(xplusSigma);
+			gradientAtXplusSigma.set(gradientMMFF94SumET);
+			for (int j = 0; j < coord3d.getSize(); j++) {
+				forHessianIndex = i*coord3d.getSize()+j;
+				forOrder2ndErrorApproximateHessian[forHessianIndex] = (gradientAtXplusSigma.getElement(j) - gradientAtXminusSigma.getElement(j)) / (2 * sigma);
+				//(functionMMFF94SumET(xplusSigma) - 2 * fx + functionMMFF94SumET(xminusSigma)) / Math.pow(sigma,2);
+			}
+		}
+		
+		order2ndErrorApproximateHessianMMFF94SumET = new GMatrix(coord3d.getSize(), coord3d.getSize());
+		order2ndErrorApproximateHessianMMFF94SumET.set(forOrder2ndErrorApproximateHessian);
+		//logger.debug("order2ndErrorApproximateHessianMMFF94SumET : " + order2ndErrorApproximateHessianMMFF94SumET);
+	}
+
+
+	/**
+	 *  Get the 2nd order error approximate Hessian for the torsion term.
+	 *
+	 *
+	 *@return           Torsion 2nd order error approximate Hessian value.
+	 */
+	public GMatrix get2ndOrderErrorApproximateHessianMMFF94SumET() {
+		return order2ndErrorApproximateHessianMMFF94SumET;
 	}
 
 }

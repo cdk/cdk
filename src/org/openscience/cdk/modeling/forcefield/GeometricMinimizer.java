@@ -29,6 +29,7 @@ public class GeometricMinimizer {
 
         GVector kCoordinates = null;
 	GVector kplus1Coordinates = null;
+	GVector g0 = null;
 	int atomNumbers = 1;
 	
 	double fxk = 0;
@@ -49,6 +50,7 @@ public class GeometricMinimizer {
 	double d = 0;
 	
 	ForceFieldTools ffTools = new ForceFieldTools();
+	NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
 	private LoggingTool logger;
 
 	Molecule molecule;
@@ -109,7 +111,6 @@ public class GeometricMinimizer {
 	}
 	
 	public void initializeMinimizationParameters(GVector initialCoord) {
-		
 		//kCoordinates.setSize(dimension);
 		//kCoordinates.set(initialCoord);
 		kCoordinates=initialCoord;
@@ -123,8 +124,9 @@ public class GeometricMinimizer {
 		iterationNumberk = -1;
 		
 		atomNumbers = initialCoord.getSize()/3;
-
-
+		
+		g0 = new GVector(kCoordinates.getSize());
+		g0.zero();
 	}
 
 
@@ -133,6 +135,7 @@ public class GeometricMinimizer {
 	 */
 	public void checkConvergence(double convergenceCriterion) {
 		
+		//logger.debug("Checking convergence : ");
 		RMS = 0;
 		RMS = gradientkplus1.dot(gradientkplus1);
 		RMS = RMS / kCoordinates.getSize();
@@ -202,12 +205,16 @@ public class GeometricMinimizer {
 		GVector sk = new GVector(gradientk.getSize());
 		GVector skplus1 = new GVector(gradientk.getSize());
 
-		LineSearch ls = new LineSearch();
+		if (gradientk.equals(g0)) {
+			convergence = true;
+			kplus1Coordinates.set(kCoordinates);
+		}		
 
 		//logger.debug("");
 		//logger.debug("FORCEFIELDTESTS steepestDescentTest");
 		
 		SteepestDescentsMethod sdm = new SteepestDescentsMethod(kCoordinates);
+		LineSearch ls = new LineSearch();
 				
 		while ((iterationNumberkplus1 < SDMaximumIteration) & (convergence == false)) {
 			
@@ -226,7 +233,7 @@ public class GeometricMinimizer {
 				sk.set(skplus1);
 			} 			
 			//logger.debug("Search direction: ");
-			sdm.setSk(gradientk, iterationNumberkplus1);
+			sdm.setSk(gradientk);
 			skplus1.set(sdm.sk);
 			
 			ls.setLineSearchLambda(kCoordinates, sdm.sk, forceField);
@@ -240,14 +247,14 @@ public class GeometricMinimizer {
 			
 			checkConvergence(SDconvergenceCriterion);
 
-			if (iterationNumberkplus1 % 50 == 0) {
+/*			if (iterationNumberkplus1 % 50 == 0) {
 				logger.debug("");
-				//logger.debug("f(x" + iterationNumberk + ") = " + fxk);
-				logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
-				logger.debug("fxkplus1 - fxk = " + (fxkplus1 - fxk));
+				logger.debug("f(x" + iterationNumberk + ") = " + fxk);
+*/				logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
+/*				logger.debug("fxkplus1 - fxk = " + (fxkplus1 - fxk));
 				logger.debug("gradientkplus1, gradientk angle = " + gradientkplus1.angle(gradientk));
 			}
-
+*/
 			/*if (iterationNumberkplus1 != 1) {
 				logger.debug("sk+1.sk = " + skplus1.dot(sk));
 				logger.debug("gk+1.gk = " + gradientkplus1.dot(gradientk));
@@ -255,7 +262,7 @@ public class GeometricMinimizer {
 			
 			if (molecule != null){
 			    //logger.debug("STEEPESTDM: kplus1Coordinates:"+kplus1Coordinates);
-			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
+			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule);
 			}
 		}
 		steepestDescentsMinimum.set(kplus1Coordinates);
@@ -309,22 +316,27 @@ public class GeometricMinimizer {
 		
 		initializeMinimizationParameters(initialCoordinates);
 		fxk = forceField.energyFunction(initialCoordinates);
-		logger.debug("f(x0) = " + fxk);
+		//logger.debug("f(x0) = " + fxk);
 		
 		forceField.setEnergyGradient(kCoordinates);
 		gradientk.set(forceField.getEnergyGradient());
-		//logger.debug("gradient at iteration 1 : g1 = " + gradientk);
+		logger.debug("gradient at iteration 1 : g1 = " + gradientk);
 
 		conjugateGradientMinimum = new GVector(kCoordinates);
-		LineSearch ls = new LineSearch();
+		
+		if (gradientk.equals(g0)) {
+			convergence = true;
+			kplus1Coordinates.set(kCoordinates);
+		}		
 		
 		ConjugateGradientMethod cgm = new ConjugateGradientMethod();
+		LineSearch ls = new LineSearch();
 		       
 		while ((iterationNumberkplus1 < CGMaximumIteration) & (convergence == false)) {
 			
 			iterationNumberkplus1 += 1;
 			iterationNumberk += 1;
-			//logger.debug("");
+			logger.debug("");
 			//logger.debug("");
 			//logger.debug("CG Iteration number: " + iterationNumberkplus1);
 			
@@ -340,33 +352,38 @@ public class GeometricMinimizer {
 			setkplus1Coordinates(cgm.vk, ls.lineSearchLambda);			
 			fxkplus1 = forceField.energyFunction(kplus1Coordinates); 			
 			//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
-			//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
+			logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
 			
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradientkplus1.set(forceField.getEnergyGradient());
 			
 			checkConvergence(CGconvergenceCriterion);
+			//logger.debug(" ");
+			//logger.debug("convergence = " + convergence);
 			
-			if (iterationNumberkplus1 % 50 == 0 | iterationNumberkplus1 % 50 == 49 | iterationNumberkplus1 % 50 == 1) {
-				logger.debug("");
+//			if (iterationNumberkplus1 % 50 == 0 | iterationNumberkplus1 % 50 == 49 | iterationNumberkplus1 % 50 == 1) {
+				//logger.debug("");
 				//logger.debug("f(x" + iterationNumberk + ") = " + fxk);
-				logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
-				logger.debug("fxkplus1 - fxk = " + (fxkplus1 - fxk));
-				logger.debug("gradientkplus1, gradientk angle = " + gradientkplus1.angle(gradientk));
-			}
+				//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
+//				logger.debug("fxkplus1 - fxk = " + (fxkplus1 - fxk));
+//				logger.debug("gradientkplus1, gradientk angle = " + gradientkplus1.angle(gradientk));
+//			}
 			/*if (iterationNumberkplus1 != 1) {
 				logger.debug("gk+1.gk = " + gradientkplus1.dot(gradientk));
 			}*/
-			
 			if (molecule !=null){
 			    //logger.debug("CGM: kplus1Coordinates:"+kplus1Coordinates);
-			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule); 
+			    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule);
 			}
-			
+
+			//forceField.setEnergyHessian(kplus1Coordinates);
+			//nrm.determinat(gradientkplus1, forceField.getEnergyHessian());
+			//nrm.hessianEigenValues(forceField.getForEnergyHessian(), kplus1Coordinates.getSize());
+
 		 }
 		 
 		 conjugateGradientMinimum.set(kplus1Coordinates);
-		 forceField.setEnergyGradient(conjugateGradientMinimum);
+		 //logger.debug("conjugateGradientMinimum, forceField.getEnergyGradient().norm() = " + forceField.getEnergyGradient().norm());
 		 //logger.debug("The CG minimum energy is at: " + conjugateGradientMinimum);
 		 //logger.debug("f(minimum) = " + fxkplus1);
 		 
@@ -415,7 +432,6 @@ public class GeometricMinimizer {
 		//logger.debug("");
 		//logger.debug("FORCEFIELDTESTS NewtonRaphsonTest");
 		
-		NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
 		GMatrix hessian = new GMatrix(initialCoordinates.getSize(),initialCoordinates.getSize());
 		
 		while ((iterationNumberkplus1 < NRMaximumIteration) & (convergence == false)) {
