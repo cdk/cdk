@@ -195,7 +195,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 					editorPanel.setIsOpenedByViewer(true);
 					frame.show();
 					frame.pack();
-					JChemPaintPanel.isViewerOnly = false;
+					setViewerOnly();
 					editorPanel.setJChemPaintModel(thisModel);
 				}
 			}

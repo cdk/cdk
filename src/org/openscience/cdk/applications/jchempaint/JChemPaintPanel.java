@@ -69,9 +69,9 @@ public abstract class JChemPaintPanel
 		 implements ChangeListener, CDKEditBus {
 
 	//Static variables hold information if the application is embedded and keep track of instances of JCPPanel
-	static boolean isEmbedded = false;
-	static boolean isOpenedByViewer	= false;
-	static boolean isViewerOnly = false;
+	boolean isEmbedded = false;
+	boolean isOpenedByViewer	= false;
+	boolean isViewerOnly = false;
 	static Vector instances = new Vector();
 	/**
 	 *  Description of the Field
@@ -968,7 +968,7 @@ public abstract class JChemPaintPanel
 				}
 				((JFrame) e.getSource()).setVisible(false);
 				((JFrame) e.getSource()).dispose();
-				if (instances.size() == 0 && !isEmbedded) {
+				if (instances.size() == 0 && !((JChemPaintPanel)rootFrame.getContentPane().getComponent(0)).isEmbedded()) {
 					System.exit(0);
 				}
 			}
