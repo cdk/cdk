@@ -45,11 +45,18 @@ cdk/$ ant -Ddo.lazy.creation=yes clean dist-all
 3. Running tests
 
 After you compiled the code, you can do "ant test" to run the test suite of non-interactive, automated
-tests. You should see something like:
+tests. You might need to copy an appropriate junit.jar into your $ANT_HOME/lib
+directory or somewhere else in your classpath.
+Upon "ant test", you should see something like:
 
 test:
 Running org.openscience.cdk.test.CDKTests
-Tests run: 15, Failures: 0, Errors: 0, Time elapsed: 1.192 sec
+Tests run: 1065, Failures: 7, Errors: 1, Time elapsed: 27,55 sec
+
+As you can see, the vast majority of tests ran successfully, but that there
+are failures and errors. The $CDK_HOME/reports/results.txt file contains
+information about the outcome of the tests. Some tests might fail intentionally
+to mark know issues in CDK.
 
 There are also run interactive tests, like the Controller2DTest. In order to try them, you can edit the "run"
 target in the build.xml file to look like this:
@@ -69,5 +76,14 @@ target in the build.xml file to look like this:
 	</target>
 
 Then, a "ant run" should give you a window where you can add bonds to a given structure.
+Currently, there are about 1000 test, of which a large part tests the core classes.
 
-Currently, there are about 600 test, of which a large part tests the core classes.
+4. Using CDK
+
+CDK is a class library intended to be used by other programs. It will not run 
+as a stand-alone program, although it contains some GUI- and command
+line applications. In order to use the CDK in your program, you need to build
+the distribution jars by running "ant dist-all". They will end up in
+$CDK_HOME/dist/jar. Copy all cdk-*.jars as well as all jars from $CDK_HOME/jar
+to the lib directory of the project for which you intend to have CDK support and
+use them as you would use any other third party jar.
