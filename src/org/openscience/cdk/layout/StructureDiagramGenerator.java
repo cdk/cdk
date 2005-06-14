@@ -68,8 +68,10 @@ import org.openscience.cdk.tools.LoggingTool;
  *@author     steinbeck
  *@cdk.created    February 2, 2004
  *@see        org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(AtomContainer)
- *@cdk.keyword    layout
- *@cdk.keyword    2D-coordinates
+ *@cdk.keyword Layout
+ *@cdk.keyword Structure Diagram Generation (SDG)
+ *@cdk.keyword 2D coordinates
+ *@cdk.keyword Coordinate generation, 2D
  */
 public class StructureDiagramGenerator
 {

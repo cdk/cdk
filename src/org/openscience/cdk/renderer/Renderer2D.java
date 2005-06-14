@@ -1,4 +1,5 @@
-/*  $RCSfile$
+/*
+ *  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -67,281 +68,359 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**
- * A Renderer class which draws 2D representations of molecules onto a given
- * graphics objects using information from a Renderer2DModel.
+ *  A Renderer class which draws 2D representations of molecules onto a given
+ *  graphics objects using information from a Renderer2DModel. <p>
  *
- * <p>This renderer uses two coordinate systems. One that is a world
- * coordinates system which is generated from the document coordinates.
- * Additionally, the screen coordinates make up the second system, and
- * are calculated by applying a zoom factor to the world coordinates.
+ *  This renderer uses two coordinate systems. One that is a world coordinates
+ *  system which is generated from the document coordinates. Additionally, the
+ *  screen coordinates make up the second system, and are calculated by applying
+ *  a zoom factor to the world coordinates. <p>
  *
- * <p>The coordinate system used for display has its origin in the
- * left-bottom corner, with the x axis to the right, and the y axis towards
- * the top of the screen. The system is thus right handed.
+ *  The coordinate system used for display has its origin in the left-bottom
+ *  corner, with the x axis to the right, and the y axis towards the top of the
+ *  screen. The system is thus right handed. <p>
  *
- * <p>The two main methods are paintMolecule() and paintChemModel(). Others
- * might not show full rendering, e.g. anti-aliasing.
- * 
- * <p>This modules tries to adhere to guidelines being developed by the IUPAC
- * which results can be found at
- * <a href="http://www.angelfire.com/sc3/iupacstructures/">http://www.angelfire.com/sc3/iupacstructures/</a>.
+ *  The two main methods are paintMolecule() and paintChemModel(). Others might
+ *  not show full rendering, e.g. anti-aliasing. <p>
  *
- * @cdk.module render
+ *  This modules tries to adhere to guidelines being developed by the IUPAC
+ *  which results can be found at <a href="http://www.angelfire.com/sc3/iupacstructures/">
+ *  http://www.angelfire.com/sc3/iupacstructures/</a> .
  *
- * @author     steinbeck
- * @author     egonw
- *
- * @cdk.created    2002-10-03
- * @cdk.keyword    viewer, 2D-viewer
- * @cdk.bug        834515
- *
- * @see org.openscience.cdk.renderer.Renderer2DModel
+ *@author         steinbeck
+ *@author         egonw
+ *@created        14. Juni 2005
+ *@cdk.module     render
+ *@cdk.created    2002-10-03
+ *@cdk.keyword    viewer, 2D-viewer
+ *@cdk.bug        834515
+ *@see            org.openscience.cdk.renderer.Renderer2DModel
  */
-public class Renderer2D implements MouseMotionListener   {
+public class Renderer2D implements MouseMotionListener
+{
 
-    final static BasicStroke stroke = new BasicStroke(1.0f);
-    
-    private LoggingTool logger;
-    boolean debug = true;
-    private IsotopeFactory isotopeFactory;
-    private int[] tooltiparea=null;
+	final static BasicStroke stroke = new BasicStroke(1.0f);
+
+	private LoggingTool logger;
+	boolean debug = true;
+	private IsotopeFactory isotopeFactory;
+	private int[] tooltiparea = null;
 
 	private Renderer2DModel r2dm;
 
-    private int graphicsHeight;
+	private int graphicsHeight;
+
 
 	/**
-	 * Constructs a Renderer2D with a default settings model.
+	 *  Constructs a Renderer2D with a default settings model.
 	 */
-	public Renderer2D() {
+	public Renderer2D()
+	{
 		this(new Renderer2DModel());
 	}
 
+
 	/**
-	 * Constructs a Renderer2D.
+	 *  Constructs a Renderer2D.
 	 *
-	 * @param  r2dm  The settings model to use for rendering.
+	 *@param  r2dm  The settings model to use for rendering.
 	 */
 	public Renderer2D(Renderer2DModel r2dm)
 	{
 		this.r2dm = r2dm;
-        logger = new LoggingTool(this);
-        
-        try {
-            isotopeFactory = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            logger.error("Error while instantiating IsotopeFactory");
-            logger.warn("Will not be able to display undefault isotopes");
-            logger.debug(exception);
-        }
+		logger = new LoggingTool(this);
+
+		try
+		{
+			isotopeFactory = IsotopeFactory.getInstance();
+		} catch (Exception exception)
+		{
+			logger.error("Error while instantiating IsotopeFactory");
+			logger.warn("Will not be able to display undefault isotopes");
+			logger.debug(exception);
+		}
 	}
 
-    private void customizeRendering(Graphics2D graphics) {
-        if (r2dm.getUseAntiAliasing()) {
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        graphics.setStroke(stroke);
-    }
-    
-    public void paintChemModel(ChemModel model, Graphics2D graphics) {
-        customizeRendering(graphics);
-        tooltiparea=null;
-        paintPointerVector(graphics);
-        if (model.getSetOfReactions() != null) {
-            paintSetOfReactions(model.getSetOfReactions(), graphics);
-        }
-	else
-	{
-		logger.debug("setOfReactions is null");
-	}
-        if (model.getSetOfMolecules() != null) {
-            paintSetOfMolecules(model.getSetOfMolecules(), graphics);
-        }
-	else
-	{
-		logger.debug("setOfMolecules is null");
-	}
 
-    }
-    
-    public void paintSetOfReactions(SetOfReactions reactionSet, Graphics2D graphics) {
-        Reaction[] reactions = reactionSet.getReactions();
-        for (int i=0; i<reactions.length; i++) {
-            paintReaction(reactions[i], graphics);
-        }
-    }
-    
-    public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics2D graphics) {
-	    logger.debug("painting set of molecules");
-        Molecule[] molecules = moleculeSet.getMolecules();
-        for (int i=0; i<molecules.length; i++) {
-		logger.debug("painting molecule " + i);
-            paintMolecule(molecules[i], graphics);
-        }
-    }
-    
-    public void paintReaction(Reaction reaction, Graphics2D graphics) {
-        // calculate some boundaries
-        AtomContainer reactantContainer = new AtomContainer();
-        Molecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            reactantContainer.add(reactants[i]);
-        }
-        double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
-        AtomContainer productContainer = new AtomContainer();
-        Molecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            productContainer.add(products[i]);
-        }
-        double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
-
-        // paint atom atom mappings
-        Atom highlighted = r2dm.getHighlightedAtom();
-        if (r2dm.getShowAtomAtomMapping() && highlighted != null) {
-            logger.debug("Showing atom-atom mapping");
-            Mapping[] mappings = reaction.getMappings();
-            logger.debug(" #mappings: ", mappings.length);
-            for (int i=0; i<mappings.length; i++) {
-                ChemObject[] objects = mappings[i].getRelatedChemObjects();
-                // only draw mapping when one of the mapped atoms
-                // is highlighted
-                if (objects[0] instanceof Atom && objects[1] instanceof Atom) {
-                    logger.debug("    atom1: ", objects[0]);
-                    logger.debug("    atom1: ", objects[1]);
-                    logger.debug("    highlighted: ", highlighted);
-                    if (highlighted == objects[0] || highlighted == objects[1]) {
-                        Atom atom1 = (Atom)objects[0];
-                        Atom atom2 = (Atom)objects[1];
-                        int[] ints = new int[4];
-                        ints[0] = (int)(atom1.getPoint2d().x);
-                        ints[1] = (int)(atom1.getPoint2d().y);
-                        ints[2] = (int)(atom2.getPoint2d().x);
-                        ints[3] = (int)(atom2.getPoint2d().y);
-                        int[] screenCoords = getScreenCoordinates(ints);
-                        graphics.setColor(r2dm.getAtomAtomMappingLineColor());
-                        logger.debug("Mapping line color", r2dm.getAtomAtomMappingLineColor());
-                        logger.debug("Mapping line coords atom1.x: ", screenCoords[0]);
-                        logger.debug("Mapping line coords atom1.y: ", screenCoords[1]);
-                        logger.debug("Mapping line coords atom2.x: ", screenCoords[2]);
-                        logger.debug("Mapping line coords atom2.y: ", screenCoords[3]);
-                        graphics.drawLine(screenCoords[0], screenCoords[1],
-                        screenCoords[2], screenCoords[3]);
-                        graphics.setColor(r2dm.getForeColor());
-                    } else {
-                        logger.debug("  skipping this mapping. Not of hightlighted atom");
-                    }
-                } else {
-                    logger.debug("Not showing a non atom-atom mapping");
-                }
-            }
-        } else {
-            logger.debug("Not showing atom-atom mapping");
-        }
-        
-        // paint box around total
-        int width = 13;
-        double[] minmaxReaction = new double[4];
-        minmaxReaction[0] = Math.min(minmaxReactants[0], minmaxProducts[0]);
-        minmaxReaction[1] = Math.min(minmaxReactants[1], minmaxProducts[1]);
-        minmaxReaction[2] = Math.max(minmaxReactants[2], minmaxProducts[2]);
-        minmaxReaction[3] = Math.max(minmaxReactants[3], minmaxProducts[3]);
-        String caption = reaction.getID();
-        if (reaction.getProperty(CDKConstants.TITLE) != null) {
-            caption = reaction.getProperty(CDKConstants.TITLE) + 
-                      " (" + caption + ")";
-        } else if (caption == null) {
-            caption = "r" + reaction.hashCode();
-        } 
-        paintBoundingBox(minmaxReaction, caption, 2*width, graphics);
-        
-        // paint reactants content
-        paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
-        paintMolecule(reactantContainer, graphics);
-
-        // paint products content
-        paintBoundingBox(minmaxProducts, "Products", width, graphics);
-        paintMolecule(productContainer, graphics);
-
-        if (productContainer.getAtomCount() > 0 && reactantContainer.getAtomCount() > 0) {
-            // paint arrow
-            int[] ints = new int[4];
-            ints[0] = (int)(minmaxReactants[2]) + width+5;
-            ints[1] = (int)(minmaxReactants[1] + (minmaxReactants[3]-minmaxReactants[1])/2);
-            ints[2] = (int)(minmaxProducts[0]) - (width+5);
-            ints[3] = ints[1];
-            int[] screenCoords = getScreenCoordinates(ints);
-            int direction = reaction.getDirection();
-            if (direction == Reaction.FORWARD) {
-                graphics.drawLine(screenCoords[0], screenCoords[1],
-                screenCoords[2], screenCoords[3]);
-                graphics.drawLine(screenCoords[2], screenCoords[3],
-                screenCoords[2]-7, screenCoords[3]-7);
-                graphics.drawLine(screenCoords[2], screenCoords[3],
-                screenCoords[2]-7, screenCoords[3]+7);
-            } else if (direction == Reaction.BACKWARD) {
-                graphics.drawLine(screenCoords[0], screenCoords[1],
-                screenCoords[2], screenCoords[3]);
-                graphics.drawLine(screenCoords[0], screenCoords[1],
-                screenCoords[0]+7, screenCoords[1]-7);
-                graphics.drawLine(screenCoords[0], screenCoords[1],
-                screenCoords[0]+7, screenCoords[1]+7);
-            } else if (direction == Reaction.BIDIRECTIONAL) {
-                graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
-                screenCoords[2], screenCoords[3] - 3);
-                graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
-                screenCoords[0]+7, screenCoords[1] - 3 - 7);
-                graphics.drawLine(screenCoords[0], screenCoords[1] + 3,
-                screenCoords[2], screenCoords[3] + 3);
-                graphics.drawLine(screenCoords[2], screenCoords[3] + 3,
-                screenCoords[2]-7, screenCoords[3] + 3 + 7);
-            }
-        }
-    }
-
-    /**
-     * @param minmax array of length for with min and max 2D coordinates
-     */
-    public void paintBoundingBox(double[] minmax, String caption, 
-                                  int side, Graphics2D graphics) {
-        int[] ints = new int[4];
-        ints[0] = (int)minmax[0] -side; // min x
-        ints[1] = (int)minmax[1] -side; // min y
-        ints[2] = (int)minmax[2] +side; // max x
-        ints[3] = (int)minmax[3] +side; // max y
-        int[] screenCoords = getScreenCoordinates(ints);
-        int heigth = screenCoords[1] - screenCoords[3]; 
-        int width = screenCoords[2] - screenCoords[0];
-        graphics.drawRect((int)screenCoords[0], (int)screenCoords[3], width, heigth);
-
-        // draw reaction ID
-        Font unscaledFont = r2dm.getFont();
-        if (unscaledFont == null) unscaledFont = graphics.getFont();
-        float fontSize = getScreenSize(unscaledFont.getSize());
-        graphics.setFont(unscaledFont.deriveFont(fontSize));
-        graphics.drawString(caption, (int)screenCoords[0], (int)screenCoords[3]);
-        graphics.setFont(unscaledFont);
-    }
-    
 	/**
-	 * Triggers the methods to make the molecule fit into the frame and to paint
-	 * it.
+	 *  Description of the Method
 	 *
-	 * @param  atomCon  Description of the Parameter
-	 * @param  graphics        Description of the Parameter
+	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintMolecule(AtomContainer atomCon, Graphics2D graphics) {
+	private void customizeRendering(Graphics2D graphics)
+	{
+		if (r2dm.getUseAntiAliasing())
+		{
+			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+		graphics.setStroke(stroke);
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  model     Description of the Parameter
+	 *@param  graphics  Description of the Parameter
+	 */
+	public void paintChemModel(ChemModel model, Graphics2D graphics)
+	{
+		customizeRendering(graphics);
+		tooltiparea = null;
+		paintPointerVector(graphics);
+		if (model.getSetOfReactions() != null)
+		{
+			paintSetOfReactions(model.getSetOfReactions(), graphics);
+		} else
+		{
+			logger.debug("setOfReactions is null");
+		}
+		if (model.getSetOfMolecules() != null)
+		{
+			paintSetOfMolecules(model.getSetOfMolecules(), graphics);
+		} else
+		{
+			logger.debug("setOfMolecules is null");
+		}
+
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  reactionSet  Description of the Parameter
+	 *@param  graphics     Description of the Parameter
+	 */
+	public void paintSetOfReactions(SetOfReactions reactionSet, Graphics2D graphics)
+	{
+		Reaction[] reactions = reactionSet.getReactions();
+		for (int i = 0; i < reactions.length; i++)
+		{
+			paintReaction(reactions[i], graphics);
+		}
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  moleculeSet  Description of the Parameter
+	 *@param  graphics     Description of the Parameter
+	 */
+	public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics2D graphics)
+	{
+		logger.debug("painting set of molecules");
+		Molecule[] molecules = moleculeSet.getMolecules();
+		for (int i = 0; i < molecules.length; i++)
+		{
+			logger.debug("painting molecule " + i);
+			paintMolecule(molecules[i], graphics);
+		}
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  reaction  Description of the Parameter
+	 *@param  graphics  Description of the Parameter
+	 */
+	public void paintReaction(Reaction reaction, Graphics2D graphics)
+	{
+		// calculate some boundaries
+		AtomContainer reactantContainer = new AtomContainer();
+		Molecule[] reactants = reaction.getReactants().getMolecules();
+		for (int i = 0; i < reactants.length; i++)
+		{
+			reactantContainer.add(reactants[i]);
+		}
+		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
+		AtomContainer productContainer = new AtomContainer();
+		Molecule[] products = reaction.getProducts().getMolecules();
+		for (int i = 0; i < products.length; i++)
+		{
+			productContainer.add(products[i]);
+		}
+		double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
+
+		// paint atom atom mappings
+		Atom highlighted = r2dm.getHighlightedAtom();
+		if (r2dm.getShowAtomAtomMapping() && highlighted != null)
+		{
+			logger.debug("Showing atom-atom mapping");
+			Mapping[] mappings = reaction.getMappings();
+			logger.debug(" #mappings: ", mappings.length);
+			for (int i = 0; i < mappings.length; i++)
+			{
+				ChemObject[] objects = mappings[i].getRelatedChemObjects();
+				// only draw mapping when one of the mapped atoms
+				// is highlighted
+				if (objects[0] instanceof Atom && objects[1] instanceof Atom)
+				{
+					logger.debug("    atom1: ", objects[0]);
+					logger.debug("    atom1: ", objects[1]);
+					logger.debug("    highlighted: ", highlighted);
+					if (highlighted == objects[0] || highlighted == objects[1])
+					{
+						Atom atom1 = (Atom) objects[0];
+						Atom atom2 = (Atom) objects[1];
+						int[] ints = new int[4];
+						ints[0] = (int) (atom1.getPoint2d().x);
+						ints[1] = (int) (atom1.getPoint2d().y);
+						ints[2] = (int) (atom2.getPoint2d().x);
+						ints[3] = (int) (atom2.getPoint2d().y);
+						int[] screenCoords = getScreenCoordinates(ints);
+						graphics.setColor(r2dm.getAtomAtomMappingLineColor());
+						logger.debug("Mapping line color", r2dm.getAtomAtomMappingLineColor());
+						logger.debug("Mapping line coords atom1.x: ", screenCoords[0]);
+						logger.debug("Mapping line coords atom1.y: ", screenCoords[1]);
+						logger.debug("Mapping line coords atom2.x: ", screenCoords[2]);
+						logger.debug("Mapping line coords atom2.y: ", screenCoords[3]);
+						graphics.drawLine(screenCoords[0], screenCoords[1],
+								screenCoords[2], screenCoords[3]);
+						graphics.setColor(r2dm.getForeColor());
+					} else
+					{
+						logger.debug("  skipping this mapping. Not of hightlighted atom");
+					}
+				} else
+				{
+					logger.debug("Not showing a non atom-atom mapping");
+				}
+			}
+		} else
+		{
+			logger.debug("Not showing atom-atom mapping");
+		}
+
+		// paint box around total
+		int width = 13;
+		double[] minmaxReaction = new double[4];
+		minmaxReaction[0] = Math.min(minmaxReactants[0], minmaxProducts[0]);
+		minmaxReaction[1] = Math.min(minmaxReactants[1], minmaxProducts[1]);
+		minmaxReaction[2] = Math.max(minmaxReactants[2], minmaxProducts[2]);
+		minmaxReaction[3] = Math.max(minmaxReactants[3], minmaxProducts[3]);
+		String caption = reaction.getID();
+		if (reaction.getProperty(CDKConstants.TITLE) != null)
+		{
+			caption = reaction.getProperty(CDKConstants.TITLE) +
+					" (" + caption + ")";
+		} else if (caption == null)
+		{
+			caption = "r" + reaction.hashCode();
+		}
+		paintBoundingBox(minmaxReaction, caption, 2 * width, graphics);
+
+		// paint reactants content
+		paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
+		paintMolecule(reactantContainer, graphics);
+
+		// paint products content
+		paintBoundingBox(minmaxProducts, "Products", width, graphics);
+		paintMolecule(productContainer, graphics);
+
+		if (productContainer.getAtomCount() > 0 && reactantContainer.getAtomCount() > 0)
+		{
+			// paint arrow
+			int[] ints = new int[4];
+			ints[0] = (int) (minmaxReactants[2]) + width + 5;
+			ints[1] = (int) (minmaxReactants[1] + (minmaxReactants[3] - minmaxReactants[1]) / 2);
+			ints[2] = (int) (minmaxProducts[0]) - (width + 5);
+			ints[3] = ints[1];
+			int[] screenCoords = getScreenCoordinates(ints);
+			int direction = reaction.getDirection();
+			if (direction == Reaction.FORWARD)
+			{
+				graphics.drawLine(screenCoords[0], screenCoords[1],
+						screenCoords[2], screenCoords[3]);
+				graphics.drawLine(screenCoords[2], screenCoords[3],
+						screenCoords[2] - 7, screenCoords[3] - 7);
+				graphics.drawLine(screenCoords[2], screenCoords[3],
+						screenCoords[2] - 7, screenCoords[3] + 7);
+			} else if (direction == Reaction.BACKWARD)
+			{
+				graphics.drawLine(screenCoords[0], screenCoords[1],
+						screenCoords[2], screenCoords[3]);
+				graphics.drawLine(screenCoords[0], screenCoords[1],
+						screenCoords[0] + 7, screenCoords[1] - 7);
+				graphics.drawLine(screenCoords[0], screenCoords[1],
+						screenCoords[0] + 7, screenCoords[1] + 7);
+			} else if (direction == Reaction.BIDIRECTIONAL)
+			{
+				graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
+						screenCoords[2], screenCoords[3] - 3);
+				graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
+						screenCoords[0] + 7, screenCoords[1] - 3 - 7);
+				graphics.drawLine(screenCoords[0], screenCoords[1] + 3,
+						screenCoords[2], screenCoords[3] + 3);
+				graphics.drawLine(screenCoords[2], screenCoords[3] + 3,
+						screenCoords[2] - 7, screenCoords[3] + 3 + 7);
+			}
+		}
+	}
+
+
+	/**
+	 *@param  minmax    array of length for with min and max 2D coordinates
+	 *@param  caption   Description of the Parameter
+	 *@param  side      Description of the Parameter
+	 *@param  graphics  Description of the Parameter
+	 */
+	public void paintBoundingBox(double[] minmax, String caption,
+			int side, Graphics2D graphics)
+	{
+		int[] ints = new int[4];
+		ints[0] = (int) minmax[0] - side;
+		// min x
+		ints[1] = (int) minmax[1] - side;
+		// min y
+		ints[2] = (int) minmax[2] + side;
+		// max x
+		ints[3] = (int) minmax[3] + side;
+		// max y
+		int[] screenCoords = getScreenCoordinates(ints);
+		int heigth = screenCoords[1] - screenCoords[3];
+		int width = screenCoords[2] - screenCoords[0];
+		graphics.drawRect((int) screenCoords[0], (int) screenCoords[3], width, heigth);
+
+		// draw reaction ID
+		Font unscaledFont = r2dm.getFont();
+		if (unscaledFont == null)
+		{
+			unscaledFont = graphics.getFont();
+		}
+		float fontSize = getScreenSize(unscaledFont.getSize());
+		graphics.setFont(unscaledFont.deriveFont(fontSize));
+		graphics.drawString(caption, (int) screenCoords[0], (int) screenCoords[3]);
+		graphics.setFont(unscaledFont);
+	}
+
+
+	/**
+	 *  Triggers the methods to make the molecule fit into the frame and to paint
+	 *  it.
+	 *
+	 *@param  atomCon   Description of the Parameter
+	 *@param  graphics  Description of the Parameter
+	 */
+	public void paintMolecule(AtomContainer atomCon, Graphics2D graphics)
+	{
 		logger.debug("inside paintMolecule()");
 		customizeRendering(graphics);
 		RingSet ringSet = new RingSet();
 		Molecule[] molecules = null;
-		try {
+		try
+		{
 			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
-		} catch (Exception exception) {
-            logger.warn("Could not partition molecule: ", exception.getMessage());
+		} catch (Exception exception)
+		{
+			logger.warn("Could not partition molecule: ", exception.getMessage());
 			logger.debug(exception);
-            return;
+			return;
 		}
-		for (int i = 0; i < molecules.length; i++) {
+		for (int i = 0; i < molecules.length; i++)
+		{
 			SSSRFinder sssrf = new SSSRFinder(molecules[i]);
 			ringSet.add(sssrf.findSSSR());
 		}
@@ -349,14 +428,19 @@ public class Renderer2D implements MouseMotionListener   {
 		paintAtoms(atomCon, graphics);
 		if (r2dm.getSelectRect() != null)
 		{
-		    graphics.setColor(r2dm.getHighlightColor());
-		    graphics.drawPolygon(r2dm.getSelectRect());
+			graphics.setColor(r2dm.getHighlightColor());
+			graphics.drawPolygon(r2dm.getSelectRect());
 		}
 		paintLassoLines(graphics);
-		
+
 	}
 
 
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  graphics  Description of the Parameter
+	 */
 	public void paintLassoLines(Graphics2D graphics)
 	{
 		Vector points = r2dm.getLassoPoints();
@@ -367,692 +451,882 @@ public class Renderer2D implements MouseMotionListener   {
 			for (int i = 1; i < points.size(); i++)
 			{
 				point2 = (Point) points.elementAt(i);
-			    graphics.drawLine(point1.x, point1.y, point2.x, point2.y);
+				graphics.drawLine(point1.x, point1.y, point2.x, point2.y);
 				point1 = point2;
 			}
 		}
 	}
 
+
 	/**
-	 * Searches through all the atoms in the given array of atoms, triggers the
-	 * paintColouredAtoms method if the atom has got a certain color and triggers
-	 * the paintAtomSymbol method if the symbol of the atom is not C.
+	 *  Searches through all the atoms in the given array of atoms, triggers the
+	 *  paintColouredAtoms method if the atom has got a certain color and triggers
+	 *  the paintAtomSymbol method if the symbol of the atom is not C.
 	 *
-	 * @param  atomCon  Description of the Parameter
+	 *@param  atomCon   Description of the Parameter
+	 *@param  graphics  Description of the Parameter
 	 */
-    public void paintAtoms(AtomContainer atomCon, Graphics2D graphics) {
-         Atom[] atoms = atomCon.getAtoms();
-         for (int i = 0; i < atoms.length; i++) {
-             paintAtom(atomCon, atoms[i], graphics);
-         }
-     }
+	public void paintAtoms(AtomContainer atomCon, Graphics2D graphics)
+	{
+		Atom[] atoms = atomCon.getAtoms();
+		for (int i = 0; i < atoms.length; i++)
+		{
+			paintAtom(atomCon, atoms[i], graphics);
+		}
+	}
 
-	public void paintAtom(AtomContainer container, Atom atom, Graphics2D graphics) {
-		logger.debug("Painting atom ");
-        Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
-        if (atom.equals(r2dm.getHighlightedAtom())) {
-            paintColouredAtomBackground(atom, r2dm.getHighlightColor(), graphics);
-        }
-        
-        int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
-        boolean drawSymbol = false;
-        boolean isRadical = (container.getSingleElectronSum(atom) > 0);
-        if (atom instanceof PseudoAtom) {
-            drawSymbol = false;
-            paintPseudoAtomLabel((PseudoAtom)atom, atomBackColor, graphics, 
-                alignment, isRadical);
-            return;
-        } else if (!atom.getSymbol().equals("C")) {
-            /*
-            *  only show element for non-carbon atoms,
-             *  unless (see below)...
-             */
-            drawSymbol = true;
-        } else if (r2dm.getKekuleStructure()) {
-            // ... unless carbon must be drawn because in Kekule mode
-            drawSymbol = true;
-        } else if (atom.getFormalCharge() != 0) {
-            // ... unless carbon is charged
-            drawSymbol = true;
-        } else if (container.getConnectedBonds(atom).length < 1) {
-            // ... unless carbon is unbonded
-            drawSymbol = true;
-        } else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1)) {
-            drawSymbol = true;
-        } else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
-            // ... unless carbon is unbonded
-            drawSymbol = true;
-        } else if (atom.getMassNumber() != 0) {
-            try {
-                if (atom.getMassNumber() != IsotopeFactory.getInstance().
-                       getMajorIsotope(atom.getSymbol()).getMassNumber()) {
-                    drawSymbol = true;
-                }
-            } catch (Exception exception) {
-            };
-        }
-        if (r2dm.drawNumbers()) {
-            drawSymbol = true;
-        }
-        if (drawSymbol || isRadical) {
-            paintAtomSymbol(atom, atomBackColor, graphics, alignment, 
-                container.getAtomNumber(atom) + 1, isRadical);
-        }
-        if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null) {
-          paintToolTip(atom, graphics, container.getAtomNumber(atom) + 1);
-        }
-    }
 
 	/**
-	 * Paints a rectangle of the given color at the position of the given atom.
-	 * For example when the atom is highlighted.
+	 *  Description of the Method
 	 *
-	 * @param  atom   The atom to be drawn
-	 * @param  color  The color of the atom to be drawn
+	 *@param  container  Description of the Parameter
+	 *@param  atom       Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 */
+	public void paintAtom(AtomContainer container, Atom atom, Graphics2D graphics)
+	{
+		logger.debug("Painting atom ");
+		Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
+		if (atom.equals(r2dm.getHighlightedAtom()))
+		{
+			paintColouredAtomBackground(atom, r2dm.getHighlightColor(), graphics);
+		}
+
+		int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
+		boolean drawSymbol = false;
+		boolean isRadical = (container.getSingleElectronSum(atom) > 0);
+		if (atom instanceof PseudoAtom)
+		{
+			drawSymbol = false;
+			paintPseudoAtomLabel((PseudoAtom) atom, atomBackColor, graphics,
+					alignment, isRadical);
+			return;
+		} else if (!atom.getSymbol().equals("C"))
+		{
+			/*
+			 *  only show element for non-carbon atoms,
+			 *  unless (see below)...
+			 */
+			drawSymbol = true;
+		} else if (r2dm.getKekuleStructure())
+		{
+			// ... unless carbon must be drawn because in Kekule mode
+			drawSymbol = true;
+		} else if (atom.getFormalCharge() != 0)
+		{
+			// ... unless carbon is charged
+			drawSymbol = true;
+		} else if (container.getConnectedBonds(atom).length < 1)
+		{
+			// ... unless carbon is unbonded
+			drawSymbol = true;
+		} else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1))
+		{
+			drawSymbol = true;
+		} else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null)
+		{
+			// ... unless carbon is unbonded
+			drawSymbol = true;
+		} else if (atom.getMassNumber() != 0)
+		{
+			try
+			{
+				if (atom.getMassNumber() != IsotopeFactory.getInstance().
+						getMajorIsotope(atom.getSymbol()).getMassNumber())
+				{
+					drawSymbol = true;
+				}
+			} catch (Exception exception)
+			{
+			}
+			;
+		}
+		if (r2dm.drawNumbers())
+		{
+			drawSymbol = true;
+		}
+		if (drawSymbol || isRadical)
+		{
+			paintAtomSymbol(atom, atomBackColor, graphics, alignment,
+					container.getAtomNumber(atom) + 1, isRadical);
+		}
+		if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null)
+		{
+			paintToolTip(atom, graphics, container.getAtomNumber(atom) + 1);
+		}
+	}
+
+
+	/**
+	 *  Paints a rectangle of the given color at the position of the given atom.
+	 *  For example when the atom is highlighted.
+	 *
+	 *@param  atom      The atom to be drawn
+	 *@param  color     The color of the atom to be drawn
+	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintColouredAtomBackground(Atom atom, Color color, Graphics2D graphics)
 	{
 		int atomRadius = r2dm.getAtomRadius();
-	    graphics.setColor(color);
-        int[] coords = {(int) atom.getX2d() - (atomRadius / 2), 
-                        (int) atom.getY2d() + (atomRadius / 2)};
-        int radius = (int)getScreenSize(atomRadius);
-        coords = getScreenCoordinates(coords);
-	    graphics.fillRect(coords[0], coords[1], radius, radius);
+		graphics.setColor(color);
+		int[] coords = {(int) atom.getX2d() - (atomRadius / 2),
+				(int) atom.getY2d() + (atomRadius / 2)};
+		int radius = (int) getScreenSize(atomRadius);
+		coords = getScreenCoordinates(coords);
+		graphics.fillRect(coords[0], coords[1], radius, radius);
 	}
 
-    /**
-     * Paints the given atom symbol. It first outputs some empty space using the
-     * background color, slightly larger than the space that the symbol occupies.
-     * The atom symbol is then printed into the empty space.
-     *
-     * <p>The algorithm uses four steps:
-     * <ol>
-     *   <li>it calculates the widths and heights of all label parts
-     *   <li>it calculates the x's and y's of all label parts
-     *   <li>it creates empty backgrounds for all label parts
-     *   <li>it draws all label parts
-     * </ol>
-     *
-     * @param  atom       The atom to be drawn
-     * @param  backColor  Description of the Parameter
-     * @param  graphics   Graphics2D to draw too
-     * @param  alignment  How to align the H's
-     * @param  atomNumber Number of the atom in the AtomContainer, 0 is not in container
-     */
-    public void paintAtomSymbol(Atom atom, Color backColor, Graphics2D graphics, 
-                    int alignment, int atomNumber, boolean isRadical) {
-        if (atom.getPoint2d() == null) {
-            logger.warn("Cannot draw atom without 2D coordinate");
-            return;
-        }
-        
-        //This is for the compact version just with a square in the right color
-        if(r2dm.getIsCompact()){
-          if(!atom.getSymbol().equals("C")){
-            int labelX = (int)(atom.getPoint2d().x - 2);
-            int labelY = (int)(atom.getPoint2d().y + 2);
-            Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
-            paintEmptySpace(labelX, labelY, 5, 5, 0, atomColor, graphics);
-          }
-          return;
-        }
-        
-        // The fonts for calculating geometries
-        float subscriptFraction = 0.7f;
-        Font normalFont = r2dm.getFont();
-        if (normalFont == null) normalFont = graphics.getFont();
-        int normalFontSize = normalFont.getSize();
-        Font subscriptFont = normalFont.deriveFont(
-            normalFontSize*subscriptFraction);
-        // get drawing fonts
-        float normalScreenFontSize = getScreenSize(normalFontSize);
-        Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
-        Font subscriptScreenFont = normalScreenFont.deriveFont(
-            normalScreenFontSize*subscriptFraction);
-
-        // STEP 1: calculate widths and heights for all parts in the label
-
-        // calculate SYMBOL width, height
-        String atomSymbol = atom.getSymbol();
-        if (r2dm.drawNumbers()) {
-            if (atomSymbol.equals("C")) {
-                atomSymbol = "" + atomNumber;
-            } else if (atomNumber != 0 && !atomSymbol.equals("")) {
-                atomSymbol += "-" + atomNumber;
-            }
-        }
-        if (isRadical) {
-            logger.debug(" atom is radical, adding \u00B7");
-            atomSymbol += "\u00B7";
-        }
-        graphics.setFont(normalFont);
-        FontMetrics fm = graphics.getFontMetrics();
-        int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
-        int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0,1)))).intValue();
-        int atomSymbolH = (new Integer(fm.getAscent())).intValue();
-        int atomSymbolXOffset = atomSymbolFirstCharW/2;
-        int atomSymbolYOffset = atomSymbolH/2;
-
-        // calculate IMPLICIT H width, height
-        int implicitHydrogenCount = atom.getHydrogenCount();
-        int hSymbolW = 0; // unless next condition, this is the default
-        int hSymbolH = 0; // unless next condition, this is the default
-        String hSymbol = "H";
-        String hMultiplierString = new Integer(implicitHydrogenCount).toString();
-        if (implicitHydrogenCount > 0) {
-            // fm is identical, don't change
-            hSymbolW = (new Integer(fm.stringWidth(hSymbol))).intValue();
-            hSymbolH = atomSymbolH;
-        }
-        graphics.setFont(subscriptFont);
-        fm = graphics.getFontMetrics();
-        int hMultiplierW = 0;
-        int hMultiplierH = 0;
-        if (implicitHydrogenCount > 1) {
-            // fm is identical, don't change
-            hMultiplierW = (new Integer(fm.stringWidth(hMultiplierString))).intValue();
-            hMultiplierH = (new Integer(fm.getAscent())).intValue();
-        }
-
-        // calculate CHARGE width, height
-        // font is still subscript, that's fine
-        int formalCharge = atom.getFormalCharge();
-        int formalChargeW = 0; // unless next condition, this is the default
-        int formalChargeH = 0;
-        String formalChargeString = ""; // if charge == 0, then don't print anything
-        if (formalCharge != 0) {
-            if (formalCharge > 1) {
-                formalChargeString = new Integer(formalCharge).toString() + "+";
-            } else if (formalCharge > 0) {
-                formalChargeString = "+";
-            } else if (formalCharge < -1) {
-                formalChargeString = new Integer(formalCharge*-1).toString() + "-";
-            } else if (formalCharge < 0) {
-                formalChargeString = "-";
-            }
-            graphics.setFont(subscriptFont);
-            fm = graphics.getFontMetrics();
-            formalChargeW = (new Integer(fm.stringWidth(formalChargeString))).intValue();
-            formalChargeH = (new Integer(fm.getAscent())).intValue();
-        }
-
-        // calculate ISOTOPE width, height
-        // font is still subscript, that's fine
-        int atomicMassNumber = atom.getMassNumber();
-        int isotopeW = 0; // unless next condition, this is the default
-        int isotopeH = 0;
-        String isotopeString = "";
-        if (atomicMassNumber != 0 && isotopeFactory != null) {
-            Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
-            if (majorIsotope != null && atomicMassNumber != majorIsotope.getMassNumber()) {
-                graphics.setFont(subscriptFont);
-                fm = graphics.getFontMetrics();
-                isotopeString = new Integer(atomicMassNumber).toString();
-                isotopeW = (new Integer(fm.stringWidth(isotopeString))).intValue();
-                isotopeH = (new Integer(fm.getAscent())).intValue();
-            }
-        }
-
-        // STEP 2: calculate x's and y's for all parts in the label
-
-        int labelX = 0;
-        int labelY = 0;
-        if (alignment == 1) { // left alignment
-            labelX = (int)(atom.getPoint2d().x - (atomSymbolXOffset + isotopeW));
-        } else { // right alignment
-            labelX = (int)(atom.getPoint2d().x -
-                     (atomSymbolXOffset + Math.max(isotopeW,hMultiplierW) + hSymbolW));
-        }
-        // labelY and labelH are the same for both left/right aligned
-        labelY = (int)(atom.getPoint2d().y + (atomSymbolYOffset + isotopeH));
-        
-        // xy for atom symbol
-        int[] atomSymbolCoords = new int[2];
-        if (alignment == 1) { // left alignment
-            atomSymbolCoords[0] = labelX + isotopeW;
-        } else { // right alignment
-            atomSymbolCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW);
-        }
-        atomSymbolCoords[1] = labelY - isotopeH - atomSymbolH;
-
-        //Check if this is inside the tooltiptextarea
-        int[] tipcoords= getScreenCoordinates(atomSymbolCoords);
-        if(tooltiparea!=null && tipcoords[0]>tooltiparea[0] && tipcoords[0]<tooltiparea[2] && tipcoords[1]>tooltiparea[1] && tipcoords[1]<tooltiparea[3])
-          return;
-
-        // xy for implicit hydrogens
-        int[] hSymbolCoords = new int[2];
-        if (alignment == 1) { // left alignment
-            hSymbolCoords[0] = labelX + isotopeW + atomSymbolW;
-        } else { // right alignment
-            hSymbolCoords[0] = labelX;
-        }
-        hSymbolCoords[1] = labelY - isotopeH - atomSymbolH;
-        // xy for implicit hydrogens multiplier
-        int[] hMultiplierCoords = new int[2];
-        if (alignment == 1) { // left alignment
-            hMultiplierCoords[0] = labelX + isotopeW + atomSymbolW +hSymbolW;
-        } else { // right alignment
-            hMultiplierCoords[0] = labelX + hSymbolW;
-        }
-        hMultiplierCoords[1] = labelY - isotopeH - atomSymbolH - hMultiplierH/2;
-
-        // xy for charge
-        int[] chargeCoords = new int[2];
-        if (alignment == 1) { // left alignment
-            chargeCoords[0] = labelX + isotopeW + atomSymbolW + hSymbolW;
-        } else { // right alignment
-            chargeCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW) +
-                        atomSymbolW;
-        }
-        chargeCoords[1] = labelY - isotopeH;
-
-        //xy for isotope
-        int[] isotopeCoords = new int[2];
-        if (alignment == 1) { // left alignment
-            isotopeCoords[0] = labelX;
-        } else { // right alignment
-            isotopeCoords[0] = labelX + hSymbolW;
-        }
-        isotopeCoords[1] = labelY - isotopeH;
-
-        // STEP 3: draw empty backgrounds for all parts in the label
-
-        int border = 2; // border for clearing background in pixels
-
-        paintEmptySpace(atomSymbolCoords[0], atomSymbolCoords[1] + atomSymbolH,
-                        atomSymbolW, atomSymbolH, border, backColor, graphics);
-        paintEmptySpace(hSymbolCoords[0], hSymbolCoords[1] + hSymbolH,
-                        hSymbolW, hSymbolH, border, backColor, graphics);
-        paintEmptySpace(hMultiplierCoords[0], hMultiplierCoords[1] + hMultiplierH,
-                        hMultiplierW, hMultiplierH, border, backColor, graphics);
-        paintEmptySpace(chargeCoords[0], chargeCoords[1] + formalChargeH,
-                        formalChargeW, formalChargeH, border, backColor, graphics);
-        paintEmptySpace(isotopeCoords[0], isotopeCoords[1] + isotopeH,
-                        isotopeW, isotopeH, border, backColor, graphics);
-
-        // STEP 4: draw all parts in the label
-
-        Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
-
-        // draw SYMBOL
-        {
-            int[] screenCoords = getScreenCoordinates(atomSymbolCoords);
-            graphics.setColor(atomColor);
-            graphics.setFont(normalScreenFont);
-            graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
-
-            // possibly underline SYMBOL
-            if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null ||
-                atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
-                // RED for error, ORANGE for warnings
-                if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null) {
-                    graphics.setColor(Color.red);
-                } else if (atom.getProperty(ProblemMarker.WARNING_MARKER) != null) {
-                    graphics.setColor(Color.orange);
-                }
-                // make zig zag bond
-                int symbolLength = atom.getSymbol().length();
-                int zigzags = 1+(2*symbolLength);
-                int spacing = atomSymbolW/zigzags;
-                int width = atomSymbolH/3;
-                for (int i=-symbolLength; i<=symbolLength; i++) {
-                    int[] lineCoords = new int[6];
-                    int halfspacing = spacing/2;
-                    lineCoords[0]=atomSymbolCoords[0] + (atomSymbolW/2) + (i*spacing) - halfspacing;
-                    lineCoords[1]=atomSymbolCoords[1] - 1*width;
-                    lineCoords[2]=lineCoords[0]+halfspacing;
-                    lineCoords[3]=atomSymbolCoords[1] - 2*width;
-                    lineCoords[4]=lineCoords[2]+halfspacing;
-                    lineCoords[5]=lineCoords[1];
-                    int[] lineScreenCoords = getScreenCoordinates(lineCoords);
-                    graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
-                                      lineScreenCoords[2], lineScreenCoords[3]);
-                    graphics.drawLine(lineScreenCoords[2], lineScreenCoords[3],
-                                      lineScreenCoords[4], lineScreenCoords[5]);
-                }
-            }
-        }
-
-        // draw IMPLICIT H's
-        if (implicitHydrogenCount > 0 && r2dm.getShowImplicitHydrogens()) {
-            int[] screenCoords = getScreenCoordinates(hSymbolCoords);
-            graphics.setColor(atomColor);
-            graphics.setFont(normalScreenFont);
-            graphics.drawString(hSymbol, screenCoords[0], screenCoords[1]);
-            if (implicitHydrogenCount > 1) {
-                // draw number of hydrogens
-                screenCoords = getScreenCoordinates(hMultiplierCoords);
-                graphics.setColor(atomColor);
-                graphics.setFont(subscriptScreenFont);
-                graphics.drawString(hMultiplierString, screenCoords[0], screenCoords[1]);
-            }
-        }
-
-        // draw CHARGE
-        if (formalCharge != 0) {
-            int[] screenCoords = getScreenCoordinates(chargeCoords);
-            graphics.setColor(atomColor);
-            graphics.setFont(normalScreenFont);
-            graphics.drawString(formalChargeString, screenCoords[0], screenCoords[1]);
-        }
-
-        // draw ISOTOPE
-        if (isotopeString.length() > 0) {
-            int[] screenCoords = getScreenCoordinates(isotopeCoords);
-            graphics.setColor(atomColor);
-            graphics.setFont(subscriptScreenFont);
-            graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
-        }
-
-        // reset old font & color
-        graphics.setFont(normalFont);
-        graphics.setColor(r2dm.getForeColor());
-    }
-
-    /**
-     * Makes a clear empty space using the background color.
-     */
-    public void paintEmptySpace(int x, int y, int w, int h, int border,
-                                Color backColor, Graphics2D graphics) {
-        if (w != 0 && h != 0) {
-            Color saveColor = graphics.getColor();
-            graphics.setColor(backColor);
-            int[] coords = {x - border, y + border};
-            int[] bounds = {(int)getScreenSize(w + 2*border),
-                            (int)getScreenSize(h + 2*border)};
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.fillRect(screenCoords[0], screenCoords[1], 
-                              bounds[0], bounds[1]);
-            graphics.setColor(saveColor);
-        } // else nothing to make empty
-    }
-
-    /**
-     * Paints the label of the given PseudoAtom, instead of it's symbol.
-     *
-     * @param  atom       The atom to be drawn
-     * @param  backColor  Description of the Parameter
-     */
-    public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor, 
-                    Graphics2D graphics, int alignment, boolean isRadical) {
-        if (atom.getPoint2d() == null) {
-            logger.warn("Cannot draw atom without 2D coordinate");
-            return;
-        }
-        String atomSymbol = atom.getLabel();
-        if (atomSymbol == null) {
-            logger.warn("Cannot draw null symbol: taking symbol as default.");
-            atomSymbol = atom.getSymbol();
-        }
-        if (isRadical) {
-            logger.debug(" atom is radical, adding \u00B7");
-            atomSymbol += "\u00B7";
-        }
-
-        // The calculation fonts
-        Font normalFont = r2dm.getFont();
-        if (normalFont == null) normalFont = graphics.getFont();
-        int normalFontSize = normalFont.getSize();
-        // get drawing fonts
-        float normalScreenFontSize = getScreenSize(normalFontSize);
-        Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
-
-        // calculate SYMBOL width, height
-        graphics.setFont(normalFont);
-        FontMetrics fm = graphics.getFontMetrics();
-        int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
-        int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0,1)))).intValue();
-        int atomSymbolLastCharW = (new Integer(fm.stringWidth(atomSymbol.substring(atomSymbol.length()-1)))).intValue();
-        int atomSymbolH = (new Integer(fm.getAscent())).intValue();
-
-        int labelX = 0;
-        int labelY = 0;
-        int labelW = atomSymbolW;
-        int labelH = atomSymbolH;
-        
-        if (alignment == 1) { // left alignment
-            labelX = (int)(atom.getPoint2d().x - (atomSymbolFirstCharW/2));
-        } else { // right alignment
-            labelX = (int)(atom.getPoint2d().x - (atomSymbolW + atomSymbolLastCharW/2));
-        }
-        // labelY and labelH are the same for both left/right aligned
-        labelY = (int)(atom.getPoint2d().y - (atomSymbolH/2));
-
-        // make empty space
-        {
-            int border = 2; // number of pixels
-            graphics.setColor(backColor);
-            int[] coords = {labelX - border, labelY + labelH + border};
-            int[] bounds = {(int)getScreenSize(labelW + 2*border),
-                            (int)getScreenSize(labelH + 2*border)};
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.fillRect(screenCoords[0], screenCoords[1],
-                              bounds[0], bounds[1]);
-        }
-
-        // draw label
-        {
-            int[] coords = { labelX, labelY};
-            int[] screenCoords = getScreenCoordinates(coords);
-            graphics.setColor(Color.black);
-            graphics.setFont(normalScreenFont);
-            graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
-        }
-
-        // reset old font & color
-        graphics.setFont(normalFont);
-        graphics.setColor(r2dm.getForeColor());
-    }
-    
-    /**
-     * Triggers the suitable method to paint each of the given bonds and selects
-     * the right color.
-     *
-     * @param  ringSet  The set of rings the molecule contains
-     * @param  atomCon  Description of the Parameter
-     */
-    public void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics2D graphics) {
-        Color bondColor;
-        Ring ring;
-        Bond[] bonds = atomCon.getBonds();
-        ArrayList painted_rings = new ArrayList();
-
-        logger.debug("Painting bonds...");
-        for (int i = 0; i < bonds.length; i++){
-            Bond currentBond = bonds[i];
-            bondColor = (Color) r2dm.getColorHash().get(currentBond);
-            if (bondColor == null) {
-                bondColor = r2dm.getForeColor();
-            }
-            if (currentBond == r2dm.getHighlightedBond()) {
-                bondColor = r2dm.getHighlightColor();
-                for (int j = 0; j < currentBond.getAtomCount(); j++) {
-                    paintColouredAtomBackground(currentBond.getAtomAt(j),
-                       bondColor, graphics);
-                }
-            }
-            ring = RingSetManipulator.getHeaviestRing(ringSet, currentBond);
-            if (ring != null) {
-                logger.debug("Found ring to draw");
-                if (ringIsAromatic(ring) && r2dm.getShowAromaticity()) {
-                    logger.debug("Ring is aromatic");
-                    if (r2dm.getShowAromaticityInCDKStyle()) {
-                        paintAromaticRingBondCDKStyle(currentBond, ring, bondColor, graphics);
-                    } else {
-                        if (!painted_rings.contains(ring)) {
-                            paintRingRing(ring, bondColor, graphics);
-                            painted_rings.add(ring);
-                        }
-                        paintSingleBond(currentBond, bondColor, graphics);
-                    }
-                } else {
-                    logger.debug("Ring is *not* aromatic");
-                    paintRingBond(currentBond, ring, bondColor, graphics);
-                }
-            } else {
-                logger.debug("Drawing a non-ring bond");
-                paintBond(currentBond, bondColor, graphics);
-            }
-        }
-    }
-
-    /**
-     * A ring is defined aromatic if all atoms are aromatic,
-     * -or- all bonds are aromatic.
-     */
-    public boolean ringIsAromatic(Ring ring) {
-        boolean isAromatic = true;
-        Atom[] atoms = ring.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            if (!atoms[i].getFlag(CDKConstants.ISAROMATIC))
-                isAromatic = false;
-        }
-        if (!isAromatic) {
-            isAromatic = true;
-            Bond[] bonds = ring.getBonds();
-            for (int i=0; i<bonds.length; i++) {
-                if (!bonds[i].getFlag(CDKConstants.ISAROMATIC))
-                    return false;
-            }
-        }
-        return isAromatic;
-    }
-    
 
 	/**
-	 * Triggers the paint method suitable to the bondorder of the given bond.
+	 *  Paints the given atom symbol. It first outputs some empty space using the
+	 *  background color, slightly larger than the space that the symbol occupies.
+	 *  The atom symbol is then printed into the empty space. <p>
 	 *
-	 * @param  bond       The Bond to be drawn.
-	 * @param  bondColor  Description of the Parameter
+	 *  The algorithm uses four steps:
+	 *  <ol>
+	 *    <li> it calculates the widths and heights of all label parts
+	 *    <li> it calculates the x's and y's of all label parts
+	 *    <li> it creates empty backgrounds for all label parts
+	 *    <li> it draws all label parts
+	 *  </ol>
+	 *
+	 *
+	 *@param  atom        The atom to be drawn
+	 *@param  backColor   Description of the Parameter
+	 *@param  graphics    Graphics2D to draw too
+	 *@param  alignment   How to align the H's
+	 *@param  atomNumber  Number of the atom in the AtomContainer, 0 is not in
+	 *      container
+	 *@param  isRadical   Description of the Parameter
 	 */
-	public void paintBond(Bond bond, Color bondColor, Graphics2D graphics) {
-    if (bond.getAtomAt(0).getPoint2d() == null ||
-            bond.getAtomAt(1).getPoint2d() == null) {
+	public void paintAtomSymbol(Atom atom, Color backColor, Graphics2D graphics,
+			int alignment, int atomNumber, boolean isRadical)
+	{
+		if (atom.getPoint2d() == null)
+		{
+			logger.warn("Cannot draw atom without 2D coordinate");
 			return;
 		}
 
-        if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
-            // Draw stero information if available
-            if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP) {
-                paintWedgeBond(bond, bondColor, graphics);
-            } else {
-                paintDashedWedgeBond(bond, bondColor, graphics);
-            }
-        } else {
-            // Draw bond order when no stereo info is available
-            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-                paintSingleBond(bond, bondColor, graphics);
-            } else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-                paintDoubleBond(bond, bondColor, graphics);
-            } else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
-                paintTripleBond(bond, bondColor, graphics);
-            } else {
-                // paint all other bonds as single bonds
-                paintSingleBond(bond, bondColor, graphics);
-            }
+		//This is for the compact version just with a square in the right color
+		if (r2dm.getIsCompact())
+		{
+			if (!atom.getSymbol().equals("C"))
+			{
+				int labelX = (int) (atom.getPoint2d().x - 2);
+				int labelY = (int) (atom.getPoint2d().y + 2);
+				Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
+				paintEmptySpace(labelX, labelY, 5, 5, 0, atomColor, graphics);
+			}
+			return;
+		}
+
+		// The fonts for calculating geometries
+		float subscriptFraction = 0.7f;
+		Font normalFont = r2dm.getFont();
+		if (normalFont == null)
+		{
+			normalFont = graphics.getFont();
+		}
+		int normalFontSize = normalFont.getSize();
+		Font subscriptFont = normalFont.deriveFont(
+				normalFontSize * subscriptFraction);
+		// get drawing fonts
+		float normalScreenFontSize = getScreenSize(normalFontSize);
+		Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
+		Font subscriptScreenFont = normalScreenFont.deriveFont(
+				normalScreenFontSize * subscriptFraction);
+
+		// STEP 1: calculate widths and heights for all parts in the label
+
+		// calculate SYMBOL width, height
+		String atomSymbol = atom.getSymbol();
+		if (r2dm.drawNumbers())
+		{
+			if (atomSymbol.equals("C"))
+			{
+				atomSymbol = "" + atomNumber;
+			} else if (atomNumber != 0 && !atomSymbol.equals(""))
+			{
+				atomSymbol += "-" + atomNumber;
+			}
+		}
+		if (isRadical)
+		{
+			logger.debug(" atom is radical, adding \u00B7");
+			atomSymbol += "\u00B7";
+		}
+		graphics.setFont(normalFont);
+		FontMetrics fm = graphics.getFontMetrics();
+		int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
+		int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0, 1)))).intValue();
+		int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+		int atomSymbolXOffset = atomSymbolFirstCharW / 2;
+		int atomSymbolYOffset = atomSymbolH / 2;
+
+		// calculate IMPLICIT H width, height
+		int implicitHydrogenCount = atom.getHydrogenCount();
+		int hSymbolW = 0;
+		// unless next condition, this is the default
+		int hSymbolH = 0;
+		// unless next condition, this is the default
+		String hSymbol = "H";
+		String hMultiplierString = new Integer(implicitHydrogenCount).toString();
+		if (implicitHydrogenCount > 0)
+		{
+			// fm is identical, don't change
+			hSymbolW = (new Integer(fm.stringWidth(hSymbol))).intValue();
+			hSymbolH = atomSymbolH;
+		}
+		graphics.setFont(subscriptFont);
+		fm = graphics.getFontMetrics();
+		int hMultiplierW = 0;
+		int hMultiplierH = 0;
+		if (implicitHydrogenCount > 1)
+		{
+			// fm is identical, don't change
+			hMultiplierW = (new Integer(fm.stringWidth(hMultiplierString))).intValue();
+			hMultiplierH = (new Integer(fm.getAscent())).intValue();
+		}
+
+		// calculate CHARGE width, height
+		// font is still subscript, that's fine
+		int formalCharge = atom.getFormalCharge();
+		int formalChargeW = 0;
+		// unless next condition, this is the default
+		int formalChargeH = 0;
+		String formalChargeString = "";
+		// if charge == 0, then don't print anything
+		if (formalCharge != 0)
+		{
+			if (formalCharge > 1)
+			{
+				formalChargeString = new Integer(formalCharge).toString() + "+";
+			} else if (formalCharge > 0)
+			{
+				formalChargeString = "+";
+			} else if (formalCharge < -1)
+			{
+				formalChargeString = new Integer(formalCharge * -1).toString() + "-";
+			} else if (formalCharge < 0)
+			{
+				formalChargeString = "-";
+			}
+			graphics.setFont(subscriptFont);
+			fm = graphics.getFontMetrics();
+			formalChargeW = (new Integer(fm.stringWidth(formalChargeString))).intValue();
+			formalChargeH = (new Integer(fm.getAscent())).intValue();
+		}
+
+		// calculate ISOTOPE width, height
+		// font is still subscript, that's fine
+		int atomicMassNumber = atom.getMassNumber();
+		int isotopeW = 0;
+		// unless next condition, this is the default
+		int isotopeH = 0;
+		String isotopeString = "";
+		if (atomicMassNumber != 0 && isotopeFactory != null)
+		{
+			Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+			if (majorIsotope != null && atomicMassNumber != majorIsotope.getMassNumber())
+			{
+				graphics.setFont(subscriptFont);
+				fm = graphics.getFontMetrics();
+				isotopeString = new Integer(atomicMassNumber).toString();
+				isotopeW = (new Integer(fm.stringWidth(isotopeString))).intValue();
+				isotopeH = (new Integer(fm.getAscent())).intValue();
+			}
+		}
+
+		// STEP 2: calculate x's and y's for all parts in the label
+
+		int labelX = 0;
+		int labelY = 0;
+		if (alignment == 1)
+		{
+			// left alignment
+			labelX = (int) (atom.getPoint2d().x - (atomSymbolXOffset + isotopeW));
+		} else
+		{
+			// right alignment
+			labelX = (int) (atom.getPoint2d().x -
+					(atomSymbolXOffset + Math.max(isotopeW, hMultiplierW) + hSymbolW));
+		}
+		// labelY and labelH are the same for both left/right aligned
+		labelY = (int) (atom.getPoint2d().y + (atomSymbolYOffset + isotopeH));
+
+		// xy for atom symbol
+		int[] atomSymbolCoords = new int[2];
+		if (alignment == 1)
+		{
+			// left alignment
+			atomSymbolCoords[0] = labelX + isotopeW;
+		} else
+		{
+			// right alignment
+			atomSymbolCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW);
+		}
+		atomSymbolCoords[1] = labelY - isotopeH - atomSymbolH;
+
+		//Check if this is inside the tooltiptextarea
+		int[] tipcoords = getScreenCoordinates(atomSymbolCoords);
+		if (tooltiparea != null && tipcoords[0] > tooltiparea[0] && tipcoords[0] < tooltiparea[2] && tipcoords[1] > tooltiparea[1] && tipcoords[1] < tooltiparea[3])
+		{
+			return;
+		}
+
+		// xy for implicit hydrogens
+		int[] hSymbolCoords = new int[2];
+		if (alignment == 1)
+		{
+			// left alignment
+			hSymbolCoords[0] = labelX + isotopeW + atomSymbolW;
+		} else
+		{
+			// right alignment
+			hSymbolCoords[0] = labelX;
+		}
+		hSymbolCoords[1] = labelY - isotopeH - atomSymbolH;
+		// xy for implicit hydrogens multiplier
+		int[] hMultiplierCoords = new int[2];
+		if (alignment == 1)
+		{
+			// left alignment
+			hMultiplierCoords[0] = labelX + isotopeW + atomSymbolW + hSymbolW;
+		} else
+		{
+			// right alignment
+			hMultiplierCoords[0] = labelX + hSymbolW;
+		}
+		hMultiplierCoords[1] = labelY - isotopeH - atomSymbolH - hMultiplierH / 2;
+
+		// xy for charge
+		int[] chargeCoords = new int[2];
+		if (alignment == 1)
+		{
+			// left alignment
+			chargeCoords[0] = labelX + isotopeW + atomSymbolW + hSymbolW;
+		} else
+		{
+			// right alignment
+			chargeCoords[0] = labelX + hSymbolW + Math.max(isotopeW, hMultiplierW) +
+					atomSymbolW;
+		}
+		chargeCoords[1] = labelY - isotopeH;
+
+		//xy for isotope
+		int[] isotopeCoords = new int[2];
+		if (alignment == 1)
+		{
+			// left alignment
+			isotopeCoords[0] = labelX;
+		} else
+		{
+			// right alignment
+			isotopeCoords[0] = labelX + hSymbolW;
+		}
+		isotopeCoords[1] = labelY - isotopeH;
+
+		// STEP 3: draw empty backgrounds for all parts in the label
+
+		int border = 2;
+		// border for clearing background in pixels
+
+		paintEmptySpace(atomSymbolCoords[0], atomSymbolCoords[1] + atomSymbolH,
+				atomSymbolW, atomSymbolH, border, backColor, graphics);
+		paintEmptySpace(hSymbolCoords[0], hSymbolCoords[1] + hSymbolH,
+				hSymbolW, hSymbolH, border, backColor, graphics);
+		paintEmptySpace(hMultiplierCoords[0], hMultiplierCoords[1] + hMultiplierH,
+				hMultiplierW, hMultiplierH, border, backColor, graphics);
+		paintEmptySpace(chargeCoords[0], chargeCoords[1] + formalChargeH,
+				formalChargeW, formalChargeH, border, backColor, graphics);
+		paintEmptySpace(isotopeCoords[0], isotopeCoords[1] + isotopeH,
+				isotopeW, isotopeH, border, backColor, graphics);
+
+		// STEP 4: draw all parts in the label
+
+		Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
+		{
+			// draw SYMBOL
+
+			int[] screenCoords = getScreenCoordinates(atomSymbolCoords);
+			graphics.setColor(atomColor);
+			graphics.setFont(normalScreenFont);
+			graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
+
+			// possibly underline SYMBOL
+			if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null ||
+					atom.getProperty(ProblemMarker.WARNING_MARKER) != null)
+			{
+				// RED for error, ORANGE for warnings
+				if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null)
+				{
+					graphics.setColor(Color.red);
+				} else if (atom.getProperty(ProblemMarker.WARNING_MARKER) != null)
+				{
+					graphics.setColor(Color.orange);
+				}
+				// make zig zag bond
+				int symbolLength = atom.getSymbol().length();
+				int zigzags = 1 + (2 * symbolLength);
+				int spacing = atomSymbolW / zigzags;
+				int width = atomSymbolH / 3;
+				for (int i = -symbolLength; i <= symbolLength; i++)
+				{
+					int[] lineCoords = new int[6];
+					int halfspacing = spacing / 2;
+					lineCoords[0] = atomSymbolCoords[0] + (atomSymbolW / 2) + (i * spacing) - halfspacing;
+					lineCoords[1] = atomSymbolCoords[1] - 1 * width;
+					lineCoords[2] = lineCoords[0] + halfspacing;
+					lineCoords[3] = atomSymbolCoords[1] - 2 * width;
+					lineCoords[4] = lineCoords[2] + halfspacing;
+					lineCoords[5] = lineCoords[1];
+					int[] lineScreenCoords = getScreenCoordinates(lineCoords);
+					graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
+							lineScreenCoords[2], lineScreenCoords[3]);
+					graphics.drawLine(lineScreenCoords[2], lineScreenCoords[3],
+							lineScreenCoords[4], lineScreenCoords[5]);
+				}
+			}
+		}
+
+		// draw IMPLICIT H's
+		if (implicitHydrogenCount > 0 && r2dm.getShowImplicitHydrogens())
+		{
+			int[] screenCoords = getScreenCoordinates(hSymbolCoords);
+			graphics.setColor(atomColor);
+			graphics.setFont(normalScreenFont);
+			graphics.drawString(hSymbol, screenCoords[0], screenCoords[1]);
+			if (implicitHydrogenCount > 1)
+			{
+				// draw number of hydrogens
+				screenCoords = getScreenCoordinates(hMultiplierCoords);
+				graphics.setColor(atomColor);
+				graphics.setFont(subscriptScreenFont);
+				graphics.drawString(hMultiplierString, screenCoords[0], screenCoords[1]);
+			}
+		}
+
+		// draw CHARGE
+		if (formalCharge != 0)
+		{
+			int[] screenCoords = getScreenCoordinates(chargeCoords);
+			graphics.setColor(atomColor);
+			graphics.setFont(normalScreenFont);
+			graphics.drawString(formalChargeString, screenCoords[0], screenCoords[1]);
+		}
+
+		// draw ISOTOPE
+		if (isotopeString.length() > 0)
+		{
+			int[] screenCoords = getScreenCoordinates(isotopeCoords);
+			graphics.setColor(atomColor);
+			graphics.setFont(subscriptScreenFont);
+			graphics.drawString(isotopeString, screenCoords[0], screenCoords[1]);
+		}
+
+		// reset old font & color
+		graphics.setFont(normalFont);
+		graphics.setColor(r2dm.getForeColor());
+	}
+
+
+	/**
+	 *  Makes a clear empty space using the background color.
+	 *
+	 *@param  x          Description of the Parameter
+	 *@param  y          Description of the Parameter
+	 *@param  w          Description of the Parameter
+	 *@param  h          Description of the Parameter
+	 *@param  border     Description of the Parameter
+	 *@param  backColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 */
+	public void paintEmptySpace(int x, int y, int w, int h, int border,
+			Color backColor, Graphics2D graphics)
+	{
+		if (w != 0 && h != 0)
+		{
+			Color saveColor = graphics.getColor();
+			graphics.setColor(backColor);
+			int[] coords = {x - border, y + border};
+			int[] bounds = {(int) getScreenSize(w + 2 * border),
+					(int) getScreenSize(h + 2 * border)};
+			int[] screenCoords = getScreenCoordinates(coords);
+			graphics.fillRect(screenCoords[0], screenCoords[1],
+					bounds[0], bounds[1]);
+			graphics.setColor(saveColor);
+		}
+		// else nothing to make empty
+	}
+
+
+	/**
+	 *  Paints the label of the given PseudoAtom, instead of it's symbol.
+	 *
+	 *@param  atom       The atom to be drawn
+	 *@param  backColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 *@param  alignment  Description of the Parameter
+	 *@param  isRadical  Description of the Parameter
+	 */
+	public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor,
+			Graphics2D graphics, int alignment, boolean isRadical)
+	{
+		if (atom.getPoint2d() == null)
+		{
+			logger.warn("Cannot draw atom without 2D coordinate");
+			return;
+		}
+		String atomSymbol = atom.getLabel();
+		if (atomSymbol == null)
+		{
+			logger.warn("Cannot draw null symbol: taking symbol as default.");
+			atomSymbol = atom.getSymbol();
+		}
+		if (isRadical)
+		{
+			logger.debug(" atom is radical, adding \u00B7");
+			atomSymbol += "\u00B7";
+		}
+
+		// The calculation fonts
+		Font normalFont = r2dm.getFont();
+		if (normalFont == null)
+		{
+			normalFont = graphics.getFont();
+		}
+		int normalFontSize = normalFont.getSize();
+		// get drawing fonts
+		float normalScreenFontSize = getScreenSize(normalFontSize);
+		Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
+
+		// calculate SYMBOL width, height
+		graphics.setFont(normalFont);
+		FontMetrics fm = graphics.getFontMetrics();
+		int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
+		int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0, 1)))).intValue();
+		int atomSymbolLastCharW = (new Integer(fm.stringWidth(atomSymbol.substring(atomSymbol.length() - 1)))).intValue();
+		int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+
+		int labelX = 0;
+		int labelY = 0;
+		int labelW = atomSymbolW;
+		int labelH = atomSymbolH;
+
+		if (alignment == 1)
+		{
+			// left alignment
+			labelX = (int) (atom.getPoint2d().x - (atomSymbolFirstCharW / 2));
+		} else
+		{
+			// right alignment
+			labelX = (int) (atom.getPoint2d().x - (atomSymbolW + atomSymbolLastCharW / 2));
+		}
+		// labelY and labelH are the same for both left/right aligned
+		labelY = (int) (atom.getPoint2d().y - (atomSymbolH / 2));
+		{
+			// make empty space
+
+			int border = 2;
+			// number of pixels
+			graphics.setColor(backColor);
+			int[] coords = {labelX - border, labelY + labelH + border};
+			int[] bounds = {(int) getScreenSize(labelW + 2 * border),
+					(int) getScreenSize(labelH + 2 * border)};
+			int[] screenCoords = getScreenCoordinates(coords);
+			graphics.fillRect(screenCoords[0], screenCoords[1],
+					bounds[0], bounds[1]);
+		}
+		{
+			// draw label
+
+			int[] coords = {labelX, labelY};
+			int[] screenCoords = getScreenCoordinates(coords);
+			graphics.setColor(Color.black);
+			graphics.setFont(normalScreenFont);
+			graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
+		}
+
+		// reset old font & color
+		graphics.setFont(normalFont);
+		graphics.setColor(r2dm.getForeColor());
+	}
+
+
+	/**
+	 *  Triggers the suitable method to paint each of the given bonds and selects
+	 *  the right color.
+	 *
+	 *@param  ringSet   The set of rings the molecule contains
+	 *@param  atomCon   Description of the Parameter
+	 *@param  graphics  Description of the Parameter
+	 */
+	public void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics2D graphics)
+	{
+		Color bondColor;
+		Ring ring;
+		Bond[] bonds = atomCon.getBonds();
+		ArrayList painted_rings = new ArrayList();
+
+		logger.debug("Painting bonds...");
+		for (int i = 0; i < bonds.length; i++)
+		{
+			Bond currentBond = bonds[i];
+			bondColor = (Color) r2dm.getColorHash().get(currentBond);
+			if (bondColor == null)
+			{
+				bondColor = r2dm.getForeColor();
+			}
+			if (currentBond == r2dm.getHighlightedBond())
+			{
+				bondColor = r2dm.getHighlightColor();
+				for (int j = 0; j < currentBond.getAtomCount(); j++)
+				{
+					paintColouredAtomBackground(currentBond.getAtomAt(j),
+							bondColor, graphics);
+				}
+			}
+			ring = RingSetManipulator.getHeaviestRing(ringSet, currentBond);
+			if (ring != null)
+			{
+				logger.debug("Found ring to draw");
+				if (ringIsAromatic(ring) && r2dm.getShowAromaticity())
+				{
+					logger.debug("Ring is aromatic");
+					if (r2dm.getShowAromaticityInCDKStyle())
+					{
+						paintAromaticRingBondCDKStyle(currentBond, ring, bondColor, graphics);
+					} else
+					{
+						if (!painted_rings.contains(ring))
+						{
+							paintRingRing(ring, bondColor, graphics);
+							painted_rings.add(ring);
+						}
+						paintSingleBond(currentBond, bondColor, graphics);
+					}
+				} else
+				{
+					logger.debug("Ring is *not* aromatic");
+					paintRingBond(currentBond, ring, bondColor, graphics);
+				}
+			} else
+			{
+				logger.debug("Drawing a non-ring bond");
+				paintBond(currentBond, bondColor, graphics);
+			}
 		}
 	}
 
 
 	/**
-	 * Triggers the paint method suitable to the bondorder of the given bond that
-	 * is part of a ring with CDK's grey inner bonds.
+	 *  A ring is defined aromatic if all atoms are aromatic, -or- all bonds are
+	 *  aromatic.
 	 *
-	 * @param  bond       The Bond to be drawn.
-	 * @param  ring       Description of the Parameter
-	 * @param  bondColor  Description of the Parameter
+	 *@param  ring  Description of the Parameter
+	 *@return       Description of the Return Value
+	 */
+	public boolean ringIsAromatic(Ring ring)
+	{
+		boolean isAromatic = true;
+		Atom[] atoms = ring.getAtoms();
+		for (int i = 0; i < atoms.length; i++)
+		{
+			if (!atoms[i].getFlag(CDKConstants.ISAROMATIC))
+			{
+				isAromatic = false;
+			}
+		}
+		if (!isAromatic)
+		{
+			isAromatic = true;
+			Bond[] bonds = ring.getBonds();
+			for (int i = 0; i < bonds.length; i++)
+			{
+				if (!bonds[i].getFlag(CDKConstants.ISAROMATIC))
+				{
+					return false;
+				}
+			}
+		}
+		return isAromatic;
+	}
+
+
+	/**
+	 *  Triggers the paint method suitable to the bondorder of the given bond.
+	 *
+	 *@param  bond       The Bond to be drawn.
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 */
+	public void paintBond(Bond bond, Color bondColor, Graphics2D graphics)
+	{
+		if (bond.getAtomAt(0).getPoint2d() == null ||
+				bond.getAtomAt(1).getPoint2d() == null)
+		{
+			return;
+		}
+
+		if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED)
+		{
+			// Draw stero information if available
+			if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP)
+			{
+				paintWedgeBond(bond, bondColor, graphics);
+			} else
+			{
+				paintDashedWedgeBond(bond, bondColor, graphics);
+			}
+		} else
+		{
+			// Draw bond order when no stereo info is available
+			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE)
+			{
+				paintSingleBond(bond, bondColor, graphics);
+			} else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE)
+			{
+				paintDoubleBond(bond, bondColor, graphics);
+			} else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE)
+			{
+				paintTripleBond(bond, bondColor, graphics);
+			} else
+			{
+				// paint all other bonds as single bonds
+				paintSingleBond(bond, bondColor, graphics);
+			}
+		}
+	}
+
+
+	/**
+	 *  Triggers the paint method suitable to the bondorder of the given bond that
+	 *  is part of a ring with CDK's grey inner bonds.
+	 *
+	 *@param  bond       The Bond to be drawn.
+	 *@param  ring       Description of the Parameter
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
-        if (bond.getOrder() == 1.0) {
-       // Added by rstefani (in fact, code copied from paintBond)
-          if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED) {
-         // Draw stero information if available
-           if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP) {
-             paintWedgeBond(bond, bondColor, graphics);
-           } else {
-             paintDashedWedgeBond(bond, bondColor, graphics);
-             }
-          } else // end code by rstefani
-            paintSingleBond(bond, bondColor, graphics);
-        } else if (bond.getOrder() == 2.0) {
-            paintSingleBond(bond, bondColor, graphics);
-            paintInnerBond(bond, ring, bondColor, graphics);
-        } else if (bond.getOrder() == 3.0) {
-            paintTripleBond(bond, bondColor, graphics);
-        } else {
-            logger.warn("Drawing bond as single even though it has order: ", bond.getOrder()); 
-            paintSingleBond(bond, bondColor, graphics);
-        }
-    }
-
-    /**
-     * Draws the ring in an aromatic ring.
-     */
-    public void paintRingRing(Ring ring, Color bondColor, Graphics2D graphics) {
-		Point2d center = GeometryTools.get2DCenter(ring);
-
-        double[] minmax = GeometryTools.getMinMax(ring);
-        double width = (minmax[2] - minmax[0]) * 0.7;
-        double height = (minmax[3] - minmax[1]) * 0.7;
-        int[] coords = {
-            (int) (center.x - (width / 2.0)),
-            (int) (center.y + (height / 2.0))
-        };
-        int[] screenCoords = getScreenCoordinates(coords);
-        int ring_width = (int) (width * r2dm.getZoomFactor());
-        int ring_height = (int) (height * r2dm.getZoomFactor());
-
-        // Calculate inner oval offset - must be a whole number of pixels > 1.
-        int offset = (int) Math.ceil(0.05 * Math.max(ring_width, ring_height));
-        int offsetX2 = 2 * offset;
-
-        // Fill outer oval.
-        graphics.setColor(bondColor);
-        graphics.fillOval(
-                screenCoords[0], screenCoords[1],
-                ring_width, ring_height);
-
-        // Erase inner oval.
-        graphics.setColor(r2dm.getBackColor());
-        graphics.fillOval(
-                screenCoords[0] + offset,
-                screenCoords[1] + offset,
-                ring_width - offsetX2,
-                ring_height - offsetX2);
-
-        // Reset drawing colour.
-        graphics.setColor(bondColor);
-    }
-    
-    /**
-     * Paint a Bond in an aromatic ring, using CDK style, meaning grey inner bonds.
-     */
-    public void paintAromaticRingBondCDKStyle(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
-	{
-        paintSingleBond(bond, bondColor, graphics);
-        paintInnerBond(bond, ring, Color.lightGray, graphics);
-    }
-
-	/**
-	 * Paints the given single bond.
-	 *
-	 * @param  bond       The single bond to be drawn
-	 * @param  bondColor  Description of the Parameter
-	 */
-	public void paintSingleBond(Bond bond, Color bondColor, Graphics2D graphics) {
-        if (GeometryTools.has2DCoordinates(bond)) { 
-            paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
-        }
+		if (bond.getOrder() == 1.0)
+		{
+			// Added by rstefani (in fact, code copied from paintBond)
+			if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED)
+			{
+				// Draw stero information if available
+				if (bond.getStereo() >= CDKConstants.STEREO_BOND_UP)
+				{
+					paintWedgeBond(bond, bondColor, graphics);
+				} else
+				{
+					paintDashedWedgeBond(bond, bondColor, graphics);
+				}
+			} else
+			{
+				// end code by rstefani
+				paintSingleBond(bond, bondColor, graphics);
+			}
+		} else if (bond.getOrder() == 2.0)
+		{
+			paintSingleBond(bond, bondColor, graphics);
+			paintInnerBond(bond, ring, bondColor, graphics);
+		} else if (bond.getOrder() == 3.0)
+		{
+			paintTripleBond(bond, bondColor, graphics);
+		} else
+		{
+			logger.warn("Drawing bond as single even though it has order: ", bond.getOrder());
+			paintSingleBond(bond, bondColor, graphics);
+		}
 	}
 
+
 	/**
-	 * Paints The given double bond.
+	 *  Draws the ring in an aromatic ring.
 	 *
-	 * @param  bond       The double bond to be drawn
-	 * @param  bondColor  Description of the Parameter
+	 *@param  ring       Description of the Parameter
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 */
+	public void paintRingRing(Ring ring, Color bondColor, Graphics2D graphics)
+	{
+		Point2d center = GeometryTools.get2DCenter(ring);
+
+		double[] minmax = GeometryTools.getMinMax(ring);
+		double width = (minmax[2] - minmax[0]) * 0.7;
+		double height = (minmax[3] - minmax[1]) * 0.7;
+		int[] coords = {
+				(int) (center.x - (width / 2.0)),
+				(int) (center.y + (height / 2.0))
+				};
+		int[] screenCoords = getScreenCoordinates(coords);
+		int ring_width = (int) (width * r2dm.getZoomFactor());
+		int ring_height = (int) (height * r2dm.getZoomFactor());
+
+		// Calculate inner oval offset - must be a whole number of pixels > 1.
+		int offset = (int) Math.ceil(0.05 * Math.max(ring_width, ring_height));
+		int offsetX2 = 2 * offset;
+
+		// Fill outer oval.
+		graphics.setColor(bondColor);
+		graphics.fillOval(
+				screenCoords[0], screenCoords[1],
+				ring_width, ring_height);
+
+		// Erase inner oval.
+		graphics.setColor(r2dm.getBackColor());
+		graphics.fillOval(
+				screenCoords[0] + offset,
+				screenCoords[1] + offset,
+				ring_width - offsetX2,
+				ring_height - offsetX2);
+
+		// Reset drawing colour.
+		graphics.setColor(bondColor);
+	}
+
+
+	/**
+	 *  Paint a Bond in an aromatic ring, using CDK style, meaning grey inner
+	 *  bonds.
+	 *
+	 *@param  bond       Description of the Parameter
+	 *@param  ring       Description of the Parameter
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 */
+	public void paintAromaticRingBondCDKStyle(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
+	{
+		paintSingleBond(bond, bondColor, graphics);
+		paintInnerBond(bond, ring, Color.lightGray, graphics);
+	}
+
+
+	/**
+	 *  Paints the given single bond.
+	 *
+	 *@param  bond       The single bond to be drawn
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 */
+	public void paintSingleBond(Bond bond, Color bondColor, Graphics2D graphics)
+	{
+		if (GeometryTools.has2DCoordinates(bond))
+		{
+			paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
+		}
+	}
+
+
+	/**
+	 *  Paints The given double bond.
+	 *
+	 *@param  bond       The double bond to be drawn
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintDoubleBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1065,11 +1339,13 @@ public class Renderer2D implements MouseMotionListener   {
 		paintOneBond(newCoords2, bondColor, graphics);
 	}
 
+
 	/**
-	 * Paints the given triple bond.
+	 *  Paints the given triple bond.
 	 *
-	 * @param  bond       The triple bond to be drawn
-	 * @param  bondColor  Description of the Parameter
+	 *@param  bond       The triple bond to be drawn
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintTripleBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1086,11 +1362,12 @@ public class Renderer2D implements MouseMotionListener   {
 
 
 	/**
-	 * Paints the inner bond of a double bond that is part of a ring.
+	 *  Paints the inner bond of a double bond that is part of a ring.
 	 *
-	 * @param  bond       The bond to be drawn
-	 * @param  ring       The ring the bond is part of
-	 * @param  bondColor  Color of the bond
+	 *@param  bond       The bond to be drawn
+	 *@param  ring       The ring the bond is part of
+	 *@param  bondColor  Color of the bond
+	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
@@ -1112,12 +1389,12 @@ public class Renderer2D implements MouseMotionListener   {
 
 
 	/**
-	 * Calculates the coordinates for the inner bond of a doublebond that is part
-	 * of a ring. It is drawn shorter than a normal bond.
+	 *  Calculates the coordinates for the inner bond of a doublebond that is part
+	 *  of a ring. It is drawn shorter than a normal bond.
 	 *
-	 * @param  coords  The original coordinates of the bond
-	 * @param  edges   Number of edges of the ring it is part of
-	 * @return         The calculated coordinates of the now shorter bond
+	 *@param  coords  The original coordinates of the bond
+	 *@param  edges   Number of edges of the ring it is part of
+	 *@return         The calculated coordinates of the now shorter bond
 	 */
 	private int[] shortenBond(int[] coords, int edges)
 	{
@@ -1129,120 +1406,140 @@ public class Renderer2D implements MouseMotionListener   {
 
 
 	/**
-	 * Really paints the bond. It is triggered by all the other paintbond methods
-	 * to draw a polygon as wide as bond width.
+	 *  Really paints the bond. It is triggered by all the other paintbond methods
+	 *  to draw a polygon as wide as bond width.
 	 *
-	 * @param  coords
-	 * @param  bondColor  Color of the bond
+	 *@param  coords
+	 *@param  bondColor  Color of the bond
+	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintOneBond(int[] coords, Color bondColor, Graphics2D graphics)
 	{
-	    graphics.setColor(bondColor);
-  	int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
-        int[] screenCoords = getScreenCoordinates(newCoords);
+		graphics.setColor(bondColor);
+		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
+		int[] screenCoords = getScreenCoordinates(newCoords);
 		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
-	    graphics.fillPolygon(xCoords, yCoords, 4);
- }
+		graphics.fillPolygon(xCoords, yCoords, 4);
+	}
+
 
 	/**
-	 * Paints the given bond as a wedge bond.
+	 *  Paints the given bond as a wedge bond.
 	 *
-	 * @param  bond       The singlebond to be drawn
-	 * @param  bondColor  Color of the bond
+	 *@param  bond       The singlebond to be drawn
+	 *@param  bondColor  Color of the bond
+	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintWedgeBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
-        double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
-        
-        int[] coords = GeometryTools.getBondCoordinates(bond);
-        int[] screenCoords = getScreenCoordinates(coords);
-        graphics.setColor(bondColor);
-        int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
-        int[] newScreenCoords = getScreenCoordinates(newCoords);
-        if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
-            int[] xCoords = {screenCoords[0], newScreenCoords[6], newScreenCoords[4]};
-            int[] yCoords = {screenCoords[1], newScreenCoords[7], newScreenCoords[5]};
-            graphics.fillPolygon(xCoords, yCoords, 3);
-        } else {
-            int[] xCoords = {screenCoords[2], newScreenCoords[0], newScreenCoords[2]};
-            int[] yCoords = {screenCoords[3], newScreenCoords[1], newScreenCoords[3]};
-            graphics.fillPolygon(xCoords, yCoords, 3);
-        }
+		double wedgeWidth = r2dm.getBondWidth() * 2.0;
+		// this value should be made customazible
+
+		int[] coords = GeometryTools.getBondCoordinates(bond);
+		int[] screenCoords = getScreenCoordinates(coords);
+		graphics.setColor(bondColor);
+		int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
+		int[] newScreenCoords = getScreenCoordinates(newCoords);
+		if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
+		{
+			int[] xCoords = {screenCoords[0], newScreenCoords[6], newScreenCoords[4]};
+			int[] yCoords = {screenCoords[1], newScreenCoords[7], newScreenCoords[5]};
+			graphics.fillPolygon(xCoords, yCoords, 3);
+		} else
+		{
+			int[] xCoords = {screenCoords[2], newScreenCoords[0], newScreenCoords[2]};
+			int[] yCoords = {screenCoords[3], newScreenCoords[1], newScreenCoords[3]};
+			graphics.fillPolygon(xCoords, yCoords, 3);
+		}
 	}
 
+
 	/**
-	 * Paints the given bond as a dashed wedge bond.
+	 *  Paints the given bond as a dashed wedge bond.
 	 *
-	 * @param  bond       The single bond to be drawn
-	 * @param  bondColor  Color of the bond
+	 *@param  bond       The single bond to be drawn
+	 *@param  bondColor  Color of the bond
+	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics2D graphics)
 	{
-	    graphics.setColor(bondColor);
+		graphics.setColor(bondColor);
 
 		double bondLength = GeometryTools.getLength2D(bond);
-		int numberOfLines = (int)(bondLength / 4.0);  // this value should be made customizable
-        double wedgeWidth = r2dm.getBondWidth() * 2.0; // this value should be made customazible
+		int numberOfLines = (int) (bondLength / 4.0);
+		// this value should be made customizable
+		double wedgeWidth = r2dm.getBondWidth() * 2.0;
+		// this value should be made customazible
 
-		double widthStep = wedgeWidth/(double)numberOfLines;
-        Point2d p1 = bond.getAtomAt(0).getPoint2d();
-        Point2d p2 = bond.getAtomAt(1).getPoint2d();
-        if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
-            // draw the wedge bond the other way around
-            p1 = bond.getAtomAt(1).getPoint2d();
-            p2 = bond.getAtomAt(0).getPoint2d();
-        }
+		double widthStep = wedgeWidth / (double) numberOfLines;
+		Point2d p1 = bond.getAtomAt(0).getPoint2d();
+		Point2d p2 = bond.getAtomAt(1).getPoint2d();
+		if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV)
+		{
+			// draw the wedge bond the other way around
+			p1 = bond.getAtomAt(1).getPoint2d();
+			p2 = bond.getAtomAt(0).getPoint2d();
+		}
 		Vector2d lengthStep = new Vector2d(p2);
 		lengthStep.sub(p1);
-		lengthStep.scale(1.0/numberOfLines);
+		lengthStep.scale(1.0 / numberOfLines);
 		Vector2d p = GeometryTools.calculatePerpendicularUnitVector(p1, p2);
 
 		Point2d currentPoint = new Point2d(p1);
 		Point2d q1 = new Point2d();
 		Point2d q2 = new Point2d();
-		for (int i=0; i <= numberOfLines; ++i) {
+		for (int i = 0; i <= numberOfLines; ++i)
+		{
 			Vector2d offset = new Vector2d(p);
-			offset.scale(i*widthStep);
+			offset.scale(i * widthStep);
 			q1.add(currentPoint, offset);
 			q2.sub(currentPoint, offset);
-            int[] lineCoords = {(int)q1.x, (int)q1.y, (int)q2.x, (int)q2.y};
-            lineCoords = getScreenCoordinates(lineCoords);
-		    graphics.drawLine(lineCoords[0], lineCoords[1], lineCoords[2], lineCoords[3]);
+			int[] lineCoords = {(int) q1.x, (int) q1.y, (int) q2.x, (int) q2.y};
+			lineCoords = getScreenCoordinates(lineCoords);
+			graphics.drawLine(lineCoords[0], lineCoords[1], lineCoords[2], lineCoords[3]);
 			currentPoint.add(lengthStep);
 		}
 	}
 
+
 	/**
-	 *  Paints a line between the start point and end point of the pointer vector that
-	 *  is stored in the Renderer2DModel.
+	 *  Paints a line between the start point and end point of the pointer vector
+	 *  that is stored in the Renderer2DModel.
+	 *
+	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintPointerVector(Graphics2D graphics)
 	{
-		if (r2dm.getPointerVectorStart() != null) {
-            if (r2dm.getPointerVectorEnd() != null) {
-                Point startPoint = r2dm.getPointerVectorStart();
-                Point endPoint = r2dm.getPointerVectorEnd();
-                int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
-                int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
-                int[] screenCoords = getScreenCoordinates(newCoords);
-                int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
-                int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
-                graphics.setColor(r2dm.getForeColor());
-                // apply zoomFactor
-                graphics.fillPolygon(xCoords, yCoords, 4);
-            } else {
-                logger.warn("Start point of vector was not null, but end was!");
-            }
-        } else if (r2dm.getPointerVectorEnd() != null) {
-            logger.warn("End point of vector was not null, but start was!");
-        }
+		if (r2dm.getPointerVectorStart() != null)
+		{
+			if (r2dm.getPointerVectorEnd() != null)
+			{
+				Point startPoint = r2dm.getPointerVectorStart();
+				Point endPoint = r2dm.getPointerVectorEnd();
+				int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
+				int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
+				int[] screenCoords = getScreenCoordinates(newCoords);
+				int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
+				int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
+				graphics.setColor(r2dm.getForeColor());
+				// apply zoomFactor
+				graphics.fillPolygon(xCoords, yCoords, 4);
+			} else
+			{
+				logger.warn("Start point of vector was not null, but end was!");
+			}
+		} else if (r2dm.getPointerVectorEnd() != null)
+		{
+			logger.warn("End point of vector was not null, but start was!");
+		}
 	}
 
+
 	/**
-	 * Returns the Renderer2DModel of this Renderer.
+	 *  Returns the Renderer2DModel of this Renderer.
 	 *
-	 * @return    the Renderer2DModel of this Renderer
+	 *@return    the Renderer2DModel of this Renderer
 	 */
 	public Renderer2DModel getRenderer2DModel()
 	{
@@ -1252,111 +1549,153 @@ public class Renderer2D implements MouseMotionListener   {
 
 
 	/**
-	 * Sets the Renderer2DModel of this Renderer.
+	 *  Sets the Renderer2DModel of this Renderer.
 	 *
-	 * @param  r2dm  the new Renderer2DModel for this Renderer
+	 *@param  r2dm  the new Renderer2DModel for this Renderer
 	 */
 	public void setRenderer2DModel(Renderer2DModel r2dm)
 	{
 		this.r2dm = r2dm;
 	}
 
-    private Point getScreenCoordinates(Point p) {
-        graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
-        logger.debug("HEIGHT: " + graphicsHeight);
-        Point screenCoordinate = new Point();
-        double zoomFactor = r2dm.getZoomFactor();
-        screenCoordinate.x = (int)((double)p.x * zoomFactor);
-        screenCoordinate.y = graphicsHeight - (int)((double)p.y * zoomFactor);
-        return screenCoordinate;
-    }
 
-    /**
-     * Expects an array of even length with x's at the uneven indices
-     * and y's at the even indices.
-     */
-    protected int[] getScreenCoordinates(int[] coords) {
-        graphicsHeight = (int)r2dm.getBackgroundDimension().getHeight();
-        logger.debug("HEIGHT: " + graphicsHeight);
-        int[] screenCoordinates = new int[coords.length];
-        double zoomFactor = r2dm.getZoomFactor();
-        final int coordCount = coords.length / 2;
-        for (int i=0; i<coordCount; i++) {
-            screenCoordinates[i*2] = (int)((double)coords[i*2] * zoomFactor);
-            screenCoordinates[i*2+1] = graphicsHeight - (int)((double)coords[i*2+1] * zoomFactor);
-        }
-        return screenCoordinates;
-    }
-
-    protected float getScreenSize(int size) {
-        return (float)size * (float)r2dm.getZoomFactor();
-    }
-    
-    /**
-     *  Paints the toolTipText for an atom
-     *
-     * @param  atom      The atom.
-     * @param  graphics  The current graphics object.
-     */
-    public void paintToolTip(Atom atom, Graphics2D graphics, int atomNumber) {
-      tooltiparea=new int[4];
-      String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
-      String[] result = text.split("\\n");
-      int widestline=0;
-      for(int i=0;i<result.length;i++){
-        String text2=result[i];
-        Font normalFont = r2dm.getFont();
-        if (normalFont == null) normalFont = graphics.getFont();
-        graphics.setFont(normalFont);
-        FontMetrics fm = graphics.getFontMetrics();
-        int atomSymbolW = (new Integer(fm.stringWidth(text2))).intValue();
-        if(atomSymbolW>widestline)
-          widestline=atomSymbolW;
-      }
-      Font normalFont = r2dm.getFont();
-        if (normalFont == null) normalFont = graphics.getFont();
-      graphics.setFont(normalFont);
-      FontMetrics fm = graphics.getFontMetrics();
-      int[] provcoords={(int)atom.getPoint2d().x+10,(int)atom.getPoint2d().y};
-      int[] screenCoords = getScreenCoordinates(provcoords);
-      for(int i=0;i<result.length;i++){
-        if(i==0){
-          tooltiparea[0]=screenCoords[0];
-          tooltiparea[1]=screenCoords[1];
-        }
-        String text2=result[i];
-        int atomSymbolH = (new Integer(fm.getAscent())).intValue();
-        graphics.setColor(Color.YELLOW);
-        graphics.fillRect(screenCoords[0], screenCoords[1]+((atomSymbolH + 4) *i), widestline + 4, atomSymbolH + 4);
-        graphics.setColor(Color.BLACK);
-        graphics.drawString(text2, screenCoords[0] + 2, screenCoords[1] + atomSymbolH + 2+((atomSymbolH + 4) *i));
-        if(i==result.length-1){
-          tooltiparea[2]=screenCoords[0]+widestline + 4;
-          tooltiparea[3]=screenCoords[1]+((atomSymbolH + 4) *i)+atomSymbolH + 4;
-        }
-      }
-    }
-  
-  
-    /**
-   *  The mouseMoved event (used for atom toolTipTexts).
-   *
-   * @param  e  The event.
-   */
-  public void mouseMoved(MouseEvent e) {
-    if (r2dm.getHighlightedAtom() != null) {
-      r2dm.setShowTooltip(true);
-    } else {
-      r2dm.setShowTooltip(false);
-    }
-  }
+	/**
+	 *  Gets the screenCoordinates attribute of the Renderer2D object
+	 *
+	 *@param  p  Description of the Parameter
+	 *@return    The screenCoordinates value
+	 */
+	private Point getScreenCoordinates(Point p)
+	{
+		graphicsHeight = (int) r2dm.getBackgroundDimension().getHeight();
+		logger.debug("HEIGHT: " + graphicsHeight);
+		Point screenCoordinate = new Point();
+		double zoomFactor = r2dm.getZoomFactor();
+		screenCoordinate.x = (int) ((double) p.x * zoomFactor);
+		screenCoordinate.y = graphicsHeight - (int) ((double) p.y * zoomFactor);
+		return screenCoordinate;
+	}
 
 
-  /**
-   *  The mouseDragged event (not used currently).
-   *
-   * @param  e  The event.
-   */
-  public void mouseDragged(MouseEvent e) {
-  }
+	/**
+	 *  Expects an array of even length with x's at the uneven indices and y's at
+	 *  the even indices.
+	 *
+	 *@param  coords  Description of the Parameter
+	 *@return         The screenCoordinates value
+	 */
+	protected int[] getScreenCoordinates(int[] coords)
+	{
+		graphicsHeight = (int) r2dm.getBackgroundDimension().getHeight();
+		logger.debug("HEIGHT: " + graphicsHeight);
+		int[] screenCoordinates = new int[coords.length];
+		double zoomFactor = r2dm.getZoomFactor();
+		final int coordCount = coords.length / 2;
+		for (int i = 0; i < coordCount; i++)
+		{
+			screenCoordinates[i * 2] = (int) ((double) coords[i * 2] * zoomFactor);
+			screenCoordinates[i * 2 + 1] = graphicsHeight - (int) ((double) coords[i * 2 + 1] * zoomFactor);
+		}
+		return screenCoordinates;
+	}
+
+
+	/**
+	 *  Gets the screenSize attribute of the Renderer2D object
+	 *
+	 *@param  size  Description of the Parameter
+	 *@return       The screenSize value
+	 */
+	protected float getScreenSize(int size)
+	{
+		return (float) size * (float) r2dm.getZoomFactor();
+	}
+
+
+	/**
+	 *  Paints the toolTipText for an atom
+	 *
+	 *@param  atom        The atom.
+	 *@param  graphics    The current graphics object.
+	 *@param  atomNumber  Description of the Parameter
+	 */
+	public void paintToolTip(Atom atom, Graphics2D graphics, int atomNumber)
+	{
+		tooltiparea = new int[4];
+		String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
+		String[] result = text.split("\\n");
+		int widestline = 0;
+		for (int i = 0; i < result.length; i++)
+		{
+			String text2 = result[i];
+			Font normalFont = r2dm.getFont();
+			if (normalFont == null)
+			{
+				normalFont = graphics.getFont();
+			}
+			graphics.setFont(normalFont);
+			FontMetrics fm = graphics.getFontMetrics();
+			int atomSymbolW = (new Integer(fm.stringWidth(text2))).intValue();
+			if (atomSymbolW > widestline)
+			{
+				widestline = atomSymbolW;
+			}
+		}
+		Font normalFont = r2dm.getFont();
+		if (normalFont == null)
+		{
+			normalFont = graphics.getFont();
+		}
+		graphics.setFont(normalFont);
+		FontMetrics fm = graphics.getFontMetrics();
+		int[] provcoords = {(int) atom.getPoint2d().x + 10, (int) atom.getPoint2d().y};
+		int[] screenCoords = getScreenCoordinates(provcoords);
+		for (int i = 0; i < result.length; i++)
+		{
+			if (i == 0)
+			{
+				tooltiparea[0] = screenCoords[0];
+				tooltiparea[1] = screenCoords[1];
+			}
+			String text2 = result[i];
+			int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+			graphics.setColor(Color.YELLOW);
+			graphics.fillRect(screenCoords[0], screenCoords[1] + ((atomSymbolH + 4) * i), widestline + 4, atomSymbolH + 4);
+			graphics.setColor(Color.BLACK);
+			graphics.drawString(text2, screenCoords[0] + 2, screenCoords[1] + atomSymbolH + 2 + ((atomSymbolH + 4) * i));
+			if (i == result.length - 1)
+			{
+				tooltiparea[2] = screenCoords[0] + widestline + 4;
+				tooltiparea[3] = screenCoords[1] + ((atomSymbolH + 4) * i) + atomSymbolH + 4;
+			}
+		}
+	}
+
+
+	/**
+	 *  The mouseMoved event (used for atom toolTipTexts).
+	 *
+	 *@param  e  The event.
+	 */
+	public void mouseMoved(MouseEvent e)
+	{
+		if (r2dm.getHighlightedAtom() != null)
+		{
+			r2dm.setShowTooltip(true);
+		} else
+		{
+			r2dm.setShowTooltip(false);
+		}
+	}
+
+
+	/**
+	 *  The mouseDragged event (not used currently).
+	 *
+	 *@param  e  The event.
+	 */
+	public void mouseDragged(MouseEvent e)
+	{
+	}
 }
+

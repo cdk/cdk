@@ -41,6 +41,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
@@ -56,21 +57,22 @@ import org.openscience.cdk.tools.LoggingTool;
  * </pre> <p>
  *
  *  The FingerPrinter assumes that hydrogens are explicitely given! <p>
- * 
- * <font color="#FF0000">Warning: The aromaticity detection for this SmilesGenerator relies on
- * AllRingsFinder, which is known to take very long for some molecules with 
- * many cycles or special cyclic topologies. Thus, the AllRingsFinder has a
- * built-in timeout of 5 seconds after which it aborts and throws an Exception.
- * If you want your SMILES generated at any expense, you need to create your own
- * AllRingsFinder, set the timeout to a higher value, and assign it to this
- * SmilesGenerator. In the vast majority of cases, however, the defaults will be
- * fine. </font><p>
  *
- *  <font color="#FF0000">Another Warning : The daylight manual says: "Fingerprints are
- *  not so definite: if a fingerprint indicates a pattern is missing then it
- *  certainly is, but it can only indicate a pattern's presence with some
- *  probability." In the case of very small molecules, the probability that you
- *  get the same fingerprint for different molecules is high. </font> </p>
+ *  <font color="#FF0000">Warning: The aromaticity detection for this
+ *  SmilesGenerator relies on AllRingsFinder, which is known to take very long
+ *  for some molecules with many cycles or special cyclic topologies. Thus, the
+ *  AllRingsFinder has a built-in timeout of 5 seconds after which it aborts and
+ *  throws an Exception. If you want your SMILES generated at any expense, you
+ *  need to create your own AllRingsFinder, set the timeout to a higher value,
+ *  and assign it to this SmilesGenerator. In the vast majority of cases,
+ *  however, the defaults will be fine. </font> <p>
+ *
+ *  <font color="#FF0000">Another Warning : The daylight manual says:
+ *  "Fingerprints are not so definite: if a fingerprint indicates a pattern is
+ *  missing then it certainly is, but it can only indicate a pattern's presence
+ *  with some probability." In the case of very small molecules, the probability
+ *  that you get the same fingerprint for different molecules is high. </font>
+ *  </p>
  *
  *@author         steinbeck
  *@created        4. Mai 2005
@@ -97,11 +99,11 @@ public class Fingerprinter
 	 *      search= 6
 	 *@return                          The Fingerprint (A one-dimensional bit
 	 *      array)
-	 *@exception  NoSuchAtomException  Description of the Exception
+	 *@exception  Exception            Description of the Exception
 	 */
 	public static BitSet getFingerprint(AtomContainer ac) throws Exception
 	{
-		return getFingerprint(ac, defaultSize, defaultSearchDepth);
+		return getFingerprint(ac, defaultSize, defaultSearchDepth, null);
 	}
 
 
@@ -113,26 +115,39 @@ public class Fingerprinter
 	 *@param  size                     The desired size of the fingerprint
 	 *@return                          The Fingerprint (A one-dimensional bit
 	 *      array)
-	 *@exception  NoSuchAtomException  Description of the Exception
+	 *@exception  Exception            Description of the Exception
 	 */
 	public static BitSet getFingerprint(AtomContainer ac, int size) throws Exception
 	{
-		return getFingerprint(ac, size, defaultSearchDepth);
+		return getFingerprint(ac, size, defaultSearchDepth, null);
 	}
-
 
 	/**
 	 *  Generates a fingerprint of a given size for the given AtomContainer
 	 *
-	 *@param  ac                       The AtomContainer for which a Fingerprint is
-	 *      generated
-	 *@param  size                     The desired size of the fingerprint
-	 *@param  searchDepth              The desired depth of search
-	 *@return                          The Fingerprint (A one-dimensional bit
-	 *      array)
-	 *@exception  NoSuchAtomException  Description of the Exception
+	 *@param  ac		The AtomContainer for which a Fingerprint is generated
+	 *@param  size          The desired size of the fingerprint
+	 *@param  searchDepth   The desired depth of search
+	 *@return               The Fingerprint (A one-dimensional bit array)
+	 *@exception  Exception thrown if something goes wrong
 	 */
 	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth) throws Exception
+	{
+		return getFingerprint(ac, size, searchDepth);
+
+	}
+		
+	/**
+	 *  Generates a fingerprint of a given size for the given AtomContainer
+	 *
+	 *@param  ac		The AtomContainer for which a Fingerprint is generated
+	 *@param  size          The desired size of the fingerprint
+	 *@param  searchDepth   The desired depth of search
+	 *@param  ringFinder           The AllRingsFinder to be used by the aromaticity detection
+	 *@return               The Fingerprint (A one-dimensional bit array)
+	 *@exception  Exception thrown if something goes wrong
+	 */
+	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth, AllRingsFinder ringFinder) throws Exception
 	{
 		String path = null;
 		int position = -1;
@@ -140,7 +155,7 @@ public class Fingerprinter
 		// logger.debug("Entering Fingerprinter");
 		// logger.debug("Starting Aromaticity Detection");
 		long before = System.currentTimeMillis();
-		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac, false);
+		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac, false, ringFinder);
 		long after = System.currentTimeMillis();
 		//logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		// logger.debug("Finished Aromaticity Detection");
@@ -227,22 +242,23 @@ public class Fingerprinter
 	static void depthFirstSearch(AtomContainer ac, Atom root, Vector currentPath, int currentDepth, int searchDepth)
 	{
 		Bond[] bonds = ac.getConnectedBonds(root);
-		
-		 /* try
-		  *{
-		  *logger.debug("Currently at atom no. " + (ac.getAtomNumber(root)  + 1) + " with symbol "  + root.getSymbol());
-		  *}
-		  *catch(Exception exc){}
-		  */
+
+		/*
+		 *  try
+		 *  {
+		 *  logger.debug("Currently at atom no. " + (ac.getAtomNumber(root)  + 1) + " with symbol "  + root.getSymbol());
+		 *  }
+		 *  catch(Exception exc){}
+		 */
 		Atom nextAtom = null;
-		
-		/*try
-		 * {
-		 * logger.debug("Currently at atom no. " + (ac.getAtomNumber(root)  + 1) + " with symbol "  + root.getSymbol());
-		 * }
-		 * catch(Exception exc){}
-		*/
-		
+
+		/*
+		 *  try
+		 *  {
+		 *  logger.debug("Currently at atom no. " + (ac.getAtomNumber(root)  + 1) + " with symbol "  + root.getSymbol());
+		 *  }
+		 *  catch(Exception exc){}
+		 */
 		Atom tempAtom = null;
 		Vector newPath = null;
 		String symbol = null;
@@ -253,14 +269,14 @@ public class Fingerprinter
 		for (int f = 0; f < bonds.length; f++)
 		{
 			nextAtom = bonds[f].getConnectedAtom(root);
-			
-			/* try
-			 * {
-			 * logger.debug("Found connected atom no. " + (ac.getAtomNumber(nextAtom) + 1) + " with symbol "  + nextAtom.getSymbol() + "...");
-			 * }
-			 * catch(Exception exc){}
+
+			/*
+			 *  try
+			 *  {
+			 *  logger.debug("Found connected atom no. " + (ac.getAtomNumber(nextAtom) + 1) + " with symbol "  + nextAtom.getSymbol() + "...");
+			 *  }
+			 *  catch(Exception exc){}
 			 */
-			
 			if (!currentPath.contains(nextAtom))
 			{
 				newPath = new Vector(currentPath);
@@ -269,7 +285,7 @@ public class Fingerprinter
 				//logger.debug("Bond has symbol " + bondSymbol);
 				newPath.addElement(nextAtom);
 				checkAndStore(newPath);
-				
+
 				if (currentDepth < searchDepth)
 				{
 					depthFirstSearch(ac, nextAtom, newPath, currentDepth, searchDepth);

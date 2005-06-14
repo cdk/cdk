@@ -1,4 +1,5 @@
-/*  $RCSfile$
+/*
+ *  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -37,148 +38,227 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+import org.openscience.cdk.exception.CDKException;
 
 /**
- * The HueckelAromaticityDetector detects the aromaticity based on
- * the Hueckel 4n+2 pi-electrons Rule. This is done by one of the
- * detectAromaticity methods. They set the aromaticity flags of
- * appropriate Atoms, Bonds and Rings. After the detection, you
- * can use getFlag(CDKConstants.ISAROMATIC) on these ChemObjects.
+ *  The HueckelAromaticityDetector detects the aromaticity based on the Hueckel
+ *  4n+2 pi-electrons Rule. This is done by one of the detectAromaticity
+ *  methods. They set the aromaticity flags of appropriate Atoms, Bonds and
+ *  Rings. After the detection, you can use getFlag(CDKConstants.ISAROMATIC) on
+ *  these ChemObjects.
  *
- * @cdk.module standard
- *
- * @author      steinbeck
- * @author      kaihartmann
- * @cdk.created 2001-09-04
+ *@author         steinbeck
+ *@author         kaihartmann
+ *@created        3. Juni 2005
+ *@cdk.module     standard
+ *@cdk.created    2001-09-04
  */
-public class HueckelAromaticityDetector {
-    
+public class HueckelAromaticityDetector
+{
+
 	static LoggingTool logger = new LoggingTool(HueckelAromaticityDetector.class);
-    
+	AllRingsFinder ringFinder = null;
+
+
 	/**
-	 * Retrieves the set of all rings and performs an aromaticity detection
-	 * based on Hueckels 4n + 2 rule.
+	 *  Retrieves the set of all rings and performs an aromaticity detection based
+	 *  on Hueckels 4n + 2 rule.
 	 *
-	 * @return  True if molecule is aromatic
+	 *@param  atomContainer		AtomContainer to detect rings in
+	 *@return                       True if the molecule has aromatic
+	 * 				features
+	 *@exception  CDKException 	Thrown if something goes wrong or in
+	 * 				case of a AllRingsFinder timeout 
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer) throws org.openscience.cdk.exception.CDKException {
+	public static boolean detectAromaticity(AtomContainer atomContainer) throws CDKException
+	{
 		return (detectAromaticity(atomContainer, true));
 	}
-	
-	
+
+
 	/**
-	 * Uses precomputed set of ALL rings and performs an aromaticity detection
-	 * based on Hueckels 4n + 2 rule.
+	 *  Uses precomputed set of ALL rings and performs an aromaticity detection
+	 *  based on Hueckels 4n + 2 rule.
 	 *
-	 * @param   ringSet  set of ALL rings
-	 * @return  True if molecule is aromatic
+	 *@param  ringSet		set of ALL rings
+	 *@param  atomContainer         The AtomContainer to detect rings in
+	 *@return                       True if molecule has aromatic features
+	 *@exception  org.openscience.cdk.exception.CDKException  
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet) throws org.openscience.cdk.exception.CDKException {
+	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet) throws org.openscience.cdk.exception.CDKException
+	{
 		return (detectAromaticity(atomContainer, ringSet, true));
 	}
-	
-	
+
+
 	/**
-	 * Retrieves the set of all rings and performs an aromaticity detection
-	 * based on Hueckels 4n + 2 rule.
+	 *  Retrieves the set of all rings and performs an aromaticity detection based
+	 *  on Hueckels 4n + 2 rule.
 	 *
-	 * @param   removeAromatictyFlags  Leaves ChemObjects that are already marked as aromatic as they are
-	 * @return                         True if molecule is aromatic
+	 *@param  removeAromatictyFlags  When true, we leaves ChemObjects that 
+	 *				 are already marked as aromatic as they are
+	 *@param  atomContainer          AtomContainer to be searched for
+	 * 				rings
+	 *@return			True, if molecule has aromatic features                               	 
+	 *@exception CDKException  	Thrown in case of errors or an 
+	 *				AllRingsFinder timeout
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.CDKException {
+	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.CDKException
+	{
+		return detectAromaticity(atomContainer, removeAromatictyFlags, null);
+	}
+
+
+	/**
+	 *  Retrieves the set of all rings and performs an aromaticity detection based
+	 *  on Hueckels 4n + 2 rule. An AllRingsFinder with customized timeout may be
+	 *  assigned to this method.
+	 *@param  removeAromatictyFlags  When true, we leaves ChemObjects that 
+	 *				 are already marked as aromatic as they are
+	 *@param  atomContainer          AtomContainer to be searched for
+	 *@param  arf                    AllRingsFinder to be employed for the
+	 *				ringsearch. Use this to customize the 
+	 *				AllRingsFinder timeout feature
+	 * 				rings
+	 *@return			True, if molecule has aromatic features                               	 
+	 *@exception CDKException  	Thrown in case of errors or an 
+	 *				AllRingsFinder timeout
+	 */
+	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags, AllRingsFinder arf) throws org.openscience.cdk.exception.CDKException
+	{
 		logger.debug("Entered Aromaticity Detection");
 		logger.debug("Starting AllRingsFinder");
 		long before = System.currentTimeMillis();
-		RingSet ringSet = new AllRingsFinder().findAllRings(atomContainer);
+		if (arf == null)
+		{
+			arf = new AllRingsFinder();
+		}
+		RingSet ringSet = arf.findAllRings(atomContainer);
 		long after = System.currentTimeMillis();
 		logger.debug("time for finding all rings: " + (after - before) + " milliseconds");
 		logger.debug("Finished AllRingsFinder");
-		if (ringSet.size() > 0) {
+		if (ringSet.size() > 0)
+		{
 			return detectAromaticity(atomContainer, ringSet, removeAromatictyFlags);
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
-	 * Uses precomputed set of ALL rings and performs an aromaticity detection
-	 * based on Hueckels 4n + 2 rule.
+	 *  Uses precomputed set of ALL rings and performs an aromaticity detection
+	 *  based on Hueckels 4n + 2 rule.
 	 *
-	 * @param  ringSet                 set of ALL rings
-	 * @param  removeAromaticityFlags  Leaves ChemObjects that are already marked as aromatic as they are
-	 * @return                         True if molecule is aromatic
+	 *@param  ringSet                 set of ALL rings
+	 *@param  removeAromaticityFlags  Leaves ChemObjects that are already marked as
+	 *      aromatic as they are
+	 *@param  atomContainer           AtomContainer to be searched for rings
+	 *@return                         True, if molecules contains an
+	 *				  aromatic feature
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet, boolean removeAromaticityFlags) {
+	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet, boolean removeAromaticityFlags)
+	{
 		boolean foundSomething = false;
-		if (removeAromaticityFlags) {
-			for (int f = 0; f < atomContainer.getAtomCount(); f++) {
+		if (removeAromaticityFlags)
+		{
+			for (int f = 0; f < atomContainer.getAtomCount(); f++)
+			{
 				atomContainer.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, false);
 			}
-			for (int f = 0; f < atomContainer.getElectronContainerCount(); f++) {
+			for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
+			{
 				ElectronContainer electronContainer = atomContainer.getElectronContainerAt(f);
-				if (electronContainer instanceof Bond) {
+				if (electronContainer instanceof Bond)
+				{
 					electronContainer.setFlag(CDKConstants.ISAROMATIC, false);
 				}
 			}
-			for (int f = 0; f < ringSet.size(); f++) {
+			for (int f = 0; f < ringSet.size(); f++)
+			{
 				((Ring) ringSet.get(f)).setFlag(CDKConstants.ISAROMATIC, false);
 			}
 		}
-		
+
 		Ring ring = null;
 		RingSetManipulator.sort(ringSet);
-		for (int f = 0; f < ringSet.size(); f++) {
+		for (int f = 0; f < ringSet.size(); f++)
+		{
 			ring = (Ring) ringSet.elementAt(f);
 			logger.debug("Testing for aromaticity in ring no ", f);
-			if (AromaticityCalculator.isAromatic(ring, atomContainer)) {
+			if (AromaticityCalculator.isAromatic(ring, atomContainer))
+			{
 				ring.setFlag(CDKConstants.ISAROMATIC, true);
-				
-				for (int g = 0; g < ring.getAtomCount(); g++) {
+
+				for (int g = 0; g < ring.getAtomCount(); g++)
+				{
 					ring.getAtomAt(g).setFlag(CDKConstants.ISAROMATIC, true);
 				}
-				
-				for (int g = 0; g < ring.getElectronContainerCount(); g++) {
+
+				for (int g = 0; g < ring.getElectronContainerCount(); g++)
+				{
 					ElectronContainer electronContainer = ring.getElectronContainerAt(g);
-					if (electronContainer instanceof Bond) {
+					if (electronContainer instanceof Bond)
+					{
 						electronContainer.setFlag(CDKConstants.ISAROMATIC, true);
 					}
 				}
-				
+
 				foundSomething = true;
 				logger.debug("This ring is aromatic: ", f);
-			} else {
+			} else
+			{
 				logger.debug("This ring is *not* aromatic: ", f);
 			}
 		}
 		return foundSomething;
 	}
-	
-	
+
+
 	/**
-	 * This method sets the aromaticity flags for a RingSet from the Atom flags.
-	 * It can be used after the aromaticity detection to set the appropriate flags
-	 * for a RingSet from the SSSR search.
+	 *  This method sets the aromaticity flags for a RingSet from the Atom flags.
+	 *  It can be used after the aromaticity detection to set the appropriate flags
+	 *  for a RingSet from the SSSR search.
 	 *
-	 * @param  ringset                 the RingSet to set the flags for
+	 *@param  ringset  the RingSet to set the flags for
 	 */
-	static public void setRingFlags(RingSet ringset) {
-		for (int i = 0; i < ringset.size(); i++) {
+	public static void setRingFlags(RingSet ringset)
+	{
+		for (int i = 0; i < ringset.size(); i++)
+		{
 			boolean aromatic = true;
-			Ring ring = (Ring)ringset.get(i);
-			for (int j = 0; j < ring.getAtomCount(); j++) {
-				if (ring.getAtomAt(j).getFlag(CDKConstants.ISAROMATIC) != true) {
+			Ring ring = (Ring) ringset.get(i);
+			for (int j = 0; j < ring.getAtomCount(); j++)
+			{
+				if (ring.getAtomAt(j).getFlag(CDKConstants.ISAROMATIC) != true)
+				{
 					aromatic = false;
 					break;
 				}
 			}
-			if (aromatic) {
+			if (aromatic)
+			{
 				ring.setFlag(CDKConstants.ISAROMATIC, true);
-			} else {
+			} else
+			{
 				ring.setFlag(CDKConstants.ISAROMATIC, false);
 			}
 		}
 	}
-	
+
+
+	/**
+	 *  Sets the current AllRingsFinder instance Use this if you want to customize
+	 *  the timeout for the AllRingsFinder. AllRingsFinder is stopping its quest to
+	 *  find all rings after a default of 5 seconds.
+	 *
+	 *@param  ringFinder  The value to assign ringFinder.
+	 *@see                org.openscience.cdk.ringsearch.AllRingsFinder
+	 */
+	public void setRingFinder(AllRingsFinder ringFinder)
+	{
+		this.ringFinder = ringFinder;
+	}
+
 	/*
 	 *  public static boolean isAromatic(AtomContainer ac, Ring ring)
 	 *  {
