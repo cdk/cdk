@@ -27,9 +27,17 @@ package org.openscience.cdk.applications.jchempaint.applet;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.controller.Controller2D;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Atom;
+import java.applet.Applet;
+import java.lang.reflect.Method;
 
 /**
  * The
@@ -38,9 +46,13 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
  * @author dirk49
  * @created 04. Mai 2005
  */
-public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
+public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet implements MouseMotionListener{
 
-	/* (non-Javadoc)
+    private Applet spectrumApplet;
+    private Object lastHighlighted=null;
+    private Controller2D controller;
+  
+  /* (non-Javadoc)
 	 * @see java.applet.Applet#init()
 	 */
 	public void init() {
@@ -49,6 +61,10 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
 		jcpvop.setShowStatusBar(false);
 		jcpvop.setShowToolBar(false);
 		setTheJcpp(jcpvop);
+		String atomNumbers=getParameter("spectrumRenderer");
+    if(atomNumbers!=null){
+      getTheJcpp().getDrawingPanel().addMouseMotionListener(this);
+    }
 	}
 	
 	/* (non-Javadoc)
@@ -63,4 +79,59 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet {
 	public void stop() {
 		super.stop();
 	}
+  
+  
+  public void mouseDragged(MouseEvent event)
+  {
+  }
+  
+  
+  public void mouseMoved(MouseEvent event)
+  {
+    try{
+      getSpectrumApplet();
+      if(controller==null)
+        controller=new Controller2D(getTheJcpp().getChemModel(),getTheJcpp().getJChemPaintModel().getRendererModel());
+      int[] screenCoords = {event.getX(), event.getY()};
+      int[] mouseCoords = controller.getWorldCoordinates(screenCoords);
+      int mouseX = mouseCoords[0];
+      int mouseY = mouseCoords[1];
+      ChemObject objectInRange = controller.getChemObjectInRange(mouseX, mouseY);
+      if (objectInRange!=lastHighlighted && objectInRange instanceof Atom)
+      {
+        getTheJcpp().getJChemPaintModel().getRendererModel().setHighlightColor(Color.red);
+        highlightPeakInSpectrum(getTheJcpp().getChemModel().getSetOfMolecules().getMolecule(0).getAtomNumber((Atom)objectInRange));
+        getTheJcpp().getJChemPaintModel().getRendererModel().setHighlightedAtom((Atom)objectInRange);
+        repaint();
+        lastHighlighted=objectInRange;
+      }
+    }catch(Exception ex){
+      ex.printStackTrace();
+    }
+  }
+  
+  
+  /**
+   * Handles interaction with structure viewer,
+   * highlighted atoms in spectrum view will be highlighted in structure
+   * @param atomNumbers atom numbers of peaks highlighted in spectrum
+   */
+  public void highlightPeakInSpectrum(int atomNumber) throws Exception{
+    if(getParameter("spectrumRenderer")==null)
+      return;
+		Method highlightMethod = getSpectrumApplet().getClass().getMethod("highlightPeakInSpectrum", new Class[] { Integer.TYPE });
+    highlightMethod.invoke(getSpectrumApplet(),	new Object[] { new Integer(atomNumber) });
+    spectrumApplet.repaint();
+  }
+
+
+  private Applet getSpectrumApplet() {
+      if (spectrumApplet == null) {
+          String s = getParameter("spectrumRenderer");
+          if ((s != null) && (s.length() > 0)) {
+              spectrumApplet = getAppletContext().getApplet(s);
+          }
+      }
+      return spectrumApplet;
+  }
 }

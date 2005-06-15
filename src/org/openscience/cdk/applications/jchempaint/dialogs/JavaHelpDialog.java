@@ -56,18 +56,18 @@ public class JavaHelpDialog
 	 *@param  fr        Description of the Parameter
 	 *@param  helpfile  Description of the Parameter
 	 */
-	public JavaHelpDialog(String helpfile)
+	public JavaHelpDialog()
 	{
 		try {
-		    HelpSet hs = new HelpSet(null, new URL("file:src/org/openscience/cdk/" +
-		    		"applications/jchempaint/resources/userhelp_jcp/jcp.hs"));
+        URL helpurl=HelpSet.findHelpSet(this.getClass().getClassLoader(),"org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/jcp.hs");
+		    HelpSet hs = new HelpSet(null, helpurl);
 		    HelpBroker hb = hs.createHelpBroker();
 		    
 		    fDisplayHelp = new CSH.DisplayHelpFromSource(hb);
 		    
 		} catch(Exception ee) {
 	        System.out.println("HelpSet: "+ee.getMessage());
-	        System.out.println("HelpSet: "+ helpfile + " not found");
+	        System.out.println("HelpSet: "+ "jcp.hs" + " not found");
 	      }
 	}
 	/**

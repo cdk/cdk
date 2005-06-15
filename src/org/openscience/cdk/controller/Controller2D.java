@@ -1308,7 +1308,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 *@param  Y  Description of the Parameter
 	 *@return    The chemObjectInRange value
 	 */
-	protected ChemObject getChemObjectInRange(int X, int Y)
+	public ChemObject getChemObjectInRange(int X, int Y)
 	{
 		ChemObject objectInRange = getAtomInRange(X, Y);
 		if (objectInRange != null)
@@ -1567,7 +1567,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 *@param  coords  Description of the Parameter
 	 *@return         The worldCoordinates value
 	 */
-	protected int[] getWorldCoordinates(int[] coords)
+	public int[] getWorldCoordinates(int[] coords)
 	{
 		int[] worldCoords = new int[coords.length];
 		int coordCount = coords.length / 2;
