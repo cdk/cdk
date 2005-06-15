@@ -82,6 +82,9 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 	private Vector commonElements;
 	private HashMap currentCommonElement = new HashMap();
+  
+  private double shiftX=0;
+  private double shiftY=0;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -555,8 +558,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			if (c2dm.getDrawMode() == c2dm.DRAWBOND)
 			{
 				Atom atomInRange;
-				Atom newAtom1;
-				Atom newAtom2;
+				Atom newAtom1=null;
+				Atom newAtom2=null;
 				Bond newBond;
 				int startX = r2dm.getPointerVectorStart().x;
 				int startY = r2dm.getPointerVectorStart().y;
@@ -703,6 +706,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				}
 				r2dm.fireChange();
 				fireChange();
+        centerAtom(newAtom1);
+        centerAtom(newAtom2);
 			}
 
 			if (c2dm.getDrawMode() == c2dm.UP_BOND)
@@ -838,7 +843,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 			if (c2dm.getDrawMode() == c2dm.RING || c2dm.getDrawMode() == c2dm.BENZENERING)
 			{
-				Ring newRing;
+				Ring newRing=null;
 				Point2d sharedAtomsCenter;
 				Vector2d ringCenterVector;
 				double bondLength;
@@ -1053,6 +1058,9 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					 *  ---
 					 */
 				}
+        for(int i=0;i<newRing.getAtomCount();i++){
+          centerAtom(newRing.getAtomAt(i));
+        }
 				r2dm.fireChange();
 				fireChange();
 			}
@@ -1145,6 +1153,19 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			r2dm.setPointerVectorStart(null);
 			r2dm.setPointerVectorEnd(null);
 		}
+    if(shiftX!=0 || shiftY!=0){
+      for(int i=0;i<chemModel.getSetOfMolecules().getMoleculeCount();i++){
+        Molecule mol=chemModel.getSetOfMolecules().getMolecules()[i];
+        for(int k=0;k<mol.getAtomCount();k++){
+          mol.getAtomAt(k).setX2d(mol.getAtomAt(k).getX2d()-shiftX);
+          mol.getAtomAt(k).setY2d(mol.getAtomAt(k).getY2d()-shiftY);
+        }
+      }
+      r2dm.fireChange();
+      fireChange();
+    }
+    shiftX=0;
+    shiftY=0;
 	}
 
 
@@ -1798,5 +1819,18 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			fireChange();
 		}
 	}
+  
+  private void centerAtom(Atom atom){
+    if(atom==null)
+      return;
+    if(atom.getX2d()<0 && shiftX>atom.getX2d()-10)
+      shiftX=atom.getX2d()-10;
+    if(atom.getX2d()>r2dm.getBackgroundDimension().getWidth() && shiftX<atom.getX2d()-r2dm.getBackgroundDimension().getWidth()+10)
+      shiftX=atom.getX2d()-r2dm.getBackgroundDimension().getWidth()+10;
+    if(atom.getY2d()<0 && shiftY>atom.getY2d()-10)
+      shiftY=atom.getY2d()-10;
+    if(atom.getY2d()>r2dm.getBackgroundDimension().getHeight() && shiftY<atom.getY2d()-r2dm.getBackgroundDimension().getHeight()+10)
+      shiftY=atom.getY2d()-r2dm.getBackgroundDimension().getHeight()+10;
+  }
 }
 

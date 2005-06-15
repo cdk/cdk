@@ -122,7 +122,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
 		logger.debug("JCPPanel set and done...");
-		if (panelDimension != null) {
+		if (panelDimension != null && getIsOpenedByViewer()) {
 			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);

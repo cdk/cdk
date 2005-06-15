@@ -74,7 +74,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		setViewerOnly();
 		buildFilePopUpMenu();
 		logger = new LoggingTool(this);
-		if (panelDimension != null) {
+		if (panelDimension != null && getIsOpenedByViewer()) {
 			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);
