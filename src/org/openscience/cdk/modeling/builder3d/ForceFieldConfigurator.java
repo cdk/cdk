@@ -64,7 +64,7 @@ import org.openscience.cdk.AtomContainer;
  */
 public class ForceFieldConfigurator {
 
-	private String ffName = "mm2";
+	private String ffName = "mmff94";
 	private Vector atomTypes;
 	private Hashtable parameterSet=null;
 	private MM2BasedParameterSetReader mm2 = null;
@@ -101,18 +101,19 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  ffname  The new forceFieldType name
 	 */
-	public void checkForceFieldType(String ffname) {
-		ffName = ffname.toLowerCase();
+	public boolean checkForceFieldType(String ffname) {
 		boolean check=false;
 		for (int i = 0; i <= fftypes.length; i++) {
-			if (fftypes[i].equals(ffName)) {
+			if (fftypes[i].equals(ffname)) {
 				check=true;
 				break;
 			} 
 		}
 		if (!check) {
-			System.out.println("FFError:checkForceFieldType> Unknown forcefield:" + ffName);
+			System.out.println("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
+			return false;
 		}
+		return true;
 	}
 
 	
@@ -131,28 +132,44 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  ffname  name of the force field data file
 	 */
-	public void setForceFieldConfigurator(String ffname) throws Exception {
-		if (ffname.toLowerCase()==ffName && parameterSet!=null){
+	public void setForceFieldConfigurator(String ffname) throws CDKException {
+		ffname=ffname.toLowerCase();
+		boolean check=false;
+		
+		if (ffname==ffName && parameterSet!=null){
 		}else{
-			this.checkForceFieldType(ffname);
+			check=this.checkForceFieldType(ffname);
+			ffName=ffname;
 			if (ffName.equals("mm2")) {
 				//System.out.println("ForceFieldConfigurator: open Force Field mm2");
 				//f = new File(mm2File);
 				//readFile(f);
 				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mm2.prm");
+				//System.out.println("ForceFieldConfigurator: open Force Field mm2 ... READY");
 				mm2 = new MM2BasedParameterSetReader();
 				mm2.setInputStream(ins);
-				this.setMM2Parameters();
-			}else if (ffName.equals("mmff94")) {
+				//System.out.println("ForceFieldConfigurator: mm2 set input stream ... READY");
+				try{
+					this.setMM2Parameters();
+				}catch (Exception ex1){
+					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString());	
+				}
+			}else if (ffName.equals("mmff94") || !check) {
 				//System.out.println("ForceFieldConfigurator: open Force Field mmff94");
 				//f = new File(mmff94File);
 				//readFile(f);
 				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mmff94.prm");
 				mmff94= new MMFF94BasedParameterSetReader();
+				
 				mmff94.setInputStream(ins);
-				this.setMMFF94Parameters();
+				try{
+					this.setMMFF94Parameters();
+				}catch (Exception ex2){
+					throw new CDKException("Problems with set MM2Parameters due to"+ex2.toString());	
+				}
 			}
 		}
+		//throw new CDKException("Data file for "+ffName+" force field could not be found");
 	}
 
 
@@ -177,8 +194,12 @@ public class ForceFieldConfigurator {
 	/**
 	 *  Sets the parameters attribute of the ForceFieldConfigurator object, default is mm2 force field
 	 */
-	public void setMM2Parameters() throws Exception{
-		mm2.readParameterSets();
+	public void setMM2Parameters() throws CDKException{
+		try{
+			mm2.readParameterSets();
+		}catch(Exception ex1){
+			throw new CDKException("Problem within readParameterSets due to:"+ex1.toString());
+		}
 		parameterSet = mm2.getParamterSet();
 		atomTypes = mm2.getAtomTypes();
   }
@@ -216,7 +237,7 @@ public class ForceFieldConfigurator {
 	 */
 	private AtomType getAtomType(String ID) throws NoSuchAtomTypeException {
 		AtomType at = null;
-    for (int i = 0; i < atomTypes.size(); i++) {
+    		for (int i = 0; i < atomTypes.size(); i++) {
 			at = (AtomType) atomTypes.get(i);
 			if (at.getID().equals(ID)) {
 				return at;
@@ -267,8 +288,8 @@ public class ForceFieldConfigurator {
 				hoseCode = hcg.getHOSECode(molecule, atom, 3);
 				//System.out.print("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
 			} catch (CDKException ex1) {
-				System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
-				throw new CDKException("Could not build HOSECode from atom");
+				//System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
+				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString());
 			}
 			try {
 				configureAtom(atom, hoseCode, isInHeteroRing);
