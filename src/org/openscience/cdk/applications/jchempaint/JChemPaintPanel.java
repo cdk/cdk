@@ -137,6 +137,7 @@ public abstract class JChemPaintPanel
 		customizeView();
 		setSize(new Dimension(600, 400));
 		setPreferredSize(new Dimension(600, 400));
+    instances.add(this);
 	}
 
 

@@ -311,7 +311,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		frame.getContentPane().add(jcpep);
 		jcpep.registerModel(model);
 		jcpep.setJChemPaintModel(model);
-		instances.add(frame);
 		frame.setTitle(model.getTitle());
 		return frame;
 	}
