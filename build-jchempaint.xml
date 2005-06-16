@@ -97,7 +97,67 @@
                     <includesfile name="${metainf}/jchempaint.application.datafiles"/>
                 </fileset>
             </jar>
-        </target>	
+        </target>
+
+	<target id="unjar" name="unjar" description="unjars a lot">
+            <unjar dest="${appjars.dir}">
+                <fileset dir="${lib}">
+                    <includesfile name="${metainf}/applications.libdepends"/>
+                    <includesfile name="${metainf}/core.libdepends"/>
+                    <includesfile name="${metainf}/data.libdepends"/>
+                    <includesfile name="${metainf}/experimental.libdepends"/>
+                    <includesfile name="${metainf}/extra.libdepends"/>
+                    <includesfile name="${metainf}/io.libdepends"/>
+                    <includesfile name="${metainf}/libio-cml.libdepends"/>
+                    <includesfile name="${metainf}/qsar.libdepends"/>
+                    <includesfile name="${metainf}/render.libdepends"/>
+                    <includesfile name="${metainf}/standard.libdepends"/>
+                    <includesfile name="${metainf}/swing.libdepends"/>
+		    <includesfile name="${metainf}/jchempaint.libdepends"/>
+                </fileset>
+            </unjar>
+	    </target>
+	    <target id="run" name="run">
+	            <antcall target="compile-module"><param name="module" value="data"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="core"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="standard"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="render"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="io"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="io-jmol"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="extra"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="pdb-cml"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="swing"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="qsar-cml"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="test"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="applications"/></antcall>
+	            <antcall target="compile-module"><param name="module" value="jchempaint"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="jchempaint.application"/></antcall>
+		    <antcall target="compile-module"><param name="module" value="jchempaint.applet"/></antcall>
+                <java classname="org.openscience.cdk.applications.jchempaint.application.JChemPaint" fork="yes" >
+
+		    <arg value="${arg1}" />
+                   <arg value="${arg2}" />
+                   <arg value="${arg3}" />
+                   <arg value="${arg4}" />
+                   <classpath>
+                        <fileset dir="${build.src}">
+				<include name="**/*"/>
+			</fileset>
+			<fileset dir="${appjars.dir}">
+				<include name="**/*"/>
+			</fileset>
+
+                    </classpath>
+                </java>
+		    
+	    </target>
+	
 </project>
 
 

@@ -76,6 +76,14 @@ public class SetOfMolecules extends SetOfAtomContainers {
 	/* notifyChanged() called in super.addAtomContainer() */
     }
     
+    public void setMolecules(Molecule[] molecules)
+    {
+	    if (atomContainerCount > 0) removeAllAtomContainers();
+	    for (int f = 0; f < molecules.length; f++)
+	    {
+		    addMolecule(molecules[f]);
+	    }
+    }
     
     /**
      *  Returns the array of Molecules of this container.

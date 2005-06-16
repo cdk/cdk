@@ -87,6 +87,21 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	}
 
 	/**
+	 * Removes all AtomContainer from this container.
+	 */
+	public void removeAllAtomContainers() {
+		for (int pos = atomContainerCount - 1; pos >= 0; pos--)
+		{
+			atomContainers[pos].removeListener(this);
+			multipliers[pos] = 0;
+			atomContainers[pos] = null;
+		}
+		atomContainerCount = 0;
+		notifyChanged();
+	}
+	
+	
+	/**
 	 * Removes an AtomContainer from this container.
 	 *
 	 * @param  pos  The position of the AtomContainer to be removed from this container

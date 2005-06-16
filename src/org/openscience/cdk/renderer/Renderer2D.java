@@ -40,10 +40,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.Vector;
 import java.util.ArrayList;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -66,6 +64,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
+import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -211,7 +210,18 @@ public class Renderer2D implements MouseMotionListener
 	public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics2D graphics)
 	{
 		logger.debug("painting set of molecules");
-		Molecule[] molecules = moleculeSet.getMolecules();
+		AtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
+		Molecule[] molecules = null;
+		try
+		{
+			molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();
+			logger.debug("We have " + molecules.length + " molecules on screen");
+		} catch (Exception exception)
+		{
+			logger.warn("Could not partition molecule: ", exception.getMessage());
+			logger.debug(exception);
+			return;
+		}
 		for (int i = 0; i < molecules.length; i++)
 		{
 			logger.debug("painting molecule " + i);
@@ -1568,7 +1578,7 @@ public class Renderer2D implements MouseMotionListener
 	private Point getScreenCoordinates(Point p)
 	{
 		graphicsHeight = (int) r2dm.getBackgroundDimension().getHeight();
-		logger.debug("HEIGHT: " + graphicsHeight);
+		//logger.debug("HEIGHT: " + graphicsHeight);
 		Point screenCoordinate = new Point();
 		double zoomFactor = r2dm.getZoomFactor();
 		screenCoordinate.x = (int) ((double) p.x * zoomFactor);

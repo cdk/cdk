@@ -905,6 +905,7 @@ public class SmilesParserTest extends CDKTestCase
 				System.out.println(mol.getAtomAt(6));
 			}
 			assertEquals(10, mol.getAtomCount());
+			assertEquals("N", mol.getAtomAt(6).getSymbol());
 			assertEquals(1, mol.getAtomAt(6).getHydrogenCount());
 		} catch (Exception e)
 		{

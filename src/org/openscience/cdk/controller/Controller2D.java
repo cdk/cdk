@@ -43,6 +43,7 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.vecmath.*;
+import org.openscience.cdk.graph.ConnectivityChecker;
 
 /**
  *  Class that acts on MouseEvents and KeyEvents.
@@ -82,9 +83,9 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 	private Vector commonElements;
 	private HashMap currentCommonElement = new HashMap();
-  
-  private double shiftX=0;
-  private double shiftY=0;
+	Atom lastAtomInRange = null;
+	  private double shiftX=0;
+	  private double shiftY=0;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -232,6 +233,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		{
 			int startX = r2dm.getPointerVectorStart().x;
 			int startY = r2dm.getPointerVectorStart().y;
+			highlightNearestChemObject(mouseX, mouseY);
 			drawProposedBond(startX, startY, mouseX, mouseY);
 		} else if (dragMode == DRAG_MAKING_SQUARE_SELECTION)
 		{
@@ -331,6 +333,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			} else
 			{
 				dragMode = DRAG_DRAWING_PROPOSED_BOND;
+				lastAtomInRange = atomInRange;
 			}
 		} else if (c2dm.getDrawMode() == c2dm.MAPATOMATOM)
 		{
@@ -557,6 +560,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 			if (c2dm.getDrawMode() == c2dm.DRAWBOND)
 			{
+				logger.debug("mouseReleased->drawbond");
 				Atom atomInRange;
 				Atom newAtom1=null;
 				Atom newAtom2=null;
@@ -564,8 +568,15 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				int startX = r2dm.getPointerVectorStart().x;
 				int startY = r2dm.getPointerVectorStart().y;
 				Bond bondInRange = r2dm.getHighlightedBond();
-				atomInRange = r2dm.getHighlightedAtom();
-
+				//atomInRange = r2dm.getHighlightedAtom();
+				//Bond bondInRange = getBondInRange(mouseX, mouseY);
+				/* IMPORTANT: I don't use getHighlighteAtom()
+				 * here because of the special case of 
+				 * only one atom on the screen. 
+				 * In this case, this atom will not detected
+				 * if the mouse hasn't moved after it's creation
+				 */
+				atomInRange = getAtomInRange(mouseX,mouseY);
 				if (bondInRange != null)
 				{
 					// increase Bond order
@@ -598,10 +609,12 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				{
 					if (atomInRange != null)
 					{
+						logger.debug("We had an atom in range");
 						newAtom1 = atomInRange;
-					} else
+					} else if (!wasDragged)
 					{
 						// create a new molecule
+						logger.debug("We make a new molecule");
 						newAtom1 = new Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
 						AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
 						atomCon.addAtom(newAtom1);
@@ -627,19 +640,36 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 							int endX = r2dm.getPointerVectorEnd().x;
 							int endY = r2dm.getPointerVectorEnd().y;
 							atomInRange = getAtomInRange(endX, endY);
-							AtomContainer atomCon = null;
+							AtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 							if (atomInRange != null)
 							{
+								logger.debug("*** atom in range");
+	
 								newAtom2 = atomInRange;
-								atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom2);
+								logger.debug("atomCon.getAtomCount() " + atomCon.getAtomCount());
 							} else
 							{
+								logger.debug("*** new atom");
 								newAtom2 = new Atom(c2dm.getDrawElement(), new Point2d(endX, endY));
-								atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, newAtom1);
 								atomCon.addAtom(newAtom2);
 							}
+							newAtom1 = lastAtomInRange;
 							newBond = new Bond(newAtom1, newAtom2, 1);
+							logger.debug(newAtom1 + " - " + newAtom2);
 							atomCon.addBond(newBond);
+			
+							try
+							{
+								SetOfMolecules setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
+								chemModel.setSetOfMolecules(setOfMolecules);
+								logger.debug("We have " + setOfMolecules.getAtomContainerCount() + " molecules on screen");
+							} catch (Exception exception)
+							{
+								logger.warn("Could not partition molecule: ", exception.getMessage());
+								logger.debug(exception);
+								return;
+							}
+
 
 							// update atoms
 							updateAtom(atomCon, newAtom2);
@@ -665,7 +695,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						// now create 2D coords for new atom
 						double bondLength = r2dm.getBondLength();
 						Atom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
-						System.out.println("connectedAtoms.length: " + connectedAtoms.length);
+						logger.debug("connectedAtoms.length: " + connectedAtoms.length);
 						AtomContainer placedAtoms = new AtomContainer();
 						//placedAtoms.addAtom(atomInRange);
 						for (int i = 0; i < connectedAtoms.length; i++)
@@ -677,8 +707,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						AtomPlacer atomPlacer = new AtomPlacer();
 						atomPlacer.setMolecule(new Molecule(atomCon));
 						Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
-						System.out.println("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
-						System.out.println("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
+						logger.debug("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
+						logger.debug("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
 						if (placedAtoms.getAtomCount() == 1)
 						{
 							Vector2d bondVector = atomPlacer.getNextBondVector(atomInRange, placedAtoms.getAtomAt(0), GeometryTools.get2DCenter(new Molecule(atomCon)));
@@ -1376,6 +1406,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		Atom closestAtom = GeometryTools.getClosestAtom(X, Y, atomCon);
 		if (closestAtom != null)
 		{
+			//logger.debug("getAtomInRange(): An atom is near");
 			if (!(Math.sqrt(Math.pow(closestAtom.getX2d() - X, 2) +
 					Math.pow(closestAtom.getY2d() - Y, 2)) < highlightRadius))
 			{
@@ -1592,7 +1623,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	{
 		int[] worldCoords = new int[coords.length];
 		int coordCount = coords.length / 2;
-		logger.debug("coord.length: ", coords.length);
+		//logger.debug("coord.length: ", coords.length);
 		int height = (int) (r2dm.getBackgroundDimension()).getHeight();
 		for (int i = 0; i < coordCount; i++)
 		{
@@ -1600,8 +1631,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			worldCoords[i * 2 + 1] = (int) ((double) (height - coords[i * 2 + 1]) / r2dm.getZoomFactor());
 			if (logger.isDebugEnabled())
 			{
-				logger.debug("getWorldCoord: " + coords[i * 2] + " -> " + worldCoords[i * 2]);
-				logger.debug("getWorldCoord: " + coords[i * 2 + 1] + " -> " + worldCoords[i * 2 + 1]);
+				//logger.debug("getWorldCoord: " + coords[i * 2] + " -> " + worldCoords[i * 2]);
+				//logger.debug("getWorldCoord: " + coords[i * 2 + 1] + " -> " + worldCoords[i * 2 + 1]);
 			}
 		}
 		return worldCoords;
