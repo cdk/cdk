@@ -79,4 +79,24 @@ public class MDLWriterTest extends CDKTestCase {
         assertTrue(writer.toString().indexOf("M  END") != -1);
     }
 
+    public void testBug1212219() {
+        StringWriter writer = new StringWriter();
+        Molecule molecule = new Molecule();
+        Atom atom = new Atom("C");
+        atom.setMassNumber(14);
+        molecule.addAtom(atom);
+        
+        try {
+            MDLWriter mdlWriter = new MDLWriter(writer);
+            mdlWriter.write(molecule);
+        } catch (Exception exception) {
+            logger.error("Error while creating an MDL file");
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+        
+        String output = writer.toString();
+        System.out.println("MDL output for testBug1212219: " + output);
+        assertTrue(output.indexOf("M  ISO  1   7   14") != -1);
+    }
 }
