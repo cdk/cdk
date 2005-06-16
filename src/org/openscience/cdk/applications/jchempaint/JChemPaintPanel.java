@@ -734,6 +734,14 @@ public abstract class JChemPaintPanel
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
 	public void scaleAndCenterMolecule(ChemModel chemModel) {
+    scaleAndCenterMolecule(chemModel, null);
+  }
+	/**
+	 *  Scales and centers the structure in the dimensions of the DrawingPanel.
+	 *
+	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
+	 */
+	public void scaleAndCenterMolecule(ChemModel chemModel, Dimension dim) {
 		JChemPaintModel jcpm = getJChemPaintModel();
 		Renderer2DModel rendererModel = jcpm.getRendererModel();
 		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
@@ -753,12 +761,18 @@ public abstract class JChemPaintPanel
       relocatedX=0;
       relocatedY=0;
 		} else {
-      if(viewablePart.getWidth()==0 && viewablePart.getHeight()==0){
-        relocatedX=0;
-        relocatedY=0;
-        GeometryTools.center(ac, model.getBackgroundDimension());
+      if(dim==null){
+        if(viewablePart.getWidth()==0 && viewablePart.getHeight()==0){
+          relocatedX=0;
+          relocatedY=0;
+          GeometryTools.center(ac, model.getBackgroundDimension());
+        }else{
+          GeometryTools.center(ac, viewablePart);
+        }
       }else{
-        GeometryTools.center(ac, viewablePart);
+        relocatedY = model.getBackgroundDimension().getSize().getHeight() - (dim.getHeight());
+        relocatedX = 0;
+        GeometryTools.center(ac, dim);
       }
 		}
 		//fixing the coords regarding the position of the viewablePart

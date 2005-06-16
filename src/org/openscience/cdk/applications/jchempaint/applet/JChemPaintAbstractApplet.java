@@ -116,9 +116,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	public void initPanelAndModel(JChemPaintPanel jcpp) {
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
-    if(theJcpp.getJChemPaintModel()!=null)
-      jcpp.scaleAndCenterMolecule(theModel.getChemModel());
-		theModel.setTitle("JCP Applet" /* getNewFrameName() */);
+    theModel.setTitle("JCP Applet" /* getNewFrameName() */);
 		theModel.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
 		// Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 		// String version = self.getImplementationVersion();
@@ -127,7 +125,9 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		theModel.setGendate((Calendar.getInstance()).getTime().toString());
 		jcpp.setJChemPaintModel(theModel);
 		jcpp.registerModel(theModel);
-
+    if(theJcpp.getJChemPaintModel()!=null)
+      jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
+		
 		//embedded means that additional instances can't be created, which is
 		// needed for applet as well
 		jcpp.setEmbedded();
