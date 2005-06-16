@@ -45,8 +45,8 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 	public MMFF94EnergyFunction(AtomContainer molecule, Hashtable mmff94Tables) throws Exception {
 		//logger.debug(molecule.getAtomCount() + " "+mmff94Tables.size());
 		bs.setMMFF94BondStretchingParameters(molecule, mmff94Tables);
-		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables);
-		sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables);
+		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables,true);
+		sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables,false);
 		t.setMMFF94TorsionsParameters(molecule, mmff94Tables);
 		vdwi.setMMFF94VanDerWaalsParameters(molecule, mmff94Tables);        
 		ei.setMMFF94ElectrostaticParameters(molecule, mmff94Tables);        

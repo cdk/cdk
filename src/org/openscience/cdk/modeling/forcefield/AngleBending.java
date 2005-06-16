@@ -48,7 +48,9 @@ public class AngleBending {
 	double cb = -0.007;
 	double[] v = null;
 	double[] deltav = null;
-
+	
+	boolean angleBending;
+	
 	ForceFieldTools ffTools = new ForceFieldTools();
 	private LoggingTool logger;
 
@@ -60,7 +62,9 @@ public class AngleBending {
 	        logger = new LoggingTool(this);
 	}
 
-
+	public void setAngleBendingFlag(boolean flag){
+		angleBending=flag;
+	}
 	/**
 	 *  Set MMFF94 reference angle v0IJK and the constants k2, k3, k4 for each
 	 *  i-j-k angle in the molecule.
@@ -69,10 +73,10 @@ public class AngleBending {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94AngleBendingParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
+	public void setMMFF94AngleBendingParameters(AtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag ) throws Exception {
 
 		Atom[] atomConnected = null;
-		
+		angleBending=angleBendingFlag;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(i));
 			if (atomConnected.length > 1) {
@@ -143,7 +147,9 @@ public class AngleBending {
 			//logger.debug("v[" + i + "] = " + v[i]);
 			//logger.debug("v0[" + i + "] = " + v0[i]);
 			deltav[i] = v[i] - v0[i];
-			if (deltav[i] > 0) {
+			if (deltav[i] > 0 & angleBending) {
+				deltav[i]= (-1) * deltav[i]; 
+			}else if (deltav[i] < 0 & !angleBending){
 				deltav[i]= (-1) * deltav[i]; 
 			}
 			/*if (Math.abs(deltav[i]) < 0.05) {
@@ -170,6 +176,7 @@ public class AngleBending {
 	 *@return        MMFF94 angle bending term value
 	 */
 	public double functionMMFF94SumEA(GVector coord3d) {
+		//this.angleBending=true;
 		setDeltav(coord3d);
 		mmff94SumEA = 0;
 		for (int i = 0; i < angleNumber; i++) {

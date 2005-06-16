@@ -536,7 +536,7 @@ public class ForceFieldTests extends CDKTestCase {
 		createTestMoleculeAndSetMMFF94Parameters();
 
 		AngleBending ab = new AngleBending();
-		ab.setMMFF94AngleBendingParameters(ac, mmff94Tables);
+		ab.setMMFF94AngleBendingParameters(ac, mmff94Tables, true);
 
 		//logger.debug("ab.functionMMFF94SumEA(acCoordinates) = " + ab.functionMMFF94SumEA(acCoordinates));
 		//assertEquals(testResult_SumEA, ab.functionMMFF94SumEA(acCoordinates), 0.00001);
@@ -582,7 +582,7 @@ public class ForceFieldTests extends CDKTestCase {
 		createTestMoleculeAndSetMMFF94Parameters();
 
 		StretchBendInteractions sbi = new StretchBendInteractions();
-		sbi.setMMFF94StretchBendParameters(ac, mmff94Tables);
+		sbi.setMMFF94StretchBendParameters(ac, mmff94Tables, false);
 
 		//logger.debug("sbi.functionMMFF94SumEBA(acCoordinates) = " + sbi.functionMMFF94SumEBA(acCoordinates));
 		//assertEquals(testResult_SumEBA, sbi.functionMMFF94SumEBA(acCoordinates), 0.00001);

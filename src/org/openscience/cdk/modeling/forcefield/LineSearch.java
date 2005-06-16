@@ -164,14 +164,42 @@ public class LineSearch {
 		fxb = forceFieldFunction.energyFunction(xb);
 
 		GVector xc = new GVector(kPoint.getSize());
+
+		boolean finish = false;
+		if (fxb > fxa) {
+			while (finish == false) {
+				
+				//logger.debug("The energy increase with the current step size. The step size will be halve");
+				
+				lambdab = lambdab / 2;
+				xb.set(kPoint);
+				direction.set(searchDirection);
+				direction.scale(lambdab);
+				xb.add(direction);
+				fxb = forceFieldFunction.energyFunction(xb);
+				
+				//logger.debug("lambdaa = " + lambdaa + "	");
+				//logger.debug("fxa = " + fxa);
+				//logger.debug("lambdab = " + lambdab + "	");
+				//logger.debug("fxb = " + fxb);
+				
+				if (fxb < fxa) {
+					finish = true;
+				}
+				if (lambdab < 0.0000000000000001) {
+					finish = true;
+					lambdac = lambdab;
+					xc.set(xb);
+				}
+			}
+		}
 		
 		//logger.debug("lambdaa = " + lambdaa + "	");
 		//logger.debug("fxa = " + fxa);
 		//logger.debug("lambdab = " + lambdab + "	");
 		//logger.debug("fxb = " + fxb);
-
-		boolean finish = false;
 		
+		finish = false;
 		if (fxb < fxa) {
 
 			//logger.debug("Brent's exponential search");
@@ -233,9 +261,9 @@ public class LineSearch {
 				}
 			}
 		} 
-		else {
+
 			//logger.debug("Golden Section Method");
-			xc.set(xb);
+			/*xc.set(xb);
 			lambdac = lambdab;
 			fxc = fxb;
 			
@@ -319,8 +347,8 @@ public class LineSearch {
 				//logger.debug("lambdab2= " + lambdab2 + " ; fxb2 = " + fxb2);
 				//logger.debug("lambdac= " + lambdac + " ; fxc = " + fxc);
 				//logger.debug("finish = " + finish);
-			}
-		}
+			}*/
+
 		return;
 	}
 
@@ -360,9 +388,9 @@ public class LineSearch {
 		
 		bracketingTheMinimum(kPoint, searchDirection, forceFieldFunction);
 		if (fxb < fxa & fxb < fxc) {
-			if (Math.abs(fxc-fxa)/Math.abs(lambdac-lambdaa) < 1) {
+			/*if (Math.abs(fxc-fxa)/Math.abs(lambdac-lambdaa) < 1) {
 				goldenSectionMethod(kPoint, searchDirection, forceFieldFunction);
-			} else {
+			} else {*/
 				//logger.debug("Quadratic interpolation");
 				
 				GVector xI = new GVector(kPoint.getSize());
@@ -412,7 +440,7 @@ public class LineSearch {
 						}
 					}*/
 				lineSearchLambda = lambdab;
-			}
+			/*}*/
 		}
 	}
 	

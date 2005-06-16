@@ -67,9 +67,9 @@ public class StretchBendInteractions {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94StretchBendParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
+	public void setMMFF94StretchBendParameters(AtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag) throws Exception {
 
-		ab.setMMFF94AngleBendingParameters(molecule, parameterSet);
+		ab.setMMFF94AngleBendingParameters(molecule, parameterSet, angleBendingFlag);
 
 		Atom[] atomConnected = null;
 
@@ -163,6 +163,7 @@ public class StretchBendInteractions {
 	 *@param  coords3d  Current molecule coordinates.
 	 */
 	public void setFunctionMMFF94SumEBA(GVector coords3d) {
+		//ab.setAngleBendingFlag(false);
 		if (currentCoordinates.equals(coords3d)) {
 		} else {
 			setDeltarijAndDeltarkj(coords3d);
