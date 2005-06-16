@@ -364,7 +364,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
                     writer.write("M  ISO  1 ");
                     writer.write(formatMDLInt(i+1,3));
                     writer.write(" ");
-                    writer.write(formatMDLInt(atomicMass - majorMass,3));
+                    writer.write(formatMDLInt(atomicMass,3));
                     writer.newLine();
                 }
             }
