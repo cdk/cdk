@@ -51,7 +51,6 @@ public class QSARRModelTests {
             suite.addTest(new TestSuite(testClass));
         } catch (ClassNotFoundException exception) {
             System.out.println("SJava is not found, skipping R tests...");
-            exception.printStackTrace();
         } catch (Exception exception) {
             System.out.println("Could not load an R model test: " + exception.getMessage());
             exception.printStackTrace();
