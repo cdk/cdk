@@ -498,7 +498,8 @@ public abstract class JChemPaintPanel
 			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), jcpp);
 
 			// load the plugins that come with JCP itself
-			// pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+            pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DadmlBrowserPlugin");
 
 			// load the user plugins
 			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
