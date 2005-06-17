@@ -1,6 +1,8 @@
 <project name="JCPCDK" default="dist-jcp" basedir=".">
     <import file="build.xml"/>
 
+    <property name="plugin.dir" value="pluginjar" />
+
     <target id="dist-jcp" name="dist-jcp" depends="dist-all"
             description="Builds the JChemPaint application">
         <antcall target="compile-module">
@@ -44,6 +46,10 @@
                 <include name="cdk-jchempaint.jar"/>
                 <include name="cdk-jchempaint.application.jar"/>
                 <include name="cdk-jchempaint.applet.jar"/>
+            </fileset>
+            <fileset dir="${plugin.dir}">
+                <include name="dirbrowser.jar"/>
+                <include name="dadmlbrowser.jar"/>
             </fileset>
         </unjar>
             
