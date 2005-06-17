@@ -208,15 +208,28 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
             new MDLReader(new FileReader(file1)).read(mol1);
             new MDLReader(new FileReader(file2)).read(mol2);
         } catch (Exception ex) {
-            System.err.println("testQueryAtomContainer: " + ex.getMessage());
+            System.err.println("testSFBug1208740: " + ex.getMessage());
             fail(ex.getMessage());
         }
         
         List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(5, list.size());
-        
         list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
         assertEquals(5, list.size());
+        
+        // now apply aromaticity detection, then 8 overlaps should be found
+        // see cdk-user@list.sf.net on 2005-06-16
+        try {
+            HueckelAromaticityDetector.detectAromaticity(mol1, true);
+            HueckelAromaticityDetector.detectAromaticity(mol2, true);
+        } catch (Exception ex) {
+            System.err.println("Problem detecting aromaticity in testSFBug1208740: " + ex.getMessage());
+            fail(ex.getMessage());
+        }
+        list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
+        assertEquals(8, list.size());
+        list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
+        assertEquals(8, list.size());
     }
     
     public void testSFBug999330() {
