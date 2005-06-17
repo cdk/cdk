@@ -11,7 +11,8 @@
 	  <mapID target="bugs" url="contain/bugs.html" />
 	
 	<mapID target="tutorial" url="contain/tutorial.html" />
-	
+	<mapID target="molecules" url="contain/molecules.html" />
+	<mapID target="reactions" url="contain/reactions.html" />
 	<mapID target="referenceGuide" url="contain/referenceGuide.html" />
 	  <mapID target="button" url="contain/button.html" />
 	  <mapID target="menu" url="contain/menu.html" />
@@ -23,9 +24,12 @@
 	    <mapID target="menuPlugins" url="contain/menuPlugins.html" />
 	    <mapID target="menuHelp" url="contain/menuHelp.html" />
 	  <mapID target="fitting" url="contain/fitting.html" />
+	  <mapID target="drawingButtons" url="contain/drawingButtons.html" />
+	  <mapID target="otherButtons" url="contain/otherButtons.html" />
+	  <mapID target="moveButtons" url="contain/moveButtons.html" />
         
+   <mapID target="beyondJCP" url="contain/beyondJCP.html" />     
 	<mapID target="extendingJCP" url="contain/extendingJCP.html" />
-	
 	<mapID target="bibliography" url="contain/bibliography.html" />
 	
 	<mapID target="toplevelfolder" url="images/toplevel.gif" />

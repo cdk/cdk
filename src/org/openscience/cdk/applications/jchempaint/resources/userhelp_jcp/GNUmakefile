@@ -12,7 +12,7 @@ JHHOME = ../../javahelp/
 INDEXER=$(JHHOME)/bin/jhindexer
 
 JHUG_CONTENT_FILES = jcp.html \
-        contain/aboutJCP.html\
+   contain/aboutJCP.html\
 	contain/bibliography.html\
 	contain/bugs.html\
 	contain/button.html\
@@ -31,6 +31,8 @@ JHUG_CONTENT_FILES = jcp.html \
 	contain/requirements.html\
 	contain/tutorial.html\
 	contain/whatIs.html\
+	contain/molecules.html\
+	contain/reactions.html\
 	
 	
 	release/release.html \

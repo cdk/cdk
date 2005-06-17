@@ -1,19 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<!--
- *         Copyright � 2004 Sun Microsystems, Inc
- *                    All rights reserved.
- *          Notice of copyright on this source code 
- *          product does not indicate publication. 
- * 
- * RESTRICTED RIGHTS LEGEND: Use, duplication, or disclosure by 
- * the U.S. Government is subject to restrictions as set forth 
- * in subparagraph (c)(1)(ii) of the Rights in Technical Data
- * and Computer Software Clause at DFARS 252.227-7013 (Oct. 1988) 
- * and FAR 52.227-19 (c) (June 1987).
- *     Sun Microsystems, Inc., 4150 Network Circle,
- *    Santa Clara, California 95054, U.S.A.
- *
--->
 <html>
 <head>
 <title>What is JChemPaint?</title>
@@ -37,22 +22,22 @@
 
 <h2>What is JChemPaint?</h2>
 <p>
-JChemPaint si<a href="bibliography.html#KRA00">[KRA00]</a> is an editor for 2D Molecular Structures, 
-like this one here <span class="inlinemediaobject"><img src="../../small-bin/caffeine.gif"></span>. 
-JChemPaint is intended to be complementary to <a href="http://www.openscience.org/jmol" target="_top">JMol</a>, 
+JChemPaint <a href="bibliography.html#KRA00">[KRA00]</a> is an editor for 2D Molecular Structures, 
+like this one here   <span class="inlinemediaobject"><img src="../../small-bin/caffeine.gif">. 
+JChemPaint is intended to be complementary to JMol(<a href="http://www.openscience.org/jmol">http://www.openscience.org/jmol</a>), 
 a visualisation and analysis tool for 3D molecular structures, which is, 
 like JChemPaint, developed by an international team of opensource programmers.
 
 <table width=98% border=0 cellpadding=5 align="left">
 <tr valign="top">
-<td><img src="../../images/hg_proc.gif" width="18" height="13">
+<td><img src="../../small-bin/hg_proc.gif" width="18" height="13">
 </td>
 <td>In at least three aspects JChemPaint is different from other programs of this sort:
 <ol>
 <li>
-  JChemPaint is an open source program [ OS ]. It is Free Software. </p> 
+  JChemPaint is an open source program <a href="bibliography.html#OS">[OS]</a>. It is Free Software. </p> 
   <p>We believe that scientific software, especially when its development was 
-  publically funded, should be free. As the GNU people put it: "``Free software'' 
+  publically funded, should be free. As the GNU people put it: <a href="http://www.gnu.org" target="_top">Free Software</a> 
   is a matter of liberty, not price. To understand the concept, you should 
   think of 'free speech', not 'free beer.' ".</p> 
   <p>Everyone can participate in the development of the program. Everyone can 
@@ -79,7 +64,7 @@ like JChemPaint, developed by an international team of opensource programmers.
 </tr>
 
 <tr valign="top">
-<td><img src="../../images/hg_proc.gif" width="18" height="13">
+<td><img src="../../small-bin/hg_proc.gif" width="18" height="13">
 </td>
 <td>
 JChemPaint, currently in release 2.0, supports:
@@ -95,10 +80,10 @@ JChemPaint, currently in release 2.0, supports:
     </ol>
 
 <li>Loading and saving of structures in Chemical Markup Language (CML) 
-  [ PMR99 ], [ WIL2001 ] and as MDL Molfiles and SDF files (Load only for 
-  the latter)[ DAL92 ].
+  <a href="bibliography.html#PMR99">[PMR99]</a>, [ WIL2001 ] and as MDL Molfiles and SDF files (Load only for 
+  the latter)<a href="bibliography.html#DAL92">[DAL92]</a>.
 <li>Automated Structure Layout, also known as Structure Diagram Generation 
-  [ HEL99 ], [ BLE91 ].
+  <a href="bibliography.html#HEL99">[HEL99]</a>, <a href="bibliography.html#BLE91">[BLE91]</a>.
 <li>Loading structures from the Internet usign CAS or NSC number
 <li>Pasting structures as SMILES strings from the clipboard (not on Linux).
 <li>Normalization of structures, currently limited to aromaticity detection.
@@ -113,149 +98,7 @@ JChemPaint, currently in release 2.0, supports:
 
 </table>
 
-<p> </p>
-<p>In your applications, you use this browser by adding the following 
-  import statement and then putting the call to <tt>setContentViewerUI</tt> 
-  before the code that creates the <tt>HelpBroker</tt> or <tt>JHelp</tt> 
-  component (for a code example that creates a <tt>HelpBroker</tt>, 
-  see <a href="../dev/basics.html">Adding the JavaHelp System 
-  to Applications</a>).</p>
-<pre>import javax.help.SwingHelpUtilities;
-...
-SwingHelpUtilities.setContentViewerUI(&quot;BasicNativeContentViewerUI&quot;);</pre>
-<p>Additionally, you can use the command-line parameters <tt>-ID</tt> 
-  and -<tt>contentViewer</tt> to cause hsviewer to use the alternate 
-  browser and display a given ID in the helpset, as follows:</p>
-<p> <tt>java -jar hsviewer.jar -helpset HolidayHistory -classpath\<br>
-  ../hsjar/holidays.jar -ID easter -contentViewer BasicNativeContentViewerUI</tt> 
-</p>
-<h3><b>Installation Packages </b></h3>
-<p> JavaHelp is now released in a single zip file installation package. You must 
-  uninstall prior releases before unpacking V2.0 into a directory. </p>
-<h3><b>Running the JavaHelp Viewer</b></h3>
-<p> The JavaHelp viewer is now in the JAR file <code>hsviewer.jar</code>. To run it 
-  you must use a command similar to the following one:</p>
-<p><code>&nbsp;&nbsp;&nbsp;java -jar c:\jh20\demos\bin\hsviewer.jar</code></p>
-<p>For more information, see <a href="../author/viewing.html">Viewing Helpsets</a>.</p>
-<h3>JDK 1.1 is no longer supported </h3>
-<p>The earliest version of the JDK that is supported is the Java<font size="1"><sup>TM</sup></font> 
-  2 Platform, Standard Edition (J2SE<font size="1"><sup>TM</sup></font>) JDK 1.2.2. 
-  </p>
-<h3>Change to API for Accessing Frames</h3>
-<p> In previous versions of JavaHelp, you could directly access the frame in which 
-  JavaHelp is displayed if you extended the DefaultHelpBroker. After extending 
-  DefaultHelpBroker, you were able access the protected JFrame frame field. 
-<p>In JavaHelp 2, the frame field is no longer accessible. In applications that 
-  use JavaHelp 2, you will have to rewrite code that does this kind of frame access. 
-  Use the following methods: 
-<blockquote> 
-  <p> <code>WindowPresentation DefaultHelpBroker.getWindowPresentation(); <br>
-    Window WindowPresentation.getHelpWindow();</code></p>
-</blockquote>
-<p>You will still be able to access the frame with the following method calls:</p>
-<blockquote> <code>WindowPresentation pres = hb.getWindowPresentation(); <br>
-  Window win = pres.getHelpWindow();</code></blockquote>
-<h3><a name="multipgprnt">Multi-Topic Printing</a></h3>
-<p>It is now possible to print more than one help page at a time. You can select 
-  a group of topics in a navigation pane, such as the TOC or index, and then choose 
-  the Print option to print them all out.</p>
-<h3><b>Comprehensive Merging Options</b> </h3>
-<p> When helpsets are merged, there are new merge options available: UniteAppendMerge 
-  and SortMerge. UniteAppendMerge causes like items to be merged, making it possible, 
-  for example, to produce fully merged TOCs. SortMerge allows you to produce fully 
-  merged and canonically sorted indexes. For more information, see <a href="../author/merge.html">Merging 
-  Helpsets</a>. 
-<h3>New Views in Help Viewer </h3>
-<p>In addition to the existing
-TOC, Index, and Search navigators, there are two new navigators  that can be added to the navigation pane of the help viewer:</p>
-<ul type="circle">
-  <li><b><a href="../author/glossary.html">Glossary</a></b>. Short technical descriptions 
-    of terms can be put in an XML-based file with a format similar to the index 
-    file.<br>
-    <br>
-  </li>
-  <li><b><a href="../author/favorites.html">Favorites</a></b>. An XML-based collapsible 
-    and expandable display of the user's favorite topics.</li>
-</ul>
-<h3>Specifying View (Navigator) Icons or Text</h3>
-<p>When you specify a navigator by using the <code>&lt;view&gt;</code> tag in 
-  the helpset file, you can also specify the icon that displays in the tab above 
-  the navigator by using the <tt>&lt;image&gt;</tt> tag. For more information 
-  on setting view images, see the description of the <code>&lt;view&gt;</code> 
-  tags in <a href="../author/helpset.html#viewtags">The Helpset File</a>.</p>
-<p>You can display text instead of icons in the navigator tabs by setting the 
-  presentation tag's <code>displayviewimage</code> attribute to <code>&quot;false&quot;</code>. 
-  For more information on setting this attribute, see the description of the <code>&lt;presentation&gt;</code> 
-  tag in <a href="../author/helpset.html#presentationtag">The Helpset File</a>.</p>
-<h3>Presentation Controls </h3>
-<p>It is now possible to display help in various kinds of windows (called <i>presentations</i>) 
-  from a Java application or from a helpset's table of contents. There are presentation 
-  controls in the helpset file and navigator files, a <code>Presentation</code> 
-  class, and context-sensitive help changes that support the class. These features 
-  provide you with more options for displaying your help content in the JavaHelp 
-  Viewer, in a secondary window, or in a popup window. 
-<p>Not only can you specify the type of presentation window, but for each type 
-  of window you can designate the buttons that appear in the toolbar. In addition 
-  to the standard Back, Forward, and Print buttons, you can display buttons like 
-  the Reload button (reloads the current topic) and the Home button (goes to the 
-  main topic defined for the helpset). 
-<p>For more information, see the Presentation feature in <a href="../author/helpset.html#presentationtag">Helpset 
-  File</a> and <a href="../dev/csh.html#presentation">Implementing Context-Sensitive 
-  Help</a>. 
-<h3>Customizable Toolbar Support in Helpset File </h3>
-<p>When you define a presentation window, you can specify if it has a toolbar, 
-  and, if so, which controls appear on the toolbar. For more information, see 
-  the <code>&lt;toolbar</code>&gt; tag in <a href="../author/helpset.html#toolbar">Helpset 
-  File</a>. 
-<h3>Server-Based JavaHelp </h3>
-<p> The JavaHelp V1.0 API provided an initial foundation for developing online 
-  help for server-based applications. JavaHelp 2 extends support for server-based 
-  applications with a standard for a JavaHelp bean and a Java Server Pages<sup>TM</sup> 
-  (JSP) tag library for accessing helpset data. For more information, see <a href="../dev/serverhlp.html">Server-Based 
-  JavaHelp</a>. 
-<h3>Helpset File has an Implementation Section
-</h3>
-<p>The implementation section of the helpset, enclosed in the <code>&lt;impl&gt;</code> 
-  tag, enables you to use special viewers based on a MIME type. It can also simplify 
-  using an external browser to display your helpsets rather than using the default 
-  helpset viewer included in the JavaHelp system. 
-<p>Specifying an <code>&lt;impl&gt; </code>section in a helpset file creates a registry 
-  that provides key data mapping to define the HelpBroker class to use in the 
-  <code>HelpSet.createHelpBroker</code> method. The registry also determines the content 
-  viewer to user for a given MIME type.
-<p><code>JEditorPane</code> uses this mechanism to link a given MIME type with an 
-  editor kit. 
-<p>For example, the JavaHelp system gets its default content pane viewer for HTML 
-  by linking the <code>text/html</code> MIME type to <code>com.sun.java.help.impl.CustomKit</code>, 
-  which is an extension of the Swing <code>HTMLEditorKit</code>. If you wanted to 
-  display PDF in the content pane, you could write your own PDF editor kit, and 
-  then you could map the MIME type for PDF (<code>application/pdf</code>) to your 
-  new editor kit. 
-<p>Another use for this feature might be to replace the current <code>HTMLEditorKit</code> 
-  (the content viewer) with a web browser without having to change code as you 
-  do in JavaHelp 1.</p>
-<p>To see how to declare the tag, see the &lt;<code>impl&gt;</code> tag in <a href="../author/helpset.html#toolbar">Helpset 
-  File</a>. 
-<h3>Dynamic Context-Sensitive Help for Components
-</h3>
-<p>You can assign help IDs based on cursor position, selection, 
-  or some other mechanism inherent in an object. For more information, see <a href="../dev/csh.html">Dynamic 
-  Map ID Assignment</a> in &quot;Implementing Context Sensitive Help.&quot; 
 
-<div class="navfooter"><hr>
- <table width="100%">
-  <tr>
-   <td align="left" width="40%"><a href="aboutJCP.html">Prev</a>&nbsp;</td>
-   <td align="center" width="20%"><a href="../jhug.html">Home</a></td>
-   <td align="right" width="40%"><a href="participate.html">Next</a></td>
-  </tr>
-  <tr>
-   <td align="left" width="40%">&nbsp;</td>
-   <td align="center" width="20%"><a href="whatIs.html">Up</a></td>
-   <td align="right" width="40%">&nbsp;</td>
-  </tr>
- </table>
-</div>
 
 
 </body>

@@ -127,3 +127,10 @@ dl.see_also {margin-left: 0;
 a.nounderline {text-decoration: none }
 pre {  font-family: Monospaced, "Courier New", Courier, mono; font-size: x-small}
 code {  font-family: Monospaced, "Courier New", Courier, mono; font-size: x-small}
+
+.abbrev {
+	font-weight: bold;
+}
+.biblioset {
+	font-style: italic;
+}

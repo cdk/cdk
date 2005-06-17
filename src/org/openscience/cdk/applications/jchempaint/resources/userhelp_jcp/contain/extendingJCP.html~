@@ -1,19 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<!--
- *         Copyright � 2003 Sun Microsystems, Inc
- *                    All rights reserved.
- *          Notice of copyright on this source code 
- *          product does not indicate publication. 
- * 
- * RESTRICTED RIGHTS LEGEND: Use, duplication, or disclosure by 
- * the U.S. Government is subject to restrictions as set forth 
- * in subparagraph (c)(1)(ii) of the Rights in Technical Data
- * and Computer Software Clause at DFARS 252.227-7013 (Oct. 1988) 
- * and FAR 52.227-19 (c) (June 1987).
- *     Sun Microsystems, Inc., 4150 Network Circle,
- *    Santa Clara, California 95054, U.S.A.
- *
--->
+
 <html>
 <head>
 <title>Extending JChemPaint</title>
@@ -24,10 +10,10 @@
 <div class="navheader">
   <table width="100%">
    <tr>
-    <th align="center" colspan="3">Extending JChemPaint</th>
+    <th align="center" colspan="3">Beyond JChemPaint</th>
    </tr>
    <tr>
-    <td align="left" width="20%"><a href="fitting.html">Prev</a>&nbsp;</td>
+    <td align="left" width="20%"><a href="beyond.html">Prev</a></td>
      <th align="center" width="60%">&nbsp;</th>
      <td align="right" width="20%">&nbsp;<a href="bibliography.html">Next</a></td>
      </tr>
@@ -35,7 +21,7 @@
   <hr>
 </div>
 
-<h2>Extending JChemPaint</h2>
+<h3>Extending JChemPaint</h3>
 <p>This section describes how JChemPaint can be extended to fit personal needs.
 All customization is done in your personal directory <code>${HOME}</code>. 
 The value of <code>${HOME}</code> for your system can be looked up in the Info 
@@ -63,13 +49,13 @@ Schema can be downloaded from the CML website. They look like:</p>
 <div class="navfooter"><hr>
  <table width="100%">
   <tr>
-   <td align="left" width="40%"><a href="fitting.html">Prev</a>&nbsp;</td>
-   <td align="center" width="20%"><a href="../jhug.html">Home</a></td>
+   <td align="left" width="40%"><a href="beyondJCP.html">Prev</a>&nbsp;</td>
+   <td align="center" width="20%"><a href="../jcp.html">Home</a></td>
    <td align="right" width="40%"><a href="bibliography.html">Next</a></td>
   </tr>
   <tr>
    <td align="left" width="40%">&nbsp;</td>
-   <td align="center" width="20%"><a href="extendingJCP.html">Up</a></td>
+   <td align="center" width="20%"><a href="beyondJCP.html">Up</a></td>
    <td align="right" width="40%">&nbsp;</td>
   </tr>
  </table>

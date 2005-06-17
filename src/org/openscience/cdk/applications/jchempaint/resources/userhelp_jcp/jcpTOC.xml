@@ -10,7 +10,7 @@
 
    <tocitem text="Preface" image="topic" target="top"/>
 
-   <tocitem text="JChemPaint Relase" image="chapter" target="aboutJCP">
+   <tocitem text="About JChemPaint" image="chapter" target="aboutJCP">
        <tocitem text="What is JChemPaint" image="topic" target="whatIs"/>
        <tocitem text="How can I participate" image="topic" target="participate"/>
        <tocitem text="Requirements" image="topic" target="requirements"/>
@@ -18,16 +18,17 @@
    </tocitem>
 
    <tocitem text="Tutorial" image="chapter" target="tutorial">
-       <tocitem text="Creating Molecules" image="topic" target="auth.viewing"/>
-       <tocitem text="Creating Reactions" image="topic" target="auth.accessibility"/>
+       <tocitem text="Creating Molecules" image="topic" target="molecules"/>
+       <tocitem text="Creating Reactions" image="topic" target="reactions"/>
    </tocitem>
 
-   <tocitem text="Reference Gruide" image="chapter" target="referenceGuide">
+   <tocitem text="Reference Guide" image="chapter" target="referenceGuide">
        <tocitem text="The Button Panel" image="chapter" target="button">
-          <tocitem text="The drawing button" image="topic" target="over.invocation"/>
-          <tocitem text="The up-bond button" image="topic" target="over.deploy"/>
-          <tocitem text="The down-bond button" image="topic" target="over.search"/>
-          <tocitem text="The Ring templates" image="topic" target="over.search"/>
+          <tocitem text="The drawing buttons" image="topic" target="drawingButtons"/>
+          <tocitem text="Move Buttons" image="topic" target="moveButtons"/>
+          <tocitem text="Buttons for other Operations" image="topic" target="otherButtons"/>
+          
+<!--           <tocitem text="The Ring templates" image="topic" target="over.search"/>
           <tocitem text="The Ring templates" image="topic" target="over.search"/>
           <tocitem text="Buttons for Moving" image="topic" target="over.search"/>
           <tocitem text="The Translate Button" image="topic" target="over.search"/>
@@ -36,6 +37,7 @@
           <tocitem text="The Eraser Button" image="topic" target="over.search"/>
           <tocitem text="The Select (Lasso) Button" image="topic" target="over.search"/>
           <tocitem text="The Cleanup Button" image="topic" target="over.search"/>
+-->
        </tocitem>
        <tocitem text="Menu description" image="chapter" target="menu">
           <tocitem text="The File menu" image="chapter" target="menuFile">
@@ -86,12 +88,10 @@
 	    <tocitem text="License" image="chapter" target="over.intro"/>
 	    </tocitem>
        </tocitem>
-       <tocitem text="Fitting JChemPaint to your needs" image="topic" target="fitting"/>
-   </tocitem>
-
-   <tocitem text="Extending JChemPaint" image="chapter" target="extendingJCP"/>
-   
-   <tocitem text="Bibliography" image="chapter" target="bibliography"/>
-
+       	<tocitem text="Fitting JChemPaint to your needs" image="topic" target="fitting"/> 
+    </tocitem>
+    <tocitem text="Beyond JChempaint" image="chapter" target="beyondJCP">
+       <tocitem text="Extending JChemPaint" image="topic" target="extendingJCP"/>
+       <tocitem text="Bibliography" image="topic" target="bibliography"/>
 </tocitem>
 </toc>

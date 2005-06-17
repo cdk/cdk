@@ -1,19 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<!--
- *         Copyright � 2003 Sun Microsystems, Inc
- *                    All rights reserved.
- *          Notice of copyright on this source code 
- *          product does not indicate publication. 
- * 
- * RESTRICTED RIGHTS LEGEND: Use, duplication, or disclosure by 
- * the U.S. Government is subject to restrictions as set forth 
- * in subparagraph (c)(1)(ii) of the Rights in Technical Data
- * and Computer Software Clause at DFARS 252.227-7013 (Oct. 1988) 
- * and FAR 52.227-19 (c) (June 1987).
- *     Sun Microsystems, Inc., 4150 Network Circle,
- *    Santa Clara, California 95054, U.S.A.
- *
--->
+
 <html>
 <head>
 <title>JChemPaint Release</title>
@@ -26,7 +12,7 @@
     <th align="center" colspan="3">JChemPaint Release</th>
    </tr>
    <tr>
-    <td align="left" width="20%"><a href="../jhug.html">Prev</a>&nbsp;</td>
+    <td align="left" width="20%"><a href="../jcp.html">Prev</a>&nbsp;</td>
      <th align="center" width="60%">&nbsp;</th>
      <td align="right" width="20%">&nbsp;<a href="whatIs.html">Next</a></td>
      </tr>
@@ -36,40 +22,33 @@
 
 <h1>JChemPaint Release</h1>
 <p>
-This chapter describes the what is JChemPaint release.<p>
+This chapter describes what is JChemPaint release.<p>
 
 How you use the release depends on your interests. For example: 
 </p>
-<table width=98% border=0 cellpadding=5 align="left">
+<table width=70% border=0 cellpadding=5 align="left">
 <tr valign="top">
-<td><img src="../../images/hg_proc.gif" width="18" height="13">
-</td>
-<td>
-If you are a user interested in draw molecule adding the JavaHelp system to an application, 
-you might read the tutorial for this:
-<ul type="circle">
-<li><a href="tutorial.html">Creating Chemistry</a>.
-<li><a href="referenceGuide.html">JChemPaint System Reference Guide</a>.
-</ul>
-</td>
+	<td><img src="../../small-bin/hg_proc.gif" width="18" height="13"></td>
+	<td>If you are a user interested in how to draw molecules and reactions using JChemPaint, 
+you might want to read following chapters:
+		<ul type="circle">
+			<li><a href="tutorial.html">JChempaint Tutorial</a>.
+			<li><a href="referenceGuide.html">JChemPaint System Reference Guide</a>.
+		</ul>
+	</td>
 </tr>
 
 <tr valign="top">
-<td><img src="../../images/hg_proc.gif" width="18" height="13">
-</td>
-<td>
-If you are an online help author and  interested in getting better JChemPaint,
-you might read again this chapter
-</ul>
-</td>
+	<td><img src="../../small-bin/hg_proc.gif" width="18" height="13"></td>
+	<td>If you are an online help author and  interested in improving JChemPaint,
+this Chapter is what you are looking for.</td>
 </tr>
 </table>
-
 <div class="navfooter"><hr>
- <table width="100%">
+ <table width="100%" border="1">
   <tr>
-   <td align="left" width="40%"><a href="../jhug.html">Prev</a>&nbsp;</td>
-   <td align="center" width="20%"><a href="../jhug.html">Home</a></td>
+   <td align="left" width="40%"><a href="../jcp.html">Prev</a></td>
+   <td align="center" width="20%"><a href="../jcp.html">Home</a></td>
    <td align="right" width="40%"><a href="whatIS.html">Next</a></td>
   </tr>
   <tr>
