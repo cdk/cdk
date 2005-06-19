@@ -54,6 +54,7 @@ public class RingSearchTest extends CDKTestCase
 
 	static boolean standAlone = false;
 	private LoggingTool logger = null;
+    private SSSRFinder sssrf = null;
 
 
 	/**
@@ -70,10 +71,11 @@ public class RingSearchTest extends CDKTestCase
 	/**
 	 *  The JUnit setup method
 	 */
-	public void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
-		logger = new LoggingTool(this);
-	}
+        logger = new LoggingTool(this);
+        sssrf = new SSSRFinder();
+    }
 
 
 	/**
@@ -93,9 +95,7 @@ public class RingSearchTest extends CDKTestCase
 	public void testAlphaPinene()
 	{
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
-		SSSRFinder sssrf = new SSSRFinder(molecule);
-
-		RingSet ringSet = sssrf.findSSSR();
+		RingSet ringSet = sssrf.findSSSR(molecule);
 		assertEquals(2, ringSet.size());
 	}
 
@@ -109,8 +109,7 @@ public class RingSearchTest extends CDKTestCase
 	{
 		SmilesParser sp = new SmilesParser();
 		Molecule molecule = sp.parseSmiles("c1ccccc1");
-		SSSRFinder sssrf = new SSSRFinder(molecule);
-		RingSet ringSet = sssrf.findSSSR();
+		RingSet ringSet = sssrf.findSSSR(molecule);
 		assertEquals(1, ringSet.size());
 	}
 
@@ -124,8 +123,7 @@ public class RingSearchTest extends CDKTestCase
 	{
 		SmilesParser sp = new SmilesParser();
 		Molecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
-		SSSRFinder sssrf = new SSSRFinder(molecule);
-		RingSet ringSet = sssrf.findSSSR();
+		RingSet ringSet = sssrf.findSSSR(molecule);
 		assertEquals(2, ringSet.size());
 	}
 
@@ -133,8 +131,7 @@ public class RingSearchTest extends CDKTestCase
 	{
 		SmilesParser sp = new SmilesParser();
 		Molecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
-		SSSRFinder sssrf = new SSSRFinder(molecule);
-		RingSet ringSet = sssrf.findSSSR();
+		RingSet ringSet = sssrf.findSSSR(molecule);
 		assertEquals(4, ringSet.size());
 	}
 
@@ -153,8 +150,7 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-			SSSRFinder sssrf = new SSSRFinder(molecule);
-			RingSet ringSet = sssrf.findSSSR();
+            RingSet ringSet = sssrf.findSSSR(molecule);
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 			assertEquals(3, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
@@ -185,8 +181,7 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-			SSSRFinder sssrf = new SSSRFinder(molecule);
-			RingSet ringSet = sssrf.findSSSR();
+            RingSet ringSet = sssrf.findSSSR(molecule);
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 			assertEquals(10, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
@@ -217,8 +212,7 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-			SSSRFinder sssrf = new SSSRFinder(molecule);
-			RingSet ringSet = sssrf.findSSSR();
+            RingSet ringSet = sssrf.findSSSR(molecule);
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 			assertEquals(5, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
@@ -242,8 +236,7 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-			SSSRFinder sssrf = new SSSRFinder(molecule);
-			RingSet ringSet = sssrf.findSSSR();
+            RingSet ringSet = sssrf.findSSSR(molecule);
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 		} catch (Exception exc) {
 			exc.printStackTrace();
