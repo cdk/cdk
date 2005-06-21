@@ -35,15 +35,15 @@ import Jama.EigenvalueDecomposition;
 /**
  * Aligns two structures to minimize the RMSD using the Kabsch algorithm.
  *
- * This class is an implementation of the Kabsch algorithm ({@cdk.cite KAB76}, {@cdk.cite KAB78})
+ * <p>This class is an implementation of the Kabsch algorithm ({@cdk.cite KAB76}, {@cdk.cite KAB78})
  * and evaluates the optimal rotation matrix (U) to minimize the RMSD between the two structures.
  * Since the algorithm assumes that the number of points are the same in the two structures
  * it is the job of the caller to pass the proper number of atoms from the two structures. Constructors
  * which take whole <code>AtomContainer</code>'s are provided but they should have the same number
  * of atoms.
  * The algorithm allows for the use of atom weightings and by default all points are given a weight of 1.0
- * <p>
- * Example usage can be:
+ *
+ * <p>Example usage can be:
  * <pre>
  * AtomContainer ac1, ac2;
  *
@@ -84,10 +84,11 @@ import Jama.EigenvalueDecomposition;
  * // display the two AtomContainer's
  *</pre>
  * 
- * @author Rajarshi Guha
- * @cdk.created 2004-12-11
+ * @author           Rajarshi Guha
+ * @cdk.created      2004-12-11
  * @cdk.builddepends Jama-1.0.1.jar
- * @cdk.depends Jama-1.0.1.jar
+ * @cdk.depends      Jama-1.0.1.jar
+ * @cdk.dictref      blue-obelisk:alignmentKabsch
  */ 
 public class KabschAlignment {
 

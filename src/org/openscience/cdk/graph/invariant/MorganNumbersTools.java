@@ -36,7 +36,6 @@ import org.openscience.cdk.AtomContainer;
  * @cdk.created    2003-06-30
  * @cdk.keyword    Morgan number
  */
-
 public class MorganNumbersTools {
 
   /**

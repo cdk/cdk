@@ -41,14 +41,15 @@ import org.openscience.cdk.graph.PathTools;
 
 
 /**
- * Spanning tree of a molecule
+ * Spanning tree of a molecule.
  * Used to discover the number of cyclic bonds in order to prevent the 
- * inefficient AllRingsFinder to run for too long
- * TODO junit test of this
- * @author Nina Jeliazkova <br>
- * <b>Modified</b> 2005-4-7
+ * inefficient AllRingsFinder to run for too long.
  *
- * @cdk.module standard
+ * @author   Nina Jeliazkova
+ * @cdk.todo junit test of this
+ *
+ * @cdk.module  standard
+ * @cdk.dictref blue-obelisk:graphSpanningTree
  */
 public class SpanningTree {
 	private int[] parent = null;
