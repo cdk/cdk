@@ -103,7 +103,7 @@ public class MakeDictionaryIndexDoclet {
         if (classDoc == null) return;
         
         String className = classDoc.qualifiedName();
-        // first deal with build dependencies
+        // first deal with class tags
         Tag[] tags = classDoc.tags(javaDocDictRefTag);
         if (tags.length > 0) {
             for (int i=0; i<tags.length; i++) {
@@ -112,10 +112,26 @@ public class MakeDictionaryIndexDoclet {
         }
     }
     
+    private void processMethod(MethodDoc methodDoc, String className) throws IOException {
+        System.out.println("Processing: " + methodDoc.qualifiedName());
+        Tag[] tags = methodDoc.tags(javaDocDictRefTag);
+        for (int j=0; j<tags.length; j++) {
+            String word = tags[j].text();
+            System.out.println("tag text: " + word);
+            addClass(jarDependencies, className, word);
+        }
+        System.out.println("done");
+    }
+
     private void processClasses(ClassDoc[] classes) throws IOException {
         for (int i=0; i<classes.length; i++) {
             ClassDoc doc = classes[i];
             processClass(doc);
+            // process class methods
+            MethodDoc[] methods = doc.methods();
+            for (int j=0; j<methods.length; j++) {
+                processMethod(methods[j], doc.qualifiedName());
+            }
         }
     }
 
