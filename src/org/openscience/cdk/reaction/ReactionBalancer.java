@@ -42,7 +42,7 @@ import java.util.*;
  * remaining hydrogens. If any other elements have to be balanced, permutations of stoichiometric
  * coefficients up to five are tested.
  * 
- * Warning: If the reaction cannot be balanced, the method balance returns false. 
+ * <p><b>Warning</b>: If the reaction cannot be balanced, the method balance returns false. 
  * Nevertheless the original reaction is modified. Use a copy of the reaction to
  * avoid this behaviour.
  * 

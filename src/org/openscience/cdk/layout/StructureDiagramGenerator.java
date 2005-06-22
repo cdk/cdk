@@ -72,6 +72,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.keyword Structure Diagram Generation (SDG)
  *@cdk.keyword 2D coordinates
  *@cdk.keyword Coordinate generation, 2D
+ * @cdk.dict blue-obelisk:layoutMolecule
  */
 public class StructureDiagramGenerator
 {

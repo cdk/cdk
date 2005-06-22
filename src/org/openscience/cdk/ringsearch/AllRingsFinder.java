@@ -51,7 +51,7 @@ import org.openscience.cdk.exception.CDKException;
  *  remains is a graph of pathes that have the same start and endpoint and are
  *  thus rings.
  *
- *  WARNING: This class has now a timeout of 5 seconds, after which it aborts
+ *  <p><b>WARNING</b>: This class has now a timeout of 5 seconds, after which it aborts
  *  its ringsearch. The timeout value can be customized by the setTimeout()
  *  method of this class.  
  *

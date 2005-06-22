@@ -56,7 +56,7 @@ import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
  *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
- * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings
+ * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Berger
  * 
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar

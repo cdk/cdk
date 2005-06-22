@@ -1,4 +1,8 @@
-/*
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
+ *
  *  Copyright (C) 2003-2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -29,15 +33,14 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 
 /**
  * An algorithm for topological symmetry.
- * This algorithm derived from the algorithm described in "Algorithm for computer perception 
- * of topological symmetry" C. Hu and L. Xu. Analytica Chimica Acta, Vol. 295, pp. 127-134, 1994.
+ * This algorithm derived from the algorithm {@cdk.cite HU94}.
  *
- *@author	Junfeng Hao
- *@cdk.created	2003-09-24
+ *@author      Junfeng Hao
+ *@cdk.created 2003-09-24
+ *@cdk.dict    blue-obelisk:perceiveGraphSymmetry
  */
- 
- public class EquivalentClassPartitioner
- {
+public class EquivalentClassPartitioner
+{
 
 	private double[][] nodeMatrix;
 	private double[][] bondMatrix;
