@@ -113,14 +113,14 @@ public class MakeDictionaryIndexDoclet {
     }
     
     private void processMethod(MethodDoc methodDoc, String className) throws IOException {
-        System.out.println("Processing: " + methodDoc.qualifiedName());
+        // System.out.println("Processing: " + methodDoc.qualifiedName());
         Tag[] tags = methodDoc.tags(javaDocDictRefTag);
         for (int j=0; j<tags.length; j++) {
             String word = tags[j].text();
-            System.out.println("tag text: " + word);
+            // System.out.println("tag text: " + word);
             addClass(jarDependencies, className, word);
         }
-        System.out.println("done");
+        // System.out.println("done");
     }
 
     private void processClasses(ClassDoc[] classes) throws IOException {
