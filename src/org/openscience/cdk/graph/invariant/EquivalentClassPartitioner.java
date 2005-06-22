@@ -37,7 +37,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
  *
  *@author      Junfeng Hao
  *@cdk.created 2003-09-24
- *@cdk.dict    blue-obelisk:perceiveGraphSymmetry
+ *@cdk.dictref blue-obelisk:perceiveGraphSymmetry
  */
 public class EquivalentClassPartitioner
 {
