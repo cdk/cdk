@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     core
+ * @cdk.module     extra
  */
 public class ElementPTFactory
 {

@@ -47,7 +47,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
- * @cdk.module     core
+ * @cdk.module     extra
  */
 public class ElementPTHandler extends DefaultHandler 
 {
