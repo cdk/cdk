@@ -11,3 +11,8 @@ Debian:
 > mkdir build
 > cd build
 > xsltproc /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/chunk.xsl ../guide.xml
+
+To upload it to SF do:
+
+> cd build/..
+> scp build/* cdk.sf.net:~/cdk-www/guides/devel/.
