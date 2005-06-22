@@ -69,6 +69,17 @@ public class RingTest extends CDKTestCase {
         assertEquals(0, ring.getBondCount());
     }
 
+    public void testRing_AtomContainer() {
+        AtomContainer container = new AtomContainer();
+        container.addAtom(new Atom("C"));
+        container.addAtom(new Atom("C"));
+        
+        Ring ring = new Ring(container);
+        assertNotNull(ring);
+        assertEquals(2, ring.getAtomCount());
+        assertEquals(0, ring.getBondCount());
+    }
+
     public void testGetOrderSum() {
         Ring r = new Ring(5, "C");
         assertEquals(5, r.getOrderSum());

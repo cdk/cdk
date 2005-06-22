@@ -96,10 +96,25 @@ public class SetOfMoleculesTest extends CDKTestCase {
         som.addMolecule(new Molecule());
         som.addMolecule(new Molecule());
 
-	SetOfMolecules som2 = new SetOfMolecules();
-	som2.add(som);
-	
+        SetOfMolecules som2 = new SetOfMolecules();
+        som2.add(som);
+        
         assertEquals(5, som2.getMoleculeCount());
+    }
+    
+    public void testSetMolecules_arrayMolecule() {
+        SetOfMolecules som = new SetOfMolecules();
+        
+        Molecule[] set = new Molecule[5];
+        set[0] = new Molecule();
+        set[1] = new Molecule();
+        set[2] = new Molecule();
+        set[3] = new Molecule();
+        set[4] = new Molecule();
+        
+        assertEquals(0, som.getMoleculeCount());
+        som.setMolecules(set);
+        assertEquals(5, som.getMoleculeCount());
     }
     
     public void testGrowMoleculeArray() {
@@ -121,7 +136,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     
     public void testSetOfMolecules() {
         SetOfMolecules som = new SetOfMolecules();
-	assertNotNull(som);
+        assertNotNull(som);
         assertEquals(0, som.getMoleculeCount());
     }
     

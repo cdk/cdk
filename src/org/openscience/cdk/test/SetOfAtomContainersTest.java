@@ -242,6 +242,18 @@ public class SetOfAtomContainersTest extends CDKTestCase {
         assertEquals(ac2, som.getAtomContainer(0));
     }
     
+    public void testRemoveAllAtomContainers() {
+        SetOfAtomContainers som = new SetOfAtomContainers();
+        AtomContainer ac1 = new AtomContainer();
+        AtomContainer ac2 = new AtomContainer();
+        som.addAtomContainer(ac1);
+        som.addAtomContainer(ac2);
+        
+        assertEquals(2, som.getAtomContainerCount());
+        som.removeAllAtomContainers();
+        assertEquals(0, som.getAtomContainerCount());
+    }
+    
     public void testRemoveAtomContainer_int() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         AtomContainer ac1 = new AtomContainer();
