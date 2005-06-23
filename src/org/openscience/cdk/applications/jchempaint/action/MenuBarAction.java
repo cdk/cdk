@@ -50,8 +50,8 @@ public class MenuBarAction extends JCPAction {
      */
     public void actionPerformed(ActionEvent e) 
     {
-	    if (jcpPanel.getShowMenuBar()) jcpPanel.setShowMenuBar(false);
-	    else jcpPanel.setShowMenuBar(true);
+	    if (((JChemPaintEditorPanel)jcpPanel).getShowMenuBar()) ((JChemPaintEditorPanel)jcpPanel).setShowMenuBar(false);
+	    else ((JChemPaintEditorPanel)jcpPanel).setShowMenuBar(true);
     }
 }
 

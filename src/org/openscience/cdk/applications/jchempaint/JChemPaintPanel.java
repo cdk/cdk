@@ -41,7 +41,6 @@ import javax.swing.filechooser.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 import org.openscience.cdk.*;
-import org.openscience.cdk.applications.plugin.*;
 import org.openscience.cdk.controller.*;
 import org.openscience.cdk.event.*;
 import org.openscience.cdk.geometry.*;
@@ -66,7 +65,7 @@ import org.openscience.cdk.applications.jchempaint.io.*;
  */
 public abstract class JChemPaintPanel
 		 extends JPanel
-		 implements ChangeListener, CDKEditBus {
+		 implements ChangeListener {
 
 	//Static variables hold information if the application is embedded and keep track of instances of JCPPanel
 	boolean isEmbedded = false;
@@ -86,20 +85,15 @@ public abstract class JChemPaintPanel
 	/**
 	 *  Description of the Field
 	 */
-	protected CDKPluginManager pluginManager = null;
 	JPanel mainContainer;
 	StatusBar statusBar;
 	JChemPaintMenuBar menu;
 	JToolBar toolBar;
-	boolean showMenuBar = true;
-	boolean showToolBar = true;
-	boolean showStatusBar = true;
 	DrawingPanel drawingPanel;
 	/**
 	 *  Description of the Field
 	 */
 	public JButton selectButton;
-	JChemPaintPanel jcpp;
 	JCPAction jcpaction = null;
 	/**
 	 *  Description of the Field
@@ -122,7 +116,6 @@ public abstract class JChemPaintPanel
 	 */
 	public JChemPaintPanel() {
 		logger = new LoggingTool(this);
-		setupPluginManager();
 		setLayout(new BorderLayout());
 		mainContainer = new JPanel();
 		mainContainer.setLayout(new BorderLayout());
@@ -134,7 +127,6 @@ public abstract class JChemPaintPanel
 		mainContainer.add(scrollPane, BorderLayout.CENTER);
 
 		add(mainContainer, BorderLayout.CENTER);
-		customizeView();
 		setSize(new Dimension(600, 400));
 		setPreferredSize(new Dimension(600, 400));
     instances.add(this);
@@ -155,41 +147,6 @@ public abstract class JChemPaintPanel
 
 
 	/**
-	 *  Description of the Method
-	 */
-	public void customizeView() {
-		if (showMenuBar) {
-			if (menu == null) {
-				menu = new JChemPaintMenuBar(this);
-			}
-			add(menu, BorderLayout.NORTH);
-			revalidate();
-		} else {
-			try {
-				remove(menu);
-				revalidate();
-			} catch (Exception exc) {
-
-			}
-		}
-		if (showStatusBar) {
-			if (statusBar == null) {
-				statusBar = new StatusBar();
-			}
-			add(statusBar, BorderLayout.SOUTH);
-			revalidate();
-		} else {
-			try {
-				remove(statusBar);
-				revalidate();
-			} catch (Exception exc) {
-
-			}
-		}
-	}
-
-
-	/**
 	 *  Tells if this JCPPanel is part of an embedded program or not.
 	 *
 	 *@return    The embedded value
@@ -206,69 +163,6 @@ public abstract class JChemPaintPanel
 	 */
 	public boolean isViewerOnly() {
 		return isViewerOnly;
-	}
-
-
-	/**
-	 *  Tells if a toolbar is shown
-	 *
-	 *@return    The showToolBar value
-	 */
-	public boolean getShowToolBar() {
-		return showToolBar;
-	}
-
-
-
-	/**
-	 *  Sets if a toolbar is shown
-	 *
-	 *@param  showToolBar  The new showToolBar value
-	 */
-	public void setShowToolBar(boolean showToolBar) {
-		this.showToolBar = showToolBar;
-		customizeView();
-	}
-
-
-	/**
-	 *  Tells if a menu is shown
-	 *
-	 *@return    The showMenu value
-	 */
-	public boolean getShowMenuBar() {
-		return showMenuBar;
-	}
-
-
-	/**
-	 *  Sets if a menu is shown
-	 *
-	 *@param  showMenuBar  The new showMenuBar value
-	 */
-	public void setShowMenuBar(boolean showMenuBar) {
-		this.showMenuBar = showMenuBar;
-		customizeView();
-	}
-
-
-	/**
-	 *  Tells if a status bar is shown
-	 *
-	 *@return    The showStatusBar value
-	 */
-	public boolean getShowStatusBar() {
-		return showStatusBar;
-	}
-
-
-	/**
-	 *  return the toolbar of this JCPPanel
-	 *
-	 *@return    The toolBar value
-	 */
-	public JToolBar getToolBar() {
-		return toolBar;
 	}
 
 
@@ -311,17 +205,6 @@ public abstract class JChemPaintPanel
 	 */
 	public void setNotEmbedded() {
 		isEmbedded = false;
-	}
-
-
-	/**
-	 *  Sets if statusbar should be shown
-	 *
-	 *@param  showStatusBar  The value to assign showStatusBar.
-	 */
-	public void setShowStatusBar(boolean showStatusBar) {
-		this.showStatusBar = showStatusBar;
-		customizeView();
 	}
 
 
@@ -475,43 +358,6 @@ public abstract class JChemPaintPanel
 	 */
 	public void setLastSavedFile(File lsf) {
 		this.lastSavedFile = lsf;
-	}
-
-
-	/**
-	 *  Gets the pluginManager attribute of the JChemPaint object
-	 *
-	 *@return    The pluginManager value
-	 */
-	public CDKPluginManager getPluginManager() {
-		return pluginManager;
-	}
-
-
-	/**
-	 *  Sets up the plugin manager.
-	 */
-	private void setupPluginManager() {
-		try {
-			// set up plugin manager
-			JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
-			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), jcpp);
-
-			// load the plugins that come with JCP itself
-			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
-            pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DadmlBrowserPlugin");
-
-			// load the user plugins
-			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
-
-			// load plugins given with -Dplugin.dir=bla
-			if (System.getProperty("plugin.dir") != null) {
-				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
-			}
-		} catch (Exception exc) {
-			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-			logger.debug(exc);
-		}
 	}
 
 
@@ -1023,22 +869,7 @@ public abstract class JChemPaintPanel
 	 *@param  e  ChangeEvent
 	 */
 	public void stateChanged(ChangeEvent e) {
-
-		if (jchemPaintModel != null) {
-			for (int i = 0; i < 3; i++) {
-				String status = jchemPaintModel.getStatus(i);
-				statusBar.setStatus(i + 1, status);
-			}
-		} else {
-			if (statusBar != null) {
-				statusBar.setStatus(1, "no model");
-			}
-		}
 		repaint();
-		// send event to plugins
-		if (pluginManager != null) {
-			pluginManager.stateChanged(new ChemObjectChangeEvent(this));
-		}
 	}
 
 

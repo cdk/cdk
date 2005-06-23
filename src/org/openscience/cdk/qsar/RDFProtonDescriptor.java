@@ -77,6 +77,8 @@ public class RDFProtonDescriptor implements Descriptor {
 
 	private int atomPosition = 0;
 	private boolean checkAromaticity = false;
+  private AtomContainer acold=null;
+  private RingSet rs = null;
 
 	/**
 	 *  Constructor for the RDFProtonDescriptor object
@@ -151,6 +153,26 @@ public class RDFProtonDescriptor implements Descriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    return(calculate(ac,null));
+  }
+  
+  
+	/**
+	 *  The method calculates from 0 to 5 array of doubles. If an array is calculated, the relative number in the 
+	 *  arrayList result is set to 1. If not, is 0. Example: if the second position of the result is 1, it means
+	 *  that the second descriptor (GHRtopol) has been calculated and it is returned as property.
+	 *  Calculated descriptors are stored as properties:
+	 *  gesteigerGHR, gesteigerGHRtopol, gesteigerGDR, gesteigerGSR, gesteigerG3R.
+	 *  Example:
+	 *  with (ArrayList)target.getProperty("gasteigerGHRtopol") it is possible to use values stored by the gasteigerGHRtopol
+	 *  property.
+	 *
+	 *@param  ac                AtomContainer
+   *@param  precalculatedringset You can give an already generated set of all rings for speeding up things.
+	 *@return                   an arrayList with 5 position (GHR, GHRtopol, GDR, GSR, G3R)
+	 *@exception  CDKException  Possible Exceptions
+	 */
+	public DescriptorValue calculate(AtomContainer ac, RingSet precalculatedringset) throws CDKException {
 		Atom target = ac.getAtomAt(atomPosition);
 		
 		IntegerArrayResult rdfProtonCalculatedValues = new IntegerArrayResult(5);
@@ -160,13 +182,19 @@ public class RDFProtonDescriptor implements Descriptor {
 /////////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
 			
 			Molecule mol = new Molecule(ac);
-			try {
-				GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-				peoe.assignGasteigerMarsiliPartialCharges(mol, true);
-			} catch (Exception ex1) {
-				throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString());
-			}				
-			RingSet rs = (new AllRingsFinder()).findAllRings(ac);
+      if(ac!=acold){
+        acold=ac;
+        if(precalculatedringset==null)
+          rs = (new AllRingsFinder()).findAllRings(ac);
+        else
+          rs=precalculatedringset;
+        try {
+          GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+          peoe.assignGasteigerMarsiliPartialCharges(mol, true);
+        } catch (Exception ex1) {
+          throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString());
+        }
+      }
 			if (checkAromaticity) {
 				HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 			}

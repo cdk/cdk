@@ -39,6 +39,7 @@ import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
 
 
@@ -66,7 +67,7 @@ public class ChemAction extends JCPAction
 			jcpPanel.lastAction.setBackground(Color.LIGHT_GRAY);
 		} else
 		{
-      (jcpPanel.getToolBar().getComponentAtIndex(0)).setBackground(Color.LIGHT_GRAY);
+      (((JChemPaintEditorPanel)jcpPanel).getToolBar().getComponentAtIndex(0)).setBackground(Color.LIGHT_GRAY);
 		}
 		((JComponent) e.getSource()).setBackground(Color.GRAY);
 		jcpPanel.lastAction = (JComponent) e.getSource();

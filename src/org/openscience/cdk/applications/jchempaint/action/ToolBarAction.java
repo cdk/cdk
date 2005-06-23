@@ -50,8 +50,8 @@ public class ToolBarAction extends JCPAction {
      */
     public void actionPerformed(ActionEvent e) 
     {
-	    if (jcpPanel.getShowToolBar()) jcpPanel.setShowToolBar(false);
-	    else jcpPanel.setShowToolBar(true);
+	    if (((JChemPaintEditorPanel)jcpPanel).getShowToolBar()) ((JChemPaintEditorPanel)jcpPanel).setShowToolBar(false);
+	    else ((JChemPaintEditorPanel)jcpPanel).setShowToolBar(true);
     }
 }
 

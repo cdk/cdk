@@ -67,10 +67,12 @@ import org.openscience.cdk.controller.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.validate.*;
 import org.openscience.cdk.renderer.*;
+import org.openscience.cdk.event.*;
 import org.openscience.cdk.applications.jchempaint.*;
 import org.openscience.cdk.applications.jchempaint.io.*;
 import org.openscience.cdk.applications.jchempaint.action.*;
 import org.openscience.cdk.applications.jchempaint.dialogs.*;
+import org.openscience.cdk.applications.plugin.*;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 
 /**
@@ -95,7 +97,12 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	private static DictionaryDatabase dictdb = null;
 	private static ValidatorEngine engine = null;
 	private static LoggingTool logger;
+
+	boolean showMenuBar = true;
+	boolean showToolBar = true;
+	boolean showStatusBar = true;
 	
+  protected CDKPluginManager pluginManager = null;
 	protected EventListenerList changeListeners = null;
 	
 	/**
@@ -114,6 +121,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public JChemPaintEditorPanel(int lines, Dimension panelDimension)
 	{
 		super();
+    customizeView();
+		setupPluginManager();
 		super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
 		if (logger == null)
@@ -126,6 +135,82 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);
+		}
+	}
+
+
+	/**
+	 *  Gets the pluginManager attribute of the JChemPaint object
+	 *
+	 *@return    The pluginManager value
+	 */
+	public CDKPluginManager getPluginManager() {
+		return pluginManager;
+	}
+
+
+	/**
+	 *  Tells if a menu is shown
+	 *
+	 *@return    The showMenu value
+	 */
+	public boolean getShowMenuBar() {
+		return showMenuBar;
+	}
+
+
+	/**
+	 *  Sets if a menu is shown
+	 *
+	 *@param  showMenuBar  The new showMenuBar value
+	 */
+	public void setShowMenuBar(boolean showMenuBar) {
+		this.showMenuBar = showMenuBar;
+		customizeView();
+	}
+
+
+	/**
+	 *  Tells if a status bar is shown
+	 *
+	 *@return    The showStatusBar value
+	 */
+	public boolean getShowStatusBar() {
+		return showStatusBar;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void customizeView() {
+		if (showMenuBar) {
+			if (menu == null) {
+				menu = new JChemPaintMenuBar(this);
+			}
+			add(menu, BorderLayout.NORTH);
+			revalidate();
+		} else {
+			try {
+				remove(menu);
+				revalidate();
+			} catch (Exception exc) {
+
+			}
+		}
+		if (showStatusBar) {
+			if (statusBar == null) {
+				statusBar = new StatusBar();
+			}
+			add(statusBar, BorderLayout.SOUTH);
+			revalidate();
+		} else {
+			try {
+				remove(statusBar);
+				revalidate();
+			} catch (Exception exc) {
+
+			}
 		}
 	}
 
@@ -179,6 +264,32 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		
 	
 	/**
+	 *  Sets up the plugin manager.
+	 */
+	private void setupPluginManager() {
+		try {
+			// set up plugin manager
+			JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
+			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), this);
+
+			// load the plugins that come with JCP itself
+			// pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+
+			// load the user plugins
+			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
+
+			// load plugins given with -Dplugin.dir=bla
+			if (System.getProperty("plugin.dir") != null) {
+				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
+			}
+		} catch (Exception exc) {
+			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
+			logger.debug(exc);
+		}
+	}
+
+
+	/**
 	 *  Returns the value of showToolbar.
 	 *
 	 *@return    The showToolbar value
@@ -215,6 +326,19 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	{
     setShowToolBar(showToolBar, 1);
   }
+
+
+	/**
+	 *  Sets if statusbar should be shown
+	 *
+	 *@param  showStatusBar  The value to assign showStatusBar.
+	 */
+	public void setShowStatusBar(boolean showStatusBar) {
+		this.showStatusBar = showStatusBar;
+		customizeView();
+	}
+
+
 	/**
 	 *  Sets the value of showToolbar.
 	 *
@@ -551,11 +675,22 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     public void stateChanged(ChangeEvent e)
    {
        super.stateChanged(e);
+
+        if (jchemPaintModel != null) {
+          for (int i = 0; i < 3; i++) {
+            String status = jchemPaintModel.getStatus(i);
+            statusBar.setStatus(i + 1, status);
+          }
+        } else {
+          if (statusBar != null) {
+            statusBar.setStatus(1, "no model");
+          }
+        }
        // send event to plugins
-       /*if (pluginManager != null)
+       if (pluginManager != null)
        {
            pluginManager.stateChanged(new ChemObjectChangeEvent(this));
-       }*/
+       }
    }
 
 

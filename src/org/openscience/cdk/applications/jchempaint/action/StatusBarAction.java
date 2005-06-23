@@ -50,8 +50,8 @@ public class StatusBarAction extends JCPAction {
      */
     public void actionPerformed(ActionEvent e) 
     {
-	    if (jcpPanel.getShowStatusBar()) jcpPanel.setShowStatusBar(false);
-	    else jcpPanel.setShowStatusBar(true);
+	    if (((JChemPaintEditorPanel)jcpPanel).getShowStatusBar()) ((JChemPaintEditorPanel)jcpPanel).setShowStatusBar(false);
+	    else ((JChemPaintEditorPanel)jcpPanel).setShowStatusBar(true);
     }
 }
 

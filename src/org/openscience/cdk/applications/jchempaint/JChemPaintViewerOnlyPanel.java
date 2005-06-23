@@ -68,9 +68,6 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	public JChemPaintViewerOnlyPanel(Dimension panelDimension) {
 		super();
 		super.setJChemPaintModel(new JChemPaintModel());
-		setShowToolBar(false);
-		setShowStatusBar(false);
-		setShowMenuBar(false);
 		setViewerOnly();
 		buildFilePopUpMenu();
 		logger = new LoggingTool(this);
@@ -183,7 +180,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 			if (e.isPopupTrigger()) {
 				viewerPanelPopupMenu.show(e.getComponent(),
 						e.getX(), e.getY());
-			} else {
+			} /*else {
 				if (e.getButton() == 1 && e.getClickCount() == 2) {
 					JChemPaintPanel viewerPanel = (JChemPaintPanel) getComponent(0).getParent();
 					Object editorModel = viewerPanel.getJChemPaintModel().getChemModel().clone();
@@ -198,7 +195,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 					setViewerOnly();
 					editorPanel.setJChemPaintModel(thisModel);
 				}
-			}
+			}*/
 		}
 	}
 
@@ -211,13 +208,13 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	 *@param  event  ChangeEvent
 	 */
 	public void stateChanged(ChangeEvent event) {
-		if (event.getSource() instanceof JChemPaintEditorPanel) {
+		/*if (event.getSource() instanceof JChemPaintEditorPanel) {
 			JChemPaintEditorPanel editorPanel = (JChemPaintEditorPanel) event.getSource();
 			if (editorPanel.getLastEventReason() == JChemPaintEditorPanel.JCP_CLOSING) {
 				setViewerOnly();
 				setJChemPaintModel(editorPanel.getJChemPaintModel());
 			}
-		}
+		}*/
 		super.stateChanged(event);
 	}
 }

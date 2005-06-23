@@ -99,9 +99,9 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 */
 	protected void createMenubar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition) {
 		addNormalMenuBar(jcpPanel, menuDefinition);
-		if (addPluginMenu && jcpPanel.getPluginManager() != null) {
+		if (addPluginMenu && ((JChemPaintEditorPanel)jcpPanel).getPluginManager() != null) {
             logger.info("Creating Plugin menu");
-            this.add(jcpPanel.getPluginManager().getMenu());
+            this.add(((JChemPaintEditorPanel)jcpPanel).getPluginManager().getMenu());
 		}
 		this.add(Box.createHorizontalGlue());
 		this.add(createMenu(jcpPanel, "help"));
