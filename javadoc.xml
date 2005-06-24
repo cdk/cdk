@@ -109,7 +109,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <package name="org.openscience.cdk"/>
             <sourcepath>
                 <pathelement path="${src}"/>
@@ -125,7 +125,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/data.javafiles"/>
             </fileset>
@@ -143,7 +143,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/core.javafiles"/>
             </fileset>
@@ -161,7 +161,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/standard.javafiles"/>
             </fileset>
@@ -179,7 +179,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/io.javafiles"/>
             </fileset>
@@ -197,7 +197,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/render.javafiles"/>
             </fileset>
@@ -215,7 +215,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/extra.javafiles"/>
             </fileset>
@@ -233,7 +233,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/qsar.javafiles"/>
             </fileset>
@@ -251,7 +251,7 @@
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="jar/doccheck.jar" />
+                    path="develjar/doccheck.jar" />
             <fileset dir="${src}">
                 <includesfile name="${src}/builder3d.javafiles"/>
             </fileset>
