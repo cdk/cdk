@@ -189,6 +189,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  to run the AtomContainer ac to the HueckelAromaticityDetector prior to 
 	 *  using getHOSECode(). This method only gives proper results if the molecule is
    *  fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
+   *  This method is known to fail for protons sometimes.
 	 *
 	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
 	 *@param  root The root atom for which to produce the HOSE code
@@ -764,6 +765,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 			return s;
 		}
 	}
+  
+  
   public Vector getNodesInSphere(int sphereNumber){
 			sphereNodes = spheres[sphereNumber-1];
       Vector atoms=new Vector();
