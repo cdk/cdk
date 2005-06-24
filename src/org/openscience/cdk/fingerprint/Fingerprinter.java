@@ -132,7 +132,7 @@ public class Fingerprinter
 	 */
 	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth) throws Exception
 	{
-		return getFingerprint(ac, size, searchDepth);
+		return getFingerprint(ac, size, searchDepth, null);
 
 	}
 		

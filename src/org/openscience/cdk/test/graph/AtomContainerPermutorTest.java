@@ -112,7 +112,7 @@ public class AtomContainerPermutorTest extends CDKTestCase
 			{
 				bonds += result.getBondAt(f).getOrder(); 
 			}
-			System.out.println(bonds);
+			//System.out.println(bonds);
 		}
 		assertEquals(119, counter);
 	}

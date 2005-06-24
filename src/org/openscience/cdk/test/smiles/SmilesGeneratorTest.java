@@ -1062,7 +1062,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
 			String moleculeSmile = sg.createSMILES(mol1);
-			System.out.println(filename + " -> " + moleculeSmile);
+			//System.out.println(filename + " -> " + moleculeSmile);
 			assertEquals(moleculeSmile, "C1CCC=2CCCC=2(C1)");
 		} catch (Exception exc)
 		{
@@ -1086,7 +1086,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
 			String moleculeSmile = sg.createSMILES(mol1);
-			System.out.println(filename + " -> " + moleculeSmile);
+			//System.out.println(filename + " -> " + moleculeSmile);
 			assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
 		} catch (Exception exc)
 		{
