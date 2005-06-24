@@ -45,7 +45,6 @@ import org.openscience.cdk.tools.LoggingTool;
  *  This class is extensively used, for example, by JChemPaint to edit molecule.
  *
  *@author        seb
- *@created       26. April 2005
  *@cdk.module    standard
  */
 public class GeometryTools {

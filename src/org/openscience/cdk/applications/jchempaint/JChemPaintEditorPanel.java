@@ -79,7 +79,7 @@ import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
  *  This class implements an editing JChemPaintPanel.
  *
  *@author        steinbeck
- *@created       16. Februar 2005
+ *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
  *@see           JChemPaintViewerPanel
  */

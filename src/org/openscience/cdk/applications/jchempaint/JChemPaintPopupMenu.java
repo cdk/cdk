@@ -43,7 +43,6 @@ import org.openscience.cdk.applications.jchempaint.action.JCPAction;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class JChemPaintPopupMenu extends CDKPopupMenu
 {

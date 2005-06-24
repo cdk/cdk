@@ -43,7 +43,7 @@ import java.net.URL;
  *
  * @cdk.module jchempaint
  * @author     mrojas
- * @created    05. Juny 2005
+ * @cdk.created    05. Juny 2005
  */
 public class JavaHelpDialog
 {

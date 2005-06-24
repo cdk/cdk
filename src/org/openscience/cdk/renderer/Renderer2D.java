@@ -88,7 +88,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  *
  *@author         steinbeck
  *@author         egonw
- *@created        14. Juni 2005
  *@cdk.module     render
  *@cdk.created    2002-10-03
  *@cdk.keyword    viewer, 2D-viewer

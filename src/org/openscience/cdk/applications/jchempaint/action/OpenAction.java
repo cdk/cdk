@@ -68,7 +68,6 @@ import org.openscience.cdk.AtomContainer;
  * Shows the open dialog
  *
  * @author        steinbeck
- * @created       22. April 2005
  * @cdk.module    jchempaint
  */
 public class OpenAction extends JCPAction {

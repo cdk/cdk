@@ -38,7 +38,7 @@ import javax.swing.JFileChooser;
  * 
  * @cdk.module jchempaint
  * @author  Egon Willighagen
- * @created 2003-07-18
+ * @cdk.created 2003-07-18
  */
 public class JCPCompChemInputSaveFileFilter extends javax.swing.filechooser.FileFilter implements JCPFileFilterInterface {
 

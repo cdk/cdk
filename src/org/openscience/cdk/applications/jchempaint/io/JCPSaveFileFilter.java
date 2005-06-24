@@ -35,7 +35,7 @@ import javax.swing.JFileChooser;
  *
  * @cdk.module jchempaint
  * @author  Egon Willighagen
- * @created 2002-10-05
+ * @cdk.created 2002-10-05
  */
 public class JCPSaveFileFilter extends JCPFileFilter {
 

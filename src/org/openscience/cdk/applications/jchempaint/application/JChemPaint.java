@@ -67,7 +67,7 @@ import org.apache.commons.cli.UnrecognizedOptionException;
  * @cdk.module jchempaint.application
  * @author     steinbeck
  * @author     egonw
- * @created    a long time ago
+ * @cdk.created    a long time ago
  */
 public class JChemPaint implements SwingConstants
 {

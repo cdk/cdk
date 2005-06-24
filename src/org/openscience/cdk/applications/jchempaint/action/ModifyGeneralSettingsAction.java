@@ -38,7 +38,7 @@ import org.openscience.cdk.applications.jchempaint.dialogs.ModifyGeneralSettings
  *
  * @cdk.module jchempaint.application
  * @author     egonw
- * @created    2005-04-27
+ * @cdk.created    2005-04-27
  */
 public class ModifyGeneralSettingsAction extends JCPAction {
 

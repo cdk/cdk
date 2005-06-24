@@ -48,7 +48,6 @@ import org.openscience.cdk.applications.jchempaint.dialogs.ChemObjectPropertyDia
  * Action for triggering an edit of a ChemObject
  *
  * @author        E.L. Willighagen <elw38@cam.ac.uk>
- * @created       2. Mai 2005
  * @cdk.module    jchempaint
  */
 public class EditChemObjectPropsAction extends JCPAction {

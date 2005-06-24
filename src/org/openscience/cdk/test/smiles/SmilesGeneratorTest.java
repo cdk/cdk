@@ -59,7 +59,6 @@ import org.openscience.cdk.graph.AtomContainerBondPermutor;
 
 /**
  *@author         steinbeck
- *@created        6. Mai 2005
  *@cdk.created    February 9, 2004
  *@cdk.module     test
  */

@@ -48,7 +48,6 @@ import org.openscience.cdk.test.CDKTestCase;
 
 /**
  *@author         steinbeck
- *@created        3. Juni 2005
  *@cdk.module     test
  *@cdk.created    2003-09-19
  */

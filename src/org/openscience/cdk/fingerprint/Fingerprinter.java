@@ -75,7 +75,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  *  </p>
  *
  *@author         steinbeck
- *@created        4. Mai 2005
  *@cdk.created    2002-02-24
  *@cdk.keyword    fingerprint
  *@cdk.keyword    similarity

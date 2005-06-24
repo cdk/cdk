@@ -39,7 +39,6 @@ import org.openscience.cdk.applications.swing.JExternalFrame;
  *
  * @cdk.module jchempaint.applet
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 {

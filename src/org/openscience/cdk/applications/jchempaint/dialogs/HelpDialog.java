@@ -55,7 +55,6 @@ import javax.swing.text.Document;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class HelpDialog extends JDialog implements HyperlinkListener
 {
@@ -185,7 +184,6 @@ public class HelpDialog extends JDialog implements HyperlinkListener
 	 *  so that a cursor change can be done).
 	 *
 	 *@author     steinbeck
-	 *@created    22. April 2005
 	 */
 	class PageLoader implements Runnable
 	{

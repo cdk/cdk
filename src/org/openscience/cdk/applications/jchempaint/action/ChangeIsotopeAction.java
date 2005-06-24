@@ -43,7 +43,6 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
  *
  * @cdk.module jchempaint
  * @author     Egon Willighagen
- * @created    22. April 2005
  */
 public class ChangeIsotopeAction extends JCPAction
 {

@@ -43,7 +43,6 @@ import org.openscience.cdk.applications.jchempaint.action.JCPAction;
  *  JChemPaint menu bar
  *
  * @author        steinbeck
- * @created       22. April 2005
  * @cdk.module    jchempaint
  */
 public class JChemPaintMenuBar extends JMenuBar {

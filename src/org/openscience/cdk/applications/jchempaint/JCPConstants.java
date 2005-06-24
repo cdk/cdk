@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint;
 /**
  *
  *@author        steinbeck
- *@created       16. Februar 2005
+ *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
  */
 

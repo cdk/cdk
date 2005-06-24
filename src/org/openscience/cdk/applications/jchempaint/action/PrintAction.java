@@ -44,7 +44,6 @@ import org.openscience.cdk.AtomContainer;
  * Opens a print dialog
  *
  * @author        steinbeck
- * @created       22. April 2005
  * @cdk.module    jchempaint
  */
 public class PrintAction extends JCPAction implements Printable {

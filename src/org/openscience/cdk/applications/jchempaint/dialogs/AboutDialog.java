@@ -49,7 +49,7 @@ import java.net.URL;
  * the user to copy&amp;paste the URL of JChemPaints main site.
  *
  * @author        hel
- * @created       27. April 2005
+ * @cdk.created       27. April 2005
  * @cdk.module    jchempaint
  */
 public class AboutDialog extends JFrame {

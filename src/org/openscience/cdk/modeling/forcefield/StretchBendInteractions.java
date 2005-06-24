@@ -15,7 +15,6 @@ import org.openscience.cdk.tools.LoggingTool;
  *  Include function and derivatives.
  *
  *@author         vlabarta
- *@created        June 6, 2005
  *@cdk.created    2005-02-15
  *@cdk.module     builder3d
  */

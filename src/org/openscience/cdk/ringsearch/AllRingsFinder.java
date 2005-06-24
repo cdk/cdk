@@ -56,7 +56,7 @@ import org.openscience.cdk.exception.CDKException;
  *  method of this class.  
  *
  *@author        steinbeck
- *@created       3. Juni 2005
+ *@cdk.created       3. Juni 2005
  *@cdk.module    standard
  */
 public class AllRingsFinder

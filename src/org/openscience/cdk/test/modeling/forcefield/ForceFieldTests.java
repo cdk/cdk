@@ -48,7 +48,6 @@ import org.openscience.cdk.tools.LoggingTool;
  *  Check results of GeometricMinimizer using some examples.
  *
  *@author         vlabarta
- *@created        March 22, 2005
  *@cdk.module     test
  *@cdk.created    2005-01-17
  */

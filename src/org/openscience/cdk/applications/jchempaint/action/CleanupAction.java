@@ -49,7 +49,6 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class CleanupAction extends JCPAction
 {

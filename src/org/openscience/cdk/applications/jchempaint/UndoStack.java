@@ -36,7 +36,7 @@ import java.util.Vector;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    February 4, 2004
+ * @cdk.created    February 4, 2004
  */
 public class UndoStack
 {

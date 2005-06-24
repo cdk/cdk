@@ -39,7 +39,6 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class JCPPropertyHandler
 {

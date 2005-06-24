@@ -43,7 +43,6 @@ import org.openscience.cdk.ChemModel;
  *  JPanel that contains a a viewer only JChemPaint panel.
  *
  *@author        steinbeck
- *@created       22. April 2005
  *@cdk.module    jchempaint
  */
 public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
@@ -148,7 +147,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	 *  Description of the Class
 	 *
 	 *@author     thelmus
-	 *@created    18. Mai 2005
+	 *@cdk.created    18. Mai 2005
 	 */
 	class PopupListener extends MouseAdapter {
 		/**

@@ -65,7 +65,6 @@ import org.openscience.cdk.applications.jchempaint.*;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class CreateCoordinatesForFileDialog extends JInternalFrame
 {
@@ -151,7 +150,6 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 	 *  Description of the Class
 	 *
 	 *@author     steinbeck
-	 *@created    22. April 2005
 	 */
 	class CancelAction extends AbstractAction
 	{
@@ -180,7 +178,6 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 	 *  Description of the Class
 	 *
 	 *@author     steinbeck
-	 *@created    22. April 2005
 	 */
 	class CreateAction extends AbstractAction
 	{

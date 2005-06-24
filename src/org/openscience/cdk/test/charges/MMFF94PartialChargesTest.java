@@ -43,7 +43,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module test
  *
  *@author        cubic
- *@created       2004-11-04
+ *@cdk.created       2004-11-04
  */
 
 public class MMFF94PartialChargesTest extends CDKTestCase {

@@ -72,7 +72,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *
  *@author         Oliver Horlacher,
  *@author         Stefan Kuhn (chiral smiles)
- *@created        2. Juni 2005
  *@cdk.created    2002-02-26
  *@cdk.keyword    SMILES, generator
  */
@@ -2133,7 +2132,6 @@ public class SmilesGenerator
 	 *  Description of the Class
 	 *
 	 *@author         shk3
-	 *@created        2. Juni 2005
 	 *@cdk.created    2003-06-17
 	 */
 	class BrokenBond

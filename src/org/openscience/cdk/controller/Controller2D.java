@@ -50,7 +50,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  *
  *@author         steinbeck
  *@author         egonw
- *@created        2. Mai 2005
+ *@cdk.created        2. Mai 2005
  *@cdk.keyword    mouse events
  *@cdk.require    java1.4+
  */

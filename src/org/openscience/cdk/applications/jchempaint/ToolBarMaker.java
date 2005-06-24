@@ -41,7 +41,7 @@ import org.openscience.cdk.applications.jchempaint.action.*;
  *  This class makes the JCPToolBar
  *
  *@author        steinbeck
- *@created       16. Februar 2005
+ *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
  *@see           JChemPaintViewerPanel
  */

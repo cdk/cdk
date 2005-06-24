@@ -38,7 +38,6 @@ import org.openscience.cdk.applications.jchempaint.dialogs.JChemPaintModelPropsE
  *
  * @cdk.module jchempaint
  *@author     steinbeck
- *@created    22. April 2005
  */
 public class ModelPropsAction extends JCPAction
 {

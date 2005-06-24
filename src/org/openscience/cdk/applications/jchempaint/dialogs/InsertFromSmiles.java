@@ -58,7 +58,6 @@ import org.openscience.cdk.applications.jchempaint.*;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
-  *@created    22. April 2005
  */
 public class InsertFromSmiles extends JFrame
 {
@@ -113,7 +112,6 @@ public class InsertFromSmiles extends JFrame
 	 *  Description of the Class
 	 *
 	 *@author     steinbeck
-	 *@created    22. April 2005
 	 */
 	class OpenAction extends AbstractAction
 	{
@@ -186,7 +184,6 @@ public class InsertFromSmiles extends JFrame
 	 *  Description of the Class
 	 *
 	 *@author     steinbeck
-	 *@created    22. April 2005
 	 */
 	class CancelAction extends AbstractAction
 	{

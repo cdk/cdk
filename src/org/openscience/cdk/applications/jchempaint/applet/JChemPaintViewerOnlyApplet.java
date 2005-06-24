@@ -44,7 +44,7 @@ import java.lang.reflect.Method;
  * 
  * @cdk.module jchempaint.applet
  * @author dirk49
- * @created 04. Mai 2005
+ * @cdk.created 04. Mai 2005
  */
 public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet implements MouseMotionListener{
 

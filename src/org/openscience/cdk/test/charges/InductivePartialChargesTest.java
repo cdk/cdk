@@ -42,7 +42,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module test
  *
  *@author        mfe4
- *@created       2004-11-04
+ *@cdk.created       2004-11-04
  */
 
 public class InductivePartialChargesTest extends CDKTestCase {

@@ -47,7 +47,6 @@ import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
  * Changes the editing mode for the Controller2D in CDK.
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class ChemAction extends JCPAction
 {
@@ -186,12 +185,6 @@ public class ChemAction extends JCPAction
 	}
 
 
-	/**
-	 *  Description of the Class
-	 *
-	 *@author     steinbeck
-	 *@created    22. April 2005
-	 */
 	class PTDialogChangeListener implements CDKChangeListener
 	{
 

@@ -39,7 +39,7 @@ import java.awt.*;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    1997
+ * @cdk.created    1997
  */
 public class NewAction extends JCPAction {
 

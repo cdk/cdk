@@ -43,7 +43,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
  *
  * @cdk.module jchempaint
  * @author  Egon Willighagen
- * @created 2003-08-08
+ * @cdk.created 2003-08-08
  */
 public class DictionaryAction extends JCPAction {
 

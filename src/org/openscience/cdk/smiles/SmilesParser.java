@@ -65,7 +65,6 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  *
  *@author         Christoph Steinbeck
  *@author         Egon Willighagen
- *@created        3. Juni 2005
  *@cdk.module     extra
  *@cdk.created    2002-04-29
  *@cdk.keyword    SMILES, parser

@@ -50,7 +50,6 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  * 
  * @cdk.module jchempaint
  * @author     E.L. Willighagen <elw38@cam.ac.uk>
- * @created    22. April 2005
  */
 public class ValidateAction extends JCPAction
 {

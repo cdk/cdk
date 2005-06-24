@@ -37,7 +37,6 @@ import org.openscience.cdk.applications.jchempaint.dialogs.AboutDialog;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class AboutAction extends JCPAction
 {

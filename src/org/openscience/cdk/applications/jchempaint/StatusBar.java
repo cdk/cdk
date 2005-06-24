@@ -40,7 +40,6 @@ import javax.swing.BorderFactory;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class StatusBar extends JPanel
 {

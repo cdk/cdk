@@ -34,7 +34,7 @@ import org.openscience.cdk.Atom;
  * some accuracy may be lost.
  *
  * @author Rajarshi Guha
- * @created 2005-05-09
+ * @cdk.created 2005-05-09
  * @cdk.module extra
  */
 class NeighborList {

@@ -12,7 +12,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  Methods of Newton-Raphson approach.
  *
  *@author        vlabarta
- *@created       June 1, 2005
+ *@cdk.created       June 1, 2005
  *@cdk.module    builder3d
  */
 public class NewtonRaphsonMethod {

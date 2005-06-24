@@ -60,7 +60,7 @@ import org.openscience.cdk.applications.jchempaint.io.*;
  *  editor.
  *
  *@author        steinbeck
- *@created       16. Februar 2005
+ *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
  */
 public abstract class JChemPaintPanel
@@ -804,7 +804,7 @@ public abstract class JChemPaintPanel
 	 *  Class for closing jcp
 	 *
 	 *@author     steinbeck
-	 *@created    February 18, 2004
+	 *@cdk.created    February 18, 2004
 	 */
 	public final static class AppCloser extends WindowAdapter {
 

@@ -30,7 +30,6 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * A set of AtomContainers.
  *
  * @author        hel
- * @created       17. Mai 2005
  * @cdk.module    data
  */
 public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, Cloneable, ChemObjectListener {

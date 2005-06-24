@@ -51,7 +51,7 @@ import org.openscience.cdk.io.MDLReader;
  * 
  * @cdk.module jchempaint.applet
  * @author dirk49
- * @created 22. April 2005
+ * @cdk.created 22. April 2005
  */
 public abstract class JChemPaintAbstractApplet extends JApplet {
 	private JChemPaintPanel theJcpp = null;

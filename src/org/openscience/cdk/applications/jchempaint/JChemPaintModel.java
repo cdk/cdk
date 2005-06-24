@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  *  interoperability.
  *
  * @author        steinbeck
- * @created       2003-02-17
+ * @cdk.created       2003-02-17
  * @cdk.module    jchempaint
  */
 public class JChemPaintModel implements java.io.Serializable, CDKChangeListener {

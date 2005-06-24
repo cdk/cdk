@@ -40,7 +40,6 @@ import org.openscience.cdk.applications.jchempaint.dialogs.ModifyRenderOptionsDi
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class ModifyDisplaySettingsAction extends JCPAction
 {

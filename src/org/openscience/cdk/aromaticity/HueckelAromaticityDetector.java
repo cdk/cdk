@@ -49,7 +49,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  *@author         steinbeck
  *@author         kaihartmann
- *@created        3. Juni 2005
+ *@cdk.created        3. Juni 2005
  *@cdk.module     standard
  *@cdk.created    2001-09-04
  */

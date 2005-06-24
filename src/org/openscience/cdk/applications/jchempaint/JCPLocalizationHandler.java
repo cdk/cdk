@@ -38,7 +38,6 @@ import java.util.Locale;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    22. April 2005
  */
 public class JCPLocalizationHandler
 {

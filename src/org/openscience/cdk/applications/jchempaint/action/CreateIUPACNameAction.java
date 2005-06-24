@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  * @cdk.module jchempaint
  * @author  Egon Willighagen
- * @created 2003-08-11
+ * @cdk.created 2003-08-11
  */
 public class CreateIUPACNameAction extends JCPAction {
 

@@ -55,7 +55,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
  * </ul>
  *
  * @author        hel
- * @created       27. April 2005
+ * @cdk.created       27. April 2005
  * @cdk.module    jchempaint
  */
 public class EditAction extends JCPAction {

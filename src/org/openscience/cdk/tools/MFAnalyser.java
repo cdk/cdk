@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * an AtomContainer with the Atoms in the molecular formula.
  *
  * @author         seb
- * @created        13. April 2005
+ * @cdk.created    13. April 2005
  * @cdk.module     standard
  * @cdk.keyword    molecule, molecular mass
  * @cdk.keyword    molecule, molecular formula
