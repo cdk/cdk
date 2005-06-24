@@ -27,6 +27,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.graph.*;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.graph.matrix.*;
 
 
@@ -50,6 +51,7 @@ public class WienerNumbersDescriptor implements Descriptor {
 	DoubleArrayResult wienerNumbers = null;
 	ConnectionMatrix connectionMatrix = new ConnectionMatrix();
 	PathTools pathTools = new PathTools();
+	AtomContainerManipulator atm =  new AtomContainerManipulator();
 	/**
 	 *  Constructor for the WienerNumbersDescriptor object
 	 */
@@ -107,14 +109,14 @@ public class WienerNumbersDescriptor implements Descriptor {
 		double wienerPolarityNumber = 0; //weinerPol
 		
 		// "matr" is the connection matrix
-		matr = connectionMatrix.getMatrix(atomContainer);
+		matr = connectionMatrix.getMatrix(atm.removeHydrogens(atomContainer));
 		// and "distances" is ist matrix of int where 
 		// for example distance[1][2] = length of the shortest path
 		// between atom at position 1 and atom at position 2.
 		int[][] distances = pathTools.computeFloydAPSP(matr);
 		
 		int partial = 0;
-		wienerPolarityNumber = 0;
+		//wienerPolarityNumber = 0;
 		for (int i = 0; i < distances.length; i++) {
 			for (int j = 0; j < distances.length; j++) {
 				partial = distances[i][j];

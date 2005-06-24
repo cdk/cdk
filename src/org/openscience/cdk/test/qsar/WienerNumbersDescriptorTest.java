@@ -51,7 +51,7 @@ public class WienerNumbersDescriptorTest extends CDKTestCase {
 		double [] testResult={18, 2};
 		Descriptor descriptor = new WienerNumbersDescriptor();
 		SmilesParser sp = new SmilesParser();
-		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
+		AtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
 		AtomContainerManipulator acm = new AtomContainerManipulator();
 		acm.removeHydrogens(mol);
 		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
