@@ -48,8 +48,8 @@ import java.awt.*;
  */
 public class HydrogenPlacer {
     
-	public static boolean debug = false;
-	public static boolean debug1 = false;
+	public final static boolean debug = false;
+	public final static boolean debug1 = false;
 	
 	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength){
 		LoggingTool logger = new LoggingTool(this);

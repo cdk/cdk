@@ -35,7 +35,7 @@ import java.util.GregorianCalendar;
  */
 public class SwissArmyKnife {
 
-	public static boolean debug = false;
+	public final static boolean debug = false;
 	// minimum details
 
 	/**

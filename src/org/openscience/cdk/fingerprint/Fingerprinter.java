@@ -84,7 +84,7 @@ public class Fingerprinter
 	static int defaultSize = 1024;
 	static int defaultSearchDepth = 6;
 	static Hashtable pathes;
-	static boolean debug = true;
+	final static boolean debug = true;
 	static int debugCounter = 0;
 
 	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);

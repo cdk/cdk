@@ -62,7 +62,7 @@ public class PartialFilledStructureMerger
 {
 	AtomContainer atomContainer;
 	SaturationChecker satCheck;
-	static boolean debug = false;
+	final static boolean debug = false;
 
 
 	/**

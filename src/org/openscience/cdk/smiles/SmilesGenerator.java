@@ -77,7 +77,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class SmilesGenerator
 {
-	private static boolean debug = false;
+	private final static boolean debug = false;
 
 	/**
 	 *  The number of rings that have been opened
@@ -96,6 +96,11 @@ public class SmilesGenerator
 
 	AllRingsFinder ringFinder;
 
+	/**
+	* RingSet that holds all rings of the molecule
+	*/
+	private RingSet rings = null; 
+	
 	/**
 	 *  The canonical labler
 	 */
@@ -156,11 +161,30 @@ public class SmilesGenerator
 		}
 	}
 
+	/**
+	 * Provide a reference to a RingSet that holds ALL rings of the molecule.<BR>
+	 * During creation of a SMILES the aromaticity of the molecule has to be detected.
+	 * This, in turn, requires the dermination of all rings of the molecule. If this
+	 * computationally expensive calculation has been done beforehand, a RingSet can
+	 * be handed over to the SmilesGenerator to save the effort of another all-rings-
+	 * calculation.
+	 *
+	 * @param  rings  RingSet that holds ALL rings of the molecule
+	 * @return        reference to the SmilesGenerator object this method was called for
+	 */
+	public SmilesGenerator setRings(RingSet rings)
+	{
+	  this.rings = rings;
+	  return this;
+	} 
 
 	/**
 	 *  Generate canonical SMILES from the <code>molecule</code>. This method
 	 *  canonicaly lables the molecule but does not perform any checks on the
 	 *  chemical validity of the molecule.
+	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
+	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
+	 *  assign the SAR.
 	 *
 	 *@param  molecule  The molecule to evaluate
 	 *@return           Description of the Returned Value
@@ -235,6 +259,9 @@ public class SmilesGenerator
 	 *  if there are no valid stereo configuration the smiles will be the same as
 	 *  the non-chiral one. Note that often stereo configurations are only complete
 	 *  and can be converted to a smiles if explicit Hs are given.
+	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
+	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
+	 *  assign the SAR.
 	 *
 	 *@param  molecule                 The molecule to evaluate
 	 *@param  doubleBondConfiguration  Description of Parameter
@@ -254,6 +281,9 @@ public class SmilesGenerator
 	 *  canonicaly lables the molecule but dose not perform any checks on the
 	 *  chemical validity of the molecule. This method also takes care of multiple
 	 *  molecules.
+	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
+	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
+	 *  assign the SAR.
 	 *
 	 *@param  molecule                 The molecule to evaluate
 	 *@param  chiral                   true=SMILES will be chiral, false=SMILES
@@ -296,6 +326,9 @@ public class SmilesGenerator
 	 *  Generate canonical SMILES from the <code>molecule</code>. This method
 	 *  canonicaly lables the molecule but dose not perform any checks on the
 	 *  chemical validity of the molecule. Does not care about multiple molecules.
+	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
+	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
+	 *  assign the SAR.
 	 *
 	 *@param  molecule                 The molecule to evaluate
 	 *@param  chiral                   true=SMILES will be chiral, false=SMILES
@@ -336,18 +369,15 @@ public class SmilesGenerator
 		}
 
 		//detect aromaticity
-		if (ringFinder == null)
+		if(rings == null)
 		{
-			ringFinder = new AllRingsFinder();
-		}
-		RingSet rings = ringFinder.findAllRings(molecule);
-		//System.out.println("Found " + rings.size() + " ring");
-		for (int f = 0; f < rings.size(); f++)
-		{
-			//System.out.println((Ring) rings.get(f));
+			if (ringFinder == null)
+			{
+				ringFinder = new AllRingsFinder();
+			}
+			rings = ringFinder.findAllRings(molecule);
 		}
 		(new HueckelAromaticityDetector()).detectAromaticity(molecule, rings, false);
-
 		if (chiral && rings.size() > 0)
 		{
 			Vector v = RingPartitioner.partitionRings(rings);
@@ -383,6 +413,7 @@ public class SmilesGenerator
 
 		StringBuffer l = new StringBuffer();
 		createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
+		rings = null;
 		return l.toString();
 	}
 

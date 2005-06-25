@@ -47,7 +47,7 @@ import org.openscience.cdk.Molecule;
  */
 public class PathTools  {
 	
-    public static boolean debug = false;
+    public final static boolean debug = false;
 
 	/**
 	 *  Sums up the columns in a 2D int matrix
@@ -137,6 +137,12 @@ public class PathTools  {
 	 *  Recursivly perfoms a depth first search in a molecular graphs contained in
 	 *  the AtomContainer molecule, starting at the root atom and returning when it
 	 *  hits the target atom.
+	 *  CAUTION: This recursive method sets the VISITED flag of each atom
+	 *  does not reset it after finishing the search. If you want to do the
+	 *  operation on the same collection of atoms more than once, you have
+	 *  to set all the VISITED flags to false before each operation
+	 *  by looping of the atoms and doing a
+	 *  "atom.setFlag((CDKConstants.VISITED, false));"
 	 *
 	 *@param  molecule                                               The
 	 *      AtomContainer to be searched

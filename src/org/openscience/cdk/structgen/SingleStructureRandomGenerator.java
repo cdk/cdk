@@ -67,7 +67,7 @@ public class SingleStructureRandomGenerator
 {
 	AtomContainer atomContainer;
 	SaturationChecker satCheck;
-	static boolean debug = false;
+	final static boolean debug = false;
 	Random random = null;
 
 	/**

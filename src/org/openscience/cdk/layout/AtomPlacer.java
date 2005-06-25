@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class AtomPlacer
 {
 
-	public static boolean debug = true;
+	public final static boolean debug = true;
 	private static LoggingTool logger = new LoggingTool(AtomPlacer.class);
 
 	/**

@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public abstract class AtomContainerPermutor implements Iterator
 {
-	static boolean debug = true;
+	final static boolean debug = true;
 	static int debugCounter = 0;
 	int N, i, j;
 	int[] bookkeeping;

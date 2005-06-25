@@ -48,7 +48,7 @@ public class RingPartitioner {
     /**
      *  Debugging on/off
      */
-    public static boolean debug = false;
+    public final static boolean debug = false;
     // minimum details
 
 

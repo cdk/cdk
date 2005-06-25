@@ -51,7 +51,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 
 public class RingPlacer 
 {
-	static boolean debug = false;
+	final static boolean debug = false;
 	private org.openscience.cdk.tools.LoggingTool logger;
 	
 	private Molecule molecule; 
