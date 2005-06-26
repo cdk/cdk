@@ -59,6 +59,7 @@ import java.util.HashMap;
  * <tr>
  * <td>Y</td><td>Double[][]</td><td>None</td><td>Length should be equal to the rows of X. Variables should be in the columns, observations in the rows</td>
  * </tr>
+ * <tr>
  * <td>newX</td><td>Double[][]</td><td>None</td><td>A 2D array of values to make predictions for. Variables should be in the columns, observations in the rows</td>
  * </tr>
  * <tr>
@@ -72,10 +73,13 @@ import java.util.HashMap;
  * <tr>
  * <td>validation</td><td>String</td><td>"none"</td><td>Indicates whether cross validation should be used. To enable cross validation set this to "CV"</td>
  * </tr>
+ * <tr>
  * <td>grpsize</td><td>Integer</td><td>0</td><td>The group size for the "CV" validation. By default this is ignored and <code>niter</code> is used to determine the value of this argument</td>
  * </tr>
+ * <tr>
  * <td>niter</td><td>Integer</td><td>10</td><td>The number of iterations in the cross-validation. Note that if <code>grpsize</code> is set to a non-zero value then the value of <code>niter</code> will be calculated from the value of <code>grpsize</code></td>
  * </tr>
+ * <tr>
  * <td>nlv</td><td>Integer</td><td>None</td><td>The number of latent variables to use during prediction. By default this does not need to be specified and will be obtained from the fitted model</td>
  * </tr>
  * </tbody>
@@ -143,6 +147,7 @@ public class PLSRegressionModel extends RModel {
      * @param xx An array of independent variables. The observations should be in the rows
      * and the variables should be in the columns
      * @param yy An array containing the dependent variable
+     * @throws QSARModelException if the number of observations in x and y do not match
      */
     public PLSRegressionModel(double[][] xx, double[] yy) throws QSARModelException{
         super();
@@ -189,6 +194,7 @@ public class PLSRegressionModel extends RModel {
      * @param xx An array of independent variables. The observations should be in the rows
      * and the variables should be in the columns
      * @param yy A 2D array containing the dependent variable
+     * @throws QSARModelException if the number of observations in x and y do not match
      */
     public PLSRegressionModel(double[][] xx, double[][] yy) throws QSARModelException{
         super();
@@ -287,6 +293,9 @@ public class PLSRegressionModel extends RModel {
      * Loads a PLSRegressionModel object from disk in to the current session.
      *
      * @param fileName The disk file containing the model
+     * @throws QSARModelException if the model being loaded is not a PLS regression model
+     * object
+     *
      */
     public void  loadModel(String fileName) throws QSARModelException {
         // should probably check that the filename does exist
@@ -311,6 +320,8 @@ public class PLSRegressionModel extends RModel {
      * @param key A String containing the name of the parameter as described in the 
      * R help pages
      * @param obj An Object containing the value of the parameter
+     * @throws QSARModelException if the type of the supplied value does not match the 
+     * expected type
      */
     public void setParameters(String key, Object obj) throws QSARModelException {
         // since we know the possible values of key we should check the coresponding
@@ -394,6 +405,13 @@ public class PLSRegressionModel extends RModel {
         return(this.modelfit.getMethod());
     }
 
+
+    /**
+     * Returns the fit NComp value.
+     *
+     * @return An array of integers indicating the number of components
+     * (latent variables)
+     */
     public int[] getFitNComp() {
         return(this.modelfit.getNComp());
     }
@@ -411,21 +429,59 @@ public class PLSRegressionModel extends RModel {
     public double[][][] getFitB() {
         return(this.modelfit.getB());
     }
+    
+    /**
+     * Get the Root Mean Square (RMS) error for the fit.
+     *
+     * @return A 2-dimensional array of RMS errors.
+     */
     public double[][] getFitRMS() {
         return(this.modelfit.getTrainingRMS());
     }
+
+    /**
+     * Get the predicted Y's.
+     *
+     * Each set of latent variables is used to make predictions for all the
+     * Y variables.
+     *
+     * @return A 3-dimensional array of doubles. The first dimension corresponds
+     * to the set of latent variables and the remaining two correspond to the 
+     * Y's themselves.
+     */
     public double[][][] getFitYPred() {
         return(this.modelfit.getTrainingYPred());
     }
+
+    /**
+     * Get the X loadings.
+     *
+     * @return A 2-dimensional array of doubles containing the X loadings
+     */
     public double[][] getFitXLoading() {
         return(this.modelfit.getXLoading());
     }
+    /**
+     * Get the Y loadings.
+     *
+     * @return A 2-dimensional array of doubles containing the Y loadings
+     */
     public double[][] getFitYLoading() {
         return(this.modelfit.getYLoading());
     }
+    /**
+     * Get the X scores.
+     *
+     * @return A 2-dimensional array of doubles containing the X scores
+     */
     public double[][] getFitXScores() {
         return(this.modelfit.getXScores());
     }
+    /**
+     * Get the Y scores.
+     *
+     * @return A 2-dimensional array of doubles containing the Y scores
+     */
     public double[][] getFitYScores() {
         return(this.modelfit.getYScores());
     }
@@ -455,15 +511,36 @@ public class PLSRegressionModel extends RModel {
     public int getValidationLV() {
         return(this.modelfit.getValidationLV());
     }
+
+    /**
+     * Get the R^2 value for validation.
+     *
+     * @return A 2-dimensional array of doubles
+     */
     public double[][] getValidationR2() {
         return(this.modelfit.getValidationR2());
     }
+    /**
+     * Get the RMS value for validation.
+     *
+     * @return A 2-dimensional array of doubles
+     */
     public double[][] getValidationRMS() {
         return(this.modelfit.getValidationRMS());
     }
+    /**
+     * Get the standard deviation of the RMS errrors for validation.
+     *
+     * @return A 2-dimensional array of doubles
+     */
     public double[][] getValidationRMSsd() {
         return(this.modelfit.getValidationRMSSD());
     }
+    /**
+     * Get the predicted Y values from validation.
+     *
+     * @return A 2-dimensional array of doubles
+     */
     public double[][][] getValidationYPred() {
         return(this.modelfit.getValidationYPred());
     }

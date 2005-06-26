@@ -152,6 +152,20 @@ public class CNNRegressionModel extends RModel {
         this.params.put("reltol", new Double(1.0e-8));
     }        
 
+    /**
+     * Constructs a CNNRegressionModel object.
+     *
+     * This constructor allows the user to simply set up an instance of a CNN
+     * regression modeling class. This constructor simply sets the name for this
+     * instance. It is expected all the relevent parameters for modeling will be
+     * set at a later point.
+     * <p>
+     * Other parameters that are required to be set should be done via
+     * calls to <code>setParameters</code>. A number of parameters are set to the
+     * defaults as specified in the manpage for 
+     * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">nnet</a>.
+     *
+     */
     public CNNRegressionModel() {
         super();
         this.params = new HashMap();
@@ -179,6 +193,7 @@ public class CNNRegressionModel extends RModel {
      * the rows and variables in the columns.
      * @param y An array (single column) of observed values
      * @param size The number of hidden layer neurons
+     * @throws QSARModelException if the number of observations in x and y do not match
      */
     public CNNRegressionModel(double[][] x, double[] y, int size) throws QSARModelException {
         super();
@@ -230,6 +245,7 @@ public class CNNRegressionModel extends RModel {
      * the rows and variables in the columns.
      * @param y An array (multiple columns) of observed values
      * @param size The number of hidden layer neurons
+     * @throws QSARModelException if the number of observations in x and y do not match
      */
     public CNNRegressionModel(double[][] x, double[][] y, int size) throws QSARModelException{
         super();
@@ -282,6 +298,8 @@ public class CNNRegressionModel extends RModel {
      * @param key A String containing the name of the parameter as described in the 
      * R help pages
      * @param obj An Object containing the value of the parameter
+     * @throws QSARModelException if the type of the supplied value does not match the 
+     * expected type
      */
     public void setParameters(String key, Object obj) throws QSARModelException {
         // since we know the possible values of key we should check the coresponding
@@ -415,6 +433,8 @@ public class CNNRegressionModel extends RModel {
      * 
      *
      * @param fileName The disk file containing the model
+     * @throws QSARModelException if the model being loaded is not a CNN regression model
+     * object
      */
     public void loadModel(String fileName) throws QSARModelException {
         // should probably check that the filename does exist

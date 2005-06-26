@@ -23,7 +23,7 @@ package org.openscience.cdk.qsar.model;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Exception that is thrown by model routines when a problem has occured
+ * Exception that is thrown by model routines when a problem has occured.
  *
  * @author Rajarshi Guha
  * @cdk.module qsar

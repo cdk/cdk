@@ -60,7 +60,7 @@ public abstract class RModel implements Model {
     private String modelName = null;
 
     /**
-     * The object that performs the calls to the R engine
+     * The object that performs the calls to the R engine.
      */
     public static REvaluator revaluator = null;
     /**
@@ -151,6 +151,7 @@ public abstract class RModel implements Model {
      *
      * @param modelname The name of the model as returned by \code{getModelName}.
      * @param filename The file to which the model should be saved
+     * @throws QSARModelException if the R session cannot save the model
      */
     public static void saveModel(String modelname, String filename) throws QSARModelException {
         if (filename.equals("") || filename == null) {
@@ -176,6 +177,7 @@ public abstract class RModel implements Model {
      * to a private method.
      *
      * @return A String containing the name of the R variable
+     * @see #setModelName
      */
     public String getModelName() {
         return(this.modelName);
@@ -191,6 +193,7 @@ public abstract class RModel implements Model {
      * can be used to assign a name to the model.
      *
      * @param newName The name of the model
+     * @see #getModelName
      *
      */
     public void setModelName(String newName) {
@@ -204,7 +207,30 @@ public abstract class RModel implements Model {
 
     abstract public void build() throws QSARModelException;
     abstract public void predict() throws QSARModelException;
+
+    /**
+     * Specifies the parameters value.
+     *
+     * @param key A String representing the name of the parameter (corresponding to the 
+     * name described in the R manpages)
+     * @param obj The value of the parameter
+     * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
+     * 
+     */
     abstract public void setParameters(String key, Object obj) throws QSARModelException;
+
+    /**
+     * Abstract method to handle loading R models.
+     *
+     * This method can be used to load a previously saved R model object. Since
+     * the user can save any arbitrary R object, checks must be made that the 
+     * object being returned is an instance of one of the current modeling classes.
+     * <p>
+     * This is best achieved by forcing each modeling class to write its own loader.
+     *
+     * @param fileName The file containing the R object to load
+     * @throws QSARModelException if the R session could not load the object
+     */
     abstract public void loadModel(String fileName) throws QSARModelException;
 }
 

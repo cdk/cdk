@@ -126,7 +126,6 @@ public class SpanningTree {
 	/**
 	 * Kruskal algorithm
 	 * @param atomContainer
-	 * @return
 	 */
 	public void buildSpanningTree(AtomContainer atomContainer){
 		disconnected = false;

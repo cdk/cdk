@@ -151,7 +151,21 @@ public class CNNClassificationModel extends RModel {
         this.params.put("abstol", new Double(1.0e-4));
         this.params.put("reltol", new Double(1.0e-8));
     }        
-
+    
+    /**
+     * Constructs a CNNClassificationModel object.
+     *
+     * This constructor allows the user to simply set up the modeling class. It is
+     * expected that parameters such as training data, architecture will be set at a 
+     * later point. The result of this constructor is to simply create a name for the 
+     * current instance of the modeling object.
+     * <p>
+     * Other parameters that are required to be set should be done via
+     * calls to <code>setParameters</code>. A number of parameters are set to the
+     * defaults as specified in the manpage for 
+     * <a href="http://www.maths.lth.se/help/R/.R/library/nnet/html/nnet.html" target="_top">nnet</a>.
+     *
+     */
     public CNNClassificationModel() {
         super();
         this.params = new HashMap();
@@ -179,6 +193,7 @@ public class CNNClassificationModel extends RModel {
      * the rows and variables in the columns.
      * @param y An array (single column) of observed class assignments
      * @param size The number of hidden layer neurons
+     * @throws QSARModelException if the number of observations in x and y are not the same
      */
     public CNNClassificationModel(double[][] x, String[] y, int size) throws QSARModelException {
         super();
@@ -230,6 +245,7 @@ public class CNNClassificationModel extends RModel {
      * the rows and variables in the columns.
      * @param y An array (multiple columns) of observed values
      * @param size The number of hidden layer neurons
+     * @throws QSARModelException if the number of observations in x and y are not the same
      */
     public CNNClassificationModel(double[][] x, String[][] y, int size) throws QSARModelException{
         super();
@@ -282,6 +298,7 @@ public class CNNClassificationModel extends RModel {
      * @param key A String containing the name of the parameter as described in the 
      * R help pages
      * @param obj An Object containing the value of the parameter
+     * @throws QSARModelException if the type of the supplied value does not match the expected type
      */
     public void setParameters(String key, Object obj) throws QSARModelException {
         // since we know the possible values of key we should check the coresponding
@@ -416,6 +433,8 @@ public class CNNClassificationModel extends RModel {
      * 
      *
      * @param fileName The disk file containing the model
+     * @throws QSARModelException if the model that was loaded was not a CNNClassification
+     * model
      */
     public void loadModel(String fileName) throws QSARModelException {
         // should probably check that the filename does exist

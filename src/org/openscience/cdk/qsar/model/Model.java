@@ -31,7 +31,20 @@ package org.openscience.cdk.qsar.model;
  * @cdk.module qsar
  */
 public interface Model {
+
+    /**
+     * Builds (trains) the model.
+     *
+     * @throws QSARModelException if errors occur in data types, calls to the R session. See
+     * the corresponding method in subclasses of this class for further details.
+     */
    public void build() throws QSARModelException;
+    /**
+     * Makes predictions using a previously built model.
+     *
+     * @throws QSARModelException if errors occur in data types, calls to the R session. See
+     * the corresponding method in subclasses of this class for further details.
+     */
    public void predict() throws QSARModelException;
 }
 

@@ -148,6 +148,7 @@ public class LinearRegressionModel extends RModel {
      * @param xx An array of independent variables. The observations should be in the rows
      * and the variables should be in the columns
      * @param yy an array containing the dependent variable
+     * @throws QSARModelException if the number of observations in x and y do not match
      */
     public LinearRegressionModel(double[][] xx, double[] yy) throws QSARModelException{
         super();
@@ -205,6 +206,7 @@ public class LinearRegressionModel extends RModel {
      * @param yy an array containing the dependent variable
      * @param weights Specifies the weights for each observation. Unit weights are equivilant
      * to OLS
+     * @throws QSARModelException if the number of observations in x and y do not match
      */
     public LinearRegressionModel(double[][] xx, double[] yy, double[] weights) throws QSARModelException{
         super();
@@ -294,6 +296,9 @@ public class LinearRegressionModel extends RModel {
      * @param key A String containing the name of the parameter as described in the 
      * R help pages
      * @param obj An Object containing the value of the parameter
+     * @throws QSARModelException if the type of the supplied value does not match the 
+     * expected type
+     *
      */
     public void setParameters(String key, Object obj) throws QSARModelException {
         // since we know the possible values of key we should check the coresponding
@@ -365,6 +370,8 @@ public class LinearRegressionModel extends RModel {
      * Loads an LinearRegressionModel object from disk in to the current session.
      *
      * @param fileName The disk file containing the model
+     * @throws QSARModelException if the model being loaded is not a linear regression model
+     * object
      */
     public void  loadModel(String fileName) throws QSARModelException {
         // should probably check that the fileName does exist
