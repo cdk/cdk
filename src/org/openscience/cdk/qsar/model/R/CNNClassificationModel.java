@@ -415,7 +415,7 @@ public class CNNClassificationModel extends RModel {
      * Loads a CNNRegresionModel object from disk in to the current session.
      * 
      *
-     * @param filename The disk file containing the model
+     * @param fileName The disk file containing the model
      */
     public void loadModel(String fileName) throws QSARModelException {
         // should probably check that the filename does exist

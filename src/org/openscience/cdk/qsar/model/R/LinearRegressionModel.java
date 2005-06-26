@@ -364,7 +364,7 @@ public class LinearRegressionModel extends RModel {
     /**
      * Loads an LinearRegressionModel object from disk in to the current session.
      *
-     * @param filename The disk file containing the model
+     * @param fileName The disk file containing the model
      */
     public void  loadModel(String fileName) throws QSARModelException {
         // should probably check that the fileName does exist

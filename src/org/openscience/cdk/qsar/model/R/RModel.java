@@ -186,11 +186,11 @@ public abstract class RModel implements Model {
      *
      * Ordinarily the user does not need to call this function as each model
      * is assigned a unique ID at instantiation. However, if a user saves a model
-     * to disk (see {@link RModel.saveModel}) and then later loads it, the loaded
+     * to disk (see {@link saveModel}) and then later loads it, the loaded
      * model may overwrite a model in that session. In this situation, this method
      * can be used to assign a name to the model.
      *
-     * @param modelName The name of the model
+     * @param newName The name of the model
      *
      */
     public void setModelName(String newName) {
