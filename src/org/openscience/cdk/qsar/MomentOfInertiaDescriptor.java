@@ -81,26 +81,28 @@ public class MomentOfInertiaDescriptor implements Descriptor {
     };
 
     /**
-     *  Sets the parameters attribute of the MomentOfInertiaDescriptor object
+     *  Sets the parameters attribute of the MomentOfInertiaDescriptor object.
      *
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
+     *@see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
 
     /**
-     *  Gets the parameters attribute of the MomentOfInertiaDescriptor object
+     *  Gets the parameters attribute of the MomentOfInertiaDescriptor object.
      *
      *@return    The parameters value
+     *@see #setParameters
      */
     public Object[] getParameters() {
         // no parameters to return
         return(null);
     }
     /**
-     *  Gets the parameterNames attribute of the MomentOfInertiaDescriptor object
+     *  Gets the parameterNames attribute of the MomentOfInertiaDescriptor object.
      *
      *@return    The parameterNames value
      */
@@ -111,7 +113,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
 
 
     /**
-     *  Gets the parameterType attribute of the MomentOfInertiaDescriptor object
+     *  Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
      *
      *@param  name  Description of the Parameter
      *@return       The parameterType value
@@ -121,7 +123,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
     }
 
     /**
-     *  Calculates the 3 MI's, 3 ration and the R_gyr value
+     *  Calculates the 3 MI's, 3 ration and the R_gyr value.
      *
      *@param  container  Parameter is the atom container.
      *@return            An ArrayList containing 7 elements in the order described above

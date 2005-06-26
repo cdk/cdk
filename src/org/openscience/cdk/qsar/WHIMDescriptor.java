@@ -211,7 +211,8 @@ public class WHIMDescriptor implements Descriptor {
      *@param  params            The new parameter values. The Object array should have a single element
      *                          which should be a String. The possible values of this String are: unity,
      *                          mass, volume, eneg, polar
-     *@exception  CDKException  Description of the Exception
+     *@exception  CDKException  if the parameters are of the wrong type
+     *@see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
@@ -234,6 +235,7 @@ public class WHIMDescriptor implements Descriptor {
      *
      *@return    Two element array of Integer representing number of highest and lowest eigenvalues
      *           to return respectively
+     *@see #setParameters
      */
     public Object[] getParameters() {
         Object[] o =new Object[1];
@@ -253,7 +255,7 @@ public class WHIMDescriptor implements Descriptor {
 
 
     /**
-     *  Gets the parameterType attribute of the WHIMDescriptor object
+     *  Gets the parameterType attribute of the WHIMDescriptor object.
      *
      *@param  name  Description of the Parameter 
      *@return       The parameterType value
@@ -270,6 +272,7 @@ public class WHIMDescriptor implements Descriptor {
      *
      *@param  container  Parameter is the atom container.
      *@return            An ArrayList containing the descriptors in the order described above. 
+     *@throws CDKException if the principal components decomposition fails
      */
     public DescriptorValue calculate(AtomContainer container) throws CDKException {
         double sum = 0.0;

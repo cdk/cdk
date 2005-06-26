@@ -41,13 +41,13 @@ import org.openscience.cdk.qsar.result.*;
 public class ZagrebIndexDescriptor implements Descriptor {
 
 	/**
-	 *  Constructor for the ZagrebIndexDescriptor object
+	 *  Constructor for the ZagrebIndexDescriptor object.
 	 */
 	public ZagrebIndexDescriptor() { }
 
 
 	/**
-	 *  Gets the specification attribute of the ZagrebIndexDescriptor object
+	 *  Gets the specification attribute of the ZagrebIndexDescriptor object.
 	 *
 	 *@return    The specification value
 	 */
@@ -61,10 +61,11 @@ public class ZagrebIndexDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the ZagrebIndexDescriptor object
+	 *  Sets the parameters attribute of the ZagrebIndexDescriptor object.
 	 *
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
+         *@see #getParameters
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		// no parameters for this descriptor
@@ -72,9 +73,10 @@ public class ZagrebIndexDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameters attribute of the ZagrebIndexDescriptor object
+	 *  Gets the parameters attribute of the ZagrebIndexDescriptor object.
 	 *
 	 *@return    The parameters value
+         *@see #setParameters
 	 */
 	public Object[] getParameters() {
 		return (null);
@@ -83,7 +85,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 
 
 	/**
-	 *  Description of the Method
+	 *  Description of the Method.
 	 *
 	 *@param  atomContainer                AtomContainer
 	 *@return                   zagreb index
@@ -107,7 +109,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterNames attribute of the ZagrebIndexDescriptor object
+	 *  Gets the parameterNames attribute of the ZagrebIndexDescriptor object.
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -119,7 +121,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterType attribute of the ZagrebIndexDescriptor object
+	 *  Gets the parameterType attribute of the ZagrebIndexDescriptor object.
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value

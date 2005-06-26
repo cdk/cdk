@@ -51,6 +51,7 @@ import Jama.EigenvalueDecomposition;
  * <tr>
  * <th>Descriptor</th><th>Meaning</th>
  * </tr>
+ * </thead>
  * <tbody>
  * <tr>
  * <td>PPSA-1</td><td> partial positive surface area -- sum of surface area on positive parts of molecule</td></tr><tr>
@@ -141,26 +142,28 @@ public class CPSADescriptor implements Descriptor {
     };
 
     /**
-     *  Sets the parameters attribute of the CPSADescriptor object
+     *  Sets the parameters attribute of the CPSADescriptor object.
      *
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
+     *@see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
 
     /**
-     *  Gets the parameters attribute of the CPSADescriptor object
+     *  Gets the parameters attribute of the CPSADescriptor object.
      *
      *@return    The parameters value
+     *@see #setParameters
      */
     public Object[] getParameters() {
         // no parameters to return
         return(null);
     }
     /**
-     *  Gets the parameterNames attribute of the CPSADescriptor object
+     *  Gets the parameterNames attribute of the CPSADescriptor object.
      *
      *@return    The parameterNames value
      */
@@ -171,7 +174,7 @@ public class CPSADescriptor implements Descriptor {
 
 
     /**
-     *  Gets the parameterType attribute of the CPSADescriptor object
+     *  Gets the parameterType attribute of the CPSADescriptor object.
      *
      *@param  name  Description of the Parameter
      *@return       The parameterType value
@@ -185,6 +188,7 @@ public class CPSADescriptor implements Descriptor {
      *
      *@param  container  Parameter is the atom container.
      *@return            An ArrayList containing 29 elements in the order described above
+     @throws CDKException if the charge calculation fails
      */
 
     public DescriptorValue calculate(AtomContainer container) throws CDKException {

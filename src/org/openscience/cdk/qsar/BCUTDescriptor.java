@@ -123,7 +123,8 @@ public class BCUTDescriptor implements Descriptor {
      *@param  params            The new parameter values. This descriptor takes 2 parameters: number of highest
      *                          eigenvalues and number of lowest eigenvalues. If 0 is specified for either (the default)
      *                          then all calculated eigenvalues are returned.
-     *@exception  CDKException  Description of the Exception
+     *@throws  CDKException  if the parameters are of the wrong type
+     *@see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
         // we expect 2 parameters
@@ -146,6 +147,7 @@ public class BCUTDescriptor implements Descriptor {
      *
      *@return    Two element array of Integer representing number of highest and lowest eigenvalues
      *           to return respectively
+     *@see #setParameters
      */
     public Object[] getParameters() {
         Object params[] = new Object[2];
@@ -154,7 +156,7 @@ public class BCUTDescriptor implements Descriptor {
         return(params);
     }
     /**
-     *  Gets the parameterNames attribute of the BCUTDescriptor object
+     *  Gets the parameterNames attribute of the BCUTDescriptor object.
      *
      *@return    The parameterNames value
      */
@@ -228,6 +230,8 @@ public class BCUTDescriptor implements Descriptor {
      *                   all calculated eigenvalues of the Burden matrices in the order described
      *                   above. If a parameter list was supplied, then only the specified number
      *                   of highest and lowest eigenvalues (for each class of BCUT) will be returned.
+     *@throws CDKException if the wrong number of eigenvalues are requested (negative or more than the number
+     * of heavy atoms)
      */
     public DescriptorValue calculate(AtomContainer container) throws CDKException {
         int j = 0;

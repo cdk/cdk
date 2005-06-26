@@ -70,13 +70,13 @@ public class XLogPDescriptor implements Descriptor {
 	private boolean checkAromaticity = false;
 
 	/**
-	 *  Constructor for the XLogPDescriptor object
+	 *  Constructor for the XLogPDescriptor object.
 	 */
 	public XLogPDescriptor() { }
 
 
 	/**
-	 *  Gets the specification attribute of the XLogPDescriptor object
+	 *  Gets the specification attribute of the XLogPDescriptor object.
 	 *
 	 *@return    The specification value
 	 */
@@ -90,10 +90,11 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the XLogPDescriptor object
+	 *  Sets the parameters attribute of the XLogPDescriptor object.
 	 *
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
+         *@see #getParameters
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
@@ -108,9 +109,10 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameters attribute of the XLogPDescriptor object
+	 *  Gets the parameters attribute of the XLogPDescriptor object.
 	 *
 	 *@return    The parameters value
+         *@see #setParameters
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
@@ -121,7 +123,9 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  calculates the xlogP for an atom container if checkAromaticity is true, the
+	 *  Calculates the xlogP for an atom container.
+         *
+         *  If checkAromaticity is true, the
 	 *  method check the aromaticity, if false, means that the aromaticity has
 	 *  already been checked. It is necessary to use before the
 	 *  addExplicitHydrogensToSatisfyValency method (HydrogenAdder classe).
@@ -691,7 +695,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the hydrogenCount attribute of the XLogPDescriptor object
+	 *  Gets the hydrogenCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -710,7 +714,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the alogenCount attribute of the XLogPDescriptor object
+	 *  Gets the alogenCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -729,7 +733,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the nitrogenOrOxygenCount attribute of the XLogPDescriptor object
+	 *  Gets the nitrogenOrOxygenCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -750,7 +754,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the aromaticCarbonsCount attribute of the XLogPDescriptor object
+	 *  Gets the aromaticCarbonsCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -771,7 +775,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the carbonsCount attribute of the XLogPDescriptor object
+	 *  Gets the carbonsCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -792,7 +796,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the doubleBondedCarbonsCount attribute of the XLogPDescriptor object
+	 *  Gets the doubleBondedCarbonsCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -817,7 +821,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the doubleBondedOxygenCount attribute of the XLogPDescriptor object
+	 *  Gets the doubleBondedOxygenCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -842,7 +846,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the doubleBondedSulfurCount attribute of the XLogPDescriptor object
+	 *  Gets the doubleBondedSulfurCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -867,7 +871,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the doubleBondedNitrogenCount attribute of the XLogPDescriptor object
+	 *  Gets the doubleBondedNitrogenCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -892,7 +896,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the aromaticNitrogensCount attribute of the XLogPDescriptor object
+	 *  Gets the aromaticNitrogensCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -915,7 +919,7 @@ public class XLogPDescriptor implements Descriptor {
 
 	// a piSystem is a double or triple or aromatic bond:
 	/**
-	 *  Gets the piSystemsCount attribute of the XLogPDescriptor object
+	 *  Gets the piSystemsCount attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -934,7 +938,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the presenceOfCarbonil attribute of the XLogPDescriptor object
+	 *  Gets the presenceOfCarbonil attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -965,7 +969,7 @@ public class XLogPDescriptor implements Descriptor {
 	// C must be sp2 or sp3
 	// and, for all distances C-1-2-3-4 only C atoms are permitted
 	/**
-	 *  Gets the ifCarbonIsHydrophobic attribute of the XLogPDescriptor object
+	 *  Gets the ifCarbonIsHydrophobic attribute of the XLogPDescriptor object.
 	 *
 	 *@param  ac    Description of the Parameter
 	 *@param  atom  Description of the Parameter
@@ -1034,7 +1038,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterNames attribute of the XLogPDescriptor object
+	 *  Gets the parameterNames attribute of the XLogPDescriptor object.
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -1047,7 +1051,7 @@ public class XLogPDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterType attribute of the XLogPDescriptor object
+	 *  Gets the parameterType attribute of the XLogPDescriptor object.
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
