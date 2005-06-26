@@ -44,9 +44,10 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Iterating MDL SDF reader. It allows to iterate over all molecules
  * in the SDF file, without reading them into memory first. Suitable
- * for very large SDF files.
+ * for very large SDF files. It can not be used to read MDL molfiles.
+ * The normal <code>MDLReader</code> should be used for such files.
  *
- * <p>For parsing the molecules it still uses the normal MDLReader.
+ * <p>For parsing the molecules it still uses the normal <code>MDLReader</code>.
  *
  * @cdk.module io
  *
