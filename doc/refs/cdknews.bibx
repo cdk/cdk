@@ -129,7 +129,7 @@
       <bibtex:year>2005</bibtex:year>
       <bibtex:volume>2</bibtex:volume>
       <bibtex:number>1</bibtex:number>
-      <bibtex:pages>2--6</bibtex:pages>
+      <bibtex:pages>2-6</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
   
@@ -141,7 +141,7 @@
       <bibtex:year>2005</bibtex:year>
       <bibtex:volume>2</bibtex:volume>
       <bibtex:number>1</bibtex:number>
-      <bibtex:pages>7--13</bibtex:pages>
+      <bibtex:pages>7-13</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
   
@@ -153,7 +153,19 @@
       <bibtex:year>2005</bibtex:year>
       <bibtex:volume>2</bibtex:volume>
       <bibtex:number>1</bibtex:number>
-      <bibtex:pages>17--20</bibtex:pages>
+      <bibtex:pages>17-20</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art14">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
+      <bibtex:title>The Algorithm and the Implementation</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>46-48</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
   
@@ -165,7 +177,7 @@
       <bibtex:year>2005</bibtex:year>
       <bibtex:volume>2</bibtex:volume>
       <bibtex:number>1</bibtex:number>
-      <bibtex:pages>14--16</bibtex:pages>
+      <bibtex:pages>14-16</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
   
@@ -177,7 +189,91 @@
       <bibtex:year>2005</bibtex:year>
       <bibtex:volume>2</bibtex:volume>
       <bibtex:number>1</bibtex:number>
-      <bibtex:pages>16--17</bibtex:pages>
+      <bibtex:pages>16-17</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art17">
+    <bibtex:article>
+      <bibtex:author>O'Boyle, N.M.</bibtex:author>
+      <bibtex:title>Accessing the CDK using Python</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>40-42</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art18">
+    <bibtex:article>
+      <bibtex:author>Apodaca, R.</bibtex:author>
+      <bibtex:title>CDKTools: The CDK-Octet Bridge</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>27-34</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art19">
+    <bibtex:article>
+      <bibtex:author>Murray-Rust, P.</bibtex:author>
+      <bibtex:title>The Blue Obelisk</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>43-46</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art20">
+    <bibtex:article>
+      <bibtex:author>Spjuth, O. and Eklund, M. and Wikberg, E.S.</bibtex:author>
+      <bibtex:title>Communication: An Information System for Proteochemometrics</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>54-56</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art21">
+    <bibtex:article>
+      <bibtex:author>Willighagen, E.L.</bibtex:author>
+      <bibtex:title>Development Tools. 1. Unit testing</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>48-51</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art22">
+    <bibtex:article>
+      <bibtex:author>Nikolova-Jeliazkova, N.</bibtex:author>
+      <bibtex:title>Slow fingerprints?</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>34-40</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="cdknews.art23">
+    <bibtex:article>
+      <bibtex:author>Steinbeck, S.</bibtex:author>
+      <bibtex:title>Call for Registration: The CDK 5th Anniversary Workshop</bibtex:title>
+      <bibtex:journal>CDK News</bibtex:journal>
+      <bibtex:year>2005</bibtex:year>
+      <bibtex:volume>2</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>54</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
   
