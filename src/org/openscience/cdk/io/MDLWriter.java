@@ -53,10 +53,18 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Writes a molecule or an array of molecules to a MDL mol or SDF file.
- *
+ * For writing a MDL molfile you can this code:
  * <pre>
  * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
  * writer.write((Molecule)molecule);
+ * writer.close();
+ * </pre>
+ *
+ * <p>The <code>write(Molecule)</code> method cannot be used to write a MDL SDF
+ * file. Then you have to use code like this:
+ * <pre>
+ * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.sdf")));
+ * writer.write((SetOfMolecules)moleculeSet);
  * writer.close();
  * </pre>
  *
