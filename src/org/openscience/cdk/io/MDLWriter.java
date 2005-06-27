@@ -296,7 +296,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 line += formatMDLFloat((float)0.0);
                 line += formatMDLFloat((float)0.0) + " ";
             }
-            line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3);
+            if(molecule.getAtomAt(f) instanceof PseudoAtom)
+		    line += formatMDLString(((PseudoAtom) molecule.getAtomAt(f)).getLabel(), 3);
+	    else
+		    line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3); 
             line += " 0  0  0  0  0  0  0  0  0  0  0  0";
             writer.write(line);
             writer.newLine();
