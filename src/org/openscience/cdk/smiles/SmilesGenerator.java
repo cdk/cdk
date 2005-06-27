@@ -2146,7 +2146,7 @@ public class SmilesGenerator
 	private String generateMassString(Atom a)
 	{
 		Isotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
-		if (majorIsotope.getExactMass() == a.getExactMass())
+		if (majorIsotope.getMassNumber() == a.getMassNumber())
 		{
 			return "";
 		} else if (a.getMassNumber() == 0)
