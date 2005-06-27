@@ -39,6 +39,15 @@ public class LinearRegressionModelFit {
     double[] coeff, res, fitted;
     int rank, dfResidual;
 
+    /**
+     * Construct the object to contain a linear regression fit.
+     *
+     * @param coeff A 1-dimensional array of coefficients
+     * @param res A 1-dimensional array of residuals
+     * @param fitted A 1-dimensional array of fitted values
+     * @param rank An integer indicating the rank of the fit
+     * @param degreesOfFreedom The degrees of freedom
+     */
     public LinearRegressionModelFit(double[] coeff, double[] res, double[] fitted, int rank, int degreesOfFreedom) {
         setCoefficients(coeff);
         setResiduals(res);
@@ -46,25 +55,113 @@ public class LinearRegressionModelFit {
         setRank(rank);
         setdfResidual(degreesOfFreedom);
     }
+    
+    /**
+     * Get the rank of the fit.
+     *
+     * @return The rank of the fit
+     * @see #setRank
+     */
     public int getRank() { return(this.rank); }
+    
+    /**
+     * Set the rank of the fit.
+     *
+     * This method should not be called outside this class
+     *
+     * @param rank The rank of the fit
+     * @see #getRank
+     */
     public void setRank(int rank) { this.rank = rank; };
 
+    /**
+     * Get the residuals of the fit.
+     *
+     * The number of residuals equals the number of observations used
+     * to build the model
+     * 
+     * @return A 1-dimensional array containing the residuals.
+     * @see #setResiduals
+     */
     public double[] getResiduals() { return(this.res); }
+
+    /**
+     * Set the residuals of the fit.
+     *
+     * This method should not be called outside this class
+     *
+     * @param residuals A 1-dimensional array of residual values
+     * @see #getResiduals
+     */
     public void setResiduals(double[] residuals) { 
         this.res = new double[residuals.length];
         for (int i = 0; i < residuals.length; i++) this.res[i] = residuals[i];
     }
 
+    /**
+     * Get the fitted coefficients.
+     *
+     * The number of coefficients equals the number of independent
+     * variables used to build the model
+     * 
+     * @return A 1-dimensional array containing the coefficients.
+     * @see #setCoefficients
+     */
     public double[] getCoefficients() { return(this.coeff); }
+
+    /**
+     * Set the fitted coefficients.
+     *
+     * 
+     * This method should not be called outside this class
+     * 
+     * @param coeff A 1-dimensional array containing the coefficients.
+     * @see #getCoefficients
+     */
     public void setCoefficients(double[] coeff) { 
         this.coeff = new double[coeff.length];
         for (int i = 0; i < coeff.length; i++) this.coeff[i] = coeff[i];
     }
 
+    /**
+     * Get the DOF of the residuals.
+     *
+     * @return An integer indicating the D.O.F
+     * @see #setdfResidual
+     */
     public int getdfResidual() { return(this.dfResidual); }
+
+    /**
+     * Set the DOF of the residuals.
+     *
+     * This method should not be called outside this class
+     * 
+     * @param degreesOfFreedom The degrees of freedom
+     * @see #getdfResidual
+     */
     public void setdfResidual(int degreesOfFreedom) { this.dfResidual = degreesOfFreedom; }
 
+    
+    /**
+     * Get the fitted values.
+     *
+     * Returns the predicted values for the observations used to 
+     * build the model. The number of fitted values equals the number
+     * observations used to build the model.
+     *
+     * @return A 1-dimensional array containing the fitted values
+     * @see #setFitted
+     */
     public double[] getFitted() { return(this.fitted); }
+
+    /** 
+     * Set the fitted values.
+     * 
+     * This method should not be called outside this class
+     *
+     * @param fitted A 1-dimensional array of fitted values
+     * @see #getFitted
+     */
     public void setFitted(double[] fitted) { 
         this.fitted = new double[fitted.length];
         for (int i = 0; i < fitted.length; i++) this.fitted[i] = fitted[i];

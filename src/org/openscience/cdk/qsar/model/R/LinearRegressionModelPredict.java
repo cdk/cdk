@@ -39,6 +39,16 @@ public class LinearRegressionModelPredict {
     int degreesOfFreedom;
     double residualScale;
 
+    /**
+     * Construct the object to contain  linear regression predictions.
+     *
+     * @param predicted A 1-dimensional array of predicted values
+     * @param standardErrors A 1-dimensional array of standard errors of prediction
+     * @param lowerBounds A 1-dimensional array of lower confidence bounds
+     * @param upperBounds A 1-dimensional array of upper confidence bounds
+     * @param degreesOfFreedom The degrees of freedom of hte predictions
+     * @param residualScale The scale of the residuals
+     */
     public LinearRegressionModelPredict(double[] predicted, double[] standardErrors,
             double[] lowerBounds, double[] upperBounds,
             int degreesOfFreedom, double residualScale) {
@@ -50,28 +60,129 @@ public class LinearRegressionModelPredict {
         setResidualScale(residualScale);
     }
 
+    /**
+     * Get the degrees of freedom.
+     *
+     * @return An integer indicating the degrees of freedom
+     * @see #setDF
+     */
     public int getDF() { return(this.degreesOfFreedom); }
+
+    /**
+     * Set the degrees of freedom.
+     *
+     * This method should not be called outside this class
+     *
+     * @param degreesOfFreedom An integer indicating the degrees of freedom
+     * @see #getDF
+     */
     public void setDF(int degreesOfFreedom) { this.degreesOfFreedom = degreesOfFreedom; }
 
+    /** 
+     * Get the scale of residuals.
+     *
+     * @return A double indicating the residual scale
+     * @see #setResidualScale
+     */
     public double getResidualScale() { return(this.residualScale); }
+
+    /**
+     * Set the scale of the residuals.
+     *
+     * This method should not be called outside this class
+     * 
+     * @param scale The scale of the residuals
+     * @see #getResidualScale
+     */
     public void setResidualScale(double scale) { this.residualScale = scale; }
 
+    /**
+     * Get predicted values.
+     *
+     * Get the predictions for a set of observations from the current linear
+     * regression fit
+     *
+     * @return A 1-dimensional array containing the predicted values
+     * @see #setPredicted
+     */
     public double[] getPredicted() { return(this.pred); }
+
+    /**
+     * Set the predicted values.
+     *
+     * This method should not be called outside this class
+     *
+     * @param predicted A 1-dimensional array of predicted values
+     * @see #getPredicted
+     */
     public void setPredicted(double[] predicted) { 
         this.pred = new double[predicted.length];
         for (int i = 0; i < predicted.length; i++) this.pred[i] = predicted[i];
     }
+
+    /**
+     * Get the lower confidence bounds.
+     *
+     * Gets the lower confidence bounds for the predicted values of
+     * the observations
+     * 
+     * @return A 1-dimensional array of lower confidence bounds
+     * @see #setLower
+     */
     public double[] getLower() { return(this.lwr); }
+
+    /**
+     * Set the lower confidence bounds.
+     *
+     * This method should not be called outside this class
+     *
+     * @param lowerBounds A 1-dimensional array of lower confidence bounds
+     * @see #getLower
+     */
     public void setLower(double[] lowerBounds) { 
         this.lwr = new double[lowerBounds.length];
         for (int i = 0; i < lowerBounds.length; i++) this.lwr[i] = lowerBounds[i];
     }
+
+    /**
+     * Get the upper confidence bounds.
+     *
+     * Gets the upper confidence bounds for the predicted values of
+     * the observations
+     * 
+     * @return A 1-dimensional array of upper confidence bounds
+     * @see #setUpper
+     */
     public double[] getUpper() { return(this.upr); }
+
+    /**
+     * Set the upper confidence bounds.
+     *
+     * This method should not be called outside this class
+     *
+     * @param upperBounds A 1-dimensional array of upper confidence bounds
+     * @see #getUpper
+     */
     public void setUpper(double[] upperBounds) { 
         this.upr = new double[upperBounds.length];
         for (int i = 0; i < upperBounds.length; i++) this.upr[i] = upperBounds[i];
     }
+
+
+    /** 
+     * Get the standard errors of prediction.
+     *
+     * @return A 1-dimensional array of standard errors
+     * @see #setSEFit
+     */
     public double[] getSEFit() { return(this.sefit); }
+
+    /**
+     * Set the standard errors of predictions.
+     *
+     * @param standardErrors A 1-dimensional array of standard errors
+     * @see #getSEFit
+     */
     public void setSEFit(double[] standardErrors) { 
         this.sefit = new double[standardErrors.length];
         for (int i = 0; i < standardErrors.length; i++) this.sefit[i] = standardErrors[i];

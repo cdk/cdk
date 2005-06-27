@@ -67,7 +67,7 @@ public class TPSADescriptor implements Descriptor {
 	private static HashMap map;
 	
 	/**
-	 *  Constructor for the TPSADescriptor object
+	 *  Constructor for the TPSADescriptor object.
 	 */
 	public TPSADescriptor() { 
 		if (map == null) {
@@ -140,8 +140,7 @@ public class TPSADescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the specification attribute of the
-	 *  TPSADescriptor object
+	 *  Gets the specification attribute of the TPSADescriptor object.
 	 *
 	 *@return    The specification value
 	 */
@@ -155,11 +154,15 @@ public class TPSADescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the
-	 *  TPSADescriptor object
+	 *  Sets the parameters attribute of the  TPSADescriptor object.
+         *
+         *  The descriptor takes a Boolean parameter to indicate whether
+         *  the descriptor routine should check for aromaticity (TRUE) or
+         *  not (FALSE)
 	 *
-	 *@param  params            The new parameters value
-	 *@exception  CDKException  Description of the Exception
+	 *@param  params            The parameter value (TRUE or FALSE)
+	 *@throws  CDKException  if the supplied parameter is not of type Boolean
+         *@see #getParameters
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
@@ -174,10 +177,11 @@ public class TPSADescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameters attribute of the
-	 *  TPSADescriptor object
+	 *  Gets the parameters attribute of the   TPSADescriptor object.
 	 *
-	 *@return    The parameters value
+	 *@return    The parameter value. For this descriptor it returns a Boolean
+         *indicating whether aromaticity was to be checked or not
+         *@see #setParameters
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
@@ -188,13 +192,19 @@ public class TPSADescriptor implements Descriptor {
 
 
 	/**
-	 *  calculates the TPSA for an atom container
-	 *  if checkAromaticity is true, the method check the aromaticity,
-	 *  if false, means that the aromaticity has already been checked.
-	 *  It is necessary to use before the addExplicitHydrogensToSatisfyValency method (HydrogenAdder classe).
-	 *
-	 *@param  ac                AtomContainer
-	 *@return                   TPSA is a double
+	 *  Calculates the TPSA for an atom container.
+         *  
+	 *  Before calling this method, you may want to set the parameter
+         *  indicating that aromaticity should be checked. If no parameter is specified
+         *  (or is set to FALSE) then it is assumed that aromaticaity has already been 
+         *  checked.
+         *  
+	 *  It is necessary to use before the
+	 *  addExplicitHydrogensToSatisfyValency method (HydrogenAdder
+	 *  classes). 
+         *
+	 *@param  ac                The AtomContainer whose TPSA is to be calculated
+	 *@return                   A double containing the topological surface area
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
@@ -299,8 +309,7 @@ public class TPSADescriptor implements Descriptor {
 	}
 
 	/**
-	 *  Gets the parameterNames attribute of the
-	 *  TPSADescriptor object
+	 *  Gets the parameterNames attribute of the  TPSADescriptor object.
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -313,8 +322,7 @@ public class TPSADescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterType attribute of the
-	 *  TPSADescriptor object
+	 *  Gets the parameterType attribute of the  TPSADescriptor object.
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
