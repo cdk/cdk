@@ -60,14 +60,6 @@ import org.openscience.cdk.tools.LoggingTool;
  * writer.close();
  * </pre>
  *
- * <p>The <code>write(Molecule)</code> method cannot be used to write a MDL SDF
- * file. Then you have to use code like this:
- * <pre>
- * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.sdf")));
- * writer.write((SetOfMolecules)moleculeSet);
- * writer.close();
- * </pre>
- *
  * See {@cdk.cite DAL92}.
  *
  * @cdk.module io
@@ -79,6 +71,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
     private BufferedWriter writer;
     private LoggingTool logger;
     private IsotopeFactory isotopeFactory = null;
+    private int moleculeNumber;
     public Map sdFields=null;
 
     /**
@@ -128,6 +121,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 throw new CDKException("Failed to initiate isotope factory: " + exception.getMessage());
             }
         }
+        this.moleculeNumber = 1;
     }
 
     /**
@@ -185,23 +179,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	private void writeSetOfMolecules(SetOfMolecules som)
 	{
 		Molecule[] molecules = som.getMolecules();
-			try
-			{
-        boolean[] isVisible=new boolean[molecules[0].getAtomCount()];
-        for(int i=0;i<isVisible.length;i++){
-          isVisible[i]=true;
-        }
-        writeMolecule(molecules[0], isVisible);
-			}
-			catch (Exception exc)
-			{
-			}
-		for (int i = 1; i <= som.getMoleculeCount() - 1; i++)
+		for (int i = 0; i < som.getMoleculeCount(); i++)
 		{
 			try
 			{
-			    writer.write("$$$$");
-				writer.newLine();
         boolean[] isVisible=new boolean[molecules[i].getAtomCount()];
         for(int k=0;k<isVisible.length;k++){
           isVisible[k]=true;
@@ -240,7 +221,12 @@ public class MDLWriter extends DefaultChemObjectWriter {
     public void writeMolecule(Molecule molecule, boolean[] isVisible) throws Exception {
         int Bonorder, stereo;
         String line = "";
-        
+        // taking care of the $$$$ signs:
+        // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule
+        if(moleculeNumber == 2) {
+          writer.write("$$$$");
+          writer.newLine();
+        }
         // write header block
         // lines get shortened to 80 chars, that's in the spec
         String title = (String)molecule.getProperty(CDKConstants.TITLE);
@@ -397,6 +383,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
             writer.newLine();
           }
         }
+        // taking care of the $$$$ signs:
+        // we write such a sign at the end of all except the first molecule
+        if(moleculeNumber != 1) {
+          writer.write("$$$$");
+          writer.newLine();
+        }
+        moleculeNumber++;
         writer.flush();
     }
 
