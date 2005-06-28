@@ -152,6 +152,28 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         }
     }
 
+    public void testOnSingleEntrySDFile() {
+        String filename = "data/mdl/singleMol.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            IteratingMDLReader reader = new IteratingMDLReader(ins);
+            
+            int molCount = 0;
+            while (reader.hasNext()) {
+                Object object = reader.next();
+                assertNotNull(object);
+                assertTrue(object instanceof Molecule);
+                molCount++;
+            }
+            
+            assertEquals(1, molCount);
+        } catch (Exception e) {
+            logger.debug(e);
+            fail(e.getMessage());
+        }
+    }
+
     public void testCorruptSDF() {
         // 'M  END' is missing from the prop block
         String filename = "data/mdl/corruptfile_bothcap.sd";
