@@ -114,7 +114,6 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	}
 
 	public void initPanelAndModel(JChemPaintPanel jcpp) {
-System.err.println(theModel.getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(3)+" after load");
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
     theModel.setTitle("JCP Applet" /* getNewFrameName() */);
@@ -133,7 +132,6 @@ System.err.println(theModel.getChemModel().getSetOfMolecules().getMolecules()[0]
 		// needed for applet as well
 		jcpp.setEmbedded();
 		getContentPane().add(jcpp, BorderLayout.CENTER);
-System.err.println(theModel.getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(3)+" after load");
 	}
 
 	// Code for both loadModel methods taken from JCPCDK applet
@@ -172,8 +170,7 @@ System.err.println(theModel.getChemModel().getSetOfMolecules().getMolecules()[0]
             count++;
           }
         }
-        System.err.println(chemModel.getSetOfMolecules().getMolecules()[0].getAtomAt(3)+" after load");
-				theModel = new JChemPaintModel(chemModel);
+        theModel = new JChemPaintModel(chemModel);
 			} catch (Exception exception) {
 				System.out.println("Cannot parse model: " + exception.toString());
 				exception.printStackTrace();

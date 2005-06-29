@@ -557,8 +557,7 @@ public class Renderer2D implements MouseMotionListener
 		}
 		if (drawSymbol || isRadical)
 		{
-      System.err.println(container.getAtomNumber(atom)+" __ "+atom);
-			paintAtomSymbol(atom, atomBackColor, graphics, alignment,
+      paintAtomSymbol(atom, atomBackColor, graphics, alignment,
 					atom.getProperty("OriginalNumber")!=null ? ((Integer)atom.getProperty("OriginalNumber")).intValue()+1 : container.getAtomNumber(atom) + 1, isRadical);
 		}
 		if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null)
