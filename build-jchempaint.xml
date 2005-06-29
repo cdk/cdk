@@ -47,10 +47,10 @@
                 <include name="cdk-jchempaint.application.jar"/>
                 <include name="cdk-jchempaint.applet.jar"/>
             </fileset>
-            <!-- <fileset dir="${plugin.dir}">
+            <fileset dir="${plugin.dir}">
                 <include name="dirbrowser.jar"/>
                 <include name="dadmlbrowser.jar"/>
-            </fileset>-->
+            </fileset>
         </unjar>
             
             <!-- then zip up things -->
