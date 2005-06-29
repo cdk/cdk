@@ -52,7 +52,21 @@ import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
- * Writes a molecule or an array of molecules to a MDL mol or SDF file.
+ * Writes MDL mol files and SD files.
+ * <BR><BR>
+ * A MDL mol file contains a single molecule, whereas a MDL SD file contains
+ * one or more molecules. This class is capable of writing both mol files and
+ * SD files. The correct format is automatically chosen:
+ * <ul>
+ * <li>if {@link #write(ChemObject)} is called with a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules}
+ * as an argument a SD files is written</li>
+ * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(Molecule) this one} or
+ * {@link #writeMolecule(Molecule, boolean[]) that one}) is called the first time, a mol file is written</li>
+ * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
+ * </ul><BR>
+ * Thus, to write several molecules to a single SD file you can either use {@link #write(ChemObject)} and pass
+ * a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules} or you can repeatedly call one of the two
+ * writeMolecule methods.<BR><BR>
  * For writing a MDL molfile you can this code:
  * <pre>
  * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
