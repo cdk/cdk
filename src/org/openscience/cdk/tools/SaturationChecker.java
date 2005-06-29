@@ -280,6 +280,22 @@ public class SaturationChecker implements ValencyCheckerInterface {
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
             boolean succeeded = newSaturate(atomContainer.getBonds(), atomContainer);
+            Bond[] bonds=atomContainer.getBonds();
+            for(int i=0;i<bonds.length;i++){
+              if(bonds[i].getOrder()==2 && bonds[i].getFlag(CDKConstants.ISAROMATIC) && (bonds[i].getAtomAt(0).getSymbol().equals("N") && bonds[i].getAtomAt(1).getSymbol().equals("N"))){
+                int atomtohandle=0;
+                if(bonds[i].getAtomAt(0).getSymbol().equals("N"))
+                  atomtohandle=1;
+                Bond[] bondstohandle=atomContainer.getConnectedBonds(bonds[i].getAtomAt(atomtohandle));
+                for(int k=0;k<bondstohandle.length;k++){
+                  if(bondstohandle[k].getOrder()==1 && bondstohandle[k].getFlag(CDKConstants.ISAROMATIC)){
+                    bondstohandle[k].setOrder(2);
+                    bonds[i].setOrder(1);
+                    break;
+                  }
+                }
+              }
+            }
             if (!succeeded) {
                 throw new CDKException("Could not saturate this atomContainer!");
             }

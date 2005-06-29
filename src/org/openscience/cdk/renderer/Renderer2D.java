@@ -65,6 +65,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+import org.openscience.cdk.config.AtomTypeFactory;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -556,8 +557,9 @@ public class Renderer2D implements MouseMotionListener
 		}
 		if (drawSymbol || isRadical)
 		{
+      System.err.println(container.getAtomNumber(atom)+" __ "+atom);
 			paintAtomSymbol(atom, atomBackColor, graphics, alignment,
-					container.getAtomNumber(atom) + 1, isRadical);
+					atom.getProperty("OriginalNumber")!=null ? ((Integer)atom.getProperty("OriginalNumber")).intValue()+1 : container.getAtomNumber(atom) + 1, isRadical);
 		}
 		if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null)
 		{
@@ -624,7 +626,16 @@ public class Renderer2D implements MouseMotionListener
 			{
 				int labelX = (int) (atom.getPoint2d().x - 2);
 				int labelY = (int) (atom.getPoint2d().y + 2);
-				Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
+        try{
+          AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+          factory.configure(atom);
+        }catch(Exception ex){
+           //We choose black if reading not possible
+           logger.debug(ex);
+        }
+        Color atomColor = (Color)atom.getProperty("org.openscience.cdk.renderer.color");
+        if(atomColor==null)
+          atomColor=Color.BLACK;
 				paintEmptySpace(labelX, labelY, 5, 5, 0, atomColor, graphics);
 			}
 			return;
