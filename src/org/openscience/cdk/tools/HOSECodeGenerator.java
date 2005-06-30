@@ -30,6 +30,8 @@ package org.openscience.cdk.tools;
 
 import java.math.BigInteger;
 import java.util.Vector;
+import java.util.Comparator;
+import java.util.Collections;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -40,6 +42,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -199,6 +202,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
 	{
+    CanonicalLabeler canLabler = new CanonicalLabeler();
+    canLabler.canonLabel(ac);
 		centerCode = "";
 		this.atomContainer = ac;
 		maxSphere = noOfSpheres;
@@ -296,6 +301,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				throw new CDKException("Error in HOSECodeGenerator->breadthFirstSearch.");
 			}
 		}
+    Collections.sort(sphereNodes,new TreeNodeComparator());
 		nextSphere(sphereNodes);
 	}
 
@@ -352,6 +358,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				}
 			}
 		}
+    Collections.sort(nextSphereNodes,new TreeNodeComparator());
 		if (sphere < maxSphere)
 		{
 			sphere++;
@@ -673,7 +680,28 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 	
 	
-	/**
+	class TreeNodeComparator implements Comparator {
+    /**
+     *The compare method, compares by canonical label of atoms
+     *
+     * @param  obj1  The first TreeNode
+     * @param  obj2  The second TreeNode
+     * @return       -1,0,1
+     */
+    public int compare(Object obj1, Object obj2) {
+      if(obj1==null || obj2==null || ((TreeNode) obj1).getAtom()==null || ((TreeNode) obj2).getAtom()==null)
+        return 0;
+      if (((Long) ((TreeNode) obj1).getAtom().getProperty("CanonicalLable")).intValue() < ((Long) ((TreeNode) obj2).getAtom().getProperty("CanonicalLable")).intValue()) {
+        return (-1);
+      }
+      if (((Long) ((TreeNode) obj1).getAtom().getProperty("CanonicalLable")).intValue() > ((Long) ((TreeNode) obj2).getAtom().getProperty("CanonicalLable")).intValue()) {
+        return (1);
+      }
+      return (0);
+    }
+  }
+    
+  /**
 	 *  Helper class for storing the properties of a node in our breadth first
 	 *  search
 	 *
@@ -718,6 +746,10 @@ public class HOSECodeGenerator implements java.io.Serializable
 			sortOrder = 1;
 			childs = new Vector();
 		}
+    
+    public Atom getAtom(){
+      return atom;
+    }
 
 
 		/**
