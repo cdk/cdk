@@ -37,8 +37,10 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- * Descriptor based on the number of atoms of a certain element type. It is
- * possible to use the wild card symbol * as element type to get the count of
+ * Descriptor based on the number of atoms of a certain element type.
+ *
+ * It is
+ * possible to use the wild card symbol '*' as element type to get the count of
  * all atoms.
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -63,114 +65,133 @@ import java.util.Hashtable;
  */
 public class AtomCountDescriptor implements Descriptor {
 
-	private String elementName = null;
+    private String elementName = null;
 
 
-	/**
-	 *  Constructor for the AtomCountDescriptor object
-	 */
-	public AtomCountDescriptor() { }
+    /**
+     *  Constructor for the AtomCountDescriptor object.
+     */
+    public AtomCountDescriptor() { }
 
-	public DescriptorSpecification getSpecification() {
+    /**
+     * Returns a <code>Map</code> which specifies which descriptor
+     * is implemented by this class. 
+     *
+     * These fields are used in the map:
+     * <ul>
+     * <li>Specification-Reference: refers to an entry in a unique dictionary
+     * <li>Implementation-Title: anything
+     * <li>Implementation-Identifier: a unique identifier for this version of
+     *  this class
+     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     * </ul>
+     *
+     * @return An object containing the descriptor specification
+     */
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:atomCount",
-		    this.getClass().getName(),
-		    "$Id$",
-            "The Chemistry Development Kit");
+                "http://qsar.sourceforge.net/dicts/qsar-descriptors:atomCount",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     };
-    
-	/**
-	 *  Sets the parameters attribute of the AtomCountDescriptor object
-	 *
-	 *@param  params            The new parameters value
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("AtomCount only expects one parameter");
-		}
-		if (!(params[0] instanceof String)) {
-			throw new CDKException("The parameter must be of type String");
-		}
-		// ok, all should be fine
-		elementName = (String) params[0];
-	}
+
+    /**
+     *  Sets the parameters attribute of the AtomCountDescriptor object.
+     *
+     *@param  params            The new parameters value
+     *@throws  CDKException  if the number of parameters is greater than 1
+     *or else the parameter is not of type String
+     *@see #getParameters
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        if (params.length > 1) {
+            throw new CDKException("AtomCount only expects one parameter");
+        }
+        if (!(params[0] instanceof String)) {
+            throw new CDKException("The parameter must be of type String");
+        }
+        // ok, all should be fine
+        elementName = (String) params[0];
+    }
 
 
-	/**
-	 *  Gets the parameters attribute of the AtomCountDescriptor object
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[1];
-		params[0] = elementName;
-		return params;
-	}
+    /**
+     *  Gets the parameters attribute of the AtomCountDescriptor object.
+     *
+     *@return    The parameters value
+     *@see #setParameters
+     */
+    public Object[] getParameters() {
+        // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[1];
+        params[0] = elementName;
+        return params;
+    }
 
 
-	/**
-	 *  This method calculate the number of atoms of a given type in an atomContainer
-	 *
-	 *@param  container  Parameter is the atom container.
-	 *@return            Number of atoms of a certain type is returned.
-	 */
-	 
-	 // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
-	 // this could be useful for other descriptors like polar surface area...
-	public DescriptorValue calculate(AtomContainer container) throws CDKException {
-		int atomCount = 0;
-		Atom[] atoms = container.getAtoms();
-		if (elementName.equals("*")) {
-			for (int i = 0; i < atoms.length; i++) {
-				atomCount += container.getAtomAt(i).getHydrogenCount();
-			}			
-			atomCount += atoms.length;
-		} 
-		else if (elementName.equals("H")) {
-			for (int i = 0; i < atoms.length; i++) {
-				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-					atomCount += 1;
-				}
-				else {
-					atomCount += container.getAtomAt(i).getHydrogenCount();
-				}
-			}
-		}
-		else {
-			for (int i = 0; i < atoms.length; i++) {
-				if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-					atomCount += 1;
-				}
-			}			
-		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomCount));
-	}
+    /**
+     *  This method calculate the number of atoms of a given type in an {@link AatomContainer}.
+     *
+     *@param  container  The atom container for which this descriptor is to be calculated
+     *@return            Number of atoms of a certain type is returned.
+     *@throws CDKException currently nothing will cause an exception to be thrown
+     */
+
+    // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
+    // this could be useful for other descriptors like polar surface area...
+    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+        int atomCount = 0;
+        Atom[] atoms = container.getAtoms();
+        if (elementName.equals("*")) {
+            for (int i = 0; i < atoms.length; i++) {
+                atomCount += container.getAtomAt(i).getHydrogenCount();
+            }			
+            atomCount += atoms.length;
+        } 
+        else if (elementName.equals("H")) {
+            for (int i = 0; i < atoms.length; i++) {
+                if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+                    atomCount += 1;
+                }
+                else {
+                    atomCount += container.getAtomAt(i).getHydrogenCount();
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < atoms.length; i++) {
+                if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+                    atomCount += 1;
+                }
+            }			
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomCount));
+    }
 
 
-	/**
-	 *  Gets the parameterNames attribute of the AtomCountDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "elementName";
-		return params;
-	}
+    /**
+     *  Gets the parameterNames attribute of the AtomCountDescriptor object.
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        String[] params = new String[1];
+        params[0] = "elementName";
+        return params;
+    }
 
 
-	/**
-	 *  Gets the parameterType attribute of the AtomCountDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new String();
-		return paramTypes;
-	}
+    /**
+     *  Gets the parameterType attribute of the AtomCountDescriptor object.
+     *
+     *@param  name  Description of the Parameter
+     *@return       An Object whose class is that of the parameter requested
+     */
+    public Object getParameterType(String name) {
+        Object[] paramTypes = new Object[1];
+        paramTypes[0] = new String();
+        return paramTypes;
+    }
 }
 

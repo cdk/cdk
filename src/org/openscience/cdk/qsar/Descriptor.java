@@ -73,7 +73,7 @@ public interface Descriptor {
      * calculate as the parameters influence the calculation outcome.
      *
      * @param params An array of Object containing the parameters for this descriptor
-     * @throws CDKException if parameters of invalid types are passed to it
+     * @throws CDKException if invalid number of type of parameters are passed to it
      * @see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException;

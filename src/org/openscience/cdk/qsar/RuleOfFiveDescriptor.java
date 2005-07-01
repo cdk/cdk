@@ -65,16 +65,25 @@ public class RuleOfFiveDescriptor implements Descriptor {
 
 
 	/**
-	 *  Constructor for the RuleOfFiveDescriptor object
+	 *  Constructor for the RuleOfFiveDescriptor object.
 	 */
 	public RuleOfFiveDescriptor() { }
 
-
-	/**
-	 *  Gets the specification attribute of the RuleOfFiveDescriptor object
-	 *
-	 *@return    The specification value
-	 */
+    /**
+     * Returns a <code>Map</code> which specifies which descriptor
+     * is implemented by this class. 
+     *
+     * These fields are used in the map:
+     * <ul>
+     * <li>Specification-Reference: refers to an entry in a unique dictionary
+     * <li>Implementation-Title: anything
+     * <li>Implementation-Identifier: a unique identifier for this version of
+     *  this class
+     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     * </ul>
+     *
+     * @return An object containing the descriptor specification
+     */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://qsar.sourceforge.net/dicts/qsar-descriptors:lipinskifailures",
@@ -85,10 +94,15 @@ public class RuleOfFiveDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the RuleOfFiveDescriptor object
+	 *  Sets the parameters attribute of the RuleOfFiveDescriptor object.
+         *
+         *  There is only one parameter, which should be a Boolean indicating whether
+         *  aromaticity should be checked or has already been checked. The name of the paramete
+         *  is checkAromaticity.
 	 *
 	 *@param  params            Parameter is only one: a boolean.
-	 *@exception  CDKException  Possible Exceptions
+	 *@throws  CDKException  if more than 1 parameter or a non-Boolean parameter is specified
+         *@see #getParameters
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
@@ -103,9 +117,10 @@ public class RuleOfFiveDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameters attribute of the RuleOfFiveDescriptor object
+	 *  Gets the parameters attribute of the RuleOfFiveDescriptor object.
 	 *
 	 *@return    The parameters value
+         *@see #setParameters
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
@@ -119,9 +134,11 @@ public class RuleOfFiveDescriptor implements Descriptor {
 	 *  the method take a boolean checkAromaticity: if the boolean is true, it means that
 	 *  aromaticity has to be checked.
 	 *
-	 *@param  mol               atom container
-	 *@return                   number of aromatic bonds in the atom container
-	 *@exception  CDKException  Possible Exceptions
+	 *@param  mol   AtomContainer for which this descriptor is to be calculated
+	 *@return    The number of failures of the Lipinski rule
+	 *@throws  CDKException  if the following descriptors throw an exception:
+         * {@link XLogPDescriptor},  {@link HBondAcceptorCountDescriptor}, {@link HBondDonorCountDescriptor},
+         * {@link WeightDescriptor}, {@link RotatableBondsCountDescriptor}, 
 	 */
 	public DescriptorValue calculate(AtomContainer mol) throws CDKException {
 		
@@ -160,8 +177,7 @@ public class RuleOfFiveDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterNames attribute of the RuleOfFiveDescriptor
-	 *  object
+	 *  Gets the parameterNames attribute of the RuleOfFiveDescriptor object.
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -174,10 +190,10 @@ public class RuleOfFiveDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterType attribute of the RuleOfFiveDescriptor object
+	 *  Gets the parameterType attribute of the RuleOfFiveDescriptor object.
 	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
+	 *@param  name  The name of the parameter. In this case it is 'checkAromaticity'.
+	 *@return       An Object of class equal to that of the parameter being requested
 	 */
 	public Object getParameterType(String name) {
 		Object[] paramTypes = new Object[1];

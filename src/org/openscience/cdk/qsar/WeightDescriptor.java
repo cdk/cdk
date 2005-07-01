@@ -39,8 +39,13 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  Descriptor based on the weight of atoms of a certain element type. If the wild-card symbol *
+ *  Descriptor based on the weight of atoms of a certain element type. 
+ *
+ *  If the wild-card symbol *
  *  is specified, the returned value is the molecular weight.
+ *  If an invalid element symbol is specified, the return value is 
+ *  0 and no exception is thrown
+ *  <p>
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -64,124 +69,142 @@ import java.util.Hashtable;
  */
 public class WeightDescriptor implements Descriptor {
 
-	private String elementName = "*";
+    private String elementName = "*";
 
-	/**
-	 *  Constructor for the WeightDescriptor object
-	 */
-	public WeightDescriptor() { }
+    /**
+     *  Constructor for the WeightDescriptor object.
+     */
+    public WeightDescriptor() { }
 
-	public DescriptorSpecification getSpecification() {
+    /**
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class. 
+     *
+     * These fields are used in the map:
+     * <ul>
+     * <li>Specification-Reference: refers to an entry in a unique dictionary
+     * <li>Implementation-Title: anything
+     * <li>Implementation-Identifier: a unique identifier for this version of
+     *  this class
+     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     * </ul>
+     *
+     * @return An object containing the descriptor specification
+     */
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:weight",
-		    this.getClass().getName(),
-		    "$Id$",
-            "The Chemistry Development Kit");
+                "http://qsar.sourceforge.net/dicts/qsar-descriptors:weight",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     };
 
-	/**
-	 *  Sets the parameters attribute of the WeightDescriptor object
-	 *
-	 *@param  params            The new parameters value
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("weight only expects one parameter");
-		}
-		if (!(params[0] instanceof String)) {
-			throw new CDKException("The parameter must be of type String");
-		}
-		// ok, all should be fine
-		elementName = (String) params[0];
-	}
+    /**
+     *  Sets the parameters attribute of the WeightDescriptor object.
+     *
+     *@param  params            The new parameters value
+     *@throws CDKException if more than 1 parameter is specified or if the parameter
+     *is not of type String
+     *@see #getParameters
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        if (params.length > 1) {
+            throw new CDKException("weight only expects one parameter");
+        }
+        if (!(params[0] instanceof String)) {
+            throw new CDKException("The parameter must be of type String");
+        }
+        // ok, all should be fine
+        elementName = (String) params[0];
+    }
 
 
-	/**
-	 *  Gets the parameters attribute of the WeightDescriptor object
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[1];
-		params[0] = elementName;
-		return params;
-	}
+    /**
+     *  Gets the parameters attribute of the WeightDescriptor object.
+     *
+     * @return    The parameters value
+     * @see #setParameters
+     */
+    public Object[] getParameters() {
+        // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[1];
+        params[0] = elementName;
+        return params;
+    }
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  container  Parameter is the atom container.
-	 *@return            Number of atoms of a certain type is returned.
-	 */
+    /**
+     * Calculate the weight of specified element type in the supplied {@link AtomContaienr}.
+     *
+     * @param  container The AtomContainer for which this descriptor is to be calculated. If 'H'
+     * is specified as the element symbol make sure that the AtomContainer has hydrogens.
+     *@return The total weight of atoms of the specified element type
+     */
 
-	public DescriptorValue calculate(AtomContainer container) {
-		double weight = 0;
-		Atom[] atoms = container.getAtoms();
-		if (elementName.equals("*")) {
-			try {
-				for (int i = 0; i < atoms.length; i++) {
-					//System.out.println("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
-					weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
-					weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
-				}
-			} catch (Exception e) {
-				System.out.println(e.toString());
-			}
-		} 
-		else if (elementName.equals("H")) {
-			try {
-				for (int i = 0; i < atoms.length; i++) {
-					if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-						weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
-					}
-					else {
-						weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
-					}
-				}
-			} catch (Exception e) {
-				System.out.println(e.toString());
-			}
-		}
-		else {
-			try {
-				for (int i = 0; i < atoms.length; i++) {
-					if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-						weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
-					}
-				}
-			} catch (Exception e) {
-				System.out.println(e.toString());
-			}
-		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight));
-	}
-
-
-	/**
-	 *  Gets the parameterNames attribute of the WeightDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "elementSymbol";
-		return params;
-	}
+    public DescriptorValue calculate(AtomContainer container) {
+        double weight = 0;
+        Atom[] atoms = container.getAtoms();
+        if (elementName.equals("*")) {
+            try {
+                for (int i = 0; i < atoms.length; i++) {
+                    //System.out.println("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
+                    weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                    weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        } 
+        else if (elementName.equals("H")) {
+            try {
+                for (int i = 0; i < atoms.length; i++) {
+                    if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+                        weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                    }
+                    else {
+                        weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+        else {
+            try {
+                for (int i = 0; i < atoms.length; i++) {
+                    if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+                        weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight));
+    }
 
 
-	/**
-	 *  Gets the parameterType attribute of the WeightDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new String();
-		return paramTypes;
-	}
+    /**
+     *  Gets the parameterNames attribute of the WeightDescriptor object.
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        String[] params = new String[1];
+        params[0] = "elementSymbol";
+        return params;
+    }
+
+
+    /**
+     *  Gets the parameterType attribute of the WeightDescriptor object.
+     *
+     *@param  name  Description of the Parameter
+     *@return       An Object whose class is that of the parameter requested
+     */
+    public Object getParameterType(String name) {
+        Object[] paramTypes = new Object[1];
+        paramTypes[0] = new String();
+        return paramTypes;
+    }
 }
 
