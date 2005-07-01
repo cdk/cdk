@@ -131,7 +131,7 @@ public class AtomCountDescriptor implements Descriptor {
 
 
     /**
-     *  This method calculate the number of atoms of a given type in an {@link AatomContainer}.
+     *  This method calculate the number of atoms of a given type in an {@link AtomContainer}.
      *
      *@param  container  The atom container for which this descriptor is to be calculated
      *@return            Number of atoms of a certain type is returned.

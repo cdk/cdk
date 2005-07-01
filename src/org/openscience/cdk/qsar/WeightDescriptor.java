@@ -133,7 +133,7 @@ public class WeightDescriptor implements Descriptor {
 
 
     /**
-     * Calculate the weight of specified element type in the supplied {@link AtomContaienr}.
+     * Calculate the weight of specified element type in the supplied {@link AtomContainer}.
      *
      * @param  container The AtomContainer for which this descriptor is to be calculated. If 'H'
      * is specified as the element symbol make sure that the AtomContainer has hydrogens.
