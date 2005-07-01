@@ -127,22 +127,24 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		jcpp.registerModel(theModel);
     if(theJcpp.getJChemPaintModel()!=null){
       jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
-      int smallestX=Integer.MAX_VALUE;
-      int largestX=Integer.MIN_VALUE;
-      int smallestY=Integer.MAX_VALUE;
-      int largestY=Integer.MIN_VALUE;
-      for(int i=0;i<theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount();i++){
-        if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x<smallestX)
-          smallestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x;
-        if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x>largestX)
-          largestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x;
-        if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y<smallestY)
-          smallestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y;
-        if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y>largestY)
-          largestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y;
+      if(theModel.getChemModel().getSetOfMolecules()!=null){
+        int smallestX=Integer.MAX_VALUE;
+        int largestX=Integer.MIN_VALUE;
+        int smallestY=Integer.MAX_VALUE;
+        int largestY=Integer.MIN_VALUE;
+        for(int i=0;i<theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomCount();i++){
+          if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x<smallestX)
+            smallestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x;
+          if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x>largestX)
+            largestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().x;
+          if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y<smallestY)
+            smallestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y;
+          if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y>largestY)
+            largestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(i).getPoint2d().y;
+        }
+        theModel.getRendererModel().setBackgroundDimension(new Dimension(largestX-smallestX+30, largestY - smallestY+30));
+        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
       }
-      theModel.getRendererModel().setBackgroundDimension(new Dimension(largestX-smallestX+30, largestY - smallestY+30));
-      jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
     }
 		//embedded means that additional instances can't be created, which is
 		// needed for applet as well
