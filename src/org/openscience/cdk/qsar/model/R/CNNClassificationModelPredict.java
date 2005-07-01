@@ -48,12 +48,26 @@ public class CNNClassificationModelPredict {
         }
         return(m);
     }
-
+    /**
+     * Create an object to hold predictions from a previously built CNN model.
+     *
+     * This class should not be accessed directly
+     *
+     * @param noutput The number of predicted variables
+     * @param values The predicted probabilities
+     */
     public CNNClassificationModelPredict(int noutput, double[] values) { 
         this.noutput = noutput;
         int nrow = values.length / noutput;
         setPredictedRaw(vectorToMatrix(values,nrow,noutput));
     }
+    /**
+     * Create an object to hold predictions from a previously built CNN model.
+     *
+     * This class should not be accessed directly
+     *
+     * @param values An array of String containing the predicted class
+     */
     public CNNClassificationModelPredict(String[] values) {
         this.predvalclass = new String[values.length];
         for (int i = 0; i < values.length; i++) {
@@ -61,7 +75,25 @@ public class CNNClassificationModelPredict {
         }
     }
 
+    /**
+     * Get the raw probabilities of the classification result.
+     * 
+     * This class should not be accessed directly
+     * 
+     * @return A 2-dimensional array containing the predicted probabilities. The rows
+     * contain the observations and the columns contain the predicted variables
+     * @see #setPredictedRaw
+     */
     public double[][] getPredictedRaw() { return(this.predvalraw); }
+    /**
+     * Get the raw probabilities of the classification result.
+     * 
+     * This class should not be accessed directly
+     * 
+     * @param predicted A 2-dimensional array containing the predicted probabilities. The rows
+     * contain the observations and the columns contain the predicted variables
+     * @see #getPredictedRaw
+     */
     public void setPredictedRaw(double[][] predicted) { 
         this.predvalraw = new double[predicted.length][this.noutput];
         for (int i = 0; i < predicted.length; i++) {
@@ -71,6 +103,13 @@ public class CNNClassificationModelPredict {
         }
     }
 
+    /**
+     * Get the predicted classes.
+     * 
+     * This class should not be accessed directly
+     *
+     * @return An array of String containing the predicted classes
+     */
     public String[] getPredictedClass() { return(this.predvalclass); };
 }
 

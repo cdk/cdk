@@ -52,7 +52,20 @@ public class CNNClassificationModelFit {
         }
         return(m);
     }
-    
+    /**
+     * Constructs an object to contain a CNN classification fit.
+     *
+     * This class should not be instantiated directly and is only
+     * required withtin R
+     *
+     * @param noutput The number of output neurons (ie the number of predicted variables)
+     * @param nobs The number of observations
+     * @param weights A 1-dimensional array containing the weights and biases
+     * @param fitted A 1-dimensional array containing the fitted values
+     * @param residual A 1-dimensional array containing the residuals of the fitted values
+     * @param value The final value of the cost function
+     * @param hessian A 1-dimensional array containing the Hessian
+     */
     public CNNClassificationModelFit(
             int noutput, 
             int nobs,
@@ -72,6 +85,19 @@ public class CNNClassificationModelFit {
         setValue(value);
         setHessian(vectorToMatrix(hessian,weights.length,weights.length));
     }
+    /**
+     * Constructs an object to contain a CNN classification fit.
+     *
+     * This class should not be instantiated directly and is only
+     * required withtin R
+     *
+     * @param noutput The number of output neurons (ie the number of predicted variables)
+     * @param nobs The number of observations
+     * @param weights A 1-dimensional array containing the weights and biases
+     * @param fitted A 1-dimensional array containing the fitted values
+     * @param residual A 1-dimensional array containing the residuals of the fitted values
+     * @param value The final value of the cost function
+     */
     public CNNClassificationModelFit(
             int noutput, 
             int nobs,
@@ -84,15 +110,48 @@ public class CNNClassificationModelFit {
         setFitted(vectorToMatrix(fitted, nobs,noutput));
         setValue(value);
     }
-
+    /**
+     * Get the final value of the cost function.
+     *
+     * This method should not be called outside this class
+     *
+     * @return The final value of the cost function
+     * @see #setValue
+     */
     public double getValue() {
         return(this.value);
     }
+    /**
+     * Set the final value of the cost function.
+     *
+     * This method should not be called outside this class
+     *
+     * @param value The value of the cost function at convergence
+     * @see #getValue
+     */
     public void setValue(double value) {
         this.value = value;
     }
 
+    
+    /**
+     * Get the Hessian for the final network.
+     * 
+     * This method should not be called outside this class
+     *
+     * @return A 2-dimensional array containing the hessian
+     * @see #setHessian
+     */
     public double[][] getHessian() { return(this.hessian); }
+
+    /**
+     * Set the Hessian for the final network.
+     * 
+     * This method should not be called outside this class
+     *
+     * @param theHessian A 2-dimensional array containing the hessian
+     * @see #getHessian
+     */
     public void setHessian(double[][] theHessian) { 
         if (theHessian == null) return;
         this.hessian = new double[theHessian.length][this.noutput];
@@ -103,7 +162,23 @@ public class CNNClassificationModelFit {
         }
     }
 
+    /**
+     * Get the weights and biases of the final network.
+     * 
+     * This method should not be called outside this class
+     *
+     * @return A 1-dimensional array of weights and biases
+     * @see #setWeights
+     */
     public double[] getWeights() { return(this.weights); }
+    /**
+     * Set the weights and biases of the final network.
+     * 
+     * This method should not be called outside this class
+     *
+     * @param weights A 1-dimensional array of weights and biases
+     * @see #getWeights
+     */
     public void setWeights(double[] weights) {
         this.weights = new double[weights.length];
         for (int i = 0; i < weights.length; i++) {
@@ -111,7 +186,26 @@ public class CNNClassificationModelFit {
         }
     }
 
+
+    /**
+     * Get the residuals of the fit.
+     * 
+     * This method should not be called outside this class
+     *
+     * @return A 2-dimensional array of residuals. The rows contain the
+     * observations and the columns contain the predicted variables
+     * @see #setResiduals
+     */
     public double[][] getResiduals() { return(this.residuals); }
+    /**
+     * Set the residuals of the fit.
+     * 
+     * This method should not be called outside this class
+     *
+     * @param residuals A 2-dimensional array of residuals. The rows contain the
+     * observations and the columns contain the predicted variables
+     * @see #getResiduals
+     */
     public void setResiduals(double[][] residuals) { 
         this.residuals = new double[residuals.length][this.noutput];
         for (int i = 0; i < residuals.length; i++) {
@@ -121,7 +215,27 @@ public class CNNClassificationModelFit {
         }
     }
 
+    
+
+    /**
+     * Get the fitted values.
+     * 
+     * This method should not be called outside this class
+     *
+     * @return A 2-dimensional array of residuals. The rows contain the
+     * observations and the columns contain the predicted variables
+     * @see #setFitted
+     */
     public double[][] getFitted() { return(this.fitted); }
+    /**
+     * Set the fitted values.
+     * 
+     * This method should not be called outside this class
+     *
+     * @param fitted A 2-dimensional array of residuals. The rows contain the
+     * observations and the columns contain the predicted variables
+     * @see #getFitted
+     */
     public void setFitted(double[][] fitted) { 
         this.fitted = new double[fitted.length][this.noutput];
         for (int i = 0; i < fitted.length; i++) {

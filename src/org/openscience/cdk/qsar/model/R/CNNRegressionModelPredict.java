@@ -21,7 +21,7 @@
 package org.openscience.cdk.qsar.model.R;
 
 /**
- * A class that wraps the return value from the R function, predict.lm.
+ * A class that wraps the return value from the R function, predict.cnn.
  *
  * This is an internal class used by R to return the result of
  * the call to <a href="http://stat.ethz.ch/R-manual/R-patched/library/nnet/html/predict.nnet.html">predict.nnet</a>.
@@ -48,13 +48,35 @@ public class CNNRegressionModelPredict {
         return(m);
     }
 
+    /**
+     * Create an object to hold predictions from a previously built CNN model.
+     *
+     * This class should not be accessed directly
+     *
+     * @param noutput The number of predicted variables
+     * @param values The predicted values
+     */
     public CNNRegressionModelPredict(int noutput, double[] values) { 
         this.noutput = noutput;
         int nrow = values.length / noutput;
         setPredicted(vectorToMatrix(values,nrow,noutput));
     }
 
+    /**
+     * Get the predicted values.
+     *
+     * @return A 2-dimensional array containing the predicted values. The rows
+     * contain the observations and the columns contain the predicted variables
+     * @see #setPredicted
+     */
     public double[][] getPredicted() { return(this.predval); }
+    /**
+     * Set the predicted values.
+     *
+     * @param predicted A 2-dimensional array containing the predicted values. The rows
+     * contain the observations and the columns contain the predicted variables
+     * @see #getPredicted
+     */    
     public void setPredicted(double[][] predicted) { 
         this.predval = new double[predicted.length][this.noutput];
         for (int i = 0; i < predicted.length; i++) {

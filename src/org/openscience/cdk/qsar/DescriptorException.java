@@ -25,7 +25,7 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.exception.CDKException;
 /**
- * Exception that is thrown by descriptor routines when a problem has occured
+ * Exception that is thrown by descriptor routines when a problem has occured.
  *
  * @cdk.module qsar
  */
@@ -41,8 +41,7 @@ public class DescriptorException extends CDKException {
     }
 
     /**
-     *  Constructs a new DescriptorException with from the supplied
-     *  descriptor name and associated message
+     *  Constructs a new DescriptorException with from the supplied descriptor name and associated message.
      *
      *  @param name Name of the descriptor raising the exception
      *  @param message The message associated with the exception

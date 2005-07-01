@@ -58,6 +58,13 @@ public class DescriptorEngine {
     private List speclist;
     private LoggingTool logger;
 
+    /**
+     * Constructor that generates a list of descriptors to calculate.
+     *
+     * All available descriptors are included in the list of descriptors to 
+     * calculate
+     * 
+     */
     public DescriptorEngine() {
         logger = new LoggingTool(this);
         descriptors = new Vector();
@@ -100,7 +107,7 @@ public class DescriptorEngine {
     }
 
     /**
-     * Generates a list of descriptors to calculate.
+     * Constructor that generates a list of descriptors to calculate.
      *
      * This constructor allows the user to specify which types of 
      * descriptors should be calculated. The possible types are
@@ -210,7 +217,7 @@ public class DescriptorEngine {
     }
 
     /**
-     * Calculates all available descriptors for a molecule.
+     * Calculates all available (or only those specified) descriptors for a molecule.
      * 
      * The results for a given descriptor as well as associated parameters and
      * specifications are used to create a <code>DescriptorValue</code>
