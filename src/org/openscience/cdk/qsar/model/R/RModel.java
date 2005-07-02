@@ -44,6 +44,13 @@ import java.io.*;
  * when any model class based on RModel is instantiated the constructor for the
  * super class (i.e., Rmodel) makes sure that SJava is not already initialized.
  * <p>
+ * By default the intialization uses a temporary file which is sourced in the
+ * R session. In some cases, such as web applications, temporary files might be 
+ * problematic. In this case the R backend can be initialized via strings. To 
+ * do this the application should specify <b>-DinitRFromString=true</b> on the command 
+ * line. Note that this approach will be slightly slower compared to initializsation
+ * via a temporary file.
+ * <p>
  * <b>NOTE</b>: For the R backend to work, ensure that R is correctly installed
  * and that SJava is also installed, using the -c option. Finally, ensure 
  * that the R_HOME environment variable points to the R installation.
@@ -153,10 +160,10 @@ public abstract class RModel implements Model {
     public RModel(String[] args) {
         logger = new LoggingTool(this);
 
-        String initRFromDiskProperty = System.getProperty("initRFromDisk");
-        boolean useDisk = false;
-        if (initRFromDiskProperty != null && initRFromDiskProperty.equals("true")) {
-            useDisk = true;
+        String initRFromString = System.getProperty("initRFromString");
+        boolean useDisk = true;
+        if (initRFromString != null && initRFromString.equals("true")) {
+            useDisk = false;
         } 
 
         if (!doneInit) {
@@ -187,10 +194,10 @@ public abstract class RModel implements Model {
         String[] args = {"--vanilla","-q", "--slave"};
         logger = new LoggingTool(this);
 
-        String initRFromDiskProperty = System.getProperty("initRFromDisk");
-        boolean useDisk = false;
-        if (initRFromDiskProperty != null && initRFromDiskProperty.equals("true")) {
-            useDisk = true;
+        String initRFromString = System.getProperty("initRFromString");
+        boolean useDisk = true;
+        if (initRFromString != null && initRFromString.equals("true")) {
+            useDisk = false;
         } 
         
         if (!doneInit) {
