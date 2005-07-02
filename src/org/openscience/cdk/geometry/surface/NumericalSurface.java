@@ -64,6 +64,8 @@ public class NumericalSurface {
 
     /**
      * Constructor to initialize the surface calculation with default values.
+     *
+     * @param atomContainer The {@link AtomContainer} for which the surface is to be calculated
      */
     public NumericalSurface(AtomContainer atomContainer) {
         this.atoms = atomContainer.getAtoms();
@@ -72,6 +74,7 @@ public class NumericalSurface {
     /**
      * Constructor to initialize the surface calculation with user specified values.
      *
+     * @param atomContainer The {@link AtomContainer} for which the surface is to be calculated
      * @param solvent_radius The radius of a solvent molecule that is used to extend
      * the radius of each atom. Setting to 0 gives the Van der Waals surface
      * @param tesslevel The number of levels that the subdivision algorithm for tessllation
@@ -175,6 +178,7 @@ public class NumericalSurface {
      * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the 
      * number of atoms in the AtomContainer that the surface was calculated for
      * @return  An array of Point3d objects 
+     * @throws CDKException if the atom index is outside the range of allowable indices
      */
     public Point3d[] getSurfacePoints(int atomIdx) throws CDKException {
         if (atomIdx >= this.surf_points.length) {
@@ -191,6 +195,7 @@ public class NumericalSurface {
      * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the 
      * number of atoms in the AtomContainer that the surface was calculated for
      * @return A double representing the accessible surface area of the atom
+     * @throws CDKException if the atom index is outside the range of allowable indices
      */
     public double getSurfaceArea(int atomIdx) throws CDKException {
         if (atomIdx >= this.surf_points.length) {

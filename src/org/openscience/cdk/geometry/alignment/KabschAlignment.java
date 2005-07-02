@@ -167,10 +167,10 @@ public class KabschAlignment {
      * The algorithm allows for atom weighting and the default is 1.0 for all
      * atoms.
      *
-     * @param al1 An array of Atom objects
-     * @param al2 An array of Atom objects. This array will have its coordinates rotated
+     * @param al1 An array of {@link Atom} objects
+     * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
      *            so that the RMDS is minimzed to the coordinates of the first array
-     * @exception CDKException Thrown if the number of Atom's are not the same in the two arrays
+     * @throws CDKException if the number of Atom's are not the same in the two arrays
      */            
     public KabschAlignment(Atom[] al1, Atom[] al2) throws CDKException {
         if (al1.length != al2.length) {
@@ -187,13 +187,13 @@ public class KabschAlignment {
         for (int i = 0; i < this.npoint; i++) this.wts[i] = 1.0;
     }
     /**
-     * Sets up variables for the alignment algorithm
+     * Sets up variables for the alignment algorithm.
      *
-     * @param al1 An array of Atom objects
-     * @param al2 An array of Atom objects. This array will have its coordinates rotated
+     * @param al1 An array of {@link Atom} objects
+     * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
      *            so that the RMDS is minimzed to the coordinates of the first array
      * @param wts A vector atom weights.           
-     * @exception CDKException Thrown if the number of Atom's are not the same in the two arrays or
+     * @throws CDKException if the number of Atom's are not the same in the two arrays or
      *                         length of the weight vector is not the same as the Atom arrays
      */            
     public KabschAlignment(Atom[] al1, Atom[] al2, double[] wts) throws CDKException {
@@ -214,15 +214,15 @@ public class KabschAlignment {
     }
 
     /**
-     * Sets up variables for the alignment algorithm
+     * Sets up variables for the alignment algorithm.
      *
      * The algorithm allows for atom weighting and the default is 1.0 for all
      * atoms.
      *
-     * @param ac1 An AtomContainer 
-     * @param ac2 An AtomContainer. This AtomContainer will have its coordinates rotated
+     * @param ac1 An {@link AtomContainer}
+     * @param ac2 An {@link AtomContainer}. This AtomContainer will have its coordinates rotated
      *            so that the RMDS is minimzed to the coordinates of the first one
-     * @exception CDKException Thrown if the number of atom's are not the same in the two AtomContainer's
+     * @throws CDKException if the number of atom's are not the same in the two AtomContainer's
      */            
     public KabschAlignment(AtomContainer ac1, AtomContainer ac2) throws CDKException {
         if (ac1.getAtomCount() != ac2.getAtomCount()) {
@@ -239,13 +239,13 @@ public class KabschAlignment {
     }
 
     /**
-     * Sets up variables for the alignment algorithm
+     * Sets up variables for the alignment algorithm.
      *
-     * @param ac1 An AtomContainer 
-     * @param ac2 An AtomContainer. This AtomContainer will have its coordinates rotated
+     * @param ac1 An {@link AtomContainer}
+     * @param ac2 An {@link AtomContainer}. This AtomContainer will have its coordinates rotated
      *            so that the RMDS is minimzed to the coordinates of the first one
      * @param wts A vector atom weights.           
-     * @exception CDKException Thrown if the number of atom's are not the same in the two AtomContainer's or
+     * @throws CDKException if the number of atom's are not the same in the two AtomContainer's or
      *                         length of the weight vector is not the same as number of atoms.
      */            
     public KabschAlignment(AtomContainer ac1, AtomContainer ac2, double[] wts) throws CDKException {
@@ -265,6 +265,12 @@ public class KabschAlignment {
         this.atwt2 = getAtomicMasses(ac2.getAtoms());
     }
 
+    /**
+     * Perform an alignment.
+     *
+     * This method aligns to set of atoms which should have been specified
+     * prior to this call
+     */
     public void align() {
         
         Matrix tmp;
@@ -417,6 +423,7 @@ public class KabschAlignment {
      * If align() has not been called the return value is -1.0
      *
      * @return The RMSD for this alignment
+     * @see #align
      */
     public double getRMSD() {
         return(this.rmsd);
@@ -426,6 +433,7 @@ public class KabschAlignment {
      * Returns the rotation matrix (u).
      *
      * @return A double[][] representing the rotation matrix
+     * @see #align
      */
     public double[][] getRotationMatrix() {
         return(this.U);
@@ -449,7 +457,7 @@ public class KabschAlignment {
     }
 
     /**
-     * Rotates the AtomContainer coordinates by the rotation matrix.
+     * Rotates the {@link AtomContainer} coordinates by the rotation matrix.
      *
      * In general if you align a subset of atoms in a AtomContainer
      * this function can be applied to the whole AtomContainer to rotate all
@@ -459,9 +467,9 @@ public class KabschAlignment {
      * Note that the AtomContainer coordinates also get translated such that the
      * center of mass of the original fragment used to calculate the alignment is at the origin.
      *
-     * @param ac The AtomContainer whose coordinates are to be rotated
+     * @param ac The {@link AtomContainer} whose coordinates are to be rotated
      */
-    public void rotateAtomContainer(AtomContainer ac) throws CDKException {
+    public void rotateAtomContainer(AtomContainer ac)  {
         Point3d[] p = getPoint3dArray( ac.getAtoms() );
         for (int i = 0; i < ac.getAtomCount(); i++) {
             // translate the the origin we have calculated

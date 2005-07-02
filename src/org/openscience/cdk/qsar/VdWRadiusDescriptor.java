@@ -59,108 +59,126 @@ import java.io.*;
  */
 public class VdWRadiusDescriptor implements Descriptor {
 
-	private int atomPosition = 0;
-	private AtomTypeFactory factory = null;
-	private LoggingTool logger;
+    private int atomPosition = 0;
+    private AtomTypeFactory factory = null;
+    private LoggingTool logger;
 
 
-	/**
-	 *  Constructor for the VdWRadiusDescriptor object
-	 */
-	public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {
-		logger = new LoggingTool(this);
-    factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
-	}
+    /**
+     *  Constructor for the VdWRadiusDescriptor object.
+     *
+     *  @throws IOException if an error ocurrs when reading atom type information
+     *  @throws ClassNotFoundException if an error occurs during tom typing
+     */
+    public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {
+        logger = new LoggingTool(this);
+        factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
+    }
 
 
-	/**
-	 *  Gets the specification attribute of the VdWRadiusDescriptor object
-	 *
-	 *@return    The specification value
-	 */
-	public DescriptorSpecification getSpecification() {
-		return new DescriptorSpecification(
-				"http://qsar.sourceforge.net/dicts/qsar-descriptors:vdwradius",
-				this.getClass().getName(),
-				"$Id$",
-				"The Chemistry Development Kit");
-	}
+    /**
+     * Returns a <code>Map</code> which specifies which descriptor
+     * is implemented by this class. 
+     *
+     * These fields are used in the map:
+     * <ul>
+     * <li>Specification-Reference: refers to an entry in a unique dictionary
+     * <li>Implementation-Title: anything
+     * <li>Implementation-Identifier: a unique identifier for this version of
+     *  this class
+     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     * </ul>
+     *
+     * @return An object containing the descriptor specification
+     */
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://qsar.sourceforge.net/dicts/qsar-descriptors:vdwradius",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
+    }
 
 
-	/**
-	 *  Sets the parameters attribute of the VdWRadiusDescriptor object
-	 *
-	 *@param  params            The parameter is the atom position
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("VdWRadiusDescriptor only expects one parameter");
-		}
-		if (!(params[0] instanceof Integer)) {
-			throw new CDKException("The parameter must be of type Integer");
-		}
-		atomPosition = ((Integer) params[0]).intValue();
-	}
+    /**
+     *  Sets the parameters attribute of the VdWRadiusDescriptor object.
+     *
+     *  This class takes a single parameter of type Integer indicating 
+     *  which atom the radius is to be calculated for
+     *
+     *@param  params            The parameter is the atom position
+     *@throws  CDKException if more than on parameter or a non-Integer parameters is specified
+     *@see #getParameters
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        if (params.length > 1) {
+            throw new CDKException("VdWRadiusDescriptor only expects one parameter");
+        }
+        if (!(params[0] instanceof Integer)) {
+            throw new CDKException("The parameter must be of type Integer");
+        }
+        atomPosition = ((Integer) params[0]).intValue();
+    }
 
 
-	/**
-	 *  Gets the parameters attribute of the VdWRadiusDescriptor object
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		Object[] params = new Object[1];
-		params[0] = new Integer(atomPosition);
-		return params;
-	}
+    /**
+     *  Gets the parameters attribute of the VdWRadiusDescriptor object.
+     *
+     *@return    The parameters value
+     * @see #setParameters
+     */
+    public Object[] getParameters() {
+        Object[] params = new Object[1];
+        params[0] = new Integer(atomPosition);
+        return params;
+    }
 
 
-	/**
-	 *  This method calculate the Van der Waals radius of an atom
-	 *
-	 *@param  container         Parameter is the atom container.
-	 *@return                   The Van der Waals radius of the atom
-	 *@exception  CDKException  Description of the Exception
-	 */
+    /**
+     *  This method calculate the Van der Waals radius of an atom.
+     *
+     *@param  container         The {@link AtomContainer} for which the descriptor is to be calculated
+     *@return                   The Van der Waals radius of the atom
+     *@exception  CDKException  if an error occurs during atom typing
+     */
 
-	public DescriptorValue calculate(AtomContainer container) throws CDKException {
-		double vdwradius = 0;
-		int atomicNumber = 0;
-		try {
-			String symbol = container.getAtomAt(atomPosition).getSymbol();
-			AtomType type = factory.getAtomType(symbol);
-			vdwradius = type.getVanderwaalsRadius();
-			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vdwradius));
-		} catch (Exception ex1) {
-			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
-		}
-	}
-
-
-	/**
-	 *  Gets the parameterNames attribute of the VdWRadiusDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "atomPosition";
-		return params;
-	}
+    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+        double vdwradius = 0;
+        int atomicNumber = 0;
+        try {
+            String symbol = container.getAtomAt(atomPosition).getSymbol();
+            AtomType type = factory.getAtomType(symbol);
+            vdwradius = type.getVanderwaalsRadius();
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vdwradius));
+        } catch (Exception ex1) {
+            logger.debug(ex1);
+            throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+        }
+    }
 
 
-	/**
-	 *  Gets the parameterType attribute of the VdWRadiusDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new Integer(1);
-		return paramTypes;
-	}
+    /**
+     *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        String[] params = new String[1];
+        params[0] = "atomPosition";
+        return params;
+    }
+
+
+    /**
+     *  Gets the parameterType attribute of the VdWRadiusDescriptor object.
+     *
+     *@param  name  Description of the Parameter
+     *@return       An Object of class equal to that of the parameter being requested
+     */
+    public Object getParameterType(String name) {
+        Object[] paramTypes = new Object[1];
+        paramTypes[0] = new Integer(1);
+        return paramTypes;
+    }
 }
 

@@ -47,10 +47,28 @@ public class PLSRegressionModelPredict {
         return(m);
     }
         
+    /**
+     * Constructor to contain the results of a PLS prediction.
+     *
+     * This class should not be instantiated directly and is really
+     * only meant to be instantiated from an R session
+     *
+     * @param ncol The number of predicted variables
+     * @param preds A 1-dimensional array of predicted values
+     */
     public PLSRegressionModelPredict(int ncol, double[] preds) {
         this.preds = VectorToMatrix(preds, preds.length/ncol, ncol);
     }
 
+    /** 
+     * Get the predicted values.
+     *
+     * This method returns the predicted values obtained by using new data
+     * with a previously built PLS regression model
+     *
+     * @return A 2-dimensional array of predictions, columns correspond to the 
+     * predicted variables
+     */
     public double[][] getPredictions() {
         return(this.preds);
     }
