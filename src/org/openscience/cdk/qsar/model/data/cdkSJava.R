@@ -1,4 +1,3 @@
-
 #
 #  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
 #
@@ -91,18 +90,30 @@ loadModel.getName <- function(filename) {
    modelname
 }
 
+hashmap.to.list <- function(params) {
+    keys <- unlist(params$keySet()$toArray())
+    paramlist <- list()
+    cnt <- 1
+    for (key in keys) {
+        paramlist[[cnt]] <- params$get(key)
+        cnt <- cnt+1
+    }
+    names(paramlist) <- keys
+    paramlist
+}
+
 #############################################
 # Linear regression fit/predict converters
 #############################################
 lmFitConverter <-
 function(obj,...)
 {
-    .JNew("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit",
+    .JNew('org.openscience.cdk.qsar.model.R.LinearRegressionModelFit',
     obj$coefficients, obj$residuals,
     obj$fitted, obj$rank, obj$df.residual)
 }
 lmPredictConverter <- function(preds,...) {
-    .JNew("org.openscience.cdk.qsar.model.R.LinearRegressionModelPredict",
+    .JNew('org.openscience.cdk.qsar.model.R.LinearRegressionModelPredict',
     preds$fit[,1], preds$se.fit, preds$fit[,2], preds$fit[,3],
     preds$df, preds$residual.scale)
 }
@@ -115,11 +126,11 @@ function(obj,...)
 {
     noutput <- ncol(obj$fitted)
     nobs <- nrow(obj$fitted)
-    if ("Hessian" %in% names(obj)) {
-        .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelFit",
+    if ('Hessian' %in% names(obj)) {
+        .JNew('org.openscience.cdk.qsar.model.R.CNNRegressionModelFit',
         noutput,nobs, obj$wts, obj$fitted, obj$residuals, obj$value, obj$Hessian)
     } else {
-        .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelFit",
+        .JNew('org.openscience.cdk.qsar.model.R.CNNRegressionModelFit',
         noutput, nobs,obj$wts, obj$fitted, obj$residuals, obj$value)
     }
 }
@@ -128,11 +139,11 @@ function(obj,...)
 {
     noutput <- ncol(obj$fitted)
     nobs <- nrow(obj$fitted)
-    if ("Hessian" %in% names(obj)) {
-        .JNew("org.openscience.cdk.qsar.model.R.CNNClassificationModelFit",
+    if ('Hessian' %in% names(obj)) {
+        .JNew('org.openscience.cdk.qsar.model.R.CNNClassificationModelFit',
         noutput,nobs, obj$wts, obj$fitted, obj$residuals, obj$value, obj$Hessian)
     } else {
-        .JNew("org.openscience.cdk.qsar.model.R.CNNClassificationModelFit",
+        .JNew('org.openscience.cdk.qsar.model.R.CNNClassificationModelFit',
         noutput, nobs,obj$wts, obj$fitted, obj$residuals, obj$value)
     }
 }
@@ -143,7 +154,7 @@ function(obj,...) {
     # to us. So we should convert obj back to class 'matrix' so 
     # that SJava can send it correctly to the Java side
     class(obj) <- 'matrix'
-    .JNew("org.openscience.cdk.qsar.model.R.CNNRegressionModelPredict",
+    .JNew('org.openscience.cdk.qsar.model.R.CNNRegressionModelPredict',
     ncol(obj), obj)
 }
 cnnClassPredictConverter <-
@@ -154,11 +165,11 @@ function(obj,...) {
     # that SJava can send it correctly to the Java side
     if (class(obj[1]) == 'numeric') {
         class(obj) <- 'matrix'
-        .JNew("org.openscience.cdk.qsar.model.R.CNNClassificationModelPredict",
+        .JNew('org.openscience.cdk.qsar.model.R.CNNClassificationModelPredict',
         ncol(obj), obj)
     } else if (class(obj[1]) == 'character') {
         class(obj) <- 'character'
-        .JNew("org.openscience.cdk.qsar.model.R.CNNClassificationModelPredict", obj)
+        .JNew('org.openscience.cdk.qsar.model.R.CNNClassificationModelPredict', obj)
     }
 }
 
@@ -168,14 +179,14 @@ function(obj,...) {
 #############################################
 plsFitConverter <-
 function(obj,...) {
-    tmp <- .JNew("org.openscience.cdk.qsar.model.R.PLSRegressionModelFit",
+    tmp <- .JNew('org.openscience.cdk.qsar.model.R.PLSRegressionModelFit',
      obj$nobj, obj$nvar, obj$npred, obj$ncomp, obj$method)
     tmp$setTrainingData(
      obj$training$B, obj$training$Ypred, obj$training$RMS,
      obj$training$Xscores, obj$training$Xload,
      obj$training$Yscores, obj$training$Yload)
     tmp$PLSRegressionModelSetTrain()
-    if ("validat" %in% names(obj)) {
+    if ('validat' %in% names(obj)) {
         # Add validation fields
         tmp$setValidationData(
          obj$valid$niter, obj$valid$nLV,
@@ -185,49 +196,38 @@ function(obj,...) {
 }
 plsPredictConverter <- 
 function(obj,...) {
-    class(obj) <- "matrix"
-    .JNew("org.openscience.cdk.qsar.model.R.PLSRegressionModelPredict",ncol(obj),obj)
+    class(obj) <- 'matrix'
+    .JNew('org.openscience.cdk.qsar.model.R.PLSRegressionModelPredict',ncol(obj),obj)
 }
 
 #############################################
 # Register the fit/predict converter funcs
 #############################################
-setJavaFunctionConverter(lmFitConverter, function(x,...){inherits(x,"lm")},
-                          description="lm fit object to Java",
+setJavaFunctionConverter(lmFitConverter, function(x,...){inherits(x,'lm')},
+                          description='lm fit object to Java',
                           fromJava=F)
-setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,"lmregprediction")},
-                          description="lm predict object to Java",
+setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,'lmregprediction')},
+                          description='lm predict object to Java',
                           fromJava=F)
-setJavaFunctionConverter(cnnClassFitConverter, function(x,...){inherits(x,"nnet.formula")},
-                          description="cnn (nnet) classification fit object to Java",
+setJavaFunctionConverter(cnnClassFitConverter, function(x,...){inherits(x,'nnet.formula')},
+                          description='cnn (nnet) classification fit object to Java',
                           fromJava=F)
-setJavaFunctionConverter(cnnFitConverter, function(x,...){inherits(x,"nnet")},
-                          description="cnn (nnet) fit object to Java",
+setJavaFunctionConverter(cnnFitConverter, function(x,...){inherits(x,'nnet')},
+                          description='cnn (nnet) fit object to Java',
                           fromJava=F)
-setJavaFunctionConverter(cnnClassPredictConverter, function(x,...){inherits(x,"cnnclsprediction")},
-                          description="cnn (nnet) classification predict object to Java",
+setJavaFunctionConverter(cnnClassPredictConverter, function(x,...){inherits(x,'cnnclsprediction')},
+                          description='cnn (nnet) classification predict object to Java',
                           fromJava=F)
-setJavaFunctionConverter(cnnPredictConverter, function(x,...){inherits(x,"cnnregprediction")},
-                          description="cnn (nnet) predict object to Java",
+setJavaFunctionConverter(cnnPredictConverter, function(x,...){inherits(x,'cnnregprediction')},
+                          description='cnn (nnet) predict object to Java',
                           fromJava=F)
-setJavaFunctionConverter(plsFitConverter, function(x,...){inherits(x,"mvr")},
-                          description="pls/pcr fit object to Java",
+setJavaFunctionConverter(plsFitConverter, function(x,...){inherits(x,'mvr')},
+                          description='pls/pcr fit object to Java',
                           fromJava=F)
-setJavaFunctionConverter(plsPredictConverter, function(x,...){inherits(x,"plsregressionprediction")},
-                          description="pls/pcr predict object to Java",
+setJavaFunctionConverter(plsPredictConverter, function(x,...){inherits(x,'plsregressionprediction')},
+                          description='pls/pcr predict object to Java',
                           fromJava=F)
                           
-hashmap.to.list <- function(params) {
-    keys <- unlist(params$keySet()$toArray())
-    paramlist <- list()
-    cnt <- 1
-    for (key in keys) {
-        paramlist[[cnt]] <- params$get(key)
-        cnt <- cnt+1
-    }
-    names(paramlist) <- keys
-    paramlist
-}
 buildLM <- function(modelname, params) {
     # params is a java.util.HashMap containing the parameters
     # we need to extract them and add them to this environment
@@ -268,7 +268,9 @@ buildCNN <-  function(modelname, params) {
 
     x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
     y <- matrix(unlist(y), nrow=length(y), byrow=TRUE)
-    if (nrow(x) != nrow(y)) { stop("The number of observations in x & y don't match") }
+    if (nrow(x) != nrow(y)) { 
+        stop('The number of observations in x & y dont match') 
+    }
 
     ninput <- ncol(x)
     nhidden <- size
@@ -298,7 +300,7 @@ buildCNNClass <- function(modelname, params) {
 
     x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
     y <- factor(unlist(y)) # y will come in as a single vector
-    if (nrow(x) != length(y)) { stop("The number of observations in x & y don't match") }
+    if (nrow(x) != length(y)) { stop('The number of observations in x & y dont match') }
 
     ninput <- ncol(x)
     nhidden <- size
@@ -321,10 +323,10 @@ buildCNNClass <- function(modelname, params) {
     detach(paramlist)
     get(modelname)
 }
-    
+
 predictCNN <- function(modelname, params) {
     # Since buildCNN should have been called before this
-    # we don't bother loading the nnet library
+    # we dont bother loading the nnet library
     paramlist <- hashmap.to.list(params)
     attach(paramlist)
 
@@ -342,7 +344,7 @@ predictCNN <- function(modelname, params) {
 }
 predictCNNClass <- function(modelname, params) {
     # Since buildCNNClass should have been called before this
-    # we don't bother loading the nnet library
+    # we dont bother loading the nnet library
     paramlist <- hashmap.to.list(params)
     attach(paramlist)
 
@@ -364,7 +366,7 @@ buildPLS <- function(modelname, params) {
     
     x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
     y <- matrix(unlist(y), nrow=length(y), byrow=TRUE)
-    if (nrow(x) != nrow(y)) { stop("The number of observations in x & y don't match") }
+    if (nrow(x) != nrow(y)) { stop('The number of observations in x & y dont match') }
 
     if (!ncomp) {
         ncomp <- 1:ncol(x)
@@ -372,14 +374,14 @@ buildPLS <- function(modelname, params) {
         ncomp <- unlist(ncomp)
     }
 
-    if (!(method %in% c("PCR","SIMPLS","kernelPLS"))) {
-        stop("Invalid methopd specification")
+    if (!(method %in% c('PCR','SIMPLS','kernelPLS'))) {
+        stop('Invalid methopd specification')
     }
-    if (!(validation %in% c("none","CV"))) {
-        stop("Invalid validation sepcification")
+    if (!(validation %in% c('none','CV'))) {
+        stop('Invalid validation sepcification')
     }
     
-    if (niter == 0 && validation == "CV") {
+    if (niter == 0 && validation == 'CV') {
         niter = nrow(y)
     }
     
@@ -406,15 +408,13 @@ predictPLS <- function(modelname, params) {
     newX <- matrix(unlist(newX), nrow=length(x), byrow=TRUE)
     model <- get(modelname)
     if (ncol(newX) != model$nvar) {
-        stop("The number of independent variables in the new data does not match that specified during building")
+        stop('The number of independent variables in the new data does not match that specified during building')
     }
     if (nlv == FALSE) {
         preds <- predict(model, newX)
     } else {
         preds <- predict(model, newX, nlv)
     }
-    class(preds) <- "plsregressionprediction"
+    class(preds) <- 'plsregressionprediction'
     preds
 }
-    
-

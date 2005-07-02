@@ -1,0 +1,50 @@
+#############################################
+# Linear regression fit/predict converters
+#############################################
+lmFitConverter <-
+function(obj,...)
+{
+    .JNew('org.openscience.cdk.qsar.model.R.LinearRegressionModelFit',
+    obj$coefficients, obj$residuals,
+    obj$fitted, obj$rank, obj$df.residual)
+}
+lmPredictConverter <- function(preds,...) {
+    .JNew('org.openscience.cdk.qsar.model.R.LinearRegressionModelPredict',
+    preds$fit[,1], preds$se.fit, preds$fit[,2], preds$fit[,3],
+    preds$df, preds$residual.scale)
+}
+
+buildLM <- function(modelname, params) {
+    # params is a java.util.HashMap containing the parameters
+    # we need to extract them and add them to this environment
+    paramlist <- hashmap.to.list(params)
+    attach(paramlist)
+
+    # x will come in as a double[][]
+    x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
+
+    # assumes y ~ all columns of x
+    d <- data.frame(y=y,x)
+    assign(modelname, lm(y~., d, weights=weights), pos=1)
+    detach(paramlist)
+    get(modelname)
+}
+
+predictLM <- function( modelname, params) {
+    # params is a java.util.HashMap containing the parameters
+    # we need to extract them and add them to this environment
+    paramlist <- hashmap.to.list(params)
+    attach(paramlist)
+
+    newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    if (interval == '' || !(interval %in% c('confidence','prediction')) ) { 
+        interval = 'confidence'
+    } 
+    preds <- predict( get(modelname), newx, se.fit = TRUE, interval=interval);
+    class(preds) <- 'lmregprediction'
+
+    detach(paramlist)
+    preds
+}
+
+

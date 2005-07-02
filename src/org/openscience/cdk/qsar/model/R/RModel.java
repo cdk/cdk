@@ -106,18 +106,71 @@ public abstract class RModel implements Model {
             logger.debug(exception);
         }
     }
+    
+    private void loadRFunctionsAsStrings(REvaluator evaluator) {
+        String[] scripts = {
+            "init_1.R", 
+            "lm_2.R", 
+            "cnn_3.R", "cnn_4.R",
+            "pls_5.R",
+            "register_999.R"
+        };
+        String scriptPrefix = "org/openscience/cdk/qsar/model/data/";
+        for (int i = 0; i < scripts.length; i++) {
+            
+            String scriptLocator = scriptPrefix + scripts[i];
+            try {
+                InputStreamReader reader = new InputStreamReader(
+                        this.getClass().getClassLoader().getResourceAsStream(scriptLocator));
+                BufferedReader inFile = new BufferedReader(reader);
+
+                StringWriter sw = new StringWriter();
+                String inputLine;
+                while ( (inputLine = inFile.readLine()) != null) {
+                    sw.write(inputLine);
+                    sw.write("\n");
+                }
+                sw.close();
+
+                evaluator.voidEval("eval(parse(text=\""+sw.toString()+"\"))");
+
+            } catch (Exception exception) {
+                logger.error("Could not load CDK-SJava R scripts: ", scriptLocator);
+                logger.debug(exception);
+            }
+            
+        }
+    }
+
 
     /**
      * Initializes SJava and R with the specified command line arguments (see R documentation).
      *
+     * This constructor will initialize the R session via a temporary file
+     * 
      * @param args A String[] containing the command line parameters as elements
      */
     public RModel(String[] args) {
         logger = new LoggingTool(this);
+
+        String initRFromDiskProperty = System.getProperty("initRFromDisk");
+        boolean useDisk = false;
+        if (initRFromDiskProperty != null && initRFromDiskProperty.equals("true")) {
+            useDisk = true;
+        } 
+
         if (!doneInit) {
             this.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
             this.revaluator = new REvaluator();
-            loadRFunctions(this.revaluator);
+
+            if (useDisk) {
+                loadRFunctions(this.revaluator);
+                logger.info("Initializing from disk");
+            } else {
+                loadRFunctionsAsStrings(this.revaluator);
+                logger.info("Initializing from strings");
+            }
+            
             doneInit = true;
             logger.info("SJava initialized");
         } else {
@@ -127,14 +180,31 @@ public abstract class RModel implements Model {
 
     /**
      * Initializes SJava with the <i>--vanilla, -q, --slave</i> flags.
+     *
+     * This constructor will initialize the R session via a temporary file
      */
     public RModel() {
         String[] args = {"--vanilla","-q", "--slave"};
         logger = new LoggingTool(this);
+
+        String initRFromDiskProperty = System.getProperty("initRFromDisk");
+        boolean useDisk = false;
+        if (initRFromDiskProperty != null && initRFromDiskProperty.equals("true")) {
+            useDisk = true;
+        } 
+        
         if (!doneInit) {
             this.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
             this.revaluator = new REvaluator();
-            loadRFunctions(this.revaluator);
+
+            if (useDisk) {
+                loadRFunctions(this.revaluator);
+                logger.info("Initializing from disk");
+            } else {
+                loadRFunctionsAsStrings(this.revaluator);
+                logger.info("Initializing from strings");
+            }
+            
             doneInit = true;
             logger.info("SJava initialized");
         } else {
