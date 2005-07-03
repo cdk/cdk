@@ -232,8 +232,12 @@ public class SaveAsAction extends JCPAction
 	protected void saveAsMol(ChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in a MDL molfile file...");
-    outFile=new File(outFile.toString()+".mol");
-    cow = new MDLWriter(new FileWriter(outFile));
+        String fileName = outFile.toString();
+        if (!fileName.endsWith(".mol")) {
+            fileName += ".mol";
+        }
+        outFile=new File(fileName);
+        cow = new MDLWriter(new FileWriter(outFile));
 		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
@@ -254,8 +258,11 @@ public class SaveAsAction extends JCPAction
 	protected void saveAsCML2(ChemObject object, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in a CML 2.0 file...");
-		outFile=new File(outFile.toString()+".cml");
-    cow = new CMLWriter(new FileWriter(outFile));
+        String fileName = outFile.toString();
+        if (!fileName.endsWith(".cml")) {
+            fileName += ".cml";
+        }
+        cow = new CMLWriter(new FileWriter(outFile));
 		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
@@ -275,8 +282,11 @@ public class SaveAsAction extends JCPAction
 	protected void saveAsSMILES(ChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in SMILES format...");
-		outFile=new File(outFile.toString()+".smi");
-    cow = new SMILESWriter(new FileWriter(outFile));
+        String fileName = outFile.toString();
+        if (!fileName.endsWith(".smi")) {
+            fileName += ".smi";
+        }
+        cow = new SMILESWriter(new FileWriter(outFile));
 		if (cow != null && askIOSettings())
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
@@ -297,7 +307,10 @@ public class SaveAsAction extends JCPAction
 	protected void saveAsCDKSourceCode(ChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents as a CDK source code file...");
-    outFile=new File(outFile.toString()+".cdk");
+        String fileName = outFile.toString();
+        if (!fileName.endsWith(".cdk")) {
+            fileName += ".cdk";
+        }
 		cow = new CDKSourceCodeWriter(new FileWriter(outFile));
 		if (cow != null && askIOSettings())
 		{
