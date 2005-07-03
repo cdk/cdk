@@ -89,6 +89,11 @@ loadModel.getName <- function(filename) {
    modelname <- load(filename)
    modelname
 }
+unserializeModel <- function(modelstr, modelname) {
+    assign(modelname, unserialize(modelstr))
+    ls()
+    get(modelname)
+}
 
 hashmap.to.list <- function(params) {
     keys <- unlist(params$keySet()$toArray())

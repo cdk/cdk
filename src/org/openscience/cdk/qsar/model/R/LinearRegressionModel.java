@@ -383,6 +383,24 @@ public class LinearRegressionModel extends RModel {
             this.setModelName(modelName);
         } else throw new QSARModelException("The loaded model was not a LinearRegressionModel");
     }
+    /**
+     * Loads an LinearRegressionModel object from a serialized string into the current session.
+     *
+     * @param serializedModel A String containing the serialized version of the model
+     * @param modelName A String indicating the name of the model in the R session
+     * @throws QSARModelException if the model being loaded is not a linear regression model
+     * object
+     */
+    public void  loadModel(String serializedModel, String modelName) throws QSARModelException {
+        // should probably check that the fileName does exist
+        Object model = (Object)revaluator.call("unserializeModel", new Object[]{ (Object)serializedModel, (Object)modelName });
+        String modelname = modelName;
+
+        if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit")) {
+            this.modelfit =(LinearRegressionModelFit)model;
+            this.setModelName(modelname);
+        } else throw new QSARModelException("The loaded model was not a LinearRegressionModel");
+    }
 
     /* interface to fit object */
 

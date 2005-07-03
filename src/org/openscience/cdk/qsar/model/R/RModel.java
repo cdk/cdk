@@ -306,9 +306,30 @@ public abstract class RModel implements Model {
      * This is best achieved by forcing each modeling class to write its own loader.
      *
      * @param fileName The file containing the R object to load
-     * @throws QSARModelException if the R session could not load the object
+     * @throws QSARModelException if the R session could not load the object or if the loaded model
+     * does not correspond to the class that it was loaded from
      */
     abstract public void loadModel(String fileName) throws QSARModelException;
+    /** 
+     * Abstract method to handle loading R models that were previously serialized.
+     *
+     * This method can be used to load a previously serialized R model object (usinging
+     * serialize()). Since
+     * the user can save any arbitrary R object, checks must be made that the 
+     * object being returned is an instance of one of the current modeling classes. 
+     * This is best achieved by forcing each modeling class to write its own loader.
+     * <p>
+     * In addition
+     * objects saved using serialize() do not have a name. As a result a name for the object must
+     * be specified when using this method.
+     *
+     * @param serializedModel A String containing the ASCII sreialized R object
+     * @param modelName The name of the model. (Within the R session, the model will be assigned to
+     * a variable of this name)
+     * @throws QSARModelException if the R session could not load the object or if the loaded model
+     * does not correspond to the class that it was loaded from
+     */
+    abstract public void  loadModel(String serializedModel, String modelName) throws QSARModelException;
 }
 
 
