@@ -75,6 +75,8 @@ require(SJava)
 if (!isJavaInitialized()) {
     .JavaInit()
 }
+library(nnet)
+library(pls.pcr)
 
 saveModel <- function(modelname, filename) {
     resp <- try( do.call('save',list(modelname,file=filename)), silent=TRUE )
@@ -136,6 +138,12 @@ lmSummaryConverter <- function(sumry,...) {
 #############################################
 # CNN regression fit/predict converters
 #############################################
+cnnSummaryConverter <- 
+function(obj,...)
+{
+    .JNew('org.openscience.cdk.qsar.model.R.CNNRegressionModelSummary',
+    obj$n, obj$entropy, obj$softmax, obj$censored, obj$value, obj$residuals)
+}
 cnnFitConverter <-
 function(obj,...) 
 {
@@ -230,6 +238,9 @@ setJavaFunctionConverter(lmSummaryConverter, function(x,...){inherits(x,'summary
 setJavaFunctionConverter(cnnClassFitConverter, function(x,...){inherits(x,'nnet.formula')},
                           description='cnn (nnet) classification fit object to Java',
                           fromJava=F)
+setJavaFunctionConverter(cnnSummaryConverter, function(x,...){inherits(x,'summary.nnet')},
+                          description='cnn (nnet) summary object to Java',
+                          fromJava=F)
 setJavaFunctionConverter(cnnFitConverter, function(x,...){inherits(x,'nnet')},
                           description='cnn (nnet) fit object to Java',
                           fromJava=F)
@@ -280,7 +291,6 @@ predictLM <- function( modelname, params) {
 }
 
 buildCNN <-  function(modelname, params) {
-    library(nnet)
     paramlist <- hashmap.to.list(params)
     attach(paramlist)
 
@@ -312,7 +322,6 @@ buildCNN <-  function(modelname, params) {
 
 
 buildCNNClass <- function(modelname, params) {
-    library(nnet)
     paramlist <- hashmap.to.list(params)
     attach(paramlist)
 

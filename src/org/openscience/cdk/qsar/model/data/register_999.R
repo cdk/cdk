@@ -10,6 +10,9 @@ setJavaFunctionConverter(lmSummaryConverter, function(x,...){inherits(x,'summary
 setJavaFunctionConverter(cnnClassFitConverter, function(x,...){inherits(x,'nnet.formula')},
                           description='cnn (nnet) classification fit object to Java',
                           fromJava=F)
+setJavaFunctionConverter(cnnSummaryConverter, function(x,...){inherits(x,'summary.nnet')},
+                          description='cnn (nnet) summary object to Java',
+                          fromJava=F)
 setJavaFunctionConverter(cnnFitConverter, function(x,...){inherits(x,'nnet')},
                           description='cnn (nnet) fit object to Java',
                           fromJava=F)

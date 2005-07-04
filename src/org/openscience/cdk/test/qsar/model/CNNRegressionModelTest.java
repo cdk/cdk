@@ -26,6 +26,7 @@ package org.openscience.cdk.test.qsar.model;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.model.R.CNNRegressionModel;
+import org.openscience.cdk.qsar.model.R.CNNRegressionModelSummary;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.test.CDKTestCase;
 import junit.framework.Test;
@@ -201,6 +202,9 @@ public class CNNRegressionModelTest extends CDKTestCase {
             assertEquals(0.390702, preds[2][0], 0.000001);
             assertEquals(0.527783, preds[3][0], 0.000001);
             assertEquals(0.527783, preds[4][0], 0.000001);
+
+            CNNRegressionModelSummary s = cnnrm.summary();
+            assertTrue(s != null);
         }
 
 }

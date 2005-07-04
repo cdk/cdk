@@ -1,6 +1,13 @@
 #############################################
 # CNN regression fit/predict converters
 #############################################
+cnnSummaryConverter <- 
+function(obj,...)
+{
+    .JNew('org.openscience.cdk.qsar.model.R.CNNRegressionModelSummary',
+    obj$n, obj$entropy, obj$softmax, obj$censored, obj$value, obj$residuals)
+}
+
 cnnFitConverter <-
 function(obj,...) 
 {

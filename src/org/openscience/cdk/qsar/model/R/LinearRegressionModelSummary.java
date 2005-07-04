@@ -53,8 +53,6 @@ public class LinearRegressionModelSummary {
         }
         return(m);
     }
-    public LinearRegressionModelSummary() {
-    }
 
     /**
      * Constructor for an object that wraps the return value from summary.lm.

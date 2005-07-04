@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.model.R;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.qsar.model.R.CNNRegressionModelFit;
 import org.openscience.cdk.qsar.model.R.CNNRegressionModelPredict;
+import org.openscience.cdk.qsar.model.R.CNNRegressionModelSummary;
 
 import org.omegahat.R.Java.REvaluator;
 import org.omegahat.R.Java.ROmegahatInterpreter;
@@ -426,6 +427,31 @@ public class CNNRegressionModel extends RModel {
         } catch (Exception re) {
             throw new QSARModelException(re.toString());
         }
+    }
+    
+    /**
+     * Returns an object summarizing the CNN regression model.
+     *
+     * The return object simply wraps the fields from the summary.nnet
+     * return value. Various details can be extracted from the return object,
+     * See {@link CNNRegressionModelSummary} for more details.
+     *
+     * @return A summary for the CNN regression model
+     * @throws QSARModelException if the model has not been built prior to a call
+     * to this method.
+     */
+    public CNNRegressionModelSummary summary() throws QSARModelException {
+        if (this.modelfit == null) 
+            throw new QSARModelException("Before calling summary() you must fit the model using build()");
+
+        CNNRegressionModelSummary s = null;
+        try {
+            s = (CNNRegressionModelSummary)revaluator.call("summaryModel",
+                    new Object[]{ getModelName() });
+        } catch (Exception re) {
+            throw new QSARModelException(re.toString());
+        }
+        return(s);
     }
         
     /**

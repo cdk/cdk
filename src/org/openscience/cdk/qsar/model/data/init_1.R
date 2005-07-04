@@ -2,6 +2,8 @@ require(SJava)
 if (!isJavaInitialized()) {
     .JavaInit()
 }
+library(nnet)
+library(pls.pcr)
 options(show.error.messages=FALSE)
 
 saveModel <- function(modelname, filename) {
