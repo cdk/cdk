@@ -33,6 +33,7 @@ import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Dimension;
+import java.awt.Container;
 
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
@@ -117,7 +118,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 			viewerPanelPopupMenu.add(mi);
 		}
 		getDrawingPanel().add(viewerPanelPopupMenu);
-		MouseListener popupListener = new PopupListener();
+		MouseListener popupListener = new PopupListener(this);
 		getDrawingPanel().addMouseListener(popupListener);
 	}
 
@@ -150,6 +151,14 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	 *@cdk.created    18. Mai 2005
 	 */
 	class PopupListener extends MouseAdapter {
+    
+    JChemPaintViewerOnlyPanel jcpvop;
+    Container parent;
+    
+    public PopupListener(JChemPaintViewerOnlyPanel jcpvop){
+      this.jcpvop=jcpvop;
+    }
+    
 		/**
 		 *  Description of the Method
 		 *
@@ -179,42 +188,25 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 			if (e.isPopupTrigger()) {
 				viewerPanelPopupMenu.show(e.getComponent(),
 						e.getX(), e.getY());
-			} /*else {
+			} else {
 				if (e.getButton() == 1 && e.getClickCount() == 2) {
-					JChemPaintPanel viewerPanel = (JChemPaintPanel) getComponent(0).getParent();
-					Object editorModel = viewerPanel.getJChemPaintModel().getChemModel().clone();
-					JChemPaintModel thisModel = new JChemPaintModel();
-					thisModel.setChemModel((ChemModel) editorModel);
-					JFrame frame = JChemPaintEditorPanel.getNewFrame(thisModel);
-					JChemPaintEditorPanel editorPanel = (JChemPaintEditorPanel) frame.getContentPane().getComponent(0);
-					editorPanel.addChangeListener(viewerPanel);
-					editorPanel.setIsOpenedByViewer(true);
-					frame.show();
+					JFrame frame = new JFrame();
+          frame.addWindowListener(
+            new WindowAdapter() {
+              public void windowClosing(WindowEvent e) {
+                parent.add(jcpvop);
+                parent.repaint();
+              }
+            });
+          parent=jcpvop.getParent();
+          jcpvop.getParent().remove(jcpvop);
+          frame.getContentPane().add(jcpvop);
+          frame.show();
 					frame.pack();
 					setViewerOnly();
-					editorPanel.setJChemPaintModel(thisModel);
 				}
-			}*/
-		}
-	}
-
-
-
-	/**
-	 *  If event is an closing event from JChemPaintEditorPanel which was opened by this viewer,
-	 *  sync the JChemPaintModels
-	 *
-	 *@param  event  ChangeEvent
-	 */
-	public void stateChanged(ChangeEvent event) {
-		/*if (event.getSource() instanceof JChemPaintEditorPanel) {
-			JChemPaintEditorPanel editorPanel = (JChemPaintEditorPanel) event.getSource();
-			if (editorPanel.getLastEventReason() == JChemPaintEditorPanel.JCP_CLOSING) {
-				setViewerOnly();
-				setJChemPaintModel(editorPanel.getJChemPaintModel());
 			}
-		}*/
-		super.stateChanged(event);
+		}
 	}
 }
 
