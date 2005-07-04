@@ -194,7 +194,6 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		int[] mouseCoords = getWorldCoordinates(screenCoords);
 		int mouseX = mouseCoords[0];
 		int mouseY = mouseCoords[1];
-
 		highlightNearestChemObject(mouseX, mouseY);
 	}
 
@@ -654,9 +653,17 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 								atomCon.addAtom(newAtom2);
 							}
 							newAtom1 = lastAtomInRange;
-							newBond = new Bond(newAtom1, newAtom2, 1);
-							logger.debug(newAtom1 + " - " + newAtom2);
-							atomCon.addBond(newBond);
+							if (newAtom1 == null)
+							{
+								newAtom1 = new
+								Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));	
+							}
+							if(newAtom1 != newAtom2)
+							{
+								newBond = new Bond(newAtom1, newAtom2, 1);
+								logger.debug(newAtom1 + " - " + newAtom2);
+								atomCon.addBond(newBond);
+							}
 			
 							try
 							{
