@@ -75,7 +75,6 @@ require(SJava)
 if (!isJavaInitialized()) {
     .JavaInit()
 }
-options(show.error.messages=FALSE)
 
 saveModel <- function(modelname, filename) {
     resp <- try( do.call('save',list(modelname,file=filename)), silent=TRUE )
@@ -90,9 +89,12 @@ loadModel.getName <- function(filename) {
    modelname
 }
 unserializeModel <- function(modelstr, modelname) {
-    assign(modelname, unserialize(modelstr))
-    ls()
+    assign(modelname, unserialize(modelstr), pos=1)
     get(modelname)
+}
+
+summaryModel <- function(modelname) {
+    summary(get(modelname))
 }
 
 hashmap.to.list <- function(params) {
@@ -121,6 +123,14 @@ lmPredictConverter <- function(preds,...) {
     .JNew('org.openscience.cdk.qsar.model.R.LinearRegressionModelPredict',
     preds$fit[,1], preds$se.fit, preds$fit[,2], preds$fit[,3],
     preds$df, preds$residual.scale)
+}
+lmSummaryConverter <- function(sumry,...) {
+    .JNew('org.openscience.cdk.qsar.model.R.LinearRegressionModelSummary',
+    sumry$residuals, sumry$coeff,
+    sumry$sigma, sumry$r.squared, sumry$adj.r.squared,
+    sumry$df[2], sumry$fstatistic,
+    attr(sumry$coeff, 'dimnames')[[1]],
+    attr(sumry$coeff, 'dimnames')[[2]])
 }
 
 #############################################
@@ -213,6 +223,9 @@ setJavaFunctionConverter(lmFitConverter, function(x,...){inherits(x,'lm')},
                           fromJava=F)
 setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,'lmregprediction')},
                           description='lm predict object to Java',
+                          fromJava=F)
+setJavaFunctionConverter(lmSummaryConverter, function(x,...){inherits(x,'summary.lm')},
+                          description='lm summary object to Java',
                           fromJava=F)
 setJavaFunctionConverter(cnnClassFitConverter, function(x,...){inherits(x,'nnet.formula')},
                           description='cnn (nnet) classification fit object to Java',

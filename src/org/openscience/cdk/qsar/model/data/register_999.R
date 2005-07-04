@@ -1,11 +1,11 @@
-#############################################
-# Register the fit/predict converter funcs
-#############################################
 setJavaFunctionConverter(lmFitConverter, function(x,...){inherits(x,'lm')},
                           description='lm fit object to Java',
                           fromJava=F)
 setJavaFunctionConverter(lmPredictConverter, function(x,...){inherits(x,'lmregprediction')},
                           description='lm predict object to Java',
+                          fromJava=F)
+setJavaFunctionConverter(lmSummaryConverter, function(x,...){inherits(x,'summary.lm')},
+                          description='lm summary object to Java',
                           fromJava=F)
 setJavaFunctionConverter(cnnClassFitConverter, function(x,...){inherits(x,'nnet.formula')},
                           description='cnn (nnet) classification fit object to Java',

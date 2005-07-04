@@ -229,6 +229,7 @@ public abstract class RModel implements Model {
      * @param modelname The name of the model as returned by \code{getModelName}.
      * @param filename The file to which the model should be saved
      * @throws QSARModelException if the R session cannot save the model
+     * @see #loadModel
      */
     public static void saveModel(String modelname, String filename) throws QSARModelException {
         if (filename.equals("") || filename == null) {
@@ -265,12 +266,14 @@ public abstract class RModel implements Model {
      *
      * Ordinarily the user does not need to call this function as each model
      * is assigned a unique ID at instantiation. However, if a user saves a model
-     * to disk (see {@link saveModel}) and then later loads it, the loaded
+     * to disk and then later loads it, the loaded
      * model may overwrite a model in that session. In this situation, this method
      * can be used to assign a name to the model.
      *
      * @param newName The name of the model
      * @see #getModelName
+     * @see #saveModel
+     * @see #loadModel
      *
      */
     public void setModelName(String newName) {
@@ -308,6 +311,7 @@ public abstract class RModel implements Model {
      * @param fileName The file containing the R object to load
      * @throws QSARModelException if the R session could not load the object or if the loaded model
      * does not correspond to the class that it was loaded from
+     * @see #saveModel
      */
     abstract public void loadModel(String fileName) throws QSARModelException;
     /** 
@@ -328,6 +332,7 @@ public abstract class RModel implements Model {
      * a variable of this name)
      * @throws QSARModelException if the R session could not load the object or if the loaded model
      * does not correspond to the class that it was loaded from
+     * @see #saveModel
      */
     abstract public void  loadModel(String serializedModel, String modelName) throws QSARModelException;
 }

@@ -156,9 +156,14 @@ public class LinearRegressionModelTest extends CDKTestCase {
             LinearRegressionModel lrm = new LinearRegressionModel(x,y);
             assertTrue(lrm.revaluator != null);
 
+
             //lrm.saveModel(lrm.getModelName(), "lmodel.rda");
 
             lrm.build();
+
+            // check the summary method
+            assertTrue(lrm.summary() != null);
+
             double[] coeff = lrm.getFitCoefficients();
             assertTrue(coeff != null);
             assertEquals(coeff[0], 0.5079196, .000001);

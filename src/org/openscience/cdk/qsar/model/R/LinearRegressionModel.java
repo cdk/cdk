@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.model.R;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.qsar.model.R.LinearRegressionModelFit;
 import org.openscience.cdk.qsar.model.R.LinearRegressionModelPredict;
+import org.openscience.cdk.qsar.model.R.LinearRegressionModelSummary;
 
 import org.omegahat.R.Java.REvaluator;
 import org.omegahat.R.Java.ROmegahatInterpreter;
@@ -348,6 +349,9 @@ public class LinearRegressionModel extends RModel {
      * call an exception will be thrown. Use <code>setParameters</code>
      * to set the values of the independent variable for the new observations and the
      * interval type.
+     * @throws QSARModelException if the model has not been built prior to a call
+     * to this method. Also if the number of independent variables specified for prediction
+     * is not the same as specified during model building
      */
     public void predict() throws QSARModelException {
         if (this.modelfit == null) 
@@ -365,6 +369,32 @@ public class LinearRegressionModel extends RModel {
             throw new QSARModelException(re.toString());
         }
     }
+
+    /**
+     * Returns an object summarizing the linear regression model.
+     *
+     * The return object simply wraps the fields from the summary.lm
+     * return value. Various details can be extracted from the return object,
+     * See {@link LinearRegressionModelSummary} for more details.
+     *
+     * @return A summary for the linear regression model
+     * @throws QSARModelException if the model has not been built prior to a call
+     * to this method
+     */
+    public LinearRegressionModelSummary summary() throws QSARModelException {
+        if (this.modelfit == null) 
+            throw new QSARModelException("Before calling summary() you must fit the model using build()");
+
+        LinearRegressionModelSummary s = null;
+        try {
+            s = (LinearRegressionModelSummary)revaluator.call("summaryModel",
+                    new Object[]{ getModelName() });
+        } catch (Exception re) {
+            throw new QSARModelException(re.toString());
+        }
+        return(s);
+    }
+
 
     /**
      * Loads an LinearRegressionModel object from disk in to the current session.

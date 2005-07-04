@@ -13,6 +13,14 @@ lmPredictConverter <- function(preds,...) {
     preds$fit[,1], preds$se.fit, preds$fit[,2], preds$fit[,3],
     preds$df, preds$residual.scale)
 }
+lmSummaryConverter <- function(sumry,...) {
+    .JNew('org.openscience.cdk.qsar.model.R.LinearRegressionModelSummary',
+    sumry$residuals, sumry$coeff,
+    sumry$sigma, sumry$r.squared, sumry$adj.r.squared,
+    sumry$df[2], sumry$fstatistic,
+    attr(sumry$coeff, 'dimnames')[[1]],
+    attr(sumry$coeff, 'dimnames')[[2]])
+}
 
 buildLM <- function(modelname, params) {
     # params is a java.util.HashMap containing the parameters
