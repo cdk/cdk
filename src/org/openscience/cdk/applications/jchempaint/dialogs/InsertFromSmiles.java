@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.applications.jchempaint.*;
 
 /**
- *  Internal frame to allow for changing the propterties.
+ * Frame to allow for changing the propterties.
  *
  * @cdk.module jchempaint
  * @author     steinbeck
@@ -145,30 +145,44 @@ public class InsertFromSmiles extends JFrame
 				String SMILES = valueText.getText();
 				SmilesParser sp = new SmilesParser();
 				Molecule m = sp.parseSmiles(SMILES);
-				
+
+                // ok, get relevent bits from active model
+                JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
+                Renderer2DModel renderModel = jcpModel.getRendererModel();
+                ChemModel chemModel = jcpModel.getChemModel();
+                SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+                if (moleculeSet == null) {
+                    moleculeSet = new SetOfMolecules();
+                }
+
 				// ok, now generate 2D coordinates
 				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 				try
 				{
 					sdg.setMolecule(m);
 					sdg.generateCoordinates(new Vector2d(0,1));
-					m = sdg.getMolecule();
-				} catch (Exception exc)
-				{
+                    m = sdg.getMolecule();
+                    double bondLength = renderModel.getBondLength();
+                    double scaleFactor = GeometryTools.getScaleFactor(m, bondLength);
+                    GeometryTools.scaleMolecule(m, scaleFactor);
+                    GeometryTools.translate2DCenterTo(m,
+                        GeometryTools.get2DCenter(
+                            ChemModelManipulator.getAllInOneContainer(chemModel)
+                        )
+                    );
+                    GeometryTools.translate2D(m, 5*bondLength, 0); // in pixels
+				} catch (Exception exc) {
 					exc.printStackTrace();
 				}
 
-				// now return structure to model
-				SetOfMolecules som = new SetOfMolecules();
-				som.addMolecule(m);
-				ChemModel chemModel = new ChemModel();
-				chemModel.setSetOfMolecules(som);
-				
-				jcpPanel.processChemModel(chemModel);
-				
-				String title = "Created from SMILES: " + SMILES;
-				jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(title);
-				((JFrame) jcpPanel.lastUsedJCPP.getParent().getParent().getParent().getParent()).setTitle(title);
+                // now add the structure to the active model
+                moleculeSet.addMolecule(m);
+                // and select it
+                renderModel.setSelectedPart(m);
+                
+                // fire a change so that the view gets updated
+                jcpModel.fireChange();
+                
 				closeFrame();
 				
 

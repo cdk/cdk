@@ -17,6 +17,10 @@
       element symbol in PDBAtom.
     </bugfix>
     <addition contributor="egonw">
+      Insert from SMILES in JChemPaint now really inserts, instead of adding a new
+      model.
+    </addition>
+    <addition contributor="egonw">
       Added copy/paste functionality to JChemPaint.
     </addition>
     <addition contributor="steinbeck">
