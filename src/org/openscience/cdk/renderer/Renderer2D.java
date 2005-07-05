@@ -583,7 +583,10 @@ public class Renderer2D implements MouseMotionListener
 				(int) atom.getY2d() + (atomRadius / 2)};
 		int radius = (int) getScreenSize(atomRadius);
 		coords = getScreenCoordinates(coords);
-		graphics.fillRect(coords[0], coords[1], radius, radius);
+    if(r2dm.getIsCompact())
+      graphics.drawRect(coords[0], coords[1], radius, radius);
+    else
+      graphics.fillRect(coords[0], coords[1], radius, radius);
 	}
 
 
