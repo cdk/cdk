@@ -101,6 +101,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private Polygon selectRect = null;
 	
 	private AtomContainer selectedPart = null;
+	private AtomContainer clipboardContent = null;
 	
 	private Vector lassoPoints = new Vector();
     
@@ -743,6 +744,28 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	}
 
 	
+
+    /**
+     * Returns the atoms and bonds on the Renderer2D clipboard. If the clipboard
+     * is empty it returns null.
+     * Primarily used for copy/paste.
+     *
+     * @return an atomcontainer with the atoms and bonds on the clipboard.
+     */
+    public AtomContainer getClipboardContent() {
+        return clipboardContent;
+    }
+
+
+    /**
+     * Sets the atoms and bonds on the Renderer2D clipboard.
+     * Primarily used for copy/paste.
+     *
+     * @param content the new content of the clipboard.
+     */
+    public void setClipboardContent(AtomContainer content) {
+        this.clipboardContent = content;
+    }
 
 	/**
 	 * Get selected atoms

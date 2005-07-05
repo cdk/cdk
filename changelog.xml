@@ -16,6 +16,9 @@
       Fixed broken Junit test when coffein.pdb is read. Corrected way of setting
       element symbol in PDBAtom.
     </bugfix>
+    <addition contributor="egonw">
+      Added copy/paste functionality to JChemPaint.
+    </addition>
     <addition contributor="steinbeck">
       Added classes for permuting the order of atoms in an AtomContainer 
       (graph.AtomContainerAtomPermutor)
