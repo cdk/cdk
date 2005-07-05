@@ -146,7 +146,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
           }
         }
         theModel.getRendererModel().setBackgroundDimension(new Dimension(largestX-smallestX+30, largestY - smallestY+30));
-        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
+        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
       }
     }
 		//embedded means that additional instances can't be created, which is
