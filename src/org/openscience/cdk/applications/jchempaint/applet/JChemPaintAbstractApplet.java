@@ -251,6 +251,6 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   public void selectAtom(int atom){
     theJcpp.getJChemPaintModel().getRendererModel().setHighlightColor(Color.RED);
     theJcpp.getJChemPaintModel().getRendererModel().setHighlightedAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(atom));
-    repaint();
+    getTheJcpp().repaint();
   }
 }
