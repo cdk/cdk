@@ -17,6 +17,9 @@
       element symbol in PDBAtom.
     </bugfix>
     <addition contributor="egonw">
+      Added an option for flipping a selected molecule horizontally or vertically.
+    </addition>
+    <addition contributor="egonw">
       Insert from SMILES in JChemPaint now really inserts, instead of adding a new
       model.
     </addition>
