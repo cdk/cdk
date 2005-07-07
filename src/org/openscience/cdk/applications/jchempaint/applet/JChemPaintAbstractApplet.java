@@ -145,7 +145,13 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
               largestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
           }
         }
-        theModel.getRendererModel().setBackgroundDimension(new Dimension(largestX-smallestX+30, largestY - smallestY+30));
+        int x=largestX-smallestX+30;
+        int y=largestY - smallestY+30;
+        if(x<300)
+          x=300;
+        if(y<300)
+          y=300;
+        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
         jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
       }
     }

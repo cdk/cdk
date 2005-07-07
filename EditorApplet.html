@@ -9,10 +9,11 @@ The JChemPaint Applet
 </h2>
 
 <applet code="org.openscience.cdk.applications.jchempaint.applet.JChemPaintEditorApplet" archive="dist/jar/jchempaint-applet-core.jar"
-		name="JChemPaintEditorApplet"
+		name="Editor"
         width="600" height="500">
+<param name="load" value="data/mdl/big.mol">
 </applet>
-
+<a href="javascript:alert(document.Editor.getMolFile())">show mol file</a>
 <blockquote>
 <hr>
 

@@ -283,8 +283,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
 			}
 		} catch (Exception exc) {
-			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-			logger.debug(exc);
+			//logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
+			//logger.debug(exc);
 		}
 	}
 
