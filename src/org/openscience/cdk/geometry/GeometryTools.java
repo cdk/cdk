@@ -611,6 +611,8 @@ public class GeometryTools {
 
 	public static double getScaleFactor(AtomContainer ac, double bondLength) {
 		double currentAverageBondLength = getBondLengthAverage(ac);
+    if(currentAverageBondLength==0 || Double.isNaN(currentAverageBondLength))
+      return 1;
 		return bondLength / currentAverageBondLength;
 	}
 

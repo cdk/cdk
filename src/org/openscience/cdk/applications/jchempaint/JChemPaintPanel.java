@@ -592,9 +592,10 @@ public abstract class JChemPaintPanel
 		JChemPaintModel jcpm = getJChemPaintModel();
 		Renderer2DModel rendererModel = jcpm.getRendererModel();
 		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
-		double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
-		GeometryTools.scaleMolecule(ac, scaleFactor);
-		Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
+    Atom[] atoms = ac.getAtoms();
+    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
+    GeometryTools.scaleMolecule(ac, scaleFactor);
+    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
     double x = view.getX() + view.getWidth();
 		double y = view.getY() + view.getHeight();
 		Renderer2DModel model = jchemPaintModel.getRendererModel();
@@ -621,9 +622,8 @@ public abstract class JChemPaintPanel
         relocatedX = 0;
         GeometryTools.center(ac, dim);
       }
-		}
+  	}
 		//fixing the coords regarding the position of the viewablePart
-		Atom[] atoms = ac.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i].getPoint2d() != null) {
         atoms[i].getPoint2d().x = atoms[i].getPoint2d().x + relocatedX;

@@ -60,8 +60,6 @@ public class HelpAction extends JCPAction
 		    try
 			{
 		        JavaHelpDialog jHD = new JavaHelpDialog();
-		        jHD.getDisplayHelp().actionPerformed(e);
-		        
 			}catch (Exception ee)
 			{
 				System.out.println("HelpSet: "+ee.getMessage());

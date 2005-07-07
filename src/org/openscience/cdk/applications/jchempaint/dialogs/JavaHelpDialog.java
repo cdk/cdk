@@ -62,22 +62,11 @@ public class JavaHelpDialog
         URL helpurl=HelpSet.findHelpSet(this.getClass().getClassLoader(),"org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/jcp.hs");
 		    HelpSet hs = new HelpSet(null, helpurl);
 		    HelpBroker hb = hs.createHelpBroker();
-		    
-		    fDisplayHelp = new CSH.DisplayHelpFromSource(hb);
-		    
+        hb.setDisplayed(true);
 		} catch(Exception ee) {
 	        System.out.println("HelpSet: "+ee.getMessage());
 	        System.out.println("HelpSet: "+ "jcp.hs" + " not found");
 	      }
-	}
-	/**
-	 *  get the Panel of JavaHelp
-	 *
-	 *@return  CSH.DisplayHelpFromSource  Description of the Parameter
-	 */
-	public CSH.DisplayHelpFromSource getDisplayHelp()
-	{
-		return  fDisplayHelp;
 	}
 }
 
