@@ -71,7 +71,9 @@ public class AtomCountDescriptor implements Descriptor {
     /**
      *  Constructor for the AtomCountDescriptor object.
      */
-    public AtomCountDescriptor() { }
+    public AtomCountDescriptor() { 
+        elementName = "*";
+    }
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
