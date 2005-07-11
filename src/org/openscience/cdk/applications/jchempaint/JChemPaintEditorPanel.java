@@ -28,13 +28,27 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.EventObject;
-import javax.swing.JPanel;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
+import javax.swing.JViewport;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -44,36 +58,24 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
+import org.openscience.cdk.applications.plugin.CDKEditBus;
+import org.openscience.cdk.applications.plugin.CDKPluginManager;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.validate.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.net.URL;
-import java.io.*;
-import javax.swing.*;
-import javax.swing.text.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.applications.plugin.*;
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.validate.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.event.*;
-import org.openscience.cdk.applications.jchempaint.*;
-import org.openscience.cdk.applications.jchempaint.io.*;
-import org.openscience.cdk.applications.jchempaint.action.*;
-import org.openscience.cdk.applications.jchempaint.dialogs.*;
-import org.openscience.cdk.applications.plugin.*;
-import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
+import org.openscience.cdk.validate.BasicValidator;
+import org.openscience.cdk.validate.CDKValidator;
+import org.openscience.cdk.validate.DictionaryValidator;
+import org.openscience.cdk.validate.PDBValidator;
+import org.openscience.cdk.validate.ValencyValidator;
+import org.openscience.cdk.validate.ValidatorEngine;
 
 /**
  *  This class implements an editing JChemPaintPanel.
@@ -113,14 +115,21 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     this(1, null);
   }
 
+
+	public JChemPaintEditorPanel(int lines, Dimension panelDimension) {
+	    this(1, panelDimension, false);
+	}
 	/**
 	 *  Constructor for the panel
 	 *
 	 *@param  lines  How many lines should the horizontal toolbar have?
 	 */
-	public JChemPaintEditorPanel(int lines, Dimension panelDimension)
+	public JChemPaintEditorPanel(int lines, Dimension panelDimension, boolean isEmbedded)
 	{
 		super();
+		if (isEmbedded == true) {
+		    this.setEmbedded();
+		}
     customizeView();
 		setupPluginManager();
 		super.setJChemPaintModel(new JChemPaintModel());
@@ -131,7 +140,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 		this.setTransferHandler(new JCPTransferHandler("JCPPanel"));
 		logger.debug("JCPPanel set and done...");
-		if (panelDimension != null && getIsOpenedByViewer()) {
+		if (panelDimension != null && this.isEmbedded()) {
 			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);
@@ -674,7 +683,18 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
    //As long there is nothing it it, it shouldn't overwrite the function of JChemPaintPanel
     public void stateChanged(ChangeEvent e)
    {
-       super.stateChanged(e);
+        if(e.getSource() instanceof JChemPaintPanel) {
+            ChemModel editorModel = ((JChemPaintPanel)e.getSource()).getJChemPaintModel().getChemModel();
+            JViewport viewPort =((JScrollPane) ((Container) this.getComponent(0)).getComponent(0)).getViewport();
+            if (viewPort.getView() == null) {
+                viewPort.add(this.getDrawingPanel());
+            }
+            this.getJChemPaintModel().setChemModel(editorModel);
+            if (editorModel != null) {
+                this.scaleAndCenterMolecule(this.getJChemPaintModel().getChemModel());
+            }
+        }
+        super.stateChanged(e);
 
         if (jchemPaintModel != null) {
           for (int i = 0; i < 3; i++) {

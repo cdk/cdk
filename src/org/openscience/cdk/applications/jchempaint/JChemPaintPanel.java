@@ -28,32 +28,58 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.JInternalFrame.*;
-import javax.swing.border.*;
-import javax.swing.filechooser.*;
-import javax.swing.event.*;
-import javax.swing.text.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.event.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.io.listener.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.tools.manipulator.*;
-import org.openscience.cdk.validate.*;
-import org.openscience.cdk.applications.jchempaint.*;
-import org.openscience.cdk.applications.jchempaint.action.*;
-import org.openscience.cdk.applications.jchempaint.dialogs.*;
-import org.openscience.cdk.applications.jchempaint.io.*;
+import java.util.Iterator;
+import java.util.MissingResourceException;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
+import javax.swing.JViewport;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.applications.jchempaint.action.JCPAction;
+import org.openscience.cdk.applications.jchempaint.action.SaveAction;
+import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.listener.SwingGUIListener;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  JPanel that contains a full JChemPaint program, either viewer or full
@@ -538,7 +564,7 @@ public abstract class JChemPaintPanel
 	 *@return    Description of the Return Value
 	 */
 	public int showWarning() {
-		if (jchemPaintModel.isModified() && !getIsOpenedByViewer()) {
+		if (jchemPaintModel.isModified() && !getIsOpenedByViewer() && !isEmbedded) {
 			int answer = JOptionPane.showConfirmDialog(this, jchemPaintModel.getTitle() + " " + JCPLocalizationHandler.getInstance().getString("warning"), JCPLocalizationHandler.getInstance().getString("warningheader"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (answer == JOptionPane.YES_OPTION) {
 				new SaveAction(this, false).actionPerformed(new ActionEvent(this, 12, ""));
@@ -589,47 +615,47 @@ public abstract class JChemPaintPanel
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
 	public void scaleAndCenterMolecule(ChemModel chemModel, Dimension dim) {
-		JChemPaintModel jcpm = getJChemPaintModel();
-		Renderer2DModel rendererModel = jcpm.getRendererModel();
-		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
-    Atom[] atoms = ac.getAtoms();
-    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
-    GeometryTools.scaleMolecule(ac, scaleFactor);
-    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
-    double x = view.getX() + view.getWidth();
-		double y = view.getY() + view.getHeight();
-		Renderer2DModel model = jchemPaintModel.getRendererModel();
-		double relocatedY = model.getBackgroundDimension().getSize().getHeight() - (y + view.getY() / 2);
-		double relocatedX = view.getX() / 2;
-		Dimension viewablePart = new Dimension((int) x, (int) y);
-		//GeometryTools.center(ac, viewablePart);
-		//to be fixed - check if molDim is reaching over viewablePart borders...
-		if (this instanceof JChemPaintViewerOnlyPanel) {
-      GeometryTools.center(ac, model.getBackgroundDimension());
-      relocatedX=0;
-      relocatedY=0;
-		} else {
-      if(dim==null){
-        if(viewablePart.getWidth()==0 && viewablePart.getHeight()==0){
-          relocatedX=0;
-          relocatedY=0;
-          GeometryTools.center(ac, model.getBackgroundDimension());
-        }else{
-          GeometryTools.center(ac, viewablePart);
-        }
-      }else{
-        relocatedY = model.getBackgroundDimension().getSize().getHeight() - (dim.getHeight());
-        relocatedX = 0;
-        GeometryTools.center(ac, dim);
-      }
-  	}
-		//fixing the coords regarding the position of the viewablePart
-		for (int i = 0; i < atoms.length; i++) {
-			if (atoms[i].getPoint2d() != null) {
-        atoms[i].getPoint2d().x = atoms[i].getPoint2d().x + relocatedX;
-				atoms[i].getPoint2d().y = atoms[i].getPoint2d().y + relocatedY;
-			}
-		}
+	    JChemPaintModel jcpm = getJChemPaintModel();
+	    Renderer2DModel rendererModel = jcpm.getRendererModel();
+	    AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
+	    Atom[] atoms = ac.getAtoms();
+	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
+	    GeometryTools.scaleMolecule(ac, scaleFactor);
+	    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
+	    double x = view.getX() + view.getWidth();
+	    double y = view.getY() + view.getHeight();
+	    Renderer2DModel model = jchemPaintModel.getRendererModel();
+	    double relocatedY = model.getBackgroundDimension().getSize().getHeight() - (y + view.getY() / 2);
+	    double relocatedX = view.getX() / 2;
+	    Dimension viewablePart = new Dimension((int) x, (int) y);
+	   //GeometryTools.center(ac, viewablePart);
+	    //to be fixed - check if molDim is reaching over viewablePart borders...
+	    if (this instanceof JChemPaintViewerOnlyPanel) {
+	        GeometryTools.center(ac, model.getBackgroundDimension());
+	        relocatedX=0;
+	        relocatedY=0;
+	    } else {
+	        if(dim==null){
+	            if(viewablePart.getWidth()==0 && viewablePart.getHeight()==0){
+	                relocatedX=0;
+	                relocatedY=0;
+	                GeometryTools.center(ac, model.getBackgroundDimension());
+	            }else{
+	                 GeometryTools.center(ac, viewablePart);
+	            }
+	        }else{
+	            relocatedY = model.getBackgroundDimension().getSize().getHeight() - (dim.getHeight());
+	            relocatedX = 0;
+	            GeometryTools.center(ac, dim);
+	        }
+	    }
+	    //fixing the coords regarding the position of the viewablePart
+	    for (int i = 0; i < atoms.length; i++) {
+	        if (atoms[i].getPoint2d() != null) {
+	            atoms[i].getPoint2d().x = atoms[i].getPoint2d().x + relocatedX;
+	            atoms[i].getPoint2d().y = atoms[i].getPoint2d().y + relocatedY;
+	        }
+	    }
 	}
 
 
@@ -798,6 +824,145 @@ public abstract class JChemPaintPanel
 	public JPanel getDrawingPanel() {
 		return drawingPanel;
 	}
+	
+	
+	public String getMenuResourceString(String key) {
+		String str;
+		try {
+			str = JCPPropertyHandler.getInstance().getGUIDefinition().getString(key);
+		} catch (MissingResourceException mre) {
+			str = null;
+		}
+		return str;
+	}
+	
+	/**
+	 * adds a popupmenu for embedded use of jcp and a mouseListener which lets 
+	 * pop up a floating jcp-frame with the actual model
+	 * 
+	 */
+	public void addFilePopUpMenu() {
+	    String key = "menubarpopup";
+		String[] itemKeys = StringHelper.tokenize(getMenuResourceString(key));
+		JPopupMenu popupMenu = new JPopupMenu();
+		for (int i = 0; i < itemKeys.length; i++) {
+			String cmd = itemKeys[i];
+			if (cmd.equals("-")) {
+				popupMenu.addSeparator();
+				continue;
+			}
+			String translation = "***" + cmd + "***";
+			try {
+				translation = JCPLocalizationHandler.getInstance().getString(cmd);
+			} catch (MissingResourceException mre) {
+			}
+			JMenuItem mi = new JMenuItem(translation);
+			String astr = JCPPropertyHandler.getInstance().getResourceString(cmd + JCPAction.actionSuffix);
+			if (astr == null) {
+				astr = cmd;
+			}
+			mi.setActionCommand(astr);
+			JCPAction action = this.getJCPAction().getAction(this, astr);
+			if (action != null) {
+				// sync some action properties with menu
+				mi.setEnabled(action.isEnabled());
+				mi.addActionListener(action);
+			} else {
+				logger.error("Could not find JCPAction class for:" + astr);
+				mi.setEnabled(false);
+			}
+			popupMenu.add(mi);
+		}
+		getDrawingPanel().add(popupMenu);
+		MouseListener popupListener = new PopupListener(this, popupMenu);
+		getDrawingPanel().addMouseListener(popupListener);
+	}
+
+
+    /**
+     *  For showing the emdedded context menu and 
+     *  sync the JChemPaintModels
+     *
+     *@author     thelmus
+     *@cdk.created    18. Mai 2005
+     */
+    class PopupListener extends MouseAdapter {
+    
+    JPopupMenu popupMenu;
+    JChemPaintPanel panel;
+    Container parent;
+    
+    public PopupListener(JChemPaintPanel panel, JPopupMenu popupMenu){
+      this.popupMenu = popupMenu;
+      this.panel = panel;
+    }
+    
+    	/**
+    	 *  Description of the Method
+    	 *
+    	 *@param  e  Description of the Parameter
+    	 */
+    	public void mousePressed(MouseEvent e) {
+    		maybeShowPopup(e);
+    	}
+    
+    
+    	/**
+    	 *  Description of the Method
+    	 *
+    	 *@param  e  Description of the Parameter
+    	 */
+    	public void mouseReleased(MouseEvent e) {
+    		//maybeShowPopup(e);
+    	}
+    
+    
+    	/**
+    	 *  Description of the Method
+    	 *
+    	 *@param  e  Description of the Parameter
+    	 */
+    	private void maybeShowPopup(MouseEvent e) {
+    	    if (e.isPopupTrigger()) {
+    			popupMenu.show(e.getComponent(),
+    					e.getX(), e.getY());
+    		} else {
+    		    JFrame frame = null;
+    		    if (e.getButton() == 1 && e.getClickCount() == 2) {
+    		        if (panel instanceof JChemPaintViewerOnlyPanel) {
+	    		        frame = new JFrame();
+	    		        frame.addWindowListener(
+	    		                new WindowAdapter() {
+	    		                    public void windowClosing(WindowEvent e) {
+	    		                        parent.add(panel);
+	    		                        parent.repaint();
+	    		                    }
+	    		                });
+	    		        parent=panel.getParent();
+	    		        panel.getParent().remove(panel);
+	    		        frame.getContentPane().add(panel);
+	    		       
+    		        }
+    		        else if (panel instanceof JChemPaintEditorPanel) {
+    		          panel = (JChemPaintEditorPanel) panel;
+    		          ChemModel model = panel.getChemModel();
+    		          frame =((JChemPaintEditorPanel) panel).getNewFrame(new JChemPaintModel(model));
+    		          JChemPaintEditorPanel newPanel = (JChemPaintEditorPanel) frame.getContentPane().getComponent(0);
+    		          newPanel.scaleAndCenterMolecule(model);
+    		          newPanel.addChangeListener(panel);
+    		          newPanel.setEmbedded();
+    		          newPanel.setIsOpenedByViewer(true);
+    		          JViewport viewPort =((JScrollPane) ((Container) panel.getComponent(0)).getComponent(0)).getViewport();
+    		          DrawingPanel draw = (DrawingPanel) (viewPort.getView());
+    		          panel.drawingPanel = draw;
+    		          viewPort.remove(draw);
+    		        }
+    		        frame.show();
+    		        frame.pack();
+    		    }
+    		}
+    	}
+    }
 
 
 	/**

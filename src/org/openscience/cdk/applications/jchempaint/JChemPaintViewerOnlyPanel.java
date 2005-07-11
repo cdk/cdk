@@ -28,16 +28,10 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.util.*;
-import javax.swing.event.*;
-import javax.swing.*;
-import java.awt.event.*;
 import java.awt.Dimension;
-import java.awt.Container;
+import java.util.MissingResourceException;
 
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.applications.jchempaint.action.JCPAction;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -49,7 +43,7 @@ import org.openscience.cdk.ChemModel;
 public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 
 	private LoggingTool logger;
-	JPopupMenu viewerPanelPopupMenu;
+//	JPopupMenu popupMenu;
 	
 
 	/**
@@ -69,9 +63,9 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		super();
 		super.setJChemPaintModel(new JChemPaintModel());
 		setViewerOnly();
-		buildFilePopUpMenu();
+//		buildFilePopUpMenu();
 		logger = new LoggingTool(this);
-		if (panelDimension != null && getIsOpenedByViewer()) {
+		if (panelDimension != null) {
 			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);
@@ -82,45 +76,6 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		}
 	}
 
-	/**
-	 *  Description of the Method
-	 */
-	private void buildFilePopUpMenu() {
-		String key = "viewepopupmenubar";
-		String[] itemKeys = StringHelper.tokenize(getMenuResourceString(key));
-		viewerPanelPopupMenu = new JPopupMenu();
-		for (int i = 0; i < itemKeys.length; i++) {
-			String cmd = itemKeys[i];
-			if (cmd.equals("-")) {
-				viewerPanelPopupMenu.addSeparator();
-				continue;
-			}
-			String translation = "***" + cmd + "***";
-			try {
-				translation = JCPLocalizationHandler.getInstance().getString(cmd);
-			} catch (MissingResourceException mre) {
-			}
-			JMenuItem mi = new JMenuItem(translation);
-			String astr = JCPPropertyHandler.getInstance().getResourceString(cmd + JCPAction.actionSuffix);
-			if (astr == null) {
-				astr = cmd;
-			}
-			mi.setActionCommand(astr);
-			JCPAction action = this.getJCPAction().getAction(this, astr);
-			if (action != null) {
-				// sync some action properties with menu
-				mi.setEnabled(action.isEnabled());
-				mi.addActionListener(action);
-			} else {
-				logger.error("Could not find JCPAction class for:" + astr);
-				mi.setEnabled(false);
-			}
-			viewerPanelPopupMenu.add(mi);
-		}
-		getDrawingPanel().add(viewerPanelPopupMenu);
-		MouseListener popupListener = new PopupListener(this);
-		getDrawingPanel().addMouseListener(popupListener);
-	}
 
 
 	/**
@@ -138,75 +93,6 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 			str = null;
 		}
 		return str;
-	}
-
-
-
-	/**
-	 *  If event is an closing event from JChemPaintEditorPanel which was opened by this viewer,
-	 *  sync the JChemPaintModels
-	 *  Description of the Class
-	 *
-	 *@author     thelmus
-	 *@cdk.created    18. Mai 2005
-	 */
-	class PopupListener extends MouseAdapter {
-    
-    JChemPaintViewerOnlyPanel jcpvop;
-    Container parent;
-    
-    public PopupListener(JChemPaintViewerOnlyPanel jcpvop){
-      this.jcpvop=jcpvop;
-    }
-    
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  e  Description of the Parameter
-		 */
-		public void mousePressed(MouseEvent e) {
-			maybeShowPopup(e);
-		}
-
-
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  e  Description of the Parameter
-		 */
-		public void mouseReleased(MouseEvent e) {
-			//maybeShowPopup(e);
-		}
-
-
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  e  Description of the Parameter
-		 */
-		private void maybeShowPopup(MouseEvent e) {
-			if (e.isPopupTrigger()) {
-				viewerPanelPopupMenu.show(e.getComponent(),
-						e.getX(), e.getY());
-			} else {
-				if (e.getButton() == 1 && e.getClickCount() == 2) {
-					JFrame frame = new JFrame();
-          frame.addWindowListener(
-            new WindowAdapter() {
-              public void windowClosing(WindowEvent e) {
-                parent.add(jcpvop);
-                parent.repaint();
-              }
-            });
-          parent=jcpvop.getParent();
-          jcpvop.getParent().remove(jcpvop);
-          frame.getContentPane().add(jcpvop);
-          frame.show();
-					frame.pack();
-					setViewerOnly();
-				}
-			}
-		}
 	}
 }
 
