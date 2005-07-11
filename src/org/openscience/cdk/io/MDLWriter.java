@@ -87,6 +87,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
     private IsotopeFactory isotopeFactory = null;
     private int moleculeNumber;
     public Map sdFields=null;
+    private boolean writeAromatic=true;
 
     /**
      * Contructs a new MDLWriter that can write an array of
@@ -100,6 +101,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
     public ChemFormat getFormat() {
         return new MDLFormat();
+    }
+    
+    public void dontWriteAromatic(){
+      writeAromatic=false;
     }
     
     /**
@@ -323,7 +328,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
                     line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
                     line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
                 }
-                if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+                if (bond.getFlag(CDKConstants.ISAROMATIC) && writeAromatic) {
                     line += formatMDLInt(4,3);
                 } else {
                     line += formatMDLInt((int)bond.getOrder(),3);

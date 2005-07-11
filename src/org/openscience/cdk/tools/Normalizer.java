@@ -65,7 +65,7 @@ public class Normalizer {
    * @return                             Did a replacement take place?
    * @exception  InvalidSmilesException  doc contains an invalid smiles.
    */
-  public static boolean normalize(AtomContainer ac, Document doc) throws InvalidSmilesException {
+  public static boolean normalize(AtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
     NodeList nl = doc.getElementsByTagName("replace-set");
     SmilesParser sp = new SmilesParser();
     boolean change=false;

@@ -101,6 +101,8 @@ public class UniversalIsomorphismTester {
 
   final static int ID1 = 0;
   final static int ID2 = 1;
+  private static long start;
+  public static long timeout=-1;
 
   ///////////////////////////////////////////////////////////////////////////
   //                            Query Methods
@@ -121,7 +123,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     true if the 2 molecule are isomorph
    */
-  public static boolean isIsomorph(AtomContainer g1, AtomContainer g2) {
+  public static boolean isIsomorph(AtomContainer g1, AtomContainer g2)  throws CDKException{
     return (getIsomorphMap(g1, g2) != null);
   }
 
@@ -133,7 +135,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     the first isomorph mapping found projected of g1. This is a List of RMap objects containing Ids of matching bonds.
    */
-  public static List getIsomorphMap(AtomContainer g1, AtomContainer g2) {
+  public static List getIsomorphMap(AtomContainer g1, AtomContainer g2)  throws CDKException{
     List result = null;
 
     List rMapsList = search(g1, g2, getBitSet(g1),
@@ -154,7 +156,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     the first isomorph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
-  public static List getIsomorphAtomsMap(AtomContainer g1, AtomContainer g2) {
+  public static List getIsomorphAtomsMap(AtomContainer g1, AtomContainer g2)  throws CDKException{
     return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getIsomorphMap(g1, g2), g1, g2));
   }
 
@@ -167,7 +169,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     the list of all the 'mappings'
    */
-  public static List getIsomorphMaps(AtomContainer g1, AtomContainer g2) {
+  public static List getIsomorphMaps(AtomContainer g1, AtomContainer g2)  throws CDKException{
     return search(g1, g2, getBitSet(g1),
         getBitSet(g2), true, true);
   }
@@ -185,7 +187,7 @@ public class UniversalIsomorphismTester {
    * @return     the list of all the 'mappings' found projected of g1
    *
    */
-  public static List getSubgraphMaps(AtomContainer g1, AtomContainer g2) {
+  public static List getSubgraphMaps(AtomContainer g1, AtomContainer g2)  throws CDKException{
     return search(g1, g2, new BitSet(), getBitSet(g2), true, true);
   }
 
@@ -197,7 +199,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     the first subgraph bond mapping found projected on g1. This is a List of RMap objects containing Ids of matching bonds.
    */
-  public static List getSubgraphMap(AtomContainer g1, AtomContainer g2) {
+  public static List getSubgraphMap(AtomContainer g1, AtomContainer g2)  throws CDKException{
     List result = null;
     List rMapsList = search(g1, g2, new BitSet(),
         getBitSet(g2), false, false);
@@ -218,7 +220,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second AtomContainer
    * @return     all subgraph atom mappings found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
-  public static List getSubgraphAtomsMaps(AtomContainer g1, AtomContainer g2) {
+  public static List getSubgraphAtomsMaps(AtomContainer g1, AtomContainer g2)  throws CDKException{
     return (makeAtomsMapsOfBondsMaps(UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2));
   }
   
@@ -229,7 +231,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     the first subgraph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
-  public static List getSubgraphAtomsMap(AtomContainer g1, AtomContainer g2) {
+  public static List getSubgraphAtomsMap(AtomContainer g1, AtomContainer g2)  throws CDKException{
     return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getSubgraphMap(g1, g2), g1, g2));
   }
 
@@ -241,7 +243,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     true if g2 a subgraph on g1
    */
-  public static boolean isSubgraph(AtomContainer g1, AtomContainer g2) {
+  public static boolean isSubgraph(AtomContainer g1, AtomContainer g2)  throws CDKException{
     return (getSubgraphMap(g1, g2) != null);
   }
 
@@ -257,7 +259,8 @@ public class UniversalIsomorphismTester {
    * @return     the list of all the maximal common substructure
    *             found projected of g1 (list of AtomContainer )
    */
-  public static List getOverlaps(AtomContainer g1, AtomContainer g2) {
+  public static List getOverlaps(AtomContainer g1, AtomContainer g2) throws CDKException{
+    start=System.currentTimeMillis();
     List rMapsList = search(g1, g2, new BitSet(),
         new BitSet(), true, false);
 
@@ -307,7 +310,7 @@ public class UniversalIsomorphismTester {
    * @param  g2  Description of the second molecule
    * @return     the rGraph
    */
-  public static RGraph buildRGraph(AtomContainer g1, AtomContainer g2) {
+  public static RGraph buildRGraph(AtomContainer g1, AtomContainer g2)  throws CDKException{
     RGraph rGraph = new RGraph();
     nodeConstructor(rGraph, g1, g2);
     arcConstructor(rGraph, g1, g2);
@@ -332,7 +335,7 @@ public class UniversalIsomorphismTester {
    * @return                   a list of rMapList that represent the search solutions
    */
   public static List search(AtomContainer g1, AtomContainer g2, BitSet c1,
-      BitSet c2, boolean findAllStructure, boolean findAllMap) {
+      BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
         
     //Test for single atom cases
     if(g2.getAtomCount() == 1) {
@@ -374,7 +377,6 @@ public class UniversalIsomorphismTester {
 
     // build the RGraph corresponding to this problem
     RGraph rGraph = buildRGraph(g1, g2);
-
     // parse the RGraph with the given constrains and options
     rGraph.parse(c1, c2, findAllStructure, findAllMap);
     List solutionList = rGraph.getSolutions();
@@ -471,7 +473,7 @@ public class UniversalIsomorphismTester {
    * @param  graphList  the list of structure to clean
    * @return            the list cleaned
    */
-  private static ArrayList getMaximum(ArrayList graphList) {
+  private static ArrayList getMaximum(ArrayList graphList)  throws CDKException{
     ArrayList reducedGraphList = (ArrayList) graphList.clone();
 
     for (int i = 0; i < graphList.size(); i++) {
@@ -583,7 +585,7 @@ public class UniversalIsomorphismTester {
    * @param  ac1  description of the first molecule
    * @param  ac2  description of the second molecule
    */
-  private static void nodeConstructor(RGraph gr, AtomContainer ac1, AtomContainer ac2) {
+  private static void nodeConstructor(RGraph gr, AtomContainer ac1, AtomContainer ac2)  throws CDKException{
     // resets the target graph.
     gr.clear();
     Bond[] bondsA1 = ac1.getBonds();
@@ -593,6 +595,8 @@ public class UniversalIsomorphismTester {
     // compares each bond of G1 to each bond of G2
     for (int i = 0; i < bondsA1.length; i++) {
       for (int j = 0; j < bondsA2.length; j++) {
+          if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
+            throw new CDKException("Timeout exceeded in getOverlaps");
           if (ac2 instanceof QueryAtomContainer) {
               QueryBond queryBond = (QueryBond)bondsA2[j];
               QueryAtom atom1 = (QueryAtom)(bondsA2[j].getAtomAt(0));
@@ -653,7 +657,7 @@ public class UniversalIsomorphismTester {
    * @param  ac1  Description of the first molecule
    * @param  ac2  Description of the second molecule
    */
-  private static void arcConstructor(RGraph gr, AtomContainer ac1, AtomContainer ac2) {
+  private static void arcConstructor(RGraph gr, AtomContainer ac1, AtomContainer ac2) throws CDKException{
     // each node is incompatible with himself
     for (int i = 0; i < gr.getGraph().size(); i++) {
       RNode x = (RNode) gr.getGraph().get(i);
@@ -678,6 +682,8 @@ public class UniversalIsomorphismTester {
       // relationship in are equivalent in G1 and G2
       // else they are incompatible.
       for (int j = i + 1; j < gr.getGraph().size(); j++) {
+        if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
+          throw new CDKException("Timeout exceeded in getOverlaps");
         RNode y = (RNode) gr.getGraph().get(j);
 
         a1 = bondsA1[((RNode) gr.getGraph().get(i)).getRMap().getId1()];

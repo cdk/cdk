@@ -42,6 +42,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
@@ -128,7 +129,7 @@ public class TemplateHandler
 		templates.addElement(molecule);
 	}
 	
-	public Molecule removeMolecule(Molecule molecule)
+	public Molecule removeMolecule(Molecule molecule)  throws CDKException
 	{
 		AtomContainer ac1 = new AtomContainer(molecule);
 		AtomContainer ac2 = null;
@@ -155,7 +156,7 @@ public class TemplateHandler
 	 *@param  molecule  The molecule to be check for potential templates
 	 *@return           True if there was a possible mapping
 	 */
-	public boolean mapTemplates(Molecule molecule)
+	public boolean mapTemplates(Molecule molecule) throws CDKException
 	{
 		boolean mapped = false;
 		Molecule template = null;

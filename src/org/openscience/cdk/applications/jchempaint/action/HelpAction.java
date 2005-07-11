@@ -33,7 +33,6 @@ import java.net.URL;
 
 import javax.help.*;
 
-import org.openscience.cdk.applications.jchempaint.dialogs.HelpDialog;
 import org.openscience.cdk.applications.jchempaint.dialogs.JavaHelpDialog;
 
 /**
@@ -52,19 +51,21 @@ public class HelpAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		if (type.equals("tutorial"))
+    try
+    {
+      if (type.equals("tutorial"))
+      {
+        JavaHelpDialog jHD = new JavaHelpDialog("tutorial");
+      }
+      else
+      {
+        JavaHelpDialog jHD = new JavaHelpDialog(null);
+      }
+    }
+    catch (Exception ee)
 		{
-			new HelpDialog(null, "doc/userhelp/ch02.html").show();
-		}  else
-		{
-		    try
-			{
-		        JavaHelpDialog jHD = new JavaHelpDialog();
-			}catch (Exception ee)
-			{
-				System.out.println("HelpSet: "+ee.getMessage());
-				System.out.println("HelpSet: "+" not found");
-			}
+      System.out.println("HelpSet: "+ee.getMessage());
+      System.out.println("HelpSet: "+" not found");
 		}
 	}
 }

@@ -244,6 +244,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   public String getMolFile() throws Exception{
     StringWriter sw = new StringWriter();
     MDLWriter mdlwriter = new MDLWriter(sw);
+    mdlwriter.dontWriteAromatic();
     Molecule all=new Molecule(SetOfMoleculesManipulator.getAllInOneContainer(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules()));
     mdlwriter.write(all);
     return(sw.toString());

@@ -30,6 +30,7 @@
 package org.openscience.cdk.reaction;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.tools.manipulator.*;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -136,7 +137,7 @@ public class ReactionBalancer {
 	 *
 	 *@return    true if Reaction could be balanced.
 	 */
-	public boolean balance(Reaction reaction) {
+	public boolean balance(Reaction reaction) throws CDKException {
 
         if (reaction != this.reaction) {
             this.reaction = reaction;
@@ -224,7 +225,7 @@ public class ReactionBalancer {
 	 *
 	 *@param  mol  The Molecule that should be used.
 	 */
-	public void balanceCharge(Molecule mol) {
+	public void balanceCharge(Molecule mol)  throws CDKException{
 		int molCharge = AtomContainerManipulator.getTotalFormalCharge(mol);
 		if (molCharge == 0) {
 			return;
@@ -278,7 +279,7 @@ public class ReactionBalancer {
 	 *@param  mol      The molecule to add
 	 *@param  element  The element that is to be balanced
 	 */
-	protected void addMoleculeToBalanceElement(Molecule mol, String element) {
+	protected void addMoleculeToBalanceElement(Molecule mol, String element) throws CDKException{
 
 		if (!diff.containsKey(element)) {
 			return;
@@ -349,7 +350,7 @@ public class ReactionBalancer {
 	 *@param  elementCount  The number of Molecules to be added
 	 *@param  mol           The Molecule to be added
 	 */
-	public void balanceSetOfMolecules(SetOfMolecules som, double elementCount, Molecule mol) {
+	public void balanceSetOfMolecules(SetOfMolecules som, double elementCount, Molecule mol) throws CDKException{
 		int molPosition = getMoleculePosition(som, mol);
 		balanceSetOfMolecules(som, elementCount, mol, molPosition);
 	}
@@ -381,7 +382,7 @@ public class ReactionBalancer {
 	 *@param  mol  The Molecule to be checked
 	 *@return      The position in SetOfMolecules if found, -1 otherwise
 	 */
-	public int getMoleculePosition(SetOfMolecules som, Molecule mol) {
+	public int getMoleculePosition(SetOfMolecules som, Molecule mol) throws CDKException {
 		for (int i = 0; i < som.getAtomContainerCount(); i++) {
 			if (som.getAtomContainer(i).getAtomCount() == mol.getAtomCount()) {
 				if (mol.getBondCount() == 0 || som.getAtomContainer(i).getBondCount() == 0) {

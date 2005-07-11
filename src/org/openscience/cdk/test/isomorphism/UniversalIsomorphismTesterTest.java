@@ -41,6 +41,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.exception.*;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
@@ -143,7 +144,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		}
 	}
 	
-    public void testQueryAtomContainer()
+    public void testQueryAtomContainer() throws CDKException
     {
         String molfile = "data/mdl/decalin.mol";
         String queryfile = "data/mdl/decalin.mol";
@@ -175,7 +176,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         
     }
     
-    public void testSFBug1110537() {
+    public void testSFBug1110537()  throws CDKException{
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
         Molecule mol1 = new Molecule();
@@ -198,7 +199,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
     }
     
-    public void testSFBug1208740() {
+    public void testSFBug1208740() throws CDKException {
         String file1 = "data/mdl/bug1208740_1.mol";
         String file2 = "data/mdl/bug1208740_2.mol";
         Molecule mol1 = new Molecule();
@@ -232,7 +233,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertEquals(8, list.size());
     }
     
-    public void testSFBug999330() {
+    public void testSFBug999330() throws CDKException {
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
         Molecule mol1 = new Molecule();

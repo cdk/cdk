@@ -97,7 +97,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		assertEquals(-1, ((Double)hash.get("Cl")).intValue());
     }
 	
-	public void testGetMoleculePosition() {
+	public void testGetMoleculePosition() throws CDKException{
         Molecule mol = new Molecule();
 		mol.addAtom(new Atom("H"));
 		ReactionBalancer rb = new ReactionBalancer();
@@ -111,7 +111,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		assertEquals(0, found);
     }
 	
-	public void testGetMoleculePosition2() {
+	public void testGetMoleculePosition2()  throws CDKException{
 		Molecule hydrogen = new Molecule();
 		Molecule proton = new Molecule();
 		hydrogen.addAtom(new Atom("H"));
@@ -128,7 +128,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		//assertEquals(-1, notFound);
     }
 	
-	public void testBalance_water() {
+	public void testBalance_water()  throws CDKException{
 		HydrogenAdder ha = new HydrogenAdder();
 		for (int i = 0; i < reaction3.getReactants().getAtomContainerCount(); i++) {
 			Molecule mol = reaction3.getReactants().getMolecule(i);
@@ -156,7 +156,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		assertTrue(rb.getDiffHashtable().isEmpty());
 	}
 	
-	public void testBalance_charge() {
+	public void testBalance_charge()  throws CDKException{
 		ReactionBalancer rb = new ReactionBalancer();
 		boolean success = rb.balance(reaction4);
 		Reaction newReaction = rb.getReaction();
@@ -168,7 +168,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		assertEquals(0.0, SetOfMoleculesManipulator.getTotalFormalCharge(newReaction.getProducts()), 0.000001);
 	}
 	
-	public void testBalance_hydrogen() {
+	public void testBalance_hydrogen()  throws CDKException{
 		ReactionBalancer rb = new ReactionBalancer();
 		boolean success = rb.balance(reaction4);
 		Reaction newReaction = rb.getReaction();
@@ -180,7 +180,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		assertEquals(2.0, newReaction.getProducts().getMultiplier(0), 0.000001);
 	}
 	
-	public void testBalance_emptyProducts() {
+	public void testBalance_emptyProducts()  throws CDKException{
 		Reaction r = new Reaction();
 		Molecule mol = new Molecule();
 		Atom h = new Atom("H");
@@ -195,7 +195,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		assertEquals(1, r.getProductCount());
 	}
 	
-	public void testBalance_wrongstoichiometry() {
+	public void testBalance_wrongstoichiometry()  throws CDKException{
 		// uncorrected: C2O2 -> CO
 		// corrected: C2O2 -> 2 CO
 		Reaction r = new Reaction();
