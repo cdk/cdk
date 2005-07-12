@@ -65,7 +65,7 @@ import java.util.Hashtable;
  */
 public class AtomCountDescriptor implements Descriptor {
 
-    private String elementName = null;
+    private String elementName = "*";
 
 
     /**
@@ -144,7 +144,13 @@ public class AtomCountDescriptor implements Descriptor {
     // this could be useful for other descriptors like polar surface area...
     public DescriptorValue calculate(AtomContainer container) throws CDKException {
         int atomCount = 0;
+
+        if (container == null) throw new CDKException("The supplied AtomContainer was NULL");
+
         Atom[] atoms = container.getAtoms();
+
+        if (atoms == null) throw new CDKException("There were no atoms in the supplied AtomContainer");
+
         if (elementName.equals("*")) {
             for (int i = 0; i < atoms.length; i++) {
                 atomCount += container.getAtomAt(i).getHydrogenCount();
