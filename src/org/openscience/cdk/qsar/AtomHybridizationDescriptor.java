@@ -133,6 +133,9 @@ public class AtomHybridizationDescriptor implements Descriptor {
 		
 		atm = new HybridizationStateATMatcher();
 		matched = atm.findMatchingAtomType(container, atom);
+                if (matched == null) {
+                    throw new CDKException("The matched atom type was null");
+                }
 		
 		atman = new AtomTypeManipulator();
 		atman.configure(atom, matched);
