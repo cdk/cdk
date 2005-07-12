@@ -338,7 +338,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 x = new Double(line.substring( 0,10).trim()).doubleValue();
                 y = new Double(line.substring(10,20).trim()).doubleValue();
                 z = new Double(line.substring(20,30).trim()).doubleValue();
-                totalZ += z;
+                totalZ += Math.abs(z); // *all* values should be zero, not just the sum
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = line.substring(31,34).trim();
 
