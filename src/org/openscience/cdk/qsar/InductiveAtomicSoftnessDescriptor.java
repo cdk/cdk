@@ -153,57 +153,61 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   a double with polarizability of the heavy atom
-	 *@exception  CDKException  Possible Exceptions
+	 *@exception  CDKException  if any atom in the supplied AtomContainer has no 3D coordinates
 	 */
-	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
-		Atom[] allAtoms = null;
-		Atom target = null;
-		double atomicSoftness = 0;
-		double radiusTarget = 0;
-		target = ac.getAtomAt(atomPosition);
-		allAtoms = ac.getAtoms();
-		atomicSoftness = 0;
-		double partial = 0;
-		double radius = 0;
-		String symbol = null;
-		AtomType type = null;
-		try {
-			symbol = ac.getAtomAt(atomPosition).getSymbol();
-			type = factory.getAtomType(symbol);
-			radiusTarget = type.getCovalentRadius();
-		} catch (Exception ex1) {
-			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
-		}
+        public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+            Atom[] allAtoms = null;
+            Atom target = null;
+            double atomicSoftness = 0;
+            double radiusTarget = 0;
+            target = ac.getAtomAt(atomPosition);
+            allAtoms = ac.getAtoms();
+            atomicSoftness = 0;
+            double partial = 0;
+            double radius = 0;
+            String symbol = null;
+            AtomType type = null;
+            try {
+                symbol = ac.getAtomAt(atomPosition).getSymbol();
+                type = factory.getAtomType(symbol);
+                radiusTarget = type.getCovalentRadius();
+            } catch (Exception ex1) {
+                logger.debug(ex1);
+                throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+            }
 
-		for (int i = 0; i < allAtoms.length; i++) {
-   			if (!target.equals(allAtoms[i])) {
-				partial = 0;
-				symbol = allAtoms[i].getSymbol();
-				try {
-					type = factory.getAtomType(symbol);
-				} catch (Exception ex1) {
-					logger.debug(ex1);
-					throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
-				}
-				
-				radius = type.getCovalentRadius();
-				partial += radius * radius;
-				partial += (radiusTarget * radiusTarget);
-				partial = partial / (calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
-				//System.out.println("SOFT: atom "+symbol+", radius "+radius+", distance "+calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
-				atomicSoftness += partial;
-			}
-		}
+            for (int i = 0; i < allAtoms.length; i++) {
 
-		atomicSoftness = 2 * atomicSoftness;
-		atomicSoftness = atomicSoftness * 0.172;
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(atomicSoftness));
-	}
+                if (target.getPoint3d() == null || allAtoms[i].getPoint3d() == null) {
+                    throw new CDKException("The target atom or atom "+i+" had no 3D coordinates. These are required");
+                }
+                if (!target.equals(allAtoms[i])) {
+                    partial = 0;
+                    symbol = allAtoms[i].getSymbol();
+                    try {
+                        type = factory.getAtomType(symbol);
+                    } catch (Exception ex1) {
+                        logger.debug(ex1);
+                        throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+                    }
+
+                    radius = type.getCovalentRadius();
+                    partial += radius * radius;
+                    partial += (radiusTarget * radiusTarget);
+                    partial = partial / (calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
+                    //System.out.println("SOFT: atom "+symbol+", radius "+radius+", distance "+calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
+                    atomicSoftness += partial;
+                }
+            }
+
+            atomicSoftness = 2 * atomicSoftness;
+            atomicSoftness = atomicSoftness * 0.172;
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(atomicSoftness));
+        }
 
 
 	/**
-	 *  Description of the Method
+	 *  Description of the Method.
 	 *
 	 *@param  atom1  Description of the Parameter
 	 *@param  atom2  Description of the Parameter
@@ -221,8 +225,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterNames attribute of the InductiveAtomicSoftnessDescriptor
-	 *  object
+	 *  Gets the parameterNames attribute of the InductiveAtomicSoftnessDescriptor  object.
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -234,8 +237,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the parameterType attribute of the InductiveAtomicSoftnessDescriptor
-	 *  object
+	 *  Gets the parameterType attribute of the InductiveAtomicSoftnessDescriptor object.
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value

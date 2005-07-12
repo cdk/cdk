@@ -138,6 +138,10 @@ public class DistanceToAtomDescriptor implements Descriptor {
 		double distanceToAtom = 0;
 		Atom target = container.getAtomAt(targetPosition);
 		Atom focus = container.getAtomAt(focusPosition);
+
+                if (target.getPoint3d() == null || focus.getPoint3d() == null) {
+                    throw new CDKException("Target or focus atom must have 3D coordinates.");
+                }
 		distanceToAtom = calculateDistanceBetweenTwoAtoms(target, focus);
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(distanceToAtom));
 

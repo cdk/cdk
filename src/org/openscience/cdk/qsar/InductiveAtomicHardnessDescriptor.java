@@ -178,6 +178,12 @@ public class InductiveAtomicHardnessDescriptor implements Descriptor {
 		}
 
 		for (int i = 0; i < allAtoms.length; i++) {
+
+                if (target.getPoint3d() == null || allAtoms[i].getPoint3d() == null) {
+                    throw new CDKException("The target atom or atom "+i+" had no 3D coordinates. These are required");
+                }
+
+
    			if (!target.equals(allAtoms[i])) {
 				partial = 0;
 				symbol = allAtoms[i].getSymbol();

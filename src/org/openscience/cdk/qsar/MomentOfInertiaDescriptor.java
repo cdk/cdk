@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -127,9 +128,10 @@ public class MomentOfInertiaDescriptor implements Descriptor {
      *
      *@param  container  Parameter is the atom container.
      *@return            An ArrayList containing 7 elements in the order described above
+     *@throws CDKException if the supplied AtomContainer does not contain 3D coordinates
      */
 
-    public DescriptorValue calculate(AtomContainer container) {
+    public DescriptorValue calculate(AtomContainer container) throws CDKException {
         IsotopeFactory factory = null;
         try {
             factory = IsotopeFactory.getInstance();
@@ -152,17 +154,25 @@ public class MomentOfInertiaDescriptor implements Descriptor {
                 int delta;
                 if (i == j) delta = 1;
                 else delta = 0;
+
+
                 for (int k = 0; k < container.getAtomCount(); k++) {
                     double[] xyz = new double[3];
                     double mass = 0.0;
                     double radius = 0.0;
 
-                    mass = factory.getMajorIsotope( container.getAtomAt(k).getSymbol() ).getMassNumber();
-                    radius = centerOfMass.distance( container.getAtomAt(k).getPoint3d() );
+                    Atom currentAtom = container.getAtomAt(k);
+                    if (currentAtom.getPoint3d() == null) {
+                        throw new CDKException("Atom "+k+" did not have any 3D coordinates. These are required");
+                    }
 
-                    xyz[0] = container.getAtomAt(k).getPoint3d().x - centerOfMass.x;
-                    xyz[1] = container.getAtomAt(k).getPoint3d().y - centerOfMass.y;
-                    xyz[2] = container.getAtomAt(k).getPoint3d().z - centerOfMass.z;
+                    mass = factory.getMajorIsotope( currentAtom.getSymbol() ).getMassNumber();
+
+                    radius = centerOfMass.distance( currentAtom.getPoint3d() );
+
+                    xyz[0] = currentAtom.getPoint3d().x - centerOfMass.x;
+                    xyz[1] = currentAtom.getPoint3d().y - centerOfMass.y;
+                    xyz[2] = currentAtom.getPoint3d().z - centerOfMass.z;
 
                     sum = sum + mass * (radius*radius*delta - xyz[i]*xyz[j]);
                 }
