@@ -234,6 +234,7 @@ public class DescriptorEngine {
                 molecule.setProperty((DescriptorSpecification)speclist.get(i), value);
             } catch (CDKException exception) {
                 logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
+                logger.debug(exception);
             }
         }
     }
