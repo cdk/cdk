@@ -47,9 +47,9 @@ import org.openscience.cdk.qsar.result.*;
  * @cdk.module applications
  *
  * @author      Egon Willighagen
- * @cdk.require java1.4
+ * @cdk.keyword      command line util descriptor calculation
+ * @cdk.builddepends commons-cli-1.0.jar
  * @cdk.created 2004-12-02
- * @cdk.keyword descriptor calculation
  */
 public class DescriptorCalculator {
 
@@ -64,7 +64,7 @@ public class DescriptorCalculator {
     private DescriptorEngine engine;
 
     public DescriptorCalculator() {
-        logger = new LoggingTool();
+        logger = new LoggingTool(this);
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
 
@@ -136,6 +136,12 @@ public class DescriptorCalculator {
             title = comps[ comps.length-1 ];
 
             DescriptorValue value = (DescriptorValue)molecule.getProperty(spec);
+            if (value == null) {
+                logger.warn("This molecule did not have the "+title+" descriptor calculated for it");
+                System.out.println("This molecule did not have the "+title+" descriptor calculated for it");
+                continue;
+            }
+                
             DescriptorResult result = value.getValue();
             if (result instanceof DoubleResult) {
                 stringWriter.write(((DoubleResult)result).doubleValue()+" ");
