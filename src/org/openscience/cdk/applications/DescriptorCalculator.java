@@ -138,7 +138,6 @@ public class DescriptorCalculator {
             DescriptorValue value = (DescriptorValue)molecule.getProperty(spec);
             if (value == null) {
                 logger.warn("This molecule did not have the "+title+" descriptor calculated for it");
-                System.out.println("This molecule did not have the "+title+" descriptor calculated for it");
                 continue;
             }
                 
