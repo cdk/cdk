@@ -47,6 +47,7 @@ import org.openscience.cdk.qsar.result.*;
  * @cdk.module applications
  *
  * @author      Egon Willighagen
+ * @cdk.require java1.4+
  * @cdk.keyword      command line util descriptor calculation
  * @cdk.builddepends commons-cli-1.0.jar
  * @cdk.created 2004-12-02
