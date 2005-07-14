@@ -58,7 +58,7 @@ import Jama.EigenvalueDecomposition;
  * <li>partial charge (Gasteiger Marsilli)
  * <li>polarizability {@cdk.cite KJ81}
  * </ul>
- * <p>By default, the descriptor will return the 2 highest and lowest eigenvalues for the three
+ * <p>By default, the descriptor will return the highest and lowest eigenvalues for the three
  * classes of descriptor in a single ArrayList (in the order shown above). However it is also
  * possible to supply a parameter list indicating how many of the highest and lowest eigenvalues
  * (for each class of descriptor) are required.
@@ -75,12 +75,12 @@ import Jama.EigenvalueDecomposition;
  *   </tr>
  *   <tr>
  *     <td>nhigh</td>
- *     <td>2</td>
+ *     <td>1</td>
  *     <td>The number of highest eigenvalue</td>
  *   </tr>
  *   <tr>
  *     <td>nlow</td>
- *     <td>2</td>
+ *     <td>1</td>
  *     <td>The number of lowest eigenvalue</td>
  *   </tr>
  * </table>
@@ -105,8 +105,8 @@ public class BCUTDescriptor implements Descriptor {
     
     public BCUTDescriptor() {
         // set the default number of BCUT's
-        this.nhigh = 2;
-        this.nlow = 2;
+        this.nhigh = 1;
+        this.nlow = 1;
     }
 
     public DescriptorSpecification getSpecification() {
