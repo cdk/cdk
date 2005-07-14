@@ -216,7 +216,7 @@ public class WHIMDescriptor implements Descriptor {
      */
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
-            throw new CDKException("BCUTDescriptor requires 1 parameter");
+            throw new CDKException("WHIMDescriptor requires 1 parameter");
         }
         if (!(params[0] instanceof String)) {
             throw new CDKException("Parameters must be of type String");
