@@ -56,6 +56,7 @@ public class DescriptorCalculator {
 
     private LoggingTool logger;
     
+    private int molcount;
     private static boolean firstTime;
     private boolean inputIsSMILES;
     private String outputFormat = null;
@@ -73,7 +74,8 @@ public class DescriptorCalculator {
         outputFormat = "cml";
         suffix = ".cml";
         firstTime = true;
-        
+        molcount = 1;
+
         Properties props = new Properties();
         props.setProperty("CMLIDs", "false");
         props.setProperty("NamespacedOutput", "false");
@@ -186,11 +188,14 @@ public class DescriptorCalculator {
             else printTXTMolecule(writer,molecule);
             if (!inputIsSMILES) System.out.print(".");
         } else {
-            if (!inputIsSMILES) System.out.print("x");
+            if (!inputIsSMILES) {
+                System.out.println("\nMolecule "+molcount+" failed. Run with -Dcdk.debugging=true and look at the log");
+            }
         }
     }
     
     public void process(String toProcess) {
+        int j = 1;
         try {
             Writer writer;
             if (inputIsSMILES) {
@@ -217,6 +222,7 @@ public class DescriptorCalculator {
                 while (reader.hasNext()) {
                     Molecule molecule = (Molecule)reader.next();
                     processMolecule(writer, molecule);
+                    molcount++;
                 }
             }
             
