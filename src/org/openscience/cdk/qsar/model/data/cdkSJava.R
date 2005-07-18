@@ -76,7 +76,7 @@ if (!isJavaInitialized()) {
     .JavaInit()
 }
 library(nnet)
-library(pls.pcr)
+#library(pls.pcr)
 
 saveModel <- function(modelname, filename) {
     resp <- try( do.call('save',list(modelname,file=filename)), silent=TRUE )
@@ -91,7 +91,8 @@ loadModel.getName <- function(filename) {
    modelname
 }
 unserializeModel <- function(modelstr, modelname) {
-    assign(modelname, unserialize(modelstr), pos=1)
+    zzz <- paste(paste(modelstr, sep='', collapse='\n'), '\n', sep='', collapse='')
+    assign(modelname, unserialize(zzz), pos=1)
     get(modelname)
 }
 
