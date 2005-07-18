@@ -45,6 +45,7 @@ predictLM <- function( modelname, params) {
     attach(paramlist)
 
     newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    names(newx) <- names(get(modelname)$coef)[-1]
     if (interval == '' || !(interval %in% c('confidence','prediction')) ) { 
         interval = 'confidence'
     } 

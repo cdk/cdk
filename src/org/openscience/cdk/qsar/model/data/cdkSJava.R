@@ -281,6 +281,7 @@ predictLM <- function( modelname, params) {
     attach(paramlist)
 
     newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    names(newx) <- names(get(modelname)$coef)[-1]
     if (interval == '' || !(interval %in% c('confidence','prediction')) ) { 
         interval = 'confidence'
     } 
@@ -359,6 +360,7 @@ predictCNN <- function(modelname, params) {
     attach(paramlist)
 
     newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    names(newx) <- get(modelname)$coefnames
     if (type == '' || !(type %in% c('raw','class')) ) { 
         type = 'raw'
     } 
@@ -376,7 +378,8 @@ predictCNNClass <- function(modelname, params) {
     paramlist <- hashmap.to.list(params)
     attach(paramlist)
 
-    newx <- data.frame( y=1, x=matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    names(newx) <- get(modelname)$coefnames
     if (type == '' || !(type %in% c('raw','class')) ) { 
         type = 'raw'
     } 

@@ -411,6 +411,8 @@ public class LinearRegressionModel extends RModel {
         if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit")) {
             this.modelfit =(LinearRegressionModelFit)model;
             this.setModelName(modelName);
+            Double tmp = (Double)revaluator.eval("length("+modelName+"$coefficients)-1");
+            nvar = (int)tmp.doubleValue();
         } else throw new QSARModelException("The loaded model was not a LinearRegressionModel");
     }
     /**
@@ -422,13 +424,15 @@ public class LinearRegressionModel extends RModel {
      * object
      */
     public void  loadModel(String serializedModel, String modelName) throws QSARModelException {
-        // should probably check that the fileName does exist
+        // should prxbably check that the fileName does exist
         Object model = (Object)revaluator.call("unserializeModel", new Object[]{ (Object)serializedModel, (Object)modelName });
         String modelname = modelName;
 
         if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit")) {
             this.modelfit =(LinearRegressionModelFit)model;
             this.setModelName(modelname);
+            Double tmp = (Double)revaluator.eval("length("+modelName+"$coefficients)-1");
+            nvar = (int)tmp.doubleValue();
         } else throw new QSARModelException("The loaded model was not a LinearRegressionModel");
     }
 

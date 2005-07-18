@@ -67,6 +67,7 @@ predictCNNClass <- function(modelname, params) {
     attach(paramlist)
 
     newx <- data.frame( y=1, x=matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    names(newx) <- get(modelname)$coefnames
     if (type == '' || !(type %in% c('raw','class')) ) { 
         type = 'raw'
     } 

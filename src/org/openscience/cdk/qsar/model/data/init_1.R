@@ -19,7 +19,8 @@ loadModel.getName <- function(filename) {
    modelname
 }
 unserializeModel <- function(modelstr, modelname) {
-    assign(modelname, unserialize(modelstr), pos=1)
+    zzz <- paste(paste(modelstr, sep='', collapse='\n'), '\n', sep='', collapse='')
+    assign(modelname, unserialize(zzz), pos=1)
     get(modelname)
 }
 summaryModel <- function(modelname) {

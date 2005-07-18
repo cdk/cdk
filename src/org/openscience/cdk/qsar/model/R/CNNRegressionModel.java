@@ -470,6 +470,8 @@ public class CNNRegressionModel extends RModel {
         if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.CNNRegressionModelFit")) {
             this.modelfit = (CNNRegressionModelFit)model;
             this.setModelName(modelName);
+            Double tmp = (Double)revaluator.eval(modelName+"$n[1]");
+            nvar = (int)tmp.doubleValue();
         } else throw new QSARModelException("The loaded model was not a CNNRegressionModel");
     }
     /**
@@ -488,6 +490,8 @@ public class CNNRegressionModel extends RModel {
         if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.CNNRegressionModelFit")) {
             this.modelfit =(CNNRegressionModelFit)model;
             this.setModelName(modelname);
+            Double tmp = (Double)revaluator.eval(modelName+"$n[1]");
+            nvar = (int)tmp.doubleValue();
         } else throw new QSARModelException("The loaded model was not a CNNRegressionModel");
     }
 
