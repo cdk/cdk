@@ -842,7 +842,7 @@ public abstract class JChemPaintPanel
 	 * 
 	 */
 	public void addFilePopUpMenu() {
-	    String key = "menubarpopup";
+	    String key = "popupmenubar";
 		String[] itemKeys = StringHelper.tokenize(getMenuResourceString(key));
 		JPopupMenu popupMenu = new JPopupMenu();
 		for (int i = 0; i < itemKeys.length; i++) {
@@ -946,7 +946,7 @@ public abstract class JChemPaintPanel
     		        else if (panel instanceof JChemPaintEditorPanel) {
     		          panel = (JChemPaintEditorPanel) panel;
     		          ChemModel model = panel.getChemModel();
-    		          frame =((JChemPaintEditorPanel) panel).getNewFrame(new JChemPaintModel(model));
+    		          frame =JChemPaintEditorPanel.getNewFrame(new JChemPaintModel(model));
     		          JChemPaintEditorPanel newPanel = (JChemPaintEditorPanel) frame.getContentPane().getComponent(0);
     		          newPanel.scaleAndCenterMolecule(model);
     		          newPanel.addChangeListener(panel);
@@ -983,7 +983,7 @@ public abstract class JChemPaintPanel
 			JFrame rootFrame = (JFrame) e.getSource();
 			if (rootFrame.getContentPane().getComponent(0) instanceof JChemPaintEditorPanel) {
 				JChemPaintEditorPanel panel = (JChemPaintEditorPanel) rootFrame.getContentPane().getComponent(0);
-				panel.fireChange(panel.JCP_CLOSING);
+				panel.fireChange(JChemPaintEditorPanel.JCP_CLOSING);
 			}
 			int clear = ((JChemPaintPanel) ((JFrame) e.getSource()).getContentPane().getComponents()[0]).showWarning();
 			if (JOptionPane.CANCEL_OPTION != clear) {
