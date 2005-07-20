@@ -162,14 +162,17 @@ public class InsertFromSmiles extends JFrame
 					sdg.setMolecule(m);
 					sdg.generateCoordinates(new Vector2d(0,1));
                     m = sdg.getMolecule();
-                    double bondLength = renderModel.getBondLength();
+                     double bondLength = renderModel.getBondLength();
                     double scaleFactor = GeometryTools.getScaleFactor(m, bondLength);
                     GeometryTools.scaleMolecule(m, scaleFactor);
-                    GeometryTools.translate2DCenterTo(m,
-                        GeometryTools.get2DCenter(
-                            ChemModelManipulator.getAllInOneContainer(chemModel)
-                        )
-                    );
+                    //if there are no atoms in the actual chemModel all 2D-coordinates would be set to NaN
+                    if (ChemModelManipulator.getAllInOneContainer(chemModel).getAtomCount() != 0) {
+	                    GeometryTools.translate2DCenterTo(m,
+	                        GeometryTools.get2DCenter(
+	                            ChemModelManipulator.getAllInOneContainer(chemModel)
+	                        )
+	                    );
+                    }
                     GeometryTools.translate2D(m, 5*bondLength, 0); // in pixels
 				} catch (Exception exc) {
 					exc.printStackTrace();
@@ -178,12 +181,14 @@ public class InsertFromSmiles extends JFrame
                 // now add the structure to the active model
                 moleculeSet.addMolecule(m);
                 // and select it
-                renderModel.setSelectedPart(m);
-                
-                // fire a change so that the view gets updated
-                jcpModel.fireChange();
-                
-				closeFrame();
+//                renderModel.setSelectedPart(m);
+                // if the not again setting the chemModel setOfMolecules the chemModel remains empty
+                jcpPanel.getChemModel().setSetOfMolecules(moleculeSet);
+                // to ensure, that the molecule is  shown in the actual visibile part of jcp
+                jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
+//             fire a change so that the view gets updated
+                jcpModel.fireChange(jcpPanel.getChemModel());
+                closeFrame();
 				
 
 			} catch (InvalidSmilesException ise)
