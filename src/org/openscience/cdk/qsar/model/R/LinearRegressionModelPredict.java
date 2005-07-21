@@ -59,6 +59,29 @@ public class LinearRegressionModelPredict {
         setDF(degreesOfFreedom);
         setResidualScale(residualScale);
     }
+    /**
+     * Construct the object to contain  linear regression predictions.
+     *
+     * This is required if a single prediction was requested in which case
+     * R will pass a single double value rather than an array.
+     * 
+     * @param predicted The predicted values
+     * @param standardErrors The standard errors of prediction
+     * @param lowerBounds The lower confidence bounds
+     * @param upperBounds The upper confidence bounds
+     * @param degreesOfFreedom The degrees of freedom of hte predictions
+     * @param residualScale The scale of the residuals
+     */
+    public LinearRegressionModelPredict(double predicted, double standardErrors,
+            double lowerBounds, double upperBounds,
+            int degreesOfFreedom, double residualScale) {
+        setPredicted(new double[] {predicted});
+        setSEFit(new double[] {standardErrors});
+        setLower(new double[] {lowerBounds});
+        setUpper(new double[] {upperBounds});
+        setDF(degreesOfFreedom);
+        setResidualScale(residualScale);
+    }
 
     /**
      * Get the degrees of freedom.

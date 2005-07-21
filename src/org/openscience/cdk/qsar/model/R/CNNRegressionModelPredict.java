@@ -61,6 +61,19 @@ public class CNNRegressionModelPredict {
         int nrow = values.length / noutput;
         setPredicted(vectorToMatrix(values,nrow,noutput));
     }
+    /**
+     * Create an object to hold predictions from a previously built CNN model.
+     *
+     * This class should not be accessed directly. Required for the case
+     * of a single predicted value.
+     *
+     * @param noutput The number of predicted variables
+     * @param values The predicted value
+     */
+    public CNNRegressionModelPredict(int noutput, double values) { 
+        this.noutput = noutput;
+        setPredicted(new double[][] { {values} });
+    }
 
     /**
      * Get the predicted values.

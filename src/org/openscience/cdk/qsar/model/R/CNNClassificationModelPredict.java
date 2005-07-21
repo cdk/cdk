@@ -64,6 +64,20 @@ public class CNNClassificationModelPredict {
     /**
      * Create an object to hold predictions from a previously built CNN model.
      *
+     * This class should not be accessed directly. Required for the case of a single
+     * predicted value.
+     *
+     * @param noutput The number of predicted variables
+     * @param values The predicted probabilities
+     */
+    public CNNClassificationModelPredict(int noutput, double values) { 
+        this.noutput = noutput;
+        setPredictedRaw(new double[][] { {values} });
+    }
+    
+    /**
+     * Create an object to hold predictions from a previously built CNN model.
+     *
      * This class should not be accessed directly
      *
      * @param values An array of String containing the predicted class
@@ -73,6 +87,18 @@ public class CNNClassificationModelPredict {
         for (int i = 0; i < values.length; i++) {
             this.predvalclass[i] = values[i];
         }
+    }
+    /**
+     * Create an object to hold predictions from a previously built CNN model.
+     *
+     * This class should not be accessed directly. Required for the 
+     * case of a single predicted value
+     *
+     * @param values An array of String containing the predicted class
+     */
+    public CNNClassificationModelPredict(String values) {
+        this.predvalclass = new String[1];
+        this.predvalclass[1] = values;
     }
 
     /**
