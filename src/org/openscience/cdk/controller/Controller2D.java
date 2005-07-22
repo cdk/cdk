@@ -324,7 +324,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 		{
 			selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
 			dragMode = DRAG_MOVING_SELECTED;
-		} else if (c2dm.getDrawMode() == c2dm.DRAWBOND)
+		} else if (c2dm.getDrawMode() == c2dm.DRAWBOND || c2dm.getDrawMode() == c2dm.DOWN_BOND || c2dm.getDrawMode() == c2dm.UP_BOND)
 		{
 			if (bondInRange != null && atomInRange == null)
 			{
@@ -556,10 +556,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					logger.debug("Not dragged in mapping mode");
 				}
 			}
-
-			if (c2dm.getDrawMode() == c2dm.DRAWBOND)
+      
+			if (c2dm.getDrawMode() == c2dm.DRAWBOND || c2dm.getDrawMode() == c2dm.DOWN_BOND || c2dm.getDrawMode() == c2dm.UP_BOND)
 			{
-				logger.debug("mouseReleased->drawbond");
+        logger.debug("mouseReleased->drawbond");
 				Atom atomInRange;
 				Atom newAtom1=null;
 				Atom newAtom2=null;
@@ -578,22 +578,50 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				atomInRange = getAtomInRange(mouseX,mouseY);
 				if (bondInRange != null)
 				{
-					// increase Bond order
-					double order = bondInRange.getOrder();
-					if (order >= CDKConstants.BONDORDER_TRIPLE)
-					{
-						bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
-					} else
-					{
-						bondInRange.setOrder(order + 1.0);
-						// this is tricky as it depends on the fact that the
-						// constants are unidistant, i.e. {1.0, 2.0, 3.0}.
-					}
-					;
-					// update atoms
-					Atom[] atoms = bondInRange.getAtoms();
-					AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-					updateAtoms(container, atoms);
+          if (c2dm.getDrawMode() == c2dm.DRAWBOND){
+            // increase Bond order
+            double order = bondInRange.getOrder();
+            if (order >= CDKConstants.BONDORDER_TRIPLE)
+            {
+              bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
+            } else
+            {
+              bondInRange.setOrder(order + 1.0);
+              // this is tricky as it depends on the fact that the
+              // constants are unidistant, i.e. {1.0, 2.0, 3.0}.
+            }
+            ;
+            // update atoms
+            Atom[] atoms = bondInRange.getAtoms();
+            AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+            updateAtoms(container, atoms);
+          }else if(c2dm.getDrawMode() == c2dm.DOWN_BOND){
+            // toggle bond stereo
+            double stereo = bondInRange.getStereo();
+            if (stereo == CDKConstants.STEREO_BOND_DOWN)
+            {
+              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN_INV);
+            } else if (stereo == CDKConstants.STEREO_BOND_DOWN_INV)
+            {
+              bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
+            } else
+            {
+              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
+            }
+          }else{
+            // toggle bond stereo
+            double stereo = bondInRange.getStereo();
+            if (stereo == CDKConstants.STEREO_BOND_UP)
+            {
+              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP_INV);
+            } else if (stereo == CDKConstants.STEREO_BOND_UP_INV)
+            {
+              bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
+            } else
+            {
+              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
+            }
+          }           
 					/*
 					 *  PRESERVE THIS. This notifies the
 					 *  the listener responsible for
@@ -634,7 +662,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 					if (wasDragged)
 					{
-						if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
+            if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
 						{
 							int endX = r2dm.getPointerVectorEnd().x;
 							int endY = r2dm.getPointerVectorEnd().y;
@@ -661,7 +689,11 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 							if(newAtom1 != newAtom2)
 							{
 								newBond = new Bond(newAtom1, newAtom2, 1);
-								logger.debug(newAtom1 + " - " + newAtom2);
+                if(c2dm.getDrawMode() == c2dm.UP_BOND)
+                  newBond.setStereo(CDKConstants.STEREO_BOND_UP);
+                if(c2dm.getDrawMode() == c2dm.DOWN_BOND)
+                  newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
+                logger.debug(newAtom1 + " - " + newAtom2);
 								atomCon.addBond(newBond);
 							}
 			
@@ -734,8 +766,12 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 						// now add the new atom
 						atomCon.addAtom(newAtom2);
-						atomCon.addBond(new Bond(atomInRange, newAtom2, 1.0));
-
+            newBond=new Bond(atomInRange, newAtom2, 1.0);
+						atomCon.addBond(newBond);
+            if(c2dm.getDrawMode() == c2dm.UP_BOND)
+              newBond.setStereo(CDKConstants.STEREO_BOND_UP);
+            if(c2dm.getDrawMode() == c2dm.DOWN_BOND)
+              newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
 						// update atoms
 						updateAtom(atomCon, atomInRange);
 						updateAtom(atomCon, newAtom2);
@@ -745,81 +781,6 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				fireChange();
         centerAtom(newAtom1);
         centerAtom(newAtom2);
-			}
-
-			if (c2dm.getDrawMode() == c2dm.UP_BOND)
-			{
-				Bond bondInRange = r2dm.getHighlightedBond();
-
-				if (bondInRange != null)
-				{
-					// toggle bond stereo
-					double stereo = bondInRange.getStereo();
-					if (stereo == CDKConstants.STEREO_BOND_UP)
-					{
-						bondInRange.setStereo(CDKConstants.STEREO_BOND_UP_INV);
-					} else if (stereo == CDKConstants.STEREO_BOND_UP_INV)
-					{
-						bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
-					} else
-					{
-						bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
-					}
-					;
-					/*
-					 *  PRESERVE THIS. This notifies the
-					 *  the listener responsible for
-					 *  undo and redo storage that it
-					 *  should store this change of an atom symbol
-					 */
-					isUndoableChange = true;
-					/*
-					 *  ---
-					 */
-				} else
-				{
-					logger.warn("No bond in range!");
-				}
-				r2dm.fireChange();
-				fireChange();
-			}
-
-			if (c2dm.getDrawMode() == c2dm.DOWN_BOND)
-			{
-				logger.info("Toggling stereo bond down");
-				Bond bondInRange = r2dm.getHighlightedBond();
-
-				if (bondInRange != null)
-				{
-					// toggle bond stereo
-					double stereo = bondInRange.getStereo();
-					if (stereo == CDKConstants.STEREO_BOND_DOWN)
-					{
-						bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN_INV);
-					} else if (stereo == CDKConstants.STEREO_BOND_DOWN_INV)
-					{
-						bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
-					} else
-					{
-						bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
-					}
-					;
-					/*
-					 *  PRESERVE THIS. This notifies the
-					 *  the listener responsible for
-					 *  undo and redo storage that it
-					 *  should store this change of an atom symbol
-					 */
-					isUndoableChange = true;
-					/*
-					 *  ---
-					 */
-				} else
-				{
-					logger.warn("No bond in range!");
-				}
-				r2dm.fireChange();
-				fireChange();
 			}
 
 			if (c2dm.getDrawMode() == c2dm.SELECT && wasDragged)
