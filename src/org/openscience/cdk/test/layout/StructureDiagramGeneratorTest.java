@@ -413,18 +413,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *
 	 *@exception  Exception  Description of the Exception
 	 */
-	public Molecule makeBug923825() throws Exception
-	{
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("c1ccccc1");
-		return mol;
-	}
-
-	/**
-	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
-	 */
 	public Molecule makeJhao3() throws Exception
 	{
 		SmilesParser sp = new SmilesParser();
@@ -443,18 +431,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		Molecule mol = sp.parseSmiles("CCC3C1CC23(CC12)");
 		return mol;
 	}
-	
-	public void testBug923825() {
-        try {
-            Molecule mol = makeBug923825();	
-            assertTrue(GeometryTools.has2DCoordinates(mol));
-        } catch (Exception exception) {
-            fail(exception.getMessage());
-            exception.printStackTrace();
-        }
-	}
-	
-
 	
 	/**
 	 *  A unit test for JUnit
