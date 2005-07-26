@@ -47,13 +47,34 @@
       The exact sum of bond orders that this atom type can have.
     </definition>
   </entry>
-  
+
+  <entry id="DA" term="Donor Acceptor">
+    <definition>
+       Denotes if an atom type is a lewis/bronsted acceptor or donor.
+    </definition>
+    <description>
+       Abbreviations used:
+       A: Acceptor
+       D: Donor.
+    </description>
+  </entry>
+ 
   <entry id="exactMass" term="Exact Mass">
     <definition>
        No explicit definition yet.
     </definition>
   </entry>
-  
+
+   <entry id="sphericalMatcher" term="Spherical Matcher">
+    <definition>
+    	A pattern which can be matched onto a string representation of the environment
+    	of an atom, e.g.a spherical Matcher can be a regular expression for 
+    	the hose code of an atom
+    </definition>
+    <description>
+    </description>
+  </entry>
+   
   <entry id="hybridization" term="Hybridization">
     <definition>
        Denotes the geometrical orientation of the atom with respect
@@ -61,6 +82,13 @@
     </definition>
     <description>
        Accepted values are: sp1, sp2 and sp3. See the CDKConstants class.
+    </description>
+  </entry>
+
+  <entry id="isotopeAbundance" term="Isotope Abundance">
+    <description>
+      The amount of isotope of one element compared with the amounts of the
+      other isotopes of that element in a natural mixture of isotopes.
     </description>
   </entry>
   
@@ -77,13 +105,23 @@
     </description>
     <relatedEntry type="seeAlso" href="isotopeAbundance"/>
   </entry>
-  
-  <entry id="isotopeAbundance" term="Isotope Abundance">
+
+  <entry id="ringConstant" term="specifies a ring system">
+    <definition>
+       The ring constants are defined in CDKRingConstants.java.
+    </definition>
     <description>
-      The amount of isotope of one element compared with the amounts of the
-      other isotopes of that element in a natural mixture of isotopes.
     </description>
   </entry>
+ 
+   <entry id="ringSize" term="size of a ring system">
+    <definition>
+       Denotes the size of a ring system.
+    </definition>
+    <description>
+    </description>
+  </entry>
+  
 
 </dictionary>
 

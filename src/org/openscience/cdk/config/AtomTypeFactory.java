@@ -103,7 +103,7 @@ public class AtomTypeFactory {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
-        atomTypes = new Vector(30);
+        atomTypes = new Vector(100);
         readConfiguration(configFile);
     }
 
@@ -118,7 +118,7 @@ public class AtomTypeFactory {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
-        atomTypes = new Vector(30);
+        atomTypes = new Vector(100);
         readConfiguration(ins, format);
     }
 
@@ -244,7 +244,7 @@ public class AtomTypeFactory {
     }
     
     private void readConfiguration(InputStream ins, String format) {
-        AtomTypeConfigurator atc = constructConfigurator(format);
+    	AtomTypeConfigurator atc = constructConfigurator(format);
 		if (atc != null) {
 			atc.setInputStream(ins);
 			try

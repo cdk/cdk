@@ -111,7 +111,7 @@ public class AtomTypeReader {
      * @return a Vector with atom types. Is empty if some reading error occured.
      */
     public Vector readAtomTypes() {
-        Vector isotopes = new Vector();
+    	Vector isotopes = new Vector();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

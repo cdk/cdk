@@ -34,6 +34,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * SAX Handler for the AtomTypeReader.
+ * -changed 21/7/05 by cho: added stuff to fit mmff94AtomTypeMatcher
  *
  * @see AtomTypeReader
  *
@@ -47,6 +48,12 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
     private final int SCALAR_HYBRIDIZATION = 3;
     private final int SCALAR_FORMALNEIGHBOURCOUNT = 4;
     private final int SCALAR_VALENCY = 5;
+    private final int SCALAR_DA = 6;
+    private final int SCALAR_SPHERICALMATCHER = 7;
+    private final int SCALAR_CHEMICALGROUPCONSTANT = 8;
+    private final int SCALAR_RINGSIZE = 9;
+    private final int SCALAR_ISAROMATIC = 10;
+    
     
     private LoggingTool logger;
     private String currentChars;
@@ -93,7 +100,7 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                     atomType.setMaxBondOrder(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_FORMALNEIGHBOURCOUNT) {
                     atomType.setFormalNeighbourCount(Integer.parseInt(currentChars));
-		} else if (scalarType == SCALAR_VALENCY) {
+                }else if (scalarType == SCALAR_VALENCY) {
                     atomType.setValency(Integer.parseInt(currentChars));
                 } else if (scalarType == SCALAR_HYBRIDIZATION) {
                     if ("sp1".equals(currentChars)) {
@@ -103,7 +110,22 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                     } else if ("sp3".equals(currentChars)) {
                         atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
                     }
-                }
+                } else if (scalarType == SCALAR_DA){
+                	if ("A".equals(currentChars)) {
+                		 atomType.setAcceptor(true);
+                	}else if ("D".equals(currentChars)){
+                		atomType.setDonor(true);
+                	}
+                } else if (scalarType == SCALAR_SPHERICALMATCHER){	
+                	atomType.setSphericalMatcher(currentChars);
+                } else if (scalarType == SCALAR_RINGSIZE){	
+                	atomType.setRingSize(Integer.parseInt(currentChars));
+                } else if (scalarType == SCALAR_CHEMICALGROUPCONSTANT){	
+                	atomType.setChemicalGroupConstant(Integer.parseInt(currentChars));
+                } else if (scalarType == SCALAR_ISAROMATIC){
+                	atomType.setIsAromatic(true);
+                } 
+                
             } catch (Exception exception) {
                 logger.error("Value (", currentChars, ") is not off the expected type: ", exception.getMessage());
                 logger.debug(exception);
@@ -151,8 +173,18 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                         scalarType = SCALAR_HYBRIDIZATION;
                     } else if ("cdk:formalNeighbourCount".equals(atts.getValue(i))) {
                         scalarType = SCALAR_FORMALNEIGHBOURCOUNT;
-		    } else if ("cdk:valency".equals(atts.getValue(i))) {
-			scalarType = SCALAR_VALENCY;
+                    } else if ("cdk:valency".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_VALENCY;
+                    } else if ("cdk:DA".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_DA;
+                    } else if ("cdk:sphericalMatcher".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_SPHERICALMATCHER;	
+                    } else if ("cdk:ringSize".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_RINGSIZE;	
+                    } else if ("cdk:ringConstant".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_CHEMICALGROUPCONSTANT;	
+                    } else if ("cdk:aromaticAtom".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_ISAROMATIC;	
                     }
                 }
             }
