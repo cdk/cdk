@@ -28,14 +28,14 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.atomtype.*;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  * Class with utilities for the <code>AtomType</code> class.
+ * - changed 21/7/05 by cho: add properties for mmff94 atom type 
  *
  * @author     mfe4
  * @author     egonw
@@ -50,13 +50,31 @@ public class AtomTypeManipulator {
 	 * @param  at    AtomType
 	 */
 	public static void configure(Atom atom, AtomType atomType) {
+		atom.setAtomTypeName(atomType.getAtomTypeName());
         atom.setMaxBondOrder(atomType.getMaxBondOrder());
         atom.setBondOrderSum(atomType.getBondOrderSum());
         atom.setVanderwaalsRadius(atomType.getVanderwaalsRadius());
         atom.setCovalentRadius(atomType.getCovalentRadius());
         atom.setFormalCharge(atomType.getFormalCharge());
-	atom.setHybridization(atomType.getHybridization());
+        atom.setHybridization(atomType.getHybridization());
         atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
+        atom.setAcceptor(atomType.getAcceptor());
+        atom.setDonor(atomType.getDonor());
+        atom.setChemicalGroupConstant(atomType.getChemicalGroupConstant());
+        atom.setIsAromatic(atomType.getIsAromatic());
+            
+        Object color = atomType.getProperty("org.openscience.cdk.renderer.color");
+        if (color != null) {
+            atom.setProperty("org.openscience.cdk.renderer.color", color);
+        }
+        if (atomType.getAtomicNumber() != 0) {
+            atom.setAtomicNumber(atomType.getAtomicNumber());
+        }
+        if (atomType.getExactMass() > 0.0) {
+            atom.setExactMass(atomType.getExactMass());
+       }
+        
+        
 	}
 }
 
