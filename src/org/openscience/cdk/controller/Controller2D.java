@@ -50,7 +50,8 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  *
  *@author         steinbeck
  *@author         egonw
- *@cdk.created        2. Mai 2005
+ *@created        8. Juli 2005
+ *@cdk.created    2. Mai 2005
  *@cdk.keyword    mouse events
  *@cdk.require    java1.4+
  */
@@ -84,8 +85,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	private Vector commonElements;
 	private HashMap currentCommonElement = new HashMap();
 	Atom lastAtomInRange = null;
-	  private double shiftX=0;
-	  private double shiftY=0;
+	private double shiftX = 0;
+	private double shiftY = 0;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -561,21 +562,22 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			{
         logger.debug("mouseReleased->drawbond");
 				Atom atomInRange;
-				Atom newAtom1=null;
-				Atom newAtom2=null;
+				Atom newAtom1 = null;
+				Atom newAtom2 = null;
 				Bond newBond;
 				int startX = r2dm.getPointerVectorStart().x;
 				int startY = r2dm.getPointerVectorStart().y;
 				Bond bondInRange = r2dm.getHighlightedBond();
 				//atomInRange = r2dm.getHighlightedAtom();
 				//Bond bondInRange = getBondInRange(mouseX, mouseY);
-				/* IMPORTANT: I don't use getHighlighteAtom()
-				 * here because of the special case of 
-				 * only one atom on the screen. 
-				 * In this case, this atom will not detected
-				 * if the mouse hasn't moved after it's creation
+				/*
+				 *  IMPORTANT: I don't use getHighlighteAtom()
+				 *  here because of the special case of
+				 *  only one atom on the screen.
+				 *  In this case, this atom will not detected
+				 *  if the mouse hasn't moved after it's creation
 				 */
-				atomInRange = getAtomInRange(mouseX,mouseY);
+				atomInRange = getAtomInRange(mouseX, mouseY);
 				if (bondInRange != null)
 				{
           if (c2dm.getDrawMode() == c2dm.DRAWBOND){
@@ -671,7 +673,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 							if (atomInRange != null)
 							{
 								logger.debug("*** atom in range");
-	
+
 								newAtom2 = atomInRange;
 								logger.debug("atomCon.getAtomCount() " + atomCon.getAtomCount());
 							} else
@@ -684,9 +686,9 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 							if (newAtom1 == null)
 							{
 								newAtom1 = new
-								Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));	
+										Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));
 							}
-							if(newAtom1 != newAtom2)
+							if (newAtom1 != newAtom2)
 							{
 								newBond = new Bond(newAtom1, newAtom2, 1);
                 if(c2dm.getDrawMode() == c2dm.UP_BOND)
@@ -696,7 +698,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
                 logger.debug(newAtom1 + " - " + newAtom2);
 								atomCon.addBond(newBond);
 							}
-			
+
 							try
 							{
 								SetOfMolecules setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
@@ -708,7 +710,6 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 								logger.debug(exception);
 								return;
 							}
-
 
 							// update atoms
 							updateAtom(atomCon, newAtom2);
@@ -757,11 +758,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 							atomPoint.add(bondVector);
 							newAtom2.setPoint2d(atomPoint);
 
-						}
-						else
+						} else
 						{
 							atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
-								unplacedAtoms, bondLength);
+									unplacedAtoms, bondLength);
 						}
 
 						// now add the new atom
@@ -779,8 +779,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				}
 				r2dm.fireChange();
 				fireChange();
-        centerAtom(newAtom1);
-        centerAtom(newAtom2);
+				centerAtom(newAtom1);
+				centerAtom(newAtom2);
 			}
 
 			if (c2dm.getDrawMode() == c2dm.SELECT && wasDragged)
@@ -841,7 +841,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 			if (c2dm.getDrawMode() == c2dm.RING || c2dm.getDrawMode() == c2dm.BENZENERING)
 			{
-				Ring newRing=null;
+				Ring newRing = null;
 				Point2d sharedAtomsCenter;
 				Vector2d ringCenterVector;
 				double bondLength;
@@ -1056,9 +1056,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					 *  ---
 					 */
 				}
-        for(int i=0;i<newRing.getAtomCount();i++){
-          centerAtom(newRing.getAtomAt(i));
-        }
+				for (int i = 0; i < newRing.getAtomCount(); i++)
+				{
+					centerAtom(newRing.getAtomAt(i));
+				}
 				r2dm.fireChange();
 				fireChange();
 			}
@@ -1151,26 +1152,29 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			r2dm.setPointerVectorStart(null);
 			r2dm.setPointerVectorEnd(null);
 		}
-    if(shiftX!=0 || shiftY!=0){
-      for(int i=0;i<chemModel.getSetOfMolecules().getMoleculeCount();i++){
-        Molecule mol=chemModel.getSetOfMolecules().getMolecules()[i];
-        for(int k=0;k<mol.getAtomCount();k++){
-          mol.getAtomAt(k).setX2d(mol.getAtomAt(k).getX2d()-shiftX);
-          mol.getAtomAt(k).setY2d(mol.getAtomAt(k).getY2d()-shiftY);
-        }
-      }
-      r2dm.fireChange();
-      fireChange();
-    }
-    shiftX=0;
-    shiftY=0;
+		if (shiftX != 0 || shiftY != 0)
+		{
+			for (int i = 0; i < chemModel.getSetOfMolecules().getMoleculeCount(); i++)
+			{
+				Molecule mol = chemModel.getSetOfMolecules().getMolecules()[i];
+				for (int k = 0; k < mol.getAtomCount(); k++)
+				{
+					mol.getAtomAt(k).setX2d(mol.getAtomAt(k).getX2d() - shiftX);
+					mol.getAtomAt(k).setY2d(mol.getAtomAt(k).getY2d() - shiftY);
+				}
+			}
+			r2dm.fireChange();
+			fireChange();
+		}
+		shiftX = 0;
+		shiftY = 0;
 	}
 
 
 	/**
-	 *  Description of the Method
+	 *  Makes a ring aromatic
 	 *
-	 *@param  ring  Description of the Parameter
+	 *@param  ring  The ring to be made aromatic
 	 */
 	private void makeRingAromatic(Ring ring)
 	{
@@ -1257,10 +1261,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 *  Start of private methods
 	 */
 	/**
-	 *  Description of the Method
+	 *  Updates an array of atoms with respect to its hydrogen count
 	 *
-	 *@param  container  Description of the Parameter
-	 *@param  atoms      Description of the Parameter
+	 *@param  container  The AtomContainer to work on
+	 *@param  atoms       The Atoms to update
 	 */
 	private void updateAtoms(AtomContainer container, Atom[] atoms)
 	{
@@ -1272,10 +1276,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 
 	/**
-	 *  Description of the Method
+	 *  Updates an atom with respect to its hydrogen count
 	 *
-	 *@param  container  Description of the Parameter
-	 *@param  atom       Description of the Parameter
+	 *@param  container  The AtomContainer to work on
+	 *@param  atom       The Atom to update
 	 */
 	private void updateAtom(AtomContainer container, Atom atom)
 	{
@@ -1295,10 +1299,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 
 	/**
-	 *  Description of the Method
+	 *  No idea what this does
 	 *
-	 *@param  angle  Description of the Parameter
-	 *@return        Description of the Return Value
+	 *@param  angle  Some kind of angle
+	 *@return        Don't know what
 	 */
 	private double snapAngle(double angle)
 	{
@@ -1308,10 +1312,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 
 	/**
-	 *  Description of the Method
+	 *  No idea what this does
 	 *
-	 *@param  position  Description of the Parameter
-	 *@return           Description of the Return Value
+	 *@param  position  Some kind of position
+	 *@return           Don't know what
 	 */
 	private int snapCartesian(int position)
 	{
@@ -1323,8 +1327,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	/**
 	 *  Gets the chemObjectInRange attribute of the Controller2D object
 	 *
-	 *@param  X  Description of the Parameter
-	 *@param  Y  Description of the Parameter
+	 *@param  X  Current mouse x
+	 *@param  Y  Current mouse x
 	 *@return    The chemObjectInRange value
 	 */
 	public ChemObject getChemObjectInRange(int X, int Y)
@@ -1584,7 +1588,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 *  coordinates back into world coordinates. IMPORTANT: even coords are taken
 	 *  as y coordinates, uneven as x coordinates.
 	 *
-	 *@param  coords  Description of the Parameter
+	 *@param  coords  the array of coordinates to be used
 	 *@return         The worldCoordinates value
 	 */
 	public int[] getWorldCoordinates(int[] coords)
@@ -1679,10 +1683,10 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	 *
 	 *  All coordinates are world coordinates.
 	 *
-	 *@param  startX  Description of the Parameter
-	 *@param  startY  Description of the Parameter
-	 *@param  endX    Description of the Parameter
-	 *@param  endY    Description of the Parameter
+	 *@param  startX  Start X coordinate of the new bond
+	 *@param  startY  Start Y coordinate of the new bond
+	 *@param  endX  End X coordinate of the new bond
+	 *@param  endY  End Y coordinate of the new bond
 	 */
 	private void createNewBond(int startX, int startY, int endX, int endY)
 	{
@@ -1691,12 +1695,13 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 
 	/**
-	 *  Description of the Method
+	 *  Draws a proposed bond, i.e. shows the bond direction
+	 *  during dragging of the mouse
 	 *
-	 *@param  startX  Description of the Parameter
-	 *@param  startY  Description of the Parameter
-	 *@param  mouseX  Description of the Parameter
-	 *@param  mouseY  Description of the Parameter
+	 *@param  startX  Start X coordinate of the proposed bond
+	 *@param  startY  Start Y coordinate of the proposed bond
+	 *@param  mouseX  Current X mouse coordinate
+	 *@param  mouseY  Current Y mouse coordinate
 	 */
 	private void drawProposedBond(int startX, int startY, int mouseX, int mouseY)
 	{
@@ -1729,12 +1734,12 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 
 	/**
-	 *  Description of the Method
+	 *  Selects a rectangular area on the screen 
 	 *
-	 *@param  startX  Description of the Parameter
-	 *@param  startY  Description of the Parameter
-	 *@param  mouseX  Description of the Parameter
-	 *@param  mouseY  Description of the Parameter
+	 *@param  startX  Start x coordinate
+	 *@param  startY  Start y coordinate
+	 *@param  mouseX  Current x mouse position
+	 *@param  mouseY  Current y mouse position
 	 */
 	private void selectRectangularArea(int startX, int startY, int mouseX, int mouseY)
 	{
@@ -1747,8 +1752,8 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 	/**
 	 *  Move an Atom by the specified change in coordinates.
 	 *
-	 *@param  deltaX  Description of the Parameter
-	 *@param  deltaY  Description of the Parameter
+	 *@param  deltaX  change in x direction
+	 *@param  deltaY  change in y direction
 	 */
 	private void moveSelectedAtomsWith(int deltaX, int deltaY)
 	{
@@ -1768,10 +1773,11 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 
 	/**
-	 *  Description of the Method
+	 *  Selects the nearest item on the screen next to the 
+	 *  mouse pointer, if none is selected yet
 	 *
-	 *@param  mouseX  Description of the Parameter
-	 *@param  mouseY  Description of the Parameter
+	 *  @param  mouseX  The current X coordinate of the mouse
+	 *  @param  mouseY  The current Y coordinate of the mouse
 	 */
 	private void selectNearestChemObjectIfNoneSelected(int mouseX, int mouseY)
 	{
@@ -1818,18 +1824,35 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			fireChange();
 		}
 	}
-  
-  private void centerAtom(Atom atom){
-    if(atom==null)
-      return;
-    if(atom.getX2d()<0 && shiftX>atom.getX2d()-10)
-      shiftX=atom.getX2d()-10;
-    if(atom.getX2d()>r2dm.getBackgroundDimension().getWidth() && shiftX<atom.getX2d()-r2dm.getBackgroundDimension().getWidth()+10)
-      shiftX=atom.getX2d()-r2dm.getBackgroundDimension().getWidth()+10;
-    if(atom.getY2d()<0 && shiftY>atom.getY2d()-10)
-      shiftY=atom.getY2d()-10;
-    if(atom.getY2d()>r2dm.getBackgroundDimension().getHeight() && shiftY<atom.getY2d()-r2dm.getBackgroundDimension().getHeight()+10)
-      shiftY=atom.getY2d()-r2dm.getBackgroundDimension().getHeight()+10;
-  }
+
+
+	/**
+	 * Centers an atom on a given background dimension
+	 *
+	 * @param  atom  The Atom to be centered
+	 */
+	private void centerAtom(Atom atom)
+	{
+		if (atom == null)
+		{
+			return;
+		}
+		if (atom.getX2d() < 0 && shiftX > atom.getX2d() - 10)
+		{
+			shiftX = atom.getX2d() - 10;
+		}
+		if (atom.getX2d() > r2dm.getBackgroundDimension().getWidth() && shiftX < atom.getX2d() - r2dm.getBackgroundDimension().getWidth() + 10)
+		{
+			shiftX = atom.getX2d() - r2dm.getBackgroundDimension().getWidth() + 10;
+		}
+		if (atom.getY2d() < 0 && shiftY > atom.getY2d() - 10)
+		{
+			shiftY = atom.getY2d() - 10;
+		}
+		if (atom.getY2d() > r2dm.getBackgroundDimension().getHeight() && shiftY < atom.getY2d() - r2dm.getBackgroundDimension().getHeight() + 10)
+		{
+			shiftY = atom.getY2d() - r2dm.getBackgroundDimension().getHeight() + 10;
+		}
+	}
 }
 

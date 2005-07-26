@@ -53,6 +53,6 @@ public class HBondAcceptorCountDescriptorTest extends CDKTestCase {
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=N(=O)c1cccc2cn[nH]c12"); // 
-		assertEquals(5, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 }

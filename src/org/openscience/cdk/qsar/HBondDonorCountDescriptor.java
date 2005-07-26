@@ -36,34 +36,27 @@ import java.util.Map;
 import java.util.Hashtable;
 
 /**
- *  The number of hydrogen bond donors is defined by Daylight in the
- *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a>
+ * This descriptor calculates the number of hydrogen bond donors using a slightly simplified version of the
+ * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
+ * The following groups are counted as hydrogen bond donors:
+ * <ul>
+ * <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge >= 0)</li>
+ * <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge >= 0)</li>
+ * </ul>
+ * <p>
+ * This descriptor uses no parameters.
+ * <p>
+ * This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
+ * hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
  *
- * <p>This descriptor uses these parameters:
- * <table>
- *   <tr>
- *     <td>Name</td>
- *     <td>Default</td>
- *     <td>Description</td>
- *   </tr>
- *   <tr>
- *     <td>checkAromaticity</td>
- *     <td>false</td>
- *     <td>True is the aromaticity has to be checked</td>
- *   </tr>
- * </table>
- *
- * @author      mfe4
- * @cdk.created 2004-11-03
+ * @author      ulif
+ * @cdk.created 2005-22-07
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
 public class HBondDonorCountDescriptor implements Descriptor {
 	
-	private boolean checkAromaticity = false;
-
-
 	/**
 	 *  Constructor for the HBondDonorCountDescriptor object
 	 */
@@ -71,10 +64,10 @@ public class HBondDonorCountDescriptor implements Descriptor {
 
 
 	/**
-	 *  Gets the specification attribute of the HBondDonorCountDescriptor
-	 *  object
+	 * Gets the specification attribute of the HBondDonorCountDescriptor
+	 * object
 	 *
-	 *@return    The specification value
+	 * @return    The specification value
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -86,115 +79,89 @@ public class HBondDonorCountDescriptor implements Descriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the HBondDonorCountDescriptor object
+	 * Sets the parameter of this HBondDonorCountDescriptor instance.
 	 *
-	 *@param  params            a boolean true means that aromaticity has to be checked
-	 *@exception  CDKException  Description of the Exception
+	 * @param  params            this descriptor does not have any parameters
+	 * @exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("HBondDonorCountDescriptor only expects less than two parameters");
-		}
-		if (!(params[0] instanceof Boolean)) {
-			throw new CDKException("The parameter must be of type Boolean");
-		}
-		// ok, all should be fine
-		checkAromaticity = ((Boolean) params[0]).booleanValue();
+    // this descriptor has no parameters; nothing has to be done here
 	}
 
 
 	/**
-	 *  Gets the parameters attribute of the HBondDonorCountDescriptor object
+	 * Gets the parameters of the HBondDonorCountDescriptor instance.
 	 *
-	 *@return    The parameters value
+	 * @return    null as this descriptor does not have any parameters
 	 */
 	public Object[] getParameters() {
-		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[1];
-		params[0] = new Boolean(checkAromaticity);
-		return params;
+    // no parameters; thus we return null
+		return null;
 	}
 
 
 	/**
-	 *  The method calculates the number of H bond donors.
+	 * Calculates the number of H bond donors.
 	 *
-	 *@param  ac                AtomContainer
-	 *@return                   number of H bond donors
-	 *@exception  CDKException  Possible Exceptions
+	 * @param  ac                AtomContainer
+	 * @return                   number of H bond donors
+	 * @exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
-		Molecule mol = new Molecule(ac);
-		if (checkAromaticity) {
-			HueckelAromaticityDetector.detectAromaticity(mol);
-		}
 		int hBondDonors = 0;
-		int hcounter = 0;
-		int atomicNumber = 0;
-		String symbol = null;
-		Atom[] atoms = mol.getAtoms();
-		Atom[] neighboors = null;
-		for (int i = 0; i < atoms.length; i++) {
-			hcounter = 0;
-			symbol = new String(atoms[i].getSymbol());
-			atomicNumber = atoms[i].getAtomicNumber();
-			neighboors = mol.getConnectedAtoms(atoms[i]);
-			for (int n = 0; n < neighboors.length; n++) {
-				if (neighboors[n].getSymbol().equals("H")) {
-					hcounter += 1;
-				} else if (atoms[i].getHydrogenCount() > 0) {
-					hcounter += 1;
-				} else {
-					hcounter += 0;
-				}
-			}
-			if(hcounter > 0) {
-				if(symbol.equals("O")) {
-					hBondDonors += 1;
-				}
-				else if(symbol.equals("N")){
-					hBondDonors += 1;
-				}
-				else if(symbol.equals("F")){
-					hBondDonors += 1;
-				}
-				else {
-					hBondDonors += 0;
-				}
-			}
-			else {
-				hBondDonors += 0;
-			}
-		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(hBondDonors));
+    
+    Atom[] atoms = ac.getAtoms();
+    // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
+    atomloop:
+    for(int atomIndex = 0; atomIndex < atoms.length; atomIndex++)
+    {
+      // checking for O and N atoms where the formal charge is >= 0
+      if((atoms[atomIndex].getSymbol().equals("O") || atoms[atomIndex].getSymbol().equals("N")) && atoms[atomIndex].getFormalCharge() >= 0)
+      {
+        // implicit hydrogens
+        if(atoms[atomIndex].getHydrogenCount() > 0)
+        {
+          hBondDonors++;
+          continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
+        }
+        // explicit hydrogens
+        Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
+        for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
+        {
+          if(neighbours[neighbourIndex].getSymbol().equals("H"))
+          {
+            hBondDonors++;
+            continue atomloop;
+          }
+        }
+      }
+    }
+    
+    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(hBondDonors));
 	}
 
 
 	/**
-	 *  Gets the parameterNames attribute of the HBondDonorCountDescriptor
-	 *  object
+	 * Gets the parameterNames of the HBondDonorCountDescriptor.
 	 *
-	 *@return    The parameterNames value
+	 * @return    null as this descriptor does not have any parameters
 	 */
 	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "checkAromaticity";
-		return params;
+    // no parameters; thus we return null
+		return null;
 	}
 
 
 
 	/**
-	 *  Gets the parameterType attribute of the HBondDonorCountDescriptor
-	 *  object
+	 * Gets the parameterType of the HBondDonorCountDescriptor.
 	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
+	 * @param  name  Description of the Parameter
+	 * @return       null as this descriptor does not have any parameters
 	 */
 	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new Boolean(true);
-		return paramTypes;
+    // no parameters; thus we return null
+		return null;
 	}
 }
 

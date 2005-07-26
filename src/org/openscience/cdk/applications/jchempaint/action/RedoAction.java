@@ -46,7 +46,7 @@ public class RedoAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		// XXX needs to be fixed
+		logger.debug("Redo triggered");
 		//jcpPanel.redo();
 	}
 

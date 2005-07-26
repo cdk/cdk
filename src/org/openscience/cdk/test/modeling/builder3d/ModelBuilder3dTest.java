@@ -96,15 +96,25 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			mol = mb3d.getMolecule();
 			for (int i=0;i<mol.getAtomCount();i++){
 				if (i==0){
-					assertTrue(c_coord.equals(mol.getAtomAt(i).getPoint3d()));
+					assertEquals(c_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
+					assertEquals(c_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
+					assertEquals(c_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
 				}else if(i==1){
-					assertTrue(f_coord.equals(mol.getAtomAt(i).getPoint3d()));
+					assertEquals(f_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
+					assertEquals(f_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
+					assertEquals(f_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
 				}else if(i==2){
-					assertTrue(h1_coord.equals(mol.getAtomAt(i).getPoint3d()));
+					assertEquals(h1_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
+					assertEquals(h1_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
+					assertEquals(h1_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
 				}else if(i==3){
-					assertTrue(h2_coord.equals(mol.getAtomAt(i).getPoint3d()));
+					assertEquals(h2_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
+					assertEquals(h2_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
+					assertEquals(h2_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
 				}else if(i==4){
-					assertTrue(h3_coord.equals(mol.getAtomAt(i).getPoint3d()));
+					assertEquals(h3_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
+					assertEquals(h3_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
+					assertEquals(h3_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
 				}
 			}
 			

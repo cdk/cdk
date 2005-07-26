@@ -32,6 +32,11 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.Image;
 
 /**
  * Action to copy/paste structures.
@@ -39,9 +44,10 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * @cdk.module jchempaint
  * @author     Egon Willighagen <e.willighagen@science.ru.nl>
  */
-public class CopyPasteAction extends JCPAction {
+public class CopyPasteAction extends JCPAction{
 
     public void actionPerformed(ActionEvent e) {
+	//handleSystemClipboard();
         logger.info("  type  ", type);
         logger.debug("  source ", e.getSource());
         JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
@@ -56,19 +62,51 @@ public class CopyPasteAction extends JCPAction {
             if (topaste != null) {
                 topaste = (AtomContainer)topaste.clone();
                 ChemModel chemModel = jcpModel.getChemModel();
-                // translate the new structure a bit
-                GeometryTools.translate2D(topaste, 25, 25); // in pixels
-                // paste the new structure into the active model
+                //translate the new structure a bit
+                GeometryTools.translate2D(topaste, 25, 25); //in pixels
+                //paste the new structure into the active model
                 SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
                 if (moleculeSet == null) {
                     moleculeSet = new SetOfMolecules();
                 }
                 moleculeSet.addMolecule(new Molecule(topaste));
-                // make the pasted structure selected
+                //make the pasted structure selected
                 renderModel.setSelectedPart(topaste);
             }
         }
     }
+    
+    void handleSystemClipboard()
+    {
+	 Clipboard clipboard = jcpPanel.getToolkit().getSystemClipboard();
+	 Transferable clipboardContent = clipboard.getContents(this);
+	 DataFlavor flavors[]=clipboardContent.getTransferDataFlavors();
+	 String text = "System.clipoard content";
+	for(int i=0;i<flavors.length;++i)
+	{
+		text+="\n\n Name: "+ flavors[i].getHumanPresentableName();
+		text+="\n MIME Type: "+flavors[i].getMimeType();
+		text+="\n Class: ";
+		Class cl = flavors[i].getRepresentationClass();
+		if(cl==null) text+="null";
+		else text+=cl.getName();
+	}
+	logger.debug(text);
+	
+	 if (clipboardContent != null) 
+	 {
+ 		try 
+		{
+			Image image = null;
+ 			image = (Image)clipboardContent.getTransferData(DataFlavor.imageFlavor);
+ 	                logger.debug("Content of system clipboard: \n" + image);
+		}
+ 	        catch (Exception e) 
+		{
+			e.printStackTrace ();
+		}
+	 }
 
+    }
 }
 

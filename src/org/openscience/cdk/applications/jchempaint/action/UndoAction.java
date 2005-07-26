@@ -47,7 +47,7 @@ public class UndoAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		//XXX needs to be fixed
+		logger.debug("Undo triggered");
 		//jcpPanel.undo();
 	}
 
