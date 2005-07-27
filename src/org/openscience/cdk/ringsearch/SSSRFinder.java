@@ -70,7 +70,7 @@ public class SSSRFinder {
 	/**
 	 * Constructs a SSSRFinder.
 	 *
-	 * @deprecated Replaced by {@link #SSSRFinder(Molecule)}
+	 * @deprecated Replaced by {@link #SSSRFinder(AtomContainer)}
 	 */
 	public SSSRFinder() {
 	}
@@ -78,7 +78,7 @@ public class SSSRFinder {
 	/**
 	 * Constructs a SSSRFinder for a specified molecule.
 	 *
-	 * @param   mol the molecule to be searched for rings 
+	 * @param   ac the molecule to be searched for rings 
 	 */
 	public SSSRFinder(AtomContainer ac) {
 		this.atomContainer = ac;
@@ -183,7 +183,7 @@ public class SSSRFinder {
 	 * The returned set is not uniquely defined.
 	 *
 	 * @deprecated replaced by {@link #findSSSR()}
-	 * @param   mol the molecule to be searched for rings 
+	 * @param   ac the molecule to be searched for rings 
 	 * @return      a RingSet containing the SSSR
 	 */
 	static public RingSet findSSSR(AtomContainer ac)

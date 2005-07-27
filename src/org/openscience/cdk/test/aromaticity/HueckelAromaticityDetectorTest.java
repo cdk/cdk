@@ -45,6 +45,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Description of the Class
@@ -57,7 +58,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 public class HueckelAromaticityDetectorTest extends CDKTestCase
 {
 	boolean standAlone = false;
-
+	private static LoggingTool logger = new LoggingTool(HueckelAromaticityDetectorTest.class);
 
 	/**
 	 *  Constructor for the HueckelAromaticityDetectorTest object
@@ -191,10 +192,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		{
 			result = (molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResult[f]);
 			assertTrue(result);
-			if (standAlone)
-			{
-				System.out.println("Result for atom " + f + " is correct?: " + result);
-			}
+			logger.debug("Result for atom " + f + " is correct?: " + result);
 		}
 		if (standAlone && isAromatic)
 		{
@@ -284,7 +282,8 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			Iterator iter = rs.iterator();
 			Ring r = null;
-			int i = 0;
+			int i = 0, aromacount = 0;
+			
 			while (iter.hasNext())
 			{
 				r = (Ring) iter.next();
@@ -297,9 +296,10 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 				{
 					System.out.println("Ring " + i + " in test molecule is not aromatic.");
 				}
-				assertTrue(testResults[i] == isAromatic);
+				if (isAromatic) aromacount++;
 				i++;
 			}
+			assertEquals(aromacount, 1);
 		} catch (Exception exc)
 		{
 			if (standAlone)

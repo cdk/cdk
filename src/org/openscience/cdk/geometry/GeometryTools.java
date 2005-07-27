@@ -360,8 +360,8 @@ public class GeometryTools {
 	 *
 	 *@param  container  AtomContainer which should be translated.
 	 *@param  p          New Location of the geometric 2D Center.
-	 *@see get2DCenter
-	 *@see translate2DCentreOfMassTo
+	 *@see #get2DCenter
+	 *@see #translate2DCentreOfMassTo
 	 */
 	public static void translate2DCenterTo(AtomContainer container, Point2d p) {
 		Point2d com = get2DCenter(container);

@@ -43,7 +43,7 @@ import org.openscience.cdk.applications.jchempaint.action.*;
  *@author        steinbeck
  *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
- *@see           JChemPaintViewerPanel
+ *@see           JChemPaintViewerOnlyPanel
  */
 public class ToolBarMaker 
 {

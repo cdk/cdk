@@ -113,7 +113,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
   /**
    * Handles interaction with structure viewer,
    * highlighted atoms in spectrum view will be highlighted in structure
-   * @param atomNumbers atom numbers of peaks highlighted in spectrum
+   * @param atomNumber atom number of peaks highlighted in spectrum
    */
   public void highlightPeakInSpectrum(int atomNumber) throws Exception{
     if(getParameter("spectrumRenderer")==null)

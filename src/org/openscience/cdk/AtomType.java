@@ -357,7 +357,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	/**
 	 *  Sets the the exact electron valency of the AtomType object.
 	 *
-	 * @param  electronValency  The new electronValency value
+	 * @param  valency  The new valency value
 	 *
 	 */
 	public void setValency(int valency)
@@ -369,7 +369,7 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	/**
 	 *  Gets the the exact electron valency of the AtomType object.
 	 *
-	 * @param  electronValency  The new electronValency value
+	 * @return The valency value
 	 *
 	 */
 	public int getValency()
@@ -469,9 +469,9 @@ public class AtomType extends Isotope implements java.io.Serializable, Cloneable
 	}
 	
 	/**
-	 * Sets if atom type is aromtatic.
+	 * Sets if atom type is aromatic.
 	 * 
-	 * @param  isAromatic  boolean
+	 * @param  ISAROMATIC  boolean
 	 *
 	 */
 	public void setIsAromatic(boolean ISAROMATIC)

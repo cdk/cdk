@@ -28,7 +28,7 @@ package org.openscience.cdk.qsar.model.R;
  * user, though the various fields may be accessed with the provided 
  * methods.
  *
- * @authro Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
  */

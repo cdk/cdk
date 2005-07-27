@@ -39,7 +39,6 @@ import java.awt.*;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @created    1997
  */
 public class MenuBarAction extends JCPAction {
 

@@ -76,7 +76,7 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 * the atom will be added to a Monomer of type UNKNOWN in the specified Strand.
 	 *
 	 * @param oAtom  The atom to add
-	 * @param oMonomer  The strand the atom belongs to
+	 * @param oStrand  The strand the atom belongs to
 	 *
 	 */
 	public void addAtom(Atom oAtom, Strand oStrand) {
@@ -140,7 +140,8 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 * monomers with the same name in different strands. There is at least one such case: every
 	 * strand contains a monomer called "".]
 	 *
-	 * @param cName  The name of the monomer to look for
+	 * @param monName  The name of the monomer to look for
+	 * @param strandName  The name of the strand to search the monomer in
 	 * @return The Monomer object which was asked for
 	 *
 	 */
@@ -224,7 +225,6 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	}
 	
 	/**
-	 * @author mek
 	 * 
 	 * Removes a particular monomer, specified by its name.
 	 * @param name
@@ -234,7 +234,6 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	}
 	
 	/**
-	 * @author mek
 	 * 
 	 * @return hashtable containing the monomers in the strand.
 	 */

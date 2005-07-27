@@ -54,21 +54,21 @@ public class TextViewDialog extends JDialog {
     private JLabel textCaption;
     
     /**
-     * @see TextViewDialog(JFrame, String, Dimension, boolean, int, int)
+     * @see #TextViewDialog(JFrame, String, Dimension, boolean, int, int)
      */
     public TextViewDialog(JFrame fr, String title) {
         this(fr, title, null);
     }
 
     /**
-     * @see TextViewDialog(JFrame, String, Dimension, boolean, int, int)
+     * @see #TextViewDialog(JFrame, String, Dimension, boolean, int, int)
      */
     public TextViewDialog(JFrame fr, String title, Dimension dim) {
         this(fr, title, dim, true);
     }
 
     /**
-     * @see TextViewDialog(JFrame, String, Dimension, boolean, int, int)
+     * @see #TextViewDialog(JFrame, String, Dimension, boolean, int, int)
      */
     public TextViewDialog(JFrame fr, String title, Dimension dim, boolean wrap) {
         this(fr, title, dim, wrap, 20, 60);

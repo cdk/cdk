@@ -47,7 +47,7 @@ public class AtomTypeManipulator {
 	 * Method that assign properties to an atom given a particular atomType.
 	 *
 	 * @param  atom  Atom to configure
-	 * @param  at    AtomType
+	 * @param  atomType    AtomType
 	 */
 	public static void configure(Atom atom, AtomType atomType) {
 		atom.setAtomTypeName(atomType.getAtomTypeName());

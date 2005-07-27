@@ -72,7 +72,6 @@ import org.openscience.cdk.tools.LoggingTool;
  * subset.
  *
  * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
- * @see org.openscience.cdk.test.smiles.smarts.ParserTest
  *
  * @author      Egon Willighagen
  * @cdk.created 2004-03-29

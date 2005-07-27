@@ -181,7 +181,6 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	}
 
 	/**
-	 * @param theModel
 	 * @param fileURL
 	 */
 	public void loadModelFromUrl(URL fileURL) {

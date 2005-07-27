@@ -348,7 +348,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * favourite small molecule]. Returns 'false' if bonds could not be created
 	 * due to incomplete pdb-records or other reasons. 
 	 * 
-	 * @param oFile
+	 * @param pol The Biopolymer to work on
 	 */
 	public boolean createBonds(BioPolymer pol){
 		SetOfMolecules AAs = AminoAcids.createAAs();

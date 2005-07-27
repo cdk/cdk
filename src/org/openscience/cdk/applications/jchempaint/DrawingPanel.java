@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.*;
  *@author        steinbeck
  *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
- *@see           JChemPaintViewerPanel
+ *@see           JChemPaintViewerOnlyPanel
  */
 public class DrawingPanel extends JPanel
 {
@@ -52,9 +52,8 @@ public class DrawingPanel extends JPanel
 
 
 	/**
-	 *  Constructor for the ReallyPaintPanel object
+	 *  Constructor for the DrawingPanel object
 	 *
-	 *@param  jcpm  Description of the Parameter
 	 */
 	public DrawingPanel()
 	{

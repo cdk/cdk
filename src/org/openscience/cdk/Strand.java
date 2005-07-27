@@ -161,7 +161,6 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	}
 	
 	/**
-	 * @author mek
 	 * 
 	 * Adds a <code>Monomer</code> to this <code>Strand</code>. All atoms and
 	 * bonds in the Monomer are added. NB: The <code>Monomer</code> will *not*
@@ -176,7 +175,6 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	}*/
 	
 	/**
-	 * @author mek
 	 * 
 	 * Removes a particular monomer, specified by its name.
 	 * @param name
@@ -188,7 +186,6 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	}
 	
 	/**
-	 * @author mek
 	 * 
 	 * @return hashtable containing the monomers in the strand.
 	 */

@@ -211,7 +211,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	 *  Returns one of the status strings at the given position
 	 *
 	 * @param  position
-	 * @return
+	 * @return the current status
 	 */
 	public String getStatus(int position) {
 		// return this.status[position];
@@ -286,7 +286,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	}
 
 	/**
-	 * @return
+	 * @return the generation date
 	 */
 	public String getGendate() {
 		return this.gendate;
@@ -302,7 +302,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 
 
 	/**
-	 * @return
+	 * @return The Software value
 	 */
 	public String getSoftware() {
 		return this.software;
@@ -318,7 +318,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 
 
 	/**
-	 * @return
+	 * @return the author of this model
 	 */
 	public String getAuthor() {
 		return this.author;
@@ -340,7 +340,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	/**
 	 *  Returns a ChemModel for this JChemPaintModel
 	 *
-	 * @return
+	 * @return the current ChemModel
 	 */
 	public ChemModel getChemModel() {
 		return model;
@@ -349,7 +349,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	/**
 	 *  Returns the ControllerModel
 	 *
-	 * @return
+	 * @return the current ControllerModel
 	 */
 	public Controller2DModel getControllerModel() {
 		return this.controllerModel;
@@ -369,7 +369,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	/**
 	 *  Returns the RendererModel
 	 *
-	 * @return
+	 * @return the current Renderer2DModel
 	 */
 	public Renderer2DModel getRendererModel() {
 		return this.rendererModel;

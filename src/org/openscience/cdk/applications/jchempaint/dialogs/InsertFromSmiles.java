@@ -69,7 +69,7 @@ public class InsertFromSmiles extends JFrame
 	/**
 	 *  Constructor for the InsertFromSmiles object
 	 *
-	 *@param  jcp  Description of the Parameter
+	 *@param  jcpPanel  Description of the Parameter
 	 */
 	public InsertFromSmiles(JChemPaintPanel jcpPanel)
 	{

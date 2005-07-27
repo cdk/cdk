@@ -64,10 +64,10 @@ public class HybridizationMatcher implements AtomTypeMatcher {
 	 * Finds the AtomType matching the Atom's element symbol, formal charge and 
      * hybridization state.
 	 *
-	 * @param  atomContainerc  AtomContainer
+	 * @param  atomContainer  AtomContainer
 	 * @param  atom            the target atom
 	 * @exception CDKException Exception thrown if something goed wrong
-     * @return                 the matching AtomType
+	 * @return                 the matching AtomType
 	 */
 	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atom) throws CDKException {
         AtomType[] types = factory.getAtomTypes(atom.getSymbol());

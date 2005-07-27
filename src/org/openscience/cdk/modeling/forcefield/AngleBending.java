@@ -424,7 +424,7 @@ public class AngleBending {
 	 *  Evaluate a 5th order error approximation of the gradient, of the angle bending term, for a given atoms
 	 *  coordinates
 	 *
-	 *@param  coords3d  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void set5thOrderErrorApproximateGradientMMFF94SumEA(GVector coord3d) {
 		order5thErrorApproximateGradientMMFF94SumEA = new GVector(coord3d.getSize());

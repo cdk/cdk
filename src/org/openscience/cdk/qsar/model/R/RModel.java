@@ -55,8 +55,6 @@ import java.io.*;
  * and that SJava is also installed, using the -c option. Finally, ensure 
  * that the R_HOME environment variable points to the R installation.
  *
- * @param args  An array of String that contains command line parameters that
- *              would be processed by R
  *
  * @author Rajarshi Guha
  * @cdk.require r-project

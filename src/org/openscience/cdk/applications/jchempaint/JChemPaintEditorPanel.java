@@ -83,7 +83,7 @@ import org.openscience.cdk.validate.ValidatorEngine;
  *@author        steinbeck
  *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
- *@see           JChemPaintViewerPanel
+ *@see           JChemPaintViewerOnlyPanel
  */
 public class JChemPaintEditorPanel extends JChemPaintPanel
 		 implements ChangeListener, CDKChangeListener, CDKEditBus
@@ -329,7 +329,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	/**
 	 *  Sets the value of showToolbar.
 	 *
-	 *@param  showToolbar  The value to assign showToolbar.
+	 *@param  showToolBar  The value to assign showToolbar.
 	 */
 	public void setShowToolBar(boolean showToolBar)
 	{
@@ -351,7 +351,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	/**
 	 *  Sets the value of showToolbar.
 	 *
-	 *@param  showToolbar  The value to assign showToolbar.
+	 *@param  showToolBar  The value to assign showToolbar.
 	 */
 	public void setShowToolBar(boolean showToolBar, int lines)
 	{
@@ -432,7 +432,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	/**
 	 *  Creates a new JChemPaintEditorPanel and assigns a given Model to it.
 	 *
-	 *@param  jchemPaintModel  The model to be assigned to the new frame.
+	 *@param  model  The model to be assigned to the new frame.
 	 *@return       The new JChemPaintFrame with its new JChemPaintModel
 	 */
 	public static JFrame getNewFrame(JChemPaintModel model)

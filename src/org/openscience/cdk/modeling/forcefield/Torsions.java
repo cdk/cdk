@@ -279,7 +279,7 @@ public class Torsions {
 	 *  Evaluate an 5 order approximation of the gradient, of the torsion term, 
 	 *  given the atoms coordinates
 	 *
-	 *@param  coords3d  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void set5thOrderApproximateGradientMMFF94SumET(GVector coord3d) {
 		order5thErrorApproximateGradientMMFF94SumET.setSize(coord3d.getSize());

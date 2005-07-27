@@ -492,7 +492,7 @@ public class VanDerWaalsInteractions {
 	 *  Evaluate a 5th order error approximation of the gradient, for the Van Der Waals interaction term, given the atoms
 	 *  coordinates
 	 *
-	 *@param  coords3d  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void set5thOrderErrorApproximateGradientMMFF94SumEvdW(GVector coord3d) {
 		order5thErrorApproximateGradientMMFF94SumEvdW = new GVector(coord3d.getSize());

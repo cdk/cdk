@@ -55,7 +55,7 @@ public class FingerprinterTest extends CDKTestCase
 {
 	
 	boolean standAlone = false;
-	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
+	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
 	
 	public FingerprinterTest(String name)
 	{

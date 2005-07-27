@@ -28,7 +28,7 @@ package org.openscience.cdk.qsar.model.R;
  * user, though the various fields may be accessed with the provided 
  * methods.
  *
- * @authro Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
  */
@@ -68,8 +68,6 @@ public class LinearRegressionModelSummary {
      * @param df The degrees of freedom
      * @param rsq The R^2 value
      * @param adjrsq The adjusted R^2 value
-     * @param numdf The DoF for the numerator of the F-statistic calculation
-     * @param dendf The DoF for the denominator of the F-statistic calculation
      * @param fstat The value of the F-statistic
      */
     public LinearRegressionModelSummary( double[] residuals , double coeff[],
@@ -132,8 +130,6 @@ public class LinearRegressionModelSummary {
      * Returns the R^2 value.
      *
      * @return The R^2 value
-     * @see #setRSQ
-     * @see #getAdjRSQ
      */
     public double getRSQ() {
         return(this.rsq);
@@ -145,8 +141,6 @@ public class LinearRegressionModelSummary {
      * This statistic is generally a better indicator than plain R^2
      *
      * @return The adjusted R^2 value
-     * @see #setAdjRSQ
-     * @see #getRSQ
      */
     public double getAdjRSQ() {
         return(this.adjrsq);
@@ -181,7 +175,7 @@ public class LinearRegressionModelSummary {
      *
      * @return A 2 element int[]. The first element is the DoF of the numerator
      * and the second element is the DoF of the denominator
-     * @see getFStatistic
+     * @see #getFStatistic
      */
     public int[] getFStatisticDF() {
         int[] ret = {this.numdf, this.dendf};

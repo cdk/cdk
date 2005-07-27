@@ -430,7 +430,6 @@ public class SaturationChecker implements ValencyCheckerInterface {
      * The method is known to fail for certain compounds. For more information, see
      * cdk.test.limitations package.
      *
-     * @see org.openscience.cdk.test.limitations.tools.SaturationCheckerTest
      */
     public void saturate(AtomContainer atomContainer) throws CDKException {
         /* newSaturate(atomContainer);

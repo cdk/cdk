@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.LoggingTool;
  * Created after http://java.sun.com/docs/books/tutorial/uiswing/misc/example-1dot4/ArrayListTransferHandler.java
  *
  * @cdk.module jchempaint
- * @cdk.creator Egon Willighagen
  */
 public class JCPTransferHandler extends TransferHandler {
     

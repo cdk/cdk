@@ -67,7 +67,7 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
     /**
      * Assign the hybridization state to a given atom.
      *
-     * @param  atomContainerc  The AtomContainer in which we should look for the given atom
+     * @param  atomContainer  The AtomContainer in which we should look for the given atom
      * @param  atom   The atom whose type we are looking for
      * @exception CDKException Description of the Exception
      * @return                 the matching AtomType

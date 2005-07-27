@@ -3,57 +3,9 @@
 
     <property name="plugin.dir" value="pluginjar" />
 
-    <target id="dist-jcp" name="dist-jcp" depends="dist-all"
+
+    <target id="dist-jcp" name="dist-jcp" depends="dist-all, compile-jcp, unjar-libjars, unjar-cdkjars"
             description="Builds the JChemPaint application">
-        <antcall target="compile-module">
-            <param name="module" value="jchempaint"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="jchempaint.application"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="jchempaint.applet"/>
-        </antcall>
-            <!-- first unjar the CDK and other jars we need -->
-        <unjar dest="${appjars.dir}">
-            <fileset dir="${lib}">
-                <includesfile name="${metainf}/applications.libdepends"/>
-                <includesfile name="${metainf}/core.libdepends"/>
-                <includesfile name="${metainf}/data.libdepends"/>
-                <includesfile name="${metainf}/experimental.libdepends"/>
-                <includesfile name="${metainf}/extra.libdepends"/>
-                <includesfile name="${metainf}/io.libdepends"/>
-                <includesfile name="${metainf}/libio-cml.libdepends"/>
-                <includesfile name="${metainf}/qsar.libdepends"/>
-                <includesfile name="${metainf}/render.libdepends"/>
-                <includesfile name="${metainf}/standard.libdepends"/>
-                <includesfile name="${metainf}/swing.libdepends"/>
-                <includesfile name="${metainf}/jchempaint.libdepends"/>
-            </fileset>
-            <fileset dir="${dist}/jar">
-                <include name="cdk-applications.jar"/>
-                <include name="cdk-core.jar"/>
-                <include name="cdk-data.jar"/>
-                <include name="cdk-experimental.jar"/>
-                <include name="cdk-extra.jar"/>
-                <include name="cdk-interfaces.jar"/>
-                <include name="cdk-io.jar"/>
-                <include name="cdk-libio-cml.jar"/>
-                <include name="cdk-qsar.jar"/>
-                <include name="cdk-render.jar"/>
-                <include name="cdk-standard.jar"/>
-                <include name="cdk-swing.jar"/>
-                <include name="cdk-jchempaint.jar"/>
-                <include name="cdk-jchempaint.application.jar"/>
-                <include name="cdk-jchempaint.applet.jar"/>
-            </fileset>
-            <fileset dir="${plugin.dir}">
-                <include name="dirbrowser.jar"/>
-                <include name="dadmlbrowser.jar"/>
-            </fileset>
-        </unjar>
-            
-            <!-- then zip up things -->
         <jar jarfile="${dist}/jar/jchempaint-${jcp.version}.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.openscience.cdk.applications.jchempaint.application.JChemPaint"/>
@@ -66,7 +18,6 @@
                     <attribute name="Implementation-Vendor" value="The CDK Project"/>
                 </section>
             </manifest>
-
             <fileset dir="${appjars.dir}">
                 <include name="**/*" />
             </fileset>
@@ -75,7 +26,7 @@
             </fileset>
         </jar>
     </target>
-	
+
     <target id="jcp-only" name="jcp-only"
             description="Builds the JChemPaint application">
         <antcall target="compile-module">
@@ -135,61 +86,53 @@
             </fileset>
         </unjar>
     </target>
-    <target id="run" name="run">
-        <antcall target="compile-module">
-            <param name="module" value="data"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="core"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="interfaces"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="standard"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="render"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="io"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="io-jmol"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="pdb"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="extra"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="libio-cml"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="pdb-cml"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="experimental"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="swing"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="qsar"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="qsar-cml"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="builder3d"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="test"/>
-        </antcall>
-        <antcall target="compile-module">
-            <param name="module" value="applications"/>
-        </antcall>
+
+    <target id="unjar-libjars" name="unjar-libjars">
+        <unjar dest="${appjars.dir}">
+            <fileset dir="${lib}">
+                <includesfile name="${metainf}/applications.libdepends"/>
+                <includesfile name="${metainf}/core.libdepends"/>
+                <includesfile name="${metainf}/data.libdepends"/>
+                <includesfile name="${metainf}/experimental.libdepends"/>
+                <includesfile name="${metainf}/extra.libdepends"/>
+                <includesfile name="${metainf}/io.libdepends"/>
+                <includesfile name="${metainf}/libio-cml.libdepends"/>
+                <includesfile name="${metainf}/qsar.libdepends"/>
+                <includesfile name="${metainf}/render.libdepends"/>
+                <includesfile name="${metainf}/standard.libdepends"/>
+                <includesfile name="${metainf}/swing.libdepends"/>
+                <includesfile name="${metainf}/jchempaint.libdepends"/>
+            </fileset>
+	 </unjar>
+	 </target>
+
+    <target id="unjar-cdkjars" name="unjar-cdkjars">
+	 <unjar dest="${appjars.dir}">
+            <fileset dir="${dist}/jar">
+                <include name="cdk-applications.jar"/>
+                <include name="cdk-core.jar"/>
+                <include name="cdk-data.jar"/>
+                <include name="cdk-experimental.jar"/>
+                <include name="cdk-extra.jar"/>
+                <include name="cdk-interfaces.jar"/>
+                <include name="cdk-io.jar"/>
+                <include name="cdk-libio-cml.jar"/>
+                <include name="cdk-qsar.jar"/>
+                <include name="cdk-render.jar"/>
+                <include name="cdk-standard.jar"/>
+                <include name="cdk-swing.jar"/>
+                <include name="cdk-jchempaint.jar"/>
+                <include name="cdk-jchempaint.application.jar"/>
+                <include name="cdk-jchempaint.applet.jar"/>
+            </fileset>
+            <fileset dir="${plugin.dir}">
+                <include name="dirbrowser.jar"/>
+                <include name="dadmlbrowser.jar"/>
+            </fileset>
+        </unjar>
+    </target>
+
+    <target id="compile-jcp" name="compile-jcp">
         <antcall target="compile-module">
             <param name="module" value="jchempaint"/>
         </antcall>
@@ -199,24 +142,9 @@
         <antcall target="compile-module">
             <param name="module" value="jchempaint.applet"/>
         </antcall>
-        <java classname="org.openscience.cdk.applications.jchempaint.application.JChemPaint" fork="yes">
-
-            <arg value="${arg1}" />
-            <arg value="${arg2}" />
-            <arg value="${arg3}" />
-            <arg value="${arg4}" />
-            <classpath>
-                <fileset dir="${build.src}">
-                    <include name="**/*"/>
-                </fileset>
-                <fileset dir="${appjars.dir}">
-                    <include name="**/*"/>
-                </fileset>
-            </classpath>
-        </java>
-
     </target>
-
+    
+    
 </project>
 
 

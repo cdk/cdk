@@ -53,8 +53,7 @@ public class JavaHelpDialog
 	/**
 	 *  Constructor for the JavaHelpDialog object
 	 *
-	 *@param  fr        Description of the Parameter
-	 *@param  helpfile  Description of the Parameter
+	 *@param  id        An ID of whatever kind XXX FIXME
 	 */
 	public JavaHelpDialog(String id)
 	{

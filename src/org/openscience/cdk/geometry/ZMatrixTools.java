@@ -55,7 +55,7 @@ public class ZMatrixTools {
      * @param second_atoms  Array of atom ids of the second involed atom in angle and dihedral
      * @param third_atoms   Array of atom ids of the third involed atom in dihedral
      *
-     * @cdk.dict blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
+     * @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
      */
     public static Point3d[] zmatrixToCartesian(double[] distances, int[] first_atoms,
                                         double[] angles,    int[] second_atoms,
