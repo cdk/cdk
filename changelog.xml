@@ -4,6 +4,10 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
+    </addition>
+    <addition contributor="cho">
+      Added MMFF94AtomTypeMatcher to cdk
+    </addition>
     <apiChange closes="1208740">
       Deprecated RTools which should be removed in the first release after the
       next; it's outdated, contains a few bugs, and redundant. Use 
