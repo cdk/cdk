@@ -4,8 +4,28 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
+    <addition contributor="shk3, tohel">
+      For the embedded component, the menu can be exported and integrated into mparent application
     </addition>
-    <addition contributor="cho">
+    <addition contributor="shk3, tohel">
+      Embedded component has own context menu with file related functions
+    </addition>
+    <addition contributor="shk3, tohel">
+      Drawing area has a defined size, currently only A4
+    </addition>
+    <addition contributor="shk3, tohel">
+      Menu/Tool/Statusbar can be hidden and by hiding all the editor looks like an viewer
+    </addition>
+    <addition contributor="shk3, tohel">
+      When double clicking on embedded drawing panel, new editor/viewer frame pops up with model of exisiting frame
+    </addition>
+    <addition contributor="shk3, tohel">
+      Applets for editor and viewer exist
+    </addition>
+    <addition contributor="shk3, tohel">
+      Splitting of JCP in editor and viewer as separate applications
+    </addition>
+    <addition contributor="shk3, tohel">
       Added MMFF94AtomTypeMatcher to cdk
     </addition>
     <apiChange closes="1208740">
