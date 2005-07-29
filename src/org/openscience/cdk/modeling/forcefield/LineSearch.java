@@ -18,7 +18,11 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class LineSearch {
 
-	GVector direction = new GVector(3);
+	PotentialFunction pf = null;
+	GVector direction = null;	// Fix value
+	GVector x = null;		// Fix value
+	GVector directionStep = null;
+	GVector xlambda = null;	
 	double lambdaa = 0;
 	double lambdab = 0.5;
 	double lambdac = 0;
@@ -27,7 +31,9 @@ public class LineSearch {
 	double fxc = 0;
 	double parabolMinimumLambda = 0;
 	double lineSearchLambda = 0;
+	double fxLS = 0;
 	double lambdabOld = 0;
+	double tol = 0.0001;
 	private LoggingTool logger;
 
 
@@ -39,100 +45,27 @@ public class LineSearch {
 	}
 
 
-	/**
-	 *  Initially Bracketing a Minimum: Look for 3 points along the line search 
-	 *  where the energy of the middle point is lower than the energy of the two outer points.
-	 *  (Numerical recipes in C++. The Art of Scientific Computing. Second Edition.)
-	 *
-	 *@param  kPoint              Current point, xk
-	 *@param  searchDirection     Search direction
-	 *@param  forceFieldFunction  Potential energy function
-	 */
-	public void initiallyBracketingAMinimum(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction) {
-
-		//logger.debug("Initially Bracketing a Minimum:");
-		
-		direction.set(searchDirection);
-		lambdaa = 0;	
-		if (lambdab < 0.5) {} 
-		else {
-			lambdab = 0.5;
-		}
-
-		double gold = 1.618034;	//Default ratio by which successive intervals are magnified.
-		double glimit = 100;	//Maximum magnification allowed for a parabolic-fit step.
-		double tiny = 1.0E-20;	//It is used to prevent any possible division by zero.
-
-		double lambdau = 0;
-		double r = 0;
-		double q = 0;
-		double fxu = 0;
-		double ulim = 0;
-
-		GVector xa = new GVector(kPoint);	fxa = forceFieldFunction.energyFunction(xa);
-		GVector xb = new GVector(kPoint.getSize());	xb.scaleAdd(lambdab, direction, kPoint);	//Sets the value of this vector to the scalar multiplication by s of vector v1 plus vector v2 (this = s*v1 + v2)
-		fxb = forceFieldFunction.energyFunction(xb);
-
-		if (fxb >fxa) {
-			double lambdat = lambdaa;	GVector xt = new GVector(xa);	double fxt = fxa;
-			lambdaa = lambdab;		xa.set(xb);			fxa = fxb;
-			lambdab = lambdat;		xb.set(xt);			fxb = fxt;
-		}
-		
-		lambdac = lambdab + gold * (lambdab - lambdaa);
-		GVector xc = new GVector(kPoint.getSize());	xc.scaleAdd(lambdac, direction, kPoint);	
-		fxc = forceFieldFunction.energyFunction(xc);
-		
-		double sign = 0;
-		GVector xu = new GVector(kPoint.getSize());
-
-		while (fxb > fxc) {
-			r = (lambdab-lambdaa) * (fxb-fxc);
-			q = (lambdab-lambdac) * (fxb-fxa);
-			if (q-r > 0) {sign = 1;}
-			else {sign = -1;}
-			lambdau = lambdab - ((lambdab-lambdac) * q - (lambdab-lambdaa) * r) / (2.0 * sign * Math.max(Math.abs(q-r),tiny));
-			ulim = lambdab + glimit * (lambdac - lambdab);	//We won't go farther than this.
-			
-			//Test various possibilities:
-			if ((lambdab - lambdau) * (lambdau - lambdac) > 0.0) {	//Parabolic u is between b and c
-				xu.scaleAdd(lambdau, direction, kPoint); fxu = forceFieldFunction.energyFunction(xu);
-				if (fxu < fxc) {	// Got a minimum between b and c
-					lambdaa = lambdab;	fxa = fxb;
-					lambdab = lambdau;	fxb = fxu;
-				} else {
-					if (fxu > fxb) {	// Got a minimum between a and u
-						lambdac = lambdau;
-						fxc = fxu;
-					}
-				}
-				lambdau = lambdac + gold * (lambdac-lambdab);	// Parabolic fit was not use. Use default magnification.
-				xu.scaleAdd(lambdau, direction, kPoint); fxu = forceFieldFunction.energyFunction(xu);
-			} else if ((lambdac-lambdau) * (lambdau-ulim) > 0.0) {	// Parabolic fit is between c and its allowed limit.
-				xu.scaleAdd(lambdau, direction, kPoint); fxu = forceFieldFunction.energyFunction(xu);
-				if (fxu < fxc) {
-					//shft3(lambdab,lambdac,lambdau,lambdau+gold*(lambdau-lambdac));	//?
-					//shft3(fxb,fxc,fxu,func(u));
-				}
-			} else if (lambdau > ulim) {	// Limit parabolic u to maximum allowed value
-				lambdau = ulim;
-				xu.scaleAdd(lambdau, direction, kPoint); fxu = forceFieldFunction.energyFunction(xu);
-			} else {	// Reject parabolic u, use default magnification.
-				lambdau = lambdac + gold * (lambdac-lambdab);
-				xu.scaleAdd(lambdau, direction, kPoint); fxu = forceFieldFunction.energyFunction(xu);
-			}
-			//shft3(lambdaa,lambdab,lambdac,lambdau);	// ? Eliminate oldest point and continue
-			//shft3(fxa,fxb,fxc,fxu);
-		}
-		
-		//logger.debug("lambdaa = " + lambdaa);
-		//logger.debug("fxa = " + fxa);
-		//logger.debug("lambdab = " + lambdab);
-		//logger.debug("fxb = " + fxb);
-		//logger.debug("lambdac = " + lambdac);
-		//logger.debug("fxc = " + fxc);
-
-		return;
+	public double f(double lambda) {
+		//logger.debug("lambda= " + lambda);
+		xlambda = new GVector(x);
+		//logger.debug("xlambda = " + xlambda);
+		directionStep = direction;
+		//logger.debug("directionStep = " + directionStep);
+		xlambda.scaleAdd(lambda, directionStep, xlambda);
+		//logger.debug("xlambda = " + xlambda);
+		double fx = pf.energyFunction(xlambda);
+		//logger.debug("fx = " + fx);
+		return fx;
+	}
+	
+	
+	public double sign(double a, double b) {
+		double c = a;
+		if (b >= 0) {
+			if (a >= 0) {} 
+			else { c = -1 * c; }
+		} else if (a >= 0) { c= -1 * c; } 
+		return c;
 	}
 
 
@@ -141,29 +74,23 @@ public class LineSearch {
 	 *  Look for 3 points along the line where the energy of the middle point is lower than the energy of the two outer points.
 	 *  The bracket corresponds to an interval specifying the range of values of Lambda.
 	 *
-	 *@param  kPoint              Current point, xk
-	 *@param  searchDirection     Search direction
-	 *@param  forceFieldFunction  Potential energy function
 	 */
-	public void bracketingTheMinimum(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction) {
+	public void bracketingTheMinimum() {
 
+		//logger.debug(" ");
 		//logger.debug("Bracketing the minimum:");
 
-		lambdaa = 0;
-		GVector xa = new GVector(kPoint);
-		fxa = forceFieldFunction.energyFunction(xa);
+		lambdaa = 0;	fxa = f(lambdaa);
+		//logger.debug("lambdaa = " + lambdaa);
+		//logger.debug("fxa = " + fxa);
 
-		if (lambdab < 0.5) {} 
+		if (lambdab < 0.5) {}
 		else {
 			lambdab = 0.5;
 		}
-		GVector xb = new GVector(kPoint);
-		direction.set(searchDirection);
-		direction.scale(lambdab);
-		xb.add(direction);
-		fxb = forceFieldFunction.energyFunction(xb);
-
-		GVector xc = new GVector(kPoint.getSize());
+		fxb = f(lambdab);
+		//logger.debug("lambdab = " + lambdab);
+		//logger.debug("fxb = " + fxb);
 
 		boolean finish = false;
 		if (fxb > fxa) {
@@ -172,15 +99,11 @@ public class LineSearch {
 				//logger.debug("The energy increase with the current step size. The step size will be halve");
 				
 				lambdab = lambdab / 2;
-				xb.set(kPoint);
-				direction.set(searchDirection);
-				direction.scale(lambdab);
-				xb.add(direction);
-				fxb = forceFieldFunction.energyFunction(xb);
+				fxb = f(lambdab);
 				
-				//logger.debug("lambdaa = " + lambdaa + "	");
+				//logger.debug("lambdaa = " + lambdaa);
 				//logger.debug("fxa = " + fxa);
-				//logger.debug("lambdab = " + lambdab + "	");
+				//logger.debug("lambdab = " + lambdab);
 				//logger.debug("fxb = " + fxb);
 				
 				if (fxb < fxa) {
@@ -189,7 +112,6 @@ public class LineSearch {
 				if (lambdab < 0.0000000000000001) {
 					finish = true;
 					lambdac = lambdab;
-					xc.set(xb);
 				}
 			}
 		}
@@ -205,11 +127,7 @@ public class LineSearch {
 			//logger.debug("Brent's exponential search");
 					
 			lambdac = 1.2 * lambdab;
-			xc.set(kPoint);
-			direction.set(searchDirection);
-			direction.scale(lambdac);
-			xc.add(direction);
-			fxc = forceFieldFunction.energyFunction(xc);
+			fxc = f(lambdac);
 			
 			//logger.debug("lambdaa = " + lambdaa + "	");
 			//logger.debug("fxa = " + fxa);
@@ -224,21 +142,15 @@ public class LineSearch {
 					finish = true;
 				} 
 				else {
-					xa.set(xb);
 					lambdaa = lambdab;
 					fxa = fxb;
 					
-					xb.set(xc);
 					lambdabOld = lambdab;
 					lambdab = lambdac;
 					fxb = fxc;
 					
 					lambdac = 1.618 * (lambdac-lambdabOld) + lambdac;	// Brent's exponential search
-					xc.set(kPoint);
-					direction.set(searchDirection);
-					direction.scale(lambdac);
-					xc.add(direction);
-					fxc = forceFieldFunction.energyFunction(xc);
+					fxc = f(lambdac);
 
 					//logger.debug("lambdaa = " + lambdaa + "	");
 					//logger.debug("fxa = " + fxa);
@@ -271,15 +183,15 @@ public class LineSearch {
 			double lambdab2 = 0.6180339887498948482 * (lambdac - lambdaa);
 			
 			GVector xb1 = new GVector(kPoint);
-			direction.set(searchDirection);
-			direction.scale(lambdab1);
-			xb1.add(direction);
+			directionStep.set(searchDirection);
+			directionStep.scale(lambdab1);
+			xb1.add(directionStep);
 			double fxb1 = forceFieldFunction.energyFunction(xb1);
 			
 			GVector xb2 = new GVector(kPoint);
-			direction.set(searchDirection);
-			direction.scale(lambdab2);
-			xb2.add(direction);
+			directionStep.set(searchDirection);
+			directionStep.scale(lambdab2);
+			xb2.add(directionStep);
 			double fxb2 = forceFieldFunction.energyFunction(xb2);
 			
 			//logger.debug("lambdaa = " + lambdaa + "	");
@@ -300,8 +212,8 @@ public class LineSearch {
 					} else {
 						lambdab2 = lambdab1;	xb2.set(xb1); 	fxb2 = fxb1;
 						lambdab1 = lambdaa + 0.3819660112 * (lambdac - lambdaa);
-						xb1.set(kPoint);	direction.set(searchDirection);		direction.scale(lambdab1);
-						xb1.add(direction);	fxb1 = forceFieldFunction.energyFunction(xb1);
+						xb1.set(kPoint);	directionStep.set(searchDirection);		directionStep.scale(lambdab1);
+						xb1.add(directionStep);	fxb1 = forceFieldFunction.energyFunction(xb1);
 					}
 				} else {//we can bracket the minimum by the interval [lambdab1, lambdac]
 					if (fxa > fxb1) {
@@ -312,15 +224,15 @@ public class LineSearch {
 						} else {
 							lambdab1 = lambdab2;	xb1.set(xb2); 	fxb1 = fxb2;
 							lambdab2 = lambdaa + 0.6180339887498948482 * (lambdac - lambdaa);
-							xb2.set(kPoint);	direction.set(searchDirection);		direction.scale(lambdab2);
-							xb2.add(direction);	fxb2 = forceFieldFunction.energyFunction(xb2);
+							xb2.set(kPoint);	directionStep.set(searchDirection);		directionStep.scale(lambdab2);
+							xb2.add(directionStep);	fxb2 = forceFieldFunction.energyFunction(xb2);
 						}
 					} else {//we can bracket the minimum by the interval [lambdaa, lambdab2]
 						lambdac = lambdab2;	xc.set(xb2);	fxc = fxb2;
 						lambdab2 = lambdab1;	xb2.set(xb1); 	fxb2 = fxb1;
 						lambdab1 = lambdaa + 0.3819660112 * (lambdac - lambdaa);
-						xb1.set(kPoint);	direction.set(searchDirection);		direction.scale(lambdab1);
-						xb1.add(direction);	fxb1 = forceFieldFunction.energyFunction(xb1);
+						xb1.set(kPoint);	directionStep.set(searchDirection);		directionStep.scale(lambdab1);
+						xb1.add(directionStep);	fxb1 = forceFieldFunction.energyFunction(xb1);
 					}
 				}
 				if (Math.abs(fxc-fxa) < 0.000000000000001) {
@@ -353,47 +265,143 @@ public class LineSearch {
 	}
 
 
-	public double parabolicInterpolation() {
-		parabolMinimumLambda = fxa * (Math.pow(lambdac,2) - Math.pow(lambdab,2)) + fxb * (Math.pow(lambdaa,2) - Math.pow(lambdac,2)) + fxc * (Math.pow(lambdab,2) - Math.pow(lambdaa,2));
-		parabolMinimumLambda = parabolMinimumLambda / (fxa * (lambdac-lambdab) + fxb * (lambdaa-lambdac) + fxc * (lambdab-lambdaa));
-		parabolMinimumLambda = 0.5 * parabolMinimumLambda;
-		
-		//logger.debug("parabolMinimumLambda = " + parabolMinimumLambda);
-		return parabolMinimumLambda;
-	}
-
-
 	/**
-	 *  Gets the stepSize attribute of the LineSearch object
-	 *
-	 *@return    The stepSize value
+	 *  Given a function f, and given a bracketing triplet of abscissas lambdaa, lambdab, lambdac (such that 
+	 *  lambdab is between lambdaa and lambdac, and f(lambdab) is less than both f(lambdaa) and f(lambdac)), 
+	 *  this routine isolates the minimum to a fractional precision of about t01=0.00001 using Brent`s method.
 	 */
-	public double getStepSize() {
-		return lineSearchLambda;
-	}
-
-
-	/**
-	 *  Bracket the minimum and then iterative parabolic interpolation.
-	 *  
-	 *@param  kPoint              Current point, xk
-	 *@param  searchDirection     Search direction
-	 *@param  forceFieldFunction  Potential energy function
-	 */
-	public void setLineSearchLambda(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction) {
-		//logger.debug("");
-		//logger.debug("Start the line search: ");
+	public void brentsMethod() {
+		//logger.debug(" ");
+		//logger.debug("brentsMethod");
+		int itmax = 100;	//maximum allowed number of iterations
+		double CGold = 0.3819660;	//golden ratio
+		double zeps = 0.0000000000000001;	//small number that protects against trying to achieve fractional accuracy for a minimum that happens to be exactly zero.
+							//zeps = numeric_limits<DP>::epsilon()*1.0e-3
+		double a,b,d = 0;
+		double etemp, fu, fv, fw, fx;
+		double p,q,r,tol1,tol2,u,v,w,x,xm;
+		double e = 0;	// This will be the distance moved on the step before last.
+		a = lambdaa;
+		b = lambdac;		// a and b  must be in ascending order.
+		x=w=v=lambdab;
+		fw=fv=fx=fxb;
+		u=lambdab; fu=fxb; // included later
 		
-		direction.setSize(searchDirection.getSize());
+		for (int iter=0; iter < itmax; iter++) {	// Main method loop
+			logger.debug("iter = " + iter);
+			//logger.debug("a (bracket the minimum) = " + a);
+			//logger.debug("b (bracket the minimum) = " + b);
+			//logger.debug("x (least function value found) = " + x + " ; f(x) = " + fx);
+			//logger.debug("w (second least function value) = " + w + " ; f(w) = " + fw);
+			//logger.debug("v (previous value of w) = " + v + " ; f(v) = " + fv);
+			//logger.debug("u (most recently evaluation) = " + u + " ; f(u) = " + fu);
+
+			xm = 0.5 * (a + b);
+			//logger.debug("xm = " + xm);
+			
+			tol1= tol * Math.abs(x) + zeps;
+			tol2 = 2.0 * tol1;
+			//logger.debug("tol = " + tol + " ; tol1 = " + tol1 + " ; tol2 = " + tol2);
+			//logger.debug("Math.abs(x-xm) = " + Math.abs(x-xm));
+			//logger.debug("tol2-0.5*(b-a) = " + (tol2-0.5*(b-a)));
+			//logger.debug("if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) ; " + (Math.abs(x-xm) <= (tol2-0.5*(b-a))));
+			if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {	// Test for done hear
+				break;
+			} else {
+				//logger.debug("if (Math.abs(e) > tol1) ; " + (Math.abs(e) > tol1));
+				if (Math.abs(e) > tol1) {		// Construct a trial parabolic fit.
+					//logger.debug("Construct a trial parabolic fit.");
+					r = (x-w) * (fx-fv);
+					//logger.debug("r = " + r);
+					q = (x-v) * (fx-fw);
+					//logger.debug("q = " + q);
+					p = (x - v) * q - (x - w) * r;
+					//logger.debug("p = " + p);
+					q = 2.0 * (q - r);
+					if (q > 0.0) {
+						p = -p;
+					}
+					q = Math.abs(q);
+					etemp = e;
+					e = d;
+					//logger.debug("if (Math.abs(p) >= Math.abs(0.5 * q * etemp) | p <= q * (a - x) | p >= q * (b-x)) ; " + (Math.abs(p) >= Math.abs(0.5 * q * etemp) | p <= q * (a - x) | p >= q * (b-x)));
+					//logger.debug("The above conditions determine the acceptability of the parabolic fit.");
+					if (Math.abs(p) >= Math.abs(0.5 * q * etemp) | p <= q * (a - x) | p >= q * (b-x)) {
+						// The above conditions determine the acceptability of the parabolic fit.
+						logger.debug("Parabolic fit");
+						if (x >= xm) {
+							e = a-x;
+						}
+						else {
+							e = b-x;
+						}
+						d = CGold * e;
+					} else {	// Here we take the golden section step into the larger of the two segments.
+						logger.debug("golden section");
+						d = p/q;	// Take the parabolic step
+						u = x + d;
+						if (u-a < tol2 | b-u < tol2) {
+							d = sign(tol1,xm-x);
+						}
+					}
+				} else {
+					if (x >= xm) {
+						//logger.debug("Prepare e, x >= xm");
+						e = a-x;	
+						//logger.debug("e = " + e);
+					} else {
+						//logger.debug("Prepare e, x < xm");
+						e = b-x;
+						//logger.debug("e = " + e);
+					}
+					d = CGold * e;
+					//logger.debug("d = " + d);
+				}
+				if (Math.abs(d) >= tol1) {
+					u = x + d;
+					//logger.debug("u = x + d = " + u);
+				} else {
+					u = x + sign(tol1,d);
+					//logger.debug("u = x + sign(tol1,d) = " + u);
+				}
+				fu = f(u);	// This is the one function evaluation per iteration
+				//logger.debug("Function evaluation: f(u) = " + fu);
+				if (fu <= fx) {		// Now decide what to do with our function evaluation.
+					if (u >= x) {
+						a=x;
+					} else {
+						b=x;
+					}
+					v = w; w = x; x = u;	// Housekeeping follows
+					fv = fw; fw = fx; fx = fu;
+				} else {
+					if (u<x) {
+						a=u;
+					} else {
+						b=u;
+					}
+					if (fu <= fw | w==x) {
+						v=w;
+						w=u;
+						fv=fw;
+						fw=fu;
+					} else if (fu <= fv | v == x | v == w) {
+						v=u;
+						fv=fu;
+					}
+				}		
+			}	// Done with housekeeping. Back for another iteration.
+			if (iter == itmax-1) {
+				logger.debug("Too many iterations in brent");
+			}
+		}
+
+		lineSearchLambda = x;
+		fxLS = fx;
+
 		
-		bracketingTheMinimum(kPoint, searchDirection, forceFieldFunction);
-		if (fxb < fxa & fxb < fxc) {
-			/*if (Math.abs(fxc-fxa)/Math.abs(lambdac-lambdaa) < 1) {
-				goldenSectionMethod(kPoint, searchDirection, forceFieldFunction);
-			} else {*/
-				//logger.debug("Quadratic interpolation");
-				
-				GVector xI = new GVector(kPoint.getSize());
+		//Parabolic interpolation - that was working before
+		 		/*GVector xI = new GVector(kPoint.getSize());
 				double fxI = 0;
 				double fMinimumMinus1 = fxa;
 				double fMinimum = fxb;
@@ -401,9 +409,9 @@ public class LineSearch {
 				do {
 					parabolicInterpolation();
 					xI.set(kPoint);
-					direction.set(searchDirection);
-					direction.scale(parabolMinimumLambda);
-					xI.add(direction);
+					directionStep.set(searchDirection);
+					directionStep.scale(parabolMinimumLambda);
+					xI.add(directionStep);
 					
 					fxI = forceFieldFunction.energyFunction(xI);
 					//logger.debug("fxI = " + fxI);
@@ -427,7 +435,7 @@ public class LineSearch {
 						fMinimum = fxb;
 					}
 				} while (Math.abs(fMinimum - fMinimumMinus1) > 0.001);
-					
+				*/	
 					/*if (fxI > fxb) {
 						lambdac = parabolMinimumLambda; fxc = fxI;
 					} else {
@@ -439,68 +447,56 @@ public class LineSearch {
 							fxb = fxI; lambdab = parabolMinimumLambda;
 						}
 					}*/
-				lineSearchLambda = lambdab;
-			/*}*/
-		}
+		/*lineSearchLambda = x;
+		fxLS = fx;
+		*/
 	}
-	
+
 	
 	/**
-	 *  Bracket the minimum using the Golden Section Search. 
-	 *  The bracketing phase determines the range of points on the search line to be consider for the interpolation.
-	 *  Look for 3 points along the line where the energy of the middle point is lower than the energy of the two outer points.
-	 *  The bracket corresponds to an interval specifying the range of values of Lambda.
+	 *  Gets the stepSize attribute of the LineSearch object
 	 *
+	 *@return    The stepSize value
+	 */
+	public double getStepSize() {
+		return lineSearchLambda;
+	}
+
+
+	/**
+	 *  Given the atom coordinates and a direction where decrease the energy function, 
+	 *  Bracket a local minimum in this direction and find the minimum, that determine the direction movement.
 	 *@param  kPoint              Current point, xk
 	 *@param  searchDirection     Search direction
 	 *@param  forceFieldFunction  Potential energy function
 	 */
-	public void goldenSectionMethod(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction) {
-
-		logger.debug("Golden Section Search");
+	public void setLineStep(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction) {
+		//logger.debug("");
+		//logger.debug("Start the line search: ");
 		
-		double lambda1 = 0;		GVector x1 = new GVector(kPoint);	double fx1 = forceFieldFunction.energyFunction(x1);
-		double lambda4 = lambdac;
-		double lambda2 = 0.3819660112 * (lambda4 - lambda1);
-		double lambda3 = 0.6180339887498948482 * (lambda4 - lambda1);
+		pf = forceFieldFunction;
+		//logger.debug("pf.energyfunction(kPoint) = " + pf.energyFunction(kPoint));
+		direction = searchDirection;
+		x = kPoint;
+		//logger.debug("pf.energyfunction(x) = " + pf.energyFunction(x));
+		//logger.debug("f(0) = " + f(0));
 		
-		direction.set(searchDirection);		direction.scale(lambda2);	direction.add(kPoint);
-		GVector x2 = new GVector(direction);	double fx2 = forceFieldFunction.energyFunction(x2);		
-		direction.set(searchDirection);		direction.scale(lambda3);	direction.add(kPoint);
-		GVector x3 = new GVector(direction);	double fx3 = forceFieldFunction.energyFunction(x3);
-		direction.set(searchDirection);		direction.scale(lambda4);	direction.add(kPoint);		
-		GVector x4 = new GVector(direction);	double fx4 = forceFieldFunction.energyFunction(x4);
 		
-		boolean finish = false;
-		while (finish != true) {
-			if (fx2 < fx3) {//we can bracket the minimum by the interval [x1, x3]
-				lambda4 = lambda3;	x4.set(x3);	fx4 = fx3;
-				lambda3 = lambda2;	x3.set(x2); 	fx3 = fx2;
-				lambda2 = lambda1 + 0.3819660112 * (lambda4 - lambda1);
-				direction.set(searchDirection);		direction.scale(lambda2);	direction.add(kPoint);
-				x2.set(direction);	fx2 = forceFieldFunction.energyFunction(x2);
-			} else {//we can bracket the minimum by the interval [x2, x4]
-				lambda1 = lambda2;	x1.set(x2);	fx1 = fx2;
-				lambda2 = lambda3;	x2.set(x3); 	fx2 = fx3;
-				lambda3 = lambda1 + 0.6180339887498948482 * (lambda4 - lambda1);
-				direction.set(searchDirection);		direction.scale(lambda3);	direction.add(kPoint);
-				x3.set(direction);	fx3 = forceFieldFunction.energyFunction(x3);
-			}
-			if (fx4-fx1 < 0.000000001) {
-				finish = true;
-				if (fx2 < fx3) {lineSearchLambda = lambda2;}
-				else {lineSearchLambda = lambda3;}
-			}
-			//logger.debug();
-			//logger.debug("lambda1= " + lambda1 + " ; fx1 = " + fx1);
-			//logger.debug("lambda2= " + lambda2 + " ; fx2 = " + fx2);
-			//logger.debug("lambda3= " + lambda3 + " ; fx3 = " + fx3);
-			//logger.debug("lambda4= " + lambda4 + " ; fx4 = " + fx4);
-			//logger.debug("finish = " + finish);
+		bracketingTheMinimum();
+		
+		if (lambdaa < lambdab & lambdab < lambdac & fxb < fxa & fxb < fxc) {
+			brentsMethod();
+		} else {
+			lineSearchLambda = 0;
+			//logger.debug("(lambdaa < lambdab & lambdab < lambdac & fxb < fxa & fxb < fxc) false");
+			/*logger.debug("lambdaa = " + lambdaa);
+			logger.debug("lambdab = " + lambdab);
+			logger.debug("lambdac = " + lambdac);
+			logger.debug("fxa = " + fxa);
+			logger.debug("fxb = " + fxb);
+			logger.debug("fxc = " + fxc);*/
 		}
-		return;
 	}
-
 
 }
 
