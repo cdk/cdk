@@ -236,7 +236,7 @@ public class GeometricMinimizer {
 			sdm.setSk(gradientk);
 			skplus1.set(sdm.sk);
 			
-			ls.setLineSearchLambda(kCoordinates, sdm.sk, forceField);
+			ls.setLineStep(kCoordinates, sdm.sk, forceField);
 			setkplus1Coordinates(sdm.sk, ls.lineSearchLambda);
 			fxkplus1 = forceField.energyFunction(kplus1Coordinates); 			
 			//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
@@ -311,16 +311,16 @@ public class GeometricMinimizer {
 	 * @param  forceField		The potential function to be used
 	 */
 	public void conjugateGradientMinimization(GVector initialCoordinates, PotentialFunction forceField) {
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS ConjugatedGradientTest");
+		logger.debug("");
+		logger.debug("FORCEFIELDTESTS ConjugatedGradientTest");
 		
 		initializeMinimizationParameters(initialCoordinates);
 		fxk = forceField.energyFunction(initialCoordinates);
-		//logger.debug("f(x0) = " + fxk);
+		logger.debug("f(x0) = " + fxk);
 		
 		forceField.setEnergyGradient(kCoordinates);
 		gradientk.set(forceField.getEnergyGradient());
-		logger.debug("gradient at iteration 1 : g1 = " + gradientk);
+		//logger.debug("gradient at iteration 1 : g1 = " + gradientk);
 
 		conjugateGradientMinimum = new GVector(kCoordinates);
 		
@@ -337,29 +337,29 @@ public class GeometricMinimizer {
 			iterationNumberkplus1 += 1;
 			iterationNumberk += 1;
 			logger.debug("");
-			//logger.debug("");
-			//logger.debug("CG Iteration number: " + iterationNumberkplus1);
+			logger.debug("");
+			logger.debug("CG Iteration number: " + iterationNumberkplus1);
 			
 			if (iterationNumberkplus1 != 1) {
 				kCoordinates.set(kplus1Coordinates);
 				fxk = fxkplus1;
 				gradientk.set(gradientkplus1);
 			}
-			//logger.debug("Search direction: ");
+			logger.debug("Search direction: ");
 			cgm.setvk(gradientk, iterationNumberkplus1);
 
-			ls.setLineSearchLambda(kCoordinates, cgm.vk, forceField);
+			ls.setLineStep(kCoordinates, cgm.vk, forceField);
 			setkplus1Coordinates(cgm.vk, ls.lineSearchLambda);			
 			fxkplus1 = forceField.energyFunction(kplus1Coordinates); 			
-			//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
+			logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
 			logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
 			
 			forceField.setEnergyGradient(kplus1Coordinates);
 			gradientkplus1.set(forceField.getEnergyGradient());
 			
 			checkConvergence(CGconvergenceCriterion);
-			//logger.debug(" ");
-			//logger.debug("convergence = " + convergence);
+			logger.debug(" ");
+			logger.debug("convergence = " + convergence);
 			
 //			if (iterationNumberkplus1 % 50 == 0 | iterationNumberkplus1 % 50 == 49 | iterationNumberkplus1 % 50 == 1) {
 				//logger.debug("");
