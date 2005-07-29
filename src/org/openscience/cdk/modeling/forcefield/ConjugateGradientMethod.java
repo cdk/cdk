@@ -16,7 +16,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  */
 public class ConjugateGradientMethod {
-	double uk = 0;
+	double uk_FletcherReeves = 0;
+	double uk_PolankRibiere = 0;
 	GVector vk = null;
 	GVector vkminus1 = null;
 	GVector gkminus1 = null;
@@ -34,16 +35,32 @@ public class ConjugateGradientMethod {
 
 
 	/**
-	 *  uk = gk gk / gk-1 gk-1
+	 *  Fletcher-Reeves: uk = gk gk / gk-1 gk-1
 	 *
 	 */
-	public void setuk(GVector gkminus1, GVector gk) {
+	public void setFletcherReeves_uk(GVector gkminus1, GVector gk) {
 		
-		uk = gk.dot(gk) / gkminus1.dot(gkminus1);
+		uk_FletcherReeves = gk.dot(gk) / gkminus1.dot(gkminus1);
 		
-		//logger.debug("uk = " + uk);
+		logger.debug("uk_FletcherReeves = " + uk_FletcherReeves);
 		return;
 	}
+
+
+	/**
+	 *  Polak-Ribiere: uk = (gk - gk-1) gk / gk-1 gk-1
+	 *
+	 */
+	public void setPolankRibiere_uk(GVector gkminus1, GVector gk) {
+		
+		GVector diffgkgkminus1 = new GVector(gk);
+		diffgkgkminus1.sub(gkminus1);
+		uk_PolankRibiere = diffgkgkminus1.dot(gk) / gkminus1.dot(gkminus1);
+		
+		logger.debug("uk_PolankRibiere = " + uk_PolankRibiere);
+		return;
+	}
+
 
 	/**
 	 *  vk=-gk + uk vk-1
@@ -56,24 +73,24 @@ public class ConjugateGradientMethod {
 		if (iterNumber != 1) {
 		//logger.debug("gk.angle(gkminus1) = " + gk.angle(gkminus1));
 			//if (gk.angle(gkminus1) > 1) {
-			if (iterNumber % 25 != 0) {	//Could be a parameter to input for the user
+			//if (iterNumber % 25 != 0) {	//Could be a parameter to input for the user
 				vkminus1.set(vk);
-				setuk(gkminus1,gk);
-				vkminus1.scale(uk);
+				setPolankRibiere_uk(gkminus1,gk);
+				vkminus1.scale(uk_PolankRibiere);
 				vk.set(gk);
 				vk.scale(-1);
 				vk.add(vkminus1);
 				//vk.normalize();
 				gkminus1.set(gk);
 				//logger.debug("vector vk : " + vk);
-			} else {
+			/*} else {
 				vk.set(gk);
 				vk.normalize();
 				vk.scale(-1);
 				//logger.debug("vectorvk : " + vk);
 				
 				gkminus1.set(gk);
-			}
+			}*/
 		} else {
 			vk = new GVector(gk);
 			vkminus1 = new GVector(gk.getSize());
