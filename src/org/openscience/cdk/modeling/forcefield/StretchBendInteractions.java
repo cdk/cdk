@@ -24,6 +24,8 @@ public class StretchBendInteractions {
 
 	double mmff94SumEBA = 0;
 	GVector gradientMMFF94SumEBA = null;
+	GVector order2ndErrorApproximateGradientMMFF94SumEBA = null;
+	GVector order5thErrorApproximateGradientMMFF94SumEBA = null;
 	GMatrix hessianMMFF94SumEBA = null;
 	GVector currentCoordinates = null;
 	GVector gradientCurrentCoordinates = null;
@@ -236,6 +238,99 @@ public class StretchBendInteractions {
 	 */
 	public GVector getGradientMMFF94SumEBA() {
 		return gradientMMFF94SumEBA;
+	}
+
+
+	/**
+	 *  Evaluate a 2nd order approximation of the gradient for the stretch-bend interaction term, 
+	 *  given the atoms coordinates.
+	 *
+	 *@param  coord3d  Current molecule coordinates.
+	 */
+	public void set2ndOrderErrorApproximateGradientMMFF94SumEBA(GVector coord3d) {
+		order2ndErrorApproximateGradientMMFF94SumEBA = new GVector(coord3d.getSize());
+		double sigma = Math.pow(0.000000000000001,0.33);
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		double fInXplusSigma = 0;
+		double fInXminusSigma = 0;
+
+		for (int m = 0; m < order2ndErrorApproximateGradientMMFF94SumEBA.getSize(); m++) {
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
+			this.setFunctionMMFF94SumEBA(xplusSigma);
+			fInXplusSigma = this.getFunctionMMFF94SumEBA();
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
+			this.setFunctionMMFF94SumEBA(xminusSigma);
+			fInXminusSigma = this.getFunctionMMFF94SumEBA();
+			order2ndErrorApproximateGradientMMFF94SumEBA.setElement(m,(fInXplusSigma - fInXminusSigma) / (2 * sigma));
+		}
+			
+		//logger.debug("order2ndErrorApproximateGradientMMFF94SumEBA : " + order2ndErrorApproximateGradientMMFF94SumEBA);
+	}
+
+
+	/**
+	 *  Get the 2nd order error approximate gradient for the stretch-bend term.
+	 *
+	 *
+	 *@return           Stretch-bend interaction 2nd order error approximate gradient value.
+	 */
+	public GVector get2ndOrderErrorApproximateGradientMMFF94SumEBA() {
+		return order2ndErrorApproximateGradientMMFF94SumEBA;
+	}
+
+
+	/**
+	 *  Evaluate a 5th order error approximation of the gradient, of the stretch-bend interaction term, for a given atoms
+	 *  coordinates
+	 *
+	 *@param  coords3d  Current molecule coordinates.
+	 */
+	public void set5thOrderErrorApproximateGradientMMFF94SumEBA(GVector coord3d) {
+		order5thErrorApproximateGradientMMFF94SumEBA = new GVector(coord3d.getSize());
+		double sigma = Math.pow(0.000000000000001,0.2);
+		GVector xplusSigma = new GVector(coord3d.getSize());
+		GVector xminusSigma = new GVector(coord3d.getSize());
+		GVector xplus2Sigma = new GVector(coord3d.getSize());
+		GVector xminus2Sigma = new GVector(coord3d.getSize());
+		double fInXplusSigma = 0;
+		double fInXminusSigma = 0;
+		double fInXplus2Sigma = 0;
+		double fInXminus2Sigma = 0;
+		
+		for (int m=0; m < order5thErrorApproximateGradientMMFF94SumEBA.getSize(); m++) {
+			xplusSigma.set(coord3d);
+			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
+			this.setFunctionMMFF94SumEBA(xplusSigma);
+			fInXplusSigma = this.getFunctionMMFF94SumEBA();
+			xminusSigma.set(coord3d);
+			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
+			this.setFunctionMMFF94SumEBA(xminusSigma);
+			fInXminusSigma = this.getFunctionMMFF94SumEBA();
+			xplus2Sigma.set(coord3d);
+			xplus2Sigma.setElement(m,coord3d.getElement(m) + 2 * sigma);
+			this.setFunctionMMFF94SumEBA(xplus2Sigma);
+			fInXplus2Sigma = this.getFunctionMMFF94SumEBA();
+			xminus2Sigma.set(coord3d);
+			xminus2Sigma.setElement(m,coord3d.getElement(m) - 2 * sigma);
+			this.setFunctionMMFF94SumEBA(xminus2Sigma);
+			fInXminus2Sigma = this.getFunctionMMFF94SumEBA();
+			order5thErrorApproximateGradientMMFF94SumEBA.setElement(m, (8 * (fInXplusSigma - fInXminusSigma) - (fInXplus2Sigma - fInXminus2Sigma)) / (12 * sigma));
+		}
+			
+		//logger.debug("order5thErrorApproximateGradientMMFF94SumEBA : " + order5thErrorApproximateGradientMMFF94SumEBA);
+	}
+
+
+	/**
+	 *  Get the 5 order approximate gradient of the stretch-bend interaction term.
+	 *
+	 *@return        stretch-bend interaction 5 order approximate gradient value.
+	 */
+	public GVector get5thOrderErrorApproximateGradientMMFF94SumEBA() {
+		return order5thErrorApproximateGradientMMFF94SumEBA;
 	}
 
 

@@ -74,14 +74,14 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 		
 		count += 1;
 		if (count == 0 | count % 20 == 0) {
-			logger.debug("count = " + count);
-			logger.debug("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
-			logger.debug("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
-			logger.debug("sbi.functionMMFF94SumEBA(coords3d) = " + sbi.getFunctionMMFF94SumEBA());
-			logger.debug("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
-			logger.debug("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.getFunctionMMFF94SumEvdW());
-			logger.debug("ei.functionMMFF94SumEQ(coords3d) = " + ei.functionMMFF94SumEQ(coords3d));
-			logger.debug("energy = " + energy);
+			System.out.println("count = " + count);
+			System.out.println("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
+			System.out.println("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
+			System.out.println("sbi.functionMMFF94SumEBA(coords3d) = " + sbi.getFunctionMMFF94SumEBA());
+			System.out.println("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
+			System.out.println("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.getFunctionMMFF94SumEvdW());
+			System.out.println("ei.functionMMFF94SumEQ(coords3d) = " + ei.functionMMFF94SumEQ(coords3d));
+			System.out.println("energy = " + energy);
 		}
 		return energy;
 	}
@@ -101,7 +101,8 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 		bs.setGradientMMFF94SumEB(coords3d);
 		ab.set2ndOrderErrorApproximateGradientMMFF94SumEA(coords3d);
 		//ab.set5thOrderErrorApproximateGradientMMFF94SumEA(coords3d);
-		sbi.setGradientMMFF94SumEBA(coords3d);
+		//sbi.setGradientMMFF94SumEBA(coords3d);
+		sbi.set2ndOrderErrorApproximateGradientMMFF94SumEBA(coords3d);
 		t.set2ndOrderErrorApproximateGradientMMFF94SumET(coords3d);
 		//t.set5thOrderErrorApproximateGradientMMFF94SumET(coords3d);
 		vdwi.setGradientMMFF94SumEvdW(coords3d);
@@ -114,7 +115,8 @@ public class MMFF94EnergyFunction implements PotentialFunction {
 			energyGradient.setElement(i, 
 				bs.getGradientMMFF94SumEB().getElement(i) 
 				+ ab.get2ndOrderErrorApproximateGradientMMFF94SumEA().getElement(i)
-				+ sbi.getGradientMMFF94SumEBA().getElement(i)
+				//+ sbi.getGradientMMFF94SumEBA().getElement(i)
+				+ sbi.get2ndOrderErrorApproximateGradientMMFF94SumEBA().getElement(i)
 				+ t.get2ndOrderErrorApproximateGradientMMFF94SumET().getElement(i)
 				+ vdwi.getGradientMMFF94SumEvdW().getElement(i)
 				+ ei.getGradientMMFF94SumEQ().getElement(i)
