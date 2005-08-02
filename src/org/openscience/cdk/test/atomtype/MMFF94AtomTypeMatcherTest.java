@@ -26,7 +26,7 @@
 package org.openscience.cdk.test.atomtype;
 
 import java.io.BufferedReader;
-//import java.io.FileReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.InputStream;
 
@@ -68,7 +68,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
     }
     
     public void testFindMatchingAtomType_AtomContainer_Atom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-    	System.out.println("**** START ATOMTYPE TEST ******");
+    	//System.out.println("**** START ATOMTYPE TEST ******");
     	AtomTypeTools att=new AtomTypeTools();
     	//SmilesParser sp = new SmilesParser();
     	Molecule mol=null;
@@ -77,23 +77,24 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         BufferedReader fin =null;
         InputStream ins=null;
 		try{
-			ins = this.getClass().getClassLoader().getResourceAsStream("data/mmff94AtomTypeTest_molecule.mol");
-			fin = new BufferedReader(new InputStreamReader(ins));
-			//fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
+			//ins = this.getClass().getClassLoader().getResourceAsStream("data/mmff94AtomTypeTest_molecule.mol");
+			//fin = new BufferedReader(new InputStreamReader(ins));
+			fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
 			MDLReader mdl=new MDLReader(fin);
 			mol=(Molecule)mdl.read(new Molecule());
 		}catch (Exception exc1){
 			System.out.println("Problems loading file due to "+exc1.toString());
 		}
        
-        mol=att.assignAtomTypePropertiesToAtom(mol);
+        att.assignAtomTypePropertiesToAtom(mol);
         for (int i=0;i<mol.getAtomCount();i++){
         	//System.out.print("atomNr:"+i);
         	AtomType matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
         	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
         }
         
-        System.out.println("Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
+        //System.out.println("Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
+        //System.out.println("Atom 0:"+mol.getAtomAt(256).getAtomTypeName());
         
         assertEquals("Sthi",mol.getAtomAt(0).getAtomTypeName());
         assertEquals("Csp2",mol.getAtomAt(7).getAtomTypeName());
@@ -102,6 +103,6 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         assertEquals("Oar",mol.getAtomAt(198).getAtomTypeName());
         assertEquals("N2OX",mol.getAtomAt(233).getAtomTypeName());
         assertEquals("NAZT",mol.getAtomAt(256).getAtomTypeName());
-        System.out.println("**** END OF ATOMTYPE TEST ******");
+        //System.out.println("**** END OF ATOMTYPE TEST ******");
     }
 }
