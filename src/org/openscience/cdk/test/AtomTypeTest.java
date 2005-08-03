@@ -169,64 +169,64 @@ public class AtomTypeTest extends CDKTestCase {
         testSetHybridization_int();
     }
 
-    public void testSetAcceptor(){
+    public void testSetAcceptor_boolean(){
     	boolean acceptor=true;
     	AtomType a = new AtomType("C");
         a.setAcceptor(acceptor);
         assertTrue(a.getAcceptor());    	
     }
     public void testGetAcceptor(){
-    	testSetAcceptor();
+    	testSetAcceptor_boolean();
     }
     
-    public void testSetDonor(){
+    public void testSetDonor_boolean(){
     	boolean donor=true;
     	AtomType a = new AtomType("C");
         a.setDonor(donor);
         assertTrue(a.getDonor());    	
     }
     public void testGetDonor(){
-    	testSetDonor();    	
+    	testSetDonor_boolean();    	
     }
     
-    public void testSetChemicalGroupConstant(){
+    public void testSetChemicalGroupConstant_int(){
     	int benzol=6;
     	AtomType a = new AtomType("C");
         a.setChemicalGroupConstant(benzol);
         assertEquals(6,a.getChemicalGroupConstant());    	
     }    
     public void testGetChemicalGroupConstant(){
-    	testSetChemicalGroupConstant();
+    	testSetChemicalGroupConstant_int();
     }
     
-    public void  testSetRingSize(){
+    public void  testSetRingSize_int(){
     	int five=5;
     	AtomType a = new AtomType("C");
         a.setRingSize(five);
         assertEquals(5,a.getRingSize());    	    	
     }    
     public void  testGetRingSize(){
-    	 testSetRingSize();
+    	 testSetRingSize_int();
     }
     
-    public void testSetIsAromatic(){
+    public void testSetIsAromatic_boolean(){
     	boolean isAromatic=true;
     	AtomType a = new AtomType("C");
         a.setIsAromatic(isAromatic);
         assertTrue(a.getIsAromatic());
     }    
     public void  testGetIsAromatic(){
-    	testSetIsAromatic();
+    	testSetIsAromatic_boolean();
     }
     
-    public void testSetSphericalMatcher(){
+    public void testSetSphericalMatcher_String(){
     	String hoseCode="C-4;HHHC(;///***)";
     	AtomType a = new AtomType("C");
         a.setSphericalMatcher(hoseCode);
         assertEquals("C-4;HHHC(;///***)",a.getSphericalMatcher());  
     }    
     public void testGetSphericalMatcher(){
-    	testSetSphericalMatcher();
+    	testSetSphericalMatcher_String();
     }
     
     /**
