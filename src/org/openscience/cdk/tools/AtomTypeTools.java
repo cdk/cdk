@@ -25,10 +25,11 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.CDKChemicalRingConstants;
+import org.openscience.cdk.atomtype.CDKChemicalRingConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -70,10 +71,10 @@ public class AtomTypeTools {
 	 *			- Ring/Group, ringSize, aromaticity
 	 *			- SphericalMatcher (HoSe Code)
 	 *
-	 *@return                molecule
+	 *@return                sssrf ringSetofTheMolecule
 	 *@exception  Exception  Description of the Exception
 	 */
-	public Molecule assignAtomTypePropertiesToAtom(Molecule molecule) throws Exception{
+	public RingSet assignAtomTypePropertiesToAtom(Molecule molecule) throws Exception{
 		//System.out.println("assignAtomTypePropertiesToAtom Start ...");
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		Atom atom = null;
@@ -98,9 +99,12 @@ public class AtomTypeTools {
 				Ring sring = (Ring) ringSetA.lastElement();
 				atom.setRingSize(sring.getRingSize());
 				atom.setChemicalGroupConstant(ringSystemClassifier(sring, sg.createSMILES(new Molecule(sring))));
-				
+				atom.setFlag(CDKConstants.ISINRING, true);
+				atom.setFlag(CDKConstants.ISALIPHATIC, false);
 			}else{
 				atom.setChemicalGroupConstant(CDKChemicalRingConstants.ISNOT_IN_RING);
+				atom.setFlag(CDKConstants.ISINRING, false);
+				atom.setFlag(CDKConstants.ISALIPHATIC,true);
 			}
 			try {
 				hoseCode = hcg.getHOSECode(molecule, atom, 3);
@@ -110,7 +114,7 @@ public class AtomTypeTools {
 				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString());
 			}
 		}
-		return molecule;
+		return ringSetMolecule;
 	}
 	
 
@@ -139,7 +143,7 @@ public class AtomTypeTools {
 		return 3;
 	}
 	
-	public String removeAromaticityFlagsFromHoseCode(String hoseCode){
+	private String removeAromaticityFlagsFromHoseCode(String hoseCode){
 		String hosecode="";
 		for (int i=0;i<hoseCode.length();i++){
 			if (hoseCode.charAt(i)!= '*'){
