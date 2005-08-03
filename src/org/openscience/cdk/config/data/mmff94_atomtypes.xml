@@ -353,19 +353,19 @@
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
     </atom>
-      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">O-[1];=C.*+</scalar>
   </atomType>
   <atomType id="OX">
     <!-- terminal (oxide) -->
-    <atom elementType="O" formalCharge="-1">
+    <atom elementType="O" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
     </atom>
-      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">O-[1];=[A-Za-z&amp;&amp;[^C]]{1,2}+[(].*+</scalar>
   </atomType>  
@@ -377,7 +377,7 @@
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
     </atom>
-      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">O-[1][-]?+;.*+</scalar>
   </atomType>   
@@ -430,7 +430,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">O-2;CC.=C.*+&amp;.*+&amp;.*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">5</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">6</scalar> 
   </atomType> 
   <atomType id="N">
     <!-- in aliphatic amines -->
@@ -488,7 +488,7 @@
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
     </atom>
-      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[2][+]?+;=[NC]=[NC][-]?+[(].*+</scalar>
   </atomType>
@@ -548,7 +548,7 @@
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
     </atom>
-      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[1-3][+]?+;[H]{0,2}+[A-Za-z]{0,6}+[(].*+%C.*+%N.*+</scalar>
   </atomType>       
@@ -653,7 +653,7 @@
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
     </atom>
-      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[1-2][-];[H]{0,1}+S[A-Z]{0,1}+[(][H]{0,4}+=?+O[-]?+.*+</scalar>
   </atomType>                
@@ -665,12 +665,12 @@
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
     </atom>
-      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[2][-];.*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">1</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">0</scalar> 
   </atomType>                
  <atomType id="NPYD">
     <!--  N pyridine -->
@@ -685,7 +685,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[2-3];[A-Za-z&amp;&amp;[^ON]]{2}[(].*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">6</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">9</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">12</scalar> 
   </atomType>                
   <atomType id="NPYL">
     <!-- N pyrole  -->
@@ -715,7 +715,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[2-3][+];[H]{0,1}+[A-Za-z&amp;&amp;[^NO]]{2,3}+[(].*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">6</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">9</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">12</scalar> 
   </atomType>          
   <atomType id="N5A">
     <!-- alpha N in aromatic 5-ring to N,O,S  -->
@@ -730,7 +730,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[2-3][+]?+;[H]{0,1}+=?+[N,O,S]{0,1}+[+]?+=?+C[+]?+[N,O,S]{0,1}+[(].*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">1</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">0</scalar> 
   </atomType>          
   <atomType id="N5B">
     <!-- beta N in aromatic 5-ring to N,O,S  -->
@@ -745,7 +745,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[2,3];[H]{0,1}+=CC[(][H]{0,3}+=?+[A-Z&amp;&amp;[^C]].*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">1</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">0</scalar> 
   </atomType>       
   <atomType id="NPOX">
     <!-- N in pyridine oxide  -->
@@ -760,7 +760,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[3][+];[A-Z&amp;&amp;[^ON]]{2}+O[-]?+[(].*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">6</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">9</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">12</scalar> 
   </atomType>      
   <atomType id="N5OX">
     <!-- N-oxide in aromatic 5-ring -->
@@ -774,7 +774,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[3][+];[A-Z&amp;&amp;[^ON]]{2}+O[-]?+[(].*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar>  
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">1</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">0</scalar> 
   </atomType>      
   <atomType id="N5+">
     <!-- positive N in aromatic 5-ring, nor alpha,beta -->
@@ -789,7 +789,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">NO PATTERN</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">1</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">0</scalar> 
   </atomType>        
   <atomType id="N5">
     <!-- general N in aromatic 5-ring systems -->
@@ -804,7 +804,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[1-3];[H]{0,1}+[A-Za-z]++[(].*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar> 
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">1</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">0</scalar> 
   </atomType>       
   <atomType id="S">
     <!-- general S in thioether or mercaptans  -->
@@ -903,7 +903,7 @@
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">S-[2];[H]{0,3}+=C.*+</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar> 
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">6</scalar> 
+      <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">8</scalar> 
   </atomType>        
   <atomType id="PTET">
     <!-- P tetracoodinated  -->
