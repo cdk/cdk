@@ -56,6 +56,9 @@ public class CDKChemicalRingConstants {
        
     /** Is in carbon ring system. */
     public final static int IS_IN_CARBRING = 1;
+    
+    /** Is in ring system. */
+    public final static int IS_IN_RING = 3;
        
     /** Is in pyrole */
     public final static int PYROLE = 4;
