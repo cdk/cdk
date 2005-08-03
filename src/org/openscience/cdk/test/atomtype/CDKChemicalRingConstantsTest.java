@@ -52,7 +52,7 @@ public class CDKChemicalRingConstantsTest extends CDKTestCase {
     }
     
    public void testCDKChemicalRingConstants() throws ClassNotFoundException, CDKException, java.lang.Exception {
-    	System.out.println("**** START CDKChemicalRingConstants TEST ******");
+    	//System.out.println("**** START CDKChemicalRingConstants TEST ******");
     	assertEquals(3,CDKChemicalRingConstants.IS_IN_RING);
     	assertEquals(6,CDKChemicalRingConstants.FURAN);    	
    }    

@@ -202,6 +202,47 @@ public class RingSetTest extends CDKTestCase {
         assertEquals(1, ringset.getRings(ring2Bond3).size());
     }
 
+    public void testIsSameRing_Atom_Atom() {
+        RingSet ringset = new RingSet();
+
+        Atom ring1Atom1 = new Atom("C"); // rather artificial molecule
+        Atom ring1Atom2 = new Atom("C");
+        Atom ring1Atom3 = new Atom("C");
+        Atom ring2Atom1 = new Atom("C");
+        Atom ring2Atom2 = new Atom("C");
+        Atom ring2Atom3 = new Atom("C");
+        Bond ring1Bond1 = new Bond(ring1Atom1, ring1Atom2);
+        Bond ring1Bond2 = new Bond(ring1Atom2, ring1Atom3);
+        Bond ring1Bond3 = new Bond(ring1Atom3, ring1Atom1);
+        
+        Bond ring2Bond1 = new Bond(ring2Atom1, ring2Atom2);
+        Bond ring2Bond2 = new Bond(ring2Atom2, ring2Atom3);
+        Bond ring2Bond3 = new Bond(ring2Atom3, ring2Atom1);
+
+        Ring ring1 = new Ring();
+        ring1.addAtom(ring1Atom1);
+        ring1.addAtom(ring1Atom2);
+        ring1.addAtom(ring1Atom3);
+        ring1.addBond(ring1Bond1);
+        ring1.addBond(ring1Bond2);
+        ring1.addBond(ring1Bond3);
+
+        Ring ring2 = new Ring();
+        ring2.addAtom(ring2Atom1);
+        ring2.addAtom(ring2Atom2);
+        ring2.addAtom(ring2Atom3);
+        ring2.addBond(ring2Bond1);
+        ring2.addBond(ring2Bond2);
+        ring2.addBond(ring2Bond3);
+        
+        ringset.add(ring1);
+        ringset.add(ring2);
+        
+        assertTrue(ringset.isSameRing(ring1Atom1, ring1Atom3));
+        assertFalse(ringset.isSameRing(ring1Atom1, ring2Atom3));
+    }
+    
+    
     public void testGetRings_Atom() {
         RingSet ringset = new RingSet();
 
