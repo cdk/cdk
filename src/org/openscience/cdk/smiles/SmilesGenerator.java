@@ -49,6 +49,7 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -483,7 +484,7 @@ public class SmilesGenerator
 					}
 				}
 				String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
-				if ((one != null && two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10) || (!atom.getSymbol().equals("N") && one != null && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)])))
+				if ((one != null && two == null && atom.getSymbol().equals("N") && Math.abs(BondTools.giveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10) || (!atom.getSymbol().equals("N") && one != null && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)])))
 				{
 					return (true);
 				} else
@@ -535,7 +536,7 @@ public class SmilesGenerator
 			}
 		}
 		String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
-		if (one != null && ((!a.getSymbol().equals("N") && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10)))
+		if (one != null && ((!a.getSymbol().equals("N") && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(BondTools.giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10)))
 		{
 			return (true);
 		} else
@@ -829,28 +830,6 @@ public class SmilesGenerator
 
 
 	/**
-	 *  Says if an atom is on the left side of a another atom seen from a certain
-	 *  atom or not
-	 *
-	 *@param  whereIs   The atom the position of which is returned
-	 *@param  viewFrom  The atom from which to look
-	 *@param  viewTo    The atom to which to look
-	 *@return           true=is left, false = is not
-	 */
-	private boolean isLeft(Atom whereIs, Atom viewFrom, Atom viewTo)
-	{
-		double angle = giveAngleBothMethods(viewFrom, viewTo, whereIs, false);
-		if (angle < 0)
-		{
-			return (false);
-		} else
-		{
-			return (true);
-		}
-	}
-
-
-	/**
 	 *  Determines if the atom <code>a</code> is a atom with a ring marker.
 	 *
 	 *@param  a  the atom to test
@@ -1009,7 +988,7 @@ public class SmilesGenerator
 	 */
 	private double giveAngle(Atom from, Atom to1, Atom to2)
 	{
-		return (giveAngleBothMethods(from, to1, to2, true));
+		return (BondTools.giveAngleBothMethods(from, to1, to2, true));
 	}
 
 
@@ -1023,48 +1002,7 @@ public class SmilesGenerator
 	 */
 	private double giveAngleFromMiddle(Atom from, Atom to1, Atom to2)
 	{
-		return (giveAngleBothMethods(from, to1, to2, false));
-	}
-
-
-	/**
-	 *  Gives the angle between two lines starting at atom from and going to to1
-	 *  and to2. If bool=false the angle starts from the middle line and goes from
-	 *  0 to PI or 0 to -PI if the to2 is on the left or right side of the line. If
-	 *  bool=true the angle goes from 0 to 2PI.
-	 *
-	 *@param  from  the atom to view from.
-	 *@param  to1   first direction to look in.
-	 *@param  to2   second direction to look in.
-	 *@param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
-	 *@return       The angle in rad.
-	 */
-	private double giveAngleBothMethods(Atom from, Atom to1, Atom to2, boolean bool)
-	{
-		double[] A = new double[2];
-		from.getPoint2d().get(A);
-		double[] B = new double[2];
-		to1.getPoint2d().get(B);
-		double[] C = new double[2];
-		to2.getPoint2d().get(C);
-		double angle1 = Math.atan2((B[1] - A[1]), (B[0] - A[0]));
-		double angle2 = Math.atan2((C[1] - A[1]), (C[0] - A[0]));
-		double angle = angle2 - angle1;
-		if (angle2 < 0 && angle1 > 0 && angle2 < -(Math.PI / 2))
-		{
-			angle = Math.PI + angle2 + Math.PI - angle1;
-		}
-		if (angle2 > 0 && angle1 < 0 && angle1 < -(Math.PI / 2))
-		{
-			angle = -Math.PI + angle2 - Math.PI - angle1;
-		}
-		if (bool && angle < 0)
-		{
-			return (2 * Math.PI + angle);
-		} else
-		{
-			return (angle);
-		}
+		return (BondTools.giveAngleBothMethods(from, to1, to2, false));
 	}
 
 
@@ -1229,11 +1167,11 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (Atom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[1] = (Atom) chiralNeighbours.get(i);
 									}
@@ -1250,11 +1188,11 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[1] = (Atom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0 && !BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (Atom) chiralNeighbours.get(i);
 									}
@@ -1274,7 +1212,7 @@ public class SmilesGenerator
 								{
 									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == 0)
 									{
-										if (isLeft(((Atom) chiralNeighbours.get(i)), parent, atom))
+										if (BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom))
 										{
 											normalBindingIsLeft = true;
 											break;
@@ -1327,11 +1265,11 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[1] = (Atom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (Atom) chiralNeighbours.get(i);
 									}
@@ -1524,11 +1462,11 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (Atom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (Atom) chiralNeighbours.get(i);
 									}
@@ -1545,11 +1483,11 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (Atom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_DOWN && !BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (Atom) chiralNeighbours.get(i);
 									}
@@ -1590,11 +1528,11 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (Atom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (Atom) chiralNeighbours.get(i);
 									}
@@ -1611,11 +1549,11 @@ public class SmilesGenerator
 							{
 								if (chiralNeighbours.get(i) != parent)
 								{
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[2] = (Atom) chiralNeighbours.get(i);
 									}
-									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
+									if (container.getBond((Atom) chiralNeighbours.get(i), atom).getStereo() == CDKConstants.STEREO_BOND_UP && !BondTools.isLeft(((Atom) chiralNeighbours.get(i)), parent, atom) && !isBondBroken((Atom) chiralNeighbours.get(i), atom))
 									{
 										sorted[0] = (Atom) chiralNeighbours.get(i);
 									}
@@ -2068,15 +2006,17 @@ public class SmilesGenerator
 					afterThisAtom = true;
 				}
 			}
-			boolean firstDirection = isLeft(viewFrom, a, parent);
-			boolean secondDirection = isLeft(viewTo, parent, a);
-			if (firstDirection == secondDirection)
-			{
-				buffer.append('\\');
-			} else
-			{
-				buffer.append('/');
-			}
+      try{
+        if (BondTools.isCisTrans(viewFrom,a,parent,viewTo,container))
+        {
+          buffer.append('\\');
+        } else
+        {
+          buffer.append('/');
+        }
+      }catch(CDKException ex){
+        //If the user wants a double bond configuration, where there is none, we ignore this.
+      }
 		}
 		Vector v = new Vector();
 		Iterator it = getRingOpenings(a, v).iterator();
