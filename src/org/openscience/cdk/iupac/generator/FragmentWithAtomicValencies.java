@@ -29,7 +29,6 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Fragment;
-import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
  * Represents the concept of a fragment with free valences.

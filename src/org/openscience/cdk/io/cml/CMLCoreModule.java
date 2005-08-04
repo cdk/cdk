@@ -31,6 +31,7 @@ package org.openscience.cdk.io.cml;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;

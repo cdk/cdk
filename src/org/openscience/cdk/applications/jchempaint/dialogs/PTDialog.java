@@ -26,16 +26,11 @@ package org.openscience.cdk.applications.jchempaint.dialogs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.border.Border;
 
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Simple Dialog that shows the JCP logo and a textfield that allows

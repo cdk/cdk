@@ -26,17 +26,18 @@ package org.openscience.cdk.applications.demo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import org.apache.commons.cli.Options;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.PosixParser;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.io.*;
+import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.iterator.event.EventCMLReader;
+import org.openscience.cdk.io.listener.ReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.io.listener.*;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

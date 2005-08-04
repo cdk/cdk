@@ -30,8 +30,8 @@
 package org.openscience.cdk.graph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 
 /**
  * Utility class to create a molecule graph for use with jgrapht.

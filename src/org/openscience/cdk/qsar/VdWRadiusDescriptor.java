@@ -24,15 +24,14 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import java.io.IOException;
 
-import java.io.*;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class return the VdW radius of a given atom.

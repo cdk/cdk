@@ -24,8 +24,8 @@
 
 package org.openscience.cdk.iupac.parser;
 
-import java.util.*;
-import org.openscience.cdk.iupac.parser.Token;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Holds data on a specific functional group or substituent.

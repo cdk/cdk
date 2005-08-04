@@ -33,10 +33,9 @@ import java.util.MissingResourceException;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.controller.CDKPopupMenu;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
-import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 
 /**
  *  A pop-up menu for JChemPaint

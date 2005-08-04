@@ -25,16 +25,9 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  * Descriptor based on the number of atoms of a certain element type.

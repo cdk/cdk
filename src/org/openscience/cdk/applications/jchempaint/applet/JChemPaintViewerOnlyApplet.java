@@ -24,20 +24,17 @@
 
 package org.openscience.cdk.applications.jchempaint.applet;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Color;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseEvent;
-import javax.swing.JScrollPane;
-import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.controller.Controller2D;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Atom;
 import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Method;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
+import org.openscience.cdk.controller.Controller2D;
 
 /**
  * The

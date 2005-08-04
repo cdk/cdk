@@ -30,16 +30,13 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import javax.vecmath.AxisAngle4d;
-import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -50,8 +47,9 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.ZMatrixTools;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.ZMatrixFormat;
 
 /**
  * It reads Z matrices like in Gaussian input files. It seems that it cannot

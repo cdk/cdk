@@ -36,8 +36,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.io.MACiEReader;
 import org.openscience.cdk.applications.jchempaint.dialogs.WebDialog;
+import org.openscience.cdk.io.MACiEReader;
 
 
 /**

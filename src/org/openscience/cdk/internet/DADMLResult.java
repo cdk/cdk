@@ -29,6 +29,7 @@
 package org.openscience.cdk.internet;
 
 import java.net.URL;
+
 import org.openscience.dadml.FIELD;
 
 /**

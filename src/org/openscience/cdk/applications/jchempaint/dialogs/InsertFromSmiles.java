@@ -43,15 +43,14 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Frame to allow for changing the propterties.

@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.dict;
 
-import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 

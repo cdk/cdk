@@ -23,21 +23,14 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.util.EventObject;
+import java.awt.GridBagLayout;
 
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JComponent;
-
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.event.CDKChangeListener;
 
 /**
  * Swing class that allows easy building of edit forms.

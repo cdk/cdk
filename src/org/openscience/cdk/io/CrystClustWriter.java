@@ -23,15 +23,20 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+import javax.vecmath.Vector3d;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
-import org.openscience.cdk.io.formats.*;
-import java.util.Vector;
-import java.io.*;
-import javax.vecmath.Vector3d;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.CrystClustFormat;
 
 /**
  * Rather stupid file format used for storing crystal information.

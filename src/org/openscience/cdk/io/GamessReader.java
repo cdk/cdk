@@ -26,11 +26,11 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.vecmath.Point3d;
 
@@ -43,8 +43,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
-import org.openscience.cdk.io.DefaultChemObjectReader;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.GamessFormat;
 
 
 /**

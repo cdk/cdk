@@ -35,10 +35,10 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import org.openscience.cdk.exception.CDKException;
 
 /**
  *  The HueckelAromaticityDetector detects the aromaticity based on the Hueckel

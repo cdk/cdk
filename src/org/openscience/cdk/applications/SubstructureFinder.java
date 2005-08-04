@@ -29,8 +29,8 @@ import java.io.FileReader;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.smiles.smarts.SMARTSParser;
 import org.openscience.cdk.tools.LoggingTool;
 

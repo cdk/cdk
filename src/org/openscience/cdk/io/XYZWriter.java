@@ -27,9 +27,9 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import javax.vecmath.Point3d;
 
@@ -37,7 +37,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.XYZFormat;
 
 /**
  * @cdk.module io

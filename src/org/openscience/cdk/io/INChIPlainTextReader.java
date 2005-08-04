@@ -28,12 +28,12 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.AtomContainer;
@@ -44,9 +44,10 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text 

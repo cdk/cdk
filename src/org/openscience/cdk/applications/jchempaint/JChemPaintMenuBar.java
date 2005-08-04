@@ -28,16 +28,20 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
 import java.lang.reflect.Field;
+import java.util.MissingResourceException;
+import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  JChemPaint menu bar

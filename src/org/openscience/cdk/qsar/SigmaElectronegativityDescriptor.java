@@ -26,11 +26,9 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  Sigma electronegativity is given by X = a + bq + c(q*q)

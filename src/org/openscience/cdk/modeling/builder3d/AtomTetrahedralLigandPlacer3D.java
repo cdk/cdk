@@ -28,14 +28,14 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.util.Vector;
-import java.util.Hashtable;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Vector;
 
+import javax.vecmath.AxisAngle4d;
+import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-import javax.vecmath.Matrix3d;
-import javax.vecmath.AxisAngle4d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;

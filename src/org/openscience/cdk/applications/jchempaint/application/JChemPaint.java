@@ -28,38 +28,22 @@
  */
 package org.openscience.cdk.applications.jchempaint.application;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.net.URL;
-import java.io.*;
-import javax.swing.*;
-import javax.swing.text.*;
-import javax.swing.JInternalFrame.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
-import org.openscience.cdk.*;
-import org.openscience.cdk.applications.plugin.*;
-import org.openscience.cdk.controller.*;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.io.listener.SwingGUIListener;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.applications.jchempaint.*;
-import org.openscience.cdk.applications.jchempaint.io.*;
-import org.openscience.cdk.applications.jchempaint.action.*;
-import org.openscience.cdk.applications.jchempaint.dialogs.*;
-import org.apache.commons.cli.Options;
+import java.io.File;
+import java.io.FileReader;
+
+import javax.swing.JFrame;
+import javax.swing.SwingConstants;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.PosixParser;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 import org.apache.commons.cli.UnrecognizedOptionException;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  JChemPaint main class.

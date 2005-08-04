@@ -26,11 +26,12 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
@@ -38,8 +39,9 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.tools.MFAnalyser;
 
 import freeware.PrintfFormat;

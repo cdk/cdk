@@ -27,7 +27,7 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Ring;
 
 /**
  * @cdk.module standard

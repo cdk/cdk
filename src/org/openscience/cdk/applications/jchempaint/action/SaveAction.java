@@ -30,32 +30,12 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.io.CDKSourceCodeWriter;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.ChemObjectWriter;
-import org.openscience.cdk.io.MDLWriter;
-import org.openscience.cdk.io.SMILESWriter;
-import org.openscience.cdk.io.SVGWriter;
-import org.openscience.cdk.io.listener.SwingGUIListener;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
-import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
 
 /**

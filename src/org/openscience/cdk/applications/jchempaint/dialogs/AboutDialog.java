@@ -30,6 +30,7 @@ package org.openscience.cdk.applications.jchempaint.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -38,10 +39,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.applications.jchempaint.action.*;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
-import java.net.URL;
+import org.openscience.cdk.applications.jchempaint.action.JCPAction;
+import org.openscience.cdk.tools.LoggingTool;
 
 
 /**

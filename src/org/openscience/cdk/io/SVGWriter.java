@@ -27,7 +27,6 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.io.BufferedWriter;
@@ -37,17 +36,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import javax.swing.JPanel;
-
 import org.apache.batik.dom.GenericDOMImplementation;
-import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGeneratorContext;
+import org.apache.batik.svggen.SVGGraphics2D;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.tools.LoggingTool;
 import org.w3c.dom.DOMImplementation;

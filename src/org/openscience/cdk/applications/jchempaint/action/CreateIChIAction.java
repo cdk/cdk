@@ -28,20 +28,22 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import org.openscience.cdk.applications.jchempaint.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.SaturationChecker;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.graph.invariant.IChIGenerator;
-import java.awt.event.ActionEvent;
-import javax.swing.event.ChangeEvent;
-import javax.vecmath.*;
-import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.graph.invariant.IChIGenerator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 
 /**

@@ -23,27 +23,21 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.Vector;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Hashtable;
-
-import Jama.Matrix;
 import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.

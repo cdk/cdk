@@ -29,9 +29,10 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
-import org.openscience.cdk.applications.jchempaint.*;
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.JFrame;
 
 
 /**

@@ -28,8 +28,9 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import org.openscience.cdk.tools.LoggingTool;
 import java.util.Vector;
+
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * A stack of undo operations

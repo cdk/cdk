@@ -28,7 +28,8 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.util.*;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  *  Helper class for dealing with String objects.

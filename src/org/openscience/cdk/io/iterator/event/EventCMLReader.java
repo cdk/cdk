@@ -30,16 +30,15 @@ package org.openscience.cdk.io.iterator.event;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.cml.CMLErrorHandler;
+import org.openscience.cdk.io.cml.CMLHandler;
+import org.openscience.cdk.io.cml.CMLResolver;
+import org.openscience.cdk.io.formats.CMLFormat;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.listener.ReaderListener;
-import org.openscience.cdk.io.cml.*;
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

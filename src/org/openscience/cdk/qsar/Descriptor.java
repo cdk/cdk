@@ -25,7 +25,6 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
 
 /**
  * Classes that implement this interface are QSAR descriptor calculators.

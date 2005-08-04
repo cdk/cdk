@@ -32,15 +32,15 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.EventObject;
 
-import javax.swing.event.ChangeEvent;
 import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
 
-import org.openscience.cdk.controller.Controller2DModel;
-import org.openscience.cdk.applications.swing.PeriodicTablePanel;
-import org.openscience.cdk.event.CDKChangeListener;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
+import org.openscience.cdk.applications.swing.PeriodicTablePanel;
+import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.event.CDKChangeListener;
 
 
 /**

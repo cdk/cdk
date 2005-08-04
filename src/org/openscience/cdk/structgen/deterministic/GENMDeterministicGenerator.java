@@ -24,15 +24,17 @@
  */
 package org.openscience.cdk.structgen.deterministic;
 
-import java.io.*;
-import java.util.*;
-import javax.vecmath.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.graph.ConnectivityChecker;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.smiles.*;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * An adapted implementation of Molodtsov structure generator. 

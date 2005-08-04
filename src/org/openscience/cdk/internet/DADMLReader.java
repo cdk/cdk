@@ -50,7 +50,6 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.tools.LoggingTool;

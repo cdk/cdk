@@ -1,11 +1,7 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.io.*;
-import java.lang.*;
-import java.util.*;
-import javax.vecmath.*;
-import Jama.*;
-import org.openscience.cdk.*;
+import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
 
 
 /**

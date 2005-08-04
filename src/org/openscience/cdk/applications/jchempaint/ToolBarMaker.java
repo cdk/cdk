@@ -28,14 +28,21 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Insets;
 import java.net.URL;
-import java.awt.RenderingHints;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.applications.jchempaint.*;
-import org.openscience.cdk.applications.jchempaint.action.*;
+import java.util.MissingResourceException;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+
+import org.openscience.cdk.applications.jchempaint.action.JCPAction;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class makes the JCPToolBar

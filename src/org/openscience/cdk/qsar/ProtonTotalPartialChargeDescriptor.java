@@ -27,13 +27,9 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.qsar.result.*;
-
-import java.util.Map;
-import java.util.Hashtable;
-import java.util.ArrayList;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 /**
  *  The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE)

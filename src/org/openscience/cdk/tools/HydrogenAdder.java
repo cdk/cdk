@@ -40,7 +40,6 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Provides methods for adding missing hydrogen atoms.

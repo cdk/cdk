@@ -20,17 +20,16 @@
 
 package org.openscience.cdk.geometry.surface;
 
-import javax.vecmath.Point3d;
-import java.lang.Math;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.openscience.cdk.config.IsotopeFactory;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * A class representing the solvent acessible surface area surface of a molecule.

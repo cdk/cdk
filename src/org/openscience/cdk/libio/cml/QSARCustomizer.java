@@ -30,17 +30,19 @@ package org.openscience.cdk.libio.cml;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.qsar.result.*;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DescriptorResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xmlcml.cmlimpl.*;
-import org.xmlcml.cml.*;
 
 /**
  * Customizer for the libio-cml Convertor to be able to export details for

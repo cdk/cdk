@@ -28,27 +28,27 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Vector;
+import java.io.InputStreamReader;
 import java.util.BitSet;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.zip.*;
+import java.util.Vector;
+import java.util.zip.GZIPInputStream;
 
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.isomorphism.mcss.RMap;
 
 /**
  *  Helper class for ModelBuilder3D. Handles templates. This is

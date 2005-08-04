@@ -27,13 +27,11 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
  * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.

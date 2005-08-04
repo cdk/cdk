@@ -30,7 +30,6 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileWriter;
 
 import javax.media.jai.JAI;
 import javax.media.jai.RenderedOp;
@@ -38,15 +37,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.io.SVGWriter;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.io.JCPExportFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
-
 
 import com.sun.media.jai.codec.JPEGEncodeParam;
 

@@ -27,10 +27,9 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.charges.Polarizability;
-import org.openscience.cdk.qsar.result.*;
-import java.util.Hashtable;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  Effective polarizability of an heavy atom and its protons

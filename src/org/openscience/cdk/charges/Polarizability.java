@@ -24,12 +24,13 @@
 package org.openscience.cdk.charges;
 
 import java.util.Vector;
+
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  *  Calculation of the polarizability of a molecule by the method of Kang and

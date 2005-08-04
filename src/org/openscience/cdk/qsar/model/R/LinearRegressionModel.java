@@ -20,15 +20,9 @@
 
 package org.openscience.cdk.qsar.model.R;
 
-import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.qsar.model.R.LinearRegressionModelFit;
-import org.openscience.cdk.qsar.model.R.LinearRegressionModelPredict;
-import org.openscience.cdk.qsar.model.R.LinearRegressionModelSummary;
-
-import org.omegahat.R.Java.REvaluator;
-import org.omegahat.R.Java.ROmegahatInterpreter;
-
 import java.util.HashMap;
+
+import org.openscience.cdk.qsar.model.QSARModelException;
 
 /** 
  * A modeling class that provides a linear least squares regression model.

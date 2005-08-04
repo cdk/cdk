@@ -29,10 +29,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
-import org.openscience.cdk.applications.jchempaint.*;
-
-import javax.swing.*;
-import java.awt.*;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 
 /**
  * Opens a new empty JChemPaintFrame.

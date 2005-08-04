@@ -28,12 +28,12 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-import java.io.IOException;
-import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -41,11 +41,11 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  *  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.

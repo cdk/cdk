@@ -31,8 +31,8 @@ import java.util.Vector;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
 import org.openscience.cdk.math.RandomNumbersTool;
+import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
 
 /**
  * Modified molecular structures by applying crossover operator on a pair of parent structures 

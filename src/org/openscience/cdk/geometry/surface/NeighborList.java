@@ -20,9 +20,9 @@
 
 package org.openscience.cdk.geometry.surface;
 
-import java.lang.Math;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.openscience.cdk.Atom;
 
 /**

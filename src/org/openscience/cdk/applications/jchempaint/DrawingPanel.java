@@ -28,10 +28,15 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import org.openscience.cdk.renderer.*;
+
+import javax.swing.JPanel;
+
+import org.openscience.cdk.renderer.Renderer2D;
+import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  *  This class implements an editing JChemPaintPanel.

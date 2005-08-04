@@ -32,6 +32,7 @@ package org.openscience.cdk.smiles;
 import java.util.Enumeration;
 import java.util.Stack;
 import java.util.StringTokenizer;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;

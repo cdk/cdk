@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import java.io.Reader;
-import java.io.StringReader;
 
 /**
  * @cdk.module io

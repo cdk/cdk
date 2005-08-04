@@ -20,17 +20,15 @@
 
 package org.openscience.cdk.geometry.alignment;
 
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 
-import javax.vecmath.Point3d;
-import java.util.Vector;
-import java.lang.Math;
-
-import Jama.Matrix;
 import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * Aligns two structures to minimize the RMSD using the Kabsch algorithm.

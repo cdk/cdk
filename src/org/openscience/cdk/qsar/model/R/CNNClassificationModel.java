@@ -20,14 +20,9 @@
 
 package org.openscience.cdk.qsar.model.R;
 
-import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.qsar.model.R.CNNClassificationModelFit;
-import org.openscience.cdk.qsar.model.R.CNNClassificationModelPredict;
-
-import org.omegahat.R.Java.REvaluator;
-import org.omegahat.R.Java.ROmegahatInterpreter;
-
 import java.util.HashMap;
+
+import org.openscience.cdk.qsar.model.QSARModelException;
 
 /** 
  * A modeling class that provides a computational neural network classification model.

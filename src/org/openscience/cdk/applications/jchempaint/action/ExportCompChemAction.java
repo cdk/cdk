@@ -35,12 +35,11 @@ import javax.swing.JFileChooser;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.jchempaint.io.JCPCompChemInputSaveFileFilter;
+import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.io.program.GaussianInputWriter;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import org.openscience.cdk.applications.jchempaint.io.JCPCompChemInputSaveFileFilter;
-import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 
 /**
  * Export current model to computational chemistry programs

@@ -20,21 +20,13 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.geometry.surface.NumericalSurface;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import javax.vecmath.*;
-import java.lang.Math;
-
-
-import Jama.Matrix;
-import Jama.EigenvalueDecomposition;
+import org.openscience.cdk.geometry.surface.NumericalSurface;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * Calculates 29 Charged Partial Surface Area (CPSA) descriptors.

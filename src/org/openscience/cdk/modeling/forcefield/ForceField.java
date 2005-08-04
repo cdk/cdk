@@ -1,21 +1,11 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.io.*;
+import javax.vecmath.GVector;
 
-import java.util.*;
-import javax.vecmath.*;
-import org.openscience.cdk.tools.LoggingTool;
-
-
-//import org.openscience.cdk.modeling.forcefield.CdkJmol3DPanel;
-
-import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
-import org.openscience.cdk.modeling.forcefield.*;
-import org.openscience.cdk.*;
-
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  To work with the coordinates of the molecule, like get the 3d coordinates of the atoms or 

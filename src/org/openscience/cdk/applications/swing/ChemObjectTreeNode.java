@@ -28,19 +28,11 @@
  */
 package org.openscience.cdk.applications.swing;
 
-import java.awt.FlowLayout;
-import java.lang.reflect.Field;
-
-import javax.swing.JPanel;
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * A node in the ChemObjectTree.

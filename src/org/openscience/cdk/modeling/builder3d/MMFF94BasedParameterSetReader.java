@@ -29,15 +29,14 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Vector;
-import java.io.BufferedReader;
-import java.util.StringTokenizer;
 import java.util.Hashtable;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
-import org.openscience.cdk.tools.*;
 import org.openscience.cdk.AtomType;
 
 /**

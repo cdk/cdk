@@ -29,9 +29,9 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.graph.AtomContainerPermutor;;
+import org.openscience.cdk.AtomContainer;
+;
 
 /**
  * This class allows to iterate trough the set of all possible

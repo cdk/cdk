@@ -28,9 +28,8 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.AtomType;
 
 
 /**

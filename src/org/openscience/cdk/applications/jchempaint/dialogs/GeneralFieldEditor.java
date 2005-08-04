@@ -28,7 +28,6 @@
 package org.openscience.cdk.applications.jchempaint.dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.Properties;
@@ -40,7 +39,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.openscience.cdk.applications.jchempaint.*;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 
 /**
  * Internal frame to allow for changing the properties.

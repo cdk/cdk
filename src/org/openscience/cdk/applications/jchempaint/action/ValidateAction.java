@@ -35,14 +35,13 @@ import javax.swing.JCheckBoxMenuItem;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.dialogs.ValidateFrame;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.validate.BasicValidator;
 import org.openscience.cdk.validate.CDKValidator;
 import org.openscience.cdk.validate.ProblemMarker;
-
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.dialogs.ValidateFrame;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 
 
 /**

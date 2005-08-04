@@ -30,13 +30,11 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.print.Printable;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterException;
-import java.awt.PrintJob;
-import java.awt.print.PrinterJob;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 import org.openscience.cdk.AtomContainer;
 

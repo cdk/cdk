@@ -37,9 +37,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.applications.jchempaint.JChemPaintMenuBar;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.controller.CDKPopupMenu;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Superclass of all JChemPaint GUI actions

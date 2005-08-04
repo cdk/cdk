@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  Connectivity index (order 0):

@@ -24,14 +24,17 @@
 
 package org.openscience.cdk.iupac.parser;
 
-import java.io.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.templates.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.iupac.parser.Token;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * Takes in parsed Tokens from NomParser and contains rules

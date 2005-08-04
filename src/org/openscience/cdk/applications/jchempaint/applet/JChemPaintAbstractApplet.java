@@ -28,24 +28,24 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
+
 import javax.swing.JApplet;
+
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.MDLWriter;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
  * The

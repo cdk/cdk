@@ -38,8 +38,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

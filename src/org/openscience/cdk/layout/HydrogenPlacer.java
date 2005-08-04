@@ -28,15 +28,15 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.ringsearch.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.graph.PathTools;
-import javax.vecmath.*;
 import java.util.Vector;
-import java.lang.Math;
-import java.awt.*;
+
+import javax.vecmath.Point2d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This is a wrapper class for some existing methods in AtomPlacer. It helps

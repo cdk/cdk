@@ -29,8 +29,8 @@
 package org.openscience.cdk.database;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -44,7 +44,6 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.formats.ChemFormat;
 
 /**

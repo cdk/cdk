@@ -37,14 +37,13 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.HydrogenPlacer;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfReactionsManipulator;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 
 /**

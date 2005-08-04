@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.util.regex.*;
-import java.util.*;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 /**
  *  Class stores hose code patterns to identify mm2 force field atom types.

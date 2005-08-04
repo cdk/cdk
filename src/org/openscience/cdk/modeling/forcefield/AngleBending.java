@@ -1,15 +1,16 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.lang.Math;
-import java.lang.Double;
-import java.lang.Exception;
-import java.lang.String;
-import java.util.Vector;
 import java.util.Hashtable;
-import javax.vecmath.*;
-import Jama.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.modeling.builder3d.*;
+import java.util.Vector;
+
+import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.LoggingTool;
 
 

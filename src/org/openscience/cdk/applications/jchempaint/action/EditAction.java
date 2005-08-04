@@ -29,6 +29,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.Atom;
@@ -37,11 +38,11 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  * This class implements editing options from the 'Edit' menu.

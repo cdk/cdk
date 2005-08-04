@@ -23,22 +23,15 @@
  */
 package org.openscience.cdk.applications.jchempaint.dialogs;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
-import javax.swing.JButton;
+
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.swing.FieldTablePanel;
-import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * JFrame that allows setting of a number of general application options.

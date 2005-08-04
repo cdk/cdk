@@ -27,19 +27,19 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.Vector;
-import java.util.Map;
-import java.util.List;
-import java.util.Iterator;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.LonePair;
+import org.openscience.cdk.Molecule;
 
 /**
  * Class with convenience methods that provide methods to manipulate

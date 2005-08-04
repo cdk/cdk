@@ -27,12 +27,12 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.RingSet;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
  *  This descriptor returns 1 if the protons is directly bonded to an aromatic system,

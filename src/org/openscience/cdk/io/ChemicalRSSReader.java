@@ -37,8 +37,9 @@ import java.io.StringReader;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.io.chemrss.RSSHandler;
+import org.openscience.cdk.io.formats.CMLRSSFormat;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -112,7 +113,7 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
     }
     
     public void setReader(Reader reader) throws CDKException {
-        this.input = input;
+        this.input = reader;
     }
 
     public void setReader(InputStream input) throws CDKException {

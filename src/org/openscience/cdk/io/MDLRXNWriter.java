@@ -29,11 +29,10 @@
 package org.openscience.cdk.io;
 
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.StringWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -41,10 +40,11 @@ import java.util.Locale;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 

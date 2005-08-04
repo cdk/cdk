@@ -29,9 +29,6 @@
 
 package org.openscience.cdk.math;
  
-import java.io.StreamTokenizer;
-import java.io.InputStream;
-import java.io.IOException;
 import java.text.DecimalFormat;
 
 /**

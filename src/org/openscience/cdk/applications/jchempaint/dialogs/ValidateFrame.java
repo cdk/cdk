@@ -36,7 +36,6 @@ import java.util.Enumeration;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -52,13 +51,13 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.swing.FieldTablePanel;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.validate.ProblemMarker;
 import org.openscience.cdk.validate.ValidationReport;
 import org.openscience.cdk.validate.ValidationTest;
-
-import org.openscience.cdk.applications.jchempaint.*;
 
 /**
  * Frame to allows editing of dictionary references of 

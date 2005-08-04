@@ -20,14 +20,9 @@
 
 package org.openscience.cdk.qsar.model.R;
 
-import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.qsar.model.R.PLSRegressionModelFit;
-import org.openscience.cdk.qsar.model.R.PLSRegressionModelPredict;
-
-import org.omegahat.R.Java.REvaluator;
-import org.omegahat.R.Java.ROmegahatInterpreter;
-
 import java.util.HashMap;
+
+import org.openscience.cdk.qsar.model.QSARModelException;
 
 /** 
  * A modeling class that provides a PLS regression model.

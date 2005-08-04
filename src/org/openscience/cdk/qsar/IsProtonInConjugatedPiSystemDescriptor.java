@@ -26,15 +26,12 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.SetOfAtomContainers;
-import java.util.Map;
-import java.util.Hashtable;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.BooleanResult;
 
 /**
  *  This class evaluates if a proton is joined to a conjugated system.

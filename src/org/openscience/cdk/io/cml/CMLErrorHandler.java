@@ -28,11 +28,10 @@
  */
 package org.openscience.cdk.io.cml;
 
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * CDK's SAX2 ErrorHandler for giving feedback on XML errors in the CML document.

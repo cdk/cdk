@@ -25,11 +25,9 @@ package org.openscience.cdk.applications.swing.editor;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.applications.swing.FieldTablePanel;
 
 /**
  * @cdk.module applications

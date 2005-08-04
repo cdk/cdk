@@ -29,16 +29,13 @@
  */
 package org.openscience.cdk.controller;
 
-import org.openscience.cdk.layout.*;
-import org.openscience.cdk.renderer.*;
-import org.openscience.cdk.geometry.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.event.*;
+import java.awt.event.MouseEvent;
+import java.util.Hashtable;
+
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
-import java.awt.*;
-import java.util.*;
-import java.awt.event.*;
-import javax.vecmath.*;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.

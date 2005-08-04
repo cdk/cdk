@@ -32,15 +32,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
-import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.ChemFormatMatcher;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

@@ -29,15 +29,16 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChIFormat;
 import org.openscience.cdk.io.ichi.IChIHandler;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;

@@ -33,7 +33,6 @@ import java.util.Hashtable;
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter.AtomIterator;
 import org.jmol.api.JmolAdapter.BondIterator;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;

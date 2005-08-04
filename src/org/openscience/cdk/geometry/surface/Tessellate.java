@@ -21,7 +21,6 @@
 package org.openscience.cdk.geometry.surface;
 
 import javax.vecmath.Point3d;
-import java.lang.Math;
 
 
 /**

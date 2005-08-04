@@ -28,25 +28,28 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.*;
-import java.util.Vector;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Hashtable;
-import java.util.regex.*;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.HOSECodeGenerator;
-import org.openscience.cdk.RingSet;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.AtomContainer;
 
 
 /**

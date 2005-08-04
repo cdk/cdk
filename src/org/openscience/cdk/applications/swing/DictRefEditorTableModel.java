@@ -34,8 +34,8 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

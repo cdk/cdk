@@ -30,11 +30,11 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.util.StringTokenizer;
-import java.io.StringReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -46,8 +46,9 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.io.formats.CIFFormat;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

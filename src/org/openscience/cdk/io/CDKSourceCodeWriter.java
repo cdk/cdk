@@ -38,7 +38,8 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 

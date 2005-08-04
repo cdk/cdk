@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  * Zagreb index: the sum of the squares of atom degree over all heavy atoms i.

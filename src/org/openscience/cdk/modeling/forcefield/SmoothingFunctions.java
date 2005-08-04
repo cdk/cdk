@@ -1,12 +1,5 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.io.*;
-import java.lang.*;
-import java.util.*;
-import javax.vecmath.*;
-
-import org.openscience.cdk.*;
-import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.tools.LoggingTool;
 
 

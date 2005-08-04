@@ -25,6 +25,7 @@
 package org.openscience.cdk.io.formats;
 
 import java.util.StringTokenizer;
+
 import org.openscience.cdk.math.MathTools;
 
 /**

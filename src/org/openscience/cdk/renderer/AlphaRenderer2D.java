@@ -33,11 +33,12 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

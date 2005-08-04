@@ -28,9 +28,10 @@
  */
 package org.openscience.cdk.applications.jchempaint.applet;
 
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.Dimension;
+
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.swing.JExternalFrame;
 

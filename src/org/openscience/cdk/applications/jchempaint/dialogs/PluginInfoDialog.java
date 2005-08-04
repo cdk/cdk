@@ -27,14 +27,18 @@
  */
 package org.openscience.cdk.applications.jchempaint.dialogs;
 
-import org.openscience.cdk.applications.plugin.CDKPluginInterface;
-import org.openscience.cdk.applications.jchempaint.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 
-import java.awt.*;
-import java.net.URL;
-import java.util.Enumeration;
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.BorderFactory;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
+
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 
 
 

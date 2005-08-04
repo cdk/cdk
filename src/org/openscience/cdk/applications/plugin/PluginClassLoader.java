@@ -26,12 +26,6 @@ package org.openscience.cdk.applications.plugin;
 
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.JarURLConnection;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.InvocationTargetException;
-import java.util.jar.Attributes;
-import java.io.IOException;
 
 import org.openscience.cdk.tools.LoggingTool;
 

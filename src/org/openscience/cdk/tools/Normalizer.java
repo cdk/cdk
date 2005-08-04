@@ -28,17 +28,20 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.isomorphism.*;
-import org.openscience.cdk.isomorphism.mcss.*;
-
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * Adjusts parts of an AtomContainer to the congiguratin of a fragment.

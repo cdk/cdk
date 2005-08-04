@@ -35,12 +35,12 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.validate.BasicValidator;
 import org.openscience.cdk.validate.CDKValidator;
 import org.openscience.cdk.validate.ValidationReport;
 import org.openscience.cdk.validate.ValidationTest;
 import org.openscience.cdk.validate.ValidatorEngine;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Command line utility for checking the chemical information from files.

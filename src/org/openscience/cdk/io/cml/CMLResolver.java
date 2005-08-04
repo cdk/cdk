@@ -31,9 +31,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This class resolves DOCTYPE declaration for Chemical Markup Language (CML)

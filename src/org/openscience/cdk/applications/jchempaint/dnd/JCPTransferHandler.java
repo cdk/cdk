@@ -27,13 +27,13 @@
  */
 package org.openscience.cdk.applications.jchempaint.dnd;
 
-import java.util.*;
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.datatransfer.*;
-import java.awt.dnd.*;
-import javax.swing.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.util.ArrayList;
+
+import javax.swing.JComponent;
+import javax.swing.TransferHandler;
 
 import org.openscience.cdk.tools.LoggingTool;
 

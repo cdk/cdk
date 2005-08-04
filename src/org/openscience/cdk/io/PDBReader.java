@@ -39,9 +39,7 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -52,7 +50,8 @@ import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.Strand;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
 

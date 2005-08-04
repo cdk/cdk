@@ -29,23 +29,24 @@
  */
 package org.openscience.cdk.applications.demo;
 
-import java.util.Vector;
-import java.applet.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.vecmath.Vector2d;
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.TextField;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.structgen.deterministic.*;
-import org.openscience.cdk.applications.swing.*;
-import org.openscience.cdk.Bond;
+import javax.swing.JApplet;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.structgen.RandomGenerator;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**

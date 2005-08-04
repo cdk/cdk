@@ -19,20 +19,19 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.AtomContainer;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.tools.MFAnalyser;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
-import javax.vecmath.*;
-import java.lang.Math;
+import org.openscience.cdk.tools.MFAnalyser;
 
-
-import Jama.Matrix;
 import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * A descriptor that calculates the moment of inertia and radius of gyration.

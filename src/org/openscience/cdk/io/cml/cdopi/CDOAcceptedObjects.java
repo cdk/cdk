@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.io.cml.cdopi;
 
-import java.util.Vector;
 import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * List of names (String classes) of objects accepted by CDO.

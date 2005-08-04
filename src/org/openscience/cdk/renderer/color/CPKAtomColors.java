@@ -24,10 +24,10 @@
  */
 package org.openscience.cdk.renderer.color;
 
-import org.openscience.cdk.Atom;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
+
+import org.openscience.cdk.Atom;
 
 /**
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.

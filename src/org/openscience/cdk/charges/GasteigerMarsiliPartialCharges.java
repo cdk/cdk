@@ -24,8 +24,8 @@
 package org.openscience.cdk.charges;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 
 /**
  * The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 

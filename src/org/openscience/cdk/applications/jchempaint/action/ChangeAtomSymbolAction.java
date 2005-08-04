@@ -32,9 +32,9 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.controller.Controller2DModel;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.controller.Controller2DModel;
 
 
 /**

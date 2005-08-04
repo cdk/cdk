@@ -39,9 +39,8 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are

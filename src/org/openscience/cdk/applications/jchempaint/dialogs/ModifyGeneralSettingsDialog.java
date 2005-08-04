@@ -27,16 +27,15 @@
  */
 package org.openscience.cdk.applications.jchempaint.dialogs;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.Enumeration;
-import javax.swing.*;
-import javax.swing.border.*;
 
-import org.openscience.cdk.applications.swing.editor.Renderer2DModelEditor;
-import org.openscience.cdk.renderer.Renderer2DModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * @cdk.module jchempaint.application

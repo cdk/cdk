@@ -23,19 +23,19 @@
  */
 package org.openscience.cdk.qsar;
 
+import java.util.HashMap;
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import java.util.Vector;
-import java.util.HashMap;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**

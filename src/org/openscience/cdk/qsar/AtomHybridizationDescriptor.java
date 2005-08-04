@@ -25,17 +25,13 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.tools.manipulator.*;
-import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.graph.*;
-import org.openscience.cdk.graph.matrix.*;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  *  This class returns the hybridization of an atom.

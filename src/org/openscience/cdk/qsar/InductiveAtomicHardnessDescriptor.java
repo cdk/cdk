@@ -24,15 +24,17 @@
  */
 package org.openscience.cdk.qsar;
 
+import java.io.IOException;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
-import javax.vecmath.*;
-import java.io.*;
 /**
  *  Inductive atomic hardness of an atom in a polyatomic system can be defined
  *  as the "resistance" to a change of the atomic charge. <p>

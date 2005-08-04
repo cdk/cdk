@@ -25,10 +25,9 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
-import java.lang.Math;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  *   Vertex adjacency information (magnitude): 

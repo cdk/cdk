@@ -28,14 +28,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.AtomTypeTools;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Class implements methods to assign mmff94 atom types for a specific atom in an molecule. 

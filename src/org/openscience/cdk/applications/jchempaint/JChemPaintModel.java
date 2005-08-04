@@ -40,8 +40,8 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.MFAnalyser;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  The model on which JChemPaint opterates. It holds all the models of the

@@ -30,39 +30,24 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
+import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.IChIReader;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.io.listener.SwingGUIListener;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
-
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
-import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
-import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.AtomContainer;
 
 /**
  * Shows the open dialog

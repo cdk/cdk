@@ -25,10 +25,10 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.graph.*;
+import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.graph.matrix.*;
 
 
 /**

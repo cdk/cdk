@@ -27,15 +27,7 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.awt.Dimension;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector2d;
-
-import org.openscience.cdk.*;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.Atom;
 
 /**
  * Weight function used in the <code>RDFCalculator</code>.

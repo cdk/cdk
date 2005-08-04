@@ -37,8 +37,8 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.SpanningTree;
 
 /**
  *  Finds the Set of all Rings. This is an implementation of the algorithm

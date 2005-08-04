@@ -23,11 +23,11 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.event.ChemObjectChangeEvent;
-
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and

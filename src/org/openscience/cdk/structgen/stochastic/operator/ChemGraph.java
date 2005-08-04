@@ -3,8 +3,8 @@ package org.openscience.cdk.structgen.stochastic.operator;
 import java.util.Vector;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.math.RandomNumbersTool;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.math.RandomNumbersTool;
 
 public class ChemGraph
 {

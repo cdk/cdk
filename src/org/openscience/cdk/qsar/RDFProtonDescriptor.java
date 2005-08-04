@@ -24,27 +24,27 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.SetOfAtomContainers;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.RingSet;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.graph.*;
-import org.openscience.cdk.graph.matrix.*;
-// import org.openscience.cdk.modeling.forcefield.*;
-// import org.openscience.cdk.modeling.builder3d.*;
-import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import javax.vecmath.*;
-import java.util.Vector;
 import java.util.ArrayList;
-import org.openscience.cdk.qsar.result.*;
+import java.util.Vector;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.MoleculeGraphs;
+import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
  *  This class calculates 5 RDF proton descriptors used in neural networks for H1 NMR shift.

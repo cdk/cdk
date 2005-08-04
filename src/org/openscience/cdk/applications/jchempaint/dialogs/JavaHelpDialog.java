@@ -28,8 +28,11 @@
  */
 package org.openscience.cdk.applications.jchempaint.dialogs;
 
-import javax.help.*;
 import java.net.URL;
+
+import javax.help.CSH;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 
 /**
  * Display the help system for the application.

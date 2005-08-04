@@ -19,17 +19,13 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
-import java.lang.Math;
-import java.util.Vector;
+import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 
 /**

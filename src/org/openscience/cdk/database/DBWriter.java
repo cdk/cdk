@@ -40,7 +40,6 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.ChemFormat;
 
 /**

@@ -31,7 +31,6 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.dialogs.EditDictRefs;
-import org.openscience.cdk.applications.jchempaint.*;
 
 
 /**

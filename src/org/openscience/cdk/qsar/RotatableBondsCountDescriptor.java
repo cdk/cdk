@@ -24,17 +24,16 @@
  */
 package org.openscience.cdk.qsar;
 
+import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.qsar.result.*;
-import java.util.Vector;
-import java.util.Map;
-import java.util.Hashtable;
 
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on

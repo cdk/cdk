@@ -29,59 +29,31 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.io.StringWriter;
+import java.io.Writer;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.Isotope;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.dict.DictRef;
-import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.CMLFormat;
+import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
-import org.openscience.cdk.tools.IDCreator;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.tools.LoggingTool;
-
 import org.openscience.cdk.libio.cml.Convertor;
-
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.dom.*;
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
-
-import org.xmlcml.cml.*;
-import org.xmlcml.cmlimpl.*;
+import org.openscience.cdk.tools.LoggingTool;
+import org.xmlcml.cml.CMLDocument;
+import org.xmlcml.cml.CMLDocumentFactory;
+import org.xmlcml.cml.CMLException;
+import org.xmlcml.cmlimpl.DocumentFactoryImpl;
 
 
 /**

@@ -27,9 +27,14 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.*;
 import java.util.Collections;
 import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 
 /**
  * @cdk.module standard

@@ -36,13 +36,13 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.event.CDKChangeListener;
-import org.openscience.cdk.renderer.color.CDK2DAtomColors;
-import org.openscience.cdk.renderer.color.CPKAtomColors;
 import org.openscience.cdk.renderer.color.AtomColorer;
+import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 
 /**
  * Model for Renderer2D that contains settings for drawing objects.

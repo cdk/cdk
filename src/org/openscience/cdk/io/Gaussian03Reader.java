@@ -27,12 +27,12 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.StringTokenizer;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.vecmath.Point3d;
 
@@ -44,9 +44,10 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.Gaussian03Format;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

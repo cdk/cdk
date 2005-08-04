@@ -38,10 +38,12 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.Vector;
 import java.util.ArrayList;
+import java.util.Vector;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -57,15 +59,15 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import org.openscience.cdk.validate.ProblemMarker;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
-import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given

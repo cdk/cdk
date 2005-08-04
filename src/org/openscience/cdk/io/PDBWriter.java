@@ -25,19 +25,29 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.*;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import freeware.PrintfFormat;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
 import java.io.BufferedWriter;
-import java.io.Writer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.PDBFormat;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+
+import freeware.PrintfFormat;
 
 /**
  * Saves molecules in a rudimentary PDB format.

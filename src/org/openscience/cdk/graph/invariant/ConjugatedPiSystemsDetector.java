@@ -24,8 +24,15 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import java.util.*;
-import org.openscience.cdk.*;
+import java.util.Stack;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.LonePair;
+import org.openscience.cdk.SetOfAtomContainers;
 
 /**
  *@author        kaihartmann

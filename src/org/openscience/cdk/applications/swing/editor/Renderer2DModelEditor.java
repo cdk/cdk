@@ -26,20 +26,16 @@ package org.openscience.cdk.applications.swing.editor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
-import com.ozten.font.JFontChooser; // from jfontchooser.jar
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.swing.FieldTablePanel;
 import org.openscience.cdk.renderer.Renderer2DModel;
+
+import com.ozten.font.JFontChooser;
 
 /**
  * @cdk.module applications

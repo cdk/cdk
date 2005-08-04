@@ -28,10 +28,10 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.openscience.cdk.tools.LoggingTool;
-import java.util.Locale;
 
 /**
  *  A property manager for JChemPaint.

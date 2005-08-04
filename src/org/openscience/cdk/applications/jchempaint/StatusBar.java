@@ -31,9 +31,9 @@ package org.openscience.cdk.applications.jchempaint;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
 
 /**
  * JChemPaints status bar

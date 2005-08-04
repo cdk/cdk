@@ -29,9 +29,6 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
-import java.net.URL;
-
-import javax.help.*;
 
 import org.openscience.cdk.applications.jchempaint.dialogs.JavaHelpDialog;
 

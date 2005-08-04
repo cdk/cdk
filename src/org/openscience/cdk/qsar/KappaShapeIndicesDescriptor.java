@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.qsar;
 
+import java.util.ArrayList;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
-import java.util.ArrayList;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 /**
  *  Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;

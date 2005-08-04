@@ -27,9 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  *  Descriptor based on the number of bonds of a certain bond order.

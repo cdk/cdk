@@ -26,13 +26,10 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.qsar.result.*;
-import java.util.Map;
-import java.util.Hashtable;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  * This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the

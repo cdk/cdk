@@ -24,17 +24,18 @@
  */
 package org.openscience.cdk.charges;
 
+import java.io.IOException;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Element;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
-import javax.vecmath.*;
-import java.io.*;
 
 /**
  *  The calculation of the inductive partial atomic charges and equalization of

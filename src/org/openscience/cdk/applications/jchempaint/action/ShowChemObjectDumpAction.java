@@ -35,8 +35,8 @@ import java.io.StringWriter;
 import javax.swing.JFrame;
 
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
+import org.openscience.cdk.io.CMLWriter;
 
 
 /**

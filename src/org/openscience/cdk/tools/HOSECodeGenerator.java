@@ -28,10 +28,9 @@
  */
 package org.openscience.cdk.tools;
 
-import java.math.BigInteger;
-import java.util.Vector;
-import java.util.Comparator;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Vector;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 

@@ -25,8 +25,8 @@
  */
 package org.openscience.cdk;
 
-import java.util.Vector;
 import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * A molecular vibration composed of a set of atom vectors.
