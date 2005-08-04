@@ -4,6 +4,9 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
+    <addition contributor="shk3">
+      BondTools contains a method if a double bond configuration is cis or trans
+    </addition>
     <addition contributor="shk3, tohel">
       For the embedded component, the menu can be exported and integrated into mparent application
     </addition>
