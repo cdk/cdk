@@ -40,6 +40,15 @@ package org.openscience.cdk;
  *   // make deuterium
  *   Isotope carbon = new Isotope(1, "H", 2, 2.01410179, 100.0);
  * </pre>
+ * 
+ * <p>Once instantiated all field not filled by passing parameters
+ * to the constructured are null. Isotopes can be configured by using
+ * the IsotopeFactory.configure() method:
+ * <pre>
+ *   Isotope isotope = new Isotope("C", 13);
+ *   IsotopeFactory if = IsotopeFactory.getInstance();
+ *   if.configure(isotope);
+ * </pre>
  *
  * @cdk.module data
  *
@@ -136,6 +145,16 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 
 	/**
 	 *  Gets the NaturalAbundance attribute of the Isotope object.
+	 *  
+	 *  <p>Once instantiated all field not filled by passing parameters
+	 * to the constructured are null. Isotopes can be configured by using
+	 * the IsotopeFactory.configure() method:
+	 * <pre>
+	 *   Isotope isotope = new Isotope("C", 13);
+	 *   IsotopeFactory if = IsotopeFactory.getInstance();
+	 *   if.configure(isotope);
+	 * </pre>
+	 * </p>
 	 *
 	 * @return    The NaturalAbundance value
      *
@@ -148,6 +167,15 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 
 	/**
 	 *  Gets the ExactMass attribute of the Isotope object.
+	 *  <p>Once instantiated all field not filled by passing parameters
+	 * to the constructured are null. Isotopes can be configured by using
+	 * the IsotopeFactory.configure() method:
+	 * <pre>
+	 *   Isotope isotope = new Isotope("C", 13);
+	 *   IsotopeFactory if = IsotopeFactory.getInstance();
+	 *   if.configure(isotope);
+	 * </pre>
+	 * </p>
 	 *
 	 * @return    The ExactMass value
      *
@@ -159,6 +187,16 @@ public class Isotope extends Element implements java.io.Serializable, Cloneable
 
     /**
      * Returns the atomic mass of this element.
+     * 
+     * <p>Once instantiated all field not filled by passing parameters
+	 * to the constructured are null. Isotopes can be configured by using
+	 * the IsotopeFactory.configure() method:
+	 * <pre>
+	 *   Isotope isotope = new Isotope("C", 13);
+	 *   IsotopeFactory if = IsotopeFactory.getInstance();
+	 *   if.configure(isotope);
+	 * </pre>
+	 * </p>
      *
      * @return The atomic mass of this element
      *
