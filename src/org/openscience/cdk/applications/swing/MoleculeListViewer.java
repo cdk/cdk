@@ -70,7 +70,6 @@ public class MoleculeListViewer extends JFrame
 	public MoleculeListViewer()
 	{
 		super();
-        this.molViewDim = molViewDim;
 		getContentPane().setLayout(new BorderLayout());
 		setTitle("Structure Display");
 		panel = new StrucContainer();
@@ -199,7 +198,7 @@ public class MoleculeListViewer extends JFrame
 	public static void main(String[] args)
 	{
 		MoleculeListViewer mlv = new MoleculeListViewer();
-		mlv.standAlone = true;
+		MoleculeListViewer.standAlone = true;
 		mlv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

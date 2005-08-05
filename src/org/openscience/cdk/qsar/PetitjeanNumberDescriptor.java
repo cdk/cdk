@@ -128,9 +128,10 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 				if(rowMax < radius) {
 					radius = rowMax;
 				}
+				/* XXX This does not make much sense
 				else { 
 					radius = radius; 
-				}
+				}*/
 			}
 			// System.out.println("row " + i + ", radius: " +radius + ", diameter: " +diameter);
 		}

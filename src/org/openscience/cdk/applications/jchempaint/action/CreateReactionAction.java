@@ -107,9 +107,10 @@ public class CreateReactionAction extends JCPAction
 					return;
 				} else
 				{
-					Object[] ids = getReactionIDs(reactionSet);
-					//XXX needs fixing
-					/*String s = (String) JOptionPane.showInputDialog(
+//					XXX needs fixing
+					/*Object[] ids = getReactionIDs(reactionSet);
+					
+					String s = (String) JOptionPane.showInputDialog(
 							jcpPanel.getFrame(),
 							"Reaction Chooser",
 							"Choose reaction to add reaction to",
@@ -143,9 +144,10 @@ public class CreateReactionAction extends JCPAction
 					return;
 				} else
 				{
-					Object[] ids = getReactionIDs(reactionSet);
 					//XXX needs fixing
-					/*String s = (String) JOptionPane.showInputDialog(
+					/*
+					Object[] ids = getReactionIDs(reactionSet);
+					String s = (String) JOptionPane.showInputDialog(
 							jcpPanel.getFrame(),
 							"Reaction Chooser",
 							"Choose reaction to add reaction to",

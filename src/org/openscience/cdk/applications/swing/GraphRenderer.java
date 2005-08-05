@@ -175,7 +175,7 @@ public class GraphRenderer extends JComponent
     at.scale(((double)(width-2*xpad))/width,((double)(height-2*ypad))/height);
     g2.setTransform(at);
 
-    if (model.getDisplayMode()==model.NORMAL)
+    if (model.getDisplayMode()==GraphRendererModel.NORMAL)
       for (i=0; i<model.getFunctionsSize(); i++) 
       {
         function = model.getFunction(i);
@@ -199,7 +199,7 @@ public class GraphRenderer extends JComponent
         oy = ny;
       }
 
-    if (model.getDisplayMode()==model.BELOWAREA)
+    if (model.getDisplayMode()==GraphRendererModel.BELOWAREA)
       for (i=0; i<model.getFunctionsSize(); i++)
       {
         function = model.getFunction(i);
@@ -217,7 +217,7 @@ public class GraphRenderer extends JComponent
         }   
       } 
 
-    if (model.getDisplayMode()==model.OVERAREA)
+    if (model.getDisplayMode()==GraphRendererModel.OVERAREA)
       for (i=0; i<model.getFunctionsSize(); i++)
       {
         function = model.getFunction(i);

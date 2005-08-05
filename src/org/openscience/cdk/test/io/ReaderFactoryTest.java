@@ -28,10 +28,8 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
@@ -39,11 +37,29 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.ABINITFormat;
+import org.openscience.cdk.io.formats.ADFFormat;
+import org.openscience.cdk.io.formats.Aces2Format;
+import org.openscience.cdk.io.formats.CMLFormat;
+import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.GamessFormat;
+import org.openscience.cdk.io.formats.Gaussian92Format;
+import org.openscience.cdk.io.formats.Gaussian94Format;
+import org.openscience.cdk.io.formats.Gaussian98Format;
+import org.openscience.cdk.io.formats.GhemicalSPMFormat;
+import org.openscience.cdk.io.formats.IChIFormat;
+import org.openscience.cdk.io.formats.INChIFormat;
+import org.openscience.cdk.io.formats.INChIPlainTextFormat;
+import org.openscience.cdk.io.formats.JaguarFormat;
+import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.PDBFormat;
+import org.openscience.cdk.io.formats.ShelXFormat;
+import org.openscience.cdk.io.formats.VASPFormat;
+import org.openscience.cdk.io.formats.XYZFormat;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

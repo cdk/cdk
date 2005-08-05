@@ -214,7 +214,6 @@ public class DescriptorCalculator {
     }
     
     public void process(String toProcess) {
-        int j = 1;
         try {
             Writer writer;
             if (inputIsSMILES) {

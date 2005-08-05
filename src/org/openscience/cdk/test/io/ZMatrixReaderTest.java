@@ -44,8 +44,8 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ZMatrixReader;
-import org.openscience.cdk.renderer.AcceleratedRenderer3D;
-import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
+//import org.openscience.cdk.renderer.AcceleratedRenderer3D;
+//import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -86,7 +86,7 @@ public class ZMatrixReaderTest extends CDKTestCase {
 			RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
 			rebonder.rebond(atomContainer);
             
-			if (standAlone) {
+			/*if (standAlone) {
                 JFrame frame = new JFrame("ZMatrixReaderTest");
                 frame.getContentPane().setLayout(new BorderLayout());
                 
@@ -99,7 +99,7 @@ public class ZMatrixReaderTest extends CDKTestCase {
                 frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 frame.setSize(500,500);
                 frame.setVisible(true);
-            }
+            }*/
 		} catch(Exception exc) {
             exc.printStackTrace();
         }

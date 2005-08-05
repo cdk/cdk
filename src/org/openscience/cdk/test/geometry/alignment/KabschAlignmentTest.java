@@ -33,7 +33,9 @@ import org.openscience.cdk.geometry.alignment.KabschAlignment;
  */
 public class KabschAlignmentTest extends CDKTestCase {
 
-    public void KabschAlignmentTest(String name) {
+    public KabschAlignmentTest(String name)
+    {
+    	super(name);
     }
     /**
      * Defines a set of tests that can be used in automatic regression testing

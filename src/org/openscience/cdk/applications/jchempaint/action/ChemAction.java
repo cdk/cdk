@@ -83,19 +83,19 @@ public class ChemAction extends JCPAction
 			c2dm = jcpm.getControllerModel();
 			if (type.equals("bond"))
 			{
-				c2dm.setDrawMode(c2dm.DRAWBOND);
+				c2dm.setDrawMode(Controller2DModel.DRAWBOND);
 			} else if (type.equals("select"))
 			{
-				c2dm.setDrawMode(c2dm.SELECT);
+				c2dm.setDrawMode(Controller2DModel.SELECT);
 			} else if (type.equals("move"))
 			{
-				c2dm.setDrawMode(c2dm.MOVE);
+				c2dm.setDrawMode(Controller2DModel.MOVE);
 			} else if (type.equals("select"))
 			{
-				c2dm.setDrawMode(c2dm.SELECT);
+				c2dm.setDrawMode(Controller2DModel.SELECT);
 			} else if (type.equals("eraser"))
 			{
-				c2dm.setDrawMode(c2dm.ERASER);
+				c2dm.setDrawMode(Controller2DModel.ERASER);
 			} else if (type.equals("element"))
 			{
 				if (dialog == null)
@@ -107,74 +107,74 @@ public class ChemAction extends JCPAction
 				}
 				dialog.pack();
 				dialog.show();
-				c2dm.setDrawMode(c2dm.ELEMENT);
+				c2dm.setDrawMode(Controller2DModel.ELEMENT);
 			} else if (type.equals("symbol"))
 			{
-				c2dm.setDrawMode(c2dm.SYMBOL);
+				c2dm.setDrawMode(Controller2DModel.SYMBOL);
 			} else if (type.equals("triangle"))
 			{
-				c2dm.setDrawMode(c2dm.RING);
+				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(3);
 			} else if (type.equals("square"))
 			{
-				c2dm.setDrawMode(c2dm.RING);
+				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(4);
 			} else if (type.equals("pentagon"))
 			{
-				c2dm.setDrawMode(c2dm.RING);
+				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(5);
 			} else if (type.equals("hexagon"))
 			{
-				c2dm.setDrawMode(c2dm.RING);
+				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(6);
 			} else if (type.equals("heptagon"))
 			{
-				c2dm.setDrawMode(c2dm.RING);
+				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(7);
 			} else if (type.equals("octagon"))
 			{
-				c2dm.setDrawMode(c2dm.RING);
+				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(8);
 			} else if (type.equals("benzene"))
 			{
-				c2dm.setDrawMode(c2dm.BENZENERING);
+				c2dm.setDrawMode(Controller2DModel.BENZENERING);
 				c2dm.setRingSize(6);
 			} else if (type.equals("cleanup"))
 			{
-				c2dm.setDrawMode(c2dm.CLEANUP);
+				c2dm.setDrawMode(Controller2DModel.CLEANUP);
 			} else if (type.equals("flip_H"))
 			{
 				// not implemented
-				c2dm.setDrawMode(c2dm.FLIP_H);
+				c2dm.setDrawMode(Controller2DModel.FLIP_H);
 			} else if (type.equals("flip_V"))
 			{
 				// not implemented
-				c2dm.setDrawMode(c2dm.FLIP_V);
+				c2dm.setDrawMode(Controller2DModel.FLIP_V);
 			} else if (type.equals("rotation"))
 			{
 				// not implemented
-				c2dm.setDrawMode(c2dm.ROTATION);
+				c2dm.setDrawMode(Controller2DModel.ROTATION);
 			} else if (type.equals("up_bond"))
 			{
-				c2dm.setDrawMode(c2dm.UP_BOND);
+				c2dm.setDrawMode(Controller2DModel.UP_BOND);
 			} else if (type.equals("down_bond"))
 			{
-				c2dm.setDrawMode(c2dm.DOWN_BOND);
+				c2dm.setDrawMode(Controller2DModel.DOWN_BOND);
 			} else if (type.equals("normalize"))
 			{
-				c2dm.setDrawMode(c2dm.NORMALIZE);
+				c2dm.setDrawMode(Controller2DModel.NORMALIZE);
 			} else if (type.equals("plus"))
 			{
-				c2dm.setDrawMode(c2dm.INCCHARGE);
+				c2dm.setDrawMode(Controller2DModel.INCCHARGE);
 			} else if (type.equals("minus"))
 			{
-				c2dm.setDrawMode(c2dm.DECCHARGE);
+				c2dm.setDrawMode(Controller2DModel.DECCHARGE);
 			} else if (type.equals("lasso"))
 			{
-				c2dm.setDrawMode(c2dm.LASSO);
+				c2dm.setDrawMode(Controller2DModel.LASSO);
 			} else if (type.equals("map"))
 			{
-				c2dm.setDrawMode(c2dm.MAPATOMATOM);
+				c2dm.setDrawMode(Controller2DModel.MAPATOMATOM);
 			}
 		}
 		jcpPanel.stateChanged(new ChangeEvent(this));

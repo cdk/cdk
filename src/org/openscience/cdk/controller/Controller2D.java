@@ -342,11 +342,11 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
 		}
 
-		if (c2dm.getDrawMode() == c2dm.MOVE)
+		if (c2dm.getDrawMode() == Controller2DModel.MOVE)
 		{
 			selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
 			dragMode = DRAG_MOVING_SELECTED;
-		} else if (c2dm.getDrawMode() == c2dm.DRAWBOND || c2dm.getDrawMode() == c2dm.DOWN_BOND || c2dm.getDrawMode() == c2dm.UP_BOND)
+		} else if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DOWN_BOND || c2dm.getDrawMode() == Controller2DModel.UP_BOND)
 		{
 			if (bondInRange != null && atomInRange == null)
 			{
@@ -356,17 +356,17 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				dragMode = DRAG_DRAWING_PROPOSED_BOND;
 				lastAtomInRange = atomInRange;
 			}
-		} else if (c2dm.getDrawMode() == c2dm.MAPATOMATOM)
+		} else if (c2dm.getDrawMode() == Controller2DModel.MAPATOMATOM)
 		{
 			dragMode = DRAG_DRAWING_PROPOSED_ATOMATOMMAP;
-		} else if (c2dm.getDrawMode() == c2dm.SELECT)
+		} else if (c2dm.getDrawMode() == Controller2DModel.SELECT)
 		{
 			dragMode = DRAG_MAKING_SQUARE_SELECTION;
-		} else if (c2dm.getDrawMode() == c2dm.LASSO)
+		} else if (c2dm.getDrawMode() == Controller2DModel.LASSO)
 		{
 			dragMode = DRAG_MAKING_LASSO_SELECTION;
-		} else if (c2dm.getDrawMode() == c2dm.RING ||
-				c2dm.getDrawMode() == c2dm.BENZENERING)
+		} else if (c2dm.getDrawMode() == Controller2DModel.RING ||
+				c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 		{
 			dragMode = DRAG_DRAWING_PROPOSED_RING;
 		}
@@ -393,7 +393,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 			int[] mouseCoords = getWorldCoordinates(screenCoords);
 			int mouseX = mouseCoords[0];
 			int mouseY = mouseCoords[1];
-			if (c2dm.getDrawMode() == c2dm.SYMBOL)
+			if (c2dm.getDrawMode() == Controller2DModel.SYMBOL)
 			{
 
 				Atom atomInRange = r2dm.getHighlightedAtom();
@@ -444,7 +444,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					currentCommonElement.put(atomInRange, new Integer(oldCommonElement));
 				}
 			}
-			if (c2dm.getDrawMode() == c2dm.ELEMENT)
+			if (c2dm.getDrawMode() == Controller2DModel.ELEMENT)
 			{
 
 				Atom atomInRange = r2dm.getHighlightedAtom();
@@ -485,7 +485,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				}
 			}
 
-			if (c2dm.getDrawMode() == c2dm.INCCHARGE)
+			if (c2dm.getDrawMode() == Controller2DModel.INCCHARGE)
 			{
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
@@ -510,7 +510,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					fireChange();
 				}
 			}
-			if (c2dm.getDrawMode() == c2dm.DECCHARGE)
+			if (c2dm.getDrawMode() == Controller2DModel.DECCHARGE)
 			{
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
@@ -535,7 +535,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				}
 			}
 
-			if (c2dm.getDrawMode() == c2dm.MAPATOMATOM)
+			if (c2dm.getDrawMode() == Controller2DModel.MAPATOMATOM)
 			{
 				logger.debug("Should make new mapping...");
 				if (wasDragged)
@@ -579,7 +579,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				}
 			}
       
-			if (c2dm.getDrawMode() == c2dm.DRAWBOND || c2dm.getDrawMode() == c2dm.DOWN_BOND || c2dm.getDrawMode() == c2dm.UP_BOND)
+			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DOWN_BOND || c2dm.getDrawMode() == c2dm.UP_BOND)
 			{
         logger.debug("mouseReleased->drawbond");
 				Atom atomInRange;
@@ -601,7 +601,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				atomInRange = getAtomInRange(mouseX, mouseY);
 				if (bondInRange != null)
 				{
-          if (c2dm.getDrawMode() == c2dm.DRAWBOND){
+          if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
             // increase Bond order
             double order = bondInRange.getOrder();
             if (order >= CDKConstants.BONDORDER_TRIPLE)
@@ -618,7 +618,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
             Atom[] atoms = bondInRange.getAtoms();
             AtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
             updateAtoms(container, atoms);
-          }else if(c2dm.getDrawMode() == c2dm.DOWN_BOND){
+          }else if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND){
             // toggle bond stereo
             double stereo = bondInRange.getStereo();
             if (stereo == CDKConstants.STEREO_BOND_DOWN)
@@ -712,9 +712,9 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 							if (newAtom1 != newAtom2)
 							{
 								newBond = new Bond(newAtom1, newAtom2, 1);
-                if(c2dm.getDrawMode() == c2dm.UP_BOND)
+                if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
                   newBond.setStereo(CDKConstants.STEREO_BOND_UP);
-                if(c2dm.getDrawMode() == c2dm.DOWN_BOND)
+                if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
                   newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
                 logger.debug(newAtom1 + " - " + newAtom2);
 								atomCon.addBond(newBond);
@@ -789,9 +789,9 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 						atomCon.addAtom(newAtom2);
             newBond=new Bond(atomInRange, newAtom2, 1.0);
 						atomCon.addBond(newBond);
-            if(c2dm.getDrawMode() == c2dm.UP_BOND)
+            if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
               newBond.setStereo(CDKConstants.STEREO_BOND_UP);
-            if(c2dm.getDrawMode() == c2dm.DOWN_BOND)
+            if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
               newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
 						// update atoms
 						updateAtom(atomCon, atomInRange);
@@ -804,7 +804,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				centerAtom(newAtom2);
 			}
 
-			if (c2dm.getDrawMode() == c2dm.SELECT && wasDragged)
+			if (c2dm.getDrawMode() == Controller2DModel.SELECT && wasDragged)
 			{
 				logger.info("User asks to selected atoms");
 				AtomContainer selectedPart = new AtomContainer();
@@ -814,7 +814,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				logger.debug("selected stuff  ", selectedPart);
 			}
 
-			if (c2dm.getDrawMode() == c2dm.ERASER)
+			if (c2dm.getDrawMode() == Controller2DModel.ERASER)
 			{
 				Atom highlightedAtom = r2dm.getHighlightedAtom();
 				Bond highlightedBond = r2dm.getHighlightedBond();
@@ -860,7 +860,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				fireChange();
 			}
 
-			if (c2dm.getDrawMode() == c2dm.RING || c2dm.getDrawMode() == c2dm.BENZENERING)
+			if (c2dm.getDrawMode() == Controller2DModel.RING || c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 			{
 				Ring newRing = null;
 				Point2d sharedAtomsCenter;
@@ -896,7 +896,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				{
 					sharedAtoms = new AtomContainer();
 					newRing = new Ring(ringSize, symbol);
-					if (c2dm.getDrawMode() == c2dm.BENZENERING)
+					if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 					{
 						// make newRing a benzene ring
 						Bond[] bonds = newRing.getBonds();
@@ -931,7 +931,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 					spiroAtom = sharedAtoms.getAtomAt(0);
 					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
 					newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-					if (c2dm.getDrawMode() == c2dm.BENZENERING)
+					if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 					{
 						// make newRing a benzene ring
 						Bond[] bonds = newRing.getBonds();
@@ -1025,7 +1025,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 
 						// construct a new Ring that contains the highlighted bond an its two atoms
 						newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-						if (c2dm.getDrawMode() == c2dm.BENZENERING)
+						if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 						{
 							// make newRing a benzene ring
 							Bond existingBond = atomCon.getBond(firstAtom, secondAtom);
@@ -1085,7 +1085,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				fireChange();
 			}
 
-			if (c2dm.getDrawMode() == c2dm.LASSO)
+			if (c2dm.getDrawMode() == Controller2DModel.LASSO)
 			{
 				// first deselect all atoms
 				r2dm.setSelectedPart(new AtomContainer());
@@ -1154,7 +1154,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				fireChange();
 			}
 
-			if (c2dm.getDrawMode() == c2dm.MOVE)
+			if (c2dm.getDrawMode() == Controller2DModel.MOVE)
 			{
 				if (draggingSelected == false)
 				{

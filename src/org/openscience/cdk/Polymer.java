@@ -112,7 +112,6 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 		}
 		// Add atom to Strand (also adds the atom to the monomer).
 		oStrand.addAtom(oAtom, oMonomer);
-		String tmp = (String)oStrand.getStrandName();
 		if (!strands.containsKey(oStrand.getStrandName())) {
 			strands.put(oStrand.getStrandName(), oStrand);
 		}
