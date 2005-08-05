@@ -23,12 +23,7 @@
  */
 package org.openscience.cdk.test;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
-
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -39,8 +34,6 @@ import junit.framework.TestSuite;
 public class DataCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "data.javafiles";
-    
-    private ClassLoader classLoader;
     
     public DataCoverageTest(String name){
         super(name);

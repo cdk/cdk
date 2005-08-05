@@ -56,7 +56,6 @@ public class GraphRenderer extends JComponent
 {
   private int xpad = 70;
   private int ypad = 50;
-  private Font font = new Font("ARIAL", Font.PLAIN, 8);
   private int numgrid  = 10;
 
   private double xmax;

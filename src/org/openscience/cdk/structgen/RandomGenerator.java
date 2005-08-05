@@ -50,7 +50,6 @@ public class RandomGenerator
 	private Molecule proposedStructure = null;
 	private Molecule molecule = null;
 	private Molecule trial = null;
-	private ConnectivityChecker cc = null; 
 	private Vector bonds = null;
 	public boolean debug = false;
 	private int[] correctBondOrderSums;
@@ -60,7 +59,6 @@ public class RandomGenerator
 	 */
 	public RandomGenerator()
 	{
-		cc = new ConnectivityChecker();
 		trial = new Molecule();
 	}
 
@@ -107,7 +105,7 @@ public class RandomGenerator
 				System.out.println(s);
 			}
 		}
-		while(!cc.isConnected(trial));
+		while(!ConnectivityChecker.isConnected(trial));
 		proposedStructure = trial;
 		
 		return proposedStructure;

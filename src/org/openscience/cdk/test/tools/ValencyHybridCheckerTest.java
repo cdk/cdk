@@ -24,15 +24,14 @@
 package org.openscience.cdk.test.tools;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ValencyChecker;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 

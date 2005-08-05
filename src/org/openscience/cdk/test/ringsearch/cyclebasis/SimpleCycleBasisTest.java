@@ -29,8 +29,6 @@
 package org.openscience.cdk.test.ringsearch.cyclebasis;
 import java.util.Arrays;
 
-import junit.framework.TestCase;
-
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasis;

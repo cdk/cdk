@@ -25,8 +25,8 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
@@ -34,6 +34,9 @@ import org.openscience.cdk.test.atomtype.CDKChemicalRingConstantsTest;
 import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
 import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
 import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
+import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
+import org.openscience.cdk.test.charges.InductivePartialChargesTest;
+import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.test.config.ConfigTests;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
@@ -45,23 +48,22 @@ import org.openscience.cdk.test.index.CASNumberTest;
 import org.openscience.cdk.test.io.IOTests;
 import org.openscience.cdk.test.isomorphism.IsomorphismTests;
 import org.openscience.cdk.test.layout.HydrogenPlacerTest;
-import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
+import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.math.MathToolsTest;
+import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
+import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
+import org.openscience.cdk.test.qsar.QSARDescriptorTests;
+import org.openscience.cdk.test.qsar.model.QSARRModelTests;
 import org.openscience.cdk.test.reaction.ReactionBalancerTest;
 import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
-import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.ringsearch.RingPartitionerTest;
+import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.test.tools.ToolsTests;
-import org.openscience.cdk.test.charges.*;
-import org.openscience.cdk.test.qsar.*;
-import org.openscience.cdk.test.qsar.model.*;
-import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
-import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
 
 /**
  * TestSuite that runs all the sample tests

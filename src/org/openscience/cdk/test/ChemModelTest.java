@@ -26,12 +26,15 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObjectListener;
+import org.openscience.cdk.Crystal;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the ChemModel class.

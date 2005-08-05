@@ -23,17 +23,16 @@
  */
 package org.openscience.cdk.test.modeling.builder3d;
 
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
-
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
-import javax.vecmath.Point3d;
 /**
  *  Description of the Class
  *

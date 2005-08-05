@@ -29,10 +29,8 @@ package org.openscience.cdk.test.io.cml;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
@@ -43,10 +41,6 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**

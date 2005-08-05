@@ -29,8 +29,6 @@
 package org.openscience.cdk.test.graph;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.graph.BiconnectivityInspector;
 import org.openscience.cdk.test.CDKTestCase;

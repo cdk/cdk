@@ -57,7 +57,8 @@ public class GraphRendererTest
     model.setX(-1d, +1d);
     model.setY(0d, +1d);
     model.addFunction(new GaussFunction(), new Color(205,230,205));
-    model.setDisplayMode(model.BELOWAREA);
+    int i = GraphRendererModel.BELOWAREA;
+	model.setDisplayMode(i);
     model.setTitle("Gauss function f(x)=e^(-10*x^2)");
     model.setXTitle("X Axis");
     model.setYTitle("Y Axis f(x)");

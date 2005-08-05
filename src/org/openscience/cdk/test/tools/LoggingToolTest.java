@@ -24,11 +24,10 @@
 package org.openscience.cdk.test.tools;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test

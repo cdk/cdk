@@ -26,7 +26,7 @@ package org.openscience.cdk.test.isomorphism;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.isomorphism.matchers.*;
+import org.openscience.cdk.test.isomorphism.matchers.SymbolSetQueryAtomTest;
 
 /**
  * TestSuite that runs all the sample tests in the

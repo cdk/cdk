@@ -48,6 +48,10 @@ public class Controller2DModelEditor extends FieldTablePanel {
 	
     public void applyChanges() {
     }
+
+	public Controller2DModel getModel() {
+		return model;
+	}
 }
 
 

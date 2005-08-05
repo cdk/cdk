@@ -26,7 +26,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.exception.*;
+import org.openscience.cdk.test.exception.NoSuchAtomTypeExceptionTest;
 
 /**
  * TestSuite that runs all the sample tests.

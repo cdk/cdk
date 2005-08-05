@@ -24,6 +24,7 @@
 package org.openscience.cdk.test;
 
 import junit.framework.TestCase;
+
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

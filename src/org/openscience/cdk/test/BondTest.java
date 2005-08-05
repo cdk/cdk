@@ -25,11 +25,11 @@
 package org.openscience.cdk.test;
 
 import java.util.Vector;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;

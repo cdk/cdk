@@ -25,8 +25,8 @@
 package org.openscience.cdk.test.config.atomtypes;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.config.atomtypes.AtomTypeHandler;
 import org.openscience.cdk.test.CDKTestCase;
 

@@ -26,10 +26,12 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 
 /**
  * Checks the funcitonality of the RingSet class.

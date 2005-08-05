@@ -52,7 +52,6 @@ public class WienerNumbersDescriptor implements Descriptor {
     double[][] matr = null;
     DoubleArrayResult wienerNumbers = null;
     ConnectionMatrix connectionMatrix = new ConnectionMatrix();
-    PathTools pathTools = new PathTools();
     AtomContainerManipulator atm =  new AtomContainerManipulator();
 
     /**
@@ -127,11 +126,11 @@ public class WienerNumbersDescriptor implements Descriptor {
         double wienerPolarityNumber = 0; //weinerPol
 
         // "matr" is the connection matrix
-        matr = connectionMatrix.getMatrix(atm.removeHydrogens(atomContainer));
+        matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));
         // and "distances" is ist matrix of int where 
         // for example distance[1][2] = length of the shortest path
         // between atom at position 1 and atom at position 2.
-        int[][] distances = pathTools.computeFloydAPSP(matr);
+        int[][] distances = PathTools.computeFloydAPSP(matr);
 
         int partial = 0;
         //wienerPolarityNumber = 0;

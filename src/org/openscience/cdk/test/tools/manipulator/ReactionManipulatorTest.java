@@ -26,7 +26,6 @@ package org.openscience.cdk.test.tools.manipulator;
 import java.util.Vector;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;

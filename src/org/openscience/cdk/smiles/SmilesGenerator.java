@@ -376,7 +376,7 @@ public class SmilesGenerator
 			}
 			rings = ringFinder.findAllRings(molecule);
 		}
-		(new HueckelAromaticityDetector()).detectAromaticity(molecule, rings, false);
+		HueckelAromaticityDetector.detectAromaticity(molecule, rings, false);
 		if (chiral && rings.size() > 0)
 		{
 			Vector v = RingPartitioner.partitionRings(rings);

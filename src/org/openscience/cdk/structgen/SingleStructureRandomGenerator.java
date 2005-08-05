@@ -135,7 +135,7 @@ public class SingleStructureRandomGenerator
 					}
 				}
 			} while (bondFormed);
-			if (new ConnectivityChecker().isConnected(atomContainer) && satCheck.allSaturated(atomContainer))
+			if (ConnectivityChecker.isConnected(atomContainer) && satCheck.allSaturated(atomContainer))
 			{
 				structureFound = true;
 			}

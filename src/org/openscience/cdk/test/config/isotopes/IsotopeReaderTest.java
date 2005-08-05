@@ -24,17 +24,14 @@
  */
 package org.openscience.cdk.test.config.isotopes;
 
-import junit.framework.AssertionFailedError;
+import java.io.StringReader;
+import java.util.Vector;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.*;
-import java.io.*;
-
-import org.openscience.cdk.*;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the IsotopeFactory

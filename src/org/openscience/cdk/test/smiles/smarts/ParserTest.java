@@ -23,17 +23,20 @@
  */
 package org.openscience.cdk.test.smiles.smarts;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
-import org.openscience.cdk.smiles.smarts.*;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.smiles.smarts.ParseException;
+import org.openscience.cdk.smiles.smarts.SMARTSParser;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * JUnit test routines for the SMARTS parser.

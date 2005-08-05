@@ -23,16 +23,17 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.openscience.cdk.smiles.SmilesParser;
+
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.APolDescriptor;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.

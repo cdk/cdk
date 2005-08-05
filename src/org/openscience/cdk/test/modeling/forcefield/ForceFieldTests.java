@@ -23,24 +23,32 @@
  */
 package org.openscience.cdk.test.modeling.forcefield;
 
+import java.util.Hashtable;
+
+import javax.vecmath.GVector;
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.io.*;
-import java.lang.*;
-import java.util.*;
-import javax.vecmath.*;
-
-import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
-import org.openscience.cdk.modeling.forcefield.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.AtomTools;
-import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.modeling.forcefield.AngleBending;
+import org.openscience.cdk.modeling.forcefield.BondStretching;
+import org.openscience.cdk.modeling.forcefield.ElectrostaticInteractions;
+import org.openscience.cdk.modeling.forcefield.ForceFieldTools;
+import org.openscience.cdk.modeling.forcefield.GeometricMinimizer;
+import org.openscience.cdk.modeling.forcefield.MMFF94EnergyFunction;
+import org.openscience.cdk.modeling.forcefield.SmoothingFunctions;
+import org.openscience.cdk.modeling.forcefield.StretchBendInteractions;
+import org.openscience.cdk.modeling.forcefield.Torsions;
+import org.openscience.cdk.modeling.forcefield.VanDerWaalsInteractions;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -274,8 +282,7 @@ public class ForceFieldTests extends CDKTestCase {
 		Point3d atomCoordinate1 = new Point3d(2, 0, 0);
 		a.setPoint3d(atomCoordinate1);
 		ac.setAtomAt(1, a);
-		AtomTools at = new AtomTools();
-		at.add3DCoordinates1(ac);
+		AtomTools.add3DCoordinates1(ac);
 
 		ForceFieldTools ffTools = new ForceFieldTools();
 		acCoordinates.setSize(ac.getAtomCount() * 3);

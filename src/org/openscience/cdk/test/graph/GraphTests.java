@@ -26,9 +26,6 @@ package org.openscience.cdk.test.graph;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.graph.rebond.*;
-import org.openscience.cdk.test.graph.invariant.*;
-
 /**
  * TestSuite that runs all the sample tests in the
  * org.openscience.cdk.graph package.

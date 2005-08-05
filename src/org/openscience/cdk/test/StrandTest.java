@@ -29,14 +29,13 @@ package org.openscience.cdk.test;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Monomer;
-import org.openscience.cdk.Polymer;
-import org.openscience.cdk.Strand;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Monomer;
+import org.openscience.cdk.Strand;
 
 /**
  * TODO To change the template for this generated type comment go to

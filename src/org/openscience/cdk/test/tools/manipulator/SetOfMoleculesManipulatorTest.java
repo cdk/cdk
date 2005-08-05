@@ -24,13 +24,11 @@
 package org.openscience.cdk.test.tools.manipulator;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.Reaction;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 

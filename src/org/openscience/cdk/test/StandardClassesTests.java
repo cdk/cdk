@@ -27,11 +27,11 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.config.AtomTypeFactoryTest;
+import org.openscience.cdk.test.config.IsotopeFactoryTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
-import org.openscience.cdk.test.config.AtomTypeFactoryTest;
-import org.openscience.cdk.test.config.IsotopeFactoryTest;
 import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
 
 /**

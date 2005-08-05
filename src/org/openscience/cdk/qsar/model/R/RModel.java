@@ -168,14 +168,14 @@ public abstract class RModel implements Model {
         } 
 
         if (!doneInit) {
-            this.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
-            this.revaluator = new REvaluator();
+            RModel.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
+            RModel.revaluator = new REvaluator();
 
             if (useDisk) {
-                loadRFunctions(this.revaluator);
+                loadRFunctions(RModel.revaluator);
                 logger.info("Initializing from disk");
             } else {
-                loadRFunctionsAsStrings(this.revaluator);
+                loadRFunctionsAsStrings(RModel.revaluator);
                 logger.info("Initializing from strings");
             }
             
@@ -202,14 +202,14 @@ public abstract class RModel implements Model {
         } 
         
         if (!doneInit) {
-            this.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
-            this.revaluator = new REvaluator();
+            RModel.interp = new ROmegahatInterpreter(ROmegahatInterpreter.fixArgs(args), false);
+            RModel.revaluator = new REvaluator();
 
             if (useDisk) {
-                loadRFunctions(this.revaluator);
+                loadRFunctions(RModel.revaluator);
                 logger.info("Initializing from disk");
             } else {
-                loadRFunctionsAsStrings(this.revaluator);
+                loadRFunctionsAsStrings(RModel.revaluator);
                 logger.info("Initializing from strings");
             }
             

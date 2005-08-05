@@ -32,8 +32,6 @@ import java.util.List;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.graph.MinimalPathIterator;
 import org.openscience.cdk.test.CDKTestCase;
-
-import junit.framework.TestCase;
 /**
  * This class tests the MinimalPathIteratorTest class.
  *

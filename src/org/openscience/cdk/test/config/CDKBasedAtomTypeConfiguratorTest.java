@@ -26,14 +26,11 @@ package org.openscience.cdk.test.config;
 
 import java.io.InputStream;
 
-import junit.framework.AssertionFailedError;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfigurator;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the TXTBasedAtomTypeConfigurator.

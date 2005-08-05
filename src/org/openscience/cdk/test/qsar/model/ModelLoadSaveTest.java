@@ -1,14 +1,14 @@
 package org.openscience.cdk.test.qsar.model;
 
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.model.R.LinearRegressionModel;
-import org.openscience.cdk.qsar.model.R.CNNRegressionModel;
-import org.openscience.cdk.qsar.model.R.RModel;
-import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.test.CDKTestCase;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.model.QSARModelException;
+import org.openscience.cdk.qsar.model.R.CNNRegressionModel;
+import org.openscience.cdk.qsar.model.R.LinearRegressionModel;
+import org.openscience.cdk.qsar.model.R.RModel;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs a test for the LinearRegressionModel
@@ -135,7 +135,7 @@ public class ModelLoadSaveTest extends CDKTestCase {
         double[] oldCoeff = lrm.getFitCoefficients();
         RModel.saveModel(lrm.getModelName(), "lmodel.rda");
 
-        lrm.revaluator.voidEval("rm("+lrm.getModelName()+")");    
+        LinearRegressionModel.revaluator.voidEval("rm("+lrm.getModelName()+")");    
 
         LinearRegressionModel lrmNew = new LinearRegressionModel();
         lrmNew.loadModel("lmodel.rda");
@@ -156,8 +156,8 @@ public class ModelLoadSaveTest extends CDKTestCase {
         cnnrm.setParameters("Wts",Wts);
         cnnrm.build();
         double oldValue = cnnrm.getFitValue();
-        cnnrm.saveModel(cnnrm.getModelName(), "cmodel.rda");
-        lrm.revaluator.voidEval("rm("+cnnrm.getModelName()+")");    
+        CNNRegressionModel.saveModel(cnnrm.getModelName(), "cmodel.rda");
+        LinearRegressionModel.revaluator.voidEval("rm("+cnnrm.getModelName()+")");    
         CNNRegressionModel cnnrmNew = new CNNRegressionModel();
         cnnrmNew.loadModel("cmodel.rda");
         double newValue = cnnrmNew.getFitValue();

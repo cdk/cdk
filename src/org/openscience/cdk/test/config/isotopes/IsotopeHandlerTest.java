@@ -25,8 +25,8 @@
 package org.openscience.cdk.test.config.isotopes;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.config.isotopes.IsotopeHandler;
 import org.openscience.cdk.test.CDKTestCase;
 

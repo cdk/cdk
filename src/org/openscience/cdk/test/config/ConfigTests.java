@@ -26,8 +26,10 @@ package org.openscience.cdk.test.config;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.config.isotopes.*;
-import org.openscience.cdk.test.config.atomtypes.*;
+import org.openscience.cdk.test.config.atomtypes.AtomTypeHandlerTest;
+import org.openscience.cdk.test.config.atomtypes.AtomTypeReaderTest;
+import org.openscience.cdk.test.config.isotopes.IsotopeHandlerTest;
+import org.openscience.cdk.test.config.isotopes.IsotopeReaderTest;
 
 /**
  * TestSuite that runs all the sample tests in the

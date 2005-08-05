@@ -19,24 +19,23 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.qsar.result.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
+import java.io.File;
+import java.io.FileReader;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.EccentricConnectivityIndexDescriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-import org.openscience.cdk.qsar.result.*;
-import java.io.*;
 
 /**
  * TestSuite that runs all QSAR tests.

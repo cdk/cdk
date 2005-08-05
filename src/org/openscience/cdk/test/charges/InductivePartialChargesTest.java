@@ -24,17 +24,16 @@
  */
 package org.openscience.cdk.test.charges;
 
-import org.openscience.cdk.charges.*;
+import javax.vecmath.Point3d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.openscience.cdk.Molecule;
+
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import javax.vecmath.Point3d;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.charges.InductivePartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.

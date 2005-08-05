@@ -24,7 +24,6 @@
 package org.openscience.cdk.test.index;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.index.CASNumber;

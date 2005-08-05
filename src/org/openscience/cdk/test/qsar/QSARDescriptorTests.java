@@ -25,8 +25,8 @@ package org.openscience.cdk.test.qsar;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.test.qsar.*;
 
 /**
  * TestSuite that runs all QSAR tests.

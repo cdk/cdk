@@ -1,12 +1,9 @@
 package org.openscience.cdk.test.modeling.forcefield;
 
-import java.io.*;
-import java.lang.*;
-import java.util.*;
-import javax.vecmath.*;
-import Jama.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.modeling.forcefield.*;
+import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
+
+import org.openscience.cdk.modeling.forcefield.PotentialFunction;
 
 /**
  * Potential function for testing forcefield classes.

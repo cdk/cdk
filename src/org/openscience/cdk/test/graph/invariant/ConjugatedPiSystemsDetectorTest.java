@@ -24,19 +24,27 @@
  */
 package org.openscience.cdk.test.graph.invariant;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Checks the funcitonality of the ConjugatedPiSystemsCalculator

@@ -111,7 +111,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
 
 public class CNNRegressionModel extends RModel {
     
-    private static int globalID = 0;
+    public static int globalID = 0;
     private int currentID;
     private CNNRegressionModelFit modelfit = null;
     private CNNRegressionModelPredict modelpredict = null;
@@ -164,8 +164,8 @@ public class CNNRegressionModel extends RModel {
     public CNNRegressionModel() {
         super();
         this.params = new HashMap();
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = CNNClassificationModel.globalID;
+        CNNClassificationModel.globalID++;
         this.setModelName("cdkCNNModel"+this.currentID);
         this.setDefaults();
     }
@@ -193,8 +193,8 @@ public class CNNRegressionModel extends RModel {
     public CNNRegressionModel(double[][] x, double[] y, int size) throws QSARModelException {
         super();
         this.params = new HashMap();
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = CNNRegressionModel.globalID;
+        CNNRegressionModel.globalID++;
         this.setModelName("cdkCNNModel"+this.currentID);
 
         int nrow = y.length;
@@ -245,8 +245,8 @@ public class CNNRegressionModel extends RModel {
     public CNNRegressionModel(double[][] x, double[][] y, int size) throws QSARModelException{
         super();
         this.params = new HashMap();
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = CNNRegressionModel.globalID;
+        CNNRegressionModel.globalID++;
         this.setModelName("cdkCNNModel"+this.currentID);
 
         int nrow = y.length;

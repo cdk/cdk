@@ -240,8 +240,7 @@ public class BCUTDescriptor implements Descriptor {
         }
 
         // do aromaticity detecttion for calculating polarizability later on
-        HueckelAromaticityDetector had = new HueckelAromaticityDetector();
-        had.detectAromaticity(ac);
+        HueckelAromaticityDetector.detectAromaticity(ac);
 
         // find number of heavy atoms
         int nheavy = 0;

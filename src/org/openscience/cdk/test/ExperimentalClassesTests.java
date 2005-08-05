@@ -24,12 +24,9 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.io.VASPReaderTest;
-import org.openscience.cdk.test.tools.HydrogenAdder2Test;
-import org.openscience.cdk.test.tools.ValencyCheckerTest;
 import org.openscience.cdk.test.isomorphism.SMARTSTest;
 
 /**

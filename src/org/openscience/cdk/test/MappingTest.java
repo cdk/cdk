@@ -25,10 +25,13 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Mapping;
+import org.openscience.cdk.PseudoAtom;
 
 /**
  * Checks the funcitonality of the Mapping class.

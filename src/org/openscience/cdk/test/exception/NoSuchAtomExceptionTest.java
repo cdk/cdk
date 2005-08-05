@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.exception;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.exception.NoSuchAtomException;

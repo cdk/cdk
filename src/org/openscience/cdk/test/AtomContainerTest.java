@@ -30,10 +30,18 @@ import java.util.Enumeration;
 import javax.vecmath.Point2d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomParity;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObjectListener;
+import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.LonePair;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /**

@@ -60,7 +60,6 @@ public class GENMDeterministicGenerator
 	private Vector basicFragment;
 	private Vector structures;
 	private Vector smiles;
-	private ConnectivityChecker connectivityChecker;
 	private org.openscience.cdk.tools.LoggingTool logger;
 	private PrintWriter structureout;
 	
@@ -78,7 +77,6 @@ public class GENMDeterministicGenerator
 		numberOfStructure=0;
 		System.out.println(mf);
 		MFAnalyser mfa = new MFAnalyser(mf);
-		connectivityChecker=new ConnectivityChecker();
 		molecularFormula=new int[12];
 		numberOfBasicUnit=new int[23];
 		numberOfBasicFragment=new int[34];
@@ -107,7 +105,6 @@ public class GENMDeterministicGenerator
 	{
 		numberOfSetFragment=0;
 		numberOfStructure=0;
-		connectivityChecker=new ConnectivityChecker();
 		numberOfBasicUnit=new int[23];
 		numberOfBasicFragment=new int[34];
 		basicFragment=new Vector();
@@ -2780,6 +2777,15 @@ public class GENMDeterministicGenerator
 			 return this.parentID;
 		 }
 	 }
+
+	public AtomContainer getAtomContainer() {
+		return atomContainer;
+	}
+
+
+	public void setAtomContainer(AtomContainer atomContainer) {
+		this.atomContainer = atomContainer;
+	}
 }
 
 

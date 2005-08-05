@@ -43,7 +43,6 @@ import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test

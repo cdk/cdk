@@ -32,15 +32,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.BremserOneSphereHOSECodePredictor;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 

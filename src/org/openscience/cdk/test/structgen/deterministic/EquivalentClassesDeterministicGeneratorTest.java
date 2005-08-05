@@ -26,17 +26,16 @@ package org.openscience.cdk.test.structgen.deterministic;
 import javax.vecmath.Vector2d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.structgen.deterministic.EquivalentClassesDeterministicGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test

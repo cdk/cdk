@@ -64,7 +64,7 @@ public class ConnectivityChecker
 	 * @param   atomContainer  The AtomContainer to be check for connectedness
 	 * @return                 true if the AtomContainer is connected   
 	 */
-	public boolean isConnected(AtomContainer atomContainer)
+	public static boolean isConnected(AtomContainer atomContainer)
 	{
 		AtomContainer ac = new AtomContainer();
 		Atom atom = null;

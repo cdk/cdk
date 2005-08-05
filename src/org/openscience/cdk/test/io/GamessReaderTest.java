@@ -8,14 +8,13 @@ import java.io.Reader;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.GamessReader;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * A Test case for the "GamessReader" class.

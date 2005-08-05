@@ -25,11 +25,10 @@
 package org.openscience.cdk.test.event;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**

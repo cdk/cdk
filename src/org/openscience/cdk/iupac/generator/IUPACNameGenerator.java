@@ -280,4 +280,48 @@ public class IUPACNameGenerator {
         }
     }
 
+	public HydrogenAdder getHydrogenAdder() {
+		return hydrogenAdder;
+	}
+
+	public void setHydrogenAdder(HydrogenAdder hydrogenAdder) {
+		this.hydrogenAdder = hydrogenAdder;
+	}
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	public IUPACNameLocalizer getLocalizer() {
+		return localizer;
+	}
+
+	public void setLocalizer(IUPACNameLocalizer localizer) {
+		this.localizer = localizer;
+	}
+
+	public org.openscience.cdk.tools.LoggingTool getLogger() {
+		return logger;
+	}
+
+	public void setLogger(org.openscience.cdk.tools.LoggingTool logger) {
+		this.logger = logger;
+	}
+
+	public Vector getRules() {
+		return rules;
+	}
+
+	public void setRules(Vector rules) {
+		this.rules = rules;
+	}
+
+	public void setName(IUPACName name) {
+		this.name = name;
+	}
+
 }

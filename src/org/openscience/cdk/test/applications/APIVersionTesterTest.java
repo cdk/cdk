@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.applications;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.applications.APIVersionTester;

@@ -74,6 +74,14 @@ public class GeneralSettingsEditor extends FieldTablePanel implements ActionList
     public void actionPerformed(ActionEvent e) {
         // nothing to do whatsoever
     }
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 }
 
 

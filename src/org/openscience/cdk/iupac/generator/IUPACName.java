@@ -124,4 +124,12 @@ public class IUPACName {
         }
         return sb.toString();
     }
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
 }

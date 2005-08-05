@@ -34,8 +34,6 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.test.CDKTestCase;
 
-import junit.framework.TestCase;
-
 /**
  * This class tests the CycleBasis class.
  *

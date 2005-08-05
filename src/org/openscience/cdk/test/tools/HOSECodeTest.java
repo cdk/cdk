@@ -28,19 +28,17 @@
  */
 package org.openscience.cdk.test.tools;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import java.io.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**

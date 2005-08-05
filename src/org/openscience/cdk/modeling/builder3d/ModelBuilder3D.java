@@ -189,8 +189,7 @@ public class ModelBuilder3D {
 		//System.out.println("******** GENERATE COORDINATES ********");
 		//CHECK FOR CONNECTIVITY!
 		//System.out.println("#atoms>"+molecule.getAtomCount());
-		ConnectivityChecker cc = new ConnectivityChecker();
-		if (!cc.isConnected(molecule)) {
+		if (!ConnectivityChecker.isConnected(molecule)) {
 			throw new Exception("CDKError: Molecule is NOT connected,could not layout.");
 		}
 		if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
@@ -357,7 +356,7 @@ public class ModelBuilder3D {
 				ringCenter.x = (ac.getAtomAt(i).getPoint3d()).x - newCoord.x;
 				ringCenter.y = (ac.getAtomAt(i).getPoint3d()).y - newCoord.y;
 				ringCenter.z = (ac.getAtomAt(i).getPoint3d()).z - newCoord.z;
-				ringCenter = atlp3d.rotate(ringCenter, n1, angle);
+				ringCenter = AtomTetrahedralLigandPlacer3D.rotate(ringCenter, n1, angle);
 				ac.getAtomAt(i).setX3d((ringCenter.x + newCoord.x));
 				ac.getAtomAt(i).setY3d((ringCenter.y + newCoord.y));
 				ac.getAtomAt(i).setZ3d((ringCenter.z + newCoord.z));
@@ -376,7 +375,7 @@ public class ModelBuilder3D {
 		ringCenter.y = ringCenter.y - newCoord.y;
 		ringCenter.z = ringCenter.z - newCoord.z;
 		for (int i = 1; i < 360; i++) {
-			ringCenter = atlp3d.rotate(ringCenter, axis, angle);
+			ringCenter = AtomTetrahedralLigandPlacer3D.rotate(ringCenter, axis, angle);
 			if (centerPlacedMolecule.distance(new Point3d(ringCenter.x, ringCenter.y, ringCenter.z)) > distance) {
 				rotAngleMax = i;
 				distance = centerPlacedMolecule.distance(new Point3d(ringCenter.x, ringCenter.y, ringCenter.z));
@@ -390,7 +389,7 @@ public class ModelBuilder3D {
 				ringCenter.x = (ac.getAtomAt(i).getPoint3d()).x;
 				ringCenter.y = (ac.getAtomAt(i).getPoint3d()).y;
 				ringCenter.z = (ac.getAtomAt(i).getPoint3d()).z;
-				ringCenter = atlp3d.rotate(ringCenter, axis, rotAngleMax);
+				ringCenter = AtomTetrahedralLigandPlacer3D.rotate(ringCenter, axis, rotAngleMax);
 				ac.getAtomAt(i).setX3d(ringCenter.x);
 				ac.getAtomAt(i).setY3d(ringCenter.y);
 				ac.getAtomAt(i).setZ3d(ringCenter.z);

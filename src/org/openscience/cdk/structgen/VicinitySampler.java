@@ -87,7 +87,7 @@ public class VicinitySampler
 	{
 		if(debug) if (debug) System.out.println("RandomGenerator->mutate() Start");
 		Vector structures = new Vector();
-		ConnectivityChecker conCheck = new ConnectivityChecker();
+		
 		int nrOfAtoms = ac.getAtomCount();
 		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
 		double b11 = 0, lowerborder = 0, upperborder = 0;
@@ -101,10 +101,8 @@ public class VicinitySampler
 		Atom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
 		Bond b1 = null, b2 = null, b3 = null, b4 = null;
 		int[] choices = new int[3];
-		int choiceCounter  = 0;
 		/* We need at least two non-zero bonds in order to be successful */
 		int nonZeroBondsCounter = 0;
-		boolean changed = false;
 		for (int x1 = 0; x1 < nrOfAtoms; x1++)
 		{
 			for (int x2 = x1 + 1; x2 < nrOfAtoms; x2++)
@@ -187,10 +185,9 @@ public class VicinitySampler
 									b21 = a11 + a21 - b11;
 									b22 = a22 - a11 + b11;
 									if (debug) System.out.println("Trying atom combination : " + x1 + ":" + x2 + ":"+ y1 + ":"+ y2);
-									changed = true;
 									newAc = (AtomContainer)ac.clone();
 									change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
-									if (conCheck.isConnected(newAc))
+									if (ConnectivityChecker.isConnected(newAc))
 									{
 										structures.add(newAc);
 									}

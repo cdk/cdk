@@ -62,8 +62,6 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private SetOfReactions currentSetOfReactions;
     private Reaction currentReaction;
     private Atom currentAtom;
-    private Crystal currentCrystal;
-
     private Hashtable atomEnumeration;
 
     private int numberOfAtoms = 0;

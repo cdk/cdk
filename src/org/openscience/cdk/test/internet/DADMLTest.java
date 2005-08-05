@@ -24,14 +24,11 @@
 
 package org.openscience.cdk.test.internet;
 
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.AtomicTable;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.internet.DADMLReader;
-import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test

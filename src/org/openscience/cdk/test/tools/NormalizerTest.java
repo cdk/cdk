@@ -23,24 +23,20 @@
  */
 package org.openscience.cdk.test.tools;
 
-import java.io.IOException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.Normalizer;
-import org.openscience.cdk.smiles.*;
-
-import javax.xml.transform.dom.*;
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @cdk.module test

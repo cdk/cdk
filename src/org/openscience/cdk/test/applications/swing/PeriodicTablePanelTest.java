@@ -25,10 +25,9 @@
 package org.openscience.cdk.test.applications.swing;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.test.CDKTestCase;

@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;

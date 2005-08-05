@@ -728,9 +728,11 @@ public class RDFProtonDescriptor implements Descriptor {
 				if(values[0] < distance) {
 					nearestBond = partial;
 				}
-				else {
+				/* XXX commented this out, because is has no effect
+				 * 
+				 else {
 					nearestBond = nearestBond;
-				}
+				}*/
 			}
 		}
 		return nearestBond;

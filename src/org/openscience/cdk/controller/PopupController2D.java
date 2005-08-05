@@ -55,8 +55,8 @@ public class PopupController2D extends Controller2D {
         super(chemModel, r2dm, c2dm);
 		logger = new LoggingTool(this);
 
-		if (this.popupMenus == null) {
-			this.popupMenus = new Hashtable();
+		if (PopupController2D.popupMenus == null) {
+			PopupController2D.popupMenus = new Hashtable();
 		}
 	}
 
@@ -101,7 +101,7 @@ public class PopupController2D extends Controller2D {
 	 *@param  menu        The new popupMenu value
 	 */
 	public void setPopupMenu(ChemObject chemObject, CDKPopupMenu menu) {
-		this.popupMenus.put(chemObject.getClass().getName(), menu);
+		PopupController2D.popupMenus.put(chemObject.getClass().getName(), menu);
 	}
 
 
@@ -117,8 +117,8 @@ public class PopupController2D extends Controller2D {
         logger.debug("Searching popup for: ", classSearched.getName());
         while (classSearched.getName().startsWith("org.openscience.cdk")) {
             logger.debug("Searching popup for: ", classSearched.getName());
-            if (this.popupMenus.containsKey(classSearched.getName())) {
-                return (CDKPopupMenu) this.popupMenus.get(classSearched.getName());
+            if (PopupController2D.popupMenus.containsKey(classSearched.getName())) {
+                return (CDKPopupMenu) PopupController2D.popupMenus.get(classSearched.getName());
             } else {
                 logger.debug("  recursing into super class");
                 classSearched = classSearched.getSuperclass();

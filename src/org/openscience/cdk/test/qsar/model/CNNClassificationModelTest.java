@@ -24,13 +24,13 @@
 
 package org.openscience.cdk.test.qsar.model;
 
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.model.R.CNNClassificationModel;
-import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.test.CDKTestCase;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.model.QSARModelException;
+import org.openscience.cdk.qsar.model.R.CNNClassificationModel;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs a test for the CNNClassificationModel
@@ -155,7 +155,7 @@ public class CNNClassificationModelTest extends CDKTestCase {
             String[] y = { "0", "0", "0", "1", "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "1", "1", "1", "0", "0", "1", "1", "1", "0", "0", "0", "1", "0", "1", "0", "1", "0", "0", "1", "1", "1", "0", "1", "0", "0", "1", "0", "0", "1", "0", "0", "0", "1", "0", "1", "1", "1", "1", "0", "1", "0", "0", "0", "0", "0", "0", "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0", "1", "1", "0", "0", "0", "1", "1", "1", "0", "0", "1", "1", "1", "0", "0", "0", "0", "1", "1", "1", "0", "1", "1", "1", "1", "0", "1"};
 
             CNNClassificationModel cnnrm = new CNNClassificationModel(x,y,3);
-            assertTrue(cnnrm.revaluator != null);
+            assertTrue(CNNClassificationModel.revaluator != null);
             
             Double[] Wts = {
                 new Double(0.51404345),new Double(0.50840113),new Double(0.74685975),new Double(0.13561035),

@@ -28,33 +28,25 @@
  */
 package org.openscience.cdk.test.isomorphism;
 
-import java.io.*;
-import java.util.Vector;
+import java.io.FileReader;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
-import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.mcss.*;
+import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test

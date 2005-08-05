@@ -30,15 +30,14 @@ package org.openscience.cdk.test.io;
 import java.io.StringWriter;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.io.MDLWriter;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the writer MDL mol files using one test file.

@@ -24,14 +24,12 @@
 package org.openscience.cdk.test.charges;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  *  Description of the Class

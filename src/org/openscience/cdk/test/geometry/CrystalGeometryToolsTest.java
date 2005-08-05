@@ -27,7 +27,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;

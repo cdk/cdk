@@ -27,20 +27,19 @@ package org.openscience.cdk.test.atomtype;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.io.InputStream;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.CDKTestCase;
+
+import org.openscience.cdk.AtomType;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.atomtype.MMFF94AtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.atomtype.MMFF94AtomTypeMatcher;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.tools.manipulator.*;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.AtomTypeTools;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Checks the functionality of the AtomType-MMFF94AtomTypeMatcher.

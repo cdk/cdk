@@ -24,17 +24,18 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import org.openscience.cdk.qsar.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.qsar.result.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.AtomHybridizationVSEPRDescriptor;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.test.CDKTestCase;
 
 
 /**

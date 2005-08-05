@@ -122,8 +122,8 @@ public class LinearRegressionModel extends RModel {
 
         this.params = new HashMap();
 
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = LinearRegressionModel.globalID;
+        LinearRegressionModel.globalID++;
         this.setModelName("cdkLMModel"+this.currentID);
     }
 
@@ -150,8 +150,8 @@ public class LinearRegressionModel extends RModel {
 
         this.params = new HashMap();
 
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = LinearRegressionModel.globalID;
+        LinearRegressionModel.globalID++;
         this.setModelName("cdkLMModel"+this.currentID);
 
         int nrow = yy.length;
@@ -208,8 +208,8 @@ public class LinearRegressionModel extends RModel {
 
         this.params = new HashMap();
 
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = LinearRegressionModel.globalID;
+        LinearRegressionModel.globalID++;
         this.setModelName("cdkLMModel"+this.currentID);
 
         int nrow = yy.length;

@@ -697,7 +697,7 @@ public abstract class JChemPaintPanel
 			setJChemPaintModel(jcpm);
 			repaint();
 		} else {
-			JFrame jcpf = ((JChemPaintEditorPanel) this).getNewFrame(jcpm);
+			JFrame jcpf = JChemPaintEditorPanel.getNewFrame(jcpm);
 			jcpf.show();
 			scaleAndCenterMolecule(chemModel);
 			jcpf.pack();

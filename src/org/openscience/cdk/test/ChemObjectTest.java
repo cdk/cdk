@@ -28,17 +28,14 @@
 package org.openscience.cdk.test;
 
 import java.util.Hashtable;
-import java.util.Vector;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemObjectListener;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.ChemObjectListener;
 
 /**
  * TestCase for the ChemObject class.

@@ -32,7 +32,6 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;

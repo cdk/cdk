@@ -284,8 +284,7 @@ public class StructureDiagramGenerator
 			molecule.getAtomAt(0).setPoint2d(new Point2d(0, 0));
 			return;
 		}
-		ConnectivityChecker conCheck = new ConnectivityChecker();
-		if (!conCheck.isConnected(molecule))
+		if (!ConnectivityChecker.isConnected(molecule))
 		{
 			logger.debug("Molecule is not connected. Throwing exception.");
 			throw new CDKException(disconnectedMessage);

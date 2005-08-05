@@ -1,24 +1,21 @@
 package org.openscience.cdk.test.geometry.alignment;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import java.io.File;
 import java.io.FileReader;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.alignment.KabschAlignment;
+import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * This class defines regression tests that should ensure that the source code

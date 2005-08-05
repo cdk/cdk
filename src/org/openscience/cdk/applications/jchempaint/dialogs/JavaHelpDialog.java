@@ -50,10 +50,7 @@ import javax.help.HelpSet;
  */
 public class JavaHelpDialog
 {
-    private CSH.DisplayHelpFromSource fDisplayHelp;
-
-
-	/**
+    /**
 	 *  Constructor for the JavaHelpDialog object
 	 *
 	 *@param  id        An ID of whatever kind XXX FIXME

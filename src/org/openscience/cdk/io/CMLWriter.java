@@ -110,8 +110,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
     
     private boolean done;
     private boolean fragment;
-    private boolean isRootElement;
-
     private String prefix = "";
     
     private LoggingTool logger;
@@ -175,8 +173,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
         customizeJob();
-        
-        isRootElement = true;
         
         prefix = namespacePrefix.getSetting();
         

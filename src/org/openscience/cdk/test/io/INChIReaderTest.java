@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
@@ -41,8 +40,8 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.INChIReader;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the reading INChI files using one test file.

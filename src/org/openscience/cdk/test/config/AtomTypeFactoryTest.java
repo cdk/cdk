@@ -27,14 +27,13 @@ package org.openscience.cdk.test.config;
 import java.io.InputStream;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 
 /**

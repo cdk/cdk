@@ -579,7 +579,7 @@ public class Controller2D implements MouseMotionListener, MouseListener, KeyList
 				}
 			}
       
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DOWN_BOND || c2dm.getDrawMode() == c2dm.UP_BOND)
+			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DOWN_BOND || c2dm.getDrawMode() == Controller2DModel.UP_BOND)
 			{
         logger.debug("mouseReleased->drawbond");
 				Atom atomInRange;

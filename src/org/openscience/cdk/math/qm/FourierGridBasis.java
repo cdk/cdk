@@ -47,18 +47,6 @@ public class FourierGridBasis implements Basis
   private double maxx;
   private double dx;
   private Function potential;
-  private Vector basis;
-
-  private Matrix S;
-  private Matrix T;
-  private Matrix V;
-
-  //private final static double m = 1.6726485E-27; // [kg] Masse eines Protons
-  //private final static double m = 9.109534E-31; // [kg] Masse eines Elektrons
-  private final static double m = (PhysicalConstants.MASS_PROTON*PhysicalConstants.MASS_PROTON)/
-                                  (2.0*PhysicalConstants.MASS_PROTON); // [kg]red.Masse
-  private final static double hdash = 6.582E-16; // [eV*s]
-
   private double Tl;
   private int N2;
 

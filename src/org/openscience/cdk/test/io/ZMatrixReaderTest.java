@@ -24,15 +24,10 @@
  */
 package org.openscience.cdk.test.io;
 
-import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileReader;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
@@ -40,12 +35,10 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ZMatrixReader;
-//import org.openscience.cdk.renderer.AcceleratedRenderer3D;
-//import org.openscience.cdk.renderer.AcceleratedRenderer3DModel;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**

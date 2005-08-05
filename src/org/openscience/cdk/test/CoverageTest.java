@@ -23,13 +23,15 @@
  */
 package org.openscience.cdk.test;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Enumeration;
+import java.util.Vector;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * This test class is <b>not</b> intended to be tested directly,
@@ -194,7 +196,6 @@ abstract public class CoverageTest extends CDKTestCase {
     
     private String convertSlash2Dot(String className) {
         StringBuffer sb = new StringBuffer();
-        className = className;
         for (int i=0; i<className.length(); i++) {
             if (className.charAt(i) == '/') {
                 sb.append('.');

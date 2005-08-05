@@ -28,7 +28,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.io.cml.CMLIOTests;
-import org.openscience.cdk.test.io.iterator.*;
+import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
+import org.openscience.cdk.test.io.iterator.IteratingSMILESReaderTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.

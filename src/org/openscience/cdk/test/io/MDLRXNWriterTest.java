@@ -27,22 +27,20 @@
  */
 package org.openscience.cdk.test.io;
 
-import java.io.StringWriter;
-import java.io.StringReader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.io.MDLRXNWriter;
 import org.openscience.cdk.io.MDLRXNReader;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.io.MDLRXNWriter;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the writer MDL rxn files using one test file.

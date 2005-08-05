@@ -32,30 +32,27 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.AtomContainer;
-
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.tools.MFAnalyser;
-import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.graph.AtomContainerAtomPermutor;
-import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *@author         steinbeck

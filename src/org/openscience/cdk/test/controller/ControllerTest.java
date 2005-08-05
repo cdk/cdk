@@ -34,8 +34,8 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.renderer.Renderer2DModel;
 

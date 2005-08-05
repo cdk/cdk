@@ -34,8 +34,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 
 /**
  * A set of static utility classes for geometric calculations on Bonds.

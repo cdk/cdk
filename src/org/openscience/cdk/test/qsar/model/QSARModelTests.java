@@ -25,7 +25,6 @@ package org.openscience.cdk.test.qsar.model;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.qsar.model.*;
 
 /**
  * TestSuite that runs all Model tests.

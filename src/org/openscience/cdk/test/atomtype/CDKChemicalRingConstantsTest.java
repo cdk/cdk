@@ -26,11 +26,11 @@
 package org.openscience.cdk.test.atomtype;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.CDKTestCase;
+
 import org.openscience.cdk.atomtype.CDKChemicalRingConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the AtomType-MMFF94AtomTypeMatcher.

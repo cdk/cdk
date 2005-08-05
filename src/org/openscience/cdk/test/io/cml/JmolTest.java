@@ -29,10 +29,10 @@ package org.openscience.cdk.test.io.cml;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;

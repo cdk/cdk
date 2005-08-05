@@ -166,7 +166,7 @@ public class GamessReader extends DefaultChemObjectReader {
     }
     
     public void setReader(Reader reader) throws CDKException {
-        this.input = input;
+        this.input = new BufferedReader(input);
     }
 
     public void setReader(InputStream input) throws CDKException {

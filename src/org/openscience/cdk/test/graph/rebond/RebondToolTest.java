@@ -27,14 +27,13 @@ package org.openscience.cdk.test.graph.rebond;
 import javax.vecmath.Point3d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.graph.rebond.RebondTool;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the RebondTool.

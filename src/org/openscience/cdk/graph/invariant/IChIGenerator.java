@@ -58,8 +58,6 @@ public class IChIGenerator {
     // FIX: make this configuarable
     private static String ichiProgram = "ichi.exe";
     private static LoggingTool logger;
-    private static Process process = null;
-
     public IChIGenerator() {
         logger = new LoggingTool(this);
     }
@@ -162,7 +160,7 @@ public class IChIGenerator {
             cmd = curdir.getAbsolutePath() + System.getProperty("file.separator") + cmd;
             String command = null;
             logger.debug("Command = " + cmd);
-            process = Runtime.getRuntime().exec(cmd);
+            Runtime.getRuntime().exec(cmd);
             logger.debug("Excuting command successfully!");
         } catch (IOException e) {
             logger.error("Error: " + e);

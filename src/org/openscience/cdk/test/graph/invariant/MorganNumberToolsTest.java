@@ -25,14 +25,13 @@
 package org.openscience.cdk.test.graph.invariant;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the MorganNumberTools

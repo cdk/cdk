@@ -38,9 +38,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
  */
 public class HuLuIndexTool 
 {
-	private static final int INFINITE = Integer.MAX_VALUE;
-	
-   /**
+	/**
    * Calculates the extended adjacency matrix index.
    * An implementation of the algorithm published in {@cdk.cite HU96}.
    *

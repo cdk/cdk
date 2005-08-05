@@ -18,14 +18,18 @@
  */
 package org.openscience.cdk.test.iupac;
 
-import junit.framework.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.isomorphism.IsomorphismTester;
-import org.openscience.cdk.iupac.parser.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.iupac.parser.NomParser;
+import org.openscience.cdk.iupac.parser.ParseException;
+import org.openscience.cdk.iupac.parser.TokenMgrError;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * JUnit test routines for the core parser.

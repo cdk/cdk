@@ -23,17 +23,20 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.qsar.result.*;
+import java.util.ArrayList;
+
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
-import java.util.ArrayList;
-import javax.vecmath.Point3d;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.RDFProtonDescriptor;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.test.CDKTestCase;
 
 
 /**

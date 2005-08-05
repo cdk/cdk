@@ -24,16 +24,13 @@
 package org.openscience.cdk.test.graph;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.graph.*;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test

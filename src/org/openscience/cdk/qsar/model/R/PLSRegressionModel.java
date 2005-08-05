@@ -125,8 +125,8 @@ public class PLSRegressionModel extends RModel {
 
         this.params = new HashMap();
 
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = PLSRegressionModel.globalID;
+        PLSRegressionModel.globalID++;
         this.setModelName("cdkPLSRegressionModel"+this.currentID);
         this.setDefaults();
     }
@@ -149,8 +149,8 @@ public class PLSRegressionModel extends RModel {
 
         this.params = new HashMap();
 
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = PLSRegressionModel.globalID;
+        PLSRegressionModel.globalID++;
         this.setModelName("cdkPLSRegressionModel"+this.currentID);
         this.setDefaults();
 
@@ -196,8 +196,8 @@ public class PLSRegressionModel extends RModel {
 
         this.params = new HashMap();
 
-        this.currentID = this.globalID;
-        this.globalID++;
+        this.currentID = PLSRegressionModel.globalID;
+        PLSRegressionModel.globalID++;
         this.setModelName("cdkPLSRegressionModel"+this.currentID);
         this.setDefaults();
 

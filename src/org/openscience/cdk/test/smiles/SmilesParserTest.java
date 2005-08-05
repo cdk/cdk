@@ -27,7 +27,6 @@ package org.openscience.cdk.test.smiles;
 import java.awt.Dimension;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
@@ -39,12 +38,12 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *@author         steinbeck
@@ -926,8 +925,7 @@ public class SmilesParserTest extends CDKTestCase
 			assertEquals(8, mol.getAtomCount());
 			assertEquals(7, mol.getBondCount());
 
-			ConnectivityChecker connChecker = new ConnectivityChecker();
-			SetOfMolecules fragments = connChecker.partitionIntoMolecules(mol);
+			SetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
 			int fragmentCount = fragments.getMoleculeCount();
 			assertEquals(2, fragmentCount);
 			Molecule mol1 = fragments.getMolecule(0);
@@ -955,8 +953,7 @@ public class SmilesParserTest extends CDKTestCase
 			assertEquals(3, mol.getAtomCount());
 			assertEquals(2, mol.getBondCount());
 
-			ConnectivityChecker connChecker = new ConnectivityChecker();
-			SetOfMolecules fragments = connChecker.partitionIntoMolecules(mol);
+			SetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
 			int fragmentCount = fragments.getMoleculeCount();
 			assertEquals(1, fragmentCount);
 			Molecule mol1 = fragments.getMolecule(0);

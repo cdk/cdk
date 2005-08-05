@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.graph;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
@@ -34,9 +33,9 @@ import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  *  Checks the functionality of the ConnectivityChecker
@@ -47,8 +46,6 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  * @cdk.created    2001-07-24
  */
 public class ConnectivityCheckerTest extends CDKTestCase {
-
-	ConnectivityChecker cc = null;
 
 	/**
 	 *  Constructor for the ConnectivityCheckerTest object
@@ -63,7 +60,6 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	 *  The JUnit setup method
 	 */
 	public void setUp() {
-		cc = new ConnectivityChecker();
 	}
 
 	/**
@@ -77,7 +73,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.makeSpiroRings());
         SetOfMolecules moleculeSet = null;
 		try {
-			moleculeSet = cc.partitionIntoMolecules(atomCon);
+			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {
             fail(exc.toString());
 		}
@@ -98,7 +94,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atomCon.addAtom(atom2);
         SetOfMolecules moleculeSet = null;
 		try {
-			moleculeSet = cc.partitionIntoMolecules(atomCon);
+			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {
             fail(exc.toString());
 		}
@@ -123,7 +119,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.makeSpiroRings());
         SetOfMolecules moleculeSet = null;
 		try {
-			moleculeSet = cc.partitionIntoMolecules(atomCon);
+			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {
             fail(exc.toString());
 		}
@@ -131,9 +127,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		assertEquals(3, moleculeSet.getMoleculeCount());
         
         Molecule[] molecules = moleculeSet.getMolecules();
-        assertTrue(cc.isConnected(molecules[0]));
-        assertTrue(cc.isConnected(molecules[1]));
-        assertTrue(cc.isConnected(molecules[2]));
+        assertTrue(ConnectivityChecker.isConnected(molecules[0]));
+        assertTrue(ConnectivityChecker.isConnected(molecules[1]));
+        assertTrue(ConnectivityChecker.isConnected(molecules[2]));
 	}
 
     /**
@@ -161,7 +157,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         // now partition
         SetOfMolecules moleculeSet = null;
 		try {
-			moleculeSet = cc.partitionIntoMolecules(atomCon);
+			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {
             fail(exc.toString());
 		}
@@ -169,8 +165,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		assertEquals(2, moleculeSet.getMoleculeCount());
         
         Molecule[] molecules = moleculeSet.getMolecules();
-        assertTrue(cc.isConnected(molecules[0]));
-        assertTrue(cc.isConnected(molecules[1]));
+        assertTrue(ConnectivityChecker.isConnected(molecules[0]));
+        assertTrue(ConnectivityChecker.isConnected(molecules[1]));
         
         // make sure
         assertEquals(1, molecules[0].getAtomCount());
@@ -189,7 +185,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	 */
 	public void testIsConnected() {
         Molecule spiro = MoleculeFactory.makeSpiroRings();
-        assertTrue(cc.isConnected(spiro));
+        assertTrue(ConnectivityChecker.isConnected(spiro));
 	}
 
 	/**

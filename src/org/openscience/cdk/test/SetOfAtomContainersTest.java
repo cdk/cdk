@@ -25,13 +25,12 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemObjectListener;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.ChemObjectListener;
 
 /**
  * Checks the funcitonality of the SetOfMolecules class.

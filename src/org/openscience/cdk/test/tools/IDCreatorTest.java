@@ -23,18 +23,13 @@
  */
 package org.openscience.cdk.test.tools;
 
-import java.io.IOException;
-import java.util.Hashtable;
-
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.IDCreator;
 
 /**

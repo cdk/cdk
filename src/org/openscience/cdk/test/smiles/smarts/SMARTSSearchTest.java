@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.test.smiles.smarts;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smiles.smarts.SMARTSParser;
 import org.openscience.cdk.smiles.smarts.ParseException;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.smiles.smarts.SMARTSParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * JUnit test routines for the SMARTS substructure search.

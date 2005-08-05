@@ -48,8 +48,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class PetitjeanNumberDescriptor implements Descriptor {
 
-	private ConnectionMatrix connectionMatrix = null;
-	private PathTools pathTools = null;
 	/**
 	 *  Constructor for the PetitjeanNumberDescriptor object
 	 */
@@ -105,10 +103,8 @@ public class PetitjeanNumberDescriptor implements Descriptor {
 		double partialDiameter = 0;
 		double radius = 0;
 		double rowMax = 0;
-		connectionMatrix = new ConnectionMatrix();
-		double[][] matr = connectionMatrix.getMatrix(atomContainer);
-		pathTools = new PathTools();
-		int[][] distances = pathTools.computeFloydAPSP(matr);
+		double[][] matr = ConnectionMatrix.getMatrix(atomContainer);
+		int[][] distances = PathTools.computeFloydAPSP(matr);
 		for (int i = 0; i < distances.length; i++) {
 			rowMax = 0;
 			for (int j = 0; j < distances.length; j++) {

@@ -24,14 +24,15 @@
  */
 package org.openscience.cdk.test.config;
 
-import junit.framework.AssertionFailedError;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Element;
+import org.openscience.cdk.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the funcitonality of the IsotopeFactory

@@ -23,17 +23,17 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.KappaShapeIndicesDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.exception.CDKException;
-import java.io.*;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -54,8 +54,7 @@ import java.io.*;
 		Descriptor descriptor = new KappaShapeIndicesDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-		AtomContainerManipulator acm = new AtomContainerManipulator();
-		acm.removeHydrogens(mol);
+		AtomContainerManipulator.removeHydrogens(mol);
 		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// position 0 =  kier1
 		// positions 1 = kier2

@@ -2,15 +2,16 @@ package org.openscience.cdk.test.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.io.Gaussian98Reader;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * A Test case for the gaussian 98 (G98Reader) class.

@@ -29,7 +29,6 @@ import java.io.InputStreamReader;
 import java.util.Vector;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
@@ -38,14 +37,13 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.layout.OverlapResolver;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  Description of the Class
@@ -84,7 +82,6 @@ public class OverlapResolverTest extends CDKTestCase
 	{
         super.setUp();
 		logger = new LoggingTool(this);
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	}
 
 
@@ -106,7 +103,6 @@ public class OverlapResolverTest extends CDKTestCase
 	 */
 	public void testResolveOverlap1() throws Exception
 	{
-		Molecule molecule = null;
 		logger.debug("Test case with atom clash");
 		try
 		{
@@ -142,7 +138,6 @@ public class OverlapResolverTest extends CDKTestCase
 	 */
 	public void testResolveOverlap2() throws Exception
 	{
-		Molecule molecule = null;
 		logger.debug("Test case with neither bond nor atom overlap");
 		try
 		{
@@ -171,7 +166,6 @@ public class OverlapResolverTest extends CDKTestCase
 	 */
 	public void testResolveOverlap3() throws Exception
 	{
-		Molecule molecule = null;
 		logger.debug("Test case with bond overlap");
 		try
 		{
@@ -200,7 +194,6 @@ public class OverlapResolverTest extends CDKTestCase
 	 */
 	public void testResolveOverlap4() throws Exception
 	{
-		Molecule molecule = null;
 		double overlapScore = 0;
 		logger.debug("Test case with atom clash");
 		try
@@ -233,7 +226,6 @@ public class OverlapResolverTest extends CDKTestCase
 	 */
 	public void testResolveOverlap5() throws Exception
 	{
-		Molecule molecule = null;
 		double overlapScore = 0;
 		logger.debug("Test case with atom clash");
 		try

@@ -23,15 +23,11 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.qsar.result.*;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
+
 import org.openscience.cdk.qsar.DescriptorEngine;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.

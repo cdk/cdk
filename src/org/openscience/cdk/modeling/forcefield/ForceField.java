@@ -49,8 +49,7 @@ public class ForceField extends GeometricMinimizer{
         }
 	
 	public void minimize( ) throws Exception{
-		ConnectivityChecker cc = new ConnectivityChecker();
-		if (!cc.isConnected(molecule)) {
+		if (!ConnectivityChecker.isConnected(molecule)) {
 			throw new Exception("CDKError: Molecule is NOT connected,could not layout.");
 		}
 		GVector moleculeCoords = new GVector(3);

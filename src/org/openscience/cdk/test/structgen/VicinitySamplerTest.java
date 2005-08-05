@@ -31,21 +31,22 @@ package org.openscience.cdk.test.structgen;
 
 import java.util.Vector;
 
+import javax.swing.JFrame;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.structgen.VicinitySampler;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 
 /**
@@ -122,7 +123,7 @@ public class VicinitySamplerTest extends CDKTestCase
 	private void display(Vector structures)
 	{
 		MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
-		moleculeListViewer.setDefaultCloseOperation(moleculeListViewer.EXIT_ON_CLOSE);
+		moleculeListViewer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		StructureDiagramGenerator sdg = null;
 		MoleculeViewer2D mv = null;
 		Molecule mol = null;

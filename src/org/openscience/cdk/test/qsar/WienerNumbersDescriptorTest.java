@@ -23,18 +23,17 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import org.openscience.cdk.qsar.*;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.*;
 
-import java.io.*;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.WienerNumbersDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test
@@ -52,8 +51,7 @@ public class WienerNumbersDescriptorTest extends CDKTestCase {
 		Descriptor descriptor = new WienerNumbersDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
-		AtomContainerManipulator acm = new AtomContainerManipulator();
-		acm.removeHydrogens(mol);
+		AtomContainerManipulator.removeHydrogens(mol);
 		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
 		// OK: assertEquals(testResult[0], retval.get(0), 0.0001);
 		assertEquals(testResult[1], retval.get(1), 0.0001);

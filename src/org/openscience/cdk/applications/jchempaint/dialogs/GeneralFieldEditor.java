@@ -130,11 +130,8 @@ public class GeneralFieldEditor extends JFrame {
     }
 
     class EditAction extends AbstractAction {
-        private String prop = "";
-   
         EditAction(String prop) {
             super("Edit");
-            this.prop = prop;
         }
 
         public void actionPerformed(ActionEvent e) {

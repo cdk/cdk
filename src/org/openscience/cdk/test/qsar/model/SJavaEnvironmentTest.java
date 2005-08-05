@@ -20,12 +20,10 @@
 
 package org.openscience.cdk.test.qsar.model;
 
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.test.CDKTestCase;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that checks some SJava requirements

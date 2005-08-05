@@ -23,17 +23,22 @@
  */
 package org.openscience.cdk.test.reaction;
 
-import java.io.*;
-import java.util.*;
-import junit.framework.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.exception.*;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.tools.manipulator.*;
-import org.openscience.cdk.isomorphism.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Hashtable;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.reaction.ReactionBalancer;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
  * @author      Kai Hartmann

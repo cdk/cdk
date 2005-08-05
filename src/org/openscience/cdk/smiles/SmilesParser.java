@@ -130,13 +130,11 @@ public class SmilesParser
 			productSmiles = tokenizer.nextToken();
 		}
 
-		ConnectivityChecker connChecker = new ConnectivityChecker();
-
 		Reaction reaction = new Reaction();
 
 		// add reactants
 		Molecule reactantContainer = parseSmiles(reactantSmiles);
-		SetOfMolecules reactantSet = connChecker.partitionIntoMolecules(reactantContainer);
+		SetOfMolecules reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
 		Molecule[] reactants = reactantSet.getMolecules();
 		for (int i = 0; i < reactants.length; i++)
 		{
@@ -147,7 +145,7 @@ public class SmilesParser
 		if (agentSmiles.length() > 0)
 		{
 			Molecule agentContainer = parseSmiles(agentSmiles);
-			SetOfMolecules agentSet = connChecker.partitionIntoMolecules(agentContainer);
+			SetOfMolecules agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
 			Molecule[] agents = agentSet.getMolecules();
 			for (int i = 0; i < agents.length; i++)
 			{
@@ -157,7 +155,7 @@ public class SmilesParser
 
 		// add products
 		Molecule productContainer = parseSmiles(productSmiles);
-		SetOfMolecules productSet = connChecker.partitionIntoMolecules(productContainer);
+		SetOfMolecules productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
 		Molecule[] products = productSet.getMolecules();
 		for (int i = 0; i < products.length; i++)
 		{

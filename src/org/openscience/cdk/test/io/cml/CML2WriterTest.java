@@ -27,32 +27,25 @@
  *  */
 package org.openscience.cdk.test.io.cml;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
+
 import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PDBAtom;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.WeightDescriptor;
+import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.qsar.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
