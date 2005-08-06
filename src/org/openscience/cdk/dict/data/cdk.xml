@@ -65,16 +65,6 @@
     </definition>
   </entry>
 
-   <entry id="sphericalMatcher" term="Spherical Matcher">
-    <definition>
-    	A pattern which can be matched onto a string representation of the environment
-    	of an atom, e.g.a spherical Matcher can be a regular expression for 
-    	the hose code of an atom
-    </definition>
-    <description>
-    </description>
-  </entry>
-   
   <entry id="hybridization" term="Hybridization">
     <definition>
        Denotes the geometrical orientation of the atom with respect
@@ -95,6 +85,13 @@
   <entry id="maxBondOrder" term="Maximal Bond Order">
     <definition>
       The maximal bond order that this atom type can have. 
+    </definition>
+  </entry>
+  
+  <entry id="partialCharge" term="Partial Atomic Charge">
+    <definition>
+      Partial charge identified as point charge with the associated atom in
+      electron equivalents.
     </definition>
   </entry>
   
@@ -122,6 +119,16 @@
     </description>
   </entry>
   
+   <entry id="sphericalMatcher" term="Spherical Matcher">
+    <definition>
+    	A pattern which can be matched onto a string representation of the environment
+    	of an atom, e.g.a spherical Matcher can be a regular expression for 
+    	the hose code of an atom
+    </definition>
+    <description>
+    </description>
+  </entry>
+   
 
 </dictionary>
 
