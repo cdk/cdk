@@ -38,7 +38,9 @@ import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Class implements methods to assign mmff94 atom types for a specific atom in an molecule. 
+ * Class implements methods to assign mmff94 atom types for a specific atom in
+ * an molecule. The full list of mmff94 atom types is defined in the file
+ * <b>cdk/config/data/mmff94_atomtypes.xml</b>.
  *
  * @author         cho
  * @cdk.created    2005-18-07

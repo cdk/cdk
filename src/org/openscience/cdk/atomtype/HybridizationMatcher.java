@@ -35,6 +35,10 @@ import org.openscience.cdk.tools.LoggingTool;
  * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol,
  * formal charge and hybridization state.
  *
+ * <p>This class uses the <b>cdk/config/data/hybridization_atomtypes.xml</b> 
+ * list. If there is not an atom type defined for the tested atom, then null 
+ * is returned.
+ *
  * @author         egonw
  * @cdk.created    2005-04-15
  * @cdk.module     core

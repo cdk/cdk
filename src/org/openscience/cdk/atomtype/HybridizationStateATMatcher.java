@@ -35,6 +35,10 @@ import org.openscience.cdk.tools.LoggingTool;
  * AtomType matcher that deduces the hybridization state of an atom based on
  * the max bond order, bond order sum and neighbor count properties of the Atom.
  *
+ * <p>This class uses the <b>cdk/config/data/hybridization_atomtypes.xml</b> 
+ * list. If there is not an atom type defined for the tested atom, then null 
+ * is returned.
+ *
  * @author         mfe4
  * @cdk.created    2004-12-02
  * @cdk.module     core
