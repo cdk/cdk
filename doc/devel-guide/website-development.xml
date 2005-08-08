@@ -59,6 +59,13 @@ exit 0
         <entry>Plone FTP directory</entry>
       </row>
       <row>
+        <entry>cdk/</entry>
+        <entry></entry>
+        <entry>changelog.xml</entry>
+        <entry>doc/website/changelog2HTML.xsl</entry>
+        <entry>/cdk/cdk_top/docu/changelog</entry>
+      </row>
+      <row>
         <entry>cdk/doc/javadoc</entry>
         <entry>dictref.index</entry>
         <entry>dictref.index.xml</entry>
@@ -132,34 +139,5 @@ scp reports/pmd/qsar.html         almost:~/index_html &amp;&amp; ssh almost "sh 
 scp reports/pmd/builder3d.html    almost:~/index_html &amp;&amp; ssh almost "sh ~/upload.pmd.builder3d.sh"
     </programlisting>
   </para>
-  <para>
-    For some files it's even simpler; for example for the ChangeLog which does
-    not require any transformation, and which can simply be uploaded (At the time
-    of writing this is *NOT* working):
-    <programlisting>
-> cd cdk/
-> scp CHANGELOG almost.cubic.uni-koeln.de:~/index_html
-> ssh almost.cubic.uni-koeln.de "sh ~/upload.changelog.sh"
-    </programlisting>
-    Below is an overview of files that need to be uploaded. Again, make custom
-    upload scripts like <filename>upload.changelog.sh</filename> to make sure
-    the file is uploaded to the correct directory on the Plone FTP server.
-  </para>
-  <informaltable>
-    <tgroup cols="3">
-    <tbody>
-      <row>
-        <entry>CDK dir</entry>
-        <entry>file</entry>
-        <entry>Plone FTP directory</entry>
-      </row>
-      <row>
-        <entry>cdk/</entry>
-        <entry>CHANGELOG</entry>
-        <entry>/cdk/cdk_top/docu/changelog</entry>
-      </row>
-    </tbody>
-    </tgroup>
-  </informaltable>
   
 </chapter>
