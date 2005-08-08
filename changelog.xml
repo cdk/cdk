@@ -4,6 +4,9 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
+  	<addition contributor="cho">
+      Added MM2AtomTypeMatcher to cdk
+    </addition>
     <addition contributor="shk3">
       BondTools contains a method if a double bond configuration is cis or trans
     </addition>
@@ -28,7 +31,7 @@
     <addition contributor="shk3 tohel">
       Splitting of JCP in editor and viewer as separate applications
     </addition>
-    <addition contributor="shk3 tohel">
+    <addition contributor="cho">
       Added MMFF94AtomTypeMatcher to cdk
     </addition>
     <apiChange closes="1208740">
