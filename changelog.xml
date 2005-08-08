@@ -119,7 +119,7 @@
       Added getRelevantAtomContainer(ChemObject, Bond) to cdk.tools.manipulators
     </addition>
     <addition contributor="egonw" implements="1177112">
-      Implemented reading of data items from MDL SD files (closes RFE #1177112)
+      Implemented reading of data items from MDL SD files
     </addition>
     <addition contributor="egonw">
       Added cdk.index.CASNumber.calculateCheckBit()
