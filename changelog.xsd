@@ -14,20 +14,15 @@
       <!-- This is a alphabetical list of contributors to CDK.
            The id's used are (if possible) the SF accounts. -->
       
-      <!-- Chris Pudney <cpudney@users.sf.net> -->
-      <xsd:enumeration value="cpudney"/>
-      <!-- Egon Willighagen <e.willighagen@science.ru.nl> -->
-      <xsd:enumeration value="egonw"/>
-      <!-- Irilenia Nobeli <nobeli@ebi.ac.uk> -->
-      <xsd:enumeration value="irilenia"/>
-      <!-- Martin Eklund <martin.eklund@farmbio.uu.se> -->
-      <xsd:enumeration value="meklund"/>
-      <!-- Christoph Steinbeck <c.steinbeck@uni-koeln.de> -->
-      <xsd:enumeration value="steinbeck"/>
-      <!-- Thierry Hanser <thierry.hanser@ixelis.com> -->
-      <xsd:enumeration value="thanser"/>
-      <!-- Uli Fechner <u.fechner@chemie.uni-frankfurt.de> -->
-      <xsd:enumeration value="ulif"/>
+      <xsd:enumeration value="cpudney"/>    <!-- Chris Pudney <cpudney@users.sf.net> -->
+      <xsd:enumeration value="egonw"/>      <!-- Egon Willighagen <e.willighagen@science.ru.nl> -->
+      <xsd:enumeration value="irilenia"/>   <!-- Irilenia Nobeli <nobeli@ebi.ac.uk> -->
+      <xsd:enumeration value="meklund"/>    <!-- Martin Eklund <martin.eklund@farmbio.uu.se> -->
+      <xsd:enumeration value="shk3"/>       <!-- Stefan Kuhn <stefan.kuhn@uni-koeln.de> -->
+      <xsd:enumeration value="steinbeck"/>  <!-- Christoph Steinbeck <c.steinbeck@uni-koeln.de> -->
+      <xsd:enumeration value="thanser"/>    <!-- Thierry Hanser <thierry.hanser@ixelis.com> -->
+      <xsd:enumeration value="tohel"/>      <!-- Tobias Helmus <tobias.helmus@uni-koeln.de> -->
+      <xsd:enumeration value="ulif"/>       <!-- Uli Fechner <u.fechner@chemie.uni-frankfurt.de> -->
       
       <!-- Contributor was untracable -->
       <xsd:enumeration value="unknown"/>
