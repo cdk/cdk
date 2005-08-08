@@ -14,7 +14,7 @@
       <!-- This is a alphabetical list of contributors to CDK.
            The id's used are (if possible) the SF accounts. -->
       
-      <xsd:enumeration value="cho"/>        <!-- Christian Hoppe <c.hoppe_@web.de> -->
+      <xsd:enumeration value="chhoppe"/>        <!-- Christian Hoppe <c.hoppe_@web.de> -->
       <xsd:enumeration value="cpudney"/>    <!-- Chris Pudney <cpudney@users.sf.net> -->
       <xsd:enumeration value="egonw"/>      <!-- Egon Willighagen <e.willighagen@science.ru.nl> -->
       <xsd:enumeration value="irilenia"/>   <!-- Irilenia Nobeli <nobeli@ebi.ac.uk> -->

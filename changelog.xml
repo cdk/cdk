@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
-  	<addition contributor="cho">
+  	<addition contributor="chhoppe">
       Added MM2AtomTypeMatcher to cdk
     </addition>
     <addition contributor="shk3">
@@ -31,7 +31,7 @@
     <addition contributor="shk3 tohel">
       Splitting of JCP in editor and viewer as separate applications
     </addition>
-    <addition contributor="cho">
+    <addition contributor="chhoppe">
       Added MMFF94AtomTypeMatcher to cdk
     </addition>
     <apiChange closes="1208740">
