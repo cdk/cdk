@@ -26,8 +26,9 @@
 package org.openscience.cdk.test.atomtype;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+//import java.io.FileReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -76,9 +77,9 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         BufferedReader fin =null;
         InputStream ins=null;
 		try{
-			//ins = this.getClass().getClassLoader().getResourceAsStream("data/mmff94AtomTypeTest_molecule.mol");
-			//fin = new BufferedReader(new InputStreamReader(ins));
-			fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
+			ins = this.getClass().getClassLoader().getResourceAsStream("data/mmff94AtomTypeTest_molecule.mol");
+			fin = new BufferedReader(new InputStreamReader(ins));
+			//fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
 			MDLReader mdl=new MDLReader(fin);
 			mol=(Molecule)mdl.read(new Molecule());
 		}catch (Exception exc1){
