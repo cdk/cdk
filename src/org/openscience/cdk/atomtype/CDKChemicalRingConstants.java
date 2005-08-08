@@ -68,13 +68,13 @@ public class CDKChemicalRingConstants {
 
     /** Is in thiophen */
     public final static int THIOPHEN = 8;
-        
-    /** Is in pyrimidin */
-    public final static int PYRIMIDIN = 10;
-                
+    
     /** Is in pyridin */
-    public final static int PYRIDIN  = 12;
-        
+    public final static int PYRIDIN  = 10;
+    
+    /** Is in pyrimidin */
+    public final static int PYRIMIDIN = 12;
+                
     /** Is in brenzol */
     public final static int BENZOL  = 5;
  

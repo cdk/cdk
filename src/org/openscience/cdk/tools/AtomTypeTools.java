@@ -131,14 +131,26 @@ public class AtomTypeTools {
 		else if (smile.equals("c1ccsc1"))return 8;
 		else if (smile.equals("c1ccncc1"))return 10;
 		else if (smile.equals("c1cncnc1"))return 12;
-		else if (smile.equals("cccccc"))return 5;
-								
+		else if (smile.equals("c1ccccc1"))return 5;
+		
+		int ncount=0;
 		for (int i=0; i<ring.getAtomCount();i++){
-			if (ring.getAtomAt(i).getSymbol()!="C"){
-				return 2;
+			if (ring.getAtomAt(i).getSymbol().equals("N")){
+				ncount=ncount+1;
 			}
 		}
-		return 3;
+			
+		if (ring.getAtomCount()==6 & ncount==1){
+			return 10;
+		}else if (ring.getAtomCount()==5 & ncount==1){
+			return 4;
+		}
+		
+		if (ncount==0){
+			return 3;
+		}else{
+			return 0;
+		}
 	}
 	
 	private String removeAromaticityFlagsFromHoseCode(String hoseCode){
