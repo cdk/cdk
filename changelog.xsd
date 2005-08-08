@@ -23,6 +23,7 @@
       <xsd:enumeration value="thanser"/>    <!-- Thierry Hanser <thierry.hanser@ixelis.com> -->
       <xsd:enumeration value="tohel"/>      <!-- Tobias Helmus <tobias.helmus@uni-koeln.de> -->
       <xsd:enumeration value="ulif"/>       <!-- Uli Fechner <u.fechner@chemie.uni-frankfurt.de> -->
+      <xsd:enumeration value="cho"/>        <!-- Christian Hoppe <c.hoppe_@web.de> -->
       
       <!-- Contributor was untracable -->
       <xsd:enumeration value="unknown"/>
