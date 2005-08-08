@@ -148,6 +148,7 @@
         <xsl:text> </xsl:text>
         <xsl:call-template name="recursiveLink">
           <xsl:with-param name="string" select="substring-after($string, ' ')" />
+          <xsl:with-param name="atid" select="$atid"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
