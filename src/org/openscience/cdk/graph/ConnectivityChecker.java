@@ -40,15 +40,13 @@ import org.openscience.cdk.SetOfMolecules;
  * To check wether an AtomContainer is connected this code
  * can be used:
  * <pre>
- *   ConnectivityChecker connChecker = new ConnectivityChecker();
- *   boolean isConnected = connChecker.isConnected(atomContainer);
+ *  boolean isConnected = ConnectivityChecker.isConnected(atomContainer);
  * </pre>
  *
  * <p>A disconnected AtomContainer can be fragmented into connected
  * fragments by using code like:
  * <pre>
- *   ConnectivityChecker connChecker = new ConnectivityChecker();
- *   SetOfMolecules fragments = connChecker.partitionIntoMolecules(disconnectedContainer);
+ *   SetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(disconnectedContainer);
  *   int fragmentCount = fragments.getMoleculeCount();
  * </pre> 
  *
