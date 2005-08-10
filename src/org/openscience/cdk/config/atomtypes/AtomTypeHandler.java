@@ -53,6 +53,7 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
     private final int SCALAR_CHEMICALGROUPCONSTANT = 8;
     private final int SCALAR_RINGSIZE = 9;
     private final int SCALAR_ISAROMATIC = 10;
+    private final int SCALAR_FORMALCHARGE=11;
     
     
     private LoggingTool logger;
@@ -102,6 +103,8 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                     atomType.setFormalNeighbourCount(Integer.parseInt(currentChars));
                 }else if (scalarType == SCALAR_VALENCY) {
                     atomType.setValency(Integer.parseInt(currentChars));
+                }else if (scalarType == SCALAR_FORMALCHARGE) {
+                    atomType.setFormalCharge(Integer.parseInt(currentChars)); 
                 } else if (scalarType == SCALAR_HYBRIDIZATION) {
                     if ("sp1".equals(currentChars)) {
                         atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
@@ -142,13 +145,15 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
         logger.debug("  uri: ", uri);
         logger.debug("  local: ", local);
         logger.debug("  raw: ", raw);
+        
         if ("atomType".equals(local)) {
             atomType = new AtomType("R");
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("id".equals(atts.getQName(i))) {
                     atomType.setAtomTypeName(atts.getValue(i));
-                }
+               }
             }
+        
         } else if ("atom".equals(local)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("elementType".equals(atts.getQName(i))) {
@@ -175,6 +180,8 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                         scalarType = SCALAR_FORMALNEIGHBOURCOUNT;
                     } else if ("cdk:valency".equals(atts.getValue(i))) {
                     	scalarType = SCALAR_VALENCY;
+                    } else if ("cdk:formalCharge".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_FORMALCHARGE;	
                     } else if ("cdk:DA".equals(atts.getValue(i))) {
                     	scalarType = SCALAR_DA;
                     } else if ("cdk:sphericalMatcher".equals(atts.getValue(i))) {

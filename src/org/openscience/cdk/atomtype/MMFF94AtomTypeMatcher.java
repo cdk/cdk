@@ -87,7 +87,7 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
 	 */
 	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atom) throws CDKException {
 		//System.out.println("****** Configure MMFF94 AtomType via findMatching ******");
-		//System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
+		System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
 		try {
 			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mmff94_atomtypes.xml");
@@ -283,10 +283,16 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
 					if (atom.getRingSize()==5 && atom.getFlag(CDKConstants.ISAROMATIC)){
 						ID = atomTypeIds[72];//Sthiophen
 					}
+				}else if (atomTypeIds[j].equals("HC")){
+					p1 = Pattern.compile(factory.getAtomType("HP").getSphericalMatcher());
+					mat1 = p1.matcher(atom.getSphericalMatcher());
+					if (mat1.matches()){
+						ID = "HP";
+					}
 				}
 				
 				atomTypeFlag = true;
-				//System.out.println(" MATCH AtomTypeID:"+j+ " " + ID);
+				System.out.println(" MATCH AtomTypeID:"+j+ " " + ID);
 				logger.debug(" MATCH AtomTypeID:"+j+ " " + ID);
 				break;
 			}//IF

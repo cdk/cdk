@@ -15,7 +15,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
    </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -27,6 +27,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -38,6 +39,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
    </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -49,6 +51,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
 	</atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -71,6 +74,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -82,6 +86,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -93,6 +98,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -105,6 +111,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -116,6 +123,7 @@
      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -129,6 +137,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -142,6 +151,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -155,6 +165,7 @@
      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -168,6 +179,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -182,6 +194,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -196,6 +209,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
      <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
      <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -209,9 +223,10 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
-    <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[1];[C,Si][+]?+[(].*+</scalar>
+    <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[1];[CSi]{1,2}.*+</scalar>
   </atomType>
   <atomType id="HO">
     <!-- H attached to oxygen -->
@@ -219,6 +234,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[1];O[(].{2,}+.*+</scalar>
@@ -229,6 +245,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[0-1];[N][(].*+</scalar>
@@ -239,6 +256,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-1;O[(]C/[H]{0,1}+=O.*+</scalar>
@@ -249,6 +267,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[0-1];N[(][H]{0,2}+=C.*+</scalar>
@@ -259,6 +278,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[0-1];N[(][H]{0,2}+=[A-Z[^C]].*+</scalar>
@@ -269,6 +289,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[0-1];O[(]C/[H]?+=C.*+</scalar>
@@ -279,6 +300,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[0-1];O[(]H[)]</scalar>
@@ -289,6 +311,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[0-1];O[(][H]{0,2}+=?+S.*+</scalar>
@@ -299,6 +322,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[0-1];[N][+][(].*+</scalar>
@@ -309,6 +333,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[1];O[+][(][A-Za-z&amp;&amp;[^=]]{1,4}+.*+</scalar>
@@ -319,6 +344,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[1];O[+][(].*+</scalar>
@@ -329,6 +355,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">D</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">H-[1];[SP].*+</scalar>
@@ -339,7 +366,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -351,7 +378,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -363,7 +390,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -375,7 +402,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -387,7 +414,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -399,7 +426,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -411,7 +438,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -423,7 +450,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -438,7 +465,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -450,7 +477,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -462,7 +489,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -474,7 +501,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -486,7 +513,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -498,7 +525,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -510,7 +537,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -522,7 +549,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -534,7 +561,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -546,7 +573,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -558,7 +585,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -570,7 +597,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -582,7 +609,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -594,7 +621,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -604,7 +631,9 @@
     <!-- for example in iminium -->
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -615,7 +644,7 @@
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -627,7 +656,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -639,7 +668,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -651,7 +680,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -663,7 +692,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -678,7 +707,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -693,7 +722,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -708,7 +737,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -723,7 +752,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -738,7 +767,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -753,7 +782,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -768,7 +797,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -782,7 +811,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -797,7 +826,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -812,7 +841,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -824,7 +853,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -836,7 +865,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -848,7 +877,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -860,7 +889,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -872,7 +901,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">5.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -884,7 +913,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -896,7 +925,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -911,7 +940,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">5.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -923,7 +952,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -935,7 +964,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">5</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -947,7 +976,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -959,7 +988,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -971,7 +1000,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -983,7 +1012,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
@@ -995,7 +1024,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
@@ -1007,7 +1036,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">7.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Cl[4];.*+</scalar>
@@ -1018,7 +1047,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">0</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">"Fe2[+].*+</scalar>
@@ -1039,7 +1068,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">F-[0-2][-];.*</scalar>
@@ -1050,7 +1079,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Cl-[0-2][-];.*+</scalar>
@@ -1061,7 +1090,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">7</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Br-[0-2][-];.*+</scalar>
@@ -1072,7 +1101,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Li-[0-2][+];.*+</scalar>
@@ -1083,7 +1112,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Na[+];.*+</scalar>
@@ -1094,7 +1123,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">K[+];.*+</scalar>
@@ -1105,7 +1134,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">0</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Zn2[+];.*+</scalar>
@@ -1116,7 +1145,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Ca2[+];.*+</scalar>
@@ -1127,7 +1156,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Cu[+];.*+</scalar>
@@ -1138,7 +1167,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Cu2[+];.*+</scalar>
@@ -1149,7 +1178,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
-      <scalar dataType="xsd:integer" dictRef="cdk:Valency">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Mg2[+];.*+</scalar>

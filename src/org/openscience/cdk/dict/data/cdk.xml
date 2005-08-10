@@ -65,6 +65,12 @@
     </definition>
   </entry>
 
+  <entry id="formalCharge" term="Formal Charge">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+
   <entry id="hybridization" term="Hybridization">
     <definition>
        Denotes the geometrical orientation of the atom with respect
@@ -128,7 +134,14 @@
     <description>
     </description>
   </entry>
-   
+  
+   <entry id="valency" term="Valency">
+    <definition>
+      Electrons of outer shells
+    </definition>
+    <description>
+    </description>
+  </entry>   
 
 </dictionary>
 

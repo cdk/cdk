@@ -54,6 +54,7 @@ public class AtomTypeManipulator {
         atom.setBondOrderSum(atomType.getBondOrderSum());
         atom.setVanderwaalsRadius(atomType.getVanderwaalsRadius());
         atom.setCovalentRadius(atomType.getCovalentRadius());
+        atom.setValency(atomType.getValency());
         atom.setFormalCharge(atomType.getFormalCharge());
         atom.setHybridization(atomType.getHybridization());
         atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
