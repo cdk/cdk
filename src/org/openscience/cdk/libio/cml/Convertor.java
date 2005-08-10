@@ -184,16 +184,14 @@ public class Convertor {
                         Customizer customizer = (Customizer)this.getClass().getClassLoader().
                             loadClass(customizerName).newInstance();
                         customizers.addElement(customizer);
-                        logger.info("Loaded Customizer: " + customizer.getClass().getName());
+                        logger.info("Loaded Customizer: ", customizer.getClass().getName());
                     } catch (ClassNotFoundException exception) {
                         logger.info("Could not find this Customizer: ", customizerName);
                         logger.debug(exception);
-                        exception.printStackTrace();
                     } catch (Exception exception) {
                         logger.warn("Could not load this Customizer: ", customizerName);
                         logger.warn(exception.getMessage());
                         logger.debug(exception);
-                        exception.printStackTrace();
                     }
                 }
                 logger.info("Number of loaded customizers: ", customizerCount);
