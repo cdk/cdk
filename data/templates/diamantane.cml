@@ -29,8 +29,8 @@
     <bond id= "b7" atomRefs2=" a5  a8" order="1"/>
     <bond id= "b8" atomRefs2=" a3  a9" order="1"/>
     <bond id= "b9" atomRefs2=" a9 a10" order="1"/>
-    <bond id="b10" atomRefs2="a10 a17" order="1"/>
-    <bond id="b11" atomRefs2="a10 a18" order="1"/>
+    <bond id="b10" atomRefs2="a10  a7" order="1"/>
+    <bond id="b11" atomRefs2="a10  a8" order="1"/>
     <bond id="b12" atomRefs2=" a2 a11" order="1"/>
     <bond id="b13" atomRefs2=" a4 a13" order="1"/>
     <bond id="b14" atomRefs2="a12 a14" order="1"/>
