@@ -115,9 +115,13 @@ public class JChemPaint implements SwingConstants
 			if (line.hasOption("h"))
 			{
 				Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
-				String version = self.getImplementationVersion();
-
-				System.out.println("JChemPaint v." + version + "\n");
+                if (self != null) {
+                    String version = self.getImplementationVersion();
+                    
+                    System.out.println("JChemPaint v." + version + "\n");
+                } else {
+                    System.out.println("JChemPaint (could not determine version)\n");
+                }
 
 				HelpFormatter formatter = new HelpFormatter();
 				formatter.printHelp("JChemPaint", options);
