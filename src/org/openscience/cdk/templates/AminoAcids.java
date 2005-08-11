@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Monomer;
+import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.SetOfMolecules;
 
@@ -207,7 +207,7 @@ public class AminoAcids {
         return info;
     }
     
-    private static Monomer[] aminoAcids = null;
+    private static AminoAcid[] aminoAcids = null;
     
     public final static String RESIDUE_NAME = "residueName";
     public final static String RESIDUE_NAME_SHORT = "residueNameShort";
@@ -216,23 +216,23 @@ public class AminoAcids {
     public final static String ID = "id";
     
     /**
-     * Creates amino acid Monomer objects.
+     * Creates amino acid AminoAcid objects.
      * 
-     * @return aminoAcids, a HashMap containing the amino acids as Monomers.
+     * @return aminoAcids, a HashMap containing the amino acids as AminoAcids.
      */
-    public static Monomer[] createAAs() {
+    public static AminoAcid[] createAAs() {
         if (aminoAcids != null) {
             return aminoAcids;
         }
         
         // Create set of AtomContainers
-        aminoAcids = new Monomer[20];
+        aminoAcids = new AminoAcid[20];
         
         // Create glycine
-        Monomer glycine = new Monomer();
-        glycine.addAtom(new Atom("N"));
+        AminoAcid glycine = new AminoAcid();
+        glycine.addNTerminus(new Atom("N"));
         glycine.addAtom(new Atom("C"));
-        glycine.addAtom(new Atom("C"));
+        glycine.addCTerminus(new Atom("C"));
         glycine.addAtom(new Atom("O"));
         glycine.addBond(0, 1, 1);
         glycine.addBond(1, 2, 1);
@@ -245,10 +245,10 @@ public class AminoAcids {
         aminoAcids[0] = glycine;
         
         // Create alanine
-        Monomer alanine = new Monomer();
-        alanine.addAtom(new Atom("N"));
+        AminoAcid alanine = new AminoAcid();
+        alanine.addNTerminus(new Atom("N"));
         alanine.addAtom(new Atom("C"));
-        alanine.addAtom(new Atom("C"));
+        alanine.addCTerminus(new Atom("C"));
         alanine.addAtom(new Atom("O"));
         alanine.addAtom(new Atom("C"));
         alanine.addBond(0, 1, 1);
@@ -263,10 +263,10 @@ public class AminoAcids {
         aminoAcids[1] = alanine;
         
         // Create valine
-        Monomer valine = new Monomer();
-        valine.addAtom(new Atom("N"));
+        AminoAcid valine = new AminoAcid();
+        valine.addNTerminus(new Atom("N"));
         valine.addAtom(new Atom("C"));
-        valine.addAtom(new Atom("C"));
+        valine.addCTerminus(new Atom("C"));
         valine.addAtom(new Atom("O"));
         valine.addAtom(new Atom("C"));
         valine.addAtom(new Atom("C"));
@@ -285,10 +285,10 @@ public class AminoAcids {
         aminoAcids[2] = valine;
         
         // Create leucine
-        Monomer leucine = new Monomer();
-        leucine.addAtom(new Atom("N"));
+        AminoAcid leucine = new AminoAcid();
+        leucine.addNTerminus(new Atom("N"));
         leucine.addAtom(new Atom("C"));
-        leucine.addAtom(new Atom("C"));
+        leucine.addCTerminus(new Atom("C"));
         leucine.addAtom(new Atom("O"));
         leucine.addAtom(new Atom("C"));
         leucine.addAtom(new Atom("C"));
@@ -309,10 +309,10 @@ public class AminoAcids {
         aminoAcids[3] = leucine;
         
         // Create isoleucine
-        Monomer isoleucine = new Monomer();
-        isoleucine.addAtom(new Atom("N"));
+        AminoAcid isoleucine = new AminoAcid();
+        isoleucine.addNTerminus(new Atom("N"));
         isoleucine.addAtom(new Atom("C"));
-        isoleucine.addAtom(new Atom("C"));
+        isoleucine.addCTerminus(new Atom("C"));
         isoleucine.addAtom(new Atom("O"));
         isoleucine.addAtom(new Atom("C"));
         isoleucine.addAtom(new Atom("C"));
@@ -333,10 +333,10 @@ public class AminoAcids {
         aminoAcids[4] = isoleucine;
         
         // Create serine
-        Monomer serine = new Monomer();
-        serine.addAtom(new Atom("N"));
+        AminoAcid serine = new AminoAcid();
+        serine.addNTerminus(new Atom("N"));
         serine.addAtom(new Atom("C"));
-        serine.addAtom(new Atom("C"));
+        serine.addCTerminus(new Atom("C"));
         serine.addAtom(new Atom("O"));
         serine.addAtom(new Atom("C"));
         serine.addAtom(new Atom("O"));
@@ -353,10 +353,10 @@ public class AminoAcids {
         aminoAcids[5] = serine;
         
         // Create threonine
-        Monomer threonine = new Monomer();
-        threonine.addAtom(new Atom("N"));
+        AminoAcid threonine = new AminoAcid();
+        threonine.addNTerminus(new Atom("N"));
         threonine.addAtom(new Atom("C"));
-        threonine.addAtom(new Atom("C"));
+        threonine.addCTerminus(new Atom("C"));
         threonine.addAtom(new Atom("O"));
         threonine.addAtom(new Atom("C"));
         threonine.addAtom(new Atom("O"));
@@ -375,10 +375,10 @@ public class AminoAcids {
         aminoAcids[6] = threonine;
         
         // Create cysteine
-        Monomer cysteine = new Monomer();
-        cysteine.addAtom(new Atom("N"));
+        AminoAcid cysteine = new AminoAcid();
+        cysteine.addNTerminus(new Atom("N"));
         cysteine.addAtom(new Atom("C"));
-        cysteine.addAtom(new Atom("C"));
+        cysteine.addCTerminus(new Atom("C"));
         cysteine.addAtom(new Atom("O"));
         cysteine.addAtom(new Atom("C"));
         cysteine.addAtom(new Atom("S"));
@@ -395,10 +395,10 @@ public class AminoAcids {
         aminoAcids[7] = cysteine;
         
         // Create methionine
-        Monomer methionine = new Monomer();
-        methionine.addAtom(new Atom("N"));
+        AminoAcid methionine = new AminoAcid();
+        methionine.addNTerminus(new Atom("N"));
         methionine.addAtom(new Atom("C"));
-        methionine.addAtom(new Atom("C"));
+        methionine.addCTerminus(new Atom("C"));
         methionine.addAtom(new Atom("O"));
         methionine.addAtom(new Atom("C"));
         methionine.addAtom(new Atom("C"));
@@ -419,10 +419,10 @@ public class AminoAcids {
         aminoAcids[8] = methionine;
         
         // Create aspartic acid
-        Monomer asparticAcid = new Monomer();
-        asparticAcid.addAtom(new Atom("N"));
+        AminoAcid asparticAcid = new AminoAcid();
+        asparticAcid.addNTerminus(new Atom("N"));
         asparticAcid.addAtom(new Atom("C"));
-        asparticAcid.addAtom(new Atom("C"));
+        asparticAcid.addCTerminus(new Atom("C"));
         asparticAcid.addAtom(new Atom("O"));
         asparticAcid.addAtom(new Atom("C"));
         asparticAcid.addAtom(new Atom("C"));
@@ -443,10 +443,10 @@ public class AminoAcids {
         aminoAcids[9] = asparticAcid;
         
         // Create asparagine
-        Monomer asparagine = new Monomer();
-        asparagine.addAtom(new Atom("N"));
+        AminoAcid asparagine = new AminoAcid();
+        asparagine.addNTerminus(new Atom("N"));
         asparagine.addAtom(new Atom("C"));
-        asparagine.addAtom(new Atom("C"));
+        asparagine.addCTerminus(new Atom("C"));
         asparagine.addAtom(new Atom("O"));
         asparagine.addAtom(new Atom("C"));
         asparagine.addAtom(new Atom("C"));
@@ -467,10 +467,10 @@ public class AminoAcids {
         aminoAcids[10] = asparagine;
         
         // Create glutamic acid
-        Monomer glutamicAcid = new Monomer();
-        glutamicAcid.addAtom(new Atom("N"));
+        AminoAcid glutamicAcid = new AminoAcid();
+        glutamicAcid.addNTerminus(new Atom("N"));
         glutamicAcid.addAtom(new Atom("C"));
-        glutamicAcid.addAtom(new Atom("C"));
+        glutamicAcid.addCTerminus(new Atom("C"));
         glutamicAcid.addAtom(new Atom("O"));
         glutamicAcid.addAtom(new Atom("C"));
         glutamicAcid.addAtom(new Atom("C"));
@@ -493,10 +493,10 @@ public class AminoAcids {
         aminoAcids[11] = glutamicAcid;
         
         // Create glutamine
-        Monomer glutamine = new Monomer();
-        glutamine.addAtom(new Atom("N"));
+        AminoAcid glutamine = new AminoAcid();
+        glutamine.addNTerminus(new Atom("N"));
         glutamine.addAtom(new Atom("C"));
-        glutamine.addAtom(new Atom("C"));
+        glutamine.addCTerminus(new Atom("C"));
         glutamine.addAtom(new Atom("O"));
         glutamine.addAtom(new Atom("C"));
         glutamine.addAtom(new Atom("C"));
@@ -519,10 +519,10 @@ public class AminoAcids {
         aminoAcids[12] = glutamine;
         
         // Create arginine
-        Monomer arginine = new Monomer();
-        arginine.addAtom(new Atom("N"));
+        AminoAcid arginine = new AminoAcid();
+        arginine.addNTerminus(new Atom("N"));
         arginine.addAtom(new Atom("C"));
-        arginine.addAtom(new Atom("C"));
+        arginine.addCTerminus(new Atom("C"));
         arginine.addAtom(new Atom("O"));
         arginine.addAtom(new Atom("C"));
         arginine.addAtom(new Atom("C"));
@@ -549,10 +549,10 @@ public class AminoAcids {
         aminoAcids[13] = arginine;
         
         // Create lysine
-        Monomer lysine = new Monomer();
-        lysine.addAtom(new Atom("N"));
+        AminoAcid lysine = new AminoAcid();
+        lysine.addNTerminus(new Atom("N"));
         lysine.addAtom(new Atom("C"));
-        lysine.addAtom(new Atom("C"));
+        lysine.addCTerminus(new Atom("C"));
         lysine.addAtom(new Atom("O"));
         lysine.addAtom(new Atom("C"));
         lysine.addAtom(new Atom("C"));
@@ -575,10 +575,10 @@ public class AminoAcids {
         aminoAcids[14] = lysine;
         
         // Create histidine
-        Monomer histidine = new Monomer();
-        histidine.addAtom(new Atom("N"));
+        AminoAcid histidine = new AminoAcid();
+        histidine.addNTerminus(new Atom("N"));
         histidine.addAtom(new Atom("C"));
-        histidine.addAtom(new Atom("C"));
+        histidine.addCTerminus(new Atom("C"));
         histidine.addAtom(new Atom("O"));
         histidine.addAtom(new Atom("C"));
         histidine.addAtom(new Atom("C"));
@@ -604,10 +604,10 @@ public class AminoAcids {
         aminoAcids[15] = histidine;
         
         // Create phenylalanine
-        Monomer phenylalanine = new Monomer();
-        phenylalanine.addAtom(new Atom("N"));
+        AminoAcid phenylalanine = new AminoAcid();
+        phenylalanine.addNTerminus(new Atom("N"));
         phenylalanine.addAtom(new Atom("C"));
-        phenylalanine.addAtom(new Atom("C"));
+        phenylalanine.addCTerminus(new Atom("C"));
         phenylalanine.addAtom(new Atom("O"));
         phenylalanine.addAtom(new Atom("C"));
         phenylalanine.addAtom(new Atom("C"));
@@ -635,10 +635,10 @@ public class AminoAcids {
         aminoAcids[16] = phenylalanine;
         
         // Create tyrosine
-        Monomer tyrosine = new Monomer();
-        tyrosine.addAtom(new Atom("N"));
+        AminoAcid tyrosine = new AminoAcid();
+        tyrosine.addNTerminus(new Atom("N"));
         tyrosine.addAtom(new Atom("C"));
-        tyrosine.addAtom(new Atom("C"));
+        tyrosine.addCTerminus(new Atom("C"));
         tyrosine.addAtom(new Atom("O"));
         tyrosine.addAtom(new Atom("C"));
         tyrosine.addAtom(new Atom("C"));
@@ -668,10 +668,10 @@ public class AminoAcids {
         aminoAcids[17] = tyrosine;
         
         // Create tryptophane
-        Monomer tryptophane = new Monomer();
-        tryptophane.addAtom(new Atom("N"));
+        AminoAcid tryptophane = new AminoAcid();
+        tryptophane.addNTerminus(new Atom("N"));
         tryptophane.addAtom(new Atom("C"));
-        tryptophane.addAtom(new Atom("C"));
+        tryptophane.addCTerminus(new Atom("C"));
         tryptophane.addAtom(new Atom("O"));
         tryptophane.addAtom(new Atom("C"));
         tryptophane.addAtom(new Atom("C"));
@@ -706,10 +706,10 @@ public class AminoAcids {
         aminoAcids[18] = tryptophane;
         
         // Create proline
-        Monomer proline = new Monomer();
-        proline.addAtom(new Atom("N"));
+        AminoAcid proline = new AminoAcid();
+        proline.addNTerminus(new Atom("N"));
         proline.addAtom(new Atom("C"));
-        proline.addAtom(new Atom("C"));
+        proline.addCTerminus(new Atom("C"));
         proline.addAtom(new Atom("O"));
         proline.addAtom(new Atom("C"));
         proline.addAtom(new Atom("C"));
@@ -736,7 +736,7 @@ public class AminoAcids {
      * N, E, Q, R, K, H, F, Y, W and P.
      */
     public static HashMap getHashMapBySingleCharCode() {
-        Monomer[] monomers = createAAs();
+        AminoAcid[] monomers = createAAs();
         HashMap map = new HashMap();
         for (int i=0; i<monomers.length; i++) {
             map.put(monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
@@ -749,7 +749,7 @@ public class AminoAcids {
      * THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
      */
     public static HashMap getHashMapByThreeLetterCode() {
-        Monomer[] monomers = createAAs();
+        AminoAcid[] monomers = createAAs();
         HashMap map = new HashMap();
         for (int i=0; i<monomers.length; i++) {
             map.put(monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
