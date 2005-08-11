@@ -727,7 +727,12 @@ public class AminoAcids {
         proline.setProperty(NO_BONDS, "7");
         proline.setProperty(ID, "146");
         aminoAcids[19] = proline;
-        
+
+        // set the monomer types
+        for (int i=0; i<aminoAcids.length; i++) {
+            aminoAcids[i].setMonomerType((String)aminoAcids[i].getProperty(RESIDUE_NAME_SHORT));
+        }
+
         return aminoAcids;
     }
 
