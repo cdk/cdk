@@ -58,6 +58,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 		oMonomer.setMonomerName("");
 		oMonomer.setMonomerType("UNKNOWN");
 		monomers.put("", oMonomer);
+                strandName = "";
 	}
 	
 	/**
