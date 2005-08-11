@@ -4,7 +4,13 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
   <release id="CVS">
-  	<addition contributor="chhoppe">
+    <addition contributor="egonw">
+      Added a cdk.tools.ProteinBuilderTool to build protein structures
+    </addition>
+    <addition contributor="egonw">
+      Added a AminoAcid class that extends Monomer
+    </addition>
+    <addition contributor="chhoppe">
       Added MM2AtomTypeMatcher to cdk
     </addition>
     <addition contributor="shk3">
