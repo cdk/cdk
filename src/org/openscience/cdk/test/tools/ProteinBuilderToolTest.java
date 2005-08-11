@@ -45,8 +45,8 @@ public class ProteinBuilderToolTest extends CDKTestCase {
         try {
             protein = ProteinBuilderTool.createProtein("GAGA");
         } catch (Exception exception) {
-            fail(exception.getMessage());
             exception.printStackTrace();
+            fail(exception.getMessage());
         }
         assertNotNull(protein);
         assertEquals(4, protein.getMonomerCount());
