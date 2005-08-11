@@ -41,6 +41,7 @@ public class DataClassesTests {
         TestSuite suite= new TestSuite("The cdk.data Tests");
         suite.addTest(DataCoverageTest.suite());
         
+        suite.addTest(AminoAcidTest.suite());
         suite.addTest(AtomContainerTest.suite());
         suite.addTest(AtomEnumerationTest.suite());
         suite.addTest(AtomParityTest.suite());

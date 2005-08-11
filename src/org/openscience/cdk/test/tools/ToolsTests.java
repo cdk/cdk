@@ -50,6 +50,7 @@ public class ToolsTests {
         suite.addTest(ValencyCheckerTest.suite());
         suite.addTest(ValencyHybridCheckerTest.suite());
         suite.addTest(NormalizerTest.suite());
+        suite.addTest(ProteinBuilderToolTest.suite());
         // cdk.test.tools.manipulator
         suite.addTest(ManipulatorsTests.suite());
         return suite;
