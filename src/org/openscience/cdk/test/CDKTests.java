@@ -64,6 +64,7 @@ import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
+import org.openscience.cdk.test.templates.AminoAcidsTest;
 import org.openscience.cdk.test.tools.ToolsTests;
 
 /**
@@ -144,6 +145,8 @@ public class CDKTests
         suite.addTest(SmilesParserTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
+        // from cdk.test.templates
+        suite.addTest(AminoAcidsTest.suite());
         // from cdk.test.modeling.forcefield
         suite.addTest(ForceFieldTests.suite());
 
