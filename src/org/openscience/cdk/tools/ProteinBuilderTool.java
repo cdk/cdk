@@ -35,6 +35,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Strand;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.AminoAcids;
+import org.openscience.cdk.tools.LoggingTool;
 
 import java.util.HashMap;
 
@@ -44,6 +45,8 @@ import java.util.HashMap;
  * written).
  */
 public class ProteinBuilderTool {
+
+    private static LoggingTool logger = new LoggingTool(ProteinBuilderTool.class);
     
     /**
      * Builds a protein by connecting a new amino acid at the N-terminus of the
@@ -107,10 +110,15 @@ public class ProteinBuilderTool {
         AminoAcid previousAA = null;
         for (int i=0; i<sequence.length(); i++) {
             String aminoAcidCode = "" + sequence.charAt(i);
+            logger.debug("Adding AA: " + aminoAcidCode);
             AminoAcid aminoAcid = (AminoAcid)templates.get(aminoAcidCode);
+            aminoAcid = (AminoAcid)aminoAcid.clone();
+            aminoAcid.setMonomerName(aminoAcidCode + i);
             if (aminoAcid == null) {
                 throw new CDKException("Cannot build sequence; unknown amino acid: " + aminoAcidCode);
             }
+            logger.debug("protein: ", protein);
+            logger.debug("strand: ", strand);
             addAminoAcidAtCTerminus(protein, aminoAcid, strand, previousAA);
             previousAA = aminoAcid;
         }
@@ -123,7 +131,7 @@ public class ProteinBuilderTool {
             protein.addAtom(atoms[i], aaToAdd, strand);
         }
         Bond[] bonds = aaToAdd.getBonds();
-        for (int i=0; i<atoms.length; i++) {
+        for (int i=0; i<bonds.length; i++) {
             protein.addBond(bonds[i]);
         }
         return protein;
