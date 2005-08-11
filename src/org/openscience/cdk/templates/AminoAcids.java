@@ -32,8 +32,7 @@ import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.SetOfMolecules;
 
 /**
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * Tool that provides templates for the (natural) amino acids.
  *
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.module  standard
@@ -208,15 +207,26 @@ public class AminoAcids {
         return info;
     }
     
+    private static Monomer[] aminoAcids = null;
+    
+    public final static String RESIDUE_NAME = "residueName";
+    public final static String RESIDUE_NAME_SHORT = "residueNameShort";
+    public final static String NO_ATOMS = "noOfAtoms";
+    public final static String NO_BONDS = "noOfBonds";
+    public final static String ID = "id";
+    
     /**
      * Creates amino acid Monomer objects.
      * 
      * @return aminoAcids, a HashMap containing the amino acids as Monomers.
-     */   
-
-    public static HashMap createAAs() {
+     */
+    public static Monomer[] createAAs() {
+        if (aminoAcids != null) {
+            return aminoAcids;
+        }
+        
         // Create set of AtomContainers
-        HashMap aminoAcids = new HashMap();
+        aminoAcids = new Monomer[20];
         
         // Create glycine
         Monomer glycine = new Monomer();
@@ -227,12 +237,12 @@ public class AminoAcids {
         glycine.addBond(0, 1, 1);
         glycine.addBond(1, 2, 1);
         glycine.addBond(2, 3, 2);
-        glycine.setProperty("residueName", "GLY");
-        glycine.setProperty("residueNameShort", "G");
-        glycine.setProperty("noOfAtoms", "4");
-        glycine.setProperty("noOfBonds", "3");
-        glycine.setProperty("id", "0");
-        aminoAcids.put("G", glycine);
+        glycine.setProperty(RESIDUE_NAME, "GLY");
+        glycine.setProperty(RESIDUE_NAME_SHORT, "G");
+        glycine.setProperty(NO_ATOMS, "4");
+        glycine.setProperty(NO_BONDS, "3");
+        glycine.setProperty(ID, "0");
+        aminoAcids[0] = glycine;
         
         // Create alanine
         Monomer alanine = new Monomer();
@@ -245,12 +255,12 @@ public class AminoAcids {
         alanine.addBond(1, 2, 1);
         alanine.addBond(2, 3, 2);
         alanine.addBond(3, 4, 1);
-        alanine.setProperty("residueName", "ALA");
-        alanine.setProperty("residueNameShort", "A");
-        alanine.setProperty("noOfAtoms", "5");
-        alanine.setProperty("noOfBonds", "4");
-        alanine.setProperty("id", "3");
-        aminoAcids.put("A", alanine);
+        alanine.setProperty(RESIDUE_NAME, "ALA");
+        alanine.setProperty(RESIDUE_NAME_SHORT, "A");
+        alanine.setProperty(NO_ATOMS, "5");
+        alanine.setProperty(NO_BONDS, "4");
+        alanine.setProperty(ID, "3");
+        aminoAcids[1] = alanine;
         
         // Create valine
         Monomer valine = new Monomer();
@@ -267,12 +277,12 @@ public class AminoAcids {
         valine.addBond(3, 4, 1);
         valine.addBond(4, 5, 1);
         valine.addBond(4, 6, 1);
-        valine.setProperty("residueName", "VAL");
-        valine.setProperty("residueNameShort", "V");
-        valine.setProperty("noOfAtoms", "7");
-        valine.setProperty("noOfBonds", "6");
-        valine.setProperty("id", "7");
-        aminoAcids.put("V", valine);
+        valine.setProperty(RESIDUE_NAME, "VAL");
+        valine.setProperty(RESIDUE_NAME_SHORT, "V");
+        valine.setProperty(NO_ATOMS, "7");
+        valine.setProperty(NO_BONDS, "6");
+        valine.setProperty(ID, "7");
+        aminoAcids[2] = valine;
         
         // Create leucine
         Monomer leucine = new Monomer();
@@ -291,12 +301,12 @@ public class AminoAcids {
         leucine.addBond(4, 5, 1);
         leucine.addBond(5, 6, 1);
         leucine.addBond(5, 7, 1);
-        leucine.setProperty("residueName", "LEU");
-        leucine.setProperty("residueNameShort", "L");
-        leucine.setProperty("noOfAtoms", "8");
-        leucine.setProperty("noOfBonds", "7");
-        leucine.setProperty("id", "13");
-        aminoAcids.put("L", leucine);
+        leucine.setProperty(RESIDUE_NAME, "LEU");
+        leucine.setProperty(RESIDUE_NAME_SHORT, "L");
+        leucine.setProperty(NO_ATOMS, "8");
+        leucine.setProperty(NO_BONDS, "7");
+        leucine.setProperty(ID, "13");
+        aminoAcids[3] = leucine;
         
         // Create isoleucine
         Monomer isoleucine = new Monomer();
@@ -315,12 +325,12 @@ public class AminoAcids {
         isoleucine.addBond(4, 5, 1);
         isoleucine.addBond(4, 6, 1);
         isoleucine.addBond(6, 7, 1);
-        isoleucine.setProperty("residueName", "ILE");
-        isoleucine.setProperty("residueNameShort", "I");
-        isoleucine.setProperty("noOfAtoms", "8");
-        isoleucine.setProperty("noOfBonds", "7");
-        isoleucine.setProperty("id", "20");
-        aminoAcids.put("I", isoleucine);
+        isoleucine.setProperty(RESIDUE_NAME, "ILE");
+        isoleucine.setProperty(RESIDUE_NAME_SHORT, "I");
+        isoleucine.setProperty(NO_ATOMS, "8");
+        isoleucine.setProperty(NO_BONDS, "7");
+        isoleucine.setProperty(ID, "20");
+        aminoAcids[4] = isoleucine;
         
         // Create serine
         Monomer serine = new Monomer();
@@ -335,12 +345,12 @@ public class AminoAcids {
         serine.addBond(2, 3, 2);
         serine.addBond(3, 4, 1);
         serine.addBond(4, 5, 1);
-        serine.setProperty("residueName", "SER");
-        serine.setProperty("residueNameShort", "S");
-        serine.setProperty("noOfAtoms", "6");
-        serine.setProperty("noOfBonds", "5");
-        serine.setProperty("id", "27");
-        aminoAcids.put("S", serine);
+        serine.setProperty(RESIDUE_NAME, "SER");
+        serine.setProperty(RESIDUE_NAME_SHORT, "S");
+        serine.setProperty(NO_ATOMS, "6");
+        serine.setProperty(NO_BONDS, "5");
+        serine.setProperty(ID, "27");
+        aminoAcids[5] = serine;
         
         // Create threonine
         Monomer threonine = new Monomer();
@@ -357,12 +367,12 @@ public class AminoAcids {
         threonine.addBond(1, 4, 1);
         threonine.addBond(4, 5, 1);
         threonine.addBond(4, 6, 1);
-        threonine.setProperty("residueName", "THR");
-        threonine.setProperty("residueNameShort", "T");
-        threonine.setProperty("noOfAtoms", "7");
-        threonine.setProperty("noOfBonds", "6");
-        threonine.setProperty("id", "32");
-        aminoAcids.put("T", threonine);
+        threonine.setProperty(RESIDUE_NAME, "THR");
+        threonine.setProperty(RESIDUE_NAME_SHORT, "T");
+        threonine.setProperty(NO_ATOMS, "7");
+        threonine.setProperty(NO_BONDS, "6");
+        threonine.setProperty(ID, "32");
+        aminoAcids[6] = threonine;
         
         // Create cysteine
         Monomer cysteine = new Monomer();
@@ -377,12 +387,12 @@ public class AminoAcids {
         cysteine.addBond(2, 3, 2);
         cysteine.addBond(3, 4, 1);
         cysteine.addBond(4, 5, 1);
-        cysteine.setProperty("residueName", "CYS");
-        cysteine.setProperty("residueNameShort", "C");
-        cysteine.setProperty("noOfAtoms", "6");
-        cysteine.setProperty("noOfBonds", "5");
-        cysteine.setProperty("id", "38");
-        aminoAcids.put("C", cysteine);
+        cysteine.setProperty(RESIDUE_NAME, "CYS");
+        cysteine.setProperty(RESIDUE_NAME_SHORT, "C");
+        cysteine.setProperty(NO_ATOMS, "6");
+        cysteine.setProperty(NO_BONDS, "5");
+        cysteine.setProperty(ID, "38");
+        aminoAcids[7] = cysteine;
         
         // Create methionine
         Monomer methionine = new Monomer();
@@ -401,12 +411,12 @@ public class AminoAcids {
         methionine.addBond(4, 5, 1);
         methionine.addBond(5, 6, 1);
         methionine.addBond(6, 7, 1);
-        methionine.setProperty("residueName", "MET");
-        methionine.setProperty("residueNameShort", "M");
-        methionine.setProperty("noOfAtoms", "8");
-        methionine.setProperty("noOfBonds", "7");
-        methionine.setProperty("id", "43");
-        aminoAcids.put("M", methionine);
+        methionine.setProperty(RESIDUE_NAME, "MET");
+        methionine.setProperty(RESIDUE_NAME_SHORT, "M");
+        methionine.setProperty(NO_ATOMS, "8");
+        methionine.setProperty(NO_BONDS, "7");
+        methionine.setProperty(ID, "43");
+        aminoAcids[8] = methionine;
         
         // Create aspartic acid
         Monomer asparticAcid = new Monomer();
@@ -425,12 +435,12 @@ public class AminoAcids {
         asparticAcid.addBond(4, 5, 1);
         asparticAcid.addBond(5, 6, 2);
         asparticAcid.addBond(6, 7, 1);
-        asparticAcid.setProperty("residueName", "ASP");
-        asparticAcid.setProperty("residueNameShort", "D");
-        asparticAcid.setProperty("noOfAtoms", "8");
-        asparticAcid.setProperty("noOfBonds", "7");
-        asparticAcid.setProperty("id", "50");
-        aminoAcids.put("D", asparticAcid);
+        asparticAcid.setProperty(RESIDUE_NAME, "ASP");
+        asparticAcid.setProperty(RESIDUE_NAME_SHORT, "D");
+        asparticAcid.setProperty(NO_ATOMS, "8");
+        asparticAcid.setProperty(NO_BONDS, "7");
+        asparticAcid.setProperty(ID, "50");
+        aminoAcids[9] = asparticAcid;
         
         // Create asparagine
         Monomer asparagine = new Monomer();
@@ -449,12 +459,12 @@ public class AminoAcids {
         asparagine.addBond(4, 5, 1);
         asparagine.addBond(5, 6, 2);
         asparagine.addBond(5, 7, 1);
-        asparagine.setProperty("residueName", "ASN");
-        asparagine.setProperty("residueNameShort", "N");
-        asparagine.setProperty("noOfAtoms", "8");
-        asparagine.setProperty("noOfBonds", "7");
-        asparagine.setProperty("id", "57");
-        aminoAcids.put("N", asparagine);
+        asparagine.setProperty(RESIDUE_NAME, "ASN");
+        asparagine.setProperty(RESIDUE_NAME_SHORT, "N");
+        asparagine.setProperty(NO_ATOMS, "8");
+        asparagine.setProperty(NO_BONDS, "7");
+        asparagine.setProperty(ID, "57");
+        aminoAcids[10] = asparagine;
         
         // Create glutamic acid
         Monomer glutamicAcid = new Monomer();
@@ -475,12 +485,12 @@ public class AminoAcids {
         glutamicAcid.addBond(5, 6, 1);
         glutamicAcid.addBond(6, 7, 2);
         glutamicAcid.addBond(7, 8, 1);
-        glutamicAcid.setProperty("residueName", "GLU");
-        glutamicAcid.setProperty("residueNameShort", "E");
-        glutamicAcid.setProperty("noOfAtoms", "9");
-        glutamicAcid.setProperty("noOfBonds", "8");
-        glutamicAcid.setProperty("id", "64");
-        aminoAcids.put("E", glutamicAcid);
+        glutamicAcid.setProperty(RESIDUE_NAME, "GLU");
+        glutamicAcid.setProperty(RESIDUE_NAME_SHORT, "E");
+        glutamicAcid.setProperty(NO_ATOMS, "9");
+        glutamicAcid.setProperty(NO_BONDS, "8");
+        glutamicAcid.setProperty(ID, "64");
+        aminoAcids[11] = glutamicAcid;
         
         // Create glutamine
         Monomer glutamine = new Monomer();
@@ -501,12 +511,12 @@ public class AminoAcids {
         glutamine.addBond(5, 6, 1);
         glutamine.addBond(6, 7, 2);
         glutamine.addBond(6, 8, 1);
-        glutamine.setProperty("residueName", "GLN");
-        glutamine.setProperty("residueNameShort", "Q");
-        glutamine.setProperty("noOfAtoms", "9");
-        glutamine.setProperty("noOfBonds", "8");
-        glutamine.setProperty("id", "72");
-        aminoAcids.put("Q", glutamine);
+        glutamine.setProperty(RESIDUE_NAME, "GLN");
+        glutamine.setProperty(RESIDUE_NAME_SHORT, "Q");
+        glutamine.setProperty(NO_ATOMS, "9");
+        glutamine.setProperty(NO_BONDS, "8");
+        glutamine.setProperty(ID, "72");
+        aminoAcids[12] = glutamine;
         
         // Create arginine
         Monomer arginine = new Monomer();
@@ -531,12 +541,12 @@ public class AminoAcids {
         arginine.addBond(7, 8, 1);
         arginine.addBond(8, 9, 2);
         arginine.addBond(8, 10, 1);
-        arginine.setProperty("residueName", "ARG");
-        arginine.setProperty("residueNameShort", "R");
-        arginine.setProperty("noOfAtoms", "11");
-        arginine.setProperty("noOfBonds", "10");
-        arginine.setProperty("id", "80");
-        aminoAcids.put("R", arginine);
+        arginine.setProperty(RESIDUE_NAME, "ARG");
+        arginine.setProperty(RESIDUE_NAME_SHORT, "R");
+        arginine.setProperty(NO_ATOMS, "11");
+        arginine.setProperty(NO_BONDS, "10");
+        arginine.setProperty(ID, "80");
+        aminoAcids[13] = arginine;
         
         // Create lysine
         Monomer lysine = new Monomer();
@@ -557,12 +567,12 @@ public class AminoAcids {
         lysine.addBond(5, 6, 1);
         lysine.addBond(6, 7, 1);
         lysine.addBond(7, 8, 1);
-        lysine.setProperty("residueName", "LYS");
-        lysine.setProperty("residueNameShort", "K");
-        lysine.setProperty("noOfAtoms", "9");
-        lysine.setProperty("noOfBonds", "8");
-        lysine.setProperty("id", "90");
-        aminoAcids.put("K", lysine);
+        lysine.setProperty(RESIDUE_NAME, "LYS");
+        lysine.setProperty(RESIDUE_NAME_SHORT, "K");
+        lysine.setProperty(NO_ATOMS, "9");
+        lysine.setProperty(NO_BONDS, "8");
+        lysine.setProperty(ID, "90");
+        aminoAcids[14] = lysine;
         
         // Create histidine
         Monomer histidine = new Monomer();
@@ -586,12 +596,12 @@ public class AminoAcids {
         histidine.addBond(6, 8, 2);
         histidine.addBond(7, 9, 1);
         histidine.addBond(8, 9, 2);
-        histidine.setProperty("residueName", "HIS");
-        histidine.setProperty("residueNameShort", "H");
-        histidine.setProperty("noOfAtoms", "10");
-        histidine.setProperty("noOfBonds", "10");
-        histidine.setProperty("id", "98");
-        aminoAcids.put("H", histidine);
+        histidine.setProperty(RESIDUE_NAME, "HIS");
+        histidine.setProperty(RESIDUE_NAME_SHORT, "H");
+        histidine.setProperty(NO_ATOMS, "10");
+        histidine.setProperty(NO_BONDS, "10");
+        histidine.setProperty(ID, "98");
+        aminoAcids[15] = histidine;
         
         // Create phenylalanine
         Monomer phenylalanine = new Monomer();
@@ -617,12 +627,12 @@ public class AminoAcids {
         phenylalanine.addBond(7, 9, 1);
         phenylalanine.addBond(8, 10, 1);
         phenylalanine.addBond(9, 10, 2);
-        phenylalanine.setProperty("residueName", "PHE");
-        phenylalanine.setProperty("residueNameShort", "F");
-        phenylalanine.setProperty("noOfAtoms", "11");
-        phenylalanine.setProperty("noOfBonds", "11");
-        phenylalanine.setProperty("id", "108");
-        aminoAcids.put("F", phenylalanine);
+        phenylalanine.setProperty(RESIDUE_NAME, "PHE");
+        phenylalanine.setProperty(RESIDUE_NAME_SHORT, "F");
+        phenylalanine.setProperty(NO_ATOMS, "11");
+        phenylalanine.setProperty(NO_BONDS, "11");
+        phenylalanine.setProperty(ID, "108");
+        aminoAcids[16] = phenylalanine;
         
         // Create tyrosine
         Monomer tyrosine = new Monomer();
@@ -650,12 +660,12 @@ public class AminoAcids {
         tyrosine.addBond(8, 10, 1);
         tyrosine.addBond(9, 10, 2);
         tyrosine.addBond(10, 11, 1);
-        tyrosine.setProperty("residueName", "TYR");
-        tyrosine.setProperty("residueNameShort", "Y");
-        tyrosine.setProperty("noOfAtoms", "12");
-        tyrosine.setProperty("noOfBonds", "12");
-        tyrosine.setProperty("id", "119");
-        aminoAcids.put("Y", tyrosine);
+        tyrosine.setProperty(RESIDUE_NAME, "TYR");
+        tyrosine.setProperty(RESIDUE_NAME_SHORT, "Y");
+        tyrosine.setProperty(NO_ATOMS, "12");
+        tyrosine.setProperty(NO_BONDS, "12");
+        tyrosine.setProperty(ID, "119");
+        aminoAcids[17] = tyrosine;
         
         // Create tryptophane
         Monomer tryptophane = new Monomer();
@@ -688,12 +698,12 @@ public class AminoAcids {
         tryptophane.addBond(10, 12, 2);
         tryptophane.addBond(11, 13, 2);
         tryptophane.addBond(12, 13, 1);
-        tryptophane.setProperty("residueName", "TRP");
-        tryptophane.setProperty("residueNameShort", "W");
-        tryptophane.setProperty("noOfAtoms", "14");
-        tryptophane.setProperty("noOfBonds", "15");
-        tryptophane.setProperty("id", "131");
-        aminoAcids.put("W", tryptophane);
+        tryptophane.setProperty(RESIDUE_NAME, "TRP");
+        tryptophane.setProperty(RESIDUE_NAME_SHORT, "W");
+        tryptophane.setProperty(NO_ATOMS, "14");
+        tryptophane.setProperty(NO_BONDS, "15");
+        tryptophane.setProperty(ID, "131");
+        aminoAcids[18] = tryptophane;
         
         // Create proline
         Monomer proline = new Monomer();
@@ -711,15 +721,39 @@ public class AminoAcids {
         proline.addBond(4, 5, 1);
         proline.addBond(5, 6, 1);
         proline.addBond(1, 6, 1);
-        proline.setProperty("residueName", "PRO");
-        proline.setProperty("residueNameShort", "P");
-        proline.setProperty("noOfAtoms", "7");
-        proline.setProperty("noOfBonds", "7");
-        proline.setProperty("id", "146");
-        aminoAcids.put("P", proline);
+        proline.setProperty(RESIDUE_NAME, "PRO");
+        proline.setProperty(RESIDUE_NAME_SHORT, "P");
+        proline.setProperty(NO_ATOMS, "7");
+        proline.setProperty(NO_BONDS, "7");
+        proline.setProperty(ID, "146");
+        aminoAcids[19] = proline;
         
         return aminoAcids;
     }
 
+    /**
+     * Returns a HashMap where the key is one of G, A, V, L, I, S, T, C, M, D,
+     * N, E, Q, R, K, H, F, Y, W and P.
+     */
+    public static HashMap getHashMapBySingleCharCode() {
+        Monomer[] monomers = createAAs();
+        HashMap map = new HashMap();
+        for (int i=0; i<monomers.length; i++) {
+            map.put(monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
+        }
+        return map;
+    }
     
+    /**
+     * Returns a HashMap where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
+     * THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
+     */
+    public static HashMap getHashMapByThreeLetterCode() {
+        Monomer[] monomers = createAAs();
+        HashMap map = new HashMap();
+        for (int i=0; i<monomers.length; i++) {
+            map.put(monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
+        }
+        return map;
+    }
 }
