@@ -30,6 +30,8 @@ import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.test.CDKTestCase;
 
+import java.util.HashMap;
+
 /**
  * @cdk.module test
  */
@@ -43,6 +45,30 @@ public class AminoAcidsTest extends CDKTestCase {
         AminoAcid[] aas = AminoAcids.createAAs();
         assertNotNull(aas);
         assertEquals(20, aas.length);
+    }
+
+    public void testGetHashMapBySingleCharCode() {
+        HashMap map = AminoAcids.getHashMapBySingleCharCode();
+        assertNotNull(map);
+        assertEquals(20, map.size());
+
+        String[] aas = { "G", "A", "V", "L" };
+        for (int i=0; i < aas.length; i++) {
+            AminoAcid aa = (AminoAcid)map.get(aas[i]);
+            assertNotNull("Did not find AA for: " + aas[i], aa);
+        }
+    }
+
+    public void testGetHashMapByThreeLetterCode() {
+        HashMap map = AminoAcids.getHashMapByThreeLetterCode();
+        assertNotNull(map);
+        assertEquals(20, map.size());
+
+        String[] aas = { "GLY", "ALA" };
+        for (int i=0; i < aas.length; i++) {
+            AminoAcid aa = (AminoAcid)map.get(aas[i]);
+            assertNotNull("Did not find AA for: " + aas[i], aa);
+        }
     }
 
 }
