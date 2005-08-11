@@ -106,4 +106,20 @@ public class Monomer extends AtomContainer implements java.io.Serializable, Clon
 		monomerType = cMonomerType;
 		notifyChanged();
 	}
+
+    /**
+     * Clones this Monomer object.
+     *
+     * @return    The cloned object
+     */
+    public Object clone() {
+        Monomer clone = null;
+        try {
+            clone = (Monomer) super.clone();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        return clone;
+    }
+
 }

@@ -97,4 +97,20 @@ public class AminoAcid extends Monomer implements java.io.Serializable
         super.addAtom(atom);
         cTerminus = atom;
     }
+
+    /**
+     * Clones this AminoAcid object.
+     *
+     * @return    The cloned object
+     */
+    public Object clone() {
+        AminoAcid clone = null;
+        try {
+            clone = (AminoAcid) super.clone();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        return clone;
+    }
+    
 }
