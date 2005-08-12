@@ -123,7 +123,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 			oMonomer = getMonomer("");
 		}
 		oMonomer.addAtom(oAtom);
-		if (! monomers.contains(oMonomer.getMonomerName())) {
+		if (! monomers.containsKey(oMonomer.getMonomerName())) {
 			monomers.put(oMonomer.getMonomerName(), oMonomer);
 		}
 	}
