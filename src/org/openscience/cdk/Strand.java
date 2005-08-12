@@ -176,8 +176,8 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	}*/
 	
 	/**
-	 * 
 	 * Removes a particular monomer, specified by its name.
+	 * 
 	 * @param name
 	 */
 	public void removeMonomer(String name)	{
@@ -192,5 +192,17 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	 */
 	public Hashtable getMonomers()	{
 		return monomers;
-	}	
+	}
+    
+    public String toString() {
+        StringBuffer stringContent = new StringBuffer();
+        stringContent.append("Strand(");
+        stringContent.append(this.hashCode()).append(", ");
+        stringContent.append("N:").append(getStrandName()).append(", ");
+        stringContent.append("T:").append(getStrandType()).append(", ");
+        stringContent.append(super.toString());
+        stringContent.append(")");
+        return stringContent.toString();
+    }
+    
 }

@@ -238,5 +238,16 @@ public class Polymer extends Molecule implements java.io.Serializable, Cloneable
 	 */
 	public Hashtable getStrands()	{
 		return strands;
-	}	
+	}
+
+    public String toString() {
+        StringBuffer stringContent = new StringBuffer();
+        stringContent.append("Polymer(");
+        stringContent.append(this.hashCode()).append(", ");
+        stringContent.append("#S:").append(getStrandCount()).append(", ");
+        stringContent.append(super.toString());
+        stringContent.append(")");
+        return stringContent.toString();
+    }
+
 }

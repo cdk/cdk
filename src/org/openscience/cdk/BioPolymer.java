@@ -52,4 +52,13 @@ public class BioPolymer extends Polymer implements java.io.Serializable, Cloneab
     public BioPolymer() {
         super();
     }
+
+    public String toString() {
+        StringBuffer stringContent = new StringBuffer();
+        stringContent.append("BioPolymer(");
+        stringContent.append(this.hashCode()).append(", ");
+        stringContent.append(super.toString());
+        stringContent.append(")");
+        return stringContent.toString();
+    }
 }

@@ -113,4 +113,13 @@ public class AminoAcid extends Monomer implements java.io.Serializable
         return clone;
     }
     
+    public String toString() {
+        StringBuffer stringContent = new StringBuffer();
+        stringContent.append("AminoAcid(");
+        stringContent.append(this.hashCode()).append(", ");
+        stringContent.append(super.toString());
+        stringContent.append(")");
+        return stringContent.toString();
+    }
+
 }
