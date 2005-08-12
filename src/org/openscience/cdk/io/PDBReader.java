@@ -34,6 +34,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -350,7 +351,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * @param pol The Biopolymer to work on
 	 */
 	public boolean createBonds(BioPolymer pol){
-		SetOfMolecules AAs = AminoAcids.createAAs();
+		HashMap AAs = AminoAcids.getHashMapByThreeLetterCode();
 		int[][] AABondInfo = AminoAcids.aaBondInfo();
 		Hashtable strands = pol.getStrands();
 		Enumeration strandKeys = strands.keys();
@@ -359,24 +360,34 @@ public class PDBReader extends DefaultChemObjectReader {
 			Strand strand = (Strand)strands.get(strandKeys.nextElement());
 			int atoms = 0;
 			int atomsInLastResidue = 0;
+			int atomsInPresentResidue = 0;
 			
 			while (atoms < strand.getAtomCount() - 1) {
 				PDBAtom anAtom = (PDBAtom)strand.getAtomAt(atoms);
 				int residue = 0;
 				
-				// Which residue/molecule?
-				while (residue < AAs.getAtomContainerCount() && 
- 						!anAtom.getResName().equals(AAs.getMolecule(residue).getProperty("molecule_name"))) {
-					residue++;
-				}
-				// If residue/molecule wasn't found, bonds cannot be created => exit method
-				if(residue == AAs.getMoleculeCount())	{
+				// Check that we have bond info about residue/ligand, if not - exit.
+				if(!AAs.containsKey(anAtom.getResName()))	{
 					return false;
 				}
-				int bondID = Integer.parseInt((String)AAs.getMolecule(residue).getProperty("id"));
+				Monomer monomer = (Monomer)AAs.get(anAtom.getResName());
+				atomsInPresentResidue = Integer.parseInt((String)monomer.getProperty("noOfAtoms"));
 				
-				// Add bonds for the correct residue/molecule
-				for (int l = 0; l < Integer.parseInt((String)AAs.getMolecule(residue).getProperty("no_bonds")); l++) {
+				/* Check if there's something wrong with the residue record (e.g. it doesn't contain the
+				 * correct number of atom records). */
+				int counter = 1;
+				while (atoms + counter < strand.getAtomCount() &&
+						anAtom.getResName().equals(strand.getAtomAt(atoms + counter).getProperty("pdb.resName"))) {
+					counter++;
+				}
+				// Check if something is wrong. Remember to deal with possible OXT atom...
+				if(counter % atomsInPresentResidue != 0 && (atoms + counter == strand.getAtomCount() && counter % atomsInPresentResidue != 1))	{
+					return false;
+				}
+				
+				// If nothing's wrong, add bonds
+				int bondID = Integer.parseInt((String)monomer.getProperty("id"));
+				for (int l = 0; l < Integer.parseInt((String)monomer.getProperty("noOfBonds")); l++) {
 					Bond bond = new Bond(strand.getAtomAt(AABondInfo[bondID + l][1] + atoms), strand.getAtomAt(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
 					pol.addBond(bond);
 				}
@@ -387,25 +398,14 @@ public class PDBReader extends DefaultChemObjectReader {
 					pol.addBond(bond);
 				}
 				
-				atomsInLastResidue = Integer.parseInt((String)AAs.getMolecule(residue).getProperty("no_atoms"));
-				/* Check if there's something wrong with the residue record (e.g. it doesn't contain the
-				 * correct number of atom records). */
-				int counter = 1;
-				while (atoms + counter < strand.getAtomCount() &&
-						anAtom.getResName().equals(strand.getAtomAt(atoms + counter).getProperty("pdb.resName"))) {
-					counter++;
-				}
-				// Remember to handle OXT-atom... And to check if there's something wrong
-				if(counter % atomsInLastResidue != 0 && (atoms + counter == strand.getAtomCount() && counter % atomsInLastResidue != 1))	{
-					return false;
-				}
-				
-				atoms = atoms + atomsInLastResidue;
+				atoms = atoms + atomsInPresentResidue;
+				atomsInLastResidue = atomsInPresentResidue;
 				
 				// Check if next atom is an OXT. The reason to why this is seemingly overly complex is because
 				// not all PDB-files have ending OXT. If that were the case you could just check if
 				// atoms == mol.getAtomCount()...
-				if(strand.getAtomCount() < atoms && ((String)strand.getAtomAt(atoms).getProperty("oxt")).equals("1"))	{
+				if(strand.getAtomCount() < atoms && ((PDBAtom)strand.getAtomAt(atoms)).getOxt())	{
+//				if(strand.getAtomCount() < atoms && ((String)strand.getAtomAt(atoms).getProperty("oxt")).equals("1"))	{
 					Bond bond = new Bond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
 					pol.addBond(bond);
 				}
