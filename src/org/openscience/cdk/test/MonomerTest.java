@@ -76,4 +76,24 @@ public class MonomerTest extends CDKTestCase {
     public void testGetMonomerType() {
         testSetMonomerType_String();
     }
+
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Monomer oMonomer = new Monomer();
+        oMonomer.setMonomerType(new String("TRP"));
+        String description = oMonomer.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
+        }
+    }
+
+    public void testClone() {
+        Monomer oMonomer = new Monomer();
+        Object clone = oMonomer.clone();
+        assertTrue(clone instanceof Monomer);
+        assertNotSame(oMonomer, clone);
+    }
 }

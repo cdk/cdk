@@ -54,4 +54,15 @@ public class BioPolymerTest extends CDKTestCase {
         assertTrue(bp != null);
     }
     
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        BioPolymer bp = new BioPolymer();
+        String description = bp.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
+        }
+    }
 }

@@ -322,4 +322,34 @@ public class PolymerTest extends TestCase {
 		
 		assertEquals(strands.keySet(), oPolymer.getStrandNames());
 	}
+    
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Polymer oPolymer = new Polymer();
+		Strand oStrand1 = new Strand();
+		Strand oStrand2 = new Strand();
+		oStrand1.setStrandName("A");
+		oStrand2.setStrandName("B");
+		Monomer oMono1 = new Monomer();
+		oMono1.setMonomerName(new String("TRP279"));
+		Atom oAtom1 = new Atom("C1");
+		oPolymer.addAtom(oAtom1, oMono1, oStrand1);
+		oPolymer.addAtom(oAtom1, oMono1, oStrand2);
+		Hashtable strands = new Hashtable();
+		strands = new Hashtable();
+		Strand oStrand = new Strand();
+		oStrand.setStrandName("");
+		oStrand.setStrandType("UNKNOWN");
+		strands.put("", oStrand);
+		strands.put("A", oStrand1);
+		strands.put("B", oStrand2);
+        
+        String description = oPolymer.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
+        }
+    }
 }

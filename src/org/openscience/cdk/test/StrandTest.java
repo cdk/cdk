@@ -253,4 +253,31 @@ public class StrandTest extends TestCase {
 		
 		assertEquals(monomers.keySet(), oStrand.getMonomerNames());
 	}
+
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        Strand oStrand = new Strand();
+		Monomer oMono1 = new Monomer();
+		oMono1.setMonomerName(new String("TRP279"));
+		Monomer oMono2 = new Monomer();
+		oMono2.setMonomerName(new String("HOH"));
+		Atom oAtom2 = new Atom("C2");
+		Atom oAtom3 = new Atom("C3");
+		oStrand.addAtom(oAtom2, oMono1);
+		oStrand.addAtom(oAtom3, oMono2);
+		Hashtable monomers = new Hashtable();
+		Monomer oMon = new Monomer();
+		oMon.setMonomerName("");
+		oMon.setMonomerType("UNKNOWN");
+		monomers.put("", oMon);
+		monomers.put("TRP279", oMono1);
+		monomers.put("HOH", oMono2);
+        String description = oStrand.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
+        }
+    }
 }

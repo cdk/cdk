@@ -78,5 +78,24 @@ public class AminoAcidTest extends CDKTestCase {
         assertNull(m.getNTerminus());
     }
     
-   
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        AminoAcid m = new AminoAcid();
+        Atom nTerminus = new Atom("N");
+        m.addNTerminus(nTerminus);
+        String description = m.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
+        }
+    }
+
+    public void testClone() {
+        AminoAcid aa = new AminoAcid();
+        Object clone = aa.clone();
+        assertTrue(clone instanceof AminoAcid);
+        assertNotSame(aa, clone);
+    }
 }
