@@ -59,10 +59,13 @@
             <echo message="    CDK version: ${version}" />
             <echo message="      build.xml: $Id$" />
             <echo message="  Doclets found: ${docletsAreCompiled}" />
-            <echo message="   JOELib found: ${joelib.present}" />
-            <echo message="   CMLDOM found: ${cmllibs.present}" />
-            <echo message="   Java3D found: ${java3D.present}" />
             <echo message="    Junit found: ${junit.present}" />
+            <echo message=" --- distributed libraries ---" />
+            <echo message="   CMLDOM found: ${cmllibs.present}" />
+            <echo message="     Jmol found: ${jmol.present}" />
+            <echo message=" --- optional libraries ---" />
+            <echo message="   JOELib found: ${joelib.present}" />
+            <echo message="   Java3D found: ${java3D.present}" />
             <echo message="R/SJava present: ${rispresent}"/>
             <echo message="" />
             <echo message="Compiling:" />
@@ -93,6 +96,9 @@
             <available classname="joelib.molecule.JOEAtom" 
                 classpath="${lib}/libio/joelib.jar" 
                 property="joelib.present"/>
+            <available classname="org.jmol.api.JmolAdapter" 
+                classpath="${lib}/jmolApis.jar" 
+                property="jmol.present"/>
             <available file="${lib}/cmlAll_1.4.jar" 
                 property="cmllibs.present"/>
             <available classname="javax.media.j3d.Canvas3D"
