@@ -35,6 +35,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Monomer;
+import org.openscience.cdk.Polymer;
 import org.openscience.cdk.Strand;
 
 /**
@@ -153,9 +154,10 @@ public class StrandTest extends TestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Atom oAtom1 = new Atom("C1");
 		Atom oAtom2 = new Atom("C2");
+		Atom oAtom3 = new Atom("C3");
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
-		oStrand.addAtom(oAtom2, oMono1);
+		oStrand.addAtom(oAtom3, oMono1);
 
 		assertEquals(2, oStrand.getMonomer("").getAtomCount());
 		assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
@@ -222,15 +224,12 @@ public class StrandTest extends TestCase {
 		Monomer oMono1 = new Monomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		Atom oAtom1 = new Atom("C1");
-		oStrand.addAtom(oAtom1, oMono1);
-		
-		Hashtable strands = new Hashtable();
-		strands.putAll(oStrand.getMonomers());
-		assertTrue(strands.contains(oMono1));
+		oStrand.addAtom(oAtom1, oMono1);		
+		assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+		assertEquals(1, oStrand.getAtomCount());
 		oStrand.removeMonomer("TRP279");
-		strands.clear();
-		strands.putAll(oStrand.getMonomers());
-		assertFalse(strands.contains(oMono1));
+		assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+		assertEquals(0, oStrand.getAtomCount());
 	}
 	
 	public void testGetMonomers()	{
