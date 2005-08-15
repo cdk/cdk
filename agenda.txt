@@ -1,9 +1,0 @@
-This information can now be found in 
-
-  doc/website/source/agenda.xml
-  
-and as HTML be found at:
-
-  http://cdk.sourceforge.net/agenda.html
-
-
