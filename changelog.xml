@@ -239,5 +239,8 @@
       reaction.ReactionBalancer: removed init method, constructor no longer takes a
       Reaction object, the isBalanced and balance method do so now.
     </apiChange>
+    <apiChange contributor="meklund">
+      Refactored Strand out of Polymer into BioPolymer.
+    </apiChange>
   </release>
 </changelog>

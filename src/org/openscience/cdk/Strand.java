@@ -118,13 +118,17 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	 *
 	 */
 	public void addAtom(Atom oAtom, Monomer oMonomer) {
-		super.addAtom(oAtom);
-		if (oMonomer == null) {
-			oMonomer = getMonomer("");
-		}
-		oMonomer.addAtom(oAtom);
-		if (! monomers.containsKey(oMonomer.getMonomerName())) {
-			monomers.put(oMonomer.getMonomerName(), oMonomer);
+		
+		if(!contains(oAtom))	{
+			super.addAtom(oAtom);
+			if (oMonomer == null) {
+				oMonomer = getMonomer("");
+			}
+			
+			oMonomer.addAtom(oAtom);
+			if (! monomers.containsKey(oMonomer.getMonomerName())) {
+				monomers.put(oMonomer.getMonomerName(), oMonomer);
+			}
 		}
 	}
 	
@@ -182,6 +186,8 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	 */
 	public void removeMonomer(String name)	{
 		if (monomers.containsKey(name))	{
+			Monomer monomer = (Monomer)monomers.get(name);
+			this.remove(monomer);
 			monomers.remove(name);
 		}
 	}
