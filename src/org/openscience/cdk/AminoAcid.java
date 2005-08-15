@@ -76,6 +76,18 @@ public class AminoAcid extends Monomer implements java.io.Serializable
     }
     
     /**
+     * Marks an Atom as being the N-terminus atom. It assumes that the Atom
+     * is already added to the AminoAcid.
+     *
+     * @param atom  The Atom that is the N-terminus
+     *
+     * @see    #addNTerminus
+     */
+    private void setNTerminus(Atom atom) {
+        nTerminus = atom;
+    }
+
+    /**
      * Retrieves the C-terminus atom.
      *
      * @return The Atom that is the C-terminus
@@ -95,6 +107,18 @@ public class AminoAcid extends Monomer implements java.io.Serializable
      */
     public void addCTerminus(Atom atom) {
         super.addAtom(atom);
+        setCTerminus(atom);
+    }
+
+    /**
+     * Marks an Atom as being the C-terminus atom. It assumes that the Atom
+     * is already added to the AminoAcid.
+     *
+     * @param atom  The Atom that is the C-terminus
+     *
+     * @see    #addCTerminus
+     */
+    private void setCTerminus(Atom atom) {
         cTerminus = atom;
     }
 
@@ -110,6 +134,9 @@ public class AminoAcid extends Monomer implements java.io.Serializable
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
+        // copying the new N-terminus and C-terminus pointers
+        clone.setNTerminus(clone.getAtomAt(getAtomNumber(getNTerminus())));
+        clone.setCTerminus(clone.getAtomAt(getAtomNumber(getCTerminus())));
         return clone;
     }
     
@@ -117,6 +144,8 @@ public class AminoAcid extends Monomer implements java.io.Serializable
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("AminoAcid(");
         stringContent.append(this.hashCode()).append(", ");
+        stringContent.append("N: ").append(nTerminus.hashCode()).append(", ");
+        stringContent.append("C: ").append(cTerminus.hashCode()).append(", ");
         stringContent.append(super.toString());
         stringContent.append(")");
         return stringContent.toString();
