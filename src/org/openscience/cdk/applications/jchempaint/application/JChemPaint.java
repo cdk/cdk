@@ -43,6 +43,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.cli.UnrecognizedOptionException;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -174,10 +175,10 @@ public class JChemPaint implements SwingConstants
 		logger = new LoggingTool(this);
 		logger.dumpSystemProperties();
 		JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
-		//for testing the ViewerOnlyPanel
-		/*JFrame frame = new JFrame();
 		frame.addWindowListener(new JChemPaintPanel.AppCloser());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		//for testing the ViewerOnlyPanel
+		/*JFrame frame = new JFrame();
 		JChemPaintViewerOnlyPanel jpvop = new JChemPaintViewerOnlyPanel(new Dimension(150,250));
 		frame.getContentPane().add(jpvop);*/
 		frame.show();

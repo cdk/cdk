@@ -1009,7 +1009,7 @@ public abstract class JChemPaintPanel
 	public static void closeAllInstances() {
 		Iterator it = instances.iterator();
 		while (it.hasNext()) {
-			JFrame frame = (JFrame) it.next();
+			JFrame frame = (JFrame) ((JPanel)it.next()).getParent().getParent().getParent().getParent();
 			WindowListener[] wls = (WindowListener[]) (frame.getListeners(WindowListener.class));
 			wls[0].windowClosing(new WindowEvent(frame, 12));
 			frame.setVisible(false);
