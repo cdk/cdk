@@ -988,7 +988,7 @@ public abstract class JChemPaintPanel
 			int clear = ((JChemPaintPanel) ((JFrame) e.getSource()).getContentPane().getComponents()[0]).showWarning();
 			if (JOptionPane.CANCEL_OPTION != clear) {
 				for (int i = 0; i < instances.size(); i++) {
-					if (instances.get(i) == e.getSource()) {
+					if (((JPanel)instances.get(i)).getParent().getParent().getParent().getParent() == (JFrame)e.getSource()) {
 						instances.remove(i);
 						break;
 					}

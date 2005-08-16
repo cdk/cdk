@@ -43,8 +43,10 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.ChemObjectWriter;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.SVGWriter;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
@@ -57,10 +59,11 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 public class CopyPasteAction extends JCPAction{
 
 	private DataFlavor molFlavor=new DataFlavor ("chemical/x-mdl-molfile", "mdl mol file format");
+	private DataFlavor svgFlavor=new DataFlavor ("image/svg+xml", "scalable vector graphics");
     
 	public void actionPerformed(ActionEvent e) {
     	try {
-    		//handleSystemClipboard();
+    		handleSystemClipboard();
 	        logger.info("  type  ", type);
 	        logger.debug("  source ", e.getSource());
 	        JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
@@ -125,9 +128,10 @@ public class CopyPasteAction extends JCPAction{
     }
 
     class JcpSelection implements Transferable, ClipboardOwner {
-  	  private DataFlavor [] supportedFlavors = {molFlavor, DataFlavor.stringFlavor};
+  	  private DataFlavor [] supportedFlavors = {molFlavor, DataFlavor.stringFlavor, svgFlavor};
       String mol;
       String smiles;
+      String svg;
 
       public JcpSelection (AtomContainer tocopy1) throws Exception{
     	  Molecule tocopy=new Molecule(tocopy1);
@@ -136,6 +140,11 @@ public class CopyPasteAction extends JCPAction{
     	  this.mol=sw.toString();
     	  SmilesGenerator sg=new SmilesGenerator();
     	  smiles = sg.createSMILES(tocopy);
+    	  sw=new StringWriter();
+    	  ChemObjectWriter cow = new SVGWriter(sw);
+    	  cow.write(tocopy);
+    	  cow.close();
+    	  svg=sw.toString();      
       }
     	
       public synchronized DataFlavor [] getTransferDataFlavors () {
