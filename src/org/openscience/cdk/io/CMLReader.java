@@ -44,6 +44,7 @@ import org.openscience.cdk.io.cml.ChemFileCDO;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -163,8 +164,9 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.error("Could not instantiate any XML parser!");
         }
     }
+    
 
-    /**
+	/**
      * Read a ChemObject from input
      *
      * @return the content in a ChemFile object
@@ -223,5 +225,9 @@ public class CMLReader extends DefaultChemObjectReader {
     public void close() throws IOException {
         input.close();
     }
+
+	public boolean accepts(ChemObject object) {
+		return (object instanceof ChemFile);
+	}
 }
 
