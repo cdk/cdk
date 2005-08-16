@@ -43,9 +43,11 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ChemObjectWriter;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.SVGWriter;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -79,10 +81,22 @@ public class CopyPasteAction extends JCPAction{
 	        } else if ("paste".equals(type)) {
 	        	Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
 	        	Transferable transfer = sysClip.getContents( null );
-	        	if(transfer!=null && (transfer.isDataFlavorSupported (molFlavor))) {
+	        	ChemObjectReader reader = null;
+	        	// if a MIME type is given ...
+	        	if (transfer!=null && (transfer.isDataFlavorSupported (molFlavor))) {
 	        		String mol = (String) transfer.getTransferData (molFlavor);
-		        	MDLReader mdlreader = new MDLReader(new StringReader(mol));
-		            AtomContainer topaste = (AtomContainer) mdlreader.read(new Molecule()); 
+		        	reader = new MDLReader(new StringReader(mol));
+	        	} else if(transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {
+	        		// otherwise, try to use the ReaderFactory...
+	        		String content = (String) transfer.getTransferData (DataFlavor.stringFlavor);
+	        		try {
+	        			reader = new ReaderFactory().createReader(new StringReader(content));
+	        		} catch (Exception exception) {
+	        			logger.warn("Pastes string is not recognized.");
+	        		}
+	        	}
+        		if (reader != null) {
+		            AtomContainer topaste = (AtomContainer) reader.read(new Molecule()); 
 		            if (topaste != null) {
 		                topaste = (AtomContainer)topaste.clone();
 		                ChemModel chemModel = jcpModel.getChemModel();
@@ -100,9 +114,10 @@ public class CopyPasteAction extends JCPAction{
 		                //make the pasted structure selected
 		                renderModel.setSelectedPart(topaste);
 		            }
-	        	}
+        			
+        		}
 	        }
-    	}catch(Exception ex){
+    	} catch(Exception ex){
     		ex.printStackTrace();
     	}
     	//handleSystemClipboard();
