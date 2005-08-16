@@ -89,8 +89,11 @@ public class CopyPasteAction extends JCPAction{
 		                SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
 		                if (moleculeSet == null) {
 		                    moleculeSet = new SetOfMolecules();
+			                chemModel.setSetOfMolecules(moleculeSet);
 		                }
 		                moleculeSet.addMolecule(new Molecule(topaste));
+		                // to ensure, that the molecule is  shown in the actual visibile part of jcp
+		                jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
 		                //make the pasted structure selected
 		                renderModel.setSelectedPart(topaste);
 		            }
