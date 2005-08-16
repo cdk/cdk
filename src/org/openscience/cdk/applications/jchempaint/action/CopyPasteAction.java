@@ -27,11 +27,15 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
@@ -39,7 +43,10 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.smiles.SmilesGenerator;
 
 /**
  * Action to copy/paste structures.
@@ -49,67 +56,109 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  */
 public class CopyPasteAction extends JCPAction{
 
-    public void actionPerformed(ActionEvent e) {
-	//handleSystemClipboard();
-        logger.info("  type  ", type);
-        logger.debug("  source ", e.getSource());
-        JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
-        Renderer2DModel renderModel = jcpModel.getRendererModel();
-        if ("copy".equals(type)) {
-            AtomContainer tocopy = renderModel.getSelectedPart();
-            if (tocopy != null) {
-                renderModel.setClipboardContent(tocopy);
-            }
-        } else if ("paste".equals(type)) {
-            AtomContainer topaste = renderModel.getClipboardContent();
-            if (topaste != null) {
-                topaste = (AtomContainer)topaste.clone();
-                ChemModel chemModel = jcpModel.getChemModel();
-                //translate the new structure a bit
-                GeometryTools.translate2D(topaste, 25, 25); //in pixels
-                //paste the new structure into the active model
-                SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
-                if (moleculeSet == null) {
-                    moleculeSet = new SetOfMolecules();
-                }
-                moleculeSet.addMolecule(new Molecule(topaste));
-                //make the pasted structure selected
-                renderModel.setSelectedPart(topaste);
-            }
-        }
+	private DataFlavor molFlavor=new DataFlavor ("chemical/x-mdl-molfile", "mdl mol file format");
+    
+	public void actionPerformed(ActionEvent e) {
+    	try {
+    		//handleSystemClipboard();
+	        logger.info("  type  ", type);
+	        logger.debug("  source ", e.getSource());
+	        JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
+	        Renderer2DModel renderModel = jcpModel.getRendererModel();
+	        if ("copy".equals(type)) {
+	            AtomContainer tocopy = renderModel.getSelectedPart();
+	            if (tocopy == null) {
+	            	return;
+	            }
+	            Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+	            JcpSelection jcpselection=new JcpSelection(tocopy);
+	            sysClip.setContents(jcpselection,null);
+	        } else if ("paste".equals(type)) {
+	        	Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+	        	Transferable transfer = sysClip.getContents( null );
+	        	if(transfer!=null && (transfer.isDataFlavorSupported (molFlavor))) {
+	        		String mol = (String) transfer.getTransferData (molFlavor);
+		        	MDLReader mdlreader = new MDLReader(new StringReader(mol));
+		            AtomContainer topaste = (AtomContainer) mdlreader.read(new Molecule()); 
+		            if (topaste != null) {
+		                topaste = (AtomContainer)topaste.clone();
+		                ChemModel chemModel = jcpModel.getChemModel();
+		                //translate the new structure a bit
+		                GeometryTools.translate2D(topaste, 25, 25); //in pixels
+		                //paste the new structure into the active model
+		                SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+		                if (moleculeSet == null) {
+		                    moleculeSet = new SetOfMolecules();
+		                }
+		                moleculeSet.addMolecule(new Molecule(topaste));
+		                //make the pasted structure selected
+		                renderModel.setSelectedPart(topaste);
+		            }
+	        	}
+	        }
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    	//handleSystemClipboard();
     }
     
     void handleSystemClipboard()
     {
-	 Clipboard clipboard = jcpPanel.getToolkit().getSystemClipboard();
-	 Transferable clipboardContent = clipboard.getContents(this);
-	 DataFlavor flavors[]=clipboardContent.getTransferDataFlavors();
-	 String text = "System.clipoard content";
-	for(int i=0;i<flavors.length;++i)
-	{
-		text+="\n\n Name: "+ flavors[i].getHumanPresentableName();
-		text+="\n MIME Type: "+flavors[i].getMimeType();
-		text+="\n Class: ";
-		Class cl = flavors[i].getRepresentationClass();
-		if(cl==null) text+="null";
-		else text+=cl.getName();
-	}
-	logger.debug(text);
-	
-	 if (clipboardContent != null) 
-	 {
- 		try 
+		Clipboard clipboard = jcpPanel.getToolkit().getSystemClipboard();
+		Transferable clipboardContent = clipboard.getContents(this);
+		DataFlavor flavors[]=clipboardContent.getTransferDataFlavors();
+		String text = "System.clipoard content";
+		for(int i=0;i<flavors.length;++i)
 		{
-			Image image = null;
- 			image = (Image)clipboardContent.getTransferData(DataFlavor.imageFlavor);
- 	                logger.debug("Content of system clipboard: \n" + image);
+			text+="\n\n Name: "+ flavors[i].getHumanPresentableName();
+			text+="\n MIME Type: "+flavors[i].getMimeType();
+			text+="\n Class: ";
+			Class cl = flavors[i].getRepresentationClass();
+			if(cl==null) text+="null";
+			else text+=cl.getName();
 		}
- 	        catch (Exception e) 
-		{
-			e.printStackTrace ();
-		}
-	 }
-
+		System.err.println(text);
+		logger.debug(text);
     }
+
+    class JcpSelection implements Transferable, ClipboardOwner {
+  	  private DataFlavor [] supportedFlavors = {molFlavor, DataFlavor.stringFlavor};
+      String mol;
+      String smiles;
+
+      public JcpSelection (AtomContainer tocopy1) throws Exception{
+    	  Molecule tocopy=new Molecule(tocopy1);
+          StringWriter sw = new StringWriter();
+          new MDLWriter(sw).writeMolecule(tocopy);
+    	  this.mol=sw.toString();
+    	  SmilesGenerator sg=new SmilesGenerator();
+    	  smiles = sg.createSMILES(tocopy);
+      }
+    	
+      public synchronized DataFlavor [] getTransferDataFlavors () {
+    	return (supportedFlavors);
+   	  }
+      
+      public boolean isDataFlavorSupported (DataFlavor parFlavor) {
+    	  for(int i=0;i<supportedFlavors.length;i++){
+    		  if(supportedFlavors[i].equals(parFlavor))
+    			  return true;
+    	  }
+    	  return false;
+      }
+    	
+      public synchronized Object getTransferData (DataFlavor parFlavor)	throws UnsupportedFlavorException {
+    	if (parFlavor.equals (molFlavor))
+    		return (mol);
+    	else if(parFlavor.equals(DataFlavor.stringFlavor))
+    		return(smiles);
+    	else
+    		throw new UnsupportedFlavorException (parFlavor);
+      }
+      
+      public void lostOwnership (Clipboard parClipboard, Transferable parTransferable) {
+    	System.out.println ("Lost ownership");
+      }
+   }
 }
 
