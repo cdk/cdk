@@ -364,9 +364,12 @@ public class LoggingTool {
                 BufferedReader reader = new BufferedReader(new StringReader(trace));
                 if (reader.ready()) {
                     String traceLine = reader.readLine();
-                    while (reader.ready() && traceLine != null) {
+                    int counter = 0;
+                    while (reader.ready() && traceLine != null && 
+                    		(counter < stackLength)) {
                         debug(traceLine);
                         traceLine = reader.readLine();
+                        counter++;
                     }
                 }
             } catch (Exception ioException) {
