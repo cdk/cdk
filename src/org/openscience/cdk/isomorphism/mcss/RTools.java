@@ -592,7 +592,6 @@ public class RTools
     {
         ChemFile outFile = null;
         ChemObjectReader reader = null;        
-        ChemFile chemFile = new ChemFile();
    
         try
         {

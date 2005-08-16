@@ -53,7 +53,6 @@ public class INChIContentProcessorTool {
         logger.debug("Parsing atom data: ", atomsEncoding);
         AtomContainer parsedContent = new AtomContainer();
 
-        Atom atomToAdd = null;
         Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d+)?(.*)");
         String remainder = atomsEncoding;
         while (remainder.length() > 0) {
@@ -100,8 +99,6 @@ public class INChIContentProcessorTool {
     public void processConnections(String bondsEncoding, 
                      AtomContainer container, int source){
         logger.debug("Parsing bond data: ", bondsEncoding);
-
-        int atoms = container.getAtomCount();
 
         Bond bondToAdd = null;
         /* Fixme: treatment of branching is too limited! */

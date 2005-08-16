@@ -241,7 +241,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
    * @param   isVisible Should a certain atom be written to mdl?
 	 */
     public void writeMolecule(Molecule molecule, boolean[] isVisible) throws Exception {
-        int Bonorder, stereo;
         String line = "";
         // taking care of the $$$$ signs:
         // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule

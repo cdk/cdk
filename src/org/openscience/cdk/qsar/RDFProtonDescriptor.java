@@ -213,10 +213,7 @@ public class RDFProtonDescriptor implements Descriptor {
 			Vector ringsWithThisAtom = null;
 			Atom[] atomsInContainer = ac.getAtoms();
 			
-			double tmp_dist = 0;
-			double tmp_result = 0;
 			for (int w = 0; w < atomsInContainer.length; w++) {
-				Atom[] atomTMP = mol.getConnectedAtoms(atomsInContainer[w]);
 				ringsWithThisAtom = rs.getRings(atomsInContainer[w]);
 				if (ringsWithThisAtom.size() > 0) {
 					atomsInContainer[w].setFlag(CDKConstants.ISINRING, true);

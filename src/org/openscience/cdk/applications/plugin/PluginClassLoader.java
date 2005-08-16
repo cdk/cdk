@@ -36,13 +36,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class PluginClassLoader extends URLClassLoader {
     
-    private URL url;
-    
     private static LoggingTool logger = null;
 
     public PluginClassLoader(URL url) {
         super(new URL[] { url });
-        this.url = url;
         if (logger == null) logger = new LoggingTool(this);
     }
 

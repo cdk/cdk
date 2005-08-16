@@ -205,6 +205,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		try {
             AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml");
 			atomType = factory.configure(atom);
+			assertNotNull(atomType);
 		} catch(Exception exc) {
 			fail("Problem getting AtomType for 'mol2:C.ar' from AtomTypeFactory: "  +  exc.getMessage());
 		}

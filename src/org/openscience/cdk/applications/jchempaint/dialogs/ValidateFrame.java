@@ -72,11 +72,9 @@ public class ValidateFrame extends JFrame  {
     private JPanel warningTreePanel;
     private JPanel cdkErrorTreePanel;
     private JTextArea detailText;
-    private JChemPaintPanel jcpp;
     
     public ValidateFrame(JChemPaintPanel jcpp) {
         super("Validation Results");
-        this.jcpp = jcpp;
    
         rendererModel = jcpp.getJChemPaintModel().getRendererModel();
         getContentPane().setLayout(new BorderLayout());

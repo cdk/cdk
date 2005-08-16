@@ -255,7 +255,6 @@ public class IChIHandler extends DefaultHandler {
     private void analyseAtomsEncoding(String atomsEncoding) {
         logger.debug("Parsing atom data: " + atomsEncoding);
 
-        Atom atomToAdd = null;
         Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d+)?(.*)");
         String remainder = atomsEncoding;
         while (remainder.length() > 0) {

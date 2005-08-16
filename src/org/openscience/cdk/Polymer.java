@@ -28,7 +28,6 @@
 package org.openscience.cdk;
 
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**

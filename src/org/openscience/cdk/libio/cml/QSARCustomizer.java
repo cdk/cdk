@@ -60,7 +60,7 @@ public class QSARCustomizer implements Customizer {
     private final static String QSARMETA_NAMESPACE = "qsarmeta";
     private final static String QSARMETA_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata";
 
-    private String namespace = "http://www.xml-cml.org/schema/cml2/core";
+    private final String namespace = "http://www.xml-cml.org/schema/cml2/core";
     
     public void customize(Object convertor, Atom atom, Element nodeToAdd) throws Exception {
         // nothing to do at this moment
