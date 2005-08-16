@@ -38,6 +38,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
@@ -51,6 +52,7 @@ import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.SVGWriter;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * Action to copy/paste structures.
@@ -96,7 +98,14 @@ public class CopyPasteAction extends JCPAction{
 	        		}
 	        	}
         		if (reader != null) {
-		            AtomContainer topaste = (AtomContainer) reader.read(new Molecule()); 
+        			AtomContainer topaste = null;
+        			if (reader.accepts(new Molecule())) { 
+        				topaste = (AtomContainer) reader.read(new Molecule());
+        			} else if (reader.accepts(new ChemFile())) {
+        				topaste = ChemFileManipulator.getAllInOneContainer(
+        						(ChemFile)reader.read(new ChemFile())
+        				);
+        			}
 		            if (topaste != null) {
 		                topaste = (AtomContainer)topaste.clone();
 		                ChemModel chemModel = jcpModel.getChemModel();
