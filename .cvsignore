@@ -9,3 +9,5 @@ reports
 *.dbxml
 *.fo
 *.pdf
+.classpath
+.project
