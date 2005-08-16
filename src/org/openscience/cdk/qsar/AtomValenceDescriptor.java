@@ -29,7 +29,6 @@ import java.util.Hashtable;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class returns the valence of an atom.
@@ -57,14 +56,12 @@ import org.openscience.cdk.tools.LoggingTool;
 public class AtomValenceDescriptor implements Descriptor {
 
 	private int targetPosition = 0;
-	private LoggingTool logger;
 	public Hashtable valencesTable;
 	
 	/**
 	 *  Constructor for the AtomValenceDescriptor object
 	 */
 	public AtomValenceDescriptor() {
-		logger = new LoggingTool(this);
 		if (valencesTable == null) { 
 		valencesTable = new Hashtable();
 		valencesTable.put("H", new Integer(1));

@@ -24,7 +24,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 
@@ -51,11 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class EccentricConnectivityIndexDescriptor implements Descriptor {
     
-    private LoggingTool logger;
-
-    public EccentricConnectivityIndexDescriptor() {
-        logger = new LoggingTool(this);
-    }
+    public EccentricConnectivityIndexDescriptor() {}
 
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(

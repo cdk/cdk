@@ -28,7 +28,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
@@ -56,14 +55,11 @@ import org.openscience.cdk.tools.LoggingTool;
 public class AtomDegreeDescriptor implements Descriptor {
 
     private int targetPosition = 0;
-    private LoggingTool logger;
 
     /**
      *  Constructor for the AtomDegreeDescriptor object.
      */
-    public AtomDegreeDescriptor() {
-        logger = new LoggingTool(this);
-    }
+    public AtomDegreeDescriptor() {}
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor

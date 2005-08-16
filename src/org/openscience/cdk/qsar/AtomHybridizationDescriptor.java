@@ -30,7 +30,6 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -62,15 +61,12 @@ public class AtomHybridizationDescriptor implements Descriptor {
 	AtomTypeManipulator atman = null;
 	HybridizationStateATMatcher atm = null;
 	Atom atom = null;
-	private LoggingTool logger;
 	AtomType matched = null;
 	
 	/**
 	 *  Constructor for the AtomHybridizationDescriptor object
 	 */
-	public AtomHybridizationDescriptor() {
-		logger = new LoggingTool(this);
-	}
+	public AtomHybridizationDescriptor() {}
 
 
 	/**

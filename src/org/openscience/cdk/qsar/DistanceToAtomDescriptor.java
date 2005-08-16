@@ -30,7 +30,6 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class returns the 3D distance between two atoms.
@@ -64,14 +63,11 @@ public class DistanceToAtomDescriptor implements Descriptor {
 
 	private int targetPosition = 0;
 	private int focusPosition = 0;
-	private LoggingTool logger;
 
 	/**
 	 *  Constructor for the DistanceToAtomDescriptor object
 	 */
-	public DistanceToAtomDescriptor() {
-		logger = new LoggingTool(this);
-	}
+	public DistanceToAtomDescriptor() {}
 
 
 	/**

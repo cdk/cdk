@@ -29,7 +29,6 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class returns the number of bonds on the shortest path between two atoms.
@@ -64,7 +63,6 @@ public class BondsToAtomDescriptor implements Descriptor {
 	private int targetPosition = 0;
 	private int focusPosition = 0;
 	private org._3pq.jgrapht.Graph mygraph = null;
-	private LoggingTool logger;
 	java.util.List mylist = null;
 	Object startVertex = null;
 	Object endVertex = null;
@@ -72,9 +70,7 @@ public class BondsToAtomDescriptor implements Descriptor {
 	/**
 	 *  Constructor for the BondsToAtomDescriptor object
 	 */
-	public BondsToAtomDescriptor() {
-		logger = new LoggingTool(this);
-	}
+	public BondsToAtomDescriptor() {}
 
 
 	/**
