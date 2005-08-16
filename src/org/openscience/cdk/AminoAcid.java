@@ -135,8 +135,10 @@ public class AminoAcid extends Monomer implements java.io.Serializable
             e.printStackTrace(System.err);
         }
         // copying the new N-terminus and C-terminus pointers
-        clone.setNTerminus(clone.getAtomAt(getAtomNumber(getNTerminus())));
-        clone.setCTerminus(clone.getAtomAt(getAtomNumber(getCTerminus())));
+        if (getNTerminus() != null)
+        	clone.setNTerminus(clone.getAtomAt(getAtomNumber(getNTerminus())));
+        if (getCTerminus() != null)
+        	clone.setCTerminus(clone.getAtomAt(getAtomNumber(getCTerminus())));
         return clone;
     }
     
@@ -144,8 +146,16 @@ public class AminoAcid extends Monomer implements java.io.Serializable
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("AminoAcid(");
         stringContent.append(this.hashCode()).append(", ");
-        stringContent.append("N: ").append(nTerminus.hashCode()).append(", ");
-        stringContent.append("C: ").append(cTerminus.hashCode()).append(", ");
+        if (nTerminus == null) {
+        	stringContent.append("N: null, ");
+        } else {
+        	stringContent.append("N: ").append(nTerminus.hashCode()).append(", ");
+        }
+        if (cTerminus == null) {
+        	stringContent.append("C: null, ");
+        } else {
+        	stringContent.append("C: ").append(cTerminus.hashCode()).append(", ");
+        }
         stringContent.append(super.toString());
         stringContent.append(")");
         return stringContent.toString();
