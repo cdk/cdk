@@ -57,7 +57,6 @@ public class ChangeAtomSymbolAction extends JCPAction
 		if (jcpm != null)
 		{
 			Controller2DModel c2dm = jcpm.getControllerModel();
-			;
 			Atom atomInRange = null;
 			ChemObject object = getSource(event);
 			logger.debug("Source of call: ", object);

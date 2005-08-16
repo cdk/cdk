@@ -180,7 +180,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         try {
             for (int i=1; i<=reactantCount; i++) {
                 StringBuffer molFile = new StringBuffer();
-                String announceMDLFileLine = input.readLine();
+                input.readLine(); // announceMDLFileLine
                 String molFileLine = "";
                 do {
                     molFileLine = input.readLine();

@@ -38,10 +38,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
-import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
-
-
-
 /**
  * Simple Dialog that shows information about JChemPaint's plugins.
  *
@@ -50,7 +46,6 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 public class PluginInfoDialog extends JFrame {
 
     private JEditorPane infoPane;
-    private JChemPaintPanel mothership;
     
 	/**
 	 * Displays the Plugin Info Dialog for JChemPaint. 

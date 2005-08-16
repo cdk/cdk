@@ -35,7 +35,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Monomer;
-import org.openscience.cdk.Polymer;
 import org.openscience.cdk.Strand;
 
 /**

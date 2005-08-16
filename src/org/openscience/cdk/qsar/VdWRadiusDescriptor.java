@@ -143,7 +143,6 @@ public class VdWRadiusDescriptor implements Descriptor {
 
     public DescriptorValue calculate(AtomContainer container) throws CDKException {
         double vdwradius = 0;
-        int atomicNumber = 0;
         try {
             String symbol = container.getAtomAt(atomPosition).getSymbol();
             AtomType type = factory.getAtomType(symbol);

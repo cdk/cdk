@@ -224,14 +224,12 @@ public class TPSADescriptor implements Descriptor {
 		double orderSum = 0;
 		double charge = 0;
 		int isin3ring = 0;
-		int isin3ringcounter = 0;
 		int numberOfNeighboors = 0;
 		int hCount = 0;
 		int singleBondCount = 0;
 		int doubleBondCount = 0;
 		int tripleBondCount = 0;
 		int aromaticBondCount = 0;
-		int atomPosition = 0;
 		for(int i = 0; i < atoms.length; i ++) {
 			if( atoms[i].getSymbol().equals("N") || atoms[i].getSymbol().equals("O") || atoms[i].getSymbol().equals("S") || atoms[i].getSymbol().equals("P") ) {
 				//System.out.println("tpsa atom: "+atoms[i].getSymbol());
@@ -268,7 +266,6 @@ public class TPSADescriptor implements Descriptor {
 				if(tripleBondCount > 0) {
 					maxOrder = 3.0;
 				}
-				isin3ringcounter = 0;
 				isin3ring = 0;
 				charge = atoms[i].getFormalCharge(); //
 				connectedAtomsFirst = ac.getConnectedAtoms(atoms[i]);
@@ -278,7 +275,6 @@ public class TPSADescriptor implements Descriptor {
 						hCount += 1;
 					}
 				}
-				atomPosition = ac.getAtomNumber(atoms[i]);
 				orderSum = ac.getBondOrderSum(atoms[i]);
 				// isin3ring checker
 				if(rs.contains(atoms[i])) {

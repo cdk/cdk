@@ -49,11 +49,8 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class GhemicalReaderTest extends CDKTestCase {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
-
     public GhemicalReaderTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
     }
 
     public static Test suite() {

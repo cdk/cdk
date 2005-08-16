@@ -180,7 +180,7 @@ public class EventCMLDemo {
             }
         }
         
-        public void processIOSettingQuestion(IOSetting setting) {};
+        public void processIOSettingQuestion(IOSetting setting) {}
 
     }
     

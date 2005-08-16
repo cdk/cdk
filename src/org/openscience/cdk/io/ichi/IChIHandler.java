@@ -295,8 +295,6 @@ public class IChIHandler extends DefaultHandler {
     private void analyseBondsEncoding(String bondsEncoding, int source){
         logger.debug("Parsing bond data: " + bondsEncoding);
 
-        int atoms = tautomer.getAtomCount();
-
         Bond bondToAdd = null;
         Pattern pattern = Pattern.compile("^(\\d+)(H?)(\\d?)(\\([^)]*\\))?-?(.*)");
         String remainder = bondsEncoding;

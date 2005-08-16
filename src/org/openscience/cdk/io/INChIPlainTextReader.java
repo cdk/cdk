@@ -47,7 +47,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text 
@@ -74,7 +73,6 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 
-    private LoggingTool logger;
     private BufferedReader input;
     private INChIContentProcessorTool inchiTool;
 
@@ -116,9 +114,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     /**
      * Initializes this reader.
      */
-    private void init() {
-        logger = new LoggingTool(this);
-    }
+    private void init() {}
 
     /**
      * Reads a ChemObject of type object from input.
