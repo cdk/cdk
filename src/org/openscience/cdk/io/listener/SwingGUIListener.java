@@ -25,9 +25,6 @@
 package org.openscience.cdk.io.listener;
 
 import java.awt.Component;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -52,8 +49,6 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  */
 public class SwingGUIListener implements ReaderListener, WriterListener {
 
-    private BufferedReader in;
-    
     private Component frame = null;
     private int level = 0;
     
@@ -64,26 +59,12 @@ public class SwingGUIListener implements ReaderListener, WriterListener {
     public SwingGUIListener(Component frame, int level) {
         this.level = level;
         this.frame = frame;
-        this.setInputReader(new InputStreamReader(System.in));
     }
     
     public void setLevel(int level) {
         this.level = level;
     }
-    
-    /**
-     * Overwrites the default reader from which the input is taken.
-     */
-    public void setInputReader(Reader reader) {
-        if (reader instanceof BufferedReader) {
-            in = (BufferedReader)reader;
-        } else if (reader == null) {
-            in = null;
-        } else {
-            in = new BufferedReader(reader);
-        }
-    }
-    
+        
     public void frameRead(ReaderEvent event) {
     };
     
@@ -100,7 +81,6 @@ public class SwingGUIListener implements ReaderListener, WriterListener {
             String answer = setting.getSetting();
             
             if (setting instanceof BooleanIOSetting) {
-                BooleanIOSetting boolSet = (BooleanIOSetting)setting;
                 int n = JOptionPane.showConfirmDialog(frame,
                     setting.getQuestion(),
                     setting.getName(),
@@ -125,7 +105,6 @@ public class SwingGUIListener implements ReaderListener, WriterListener {
                     null, options, setting.getSetting());
                 answer = (String)options[n];
             } else if (setting instanceof StringIOSetting) {
-                StringIOSetting stringSetting = (StringIOSetting)setting;
                 answer = JOptionPane.showInputDialog(frame,
                     setting.getQuestion(),
                     setting.getName(), JOptionPane.QUESTION_MESSAGE, null, null,
