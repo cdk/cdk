@@ -31,9 +31,9 @@ package org.openscience.cdk.controller;
 
 import java.util.Vector;
 
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
+
 
 /**
  *  Class that acts on MouseEvents and KeyEvents.
@@ -44,36 +44,23 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.keyword    mouse events
  *@cdk.require    java1.4+
  */
-public class Controller2D extends SimpleController2D
+public class SimpleController2D extends AbstractController2D
 {
-	/**
-	 *  Constructs a controller that performs operations on the AtomContainer when
-	 *  actions are detected from the MouseEvents.
-	 *
-	 *@param  chemModel  Description of the Parameter
-	 *@param  r2dm       Description of the Parameter
-	 *@param  c2dm       Description of the Parameter
-	 */
-	public Controller2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm)
+	SimpleController2D()
+	{
+		super();
+
+	}
+
+	SimpleController2D(Controller2DModel c2dm)
+	{
+		super(c2dm);
+	}
+
+	SimpleController2D(Renderer2DModel r2dm, Controller2DModel c2dm)
 	{
 		super(r2dm, c2dm);
-		this.chemModel = chemModel;
 	}
-
-
-	/**
-	 *  Constructor for the Controller2D object
-	 *
-	 *@param  chemModel  Description of the Parameter
-	 *@param  r2dm       Description of the Parameter
-	 */
-	public Controller2D(ChemModel chemModel, Renderer2DModel r2dm)
-	{
-		super(r2dm, new Controller2DModel());
-		this.chemModel = chemModel;
-	}
-
-
 
 }
 
