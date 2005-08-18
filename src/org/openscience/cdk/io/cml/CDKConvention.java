@@ -46,7 +46,7 @@ public class CDKConvention extends CMLCoreModule {
 
     public CDKConvention(CDOInterface cdo) {
         super(cdo);
-    };
+    }
 
     public CDKConvention(ModuleInterface conv) {
         super(conv);
@@ -54,19 +54,18 @@ public class CDKConvention extends CMLCoreModule {
     
     public CDOInterface returnCDO() {
         return this.cdo;
-    };
+    }
 
     public void startDocument() {
         super.startDocument();
         isBond = false;
-    };
+    }
 
     public void endDocument() {
         super.endDocument();
-    };
+    }
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
-        String name = raw;
         isBond = false;
         if (xpath.toString().endsWith("string/")) {
             for (int i = 0; i < atts.getLength(); i++) {
@@ -78,7 +77,7 @@ public class CDKConvention extends CMLCoreModule {
         } else {
             super.startElement(xpath, uri, local, raw, atts);
         }
-    };
+    }
 
     public void endElement (CMLStack xpath, String uri, String local, String raw) {
         super.endElement(xpath, uri, local, raw);

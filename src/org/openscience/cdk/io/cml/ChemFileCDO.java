@@ -105,7 +105,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       currentSetOfMolecules = new SetOfMolecules();
       currentMolecule = new Molecule();
       atomEnumeration = new Hashtable();
-    };
+    }
 
     /**
      * Procedure required by the CDOInterface. This function is only
@@ -136,13 +136,13 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         }
         logger.info("End CDO Object");
         logger.info("Number of sequences:", getChemSequenceCount());
-    };
+    }
 
     /**
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
      */
-    public void setDocumentProperty(String type, String value) {};
+    public void setDocumentProperty(String type, String value) {}
 
     /**
      * Procedure required by the CDOInterface. This function is only
@@ -188,7 +188,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           if (currentReaction == null) startObject("Reaction");
           currentMolecule = new Molecule();
       }
-    };
+    }
 
     /**
      * Procedure required by the CDOInterface. This function is only
@@ -277,7 +277,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       } else if (objectType.equals("Crystal")) {
           logger.debug("Crystal: " + currentMolecule);
       }
-    };
+    }
 
     /**
      * Procedure required by the CDOInterface. This function is only
@@ -422,7 +422,6 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
                  objectType.equals("c-axis")) {
           // set these variables
           if (currentMolecule instanceof Crystal) {
-              Crystal current = (Crystal)currentMolecule;
               logger.debug("Setting axis (" + objectType + "): " + propertyValue);
               if (propertyType.equals("x")) {
                   crystal_axis_x = Double.parseDouble(propertyValue);
@@ -437,7 +436,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           }
       }
       logger.debug("Object property set...");
-    };
+    }
 
     /**
      * Procedure required by the CDOInterface. This function is only
@@ -460,6 +459,6 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         objects.add("Reactant");
         objects.add("Product");
       return objects;
-    };
+    }
 }
 

@@ -40,7 +40,7 @@ public class CMLReactionModule extends CMLCoreModule {
 
     public CMLReactionModule(CDOInterface cdo) {
         super(cdo);
-    };
+    }
 
     public CMLReactionModule(ModuleInterface conv) {
         super(conv);
@@ -49,16 +49,15 @@ public class CMLReactionModule extends CMLCoreModule {
 
     public CDOInterface returnCDO() {
         return this.cdo;
-    };
+    }
 
     public void startDocument() {
         super.startDocument();
-    };
+    }
 
     public void endDocument() {
         super.endDocument();
-    };
-    
+    }
     
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         if ("reaction".equals(local)) {
@@ -103,7 +102,7 @@ public class CMLReactionModule extends CMLCoreModule {
         } else {
             super.startElement(xpath, uri, local, raw, atts);
         }
-    };
+    }
 
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         if ("reaction".equals(local)) {
@@ -124,7 +123,6 @@ public class CMLReactionModule extends CMLCoreModule {
     }
 
     public void characterData(CMLStack xpath, char ch[], int start, int length) {
-        String s = new String(ch, start, length).trim();
         super.characterData(xpath, ch, start, length);
     }
 }

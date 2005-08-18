@@ -42,7 +42,7 @@ public class MDLMolConvention extends CMLCoreModule {
 
     public MDLMolConvention(CDOInterface cdo) {
         super(cdo);
-    };
+    }
 
     public MDLMolConvention(ModuleInterface conv) {
         super(conv);
@@ -50,22 +50,22 @@ public class MDLMolConvention extends CMLCoreModule {
 
     public CDOInterface returnCDO() {
         return this.cdo;
-    };
+    }
 
     public void startDocument() {
         super.startDocument();
         cdo.startObject("Frame");
-    };
+    }
 
     public void endDocument() {
         cdo.endObject("Frame");
         super.endDocument();
-    };
+    }
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("MDLMol element: name");
         super.startElement(xpath, uri, local, raw, atts);
-    };
+    }
 
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         super.endElement(xpath, uri, local, raw);

@@ -429,11 +429,7 @@ public class CMLCoreModule implements ModuleInterface {
             BUILTIN = "";
             cdo.startObject("Molecule");
             for (int i = 0; i < atts.getLength(); i++) {
-                
-                String att = atts.getQName(i);
-                String value = atts.getValue(i);
-                
-                if (att.equals("id")) {
+                if (atts.getQName(i).equals("id")) {
                     cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
                 }
             }

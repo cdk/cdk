@@ -51,24 +51,24 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         super(cdo);
         logger = new LoggingTool(this);
         current = UNKNOWN;
-    };
+    }
 
     public JMOLANIMATIONConvention(ModuleInterface conv) {
         super(conv);
         logger = new LoggingTool(this);
-    };
+    }
 
     public CDOInterface returnCDO() {
         return this.cdo;
-    };
+    }
 
     public void startDocument() {
         super.startDocument();
-    };
+    }
 
     public void endDocument() {
         super.endDocument();
-    };
+    }
 
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
@@ -102,7 +102,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         } else {
             super.startElement(xpath, uri, local, raw, atts);
         }
-    };
+    }
 
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         String name = local;

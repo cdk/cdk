@@ -47,7 +47,7 @@ public class PMPConvention extends CMLCoreModule {
 
     public PMPConvention(CDOInterface cdo) {
         super(cdo);
-    };
+    }
 
     public PMPConvention(ModuleInterface conv) {
         super(conv);
@@ -56,23 +56,23 @@ public class PMPConvention extends CMLCoreModule {
 
     public CDOInterface returnCDO() {
         return this.cdo;
-    };
+    }
 
     public void startDocument() {
         super.startDocument();
         cdo.startObject("Frame");
-    };
+    }
 
     public void endDocument() {
         cdo.endObject("Frame");
         super.endDocument();
-    };
+    }
     
     
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("PMP element: name");
         super.startElement(xpath, uri, local, raw, atts);
-    };
+    }
 
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         super.endElement(xpath, uri, local, raw);
