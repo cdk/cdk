@@ -87,9 +87,11 @@ public class CopyPasteAction extends JCPAction{
 	        	// if a MIME type is given ...
 	        	if (transfer!=null && (transfer.isDataFlavorSupported (molFlavor))) {
 	        		String mol = (String) transfer.getTransferData (molFlavor);
+	        		logger.debug("Dataflavor molFlavor found");
 		        	reader = new MDLReader(new StringReader(mol));
 	        	} else if(transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {
 	        		// otherwise, try to use the ReaderFactory...
+	        		logger.debug("Dataflavor stringFlavor found");
 	        		String content = (String) transfer.getTransferData (DataFlavor.stringFlavor);
 	        		try {
 	        			reader = new ReaderFactory().createReader(new StringReader(content));
@@ -98,6 +100,7 @@ public class CopyPasteAction extends JCPAction{
 	        		}
 	        	}
         		if (reader != null) {
+        			logger.debug("Seems we got a reader");
         			AtomContainer topaste = null;
         			if (reader.accepts(new Molecule())) { 
         				topaste = (AtomContainer) reader.read(new Molecule());

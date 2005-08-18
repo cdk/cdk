@@ -29,10 +29,15 @@
  */
 package org.openscience.cdk.controller;
 
-import java.util.Vector;
-
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 
 /**
@@ -46,6 +51,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class SimpleController2D extends AbstractController2D
 {
+		
 	SimpleController2D()
 	{
 		super();
@@ -61,6 +67,16 @@ public class SimpleController2D extends AbstractController2D
 	{
 		super(r2dm, c2dm);
 	}
+	
+	Reaction getReactionInRange(int X, int Y) {
+		return null;
+	}
+	
+	Reaction getRelevantReaction(ChemModel chemModel, Atom atom)
+	{
+		return null;
+	}
+
 
 }
 

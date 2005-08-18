@@ -31,9 +31,16 @@ package org.openscience.cdk.controller;
 
 import java.util.Vector;
 
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  *  Class that acts on MouseEvents and KeyEvents.
@@ -46,6 +53,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class Controller2D extends SimpleController2D
 {
+	
 	/**
 	 *  Constructs a controller that performs operations on the AtomContainer when
 	 *  actions are detected from the MouseEvents.
@@ -60,7 +68,16 @@ public class Controller2D extends SimpleController2D
 		this.chemModel = chemModel;
 	}
 
-
+	/**
+	 *  Sets the chemModel attribute of the Controller2D object
+	 *
+	 *@param  chemModel  The new chemModel value
+	 */
+	public void setChemModel(ChemModel chemModel)
+	{
+		this.chemModel = chemModel;
+	}
+	
 	/**
 	 *  Constructor for the Controller2D object
 	 *
@@ -73,7 +90,50 @@ public class Controller2D extends SimpleController2D
 		this.chemModel = chemModel;
 	}
 
+	AtomContainer getRelevantAtomContainer(ChemModel chemModel, Atom atom)
+	{
+		return ChemModelManipulator.getRelevantAtomContainer(chemModel, atom);
+	}
 
+	AtomContainer getAllInOneContainer(ChemModel chemModel)
+	{
+		return ChemModelManipulator.getAllInOneContainer(chemModel);	
+	}
+
+	/**
+	 *  Returns a Reaction if the coordinate is within the reaction 'window'.
+	 *
+	 *@param  X  The x world coordinate of the point
+	 *@param  Y  The y world coordinate of the point
+	 *@return    A Reaction if it is in a certain range of the given point
+	 */
+	Reaction getReactionInRange(int X, int Y) {
+		SetOfReactions reactionSet = chemModel.getSetOfReactions();
+		if (reactionSet != null)
+		{
+			// process reaction by reaction
+			Reaction[] reactions = reactionSet.getReactions();
+			for (int i = 0; i < reactions.length; i++)
+			{
+				AtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reactions[i]);
+				double[] minmax = GeometryTools.getMinMax(atomContainer);
+				if ((X <= minmax[2]) && (X >= minmax[0]) &&
+						(Y <= minmax[3]) && (Y >= minmax[1]))
+				{
+					// cursor in in reaction bounding box
+					return reactions[i];
+				}
+			}
+		}
+		return null;
+	}
+	
+	Reaction getRelevantReaction(ChemModel chemModel, Atom atom)
+	{
+		return ChemModelManipulator.getRelevantReaction(chemModel, atom);
+	}
+
+	
 
 }
 
