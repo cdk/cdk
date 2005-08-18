@@ -41,12 +41,12 @@ public class CMLCDO implements CDOInterface {
   /**
    * Called just before XML parsing is started.
    */
-  public void startDocument() {};
+  public void startDocument() {}
 
   /**
    * Called just after XML parsing has ended.
    */
-  public void endDocument() {};
+  public void endDocument() {}
 
   /**
    * Sets a property for this document.
@@ -54,7 +54,7 @@ public class CMLCDO implements CDOInterface {
    * @param type  Type of the property.
    * @param value Value of the property.
    */
-  public void setDocumentProperty(String type, String value) {};
+  public void setDocumentProperty(String type, String value) {}
 
   /**
    * Exports the list of objects that the CML CDO excepts as a CDOAcceptedObjects object:
@@ -74,14 +74,14 @@ public class CMLCDO implements CDOInterface {
    *
    * @param objectType  Type of the object being added.
    */
-  public void startObject(String objectType) {};
+  public void startObject(String objectType) {}
 
   /**
    * End the process of adding a new object to the CDO of a certain type.
    *
    * @param objectType  Type of the object being added.
    */
-  public void endObject(String objectType) {};
+  public void endObject(String objectType) {}
 
   /**
    * Sets a property of the object being added.
@@ -90,5 +90,5 @@ public class CMLCDO implements CDOInterface {
    * @param type        Type of the property being set.
    * @param value       Value of the property being set.
    */
-  public void setObjectProperty(String objectType, String type, String value) {};
+  public void setObjectProperty(String objectType, String type, String value) {}
 }
