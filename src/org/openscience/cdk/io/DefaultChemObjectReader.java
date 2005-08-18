@@ -57,6 +57,10 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
         listenerList.removeElement(listener);
     }
 
+    /**
+     * Returns true if the Reader supports reading into a ChemObject of
+     * this type.
+     */
     public boolean accepts(ChemObject object) {
         // leave it up the read(ChemObject) to decide by default
         return true;
