@@ -2,16 +2,17 @@
 <list title="Regression tests for valid XML Schema documents for CML 2.0"
         xmlns="http://www.xml-cml.org/schema/cml2/core"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../src/org/openscience/cdk/io/cml/data/cmlCore.xsd">
+        xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../src/org/openscience/cdk/io/cml/data/cmlAll.xsd">
 
     <molecule id="alanine">
+        <name>alanine</name>
         <name dictRef="pdb:residueName">Ala</name>
         <name dictRef="pdb:oneLetterCode">A</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="265.0" y2="989.0"/>
-            <atom id="a2" elementType="N" x2="234.0" y2="972.0"/>
+            <atom id="a2" elementType="N" x2="234.0" y2="972.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a3" elementType="C" x2="265.0" y2="1025.0"/>
-            <atom id="a4" elementType="C" x2="296.0" y2="971.0"/>
+            <atom id="a4" elementType="C" x2="296.0" y2="971.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a5" elementType="O" x2="296.0" y2="935.0"/>
             <atom id="a6" elementType="O" x2="327.0" y2="988.0"/>
         </atomArray>
@@ -25,13 +26,14 @@
     </molecule>
 
     <molecule id="arginine">
+        <name>arginine</name>
         <name dictRef="pdb:residueName">Arg</name>
         <name dictRef="pdb:oneLetterCode">R</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="340.0" y2="879.0"/>
             <atom id="a2" elementType="C" x2="340.0" y2="915.0"/>
-            <atom id="a3" elementType="C" x2="371.0" y2="861.0"/>
-            <atom id="a4" elementType="N" x2="309.0" y2="862.0"/>
+            <atom id="a3" elementType="C" x2="371.0" y2="861.0"><atomType dictRef="pdb:cTerminus"/></atom>
+            <atom id="a4" elementType="N" x2="309.0" y2="862.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a5" elementType="C" x2="371.0" y2="932.0"/>
             <atom id="a6" elementType="O" x2="371.0" y2="825.0"/>
             <atom id="a7" elementType="O" x2="402.0" y2="878.0"/>
@@ -57,13 +59,14 @@
     </molecule>
 
     <molecule id="asparagine">
+        <name>asparagine</name>
         <name dictRef="pdb:residueName">Asn</name>
         <name dictRef="pdb:oneLetterCode">N</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="435.0" y2="788.0"/>
-            <atom id="a2" elementType="N" x2="404.0" y2="771.0"/>
+            <atom id="a2" elementType="N" x2="404.0" y2="771.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a3" elementType="C" x2="435.0" y2="824.0"/>
-            <atom id="a4" elementType="C" x2="466.0" y2="770.0"/>
+            <atom id="a4" elementType="C" x2="466.0" y2="770.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a5" elementType="C" x2="404.0" y2="842.0"/>
             <atom id="a6" elementType="O" x2="466.0" y2="734.0"/>
             <atom id="a7" elementType="O" x2="497.0" y2="787.0"/>
@@ -82,14 +85,15 @@
         </bondArray>
     </molecule>
 
-    <molecule id="aspartic acid">
+    <molecule id="asparticAcid">
+        <name>aspartic acid</name>
         <name dictRef="pdb:residueName">Asp</name>
         <name dictRef="pdb:oneLetterCode">D</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="435.0" y2="788.0"/>
-            <atom id="a2" elementType="N" x2="404.0" y2="771.0"/>
+            <atom id="a2" elementType="N" x2="404.0" y2="771.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a3" elementType="C" x2="435.0" y2="824.0"/>
-            <atom id="a4" elementType="C" x2="466.0" y2="770.0"/>
+            <atom id="a4" elementType="C" x2="466.0" y2="770.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a5" elementType="C" x2="404.0" y2="842.0"/>
             <atom id="a6" elementType="O" x2="466.0" y2="734.0"/>
             <atom id="a7" elementType="O" x2="497.0" y2="787.0"/>
@@ -109,13 +113,14 @@
     </molecule>
 
     <molecule id="cysteine">
+        <name>cysteine</name>
         <name dictRef="pdb:residueName">Cys</name>
         <name dictRef="pdb:oneLetterCode">C</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="435.0" y2="788.0"/>
-            <atom id="a2" elementType="N" x2="404.0" y2="771.0"/>
+            <atom id="a2" elementType="N" x2="404.0" y2="771.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a3" elementType="C" x2="435.0" y2="824.0"/>
-            <atom id="a4" elementType="C" x2="466.0" y2="770.0"/>
+            <atom id="a4" elementType="C" x2="466.0" y2="770.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a5" elementType="S" x2="404.0" y2="842.0"/>
             <atom id="a6" elementType="O" x2="466.0" y2="734.0"/>
             <atom id="a7" elementType="O" x2="497.0" y2="787.0"/>
@@ -131,12 +136,13 @@
     </molecule>
 
     <molecule id="phenylalanine">
+        <name>phenylalanine</name>
         <name dictRef="pdb:residueName">Phe</name>
         <name dictRef="pdb:oneLetterCode">F</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="411.0" y2="774.0"/>
-            <atom id="a2" elementType="N" x2="380.0" y2="757.0"/>
-            <atom id="a3" elementType="C" x2="442.0" y2="756.0"/>
+            <atom id="a2" elementType="N" x2="380.0" y2="757.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="442.0" y2="756.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="411.0" y2="810.0"/>
             <atom id="a5" elementType="O" x2="442.0" y2="720.0"/>
             <atom id="a6" elementType="O" x2="473.0" y2="773.0"/>
@@ -164,12 +170,13 @@
     </molecule>
 
     <molecule id="glutamine">
+        <name>glutamine</name>
         <name dictRef="pdb:residueName">Gln</name>
         <name dictRef="pdb:oneLetterCode">Q</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="378.0" y2="797.0"/>
-            <atom id="a2" elementType="N" x2="347.0" y2="780.0"/>
-            <atom id="a3" elementType="C" x2="409.0" y2="779.0"/>
+            <atom id="a2" elementType="N" x2="347.0" y2="780.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="409.0" y2="779.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="378.0" y2="833.0"/>
             <atom id="a5" elementType="O" x2="409.0" y2="743.0"/>
             <atom id="a6" elementType="O" x2="440.0" y2="796.0"/>
@@ -191,13 +198,14 @@
         </bondArray>
     </molecule>
 
-    <molecule id="glutamic acid">
+    <molecule id="glutamicAcid">
+        <name>glutamic acid</name>
         <name dictRef="pdb:residueName">Glu</name>
         <name dictRef="pdb:oneLetterCode">E</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="378.0" y2="797.0"/>
-            <atom id="a2" elementType="N" x2="347.0" y2="780.0"/>
-            <atom id="a3" elementType="C" x2="409.0" y2="779.0"/>
+            <atom id="a2" elementType="N" x2="347.0" y2="780.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="409.0" y2="779.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="378.0" y2="833.0"/>
             <atom id="a5" elementType="O" x2="409.0" y2="743.0"/>
             <atom id="a6" elementType="O" x2="440.0" y2="796.0"/>
@@ -220,12 +228,13 @@
     </molecule>
 
     <molecule id="glycine">
+        <name>glycine</name>
         <name dictRef="pdb:residueName">Gly</name>
         <name dictRef="pdb:oneLetterCode">G</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="348.0" y2="839.0"/>
-            <atom id="a2" elementType="N" x2="317.0" y2="822.0"/>
-            <atom id="a3" elementType="C" x2="379.0" y2="821.0"/>
+            <atom id="a2" elementType="N" x2="317.0" y2="822.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="379.0" y2="821.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="O" x2="379.0" y2="785.0"/>
             <atom id="a5" elementType="O" x2="410.0" y2="838.0"/>
         </atomArray>
@@ -238,12 +247,13 @@
     </molecule>
 
     <molecule id="histidine">
+        <name>histidine</name>
         <name dictRef="pdb:residueName">His</name>
         <name dictRef="pdb:oneLetterCode">H</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="322.0" y2="807.0"/>
-            <atom id="a2" elementType="N" x2="291.0" y2="790.0"/>
-            <atom id="a3" elementType="C" x2="353.0" y2="789.0"/>
+            <atom id="a2" elementType="N" x2="291.0" y2="790.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="353.0" y2="789.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="322.0" y2="843.0"/>
             <atom id="a5" elementType="O" x2="353.0" y2="753.0"/>
             <atom id="a6" elementType="O" x2="384.0" y2="806.0"/>
@@ -269,12 +279,13 @@
     </molecule>
 
     <molecule id="isoleucine">
+        <name>isoleucine</name>
         <name dictRef="pdb:residueName">Ile</name>
         <name dictRef="pdb:oneLetterCode">I</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="390.0" y2="764.0"/>
-            <atom id="a2" elementType="N" x2="359.0" y2="747.0"/>
-            <atom id="a3" elementType="C" x2="421.0" y2="746.0"/>
+            <atom id="a2" elementType="N" x2="359.0" y2="747.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="421.0" y2="746.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="390.0" y2="800.0"/>
             <atom id="a5" elementType="O" x2="421.0" y2="710.0"/>
             <atom id="a6" elementType="O" x2="452.0" y2="763.0"/>
@@ -295,14 +306,15 @@
     </molecule>
 
     <molecule id="proline">
+        <name>proline</name>
         <name dictRef="pdb:residueName">Pro</name>
         <name dictRef="pdb:oneLetterCode">P</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="415.0" y2="897.0"/>
             <atom id="a2" elementType="C" x2="415.0" y2="861.0"/>
             <atom id="a3" elementType="C" x2="370.0" y2="892.0"/>
-            <atom id="a4" elementType="N" x2="383.8231" y2="843.0"/>
-            <atom id="a5" elementType="C" x2="446.0" y2="843.0"/>
+            <atom id="a4" elementType="N" x2="383.8231" y2="843.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a5" elementType="C" x2="446.0" y2="843.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a6" elementType="C" x2="352.0" y2="861.0"/>
             <atom id="a7" elementType="O" x2="446.0" y2="807.0"/>
             <atom id="a8" elementType="O" x2="477.0" y2="860.0"/>
@@ -320,12 +332,13 @@
     </molecule>
 
     <molecule id="leucine">
+        <name>leucine</name>
         <name dictRef="pdb:residueName">Leu</name>
         <name dictRef="pdb:oneLetterCode">L</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="337.0" y2="730.0"/>
-            <atom id="a2" elementType="N" x2="306.0" y2="713.0"/>
-            <atom id="a3" elementType="C" x2="368.0" y2="712.0"/>
+            <atom id="a2" elementType="N" x2="306.0" y2="713.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="368.0" y2="712.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="337.0" y2="766.0"/>
             <atom id="a5" elementType="O" x2="368.0" y2="676.0"/>
             <atom id="a6" elementType="O" x2="399.0" y2="729.0"/>
@@ -346,12 +359,13 @@
     </molecule>
 
     <molecule id="lysine">
+        <name>lysine</name>
         <name dictRef="pdb:residueName">Lys</name>
         <name dictRef="pdb:oneLetterCode">K</name>
         <atomArray>
-            <atom id="a1" elementType="N" x2="313.0" y2="858.0"/>
+            <atom id="a1" elementType="N" x2="313.0" y2="858.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a2" elementType="C" x2="344.0" y2="875.0"/>
-            <atom id="a3" elementType="C" x2="375.0" y2="857.0"/>
+            <atom id="a3" elementType="C" x2="375.0" y2="857.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="344.0" y2="911.0"/>
             <atom id="a5" elementType="O" x2="375.0" y2="821.0"/>
             <atom id="a6" elementType="O" x2="406.0" y2="874.0"/>
@@ -374,13 +388,14 @@
     </molecule>
 
     <molecule id="methionine">
+        <name>methionine</name>
         <name dictRef="pdb:residueName">Met</name>
         <name dictRef="pdb:oneLetterCode">M</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="349.0" y2="834.0"/>
-            <atom id="a2" elementType="N" x2="318.0" y2="817.0"/>
+            <atom id="a2" elementType="N" x2="318.0" y2="817.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a3" elementType="C" x2="349.0" y2="870.0"/>
-            <atom id="a4" elementType="C" x2="380.0" y2="816.0"/>
+            <atom id="a4" elementType="C" x2="380.0" y2="816.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a5" elementType="C" x2="380.0" y2="887.0"/>
             <atom id="a6" elementType="O" x2="380.0" y2="780.0"/>
             <atom id="a7" elementType="O" x2="411.0" y2="833.0"/>
@@ -400,13 +415,14 @@
     </molecule>
 
     <molecule id="serine">
+        <name>serine</name>
         <name dictRef="pdb:residueName">Ser</name>
         <name dictRef="pdb:oneLetterCode">S</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="349.0" y2="834.0"/>
-            <atom id="a2" elementType="N" x2="318.0" y2="817.0"/>
+            <atom id="a2" elementType="N" x2="318.0" y2="817.0"><atomType dictRef="pdb:nTerminus"/></atom>
             <atom id="a3" elementType="C" x2="349.0" y2="870.0"/>
-            <atom id="a4" elementType="C" x2="380.0" y2="816.0"/>
+            <atom id="a4" elementType="C" x2="380.0" y2="816.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a5" elementType="O" x2="380.0" y2="887.0"/>
             <atom id="a6" elementType="O" x2="380.0" y2="780.0"/>
             <atom id="a7" elementType="O" x2="411.0" y2="833.0"/>
@@ -422,12 +438,13 @@
     </molecule>
 
     <molecule id="threonine">
+        <name>threonine</name>
         <name dictRef="pdb:residueName">Thr</name>
         <name dictRef="pdb:oneLetterCode">T</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="301.0" y2="814.0"/>
-            <atom id="a2" elementType="N" x2="270.0" y2="797.0"/>
-            <atom id="a3" elementType="C" x2="332.0" y2="796.0"/>
+            <atom id="a2" elementType="N" x2="270.0" y2="797.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="332.0" y2="796.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="301.0" y2="850.0"/>
             <atom id="a5" elementType="O" x2="332.0" y2="760.0"/>
             <atom id="a6" elementType="O" x2="363.0" y2="813.0"/>
@@ -446,12 +463,13 @@
     </molecule>
 
     <molecule id="tryptophan">
+        <name>tryptophan</name>
         <name dictRef="pdb:residueName">Tyr</name>
         <name dictRef="pdb:oneLetterCode">Y</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="357.0" y2="824.0"/>
-            <atom id="a2" elementType="N" x2="326.0" y2="807.0"/>
-            <atom id="a3" elementType="C" x2="388.0" y2="806.0"/>
+            <atom id="a2" elementType="N" x2="326.0" y2="807.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="388.0" y2="806.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="357.0" y2="860.0"/>
             <atom id="a5" elementType="O" x2="388.0" y2="770.0"/>
             <atom id="a6" elementType="O" x2="419.0" y2="823.0"/>
@@ -481,12 +499,13 @@
     </molecule>
 
     <molecule id="valine">
+        <name>valine</name>
         <name dictRef="pdb:residueName">Val</name>
         <name dictRef="pdb:oneLetterCode">V</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="362.0" y2="766.0"/>
-            <atom id="a2" elementType="N" x2="331.0" y2="749.0"/>
-            <atom id="a3" elementType="C" x2="393.0" y2="748.0"/>
+            <atom id="a2" elementType="N" x2="331.0" y2="749.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a3" elementType="C" x2="393.0" y2="748.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a4" elementType="C" x2="362.0" y2="802.0"/>
             <atom id="a5" elementType="O" x2="393.0" y2="712.0"/>
             <atom id="a6" elementType="O" x2="424.0" y2="765.0"/>
@@ -505,13 +524,14 @@
     </molecule>
 
     <molecule id="tyrosine">
+        <name>tyrosine</name>
         <name dictRef="pdb:residueName">Trp</name>
         <name dictRef="pdb:oneLetterCode">W</name>
         <atomArray>
             <atom id="a1" elementType="C" x2="276.0" y2="843.0"/>
             <atom id="a2" elementType="C" x2="276.0" y2="879.0"/>
-            <atom id="a3" elementType="N" x2="245.0" y2="826.0"/>
-            <atom id="a4" elementType="C" x2="307.0" y2="825.0"/>
+            <atom id="a3" elementType="N" x2="245.0" y2="826.0"><atomType dictRef="pdb:nTerminus"/></atom>
+            <atom id="a4" elementType="C" x2="307.0" y2="825.0"><atomType dictRef="pdb:cTerminus"/></atom>
             <atom id="a5" elementType="C" x2="245.0" y2="897.0"/>
             <atom id="a6" elementType="O" x2="307.0" y2="789.0"/>
             <atom id="a7" elementType="O" x2="338.0" y2="842.0"/>
