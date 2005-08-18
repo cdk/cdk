@@ -38,10 +38,10 @@ public class MDLFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLReader";
-    };
+    }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.MDLWriter";
-    };
+    }
 
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 4 && (line.indexOf("v2000") >= 0 ||

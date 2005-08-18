@@ -35,7 +35,7 @@ public class CMLRSSFormat implements ChemFormat {
         return "CML enriched RSS";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
 }

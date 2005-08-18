@@ -38,8 +38,8 @@ public class CIFFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CIFReader";
-    };
-    public String getWriterClassName() { return null; };
+    }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("_cell_length_a") ||

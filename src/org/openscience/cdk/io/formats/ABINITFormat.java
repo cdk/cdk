@@ -36,8 +36,8 @@ public class ABINITFormat implements ChemFormatMatcher {
         return "ABINIT";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("natom") >= 0 ||

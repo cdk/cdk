@@ -38,8 +38,8 @@ public class JMEFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.JMEReader";
-    };
-    public String getWriterClassName() { return null; };
+    }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         return false;

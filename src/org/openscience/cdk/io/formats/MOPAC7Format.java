@@ -37,8 +37,8 @@ public class MOPAC7Format implements ChemFormatMatcher {
         return "MOPAC7";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("MOPAC:  VERSION  7.00") >= 0) {

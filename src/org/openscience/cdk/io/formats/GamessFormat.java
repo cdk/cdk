@@ -38,8 +38,8 @@ public class GamessFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.GamessReader";
-    };
-    public String getWriterClassName() { return null; };
+    }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("GAMESS execution script") >= 0 ||

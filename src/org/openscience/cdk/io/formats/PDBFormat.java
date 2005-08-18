@@ -38,10 +38,10 @@ public class PDBFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.PDBReader";
-    };
+    }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.PDBWriter";
-    };
+    }
 
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("HEADER") ||

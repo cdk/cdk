@@ -42,10 +42,10 @@ public class HINFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.HINReader";
-    };
+    }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.HINWriter";
-    };
+    }
 
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("atom ") &&

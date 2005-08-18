@@ -37,8 +37,8 @@ public class ADFFormat implements ChemFormatMatcher {
         return "ADF";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Amsterdam Density Functional") >= 0) {

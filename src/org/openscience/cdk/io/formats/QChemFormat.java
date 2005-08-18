@@ -36,8 +36,8 @@ public class QChemFormat implements ChemFormatMatcher {
         return "Q-Chem";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Welcome to Q-Chem") != -1) {

@@ -36,10 +36,10 @@ public class GaussianInputFormat implements ChemFormatMatcher {
         return "Gaussian Input";
     }
 
-    public String getReaderClassName() { return null; };
+    public String getReaderClassName() { return null; }
     public String getWriterClassName() {
       return "org.openscience.cdk.io.program.GaussianInputWriter";
-    };
+    }
 
     public boolean matches(int lineNumber, String line) {
         return false;

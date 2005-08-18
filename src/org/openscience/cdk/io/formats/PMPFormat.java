@@ -38,8 +38,8 @@ public class PMPFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.PMPReader";
-    };
-    public String getWriterClassName() { return null; };
+    }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("%%Header Start")) {

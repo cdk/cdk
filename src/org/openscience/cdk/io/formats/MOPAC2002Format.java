@@ -38,8 +38,8 @@ public class MOPAC2002Format implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MOPAC97Reader";
-    };
-    public String getWriterClassName() { return null; };
+    }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("MOPAC2002") >= 0) {

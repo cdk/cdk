@@ -38,10 +38,10 @@ public class XYZFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.XYZReader";
-    };
+    }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.XYZWriter";
-    };
+    }
 
     public boolean matches(int lineNumber, String line) {
         return false;

@@ -38,8 +38,8 @@ public class MDLRXNV3000Format implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLRXNV3000Reader";
-    };
-    public String getWriterClassName() { return null; };
+    }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 4 && 

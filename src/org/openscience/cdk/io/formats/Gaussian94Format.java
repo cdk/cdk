@@ -37,8 +37,8 @@ public class Gaussian94Format implements ChemFormatMatcher {
         return "Gaussian94";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Gaussian 94") >= 0) {

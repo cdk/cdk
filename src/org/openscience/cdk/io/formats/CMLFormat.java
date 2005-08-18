@@ -38,10 +38,10 @@ public class CMLFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CMLReader";
-    };
+    }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.CMLWriter";
-    };
+    }
 
     public boolean matches(int lineNumber, String line) {
         if ((line.indexOf("<atom") != -1) ||

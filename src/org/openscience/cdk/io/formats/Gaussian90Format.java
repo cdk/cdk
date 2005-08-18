@@ -37,8 +37,8 @@ public class Gaussian90Format implements ChemFormatMatcher {
         return "Gaussian90";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Gaussian G90") >= 0) {

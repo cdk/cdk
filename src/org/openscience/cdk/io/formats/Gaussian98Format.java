@@ -38,8 +38,8 @@ public class Gaussian98Format implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.Gaussian98Reader";
-    };
-    public String getWriterClassName() { return null; };
+    }
+    public String getWriterClassName() { return null; }
 
 	public boolean matches(int lineNumber, String line) {
 		if (line.indexOf("Gaussian(R) 98") >= 0 ||

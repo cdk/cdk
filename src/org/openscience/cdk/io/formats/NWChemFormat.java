@@ -37,8 +37,8 @@ public class NWChemFormat implements ChemFormatMatcher {
         return "NWChem";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Northwest Computational Chemistry Package") >= 0) {

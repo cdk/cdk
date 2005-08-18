@@ -38,10 +38,10 @@ public class ShelXFormat implements ChemFormatMatcher {
 
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.ShelXReader";
-    };
+    }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.ShelXWriter";
-    };
+    }
 
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("ZERR ") ||

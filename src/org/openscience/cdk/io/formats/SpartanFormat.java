@@ -36,8 +36,8 @@ public class SpartanFormat implements ChemFormatMatcher {
         return "Spartan Quantum Mechanics Program";
     }
 
-    public String getReaderClassName() { return null; };
-    public String getWriterClassName() { return null; };
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("Spartan") != -1 &&
