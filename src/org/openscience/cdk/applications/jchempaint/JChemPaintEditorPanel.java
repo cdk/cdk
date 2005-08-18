@@ -130,8 +130,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		if (isEmbedded == true) {
 		    this.setEmbedded();
 		}
-    customizeView();
 		setupPluginManager();
+	    customizeView();
 		super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
 		if (logger == null)
@@ -282,7 +282,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), this);
 
 			// load the plugins that come with JCP itself
-			// pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
 
 			// load the user plugins
 			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
@@ -292,8 +292,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
 			}
 		} catch (Exception exc) {
-			//logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-			//logger.debug(exc);
+			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
+			logger.debug(exc);
 		}
 	}
 
