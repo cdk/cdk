@@ -30,15 +30,8 @@ package org.openscience.cdk.applications.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.Vector;
-
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 /**
  * @cdk.module applications
@@ -49,20 +42,8 @@ import javax.swing.JScrollPane;
  */
 public class MoleculeListViewer extends JFrame
 {
-	protected StrucContainer panel;
-	protected JScrollPane scrollPane;
-	protected int noOfStructures = 0;
-
-	/**
-	 *  The dimension of a single MoleculeViewerPanel
-	 */
-	protected Dimension molViewDim = new Dimension(250, 250);
-
-	protected Vector moleculeViewerPanels = new Vector();
-
+	protected MoleculeListPanel panel;
 	public static boolean standAlone = false;
-
-
 
 	/**
 	 *  Constructor for the MoleculeListViewer object
@@ -72,10 +53,8 @@ public class MoleculeListViewer extends JFrame
 		super();
 		getContentPane().setLayout(new BorderLayout());
 		setTitle("Structure Display");
-		panel = new StrucContainer();
-		scrollPane = new JScrollPane(panel);
-		scrollPane.setPreferredSize(new Dimension(800, 600));
-		getContentPane().add("Center", scrollPane);
+		panel = new MoleculeListPanel();
+		getContentPane().add("Center", panel);
 		setTitle("MoleculeListViewer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
@@ -87,20 +66,17 @@ public class MoleculeListViewer extends JFrame
 	 *
 	 *@param  molViewDim  The new molViewDim value
 	 */
-	public void setMolViewDim(Dimension molViewDim)
-	{
-		this.molViewDim = molViewDim;
+	public void setMolViewDim(Dimension molViewDim) {
+		panel.setMolViewDim(molViewDim);
 	}
-
 
 	/**
 	 *  Gets the molViewDim attribute of the MoleculeListViewer object
 	 *
 	 *@return    The molViewDim value
 	 */
-	public Dimension getMolViewDim()
-	{
-		return molViewDim;
+	public Dimension getMolViewDim() {
+		return panel.getMolViewDim();
 	}
 
 
@@ -109,12 +85,9 @@ public class MoleculeListViewer extends JFrame
 	 *
 	 *@param  moleculeViewer  The feature to be added to the Structure attribute
 	 */
-	public void addStructure(MoleculeViewer2D moleculeViewer)
-	{
-		String title = "Structure no. " + (noOfStructures + 1);
-		addStructure(moleculeViewer, title);
+	public void addStructure(MoleculeViewer2D moleculeViewer) {
+		panel.addStructure(moleculeViewer);
 	}
-
 
 	/**
 	 *  Adds a feature to the Structure attribute of the MoleculeListViewer object
@@ -122,14 +95,8 @@ public class MoleculeListViewer extends JFrame
 	 *@param  moleculeViewer     The feature to be added to the Structure attribute
 	 *@param  title  The feature to be added to the Structure attribute
 	 */
-	public void addStructure(MoleculeViewer2D moleculeViewer, String title)
-	{
-		noOfStructures++;
-		moleculeViewer.setPreferredSize(molViewDim);
-        moleculeViewer.getRenderer2DModel().setBackgroundDimension(molViewDim);
-		moleculeViewer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), title));
-		moleculeViewerPanels.addElement(moleculeViewer);
-		panel.add(moleculeViewer);
+	public void addStructure(MoleculeViewer2D moleculeViewer, String title) {
+		panel.addStructure(moleculeViewer, title);
 		panel.revalidate();
 	}
 
@@ -139,56 +106,6 @@ public class MoleculeListViewer extends JFrame
 		super.paint(graphics);
 		panel.revalidate();
 	}
-
-
-	/**
-	 * @author     steinbeck
-	 * @cdk.created    2002-10-29
-	 */
-	class StrucContainer extends JPanel
-	{
-		/**
-		 *  Constructor for the StrucContainer object
-		 */
-		public StrucContainer()
-		{
-			super();
-			setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		}
-
-
-		/**
-		 *  Gets the preferredSize attribute of the StrucContainer object
-		 *
-		 *@return    The preferredSize value
-		 */
-		public Dimension getPreferredSize()
-		{
-			int width;
-			int height;
-			width = getContentPane().getSize().width;
-			if (width < molViewDim.width)
-			{
-				width = molViewDim.width;
-			}
-			height = ((noOfStructures / ((int) width / molViewDim.width)) + 1) * molViewDim.height;
-			height = (int) (height * 1.2);
-			return new Dimension(width, height);
-		}
-
-
-		/**
-		 *  Gets the bounds attribute of the StrucContainer object
-		 *
-		 *@return    The bounds value
-		 */
-		public Rectangle getBounds()
-		{
-			return new Rectangle(new java.awt.Point(0, 0), getPreferredSize());
-		}
-
-	}
-
 
 	/**
 	 *  The main program for the MoleculeListViewer class
