@@ -26,6 +26,7 @@ package org.openscience.cdk.io.cml;
 import java.util.Hashtable;
 
 import javax.vecmath.Vector3d;
+import java.util.StringTokenizer;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -41,6 +42,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.openscience.cdk.tools.LoggingTool;
@@ -307,6 +309,16 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           currentMolecule.setID(propertyValue);
         } else if (propertyType.equals("inchi")) {
           currentMolecule.setProperty("iupac.nist.chemical.identifier", propertyValue);
+        } else if (propertyType.equals("pdb:residueName")) {
+          currentMolecule.setProperty(
+        	new DictRef(propertyType, propertyValue), propertyValue
+          );
+        } else if (propertyType.equals("pdb:oneLetterCode")) {
+          currentMolecule.setProperty(
+          	new DictRef(propertyType, propertyValue), propertyValue
+          );
+        } else {
+        	logger.warn("Not adding molecule property!");
         }
       } else if (objectType.equals("PseudoAtom")) {
         if (propertyType.equals("label")) {

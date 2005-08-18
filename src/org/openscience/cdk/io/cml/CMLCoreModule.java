@@ -431,6 +431,8 @@ public class CMLCoreModule implements ModuleInterface {
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("id")) {
                     cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
+                } else if (atts.getQName(i).equals("dictRef")) {
+                	cdo.setObjectProperty("Molecule", "dictRef", atts.getValue(i));
                 }
             }
         } else if ("crystal".equals(name)) {
@@ -762,10 +764,6 @@ public class CMLCoreModule implements ModuleInterface {
             } else if (xpath.toString().endsWith("atom/scalar/")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.addElement(cData.trim());
-                } else if (DICTREF.equals("pdb:nTerminus")) {
-                	atomDictRefs.addElement(cData.trim());
-                } else if (DICTREF.equals("pdb:cTerminus")) {
-                	atomDictRefs.addElement(cData.trim());
                 }
             } else {
                 logger.warn("Ignoring scaler: " + xpath);
@@ -844,6 +842,10 @@ public class CMLCoreModule implements ModuleInterface {
         } else if ("basic".equals(name)) {
             // assuming this is the child element of <identifier>
             this.inchi = cData;
+        } else if ("name".equals(name)) {
+            if (xpath.toString().endsWith("molecule/name/")) {
+            	cdo.setObjectProperty("Molecule", DICTREF, cData); 
+            }
         } else {
             logger.warn("Skipping element: " + name);
         }
