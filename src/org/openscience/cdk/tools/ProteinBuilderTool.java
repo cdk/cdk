@@ -43,6 +43,8 @@ import java.util.HashMap;
  * Class that facilitates building protein structures. Building DNA and RNA
  * is done by a complementary class <code>NucleicAcidBuilderTool</code> (to be
  * written).
+ * 
+ * @cdk.module pdb
  */
 public class ProteinBuilderTool {
 
