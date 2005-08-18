@@ -762,6 +762,10 @@ public class CMLCoreModule implements ModuleInterface {
             } else if (xpath.toString().endsWith("atom/scalar/")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.addElement(cData.trim());
+                } else if (DICTREF.equals("pdb:nTerminus")) {
+                	atomDictRefs.addElement(cData.trim());
+                } else if (DICTREF.equals("pdb:cTerminus")) {
+                	atomDictRefs.addElement(cData.trim());
                 }
             } else {
                 logger.warn("Ignoring scaler: " + xpath);
