@@ -115,8 +115,6 @@ public class BioPolymer extends Polymer implements java.io.Serializable, Cloneab
 			// Add atom to Strand (also adds the atom to the monomer).
 			if(oStrand != null)	{
 				oStrand.addAtom(oAtom, oMonomer);	// Same problem as above: better to throw nullpointer exception?
-				String tmp = (String)oStrand.getStrandName();
-				
 				if (!strands.containsKey(oStrand.getStrandName())) {
 					strands.put(oStrand.getStrandName(), oStrand);
 				}
@@ -124,10 +122,10 @@ public class BioPolymer extends Polymer implements java.io.Serializable, Cloneab
 		}
 		/* The reasoning above is: 
 		 * All Monomers have to belong to a Strand and all atoms belonging to strands have to belong to a Monomer =>
-		 * ¤ oMonomer != null and oStrand != null, oAtom is added to BioPolymer and to oMonomer in oStrand
-		 * ¤ oMonomer == null and oStrand != null, oAtom is added to BioPolymer and default Monomer in oStrand
-		 * ¤ oMonomer != null and oStrand == null, oAtom is added to BioPolymer, but not to a Monomer or Strand (especially good to maybe throw exception in this case)
-		 * ¤ oMonomer == null and oStrand == null, oAtom is added to BioPolymer, but not to a Monomer or Strand
+		 * ? oMonomer != null and oStrand != null, oAtom is added to BioPolymer and to oMonomer in oStrand
+		 * ? oMonomer == null and oStrand != null, oAtom is added to BioPolymer and default Monomer in oStrand
+		 * ? oMonomer != null and oStrand == null, oAtom is added to BioPolymer, but not to a Monomer or Strand (especially good to maybe throw exception in this case)
+		 * ? oMonomer == null and oStrand == null, oAtom is added to BioPolymer, but not to a Monomer or Strand
 		 * */
 	}
 	
