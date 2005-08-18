@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../src/org/openscience/cdk/io/cml/data/cmlCore.xsd">
 
-    <molecule id="mol1">
+    <molecule id="alanine">
         <name dictRef="pdb:residueName">Ala</name>
         <name dictRef="pdb:oneLetterCode">A</name>
         <atomArray>
@@ -24,7 +24,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol2">
+    <molecule id="arginine">
         <name dictRef="pdb:residueName">Arg</name>
         <name dictRef="pdb:oneLetterCode">R</name>
         <atomArray>
@@ -56,7 +56,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol3">
+    <molecule id="asparagine">
         <name dictRef="pdb:residueName">Asn</name>
         <name dictRef="pdb:oneLetterCode">N</name>
         <atomArray>
@@ -82,7 +82,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol4">
+    <molecule id="aspartic acid">
         <name dictRef="pdb:residueName">Asp</name>
         <name dictRef="pdb:oneLetterCode">D</name>
         <atomArray>
@@ -108,7 +108,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol5">
+    <molecule id="cysteine">
         <name dictRef="pdb:residueName">Cys</name>
         <name dictRef="pdb:oneLetterCode">C</name>
         <atomArray>
@@ -130,7 +130,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol6">
+    <molecule id="phenylalanine">
         <name dictRef="pdb:residueName">Phe</name>
         <name dictRef="pdb:oneLetterCode">F</name>
         <atomArray>
@@ -163,7 +163,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol7">
+    <molecule id="glutamine">
         <name dictRef="pdb:residueName">Gln</name>
         <name dictRef="pdb:oneLetterCode">Q</name>
         <atomArray>
@@ -191,7 +191,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol8">
+    <molecule id="glutamic acid">
         <name dictRef="pdb:residueName">Glu</name>
         <name dictRef="pdb:oneLetterCode">E</name>
         <atomArray>
@@ -219,7 +219,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol9">
+    <molecule id="glycine">
         <name dictRef="pdb:residueName">Gly</name>
         <name dictRef="pdb:oneLetterCode">G</name>
         <atomArray>
@@ -237,7 +237,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol10">
+    <molecule id="histidine">
         <name dictRef="pdb:residueName">His</name>
         <name dictRef="pdb:oneLetterCode">H</name>
         <atomArray>
@@ -268,7 +268,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol11">
+    <molecule id="isoleucine">
         <name dictRef="pdb:residueName">Ile</name>
         <name dictRef="pdb:oneLetterCode">I</name>
         <atomArray>
@@ -294,7 +294,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol12">
+    <molecule id="proline">
         <name dictRef="pdb:residueName">Pro</name>
         <name dictRef="pdb:oneLetterCode">P</name>
         <atomArray>
@@ -319,7 +319,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol13">
+    <molecule id="leucine">
         <name dictRef="pdb:residueName">Leu</name>
         <name dictRef="pdb:oneLetterCode">L</name>
         <atomArray>
@@ -345,7 +345,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol14">
+    <molecule id="lysine">
         <name dictRef="pdb:residueName">Lys</name>
         <name dictRef="pdb:oneLetterCode">K</name>
         <atomArray>
@@ -373,7 +373,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol15">
+    <molecule id="methionine">
         <name dictRef="pdb:residueName">Met</name>
         <name dictRef="pdb:oneLetterCode">M</name>
         <atomArray>
@@ -399,7 +399,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol16">
+    <molecule id="serine">
         <name dictRef="pdb:residueName">Ser</name>
         <name dictRef="pdb:oneLetterCode">S</name>
         <atomArray>
@@ -421,7 +421,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol17">
+    <molecule id="threonine">
         <name dictRef="pdb:residueName">Thr</name>
         <name dictRef="pdb:oneLetterCode">T</name>
         <atomArray>
@@ -445,7 +445,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol18">
+    <molecule id="tryptophan">
         <name dictRef="pdb:residueName">Tyr</name>
         <name dictRef="pdb:oneLetterCode">Y</name>
         <atomArray>
@@ -480,7 +480,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol19">
+    <molecule id="valine">
         <name dictRef="pdb:residueName">Val</name>
         <name dictRef="pdb:oneLetterCode">V</name>
         <atomArray>
@@ -504,7 +504,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="mol20">
+    <molecule id="tyrosine">
         <name dictRef="pdb:residueName">Trp</name>
         <name dictRef="pdb:oneLetterCode">W</name>
         <atomArray>
