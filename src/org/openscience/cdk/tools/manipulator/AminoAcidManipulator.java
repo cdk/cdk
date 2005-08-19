@@ -58,9 +58,12 @@ public class AminoAcidManipulator {
 		for (int i=0; i<bonds.length; i++) {
 			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				Atom[] atoms = bonds[i].getAtoms();
-				if (atoms[i].getSymbol().equals("O")) {
-					// yes, we found a singly bonded oxygen!
-					acid.removeAtomAndConnectedElectronContainers(atoms[i]);
+				for (int j=0; j<atoms.length; j++) {
+					if (atoms[j].getSymbol().equals("O")) {
+						// yes, we found a singly bonded oxygen!
+						acid.removeAtomAndConnectedElectronContainers(atoms[j]);
+						System.out.println("Found and remove acidic oxygen: " + atoms[j]);
+					}
 				}
 			}
 		}
