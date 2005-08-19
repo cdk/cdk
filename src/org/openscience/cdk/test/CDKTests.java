@@ -39,6 +39,7 @@ import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.charges.InductivePartialChargesTest;
 import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.test.config.ConfigTests;
+import org.openscience.cdk.test.dict.DictRefTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
@@ -105,12 +106,12 @@ public class CDKTests
         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
         suite.addTest(CDKChemicalRingConstantsTest.suite());
         suite.addTest(MM2AtomTypeMatcherTest.suite());
+        // from cdk.test.dict
+        suite.addTest(DictRefTest.suite());
         // from cdk.test.charges
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
         suite.addTest(MMFF94PartialChargesTest.suite());
         suite.addTest(InductivePartialChargesTest.suite());
-        // from cdk.test.modeling
-        suite.addTest(ModelBuilder3dTest.suite());
         // from cdk.test.fingerprint
         suite.addTest(FingerprinterTest.suite());
         // from cdk.test.geometry
@@ -132,6 +133,10 @@ public class CDKTests
         suite.addTest(TemplateHandlerTest.suite());
         // from cdk.test.math
         suite.addTest(MathToolsTest.suite());
+        // from cdk.test.modeling
+        suite.addTest(ModelBuilder3dTest.suite());
+        // from cdk.test.modeling.forcefield
+        suite.addTest(ForceFieldTests.suite());
         // from cdk.test.qsar
         suite.addTest(QSARDescriptorTests.suite());
         // from cdk.test.reaction
@@ -147,8 +152,6 @@ public class CDKTests
         suite.addTest(RandomStructureGeneratorTest.suite());
         // from cdk.test.templates
         suite.addTest(AminoAcidsTest.suite());
-        // from cdk.test.modeling.forcefield
-        suite.addTest(ForceFieldTests.suite());
 
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).

@@ -34,7 +34,7 @@ package org.openscience.cdk.dict;
  *
  * @author      Egon Willighagen
  * @cdk.created 2003-08-24
- * @cdk.module  core
+ * @cdk.module  data
  */
 public class DictRef implements java.io.Serializable, Cloneable  {
 
@@ -46,10 +46,6 @@ public class DictRef implements java.io.Serializable, Cloneable  {
         this.dictRef = dictRef;
     }
     
-    public String toString() {
-        return this.type + "=" + dictRef;
-    }
-    
     public String getDictRef() {
         return dictRef;
     }
@@ -57,4 +53,9 @@ public class DictRef implements java.io.Serializable, Cloneable  {
     public String getType() {
         return type;
     }
+
+    public String toString() {
+        return "DictRef{T=" + this.type + ", R=" + dictRef +"}";
+    }
+    
 }
