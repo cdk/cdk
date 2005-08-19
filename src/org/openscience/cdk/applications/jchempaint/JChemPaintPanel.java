@@ -609,15 +609,20 @@ public abstract class JChemPaintPanel
 	public void scaleAndCenterMolecule(ChemModel chemModel) {
     scaleAndCenterMolecule(chemModel, null);
   }
+
+	public void scaleAndCenterMolecule(ChemModel chemModel, Dimension dim) {
+		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
+		scaleAndCenterMolecule(ac,dim);
+	}
+	
 	/**
 	 *  Scales and centers the structure in the dimensions of the DrawingPanel.
 	 *
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
-	public void scaleAndCenterMolecule(ChemModel chemModel, Dimension dim) {
+	public void scaleAndCenterMolecule(AtomContainer ac, Dimension dim) {
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
-	    AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
 	    Atom[] atoms = ac.getAtoms();
 	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 	    GeometryTools.scaleMolecule(ac, scaleFactor);
