@@ -35,20 +35,21 @@ import org.openscience.cdk.exception.CDKException;
 
 /**
  * Class with convenience methods that provide methods to manipulate
- * AtomContainer's. For example:
- * <pre>
- * AtomContainerManipulator.replaceAtomByAtom(container, atom1, atom2);
- * </pre>
- * will replace the Atom in the AtomContainer, but in all the ElectronContainer's
- * it participates too.
+ * AminoAcid's.
  *
  * @cdk.module standard
  *
- * @author  Egon Willighagen
- * @cdk.created 2003-08-07
+ * @author      Egon Willighagen
+ * @cdk.created 2005-08-19
  */
 public class AminoAcidManipulator {
 
+	/**
+	 * Removes the singly bonded oxygen from the acid group of the AminoAcid.
+	 * 
+	 * @param acid AminoAcid from which to remove the oxygen
+	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid 
+	 */
 	public static void removeAcidicOxygen(AminoAcid acid) throws CDKException {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
