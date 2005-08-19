@@ -307,7 +307,7 @@
         </xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
-        <xsd:pattern value="[\!\$\%\^\*\@\~\;\#\,\/\|]"/>
+        <xsd:pattern value="\!\$\%\^\*\@\~\;\#\,\/\|"/>
     </xsd:restriction>
 </xsd:simpleType><xsd:simpleType name="sizeType" id="st.sizeType" xmlns:h="http://www.w3.org/1999/xhtml">
     <xsd:annotation>
