@@ -36,6 +36,7 @@ import org.openscience.cdk.Strand;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 
 import java.util.HashMap;
 
@@ -61,6 +62,14 @@ public class ProteinBuilderTool {
     public static BioPolymer addAminoAcidAtNTerminus(
         BioPolymer protein, AminoAcid aaToAdd, Strand strand, AminoAcid aaToAddTo)
     {
+        // remove the acidic oxygen which is to be replaced by the nitrogen
+    	try {
+    		AminoAcidManipulator.removeAcidicOxygen(aaToAdd);
+    	} catch (Exception exception) {
+    		logger.error("Could not remove acidic oxygen: ", exception.getMessage());
+    		logger.debug(exception);
+    	}
+    	// then add the amino acid
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
         if (protein.getMonomerCount() == 0) {
@@ -75,7 +84,9 @@ public class ProteinBuilderTool {
     
     /**
      * Builds a protein by connecting a new amino acid at the C-terminus of the
-     * given strand.
+     * given strand. The acidic oxygen of the added amino acid is removed so that
+     * additional amino acids can be added savely. But this also means that you
+     * might want to add an oxygen at the end of the protein building!
      *
      * @param protein protein to which the strand belongs
      * @param aaToAdd amino acid to add to the strand of the protein
@@ -84,6 +95,17 @@ public class ProteinBuilderTool {
     public static BioPolymer addAminoAcidAtCTerminus(
         BioPolymer protein, AminoAcid aaToAdd, Strand strand, AminoAcid aaToAddTo)
     {
+        // remove the acidic oxygen which might be removed by the next added amino
+    	// acid... so we'll have a dangling carbonyl in the end
+    	logger.debug("Before removal: ", aaToAdd);
+    	try {
+    		AminoAcidManipulator.removeAcidicOxygen(aaToAdd);
+    	} catch (Exception exception) {
+    		logger.error("Could not remove acidic oxygen: ", exception.getMessage());
+    		logger.debug(exception);
+    	}
+    	logger.debug("After removal: ", aaToAdd);
+    	// then add the amino acid
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
         if ((protein.getMonomerCount() != 0) && (aaToAddTo != null)) {
@@ -124,6 +146,15 @@ public class ProteinBuilderTool {
             addAminoAcidAtCTerminus(protein, aminoAcid, strand, previousAA);
             previousAA = aminoAcid;
         }
+        // add the last oxygen of the protein
+        Atom oxygen = new Atom("O");
+        // ... to amino acid
+        previousAA.addAtom(oxygen);
+        Bond bond = new Bond(oxygen, previousAA.getCTerminus(), 1.0);
+        previousAA.addBond(bond);
+        // ... and to protein
+        protein.addAtom(oxygen, previousAA, strand);
+        protein.addBond(bond);
         return protein;
     }
     
