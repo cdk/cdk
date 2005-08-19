@@ -62,7 +62,6 @@ public class AminoAcidManipulator {
 					if (atoms[j].getSymbol().equals("O")) {
 						// yes, we found a singly bonded oxygen!
 						acid.removeAtomAndConnectedElectronContainers(atoms[j]);
-						System.out.println("Found and remove acidic oxygen: " + atoms[j]);
 					}
 				}
 			}
