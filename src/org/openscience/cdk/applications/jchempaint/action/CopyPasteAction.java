@@ -50,8 +50,10 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.SVGWriter;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -99,9 +101,8 @@ public class CopyPasteAction extends JCPAction{
 	        			logger.warn("Pastes string is not recognized.");
 	        		}
 	        	}
+    			AtomContainer topaste = null;
         		if (reader != null) {
-        			logger.debug("Seems we got a reader");
-        			AtomContainer topaste = null;
         			if (reader.accepts(new Molecule())) { 
         				topaste = (AtomContainer) reader.read(new Molecule());
         			} else if (reader.accepts(new ChemFile())) {
@@ -109,30 +110,38 @@ public class CopyPasteAction extends JCPAction{
         						(ChemFile)reader.read(new ChemFile())
         				);
         			}
-		            if (topaste != null) {
-		                topaste = (AtomContainer)topaste.clone();
-		                ChemModel chemModel = jcpModel.getChemModel();
-		                //translate the new structure a bit
-		                GeometryTools.translate2D(topaste, 25, 25); //in pixels
-		                //paste the new structure into the active model
-		                SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
-		                if (moleculeSet == null) {
-		                    moleculeSet = new SetOfMolecules();
-			                chemModel.setSetOfMolecules(moleculeSet);
-		                }
-		                moleculeSet.addMolecule(new Molecule(topaste));
-		                // to ensure, that the molecule is  shown in the actual visibile part of jcp
-		                jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
-		                //make the pasted structure selected
-		                renderModel.setSelectedPart(topaste);
-		            }
-        			
         		}
-	        }
+        		if(transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {
+        			try{
+        				SmilesParser sp = new SmilesParser();
+        				topaste = sp.parseSmiles((String) transfer.getTransferData (DataFlavor.stringFlavor));
+        				new StructureDiagramGenerator((Molecule)topaste).generateCoordinates();
+        				jcpPanel.scaleAndCenterMolecule(topaste,jcpPanel.getSize());
+        			}catch(Exception ex){
+        				//we just try smiles
+        			}
+        		}
+	            if (topaste != null) {
+	                topaste = (AtomContainer)topaste.clone();
+	                ChemModel chemModel = jcpModel.getChemModel();
+	                //translate the new structure a bit
+	                GeometryTools.translate2D(topaste, 25, 25); //in pixels
+	                //paste the new structure into the active model
+	                SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+	                if (moleculeSet == null) {
+	                    moleculeSet = new SetOfMolecules();
+		                chemModel.setSetOfMolecules(moleculeSet);
+	                }
+	                moleculeSet.addMolecule(new Molecule(topaste));
+	                // to ensure, that the molecule is  shown in the actual visibile part of jcp
+	                jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
+	                //make the pasted structure selected
+	                renderModel.setSelectedPart(topaste);
+	            }
+        	}
     	} catch(Exception ex){
     		ex.printStackTrace();
     	}
-    	//handleSystemClipboard();
     }
     
     void handleSystemClipboard()
@@ -150,7 +159,6 @@ public class CopyPasteAction extends JCPAction{
 			if(cl==null) text+="null";
 			else text+=cl.getName();
 		}
-		System.err.println(text);
 		logger.debug(text);
     }
 
