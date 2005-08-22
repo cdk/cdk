@@ -69,7 +69,7 @@ public class INChIReaderTest extends CDKTestCase {
      * of guanine.
      */
     public void testGuanine() {
-        String filename = "data/ichi/guanine.inchi.xml";
+        String filename = "data/inchi/guanine.inchi.xml";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

@@ -66,7 +66,7 @@ public class CrystClustReaderTest extends CDKTestCase {
     }
 
     public void testEstrone() {
-        String filename = "data/estron.crystclust";
+        String filename = "data/crystclust/estron.crystclust";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

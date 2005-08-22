@@ -56,7 +56,7 @@ public class ShelXReaderTest extends CDKTestCase {
     }
 
     public void testReading() {
-        String filename = "data/frame_1.res";
+        String filename = "data/shelx/frame_1.res";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

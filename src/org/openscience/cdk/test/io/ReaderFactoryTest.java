@@ -96,11 +96,11 @@ public class ReaderFactoryTest extends CDKTestCase {
     }
 
     public void testGhemical() {
-        expectReader("data/ethene.mm1gp", new GhemicalSPMFormat());
+        expectReader("data/ghemical/ethene.mm1gp", new GhemicalSPMFormat());
     }
 
     public void testJaguar() {
-        expectFormat("data/ch4-opt.out", new JaguarFormat());
+        expectFormat("data/jaguar/ch4-opt.out", new JaguarFormat());
     }
 
     public void testIChI() {
@@ -108,43 +108,43 @@ public class ReaderFactoryTest extends CDKTestCase {
     }
 
     public void testINChI() {
-        expectReader("data/ichi/guanine.inchi.xml", new INChIFormat());
+        expectReader("data/inchi/guanine.inchi.xml", new INChIFormat());
     }
 
     public void testINChIPlainText() {
-        expectReader("data/ichi/guanine.inchi", new INChIPlainTextFormat());
+        expectReader("data/inchi/guanine.inchi", new INChIPlainTextFormat());
     }
 
     public void testVASP() {
-        expectReader("data/LiMoS2_optimisation_ISIF3.vasp", new VASPFormat());
+        expectReader("data/vasp/LiMoS2_optimisation_ISIF3.vasp", new VASPFormat());
     }
 
     public void testAces2() {
-        expectFormat("data/ch3oh_ace.out", new Aces2Format());
+        expectFormat("data/aces2/ch3oh_ace.out", new Aces2Format());
     }
 
     public void testADF() {
-        expectFormat("data/ammonia.adf.out", new ADFFormat());
+        expectFormat("data/adf/ammonia.adf.out", new ADFFormat());
     }
 
     public void testGamess() {
-        expectReader("data/ch3oh_gam.out", new GamessFormat());
+        expectReader("data/gamess/ch3oh_gam.out", new GamessFormat());
     }
 
     public void testABINIT() {
-        expectFormat("data/t54.in", new ABINITFormat());
+        expectFormat("data/abinit/t54.in", new ABINITFormat());
     }
 
     public void testCML() {
-        expectReader("data/cmltest/estron.cml", new CMLFormat());
+        expectReader("data/cml/estron.cml", new CMLFormat());
     }
 
     public void testXYZ() {
-        expectReader("data/bf3.xyz", new XYZFormat());
+        expectReader("data/xyz/bf3.xyz", new XYZFormat());
     }
 
     public void testShelX() {
-        expectReader("data/frame_1.res", new ShelXFormat());
+        expectReader("data/shelx/frame_1.res", new ShelXFormat());
     }
     
     public void testMDLMol() {
@@ -152,7 +152,7 @@ public class ReaderFactoryTest extends CDKTestCase {
     }
 
     public void testPDB() {
-        expectReader("data/coffeine.pdb", new PDBFormat());
+        expectReader("data/pdb/coffeine.pdb", new PDBFormat());
     }
     
     private void expectFormat(String filename, ChemFormat expectedFormat) {

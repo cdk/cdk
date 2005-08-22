@@ -77,7 +77,7 @@ public class JumboTest extends CDKTestCase {
      * - X2D only
      */
     public void testCuran() {
-        String filename = "data/cmltest/curan.xml";
+        String filename = "data/cml/curan.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -113,7 +113,7 @@ public class JumboTest extends CDKTestCase {
      * - X2D only
      */
     public void testCephNS() {
-        String filename = "data/cmltest/ceph-ns.xml";
+        String filename = "data/cml/ceph-ns.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -149,7 +149,7 @@ public class JumboTest extends CDKTestCase {
      * - no coords
      */
     public void testNucleustest() {
-        String filename = "data/cmltest/nucleustest.xml";
+        String filename = "data/cml/nucleustest.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

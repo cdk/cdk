@@ -63,7 +63,7 @@ public class HINReaderTest extends CDKTestCase {
     }
 
     public void testBenzene() {
-        String filename = "data/benzene.hin";
+        String filename = "data/hin/benzene.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -92,7 +92,7 @@ public class HINReaderTest extends CDKTestCase {
     }
 
     public void testMoleculeTwo() {
-        String filename = "data/molecule2.hin";
+        String filename = "data/hin/molecule2.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -121,7 +121,7 @@ public class HINReaderTest extends CDKTestCase {
     }
 
     public void testMultiple() {
-        String filename = "data/multiple.hin";
+        String filename = "data/hin/multiple.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

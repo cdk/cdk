@@ -64,7 +64,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCOONa() {
-        String filename = "data/cmltest/COONa.cml";
+        String filename = "data/cml/COONa.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -102,7 +102,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testNitrate() {
-        String filename = "data/cmltest/nitrate.cml";
+        String filename = "data/cml/nitrate.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -140,7 +140,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK1() {
-        String filename = "data/cmltestok/cs2a.cml";
+        String filename = "data/cml/cs2a.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -172,7 +172,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK2() {
-        String filename = "data/cmltestok/cs2a.mol.cml";
+        String filename = "data/cml/cs2a.mol.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -204,7 +204,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK3() {
-        String filename = "data/cmltestok/nsc2dmol.1.cml";
+        String filename = "data/cml/nsc2dmol.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -236,7 +236,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK4() {
-        String filename = "data/cmltestok/nsc2dmol.2.cml";
+        String filename = "data/cml/nsc2dmol.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -268,7 +268,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK5() {
-        String filename = "data/cmltestok/nsc2dmol.a1.cml";
+        String filename = "data/cml/nsc2dmol.a1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -300,7 +300,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK6() {
-        String filename = "data/cmltestok/nsc2dmol.a2.cml";
+        String filename = "data/cml/nsc2dmol.a2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -332,7 +332,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK7() {
-        String filename = "data/cmltestok/nsc3dcml.xml";
+        String filename = "data/cml/nsc3dcml.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -364,7 +364,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK8() {
-        String filename = "data/cmltestok/nsc2dcml.xml";
+        String filename = "data/cml/nsc2dcml.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -396,7 +396,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK9() {
-        String filename = "data/cmltestok/nsc3dmol.1.cml";
+        String filename = "data/cml/nsc3dmol.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -428,7 +428,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK10() {
-        String filename = "data/cmltestok/nsc3dmol.2.cml";
+        String filename = "data/cml/nsc3dmol.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -460,7 +460,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK11() {
-        String filename = "data/cmltestok/nsc3dmol.a1.cml";
+        String filename = "data/cml/nsc3dmol.a1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -492,7 +492,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     public void testCMLOK12() {
-        String filename = "data/cmltestok/nsc3dmol.a2.cml";
+        String filename = "data/cml/nsc3dmol.a2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

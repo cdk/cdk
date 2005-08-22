@@ -67,7 +67,7 @@ public class JChemPaintTest extends CDKTestCase {
      * This one tests a CML2 file.
      */
     public void testSalt() {
-        String filename = "data/cmltest/COONa.cml";
+        String filename = "data/cml/COONa.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -101,7 +101,7 @@ public class JChemPaintTest extends CDKTestCase {
      * This one tests reading of output from the WWMM matrix (KEGG collection).
      */
     public void testWWMMOutput() {
-        String filename = "data/cmltest/keggtest.cml";
+        String filename = "data/cml/keggtest.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {

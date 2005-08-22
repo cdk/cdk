@@ -89,7 +89,7 @@ public class PDBReaderTest extends TestCase {
   }
 
 	public void testPDBFileCoffein() {
-        String filename = "data/coffeine.pdb";
+        String filename = "data/pdb/coffeine.pdb";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
             ChemObjectReader oReader = new PDBReader(new InputStreamReader(ins));
@@ -168,7 +168,7 @@ public class PDBReaderTest extends TestCase {
    * Tests reading a protein PDB file.
    */
   public void testProtein() {
-    String filename = "data/Test-1crn.pdb";
+    String filename = "data/pdb/Test-1crn.pdb";
     InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
     try {
