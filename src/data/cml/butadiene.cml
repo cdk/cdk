@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<molecule id="butadiene.cml" convention="CML-1999-05-15">
+  <string title="GenerationDate">Sat May 4 14:07:20 2002</string>
+  <string title="GenerationSoftware">XDrawChem 0.9</string>
+  <atom id="a0">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">84 138</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a1">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">105.651 125.5</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a2">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">127.301 138</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a3">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">148.952 125.5</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <bond id="b0" atomRefs="a0 a1">
+    <string builtin="order">2</string>
+  </bond>
+  <bond id="b1" atomRefs="a1 a2">
+    <string builtin="order">1</string>
+  </bond>
+  <bond id="b2" atomRefs="a2 a3">
+    <string builtin="order">2</string>
+  </bond>
+</molecule>

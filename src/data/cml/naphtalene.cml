@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<molecule id="91-20-3">
+  <string title="GenerationDate">Sun Sep 03 13:38:39 GMT+02:00 2000</string>
+  <string title="CAS-Number">91-20-3</string>
+  <string title="Author">Geert Josten</string>
+  <string title="GenerationSoftware">JChemPaint 0.8pre3</string>
+  <atomArray>
+    <stringArray builtin="id">a1 a2 a3 a4 a5 a6 a7 a8 a9 a10</stringArray>
+    <stringArray builtin="elementType">C C C C C C C C C C</stringArray>
+    <floatArray builtin="x2" units="arbitrary">
+      12.8333 12.0833 10.5833 9.8333 10.5833 12.0833 12.8334 14.3334 15.0833 14.3333 
+    </floatArray>
+    <floatArray builtin="y2" units="arbitrary">
+      7.6740 8.9731 8.9731 7.6740 6.3750 6.3750 10.2721 10.2721 8.9730 7.6740 
+    </floatArray>
+  </atomArray>
+  <bondArray>
+    <stringArray builtin="atomRefs">a1 a1 a1  a2 a2 a3 a4 a5 a7 a8 a9</stringArray>
+    <stringArray builtin="atomRefs">a2 a6 a10 a3 a7 a4 a5 a6 a8 a9 a10</stringArray>
+    <stringArray builtin="order">   1  2  1   2  1  1  2  1  2  1  2</stringArray>
+  </bondArray>
+</molecule>

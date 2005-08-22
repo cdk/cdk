@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<molecule>
+<atomArray>
+<atom x2="14.726185" elementType="C" y2="7.1110344" id="a27271771"/>
+<atom x2="13.632989" elementType="C" y2="7.7421913" id="a13594894"/>
+<atom x2="15.819381" elementType="C" y2="7.7421913" id="a26285376"/>
+<atom x2="13.632989" elementType="C" y2="9.004505" id="a5253145"/>
+<atom x2="15.819381" elementType="C" y2="9.004505" id="a2355643"/>
+<atom x2="15.062802" elementType="C" y2="10.014357" id="a6526955"/>
+<atom x2="13.843374" elementType="C" y2="9.972279" id="a22922109"/>
+</atomArray>
+<bondArray>
+<bond order="S" atomRefs2="a27271771 a13594894" id="b19141351"/>
+<bond order="S" atomRefs2="a26285376 a27271771" id="b14434757"/>
+<bond order="S" atomRefs2="a13594894 a5253145" id="b14779369"/>
+<bond order="S" atomRefs2="a2355643 a26285376" id="b9144903"/>
+<bond order="S" atomRefs2="a5253145 a6526955" id="b6146452"/>
+<bond order="S" atomRefs2="a2355643 a22922109" id="b6232809"/>
+</bondArray>
+</molecule>

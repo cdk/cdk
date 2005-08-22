@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<molecule id="benzene">
+  <atomArray>
+    <stringArray builtin="id">a1 a2 a3 a4 a5 a6</stringArray>
+    <stringArray builtin="elementType">C C C C C C</stringArray>
+  </atomArray>
+  <bondArray>
+    <stringArray builtin="atomRefs">a1 a2 a3 a4 a5 a6</stringArray>
+    <stringArray builtin="atomRefs">a2 a3 a4 a5 a6 a1</stringArray>
+    <stringArray builtin="order">1 2 1 2 1 2</stringArray>
+  </bondArray>
+</molecule>

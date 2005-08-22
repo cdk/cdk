@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE molecule SYSTEM "cml.dtd" []>
+<molecule id="cyclohexane.cml" convention="CML-1999-05-15">
+  <string title="GenerationDate">Sun Feb 25 18:04:28 2001</string>
+  <string title="GenerationSoftware">XDrawChem 0.84alpha</string>
+  <atom id="a1">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">223.651 252</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a2">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">245.301 264.5</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a3">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">245.301 289.5</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a4">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">223.651 302</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a5">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">202 289.5</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <atom id="a6">
+    <string builtin="elementType">C</string>
+    <coordinate2 builtin="xy2">202 264.5</coordinate2>
+    <integer builtin="formalCharge">0</integer>
+  </atom>
+  <bond id="b1" atomRefs="a1 a2">
+    <string builtin="order">1</string>
+  </bond>
+  <bond id="b2" atomRefs="a2 a3">
+    <string builtin="order">1</string>
+  </bond>
+  <bond id="b3" atomRefs="a3 a4">
+    <string builtin="order">1</string>
+  </bond>
+  <bond id="b4" atomRefs="a4 a5">
+    <string builtin="order">1</string>
+  </bond>
+  <bond id="b5" atomRefs="a5 a6">
+    <string builtin="order">1</string>
+  </bond>
+  <bond id="b6" atomRefs="a6 a1">
+    <string builtin="order">1</string>
+  </bond>
+</molecule>
