@@ -83,7 +83,7 @@ public class DictionaryDatabase {
             logger.debug(exception);
         }
         return dictionary;
-    };
+    }
 
     /**
      * Reads a custom dictionary into the database.
@@ -103,7 +103,7 @@ public class DictionaryDatabase {
         } else {
             logger.error("Dictionary already loaded: ", name);
         }
-    };
+    }
 
     /**
      * Returns a String[] with the names of the known dictionaries.

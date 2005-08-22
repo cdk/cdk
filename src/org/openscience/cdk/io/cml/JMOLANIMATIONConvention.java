@@ -44,7 +44,6 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
 
     private int current;
     private String frame_energy;
-    private String units;
     private LoggingTool logger;
 
     public JMOLANIMATIONConvention(CDOInterface cdo) {
@@ -89,8 +88,6 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
                 if (atts.getQName(i).equals("title")
                         && atts.getValue(i).equals("FRAME_ENERGY")) {
                     isEnergy = true;
-                } else if (atts.getQName(i).equals("units")) {
-                    units = atts.getValue(i);
                 }
             }
             if (isEnergy) {
@@ -111,7 +108,6 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
                 // + " " + units);
             current = UNKNOWN;
             frame_energy = "";
-            units = "";
         } else if (name.equals("list")) {
             super.endElement(xpath, uri, local, raw);
             cdo.endObject("Animation");

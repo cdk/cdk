@@ -96,8 +96,8 @@ public class WWMMatrixReader {
             public String getFormatName() {
                 return "World Wide Molecular Matrix";
             }
-            public String getReaderClassName() { return null; };
-            public String getWriterClassName() { return null; };
+            public String getReaderClassName() { return null; }
+            public String getWriterClassName() { return null; }
         };
     }
     public void setReader(Reader input) throws CDKException {

@@ -26,7 +26,6 @@ package org.openscience.cdk.io.cml;
 import java.util.Hashtable;
 
 import javax.vecmath.Vector3d;
-import java.util.StringTokenizer;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;

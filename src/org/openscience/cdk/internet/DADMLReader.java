@@ -99,8 +99,8 @@ public class DADMLReader {
             public String getFormatName() {
                 return "DADML network";
             }
-            public String getReaderClassName() { return null; };
-            public String getWriterClassName() { return null; };
+            public String getReaderClassName() { return null; }
+            public String getWriterClassName() { return null; }
         };
     }
     
@@ -200,7 +200,6 @@ public class DADMLReader {
         String indexType = dadmlRI.getPath().substring(1);
         String index = dadmlRI.getQuery();
         
-        Molecule molecule = new Molecule();
         DBLIST dblist = new DBLIST();
         try {
             logger.info("Downloading DADML super database: ", this.superdb);

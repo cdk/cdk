@@ -51,7 +51,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     
     public void setInputStream(InputStream ins) {
         this.ins = ins;
-    };
+    }
     
     public Vector readAtomTypes() throws IOException {
         Vector atomTypes = new Vector(0);

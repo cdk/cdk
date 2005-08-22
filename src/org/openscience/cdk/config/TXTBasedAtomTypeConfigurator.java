@@ -58,7 +58,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
      */
     public void setInputStream(InputStream ins) {
         this.ins = ins;
-    };
+    }
     
     /**
      * Read a text based configuration file
