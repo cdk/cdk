@@ -125,7 +125,6 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 		Molecule mol = new Molecule(ac);
 		
 		Atom target = mol.getAtomAt(atomPosition);
-		Atom[] neighboors = mol.getConnectedAtoms(target);
 		double effectivePolarizability = 0;
 		effectivePolarizability = pol.calculateGHEffectiveAtomPolarizability(mol, target, 1000);
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(effectivePolarizability));

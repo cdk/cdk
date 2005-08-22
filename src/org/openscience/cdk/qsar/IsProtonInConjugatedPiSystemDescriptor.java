@@ -140,30 +140,24 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 			Molecule mol = new Molecule(ac);
 			if (checkAromaticity) {
 				HueckelAromaticityDetector.detectAromaticity(mol);
+        System.err.println("detecting aromaticity");
 			}
 			Atom target = ac.getAtomAt(atomPosition);
 			if(target.getSymbol().equals("H")) {
         if(acold!=ac){
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
+          System.err.println("detecting conjucatioN");
         }
 				AtomContainer[] detected = acSet.getAtomContainers();
 				Atom[] neighboors = mol.getConnectedAtoms(target);
 				for (int i = 0; i < neighboors.length; i++) {
 					for(int d = 0; d < detected.length; d++) {
 						if ((detected[d]!= null) && (detected[d].contains(neighboors[i]))) {
-							counter += 1;
-						}
-						else {
-							counter += 0;
+							isProtonInPiSystem=true;
+              break;
 						}
 					}
-				}
-				if(counter > 0) {
-					isProtonInPiSystem = true;
-				}
-				else {
-					isProtonInPiSystem = false;
 				}
 			}
 			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(isProtonInPiSystem));

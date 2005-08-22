@@ -140,6 +140,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
 			sigmaElectronegativity = ((gasteigerFactors[start]) + (mol.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((mol.getAtomAt(atomPosition).getCharge() * mol.getAtomAt(atomPosition).getCharge()))));
       return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(sigmaElectronegativity));
 		} catch (Exception ex1) {
+      ex1.printStackTrace();
 			throw new CDKException("Problems with GasteigerMarsiliPartialCharges due to " + ex1.toString());
 		}
 	}
