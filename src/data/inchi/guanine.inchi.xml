@@ -1,0 +1,30 @@
+<INChI version="1.1Beta">
+
+ <structure number="1">
+
+  <identifier version="1.1Beta" mobile-H="1">
+   <version>1.1Beta</version>
+   <formula>C5H5N5O</formula>
+   <connections>6-5-9-3-2(4(11)10-5)7-1-8-3</connections>
+   <H>1H,(H4,6,7,8,9,10,11)</H>
+  </identifier>
+
+  <identifier.auxiliary-info version="1.1Beta" mobile-H="1">
+   <!-- Auxiliary info is not a part of the identifier, it is not unique -->
+   <atom.orig-nbr>11,6,8,5,1,4,9,10,3,2,7</atom.orig-nbr>
+   <reversibility>
+    <atoms>
+     11CNNNCCOCNNC
+    </atoms>
+    <bonds>
+     s1;d1;s1;s2;s5;d5;s3d6;s6;s8;s9d10;
+    </bonds>
+    <xyz>
+     3.8747,-2.5396,0;3.8747,-1.7132,0;4.5771,-2.9115,0;3.1309,-2.9115,0;
+     4.5771,-1.3,0;5.2382,-1.7132,0;4.5771,-.4737,0;5.2382,-2.5396,0;
+     6.0646,-1.4653,0;6.0646,-2.7462,0;6.5191,-2.1264,0;
+    </xyz>
+   </reversibility>
+  </identifier.auxiliary-info>
+ </structure>
+</INChI>
