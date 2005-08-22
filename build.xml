@@ -410,7 +410,7 @@
                     <exclude name="**/*" unless="module.datafiles.present"/>
                     <includesfile name="${metainf}/${module}.datafiles" if="module.datafiles.present" />
                </fileset>
-               <fileset dir=".">
+               <fileset dir="${src}">
                     <exclude name="**/*" unless="module.extrafiles.present"/>
                     <includesfile name="${metainf}/${module}.extrafiles" if="module.extrafiles.present" />
                </fileset>
@@ -557,7 +557,7 @@
                         </fileset>
                 </copy>
                 <copy todir="${sourcedist.dir}/data">
-                        <fileset dir="data" />
+                        <fileset dir="src/data" />
                 </copy>
                 <copy tofile="${sourcedist.dir}/doc/javadoc/source//MakeJavaFilesFilesDoclet.java"
                       file="doc/javadoc/source/MakeJavaFilesFilesDoclet.java"/>
