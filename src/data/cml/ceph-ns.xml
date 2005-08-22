@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<cml:molecule xmlns:cml="http://www.xml-cml.org/DTD/V1_0_1"  convention="SMILES" id="ceph">
+  
+  
+  <cml:atomArray>
+    <cml:atom id="a1">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">1</cml:integer>
+      <cml:float builtin="x2">-15.00000000000001</cml:float>
+      <cml:float builtin="y2">-25.980762113533153</cml:float>
+</cml:atom>
+    <cml:atom id="a2">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">1</cml:integer>
+      <cml:float builtin="x2">-15.000000000000037</cml:float>
+      <cml:float builtin="y2">-55.980762113533146</cml:float>
+</cml:atom>
+    <cml:atom id="a3">
+            <cml:string builtin="elementType">N</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">2</cml:integer>
+      <cml:float builtin="x2">-36.21320343559648</cml:float>
+      <cml:float builtin="y2">-77.19396554912956</cml:float>
+</cml:atom>
+    <cml:atom id="a4">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">14.999999999999957</cml:float>
+      <cml:float builtin="y2">-55.98076211353317</cml:float>
+</cml:atom>
+    <cml:atom id="a5">
+            <cml:string builtin="elementType">O</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">36.21320343559636</cml:float>
+      <cml:float builtin="y2">-77.19396554912962</cml:float>
+</cml:atom>
+    <cml:atom id="a6">
+            <cml:string builtin="elementType">N</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">14.999999999999984</cml:float>
+      <cml:float builtin="y2">-25.980762113533174</cml:float>
+</cml:atom>
+    <cml:atom id="a7">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">30.000000000000004</cml:float>
+      <cml:float builtin="y2">0.0</cml:float>
+</cml:atom>
+    <cml:atom id="a8">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">60.0</cml:float>
+      <cml:float builtin="y2">-5.510728592200698E-15</cml:float>
+</cml:atom>
+    <cml:atom id="a9">
+            <cml:string builtin="elementType">O</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">120.25346323107017</cml:float>
+      <cml:float builtin="y2">47.539367784203705</cml:float>
+</cml:atom>
+    <cml:atom id="a10">
+            <cml:string builtin="elementType">O</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">1</cml:integer>
+      <cml:float builtin="x2">153.5867965644035</cml:float>
+      <cml:float builtin="y2">19.539367784203705</cml:float>
+</cml:atom>
+    <cml:atom id="a11">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">15.000000000000005</cml:float>
+      <cml:float builtin="y2">25.98076211353316</cml:float>
+</cml:atom>
+    <cml:atom id="a12">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">2</cml:integer>
+      <cml:float builtin="x2">30.00000000000002</cml:float>
+      <cml:float builtin="y2">51.96152422706631</cml:float>
+</cml:atom>
+    <cml:atom id="a13">
+            <cml:string builtin="elementType">O</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">1</cml:integer>
+      <cml:float builtin="x2">53.933300224210775</cml:float>
+      <cml:float builtin="y2">70.05011566967988</cml:float>
+</cml:atom>
+    <cml:atom id="a14">
+            <cml:string builtin="elementType">C</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">2</cml:integer>
+      <cml:float builtin="x2">-14.999999999999993</cml:float>
+      <cml:float builtin="y2">25.980762113533167</cml:float>
+</cml:atom>
+    <cml:atom id="a15">
+            <cml:string builtin="elementType">S</cml:string>
+
+          <cml:integer builtin="nonHydrogenCount">0</cml:integer>
+      <cml:float builtin="x2">-30.0</cml:float>
+      <cml:float builtin="y2">5.450175900867383E-15</cml:float>
+</cml:atom>
+  </cml:atomArray>
+  <cml:bondArray>
+    <cml:bond>
+            <cml:string builtin="atomRef">a1</cml:string>
+
+            <cml:string builtin="atomRef">a2</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a2</cml:string>
+
+            <cml:string builtin="atomRef">a3</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a2</cml:string>
+
+            <cml:string builtin="atomRef">a4</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a4</cml:string>
+
+            <cml:string builtin="atomRef">a5</cml:string>
+
+            <cml:string builtin="order">2</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a4</cml:string>
+
+            <cml:string builtin="atomRef">a6</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a1</cml:string>
+
+            <cml:string builtin="atomRef">a6</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a6</cml:string>
+
+            <cml:string builtin="atomRef">a7</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a7</cml:string>
+
+            <cml:string builtin="atomRef">a8</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a8</cml:string>
+
+            <cml:string builtin="atomRef">a9</cml:string>
+
+            <cml:string builtin="order">2</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a8</cml:string>
+
+            <cml:string builtin="atomRef">a10</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a7</cml:string>
+
+            <cml:string builtin="atomRef">a11</cml:string>
+
+            <cml:string builtin="order">2</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a11</cml:string>
+
+            <cml:string builtin="atomRef">a12</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a12</cml:string>
+
+            <cml:string builtin="atomRef">a13</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a11</cml:string>
+
+            <cml:string builtin="atomRef">a14</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a14</cml:string>
+
+            <cml:string builtin="atomRef">a15</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+    <cml:bond>
+            <cml:string builtin="atomRef">a1</cml:string>
+
+            <cml:string builtin="atomRef">a15</cml:string>
+
+            <cml:string builtin="order">1</cml:string>
+
+    </cml:bond>
+  </cml:bondArray>
+</cml:molecule>

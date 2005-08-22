@@ -1,0 +1,11 @@
+<molecule id="nucleustest" xmlns="http://www.xml-cml.org/dtd/cml1_0_1">
+  <atomArray>
+    <stringArray builtin="atomId">C1 S2 C3 C31 C32 C4 N5 C6 O61 C7 N8</stringArray>
+    <stringArray builtin="elementType">C S C C C C N C O C N</stringArray>
+  </atomArray>
+  <bondArray>
+    <stringArray builtin="atomRefs">C1 S2 C3  C3  C3 C4 N5 N5 C6  C6 C7 C7</stringArray>
+    <stringArray builtin="atomRefs">S2 C3 C31 C32 C4 N5 C6 C1 O61 C7 N8 C1</stringArray>
+    <stringArray builtin="order">  1  1  1   1   1  1  1  1  2   1  1  1 </stringArray>
+  </bondArray>
+</molecule>
