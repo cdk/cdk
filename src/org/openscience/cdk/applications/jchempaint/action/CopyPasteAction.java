@@ -111,7 +111,7 @@ public class CopyPasteAction extends JCPAction{
         				);
         			}
         		}
-        		if(transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {
+        		if(topaste==null && transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {
         			try{
         				SmilesParser sp = new SmilesParser();
         				topaste = sp.parseSmiles((String) transfer.getTransferData (DataFlavor.stringFlavor));
