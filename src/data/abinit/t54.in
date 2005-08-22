@@ -1,0 +1,62 @@
+# Crystalline AlAs : computation of the dynamical matrix at Gamma
+#
+
+#Response-function calculation, with q=0
+  rfphon   1            # Will consider phonon-type perturbation
+ rfatpol   1 2          # All the atoms will be displaced
+   rfdir   1 1 1        # Along all reduced coordinate axis
+    nqpt   1            # One wavevector is to be considered
+     qpt   0 0 0        # This wavevector is q=0 (Gamma)
+  kptopt   2            # Automatic generation of k points, taking
+                        # into account the time-reversal symmetry only
+  tolvrs   1.0d-8       # SCF stopping criterion
+    iscf   5            # Self-consistent calculation, using algorithm 5
+  irdwfk   1            # Read the ground-state wavefunctions
+ 
+
+#######################################################################
+#Common input variables
+
+#Definition of the unit cell
+acell 3*10.61          # This is equivalent to   10.61 10.61 10.61
+rprim  0.0  0.5  0.5   # In lessons 1 and 2, these primitive vectors 
+       0.5  0.0  0.5   # (to be scaled by acell) were 1 0 0  0 1 0  0 0 1 
+       0.5  0.5  0.0   # that is, the default.
+
+#Definition of the atom types
+ntype 2                # There are two types of atom
+zatnum 13 33           # The keyword "zatnum" refers to the atomic number of the 
+                       # possible type(s) of atom. The pseudopotential(s) 
+                       # mentioned in the "files" file must correspond
+                       # to the type(s) of atom. Here, type 1 is the Aluminum,
+                       # type 2 is the Arsenic.
+
+#Definition of the atoms
+natom 2                # There are two atoms
+type 1 2               # The first is of type 1 (Al), the second is of type 2 (As).
+xred                   # This keyword indicate that the location of the atoms
+                       # will follow, one triplet of number for each atom
+   0.0  0.0  0.0       # Triplet giving the REDUCED coordinate of atom 1.
+   0.25 0.25 0.25      # Triplet giving the REDUCED coordinate of atom 2.
+
+#Gives the number of band, explicitely (do not take the default)
+nband  4               # For an insulator (if described correctly as an insulator 
+                       # by DFT), there is no need to include conduction bands 
+                       # in response-function calculations
+
+#Definition of the planewave basis set
+ecut    3.0           # Maximal kinetic energy cut-off, in Hartree
+
+#Definition of the k-point grid
+kptrlatt -4  4  4      # In cartesian coordinates, this grid is simple cubic, and
+          4 -4  4      # actually corresponds to the so-called 8x8x8 Monkhorst-Pack grid.
+          4  4 -4      # It might as well be obtained through the use of
+                       # ngkpt, nshiftk and shiftk .
+
+#Definition of the SCF procedure
+nstep 15               # Maximal number of SCF cycles
+diemac 9.0             # Although this is not mandatory, it is worth to
+                       # precondition the SCF cycle. The model dielectric
+                       # function used as the standard preconditioner
+                       # is described in the "dielng" input variable section.
+                       # The dielectric constant of AlAs is smaller that the one of Si (=12).
