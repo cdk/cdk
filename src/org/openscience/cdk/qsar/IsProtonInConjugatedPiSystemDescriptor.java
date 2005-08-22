@@ -140,14 +140,12 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 			Molecule mol = new Molecule(ac);
 			if (checkAromaticity) {
 				HueckelAromaticityDetector.detectAromaticity(mol);
-        System.err.println("detecting aromaticity");
-			}
+    	}
 			Atom target = ac.getAtomAt(atomPosition);
 			if(target.getSymbol().equals("H")) {
         if(acold!=ac){
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
-          System.err.println("detecting conjucatioN");
         }
 				AtomContainer[] detected = acSet.getAtomContainers();
 				Atom[] neighboors = mol.getConnectedAtoms(target);
