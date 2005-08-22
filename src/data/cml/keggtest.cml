@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<molecule name="C00007" dictRef="KEGG" xmlns:src="http://xml.apache.org/xindice/Query" src:col="/db/wwmm/kegg" src:key="C00007.cml">
+  <identifier version="0.931Beta" tautomeric="0">
+   <basic>O2,1-2</basic>
+   <charge />
+  </identifier>
+<atomArray>
+    <atom id="a1" elementType="O" x3="-0.7621" y3="-0.1207" z3="0">
+    </atom>
+    <atom id="a2" elementType="O" x3="0.7621" y3="0.1207" z3="0">
+
+    </atom>
+</atomArray>
+  <bondArray>
+    <bond atomRefs2="a1 a2" order="2" />
+  </bondArray>
+</molecule>
