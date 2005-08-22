@@ -89,6 +89,7 @@ public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 	private int targetPosition = 0;
 	Atom atom = null;
 	private LoggingTool logger;
+  private static AtomTypeFactory atomATF=null;
 	
 	/**
 	 *  Constructor for the AtomHybridizationVSEPRDescriptor object
@@ -197,7 +198,8 @@ public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 	private AtomType findMatchingAtomType(AtomContainer container, Atom atom) throws CDKException 
 	{
 		try {
-			AtomTypeFactory atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml");
+      if(atomATF==null)
+        atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml");
 
 			// take atomtype for the given element...
 			AtomType atomType = atomATF.getAtomType(atom.getSymbol());
