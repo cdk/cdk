@@ -56,66 +56,66 @@ public class AbstractValidator implements ValidatorInterface {
     public ValidationReport validateChemObject(ChemObject subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateAtom(Atom subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateAtomContainer(AtomContainer subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateAtomType(AtomType subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateBond(Bond subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateChemFile(ChemFile subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateChemModel(ChemModel subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateChemSequence(ChemSequence subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateCrystal(Crystal subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateElectronContainer(ElectronContainer subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateElement(Element subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateIsotope(Isotope subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateMolecule(Molecule subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateReaction(Reaction subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     public ValidationReport validateSetOfReactions(SetOfReactions subject) {
         ValidationReport report = new ValidationReport();
         return report;
-    };
+    }
     
 }

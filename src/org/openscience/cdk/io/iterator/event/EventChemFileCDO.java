@@ -91,7 +91,7 @@ public class EventChemFileCDO implements CDOInterface {
     */
     public void startDocument() {
         logger.info("New CDO Object");
-    };
+    }
     
     /**
     * Procedure required by the CDOInterface. This function is only
@@ -100,13 +100,13 @@ public class EventChemFileCDO implements CDOInterface {
     public void endDocument() {
         logger.debug("Closing document");
         logger.info("End CDO Object");
-    };
+    }
     
     /**
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
     */
-    public void setDocumentProperty(String type, String value) {};
+    public void setDocumentProperty(String type, String value) {}
     
     /**
     * Procedure required by the CDOInterface. This function is only
@@ -125,7 +125,7 @@ public class EventChemFileCDO implements CDOInterface {
             bond_id = null;
             bond_stereo = -99;
         }
-    };
+    }
     
     /**
     * Procedure required by the CDOInterface. This function is only
@@ -158,7 +158,7 @@ public class EventChemFileCDO implements CDOInterface {
                 currentMolecule.addBond(b);
             }
         }
-    };
+    }
     
     /**
     * Procedure required by the CDOInterface. This function is only
@@ -258,9 +258,9 @@ public class EventChemFileCDO implements CDOInterface {
                     bond_stereo = CDKConstants.STEREO_BOND_UP;
                 }
             }
-        };
+        }
         logger.debug("Object property set...");
-    };
+    }
     
     /**
     * Procedure required by the CDOInterface. This function is only
@@ -273,6 +273,6 @@ public class EventChemFileCDO implements CDOInterface {
         objects.add("Atom");
         objects.add("Bond");
         return objects;
-    };
+    }
 }
 

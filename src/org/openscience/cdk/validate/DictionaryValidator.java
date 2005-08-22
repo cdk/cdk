@@ -114,6 +114,6 @@ public class DictionaryValidator extends AbstractValidator {
             }
         }
         return report;
-    };
+    }
     
 }

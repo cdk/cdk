@@ -60,7 +60,7 @@ public class ValencyValidator extends AbstractValidator {
             }
         }
         return report;
-    };
+    }
     
     // the Molecule tests
 
@@ -79,7 +79,7 @@ public class ValencyValidator extends AbstractValidator {
             }
         } catch (Exception exception) {
             String error = "Error while performing atom valency validation: " + exception.getMessage();
-            System.err.println(error);
+            logger.error(error);
             checkValency.setDetails(error);
             report.addCDKError(checkValency);
         }

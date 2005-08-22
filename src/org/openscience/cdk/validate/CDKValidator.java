@@ -42,10 +42,10 @@ public class CDKValidator extends AbstractValidator {
     
     public ValidationReport validateChemFile(ChemFile subject) {
         return validateChemFileNulls(subject);
-    };
+    }
     public ValidationReport validateChemSequence(ChemSequence subject) {
         return validateChemSequenceNulls(subject);
-    };
+    }
 
     private ValidationReport validateChemFileNulls(ChemFile chemFile) {
         ValidationReport report = new ValidationReport();

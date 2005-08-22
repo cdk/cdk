@@ -66,7 +66,7 @@ public class SwingGUIListener implements ReaderListener, WriterListener {
     }
         
     public void frameRead(ReaderEvent event) {
-    };
+    }
     
     /**
      * Processes the IOSettings by listing the question, giving the options
@@ -122,7 +122,7 @@ public class SwingGUIListener implements ReaderListener, WriterListener {
             }
         } // else skip question
         
-    };
+    }
  
     
  

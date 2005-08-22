@@ -65,7 +65,7 @@ public class ValidatorEngine implements ValidatorInterface {
     public ValidatorEngine() {
         validators = new Hashtable();
         logger = new LoggingTool(this);
-    };
+    }
     
     public void addValidator(ValidatorInterface validator) {
         logger.info("Registering validator: " + validator.getClass().getName());
@@ -100,7 +100,7 @@ public class ValidatorEngine implements ValidatorInterface {
         report.addReport(validateAtomType(subject));
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateAtomContainer(AtomContainer subject) {
         logger.info("Validating org.openscience.cdk.AtomContainer");
         ValidationReport report = new ValidationReport();
@@ -122,7 +122,7 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateBond(bonds[i]));
         }
         return report;
-    };
+    }
     public ValidationReport validateAtomType(AtomType subject) {
         logger.info("Validating org.openscience.cdk.AtomType");
         ValidationReport report = new ValidationReport();
@@ -136,7 +136,7 @@ public class ValidatorEngine implements ValidatorInterface {
         report.addReport(validateIsotope(subject));
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateBond(Bond subject) {
         logger.info("Validating org.openscience.cdk.Bond");
         ValidationReport report = new ValidationReport();
@@ -154,7 +154,7 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateAtom(atoms[i]));
         }
         return report;
-    };
+    }
     public ValidationReport validateChemFile(ChemFile subject) {
         logger.info("Validating org.openscience.cdk.ChemFile");
         ValidationReport report = new ValidationReport();
@@ -172,7 +172,7 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateChemSequence(sequences[i]));
         }
         return report;
-    };
+    }
     public ValidationReport validateChemModel(ChemModel subject) {
         logger.info("Validating org.openscience.cdk.ChemModel");
         ValidationReport report = new ValidationReport();
@@ -198,7 +198,7 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateSetOfMolecules(moleculeSet));
         }
         return report;
-    };
+    }
     public ValidationReport validateChemObject(ChemObject subject) {
         logger.info("Validating org.openscience.cdk.ChemObject");
         ValidationReport report = new ValidationReport();
@@ -211,7 +211,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateChemSequence(ChemSequence subject) {
         logger.info("Validating org.openscience.cdk.ChemSequence");
         ValidationReport report = new ValidationReport();
@@ -229,7 +229,7 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateChemModel(models[i]));
         }
         return report;
-    };
+    }
     public ValidationReport validateCrystal(Crystal subject) {
         logger.info("Validating org.openscience.cdk.Crystal");
         ValidationReport report = new ValidationReport();
@@ -243,7 +243,7 @@ public class ValidatorEngine implements ValidatorInterface {
         report.addReport(validateAtomContainer(subject));
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateElectronContainer(ElectronContainer subject) {
         logger.info("Validating org.openscience.cdk.ElectronContainer");
         ValidationReport report = new ValidationReport();
@@ -257,7 +257,7 @@ public class ValidatorEngine implements ValidatorInterface {
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateElement(Element subject) {
         logger.info("Validating org.openscience.cdk.Element");
         ValidationReport report = new ValidationReport();
@@ -271,7 +271,7 @@ public class ValidatorEngine implements ValidatorInterface {
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateIsotope(Isotope subject) {
         logger.info("Validating org.openscience.cdk.Isotope");
         ValidationReport report = new ValidationReport();
@@ -285,7 +285,7 @@ public class ValidatorEngine implements ValidatorInterface {
         report.addReport(validateElement(subject));
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateMolecule(Molecule subject) {
         logger.info("Validating org.openscience.cdk.Molecule");
         ValidationReport report = new ValidationReport();
@@ -299,7 +299,7 @@ public class ValidatorEngine implements ValidatorInterface {
         report.addReport(validateAtomContainer(subject));
         // traverse into hierarchy
         return report;
-    };
+    }
     public ValidationReport validateReaction(Reaction subject) {
         logger.info("Validating org.openscience.cdk.Reaction");
         ValidationReport report = new ValidationReport();
@@ -321,7 +321,7 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateMolecule(products[i]));
         }
         return report;
-    };
+    }
     public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
         logger.info("Validating org.openscience.cdk.SetOfMolecules");
         ValidationReport report = new ValidationReport();
@@ -339,7 +339,7 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateMolecule(molecules[i]));
         }
         return report;
-    };
+    }
     public ValidationReport validateSetOfReactions(SetOfReactions subject) {
         logger.info("Validating org.openscience.cdk.SetOfReactions");
         ValidationReport report = new ValidationReport();
@@ -357,6 +357,6 @@ public class ValidatorEngine implements ValidatorInterface {
             report.addReport(validateReaction(reactions[i]));
         }
         return report;
-    };
+    }
     
 }

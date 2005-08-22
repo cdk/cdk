@@ -73,7 +73,7 @@ public class PropertiesListener implements ReaderListener, WriterListener {
         }
     }
     
-    public void frameRead(ReaderEvent event) {};
+    public void frameRead(ReaderEvent event) {}
     
     /**
      * Processes the IOSettings by listing the question, giving the options
@@ -93,7 +93,7 @@ public class PropertiesListener implements ReaderListener, WriterListener {
                 out.println(message);
             }
         }
-    };
+    }
   
 }
 

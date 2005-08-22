@@ -61,16 +61,16 @@ public class BasicValidator extends AbstractValidator {
         report.addReport(validateHydrogenCount(subject));
         report.addReport(validatePseudoAtom(subject));
         return report;
-    };
+    }
     public ValidationReport validateBond(Bond subject) {
         ValidationReport report = new ValidationReport();
         report.addReport(validateStereoChemistry(subject));
         report.addReport(validateMaxBondOrder(subject));
         return report;
-    };
+    }
     public ValidationReport validateIsotope(Isotope subject) {
         return validateIsotopeExistence(subject);
-    };
+    }
     public ValidationReport validateMolecule(Molecule subject) {
         ValidationReport report = new ValidationReport();
         ValidationTest emptyMolecule = new ValidationTest(subject,
@@ -99,7 +99,7 @@ public class BasicValidator extends AbstractValidator {
             }
         }
         return report;
-    };
+    }
     public ValidationReport validateReaction(Reaction subject) {
         ValidationReport report = new ValidationReport();
         AtomContainer container1 = new AtomContainer();
@@ -115,7 +115,7 @@ public class BasicValidator extends AbstractValidator {
         report.addReport(validateAtomCountConservation(subject, container1, container2));
         report.addReport(validateChargeConservation(subject, container1, container2));
         return report;
-    };
+    }
     
     // the Atom tests
     

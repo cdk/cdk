@@ -97,8 +97,7 @@ public class TextGUIListener implements ReaderListener, WriterListener {
         }
     }
     
-    public void frameRead(ReaderEvent event) {
-    };
+    public void frameRead(ReaderEvent event) {}
     
     /**
      * Processes the IOSettings by listing the question, giving the options
@@ -177,7 +176,7 @@ public class TextGUIListener implements ReaderListener, WriterListener {
                 }
             }
         }
-    };
+    }
   
 }
 

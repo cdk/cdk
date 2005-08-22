@@ -125,6 +125,6 @@ public class PDBValidator extends AbstractValidator {
             }
         }
         return report;
-    };
+    }
     
 }
