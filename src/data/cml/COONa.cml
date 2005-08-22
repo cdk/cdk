@@ -1,0 +1,16 @@
+<molecule id="m1" xmlns="http://www.xml-cml.org/schema/cml2/core">
+  <atomArray>
+    <atom id="a1" elementType="Na" formalCharge="1" x3="0.3114" y3="-3.223" z3="0">
+    </atom>
+    <atom id="a2" elementType="C" x3="-0.6296" y3="-4.0333" z3="0">
+    </atom>
+    <atom id="a3" elementType="O" formalCharge="-1" x3="0.0865" y3="-4.4458" z3="0">
+    </atom>
+    <atom id="a4" elementType="O" x3="-0.6296" y3="-3.2083" z3="0">
+    </atom>
+  </atomArray>
+  <bondArray>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="2"/>
+  </bondArray>
+</molecule>

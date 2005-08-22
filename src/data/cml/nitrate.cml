@@ -1,0 +1,17 @@
+<molecule id="m1">
+<atomArray>
+    <atom id="a1" elementType="O" x3="0.6484" y3="-0.2797" z3="0">
+    </atom>
+    <atom id="a2" elementType="O" x3="1.3708" y3="0.9542" z3="0">
+    </atom>
+    <atom id="a3" elementType="N" formalCharge="1" x3="1.3667" y3="0.1292" z3="0">
+    </atom>
+    <atom id="a4" elementType="O" formalCharge="-1" x3="2.0808" y3="-0.2869" z3="0">
+    </atom>
+</atomArray>
+  <bondArray>
+    <bond atomRefs2="a3 a1" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+  </bondArray>
+</molecule>
