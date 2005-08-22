@@ -30,6 +30,8 @@ package org.openscience.cdk.test.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -68,7 +70,8 @@ public class MDLRXNWriterTest extends CDKTestCase {
         
         String originalFile = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
+        	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    		BufferedReader br = new BufferedReader(new InputStreamReader(ins));
             while (br.ready()) {
                 originalFile += br.readLine() + "\n";
             }
@@ -81,7 +84,9 @@ public class MDLRXNWriterTest extends CDKTestCase {
         
         Reaction reaction = new Reaction();
         try {
-            MDLRXNReader reader = new MDLRXNReader(new FileReader(filename));
+        	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    		BufferedReader br = new BufferedReader(new InputStreamReader(ins));
+            MDLRXNReader reader = new MDLRXNReader(br);
             reaction = (Reaction)reader.read(reaction);
             reader.close();
         } catch (Exception ex) {

@@ -77,7 +77,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         BufferedReader fin =null;
         InputStream ins=null;
 		try{
-			ins = this.getClass().getClassLoader().getResourceAsStream("data/mmff94AtomTypeTest_molecule.mol");
+			ins = this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
 			fin = new BufferedReader(new InputStreamReader(ins));
 			//fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
 			MDLReader mdl=new MDLReader(fin);

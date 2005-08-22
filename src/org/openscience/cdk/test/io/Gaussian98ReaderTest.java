@@ -2,6 +2,8 @@ package org.openscience.cdk.test.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -57,7 +59,8 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 		int shieldingCounter = 0;
 		try{
 			String filename = "data/gaussian/g98ReaderNMRTest.log";
-			BufferedReader inputReader = new BufferedReader(new FileReader(filename));
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			BufferedReader inputReader = new BufferedReader(new InputStreamReader(ins));
 			Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
 			ChemFile chemFile = (ChemFile)g98Reader.read(new ChemFile());
 			AtomContainer[] atomContainers = ChemFileManipulator.getAllAtomContainers(chemFile);

@@ -21,6 +21,7 @@ package org.openscience.cdk.test.qsar;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -52,9 +53,9 @@ public class EccentricConnectivityIndexDescriptorTest extends CDKTestCase {
     }
 
     public void testEccentricConnectivityIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        String filename = "data/gravindex.hin";
-        File input = new File(filename);
-        ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
+        String filename = "data/hin/gravindex.hin";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
         AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
         AtomContainer ac = c[0];

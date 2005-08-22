@@ -29,6 +29,8 @@
 package org.openscience.cdk.test.isomorphism;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import junit.framework.Test;
@@ -146,9 +148,11 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         QueryAtomContainer query2 = null;
         
         try {
-            MDLReader reader = new MDLReader(new FileReader(molfile));
+        	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
+            MDLReader reader = new MDLReader(new InputStreamReader(ins));
             reader.read(mol);
-            reader = new MDLReader(new FileReader(queryfile));
+        	ins = this.getClass().getClassLoader().getResourceAsStream(queryfile);
+            reader = new MDLReader(new InputStreamReader(ins));
             reader.read(temp);
             query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
             
@@ -175,8 +179,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol2 = new Molecule();
         
         try {
-            new MDLReader(new FileReader(file1)).read(mol1);
-            new MDLReader(new FileReader(file2)).read(mol2);
+        	InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+            new MDLReader(ins1).read(mol1);
+            InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+            new MDLReader(ins2).read(mol2);
         } catch (Exception ex) {
             System.err.println("testQueryAtomContainer: " + ex.getMessage());
             fail(ex.getMessage());
@@ -198,8 +204,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol2 = new Molecule();
         
         try {
-            new MDLReader(new FileReader(file1)).read(mol1);
-            new MDLReader(new FileReader(file2)).read(mol2);
+        	InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+            new MDLReader(ins1).read(mol1);
+            InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+            new MDLReader(ins2).read(mol2);
         } catch (Exception ex) {
             System.err.println("testSFBug1208740: " + ex.getMessage());
             fail(ex.getMessage());
@@ -232,8 +240,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol2 = new Molecule();
         
         try {
-            new MDLReader(new FileReader(file1)).read(mol1);
-            new MDLReader(new FileReader(file2)).read(mol2);
+        	InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+            new MDLReader(ins1).read(mol1);
+            InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+            new MDLReader(ins2).read(mol2);
         } catch (Exception ex) {
             System.err.println("testQueryAtomContainer: " + ex.getMessage());
             fail(ex.getMessage());

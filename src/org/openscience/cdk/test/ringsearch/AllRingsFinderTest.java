@@ -130,7 +130,7 @@ public class AllRingsFinderTest extends CDKTestCase
         AllRingsFinder arf = new AllRingsFinder();
 		if (standAlone) arf.debug = true;
         
-        String filename = "data/isolated_ringsystems.cml";
+        String filename = "data/cml/isolated_ringsystems.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
 		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
@@ -160,7 +160,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	public void testBug777488()
 	{
 	        //String filename = "data/Bug646.cml";
-                String filename = "data/testBug777488-1-AllRingsFinder.cml";
+                String filename = "data/cml/testBug777488-1-AllRingsFinder.cml";
 		//String filename = "data/NCI_diversity_528.mol.cml";
 		//String filename = "data/NCI_diversity_978.mol.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

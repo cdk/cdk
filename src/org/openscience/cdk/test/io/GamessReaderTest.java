@@ -3,6 +3,8 @@ package org.openscience.cdk.test.io;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 
 import junit.framework.Assert;
@@ -87,7 +89,8 @@ public class GamessReaderTest extends CDKTestCase {
 		super.setUp();
 
 		String filename = "data/gamess/Cl2O.log";
-		this.inputReader = new BufferedReader(new FileReader(filename));
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		this.inputReader = new BufferedReader(new InputStreamReader(ins));
 		this.gamessReaderUnderTest = new GamessReader(this.inputReader);
 	}
 	
