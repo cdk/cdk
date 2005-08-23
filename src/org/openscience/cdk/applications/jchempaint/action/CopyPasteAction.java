@@ -217,6 +217,8 @@ public class CopyPasteAction extends JCPAction{
     		return smiles;
     	} else if(parFlavor.equals(cmlFlavor)) {
     		return cml;
+    	} else if(parFlavor.equals(svgFlavor)) {
+    		return svg;
     	} else {
     		throw new UnsupportedFlavorException (parFlavor);
     	}
