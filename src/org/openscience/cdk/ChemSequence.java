@@ -126,7 +126,6 @@ public class ChemSequence extends ChemObject implements java.io.Serializable
 	 */
 	protected void growChemModelArray()
 	{
-		growArraySize = chemModels.length;
 		ChemModel[] newchemModels = new ChemModel[chemModels.length + growArraySize];
 		System.arraycopy(chemModels, 0, newchemModels, 0, chemModels.length);
 		chemModels = newchemModels;

@@ -145,6 +145,9 @@
       pdb-cml for outputing PDBAtom information, and qsar-cml for outputing
       QSAR-descriptor information
     </addition>
+    <bugfix contributor="egonw" closes="1260766">
+      Removed exponential growth of the ChemSequence length.
+    </bugfix>
     <bugfix contributor="ulif" closes="1212219">
       Fixed output of mass number information in MDL files.
     </bugfix>
