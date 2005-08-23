@@ -44,6 +44,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ChemObjectWriter;
 import org.openscience.cdk.io.MDLReader;
@@ -64,8 +65,12 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CopyPasteAction extends JCPAction{
 
-	private DataFlavor molFlavor=new DataFlavor ("chemical/x-mdl-molfile", "mdl mol file format");
-	private DataFlavor svgFlavor=new DataFlavor ("image/svg+xml", "scalable vector graphics");
+	private DataFlavor molFlavor = new DataFlavor(
+		"chemical/x-mdl-molfile", "mdl mol file format");
+	private DataFlavor svgFlavor = new DataFlavor(
+		"image/svg+xml",          "scalable vector graphics");
+	private DataFlavor cmlFlavor = new DataFlavor(
+			"image/cml",          "chemical markup language");
     
 	public void actionPerformed(ActionEvent e) {
     	try {
@@ -163,23 +168,34 @@ public class CopyPasteAction extends JCPAction{
     }
 
     class JcpSelection implements Transferable, ClipboardOwner {
-  	  private DataFlavor [] supportedFlavors = {molFlavor, DataFlavor.stringFlavor, svgFlavor};
+  	  private DataFlavor [] supportedFlavors = {
+  	      molFlavor, DataFlavor.stringFlavor, svgFlavor, cmlFlavor
+  	  };
       String mol;
       String smiles;
       String svg;
+      String cml;
 
       public JcpSelection (AtomContainer tocopy1) throws Exception{
     	  Molecule tocopy=new Molecule(tocopy1);
+    	  // MDL mol output
           StringWriter sw = new StringWriter();
           new MDLWriter(sw).writeMolecule(tocopy);
     	  this.mol=sw.toString();
     	  SmilesGenerator sg=new SmilesGenerator();
     	  smiles = sg.createSMILES(tocopy);
+    	  // SVG output
     	  sw=new StringWriter();
     	  ChemObjectWriter cow = new SVGWriter(sw);
     	  cow.write(tocopy);
     	  cow.close();
-    	  svg=sw.toString();      
+    	  svg=sw.toString();
+    	  // CML output
+    	  sw=new StringWriter();
+    	  cow = new CMLWriter(sw);
+    	  cow.write(tocopy);
+    	  cow.close();
+    	  cml=sw.toString();      
       }
     	
       public synchronized DataFlavor [] getTransferDataFlavors () {
@@ -195,12 +211,15 @@ public class CopyPasteAction extends JCPAction{
       }
     	
       public synchronized Object getTransferData (DataFlavor parFlavor)	throws UnsupportedFlavorException {
-    	if (parFlavor.equals (molFlavor))
-    		return (mol);
-    	else if(parFlavor.equals(DataFlavor.stringFlavor))
-    		return(smiles);
-    	else
+    	if (parFlavor.equals (molFlavor)) {
+    		return mol;
+    	} else if(parFlavor.equals(DataFlavor.stringFlavor)) {
+    		return smiles;
+    	} else if(parFlavor.equals(cmlFlavor)) {
+    		return cml;
+    	} else {
     		throw new UnsupportedFlavorException (parFlavor);
+    	}
       }
       
       public void lostOwnership (Clipboard parClipboard, Transferable parTransferable) {
