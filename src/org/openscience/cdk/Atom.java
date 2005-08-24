@@ -58,7 +58,7 @@ import javax.vecmath.Point3d;
  *
  * @see  org.openscience.cdk.config.IsotopeFactory#getInstance()
  */
-public class Atom extends AtomType implements java.io.Serializable, Cloneable  {
+public class Atom extends AtomType implements java.io.Serializable, org.openscience.cdk.interfaces.Atom  {
     
         /* Let's keep this exact specification
          * of what kind of point2d we're talking of here,
