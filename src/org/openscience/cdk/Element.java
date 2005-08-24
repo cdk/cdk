@@ -41,7 +41,7 @@ package org.openscience.cdk;
  *
  * @see org.openscience.cdk.config.IsotopeFactory
  */
-public class Element extends ChemObject implements java.io.Serializable, Cloneable
+public class Element extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.Element
 {
 
     /** The element symbol for this element as listed in the periodic table. */
