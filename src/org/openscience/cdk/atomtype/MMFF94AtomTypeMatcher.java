@@ -87,7 +87,7 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
 	 */
 	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atom) throws CDKException {
 		//System.out.println("****** Configure MMFF94 AtomType via findMatching ******");
-		System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
+		//System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
 		try {
 			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mmff94_atomtypes.xml");
