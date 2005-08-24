@@ -43,7 +43,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *@author        steinbeck
  *@cdk.module    data
  */
-public class ChemObject implements java.io.Serializable, Cloneable
+public class ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ChemObject
 {
 
 	/**
@@ -152,7 +152,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *  This should be triggered by an method that changes the content of an object
 	 *  to that the registered listeners can react to it.
 	 */
-	protected void notifyChanged() {
+	public void notifyChanged() {
         if (getListenerCount() > 0) {
             Vector listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
@@ -171,7 +171,7 @@ public class ChemObject implements java.io.Serializable, Cloneable
 	 *@param  evt  A ChemObjectChangeEvent pointing to the source of where
 	 *		the change happend
 	 */
-	protected void notifyChanged(ChemObjectChangeEvent evt) {
+	public void notifyChanged(ChemObjectChangeEvent evt) {
         if (getListenerCount() > 0) {
             Vector listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
