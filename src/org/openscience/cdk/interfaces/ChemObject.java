@@ -38,7 +38,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * adding listeners and for their notification of events, as well a a hash
  * table for administration of physical or chemical properties
  *
- *@author        steinbeck
+ *@author        egonw
  *@cdk.module    data
  */
 public interface ChemObject extends Cloneable {
@@ -186,6 +186,12 @@ public interface ChemObject extends Cloneable {
 	 */
     public boolean[] getFlags();
 
+    /**
+     * Returns a one line description of this ChemObject.
+     *
+     * @return a String representation of this object
+     */
+    public String toString();
 }
 
 

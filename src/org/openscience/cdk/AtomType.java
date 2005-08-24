@@ -41,7 +41,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword     atom, type
  */
-public class AtomType extends Isotope implements java.io.Serializable, Cloneable
+public class AtomType extends Isotope implements java.io.Serializable, org.openscience.cdk.interfaces.AtomType
 {
 
 	/**
