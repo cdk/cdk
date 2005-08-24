@@ -23,69 +23,33 @@
  * 
  */
 
-package org.openscience.cdk;
+package org.openscience.cdk.interfaces;
 
 /**
  * Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
  *
  * @cdk.module data
  *
- * @cdk.keyword orbital
- * @cdk.keyword lone-pair
- * @cdk.keyword bond
+ * @cdk.keyword electron
  */
-public class ElectronContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ElectronContainer 
-{
-	/** Number of electrons in the ElectronContainer. */
-	protected int electronCount;
+public interface ElectronContainer extends ChemObject {
 
-    /**
-     * Constructs an empty ElectronContainer.
-     */
-    public ElectronContainer() {
-        electronCount = 0;
-    }
-    
 	/**
 	 * Returns the number of electrons in this electron container.
 	 *
 	 * @return The number of electrons in this electron container.
-     *
      * @see     #setElectronCount
 	 */
-	public int getElectronCount()
-	{
-		return this.electronCount;
-	}
-
+	public int getElectronCount();
 
 	/**
 	 * Sets the number of electorn in this electron container.
 	 *
 	 * @param   electronCount The number of electrons in this electron container.
-     *
      * @see     #getElectronCount
 	 */
-	public void setElectronCount(int electronCount)
-	{
-		this.electronCount = electronCount;
-		notifyChanged();
-	}
+	public void setElectronCount(int electronCount);
 
-    /**
-     * Clones this atom object and its content.
-     *
-     * @return  The cloned object   
-     */
-    public Object clone() {
-        Object clone = null;
-        try {
-            clone = super.clone();
-        } catch (Exception exception) {
-            exception.printStackTrace(System.err);
-        }
-        return clone;
-    }
 }
 
 
