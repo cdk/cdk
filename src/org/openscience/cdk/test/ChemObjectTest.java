@@ -289,19 +289,33 @@ public class ChemObjectTest extends CDKTestCase {
         assertTrue(listener.changed);
     }
     
+    public void testNotifyChanged_ChemObjectChangeEvent() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        ChemObject chemObject = new ChemObject();
+        chemObject.addListener(listener);
+        
+        chemObject.setID("Changed");
+        assertNotNull(listener.event);
+    }
+
     private class ChemObjectListenerImpl implements ChemObjectListener {
         private boolean changed;
+        private ChemObjectChangeEvent event;
         
         private ChemObjectListenerImpl() {
             changed = false;
+            event = null;
         }
         
         public void stateChanged(ChemObjectChangeEvent e) {
             changed = true;
+            event = e;
         }
         
         public void reset() {
             changed = false;
+            event = null;
         }
     }
+    
 }
