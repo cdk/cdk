@@ -22,6 +22,7 @@ import junit.framework.TestSuite;
 /**
  * Junit test for the ddHydrogenEditTest class
  * @author tohel
+ * @cdk.module test
  * 
  */
 public class AddHydrogenEditTest extends TestCase {

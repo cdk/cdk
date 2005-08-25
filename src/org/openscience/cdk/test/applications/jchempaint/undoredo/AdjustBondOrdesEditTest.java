@@ -21,7 +21,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * Junit test for the AdjustBondOrdesEdit class
  * 
  * @author tohel
- * 
+ * @cdk.module test
  */
 public class AdjustBondOrdesEditTest extends CDKTestCase {
 

@@ -19,7 +19,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * Junit test for the ChangeAtomSymbolEdit class
  * 
  * @author tohel
- * 
+ * @cdk.module test
  */
 public class ChangeAtomSymbolEditTest extends CDKTestCase {
 
