@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.jchempaint.undoredo.AdjustBondOrdesEdit;
+import org.openscience.cdk.applications.jchempaint.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -23,7 +23,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @author tohel
  * @cdk.module test
  */
-public class AdjustBondOrdesEditTest extends CDKTestCase {
+public class AdjustBondOrdersEditTest extends CDKTestCase {
 
     private Molecule clearMol;
 
@@ -31,12 +31,12 @@ public class AdjustBondOrdesEditTest extends CDKTestCase {
 
     private SaturationChecker satChecker;
 
-    public AdjustBondOrdesEditTest() throws IOException, ClassNotFoundException {
+    public AdjustBondOrdersEditTest() throws IOException, ClassNotFoundException {
         satChecker = new SaturationChecker();
     }
 
     public static Test suite() {
-        return new TestSuite(AdjustBondOrdesEditTest.class);
+        return new TestSuite(AdjustBondOrdersEditTest.class);
     }
 
     /*
@@ -46,7 +46,7 @@ public class AdjustBondOrdesEditTest extends CDKTestCase {
     public void testClearBondOrdersRedo() throws IOException,
             ClassNotFoundException {
         HashMap changedBonds = makeClearMolecule();
-        AdjustBondOrdesEdit edit = new AdjustBondOrdesEdit(changedBonds);
+        AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
         edit.undo();
         edit.redo();
         Set keys = changedBonds.keySet();
@@ -64,7 +64,7 @@ public class AdjustBondOrdesEditTest extends CDKTestCase {
      */
     public void testFitBondOrdersRedo() throws CDKException {
         HashMap changedBonds = makeFittingMolecule();
-        AdjustBondOrdesEdit edit = new AdjustBondOrdesEdit(changedBonds);
+        AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
         edit.undo();
         edit.redo();
         Set keys = changedBonds.keySet();
@@ -83,7 +83,7 @@ public class AdjustBondOrdesEditTest extends CDKTestCase {
     public void testClearBondOrdersUndo() throws IOException,
             ClassNotFoundException {
         HashMap changedBonds = makeClearMolecule();
-        AdjustBondOrdesEdit edit = new AdjustBondOrdesEdit(changedBonds);
+        AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
         edit.undo();
         Set keys = changedBonds.keySet();
         Iterator it = keys.iterator();
@@ -100,7 +100,7 @@ public class AdjustBondOrdesEditTest extends CDKTestCase {
      */
     public void testFitBondOrdersUndo() throws CDKException {
         HashMap changedBonds = makeFittingMolecule();
-        AdjustBondOrdesEdit edit = new AdjustBondOrdesEdit(changedBonds);
+        AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
         edit.undo();
         Set keys = changedBonds.keySet();
         Iterator it = keys.iterator();

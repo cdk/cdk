@@ -15,9 +15,8 @@ import org.openscience.cdk.Bond;
  * for undoing and redoing the regarding changes
  * 
  * @author tohel
- * 
  */
-public class AdjustBondOrdesEdit extends AbstractUndoableEdit {
+public class AdjustBondOrdersEdit extends AbstractUndoableEdit {
 
     private HashMap changedBondOrders;
 
@@ -26,7 +25,7 @@ public class AdjustBondOrdesEdit extends AbstractUndoableEdit {
      *            A HashMap containing the changed atoms as key and an Array
      *            with the former and the changed bondOrder
      */
-    public AdjustBondOrdesEdit(HashMap changedBonds) {
+    public AdjustBondOrdersEdit(HashMap changedBonds) {
         this.changedBondOrders = changedBonds;
     }
 

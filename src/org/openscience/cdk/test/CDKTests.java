@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
 import org.openscience.cdk.test.applications.jchempaint.undoredo.AddHydrogenEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.AdjustBondOrdesEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.AdjustBondOrdersEditTest;
 import org.openscience.cdk.test.applications.jchempaint.undoredo.ChangeAtomSymbolEditTest;
 import org.openscience.cdk.test.applications.jchempaint.undoredo.ChangeIsotopeEditTest;
 import org.openscience.cdk.test.applications.jchempaint.undoredo.CleanUpEditTest;
@@ -183,7 +183,7 @@ public class CDKTests
         suite.addTest(ChangeAtomSymbolEditTest.suite());
         suite.addTest(CleanUpEditTest.suite());
         suite.addTest(AddHydrogenEditTest.suite());
-        suite.addTest(AdjustBondOrdesEditTest.suite());
+        suite.addTest(AdjustBondOrdersEditTest.suite());
         suite.addTest(FlipEditTest.suite());
         
         return suite;
