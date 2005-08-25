@@ -29,6 +29,14 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.AddHydrogenEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.AdjustBondOrdesEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.ChangeAtomSymbolEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.ChangeIsotopeEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.CleanUpEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.ConvertToPseudoAtomEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.ConvertToRadicalEditTest;
+import org.openscience.cdk.test.applications.jchempaint.undoredo.FlipEditTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.atomtype.CDKChemicalRingConstantsTest;
 import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
@@ -167,7 +175,17 @@ public class CDKTests
 
         // from cdk.test.qsar.model
         suite.addTest(QSARRModelTests.suite());
-
+        
+        //from cdk.test.applications.jchempaint.undoredo
+        suite.addTest(ConvertToPseudoAtomEditTest.suite());
+        suite.addTest(ConvertToRadicalEditTest.suite());
+        suite.addTest(ChangeIsotopeEditTest.suite());
+        suite.addTest(ChangeAtomSymbolEditTest.suite());
+        suite.addTest(CleanUpEditTest.suite());
+        suite.addTest(AddHydrogenEditTest.suite());
+        suite.addTest(AdjustBondOrdesEditTest.suite());
+        suite.addTest(FlipEditTest.suite());
+        
         return suite;
     }
     

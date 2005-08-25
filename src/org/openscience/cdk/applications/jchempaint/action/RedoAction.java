@@ -47,7 +47,10 @@ public class RedoAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Redo triggered");
-		//jcpPanel.redo();
+        if (jcpPanel.getUndoManager().canRedo()) {
+            jcpPanel.getUndoManager().redo();
+        }
+        jcpPanel.getJChemPaintModel().fireChange();
 	}
 
 }

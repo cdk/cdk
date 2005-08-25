@@ -29,16 +29,20 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
+import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.undoredo.CleanUpEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -54,6 +58,7 @@ public class CleanupAction extends JCPAction
 {
 
 	private StructureDiagramGenerator diagramGenerator;
+    
 
 	/**
 	 *  Constructor for the CleanupAction object
@@ -71,7 +76,8 @@ public class CleanupAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{	
-		logger.info("Going to performe a clean up...");
+        HashMap atomCoordsMap = new HashMap();
+        logger.info("Going to performe a clean up...");
 		if (jcpPanel.getJChemPaintModel() != null)
 		{
 			if (diagramGenerator == null) diagramGenerator = new StructureDiagramGenerator();
@@ -91,9 +97,27 @@ public class CleanupAction extends JCPAction
 				Molecule[] mols = som.getMolecules();
 				for (int i = 0; i < mols.length; i++)
 				{
-					newsom.addMolecule(relayoutMolecule(mols[i]));
+                    Molecule molecule = mols[i];
+                    Molecule cleanedMol = relayoutMolecule(mols[i]);
+					newsom.addMolecule(cleanedMol);
+                    
+                    Atom[] atoms = molecule.getAtoms();
+                    Atom[] newAtoms = cleanedMol.getAtoms();
+                    for (int j=0; j<atoms.length; j++) {
+                        Point2d oldCoord = atoms[j].getPoint2d();
+                        Point2d newCoord = newAtoms[j].getPoint2d();
+                        if (!oldCoord.equals(newCoord)) {
+                            Point2d[] coords = new Point2d[2];
+                            coords[0] = newCoord;
+                            coords[1] = oldCoord;
+                            atomCoordsMap.put(newAtoms[j], coords);
+                        }
+                    }
 				}
 				model.setSetOfMolecules(newsom);
+                
+                UndoableEdit  edit = new CleanUpEdit(atomCoordsMap);
+                jcpPanel.getUndoSupport().postEdit(edit);
 			}
 			SetOfReactions reactionSet = model.getSetOfReactions();
 			if (reactionSet != null)
@@ -138,7 +162,7 @@ public class CleanupAction extends JCPAction
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Molecule cleanedMol = molecule;
-		if (molecule != null)
+       if (molecule != null)
 		{
 			if (molecule.getAtomCount() > 2)
 			{
@@ -147,10 +171,8 @@ public class CleanupAction extends JCPAction
 					Point2d centre = GeometryTools.get2DCentreOfMass(molecule);
 					diagramGenerator.setMolecule(molecule);
 					diagramGenerator.generateExperimentalCoordinates(new Vector2d(0, 1));
-
 					cleanedMol = diagramGenerator.getMolecule();
-
-					/*
+                    /*
 					 *  make the molecule end up somewhere reasonable
 					 *  See constructor of JCPPanel
 					 */
@@ -158,7 +180,6 @@ public class CleanupAction extends JCPAction
 					double scaleFactor = GeometryTools.getScaleFactor(cleanedMol, jcpmodel.getRendererModel().getBondLength());
 					GeometryTools.scaleMolecule(cleanedMol, scaleFactor);
 					GeometryTools.translate2DCentreOfMassTo(cleanedMol, centre);
-
 				} catch (Exception exc)
 				{
 					logger.error("Could not generate coordinates for molecule");

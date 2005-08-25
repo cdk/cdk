@@ -28,12 +28,15 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
+import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.undoredo.FlipEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
@@ -48,6 +51,7 @@ public class FlipAction extends JCPAction {
     public void actionPerformed(ActionEvent e) {
         logger.info("  type  ", type);
         logger.debug("  source ", e.getSource());
+        HashMap atomCoordsMap = new HashMap();
         JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
         Renderer2DModel renderModel = jcpModel.getRendererModel();
         boolean horiz = "horizontal".equals(type);
@@ -57,12 +61,22 @@ public class FlipAction extends JCPAction {
             Atom[] atoms = toflip.getAtoms();
             for (int i=0; i<atoms.length; i++) {
                 Point2d atom = atoms[i].getPoint2d();
+                Point2d oldCoord = (Point2d) atom.clone();;
                 if (horiz) {
                     atom.y = 2.0*center.y - atom.y;
                 } else {
                     atom.x = 2.0*center.x - atom.x;
                 }
+                Point2d newCoord = atom;
+                if (!oldCoord.equals(newCoord)) {
+                    Point2d[] coords = new Point2d[2];
+                    coords[0] = newCoord;
+                    coords[1] = oldCoord;
+                    atomCoordsMap.put(atoms[i], coords);
+                }
             }
+            UndoableEdit  edit = new FlipEdit(atomCoordsMap);
+            jcpPanel.getUndoSupport().postEdit(edit);
             // fire a change so that the view gets updated
             jcpModel.fireChange();
         }

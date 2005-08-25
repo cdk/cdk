@@ -11,3 +11,5 @@ reports
 *.pdf
 .classpath
 .project
+bin
+.metadata

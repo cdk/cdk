@@ -29,11 +29,15 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
+import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.applications.jchempaint.undoredo.AdjustBondOrdesEdit;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -54,17 +58,31 @@ public class AdjustBondOrdersAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
+        HashMap changedBonds = null;
+        ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
 		logger.debug("Adjusting bondorders: ", type);
+        System.out.println("hier: " + type);
 		if (type.equals("clear"))
 		{
 			try
 			{
 				SaturationChecker satChecker = new SaturationChecker();
-				ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
+                changedBonds = new HashMap();
 				AtomContainer[] containers = ChemModelManipulator.getAllAtomContainers(model);
-				for (int i = 0; i < containers.length; i++)
+               for (int i = 0; i < containers.length; i++)
 				{
+                    AtomContainer containerCopy = (AtomContainer) containers[i].clone();
 					satChecker.unsaturate(containers[i].getBonds());
+                     for (int j=0; j<containerCopy.getBondCount(); j++) {
+                            Bond bondCopy = containerCopy.getBondAt(j);
+                            Bond bond = containers[i].getBondAt(j);
+                            if (bond.getOrder() != bondCopy.getOrder()) {
+                                double[] bondOrders = new double[2];
+                                bondOrders[0] = bond.getOrder();
+                                bondOrders[1] = bondCopy.getOrder();
+                                changedBonds.put(bond, bondOrders);
+                            }
+                        }
 				}
 				jcpPanel.getJChemPaintModel().fireChange();
 			} catch (Exception exc)
@@ -79,11 +97,22 @@ public class AdjustBondOrdersAction extends JCPAction
 			try
 			{
 				SaturationChecker satChecker = new SaturationChecker();
-				ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
+                changedBonds = new HashMap();
 				AtomContainer[] containers = ChemModelManipulator.getAllAtomContainers(model);
-				for (int i = 0; i < containers.length; i++)
+               for (int i = 0; i < containers.length; i++)
 				{
+                   AtomContainer containerCopy = (AtomContainer) containers[i].clone();
 					satChecker.saturate(containers[i]);
+                    for (int j=0; j<containerCopy.getBondCount(); j++) {
+                        Bond bondCopy = containerCopy.getBondAt(j);
+                        Bond bond = containers[i].getBondAt(j);
+                        if (bond.getOrder() != bondCopy.getOrder()) {
+                            double[] bondOrders = new double[2];
+                            bondOrders[0] = bond.getOrder();
+                            bondOrders[1] = bondCopy.getOrder();
+                            changedBonds.put(bond, bondOrders);
+                        }
+                    }
 				}
 				jcpPanel.getJChemPaintModel().fireChange();
 			} catch (Exception exc)
@@ -94,6 +123,8 @@ public class AdjustBondOrdersAction extends JCPAction
 				JOptionPane.showMessageDialog(jcpPanel, error);
 			}
 		}
+        UndoableEdit  edit = new AdjustBondOrdesEdit(changedBonds);
+        jcpPanel.getUndoSupport().postEdit(edit);
 	}
 }
 

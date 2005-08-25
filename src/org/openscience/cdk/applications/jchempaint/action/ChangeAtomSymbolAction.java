@@ -30,9 +30,12 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.undo.UndoableEdit;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.undoredo.ChangeAtomSymbolEdit;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.controller.Controller2DModel;
 
@@ -67,9 +70,10 @@ public class ChangeAtomSymbolAction extends JCPAction
 			{
 				atomInRange = jcpm.getRendererModel().getHighlightedAtom();
 			}
+            String formerSymbol = atomInRange.getSymbol();
 			String s = event.getActionCommand();
 			String symbol = s.substring(s.indexOf("@") + 1);
-			atomInRange.setSymbol(symbol);
+            atomInRange.setSymbol(symbol);
 			// modify the current atom symbol
 			c2dm.setDrawElement(symbol);
 			// configure the atom, so that the atomic number matches the symbol
@@ -81,6 +85,8 @@ public class ChangeAtomSymbolAction extends JCPAction
 				logger.error("Error while configuring atom");
 				logger.debug(exception);
 			}
+            UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
+            jcpPanel.getUndoSupport().postEdit(edit);
 			jcpm.fireChange();
 		}
 	}

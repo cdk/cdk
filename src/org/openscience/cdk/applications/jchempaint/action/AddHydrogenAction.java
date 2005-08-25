@@ -29,6 +29,9 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
+
+import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -38,6 +41,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.HydrogenPlacer;
@@ -57,6 +61,8 @@ public class AddHydrogenAction extends JCPAction
 {
 
 	private HydrogenAdder hydrogenAdder = null;
+    private AtomContainer changedAtomsAndBonds = null;
+    private HashMap hydrogenAtomMap = null;
 
 
 	/**
@@ -66,6 +72,8 @@ public class AddHydrogenAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent event)
 	{
+        this.hydrogenAtomMap = null;
+        this.changedAtomsAndBonds = null;
 		logger.debug("Trying to add hydrogen in mode: ", type);
 		if (hydrogenAdder == null)
 		{
@@ -77,7 +85,7 @@ public class AddHydrogenAction extends JCPAction
 			// now add hydrogens
 			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 			ChemModel model = jcpmodel.getChemModel();
-
+            
 			ChemObject object = getSource(event);
 			if (object != null)
 			{
@@ -85,18 +93,29 @@ public class AddHydrogenAction extends JCPAction
 				{
 					logger.debug("Adding hydrogens to this specific atom");
 					Atom atom = (Atom) object;
-					addHydrogenToOneAtom(ChemModelManipulator.getRelevantAtomContainer(model, atom), atom);
+                    addHydrogenToOneAtom(ChemModelManipulator.getRelevantAtomContainer(model, atom), atom);
 				} else if (object instanceof ChemModel) {
-					logger.debug("Adding hydrogens to all atoms");
+                    logger.debug("Adding hydrogens to all atoms");
 					addHydrogenToAllAtoms(model);
 				} else {
 					logger.error("Can only add hydrogens to Atom's");
 				}
 			} else
 			{
-				logger.debug("Adding hydrogens to all atoms");
+                logger.debug("Adding hydrogens to all atoms");
 				addHydrogenToAllAtoms(model);
 			}
+            UndoableEdit edit = null;
+            if (type.equals("explicit")) {
+                edit = new  AddHydrogenEdit(model, changedAtomsAndBonds);
+            }
+            else if ( type.equals("implicit")) {
+                edit = new  AddHydrogenEdit(model, hydrogenAtomMap);
+            }
+            else if (type.equals("allimplicit")) {
+               edit = new  AddHydrogenEdit(model, hydrogenAtomMap);
+            }
+            jcpPanel.getUndoSupport().postEdit(edit);
 			jcpmodel.fireChange();
 		}
 	}
@@ -135,7 +154,7 @@ public class AddHydrogenAction extends JCPAction
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();
-		try
+        try
 		{
 			Molecule[] mols = som.getMolecules();
 			for (int i = 0; i < mols.length; i++)
@@ -145,7 +164,8 @@ public class AddHydrogenAction extends JCPAction
 				{
 					if (type.equals("implicit"))
 					{
-						hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+                        hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+//                        changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
 					} else if (type.equals("explicit"))
 					{
 						double bondLength = GeometryTools.getBondLengthAverage(molecule);
@@ -154,8 +174,9 @@ public class AddHydrogenAction extends JCPAction
 							logger.warn("Could not determine average bond length from structure!");
 							bondLength = controllerModel.getBondPointerLength();
 						}
-						hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
-						HydrogenPlacer hPlacer = new HydrogenPlacer();
+//                        hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
+                        changedAtomsAndBonds = hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
+                        HydrogenPlacer hPlacer = new HydrogenPlacer();
 						hPlacer.placeHydrogens2D(molecule, bondLength);
 					} else if (type.equals("allimplicit"))
 					{
@@ -171,7 +192,8 @@ public class AddHydrogenAction extends JCPAction
 							}
 						}
 						// add implicit hydrogen
-						hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+                        hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+//                        changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
 					}
 				} else
 				{
@@ -201,7 +223,9 @@ public class AddHydrogenAction extends JCPAction
 		{
 			if (type.equals("implicit"))
 			{
-				hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
+               int[] hydrogens = hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
+               hydrogenAtomMap.put(atom, hydrogens);
+//                changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
 			} else if (type.equals("explicit"))
 			{
 				double bondLength = GeometryTools.getBondLengthAverage(container);
@@ -210,7 +234,8 @@ public class AddHydrogenAction extends JCPAction
 					logger.warn("Could not determine average bond length from structure!");
 					bondLength = controllerModel.getBondPointerLength();
 				}
-				hydrogenAdder.addExplicitHydrogensToSatisfyValency(container, atom, container);
+//                hydrogenAdder.addExplicitHydrogensToSatisfyValency(container, atom, container);
+                changedAtomsAndBonds = hydrogenAdder.addExplicitHydrogensToSatisfyValency(container, atom, container);
 				HydrogenPlacer hPlacer = new HydrogenPlacer();
 				hPlacer.placeHydrogens2D(container, atom, bondLength);
 			}

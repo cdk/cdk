@@ -29,6 +29,8 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.undo.UndoableEdit;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
@@ -37,6 +39,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.applications.jchempaint.undoredo.ConvertToPseudoAtomEdit;;
 
 /**
  * @cdk.module jchempaint
@@ -56,6 +59,9 @@ public class ConvertToPseudoAtomAction extends JCPAction {
                 pseudo.setLabel(type);
                 AtomContainerManipulator.replaceAtomByAtom(relevantContainer, 
                     atom, pseudo);
+                UndoableEdit  edit = new ConvertToPseudoAtomEdit(relevantContainer, 
+                        atom, pseudo);
+                jcpPanel.getUndoSupport().postEdit(edit);
             } else {
                 logger.error("Object not an Atom! Cannot convert into a PseudoAtom!");
             }

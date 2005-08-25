@@ -48,7 +48,10 @@ public class UndoAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Undo triggered");
-		//jcpPanel.undo();
+        if (jcpPanel.getUndoManager().canUndo()) {
+            jcpPanel.getUndoManager().undo();
+        }
+        jcpPanel.getJChemPaintModel().fireChange();
 	}
 
 }

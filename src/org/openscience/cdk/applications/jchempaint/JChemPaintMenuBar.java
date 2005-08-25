@@ -283,7 +283,7 @@ public class JChemPaintMenuBar extends JMenuBar {
 		}
 		logger.debug("Created new menu item...");
 		String astr = JCPPropertyHandler.getInstance().getResourceString(cmd + JCPAction.actionSuffix);
-		if (astr == null) {
+        if (astr == null) {
 			astr = cmd;
 		}
 		mi.setActionCommand(astr);

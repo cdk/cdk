@@ -30,10 +30,13 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.undo.UndoableEdit;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.undoredo.ChangeIsotopeEdit;
 import org.openscience.cdk.config.IsotopeFactory;
 
 
@@ -63,11 +66,13 @@ public class ChangeIsotopeAction extends JCPAction
 			{
 				Atom atom = (Atom) object;
 				int isotopeNumber = 0;
+                 int formerIsotopeNumber = 0;
 				try
 				{
 					Isotope isotope = IsotopeFactory.getInstance().
 							getMajorIsotope(atom.getSymbol());
 					isotopeNumber = isotope.getMassNumber();
+                    formerIsotopeNumber = isotopeNumber;
 				} catch (Exception exception)
 				{
 					logger.error("Error while configuring atom");
@@ -103,6 +108,8 @@ public class ChangeIsotopeAction extends JCPAction
 					isotopeNumber--;
 				}
 				atom.setMassNumber(isotopeNumber);
+                UndoableEdit  edit = new ChangeIsotopeEdit(atom, formerIsotopeNumber, isotopeNumber);
+                jcpPanel.getUndoSupport().postEdit(edit);
 				jcpm.fireChange();
 			}
 		}

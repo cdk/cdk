@@ -29,6 +29,7 @@
 package org.openscience.cdk.tools;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -138,14 +139,16 @@ public class HydrogenAdder {
      * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
+     * @return 
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public void addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
+    public AtomContainer addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
 	    logger.debug("Start of addHydrogensToSatisfyValency");
-        addExplicitHydrogensToSatisfyValency(molecule);
+        AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(molecule);
 	logger.debug("End of addHydrogensToSatisfyValency");
+    return changedAtomsAndBonds;
     }
 
     /**
@@ -158,22 +161,28 @@ public class HydrogenAdder {
      * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
+     * @return 
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public void addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
+    public AtomContainer addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
 	    logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
       Molecule[] molecules = moleculeSet.getMolecules();
+      AtomContainer changedAtomsAndBonds = new AtomContainer();
+      AtomContainer intermediateContainer= null;
       for (int k = 0; k < molecules.length; k++) {
         Molecule molPart = molecules[k];
         Atom[] atoms = molPart.getAtoms();
-        for (int i = 0; i < atoms.length; i++) {
-          addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
+         for (int i = 0; i < atoms.length; i++) {
+            intermediateContainer = addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
+            changedAtomsAndBonds.add(intermediateContainer);
         }
+       
       }
       logger.debug("End of addExplicitHydrogensToSatisfyValency");
+      return changedAtomsAndBonds;
     }
 
     /**
@@ -188,18 +197,20 @@ public class HydrogenAdder {
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
+     * @return 
      *
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      *
      * @deprecated
      */
-    public void addHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
+    public AtomContainer addHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException, CDKException
     {
 	logger.debug("Start of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
-        addExplicitHydrogensToSatisfyValency(container, atom, totalContainer);
+    AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, totalContainer);
 	logger.debug("End of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
+    return changedAtomsAndBonds;
     }
 
     /**
@@ -214,11 +225,12 @@ public class HydrogenAdder {
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
+     * @return 
      *
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
+    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException, CDKException
     {
         // set number of implicit hydrogens to zero
@@ -226,8 +238,9 @@ public class HydrogenAdder {
 	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
         int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
 	logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
-        addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
+        AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
 	logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
+    return changedAtomsAndBonds;
     }
     
     /**
@@ -237,44 +250,52 @@ public class HydrogenAdder {
      * @param  container AtomContainer containing the atom
      * @param  count     Number of hydrogens to add
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
+     * @return 
      *
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public void addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count, AtomContainer totalContainer) 
+    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
     {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
         
         Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
         atom.setHydrogenCount(0);
-        
+        AtomContainer changedAtomsAndBonds = new AtomContainer();
         for (int i = 1; i <= count; i++) {
             Atom hydrogen = new Atom("H");
             IsotopeFactory.getInstance().configure(hydrogen, isotope);
             totalContainer.addAtom(hydrogen);
             Bond newBond = new Bond(atom, hydrogen, 1.0);
             totalContainer.addBond(newBond);
+            changedAtomsAndBonds.addAtom(hydrogen);
+            changedAtomsAndBonds.addBond(newBond);
         }
+        return changedAtomsAndBonds;
     }
     
     /**
      *  Method that saturates a molecule by adding implicit hydrogens.
      *
      *@param  container  Molecule to saturate
+     * @return 
      *@cdk.keyword          hydrogen, adding
      *@cdk.keyword          implicit hydrogen
      */
-    public void addImplicitHydrogensToSatisfyValency(AtomContainer container) throws CDKException {
+    public HashMap addImplicitHydrogensToSatisfyValency(AtomContainer container) throws CDKException {
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
       Molecule[] molecules = moleculeSet.getMolecules();
+      HashMap hydrogenAtomMap = new HashMap();
       for (int k = 0; k < molecules.length; k++) {
         Molecule molPart = molecules[k];
         Atom[] atoms = molPart.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
-            addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);
+            int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);
+            hydrogenAtomMap.put(atoms[f], hydrogens);
         }
       }
+      return hydrogenAtomMap;
     }
     
     /**
@@ -282,13 +303,19 @@ public class HydrogenAdder {
      *
      * @param  container  Molecule to saturate
      * @param  atom      Atom to satureate.
+     * @return 
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          implicit hydrogen
      */
-    public void addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
+    public int[] addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
     {
+        int formerHydrogens = atom.getHydrogenCount();
         int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
         atom.setHydrogenCount(missingHydrogens);
+        int[] hydrogens = new int[2];
+        hydrogens[0] = formerHydrogens;
+        hydrogens[1] = missingHydrogens;
+        return hydrogens;
     }
 
     /*

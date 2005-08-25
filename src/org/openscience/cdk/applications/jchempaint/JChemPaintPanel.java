@@ -63,6 +63,8 @@ import javax.swing.JViewport;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEditSupport;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -73,6 +75,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
+import org.openscience.cdk.applications.jchempaint.undoredo.UndoAdapter;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
@@ -134,6 +137,8 @@ public abstract class JChemPaintPanel
 	 */
 	public JComponent lastAction;
   Dimension viewerDimension;
+private UndoManager undoManager;
+private UndoableEditSupport undoSupport;
 
 
 
@@ -142,6 +147,12 @@ public abstract class JChemPaintPanel
 	 */
 	public JChemPaintPanel() {
 		logger = new LoggingTool(this);
+        
+        undoManager = new UndoManager();
+        undoManager.setLimit(10);
+        undoSupport = new UndoableEditSupport();
+        undoSupport.addUndoableEditListener(new UndoAdapter(undoManager));
+        
 		setLayout(new BorderLayout());
 		mainContainer = new JPanel();
 		mainContainer.setLayout(new BorderLayout());
@@ -1082,6 +1093,38 @@ public abstract class JChemPaintPanel
 	{
 		this.viewerDimension = viewerDimension;
 	}
+
+
+    /**
+     * @return Returns the undoManager.
+     */
+    public UndoManager getUndoManager() {
+        return undoManager;
+    }
+
+
+    /**
+     * @param undoManager The undoManager to set.
+     */
+    public void setUndoManager(UndoManager undoManager) {
+        this.undoManager = undoManager;
+    }
+
+
+    /**
+     * @return Returns the undoSupport.
+     */
+    public UndoableEditSupport getUndoSupport() {
+        return undoSupport;
+    }
+
+
+    /**
+     * @param undoSupport The undoSupport to set.
+     */
+    public void setUndoSupport(UndoableEditSupport undoSupport) {
+        this.undoSupport = undoSupport;
+    }
 
 }
 

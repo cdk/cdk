@@ -29,12 +29,16 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.undo.UndoableEdit;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.jchempaint.undoredo.ConvertToRadicalEdit;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -51,7 +55,11 @@ public class ConvertToRadicalAction extends JCPAction {
             if (object instanceof Atom) {
                 Atom atom = (Atom)object;
                 AtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
-                relevantContainer.addElectronContainer(new SingleElectron(atom));
+                ElectronContainer electronContainer = new SingleElectron(atom);
+                relevantContainer.addElectronContainer(electronContainer);
+                UndoableEdit  edit = new ConvertToRadicalEdit(relevantContainer, 
+                        electronContainer);
+                jcpPanel.getUndoSupport().postEdit(edit);
                 logger.info("Added single electron to atom");
                 logger.debug("new AC: ", relevantContainer);
             } else {
