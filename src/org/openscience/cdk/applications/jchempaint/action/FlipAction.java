@@ -61,7 +61,7 @@ public class FlipAction extends JCPAction {
             Atom[] atoms = toflip.getAtoms();
             for (int i=0; i<atoms.length; i++) {
                 Point2d atom = atoms[i].getPoint2d();
-                Point2d oldCoord = (Point2d) atom.clone();;
+                Point2d oldCoord = new Point2d(atom.x, atom.y);
                 if (horiz) {
                     atom.y = 2.0*center.y - atom.y;
                 } else {
