@@ -38,7 +38,7 @@ import java.util.Hashtable;
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  */
-public class Strand extends AtomContainer implements java.io.Serializable, Cloneable
+public class Strand extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Strand
 {
 	/** The list of all Monomers in the Strand.*/
 	private Hashtable monomers;
@@ -105,7 +105,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	 * @param oAtom  The atom to add
 	 *
 	 */
-	public void addAtom(Atom oAtom) {
+	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom) {
 		addAtom(oAtom, getMonomer(""));
 	}
 	
@@ -117,7 +117,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, Clone
 	 * @param oMonomer  The monomer the atom belongs to
 	 *
 	 */
-	public void addAtom(Atom oAtom, Monomer oMonomer) {
+	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);

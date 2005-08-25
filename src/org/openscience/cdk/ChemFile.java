@@ -35,13 +35,13 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *@cdk.module    data
  */
 public class ChemFile extends ChemObject implements java.io.Serializable
-		, Cloneable, ChemObjectListener
+		, org.openscience.cdk.interfaces.ChemFile, ChemObjectListener
 {
 
 	/**
 	 *  Array of ChemSquences.
 	 */
-	protected ChemSequence[] chemSequences;
+	protected org.openscience.cdk.interfaces.ChemSequence[] chemSequences;
 
 	/**
 	 *  Number of ChemSequences contained by this container.
@@ -71,7 +71,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	 *@param  chemSequence  The chemSequence to be added to this container
 	 *@see                  #getChemSequences
 	 */
-	public void addChemSequence(ChemSequence chemSequence)
+	public void addChemSequence(org.openscience.cdk.interfaces.ChemSequence chemSequence)
 	{
 		chemSequence.addListener(this);
 		if (chemSequenceCount + 1 >= chemSequences.length)
@@ -109,7 +109,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	 */
 	public ChemSequence getChemSequence(int number)
 	{
-		return chemSequences[number];
+		return (ChemSequence)chemSequences[number];
 	}
 
 
@@ -174,7 +174,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 		clone.chemSequences = new ChemSequence[clone.chemSequenceCount];
 		for (int f = 0; f < clone.chemSequenceCount; f++)
 		{
-			clone.chemSequences[f] = (ChemSequence) chemSequences[f].clone();
+			clone.chemSequences[f] = (ChemSequence)((ChemSequence)chemSequences[f]).clone();
 		}
 		return clone;
 	}

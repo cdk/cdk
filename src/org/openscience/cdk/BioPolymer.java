@@ -45,7 +45,7 @@ import java.util.Hashtable;
  * @cdk.keyword    polymer
  * @cdk.keyword    biopolymer
  */
-public class BioPolymer extends Polymer implements java.io.Serializable, Cloneable
+public class BioPolymer extends Polymer implements java.io.Serializable, org.openscience.cdk.interfaces.BioPolymer
 {
 
 	private Hashtable strands;	// the list of all the contained Strands.
@@ -82,7 +82,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, Cloneab
 	 * @param oMonomer  The strand the atom belongs to
 	 *
 	 */
-	public void addAtom(Atom oAtom, Strand oStrand) {
+	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Strand oStrand) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);
@@ -106,7 +106,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, Cloneab
 	 * @param oMonomer
 	 * @param oStrand
 	 */
-	public void addAtom(Atom oAtom, Monomer oMonomer, Strand oStrand)	{
+	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer, org.openscience.cdk.interfaces.Strand oStrand)	{
 		
 		if(!contains(oAtom))	{
 			// Add atom to AtomContainer

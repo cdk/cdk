@@ -25,10 +25,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
-package org.openscience.cdk;
+package org.openscience.cdk.interfaces;
 
 import java.util.Collection;
-import java.util.Hashtable;
 
 /**
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
@@ -40,82 +39,39 @@ import java.util.Hashtable;
  * @cdk.created 2001-08-06
  * @cdk.keyword polymer
  */
-public class Polymer extends Molecule implements java.io.Serializable, org.openscience.cdk.interfaces.Polymer
-{ 
-	private Hashtable monomers;	// the list of all the contained Monomers. 
+public interface Polymer extends Molecule {
 	
 	/**
-	 *
-	 * Contructs a new Polymer to store the Monomers.
-	 *
-	 */	
-	public Polymer() {
-		super();
-		monomers = new Hashtable();
-	}
-	
-	/**
-	 *
 	 * Adds the atom oAtom without specifying a Monomer. Therefore the
 	 * atom to this AtomContainer, but not to a certain Monomer (intended
 	 * e.g. for HETATMs).
 	 *
 	 * @param oAtom  The atom to add
-	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom) {
-		super.addAtom(oAtom);
-		/* notifyChanged() is called by addAtom in
-		 AtomContainer */
-	}
+	public void addAtom(Atom oAtom);
 	
 	/**
-	 *
 	 * Adds the atom oAtom to a specified Monomer.
 	 *
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The monomer the atom belongs to
-	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer) {
-		
-		if(!contains(oAtom))	{
-			super.addAtom(oAtom);
-			
-			if(oMonomer != null)	{	// Not sure what's better here...throw nullpointer exception?
-				oMonomer.addAtom(oAtom);
-				
-				if (! monomers.containsKey(oMonomer.getMonomerName())) {
-					monomers.put(oMonomer.getMonomerName(), oMonomer);
-				}
-			}
-		}
-		/* notifyChanged() is called by addAtom in
-		 AtomContainer */
-	}
+	public void addAtom(Atom oAtom, Monomer oMonomer);
 	
 	/**
-	 *
 	 * Return the number of monomers present in the Polymer.
 	 *
 	 * @return number of monomers
-	 *
 	 */
-	public int getMonomerCount() {
-		return monomers.size();
-	}
+	public int getMonomerCount();
 	
 	/**
-	 *
 	 * Retrieve a Monomer object by specifying its name.
 	 *
 	 * @param cName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for
-	 *
 	 */
-	public Monomer getMonomer(String cName) {
-		return (Monomer)monomers.get(cName);
-	}
+	public org.openscience.cdk.Monomer getMonomer(String cName);
 	
 	/**
 	 * Returns a collection of the names of all <code>Monomer</code>s in this
@@ -123,32 +79,13 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 *
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
-	public Collection getMonomerNames() {
-		return monomers.keySet();
-	}
+	public Collection getMonomerNames();
 	
 	/**
 	 * Removes a particular monomer, specified by its name.
 	 * 
 	 * @param name
 	 */
-	public void removeMonomer(String name)	{
-		if (monomers.containsKey(name))	{
-			Monomer monomer = (Monomer)monomers.get(name);
-			this.remove(monomer);
-			monomers.remove(name);
-		}
-	}
-
-    public String toString() {
-        StringBuffer stringContent = new StringBuffer();
-        stringContent.append("Polymer(");
-        stringContent.append(this.hashCode()).append(", ");
-//        stringContent.append("N:").append(getStrandName()).append(", ");
-//        stringContent.append("T:").append(getStrandType()).append(", ");
-        stringContent.append(super.toString());
-        stringContent.append(")");
-        return stringContent.toString();
-    }
+	public void removeMonomer(String name);
 
 }

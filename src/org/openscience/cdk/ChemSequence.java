@@ -36,14 +36,13 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * @cdk.keyword animation
  * @cdk.keyword reaction
  */
-public class ChemSequence extends ChemObject implements java.io.Serializable
-, Cloneable, ChemObjectListener
+public class ChemSequence extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ChemSequence, ChemObjectListener
 {
 
 	/**
 	 *  Array of ChemModels.
 	 */
-	protected ChemModel[] chemModels;
+	protected org.openscience.cdk.interfaces.ChemModel[] chemModels;
 	
 	/**
 	 *  Number of ChemModels contained by this container.
@@ -76,7 +75,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable
      *
      * @see            #getChemModel
 	 */
-	public void addChemModel(ChemModel chemModel)
+	public void addChemModel(org.openscience.cdk.interfaces.ChemModel chemModel)
 	{
 		if (chemModelCount + 1 >= chemModels.length)
 		{
@@ -116,7 +115,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable
 	 */
 	public ChemModel getChemModel(int number)
 	{
-		return chemModels[number];
+		return (ChemModel)chemModels[number];
 	}
 	
 	/**
@@ -162,7 +161,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable
         clone.chemModelCount = getChemModelCount();
 		clone.chemModels = new ChemModel[clone.chemModelCount];
 		for (int f = 0; f < clone.chemModelCount; f++) {
-			clone.chemModels[f] = (ChemModel)chemModels[f].clone();
+			clone.chemModels[f] = (ChemModel)((ChemModel)chemModels[f]).clone();
 		}
 		return clone;
 	}
