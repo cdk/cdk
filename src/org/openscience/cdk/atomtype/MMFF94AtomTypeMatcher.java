@@ -292,7 +292,7 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
 				}
 				
 				atomTypeFlag = true;
-				System.out.println(" MATCH AtomTypeID:"+j+ " " + ID);
+				// System.out.println(" MATCH AtomTypeID:"+j+ " " + ID);
 				logger.debug(" MATCH AtomTypeID:"+j+ " " + ID);
 				break;
 			}//IF
