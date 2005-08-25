@@ -43,7 +43,7 @@ package org.openscience.cdk;
  * @cdk.keyword reaction
  * @cdk.bug     1095690
  */
-public class Reaction extends ChemObject implements java.io.Serializable, Cloneable {
+public class Reaction extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.Reaction {
 
     /** Reaction of which the equilibrium is not set. */
     public static final int UNKNOWN_DIRECTION = 0;
@@ -58,11 +58,11 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 
 	protected int growArraySize = 3;
 
-    protected SetOfMolecules reactants;
-    protected SetOfMolecules products;
+    protected org.openscience.cdk.interfaces.SetOfAtomContainers reactants;
+    protected org.openscience.cdk.interfaces.SetOfAtomContainers products;
     /** These are the used solvent, catalysist etc that normally appear above
         the reaction arrow */
-    protected SetOfMolecules agents;
+    protected org.openscience.cdk.interfaces.SetOfAtomContainers agents;
     
     protected Mapping[] map;
     protected int mappingCount;
@@ -105,8 +105,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return A SetOfMolecules containing the reactants in this reaction
      * @see    #setReactants
      */
-    public SetOfMolecules getReactants() {
-        return reactants;
+    public SetOfAtomContainers getReactants() {
+        return (SetOfAtomContainers)reactants;
     }
 
     /**
@@ -115,7 +115,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param setOfMolecules The new set of reactants
      * @see   #getReactants
      */
-    public void setReactants(SetOfMolecules setOfMolecules) {
+    public void setReactants(org.openscience.cdk.interfaces.SetOfAtomContainers setOfMolecules) {
         reactants = setOfMolecules;
 	notifyChanged();
     }
@@ -126,8 +126,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return A SetOfMolecules containing the products in this reaction
      * @see    #setProducts
      */
-    public SetOfMolecules getProducts() {
-        return products;
+    public SetOfAtomContainers getProducts() {
+        return (SetOfAtomContainers)products;
     }
     
 	/**
@@ -136,7 +136,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param setOfMolecules The new set of products
      * @see   #getProducts
      */
-    public void setProducts(SetOfMolecules setOfMolecules) {
+    public void setProducts(org.openscience.cdk.interfaces.SetOfAtomContainers setOfMolecules) {
         products = setOfMolecules;
 	notifyChanged();
     }
@@ -147,8 +147,8 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return A SetOfMolecules containing the agents in this reaction
      * @see    #addAgent
      */
-    public SetOfMolecules getAgents() {
-        return agents;
+    public SetOfAtomContainers getAgents() {
+        return (SetOfAtomContainers)agents;
     }
     
     /**
@@ -169,7 +169,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param reactant   Molecule added as reactant to this reaction
      * @see   #getReactants
      */
-    public void addReactant(Molecule reactant) {
+    public void addReactant(org.openscience.cdk.interfaces.AtomContainer reactant) {
         addReactant(reactant, 1.0);
 	/* notifyChanged() is called by 
 	   addReactant(Molecule reactant, double coefficient) */
@@ -181,7 +181,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param agent   Molecule added as agent to this reaction
      * @see   #getAgents
      */
-    public void addAgent(Molecule agent) {
+    public void addAgent(org.openscience.cdk.interfaces.AtomContainer agent) {
         agents.addAtomContainer(agent);
 	notifyChanged();
     }
@@ -193,7 +193,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getReactants
      */
-    public void addReactant(Molecule reactant, double coefficient) {
+    public void addReactant(org.openscience.cdk.interfaces.AtomContainer reactant, double coefficient) {
         reactants.addAtomContainer(reactant, coefficient);
 	notifyChanged();
     }
@@ -204,7 +204,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param product    Molecule added as product to this reaction
      * @see   #getProducts
      */
-    public void addProduct(Molecule product) {
+    public void addProduct(org.openscience.cdk.interfaces.AtomContainer product) {
         this.addProduct(product, 1.0);
 	/* notifyChanged() is called by 
 	addProduct(Molecule product, double coefficient)*/
@@ -217,7 +217,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getProducts
      */
-    public void addProduct(Molecule product, double coefficient) {
+    public void addProduct(org.openscience.cdk.interfaces.AtomContainer product, double coefficient) {
         products.addAtomContainer(product, coefficient);
 	/* notifyChanged() is called by 
 	   addReactant(Molecule reactant, double coefficient) */
@@ -230,7 +230,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setReactantCoefficient
      */
-    public double getReactantCoefficient(Molecule reactant) {
+    public double getReactantCoefficient(org.openscience.cdk.interfaces.AtomContainer reactant) {
         return reactants.getMultiplier(reactant);
     }
     
@@ -241,7 +241,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setProductCoefficient
      */
-    public double getProductCoefficient(Molecule product) {
+    public double getProductCoefficient(org.openscience.cdk.interfaces.AtomContainer product) {
         return products.getMultiplier(product);
     }
 	
@@ -253,7 +253,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getReactantCoefficient
      */
-    public boolean setReactantCoefficient(Molecule reactant, double coefficient) {
+    public boolean setReactantCoefficient(org.openscience.cdk.interfaces.AtomContainer reactant, double coefficient) {
 	notifyChanged();
         return reactants.setMultiplier(reactant, coefficient);
     }
@@ -267,7 +267,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getProductCoefficient
      */
-    public boolean setProductCoefficient(Molecule product, double coefficient) {
+    public boolean setProductCoefficient(org.openscience.cdk.interfaces.AtomContainer product, double coefficient) {
 	notifyChanged();
         return products.setMultiplier(product, coefficient);
     }
@@ -387,9 +387,9 @@ public class Reaction extends ChemObject implements java.io.Serializable, Clonea
 	public Object clone() {
 		Reaction clone = (Reaction)super.clone();
         // clone the reactants, products and agents
-        clone.reactants = (SetOfMolecules)reactants.clone();
-        clone.agents = (SetOfMolecules)agents.clone();
-        clone.products = (SetOfMolecules)products.clone();
+        clone.reactants = (SetOfAtomContainers)((SetOfAtomContainers)reactants).clone();
+        clone.agents = (SetOfAtomContainers)((SetOfAtomContainers)agents).clone();
+        clone.products = (SetOfAtomContainers)((SetOfAtomContainers)products).clone();
         // clone the maps
 		clone.map = new Mapping[map.length];
 		for (int f = 0; f < map.length; f++) {

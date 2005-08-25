@@ -32,10 +32,10 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * @author        hel
  * @cdk.module    data
  */
-public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, Cloneable, ChemObjectListener {
+public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.SetOfAtomContainers, ChemObjectListener {
 
 	/**  Array of AtomContainers. */
-	protected AtomContainer[] atomContainers;
+	protected org.openscience.cdk.interfaces.AtomContainer[] atomContainers;
 
 	/**  Number of AtomContainers contained by this container. */
 	protected int atomContainerCount;
@@ -65,7 +65,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @param  atomContainer  The atomContainer to be added to this container
 	 */
-	public void addAtomContainer(AtomContainer atomContainer) {
+	public void addAtomContainer(org.openscience.cdk.interfaces.AtomContainer atomContainer) {
 		atomContainer.addListener(this);
 		addAtomContainer(atomContainer, 1.0);
 		/*
@@ -78,7 +78,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @param  atomContainer  The atomContainer to be removed from this container
 	 */
-	public void removeAtomContainer(AtomContainer atomContainer) {
+	public void removeAtomContainer(org.openscience.cdk.interfaces.AtomContainer atomContainer) {
 		for (int i = 0; i < atomContainerCount; i++) {
 			if (atomContainers[i] == atomContainer)
 				removeAtomContainer(i);
@@ -124,7 +124,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @return             true if multiplier has been set
 	 * @see                #getMultiplier(AtomContainer)
 	 */
-	public boolean setMultiplier(AtomContainer container, double multiplier) {
+	public boolean setMultiplier(org.openscience.cdk.interfaces.AtomContainer container, double multiplier) {
 		for (int i = 0; i < atomContainers.length; i++) {
 			if (atomContainers[i] == container) {
 				multipliers[i] = multiplier;
@@ -186,7 +186,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @param  atomContainer  The atomContainer to be added to this container
 	 * @param  multiplier     The multiplier of this atomContainer
 	 */
-	public void addAtomContainer(AtomContainer atomContainer, double multiplier) {
+	public void addAtomContainer(org.openscience.cdk.interfaces.AtomContainer atomContainer, double multiplier) {
 		if (atomContainerCount + 1 >= atomContainers.length) {
 			growAtomContainerArray();
 		}
@@ -202,7 +202,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @param  atomContainerSet  The SetOfAtomContainers
 	 */
-	public void add(SetOfAtomContainers atomContainerSet) {
+	public void add(org.openscience.cdk.interfaces.SetOfAtomContainers atomContainerSet) {
 		AtomContainer[] mols = atomContainerSet.getAtomContainers();
 		for (int i = 0; i < mols.length; i++) {
 			addAtomContainer(mols[i]);
@@ -232,7 +232,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @return         The AtomContainer at position <code>number</code> .
 	 */
 	public AtomContainer getAtomContainer(int number) {
-		return atomContainers[number];
+		return (AtomContainer)atomContainers[number];
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @return            -1, if the given molecule is not a container in this set
 	 * @see               #setMultiplier(AtomContainer, double)
 	 */
-	public double getMultiplier(AtomContainer container) {
+	public double getMultiplier(org.openscience.cdk.interfaces.AtomContainer container) {
 		for (int i = 0; i < atomContainerCount; i++) {
 			if (atomContainers[i].equals(container)) {
 				return multipliers[i];

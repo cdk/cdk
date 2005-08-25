@@ -40,14 +40,14 @@ package org.openscience.cdk;
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired
  */
-public class SingleElectron extends ElectronContainer implements java.io.Serializable, Cloneable
+public class SingleElectron extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.SingleElectron
 {
 
     /** Number of electron for this class is defined as one. */
     protected final int electronCount = 1;
 
     /** The atom with which this single electron is associated. */
-    protected Atom atom;
+    protected org.openscience.cdk.interfaces.Atom atom;
 
     /**
      * Constructs an single electron orbital on an Atom.
@@ -81,7 +81,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      * @see    #setAtom
 	 */
 	public Atom getAtom() {
-		return this.atom;
+		return (Atom)this.atom;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      *
      * @see    #getAtom
 	 */
-	public void setAtom(Atom atom) {
+	public void setAtom(org.openscience.cdk.interfaces.Atom atom) {
 		this.atom = atom;
 		notifyChanged();
 	}
@@ -102,7 +102,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this SingleElectron is associated with the atom
      */
-    public boolean contains(Atom atom)     {
+    public boolean contains(org.openscience.cdk.interfaces.Atom atom)     {
         return (this.atom == atom) ? true : false;
     }
 
@@ -139,7 +139,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
 		}
         // clone the Atom
         if (atom != null) {
-		    clone.atom = (Atom)atom.clone(); 
+		    clone.atom = (Atom)((Atom)atom).clone(); 
         }
 		return clone;
 	}
