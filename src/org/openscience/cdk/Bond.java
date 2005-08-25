@@ -41,7 +41,7 @@ import javax.vecmath.Point3d;
  * @cdk.keyword    atom
  * @cdk.keyword    electron
  */
-public class Bond extends ElectronContainer implements java.io.Serializable, Cloneable
+public class Bond extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Bond
 {
 	/**
 	 *  The bond order of this bond.
@@ -56,7 +56,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	/**
 	 *  A list of atoms participating in this bond.
 	 */
-	protected Atom[] atoms;
+	protected org.openscience.cdk.interfaces.Atom[] atoms;
 
 	/**
 	 *  A descriptor the stereochemical orientation of this bond.
@@ -156,7 +156,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *@param  atoms  An array of atoms that forms this bond
 	 *@see           #getAtoms
 	 */
-	public void setAtoms(Atom[] atoms)
+	public void setAtoms(org.openscience.cdk.interfaces.Atom[] atoms)
 	{
 		this.atoms = atoms;
 		notifyChanged();
@@ -183,7 +183,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 */
 	public Atom getAtomAt(int position)
 	{
-		return atoms[position];
+		return (Atom)atoms[position];
 	}
 
 
@@ -194,14 +194,14 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *@param  atom  The atom the bond partner is searched of
 	 *@return       the connected atom or null
 	 */
-	public Atom getConnectedAtom(Atom atom)
+	public Atom getConnectedAtom(org.openscience.cdk.interfaces.Atom atom)
 	{
 		if (atoms[0] == atom)
 		{
-			return atoms[1];
+			return (Atom)atoms[1];
 		} else if (atoms[1] == atom)
 		{
-			return atoms[0];
+			return (Atom)atoms[0];
 		}
 		return null;
 	}
@@ -213,7 +213,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *@param  atom  The atom to be tested if it participates in this bond
 	 *@return       true if the atom participates in this bond
 	 */
-	public boolean contains(Atom atom)
+	public boolean contains(org.openscience.cdk.interfaces.Atom atom)
 	{
 		if (atoms[0] == atom)
 		{
@@ -233,7 +233,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 *@param  position  The position in this bond where the atom is to be inserted
 	 *@see              #getAtomAt
 	 */
-	public void setAtomAt(Atom atom, int position)
+	public void setAtomAt(org.openscience.cdk.interfaces.Atom atom, int position)
 	{
 		atoms[position] = atom;
 		notifyChanged();
@@ -374,7 +374,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 	 * @param  bond  The bond which is checked to be connect with this one
 	 * @return       True, if the bonds share an atom, otherwise false
 	 */
-	public boolean isConnectedTo(Bond bond)
+	public boolean isConnectedTo(org.openscience.cdk.interfaces.Bond bond)
 	{
 		for (int f = 0; f < getAtomCount(); f++)
 		{
@@ -405,7 +405,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, Clo
 		    ((Bond)clone).atoms = new Atom[atoms.length];
             for (int f = 0; f < atoms.length; f++) {
                 if (atoms[f] != null) {
-                    ((Bond)clone).atoms[f] = (Atom)atoms[f].clone();
+                    ((Bond)clone).atoms[f] = (Atom)((Atom)atoms[f]).clone();
                 }
             }
         }

@@ -38,7 +38,7 @@ package org.openscience.cdk;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public class AtomParity implements java.io.Serializable, Cloneable  {
+public class AtomParity implements java.io.Serializable, org.openscience.cdk.interfaces.AtomParity  {
     
     private Atom centralAtom;
     private Atom[] neighbors;
