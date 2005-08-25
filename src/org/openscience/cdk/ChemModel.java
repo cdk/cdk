@@ -33,36 +33,34 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  *
  * @cdk.module data
  */
-public class ChemModel extends ChemObject implements java.io.Serializable
-, Cloneable, ChemObjectListener
+public class ChemModel extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ChemModel, ChemObjectListener
 {
 
 	/**
 	 *  A SetOfMolecules.
 	 */
-	protected SetOfMolecules setOfMolecules = null;
+	protected org.openscience.cdk.interfaces.SetOfAtomContainers setOfMolecules = null;
 
 	/**
 	 *  A SetOfReactions.
 	 */
-	protected SetOfReactions setOfReactions = null;
+	protected org.openscience.cdk.interfaces.SetOfReactions setOfReactions = null;
 
 	/**
 	 *  A RingSet.
 	 */
-	protected RingSet ringSet = null;
+	protected org.openscience.cdk.interfaces.RingSet ringSet = null;
 	
     /**
 	 *  A Crystal.
 	 */
-     protected Crystal crystal = null;
+     protected org.openscience.cdk.interfaces.Crystal crystal = null;
 
 	/**
 	 *  Constructs an new ChemModel with a non-null, but 
      *  empty setOfMolecules.
 	 */
-	public ChemModel() {
-	}
+	public ChemModel() {}
 
 	/**
 	 * Returns the SetOfMolecules of this ChemModel.
@@ -73,7 +71,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
 	 */
 	public SetOfMolecules getSetOfMolecules()
 	{
-		return this.setOfMolecules;
+		return (SetOfMolecules)this.setOfMolecules;
 	}
 
 
@@ -84,7 +82,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
      *
      * @see      #getSetOfMolecules
 	 */
-	public void setSetOfMolecules(SetOfMolecules setOfMolecules)
+	public void setSetOfMolecules(org.openscience.cdk.interfaces.SetOfAtomContainers setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
 		this.setOfMolecules.addListener(this);
@@ -101,7 +99,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
      * @see      #setRingSet
 	 */
 	public RingSet getRingSet() {
-		return this.ringSet;
+		return (RingSet)this.ringSet;
 	}
 
 
@@ -112,7 +110,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
      *
      * @see      #getRingSet
 	 */
-	public void setRingSet(RingSet ringSet)
+	public void setRingSet(org.openscience.cdk.interfaces.RingSet ringSet)
 	{
 		this.ringSet = ringSet;
 		notifyChanged();
@@ -126,7 +124,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
      * @see      #setCrystal
      */
     public Crystal getCrystal() {
-        return this.crystal;
+        return (Crystal)this.crystal;
     }
 
     /**
@@ -136,7 +134,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
      *
      * @see      #getCrystal
      */
-    public void setCrystal(Crystal crystal) {
+    public void setCrystal(org.openscience.cdk.interfaces.Crystal crystal) {
         this.crystal = crystal;
 	this.crystal.addListener(this);
 	notifyChanged();
@@ -150,7 +148,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
      * @see      #setSetOfReactions
      */
     public SetOfReactions getSetOfReactions() {
-        return this.setOfReactions;
+        return (SetOfReactions)this.setOfReactions;
     }
 
     /**
@@ -160,7 +158,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable
      *
      * @see       #getSetOfReactions
      */
-    public void setSetOfReactions(SetOfReactions sor) {
+    public void setSetOfReactions(org.openscience.cdk.interfaces.SetOfReactions sor) {
         this.setOfReactions = sor;
 	this.setOfReactions.addListener(this);
 	notifyChanged();
@@ -207,22 +205,22 @@ public class ChemModel extends ChemObject implements java.io.Serializable
 		ChemModel clone = (ChemModel)super.clone();
         // clone the content
         if (setOfMolecules != null) {
-            clone.setOfMolecules = (SetOfMolecules)setOfMolecules.clone();
+            clone.setOfMolecules = (SetOfMolecules)((SetOfMolecules)setOfMolecules).clone();
         } else {
             clone.setOfMolecules = null;
         }
         if (setOfReactions != null) {
-            clone.setOfReactions = (SetOfReactions)setOfReactions.clone();
+            clone.setOfReactions = (org.openscience.cdk.interfaces.SetOfReactions)((SetOfReactions)setOfReactions).clone();
         } else {
             clone.setOfReactions = null;
         }
         if (crystal != null) {
-            clone.crystal = (Crystal)crystal.clone();
+            clone.crystal = (Crystal)((Crystal)crystal).clone();
         } else {
             clone.crystal = null;
         }
         if (ringSet != null) {
-            clone.ringSet = (RingSet)ringSet.clone();
+            clone.ringSet = (RingSet)((RingSet)ringSet).clone();
         } else {
             clone.ringSet = null;
         }

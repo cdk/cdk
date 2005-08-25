@@ -35,7 +35,7 @@ import java.util.Vector;
  *
  * @cdk.keyword     ring, set of
  */
-public class RingSet extends Vector implements java.io.Serializable, Cloneable
+public class RingSet extends Vector implements java.io.Serializable, org.openscience.cdk.interfaces.RingSet
 {
 
     /** Flag to denote that the set is order with the largest ring first? */
@@ -59,7 +59,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 * @param   newRing  The ring to be tested if it is already stored here
 	 * @return     true if it is already stored
 	 */
-	public boolean ringAlreadyInSet(Ring newRing)
+	public boolean ringAlreadyInSet(org.openscience.cdk.interfaces.Ring newRing)
 	{
 		Ring ring;
 		Bond[] bonds;
@@ -102,7 +102,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public Vector getRings(Bond bond)
+	public Vector getRings(org.openscience.cdk.interfaces.Bond bond)
 	{
 		Vector rings = new Vector();
 		Ring ring;
@@ -124,7 +124,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public RingSet getRings(Atom atom)
+	public RingSet getRings(org.openscience.cdk.interfaces.Atom atom)
 	{
 		RingSet rings = new RingSet();
 		Ring ring;
@@ -147,7 +147,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
 
-	public Vector getConnectedRings(Ring ring)
+	public Vector getConnectedRings(org.openscience.cdk.interfaces.Ring ring)
 	{
 		Vector connectedRings = new Vector();
 		Ring tempRing;
@@ -172,13 +172,13 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
 	 *
 	 * @param   ringSet  the ring set to be united with this one.
 	 */
-	public void add(RingSet ringSet)
+	public void add(org.openscience.cdk.interfaces.RingSet ringSet)
 	{
 		for (int f = 0; f < ringSet.size(); f++)
 		{
-			if (!contains(ringSet.elementAt(f)))
+			if (!contains(ringSet.get(f)))
 			{
-				addElement(ringSet.elementAt(f));
+				addElement(ringSet.get(f));
 			}
 		}
 	}
@@ -190,7 +190,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
      * @param  atom Atom to check
 	 * @return      true, if the ringset contains the atom
 	 */
-	public boolean contains(Atom atom)
+	public boolean contains(org.openscience.cdk.interfaces.Atom atom)
 	{
 		for (int i = 0; i < size(); i++)
 		{
@@ -255,7 +255,7 @@ public class RingSet extends Vector implements java.io.Serializable, Cloneable
    *
    * @param atom1 The first atom
    * @param atom2 The second atom
-   * @return  boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
+   * @return ï¿½boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
    */
   public boolean isSameRing(Atom atom1, Atom atom2)
   {

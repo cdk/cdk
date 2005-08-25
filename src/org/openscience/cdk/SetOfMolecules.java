@@ -50,14 +50,14 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * @cdk.keyword reaction
  * @cdk.keyword molecule
  */
-public class SetOfMolecules extends SetOfAtomContainers {
+public class SetOfMolecules extends SetOfAtomContainers implements org.openscience.cdk.interfaces.SetOfMolecules {
 
     /**
      *  Adds an molecule to this container.
      *
      * @param  molecule  The molecule to be added to this container 
      */
-    public void addMolecule(Molecule molecule) {
+    public void addMolecule(org.openscience.cdk.interfaces.Molecule molecule) {
         super.addAtomContainer(molecule);
 	/* notifyChanged() called in super.addAtomContainer() */
     }
@@ -67,7 +67,7 @@ public class SetOfMolecules extends SetOfAtomContainers {
      *
      * @param  moleculeSet  The SetOfMolecules 
      */
-    public void add(SetOfMolecules moleculeSet) {
+    public void add(org.openscience.cdk.interfaces.SetOfMolecules moleculeSet) {
         Molecule[] mols = moleculeSet.getMolecules();
         for (int i=0; i< mols.length; i++) {
             addMolecule(mols[i]);
@@ -75,7 +75,7 @@ public class SetOfMolecules extends SetOfAtomContainers {
 	/* notifyChanged() called in super.addAtomContainer() */
     }
     
-    public void setMolecules(Molecule[] molecules)
+    public void setMolecules(org.openscience.cdk.interfaces.Molecule[] molecules)
     {
 	    if (atomContainerCount > 0) removeAllAtomContainers();
 	    for (int f = 0; f < molecules.length; f++)

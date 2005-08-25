@@ -34,7 +34,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword    ring
  */
-public class Ring extends AtomContainer implements java.io.Serializable, Cloneable
+public class Ring extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Ring
 {
 
 	/**
@@ -100,7 +100,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, Cloneab
 	 * @param   atom  A atom from the bond above to assign a search direction
 	 * @return  The next bond in the order given by the above assignment   
 	 */
-	public Bond getNextBond(Bond bond, Atom atom)
+	public Bond getNextBond(org.openscience.cdk.interfaces.Bond bond, org.openscience.cdk.interfaces.Atom atom)
 	{
 		Bond tempBond;
 		for (int f = 0; f < getElectronContainerCount(); f++) {

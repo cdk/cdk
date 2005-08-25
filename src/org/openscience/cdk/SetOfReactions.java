@@ -50,13 +50,13 @@ package org.openscience.cdk;
  * @cdk.keyword reaction
  * @cdk.keyword reaction
  */
-public class SetOfReactions extends ChemObject implements java.io.Serializable, Cloneable
+public class SetOfReactions extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.SetOfReactions
 {
 
 	/**
 	 *  Array of Reactions.
 	 */
-	private Reaction[] reactions;
+	private org.openscience.cdk.interfaces.Reaction[] reactions;
 	
 	/**
 	 *  Number of Reactions contained by this container.
@@ -85,7 +85,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	 *
 	 * @param  reaction  The reaction to be added to this container 
 	 */
-	public void addReaction(Reaction reaction) {
+	public void addReaction(org.openscience.cdk.interfaces.Reaction reaction) {
 		if (reactionCount + 1 >= reactions.length) growReactionArray();
 		reactions[reactionCount] = reaction;
 		reactionCount++;
@@ -102,7 +102,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	 * @return         The Reaction at position <code>number</code>
 	 */
     public Reaction getReaction(int number) {
-        return reactions[number];
+        return (Reaction)reactions[number];
     }
     
 
@@ -114,7 +114,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	public Reaction[] getReactions() {
         Reaction[] result = new Reaction[reactionCount];
         for (int i=0; i < reactionCount; i++) {
-            result[i] = reactions[i];
+            result[i] = (Reaction)reactions[i];
         }
 		return result;
 	}
@@ -166,7 +166,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
         clone.reactionCount = this.reactionCount;
 		clone.reactions = new Reaction[clone.reactionCount];
 		for (int f = 0; f < clone.reactionCount; f++) {
-			clone.reactions[f] = (Reaction)reactions[f].clone();
+			clone.reactions[f] = (Reaction)((Reaction)reactions[f]).clone();
 		}
 		return clone;
 	}

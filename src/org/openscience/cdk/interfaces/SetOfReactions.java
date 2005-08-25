@@ -47,14 +47,14 @@ public interface SetOfReactions extends ChemObject {
 	 * @param  number  The position of the Reaction to be returned
 	 * @return         The Reaction at position <code>number</code>
 	 */
-    public Reaction getReaction(int number);
+    public org.openscience.cdk.Reaction getReaction(int number);
 
 	/**
 	 * Returns the array of Reactions of this container.
 	 *
 	 * @return    The array of Reactions of this container 
 	 */
-	public Reaction[] getReactions();
+	public org.openscience.cdk.Reaction[] getReactions();
 	
 	/**
 	 * Returns the number of Reactions in this Container.

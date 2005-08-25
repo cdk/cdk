@@ -65,39 +65,39 @@ public interface Reaction extends ChemObject {
      * @return A SetOfMolecules containing the reactants in this reaction
      * @see    #setReactants
      */
-    public org.openscience.cdk.SetOfAtomContainers getReactants();
+    public org.openscience.cdk.SetOfMolecules getReactants();
 
     /**
-     * Assigns a SetOfMolecules to the reactants in this reaction.
+     * Assigns a  to the reactants in this reaction.
      *
-     * @param setOfMolecules The new set of reactants
+     * @param  The new set of reactants
      * @see   #getReactants
      */
-    public void setReactants(SetOfAtomContainers setOfMolecules);
+    public void setReactants(SetOfMolecules reactants);
 	
     /**
-     * Returns a SetOfMolecules containing the products of this reaction.
+     * Returns a  containing the products of this reaction.
      *
-     * @return A SetOfMolecules containing the products in this reaction
+     * @return A  containing the products in this reaction
      * @see    #setProducts
      */
-    public org.openscience.cdk.SetOfAtomContainers getProducts();
+    public org.openscience.cdk.SetOfMolecules getProducts();
     
 	/**
-     * Assigns a SetOfMolecules to the products of this reaction.
+     * Assigns a  to the products of this reaction.
      *
-     * @param setOfMolecules The new set of products
+     * @param  The new set of products
      * @see   #getProducts
      */
-    public void setProducts(SetOfAtomContainers setOfMolecules);
+    public void setProducts(SetOfMolecules products);
 	
     /**
-     * Returns a SetOfMolecules containing the agents in this reaction.
+     * Returns a  containing the agents in this reaction.
      *
-     * @return A SetOfMolecules containing the agents in this reaction
+     * @return A  containing the agents in this reaction
      * @see    #addAgent
      */
-    public org.openscience.cdk.SetOfAtomContainers getAgents();
+    public org.openscience.cdk.SetOfMolecules getAgents();
     
     /**
      * Adds a reactant to this reaction.
@@ -105,7 +105,7 @@ public interface Reaction extends ChemObject {
      * @param reactant   Molecule added as reactant to this reaction
      * @see   #getReactants
      */
-    public void addReactant(AtomContainer reactant);
+    public void addReactant(Molecule reactant);
     
     /**
      * Adds an agent to this reaction.
@@ -113,7 +113,7 @@ public interface Reaction extends ChemObject {
      * @param agent   Molecule added as agent to this reaction
      * @see   #getAgents
      */
-    public void addAgent(AtomContainer agent);
+    public void addAgent(Molecule agent);
     
     /**
      * Adds a reactant to this reaction with a stoichiometry coefficient.
@@ -122,7 +122,7 @@ public interface Reaction extends ChemObject {
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getReactants
      */
-    public void addReactant(AtomContainer reactant, double coefficient);
+    public void addReactant(Molecule reactant, double coefficient);
     
     /**
      * Adds a product to this reaction.
@@ -130,7 +130,7 @@ public interface Reaction extends ChemObject {
      * @param product    Molecule added as product to this reaction
      * @see   #getProducts
      */
-    public void addProduct(AtomContainer product);
+    public void addProduct(Molecule product);
     
     /**
      * Adds a product to this reaction.
@@ -139,7 +139,7 @@ public interface Reaction extends ChemObject {
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getProducts
      */
-    public void addProduct(AtomContainer product, double coefficient);
+    public void addProduct(Molecule product, double coefficient);
     
     /**
      * Returns the stoichiometry coefficient of the given reactant.
@@ -148,7 +148,7 @@ public interface Reaction extends ChemObject {
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setReactantCoefficient
      */
-    public double getReactantCoefficient(AtomContainer reactant);
+    public double getReactantCoefficient(Molecule reactant);
     
     /**
      * Returns the stoichiometry coefficient of the given product.
@@ -157,7 +157,7 @@ public interface Reaction extends ChemObject {
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setProductCoefficient
      */
-    public double getProductCoefficient(AtomContainer product);
+    public double getProductCoefficient(Molecule product);
 	
 	/**
      * Sets the coefficient of a a reactant to a given value.
@@ -167,7 +167,7 @@ public interface Reaction extends ChemObject {
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getReactantCoefficient
      */
-    public boolean setReactantCoefficient(AtomContainer reactant, double coefficient);	
+    public boolean setReactantCoefficient(Molecule reactant, double coefficient);	
 	    
 	/**
      * Sets the coefficient of a a product to a given value.
@@ -177,7 +177,7 @@ public interface Reaction extends ChemObject {
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getProductCoefficient
      */
-    public boolean setProductCoefficient(AtomContainer product, double coefficient);
+    public boolean setProductCoefficient(Molecule product, double coefficient);
     
 	/**
      * Returns an array of double with the stoichiometric coefficients
