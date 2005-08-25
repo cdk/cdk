@@ -34,14 +34,14 @@ package org.openscience.cdk;
  * @cdk.keyword lone-pair
  * @cdk.keyword bond
  */
-public class LonePair extends ElectronContainer implements java.io.Serializable, Cloneable
+public class LonePair extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.LonePair
 {
 
     /** Number of electrons in the lone pair. */
     protected final int electronCount = 2;
 
     /** The atom with which this lone pair is associated. */
-    protected Atom atom;
+    protected org.openscience.cdk.interfaces.Atom atom;
 
     /**
      * Constructs an unconnected lone pair.
@@ -77,7 +77,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * @see    #setAtom
 	 */
 	public Atom getAtom() {
-		return this.atom;
+		return (Atom)this.atom;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      *
      * @see    #getAtom
 	 */
-	public void setAtom(Atom atom) {
+	public void setAtom(org.openscience.cdk.interfaces.Atom atom) {
 		this.atom = atom;
 		notifyChanged();
 	}
@@ -98,7 +98,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this lone pair is associated with the atom
      */
-    public boolean contains(Atom atom)     {
+    public boolean contains(org.openscience.cdk.interfaces.Atom atom)     {
         return (this.atom == atom) ? true : false;
     }
 
@@ -117,7 +117,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
 		}
         // clone the Atom
         if (atom != null) {
-		    clone.atom = (Atom)atom.clone(); 
+		    clone.atom = (Atom)((Atom)atom).clone(); 
         }
 		return clone;
 	}

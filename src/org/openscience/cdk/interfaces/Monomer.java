@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *  */
-package org.openscience.cdk;
+package org.openscience.cdk.interfaces;
 
 
 /**
@@ -40,86 +40,37 @@ package org.openscience.cdk;
  * @cdk.keyword    monomer
  *
  */
-public class Monomer extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Monomer
-{
-
-    /** The name of this monomer (e.g. Trp42). */
-    private String monomerName;
-    /** The type of this monomer (e.g. TRP). */
-    private String monomerType;
+public interface Monomer extends AtomContainer {
 
 	/**
-	 *
-	 * Contructs a new Monomer.
-	 *
-	 */	
-	public Monomer () {
-		super();
-	}
-	
-	/**
-	 *
 	 * Retrieve the monomer name.
 	 *
 	 * @return The name of the Monomer object
-	 *
      * @see    #setMonomerName
 	 */
-	public String getMonomerName() {
-		return monomerName;
-	}
+	public String getMonomerName();
 
 	/**
-	 *
 	 * Retrieve the monomer type.
 	 *
 	 * @return The type of the Monomer object
-	 *
      * @see    #setMonomerType
 	 */
-	public String getMonomerType() {
-		return monomerType;
-	}
+	public String getMonomerType();
 	
 	/**
-	 *
 	 * Set the name of the Monomer object.
 	 *
 	 * @param cMonomerName  The new name for this monomer
-	 *
      * @see    #getMonomerName
 	 */
-	public void setMonomerName(String cMonomerName) {
-		monomerName = cMonomerName;
-		notifyChanged();
-	}
+	public void setMonomerName(String cMonomerName);
 	
 	/**
-	 *
 	 * Set the type of the Monomer object.
 	 *
 	 * @param cMonomerType  The new type for this monomer
-	 *
      * @see    #getMonomerType
 	 */
-	public void setMonomerType(String cMonomerType) {
-		monomerType = cMonomerType;
-		notifyChanged();
-	}
-
-    /**
-     * Clones this Monomer object.
-     *
-     * @return    The cloned object
-     */
-    public Object clone() {
-        Monomer clone = null;
-        try {
-            clone = (Monomer) super.clone();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
-        return clone;
-    }
-
+	public void setMonomerType(String cMonomerType);
 }
