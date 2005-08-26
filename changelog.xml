@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
   
-  <release id="CVS">
+  <release id="20050826">
     <addition contributor="egonw">
       Added a cdk.tools.ProteinBuilderTool to build protein structures
     </addition>
