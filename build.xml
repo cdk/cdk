@@ -590,7 +590,7 @@
                 </copy>
                 <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/forcefield/data/"/>
                 <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/forcefield/data/">
-                    <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.prm"/>
+                    <fileset dir="${src}/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
                 </copy>
                 <copy todir="${sourcedist.dir}/${src}/">
                     <fileset dir="${src}/" includes="*.manifest" />
