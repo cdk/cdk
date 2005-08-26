@@ -62,13 +62,6 @@ public class ProteinBuilderTool {
     public static BioPolymer addAminoAcidAtNTerminus(
         BioPolymer protein, AminoAcid aaToAdd, Strand strand, AminoAcid aaToAddTo)
     {
-        // remove the acidic oxygen which is to be replaced by the nitrogen
-    	try {
-    		AminoAcidManipulator.removeAcidicOxygen(aaToAdd);
-    	} catch (Exception exception) {
-    		logger.error("Could not remove acidic oxygen: ", exception.getMessage());
-    		logger.debug(exception);
-    	}
     	// then add the amino acid
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
@@ -95,16 +88,6 @@ public class ProteinBuilderTool {
     public static BioPolymer addAminoAcidAtCTerminus(
         BioPolymer protein, AminoAcid aaToAdd, Strand strand, AminoAcid aaToAddTo)
     {
-        // remove the acidic oxygen which might be removed by the next added amino
-    	// acid... so we'll have a dangling carbonyl in the end
-    	logger.debug("Before removal: ", aaToAdd);
-    	try {
-    		AminoAcidManipulator.removeAcidicOxygen(aaToAdd);
-    	} catch (Exception exception) {
-    		logger.error("Could not remove acidic oxygen: ", exception.getMessage());
-    		logger.debug(exception);
-    	}
-    	logger.debug("After removal: ", aaToAdd);
     	// then add the amino acid
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
