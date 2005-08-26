@@ -529,7 +529,7 @@
             </jar>
         </target>
 
-        <!-- target id="sourcedist" name="sourcedist" depends="init"
+        <target id="sourcedist" name="sourcedist" depends="init"
                 description="Builds the source packages.">
                 <property name="package" value="cdk-source-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
@@ -556,9 +556,19 @@
                             <exclude name="dbdoclet*.*"/>
                         </fileset>
                 </copy>
-                <copy todir="${sourcedist.dir}/data">
+            <copy todir="${sourcedist.dir}/develjar">
+                    <fileset dir="develjar">
+                        <exclude name="pmd-1.8.jar"/>
+                        <exclude name="doccheck.jar"/>
+                        <exclude name="dbdoclet*.*"/>
+                    </fileset>
+            </copy>
+                <copy todir="${sourcedist.dir}/src/data">
                         <fileset dir="src/data" />
                 </copy>
+            <copy todir="${sourcedist.dir}/src/META-INF">
+                    <fileset dir="src/META-INF" />
+            </copy>
                 <copy tofile="${sourcedist.dir}/doc/javadoc/source//MakeJavaFilesFilesDoclet.java"
                       file="doc/javadoc/source/MakeJavaFilesFilesDoclet.java"/>
                 <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/data/">
@@ -578,6 +588,10 @@
                 <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/">
                     <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
                 </copy>
+                <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/forcefield/data/"/>
+                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/forcefield/data/">
+                    <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.prm"/>
+                </copy>
                 <copy todir="${sourcedist.dir}/${src}/">
                     <fileset dir="${src}/" includes="*.manifest" />
                 </copy>
@@ -594,7 +608,7 @@
                 <gzip zipfile="${package}.tar.gz" src="cdk-source-${version}.tar" />
                 <delete file="${package}.tar" />
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
-        </target -->
+        </target>
 
         <target id="test-all" name="test-all" depends="test, test-experimental"/>
         
