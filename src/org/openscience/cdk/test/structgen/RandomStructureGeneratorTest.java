@@ -76,7 +76,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 		String s = null;
 		Vector structures = new Vector();	
 		Molecule mol = null;
-		Molecule molecule = MoleculeFactory.loadMolecule("data/mdl/a-pinene.mol");
+		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		//System.out.println(molecule);
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
