@@ -765,8 +765,12 @@ public class CMLCoreModule implements ModuleInterface {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.addElement(cData.trim());
                 }
+            } else if (xpath.toString().endsWith("molecule/scalar/")) {
+                if (DICTREF.equals("pdb:id")) {
+                	cdo.setObjectProperty("Molecule", DICTREF, cData); 
+                }
             } else {
-                logger.warn("Ignoring scaler: " + xpath);
+                logger.warn("Ignoring scalar: " + xpath);
             }
         } else if ("floatArray".equals(name)) {
             if (BUILTIN.equals("x3")) {

@@ -34,6 +34,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Tool that provides templates for the (natural) amino acids.
@@ -46,6 +47,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class AminoAcids {
 
+	private static final LoggingTool logger = new LoggingTool(AminoAcids.class);
+	
     /**
      * Creates matrix with info about the bonds in the amino acids.
      * 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
@@ -242,15 +245,15 @@ public class AminoAcids {
         	list = (ChemFile)reader.read(list);
         	AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(list);
         	for (int i=0; i<containers.length; i++) {
-        		// System.out.println("Adding AA: " + containers[i]);
+        		logger.debug("Adding AA: ", containers[i]);
         		// convert into an AminoAcid
         		AminoAcid aminoAcid = new AminoAcid();
         		Atom[] atoms = containers[i].getAtoms();
         		Enumeration props = containers[i].getProperties().keys();
         		while (props.hasMoreElements()) {
         			Object next = props.nextElement();
-        			// System.out.println("Prop class: " + next.getClass().getName());
-        			// System.out.println("Prop: " + next.toString());
+        			logger.debug("Prop class: " + next.getClass().getName());
+        			logger.debug("Prop: " + next.toString());
         			if (next instanceof DictRef) {
         				DictRef dictRef = (DictRef)next;
         				// System.out.println("DictRef type: " + dictRef.getType());
@@ -258,8 +261,11 @@ public class AminoAcids {
         					aminoAcid.setProperty(RESIDUE_NAME, containers[i].getProperty(dictRef).toString().toUpperCase());
         				} else if (dictRef.getType().equals("pdb:oneLetterCode")) {
         					aminoAcid.setProperty(RESIDUE_NAME_SHORT, containers[i].getProperty(dictRef));
+        				} else if (dictRef.getType().equals("pdb:id")) {
+        					aminoAcid.setProperty(ID, containers[i].getProperty(dictRef));
+        					logger.debug("Set AA ID to: ", containers[i].getProperty(dictRef));
         				} else {
-        					System.err.println("Cannot deal with dictRef!");
+        					logger.error("Cannot deal with dictRef!");
         				}
         			}
         		}
@@ -283,12 +289,12 @@ public class AminoAcids {
                 if (i < aminoAcids.length) {
                 	aminoAcids[i] = aminoAcid;
                 } else {
-                	System.err.println("Could not store AminoAcid! Array too short!");
+                	logger.error("Could not store AminoAcid! Array too short!");
                 }
         	}
         } catch (Exception exception) {
-        	System.err.println("Failed reading file: " + exception.getMessage());
-        	exception.printStackTrace();
+        	logger.error("Failed reading file: ", exception.getMessage());
+        	logger.debug(exception);
         }
         
         return aminoAcids;

@@ -316,6 +316,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           currentMolecule.setProperty(
           	new DictRef(propertyType, propertyValue), propertyValue
           );
+        } else if (propertyType.equals("pdb:id")) {
+            currentMolecule.setProperty(
+            	new DictRef(propertyType, propertyValue), propertyValue
+            );
         } else {
         	logger.warn("Not adding molecule property!");
         }
