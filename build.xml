@@ -593,6 +593,10 @@
                 <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/forcefield/data/">
                     <fileset dir="${src}/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
                 </copy>
+            <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/builder3d/data/"/>
+            <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/builder3d/data/">
+                <fileset dir="${src}/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
+            </copy>
                 <copy todir="${sourcedist.dir}/${src}/">
                     <fileset dir="${src}/" includes="*.manifest" />
                 </copy>
