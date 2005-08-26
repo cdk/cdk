@@ -222,6 +222,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						
 						// add the atom
 						oBP.addAtom(oAtom, oMonomer, oStrand);
+						logger.debug("Added ATOM: ", oAtom);
 						
 						/** As HETATMs cannot be considered to either belong to a certain monomer or strand,
 						 * they are dealt with seperately.*/
@@ -229,11 +230,13 @@ public class PDBReader extends DefaultChemObjectReader {
 						// read an atom record
 						oAtom = readAtom(cLine.toString());
 						oBP.addAtom(oAtom);
+						logger.debug("Added HETATM: ", oAtom);
 					} else if (cCol.equals("TER   ")) {
 						// start new strand						
 						chain++;
 						oStrand = new Strand();
 						oStrand.setStrandName(String.valueOf(chain));
+						logger.debug("Added new STRAND");
 					} else if (cCol.equals("END   ")) {
 						// create bonds and finish the molecule
 						if (oBP.getAtomCount() != 0) {
@@ -371,13 +374,13 @@ public class PDBReader extends DefaultChemObjectReader {
 					return false;
 				}
 				Monomer monomer = (Monomer)AAs.get(anAtom.getResName());
-				atomsInPresentResidue = Integer.parseInt((String)monomer.getProperty("noOfAtoms"));
+				atomsInPresentResidue = Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_ATOMS));
 				
 				/* Check if there's something wrong with the residue record (e.g. it doesn't contain the
 				 * correct number of atom records). */
 				int counter = 1;
 				while (atoms + counter < strand.getAtomCount() &&
-						anAtom.getResName().equals(strand.getAtomAt(atoms + counter).getProperty("pdb.resName"))) {
+						anAtom.getResName().equals(strand.getAtomAt(atoms + counter).getProperty(AminoAcids.RESIDUE_NAME))) {
 					counter++;
 				}
 				// Check if something is wrong. Remember to deal with possible OXT atom...
@@ -386,8 +389,8 @@ public class PDBReader extends DefaultChemObjectReader {
 				}
 				
 				// If nothing's wrong, add bonds
-				int bondID = Integer.parseInt((String)monomer.getProperty("id"));
-				for (int l = 0; l < Integer.parseInt((String)monomer.getProperty("noOfBonds")); l++) {
+				int bondID = Integer.parseInt((String)monomer.getProperty(AminoAcids.ID));
+				for (int l = 0; l < Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_BONDS)); l++) {
 					Bond bond = new Bond(strand.getAtomAt(AABondInfo[bondID + l][1] + atoms), strand.getAtomAt(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
 					pol.addBond(bond);
 				}
