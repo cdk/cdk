@@ -535,7 +535,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
             }
             ;
             // update atoms
-            Atom[] atoms = bondInRange.getAtoms();
+            org.openscience.cdk.interfaces.Atom[] atoms = bondInRange.getAtoms();
             AtomContainer container = getRelevantAtomContainer(chemModel, atoms[0]);
             updateAtoms(container, atoms);
           }else if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND){
@@ -747,7 +747,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 					logger.info("User asks to delete a Bond");
 					ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
 					// update atoms
-					Atom[] atoms = highlightedBond.getAtoms();
+					org.openscience.cdk.interfaces.Atom[] atoms = highlightedBond.getAtoms();
 					AtomContainer container = getRelevantAtomContainer(chemModel, atoms[0]);
 					updateAtoms(container, atoms);
 				} else
@@ -1022,7 +1022,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						Bond bond = (Bond) chemObj;
 						container.addBond(bond);
 						logger.debug("selected one bond in lasso mode");
-						Atom[] atoms = bond.getAtoms();
+						org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
 						for (int i = 0; i < atoms.length; i++)
 						{
 							container.addAtom(atoms[i]);
@@ -1166,7 +1166,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 	 *@param  container  The AtomContainer to work on
 	 *@param  atoms       The Atoms to update
 	 */
-	private void updateAtoms(AtomContainer container, Atom[] atoms)
+	private void updateAtoms(AtomContainer container, org.openscience.cdk.interfaces.Atom[] atoms)
 	{
 		for (int i = 0; i < atoms.length; i++)
 		{
@@ -1181,7 +1181,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 	 *@param  container  The AtomContainer to work on
 	 *@param  atom       The Atom to update
 	 */
-	private void updateAtom(AtomContainer container, Atom atom)
+	private void updateAtom(AtomContainer container, org.openscience.cdk.interfaces.Atom atom)
 	{
 		if (c2dm.getAutoUpdateImplicitHydrogens())
 		{
@@ -1673,7 +1673,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				// in the bond, instead of the bond itself
 				if (bondInRange != null)
 				{
-					Atom[] atoms = bondInRange.getAtoms();
+					org.openscience.cdk.interfaces.Atom[] atoms = bondInRange.getAtoms();
 					for (int i = 0; i < atoms.length; i++)
 					{
 						selected.addAtom(atoms[i]);
@@ -1716,7 +1716,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 		}
 	}
 	
-	AtomContainer getRelevantAtomContainer(ChemModel chemModel, Atom atom)
+	AtomContainer getRelevantAtomContainer(ChemModel chemModel, org.openscience.cdk.interfaces.Atom atom)
 	{
 		return atomContainer;
 	}

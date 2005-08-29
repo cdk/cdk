@@ -27,22 +27,22 @@ package org.openscience.cdk.validate;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.ElectronContainer;
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -87,7 +87,7 @@ public class ValidatorEngine implements ValidatorInterface {
         }
     }
     
-    public ValidationReport validateAtom(Atom subject) {
+    public ValidationReport validateAtom(org.openscience.cdk.interfaces.Atom subject) {
         logger.info("Validating org.openscience.cdk.Atom");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -149,7 +149,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateElectronContainer(subject));
         // traverse into hierarchy
-        Atom[] atoms = subject.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = subject.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             report.addReport(validateAtom(atoms[i]));
         }

@@ -137,7 +137,7 @@ public class BondTest extends CDKTestCase {
         Bond b = new Bond();
         b.setAtoms(atomsToAdd);
         
-        Atom[] atoms = b.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = b.getAtoms();
         assertEquals(2, atoms.length);
         assertEquals(atomsToAdd[0], atoms[0]);
         assertEquals(atomsToAdd[1], atoms[1]);
@@ -149,7 +149,7 @@ public class BondTest extends CDKTestCase {
         
         Bond b = new Bond(c, o, 2.0); // C=O bond
         
-        Atom[] atoms = b.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = b.getAtoms();
         assertEquals(2, atoms.length);
         assertEquals(c, atoms[0]);
         assertEquals(o, atoms[1]);

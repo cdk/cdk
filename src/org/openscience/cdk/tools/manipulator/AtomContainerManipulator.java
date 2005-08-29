@@ -180,7 +180,7 @@ public class AtomContainerManipulator {
         {
             // Check bond.
             final Bond bond = atomContainer.getBondAt(i);
-            Atom[] atoms = bond.getAtoms();
+            org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
             boolean removedBond = false;
             final int length = atoms.length;
             for (int k = 0;

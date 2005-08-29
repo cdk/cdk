@@ -527,8 +527,8 @@ public class UniversalIsomorphismTester {
     for (int i = 0; i < l.size(); i++) {
       Bond bond1 = bonds1[((RMap) l.get(i)).getId1()];
       Bond bond2 = bonds2[((RMap) l.get(i)).getId2()];
-      Atom[] atom1 = bond1.getAtoms();
-      Atom[] atom2 = bond2.getAtoms();
+      org.openscience.cdk.interfaces.Atom[] atom1 = bond1.getAtoms();
+      org.openscience.cdk.interfaces.Atom[] atom2 = bond2.getAtoms();
       for (int j = 0; j < 2; j++) {
         Bond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
         for (int k = 0; k < bondsConnectedToAtom1j.length; k++) {

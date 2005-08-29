@@ -46,7 +46,7 @@ public interface Bond extends ElectronContainer {
 	 * @return    An array of atoms participating in this bond
 	 * @see       #setAtoms
 	 */
-	public org.openscience.cdk.Atom[] getAtoms();
+	public Atom[] getAtoms();
 
 	/**
 	 * Sets the array of atoms making up this bond.

@@ -252,12 +252,12 @@ public class MFAnalyser {
 		for (int i = 0;
 				i < count;
 				i++) {
-			final Atom[] atoms = ac.getBondAt(i).getAtoms();
+			final org.openscience.cdk.interfaces.Atom[] atoms = ac.getBondAt(i).getAtoms();
 			final int length = atoms.length;
 			for (int k = 0;
 					k < length;
 					k++) {
-				final Atom atom = atoms[k];
+				final org.openscience.cdk.interfaces.Atom atom = atoms[k];
 				if (atom.getSymbol().equals(H_ELEMENT_SYMBOL)) {
 					(h.contains(atom) ? multi_h : h).add(atom);
 				}
@@ -314,7 +314,7 @@ public class MFAnalyser {
 				i++) {
 			// Check bond.
 			final Bond bond = ac.getBondAt(i);
-			Atom[] atoms = bond.getAtoms();
+			org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
 			boolean remove_bond = false;
 			final int length = atoms.length;
 			for (int k = 0;

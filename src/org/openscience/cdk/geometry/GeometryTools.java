@@ -707,7 +707,7 @@ public class GeometryTools {
 	 *@return    boolean indication that 2D coordinates are available
 	 */
 	public static boolean has2DCoordinates(Bond b) {
-		Atom[] atoms = b.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = b.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i].getPoint2d() == null) {
 				return false;

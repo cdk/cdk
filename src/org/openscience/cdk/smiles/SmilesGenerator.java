@@ -136,7 +136,7 @@ public class SmilesGenerator
 	 */
 	public boolean isValidDoubleBondConfiguration(AtomContainer container, Bond bond)
 	{
-		Atom[] atoms = bond.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
 		Atom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
 		Atom from = null;
 		for (int i = 0; i < connectedAtoms.length; i++)
@@ -456,7 +456,7 @@ public class SmilesGenerator
 	 *      actually the possibility of a double bond configuration)
 	 *@return                          false=is not end of configuration, true=is
 	 */
-	private boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent, boolean[] doubleBondConfiguration)
+	private boolean isEndOfDoubleBond(AtomContainer container, org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom parent, boolean[] doubleBondConfiguration)
 	{
 		if (container.getBondNumber(atom, parent) == -1 || doubleBondConfiguration.length <= container.getBondNumber(atom, parent) || !doubleBondConfiguration[container.getBondNumber(atom, parent)])
 		{
@@ -506,7 +506,7 @@ public class SmilesGenerator
 	 *      actually the possibility of a double bond configuration)
 	 *@return                          false=is not start of configuration, true=is
 	 */
-	private boolean isStartOfDoubleBond(AtomContainer container, Atom a, Atom parent, boolean[] doubleBondConfiguration)
+	private boolean isStartOfDoubleBond(AtomContainer container, org.openscience.cdk.interfaces.Atom a, org.openscience.cdk.interfaces.Atom parent, boolean[] doubleBondConfiguration)
 	{
 		int lengthAtom = container.getConnectedAtoms(a).length + a.getHydrogenCount();
 		if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N")))

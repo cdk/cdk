@@ -126,9 +126,9 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@return    An array of atoms participating in this bond
 	 *@see       #setAtoms
 	 */
-	public Atom[] getAtoms()
+	public org.openscience.cdk.interfaces.Atom[] getAtoms()
 	{
-		Atom[] returnAtoms = new Atom[getAtomCount()];
+		org.openscience.cdk.interfaces.Atom[] returnAtoms = new Atom[getAtomCount()];
 		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
 		return returnAtoms;
 	}
@@ -425,7 +425,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 		resultString.append(this.hashCode());
 		resultString.append(", #O:").append(getOrder());
 		resultString.append(", #S:").append(getStereo());
-		Atom[] atoms = getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = getAtoms();
 		resultString.append(", #A:").append(atoms.length);
 		for (int i = 0; i < atoms.length; i++)
 		{

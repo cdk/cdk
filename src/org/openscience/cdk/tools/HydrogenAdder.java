@@ -204,7 +204,7 @@ public class HydrogenAdder {
      *
      * @deprecated
      */
-    public AtomContainer addHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
+    public AtomContainer addHydrogensToSatisfyValency(AtomContainer container, org.openscience.cdk.interfaces.Atom atom, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException, CDKException
     {
 	logger.debug("Start of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
@@ -230,12 +230,12 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
+    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, org.openscience.cdk.interfaces.Atom atom, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException, CDKException
     {
         // set number of implicit hydrogens to zero
         // add explicit hydrogens
-	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
+	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, org.openscience.cdk.interfaces.Atom atom)");
         int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
 	logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
         AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
@@ -255,7 +255,7 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count, AtomContainer totalContainer) 
+    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, org.openscience.cdk.interfaces.Atom atom, int count, AtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
     {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
@@ -267,7 +267,7 @@ public class HydrogenAdder {
             Atom hydrogen = new Atom("H");
             IsotopeFactory.getInstance().configure(hydrogen, isotope);
             totalContainer.addAtom(hydrogen);
-            Bond newBond = new Bond(atom, hydrogen, 1.0);
+            Bond newBond = new Bond((Atom)atom, hydrogen, 1.0);
             totalContainer.addBond(newBond);
             changedAtomsAndBonds.addAtom(hydrogen);
             changedAtomsAndBonds.addBond(newBond);
@@ -307,7 +307,7 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          implicit hydrogen
      */
-    public int[] addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
+    public int[] addImplicitHydrogensToSatisfyValency(AtomContainer container, org.openscience.cdk.interfaces.Atom atom) throws CDKException
     {
         int formerHydrogens = atom.getHydrogenCount();
         int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);

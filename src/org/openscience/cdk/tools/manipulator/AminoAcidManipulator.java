@@ -58,7 +58,7 @@ public class AminoAcidManipulator {
 		// ok, look for the oxygen which is singly bonded
 		for (int i=0; i<bonds.length; i++) {
 			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				Atom[] atoms = bonds[i].getAtoms();
+				org.openscience.cdk.interfaces.Atom[] atoms = bonds[i].getAtoms();
 				for (int j=0; j<atoms.length; j++) {
 					if (atoms[j].getSymbol().equals("O")) {
 						// yes, we found a singly bonded oxygen!

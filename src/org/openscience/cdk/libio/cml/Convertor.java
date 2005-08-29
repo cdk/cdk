@@ -629,7 +629,7 @@ public class Convertor {
             bondimpl.setAttribute("id", bond.getID());
         }
         StringBuffer atomRefs = new StringBuffer();
-        Atom[] atoms = bond.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             String atomID = atoms[i].getID();
             if (atomID == null || atomID.length() == 0) {

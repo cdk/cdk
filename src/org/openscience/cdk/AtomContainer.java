@@ -1288,7 +1288,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		AtomContainer clone = null;
 		ElectronContainer electronContainer = null;
 		ElectronContainer newEC = null;
-		Atom[] natoms;
+		org.openscience.cdk.interfaces.Atom[] natoms;
 		Atom[] newAtoms;
 		try {
 			clone = (AtomContainer) super.clone();

@@ -52,7 +52,7 @@ public class BondTools {
    * @return            true=is a potential configuration, false=is not.
    */
   private static boolean isValidDoubleBondConfiguration(AtomContainer container, Bond bond) {
-    Atom[] atoms = bond.getAtoms();
+    org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
     Atom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
     Atom from = null;
     for (int i = 0; i < connectedAtoms.length; i++) {
@@ -153,7 +153,7 @@ public class BondTools {
    * @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
    * @return       The angle in rad.
    */
-  public static double giveAngleBothMethods(Atom from, Atom to1, Atom to2, boolean bool) {
+  public static double giveAngleBothMethods(org.openscience.cdk.interfaces.Atom from, org.openscience.cdk.interfaces.Atom to1, org.openscience.cdk.interfaces.Atom to2, boolean bool) {
     double[] A = new double[2];
     from.getPoint2d().get(A);
     double[] B = new double[2];
@@ -188,7 +188,7 @@ public class BondTools {
    *      actually the possibility of a double bond configuration)
    * @return                          false=is not end of configuration, true=is
    */
-  private static boolean isEndOfDoubleBond(AtomContainer container, Atom atom, Atom parent, boolean[] doubleBondConfiguration) {
+  private static boolean isEndOfDoubleBond(AtomContainer container, org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom parent, boolean[] doubleBondConfiguration) {
     if (container.getBondNumber(atom, parent) == -1 || doubleBondConfiguration.length <= container.getBondNumber(atom, parent) || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
       return false;
     }
@@ -229,7 +229,7 @@ public class BondTools {
    *      actually the possibility of a double bond configuration)
    * @return                          false=is not start of configuration, true=is
    */
-  private static boolean isStartOfDoubleBond(AtomContainer container, Atom a, Atom parent, boolean[] doubleBondConfiguration) {
+  private static boolean isStartOfDoubleBond(AtomContainer container, org.openscience.cdk.interfaces.Atom a, org.openscience.cdk.interfaces.Atom parent, boolean[] doubleBondConfiguration) {
     int lengthAtom = container.getConnectedAtoms(a).length + a.getHydrogenCount();
     if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N"))) {
       return (false);

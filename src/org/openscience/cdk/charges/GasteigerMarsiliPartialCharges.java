@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.charges;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 

@@ -134,7 +134,7 @@ public class Polarizability {
 	public double calculateBondPolarizability(AtomContainer ac, Bond bond) {
 		double polarizabilitiy = 0;
 		Molecule acH = new Molecule(ac);
-		Atom[] atoms = bond.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
 		try {
 			HydrogenAdder hAdder = new HydrogenAdder();
 			hAdder.addExplicitHydrogensToSatisfyValency(acH);
@@ -155,7 +155,7 @@ public class Polarizability {
 	 *@param  atom  Atom
 	 *@return       double polarizabilitiyFactor
 	 */
-	private double getKJPolarizabilityFactor(AtomContainer ac, Atom atom) {
+	private double getKJPolarizabilityFactor(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
 		double polarizabilitiyFactor = 0;
 		String AtomSymbol = "";
 		AtomSymbol = atom.getSymbol();
@@ -221,7 +221,7 @@ public class Polarizability {
 	 *@param  atom  Description of the Parameter
 	 *@return       The numberOfHydrogen value
 	 */
-	private int getNumberOfHydrogen(AtomContainer ac, Atom atom) {
+	private int getNumberOfHydrogen(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
 		Bond[] bonds = ac.getConnectedBonds(atom);
 		Atom connectedAtom = null;
 		int hCounter = 0;
