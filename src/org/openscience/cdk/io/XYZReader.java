@@ -49,6 +49,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads an object from XYZ formated input.
@@ -62,14 +63,16 @@ import org.openscience.cdk.io.formats.XYZFormat;
 public class XYZReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
+    private LoggingTool logger;
 
-    /* 
-     * construct a new reader from a Reader type object
+    /**
+     * Construct a new reader from a Reader type object.
      *
      * @param input reader from which input is read
      */
     public XYZReader(Reader input) {
         this.input = new BufferedReader(input);
+        logger = new LoggingTool(this);
     }
 
     public XYZReader(InputStream input) {
@@ -141,13 +144,19 @@ public class XYZReader extends DefaultChemObjectReader {
                 SetOfMolecules setOfMolecules = new SetOfMolecules();
                 
                 Molecule m = new Molecule();
-                m.setProperty(CDKConstants.TITLE ,info);
+                m.setProperty(CDKConstants.TITLE, info);
 
                 for (int i = 0; i < number_of_atoms; i++) {
                     line = input.readLine();
                     if (line == null) break;
-                    if (line.startsWith("#")) {
-                        // skip comment in file
+                    if (line.startsWith("#") && line.length() > 1) {
+                        Object comment = m.getProperty(CDKConstants.COMMENT);
+                        if (comment == null) {
+                        	comment = "";
+                        }
+                        comment = comment.toString() + line.substring(1).trim();
+                        m.setProperty(CDKConstants.COMMENT, comment);
+                    	logger.debug("Found and set comment: ", comment);
                     } else {
                         double x = 0.0f, y = 0.0f, z = 0.0f;
                         double charge = 0.0f;
@@ -181,6 +190,8 @@ public class XYZReader extends DefaultChemObjectReader {
         } catch (IOException e) {
             // should make some noise now
             file = null;
+            logger.error("Error while reading file: ", e.getMessage());
+            logger.debug(e);
         }
         return file;
     }
