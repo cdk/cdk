@@ -91,8 +91,7 @@ public class File2Text {
     
     public static String toText(ChemObjectReader reader) throws Exception {
     	StringBuffer buffer = new StringBuffer();
-    	ChemFile file = new ChemFile();
-    	reader.read(file);
+    	ChemFile file = (ChemFile)reader.read(new ChemFile());
     	AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(file);
     	for (int i=0; i<containers.length; i++) {
     		if (containers[i].getProperty(CDKConstants.REMARK) != null) {
