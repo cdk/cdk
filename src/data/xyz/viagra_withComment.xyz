@@ -60,7 +60,7 @@ H    1.9820    5.5268    1.8830
 H    1.0758    4.0730    1.3558
 H    3.2162    5.5811   -0.3186
 H    1.4381    5.6884   -0.5419
+# some extra comment, should be ignored
 H    2.4010    4.1167   -2.2238
 H    1.3671    3.1920   -1.0766
 H    3.1625    3.1270   -0.9362
-# some extra comment, should be ignored
