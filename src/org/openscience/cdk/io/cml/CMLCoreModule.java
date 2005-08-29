@@ -381,8 +381,9 @@ public class CMLCoreModule implements ModuleInterface {
                     
                     // expect exactly two references
                     try {
-                        StringTokenizer st = new StringTokenizer(atts.getValue(
-                        i));
+                        StringTokenizer st = new StringTokenizer(
+                            atts.getValue(i)
+                        );
                         bondARef1.addElement((String)st.nextElement());
                         bondARef2.addElement((String)st.nextElement());
                     } catch (Exception e) {
