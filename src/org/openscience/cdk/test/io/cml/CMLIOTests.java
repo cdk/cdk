@@ -49,6 +49,7 @@ public class CMLIOTests {
         
         // the following classes require Java 1.4
         if (System.getProperty("java.version").startsWith("1.4")) {
+            System.out.println("Found required Java 1.4, so running CML2 tests.");
             try {
                 Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2Test");
                 suite.addTest(new TestSuite(testClass));

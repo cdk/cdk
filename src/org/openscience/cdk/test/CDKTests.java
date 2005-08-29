@@ -168,6 +168,7 @@ public class CDKTests
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
             suite.addTest(new TestSuite(testClass));
+            System.out.println("Found IUPAC Parser test.");
         } catch (Exception exception) {
             // ok, do without. Probably compiled with Ant < 1.6
             System.out.println("Could not load the IUPAC Parser test: " + exception.getMessage());
