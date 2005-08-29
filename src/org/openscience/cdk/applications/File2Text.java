@@ -96,8 +96,12 @@ public class File2Text {
     	for (int i=0; i<containers.length; i++) {
     		if (containers[i].getProperty(CDKConstants.REMARK) != null) {
     			buffer.append("Remark: ").append(containers[i].getProperty(CDKConstants.REMARK)).append("\n");
-    		} else if (containers[i].getProperty(CDKConstants.TITLE) != null) {
+    		}
+    		if (containers[i].getProperty(CDKConstants.TITLE) != null) {
     			buffer.append("Title: ").append(containers[i].getProperty(CDKConstants.TITLE)).append("\n");
+    		}
+    		if (containers[i].getProperty(CDKConstants.COMMENT) != null) {
+    			buffer.append("Comment: ").append(containers[i].getProperty(CDKConstants.COMMENT)).append("\n");
     		}
     	}
     	return buffer.toString();
