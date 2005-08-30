@@ -186,6 +186,13 @@ public interface ChemObject extends Cloneable {
      * @return a String representation of this object
      */
     public String toString();
+    
+    /**
+     * Returns a deep clone of this ChemObject.
+     *
+     * @return Object the clone of this ChemObject.
+     */
+    public Object clone();
 }
 
 
