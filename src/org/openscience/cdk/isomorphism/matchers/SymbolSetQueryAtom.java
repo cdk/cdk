@@ -57,7 +57,7 @@ public class SymbolSetQueryAtom extends PseudoAtom implements QueryAtom {
      *@param  atom  The atom to be matched by this QueryAtom
      *@return       true if Atom matched
      */
-    public boolean matches(Atom atom) {
+    public boolean matches(org.openscience.cdk.interfaces.Atom atom) {
         return symbols.contains(atom.getSymbol());
     }
 

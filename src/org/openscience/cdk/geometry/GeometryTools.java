@@ -640,8 +640,8 @@ public class GeometryTools {
 		int bondCounter = 0;
 		for (int f = 0; f < bonds.length; f++) {
 			Bond bond = bonds[f];
-			Atom atom1 = bond.getAtomAt(0);
-			Atom atom2 = bond.getAtomAt(1);
+			org.openscience.cdk.interfaces.Atom atom1 = bond.getAtomAt(0);
+			org.openscience.cdk.interfaces.Atom atom2 = bond.getAtomAt(1);
 			if (atom1.getPoint2d() != null &&
 					atom2.getPoint2d() != null) {
 				bondCounter++;
@@ -774,8 +774,8 @@ public class GeometryTools {
 			// only consider two atom bonds into account
 			if (bonds[f].getAtomCount() == 2) {
 				counter++;
-				Atom atom1 = bonds[f].getAtomAt(0);
-				Atom atom2 = bonds[f].getAtomAt(1);
+				org.openscience.cdk.interfaces.Atom atom1 = bonds[f].getAtomAt(0);
+				org.openscience.cdk.interfaces.Atom atom2 = bonds[f].getAtomAt(1);
 				bondlength += Math.sqrt(Math.pow(atom1.getX2d() - atom2.getX2d(), 2) +
 						Math.pow(atom1.getY2d() - atom2.getY2d(), 2));
 			}

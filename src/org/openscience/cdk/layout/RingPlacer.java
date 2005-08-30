@@ -257,7 +257,7 @@ public class RingPlacer
 		}
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
 
-		Atom currentAtom = startAtom;
+		org.openscience.cdk.interfaces.Atom currentAtom = startAtom;
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
@@ -318,7 +318,7 @@ public class RingPlacer
 		
 		int direction = 1;
 
-		Atom currentAtom = startAtom;
+		org.openscience.cdk.interfaces.Atom currentAtom = startAtom;
 		double startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
 		/* 
 		 * Get one bond connected to the spiro bridge atom.
@@ -449,7 +449,7 @@ public class RingPlacer
 		}
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
 	
-		Atom currentAtom = startAtom;
+		org.openscience.cdk.interfaces.Atom currentAtom = startAtom;
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {

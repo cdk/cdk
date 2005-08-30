@@ -154,7 +154,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                         Bond b = bonds[j];
                         if (b.contains(a)) {
                             // current atom is in the bond so lets get the connected atom
-                            Atom ca = b.getConnectedAtom(a);
+                        	org.openscience.cdk.interfaces.Atom ca = b.getConnectedAtom(a);
                             double bo = b.getOrder();
                             int serial = -1;
                             String bt = "";

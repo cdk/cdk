@@ -32,12 +32,12 @@ public class SymbolAndChargeQueryAtom extends Atom implements QueryAtom {
     
     public SymbolAndChargeQueryAtom() {}
     
-    public SymbolAndChargeQueryAtom(Atom atom) {
+    public SymbolAndChargeQueryAtom(org.openscience.cdk.interfaces.Atom atom) {
         super(atom.getSymbol());
         setFormalCharge(atom.getFormalCharge());
     }
     
-    public boolean matches(Atom atom) {
+    public boolean matches(org.openscience.cdk.interfaces.Atom atom) {
         return this.getSymbol().equals(atom.getSymbol())&&this.getFormalCharge()==atom.getFormalCharge();
     };
 

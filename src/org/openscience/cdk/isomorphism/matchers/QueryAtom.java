@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 
 /**
  * @cdk.module standard

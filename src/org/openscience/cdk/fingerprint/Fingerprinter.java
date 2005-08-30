@@ -237,7 +237,7 @@ public class Fingerprinter
 	 *@param  currentDepth  The current depth in this recursive search
 	 *@param  searchDepth   Description of the Parameter
 	 */
-	static void depthFirstSearch(AtomContainer ac, Atom root, Vector currentPath, int currentDepth, int searchDepth)
+	static void depthFirstSearch(AtomContainer ac, org.openscience.cdk.interfaces.Atom root, Vector currentPath, int currentDepth, int searchDepth)
 	{
 		Bond[] bonds = ac.getConnectedBonds(root);
 
@@ -248,7 +248,7 @@ public class Fingerprinter
 		 *  }
 		 *  catch(Exception exc){}
 		 */
-		Atom nextAtom = null;
+		org.openscience.cdk.interfaces.Atom nextAtom = null;
 
 		/*
 		 *  try

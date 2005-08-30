@@ -1620,7 +1620,7 @@ public class AtomContainerTest extends CDKTestCase {
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         AtomContainer container = new AtomContainer();
         container.addAtomParity(parity);
-        AtomParity copy = container.getAtomParity(carbon);
+        org.openscience.cdk.interfaces.AtomParity copy = container.getAtomParity(carbon);
         assertNotNull(copy);
         assertEquals(parity, copy);
     }

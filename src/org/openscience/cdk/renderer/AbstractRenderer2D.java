@@ -313,7 +313,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  color     The color of the atom to be drawn
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintColouredAtomBackground(Atom atom, Color color, Graphics2D graphics)
+	public void paintColouredAtomBackground(org.openscience.cdk.interfaces.Atom atom, Color color, Graphics2D graphics)
 	{
 		int atomRadius = r2dm.getAtomRadius();
 		graphics.setColor(color);

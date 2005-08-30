@@ -30,7 +30,7 @@ package org.openscience.cdk.ringsearch;
 
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.AtomContainer;
 
 /**

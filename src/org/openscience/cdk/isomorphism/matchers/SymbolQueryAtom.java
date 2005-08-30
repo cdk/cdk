@@ -32,11 +32,11 @@ public class SymbolQueryAtom extends Atom implements QueryAtom {
     
     public SymbolQueryAtom() {}
     
-    public SymbolQueryAtom(Atom atom) {
+    public SymbolQueryAtom(org.openscience.cdk.interfaces.Atom atom) {
         super(atom.getSymbol());
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(org.openscience.cdk.interfaces.Atom atom) {
         return this.getSymbol().equals(atom.getSymbol());
     };
 

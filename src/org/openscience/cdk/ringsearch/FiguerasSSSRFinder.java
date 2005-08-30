@@ -202,7 +202,7 @@ public class FiguerasSSSRFinder {
 	 * @param   molecule  The molecule that contains the rootNode
 	 * @return     The smallest Ring rootnode is part of
 	 */
-	private Ring getRing(Atom rootNode, Molecule molecule)
+	private Ring getRing(org.openscience.cdk.interfaces.Atom rootNode, Molecule molecule)
 	{
 		Atom node, neighbor, mAtom; 
 		Atom[] neighbors, mAtoms;

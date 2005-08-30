@@ -403,7 +403,7 @@ public class UniversalIsomorphismTester {
     Hashtable table = new Hashtable();
     Atom a1 = null;
     Atom a2 = null;
-    Atom a = null;
+    org.openscience.cdk.interfaces.Atom a = null;
     Bond bond = null;
 
     for (Iterator i = rMapList.iterator(); i.hasNext(); ) {
@@ -418,7 +418,7 @@ public class UniversalIsomorphismTester {
       a1 = (Atom) table.get(a);
 
       if (a1 == null) {
-        a1 = (Atom) a.clone();
+        a1 = (Atom)((Atom)a).clone();
         ac.addAtom(a1);
         table.put(a, a1);
       }
@@ -427,7 +427,7 @@ public class UniversalIsomorphismTester {
       a2 = (Atom) table.get(a);
 
       if (a2 == null) {
-        a2 = (Atom) a.clone();
+        a2 = (Atom)((Atom)a).clone();
         ac.addAtom(a2);
         table.put(a, a2);
       }
@@ -758,8 +758,8 @@ public class UniversalIsomorphismTester {
    */
   private static boolean queryAdjacency(Bond a1, Bond b1, Bond a2, Bond b2) {
       
-      Atom atom1 = null;
-      Atom atom2 = null;
+	  org.openscience.cdk.interfaces.Atom atom1 = null;
+	  org.openscience.cdk.interfaces.Atom atom2 = null;
       
       if (a1.contains(b1.getAtomAt(0))) {
           atom1 = b1.getAtomAt(0);

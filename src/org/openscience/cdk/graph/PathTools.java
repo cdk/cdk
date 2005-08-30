@@ -154,9 +154,9 @@ public class PathTools  {
 	 *@return                                                        true if the
 	 *      target atom was found during this function call
 	 */
-	public static boolean depthFirstTargetSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException {
+	public static boolean depthFirstTargetSearch(AtomContainer molecule, org.openscience.cdk.interfaces.Atom root, org.openscience.cdk.interfaces.Atom target, AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException {
 		Bond[] bonds = molecule.getConnectedBonds(root);
-		Atom nextAtom = null;
+		org.openscience.cdk.interfaces.Atom nextAtom = null;
 		root.setFlag(CDKConstants.VISITED, true);
 		for (int f = 0; f < bonds.length; f++) {
 			nextAtom = bonds[f].getConnectedAtom(root);
@@ -245,7 +245,7 @@ public class PathTools  {
 	 */
 	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule, int max) {
 		Atom atom = null;
-		Atom nextAtom = null;
+		org.openscience.cdk.interfaces.Atom nextAtom = null;
 		Vector newSphere = new Vector();
 		for (int f = 0; f < sphere.size(); f++) {
 			atom = (Atom) sphere.elementAt(f);
@@ -311,7 +311,7 @@ public class PathTools  {
 		}
 		Atom atom = null;
 
-		Atom nextAtom = null;
+		org.openscience.cdk.interfaces.Atom nextAtom = null;
 		Vector newSphere = new Vector();
 		for (int f = 0; f < sphere.size(); f++) {
 			atom = (Atom) sphere.elementAt(f);

@@ -450,7 +450,7 @@ public class RTools
         Hashtable table = new Hashtable();
         Atom a1 = null;
         Atom a2 = null;
-        Atom a = null;
+        org.openscience.cdk.interfaces.Atom a = null;
         Bond bond = null;
 
         for(Iterator i = rMapList.iterator(); i.hasNext(); )
@@ -470,7 +470,7 @@ public class RTools
 
             if(a1 == null)
             {
-                a1 = (Atom) a.clone();
+                a1 = (Atom)((Atom)a).clone();
                 ac.addAtom(a1);
                 table.put(a, a1);
             }
@@ -480,7 +480,7 @@ public class RTools
 
             if(a2 == null)
             {
-                a2 = (Atom) a.clone();
+                a2 = (Atom)((Atom)a).clone();
                 ac.addAtom(a2);
                 table.put(a, a2);
             }

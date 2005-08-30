@@ -131,7 +131,7 @@ public class AtomPlacer
 	 *      Atoms
 	 *@param  sharedAtomsCenter   The 2D centre of the placed Atoms
 	 */
-	public void distributePartners(Atom atom, AtomContainer placedNeighbours, Point2d sharedAtomsCenter,
+	public void distributePartners(org.openscience.cdk.interfaces.Atom atom, AtomContainer placedNeighbours, Point2d sharedAtomsCenter,
 			AtomContainer unplacedNeighbours, double bondLength)
 	{
 		double occupiedAngle = 0;
@@ -360,7 +360,7 @@ public class AtomPlacer
 	 *@return                  A vector pointing to the location of the next atom
 	 *      to draw
 	 */
-	public Vector2d getNextBondVector(Atom atom, Atom previousAtom, Point2d distanceMeasure)
+	public Vector2d getNextBondVector(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom previousAtom, Point2d distanceMeasure)
 	{
     if (logger.isDebugEnabled())
     {
@@ -470,7 +470,7 @@ public class AtomPlacer
 	 *@param  unplacedPartners  A vector for the unplaced bonding partners to go in
 	 *@param  placedPartners    A vector for the placed bonding partners to go in
 	 */
-	public void partitionPartners(Atom atom, AtomContainer unplacedPartners, AtomContainer placedPartners)
+	public void partitionPartners(org.openscience.cdk.interfaces.Atom atom, AtomContainer unplacedPartners, AtomContainer placedPartners)
 	{
 		Atom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
@@ -556,7 +556,7 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws org.openscience.cdk.exception.CDKException
+	public AtomContainer getLongestUnplacedChain(Molecule molecule, org.openscience.cdk.interfaces.Atom startAtom) throws org.openscience.cdk.exception.CDKException
 	{
 		logger.debug("Start of getLongestUnplacedChain.");
 		//ConnectivityChecker cc = new ConnectivityChecker();
@@ -606,7 +606,7 @@ public class AtomPlacer
 	public  void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws org.openscience.cdk.exception.CDKException
 	{
 		Atom atom = null;
-		Atom nextAtom = null;
+		org.openscience.cdk.interfaces.Atom nextAtom = null;
 		int atomNr;
 		int nextAtomNr;
 		AtomContainer path = null;
@@ -851,7 +851,7 @@ public class AtomPlacer
 		return tempMorganMatrix;
 	}
 	
-	public boolean shouldBeLinear(Atom atom, Molecule molecule)
+	public boolean shouldBeLinear(org.openscience.cdk.interfaces.Atom atom, Molecule molecule)
 	{
 		int sum = 0;
 		Bond[] bonds = molecule.getConnectedBonds(atom);

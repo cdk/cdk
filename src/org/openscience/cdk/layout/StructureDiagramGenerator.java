@@ -516,7 +516,7 @@ public class StructureDiagramGenerator
 	private void handleAliphatics() throws org.openscience.cdk.exception.CDKException
 	{
 		int safetyCounter = 0;
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		double xDiff;
 		double yDiff;
 		Atom[] atoms = null;
@@ -602,8 +602,8 @@ public class StructureDiagramGenerator
 	private void layoutNextRingSystem()
 	{
 		logger.debug("Start of layoutNextRingSystem()");
-		Atom vectorAtom1 = null;
-		Atom vectorAtom2 = null;
+		org.openscience.cdk.interfaces.Atom vectorAtom1 = null;
+		org.openscience.cdk.interfaces.Atom vectorAtom2 = null;
 		Point2d oldPoint1 = null;
 		Point2d newPoint1 = null;
 		Point2d oldPoint2 = null;
@@ -680,11 +680,11 @@ public class StructureDiagramGenerator
 	 *@return       an AtomContainer with all the unplaced atoms connected to a
 	 *      given atom
 	 */
-	private AtomContainer getUnplacedAtoms(Atom atom)
+	private AtomContainer getUnplacedAtoms(org.openscience.cdk.interfaces.Atom atom)
 	{
 		AtomContainer unplacedAtoms = new AtomContainer();
 		Bond[] bonds = molecule.getConnectedBonds(atom);
-		Atom connectedAtom = null;
+		org.openscience.cdk.interfaces.Atom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
 			connectedAtom = bonds[f].getConnectedAtom(atom);
@@ -705,11 +705,11 @@ public class StructureDiagramGenerator
 	 *@return       an AtomContainer with all the placed atoms connected to a given
 	 *      atom
 	 */
-	private AtomContainer getPlacedAtoms(Atom atom)
+	private AtomContainer getPlacedAtoms(org.openscience.cdk.interfaces.Atom atom)
 	{
 		AtomContainer placedAtoms = new AtomContainer();
 		Bond[] bonds = molecule.getConnectedBonds(atom);
-		Atom connectedAtom = null;
+		org.openscience.cdk.interfaces.Atom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
 			connectedAtom = bonds[f].getConnectedAtom(atom);
@@ -727,7 +727,7 @@ public class StructureDiagramGenerator
 	 *
 	 *@return    the next atom with unplaced aliphatic neighbors
 	 */
-	private Atom getNextAtomWithAliphaticUnplacedNeigbors()
+	private org.openscience.cdk.interfaces.Atom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
 		Bond bond = null;
 		for (int f = 0; f < molecule.getElectronContainerCount(); f++)
@@ -801,7 +801,7 @@ public class StructureDiagramGenerator
 			logger.debug("placeFirstBondOfFirstRing->bondVector.length():" + bondVector.length());
 			bondVector.scale(bondLength);
 			logger.debug("placeFirstBondOfFirstRing->bondVector.length() after scaling:" + bondVector.length());
-			Atom atom;
+			org.openscience.cdk.interfaces.Atom atom;
 			Point2d point = new Point2d(0, 0);
 			atom = bond.getAtomAt(0);
 			logger.debug("Atom 1 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
@@ -909,7 +909,7 @@ public class StructureDiagramGenerator
 	 *@param  bond  the bond to be search for the unplaced ring atom
 	 *@return       the unplaced ring atom in this bond
 	 */
-	private Atom getRingAtom(Bond bond)
+	private org.openscience.cdk.interfaces.Atom getRingAtom(Bond bond)
 	{
 		if (bond.getAtomAt(0).getFlag(CDKConstants.ISINRING) &&
 				!bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED))
@@ -932,7 +932,7 @@ public class StructureDiagramGenerator
 	 *@param  ringAtom     The ring atom to be search in the ring system.
 	 *@return              the ring system of which the given atom is part of
 	 */
-	private RingSet getRingSystemOfAtom(Vector ringSystems, Atom ringAtom)
+	private RingSet getRingSystemOfAtom(Vector ringSystems, org.openscience.cdk.interfaces.Atom ringAtom)
 	{
 		RingSet ringSet = null;
 		for (int f = 0; f < ringSystems.size(); f++)
