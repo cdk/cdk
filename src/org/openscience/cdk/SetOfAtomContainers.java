@@ -203,7 +203,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @param  atomContainerSet  The SetOfAtomContainers
 	 */
 	public void add(org.openscience.cdk.interfaces.SetOfAtomContainers atomContainerSet) {
-		AtomContainer[] mols = atomContainerSet.getAtomContainers();
+		org.openscience.cdk.interfaces.AtomContainer[] mols = atomContainerSet.getAtomContainers();
 		for (int i = 0; i < mols.length; i++) {
 			addAtomContainer(mols[i]);
 		}
@@ -217,8 +217,8 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @return    The array of AtomContainers of this container
 	 */
-	public AtomContainer[] getAtomContainers() {
-		AtomContainer[] result = new AtomContainer[atomContainerCount];
+	public org.openscience.cdk.interfaces.AtomContainer[] getAtomContainers() {
+		org.openscience.cdk.interfaces.AtomContainer[] result = new AtomContainer[atomContainerCount];
 		System.arraycopy(this.atomContainers, 0, result, 0, result.length);
 		return result;
 	}
@@ -298,7 +298,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 		buffer.append("SetOfAtomContainers(");
 		buffer.append(this.hashCode()).append(", ");
 		buffer.append("M=").append(getAtomContainerCount()).append(", ");
-		AtomContainer[] atomContainers = getAtomContainers();
+		org.openscience.cdk.interfaces.AtomContainer[] atomContainers = getAtomContainers();
 		for (int i = 0; i < atomContainers.length; i++) {
 			buffer.append(atomContainers[i].toString());
 			if (i < atomContainers.length - 1) {
@@ -317,9 +317,9 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 */
 	public Object clone() {
 		SetOfAtomContainers clone = new SetOfAtomContainers();
-		AtomContainer[] result = getAtomContainers();
+		org.openscience.cdk.interfaces.AtomContainer[] result = getAtomContainers();
 		for (int i = 0; i < result.length; i++) {
-				clone.addAtomContainer((AtomContainer) result[i].clone(), 1.0);
+				clone.addAtomContainer((AtomContainer)((AtomContainer)result[i]).clone(), 1.0);
 		}
 		return (Object) clone;
 	}

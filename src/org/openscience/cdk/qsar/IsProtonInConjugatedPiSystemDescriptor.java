@@ -147,7 +147,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
         }
-				AtomContainer[] detected = acSet.getAtomContainers();
+                org.openscience.cdk.interfaces.AtomContainer[] detected = acSet.getAtomContainers();
 				Atom[] neighboors = mol.getConnectedAtoms(target);
 				for (int i = 0; i < neighboors.length; i++) {
 					for(int d = 0; d < detected.length; d++) {

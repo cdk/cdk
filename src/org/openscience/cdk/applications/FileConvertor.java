@@ -165,10 +165,10 @@ public class FileConvertor {
                 }
 
                 // apply modifications
-                AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
+                AtomContainer[] containers = (AtomContainer[])ChemFileManipulator.getAllAtomContainers(content);
                 AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
                 for (int i=0; i<containers.length; i++) {
-                    AtomContainer container = containers[i];
+                	AtomContainer container = containers[i];
                     Atom[] atoms = container.getAtoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
                         for (int j=0; j<atoms.length; j++) {
@@ -186,7 +186,7 @@ public class FileConvertor {
                         logger.info("Adding Hydrogens...");
                         HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
                         adder.addExplicitHydrogensToSatisfyValency(
-                            new Molecule(container)
+                            new Molecule((AtomContainer)container)
                         );
                     } else if (applyHRemoval) {
                         for (int atomi=0; atomi<atoms.length; atomi++) {

@@ -118,7 +118,7 @@ public interface SetOfAtomContainers extends ChemObject {
 	 *
 	 * @return    The array of AtomContainers of this container
 	 */
-	public org.openscience.cdk.AtomContainer[] getAtomContainers();
+	public AtomContainer[] getAtomContainers();
 
 	/**
 	 * Returns the AtomContainer at position <code>number</code> in the

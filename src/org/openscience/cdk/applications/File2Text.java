@@ -92,7 +92,7 @@ public class File2Text {
     public static String toText(ChemObjectReader reader) throws Exception {
     	StringBuffer buffer = new StringBuffer();
     	ChemFile file = (ChemFile)reader.read(new ChemFile());
-    	AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(file);
+    	org.openscience.cdk.interfaces.AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(file);
     	for (int i=0; i<containers.length; i++) {
     		if (containers[i].getProperty(CDKConstants.REMARK) != null) {
     			buffer.append("Remark: ").append(containers[i].getProperty(CDKConstants.REMARK)).append("\n");

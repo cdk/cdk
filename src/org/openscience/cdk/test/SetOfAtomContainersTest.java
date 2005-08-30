@@ -184,14 +184,14 @@ public class SetOfAtomContainersTest extends CDKTestCase {
         som.addAtomContainer(new AtomContainer());
         som.addAtomContainer(new AtomContainer());
 
-        AtomContainer[] mols = som.getAtomContainers();
+        org.openscience.cdk.interfaces.AtomContainer[] mols = som.getAtomContainers();
         assertEquals(7, mols.length);
     }
     
     public void testGetAtomContainers() {
         SetOfAtomContainers som = new SetOfAtomContainers();
         
-        AtomContainer[] mols = som.getAtomContainers();
+        org.openscience.cdk.interfaces.AtomContainer[] mols = som.getAtomContainers();
         assertEquals(0, mols.length);
         
         som.addAtomContainer(new AtomContainer());

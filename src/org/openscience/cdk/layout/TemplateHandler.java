@@ -104,7 +104,7 @@ public class TemplateHandler
                 );
                 ChemFile file = (ChemFile)structureReader.read(new ChemFile());
 				templates.addElement(new Molecule(
-                    ChemFileManipulator.getAllInOneContainer(file)
+                    (AtomContainer)ChemFileManipulator.getAllInOneContainer(file)
                 ));
 				logger.debug("Successfully read template ", line);
 			}

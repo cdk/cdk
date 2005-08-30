@@ -118,7 +118,7 @@ public class AtomContainerManipulator {
         return hCount;
     }
 
-    public static Vector getAllIDs(AtomContainer mol) {
+    public static Vector getAllIDs(org.openscience.cdk.interfaces.AtomContainer mol) {
         Vector idList = new Vector();
         if (mol != null) {
             if (mol.getID() != null) idList.addElement(mol.getID());

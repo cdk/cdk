@@ -31,7 +31,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 
@@ -52,7 +52,7 @@ public class ChemSequenceManipulator {
      * @return  The AtomContainer with all the Molecules of this container
      */
     public static AtomContainer getAllInOneContainer(ChemSequence sequence) {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         for (int i=0; i<sequence.getChemModelCount(); i++) {
             ChemModel model = sequence.getChemModel(i);
             container.add(ChemModelManipulator.getAllInOneContainer(model));

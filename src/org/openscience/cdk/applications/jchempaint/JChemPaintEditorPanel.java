@@ -229,7 +229,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	void setupIfModelNotEmpty()
 	{
-		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jchemPaintModel.getChemModel());
+		org.openscience.cdk.interfaces.AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jchemPaintModel.getChemModel());
 
 		Renderer2DModel rendererModel = jchemPaintModel.getRendererModel();
 		if (ac.getAtomCount() != 0)

@@ -28,7 +28,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Crystal;
@@ -97,7 +97,7 @@ public class ChemModelManipulator {
      * @return  The AtomContainer with all the Molecules of this container
      */
     public static AtomContainer getAllInOneContainer(ChemModel chemModel) {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         Crystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             container.add(crystal);

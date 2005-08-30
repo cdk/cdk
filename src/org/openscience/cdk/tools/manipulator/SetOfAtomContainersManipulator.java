@@ -30,7 +30,7 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SetOfAtomContainers;
@@ -71,7 +71,7 @@ public class SetOfAtomContainersManipulator {
      * @return  The AtomContainer with all the AtomContainers of this set
      */
     public static AtomContainer getAllInOneContainer(SetOfAtomContainers set) {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         AtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
             container.add(acs[i]);
