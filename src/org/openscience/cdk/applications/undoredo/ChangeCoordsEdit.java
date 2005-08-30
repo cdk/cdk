@@ -9,7 +9,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 
 /**
  * Undo/Redo Edit superclass for all edit classes for coordinate changing

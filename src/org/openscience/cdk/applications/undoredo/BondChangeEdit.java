@@ -4,12 +4,12 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -44,7 +44,7 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	public void redo() throws CannotRedoException {
 		container.removeElectronContainer(formerBond);
 		container.addBond(newBond);
-		Molecule molecule = new Molecule(container);
+		Molecule molecule = new org.openscience.cdk.Molecule(container);
 		SetOfMolecules moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
@@ -58,7 +58,7 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	public void undo() throws CannotUndoException {
 		container.removeElectronContainer(newBond);
 		container.addBond(formerBond);
-		Molecule molecule = new Molecule(container);
+		Molecule molecule = new org.openscience.cdk.Molecule(container);
 		SetOfMolecules moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);

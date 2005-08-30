@@ -4,8 +4,8 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ElectronContainer;
 
 /**
  * Undo/Redo Edit class for the ConvertToRadicalAction,containing the methods

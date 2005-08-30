@@ -8,7 +8,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Bond;
 
 /**
  * Undo/Redo Edit class for the AdjustBondOrdesAction, containing the methods
