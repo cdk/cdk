@@ -34,7 +34,7 @@ import java.util.Vector;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
@@ -321,9 +321,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 		/*
 		 *  From here we start assembling the next sphere
 		 */
-		Atom node = null;
-		Atom toNode = null;
-		Atom[] conAtoms = null;
+        Atom node = null;
+        Atom toNode = null;
+        Atom[] conAtoms = null;
 		TreeNode treeNode = null;
 		nextSphereNodes = new Vector();
 		Bond bond = null;
