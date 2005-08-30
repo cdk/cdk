@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.tools.LoggingTool;
 
