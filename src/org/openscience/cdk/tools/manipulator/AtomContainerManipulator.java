@@ -34,12 +34,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.LonePair;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -151,7 +151,7 @@ public class AtomContainerManipulator {
         List remove = new ArrayList();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
-        Molecule mol = new Molecule();
+        Molecule mol = new org.openscience.cdk.Molecule();
         int count = atomContainer.getAtomCount();
         for (int i = 0;
                 i < count;

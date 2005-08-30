@@ -30,10 +30,10 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.Collections;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Ring;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.RingSet;
 
 /**
@@ -48,7 +48,7 @@ public class RingSetManipulator {
 	 * @return an AtomContainer with all atoms and bonds from the RingSet
 	 */
 	public static AtomContainer getAllInOneContainer(RingSet ringSet) {
-		AtomContainer container = new AtomContainer();
+		AtomContainer container = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < ringSet.size(); i++) {
 			container.add((Ring)ringSet.elementAt(i));
 		}

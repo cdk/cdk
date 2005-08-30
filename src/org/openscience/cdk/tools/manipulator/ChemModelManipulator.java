@@ -27,16 +27,16 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.ElectronContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfReactions;
 
 /**
  * Class with convenience methods that provide methods from
@@ -119,12 +119,12 @@ public class ChemModelManipulator {
      */
     public static AtomContainer createNewMolecule(ChemModel chemModel) {
         // Add a new molecule either the set of molecules
-        Molecule molecule = new Molecule();
+        Molecule molecule = new org.openscience.cdk.Molecule();
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             moleculeSet.addMolecule(molecule);
         } else {
-            SetOfMolecules moleculeSet = new SetOfMolecules();
+            SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
             moleculeSet.addMolecule(molecule);
             chemModel.setSetOfMolecules(moleculeSet);
         }
@@ -182,7 +182,7 @@ public class ChemModelManipulator {
      * Returns all the AtomContainer's of a ChemModel.
      */
     public static AtomContainer[] getAllAtomContainers(ChemModel chemModel) {
-        SetOfMolecules moleculeSet = new SetOfMolecules();
+        SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
         if (chemModel.getSetOfMolecules() != null) {
             moleculeSet.add(chemModel.getSetOfMolecules());
         }

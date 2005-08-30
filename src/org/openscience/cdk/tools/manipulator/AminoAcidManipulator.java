@@ -28,8 +28,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 

@@ -29,13 +29,13 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ElectronContainer;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfReactions;
 
 /**
  * @cdk.module standard
@@ -73,7 +73,7 @@ public class SetOfReactionsManipulator {
     }
     
     public static SetOfMolecules getAllMolecules(SetOfReactions set) {
-        SetOfMolecules moleculeSet = new SetOfMolecules();
+        SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];

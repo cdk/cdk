@@ -29,13 +29,13 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ElectronContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 
 /**
  * @cdk.module standard
@@ -97,7 +97,7 @@ public class ReactionManipulator {
     }
     
     public static SetOfMolecules getAllMolecules(Reaction reaction) {
-        SetOfMolecules moleculeSet = new SetOfMolecules();
+        SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
         Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             moleculeSet.addMolecule(reactants[i]);
@@ -114,13 +114,13 @@ public class ReactionManipulator {
      * Reaction.
      */
     public static Reaction reverse(Reaction reaction) {
-        Reaction reversedReaction = new Reaction();
-        if (reaction.getDirection() == Reaction.BIDIRECTIONAL) {
-            reversedReaction.setDirection(Reaction.BIDIRECTIONAL);
-        } else if (reaction.getDirection() == Reaction.FORWARD) {
-            reversedReaction.setDirection(Reaction.BACKWARD);
-        } else if (reaction.getDirection() == Reaction.BACKWARD) {
-            reversedReaction.setDirection(Reaction.FORWARD);
+        Reaction reversedReaction = new org.openscience.cdk.Reaction();
+        if (reaction.getDirection() == org.openscience.cdk.Reaction.BIDIRECTIONAL) {
+            reversedReaction.setDirection(org.openscience.cdk.Reaction.BIDIRECTIONAL);
+        } else if (reaction.getDirection() == org.openscience.cdk.Reaction.FORWARD) {
+            reversedReaction.setDirection(org.openscience.cdk.Reaction.BACKWARD);
+        } else if (reaction.getDirection() == org.openscience.cdk.Reaction.BACKWARD) {
+            reversedReaction.setDirection(org.openscience.cdk.Reaction.FORWARD);
         }
         Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {

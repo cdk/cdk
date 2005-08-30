@@ -29,11 +29,11 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ElectronContainer;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 
 /**
  * @cdk.module standard

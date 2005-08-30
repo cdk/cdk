@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 
 /**
  * Error found during sematical validation of a ChemObject.
