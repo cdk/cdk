@@ -181,7 +181,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@return           The atom at the specified position
 	 *@see              #setAtomAt
 	 */
-	public Atom getAtomAt(int position)
+	public org.openscience.cdk.interfaces.Atom getAtomAt(int position)
 	{
 		return (Atom)atoms[position];
 	}
@@ -194,7 +194,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atom  The atom the bond partner is searched of
 	 *@return       the connected atom or null
 	 */
-	public Atom getConnectedAtom(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.Atom getConnectedAtom(org.openscience.cdk.interfaces.Atom atom)
 	{
 		if (atoms[0] == atom)
 		{

@@ -70,7 +70,7 @@ public interface Bond extends ElectronContainer {
 	 * @return           The atom at the specified position
 	 * @see              #setAtomAt
 	 */
-	public org.openscience.cdk.Atom getAtomAt(int position);
+	public Atom getAtomAt(int position);
 
 
 	/**
@@ -79,7 +79,7 @@ public interface Bond extends ElectronContainer {
 	 * @param  atom  The atom the bond partner is searched of
 	 * @return       the connected atom or null
 	 */
-	public org.openscience.cdk.Atom getConnectedAtom(Atom atom);
+	public Atom getConnectedAtom(Atom atom);
 
 	/**
 	 * Returns true if the given atom participates in this bond.
