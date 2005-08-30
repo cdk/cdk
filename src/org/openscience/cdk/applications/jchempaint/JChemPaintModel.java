@@ -34,7 +34,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.controller.Controller2DModel;

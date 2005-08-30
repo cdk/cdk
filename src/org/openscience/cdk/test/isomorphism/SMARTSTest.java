@@ -87,7 +87,7 @@ public class SMARTSTest extends CDKTestCase {
     }
 	
     private AtomContainer createEthane() {
-        AtomContainer container = new AtomContainer(); // SMILES "CC"
+        AtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
         Atom carbon = new Atom("C");
         Atom carbon2 = new Atom("C");
         carbon.setHydrogenCount(3);

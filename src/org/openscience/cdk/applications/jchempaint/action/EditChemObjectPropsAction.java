@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -76,7 +76,7 @@ public class EditChemObjectPropsAction extends JCPAction {
 			}
 			
 			if (editor != null) {
-				editor.setChemObject(object);
+				editor.setChemObject((org.openscience.cdk.ChemObject)object);
 				ChemObjectPropertyDialog frame =
 						new ChemObjectPropertyDialog(jcpmodel, editor);
 				frame.pack();

@@ -396,7 +396,7 @@ public class UniversalIsomorphismTester {
    * @return           an AtomContainer
    */
   public static AtomContainer project(List rMapList, AtomContainer g, int id) {
-    AtomContainer ac = new AtomContainer();
+    AtomContainer ac = new org.openscience.cdk.AtomContainer();
 
     Bond[] bondList = g.getBonds();
 

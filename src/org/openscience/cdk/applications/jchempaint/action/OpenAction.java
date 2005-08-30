@@ -41,7 +41,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.io.CMLReader;

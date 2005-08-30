@@ -37,7 +37,7 @@ import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
@@ -164,8 +164,8 @@ public class TemplateHandler3D{
 			}
 			if (Fingerprinter.isSubset(ringSystemFingerprint,(BitSet)fingerprintData.get(i))){
 				query=QueryAtomContainerCreator.createAnyAtomContainer(template,true);
-				if (UniversalIsomorphismTester.isSubgraph(ringSystems,query)){
-					List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems,query);
+				if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ringSystems,query)){
+					List list = UniversalIsomorphismTester.getSubgraphAtomsMap((org.openscience.cdk.AtomContainer)ringSystems,query);
 					//System.out.println("Found a subgraph mapping of size " + list.size()+" Position:"+i+" RingSize:"+NumberOfRingAtoms);
 					if ((NumberOfRingAtoms)/list.size()==1){
 						flagMaxSubstructure=true;

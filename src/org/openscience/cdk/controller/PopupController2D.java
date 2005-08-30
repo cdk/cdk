@@ -32,8 +32,8 @@ package org.openscience.cdk.controller;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
 

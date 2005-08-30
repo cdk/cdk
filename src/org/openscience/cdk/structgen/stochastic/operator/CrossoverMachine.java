@@ -131,10 +131,10 @@ public class CrossoverMachine
 		/*** dividing over ***/
 		
 		
-		redChild[0] =new AtomContainer(dad); 
-		blueChild[0] = new AtomContainer(dad); 
-		redChild[1] = new AtomContainer(mom); 
-		blueChild[1] = new AtomContainer(mom); 
+		redChild[0] =new org.openscience.cdk.AtomContainer(dad); 
+		blueChild[0] = new org.openscience.cdk.AtomContainer(dad); 
+		redChild[1] = new org.openscience.cdk.AtomContainer(mom); 
+		blueChild[1] = new org.openscience.cdk.AtomContainer(mom); 
 		
 		
 		for (int j = 0; j < blueAtoms.size(); j++)

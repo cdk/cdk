@@ -34,11 +34,11 @@ import java.util.HashMap;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;

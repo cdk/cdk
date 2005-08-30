@@ -37,10 +37,10 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;

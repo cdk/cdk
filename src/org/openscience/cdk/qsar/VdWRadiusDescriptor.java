@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar;
 
 import java.io.IOException;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;

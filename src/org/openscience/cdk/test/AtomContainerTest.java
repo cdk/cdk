@@ -67,7 +67,7 @@ public class AtomContainerTest extends CDKTestCase {
         atoms[1] = new Atom("C");
         atoms[2] = new Atom("C");
         atoms[3] = new Atom("O");
-        AtomContainer ac = new AtomContainer();
+        AtomContainer ac = new org.openscience.cdk.AtomContainer();
         ac.setAtoms(atoms);
         
         assertEquals(4, ac.getAtomCount());
@@ -78,13 +78,13 @@ public class AtomContainerTest extends CDKTestCase {
      * Only test wether the atoms are correctly cloned.
      */
 	public void testClone() {
-        AtomContainer molecule = new AtomContainer();
+        AtomContainer molecule = new org.openscience.cdk.AtomContainer();
         Object clone = molecule.clone();
         assertTrue(clone instanceof AtomContainer);
     }    
         
     public void testClone_Atom() {
-		AtomContainer molecule = new AtomContainer();
+		AtomContainer molecule = new org.openscience.cdk.AtomContainer();
 		molecule.addAtom(new Atom("C")); // 1
 		molecule.addAtom(new Atom("C")); // 2
 		molecule.addAtom(new Atom("C")); // 3
@@ -114,7 +114,7 @@ public class AtomContainerTest extends CDKTestCase {
 	}
 
     public void testClone_Bond() {
-		AtomContainer molecule = new AtomContainer();
+		AtomContainer molecule = new org.openscience.cdk.AtomContainer();
 		molecule.addAtom(new Atom("C")); // 1
 		molecule.addAtom(new Atom("C")); // 2
 		molecule.addAtom(new Atom("C")); // 3
@@ -135,7 +135,7 @@ public class AtomContainerTest extends CDKTestCase {
 	}
 
     public void testClone_Bond2() {
-		AtomContainer molecule = new AtomContainer();
+		AtomContainer molecule = new org.openscience.cdk.AtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
 		molecule.addAtom(atom1); // 1
@@ -149,7 +149,7 @@ public class AtomContainerTest extends CDKTestCase {
 	}
 
     public void testClone_Bond3() {
-		AtomContainer molecule = new AtomContainer();
+		AtomContainer molecule = new org.openscience.cdk.AtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
 		molecule.addAtom(atom1); // 1
@@ -421,7 +421,7 @@ public class AtomContainerTest extends CDKTestCase {
     public void testAtomContainer_int_int() {
         // create an empty container with predefined
         // array lengths
-        AtomContainer ac = new AtomContainer(5,6);
+        AtomContainer ac = new org.openscience.cdk.AtomContainer(5,6);
         
         assertEquals(0, ac.getAtoms().length);
         assertEquals(0, ac.getElectronContainers().length);
@@ -433,7 +433,7 @@ public class AtomContainerTest extends CDKTestCase {
 
     public void testAtomContainer() {
         // create an empty container with in the constructor defined array lengths
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         
         assertEquals(0, container.getAtoms().length);
         assertEquals(0, container.getElectronContainers().length);
@@ -460,7 +460,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        AtomContainer container = new AtomContainer(acetone);
+        AtomContainer container = new org.openscience.cdk.AtomContainer(acetone);
         assertEquals(4, container.getAtomCount());
         assertEquals(3, container.getBondCount());
     }
@@ -482,7 +482,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.add(acetone);
         assertEquals(4, container.getAtomCount());
         assertEquals(3, container.getBondCount());
@@ -505,7 +505,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.add(acetone);
         assertEquals(4, container.getAtomCount());
         assertEquals(3, container.getBondCount());
@@ -534,7 +534,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.add(acetone);
         assertEquals(4, container.getAtomCount());
         assertEquals(3, container.getBondCount());
@@ -582,7 +582,7 @@ public class AtomContainerTest extends CDKTestCase {
     }
     
     public void testSetAtomAt_int_Atom() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         Atom c = new Atom("C");
         container.setAtomAt(0, c);
         
@@ -600,13 +600,13 @@ public class AtomContainerTest extends CDKTestCase {
         Bond b2 = new Bond(o, c2);
         Bond b3 = new Bond(c2, c3);
         
-        AtomContainer container1 = new AtomContainer();
+        AtomContainer container1 = new org.openscience.cdk.AtomContainer();
         container1.addAtom(c1);
         container1.addAtom(o);
         container1.addAtom(c2);
         container1.addBond(b1);
         container1.addBond(b2);
-        AtomContainer container2 = new AtomContainer();
+        AtomContainer container2 = new org.openscience.cdk.AtomContainer();
         container2.addAtom(o);
         container2.addAtom(c3);
         container2.addAtom(c2);
@@ -622,7 +622,7 @@ public class AtomContainerTest extends CDKTestCase {
     }
     
     public void testGetAtomAt_int() {
-        AtomContainer acetone = new AtomContainer();
+        AtomContainer acetone = new org.openscience.cdk.AtomContainer();
         
         Atom c = new Atom("C");
         Atom n = new Atom("N");
@@ -673,7 +673,7 @@ public class AtomContainerTest extends CDKTestCase {
     }
     
     public void testSetElectronContainerAt_int_ElectronContainer() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");
         container.addAtom(c1);
@@ -762,14 +762,14 @@ public class AtomContainerTest extends CDKTestCase {
     }
     
     public void testSetElectronContainerCount_int() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.setElectronContainerCount(2);
         
         assertEquals(2, container.getElectronContainerCount());
     }
     
     public void testSetAtomCount_int() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.setAtomCount(2);
         
         assertEquals(2, container.getAtomCount());
@@ -1067,7 +1067,7 @@ public class AtomContainerTest extends CDKTestCase {
         electronContainers[2] = new Bond(c1, c3,1);
         acetone.setElectronContainers(electronContainers);
         
-        AtomContainer tested = new AtomContainer();
+        AtomContainer tested = new org.openscience.cdk.AtomContainer();
         tested.addBond(new Bond(c2, c3));
         tested.addElectronContainers(acetone);
         
@@ -1308,7 +1308,7 @@ public class AtomContainerTest extends CDKTestCase {
     }
     
     public void testGetFirstAtom() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("O");
         Atom o = new Atom("H");
@@ -1321,7 +1321,7 @@ public class AtomContainerTest extends CDKTestCase {
     }
 
     public void testGetLastAtom() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("O");
         Atom o = new Atom("H");
@@ -1618,7 +1618,7 @@ public class AtomContainerTest extends CDKTestCase {
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.addAtomParity(parity);
         org.openscience.cdk.interfaces.AtomParity copy = container.getAtomParity(carbon);
         assertNotNull(copy);
@@ -1627,7 +1627,7 @@ public class AtomContainerTest extends CDKTestCase {
 
     /** Test for RFC #9 */
     public void testToString() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         String description = container.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
@@ -1637,7 +1637,7 @@ public class AtomContainerTest extends CDKTestCase {
 
     public void testStateChanged_ChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        AtomContainer chemObject = new AtomContainer();
+        AtomContainer chemObject = new org.openscience.cdk.AtomContainer();
         chemObject.addListener(listener);
         
         chemObject.addAtom(new Atom());

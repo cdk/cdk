@@ -37,9 +37,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
@@ -342,7 +342,7 @@ public class SaveAsAction extends JCPAction
 		AtomContainer ac = (AtomContainer) ChemModelManipulator.getAllInOneContainer(model);
 		if (ac != null)
 		{
-			cow.write((AtomContainer) ac.clone());
+			cow.write((org.openscience.cdk.AtomContainer) ac.clone());
 			cow.close();
 		} else
 		{

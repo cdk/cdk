@@ -172,7 +172,7 @@ public class SpanningTree {
 		
 	}
 	public AtomContainer getSpanningTree() {
-		AtomContainer ac = new AtomContainer();
+		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 		for (int a=0 ; a < V; a++) ac.addAtom(molecule.getAtomAt(a));
 		for (int b=0; b < E; b++ ) if (bondsInTree[b])
 			ac.addBond(molecule.getBondAt(b));
@@ -193,7 +193,7 @@ public class SpanningTree {
 	}	
 	public AtomContainer getPath(AtomContainer spt,Atom a1, Atom a2) throws NoSuchAtomException {
 		
-		AtomContainer path = new AtomContainer();
+		AtomContainer path = new org.openscience.cdk.AtomContainer();
 		PathTools.resetFlags(spt);
 		path.addAtom(a1);
 		PathTools.depthFirstTargetSearch(spt,a1,a2,path);		

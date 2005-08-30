@@ -67,7 +67,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	 */
 	public void testPartitionIntoMolecules() {
 		//System.out.println(atomCon);
-        AtomContainer atomCon = new AtomContainer();
+        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
@@ -85,7 +85,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
      * Test for SF bug #903551
      */
 	public void testPartitionIntoMoleculesKeepsAtomIDs() {
-        AtomContainer atomCon = new AtomContainer();
+        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
         Atom atom1 = new Atom("C");
         atom1.setID("atom1");
         Atom atom2 = new Atom("C");
@@ -113,7 +113,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	 */
 	public void testPartitionIntoMolecules_IsConnected_Consistency() {
 		//System.out.println(atomCon);
-        AtomContainer atomCon = new AtomContainer();
+        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
@@ -137,7 +137,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
      * method keeps LonePairs and SingleElectrons with its associated atoms.
 	 */
 	public void testDontDeleteSingleElectrons() {
-        AtomContainer atomCon = new AtomContainer();
+        AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
         // make two molecules; one with an LonePair, the other with a SingleElectron
         Molecule mol1 = new Molecule();
         Atom atom1 = new Atom("C");

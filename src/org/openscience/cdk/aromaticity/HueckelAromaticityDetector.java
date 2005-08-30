@@ -29,7 +29,7 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ElectronContainer;

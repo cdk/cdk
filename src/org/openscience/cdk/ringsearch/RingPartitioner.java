@@ -92,7 +92,7 @@ public class RingPartitioner {
      *@return          The AtomContainer containing the bonds and atoms of the ringSet.
      */
     public static AtomContainer convertToAtomContainer(RingSet ringSet) {
-        AtomContainer ac = new AtomContainer();
+        AtomContainer ac = new org.openscience.cdk.AtomContainer();
         for (int i = 0; i < ringSet.size(); i++) {
             Ring ring = (Ring) ringSet.get(i);
             for (int r = 0; r < ring.getBondCount(); r++) {

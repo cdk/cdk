@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.graph.rebond;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -107,7 +107,7 @@ public class RebondTool {
                                     atomNear, atomNear.getCovalentRadius(),
                                     e.foundDistance2());
         if (isBonded) {
-          Bond bond = new Bond(atom, atomNear, 1.0);
+          Bond bond = new org.openscience.cdk.Bond(atom, atomNear, 1.0);
           container.addBond(bond);
         }
       }

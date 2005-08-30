@@ -34,11 +34,11 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
@@ -531,7 +531,7 @@ public class AtomPlacer
 		
 		startAtom = molecule.getAtomAt(bestStartAtom);
 		endAtom = molecule.getAtomAt(bestEndAtom);
-		AtomContainer path = new AtomContainer();
+		AtomContainer path = new org.openscience.cdk.AtomContainer();
 		path.addAtom(startAtom);
 		path = getLongestUnplacedChain(molecule, startAtom);
 		//PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);
@@ -562,11 +562,11 @@ public class AtomPlacer
 		//ConnectivityChecker cc = new ConnectivityChecker();
 		int longest = 0;
 		int longestPathLength = 0;
-		AtomContainer[] pathes = new AtomContainer[molecule.getAtomCount()];
+		AtomContainer[] pathes = new org.openscience.cdk.AtomContainer[molecule.getAtomCount()];
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			molecule.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
-			pathes[f] = new AtomContainer();
+			pathes[f] = new org.openscience.cdk.AtomContainer();
 			pathes[f].addAtom(startAtom);
 
 		}
@@ -630,7 +630,7 @@ public class AtomPlacer
 					{
 						nextAtomNr = ac.getAtomNumber(nextAtom);
 						logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-						pathes[nextAtomNr] = new AtomContainer(pathes[atomNr]);
+						pathes[nextAtomNr] = new org.openscience.cdk.AtomContainer(pathes[atomNr]);
 						logger.debug("Making copy of path " + (atomNr + 1) + " to form new path " + (nextAtomNr + 1));
 						logger.debug("Old path " + (atomNr + 1) + " looks like: " + listNumbers(molecule, pathes[atomNr]));
 						logger.debug("Copied path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
@@ -786,7 +786,7 @@ public class AtomPlacer
 	 */
 	public AtomContainer getPlacedAtoms(AtomContainer ac)
 	{
-		AtomContainer ret = new AtomContainer();
+		AtomContainer ret = new org.openscience.cdk.AtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			if (ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED))

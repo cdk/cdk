@@ -67,7 +67,7 @@ public class MoleculeTest extends CDKTestCase {
     }
 
     public void testMolecule_AtomContainer() {
-        AtomContainer acetone = new AtomContainer();
+        AtomContainer acetone = new org.openscience.cdk.AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");
         Atom o = new Atom("O");

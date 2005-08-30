@@ -27,7 +27,7 @@ package org.openscience.cdk.charges;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 

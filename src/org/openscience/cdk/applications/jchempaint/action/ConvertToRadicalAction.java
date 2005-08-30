@@ -32,9 +32,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;

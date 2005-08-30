@@ -23,12 +23,12 @@ package org.openscience.cdk.geometry.surface;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 
 /**
  * Creates a list of atoms neighboring each atom in the molecule.
  *
- * The routine is a simplified version of the neighbor list described
+ * <p>The routine is a simplified version of the neighbor list described
  * in {@cdk.cite EIS95} and is based on the implementation by Peter McCluskey.
  * Due to the fact that it divides the cube into a fixed number of sub cubes, 
  * some accuracy may be lost.

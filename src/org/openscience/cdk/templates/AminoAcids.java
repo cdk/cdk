@@ -28,7 +28,7 @@ import java.util.Enumeration;
 
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.dict.DictRef;

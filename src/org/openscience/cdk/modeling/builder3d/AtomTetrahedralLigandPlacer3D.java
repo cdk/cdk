@@ -38,8 +38,8 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 
 /**
@@ -97,8 +97,8 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@cdk.keyword           3D model
 	 */
 	public void add3DCoordinatesForSinglyBondedLigands(AtomContainer atomContainer) throws Exception {
-		AtomContainer noCoords = new AtomContainer();
-		AtomContainer withCoords = new AtomContainer();
+		AtomContainer noCoords = new org.openscience.cdk.AtomContainer();
+		AtomContainer withCoords = new org.openscience.cdk.AtomContainer();
 		Atom refAtom = null;
 		Atom atomC = null;
 		int nwanted = 0;
@@ -856,7 +856,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	public AtomContainer getPlacedAtomsInAtomContainer(Atom atom, AtomContainer ac) {
 
 		Bond[] bonds = ac.getConnectedBonds(atom);
-		AtomContainer connectedAtoms = new AtomContainer();
+		AtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		Atom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);
@@ -878,7 +878,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 */
 	public AtomContainer getUnsetAtomsInAtomContainer(Atom atom, AtomContainer ac) {
 		Atom[] atoms = ac.getConnectedAtoms(atom);
-		AtomContainer connectedAtoms = new AtomContainer();
+		AtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < atoms.length; i++) {
 			if (!atoms[i].getFlag(CDKConstants.ISPLACED)){//&& atoms[i].getPoint3d() == null) {
 				connectedAtoms.addAtom(atoms[i]);

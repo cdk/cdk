@@ -35,12 +35,12 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Ring;
+import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -635,7 +635,7 @@ public class StructureDiagramGenerator
 			logger.debug("oldPoint2: " + oldPoint2);
 			angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
 			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
-			ringSystem = new AtomContainer();
+			ringSystem = new org.openscience.cdk.AtomContainer();
 			ringSystem.add(RingSetManipulator.getAllInOneContainer(nextRingSystem));
 
 			/*
@@ -682,7 +682,7 @@ public class StructureDiagramGenerator
 	 */
 	private AtomContainer getUnplacedAtoms(org.openscience.cdk.interfaces.Atom atom)
 	{
-		AtomContainer unplacedAtoms = new AtomContainer();
+		AtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
 		Bond[] bonds = molecule.getConnectedBonds(atom);
 		org.openscience.cdk.interfaces.Atom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
@@ -707,7 +707,7 @@ public class StructureDiagramGenerator
 	 */
 	private AtomContainer getPlacedAtoms(org.openscience.cdk.interfaces.Atom atom)
 	{
-		AtomContainer placedAtoms = new AtomContainer();
+		AtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
 		Bond[] bonds = molecule.getConnectedBonds(atom);
 		org.openscience.cdk.interfaces.Atom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
@@ -819,7 +819,7 @@ public class StructureDiagramGenerator
 			 *  ring is somehow connected, or some other system of atoms in an aliphatic chain.
 			 *  In this case, it's the first bond that we layout by hand.
 			 */
-			sharedAtoms = new AtomContainer();
+			sharedAtoms = new org.openscience.cdk.AtomContainer();
 			sharedAtoms.addBond(bond);
 			sharedAtoms.addAtom(bond.getAtomAt(0));
 			sharedAtoms.addAtom(bond.getAtomAt(1));

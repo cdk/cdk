@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -72,7 +72,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 	public void testConfigure_Atom_Isotope() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance();
 		Atom atom = new Atom("H");
-        Isotope isotope = new Isotope("H", 2);
+        Isotope isotope = new org.openscience.cdk.Isotope("H", 2);
         isofac.configure(atom, isotope);
         assertEquals(2, atom.getMassNumber());
     }
@@ -120,7 +120,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 	}
     
     public void testConfigureAtoms_AtomContainer() throws Exception {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("H"));
         container.addAtom(new Atom("N"));

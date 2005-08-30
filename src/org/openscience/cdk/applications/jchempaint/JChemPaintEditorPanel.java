@@ -571,7 +571,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			Reaction[] reactions = reactionSet.getReactions();
 			for (int i = 1; i <= reactions.length; i++)
 			{
-				AtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);
+				org.openscience.cdk.interfaces.AtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);
 				GeometryTools.center(ac, baseDim);
 				GeometryTools.translate2D(ac, 0, baseDim.height * (reactions.length - i));
 			}

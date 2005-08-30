@@ -87,7 +87,7 @@ public class ConjugatedPiSystemsDetector {
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
             }
-            AtomContainer piSystem = new AtomContainer();
+            AtomContainer piSystem = new org.openscience.cdk.AtomContainer();
             Stack stack = new Stack();
 
             piSystem.addAtom(firstAtom);

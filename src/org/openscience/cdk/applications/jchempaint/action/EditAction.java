@@ -33,10 +33,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -75,7 +75,7 @@ public class EditAction extends JCPAction {
 		Renderer2DModel renderModel = jcpModel.getRendererModel();
 		ChemModel chemModel = jcpModel.getChemModel();
 		if (type.equals("cut")) {
-			Atom atomInRange = null;
+			org.openscience.cdk.interfaces.Atom atomInRange = null;
 			ChemObject object = getSource(event);
 			logger.debug("Source of call: ", object);
 			if (object instanceof Atom) {
@@ -88,7 +88,7 @@ public class EditAction extends JCPAction {
 				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atomInRange);
 			}
 			else {
-				Bond bond = renderModel.getHighlightedBond();
+				org.openscience.cdk.interfaces.Bond bond = renderModel.getHighlightedBond();
 				if (bond != null) {
 					ChemModelManipulator.removeElectronContainer(chemModel, bond);
 				}
@@ -107,7 +107,7 @@ public class EditAction extends JCPAction {
 					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, selected[i]);
 				}
 			}
-			renderModel.setSelectedPart(new AtomContainer());
+			renderModel.setSelectedPart(new org.openscience.cdk.AtomContainer());
 			jcpModel.fireChange();
 		}
 		else if (type.equals("selectAll")) {
@@ -127,13 +127,13 @@ public class EditAction extends JCPAction {
 			// FIXME: implement for others than Reaction, Atom, Bond
 			ChemObject object = getSource(event);
 			if (object instanceof Atom) {
-				AtomContainer container = new AtomContainer();
+				AtomContainer container = new org.openscience.cdk.AtomContainer();
 				container.addAtom((Atom) object);
 				renderModel.setSelectedPart(container);
 				jcpModel.fireChange();
 			}
 			else if (object instanceof Bond) {
-				AtomContainer container = new AtomContainer();
+				AtomContainer container = new org.openscience.cdk.AtomContainer();
 				container.addBond((Bond) object);
 				renderModel.setSelectedPart(container);
 				jcpModel.fireChange();

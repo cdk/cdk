@@ -82,7 +82,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     
     public void testCalculate() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
-        AtomContainer h2mol = new AtomContainer();
+        AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
         Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
         Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));
         h2mol.addAtom(h1); h2mol.addAtom(h2);
@@ -109,7 +109,7 @@ public class RDFCalculatorTest extends CDKTestCase {
                 }
             }
         );
-        AtomContainer h2mol = new AtomContainer();
+        AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
         Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
         Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));
         h2mol.addAtom(h1); h2mol.addAtom(h2);
@@ -136,7 +136,7 @@ public class RDFCalculatorTest extends CDKTestCase {
                 }
             }
         );
-        AtomContainer h2mol = new AtomContainer();
+        AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
         Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
           h1.setCharge(+1.0);
         Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));

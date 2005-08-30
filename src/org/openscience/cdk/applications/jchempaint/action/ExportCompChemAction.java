@@ -33,7 +33,7 @@ import java.io.FileWriter;
 
 import javax.swing.JFileChooser;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.io.JCPCompChemInputSaveFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;

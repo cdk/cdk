@@ -32,9 +32,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -170,7 +170,7 @@ public class HydrogenAdder {
 	    logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
       Molecule[] molecules = moleculeSet.getMolecules();
-      AtomContainer changedAtomsAndBonds = new AtomContainer();
+      AtomContainer changedAtomsAndBonds = new org.openscience.cdk.AtomContainer();
       AtomContainer intermediateContainer= null;
       for (int k = 0; k < molecules.length; k++) {
         Molecule molPart = molecules[k];
@@ -262,7 +262,7 @@ public class HydrogenAdder {
         
         Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
         atom.setHydrogenCount(0);
-        AtomContainer changedAtomsAndBonds = new AtomContainer();
+        AtomContainer changedAtomsAndBonds = new org.openscience.cdk.AtomContainer();
         for (int i = 1; i <= count; i++) {
             Atom hydrogen = new Atom("H");
             IsotopeFactory.getInstance().configure(hydrogen, isotope);

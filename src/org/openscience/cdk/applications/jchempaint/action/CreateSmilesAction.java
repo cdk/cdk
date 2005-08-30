@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;

@@ -31,7 +31,7 @@ package org.openscience.cdk.ringsearch;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 
 /**
 * Implementation of a Path as needed by {@cdk.cite HAN96}.

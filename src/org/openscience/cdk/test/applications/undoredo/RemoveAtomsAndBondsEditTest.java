@@ -65,7 +65,7 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 	 * @return
 	 */
 	private ChemModel createAllRemovedMol() {
-		undoCont = new AtomContainer();
+		undoCont = new org.openscience.cdk.AtomContainer();
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();

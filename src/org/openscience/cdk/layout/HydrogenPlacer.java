@@ -33,7 +33,7 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.tools.LoggingTool;
@@ -88,8 +88,8 @@ public class HydrogenPlacer {
 		Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
 		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
-		AtomContainer placedAtoms = new AtomContainer();
-		AtomContainer unplacedAtoms = new AtomContainer();
+		AtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
+		AtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
 		
 		for (int f = 0; f < connectedAtoms.length; f++) {
 			if (connectedAtoms[f].getSymbol().equals("H") && connectedAtoms[f].getPoint2d()==null) {

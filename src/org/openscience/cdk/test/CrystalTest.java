@@ -60,7 +60,7 @@ public class CrystalTest extends CDKTestCase {
     }
     
     public void testCrystal_AtomContainer() {
-        AtomContainer acetone = new AtomContainer();
+        AtomContainer acetone = new org.openscience.cdk.AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");
         Atom o = new Atom("O");
@@ -83,7 +83,7 @@ public class CrystalTest extends CDKTestCase {
     }
     
     public void testAdd_AtomContainer() {
-        AtomContainer acetone = new AtomContainer();
+        AtomContainer acetone = new org.openscience.cdk.AtomContainer();
         Atom c1 = new Atom("C");
         Atom c2 = new Atom("C");
         Atom o = new Atom("O");

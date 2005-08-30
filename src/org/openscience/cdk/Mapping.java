@@ -39,7 +39,7 @@ package org.openscience.cdk;
  */
 public class Mapping extends ChemObject implements java.io.Serializable, Cloneable {
 
-    private ChemObject[] relation;
+    private org.openscience.cdk.interfaces.ChemObject[] relation;
     
     /**
      * Constructs an unconnected lone pair.
@@ -47,7 +47,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * @param objectOne The first ChemObject of the mapping
      * @param objectTwo The second ChemObject of the mapping
      */
-    public Mapping(ChemObject objectOne, ChemObject objectTwo) {
+    public Mapping(org.openscience.cdk.interfaces.ChemObject objectOne, org.openscience.cdk.interfaces.ChemObject objectTwo) {
         relation = new ChemObject[2];
         relation[0] = objectOne;
         relation[1] = objectTwo;
@@ -59,7 +59,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * @return An array of two ChemObject's that define the mapping
      */
     public ChemObject[] getRelatedChemObjects() {
-        return relation;
+        return (ChemObject[])relation;
     }
 
 	/**

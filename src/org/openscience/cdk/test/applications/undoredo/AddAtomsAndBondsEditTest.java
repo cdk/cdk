@@ -70,7 +70,7 @@ public class AddAtomsAndBondsEditTest extends CDKTestCase {
 	 * @return
 	 */
 	private ChemModel createMol() {
-		undoCont = new AtomContainer();
+		undoCont = new org.openscience.cdk.AtomContainer();
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();

@@ -27,8 +27,8 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 
 /**
  * Tool to make projections from 3D to 2D

@@ -82,7 +82,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atom1  the first Atom in the bond
 	 *@param  atom2  the second Atom in the bond
 	 */
-	public Bond(Atom atom1, Atom atom2)
+	public Bond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2)
 	{
 		this(atom1, atom2, 1.0, CDKConstants.STEREO_BOND_NONE);
 	}
@@ -95,7 +95,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atom2  the second Atom in the bond
 	 *@param  order  the bond order
 	 */
-	public Bond(Atom atom1, Atom atom2, double order)
+	public Bond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order)
 	{
 		this(atom1, atom2, order, CDKConstants.STEREO_BOND_NONE);
 	}
@@ -110,7 +110,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  order   the bond order
 	 *@param  stereo  a descriptor the stereochemical orientation of this bond
 	 */
-	public Bond(Atom atom1, Atom atom2, double order, int stereo)
+	public Bond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order, int stereo)
 	{
 		atoms = new Atom[2];
 		setAtomAt(atom1, 0);

@@ -63,9 +63,9 @@ public class AtomTools {
      */
     public static void add3DCoordinates1(AtomContainer atomContainer) {
             // atoms without coordinates
-        AtomContainer noCoords = new AtomContainer();
+        AtomContainer noCoords = new org.openscience.cdk.AtomContainer();
         // get vector of possible referenceAtoms?
-        AtomContainer refAtoms = new AtomContainer();
+        AtomContainer refAtoms = new org.openscience.cdk.AtomContainer();
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             Atom atom = atomContainer.getAtomAt(i);
             // is this atom without 3D coords, and has only one ligand?
@@ -194,7 +194,7 @@ public class AtomTools {
             return newPoints;
         }
         int nligands = connectedAtoms.size();
-        AtomContainer ligandsWithCoords    = new AtomContainer();
+        AtomContainer ligandsWithCoords    = new org.openscience.cdk.AtomContainer();
         for (int i = 0; i < nligands; i++) {
             Atom ligand = (Atom) connectedAtoms.elementAt(i);
             if (ligand.getPoint3d() != null) {

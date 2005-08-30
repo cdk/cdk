@@ -36,7 +36,7 @@ import java.awt.Graphics2D;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2D;

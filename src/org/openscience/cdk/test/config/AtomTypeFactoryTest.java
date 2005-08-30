@@ -29,8 +29,8 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -200,7 +200,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     public void testConfigure_Atom() {
 		AtomType atomType = null;
-        Atom atom = new Atom("X");
+        Atom atom = new org.openscience.cdk.Atom("X");
         atom.setAtomTypeName("C.ar");
 		try {
             AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml");

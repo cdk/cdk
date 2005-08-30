@@ -31,7 +31,7 @@ import java.io.OptionalDataException;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;

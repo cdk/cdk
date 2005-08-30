@@ -3,7 +3,7 @@ package org.openscience.cdk.test.applications.undoredo;
 import java.util.HashMap;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;

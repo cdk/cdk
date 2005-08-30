@@ -52,7 +52,7 @@ public class AtomEnumerationTest extends CDKTestCase {
     }
     
     public void testHasMoreElements() {
-        AtomContainer ac = new AtomContainer();
+        AtomContainer ac = new org.openscience.cdk.AtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));

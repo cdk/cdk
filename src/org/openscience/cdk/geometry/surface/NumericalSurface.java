@@ -25,8 +25,8 @@ import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -34,17 +34,17 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * A class representing the solvent acessible surface area surface of a molecule.
  *
- * This class is based on the Python implementation of the DCLM method
+ * <p>This class is based on the Python implementation of the DCLM method
  * ({@cdk.cite EIS95}) by Peter McCluskey, which is a non-analytical method to generate a set of points
  * representing the solvent accessible surface area of a molecule.
- * <p>
- * The neighbor list is a simplified version of that
+ * 
+ * <p>The neighbor list is a simplified version of that
  * described in {@cdk.cite EIS95} and as a result, the surface areas of the atoms may not be exact
  * (compared to analytical calculations). The tessellation is slightly different from
  * that described by McCluskey and uses recursive subdivision starting from an icosahedral
  * representation.
- * <p>
- * The default solvent radius used is 1.4A and setting this to 0 will give the
+ * 
+ * <p>The default solvent radius used is 1.4A and setting this to 0 will give the
  * Van der Waals surface. The accuracy can be increased by increasing the tessellation 
  * level, though the default of 4 is a good balance between accuracy and speed.
  *

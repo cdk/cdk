@@ -39,7 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.invariant.IChIGenerator;

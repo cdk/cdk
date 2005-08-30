@@ -62,9 +62,9 @@ public class ConnectivityChecker
 	 * @param   atomContainer  The AtomContainer to be check for connectedness
 	 * @return                 true if the AtomContainer is connected   
 	 */
-	public static boolean isConnected(AtomContainer atomContainer)
+	public static boolean isConnected(org.openscience.cdk.interfaces.AtomContainer atomContainer)
 	{
-		AtomContainer ac = new AtomContainer();
+		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 		Atom atom = null;
 		Bond bond = null;
 		Molecule molecule = new Molecule();
@@ -103,8 +103,8 @@ public class ConnectivityChecker
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
-	public static SetOfMolecules partitionIntoMolecules(AtomContainer atomContainer) {
-		AtomContainer ac = new AtomContainer();
+	public static SetOfMolecules partitionIntoMolecules(org.openscience.cdk.interfaces.AtomContainer atomContainer) {
+		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 		Atom atom = null;
 		ElectronContainer eContainer = null;
 		Molecule molecule = null;

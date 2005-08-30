@@ -829,7 +829,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 
 	public AtomContainer getIntersection(org.openscience.cdk.interfaces.AtomContainer container)
 	{
-		AtomContainer intersection = new AtomContainer();
+		AtomContainer intersection = new org.openscience.cdk.AtomContainer();
 
 		for (int i = 0; i < getAtomCount(); i++)
 		{

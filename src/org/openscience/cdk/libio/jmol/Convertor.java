@@ -62,7 +62,7 @@ public class Convertor {
      * @param model A Jmol model as returned by the method ModelAdapter.openBufferedReader()
      */
     public AtomContainer convert(Object model) throws CDKException {
-        AtomContainer atomContainer = new AtomContainer();
+        AtomContainer atomContainer = new org.openscience.cdk.AtomContainer();
         SmarterJmolAdapter adapter = new SmarterJmolAdapter(null);
         // use this hashtable to map the ModelAdapter Unique IDs to
         // our CDK Atom's

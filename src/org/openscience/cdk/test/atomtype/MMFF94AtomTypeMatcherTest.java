@@ -33,7 +33,7 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.MMFF94AtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;

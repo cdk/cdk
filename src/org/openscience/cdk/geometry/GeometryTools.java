@@ -40,11 +40,11 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.AtomEnumeration;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Ring;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -280,18 +280,18 @@ public class GeometryTools {
 	 *@param  atoms  The vector of the given atoms
 	 *@return        The center of the given atoms as Point2d
 	 */
-	public static Point2d get2DCenter(Vector atoms) {
+	public static Point2d get2DCenter(Atom[] atoms) {
 		Atom atom;
 		double x = 0;
 		double y = 0;
-		for (int f = 0; f < atoms.size(); f++) {
-			atom = (Atom) atoms.elementAt(f);
+		for (int f = 0; f < atoms.length; f++) {
+			atom = (Atom) atoms[f];
 			if (atom.getPoint2d() != null) {
 				x += atom.getX2d();
 				y += atom.getY2d();
 			}
 		}
-		return new Point2d(x / (double) atoms.size(), y / (double) atoms.size());
+		return new Point2d(x / (double) atoms.length, y / (double) atoms.length);
 	}
 
 
@@ -565,7 +565,7 @@ public class GeometryTools {
 		Bond[] bonds = atomCon.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			currentBond = bonds[i];
-			bondCenter = get2DCenter(currentBond.getAtomsVector());
+			bondCenter = get2DCenter(currentBond.getAtoms());
 			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
 			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
 				smallestMouseDistance = mouseDistance;

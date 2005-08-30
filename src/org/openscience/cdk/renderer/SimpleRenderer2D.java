@@ -37,10 +37,6 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
-
-
-
-
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
  *  graphics objects using information from a Renderer2DModel. <p>
@@ -99,7 +95,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	 *@param  atomCon   Description of the Parameter
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintMolecule(AtomContainer atomCon, Graphics2D graphics) {
+	public void paintMolecule(org.openscience.cdk.interfaces.AtomContainer atomCon, Graphics2D graphics) {
 		logger.debug("inside paintMolecule()");
 		customizeRendering(graphics);
 		RingSet ringSet = new RingSet();

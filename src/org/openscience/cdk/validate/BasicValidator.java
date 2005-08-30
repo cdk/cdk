@@ -30,7 +30,7 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
@@ -102,12 +102,12 @@ public class BasicValidator extends AbstractValidator {
     }
     public ValidationReport validateReaction(Reaction subject) {
         ValidationReport report = new ValidationReport();
-        AtomContainer container1 = new AtomContainer();
+        AtomContainer container1 = new org.openscience.cdk.AtomContainer();
         Molecule[] reactants = subject.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             container1.add(reactants[i]);
         }
-        AtomContainer container2 = new AtomContainer();
+        AtomContainer container2 = new org.openscience.cdk.AtomContainer();
         Molecule[] products = subject.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             container2.add(products[i]);

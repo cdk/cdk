@@ -31,14 +31,14 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Graphics2D;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -148,7 +148,7 @@ public class Renderer2D extends SimpleRenderer2D
 	 */
 	public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics2D graphics) {
 		logger.debug("painting set of molecules");
-		AtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
+		org.openscience.cdk.interfaces.AtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
 		Molecule[] molecules = null;
 		try
 		{
@@ -176,14 +176,14 @@ public class Renderer2D extends SimpleRenderer2D
 	 */
 	public void paintReaction(Reaction reaction, Graphics2D graphics) {
 		// calculate some boundaries
-		AtomContainer reactantContainer = new AtomContainer();
+		AtomContainer reactantContainer = new org.openscience.cdk.AtomContainer();
 		Molecule[] reactants = reaction.getReactants().getMolecules();
 		for (int i = 0; i < reactants.length; i++)
 		{
 			reactantContainer.add(reactants[i]);
 		}
 		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
-		AtomContainer productContainer = new AtomContainer();
+		AtomContainer productContainer = new org.openscience.cdk.AtomContainer();
 		Molecule[] products = reaction.getProducts().getMolecules();
 		for (int i = 0; i < products.length; i++)
 		{
@@ -193,10 +193,11 @@ public class Renderer2D extends SimpleRenderer2D
 	
 		// paint atom atom mappings
 		Atom highlighted = r2dm.getHighlightedAtom();
-		if (r2dm.getShowAtomAtomMapping() && highlighted != null)
+		if (r2dm.getShowAtomAtomMapping() && highlighted != null && 
+		    reaction instanceof org.openscience.cdk.Reaction)
 		{
 			logger.debug("Showing atom-atom mapping");
-			Mapping[] mappings = reaction.getMappings();
+			Mapping[] mappings = ((org.openscience.cdk.Reaction)reaction).getMappings();
 			logger.debug(" #mappings: ", mappings.length);
 			for (int i = 0; i < mappings.length; i++)
 			{
@@ -277,7 +278,7 @@ public class Renderer2D extends SimpleRenderer2D
 			ints[3] = ints[1];
 			int[] screenCoords = getScreenCoordinates(ints);
 			int direction = reaction.getDirection();
-			if (direction == Reaction.FORWARD)
+			if (direction == org.openscience.cdk.Reaction.FORWARD)
 			{
 				graphics.drawLine(screenCoords[0], screenCoords[1],
 						screenCoords[2], screenCoords[3]);
@@ -285,7 +286,7 @@ public class Renderer2D extends SimpleRenderer2D
 						screenCoords[2] - 7, screenCoords[3] - 7);
 				graphics.drawLine(screenCoords[2], screenCoords[3],
 						screenCoords[2] - 7, screenCoords[3] + 7);
-			} else if (direction == Reaction.BACKWARD)
+			} else if (direction == org.openscience.cdk.Reaction.BACKWARD)
 			{
 				graphics.drawLine(screenCoords[0], screenCoords[1],
 						screenCoords[2], screenCoords[3]);
@@ -293,7 +294,7 @@ public class Renderer2D extends SimpleRenderer2D
 						screenCoords[0] + 7, screenCoords[1] - 7);
 				graphics.drawLine(screenCoords[0], screenCoords[1],
 						screenCoords[0] + 7, screenCoords[1] + 7);
-			} else if (direction == Reaction.BIDIRECTIONAL)
+			} else if (direction == org.openscience.cdk.Reaction.BIDIRECTIONAL)
 			{
 				graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
 						screenCoords[2], screenCoords[3] - 3);

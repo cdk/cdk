@@ -34,7 +34,7 @@ import javax.swing.JCheckBoxMenuItem;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ValidateFrame;

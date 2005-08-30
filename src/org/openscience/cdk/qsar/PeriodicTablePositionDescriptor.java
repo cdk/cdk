@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;

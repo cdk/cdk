@@ -34,7 +34,7 @@ import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.FlipEdit;
 import org.openscience.cdk.geometry.GeometryTools;

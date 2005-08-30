@@ -32,7 +32,7 @@ import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.iupac.generator.IUPACName;

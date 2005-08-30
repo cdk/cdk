@@ -33,7 +33,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
@@ -85,7 +85,7 @@ public class AllRingsFinder
 	public RingSet findAllRings(AtomContainer atomContainer) throws CDKException
 	{
 		startTime = System.currentTimeMillis();
-		SpanningTree spanningTree = new SpanningTree((AtomContainer) atomContainer.clone());
+		SpanningTree spanningTree = new SpanningTree((org.openscience.cdk.AtomContainer) atomContainer.clone());
 		spanningTree.identifyBonds();
 		if (spanningTree.getBondsCyclicCount() < 37)
 		{
@@ -111,7 +111,7 @@ public class AllRingsFinder
 		}
 		Vector pathes = new Vector();
 		RingSet ringSet = new RingSet();
-		AtomContainer ac = new AtomContainer();
+		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 		originalAc = atomContainer;
 		ac.add(atomContainer);
 		if (debug)
@@ -125,7 +125,7 @@ public class AllRingsFinder
 		}
 		if (useSSSR)
 		{
-			SSSRFinder sssrf = new SSSRFinder(atomContainer);
+			SSSRFinder sssrf = new SSSRFinder((org.openscience.cdk.AtomContainer)atomContainer);
 			RingSet sssr = sssrf.findSSSR();
 			Vector ringSets = RingPartitioner.partitionRings(sssr);
 

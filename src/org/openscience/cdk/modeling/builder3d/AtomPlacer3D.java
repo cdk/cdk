@@ -31,7 +31,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -559,7 +559,7 @@ public class AtomPlacer3D {
 	public AtomContainer getPlacedHeavyAtoms(AtomContainer molecule, Atom atom) {
 
 		Bond[] bonds = molecule.getConnectedBonds(atom);
-		AtomContainer connectedAtoms = new AtomContainer();
+		AtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		Atom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);
@@ -580,7 +580,7 @@ public class AtomPlacer3D {
 	public AtomContainer getUnplacedAtoms(AtomContainer molecule, Atom atom) {
 
 		Bond[] bonds = molecule.getConnectedBonds(atom);
-		AtomContainer connectedAtoms = new AtomContainer();
+		AtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		Atom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);
@@ -613,7 +613,7 @@ public class AtomPlacer3D {
 	 * @return    The allPlacedAtoms value
 	 */
 	public AtomContainer getAllPlacedAtoms(AtomContainer molecule) {
-		AtomContainer placedAtoms = new AtomContainer();
+		AtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			if (molecule.getAtomAt(i).getFlag(CDKConstants.ISPLACED)) {
 				placedAtoms.addAtom(molecule.getAtomAt(i));

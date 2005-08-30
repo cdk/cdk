@@ -31,12 +31,11 @@ import java.io.InputStreamReader;
 import java.io.InputStream;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.atomtype.MM2AtomTypeMatcher;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.tools.manipulator.*;

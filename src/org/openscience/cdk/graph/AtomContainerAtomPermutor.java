@@ -75,7 +75,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 		{
 			atoms[f] = ((Atom)objects[f]);	
 		}
-		AtomContainer ac = new AtomContainer(atomContainer);
+		AtomContainer ac = new org.openscience.cdk.AtomContainer(atomContainer);
 		ac.setAtoms(atoms);
 		return (AtomContainer)ac.clone();
 	}

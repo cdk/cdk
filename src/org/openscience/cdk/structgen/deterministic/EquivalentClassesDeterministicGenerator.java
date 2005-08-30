@@ -64,7 +64,7 @@ public class EquivalentClassesDeterministicGenerator
 		Graph graph = (Graph)graphs.elementAt(0);
 		for (int f = 0; f < baseAtomContainer.getAtomCount(); f++)
 		{
-			ac = new AtomContainer();
+			ac = new org.openscience.cdk.AtomContainer();
 			atom = baseAtomContainer.getAtomAt(f);
 			ac.addAtom(atom);
 			ac.setProperty("class", new Integer(atom.getHydrogenCount()));

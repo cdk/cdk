@@ -130,14 +130,14 @@ public class TemplateHandler
 	
 	public Molecule removeMolecule(Molecule molecule)  throws CDKException
 	{
-		AtomContainer ac1 = new AtomContainer(molecule);
+		AtomContainer ac1 = new org.openscience.cdk.AtomContainer(molecule);
 		AtomContainer ac2 = null;
 		Molecule mol2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			mol2 = (Molecule)templates.elementAt(f);
-			ac2 = new AtomContainer(mol2);
-			if (UniversalIsomorphismTester.isIsomorph(new AtomContainer(ac1), new AtomContainer(ac2)))
+			ac2 = new org.openscience.cdk.AtomContainer(mol2);
+			if (UniversalIsomorphismTester.isIsomorph(new org.openscience.cdk.AtomContainer(ac1), new org.openscience.cdk.AtomContainer(ac2)))
 			{
 				templates.removeElementAt(f);
 				return mol2;
@@ -165,9 +165,9 @@ public class TemplateHandler
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = (Molecule) templates.elementAt(f);
-			if (UniversalIsomorphismTester.isSubgraph(new AtomContainer(molecule), new AtomContainer(template)))
+			if (UniversalIsomorphismTester.isSubgraph(new org.openscience.cdk.AtomContainer(molecule), new org.openscience.cdk.AtomContainer(template)))
 			{
-				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(new AtomContainer(molecule), new AtomContainer(template));
+				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(new org.openscience.cdk.AtomContainer(molecule), new org.openscience.cdk.AtomContainer(template));
 				logger.debug("Found a subgraph mapping of size " + list.size());
 				for (int i = 0; i < list.size(); i++)
 				{

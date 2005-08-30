@@ -63,7 +63,7 @@ public class Molecule extends AtomContainer implements java.io.Serializable, org
 	 *
 	 * @param   container  An Molecule to copy the atoms and bonds from
 	 */
-	public Molecule(AtomContainer container)
+	public Molecule(org.openscience.cdk.interfaces.AtomContainer container)
 	{
 		super(container);
 	}

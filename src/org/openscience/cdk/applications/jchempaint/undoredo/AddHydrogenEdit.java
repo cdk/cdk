@@ -117,7 +117,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
      */
     private void redoExplicitHydrogenAdding() {
         if (model.getSetOfMolecules() != null) {
-            AtomContainer container = ChemModelManipulator
+            org.openscience.cdk.interfaces.AtomContainer container = ChemModelManipulator
                     .getAllInOneContainer(model);
             for (int i = 0; i < changedAtomsAndBonds.getAtomCount(); i++) {
                 container.addAtom(changedAtomsAndBonds.getAtomAt(i));
@@ -126,7 +126,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
                 Bond bond = changedAtomsAndBonds.getBondAt(i);
                 container.addBond(bond);
             }
-            Molecule molecule = new Molecule(container);
+            Molecule molecule = new Molecule((AtomContainer)container);
             SetOfMolecules moleculeSet = ConnectivityChecker
                     .partitionIntoMolecules(molecule);
             model.setSetOfMolecules(moleculeSet);
@@ -139,7 +139,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
     private void undoExplicitHydrogenAdding() {
         if (model.getSetOfMolecules() != null) {
             for (int i = 0; i < changedAtomsAndBonds.getAtomCount(); i++) {
-                AtomContainer container = ChemModelManipulator
+                org.openscience.cdk.interfaces.AtomContainer container = ChemModelManipulator
                         .getRelevantAtomContainer(model, changedAtomsAndBonds
                                 .getAtomAt(i));
                 container.removeAtom(changedAtomsAndBonds.getAtomAt(i));
@@ -147,7 +147,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
             for (int i = 0; i < changedAtomsAndBonds.getBondCount(); i++) {
                 Bond bond = changedAtomsAndBonds.getBondAt(i);
                 Atom[] atoms = bond.getAtoms();
-                AtomContainer container = ChemModelManipulator
+                org.openscience.cdk.interfaces.AtomContainer container = ChemModelManipulator
                         .getRelevantAtomContainer(model, changedAtomsAndBonds
                                 .getBondAt(i));
                 container.removeBond(atoms[0], atoms[1]);

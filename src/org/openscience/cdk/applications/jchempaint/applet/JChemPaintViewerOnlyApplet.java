@@ -31,8 +31,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Method;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 import org.openscience.cdk.controller.Controller2D;
 

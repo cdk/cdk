@@ -72,7 +72,7 @@ public class RingTest extends CDKTestCase {
     }
 
     public void testRing_AtomContainer() {
-        AtomContainer container = new AtomContainer();
+        AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("C"));
         

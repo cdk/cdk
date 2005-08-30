@@ -32,7 +32,7 @@ import java.util.EventObject;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.event.CDKChangeListener;

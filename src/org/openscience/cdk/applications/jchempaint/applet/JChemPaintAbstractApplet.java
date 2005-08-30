@@ -37,6 +37,7 @@ import java.util.PropertyResourceBundle;
 
 import javax.swing.JApplet;
 
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
@@ -244,7 +245,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
     StringWriter sw = new StringWriter();
     MDLWriter mdlwriter = new MDLWriter(sw);
     mdlwriter.dontWriteAromatic();
-    Molecule all=new Molecule(SetOfMoleculesManipulator.getAllInOneContainer(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules()));
+    Molecule all=new Molecule((AtomContainer)SetOfMoleculesManipulator.getAllInOneContainer(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules()));
     mdlwriter.write(all);
     return(sw.toString());
   }

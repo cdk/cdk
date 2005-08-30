@@ -53,7 +53,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 
 	public void testEquivalent() 
 	{
-				AtomContainer C40C3V = new AtomContainer();
+				AtomContainer C40C3V = new org.openscience.cdk.AtomContainer();
 				C40C3V.addAtom(new Atom("C")); // 1
 				C40C3V.addAtom(new Atom("C")); // 2
 				C40C3V.addAtom(new Atom("C")); // 3
@@ -177,7 +177,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 	
 	public void testFullereneC24D6D() 
 		{
-					AtomContainer C24D6D = new AtomContainer();
+					AtomContainer C24D6D = new org.openscience.cdk.AtomContainer();
 					C24D6D.addAtom(new Atom("C")); // 1
 					C24D6D.addAtom(new Atom("C")); // 2
 					C24D6D.addAtom(new Atom("C")); // 3

@@ -35,11 +35,11 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.RingSet;
 
 /**
  * Helper class for Structure Diagram Generation. Resolves atom or bond

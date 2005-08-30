@@ -99,7 +99,7 @@ public class PartialFilledStructureMerger
 		int iteration = 0;
 		Atom partner;
 		Atom atom;
-		AtomContainer backup = new AtomContainer(atomContainer);
+		AtomContainer backup = new org.openscience.cdk.AtomContainer(atomContainer);
 		do
 		{
 			iteration++;

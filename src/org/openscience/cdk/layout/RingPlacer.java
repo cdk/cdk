@@ -33,12 +33,12 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Ring;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.geometry.GeometryTools;
 
@@ -113,10 +113,10 @@ public class RingPlacer
 		Ring ring = null;
 		Atom atom = null;
 		RingSet rings = null;
-		AtomContainer unplacedPartners = new AtomContainer();;
-		AtomContainer sharedAtoms = new AtomContainer();
-		AtomContainer primaryAtoms = new AtomContainer();
-		AtomContainer treatedAtoms = new AtomContainer();
+		AtomContainer unplacedPartners = new org.openscience.cdk.AtomContainer();;
+		AtomContainer sharedAtoms = new org.openscience.cdk.AtomContainer();
+		AtomContainer primaryAtoms = new org.openscience.cdk.AtomContainer();
+		AtomContainer treatedAtoms = new org.openscience.cdk.AtomContainer();
 		Point2d centerOfRingGravity = null;
 		for (int j = 0; j < rs.size(); j++)
 		{

@@ -58,7 +58,7 @@ public class Polarizability {
 	 *@return       The polarizabilitiyFactorForAtom value
 	 */
 	public double getPolarizabilitiyFactorForAtom(AtomContainer ac, Atom atom) {
-		AtomContainer acH = new AtomContainer(ac);
+		AtomContainer acH = new org.openscience.cdk.AtomContainer(ac);
 		try {
 			HydrogenAdder hAdder = new HydrogenAdder();
 			hAdder.addExplicitHydrogensToSatisfyValency((Molecule) acH);

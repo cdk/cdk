@@ -33,8 +33,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ChangeIsotopeEdit;
 import org.openscience.cdk.config.IsotopeFactory;

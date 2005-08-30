@@ -30,7 +30,7 @@ package org.openscience.cdk.controller;
 
 import javax.swing.JPopupMenu;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 
 /**
  * Basically, identical to the JPopupMenu class, except that this menu

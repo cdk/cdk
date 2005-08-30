@@ -34,7 +34,7 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.undo.UndoableEdit;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;

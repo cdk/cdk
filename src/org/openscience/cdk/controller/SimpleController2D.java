@@ -29,16 +29,10 @@
  */
 package org.openscience.cdk.controller;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-
 
 /**
  *  Class that acts on MouseEvents and KeyEvents.

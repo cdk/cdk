@@ -51,7 +51,7 @@ public class INChIContentProcessorTool {
      */
     public AtomContainer processFormula(String atomsEncoding) {
         logger.debug("Parsing atom data: ", atomsEncoding);
-        AtomContainer parsedContent = new AtomContainer();
+        AtomContainer parsedContent = new org.openscience.cdk.AtomContainer();
 
         Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d+)?(.*)");
         String remainder = atomsEncoding;

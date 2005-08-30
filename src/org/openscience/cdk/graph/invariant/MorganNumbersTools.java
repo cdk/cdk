@@ -24,8 +24,8 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 
 /**
  * Tool for calculating Morgan numbers {@cdk.cite MOR65}.

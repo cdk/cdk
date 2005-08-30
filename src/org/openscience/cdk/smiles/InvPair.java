@@ -27,7 +27,7 @@
  *  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.math.Primes;
 
 /**

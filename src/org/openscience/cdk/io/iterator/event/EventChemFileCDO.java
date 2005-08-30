@@ -115,7 +115,7 @@ public class EventChemFileCDO implements CDOInterface {
     public void startObject(String objectType) {
         logger.debug("START:" + objectType);
         if (objectType.equals("Molecule")) {
-            currentMolecule = new AtomContainer();
+            currentMolecule = new org.openscience.cdk.AtomContainer();
             atomEnumeration = new Hashtable();
         } else if (objectType.equals("Atom")) {
             currentAtom = new Atom("H");

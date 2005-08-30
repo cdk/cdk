@@ -41,10 +41,10 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -172,11 +172,11 @@ public class MFAnalyser {
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			i = si.getMajorIsotope(ac.getAtomAt(f).getSymbol());
 			if (i != null) {
-				mass += i.exactMass;
+				mass += i.getExactMass();
 			} else {
 				return 0;
 			}
-			mass += ac.getAtomAt(f).getHydrogenCount() * h.exactMass;
+			mass += ac.getAtomAt(f).getHydrogenCount() * h.getExactMass();
 		}
 		return mass;
 	}
@@ -376,7 +376,7 @@ public class MFAnalyser {
 	 * @return     Description of the Return Value
 	 */
 	private AtomContainer analyseMF(String MF) {
-		AtomContainer ac = new AtomContainer();
+		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 
 		char ThisChar;
 		/*

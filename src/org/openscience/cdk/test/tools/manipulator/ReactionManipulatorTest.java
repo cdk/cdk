@@ -61,7 +61,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(new Molecule());
         reaction.addProduct(new Molecule());
         
-        Reaction reversedReaction = ReactionManipulator.reverse(reaction);
+        Reaction reversedReaction = (Reaction)ReactionManipulator.reverse(reaction);
         assertEquals(Reaction.FORWARD, reversedReaction.getDirection());
         assertEquals(2, reversedReaction.getProductCount());
         assertEquals(1, reversedReaction.getReactantCount());

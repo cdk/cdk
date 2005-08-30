@@ -443,7 +443,7 @@ public class RTools
      */
     public static AtomContainer project(List rMapList, AtomContainer g, int id)
     {
-        AtomContainer ac = new AtomContainer();
+        AtomContainer ac = new org.openscience.cdk.AtomContainer();
 
         Bond[] bondList = g.getBonds();
 
@@ -620,7 +620,7 @@ public class RTools
             System.out.println(e);
         } 
         
-        return ChemModelManipulator.getAllInOneContainer(outFile.getChemSequence(0).getChemModel(0));
+        return (AtomContainer)ChemModelManipulator.getAllInOneContainer(outFile.getChemSequence(0).getChemModel(0));
     }    
 }
 

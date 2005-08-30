@@ -865,7 +865,7 @@ public class GENMDeterministicGenerator
 			 }
 			 
 		//order the fragments
-		atomContainer=new AtomContainer();
+		atomContainer=new org.openscience.cdk.AtomContainer();
 		
 		parentID=new int[setOfBasicFragment.size()];
 		

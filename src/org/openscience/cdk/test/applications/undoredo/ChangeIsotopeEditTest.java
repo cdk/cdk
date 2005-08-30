@@ -12,7 +12,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.undoredo.ChangeIsotopeEdit;
 import org.openscience.cdk.config.IsotopeFactory;
