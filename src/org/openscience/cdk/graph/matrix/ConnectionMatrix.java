@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.graph.matrix;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
 
 /**
  * Calculator for a connection matrix representation of this AtomContainer. An
