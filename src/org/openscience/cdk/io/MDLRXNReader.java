@@ -39,7 +39,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.Molecule;
@@ -237,12 +237,12 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         // now try to map things, if wanted
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
-        AtomContainer reactingSide = new AtomContainer();
+        AtomContainer reactingSide = new org.openscience.cdk.AtomContainer();
         Molecule[] molecules = reaction.getReactants().getMolecules();
         for (int i=0; i<molecules.length; i++) {
             reactingSide.add(molecules[i]);
         }
-        AtomContainer producedSide = new AtomContainer();
+        AtomContainer producedSide = new org.openscience.cdk.AtomContainer();
         molecules = reaction.getProducts().getMolecules();
         for (int i=0; i<molecules.length; i++) {
             producedSide.add(molecules[i]);

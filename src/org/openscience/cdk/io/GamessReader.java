@@ -37,7 +37,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PhysicalConstants;

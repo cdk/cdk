@@ -37,7 +37,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -222,7 +222,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                 } else if ("!End".equals(command)) {
                     logger.info("Found end of file");
                     // Store atoms
-                    AtomContainer container = new AtomContainer();
+                    AtomContainer container = new org.openscience.cdk.AtomContainer();
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
                             Atom atom = new Atom(IsotopeFactory.getInstance().getElementSymbol(atoms[i]));

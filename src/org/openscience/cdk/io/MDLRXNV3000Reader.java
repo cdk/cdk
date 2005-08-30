@@ -33,7 +33,7 @@ import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfReactions;

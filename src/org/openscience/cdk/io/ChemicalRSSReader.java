@@ -34,7 +34,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.chemrss.RSSHandler;

@@ -24,7 +24,7 @@
 package org.openscience.cdk.iupac.generator.sectiona;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.iupac.generator.IUPACNamePart;
@@ -96,7 +96,7 @@ public class Rule2dot1 extends NamingRule {
             AtomPlacer ap = new AtomPlacer();
             // determine longest C-C chain
             try {
-                AtomContainer copy = new AtomContainer();
+                AtomContainer copy = new org.openscience.cdk.AtomContainer();
 //                System.err.println(" m: " + m);
                 copy.add(m);
 //                System.err.println("cp: " + copy);

@@ -31,7 +31,7 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 import java.io.Reader;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 
 /**

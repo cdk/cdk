@@ -43,7 +43,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -132,7 +132,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
     
     public AtomContainer readConnectionTable() throws CDKException {
-        AtomContainer readData = new AtomContainer();
+        AtomContainer readData = new org.openscience.cdk.AtomContainer();
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             String command = readCommand();

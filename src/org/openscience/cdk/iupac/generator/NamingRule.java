@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.iupac.generator;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 
 /**
  *  This interface defines the API for the implementation of

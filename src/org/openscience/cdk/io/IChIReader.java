@@ -35,7 +35,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.IChIFormat;

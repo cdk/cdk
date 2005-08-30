@@ -27,7 +27,7 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 
 /**

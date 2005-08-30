@@ -30,7 +30,7 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;

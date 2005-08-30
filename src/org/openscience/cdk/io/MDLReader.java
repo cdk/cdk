@@ -39,14 +39,14 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
@@ -345,7 +345,7 @@ public class MDLReader extends DefaultChemObjectReader {
 
                 logger.debug("Atom type: ", element);
                 if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(new Atom(element));
+                    atom = isotopeFactory.configure(new org.openscience.cdk.Atom(element));
                 } else {
                     logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     atom = new PseudoAtom(element);
