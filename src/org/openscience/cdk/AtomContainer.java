@@ -139,7 +139,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
      *         not have an associated AtomParity
      * @see    #addAtomParity
      */
-    public AtomParity getAtomParity(org.openscience.cdk.interfaces.Atom atom) {
+    public org.openscience.cdk.interfaces.AtomParity getAtomParity(org.openscience.cdk.interfaces.Atom atom) {
         return (AtomParity)atomParities.get(atom);
     }
     

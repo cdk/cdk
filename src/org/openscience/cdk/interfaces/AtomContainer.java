@@ -64,7 +64,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
      *         not have an associated AtomParity
      * @see    #addAtomParity
      */
-    public org.openscience.cdk.AtomParity getAtomParity(Atom atom);
+    public AtomParity getAtomParity(Atom atom);
     
 	/**
 	 * Sets the array of atoms of this AtomContainer.
