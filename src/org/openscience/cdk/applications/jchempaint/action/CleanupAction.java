@@ -42,7 +42,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.undoredo.CleanUpEdit;
+import org.openscience.cdk.applications.undoredo.CleanUpEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;

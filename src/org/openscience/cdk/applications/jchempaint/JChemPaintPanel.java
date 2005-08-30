@@ -75,7 +75,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
-import org.openscience.cdk.applications.jchempaint.undoredo.UndoAdapter;
+import org.openscience.cdk.applications.undoredo.UndoAdapter;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
@@ -148,10 +148,10 @@ private UndoableEditSupport undoSupport;
 	public JChemPaintPanel() {
 		logger = new LoggingTool(this);
         
-        undoManager = new UndoManager();
-        undoManager.setLimit(10);
-        undoSupport = new UndoableEditSupport();
-        undoSupport.addUndoableEditListener(new UndoAdapter(undoManager));
+//        undoManager = new UndoManager();
+//        undoManager.setLimit(10);
+//        undoSupport = new UndoableEditSupport();
+//        undoSupport.addUndoableEditListener(new UndoAdapter(undoManager));
         
 		setLayout(new BorderLayout());
 		mainContainer = new JPanel();
@@ -1099,7 +1099,7 @@ private UndoableEditSupport undoSupport;
      * @return Returns the undoManager.
      */
     public UndoManager getUndoManager() {
-        return undoManager;
+        return this.jchemPaintModel.getControllerModel().getUndoManager();
     }
 
 
@@ -1107,7 +1107,7 @@ private UndoableEditSupport undoSupport;
      * @param undoManager The undoManager to set.
      */
     public void setUndoManager(UndoManager undoManager) {
-        this.undoManager = undoManager;
+    	this.jchemPaintModel.getControllerModel().setUndoManager(undoManager);
     }
 
 
@@ -1115,7 +1115,7 @@ private UndoableEditSupport undoSupport;
      * @return Returns the undoSupport.
      */
     public UndoableEditSupport getUndoSupport() {
-        return undoSupport;
+        return this.jchemPaintModel.getControllerModel().getUndoSupport();
     }
 
 
@@ -1123,7 +1123,7 @@ private UndoableEditSupport undoSupport;
      * @param undoSupport The undoSupport to set.
      */
     public void setUndoSupport(UndoableEditSupport undoSupport) {
-        this.undoSupport = undoSupport;
+    	this.jchemPaintModel.getControllerModel().setUndoSupport(undoSupport);
     }
 
 }

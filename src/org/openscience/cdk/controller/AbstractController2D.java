@@ -40,6 +40,7 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Vector;
 
+import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
@@ -54,6 +55,11 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
+import org.openscience.cdk.applications.undoredo.BondChangeEdit;
+import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
+import org.openscience.cdk.applications.undoredo.ChangeChargeEdit;
+import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -434,7 +440,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 					if (!(atomInRange.getSymbol().equals(symbol)))
 					{
 						// only change symbol if needed
-
+						String formerSymbol = atomInRange.getSymbol();
 						atomInRange.setSymbol(symbol);
 						// configure the atom, so that the atomic number matches the symbol
 						try
@@ -455,10 +461,13 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						 *  undo and redo storage that it
 						 *  should store this change of an atom symbol
 						 */
-						isUndoableChange = true;
+//						isUndoableChange = true;
 						/*
 						 *  ---
 						 */
+						// undoredo support
+						UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
+						c2dm.getUndoSupport().postEdit(edit);
 						r2dm.fireChange();
 						fireChange();
 					}
@@ -470,11 +479,15 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
 				{
+					double formerCharge = atomInRange.getCharge();
 					atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
 
 					// update atom
 					AtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
 					updateAtom(container, atomInRange);
+					//undoredo support
+					UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getCharge());
+					c2dm.getUndoSupport().postEdit(edit);
 					r2dm.fireChange();
 					fireChange();
 				}
@@ -484,11 +497,14 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
 				{
+					double formerCharge = atomInRange.getCharge();
 					atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
 					// update atom
 					AtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
 					updateAtom(container, atomInRange);
-
+					//undoredo support
+					UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getCharge());
+					c2dm.getUndoSupport().postEdit(edit);
 					r2dm.fireChange();
 					fireChange();
 				}
@@ -505,7 +521,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				Atom atomInRange;
 				Atom newAtom1 = null;
 				Atom newAtom2 = null;
-				Bond newBond;
+				Bond newBond = null;
 				int startX = r2dm.getPointerVectorStart().x;
 				int startY = r2dm.getPointerVectorStart().y;
 				Bond bondInRange = r2dm.getHighlightedBond();
@@ -521,7 +537,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				atomInRange = getAtomInRange(mouseX, mouseY);
 				if (bondInRange != null)
 				{
-          if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
+					Bond formerBond = (Bond) bondInRange.clone();
+					if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
             // increase Bond order
             double order = bondInRange.getOrder();
             if (order >= CDKConstants.BONDORDER_TRIPLE)
@@ -575,8 +592,11 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 					/*
 					 *  ---
 					 */
+					UndoableEdit  edit = new BondChangeEdit(chemModel, formerBond, bondInRange);
+					c2dm.getUndoSupport().postEdit(edit);
 				} else
 				{
+					AtomContainer undoRedoContainer = new AtomContainer();
 					if (atomInRange != null)
 					{
 						logger.debug("We had an atom in range");
@@ -590,11 +610,12 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						atomCon.addAtom(newAtom1);
 						// update atoms
 						updateAtom(atomCon, newAtom1);
+						undoRedoContainer.add(atomCon);
 					}
 
 					if (wasDragged)
 					{
-            if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
+						if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
 						{
 							int endX = r2dm.getPointerVectorEnd().x;
 							int endY = r2dm.getPointerVectorEnd().y;
@@ -611,12 +632,14 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 								logger.debug("*** new atom");
 								newAtom2 = new Atom(c2dm.getDrawElement(), new Point2d(endX, endY));
 								atomCon.addAtom(newAtom2);
+								undoRedoContainer.addAtom(newAtom2);
 							}
 							newAtom1 = lastAtomInRange;
 							if (newAtom1 == null)
 							{
 								newAtom1 = new
-										Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));
+								Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));
+								undoRedoContainer.addAtom(newAtom1);
 							}
 							if (newAtom1 != newAtom2)
 							{
@@ -627,6 +650,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
                   newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
                 logger.debug(newAtom1 + " - " + newAtom2);
 								atomCon.addBond(newBond);
+								undoRedoContainer.addBond(newBond);
 							}
 
 							try
@@ -696,16 +720,20 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 						// now add the new atom
 						atomCon.addAtom(newAtom2);
-            newBond=new Bond(atomInRange, newAtom2, 1.0);
+						undoRedoContainer.addAtom(newAtom2);
+						newBond=new Bond(atomInRange, newAtom2, 1.0);
 						atomCon.addBond(newBond);
-            if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
-              newBond.setStereo(CDKConstants.STEREO_BOND_UP);
-            if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
-              newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
+						undoRedoContainer.addBond(newBond);
+						if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
+							newBond.setStereo(CDKConstants.STEREO_BOND_UP);
+						if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
+							newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
 						// update atoms
 						updateAtom(atomCon, atomInRange);
 						updateAtom(atomCon, newAtom2);
 					}
+					UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Bond");
+					c2dm.getUndoSupport().postEdit(edit);
 				}
 				r2dm.fireChange();
 				fireChange();
@@ -725,6 +753,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 			if (c2dm.getDrawMode() == Controller2DModel.ERASER)
 			{
+				AtomContainer undoRedoContainer = new AtomContainer();
+				String type = null;
 				Atom highlightedAtom = r2dm.getHighlightedAtom();
 				Bond highlightedBond = r2dm.getHighlightedBond();
 				if (highlightedAtom != null)
@@ -733,6 +763,13 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 					AtomContainer container = getAllInOneContainer(chemModel);
 					logger.debug("Atoms before delete: ", container.getAtomCount());
 					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
+					undoRedoContainer.addAtom(highlightedAtom);
+					if (type == null) {
+						type = "Remove Atom";
+					}
+					else {
+						type = "Remove Substructure";
+					}
 					container = getAllInOneContainer(chemModel);
 					logger.debug("Atoms before delete: ", container.getAtomCount());
 					// update atoms
@@ -746,6 +783,13 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				{
 					logger.info("User asks to delete a Bond");
 					ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
+					undoRedoContainer.addBond(highlightedBond);
+					if (type == null) {
+						type = "Remove Bond";
+					}
+					else {
+						type = "Remove Substructure";
+					}
 					// update atoms
 					org.openscience.cdk.interfaces.Atom[] atoms = highlightedBond.getAtoms();
 					AtomContainer container = getRelevantAtomContainer(chemModel, atoms[0]);
@@ -765,12 +809,15 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				/*
 				 *  ---
 				 */
+				UndoableEdit  edit = new RemoveAtomsAndBondsEdit(chemModel, undoRedoContainer, type);
+				c2dm.getUndoSupport().postEdit(edit);
 				r2dm.fireChange();
 				fireChange();
 			}
 
 			if (c2dm.getDrawMode() == Controller2DModel.RING || c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 			{
+				AtomContainer undoRedoContainer = new AtomContainer();
 				Ring newRing = null;
 				Point2d sharedAtomsCenter;
 				Vector2d ringCenterVector;
@@ -825,6 +872,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 					ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
 					AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
 					atomCon.add(newRing);
+					undoRedoContainer.add(newRing);
 				} else if (sharedAtoms.getAtomCount() == 1)
 				{
 					spiroAtom = sharedAtoms.getAtomAt(0);
@@ -862,6 +910,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 					}
 					AtomContainer atomCon = getRelevantAtomContainer(chemModel, spiroAtom);
 					atomCon.add(newRing);
+					undoRedoContainer.add(newRing);
 				} else if (sharedAtoms.getAtomCount() == 2)
 				{
 					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
@@ -960,6 +1009,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				{
 					centerAtom(newRing.getAtomAt(i));
 				}
+				undoRedoContainer.add(newRing);
+				UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Benzene");
+				c2dm.getUndoSupport().postEdit(edit);
 				r2dm.fireChange();
 				fireChange();
 			}

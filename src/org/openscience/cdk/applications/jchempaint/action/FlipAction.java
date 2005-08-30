@@ -36,7 +36,7 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.undoredo.FlipEdit;
+import org.openscience.cdk.applications.undoredo.FlipEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
 

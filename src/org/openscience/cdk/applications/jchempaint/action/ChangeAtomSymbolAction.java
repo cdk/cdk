@@ -35,7 +35,7 @@ import javax.swing.undo.UndoableEdit;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.undoredo.ChangeAtomSymbolEdit;
+import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.controller.Controller2DModel;
 

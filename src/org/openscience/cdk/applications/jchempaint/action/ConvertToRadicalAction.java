@@ -38,7 +38,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.undoredo.ConvertToRadicalEdit;
+import org.openscience.cdk.applications.undoredo.ConvertToRadicalEdit;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**

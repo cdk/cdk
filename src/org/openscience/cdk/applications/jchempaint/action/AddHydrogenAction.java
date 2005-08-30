@@ -41,7 +41,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.undoredo.AddHydrogenEdit;
+import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.HydrogenPlacer;

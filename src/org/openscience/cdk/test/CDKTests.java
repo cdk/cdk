@@ -29,14 +29,18 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.AddHydrogenEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.AdjustBondOrdersEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.ChangeAtomSymbolEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.ChangeIsotopeEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.CleanUpEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.ConvertToPseudoAtomEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.ConvertToRadicalEditTest;
-import org.openscience.cdk.test.applications.jchempaint.undoredo.FlipEditTest;
+import org.openscience.cdk.test.applications.undoredo.AddAtomsAndBondsEditTest;
+import org.openscience.cdk.test.applications.undoredo.AddHydrogenEditTest;
+import org.openscience.cdk.test.applications.undoredo.AdjustBondOrdersEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeAtomSymbolEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeChargeEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeCoordsEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeIsotopeEditTest;
+import org.openscience.cdk.test.applications.undoredo.CleanUpEditTest;
+import org.openscience.cdk.test.applications.undoredo.ConvertToPseudoAtomEditTest;
+import org.openscience.cdk.test.applications.undoredo.ConvertToRadicalEditTest;
+import org.openscience.cdk.test.applications.undoredo.FlipEditTest;
+import org.openscience.cdk.test.applications.undoredo.RemoveAtomsAndBondsEditTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.atomtype.CDKChemicalRingConstantsTest;
 import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
@@ -186,7 +190,9 @@ public class CDKTests
         suite.addTest(AddHydrogenEditTest.suite());
         suite.addTest(AdjustBondOrdersEditTest.suite());
         suite.addTest(FlipEditTest.suite());
-        
+        suite.addTest(AddAtomsAndBondsEditTest.suite());
+        suite.addTest(RemoveAtomsAndBondsEditTest.suite());
+        suite.addTest(ChangeChargeEditTest.suite());
         return suite;
     }
     

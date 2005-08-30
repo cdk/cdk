@@ -37,7 +37,7 @@ import javax.swing.undo.UndoableEdit;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.applications.jchempaint.undoredo.AdjustBondOrdersEdit;
+import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 

@@ -28,6 +28,11 @@
  */
 package org.openscience.cdk.controller;
 
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEditSupport;
+
+import org.openscience.cdk.applications.undoredo.UndoAdapter;
+
 public class Controller2DModel implements java.io.Serializable, Cloneable
 {
 	
@@ -68,7 +73,16 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	private double ringPointerLength = 20;
 
     private boolean autoUpdateImplicitHydrogens = true;
+	private UndoManager undoManager;
+	private UndoableEditSupport undoSupport;
     
+    
+    public Controller2DModel() {
+        undoManager = new UndoManager();
+        undoManager.setLimit(100);
+        undoSupport = new UndoableEditSupport();
+        undoSupport.addUndoableEditListener(new UndoAdapter(undoManager));
+    }
  	/**
 	 * Returns the draw mode.
 	 *
@@ -338,5 +352,17 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
     public String getDrawElement() {
         return this.drawElement;
     }
+	public UndoableEditSupport getUndoSupport() {
+		return undoSupport;
+	}
+	public void setUndoSupport(UndoableEditSupport undoSupport) {
+		this.undoSupport = undoSupport;
+	}
+	public UndoManager getUndoManager() {
+		return undoManager;
+	}
+	public void setUndoManager(UndoManager undoManager) {
+		this.undoManager = undoManager;
+	}
 
 }

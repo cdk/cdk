@@ -36,7 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.jchempaint.undoredo.ChangeIsotopeEdit;
+import org.openscience.cdk.applications.undoredo.ChangeIsotopeEdit;
 import org.openscience.cdk.config.IsotopeFactory;
 
 
