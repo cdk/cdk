@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.atomtype;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.exception.CDKException;
 
 /**

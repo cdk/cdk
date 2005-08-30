@@ -27,9 +27,9 @@ package org.openscience.cdk.atomtype;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -85,7 +85,8 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
 	 * @exception CDKException Description of the Exception
      * @return                 the matching AtomType (AtomType class)
 	 */
-	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atom) throws CDKException {
+	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atomInterface) throws CDKException {
+		org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atomInterface;
 		//System.out.println("****** Configure MMFF94 AtomType via findMatching ******");
 		//System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
