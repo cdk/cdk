@@ -75,6 +75,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
+import org.openscience.cdk.applications.plugin.CDKEditBus;
 import org.openscience.cdk.applications.undoredo.UndoAdapter;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.ChemObjectReader;
@@ -94,7 +95,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public abstract class JChemPaintPanel
 		 extends JPanel
-		 implements ChangeListener {
+		 implements ChangeListener, CDKEditBus {
 
 	//Static variables hold information if the application is embedded and keep track of instances of JCPPanel
 	boolean isEmbedded = false;
@@ -744,7 +745,7 @@ private UndoableEditSupport undoSupport;
 	 *
 	 *@param  chemFile  Description of the Parameter
 	 */
-	public void showChemFile(ChemFile chemFile) {
+	public void showChemFile(org.openscience.cdk.interfaces.ChemFile chemFile) {
 		logger.info("Information read from file:");
 
 		int chemSequenceCount = chemFile.getChemSequenceCount();
@@ -769,7 +770,7 @@ private UndoableEditSupport undoSupport;
 	 *
 	 *@param  chemModel  Description of the Parameter
 	 */
-	public void showChemModel(ChemModel chemModel) {
+	public void showChemModel(org.openscience.cdk.interfaces.ChemModel chemModel) {
 		// check for bonds
 		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
 			String error = "Model does not have bonds. Cannot depict contents.";
@@ -784,14 +785,14 @@ private UndoableEditSupport undoSupport;
 			String error = "Model does not have coordinates. Will ask for coord generation.";
 			logger.warn(error);
 
-			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
+			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog((ChemModel)chemModel);
 			frame.pack();
 			frame.show();
 			frame.moveToFront();
 			return;
 		}
 
-		setJChemPaintModel(new JChemPaintModel(chemModel));
+		setJChemPaintModel(new JChemPaintModel((ChemModel)chemModel));
 	}
 
 
@@ -801,7 +802,7 @@ private UndoableEditSupport undoSupport;
 	 *
 	 *@return    The chemModel value
 	 */
-	public ChemModel getChemModel() {
+	public org.openscience.cdk.interfaces.ChemModel getChemModel() {
 		return jchemPaintModel.getChemModel();
 	}
 
@@ -812,7 +813,7 @@ private UndoableEditSupport undoSupport;
 	 *
 	 *@return    The chemFile value
 	 */
-	public ChemFile getChemFile() {
+	public org.openscience.cdk.interfaces.ChemFile getChemFile() {
 		ChemFile file = new ChemFile();
 		ChemSequence sequence = new ChemSequence();
 		sequence.addChemModel(getChemModel());
@@ -961,7 +962,7 @@ private UndoableEditSupport undoSupport;
     		        }
     		        else if (panel instanceof JChemPaintEditorPanel) {
     		          panel = (JChemPaintEditorPanel) panel;
-    		          ChemModel model = panel.getChemModel();
+    		          ChemModel model = (ChemModel)panel.getChemModel();
     		          frame =JChemPaintEditorPanel.getNewFrame(new JChemPaintModel(model));
     		          JChemPaintEditorPanel newPanel = (JChemPaintEditorPanel) frame.getContentPane().getComponent(0);
     		          newPanel.scaleAndCenterMolecule(model);

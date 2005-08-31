@@ -86,7 +86,7 @@ import org.openscience.cdk.validate.ValidatorEngine;
  *@see           JChemPaintViewerOnlyPanel
  */
 public class JChemPaintEditorPanel extends JChemPaintPanel
-		 implements ChangeListener, CDKChangeListener, CDKEditBus
+		 implements ChangeListener, CDKChangeListener
 {
 
 	static String JCP_MODEL_CHANGED = "1";
