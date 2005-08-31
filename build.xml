@@ -198,6 +198,7 @@
                     <fileset dir="${src}" includes="*.javafiles">
                         <exclude name="jmol*.javafiles" />
                     </fileset>
+                    <fileset dir="${src}" includes="*.entitylist" />
                     <!-- remove java files generated with JavaCC -->
                     <fileset dir="${src}/org/openscience/cdk/smiles/smarts" includes="*.java" />
                     <fileset dir="${src}/org/openscience/cdk/iupac/parser" includes="*.java">
@@ -445,9 +446,9 @@
 
         <target id="dist-all" name="dist-all" description="dist-all">
             <antcall target="compile-init"/>
+            <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
-            <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
             <antcall target="compile-module"><param name="module" value="standard"/></antcall>
             <antcall target="compile-module"><param name="module" value="render"/></antcall>
             <antcall target="compile-module"><param name="module" value="io"/></antcall>
