@@ -31,8 +31,8 @@ package org.openscience.cdk.libio.cml;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;

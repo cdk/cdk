@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.w3c.dom.Element;

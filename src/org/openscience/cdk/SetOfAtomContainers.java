@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  * A set of AtomContainers.

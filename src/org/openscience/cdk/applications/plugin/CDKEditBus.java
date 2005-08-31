@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.ChemModel;
  * order to have plugins perform operations in the application.
  * For example, Jmol's DisplayControl class implements this interface.
  *
- * @cdk.module applications
+ * @cdk.module standard
  *
  * @version $Revision$
  */

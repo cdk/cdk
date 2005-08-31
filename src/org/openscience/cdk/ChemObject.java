@@ -33,7 +33,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -156,7 +156,9 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
         if (getListenerCount() > 0) {
             Vector listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
-                ((ChemObjectListener) listeners.elementAt(f)).stateChanged(new ChemObjectChangeEvent(this));
+                ((ChemObjectListener) listeners.elementAt(f)).stateChanged(
+                    new org.openscience.cdk.event.ChemObjectChangeEvent(this)
+                );
             }
         }
 	}

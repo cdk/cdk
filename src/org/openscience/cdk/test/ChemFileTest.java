@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObjectListener;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the ChemSequence class.

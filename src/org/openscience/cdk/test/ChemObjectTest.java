@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemObjectListener;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  * TestCase for the ChemObject class.

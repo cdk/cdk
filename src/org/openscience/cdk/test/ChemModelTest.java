@@ -34,7 +34,7 @@ import org.openscience.cdk.Crystal;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the ChemModel class.

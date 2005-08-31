@@ -34,4 +34,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.module interfaces
  */
 public interface ChemObjectChangeEvent {
+    
+    public Object getSource();
+    
 }

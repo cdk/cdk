@@ -42,7 +42,7 @@ import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the AtomContainer.
