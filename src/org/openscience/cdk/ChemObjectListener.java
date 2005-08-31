@@ -24,20 +24,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
- * 
  */
-
 package org.openscience.cdk;
 
-import org.openscience.cdk.event.ChemObjectChangeEvent;
-
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  * Classes implementing this interface must implement this method
  * such that they react appropriately to changes in the object they
  * are interested in.
  *
- * @cdk.module data
+ * @cdk.module interfaces
  */
 public interface ChemObjectListener
 {

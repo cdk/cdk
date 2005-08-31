@@ -27,7 +27,7 @@ package org.openscience.cdk.applications.plugin;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 
-import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
  * Interface that CDK Plugins must implement. The version of this
@@ -42,7 +42,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * using an <code>CDKEditBus</code> object. Check its API to see how to
  * interact with the application.
  *
- * @cdk.module interfaces
+ * @cdk.module applications
  *
  * @version $Revision$
  *

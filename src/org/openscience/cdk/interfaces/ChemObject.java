@@ -25,7 +25,6 @@ package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
 import org.openscience.cdk.ChemObjectListener;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
 
 /**
  * The base class for all chemical objects in this cdk. It provides methods for
@@ -33,7 +32,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
  * table for administration of physical or chemical properties
  *
  *@author        egonw
- *@cdk.module    data
+ *@cdk.module    interfaces
  */
 public interface ChemObject extends Cloneable {
 

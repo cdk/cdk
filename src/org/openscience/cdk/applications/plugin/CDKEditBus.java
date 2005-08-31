@@ -26,15 +26,15 @@ package org.openscience.cdk.applications.plugin;
 
 import java.io.Reader;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 
 /**
  * Interface that applications must have an implementation for in
  * order to have plugins perform operations in the application.
  * For example, Jmol's DisplayControl class implements this interface.
  *
- * @cdk.module interfaces
+ * @cdk.module applications
  *
  * @version $Revision$
  */

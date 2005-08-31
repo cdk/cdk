@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Molecule;
 import org.w3c.dom.Element;
 
 /**
@@ -40,7 +40,7 @@ import org.w3c.dom.Element;
  *
  * @author        egonw
  * @cdk.created   2005-05-04
- * @cdk.module    interfaces
+ * @cdk.module    data
  */
 public interface Customizer {
 

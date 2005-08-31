@@ -29,7 +29,7 @@ import javax.vecmath.Point3d;
 /**
  * Represents the idea of an chemical atom.
  *
- * @cdk.module  data
+ * @cdk.module  interfaces
  *
  * @author      egonw
  * @cdk.created 2005-08-24

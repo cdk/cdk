@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * sp<sup>3</sup> hybridized carbon C3, etc., in some molecular modelling 
  * applications.
  *
- * @cdk.module data
+ * @cdk.module interfaces
  *
  * @author      egonw
  * @cdk.created 2005-08-24

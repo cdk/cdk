@@ -25,24 +25,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  */
-package org.openscience.cdk.event;
+package org.openscience.cdk.interfaces;
 
 /**
- * Event fired by cdk classes to their registered listeners
+ * Event fired by CDK ChemObject classes to their registered listeners
  * in case something changes within them.
  *
- * @cdk.module data
+ * @cdk.module interfaces
  */
-public class ChemObjectChangeEvent extends java.util.EventObject implements org.openscience.cdk.interfaces.ChemObjectChangeEvent
-{
-	/**
-	 * Constructs a ChemObjectChangeEvent with a reference 
-	 * to the object where it originated.
-	 *
-	 * @param   source The reference to the object where this change event originated
-	 */
-	public ChemObjectChangeEvent(Object source)
-	{
-		super(source);
-	}
+public interface ChemObjectChangeEvent {
 }
