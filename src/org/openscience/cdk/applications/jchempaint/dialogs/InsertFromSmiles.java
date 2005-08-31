@@ -184,7 +184,7 @@ public class InsertFromSmiles extends JFrame
                 // if the not again setting the chemModel setOfMolecules the chemModel remains empty
                 jcpPanel.getChemModel().setSetOfMolecules(moleculeSet);
                 // to ensure, that the molecule is  shown in the actual visibile part of jcp
-                jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
+                jcpPanel.scaleAndCenterMolecule((ChemModel)jcpPanel.getChemModel());
 //             fire a change so that the view gets updated
                 jcpModel.fireChange(jcpPanel.getChemModel());
                 closeFrame();
