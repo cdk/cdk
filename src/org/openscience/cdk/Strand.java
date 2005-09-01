@@ -151,7 +151,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, org.o
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public Monomer getMonomer(String cName) {
+	public org.openscience.cdk.interfaces.Monomer getMonomer(String cName) {
 	    return (Monomer)monomers.get(cName);
 	}
 	

@@ -38,7 +38,6 @@ package org.openscience.cdk.interfaces;
  * @cdk.created    2001-08-06 
  *
  * @cdk.keyword    monomer
- *
  */
 public interface Monomer extends AtomContainer {
 

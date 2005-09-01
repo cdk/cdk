@@ -159,7 +159,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	    Strand strand = (Strand)strands.get(strandName); 
 	    
 	    if(strand != null)	{
-	        return strand.getMonomer(monName);
+	        return (Monomer)strand.getMonomer(monName);
 	    }
 	    else	{
 	        return null;

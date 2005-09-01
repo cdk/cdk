@@ -97,7 +97,7 @@ public interface Strand extends AtomContainer {
 	 * @param cName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for
 	 */
-	public org.openscience.cdk.Monomer getMonomer(String cName);
+	public Monomer getMonomer(String cName);
 	
 	/**
 	 * Returns a collection of the names of all <code>Monomer</code>s in this
