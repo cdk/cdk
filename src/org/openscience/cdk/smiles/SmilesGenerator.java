@@ -834,11 +834,11 @@ public class SmilesGenerator
 					//System.out.println("in parseChain in isChiral");
 					Atom[] sorted = null;
 					Vector chiralNeighbours = container.getConnectedAtomsVector(atom);
-					if (BondTools.isTetrahedral(container, atom,true) > 0)
+					if (BondTools.isTetrahedral(container, atom,false) > 0)
 					{
 						sorted = new Atom[3];
 					}
-					if (BondTools.isTetrahedral(container, atom,true) == 1)
+					if (BondTools.isTetrahedral(container, atom,false) == 1)
 					{
 						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
 						{
@@ -936,7 +936,7 @@ public class SmilesGenerator
 							}
 						}
 					}
-					if (BondTools.isTetrahedral(container, atom,true) == 2)
+					if (BondTools.isTetrahedral(container, atom,false) == 2)
 					{
 						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
 						{
@@ -998,7 +998,7 @@ public class SmilesGenerator
 							}
 						}
 					}
-					if (BondTools.isTetrahedral(container, atom,true) == 3)
+					if (BondTools.isTetrahedral(container, atom,false) == 3)
 					{
 						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
 						{
@@ -1055,7 +1055,7 @@ public class SmilesGenerator
 							}
 						}
 					}
-					if (BondTools.isTetrahedral(container, atom,true) == 4)
+					if (BondTools.isTetrahedral(container, atom,false) == 4)
 					{
 						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
 						{
@@ -1112,7 +1112,7 @@ public class SmilesGenerator
 							}
 						}
 					}
-					if (BondTools.isTetrahedral(container, atom,true) == 5)
+					if (BondTools.isTetrahedral(container, atom,false) == 5)
 					{
 						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_DOWN)
 						{
@@ -1178,7 +1178,7 @@ public class SmilesGenerator
 							}
 						}
 					}
-					if (BondTools.isTetrahedral(container, atom,true) == 6)
+					if (BondTools.isTetrahedral(container, atom,false) == 6)
 					{
 						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
 						{
@@ -1619,7 +1619,7 @@ public class SmilesGenerator
 			{
 				buffer.append('\\');
 			}
-			if (chiral && stereo && (BondTools.isTrigonalBipyramidalOrOctahedral(container, a)!=0 || BondTools.isSquarePlanar(container, a) || BondTools.isTetrahedral(container, a,true) != 0))
+			if (chiral && stereo && (BondTools.isTrigonalBipyramidalOrOctahedral(container, a)!=0 || BondTools.isSquarePlanar(container, a) || BondTools.isTetrahedral(container, a,false) != 0))
 			{
 				buffer.append('@');
 			}
