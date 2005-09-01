@@ -618,11 +618,11 @@ private UndoableEditSupport undoSupport;
 	 *
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
-	public void scaleAndCenterMolecule(ChemModel chemModel) {
+	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.ChemModel chemModel) {
     scaleAndCenterMolecule(chemModel, null);
   }
 
-	public void scaleAndCenterMolecule(ChemModel chemModel, Dimension dim) {
+	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.ChemModel chemModel, Dimension dim) {
 		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
 		scaleAndCenterMolecule(ac,dim);
 	}

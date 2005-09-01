@@ -223,7 +223,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 		}
 		else if (position == 1) {
 			// depict bruto formula
-			AtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer(model);
+			AtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((org.openscience.cdk.interfaces.ChemModel)model);
 			String formula = new MFAnalyser(wholeModel).getHTMLMolecularFormulaWithCharge();
 			status = "<html>" + formula + "</html>";
 		}
