@@ -54,7 +54,7 @@ public class BondTools {
    * @param  bond       The bond.
    * @return            true=is a potential configuration, false=is not.
    */
-  private static boolean isValidDoubleBondConfiguration(AtomContainer container, Bond bond) {
+  public static boolean isValidDoubleBondConfiguration(AtomContainer container, Bond bond) {
     org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
     Atom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
     Atom from = null;
@@ -270,7 +270,7 @@ public class BondTools {
 	 *@return            0=is not tetrahedral;>1 is a certain depiction of
 	 *      tetrahedrality (evaluated in parse chain)
 	 */
-	public static int isTetrahedral(AtomContainer container, Atom a)
+	public static int isTetrahedral(AtomContainer container, Atom a, boolean strict)
 	{
 		Atom[] atoms = container.getConnectedAtoms(a);
 		if (atoms.length != 4)
@@ -308,19 +308,19 @@ public class BondTools {
 			}
 			return 0;
 		}
-		if (up == 1 && down == 0)
+		if (up == 1 && down == 0 && !strict)
 		{
 			return 3;
 		}
-		if (down == 1 && up == 0)
+		if (down == 1 && up == 0 && !strict)
 		{
 			return 4;
 		}
-		if (down == 2 && up == 1)
+		if (down == 2 && up == 1 && !strict)
 		{
 			return 5;
 		}
-		if (down == 1 && up == 2)
+		if (down == 1 && up == 2 && !strict)
 		{
 			return 6;
 		}
@@ -336,12 +336,12 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is square planar, false=is not
 	 */
-	public static boolean isTrigonalBipyramidalOrOctahedral(AtomContainer container, Atom a)
+	public static int isTrigonalBipyramidalOrOctahedral(AtomContainer container, Atom a)
 	{
 		Atom[] atoms = container.getConnectedAtoms(a);
 		if (atoms.length < 5 || atoms.length > 6)
 		{
-			return (false);
+			return (0);
 		}
 		Bond[] bonds = container.getConnectedBonds(a);
 		int normal = 0;
@@ -364,9 +364,12 @@ public class BondTools {
 		}
 		if (up == 1 && down == 1)
 		{
-			return true;
+			if(atoms.length==5)
+				return 1;
+			else
+				return 2;
 		}
-		return false;
+		return 0;
 	}
 
 
@@ -578,6 +581,36 @@ public class BondTools {
 	public static double giveAngleFromMiddle(Atom from, Atom to1, Atom to2)
 	{
 		return (giveAngleBothMethods(from, to1, to2, false));
+	}
+	
+	public static void  makeUpDownBonds(AtomContainer container){
+	    for (int i = 0; i < container.getAtomCount(); i++) {
+	        Atom a = container.getAtomAt(i);
+	        if (container.getConnectedAtoms(a).length == 4) {
+	          int up = 0;
+	          int down = 0;
+	          int hs = 0;
+	          Atom h = null;
+	          for (int k = 0; k < 4; k++) {
+	            if (container.getBond(a, container.getConnectedAtoms(a)[k]).getStereo() == CDKConstants.STEREO_BOND_UP) {
+	              up++;
+	            }
+	            if (container.getBond(a, container.getConnectedAtoms(a)[k]).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+	              down++;
+	            }
+	            if (container.getBond(a, container.getConnectedAtoms(a)[k]).getStereo() == CDKConstants.STEREO_BOND_NONE && container.getConnectedAtoms(a)[k].getSymbol().equals("H")) {
+	              h = container.getConnectedAtoms(a)[k];
+	              hs++;
+	            }
+	          }
+	          if (up == 0 && down == 1 && h != null && hs == 1) {
+	            container.getBond(a, h).setStereo(CDKConstants.STEREO_BOND_UP);
+	          }
+	          if (up == 1 && down == 0 && h != null && hs == 1) {
+	            container.getBond(a, h).setStereo(CDKConstants.STEREO_BOND_DOWN);
+	          }
+	        }
+	      }
 	}
 }
 
