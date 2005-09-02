@@ -45,6 +45,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.PDBAtom;
@@ -255,6 +256,16 @@ public class PDBReader extends DefaultChemObjectReader {
 						//					System.out.println(cLine);
 						//				} else if (cCol.equals("ENDMDL")) {
 						//					System.out.println(cLine);
+					} else if (cCol.equals("REMARK")) {						
+						Object comment = oFile.getProperty(CDKConstants.COMMENT);
+                        if (comment == null) {
+                        	comment = "";
+                        }
+                        comment = comment.toString() + cLine.substring(11).trim() + "\n";
+                        oFile.setProperty(CDKConstants.COMMENT, comment);
+					} else if (cCol.equals("COMPND")) {						
+                        String title = cLine.substring(10).trim();
+                        oFile.setProperty(CDKConstants.TITLE, title);
 					} 
 					
 					/*************************************************************
