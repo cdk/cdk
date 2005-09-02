@@ -109,7 +109,7 @@ public class VicinitySamplerTest extends CDKTestCase
 		   hydrogen count configurator
 		 */
 		double bondCount = 0;
-		Atom atom;
+		org.openscience.cdk.interfaces.Atom atom;
 		 for (int f = 0; f < mol.getAtomCount(); f++)
 		{
 			atom = mol.getAtomAt(f);

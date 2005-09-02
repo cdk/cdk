@@ -153,7 +153,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         /* write atoms */
         format = new PrintfFormat("%7.5lf");
         for (int i = 0; i < crystal.getAtomCount(); i++) {
-            Atom atom = crystal.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom atom = crystal.getAtomAt(i);
             Point3d cartCoord = atom.getPoint3d();
             Point3d fracCoord = CrystalGeometryTools.cartesianToFractional(a, b, c, cartCoord);
             String symbol = atom.getSymbol();

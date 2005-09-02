@@ -154,7 +154,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         // output atoms
         for (int i = 0; i < noatoms; i++) {
             // output atom sumbol
-            Atom atom = crystal.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom atom = crystal.getAtomAt(i);
             write(atom.getSymbol());
             write(":");
             // output atom charge

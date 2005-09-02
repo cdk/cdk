@@ -65,7 +65,7 @@ public class ConnectivityChecker
 	public static boolean isConnected(org.openscience.cdk.interfaces.AtomContainer atomContainer)
 	{
 		AtomContainer ac = new org.openscience.cdk.AtomContainer();
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		Bond bond = null;
 		Molecule molecule = new Molecule();
 		Vector sphere = new Vector();
@@ -105,7 +105,7 @@ public class ConnectivityChecker
 	 */
 	public static SetOfMolecules partitionIntoMolecules(org.openscience.cdk.interfaces.AtomContainer atomContainer) {
 		AtomContainer ac = new org.openscience.cdk.AtomContainer();
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		ElectronContainer eContainer = null;
 		Molecule molecule = null;
 		SetOfMolecules molecules = new SetOfMolecules();

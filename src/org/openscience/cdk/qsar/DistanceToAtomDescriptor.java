@@ -128,8 +128,8 @@ public class DistanceToAtomDescriptor implements Descriptor {
 
 	public DescriptorValue calculate(AtomContainer container) throws CDKException {
 		double distanceToAtom = 0;
-		Atom target = container.getAtomAt(targetPosition);
-		Atom focus = container.getAtomAt(focusPosition);
+		org.openscience.cdk.interfaces.Atom target = container.getAtomAt(targetPosition);
+		org.openscience.cdk.interfaces.Atom focus = container.getAtomAt(focusPosition);
 
                 if (target.getPoint3d() == null || focus.getPoint3d() == null) {
                     throw new CDKException("Target or focus atom must have 3D coordinates.");
@@ -140,7 +140,7 @@ public class DistanceToAtomDescriptor implements Descriptor {
 	}
 
 	// generic method for calculation of distance btw 2 atoms
-	private double calculateDistanceBetweenTwoAtoms(Atom atom1, Atom atom2) {
+	private double calculateDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
 		double distance = 0;
 		Point3d firstPoint = atom1.getPoint3d();
 		Point3d secondPoint = atom2.getPoint3d();

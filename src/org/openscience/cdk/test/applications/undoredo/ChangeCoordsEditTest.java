@@ -40,7 +40,7 @@ public class ChangeCoordsEditTest extends CDKTestCase {
 		edit.undo();
 		edit.redo();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
 			if (atomCoordsMap.containsKey(atom)) {
 				assertTrue(atom.getPoint2d().equals(
 						((Point2d[]) atomCoordsMap.get(atom))[0]));
@@ -56,7 +56,7 @@ public class ChangeCoordsEditTest extends CDKTestCase {
 		ChangeCoordsEdit edit = new ChangeCoordsEdit(atomCoordsMap);
 		edit.undo();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
 			if (atomCoordsMap.containsKey(atom)) {
 				assertTrue(atom.getPoint2d().equals(
 						((Point2d[]) atomCoordsMap.get(atom))[1]));

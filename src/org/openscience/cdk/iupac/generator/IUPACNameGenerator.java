@@ -187,7 +187,7 @@ public class IUPACNameGenerator {
         Vector frags = new Vector();
 
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
-            Atom a = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom a = ac.getAtomAt(i);
             if (a.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
                 a.setProperty(Rule.ATOM_HAS_VALENCY, "no");
                 // loop over connected atoms
@@ -214,7 +214,7 @@ public class IUPACNameGenerator {
                 FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies(molecules[j]);
                 for (int i=0; i < fwav.getAtomCount(); i++) {
                     try {
-                        Atom a = fwav.getAtomAt(i);
+                    	org.openscience.cdk.interfaces.Atom a = fwav.getAtomAt(i);
                         String prop = (String)a.getProperty(Rule.ATOM_HAS_VALENCY);
                         if (prop != null && prop.equals("yes")) {
                             fwav.addValencyAtAtom(a);
@@ -266,7 +266,7 @@ public class IUPACNameGenerator {
 
     private void deleteNamedAtoms(AtomContainer ac) {
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
-            Atom a = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom a = ac.getAtomAt(i);
             if (a.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
                 logger.info("Deleting atom: " + a.getSymbol());
                 ac.removeAtomAndConnectedElectronContainers(ac.getAtomAt(i));

@@ -45,7 +45,7 @@ public class AdjacencyMatrixTools {
     public static int[][] getCarbonOnly(AtomContainer ac) {
         AtomContainer copy = (AtomContainer)ac.clone();
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Atom a = copy.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom a = copy.getAtomAt(i);
             if (!a.getSymbol().equals("C")) {
                 copy.removeAtomAndConnectedElectronContainers(a);
             }

@@ -60,7 +60,7 @@ public class AtomHybridizationDescriptor implements Descriptor {
 	private int targetPosition = 0;
 	AtomTypeManipulator atman = null;
 	HybridizationStateATMatcher atm = null;
-	Atom atom = null;
+	org.openscience.cdk.interfaces.Atom atom = null;
 	AtomType matched = null;
 	
 	/**

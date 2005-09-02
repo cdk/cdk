@@ -132,8 +132,8 @@ public class BondsToAtomDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer container) throws CDKException {
 		mygraph = MoleculeGraphs.getMoleculeGraph((Molecule)container);
 		int bondsToAtom = 0;
-		Atom target = container.getAtomAt(targetPosition);
-		Atom focus = container.getAtomAt(focusPosition);
+		org.openscience.cdk.interfaces.Atom target = container.getAtomAt(targetPosition);
+		org.openscience.cdk.interfaces.Atom focus = container.getAtomAt(focusPosition);
 		startVertex = target;
 		endVertex = focus;
 		org._3pq.jgrapht.Edge edg = null;

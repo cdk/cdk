@@ -77,12 +77,12 @@ public class ConjugatedPiSystemsDetector {
         SetOfAtomContainers piSystemSet = new SetOfAtomContainers();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Atom atom = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom atom = ac.getAtomAt(i);
             atom.setFlag(CDKConstants.VISITED, false);
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Atom firstAtom = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom firstAtom = ac.getAtomAt(i);
             // if this atom was already visited in a previous DFS, continue
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
@@ -140,7 +140,7 @@ public class ConjugatedPiSystemsDetector {
      *@param  currentAtom  The Atom to check
      *@return              -1 if isolated, 0 if conjugated, 1 if cumulative db
      */
-    private static int checkAtom(AtomContainer ac, Atom currentAtom) {
+    private static int checkAtom(AtomContainer ac, org.openscience.cdk.interfaces.Atom currentAtom) {
         int check = -1;
         Vector atoms = ac.getConnectedAtomsVector(currentAtom);
         Vector bonds = ac.getConnectedBondsVector(currentAtom);

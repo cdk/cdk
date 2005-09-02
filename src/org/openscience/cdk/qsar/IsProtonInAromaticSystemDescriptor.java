@@ -144,7 +144,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
 		Atom[] neighboor = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
-		Atom target = ac.getAtomAt(atomPosition);
+		org.openscience.cdk.interfaces.Atom target = ac.getAtomAt(atomPosition);
 		if(target.getSymbol().equals("H")) {
 			//System.out.println("aromatic proton");
 			if(neighboor[0].getFlag(CDKConstants.ISAROMATIC)) {

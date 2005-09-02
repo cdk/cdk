@@ -351,7 +351,7 @@ public class UniversalIsomorphismTester {
     } else if (g1.getAtomCount() == 1) {
 	List arrayList = new ArrayList();
         if (g2 instanceof QueryAtomContainer) {
-            Atom atom = g1.getAtomAt(0);
+        	org.openscience.cdk.interfaces.Atom atom = g1.getAtomAt(0);
             for(int i=0;i<g2.getAtomCount();i++){
                 if(((QueryAtom)g2.getAtomAt(i)).matches(atom))
                     arrayList.add(new RMap(0,i));

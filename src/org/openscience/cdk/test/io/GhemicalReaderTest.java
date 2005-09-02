@@ -105,7 +105,7 @@ public class GhemicalReaderTest extends CDKTestCase {
             assertEquals(5, m.getBondCount());
             
             // test reading of formal charges
-            Atom a = m.getAtomAt(0);
+            org.openscience.cdk.interfaces.Atom a = m.getAtomAt(0);
             assertNotNull(a);
             assertEquals(6, a.getAtomicNumber());
             assertEquals(-0.2, a.getCharge(), 0.01);

@@ -102,8 +102,8 @@ public class Normalizer {
           Iterator atomit = l2.iterator();
           while (atomit.hasNext()) {
             RMap rmap = (RMap) atomit.next();
-            Atom acatom = ac.getAtomAt(rmap.getId1());
-            Atom replaceatom = replacementStructure.getAtomAt(rmap.getId2());
+            org.openscience.cdk.interfaces.Atom acatom = ac.getAtomAt(rmap.getId1());
+            org.openscience.cdk.interfaces.Atom replaceatom = replacementStructure.getAtomAt(rmap.getId2());
             acatom.setFormalCharge(replaceatom.getFormalCharge());
             change=true;
           }

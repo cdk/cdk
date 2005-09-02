@@ -196,7 +196,7 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(mol.getMonomer("ILEA7", "A"));
       assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
       
-      Atom nAtom = mol.getAtomAt(94);
+      org.openscience.cdk.interfaces.Atom nAtom = mol.getAtomAt(94);
       assertNotNull(nAtom);
       assertTrue(nAtom instanceof PDBAtom);
       PDBAtom atom = (PDBAtom)nAtom;

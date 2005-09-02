@@ -224,8 +224,8 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
                 logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
                              " and " + bond_a2);
             } else {
-                Atom a1 = currentMolecule.getAtomAt(bond_a1);
-                Atom a2 = currentMolecule.getAtomAt(bond_a2);
+            	org.openscience.cdk.interfaces.Atom a1 = currentMolecule.getAtomAt(bond_a1);
+            	org.openscience.cdk.interfaces.Atom a2 = currentMolecule.getAtomAt(bond_a2);
                 Bond b = new Bond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {

@@ -141,7 +141,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
 			if (checkAromaticity) {
 				HueckelAromaticityDetector.detectAromaticity(mol);
     	}
-			Atom target = ac.getAtomAt(atomPosition);
+			org.openscience.cdk.interfaces.Atom target = ac.getAtomAt(atomPosition);
 			if(target.getSymbol().equals("H")) {
         if(acold!=ac){
           acold=ac;

@@ -155,7 +155,7 @@ public class AllRingsFinder
 	 */
 	private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws CDKException
 	{
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		/*
 		 *  First we convert the molecular graph into a a path graph by
 		 *  creating a set of two membered pathes from all the bonds in the molecule
@@ -222,7 +222,7 @@ public class AllRingsFinder
 	 *@param  rings             The ringset to be extended
 	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
 	 */
-	private void remove(Atom atom, AtomContainer ac, Vector pathes, RingSet rings) throws CDKException
+	private void remove(org.openscience.cdk.interfaces.Atom atom, AtomContainer ac, Vector pathes, RingSet rings) throws CDKException
 	{
 		Path path1 = null;
 		Path path2 = null;
@@ -364,13 +364,13 @@ public class AllRingsFinder
 	 *@param  ac  The AtomContainer to search
 	 *@return     The selected Atom
 	 */
-	private Atom selectAtom(AtomContainer ac)
+	private org.openscience.cdk.interfaces.Atom selectAtom(AtomContainer ac)
 	{
 		int minDegree = 999;
 		// :-)
 		int degree = minDegree;
-		Atom minAtom = null;
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom minAtom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtomAt(f);

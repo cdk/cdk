@@ -87,7 +87,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 
 	private int targetPosition = 0;
-	Atom atom = null;
+	org.openscience.cdk.interfaces.Atom atom = null;
 	private LoggingTool logger;
   private static AtomTypeFactory atomATF=null;
 	
@@ -195,7 +195,7 @@ public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 
 
 	
-	private AtomType findMatchingAtomType(AtomContainer container, Atom atom) throws CDKException 
+	private AtomType findMatchingAtomType(AtomContainer container, org.openscience.cdk.interfaces.Atom atom) throws CDKException 
 	{
 		try {
       if(atomATF==null)

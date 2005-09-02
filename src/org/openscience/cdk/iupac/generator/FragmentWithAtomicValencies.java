@@ -71,7 +71,7 @@ public class FragmentWithAtomicValencies extends Fragment {
      * Add a valency to this Fragment. The valencies are localized
      * on the atoms.
      */
-    public void addValencyAtAtom(Atom a) throws Exception {
+    public void addValencyAtAtom(org.openscience.cdk.interfaces.Atom a) throws Exception {
 //        System.out.println("test");
         int atomNumber = super.getAtomNumber(a);
 //        System.out.println("test");

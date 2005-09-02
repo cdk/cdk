@@ -303,7 +303,7 @@ public class PathTools  {
 	 *@param  cutOff      Stop the path search when this cutOff sphere count has been reached
 	 *@return             The shortest path between the starting sphere and the target atom
 	 */
-	public static int breadthFirstTargetSearch(AtomContainer ac, Vector sphere, Atom target, int pathLength, int cutOff) {
+	public static int breadthFirstTargetSearch(AtomContainer ac, Vector sphere, org.openscience.cdk.interfaces.Atom target, int pathLength, int cutOff) {
 		if (pathLength == 0) resetFlags(ac);
 		pathLength++;
 		if (pathLength > cutOff) {

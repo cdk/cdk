@@ -99,7 +99,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 * @return         The atomAt value
 	 * @see            #setAtomAt
 	 */
-	public org.openscience.cdk.Atom getAtomAt(int number);
+	public Atom getAtomAt(int number);
 
 	/**
 	 *  Get the bond at position <code>number</code> in [0,..].

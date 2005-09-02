@@ -304,7 +304,7 @@ public class IChIHandler extends DefaultHandler {
                 String targetStr = matcher.group(1);
                 int target = Integer.parseInt(targetStr);
                 logger.debug("Target atom: " + targetStr);
-                Atom targetAtom = tautomer.getAtomAt(target-1);
+                org.openscience.cdk.interfaces.Atom targetAtom = tautomer.getAtomAt(target-1);
                 String hStr = matcher.group(2);
                 logger.debug(" hStr: " + hStr);
                 String hCountStr = matcher.group(3);
@@ -316,7 +316,7 @@ public class IChIHandler extends DefaultHandler {
                     targetAtom.setHydrogenCount(hCount);
                 }
                 if (source != -1) {
-                    Atom sourceAtom = tautomer.getAtomAt(source-1);
+                	org.openscience.cdk.interfaces.Atom sourceAtom = tautomer.getAtomAt(source-1);
                     bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
                     tautomer.addBond(bondToAdd);
                 }
@@ -349,8 +349,8 @@ public class IChIHandler extends DefaultHandler {
         }
         int target = Integer.parseInt(st.nextToken());
         // should better check if atom exists!
-        Atom sourceAtom = tautomer.getAtomAt(source-1);
-        Atom targetAtom = tautomer.getAtomAt(target-1);
+        org.openscience.cdk.interfaces.Atom sourceAtom = tautomer.getAtomAt(source-1);
+        org.openscience.cdk.interfaces.Atom targetAtom = tautomer.getAtomAt(target-1);
         
         Bond bond = tautomer.getBond(sourceAtom, targetAtom);
         bond.setOrder(CDKConstants.BONDORDER_DOUBLE);

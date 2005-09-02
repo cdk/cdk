@@ -160,8 +160,8 @@ public class TemplateHandler
 		boolean mapped = false;
 		Molecule template = null;
 		RMap map = null;
-		Atom atom1 = null;
-		Atom atom2 = null;
+		org.openscience.cdk.interfaces.Atom atom1 = null;
+		org.openscience.cdk.interfaces.Atom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = (Molecule) templates.elementAt(f);

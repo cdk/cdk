@@ -124,7 +124,7 @@ public class StructureDiagramGenerator
 	 */
 	public void setMolecule(Molecule mol, boolean clone)
 	{
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		if (clone)
 		{
 			this.molecule = (Molecule) mol.clone();
@@ -836,7 +836,7 @@ public class StructureDiagramGenerator
 	 */
 	private void fixRest()
 	{
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		Atom[] neighbors = null;
 		Point2d point = null;
 		for (int f = 0; f < molecule.getAtomCount(); f++)

@@ -40,7 +40,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.Element;
@@ -426,7 +426,7 @@ public class MFAnalyser {
 					RecentElementCount = 1;
 				}
 				for (int g = 0; g < RecentElementCount; g++) {
-					ac.addAtom(new Atom(RecentElementSymbol));
+					ac.addAtom(new org.openscience.cdk.Atom(RecentElementSymbol));
 				}
 			}
 		}

@@ -121,9 +121,9 @@ public class INChIContentProcessorTool {
                     int target = Integer.parseInt(targetStr);
                     logger.debug("Source atom: ", source);
                     logger.debug("Target atom: ", targetStr);
-                    Atom targetAtom = container.getAtomAt(target-1);
+                    org.openscience.cdk.interfaces.Atom targetAtom = container.getAtomAt(target-1);
                     if (source != -1) {
-                        Atom sourceAtom = container.getAtomAt(source-1);
+                    	org.openscience.cdk.interfaces.Atom sourceAtom = container.getAtomAt(source-1);
                         bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
                         container.addBond(bondToAdd);
                     }

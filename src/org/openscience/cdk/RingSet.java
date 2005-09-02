@@ -151,7 +151,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	{
 		Vector connectedRings = new Vector();
 		Ring tempRing;
-		Atom atom;
+		org.openscience.cdk.interfaces.Atom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)
 		{
 			atom = ring.getAtomAt(i);
@@ -255,7 +255,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
    *
    * @param atom1 The first atom
    * @param atom2 The second atom
-   * @return �boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
+   * @return ???boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
    */
   public boolean isSameRing(Atom atom1, Atom atom2)
   {

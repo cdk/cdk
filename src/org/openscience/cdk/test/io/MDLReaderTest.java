@@ -91,7 +91,7 @@ public class MDLReaderTest extends CDKTestCase {
             assertEquals(2, m.getBondCount());
             
             // test reading of formal charges
-            Atom a = m.getAtomAt(0);
+            org.openscience.cdk.interfaces.Atom a = m.getAtomAt(0);
             assertNotNull(a);
             assertEquals("Na", a.getSymbol());
             assertEquals(1, a.getFormalCharge());

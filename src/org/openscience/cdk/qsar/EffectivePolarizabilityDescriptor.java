@@ -124,7 +124,7 @@ public class EffectivePolarizabilityDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		Molecule mol = new Molecule(ac);
 		
-		Atom target = mol.getAtomAt(atomPosition);
+		org.openscience.cdk.interfaces.Atom target = mol.getAtomAt(atomPosition);
 		double effectivePolarizability = 0;
 		effectivePolarizability = pol.calculateGHEffectiveAtomPolarizability(mol, target, 1000);
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(effectivePolarizability));

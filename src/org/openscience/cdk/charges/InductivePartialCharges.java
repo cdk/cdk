@@ -195,7 +195,7 @@ public class InductivePartialCharges {
 	 // of effective electronegativity
 	public double getAtomicSoftnessCore(AtomContainer ac, int atomPosition) throws CDKException {
 		Atom[] allAtoms = null;
-		Atom target = null;
+		org.openscience.cdk.interfaces.Atom target = null;
 		double core = 0;
 		double radiusTarget = 0;
 		target = ac.getAtomAt(atomPosition);
@@ -259,7 +259,7 @@ public class InductivePartialCharges {
 	 */
 	private double getAtomicChargeIncrement(AtomContainer ac, int atomPosition, double[] ElEn, int as) throws CDKException {
 		Atom[] allAtoms = null;
-		Atom target = null;
+		org.openscience.cdk.interfaces.Atom target = null;
 		double incrementedCharge = 0;
 		double radiusTarget = 0;
 		target = ac.getAtomAt(atomPosition);
@@ -366,7 +366,7 @@ public class InductivePartialCharges {
 	 *@param  atom2  second atom
 	 *@return        squared distance between the 2 atoms
 	 */
-	private double calculateSquaredDistanceBetweenTwoAtoms(Atom atom1, Atom atom2) {
+	private double calculateSquaredDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
 		double distance = 0;
 		double tmp = 0;
 		Point3d firstPoint = atom1.getPoint3d();

@@ -41,9 +41,9 @@ public class AminoAcid extends Monomer implements java.io.Serializable
 {
 
     /** The atom that constitutes the N-terminus. */
-    private Atom nTerminus;
+    private org.openscience.cdk.interfaces.Atom nTerminus;
     /** The atom that constitutes the C-terminus. */
-    private Atom cTerminus;
+    private org.openscience.cdk.interfaces.Atom cTerminus;
 
     /**
      * Contructs a new AminoAcid.
@@ -59,7 +59,7 @@ public class AminoAcid extends Monomer implements java.io.Serializable
      *
      * @see    #addNTerminus(Atom)
      */
-    public Atom getNTerminus() {
+    public org.openscience.cdk.interfaces.Atom getNTerminus() {
         return nTerminus;
     }
 
@@ -70,7 +70,7 @@ public class AminoAcid extends Monomer implements java.io.Serializable
      *
      * @see    #getNTerminus
      */
-    public void addNTerminus(Atom atom) {
+    public void addNTerminus(org.openscience.cdk.interfaces.Atom atom) {
         super.addAtom(atom);
         nTerminus = atom;
     }
@@ -83,7 +83,7 @@ public class AminoAcid extends Monomer implements java.io.Serializable
      *
      * @see    #addNTerminus
      */
-    private void setNTerminus(Atom atom) {
+    private void setNTerminus(org.openscience.cdk.interfaces.Atom atom) {
         nTerminus = atom;
     }
 
@@ -94,7 +94,7 @@ public class AminoAcid extends Monomer implements java.io.Serializable
      *
      * @see    #addCTerminus(Atom)
      */
-    public Atom getCTerminus() {
+    public org.openscience.cdk.interfaces.Atom getCTerminus() {
         return cTerminus;
     }
 
@@ -105,7 +105,7 @@ public class AminoAcid extends Monomer implements java.io.Serializable
      *
      * @see    #getCTerminus
      */
-    public void addCTerminus(Atom atom) {
+    public void addCTerminus(org.openscience.cdk.interfaces.Atom atom) {
         super.addAtom(atom);
         setCTerminus(atom);
     }
@@ -118,7 +118,7 @@ public class AminoAcid extends Monomer implements java.io.Serializable
      *
      * @see    #addCTerminus
      */
-    private void setCTerminus(Atom atom) {
+    private void setCTerminus(org.openscience.cdk.interfaces.Atom atom) {
         cTerminus = atom;
     }
 

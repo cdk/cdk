@@ -633,16 +633,16 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(o);
         acetone.addAtom(s);
         
-        Atom a1 = acetone.getAtomAt(0);
+        org.openscience.cdk.interfaces.Atom a1 = acetone.getAtomAt(0);
         assertNotNull(a1);
         assertEquals("C", a1.getSymbol());
-        Atom a2 = acetone.getAtomAt(1);
+        org.openscience.cdk.interfaces.Atom a2 = acetone.getAtomAt(1);
         assertNotNull(a2);
         assertEquals("N", a2.getSymbol());
-        Atom a3 = acetone.getAtomAt(2);
+        org.openscience.cdk.interfaces.Atom a3 = acetone.getAtomAt(2);
         assertNotNull(a3);
         assertEquals("O", a3.getSymbol());
-        Atom a4 = acetone.getAtomAt(3);
+        org.openscience.cdk.interfaces.Atom a4 = acetone.getAtomAt(3);
         assertNotNull(a4);
         assertEquals("S", a4.getSymbol());
     }

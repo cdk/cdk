@@ -75,7 +75,7 @@ public class ChangeChargeEditTest extends CDKTestCase {
 		HashMap atomChargeMap = new HashMap();
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
 			double formerCharge = atom.getCharge();
 			atom.setCharge(atom.getCharge() + 1);
 			double[] charges = new double[2];

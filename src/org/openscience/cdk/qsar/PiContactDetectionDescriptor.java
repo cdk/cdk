@@ -152,8 +152,8 @@ public class PiContactDetectionDescriptor implements Descriptor {
 		boolean piContact = false;
 		int counter = 0;
 
-		Atom first = ac.getAtomAt(firstAtom);
-		Atom second = ac.getAtomAt(secondAtom);
+		org.openscience.cdk.interfaces.Atom first = ac.getAtomAt(firstAtom);
+		org.openscience.cdk.interfaces.Atom second = ac.getAtomAt(secondAtom);
 		acSet = ConjugatedPiSystemsDetector.detect(mol);
 		org.openscience.cdk.interfaces.AtomContainer[] detected = acSet.getAtomContainers();
 

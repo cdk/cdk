@@ -57,7 +57,7 @@ public class Polarizability {
 	 *@param  atom  atom for which the factor should become known
 	 *@return       The polarizabilitiyFactorForAtom value
 	 */
-	public double getPolarizabilitiyFactorForAtom(AtomContainer ac, Atom atom) {
+	public double getPolarizabilitiyFactorForAtom(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
 		AtomContainer acH = new org.openscience.cdk.AtomContainer(ac);
 		try {
 			HydrogenAdder hAdder = new HydrogenAdder();
@@ -97,7 +97,7 @@ public class Polarizability {
 	 *@param  influenceSphereCutOff  cut off for spheres whoch should taken into account for calculation
 	 *@return                        polarizabilitiy
 	 */
-	public double calculateGHEffectiveAtomPolarizability(AtomContainer ac, Atom atom, int influenceSphereCutOff) {
+	public double calculateGHEffectiveAtomPolarizability(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom, int influenceSphereCutOff) {
 		double polarizabilitiy = 0;
 		Molecule acH = new Molecule(ac);
 		Vector startAtom = new Vector(1);

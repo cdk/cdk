@@ -69,7 +69,7 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
 	Molecule mol = sp.parseSmiles("C#CCC=O");
 	HydrogenAdder hAdder = new HydrogenAdder();
 	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-	Atom atom = mol.getAtomAt(0);
+	org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(0);
 	
 	HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
 	AtomType matched = atm.findMatchingAtomType(mol, atom);

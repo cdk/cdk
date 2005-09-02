@@ -97,8 +97,8 @@ public class PartialFilledStructureMerger
 		double order;
 		double max, cmax1, cmax2;
 		int iteration = 0;
-		Atom partner;
-		Atom atom;
+		org.openscience.cdk.interfaces.Atom partner;
+		org.openscience.cdk.interfaces.Atom atom;
 		AtomContainer backup = new org.openscience.cdk.AtomContainer(atomContainer);
 		do
 		{
@@ -150,9 +150,9 @@ public class PartialFilledStructureMerger
 	 *
 	 * @return                The AnotherUnsaturatedNode value
 	 */
-	private Atom getAnotherUnsaturatedNode(Atom exclusionAtom) throws CDKException
+	private org.openscience.cdk.interfaces.Atom getAnotherUnsaturatedNode(org.openscience.cdk.interfaces.Atom exclusionAtom) throws CDKException
 	{
-		Atom atom;
+		org.openscience.cdk.interfaces.Atom atom;
 		int next = (int) (Math.random() * atomContainer.getAtomCount());
 
 		for (int f = next; f < atomContainer.getAtomCount(); f++)

@@ -424,7 +424,7 @@ public class SmilesGenerator
 	 *@param  a   Description of the Parameter
 	 *@return     Description of the Return Value
 	 */
-	private Atom hasWedges(AtomContainer ac, Atom a)
+	private Atom hasWedges(AtomContainer ac, org.openscience.cdk.interfaces.Atom a)
 	{
 		Atom[] atoms = ac.getConnectedAtoms(a);
 		for (int i = 0; i < atoms.length; i++)

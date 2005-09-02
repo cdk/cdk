@@ -54,8 +54,8 @@ public class PathToolsTest extends CDKTestCase
 	}
 
 	public void testBreadthFirstTargetSearch() {
-		Atom atom1 = molecule.getAtomAt(0);
-		Atom atom2 = molecule.getAtomAt(8);
+		org.openscience.cdk.interfaces.Atom atom1 = molecule.getAtomAt(0);
+		org.openscience.cdk.interfaces.Atom atom2 = molecule.getAtomAt(8);
 		Vector sphere = new Vector();
 		sphere.addElement(atom1);
 		int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);

@@ -160,7 +160,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
                     double mass = 0.0;
                     double radius = 0.0;
 
-                    Atom currentAtom = container.getAtomAt(k);
+                    org.openscience.cdk.interfaces.Atom currentAtom = container.getAtomAt(k);
                     if (currentAtom.getPoint3d() == null) {
                         throw new CDKException("Atom "+k+" did not have any 3D coordinates. These are required");
                     }

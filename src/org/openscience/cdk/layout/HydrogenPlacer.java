@@ -54,7 +54,7 @@ public class HydrogenPlacer {
 	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength){
 		LoggingTool logger = new LoggingTool(this);
 		logger.debug("Entering Hydrogen Placement...");
-		Atom atom = null; 
+		org.openscience.cdk.interfaces.Atom atom = null; 
 		for (int f = 0; f < atomContainer.getAtomCount();f++)
 		{
 			atom = atomContainer.getAtomAt(f);
@@ -77,7 +77,7 @@ public class HydrogenPlacer {
 	
 	}
 	
-	public  void placeHydrogens2D(AtomContainer atomContainer, Atom atom, double bondLength)
+	public  void placeHydrogens2D(AtomContainer atomContainer, org.openscience.cdk.interfaces.Atom atom, double bondLength)
 	{
 		LoggingTool logger = new LoggingTool(this);
 		

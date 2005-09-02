@@ -128,7 +128,7 @@ public class AtomDegreeDescriptor implements Descriptor {
 
     public DescriptorValue calculate(AtomContainer container) throws CDKException {
         int atomDegree = 0;
-        Atom target = container.getAtomAt(targetPosition);
+        org.openscience.cdk.interfaces.Atom target = container.getAtomAt(targetPosition);
         Atom[] neighboors = container.getConnectedAtoms(target);
         for (int i =0; i< neighboors.length;i++) {
             if(!neighboors[i].getSymbol().equals("H")) atomDegree+=1;

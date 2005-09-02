@@ -56,7 +56,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      *
      * @param atom  Atom to which this lone pair is connected
      */
-    public LonePair(Atom atom) {
+    public LonePair(org.openscience.cdk.interfaces.Atom atom) {
         this.atom = atom;
     }
 

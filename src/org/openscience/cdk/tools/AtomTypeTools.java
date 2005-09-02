@@ -88,7 +88,7 @@ public class AtomTypeTools {
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atom = molecule.getAtomAt(i);
+			atom = (Atom)molecule.getAtomAt(i);
 			//Atom aromatic is set by HueckelAromaticityDetector
 			//Atom in ring?
 			if (ringSetMolecule.contains(atom)) {

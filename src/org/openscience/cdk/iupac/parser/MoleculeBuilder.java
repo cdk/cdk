@@ -456,7 +456,7 @@ public class MoleculeBuilder
      * @param bondOrder The order of the bond to use to join the two atoms.
      * @param hydrogenCount The number of hydrogen atoms connected to this atom.
      */
-    private void addAtom(String newAtomType, Atom otherConnectingAtom, double bondOrder, int hydrogenCount)
+    private void addAtom(String newAtomType, org.openscience.cdk.interfaces.Atom otherConnectingAtom, double bondOrder, int hydrogenCount)
     {
         //Create the new atom and bond.
         Atom newAtom = new Atom(newAtomType);
@@ -486,7 +486,7 @@ public class MoleculeBuilder
                 Token locationToken = (Token) locationsIterator.next();
                 
                 int joinLocation = Integer.parseInt(locationToken.image) - 1;
-                Atom connectingAtom;
+                org.openscience.cdk.interfaces.Atom connectingAtom;
                 
                 //If join location wasn't specified we must be dealing with the "hack" which makes
                 //mainchains a substituent if a real substituent has already been parsed and interpreted as a main chain

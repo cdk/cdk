@@ -159,7 +159,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
 	 */
         public DescriptorValue calculate(AtomContainer ac) throws CDKException {
             Atom[] allAtoms = null;
-            Atom target = null;
+            org.openscience.cdk.interfaces.Atom target = null;
             double atomicSoftness = 0;
             double radiusTarget = 0;
             target = ac.getAtomAt(atomPosition);
@@ -215,7 +215,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
 	 *@param  atom2  Description of the Parameter
 	 *@return        Description of the Return Value
 	 */
-	private double calculateSquareDistanceBetweenTwoAtoms(Atom atom1, Atom atom2) {
+	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
 		double distance = 0;
 		double tmp = 0;
 		Point3d firstPoint = atom1.getPoint3d();

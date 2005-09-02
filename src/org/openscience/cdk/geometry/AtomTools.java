@@ -67,7 +67,7 @@ public class AtomTools {
         // get vector of possible referenceAtoms?
         AtomContainer refAtoms = new org.openscience.cdk.AtomContainer();
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            Atom atom = atomContainer.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom atom = atomContainer.getAtomAt(i);
             // is this atom without 3D coords, and has only one ligand?
             if (atom.getPoint3d() == null) {
                 Atom connectedAtoms[] = atomContainer.getConnectedAtoms(atom);
@@ -90,7 +90,7 @@ public class AtomTools {
         double length = 1.0;
         double angle = TETRAHEDRAL_ANGLE;
         for (int i = 0; i < refAtoms.getAtomCount(); i++) {
-            Atom refAtom = refAtoms.getAtomAt(i);
+        	org.openscience.cdk.interfaces.Atom refAtom = refAtoms.getAtomAt(i);
             Atom noCoordLigands[] = noCoords.getConnectedAtoms(refAtom);
             int nLigands = noCoordLigands.length;
             int nwanted = nLigands;
@@ -121,7 +121,7 @@ public class AtomTools {
      * @return        new coords for atom 2
      */
     public static Point3d rescaleBondLength(
-        Atom atom1, Atom atom2, Point3d point2) {
+    		org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, Point3d point2) {
         Point3d point1 = atom1.getPoint3d();
         double d1 = atom1.getCovalentRadius();
         double d2 = atom2.getCovalentRadius();
@@ -184,7 +184,7 @@ public class AtomTools {
      * @cdk.keyword coordinate generation
      */
     public static Point3d[] calculate3DCoordinatesForLigands(
-        AtomContainer atomContainer, Atom refAtom, int nwanted, 
+        AtomContainer atomContainer, org.openscience.cdk.interfaces.Atom refAtom, int nwanted, 
         double length, double angle) {
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
@@ -210,7 +210,7 @@ public class AtomTools {
             newPoints = calculate3DCoordinates0(refAtom.getPoint3d(), nwanted, length);
         } else if (nwithCoords == 1) {
 // ligand on A            
-            Atom bAtom = ligandsWithCoords.getAtomAt(0);
+        	org.openscience.cdk.interfaces.Atom bAtom = ligandsWithCoords.getAtomAt(0);
             connectedAtoms = ligandsWithCoords.getConnectedAtomsVector(bAtom);
 // does B have a ligand (other than A)            
             Atom jAtom = null;

@@ -43,7 +43,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 	public void testRedo() {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
 			ElectronContainer electronContainer = new SingleElectron(atom);
 			ConvertToRadicalEdit edit = new ConvertToRadicalEdit(mol,
 					electronContainer);
@@ -88,7 +88,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		Molecule allRadicalsMol = (Molecule) mol.clone();
 		electronContainerList = new ArrayList();
 		for (int i = 0; i < allRadicalsMol.getAtomCount(); i++) {
-			Atom atom = allRadicalsMol.getAtomAt(i);
+			org.openscience.cdk.interfaces.Atom atom = allRadicalsMol.getAtomAt(i);
 			ElectronContainer electronContainer = new SingleElectron(atom);
 			allRadicalsMol.addElectronContainer(electronContainer);
 			electronContainerList.add(electronContainer);

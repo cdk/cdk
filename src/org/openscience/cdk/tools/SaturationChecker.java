@@ -230,7 +230,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 * @param  ac    The AtomContainer that provides the context
 	 * @return       the currently maximum formable bond order for this atom
 	 */
-	public double getCurrentMaxBondOrder(Atom atom, AtomContainer ac) throws CDKException
+	public double getCurrentMaxBondOrder(org.openscience.cdk.interfaces.Atom atom, AtomContainer ac) throws CDKException
 	{
 		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
@@ -435,7 +435,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
     }
     public void oldSaturate(AtomContainer atomContainer) throws CDKException { */
 		Atom partner = null;
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		Atom[] partners = null;
 		AtomType[] atomTypes1 = null;
 		AtomType[] atomTypes2 = null;
@@ -505,7 +505,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 		RingSet rs = new SSSRFinder(new Molecule(atomContainer)).findSSSR();
 		Vector ringSets = RingPartitioner.partitionRings(rs);
 		AtomContainer ac = null;
-		Atom atom = null;
+		org.openscience.cdk.interfaces.Atom atom = null;
 		int temp[];
 		for (int f = 0; f < ringSets.size(); f++)
 		{

@@ -203,9 +203,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return         The atomAt value
 	 *@see            #setAtomAt
 	 */
-	public Atom getAtomAt(int number)
+	public org.openscience.cdk.interfaces.Atom getAtomAt(int number)
 	{
-		return (Atom)atoms[number];
+		return atoms[number];
 	}
 
 
@@ -1289,7 +1289,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		ElectronContainer electronContainer = null;
 		ElectronContainer newEC = null;
 		org.openscience.cdk.interfaces.Atom[] natoms;
-		Atom[] newAtoms;
+		org.openscience.cdk.interfaces.Atom[] newAtoms;
 		try {
 			clone = (AtomContainer) super.clone();
 		} catch (Exception e) {

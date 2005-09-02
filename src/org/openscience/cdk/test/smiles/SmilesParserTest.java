@@ -844,7 +844,7 @@ public class SmilesParserTest extends CDKTestCase
 			assertEquals(8.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded
-			Atom nitrogen = mol.getAtomAt(1);
+			org.openscience.cdk.interfaces.Atom nitrogen = mol.getAtomAt(1);
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;
@@ -1192,7 +1192,7 @@ public class SmilesParserTest extends CDKTestCase
 			assertEquals(9.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded
-			Atom nitrogen = mol.getAtomAt(3);
+			org.openscience.cdk.interfaces.Atom nitrogen = mol.getAtomAt(3);
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;
