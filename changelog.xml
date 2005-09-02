@@ -2,6 +2,12 @@
 <changelog xmlns="http://cdk.sf.net/schema/changelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
+
+  <release id="cvs">
+   <addition contributor="egonw">
+     Added getAllChemObjects() methods to the cdk.tools.manipulators
+   </addition>
+  </release>
   
   <release id="20050826">
     <addition contributor="egonw">

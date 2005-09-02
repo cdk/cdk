@@ -27,7 +27,9 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
@@ -59,6 +61,22 @@ public class ChemFileManipulator {
             container.add(ChemSequenceManipulator.getAllInOneContainer(sequence));
         }
         return container;
+    }
+
+    /**
+     * Returns a List of all ChemObject in this ChemFile.
+     *
+     * @return  A list of all ChemObjects
+     */
+    public static List getAllChemObjects(ChemFile file) {
+    	ArrayList list = new ArrayList();
+    	list.add(file);
+        for (int i=0; i<file.getChemSequenceCount(); i++) {
+            list.addAll(ChemSequenceManipulator.getAllChemObjects(
+                file.getChemSequence(i)
+            ));
+        }
+        return list;
     }
 
     /**

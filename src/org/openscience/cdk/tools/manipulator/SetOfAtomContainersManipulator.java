@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
@@ -161,5 +163,16 @@ public class SetOfAtomContainersManipulator {
         }
         return null;
     }
+    
+    public static List getAllChemObjects(SetOfAtomContainers set) {
+        ArrayList list = new ArrayList();
+        list.add(set);
+        AtomContainer[] acs = set.getAtomContainers();
+        for (int i=0; i < acs.length; i++) {
+            list.add(acs[i]); // don't recurse into AC's for now
+        }
+        return list;
+    }
+    
 }
 

@@ -27,10 +27,14 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.Molecule;
@@ -213,5 +217,24 @@ public class ChemModelManipulator {
             );
         }
     }
+    
+	public static List getAllChemObjects(ChemModel chemModel) {
+		ArrayList list = new ArrayList();
+        list.add(chemModel);
+        Crystal crystal = chemModel.getCrystal();
+        if (crystal != null) {
+            list.add(crystal);
+        }
+        SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+        if (moleculeSet != null) {
+            list.addAll(SetOfMoleculesManipulator.getAllChemObjects(moleculeSet));
+        }
+        SetOfReactions reactionSet = chemModel.getSetOfReactions();
+        if (reactionSet != null) {
+            list.addAll(SetOfReactionsManipulator.getAllChemObjects(reactionSet));
+        }
+		return list;
+	}
+
 }
 

@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
@@ -190,4 +192,18 @@ public class ReactionManipulator {
             );
         }
     }
+    
+    public static List getAllChemObjects(Reaction reaction) {
+        ArrayList list = new ArrayList();
+        Molecule[] reactants = reaction.getReactants().getMolecules();
+        for (int i=0; i<reactants.length; i++) {
+            list.add(reactants[i]);
+        }
+        Molecule[] products = reaction.getProducts().getMolecules();
+        for (int i=0; i<products.length; i++) {
+            list.add(products[i]);
+        }
+        return list;
+    }
+    
 }

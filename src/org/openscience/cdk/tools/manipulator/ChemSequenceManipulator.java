@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -85,5 +87,16 @@ public class ChemSequenceManipulator {
         }
         return containers;
     }
+
+	public static List getAllChemObjects(ChemSequence sequence) {
+		ArrayList list = new ArrayList();
+        list.add(sequence);
+        for (int i=0; i<sequence.getChemModelCount(); i++) {
+            list.addAll(ChemModelManipulator.getAllChemObjects(
+            	sequence.getChemModel(i)
+            ));
+        }
+		return list;
+	}
 }
 

@@ -27,6 +27,7 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
@@ -102,6 +103,10 @@ public class SetOfMoleculesManipulator {
 
     public static AtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, Bond bond) {
         return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, bond);
+    }
+
+    public static List getAllChemObjects(SetOfMolecules set) {
+        return SetOfAtomContainersManipulator.getAllChemObjects(set);
     }
 
 }
