@@ -25,10 +25,10 @@ package org.openscience.cdk.applications;
 
 import java.io.File;
 import java.io.FileReader;
-
-import org.openscience.cdk.AtomContainer;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
@@ -92,16 +92,17 @@ public class File2Text {
     public static String toText(ChemObjectReader reader) throws Exception {
     	StringBuffer buffer = new StringBuffer();
     	ChemFile file = (ChemFile)reader.read(new ChemFile());
-    	org.openscience.cdk.interfaces.AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(file);
-    	for (int i=0; i<containers.length; i++) {
-    		if (containers[i].getProperty(CDKConstants.REMARK) != null) {
-    			buffer.append("Remark: ").append(containers[i].getProperty(CDKConstants.REMARK)).append("\n");
+    	Iterator iter = ChemFileManipulator.getAllChemObjects(file).iterator();
+    	while (iter.hasNext()) {
+    		ChemObject object = (ChemObject)iter.next();
+    		if (object.getProperty(CDKConstants.REMARK) != null) {
+    			buffer.append("Remark: ").append(object.getProperty(CDKConstants.REMARK)).append("\n");
     		}
-    		if (containers[i].getProperty(CDKConstants.TITLE) != null) {
-    			buffer.append("Title: ").append(containers[i].getProperty(CDKConstants.TITLE)).append("\n");
+    		if (object.getProperty(CDKConstants.TITLE) != null) {
+    			buffer.append("Title: ").append(object.getProperty(CDKConstants.TITLE)).append("\n");
     		}
-    		if (containers[i].getProperty(CDKConstants.COMMENT) != null) {
-    			buffer.append("Comment: ").append(containers[i].getProperty(CDKConstants.COMMENT)).append("\n");
+    		if (object.getProperty(CDKConstants.COMMENT) != null) {
+    			buffer.append("Comment: ").append(object.getProperty(CDKConstants.COMMENT)).append("\n");
     		}
     	}
     	return buffer.toString();
