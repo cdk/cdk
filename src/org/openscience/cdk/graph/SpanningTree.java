@@ -137,7 +137,7 @@ public class SpanningTree {
 		for (int i = 0; i < V; i++) {
 			(atomContainer.getAtomAt(i)).setProperty("ST_ATOMNO", Integer.toString(i+1));
 		}
-		Bond bond;
+		org.openscience.cdk.interfaces.Bond bond;
 		int v1,v2;
 		bondsInTree = new boolean[E];
 		
@@ -199,7 +199,7 @@ public class SpanningTree {
 		PathTools.depthFirstTargetSearch(spt,a1,a2,path);		
 		return path;
 	}
-	private Ring getRing(AtomContainer spt,Bond bond) throws NoSuchAtomException {
+	private Ring getRing(AtomContainer spt, org.openscience.cdk.interfaces.Bond bond) throws NoSuchAtomException {
 		Ring ring = new Ring();
 		PathTools.resetFlags(spt);
 		ring.addAtom(bond.getAtomAt(0));		

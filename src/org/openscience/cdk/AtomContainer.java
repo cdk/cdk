@@ -216,7 +216,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return         The bondAt value
 	 *@see            #setElectronContainerAt
 	 */
-	public Bond getBondAt(int number)
+	public org.openscience.cdk.interfaces.Bond getBondAt(int number)
 	{
 		return getBonds()[number];
 	}

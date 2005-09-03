@@ -453,10 +453,10 @@ public class RDFProtonDescriptor implements Descriptor {
 				step = (limitSup - limitInf)/7;
 				position = 0;
 				partial = 0;
-				Bond theDoubleBond = null;
+				org.openscience.cdk.interfaces.Bond theDoubleBond = null;
 				smooth = -1.15;
 				int goodPosition = 0;
-				Bond goodBond = null;
+				org.openscience.cdk.interfaces.Bond goodBond = null;
 				ArrayList gDr_function = new ArrayList(7);
 				for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
 					sum = 0;
@@ -506,7 +506,7 @@ public class RDFProtonDescriptor implements Descriptor {
 				Atom[] atomsInSingleBond = null;				
 				distance = 0;
 				position = 0;
-				Bond theSingleBond = null;
+				org.openscience.cdk.interfaces.Bond theSingleBond = null;
 				limitInf = 0;
 				limitSup = Math.PI / 2;
 				step = (limitSup - limitInf)/7;
@@ -556,7 +556,7 @@ public class RDFProtonDescriptor implements Descriptor {
 			
 			if(bondsInCycloex.size() > 0) {
 				Atom[] atomsInCycloexBond = null;
-				Bond theInCycloexBond = null;
+				org.openscience.cdk.interfaces.Bond theInCycloexBond = null;
 				distance = 0;
 				limitInf = 0;
 				limitSup = Math.PI;
@@ -706,7 +706,7 @@ public class RDFProtonDescriptor implements Descriptor {
 	
 	// given a double bond 
 	// this method returns a bond bonded to this double bond
-	private int getNearestBondtoAGivenAtom(Molecule mol, Atom atom, Bond bond) {
+	private int getNearestBondtoAGivenAtom(Molecule mol, Atom atom, org.openscience.cdk.interfaces.Bond bond) {
 		int nearestBond = 0;
 		double[] values = new double[4];
 		double distance = 0;
@@ -738,7 +738,7 @@ public class RDFProtonDescriptor implements Descriptor {
 	
 	// method which calculated distance btw an atom and the middle point of a bond
 	// and returns distance and coordinates of middle point
-	private double[] calculateDistanceBetweenAtomAndBond(Molecule mol, Atom proton, Bond theBond) {
+	private double[] calculateDistanceBetweenAtomAndBond(Molecule mol, Atom proton, org.openscience.cdk.interfaces.Bond theBond) {
 		Point3d middlePoint = theBond.get3DCenter();
 		Point3d protonPoint = proton.getPoint3d();
 		double[] values = new double[4];

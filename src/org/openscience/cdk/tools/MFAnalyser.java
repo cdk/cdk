@@ -313,7 +313,7 @@ public class MFAnalyser {
 				i < count;
 				i++) {
 			// Check bond.
-			final Bond bond = ac.getBondAt(i);
+			final org.openscience.cdk.interfaces.Bond bond = ac.getBondAt(i);
 			org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
 			boolean remove_bond = false;
 			final int length = atoms.length;

@@ -208,7 +208,7 @@ public class PDBReaderTest extends TestCase {
       assertEquals(1.0, atom.getOccupancy(), 0.001);
       assertEquals(6.84, atom.getTempFactor(), 0.001);
       
-      Bond bond = mol.getBondAt(93);
+      org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(93);
       assertNotNull(bond);
       assertEquals("Test failed. Bond order not the same.", 2.0, bond.getOrder(), 0.001);
       org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();

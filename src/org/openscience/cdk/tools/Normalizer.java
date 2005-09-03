@@ -94,8 +94,8 @@ public class Normalizer {
           Iterator bondit = l.iterator();
           while (bondit.hasNext()) {
             RMap rmap = (RMap) bondit.next();
-            Bond acbond = ac.getBondAt(rmap.getId1());
-            Bond replacebond = replacementStructure.getBondAt(rmap.getId2());
+            org.openscience.cdk.interfaces.Bond acbond = ac.getBondAt(rmap.getId1());
+            org.openscience.cdk.interfaces.Bond replacebond = replacementStructure.getBondAt(rmap.getId2());
             acbond.setOrder(replacebond.getOrder());
             change=true;
           }

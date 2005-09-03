@@ -123,7 +123,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
                 container.addAtom(changedAtomsAndBonds.getAtomAt(i));
             }
             for (int i = 0; i < changedAtomsAndBonds.getBondCount(); i++) {
-                Bond bond = changedAtomsAndBonds.getBondAt(i);
+            	org.openscience.cdk.interfaces.Bond bond = changedAtomsAndBonds.getBondAt(i);
                 container.addBond(bond);
             }
             Molecule molecule = new Molecule((AtomContainer)container);
@@ -145,7 +145,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
                 container.removeAtom(changedAtomsAndBonds.getAtomAt(i));
             }
             for (int i = 0; i < changedAtomsAndBonds.getBondCount(); i++) {
-                Bond bond = changedAtomsAndBonds.getBondAt(i);
+            	org.openscience.cdk.interfaces.Bond bond = changedAtomsAndBonds.getBondAt(i);
                 Atom[] atoms = bond.getAtoms();
                 org.openscience.cdk.interfaces.AtomContainer container = ChemModelManipulator
                         .getRelevantAtomContainer(model, changedAtomsAndBonds

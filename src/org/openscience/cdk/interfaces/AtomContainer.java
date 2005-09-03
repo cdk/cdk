@@ -108,7 +108,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@return         The bondAt value
 	 *@see            #setElectronContainerAt
 	 */
-	public org.openscience.cdk.Bond getBondAt(int number);
+	public Bond getBondAt(int number);
 
 
 

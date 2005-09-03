@@ -74,8 +74,8 @@ public class AdjustBondOrdersAction extends JCPAction
                     AtomContainer containerCopy = (AtomContainer) containers[i].clone();
 					satChecker.unsaturate(containers[i].getBonds());
                      for (int j=0; j<containerCopy.getBondCount(); j++) {
-                            Bond bondCopy = containerCopy.getBondAt(j);
-                            Bond bond = containers[i].getBondAt(j);
+                    	 org.openscience.cdk.interfaces.Bond bondCopy = containerCopy.getBondAt(j);
+                    	 org.openscience.cdk.interfaces.Bond bond = containers[i].getBondAt(j);
                             if (bond.getOrder() != bondCopy.getOrder()) {
                                 double[] bondOrders = new double[2];
                                 bondOrders[0] = bond.getOrder();
@@ -104,8 +104,8 @@ public class AdjustBondOrdersAction extends JCPAction
                    AtomContainer containerCopy = (AtomContainer) containers[i].clone();
 					satChecker.saturate(containers[i]);
                     for (int j=0; j<containerCopy.getBondCount(); j++) {
-                        Bond bondCopy = containerCopy.getBondAt(j);
-                        Bond bond = containers[i].getBondAt(j);
+                    	org.openscience.cdk.interfaces.Bond bondCopy = containerCopy.getBondAt(j);
+                    	org.openscience.cdk.interfaces.Bond bond = containers[i].getBondAt(j);
                         if (bond.getOrder() != bondCopy.getOrder()) {
                             double[] bondOrders = new double[2];
                             bondOrders[0] = bond.getOrder();

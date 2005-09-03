@@ -130,7 +130,7 @@ public class ParserTest extends CDKTestCase {
             QueryAtomContainer container = SMARTSParser.parse("C-C");
             assertEquals(2, container.getAtomCount());
             assertEquals(1, container.getBondCount());
-            Bond bond = container.getBondAt(0);
+            org.openscience.cdk.interfaces.Bond bond = container.getBondAt(0);
             assertTrue(bond instanceof OrderQueryBond);
             OrderQueryBond qBond = (OrderQueryBond)bond;
             assertEquals(1.0, qBond.getOrder(), 0.001);
@@ -144,7 +144,7 @@ public class ParserTest extends CDKTestCase {
             QueryAtomContainer container = SMARTSParser.parse("C=C");
             assertEquals(2, container.getAtomCount());
             assertEquals(1, container.getBondCount());
-            Bond bond = container.getBondAt(0);
+            org.openscience.cdk.interfaces.Bond bond = container.getBondAt(0);
             assertTrue(bond instanceof OrderQueryBond);
             OrderQueryBond qBond = (OrderQueryBond)bond;
             assertEquals(2.0, qBond.getOrder(), 0.001);
@@ -158,7 +158,7 @@ public class ParserTest extends CDKTestCase {
             QueryAtomContainer container = SMARTSParser.parse("C#C");
             assertEquals(2, container.getAtomCount());
             assertEquals(1, container.getBondCount());
-            Bond bond = container.getBondAt(0);
+            org.openscience.cdk.interfaces.Bond bond = container.getBondAt(0);
             assertTrue(bond instanceof OrderQueryBond);
             OrderQueryBond qBond = (OrderQueryBond)bond;
             assertEquals(3.0, qBond.getOrder(), 0.001);
@@ -172,7 +172,7 @@ public class ParserTest extends CDKTestCase {
             QueryAtomContainer container = SMARTSParser.parse("C:C");
             assertEquals(2, container.getAtomCount());
             assertEquals(1, container.getBondCount());
-            Bond bond = container.getBondAt(0);
+            org.openscience.cdk.interfaces.Bond bond = container.getBondAt(0);
             assertTrue(bond instanceof AromaticQueryBond);
         } catch (CDKException exception) {
             fail(exception.getMessage());
@@ -184,7 +184,7 @@ public class ParserTest extends CDKTestCase {
             QueryAtomContainer container = SMARTSParser.parse("C~C");
             assertEquals(2, container.getAtomCount());
             assertEquals(1, container.getBondCount());
-            Bond bond = container.getBondAt(0);
+            org.openscience.cdk.interfaces.Bond bond = container.getBondAt(0);
             assertTrue(bond instanceof AnyOrderQueryBond);
         } catch (CDKException exception) {
             fail(exception.getMessage());

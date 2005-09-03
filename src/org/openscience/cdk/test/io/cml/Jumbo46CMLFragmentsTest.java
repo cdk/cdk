@@ -107,7 +107,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
-        Bond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(2, bond.getAtomCount());
         Atom atom1 = bond.getAtomAt(0);
         Atom atom2 = bond.getAtomAt(1);
@@ -123,7 +123,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, mol.getBondCount());
-        Bond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(2, bond.getAtomCount());
         Atom atom1 = bond.getAtomAt(0);
         Atom atom2 = bond.getAtomAt(1);
@@ -140,7 +140,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, mol.getBondCount());
-        Bond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(2, bond.getAtomCount());
         assertEquals(1.0, bond.getOrder(), 0.0001);
         bond = mol.getBondAt(1);
@@ -155,7 +155,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
-        Bond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(CDKConstants.BONDORDER_AROMATIC, bond.getOrder(), 0.0001);
         assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
     }
@@ -168,7 +168,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
-        Bond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals("b1", bond.getID());
     }
     
