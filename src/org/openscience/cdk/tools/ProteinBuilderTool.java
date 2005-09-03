@@ -142,7 +142,7 @@ public class ProteinBuilderTool {
     }
     
     private static BioPolymer addAminoAcid(BioPolymer protein, AminoAcid aaToAdd, Strand strand) {
-        Atom[] atoms = aaToAdd.getAtoms();
+    	org.openscience.cdk.interfaces.Atom[] atoms = aaToAdd.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             protein.addAtom(atoms[i], aaToAdd, strand);
         }

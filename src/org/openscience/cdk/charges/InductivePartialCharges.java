@@ -85,7 +85,7 @@ public class InductivePartialCharges {
 	 */
 	public AtomContainer assignInductivePartialCharges(AtomContainer ac) throws Exception {
 		int stepsLimit = 9;
-		Atom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
 		double[] pChInch = new double[atoms.length * (stepsLimit + 1)];
 		double[] ElEn = new double[atoms.length * (stepsLimit + 1)];
 		double[] pCh = new double[atoms.length * (stepsLimit + 1)];
@@ -124,7 +124,7 @@ public class InductivePartialCharges {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public double[] getPaulingElectronegativities(AtomContainer ac, boolean modified) throws Exception {
-		Atom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
 		double[] paulingElectronegativities = new double[atoms.length];
 		Element element = null;
 		String symbol = null;
@@ -194,7 +194,7 @@ public class InductivePartialCharges {
 	 // that can be used for qsar descriptors and during the iterative calculation
 	 // of effective electronegativity
 	public double getAtomicSoftnessCore(AtomContainer ac, int atomPosition) throws CDKException {
-		Atom[] allAtoms = null;
+		org.openscience.cdk.interfaces.Atom[] allAtoms = null;
 		org.openscience.cdk.interfaces.Atom target = null;
 		double core = 0;
 		double radiusTarget = 0;
@@ -258,7 +258,7 @@ public class InductivePartialCharges {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	private double getAtomicChargeIncrement(AtomContainer ac, int atomPosition, double[] ElEn, int as) throws CDKException {
-		Atom[] allAtoms = null;
+		org.openscience.cdk.interfaces.Atom[] allAtoms = null;
 		org.openscience.cdk.interfaces.Atom target = null;
 		double incrementedCharge = 0;
 		double radiusTarget = 0;

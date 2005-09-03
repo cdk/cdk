@@ -271,7 +271,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return    The array of atoms of this AtomContainer
 	 *@see       #setAtoms
 	 */
-	public Atom[] getAtoms()
+	public org.openscience.cdk.interfaces.Atom[] getAtoms()
 	{
 		Atom[] returnAtoms = new Atom[getAtomCount()];
 		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);

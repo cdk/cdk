@@ -635,7 +635,7 @@ private UndoableEditSupport undoSupport;
 	public void scaleAndCenterMolecule(AtomContainer ac, Dimension dim) {
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
-	    Atom[] atoms = ac.getAtoms();
+	    org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
 	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 	    GeometryTools.scaleMolecule(ac, scaleFactor);
 	    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();

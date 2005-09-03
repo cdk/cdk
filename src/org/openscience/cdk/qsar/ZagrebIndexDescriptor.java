@@ -93,7 +93,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
 	 */
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 		double zagreb = 0;
-		Atom[] atoms = atomContainer.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			int atomDegree = 0;
 			Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[i]);

@@ -89,9 +89,9 @@ public class CML2Test extends CDKTestCase {
             assertTrue(GeometryTools.has3DCoordinates(mol));
             assertTrue(!GeometryTools.has2DCoordinates(mol));
             
-            Atom[] atoms = mol.getAtoms();
+            org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
             for (int i=0; i<atoms.length; i++) {
-                Atom atom = atoms[i];
+            	org.openscience.cdk.interfaces.Atom atom = atoms[i];
                 if (atom.getSymbol().equals("Na")) 
                     assertEquals(+1, atom.getFormalCharge()); 
             }
@@ -127,9 +127,9 @@ public class CML2Test extends CDKTestCase {
             assertTrue(GeometryTools.has3DCoordinates(mol));
             assertTrue(!GeometryTools.has2DCoordinates(mol));
             
-            Atom[] atoms = mol.getAtoms();
+            org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
             for (int i=0; i<atoms.length; i++) {
-                Atom atom = atoms[i];
+            	org.openscience.cdk.interfaces.Atom atom = atoms[i];
                 if (atom.getSymbol().equals("N")) 
                     assertEquals(+1, atom.getFormalCharge()); 
             }

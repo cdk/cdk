@@ -31,7 +31,7 @@ import java.awt.Color;
 import java.util.EventObject;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.renderer.color.AtomColorer;
 import org.openscience.cdk.renderer.color.CDKAtomColors;

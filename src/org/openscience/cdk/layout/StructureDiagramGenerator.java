@@ -244,7 +244,7 @@ public class StructureDiagramGenerator
         Molecule original = molecule;
         Molecule shallowCopy = (Molecule)molecule.shallowCopy();
         // ok, delete H's from 
-        Atom[] atoms = shallowCopy.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = shallowCopy.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             if (atoms[i].getSymbol().equals("H")) {
                 shallowCopy.removeAtomAndConnectedElectronContainers(atoms[i]);

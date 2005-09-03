@@ -211,12 +211,12 @@ public class PathTools  {
       * @param   a the atom to start from
       * @param   max the number of neighbours to return
       * @return  the average bond length 
-     */  public static Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
+     */  public static org.openscience.cdk.interfaces.Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
     Molecule mol=new Molecule();
     Vector v=new Vector();
     v.add(a);
     breadthFirstSearch(ac, v, mol, max);
-    Atom[] returnValue=new Atom[mol.getAtoms().length-1];
+    org.openscience.cdk.interfaces.Atom[] returnValue=new Atom[mol.getAtoms().length-1];
     int k=0;
     for(int i=0;i<mol.getAtoms().length;i++){
       if(mol.getAtoms()[i]!=a){

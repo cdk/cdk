@@ -121,7 +121,7 @@ public class AminoAcids {
         		logger.debug("Adding AA: ", containers[i]);
         		// convert into an AminoAcid
         		AminoAcid aminoAcid = new AminoAcid();
-        		Atom[] atoms = containers[i].getAtoms();
+        		org.openscience.cdk.interfaces.Atom[] atoms = containers[i].getAtoms();
         		Enumeration props = containers[i].getProperties().keys();
         		while (props.hasMoreElements()) {
         			Object next = props.nextElement();
@@ -143,7 +143,7 @@ public class AminoAcids {
         			}
         		}
         		for (int atomCount=0; atomCount<atoms.length; atomCount++) {
-        			Atom atom = atoms[atomCount];
+        			org.openscience.cdk.interfaces.Atom atom = atoms[atomCount];
         			String dictRef = (String)atom.getProperty("org.openscience.cdk.dict");
         			if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
         				aminoAcid.addNTerminus(atom);

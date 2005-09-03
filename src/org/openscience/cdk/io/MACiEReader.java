@@ -434,7 +434,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
     
     private void markEnzymeResidueLocatorAtoms(Reaction currentReaction) {
-        Atom[] atoms = ReactionManipulator.getAllInOneContainer(currentReaction).getAtoms();
+    	org.openscience.cdk.interfaces.Atom[] atoms = ReactionManipulator.getAllInOneContainer(currentReaction).getAtoms();
         for (int i=0; i<atoms.length; i++) {
             if (atoms[i] instanceof EnzymeResidueLocator) {
                 // skip atom
@@ -511,7 +511,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                 residueLocator.matcher(field);
             if (residueLocatorMatcher.matches()) {
                 logger.debug("Found residueLocator: ", field);
-                Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
+                org.openscience.cdk.interfaces.Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
                 boolean found = false;
                 logger.debug("Searching for given residueLocator through #atom: ", atoms.length);
                 logger.debug("Taken from reaction ", reaction.getID());

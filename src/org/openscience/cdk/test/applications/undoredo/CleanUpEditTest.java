@@ -66,8 +66,8 @@ public class CleanUpEditTest extends ChangeCoordsEditTest {
 		StructureDiagramGenerator generator = new StructureDiagramGenerator(mol);
 		generator.generateCoordinates();
 		mol = relayoutMolecule(mol);
-		Atom[] atoms = mol.getAtoms();
-		Atom[] newAtoms = mol.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] newAtoms = mol.getAtoms();
 		for (int j = 0; j < atoms.length; j++) {
 			Point2d oldCoord = atoms[j].getPoint2d();
 			Point2d newCoord = newAtoms[j].getPoint2d();

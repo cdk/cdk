@@ -130,7 +130,7 @@ public class RDFCalculator {
         int index = 0;
         
         Point3d atomPoint = atom.getPoint3d();
-        Atom[] atomsInContainer = container.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atomsInContainer = container.getAtoms();
         for (int i=0; i<atomsInContainer.length; i++) {
             distance = atomPoint.distance(atomsInContainer[i].getPoint3d());
             index = (int)((distance-startCutoff)/this.resolution);

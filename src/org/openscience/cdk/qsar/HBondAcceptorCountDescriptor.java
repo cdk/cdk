@@ -135,7 +135,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
 		if (checkAromaticity)
 			HueckelAromaticityDetector.detectAromaticity(ac);
 
-    Atom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
     // labelled for loop to allow for labelled continue statements within the loop
     atomloop:
 		for (int atomIndex = 0; atomIndex < atoms.length; atomIndex++)

@@ -476,7 +476,7 @@ public class Convertor {
         }
     }
 
-    private void writeAtomArray(AtomContainer container, Atom atoms[], Element nodeToAppend) throws CMLException {
+    private void writeAtomArray(AtomContainer container, org.openscience.cdk.interfaces.Atom atoms[], Element nodeToAppend) throws CMLException {
         AtomArrayImpl atomarray = new AtomArrayImpl(doc);
         nodeToAppend.appendChild(atomarray);
         for (int i = 0; i < atoms.length; i++) {
@@ -550,7 +550,7 @@ public class Convertor {
         return false;
     }
     
-    private boolean addAtomID(Atom atom, Element nodeToAppend) {
+    private boolean addAtomID(org.openscience.cdk.interfaces.Atom atom, Element nodeToAppend) {
         if(atom.getID()!=null && !atom.getID().equals(""))
           nodeToAppend.setAttribute("id", atom.getID());
         else
@@ -558,7 +558,7 @@ public class Convertor {
         return true;
     }
     
-    private void writeAtom(AtomContainer container, Atom atom, Element nodeToAppend) throws CMLException {
+    private void writeAtom(AtomContainer container, org.openscience.cdk.interfaces.Atom atom, Element nodeToAppend) throws CMLException {
         AtomImpl atomimpl=new AtomImpl(doc);
         nodeToAppend.appendChild(atomimpl);
         addAtomID(atom, atomimpl);

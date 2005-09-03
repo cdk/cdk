@@ -95,9 +95,9 @@ public class IDCreator {
             container.setID("m" + moleculeCount);
         }
         
-        Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-            Atom atom = atoms[i];
+        	org.openscience.cdk.interfaces.Atom atom = atoms[i];
             if (atom.getID() == null) {
                 atomCount++;
                 while (tabuList.contains("a" + atomCount)) atomCount++;

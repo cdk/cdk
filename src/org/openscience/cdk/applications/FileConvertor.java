@@ -169,7 +169,7 @@ public class FileConvertor {
                 AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
                 for (int i=0; i<containers.length; i++) {
                 	AtomContainer container = containers[i];
-                    Atom[] atoms = container.getAtoms();
+                	org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
                         for (int j=0; j<atoms.length; j++) {
                             if (!(atoms[j] instanceof PseudoAtom)) {

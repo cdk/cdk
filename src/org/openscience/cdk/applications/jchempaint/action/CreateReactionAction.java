@@ -83,7 +83,7 @@ public class CreateReactionAction extends JCPAction
 		{
 			AtomContainer newContainer = (AtomContainer) container.clone();
 			// delete atoms in current model
-			Atom[] atoms = container.getAtoms();
+			org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
 			for (int i = 0; i < atoms.length; i++)
 			{
 				ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, atoms[i]);

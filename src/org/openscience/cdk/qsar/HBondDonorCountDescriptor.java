@@ -104,7 +104,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		int hBondDonors = 0;
     
-    Atom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
     // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
     atomloop:
     for(int atomIndex = 0; atomIndex < atoms.length; atomIndex++)

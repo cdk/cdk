@@ -40,23 +40,23 @@ public class ProblemMarker {
     public static String ERROR_MARKER = "org.openscience.cdk.validate.error";
     public static String WARNING_MARKER = "org.openscience.cdk.validate.warning";
     
-    public static void markWithError(ChemObject object) {
+    public static void markWithError(org.openscience.cdk.interfaces.ChemObject object) {
         object.setProperty(ERROR_MARKER, new Boolean(true));
     }
 
-    public static void markWithWarning(ChemObject object) {
+    public static void markWithWarning(org.openscience.cdk.interfaces.ChemObject object) {
         object.setProperty(WARNING_MARKER, new Boolean(true));
     }
 
-    public static void unmarkWithError(ChemObject object) {
+    public static void unmarkWithError(org.openscience.cdk.interfaces.ChemObject object) {
         object.removeProperty(ERROR_MARKER);
     }
 
-    public static void unmarkWithWarning(ChemObject object) {
+    public static void unmarkWithWarning(org.openscience.cdk.interfaces.ChemObject object) {
         object.removeProperty(WARNING_MARKER);
     }
     
-    public static void unmark(ChemObject object) {
+    public static void unmark(org.openscience.cdk.interfaces.ChemObject object) {
         unmarkWithWarning(object);
         unmarkWithError(object);
     }

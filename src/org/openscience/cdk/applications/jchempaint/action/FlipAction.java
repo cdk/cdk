@@ -58,7 +58,7 @@ public class FlipAction extends JCPAction {
         if (horiz || "vertical".equals(type)) {
             AtomContainer toflip = renderModel.getSelectedPart();
             Point2d center = GeometryTools.get2DCenter(toflip);
-            Atom[] atoms = toflip.getAtoms();
+            org.openscience.cdk.interfaces.Atom[] atoms = toflip.getAtoms();
             for (int i=0; i<atoms.length; i++) {
                 Point2d atom = atoms[i].getPoint2d();
                 Point2d oldCoord = new Point2d(atom.x, atom.y);

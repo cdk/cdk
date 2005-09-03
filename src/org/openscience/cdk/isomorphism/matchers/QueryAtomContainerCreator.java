@@ -46,7 +46,7 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createBasicQueryContainer(AtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolQueryAtom(atoms[i]));
         }
@@ -77,7 +77,7 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createSymbolAndChargeQueryContainer(AtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(atoms[i]));
         }
@@ -109,7 +109,7 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createAnyAtomContainer(AtomContainer container, boolean aromaticity) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
 
         for (int i = 0; i < atoms.length; i++) {
             if (aromaticity && atoms[i].getFlag(CDKConstants.ISAROMATIC)) {

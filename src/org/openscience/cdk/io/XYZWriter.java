@@ -112,10 +112,10 @@ public class XYZWriter extends DefaultChemObjectWriter {
             writer.newLine();
             
             // Loop through the atoms and write them out:
-            Atom[] atoms = mol.getAtoms();
+            org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
             for (int i = 0; i < atoms.length; i++) {
                 
-                Atom a = atoms[i];
+            	org.openscience.cdk.interfaces.Atom a = atoms[i];
                 st = a.getSymbol();
                 
                 Point3d p3 = a.getPoint3d();

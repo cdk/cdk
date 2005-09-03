@@ -158,7 +158,7 @@ public class InductiveAtomicHardnessDescriptor implements Descriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
-		Atom[] allAtoms = null;
+		org.openscience.cdk.interfaces.Atom[] allAtoms = null;
 		org.openscience.cdk.interfaces.Atom target = null;
 		double atomicHardness = 0;
 

@@ -130,13 +130,13 @@ public class HINWriter extends DefaultChemObjectWriter {
                 writer.newLine();
 
                 // Loop through the atoms and write them out:
-                Atom[] atoms = mol.getAtoms();
+                org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
                 Bond[] bonds = mol.getBonds();
 
                 for (int i = 0; i < natom; i++) {
 
                     String line = "atom ";
-                    Atom a = atoms[i];
+                    org.openscience.cdk.interfaces.Atom a = atoms[i];
 
                     sym = a.getSymbol();
                     chrg = a.getCharge();

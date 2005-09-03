@@ -350,11 +350,11 @@ public class SmilesGenerator
 		canLabler.canonLabel(molecule);
 		brokenBonds.clear();
 		ringMarker = 0;
-		Atom[] all = molecule.getAtoms();
-		Atom start = null;
+		org.openscience.cdk.interfaces.Atom[] all = molecule.getAtoms();
+		org.openscience.cdk.interfaces.Atom start = null;
 		for (int i = 0; i < all.length; i++)
 		{
-			Atom atom = all[i];
+			org.openscience.cdk.interfaces.Atom atom = all[i];
 			if (chiral && atom.getPoint2d() == null)
 			{
 				throw new CDKException("Atom number " + i + " has no 2D coordinates, but 2D coordinates are needed for creating chiral smiles");
@@ -622,7 +622,7 @@ public class SmilesGenerator
 	 *@param  container  the AtomContainer that is being parsed.
 	 *@return            Vector of atoms in canonical oreder.
 	 */
-	private Vector getCanNeigh(final Atom a, final AtomContainer container)
+	private Vector getCanNeigh(final org.openscience.cdk.interfaces.Atom a, final AtomContainer container)
 	{
 		Vector v = container.getConnectedAtomsVector(a);
 		if (v.size() > 1)
@@ -728,7 +728,7 @@ public class SmilesGenerator
 	 *      generated for.
 	 *@param  doubleBondConfiguration  Description of Parameter
 	 */
-	private void createSMILES(Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration)
+	private void createSMILES(org.openscience.cdk.interfaces.Atom a, StringBuffer line, AtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration)
 	{
 		Vector tree = new Vector();
 		createDFSTree(a, tree, null, atomContainer);
@@ -746,7 +746,7 @@ public class SmilesGenerator
 	 *@param  parent     the atom we came from.
 	 *@param  container  the AtomContainer that we are parsing.
 	 */
-	private void createDFSTree(Atom a, Vector tree, Atom parent, AtomContainer container)
+	private void createDFSTree(org.openscience.cdk.interfaces.Atom a, Vector tree, org.openscience.cdk.interfaces.Atom parent, AtomContainer container)
 	{
 		tree.add(a);
 		Vector neighbours = getCanNeigh(a, container);
@@ -1790,7 +1790,7 @@ public class SmilesGenerator
 		/**
 		 *  The atoms which close the ring
 		 */
-		private Atom a1, a2;
+		private org.openscience.cdk.interfaces.Atom a1, a2;
 
 		/**
 		 *  The number of the marker
@@ -1806,7 +1806,7 @@ public class SmilesGenerator
 		 *@param  a1      Description of Parameter
 		 *@param  a2      Description of Parameter
 		 */
-		BrokenBond(Atom a1, Atom a2, int marker)
+		BrokenBond(org.openscience.cdk.interfaces.Atom a1, org.openscience.cdk.interfaces.Atom a2, int marker)
 		{
 			this.a1 = a1;
 			this.a2 = a2;
@@ -1819,7 +1819,7 @@ public class SmilesGenerator
 		 *
 		 *@return    The a1 value
 		 */
-		public Atom getA1()
+		public org.openscience.cdk.interfaces.Atom getA1()
 		{
 			return a1;
 		}
@@ -1830,7 +1830,7 @@ public class SmilesGenerator
 		 *
 		 *@return    The a2 value
 		 */
-		public Atom getA2()
+		public org.openscience.cdk.interfaces.Atom getA2()
 		{
 			return a2;
 		}

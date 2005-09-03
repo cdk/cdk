@@ -134,7 +134,7 @@ public class WeightDescriptor implements Descriptor {
 
     public DescriptorValue calculate(AtomContainer container) {
         double weight = 0;
-        Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
         if (elementName.equals("*")) {
             try {
                 for (int i = 0; i < atoms.length; i++) {

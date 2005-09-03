@@ -82,12 +82,12 @@ public class MMFF94PartialCharges {
 		double theta = 0;
 		double sumOfFormalCharges = 0;
 		double sumOfBondIncrements = 0;
-		Atom thisAtom = null;
+		org.openscience.cdk.interfaces.Atom thisAtom = null;
 		Atom[] neighboors = null;
 		Vector data = null;
 		Vector bondData = null;
 		Vector dataNeigh = null;
-		Atom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
 		for(int i= 0; i < atoms.length; i++) {
 			//System.out.println("ATOM "+i+ " " +atoms[i].getSymbol());
 			thisAtom = atoms[i];

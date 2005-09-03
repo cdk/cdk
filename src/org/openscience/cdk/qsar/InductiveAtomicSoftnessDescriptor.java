@@ -158,7 +158,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
 	 *@exception  CDKException  if any atom in the supplied AtomContainer has no 3D coordinates
 	 */
         public DescriptorValue calculate(AtomContainer ac) throws CDKException {
-            Atom[] allAtoms = null;
+        	org.openscience.cdk.interfaces.Atom[] allAtoms = null;
             org.openscience.cdk.interfaces.Atom target = null;
             double atomicSoftness = 0;
             double radiusTarget = 0;

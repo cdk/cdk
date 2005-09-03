@@ -47,7 +47,7 @@ public class SimpleBasisSet extends GaussiansBasis
   /**
    * Create a base set
    */
-  public SimpleBasisSet(Atom[] atoms)
+  public SimpleBasisSet(org.openscience.cdk.interfaces.Atom[] atoms)
   {
     int i, j;
     int size = 0;

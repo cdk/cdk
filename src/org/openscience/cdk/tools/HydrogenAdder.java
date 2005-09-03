@@ -174,7 +174,7 @@ public class HydrogenAdder {
       AtomContainer intermediateContainer= null;
       for (int k = 0; k < molecules.length; k++) {
         Molecule molPart = molecules[k];
-        Atom[] atoms = molPart.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = molPart.getAtoms();
          for (int i = 0; i < atoms.length; i++) {
             intermediateContainer = addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
             changedAtomsAndBonds.add(intermediateContainer);
@@ -289,7 +289,7 @@ public class HydrogenAdder {
       HashMap hydrogenAtomMap = new HashMap();
       for (int k = 0; k < molecules.length; k++) {
         Molecule molPart = molecules[k];
-        Atom[] atoms = molPart.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = molPart.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
             int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);
             hydrogenAtomMap.put(atoms[f], hydrogens);

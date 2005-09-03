@@ -141,7 +141,7 @@ public class ValidateAction extends JCPAction
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		ChemModel model = jcpmodel.getChemModel();
-		Atom[] atoms = ChemModelManipulator.getAllInOneContainer(model).getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = ChemModelManipulator.getAllInOneContainer(model).getAtoms();
 		logger.info("Clearing errors on atoms: " + atoms.length);
 		for (int i = 0; i < atoms.length; i++)
 		{

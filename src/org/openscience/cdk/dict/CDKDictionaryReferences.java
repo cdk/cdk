@@ -54,7 +54,7 @@ public class CDKDictionaryReferences {
 
     private static String prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
     
-    public static void makeReferencesExplicit(ChemObject object) {
+    public static void makeReferencesExplicit(org.openscience.cdk.interfaces.ChemObject object) {
         if (object instanceof Atom) {
             makeReferencesExplicitForAtom((Atom)object);
         } else if (object instanceof Bond) {
@@ -74,24 +74,24 @@ public class CDKDictionaryReferences {
         }
     }
     
-    private static void makeReferencesExplicitForAtom(Atom atom) {
+    private static void makeReferencesExplicitForAtom(org.openscience.cdk.interfaces.Atom atom) {
         int selfCounter = 0;
         atom.setProperty(prefix + ":self:" + selfCounter++, "chemical:atom");
         
         makeReferencesExplicitForElement((Element)atom);
     }
     
-    private static void makeReferencesExplicitForBond(Bond bond) {
+    private static void makeReferencesExplicitForBond(org.openscience.cdk.interfaces.Bond bond) {
         int selfCounter = 0;
         bond.setProperty(prefix + ":self:" + selfCounter++, "chemical:covalentBond");
         bond.setProperty(prefix + ":field:order", "chemical:bondOrder");
     }
 
-    private static void makeReferencesExplicitForChemModel(ChemModel model) { // NOPMD
+    private static void makeReferencesExplicitForChemModel(org.openscience.cdk.interfaces.ChemModel model) { // NOPMD
         // nothing to do
     }
 
-    private static void makeReferencesExplicitForElement(Element element) {
+    private static void makeReferencesExplicitForElement(org.openscience.cdk.interfaces.Element element) {
         int selfCounter = 0;
         element.setProperty(prefix + ":field:symbol", "chemical:atomSymbol");
         element.setProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
@@ -111,19 +111,19 @@ public class CDKDictionaryReferences {
         }
     }
 
-    private static void makeReferencesExplicitForIsotope(Isotope isotope) {
+    private static void makeReferencesExplicitForIsotope(org.openscience.cdk.interfaces.Isotope isotope) {
         int selfCounter = 0;
         isotope.setProperty(prefix + ":self:" + selfCounter++, "chemical:isotope");
     }
 
-    private static void makeReferencesExplicitForMolecule(Molecule molecule) {
+    private static void makeReferencesExplicitForMolecule(org.openscience.cdk.interfaces.Molecule molecule) {
         int selfCounter = 0;
         molecule.setProperty(prefix + ":self:" + selfCounter++, "chemical:molecularEntity");
         /* remark: this is not strictly true... the Compendium includes the
                    ion pair, which normally would not considered a CDK molecule */
     }
 
-    private static void makeReferencesExplicitForReaction(Reaction reaction) {
+    private static void makeReferencesExplicitForReaction(org.openscience.cdk.interfaces.Reaction reaction) {
         int selfCounter = 0;
         reaction.setProperty(prefix + ":self:" + selfCounter++, "reaction:reactionStep");
     }

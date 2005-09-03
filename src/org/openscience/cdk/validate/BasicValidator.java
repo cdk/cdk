@@ -76,7 +76,7 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest emptyMolecule = new ValidationTest(subject,
             "Molecule does not contain any atom"
         );
-        Atom[] atoms = subject.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = subject.getAtoms();
         if (atoms.length == 0) {
             report.addError(emptyMolecule);
         } else {
@@ -301,7 +301,7 @@ public class BasicValidator extends AbstractValidator {
     
     // the Molecule tests
 
-    private ValidationReport validateBondOrderSum(Atom atom, Molecule molecule) {
+    private ValidationReport validateBondOrderSum(org.openscience.cdk.interfaces.Atom atom, Molecule molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkBondSum = new ValidationTest(atom,
             "The atom's total bond order is too high."
@@ -374,12 +374,12 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest chargeConservation = new ValidationTest(reaction,
             "Total formal charge is not preserved during the reaction"
         );
-        Atom[] atoms1 = reactants.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms1 = reactants.getAtoms();
         int totalCharge1 = 0;
         for (int i=0;i<atoms1.length; i++) {
             totalCharge1 =+ atoms1[i].getFormalCharge();
         }
-        Atom[] atoms2 = products.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms2 = products.getAtoms();
         int totalCharge2 = 0;
         for (int i=0;i<atoms2.length; i++) {
             totalCharge2 =+ atoms2[i].getFormalCharge();

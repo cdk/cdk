@@ -135,7 +135,7 @@ public class APolDescriptor implements Descriptor {
         try {
             ifac = IsotopeFactory.getInstance();			
             Element element = null;
-            Atom[] atoms = container.getAtoms();
+            org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
             String symbol = null;
             for (int i = 0; i < atoms.length; i++) {
                 symbol = container.getAtomAt(i).getSymbol();

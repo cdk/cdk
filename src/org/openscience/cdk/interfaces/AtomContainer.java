@@ -147,7 +147,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@return    The array of atoms of this AtomContainer
 	 *@see       #setAtoms
 	 */
-	public org.openscience.cdk.Atom[] getAtoms();
+	public Atom[] getAtoms();
 
 
 	/**

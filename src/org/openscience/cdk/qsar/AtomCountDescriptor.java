@@ -140,7 +140,7 @@ public class AtomCountDescriptor implements Descriptor {
 
         if (container == null) throw new CDKException("The supplied AtomContainer was NULL");
 
-        Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
 
         if (atoms == null) throw new CDKException("There were no atoms in the supplied AtomContainer");
 

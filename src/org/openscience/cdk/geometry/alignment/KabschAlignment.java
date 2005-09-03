@@ -98,7 +98,7 @@ public class KabschAlignment {
     private Point3d cm1, cm2;
     private double[] atwt1, atwt2;
     
-    private Point3d[] getPoint3dArray(Atom[] a) {
+    private Point3d[] getPoint3dArray(org.openscience.cdk.interfaces.Atom[] a) {
         Point3d[] p = new Point3d[ a.length ];
         for (int i = 0; i < a.length; i++) {
             p[i] = new Point3d( a[i].getPoint3d() );
@@ -106,7 +106,7 @@ public class KabschAlignment {
         return(p);
     }
 
-    private double[] getAtomicMasses(Atom[] a) {
+    private double[] getAtomicMasses(org.openscience.cdk.interfaces.Atom[] a) {
         double[] am = new double[a.length];
         IsotopeFactory factory = null;
         try {

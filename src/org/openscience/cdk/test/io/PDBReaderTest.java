@@ -124,7 +124,7 @@ public class PDBReaderTest extends TestCase {
             oMol.setProperty(new String("test.molecule"), new String("test.molecule")); 
             assertEquals(new String("test.molecule"), oMol.getProperty("test.molecule"));
 
-            Atom nAtom = oMol.getFirstAtom();
+            org.openscience.cdk.interfaces.Atom nAtom = oMol.getFirstAtom();
             assertNotNull(nAtom);
             assertTrue(nAtom instanceof PDBAtom);
             PDBAtom oAtom = (PDBAtom)nAtom;

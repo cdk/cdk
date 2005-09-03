@@ -250,8 +250,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         
         // map the atoms
         int mappingCount = 0;
-        Atom[] reactantAtoms = reactingSide.getAtoms();
-        Atom[] producedAtoms = producedSide.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] reactantAtoms = reactingSide.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] producedAtoms = producedSide.getAtoms();
         for (int i=0; i<reactantAtoms.length; i++) {
             for (int j=0; j<producedAtoms.length; j++) {
                 if (reactantAtoms[i].getID() != null &&

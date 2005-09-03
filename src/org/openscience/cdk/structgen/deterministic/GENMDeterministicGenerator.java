@@ -889,7 +889,7 @@ public class GENMDeterministicGenerator
 			atomContainer.addAtom(new Atom(((BasicFragment)(setOfBasicFragment.get(i))).getHeavyAtomSymbol()));
 		}
 		
-		Atom[] atom=atomContainer.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atom=atomContainer.getAtoms();
 		
 		for(i=0;i<atom.length;i++)
 		{

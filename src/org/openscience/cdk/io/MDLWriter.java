@@ -283,10 +283,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.write(line);
 
         // write Atom block
-        Atom[] atoms = molecule.getAtoms();
+        org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
           if(isVisible[f]){
-            Atom atom = atoms[f];
+        	  org.openscience.cdk.interfaces.Atom atom = atoms[f];
             line = "";
             if (atom.getPoint3d() != null) {
                 line += formatMDLFloat((float) atom.getX3d());
@@ -361,7 +361,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
         // write formal atomic charges
         for (int i = 0; i < atoms.length; i++) {
-            Atom atom = atoms[i];
+        	org.openscience.cdk.interfaces.Atom atom = atoms[i];
             int charge = atom.getFormalCharge();
             if (charge != 0) {
                 writer.write("M  CHG  1 ");
@@ -374,7 +374,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         
         // write formal isotope information
         for (int i = 0; i < atoms.length; i++) {
-            Atom atom = atoms[i];
+        	org.openscience.cdk.interfaces.Atom atom = atoms[i];
             if (!(atom instanceof PseudoAtom)) {
                 int atomicMass = atom.getMassNumber();
                 int majorMass = isotopeFactory.getMajorIsotope(atom.getSymbol()).getMassNumber();

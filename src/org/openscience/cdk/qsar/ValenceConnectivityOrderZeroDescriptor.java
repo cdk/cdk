@@ -120,7 +120,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
 		int hcount = 0;
 		int atomValue = 0;
 		double chi0v = 0;
-		Atom[] atoms = atomContainer.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
 		Atom[] neighatoms = null;
 		Element element = null;
 		IsotopeFactory elfac = null;

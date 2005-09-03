@@ -69,7 +69,7 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();
-		Atom[] atoms = mol.getAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
 		Bond[] bonds = mol.getBonds();
 		for (int i = 0; i < atoms.length; i++) {
 			undoCont.addAtom(atoms[i]);

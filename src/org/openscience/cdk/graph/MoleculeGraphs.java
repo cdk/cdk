@@ -58,7 +58,7 @@ public class MoleculeGraphs {
 	static public SimpleGraph getMoleculeGraph(AtomContainer molecule) {
 		SimpleGraph graph = new SimpleGraph();
 		for (int i=0; i<molecule.getAtomCount(); i++	) {
-			Atom atom = molecule.getAtoms()[i];
+			org.openscience.cdk.interfaces.Atom atom = molecule.getAtoms()[i];
 			graph.addVertex(atom);
 		}
 		

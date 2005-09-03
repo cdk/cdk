@@ -181,7 +181,7 @@ public class AddHydrogenAction extends JCPAction
 					} else if (type.equals("allimplicit"))
 					{
 						// remove explicit hydrogen if necessary
-						Atom[] atoms = molecule.getAtoms();
+						org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
 						for (int j = 0; j < atoms.length; j++)
 						{
 							logger.debug("Checking atom: ", j);

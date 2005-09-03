@@ -85,7 +85,7 @@ public class GaussiansCalculationTest
       ChemSequence[] chemSequence = chemFile.getChemSequences();
       ChemModel[] chemModels = chemSequence[0].getChemModels();
       AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
-			Atom[] atoms = atomContainer.getAtoms();
+      org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
 
 			GaussiansBasis basis = new SimpleBasisSet(atoms);
         
