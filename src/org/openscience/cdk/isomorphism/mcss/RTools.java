@@ -258,8 +258,8 @@ public class RTools
     {
         // resets the target graph.
         gr.clear(); 
-        Bond[] bondsA1 = ac1.getBonds();
-        Bond[] bondsA2 = ac2.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bondsA1 = ac1.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bondsA2 = ac2.getBonds();
         int k = 0;
 
         // compares each bond of G1 to each bond of G2
@@ -301,13 +301,13 @@ public class RTools
             x.forbidden.set(i);
         }
 
-        Bond a1 = null;
-        Bond a2 = null;
-        Bond b1 = null;
-        Bond b2 = null;
+        org.openscience.cdk.interfaces.Bond a1 = null;
+        org.openscience.cdk.interfaces.Bond a2 = null;
+        org.openscience.cdk.interfaces.Bond b1 = null;
+        org.openscience.cdk.interfaces.Bond b2 = null;
 
-        Bond[] bondsA1 = ac1.getBonds();
-        Bond[] bondsA2 = ac2.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bondsA1 = ac1.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bondsA2 = ac2.getBonds();
 
         gr.setFirstGraphSize(ac1.getBondCount());
         gr.setSecondGraphSize(ac2.getBondCount());
@@ -351,7 +351,7 @@ public class RTools
      * @return    the symbol of the common atom or "" if 
      *            the 2 bonds have no common atom
      */
-    private static String adjacency(Bond a, Bond b)
+    private static String adjacency(org.openscience.cdk.interfaces.Bond a, org.openscience.cdk.interfaces.Bond b)
     {
         String symbol = "";
 
@@ -445,13 +445,13 @@ public class RTools
     {
         AtomContainer ac = new org.openscience.cdk.AtomContainer();
 
-        Bond[] bondList = g.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bondList = g.getBonds();
 
         Hashtable table = new Hashtable();
         Atom a1 = null;
         Atom a2 = null;
         org.openscience.cdk.interfaces.Atom a = null;
-        Bond bond = null;
+        org.openscience.cdk.interfaces.Bond bond = null;
 
         for(Iterator i = rMapList.iterator(); i.hasNext(); )
         {

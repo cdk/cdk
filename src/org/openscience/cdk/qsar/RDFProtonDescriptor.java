@@ -202,7 +202,7 @@ public class RDFProtonDescriptor implements Descriptor {
 			Ring ring = null;
 			Vector ringsWithThisBond = null;
 			// SET ISINRING FLAGS FOR BONDS
-			Bond[] bondsInContainer = ac.getBonds();		
+			org.openscience.cdk.interfaces.Bond[] bondsInContainer = ac.getBonds();		
 			for (int z = 0; z < bondsInContainer.length; z++) {
 				ringsWithThisBond = rs.getRings(bondsInContainer[z]);
 				if (ringsWithThisBond.size() > 0) {

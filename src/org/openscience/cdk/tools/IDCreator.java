@@ -104,9 +104,9 @@ public class IDCreator {
                 atoms[i].setID("a" + atomCount);
             }
         }
-        Bond[] bonds = container.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
         for (int i=0; i<bonds.length; i++) {
-            Bond bond = bonds[i];
+        	org.openscience.cdk.interfaces.Bond bond = bonds[i];
             if (bond.getID() == null) {
                 bondCount++;
                 while (tabuList.contains("b" + bondCount)) bondCount++;

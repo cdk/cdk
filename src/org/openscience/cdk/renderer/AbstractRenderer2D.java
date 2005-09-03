@@ -825,13 +825,13 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		Color bondColor;
 		Ring ring;
-		Bond[] bonds = atomCon.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = atomCon.getBonds();
 		ArrayList painted_rings = new ArrayList();
 
 		logger.debug("Painting bonds...");
 		for (int i = 0; i < bonds.length; i++)
 		{
-			Bond currentBond = bonds[i];
+			org.openscience.cdk.interfaces.Bond currentBond = bonds[i];
 			bondColor = (Color) r2dm.getColorHash().get(currentBond);
 			if (bondColor == null)
 			{
@@ -900,7 +900,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		if (!isAromatic)
 		{
 			isAromatic = true;
-			Bond[] bonds = ring.getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = ring.getBonds();
 			for (int i = 0; i < bonds.length; i++)
 			{
 				if (!bonds[i].getFlag(CDKConstants.ISAROMATIC))
@@ -920,7 +920,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintBond(Bond bond, Color bondColor, Graphics2D graphics)
+	public void paintBond(org.openscience.cdk.interfaces.Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		if (bond.getAtomAt(0).getPoint2d() == null ||
 				bond.getAtomAt(1).getPoint2d() == null)
@@ -968,7 +968,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintRingBond(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
+	public void paintRingBond(org.openscience.cdk.interfaces.Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
 		if (bond.getOrder() == 1.0)
 		{
@@ -1057,7 +1057,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintAromaticRingBondCDKStyle(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
+	public void paintAromaticRingBondCDKStyle(org.openscience.cdk.interfaces.Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
 		paintSingleBond(bond, bondColor, graphics);
 		paintInnerBond(bond, ring, Color.lightGray, graphics);
@@ -1071,7 +1071,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintSingleBond(Bond bond, Color bondColor, Graphics2D graphics)
+	public void paintSingleBond(org.openscience.cdk.interfaces.Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		if (GeometryTools.has2DCoordinates(bond))
 		{
@@ -1087,7 +1087,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintDoubleBond(Bond bond, Color bondColor, Graphics2D graphics)
+	public void paintDoubleBond(org.openscience.cdk.interfaces.Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
 
@@ -1106,7 +1106,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintTripleBond(Bond bond, Color bondColor, Graphics2D graphics)
+	public void paintTripleBond(org.openscience.cdk.interfaces.Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		paintSingleBond(bond, bondColor, graphics);
 
@@ -1128,7 +1128,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Color of the bond
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintInnerBond(Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
+	public void paintInnerBond(org.openscience.cdk.interfaces.Bond bond, Ring ring, Color bondColor, Graphics2D graphics)
 	{
 		Point2d center = GeometryTools.get2DCenter(ring);
 
@@ -1190,7 +1190,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Color of the bond
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintWedgeBond(Bond bond, Color bondColor, Graphics2D graphics)
+	public void paintWedgeBond(org.openscience.cdk.interfaces.Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		double wedgeWidth = r2dm.getBondWidth() * 2.0;
 		// this value should be made customazible
@@ -1221,7 +1221,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bondColor  Color of the bond
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintDashedWedgeBond(Bond bond, Color bondColor, Graphics2D graphics)
+	public void paintDashedWedgeBond(org.openscience.cdk.interfaces.Bond bond, Color bondColor, Graphics2D graphics)
 	{
 		graphics.setColor(bondColor);
 
@@ -1378,7 +1378,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  graphics    The current graphics object.
 	 *@param  atomNumber  Description of the Parameter
 	 */
-	public void paintToolTip(Atom atom, Graphics2D graphics, int atomNumber)
+	public void paintToolTip(org.openscience.cdk.interfaces.Atom atom, Graphics2D graphics, int atomNumber)
 	{
 		tooltiparea = new int[4];
 		String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());

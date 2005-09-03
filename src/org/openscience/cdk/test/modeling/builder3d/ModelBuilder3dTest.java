@@ -166,7 +166,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			mb3d.setMolecule(mol,false);
 			mb3d.generate3DCoordinates();
 		} catch (Exception exc) {
-			System.out.println("Cannot layout molecule with SMILE:"+smile);
+			System.out.println("Cannot layout molecule with SMILE: "+smile);
 			if (standAlone)
 			{
 				exc.printStackTrace();

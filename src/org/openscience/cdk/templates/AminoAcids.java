@@ -67,7 +67,7 @@ public class AminoAcids {
         int total = 0;
         for (int aa=0; aa<aminoAcids.length; aa++) {
         	AminoAcid acid = aminoAcids[aa];
-        	Bond[] bonds = acid.getBonds();
+        	org.openscience.cdk.interfaces.Bond[] bonds = acid.getBonds();
         	logger.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + bonds.length);
         	total += bonds.length;
         	logger.debug("total #bonds: ", total);
@@ -153,7 +153,7 @@ public class AminoAcids {
         				aminoAcid.addAtom(atom);
         			}
         		}
-        		Bond[] bonds = containers[i].getBonds();
+        		org.openscience.cdk.interfaces.Bond[] bonds = containers[i].getBonds();
         		for (int bondCount=0; bondCount<bonds.length; bondCount++) {
         			aminoAcid.addBond(bonds[bondCount]);
         		}

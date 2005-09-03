@@ -131,7 +131,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                 // Loop through the atoms and write them out:
                 org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
-                Bond[] bonds = mol.getBonds();
+                org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
 
                 for (int i = 0; i < natom; i++) {
 
@@ -151,7 +151,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                     String buf = "";
                     int ncon = 0;
                     for (int j = 0; j < nbond; j++) {
-                        Bond b = bonds[j];
+                    	org.openscience.cdk.interfaces.Bond b = bonds[j];
                         if (b.contains(a)) {
                             // current atom is in the bond so lets get the connected atom
                         	org.openscience.cdk.interfaces.Atom ca = b.getConnectedAtom(a);

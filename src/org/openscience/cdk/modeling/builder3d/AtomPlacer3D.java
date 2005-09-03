@@ -356,7 +356,7 @@ public class AtomPlacer3D {
 	 * author:    steinbeck,cho
 	 */
 	public Atom getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(AtomContainer molecule) {
-		Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			Atom[] atoms = bonds[i].getAtoms();
 			if (atoms[0].getFlag(CDKConstants.ISPLACED) & !(atoms[1].getFlag(CDKConstants.ISPLACED))) {
@@ -380,7 +380,7 @@ public class AtomPlacer3D {
 	 * author: steinbeck,cho
 	 */
 	public Atom getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(AtomContainer molecule) {
-		Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			Atom[] atoms = bonds[i].getAtoms();
 			if (atoms[0].getFlag(CDKConstants.ISPLACED) & !(atoms[1].getFlag(CDKConstants.ISPLACED))) {
@@ -403,7 +403,7 @@ public class AtomPlacer3D {
 	 * @return    The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
 	 */
 	public Atom getNextPlacedHeavyAtomWithUnplacedRingNeighbour(AtomContainer molecule) {
-		Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			Atom[] atoms = bonds[i].getAtoms();
 			if (atoms[0].getFlag(CDKConstants.ISPLACED) & !(atoms[1].getFlag(CDKConstants.ISPLACED))) {

@@ -301,7 +301,7 @@ public class AllRingsFinder
 	{
 		Path path = null;
 		Ring ring = null;
-		Bond bond = null;
+		org.openscience.cdk.interfaces.Bond bond = null;
 		for (int f = 0; f < pathes.size(); f++)
 		{
 			path = (Path) pathes.elementAt(f);
@@ -317,7 +317,7 @@ public class AllRingsFinder
 				{
 					ring.addAtom((Atom) path.elementAt(g));
 				}
-				Bond[] bonds = ac.getBonds();
+				org.openscience.cdk.interfaces.Bond[] bonds = ac.getBonds();
 				for (int g = 0; g < bonds.length; g++)
 				{
 					bond = bonds[g];
@@ -341,9 +341,9 @@ public class AllRingsFinder
 	 */
 	private void initPathGraph(AtomContainer ac, Vector pathes)
 	{
-		Bond bond = null;
+		org.openscience.cdk.interfaces.Bond bond = null;
 		Path path = null;
-		Bond[] bonds = ac.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = ac.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];

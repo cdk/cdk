@@ -119,9 +119,9 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");\n");
         }
-        Bond[] bonds = molecule.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
         for (int i=0; i<bonds.length; i++) {
-            Bond bond = bonds[i];
+        	org.openscience.cdk.interfaces.Bond bond = bonds[i];
             writeBond(bond);
             writer.write("  mol.addBond(" + bond.getID() + ");\n");
         }

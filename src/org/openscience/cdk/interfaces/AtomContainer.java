@@ -174,7 +174,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@return    The array of Bonds of this AtomContainer
 	 *@see       #getElectronContainers
 	 */
-	public org.openscience.cdk.Bond[] getBonds();
+	public Bond[] getBonds();
 
 
 	/**

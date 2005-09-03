@@ -62,9 +62,9 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	public boolean ringAlreadyInSet(org.openscience.cdk.interfaces.Ring newRing)
 	{
 		Ring ring;
-		Bond[] bonds;
-		Bond[] newBonds;
-		Bond bond;
+		org.openscience.cdk.interfaces.Bond[] bonds;
+		org.openscience.cdk.interfaces.Bond[] newBonds;
+		org.openscience.cdk.interfaces.Bond bond;
 		int equalCount;
 		boolean equals;
 		for (int f = 0; f < this.size(); f++)

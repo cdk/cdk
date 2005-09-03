@@ -1014,7 +1014,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         assertEquals(3, acetone.getBondCount());
-        Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1041,7 +1041,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.setElectronContainers(electronContainers);
         
         assertEquals(3, acetone.getBondCount());
-        Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1073,7 +1073,7 @@ public class AtomContainerTest extends CDKTestCase {
         
         assertEquals(0, tested.getAtomCount());
         assertEquals(4, tested.getBondCount());
-        Bond[] bonds = tested.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = tested.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1157,7 +1157,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(1, 2, 1);
         
         assertEquals(3, acetone.getBondCount());
-        Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1188,7 +1188,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(1, 2, 1, CDKConstants.STEREO_BOND_NONE);
         
         assertEquals(3, acetone.getBondCount());
-        Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }

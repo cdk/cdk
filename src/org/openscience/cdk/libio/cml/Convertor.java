@@ -484,7 +484,7 @@ public class Convertor {
         }
     }
     
-    private void writeBondArray(Bond bonds[], Element nodeToAppend) throws CMLException {
+    private void writeBondArray(org.openscience.cdk.interfaces.Bond bonds[], Element nodeToAppend) throws CMLException {
         if (bonds.length > 0) {
             BondArrayImpl bondarray=new BondArrayImpl(doc);
             nodeToAppend.appendChild(bondarray);
@@ -619,7 +619,7 @@ public class Convertor {
         }
     }
 
-    private void writeBond(Bond bond, Element nodeToAdd) throws CMLException {
+    private void writeBond(org.openscience.cdk.interfaces.Bond bond, Element nodeToAdd) throws CMLException {
         BondImpl bondimpl=new BondImpl(doc);
         nodeToAdd.appendChild(bondimpl);
         logger.debug("Bond id: ", bond.getID());

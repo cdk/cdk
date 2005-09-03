@@ -66,7 +66,7 @@ public class ConnectivityChecker
 	{
 		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 		org.openscience.cdk.interfaces.Atom atom = null;
-		Bond bond = null;
+		org.openscience.cdk.interfaces.Bond bond = null;
 		Molecule molecule = new Molecule();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
@@ -75,7 +75,7 @@ public class ConnectivityChecker
 			atomContainer.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
-        Bond[] bonds = atomContainer.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];

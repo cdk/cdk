@@ -125,7 +125,7 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 	 */
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
 		int rotatableBondsCount = 0;
-		Bond[] bonds = ac.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = ac.getBonds();
 		int degree0 = 0;
 		int degree1 = 0;
 		RingSet ringSet = null;

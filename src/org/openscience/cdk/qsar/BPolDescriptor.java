@@ -118,7 +118,7 @@ public class BPolDescriptor implements Descriptor {
 			ifac = IsotopeFactory.getInstance();			
 			Element element0 = null;
 			Element element1 = null;
-			Bond[] bonds = container.getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
 			Atom[] atoms = null;
 			String symbol0 = null;
 			String symbol1 = null;

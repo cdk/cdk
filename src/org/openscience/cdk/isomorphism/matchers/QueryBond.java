@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Bond;
 
 /**
  * @cdk.module standard

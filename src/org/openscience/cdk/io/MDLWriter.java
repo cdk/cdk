@@ -314,10 +314,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        Bond[] bonds = molecule.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
         for (int g = 0; g < bonds.length; g++) {
           if(upToWhichAtom==molecule.getAtomCount() || (isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[0])] && isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[1])])){
-            Bond bond = bonds[g];
+        	  org.openscience.cdk.interfaces.Bond bond = bonds[g];
             if (bond.getAtoms().length != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {

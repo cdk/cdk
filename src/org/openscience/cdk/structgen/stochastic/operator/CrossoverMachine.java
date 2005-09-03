@@ -139,7 +139,7 @@ public class CrossoverMachine
 		
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-            Bond[] bonds = redChild[1].getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = redChild[1].getBonds();
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(redChild[0].getAtomAt(((Integer)blueAtoms.elementAt(j)).intValue())))
 				{
@@ -152,7 +152,7 @@ public class CrossoverMachine
 
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-            Bond[] bonds = redChild[1].getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = redChild[1].getBonds();
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(redChild[1].getAtomAt(((Integer)blueAtoms.elementAt(j)).intValue())))
 				{
@@ -165,7 +165,7 @@ public class CrossoverMachine
 
 		for (int j = 0; j < redAtoms.size(); j++)
 		{
-            Bond[] bonds = blueChild[0].getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = blueChild[0].getBonds();
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(blueChild[0].getAtomAt(((Integer)redAtoms.elementAt(j)).intValue())))
 				{
@@ -177,7 +177,7 @@ public class CrossoverMachine
 
 
 		for (int j = 0; j < redAtoms.size(); j++) {
-            Bond[] bonds = blueChild[1].getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = blueChild[1].getBonds();
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(blueChild[1].getAtomAt(((Integer)redAtoms.elementAt(j)).intValue())))
 				{

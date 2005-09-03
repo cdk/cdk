@@ -797,7 +797,7 @@ public class SmilesParserTest extends CDKTestCase
 			// it's a bit hard to detect three double bonds in the phenyl ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			Bond[] bonds = mol.getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
 			for (int i = 0; i < bonds.length; i++)
 			{
 				totalBondOrder += bonds[i].getOrder();
@@ -836,7 +836,7 @@ public class SmilesParserTest extends CDKTestCase
 			// it's a bit hard to detect two double bonds in the pyrrole ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			Bond[] bonds = mol.getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
 			for (int i = 0; i < bonds.length; i++)
 			{
 				totalBondOrder += bonds[i].getOrder();
@@ -1184,7 +1184,7 @@ public class SmilesParserTest extends CDKTestCase
 			// it's a bit hard to detect two double bonds in the pyrrole ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			Bond[] bonds = mol.getBonds();
+			org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
 			for (int i = 0; i < bonds.length; i++)
 			{
 				totalBondOrder += bonds[i].getOrder();

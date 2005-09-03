@@ -398,13 +398,13 @@ public class UniversalIsomorphismTester {
   public static AtomContainer project(List rMapList, AtomContainer g, int id) {
     AtomContainer ac = new org.openscience.cdk.AtomContainer();
 
-    Bond[] bondList = g.getBonds();
+    org.openscience.cdk.interfaces.Bond[] bondList = g.getBonds();
 
     Hashtable table = new Hashtable();
     Atom a1 = null;
     Atom a2 = null;
     org.openscience.cdk.interfaces.Atom a = null;
-    Bond bond = null;
+    org.openscience.cdk.interfaces.Bond bond = null;
 
     for (Iterator i = rMapList.iterator(); i.hasNext(); ) {
       RMap rMap = (RMap) i.next();
@@ -521,21 +521,21 @@ public class UniversalIsomorphismTester {
   public static List makeAtomsMapOfBondsMap(List l, AtomContainer g1, AtomContainer g2) {
     if(l==null)
       return(l);
-    Bond[] bonds1 = g1.getBonds();
-    Bond[] bonds2 = g2.getBonds();
+    org.openscience.cdk.interfaces.Bond[] bonds1 = g1.getBonds();
+    org.openscience.cdk.interfaces.Bond[] bonds2 = g2.getBonds();
     List result = new Vector();
     for (int i = 0; i < l.size(); i++) {
-      Bond bond1 = bonds1[((RMap) l.get(i)).getId1()];
-      Bond bond2 = bonds2[((RMap) l.get(i)).getId2()];
+    	org.openscience.cdk.interfaces.Bond bond1 = bonds1[((RMap) l.get(i)).getId1()];
+    	org.openscience.cdk.interfaces.Bond bond2 = bonds2[((RMap) l.get(i)).getId2()];
       org.openscience.cdk.interfaces.Atom[] atom1 = bond1.getAtoms();
       org.openscience.cdk.interfaces.Atom[] atom2 = bond2.getAtoms();
       for (int j = 0; j < 2; j++) {
-        Bond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
+    	  org.openscience.cdk.interfaces.Bond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
         for (int k = 0; k < bondsConnectedToAtom1j.length; k++) {
           if (bondsConnectedToAtom1j[k] != bond1) {
-            Bond testBond = bondsConnectedToAtom1j[k];
+        	  org.openscience.cdk.interfaces.Bond testBond = bondsConnectedToAtom1j[k];
             for (int m = 0; m < l.size(); m++) {
-              Bond testBond2 = null;
+            	org.openscience.cdk.interfaces.Bond testBond2 = null;
               if (((RMap) l.get(m)).getId1() == g1.getBondNumber(testBond)) {
                 testBond2 = bonds2[((RMap) l.get(m)).getId2()];
                 for (int n = 0; n < 2; n++) {
@@ -582,8 +582,8 @@ public class UniversalIsomorphismTester {
   private static void nodeConstructor(RGraph gr, AtomContainer ac1, AtomContainer ac2)  throws CDKException{
     // resets the target graph.
     gr.clear();
-    Bond[] bondsA1 = ac1.getBonds();
-    Bond[] bondsA2 = ac2.getBonds();
+    org.openscience.cdk.interfaces.Bond[] bondsA1 = ac1.getBonds();
+    org.openscience.cdk.interfaces.Bond[] bondsA2 = ac2.getBonds();
     int k = 0;
 
     // compares each bond of G1 to each bond of G2
@@ -595,7 +595,7 @@ public class UniversalIsomorphismTester {
               QueryBond queryBond = (QueryBond)bondsA2[j];
               QueryAtom atom1 = (QueryAtom)(bondsA2[j].getAtomAt(0));
               QueryAtom atom2 = (QueryAtom)(bondsA2[j].getAtomAt(1));
-              Bond bond = bondsA1[i];
+              org.openscience.cdk.interfaces.Bond bond = bondsA1[i];
               if (queryBond.matches(bond)) {
                   // ok, bonds match
                   if (atom1.matches(bond.getAtomAt(0)) && atom2.matches(bond.getAtomAt(1)) ||
@@ -658,13 +658,13 @@ public class UniversalIsomorphismTester {
       x.getForbidden().set(i);
     }
 
-    Bond a1 = null;
-    Bond a2 = null;
-    Bond b1 = null;
-    Bond b2 = null;
+    org.openscience.cdk.interfaces.Bond a1 = null;
+    org.openscience.cdk.interfaces.Bond a2 = null;
+    org.openscience.cdk.interfaces.Bond b1 = null;
+    org.openscience.cdk.interfaces.Bond b2 = null;
 
-    Bond[] bondsA1 = ac1.getBonds();
-    Bond[] bondsA2 = ac2.getBonds();
+    org.openscience.cdk.interfaces.Bond[] bondsA1 = ac1.getBonds();
+    org.openscience.cdk.interfaces.Bond[] bondsA2 = ac2.getBonds();
 
     gr.setFirstGraphSize(ac1.getBondCount());
     gr.setSecondGraphSize(ac2.getBondCount());
@@ -717,7 +717,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static boolean hasCommonAtom(Bond a, Bond b) {
+  private static boolean hasCommonAtom(org.openscience.cdk.interfaces.Bond a, org.openscience.cdk.interfaces.Bond b) {
       
     if (a.contains(b.getAtomAt(0))) {
       return true;
@@ -736,7 +736,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static String getCommonSymbol(Bond a, Bond b) {
+  private static String getCommonSymbol(org.openscience.cdk.interfaces.Bond a, org.openscience.cdk.interfaces.Bond b) {
     String symbol = "";
     
     if (a.contains(b.getAtomAt(0))) {
@@ -756,7 +756,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static boolean queryAdjacency(Bond a1, Bond b1, Bond a2, Bond b2) {
+  private static boolean queryAdjacency(org.openscience.cdk.interfaces.Bond a1, org.openscience.cdk.interfaces.Bond b1, org.openscience.cdk.interfaces.Bond a2, org.openscience.cdk.interfaces.Bond b2) {
       
 	  org.openscience.cdk.interfaces.Atom atom1 = null;
 	  org.openscience.cdk.interfaces.Atom atom2 = null;

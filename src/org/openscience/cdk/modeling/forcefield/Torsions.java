@@ -43,7 +43,7 @@ public class Torsions {
 	double[] v3 = null;
 	double[] phi = null;
 	
-	Bond[] bond = null;
+	org.openscience.cdk.interfaces.Bond[] bond = null;
 	Atom[] atomInBond = null;
 	Bond[] bondConnectedBefore = null;
 	Bond[] bondConnectedAfter = null;

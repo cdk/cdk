@@ -23,14 +23,14 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 
 /**
  * @cdk.module extra
  */
-public class OrderQueryBond extends Bond implements QueryBond {
+public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBond {
 
     public OrderQueryBond() {
     }

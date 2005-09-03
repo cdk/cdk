@@ -143,7 +143,7 @@ public class AromaticBondsCountDescriptor implements Descriptor {
             RingSet rs = (new AllRingsFinder()).findAllRings(ac);
             HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
         }
-        Bond[] bonds = ac.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = ac.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             if (ac.getBondAt(i).getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticBondsCount += 1;

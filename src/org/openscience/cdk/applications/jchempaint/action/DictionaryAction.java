@@ -60,7 +60,7 @@ public class DictionaryAction extends JCPAction {
             logger.debug("Making references for atom...");
             CDKDictionaryReferences.makeReferencesExplicit(atoms[i]);
         }
-        Bond[] bonds = container.getBonds();
+        org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
         for (int i=0; i<bonds.length; i++) {
             logger.debug("Making references for bond...");
             CDKDictionaryReferences.makeReferencesExplicit(bonds[i]);

@@ -397,7 +397,7 @@ public class FiguerasSSSRFinder {
 	 */
 	private void breakBond(Atom atom, Molecule molecule)
 	{
-        Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
 			if (bonds[i].contains(atom))
@@ -422,11 +422,11 @@ public class FiguerasSSSRFinder {
 	{
 		Ring r1, r2;
 		RingSet ringSet = new RingSet();
-		Bond bond;
+		org.openscience.cdk.interfaces.Bond bond;
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
 		logger.debug("Molecule: " + molecule);
-        Bond[] bonds = ring.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = ring.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
 			bond = bonds[i];

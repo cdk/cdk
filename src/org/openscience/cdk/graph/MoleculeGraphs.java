@@ -63,7 +63,7 @@ public class MoleculeGraphs {
 		}
 		
 		for (int i=0; i<molecule.getBondCount(); i++	) {
-			Bond bond = molecule.getBonds()[i];
+			org.openscience.cdk.interfaces.Bond bond = molecule.getBonds()[i];
 			
 			/*
 			int order = (int) bond.getOrder();

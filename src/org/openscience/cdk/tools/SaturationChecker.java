@@ -134,7 +134,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
      * Returns wether a bond is unsaturated. A bond is unsaturated if 
      * <b>both</b> Atoms in the bond are unsaturated.
      */
-    public boolean isUnsaturated(Bond bond, AtomContainer atomContainer) throws CDKException {
+    public boolean isUnsaturated(org.openscience.cdk.interfaces.Bond bond, AtomContainer atomContainer) throws CDKException {
     	org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
         boolean isUnsaturated = true;
         for (int i=0; i<atoms.length; i++) {
@@ -147,7 +147,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
      * Returns wether a bond is saturated. A bond is saturated if 
      * <b>both</b> Atoms in the bond are saturated.
      */
-    public boolean isSaturated(Bond bond, AtomContainer atomContainer) throws CDKException {
+    public boolean isSaturated(org.openscience.cdk.interfaces.Bond bond, AtomContainer atomContainer) throws CDKException {
     	org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
         boolean isSaturated = true;
         for (int i=0; i<atoms.length; i++) {
@@ -261,7 +261,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
     /**
      * Resets the bond order of the Bond to 1.0.
      */
-    public void unsaturate(Bond[] bonds) {
+    public void unsaturate(org.openscience.cdk.interfaces.Bond[] bonds) {
         for (int i = 1; i < bonds.length; i++) {
             bonds[i].setOrder(1.0);
         }
@@ -279,7 +279,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
             boolean succeeded = newSaturate(atomContainer.getBonds(), atomContainer);
-            Bond[] bonds=atomContainer.getBonds();
+            org.openscience.cdk.interfaces.Bond[] bonds=atomContainer.getBonds();
             for(int i=0;i<bonds.length;i++){
               if(bonds[i].getOrder()==2 && bonds[i].getFlag(CDKConstants.ISAROMATIC) && (bonds[i].getAtomAt(0).getSymbol().equals("N") && bonds[i].getAtomAt(1).getSymbol().equals("N"))){
                 int atomtohandle=0;
@@ -304,11 +304,11 @@ public class SaturationChecker implements ValencyCheckerInterface {
     /**
      * Saturates a set of Bonds in an AtomContainer.
      */
-    public boolean newSaturate(Bond[] bonds, AtomContainer atomContainer) throws CDKException {
+    public boolean newSaturate(org.openscience.cdk.interfaces.Bond[] bonds, AtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: " + bonds.length);
         boolean bondsAreFullySaturated = true;
         if (bonds.length > 0) {
-            Bond bond = bonds[0];
+        	org.openscience.cdk.interfaces.Bond bond = bonds[0];
 
             // determine bonds left
             int leftBondCount = bonds.length-1;
@@ -374,7 +374,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
     /**
      * Saturate atom by adjusting its bond orders.
      */
-    public boolean newSaturate(Bond bond, AtomContainer atomContainer) throws CDKException {
+    public boolean newSaturate(org.openscience.cdk.interfaces.Bond bond, AtomContainer atomContainer) throws CDKException {
     	org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
     	org.openscience.cdk.interfaces.Atom atom = atoms[0];
     	org.openscience.cdk.interfaces.Atom partner = atoms[1];

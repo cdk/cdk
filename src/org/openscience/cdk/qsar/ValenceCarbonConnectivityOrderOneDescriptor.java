@@ -131,7 +131,7 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements Descriptor {
 		Element element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
-		Bond[] bonds = atomContainer.getBonds();
+		org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
 		for (int b = 0; b < bonds.length; b++) {
 			atoms = bonds[b].getAtoms();
 			if ((!atoms[0].getSymbol().equals("H")) && (!atoms[1].getSymbol().equals("H"))) {

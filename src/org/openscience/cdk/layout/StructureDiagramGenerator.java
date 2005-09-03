@@ -610,7 +610,7 @@ public class StructureDiagramGenerator
 		Point2d newPoint2 = null;
 		RingSet nextRingSystem = null;
 		AtomContainer ringSystem = null;
-		Bond nextRingAttachmentBond = null;
+		org.openscience.cdk.interfaces.Bond nextRingAttachmentBond = null;
 		double angle;
 		double angle1;
 		double angle2;
@@ -758,10 +758,10 @@ public class StructureDiagramGenerator
 	 *
 	 *@return    the next bond with an unplaced ring atom
 	 */
-	private Bond getNextBondWithUnplacedRingAtom()
+	private org.openscience.cdk.interfaces.Bond getNextBondWithUnplacedRingAtom()
 	{
-		Bond bond = null;
-		Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.Bond bond = null;
+		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
@@ -909,7 +909,7 @@ public class StructureDiagramGenerator
 	 *@param  bond  the bond to be search for the unplaced ring atom
 	 *@return       the unplaced ring atom in this bond
 	 */
-	private org.openscience.cdk.interfaces.Atom getRingAtom(Bond bond)
+	private org.openscience.cdk.interfaces.Atom getRingAtom(org.openscience.cdk.interfaces.Bond bond)
 	{
 		if (bond.getAtomAt(0).getFlag(CDKConstants.ISINRING) &&
 				!bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED))

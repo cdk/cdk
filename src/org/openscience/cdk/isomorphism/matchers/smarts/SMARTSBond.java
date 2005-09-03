@@ -41,7 +41,7 @@ public class SMARTSBond extends Bond implements QueryBond {
         super((Atom)atom1, (Atom)atom2, order);
     }
 
-	public boolean matches(Bond bond) {
+	public boolean matches(org.openscience.cdk.interfaces.Bond bond) {
         return false;
     };
 }

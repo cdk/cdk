@@ -23,15 +23,15 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
 
 /**
  * @cdk.module standard
  */
-public class QueryAtomContainer extends AtomContainer {
+public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
 
     public QueryAtomContainer() {
     };
