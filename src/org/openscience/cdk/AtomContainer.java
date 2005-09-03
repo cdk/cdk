@@ -297,9 +297,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return    The array of electronContainers of this AtomContainer
 	 *@see       #setElectronContainers
 	 */
-	public ElectronContainer[] getElectronContainers()
+	public org.openscience.cdk.interfaces.ElectronContainer[] getElectronContainers()
 	{
-		ElectronContainer[] returnElectronContainers = new ElectronContainer[getElectronContainerCount()];
+		org.openscience.cdk.interfaces.ElectronContainer[] returnElectronContainers = new ElectronContainer[getElectronContainerCount()];
 		System.arraycopy(this.electronContainers, 0, returnElectronContainers, 0, returnElectronContainers.length);
 		return returnElectronContainers;
 	}
