@@ -37,7 +37,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemObjectListener;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;

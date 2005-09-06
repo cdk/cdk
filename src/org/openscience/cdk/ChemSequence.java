@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 
 /** 
  * A sequence of ChemModels, which can, for example, be used to

@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObjectListener;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 

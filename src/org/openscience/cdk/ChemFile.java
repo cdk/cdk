@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 
 /**
  *  A Object containing a number of ChemSequences. This is supposed to be the

@@ -27,7 +27,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ChemObjectListener;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;

@@ -24,6 +24,7 @@
 package org.openscience.cdk;
 
 import javax.vecmath.Vector3d;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 
 /**
  * Class representing a molecular crystal.

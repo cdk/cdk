@@ -28,7 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemObjectListener;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 

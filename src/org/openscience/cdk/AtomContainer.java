@@ -28,6 +28,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and

@@ -34,6 +34,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectListener;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for

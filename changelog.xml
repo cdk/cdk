@@ -7,6 +7,9 @@
    <addition contributor="egonw">
      Added getAllChemObjects() methods to the cdk.tools.manipulators
    </addition>
+   <apiChange contributor="egonw">
+     ChemObjectListener was moved to the cdk.interfaces package
+   </apiChange>
   </release>
   
   <release id="20050826">
