@@ -261,7 +261,7 @@ public class RingPlacer
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainerAt(k) instanceof Bond) break;
+            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.Bond) break;
         }
         Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();
@@ -453,7 +453,7 @@ public class RingPlacer
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainerAt(k) instanceof Bond) break;
+            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.Bond) break;
         }
         Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();

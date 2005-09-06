@@ -51,7 +51,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		}
 		int singleElectronContainerCount = 0;
 		for (int i = 0; i < mol.getElectronContainerCount(); i++) {
-			ElectronContainer container = mol.getElectronContainerAt(i);
+			org.openscience.cdk.interfaces.ElectronContainer container = mol.getElectronContainerAt(i);
 			if (container.getClass() == SingleElectron.class) {
 				singleElectronContainerCount += 1;
 			}
@@ -75,9 +75,9 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		}
 		int singleElectronContainerCount = 0;
 		for (int i = 0; i < allRadicalsMol.getElectronContainerCount(); i++) {
-			ElectronContainer container = allRadicalsMol
+			org.openscience.cdk.interfaces.ElectronContainer container = allRadicalsMol
 					.getElectronContainerAt(i);
-			if (container.getClass() == SingleElectron.class) {
+			if (container instanceof SingleElectron) {
 				singleElectronContainerCount += 1;
 			}
 		}

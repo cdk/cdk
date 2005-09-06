@@ -117,7 +117,7 @@ public class EditAction extends JCPAction {
 			ChemObject object = getSource(event);
 			if (object instanceof Atom) {
 				renderModel.setSelectedPart(ChemModelManipulator.getRelevantAtomContainer(jcpModel.getChemModel(),(Atom)object));
-			} else if (object instanceof Bond) {
+			} else if (object instanceof org.openscience.cdk.interfaces.Bond) {
 				renderModel.setSelectedPart(ChemModelManipulator.getRelevantAtomContainer(jcpModel.getChemModel(),(Bond)object));
 			} else {
 				logger.warn("selectMolecule not defined for the calling object ", object);
@@ -132,7 +132,7 @@ public class EditAction extends JCPAction {
 				renderModel.setSelectedPart(container);
 				jcpModel.fireChange();
 			}
-			else if (object instanceof Bond) {
+			else if (object instanceof org.openscience.cdk.interfaces.Bond) {
 				AtomContainer container = new org.openscience.cdk.AtomContainer();
 				container.addBond((Bond) object);
 				renderModel.setSelectedPart(container);

@@ -346,7 +346,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 */
 	public boolean compare(Object object)
 	{
-		if (object instanceof Bond)
+		if (object instanceof org.openscience.cdk.interfaces.Bond)
 		{
 			Bond bond = (Bond) object;
 			for (int i = 0; i < atoms.length; i++)

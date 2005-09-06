@@ -207,7 +207,7 @@ public class PMPReader extends DefaultChemObjectReader {
                             if (chemObject instanceof Atom) {
                                 atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
                                 molecule.addAtom((Atom)chemObject);
-                            } else if (chemObject instanceof Bond) {
+                            } else if (chemObject instanceof org.openscience.cdk.interfaces.Bond) {
                                 bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
                                 molecule.addBond((Bond)chemObject);
                             } else {

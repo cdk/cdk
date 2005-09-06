@@ -271,7 +271,7 @@ public class BondTest extends CDKTestCase {
         Bond bond = new Bond();
         Object clone = bond.clone();
         assertNotNull(clone);
-        assertTrue(clone instanceof Bond);
+        assertTrue(clone instanceof org.openscience.cdk.interfaces.Bond);
     }
 
     public void testClone_Atom() {

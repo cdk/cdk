@@ -65,7 +65,7 @@ public class AtomContainerManipulator {
             container.setAtomAt(container.getAtomNumber(atom), newAtom);
             ElectronContainer[] electronContainers = container.getElectronContainers();
             for (int i=0; i<electronContainers.length; i++) {
-                if (electronContainers[i] instanceof Bond) {
+                if (electronContainers[i] instanceof org.openscience.cdk.interfaces.Bond) {
                     Bond bond = (Bond)electronContainers[i];
                     if (bond.contains(atom)) {
                         for (int j=0; j<bond.getAtomCount(); j++) {

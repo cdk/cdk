@@ -51,7 +51,7 @@ public class MoleculeBuilder
 {
     /** The molecule which is worked upon throughout the class and returned at the end */
     private Molecule currentMolecule = new Molecule();
-    private Atom endOfChain;
+    private org.openscience.cdk.interfaces.Atom endOfChain;
         
     /**
      * Builds the main chain which may act as a foundation for futher working groups.
@@ -258,7 +258,7 @@ public class MoleculeBuilder
             }
             
             //Stuff which applied no matter where the N atom is:
-            Atom nitrogenAtom = currentMolecule.getLastAtom();
+            org.openscience.cdk.interfaces.Atom nitrogenAtom = currentMolecule.getLastAtom();
             nitrogenAtom.setFormalCharge(+1);
             addAtom("O", nitrogenAtom, 1.0, 0);
             currentMolecule.getLastAtom().setFormalCharge(-1);

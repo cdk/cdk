@@ -57,7 +57,7 @@ public class CDKDictionaryReferences {
     public static void makeReferencesExplicit(org.openscience.cdk.interfaces.ChemObject object) {
         if (object instanceof Atom) {
             makeReferencesExplicitForAtom((Atom)object);
-        } else if (object instanceof Bond) {
+        } else if (object instanceof org.openscience.cdk.interfaces.Bond) {
             makeReferencesExplicitForBond((Bond)object);
         } else if (object instanceof ChemModel) {
             makeReferencesExplicitForChemModel((ChemModel)object);

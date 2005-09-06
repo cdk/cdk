@@ -368,7 +368,7 @@ public class AtomContainerTest extends CDKTestCase {
         
 		for (int i = 0; i < acetone.getElectronContainerCount(); i++) {
             try {
-                ElectronContainer ec = acetone.getElectronContainerAt(i);
+            	org.openscience.cdk.interfaces.ElectronContainer ec = acetone.getElectronContainerAt(i);
                 if (ec == null) {
                     fail("ElectronContainer is unexpectedly null!");
                 }
@@ -681,7 +681,7 @@ public class AtomContainerTest extends CDKTestCase {
         Bond b = new Bond(c1, c2, 3);
         container.setElectronContainerAt(3, b);
         
-        assertTrue(container.getElectronContainerAt(3) instanceof Bond);
+        assertTrue(container.getElectronContainerAt(3) instanceof org.openscience.cdk.interfaces.Bond);
         Bond bond = (Bond)container.getElectronContainerAt(3);
         assertEquals(3.0, bond.getOrder(), 0.00001);
     }

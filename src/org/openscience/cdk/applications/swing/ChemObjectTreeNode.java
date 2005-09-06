@@ -63,7 +63,7 @@ public class ChemObjectTreeNode extends DefaultMutableTreeNode {
         if (object instanceof Atom) {
             Atom atom = (Atom)object;
             name.append(" " + atom.getSymbol());
-        } else if (object instanceof Bond) {
+        } else if (object instanceof org.openscience.cdk.interfaces.Bond) {
             Bond bond = (Bond)object;
             name.append(" " + bond.getOrder());
         }

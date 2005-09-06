@@ -461,7 +461,7 @@ public class StructureDiagramGenerator
 		int i = 0;
 		for (i = 0; i < ring.getElectronContainerCount(); i++)
 		{
-			if (ring.getElectronContainerAt(i) instanceof Bond)
+			if (ring.getElectronContainerAt(i) instanceof org.openscience.cdk.interfaces.Bond)
 			{
 				break;
 			}
@@ -732,8 +732,8 @@ public class StructureDiagramGenerator
 		Bond bond = null;
 		for (int f = 0; f < molecule.getElectronContainerCount(); f++)
 		{
-			ElectronContainer ec = molecule.getElectronContainerAt(f);
-			if (ec instanceof Bond)
+			org.openscience.cdk.interfaces.ElectronContainer ec = molecule.getElectronContainerAt(f);
+			if (ec instanceof org.openscience.cdk.interfaces.Bond)
 			{
 				bond = (Bond) ec;
 				if (bond.getAtomAt(1).getFlag(CDKConstants.ISPLACED) &&

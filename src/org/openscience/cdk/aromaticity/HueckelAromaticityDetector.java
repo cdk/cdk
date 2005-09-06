@@ -32,7 +32,7 @@ package org.openscience.cdk.aromaticity;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -168,7 +168,7 @@ public class HueckelAromaticityDetector
 			for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
 			{
 				ElectronContainer electronContainer = atomContainer.getElectronContainerAt(f);
-				if (electronContainer instanceof Bond)
+				if (electronContainer instanceof org.openscience.cdk.interfaces.Bond)
 				{
 					electronContainer.setFlag(CDKConstants.ISAROMATIC, false);
 				}
@@ -197,7 +197,7 @@ public class HueckelAromaticityDetector
 				for (int g = 0; g < ring.getElectronContainerCount(); g++)
 				{
 					ElectronContainer electronContainer = ring.getElectronContainerAt(g);
-					if (electronContainer instanceof Bond)
+					if (electronContainer instanceof org.openscience.cdk.interfaces.Bond)
 					{
 						electronContainer.setFlag(CDKConstants.ISAROMATIC, true);
 					}
@@ -286,7 +286,7 @@ public class HueckelAromaticityDetector
 	 *  }
 	 *  for (int g = 0; g < ring.getElectronContainerCount(); g++) {
 	 *  ElectronContainer ec = ring.getElectronContainerAt(g);
-	 *  if (ec instanceof Bond) {
+	 *  if (ec instanceof org.openscience.cdk.interfaces.Bond) {
 	 *  bond = (Bond)ec;
 	 *  if (bond.getOrder() > 1) {
 	 *  piElectronCount += 2*(bond.getOrder()-1);

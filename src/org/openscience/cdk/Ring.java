@@ -104,7 +104,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	{
 		Bond tempBond;
 		for (int f = 0; f < getElectronContainerCount(); f++) {
-            ElectronContainer electronContainer = getElectronContainerAt(f);
+			org.openscience.cdk.interfaces.ElectronContainer electronContainer = getElectronContainerAt(f);
             if (electronContainer instanceof org.openscience.cdk.interfaces.Bond) {
                 tempBond = (Bond)electronContainer;
                 if (tempBond.contains(atom) && bond != tempBond) {
@@ -125,7 +125,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 		int orderSum = 0;
 		Bond tempBond;
 		for (int i = 0; i < getElectronContainerCount(); i++) {
-            ElectronContainer electronContainer = getElectronContainerAt(i);
+			org.openscience.cdk.interfaces.ElectronContainer electronContainer = getElectronContainerAt(i);
             if (electronContainer instanceof org.openscience.cdk.interfaces.Bond) {
                 tempBond = (Bond)electronContainer;
                 orderSum += tempBond.getOrder();

@@ -254,7 +254,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@return         The ElectronContainer at position <code>number</code>.
 	 *@see            #setElectronContainerAt
 	 */
-	public org.openscience.cdk.ElectronContainer getElectronContainerAt(int number);
+	public ElectronContainer getElectronContainerAt(int number);
 
 
 	/**
@@ -485,7 +485,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 * @param  position  The position of the bond in the electronContainers array
 	 * @return           Bond that was removed
 	 */
-	public org.openscience.cdk.ElectronContainer removeElectronContainer(int position);
+	public ElectronContainer removeElectronContainer(int position);
 
 
 	/**
@@ -494,7 +494,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 * @param  electronContainer    The electronContainer to be removed
 	 * @return                      Bond that was removed
 	 */
-	public org.openscience.cdk.ElectronContainer removeElectronContainer(ElectronContainer electronContainer);
+	public ElectronContainer removeElectronContainer(ElectronContainer electronContainer);
 
 
 	/**

@@ -71,7 +71,7 @@ public class EditChemObjectPropsAction extends JCPAction {
 			else if (object instanceof Reaction) {
 				editor = new ReactionEditor();
 			}
-			else if (object instanceof Bond) {
+			else if (object instanceof org.openscience.cdk.interfaces.Bond) {
 				editor = new BondEditor();
 			}
 			

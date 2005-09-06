@@ -232,7 +232,7 @@ public class Convertor {
             writeChemModel((ChemModel)object, element);
         } else if (object instanceof Atom) {
             writeAtom(null, (Atom)object, element);
-        } else if (object instanceof Bond) {
+        } else if (object instanceof org.openscience.cdk.interfaces.Bond) {
             writeBond((Bond)object, element);
         } else if (object instanceof Reaction) {
             writeReaction((Reaction)object, element);

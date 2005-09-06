@@ -257,7 +257,7 @@ public class PathTools  {
             ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
             //System.out.println("found #ec's: " + eContainers.length);
             for (int i=0; i<eContainers.length; i++) {
-                if (!(eContainers[i] instanceof Bond)) {
+                if (!(eContainers[i] instanceof org.openscience.cdk.interfaces.Bond)) {
                     // ok, no bond, thus LonePair or SingleElectron
                     // System.out.println("adding non bond " + eContainers[i]);
                     molecule.addElectronContainer(eContainers[i]);

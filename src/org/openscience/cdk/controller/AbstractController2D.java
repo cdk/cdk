@@ -1071,7 +1071,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						container.addAtom((Atom) chemObj);
 						logger.debug("selected one atom in lasso mode");
 						r2dm.setSelectedPart(container);
-					} else if (chemObj instanceof Bond)
+					} else if (chemObj instanceof org.openscience.cdk.interfaces.Bond)
 					{
 						Bond bond = (Bond) chemObj;
 						container.addBond(bond);
@@ -1590,7 +1590,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 		{
 			r2dm.setHighlightedAtom((Atom) objectInRange);
 			r2dm.setHighlightedBond(null);
-		} else if (objectInRange instanceof Bond)
+		} else if (objectInRange instanceof org.openscience.cdk.interfaces.Bond)
 		{
 			r2dm.setHighlightedBond((Bond) objectInRange);
 			r2dm.setHighlightedAtom(null);
