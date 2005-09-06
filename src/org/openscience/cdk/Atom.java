@@ -553,7 +553,7 @@ public class Atom extends AtomType implements java.io.Serializable, org.openscie
          */
         public boolean compare(Object object)
         {
-          if (!(object instanceof Atom)) {
+          if (!(object instanceof org.openscience.cdk.interfaces.Atom)) {
               return false;
           }
           if (!super.compare(object)) {

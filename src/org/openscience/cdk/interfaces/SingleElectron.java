@@ -35,7 +35,7 @@ package org.openscience.cdk.interfaces;
  *   radical.addElectronContainer(new SingleElectron(carbon));
  * </pre> 
  *
- * @cdk.module data
+ * @cdk.module interfaces
  *
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired
@@ -48,7 +48,7 @@ public interface SingleElectron extends ElectronContainer {
      * @return the associated Atom.
      * @see    #setAtom
 	 */
-	public org.openscience.cdk.Atom getAtom();
+	public Atom getAtom();
 
 	/**
 	 * Sets the associated Atom.

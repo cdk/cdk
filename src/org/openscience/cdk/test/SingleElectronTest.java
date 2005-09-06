@@ -59,7 +59,7 @@ public class SingleElectronTest extends CDKTestCase {
         Atom atom = new Atom("N");
         SingleElectron radical = new SingleElectron(atom);
         assertEquals(1, radical.getElectronCount());
-        assertTrue(radical.getAtom().compare(atom));
+        assertEquals(atom, radical.getAtom());
         assertTrue(radical.contains(atom));
     }
 
@@ -79,13 +79,13 @@ public class SingleElectronTest extends CDKTestCase {
         SingleElectron radical = new SingleElectron();
         assertNull(radical.getAtom());
         radical.setAtom(atom);
-        assertTrue(radical.getAtom().compare(atom));
+        assertEquals(atom, radical.getAtom());
     }
 
     public void testGetAtom() {
         Atom atom = new Atom("N");
         SingleElectron radical = new SingleElectron(atom);
-        assertTrue(radical.getAtom().compare(atom));
+        assertEquals(atom, radical.getAtom());
     }
     
     public void testClone() {

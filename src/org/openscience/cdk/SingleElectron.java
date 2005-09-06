@@ -80,7 +80,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      *
      * @see    #setAtom
 	 */
-	public Atom getAtom() {
+	public org.openscience.cdk.interfaces.Atom getAtom() {
 		return (Atom)this.atom;
 	}
 
