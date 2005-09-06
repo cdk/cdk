@@ -504,7 +504,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 * @param  atom2  The second atom
 	 * @return        The bond that connectes the two atoms
 	 */
-	public org.openscience.cdk.Bond removeBond(Atom atom1, Atom atom2);
+	public Bond removeBond(Atom atom1, Atom atom2);
 
 
 
