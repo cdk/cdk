@@ -49,7 +49,7 @@ public interface LonePair extends ElectronContainer {
      * @return the associated Atom.
      * @see    #setAtom
 	 */
-	public org.openscience.cdk.Atom getAtom();
+	public Atom getAtom();
 
 	/**
 	 * Sets the associated Atom.

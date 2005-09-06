@@ -1320,7 +1320,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 				}
 				((Bond) newEC).setAtoms(newAtoms);
 			} else if (electronContainer instanceof LonePair) {
-				Atom atom = ((LonePair) electronContainer).getAtom();
+				org.openscience.cdk.interfaces.Atom atom = ((LonePair) electronContainer).getAtom();
 				newEC = (LonePair)electronContainer.clone();
 				((LonePair) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
             } else if (electronContainer instanceof SingleElectron) {

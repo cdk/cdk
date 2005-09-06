@@ -59,7 +59,7 @@ public class LonePairTest extends CDKTestCase {
         Atom atom = new Atom("N");
         LonePair lp = new LonePair(atom);
         assertEquals(2, lp.getElectronCount());
-        assertTrue(lp.getAtom().compare(atom));
+        assertEquals(atom, lp.getAtom());
         assertTrue(lp.contains(atom));
     }
     
@@ -67,7 +67,7 @@ public class LonePairTest extends CDKTestCase {
         Atom atom = new Atom("N");
         LonePair lp = new LonePair();
         lp.setAtom(atom);
-        assertTrue(lp.getAtom().compare(atom));
+        assertEquals(atom, lp.getAtom());
     }
     
     public void testGetAtom() {
@@ -75,7 +75,7 @@ public class LonePairTest extends CDKTestCase {
         LonePair lp = new LonePair();
         assertNull(lp.getAtom());
         lp.setAtom(atom);
-        assertTrue(lp.getAtom().compare(atom));
+        assertEquals(atom, lp.getAtom());
     }
     
     public void testGetElectronCount() {
