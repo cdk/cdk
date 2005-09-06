@@ -478,7 +478,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 * @param  atom2  The second atom
 	 * @return        The bond that connectes the two atoms
 	 */
-	public Bond getBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2)
+	public org.openscience.cdk.interfaces.Bond getBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2)
 	{
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{

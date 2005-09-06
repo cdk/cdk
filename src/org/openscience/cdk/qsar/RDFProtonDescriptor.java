@@ -243,12 +243,12 @@ public class RDFProtonDescriptor implements Descriptor {
 			ArrayList bondsInCycloex = new ArrayList(); // list for bonds in cycloexane-like rings
 			
 			// 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
-			Bond secondBond = null; // (remember that first bond is proton bond)
-			Bond thirdBond = null; //
-			Bond fourthBond = null; //
-			Bond fifthBond = null; //
-			Bond sixthBond = null; //
-			Bond seventhBond = null; //
+			org.openscience.cdk.interfaces.Bond secondBond = null; // (remember that first bond is proton bond)
+			org.openscience.cdk.interfaces.Bond thirdBond = null; //
+			org.openscience.cdk.interfaces.Bond fourthBond = null; //
+			org.openscience.cdk.interfaces.Bond fifthBond = null; //
+			org.openscience.cdk.interfaces.Bond sixthBond = null; //
+			org.openscience.cdk.interfaces.Bond seventhBond = null; //
 			
 			// definition of some variables used in the main FOR loop for detection of interesting atoms and bonds:
 			boolean theBondIsInA6MemberedRing = false; // this is like a flag for bonds which are in cycloexane-like rings (rings with more than 4 at.)
@@ -624,7 +624,7 @@ public class RDFProtonDescriptor implements Descriptor {
 	// 3) it belongs to an amide group
 	
 	
-	private boolean getIfBondIsNotRotatable(Molecule mol, Bond bond, AtomContainer detected) {
+	private boolean getIfBondIsNotRotatable(Molecule mol, org.openscience.cdk.interfaces.Bond bond, AtomContainer detected) {
 		boolean isBondNotRotatable = false;
 		int counter = 0;
 		Atom[] atoms = bond.getAtoms();
@@ -651,7 +651,7 @@ public class RDFProtonDescriptor implements Descriptor {
 	private boolean getIfACarbonIsDoubleBondedToAnOxygen(Molecule mol, Atom carbonAtom) {
 		boolean isDoubleBondedToOxygen = false;
 		Atom[] neighToCarbon = mol.getConnectedAtoms(carbonAtom);
-		Bond tmpBond = null;
+		org.openscience.cdk.interfaces.Bond tmpBond = null;
 		int counter = 0;
 		for(int nei = 0; nei < neighToCarbon.length; nei++) {
 			if(neighToCarbon[nei].getSymbol().equals("O")) {

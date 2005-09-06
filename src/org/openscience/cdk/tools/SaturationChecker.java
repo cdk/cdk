@@ -439,7 +439,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 		Atom[] partners = null;
 		AtomType[] atomTypes1 = null;
 		AtomType[] atomTypes2 = null;
-		Bond bond = null;
+		org.openscience.cdk.interfaces.Bond bond = null;
 		for (int i = 1; i < 4; i++)
 		{
 			// handle atoms with degree 1 first and then proceed to higher order

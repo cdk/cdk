@@ -99,7 +99,7 @@ public class VicinitySampler
 		AtomContainer newAc = null;
 
 		org.openscience.cdk.interfaces.Atom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
-		Bond b1 = null, b2 = null, b3 = null, b4 = null;
+		org.openscience.cdk.interfaces.Bond b1 = null, b2 = null, b3 = null, b4 = null;
 		int[] choices = new int[3];
 		/* We need at least two non-zero bonds in order to be successful */
 		int nonZeroBondsCounter = 0;
@@ -246,7 +246,7 @@ public class VicinitySampler
 	private AtomContainer change(AtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12, double b21, double b22)
 	{
 		org.openscience.cdk.interfaces.Atom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
-		Bond b1 = null, b2 = null, b3 = null, b4 = null;
+		org.openscience.cdk.interfaces.Bond b1 = null, b2 = null, b3 = null, b4 = null;
 		if (debug) System.out.println("About to make modification " + molCounter);
 		molCounter ++;
 		if (debug) System.out.println("Changes for molecule no. " + molCounter);

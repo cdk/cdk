@@ -284,7 +284,7 @@ public class AtomPlacer3D {
 	 *@return                The doubleBondConfiguration2D value
 	 *@exception  Exception  Description of the Exception
 	 */
-	private int getDoubleBondConfiguration2D(Bond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
+	private int getDoubleBondConfiguration2D(org.openscience.cdk.interfaces.Bond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
 		if (bond.getOrder()<1.5 || bond.getOrder()>2){
 			return 0;
 		}
