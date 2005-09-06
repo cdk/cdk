@@ -385,7 +385,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@return    The atom at position 0 .
 	 */
-	public Atom getFirstAtom()
+	public org.openscience.cdk.interfaces.Atom getFirstAtom()
 	{
 		return (Atom)atoms[0];
 	}
@@ -396,7 +396,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@return    The atom at the last position
 	 */
-	public Atom getLastAtom()
+	public org.openscience.cdk.interfaces.Atom getLastAtom()
 	{
 		return (Atom)atoms[getAtomCount() - 1];
 	}

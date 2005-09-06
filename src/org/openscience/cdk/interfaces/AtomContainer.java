@@ -203,7 +203,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *
 	 *@return    The atom at position 0 .
 	 */
-	public org.openscience.cdk.Atom getFirstAtom();
+	public Atom getFirstAtom();
 
 
 	/**
@@ -211,7 +211,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *
 	 *@return    The atom at the last position
 	 */
-	public org.openscience.cdk.Atom getLastAtom();
+	public Atom getLastAtom();
 
 
 	/**
