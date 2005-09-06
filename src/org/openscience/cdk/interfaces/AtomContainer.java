@@ -184,7 +184,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@see       #getElectronContainers
 	 *@see       #getBonds
 	 */
-	public org.openscience.cdk.LonePair[] getLonePairs();
+	public LonePair[] getLonePairs();
 
 
 	/**
@@ -195,7 +195,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@see          #getElectronContainers
 	 *@see          #getBonds
 	 */
-	public org.openscience.cdk.LonePair[] getLonePairs(Atom atom);
+	public LonePair[] getLonePairs(Atom atom);
 
 
 	/**

@@ -336,7 +336,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@see       #getElectronContainers
 	 *@see       #getBonds
 	 */
-	public LonePair[] getLonePairs()
+	public org.openscience.cdk.interfaces.LonePair[] getLonePairs()
 	{
 		int count = getLonePairCount();
 		LonePair[] result = new LonePair[count];
@@ -362,7 +362,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@see          #getElectronContainers
 	 *@see          #getBonds
 	 */
-	public LonePair[] getLonePairs(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.LonePair[] getLonePairs(org.openscience.cdk.interfaces.Atom atom)
 	{
 		Vector lps = new Vector();
 		for (int i = 0; i < getElectronContainerCount(); i++)
