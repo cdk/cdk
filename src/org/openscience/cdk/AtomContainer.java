@@ -503,7 +503,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return       The array of <code>Atom</code>s with the size of connected
 	 *      atoms
 	 */
-	public Atom[] getConnectedAtoms(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.Atom[] getConnectedAtoms(org.openscience.cdk.interfaces.Atom atom)
 	{
 		Vector atomsVec = getConnectedAtomsVector(atom);
 		Atom[] conAtoms = new Atom[atomsVec.size()];

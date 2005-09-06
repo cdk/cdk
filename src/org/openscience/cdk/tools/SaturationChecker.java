@@ -434,9 +434,9 @@ public class SaturationChecker implements ValencyCheckerInterface {
         /* newSaturate(atomContainer);
     }
     public void oldSaturate(AtomContainer atomContainer) throws CDKException { */
-		Atom partner = null;
+    	org.openscience.cdk.interfaces.Atom partner = null;
 		org.openscience.cdk.interfaces.Atom atom = null;
-		Atom[] partners = null;
+		org.openscience.cdk.interfaces.Atom[] partners = null;
 		AtomType[] atomTypes1 = null;
 		AtomType[] atomTypes2 = null;
 		org.openscience.cdk.interfaces.Bond bond = null;

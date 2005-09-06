@@ -274,7 +274,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@return       The array of <code>Atom</code>s with the size of connected
 	 *      atoms
 	 */
-	public org.openscience.cdk.Atom[] getConnectedAtoms(Atom atom);
+	public Atom[] getConnectedAtoms(Atom atom);
 
 
 	/**

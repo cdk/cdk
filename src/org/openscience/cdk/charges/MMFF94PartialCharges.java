@@ -83,7 +83,7 @@ public class MMFF94PartialCharges {
 		double sumOfFormalCharges = 0;
 		double sumOfBondIncrements = 0;
 		org.openscience.cdk.interfaces.Atom thisAtom = null;
-		Atom[] neighboors = null;
+		org.openscience.cdk.interfaces.Atom[] neighboors = null;
 		Vector data = null;
 		Vector bondData = null;
 		Vector dataNeigh = null;

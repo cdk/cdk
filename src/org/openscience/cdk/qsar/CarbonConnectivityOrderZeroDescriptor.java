@@ -98,7 +98,7 @@ public class CarbonConnectivityOrderZeroDescriptor implements Descriptor {
 		org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			int atomDegree = 0;
-			Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[i]);
+			org.openscience.cdk.interfaces.Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[i]);
 			for (int a = 0; a < neighboors.length; a++) {
 				if (!neighboors[a].getSymbol().equals("H")) {
 					atomDegree += 1;

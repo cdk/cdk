@@ -157,8 +157,8 @@ public class PiContactDetectionDescriptor implements Descriptor {
 		acSet = ConjugatedPiSystemsDetector.detect(mol);
 		org.openscience.cdk.interfaces.AtomContainer[] detected = acSet.getAtomContainers();
 
-		Atom[] neighboorsFirst = mol.getConnectedAtoms(first);
-		Atom[] neighboorsSecond = mol.getConnectedAtoms(second);
+		org.openscience.cdk.interfaces.Atom[] neighboorsFirst = mol.getConnectedAtoms(first);
+		org.openscience.cdk.interfaces.Atom[] neighboorsSecond = mol.getConnectedAtoms(second);
 
 		for (int i = 0; i < detected.length; i++) {
 			if (detected[i].contains(first) && detected[i].contains(second)) {
@@ -185,7 +185,7 @@ public class PiContactDetectionDescriptor implements Descriptor {
 	 *@param  ac      AtomContainer
 	 *@return         The boolean result
 	 */
-	private boolean isANeighboorsInAnAtomContainer(Atom[] neighs, org.openscience.cdk.interfaces.AtomContainer ac) {
+	private boolean isANeighboorsInAnAtomContainer(org.openscience.cdk.interfaces.Atom[] neighs, org.openscience.cdk.interfaces.AtomContainer ac) {
 		boolean isIn = false;
 		int count = 0;
 		for (int i = 0; i < neighs.length; i++) {

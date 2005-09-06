@@ -217,7 +217,7 @@ public class TPSADescriptor implements Descriptor {
 		Ring ring = null;
 		String profile = "";
 		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
-		Atom[] connectedAtomsFirst = null;
+		org.openscience.cdk.interfaces.Atom[] connectedAtomsFirst = null;
 		Bond[] connectedBondsfirst = null;
 		Vector profiles = new Vector();
 		double maxOrder = 0;

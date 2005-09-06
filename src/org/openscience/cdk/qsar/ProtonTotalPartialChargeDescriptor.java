@@ -133,7 +133,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 			throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString());
 		}
 		org.openscience.cdk.interfaces.Atom target = mol.getAtomAt(atomPosition);
-		Atom[] neighboors = mol.getConnectedAtoms(target);
+		org.openscience.cdk.interfaces.Atom[] neighboors = mol.getConnectedAtoms(target);
 		DoubleArrayResult protonPartialCharge = new DoubleArrayResult(neighboors.length + 1);
 		protonPartialCharge.add( target.getCharge() );
 		for (int i = 0; i < neighboors.length; i++) {

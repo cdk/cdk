@@ -204,8 +204,8 @@ public class FiguerasSSSRFinder {
 	 */
 	private Ring getRing(org.openscience.cdk.interfaces.Atom rootNode, Molecule molecule)
 	{
-		Atom node, neighbor, mAtom; 
-		Atom[] neighbors, mAtoms;
+		org.openscience.cdk.interfaces.Atom node, neighbor, mAtom; 
+		org.openscience.cdk.interfaces.Atom[] neighbors, mAtoms;
 		/** OKatoms is Figueras nomenclature, giving the number of 
 		    atoms in the structure */
 		int OKatoms = molecule.getAtomCount();

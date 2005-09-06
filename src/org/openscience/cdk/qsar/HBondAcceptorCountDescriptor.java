@@ -144,7 +144,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
       if(atoms[atomIndex].getSymbol().equals("N") && atoms[atomIndex].getFormalCharge() <= 0)
       {
         // excluding nitrogens that are adjacent to an oxygen
-        Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
+    	  org.openscience.cdk.interfaces.Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
         for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
           if(neighbours[neighbourIndex].getSymbol().equals("O"))
             continue atomloop;
@@ -154,7 +154,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
       if(atoms[atomIndex].getSymbol().equals("O") && atoms[atomIndex].getFormalCharge() <= 0)
       {
         //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-        Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
+    	  org.openscience.cdk.interfaces.Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
         for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
           if(neighbours[neighbourIndex].getSymbol().equals("N") || 
               (neighbours[neighbourIndex].getSymbol().equals("C") && neighbours[neighbourIndex].getFlag(CDKConstants.ISAROMATIC)))

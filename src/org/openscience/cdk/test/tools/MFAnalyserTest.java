@@ -131,7 +131,7 @@ public class MFAnalyserTest extends CDKTestCase {
                 // Each B has two explicit and two implicit H.
                 b++;
                 assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
-                Atom[] nbs = ac.getConnectedAtoms(atom);
+                org.openscience.cdk.interfaces.Atom[] nbs = ac.getConnectedAtoms(atom);
                 assertEquals("incorrect connected count", 2, nbs.length);
                 assertEquals("incorrect bond", "H", nbs[0].getSymbol());
                 assertEquals("incorrect bond", "H", nbs[1].getSymbol());

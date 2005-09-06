@@ -106,9 +106,9 @@ public class KappaShapeIndicesDescriptor implements Descriptor {
 	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
 
 		org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
-		Atom[] firstAtomNeighboors = null;
-		Atom[] secondAtomNeighboors = null;
-		Atom[] thirdAtomNeighboors = null;
+		org.openscience.cdk.interfaces.Atom[] firstAtomNeighboors = null;
+		org.openscience.cdk.interfaces.Atom[] secondAtomNeighboors = null;
+		org.openscience.cdk.interfaces.Atom[] thirdAtomNeighboors = null;
 		DoubleArrayResult kierValues = new DoubleArrayResult(3);
 		double bond1 = 0;
 		double bond2 = 0;

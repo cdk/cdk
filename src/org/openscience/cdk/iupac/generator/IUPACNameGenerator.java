@@ -191,9 +191,9 @@ public class IUPACNameGenerator {
             if (a.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
                 a.setProperty(Rule.ATOM_HAS_VALENCY, "no");
                 // loop over connected atoms
-                Atom[] connectedAtoms = ac.getConnectedAtoms(a);
+                org.openscience.cdk.interfaces.Atom[] connectedAtoms = ac.getConnectedAtoms(a);
                 for (int j = 0; j < connectedAtoms.length; j++) {
-                    Atom b = connectedAtoms[j];
+                	org.openscience.cdk.interfaces.Atom b = connectedAtoms[j];
                     if (b.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
                         b.setProperty(Rule.ATOM_HAS_VALENCY, "no");
                     } else {

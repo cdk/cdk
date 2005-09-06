@@ -137,8 +137,8 @@ public class SmilesGenerator
 	public boolean isValidDoubleBondConfiguration(AtomContainer container, Bond bond)
 	{
 		org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
-		Atom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
-		Atom from = null;
+		org.openscience.cdk.interfaces.Atom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
+		org.openscience.cdk.interfaces.Atom from = null;
 		for (int i = 0; i < connectedAtoms.length; i++)
 		{
 			if (connectedAtoms[i] != atoms[1])
@@ -424,9 +424,9 @@ public class SmilesGenerator
 	 *@param  a   Description of the Parameter
 	 *@return     Description of the Return Value
 	 */
-	private Atom hasWedges(AtomContainer ac, org.openscience.cdk.interfaces.Atom a)
+	private org.openscience.cdk.interfaces.Atom hasWedges(AtomContainer ac, org.openscience.cdk.interfaces.Atom a)
 	{
-		Atom[] atoms = ac.getConnectedAtoms(a);
+		org.openscience.cdk.interfaces.Atom[] atoms = ac.getConnectedAtoms(a);
 		for (int i = 0; i < atoms.length; i++)
 		{
 			if (ac.getBond(a, atoms[i]).getStereo() != CDKConstants.STEREO_BOND_NONE && !atoms[i].getSymbol().equals("H"))
@@ -468,9 +468,9 @@ public class SmilesGenerator
 		{
 			if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N"))))
 			{
-				Atom[] atoms = container.getConnectedAtoms(atom);
-				Atom one = null;
-				Atom two = null;
+				org.openscience.cdk.interfaces.Atom[] atoms = container.getConnectedAtoms(atom);
+				org.openscience.cdk.interfaces.Atom one = null;
+				org.openscience.cdk.interfaces.Atom two = null;
 				for (int i = 0; i < atoms.length; i++)
 				{
 					if (atoms[i] != parent && one == null)
@@ -513,11 +513,11 @@ public class SmilesGenerator
 		{
 			return (false);
 		}
-		Atom[] atoms = container.getConnectedAtoms(a);
-		Atom one = null;
-		Atom two = null;
+		org.openscience.cdk.interfaces.Atom[] atoms = container.getConnectedAtoms(a);
+		org.openscience.cdk.interfaces.Atom one = null;
+		org.openscience.cdk.interfaces.Atom two = null;
 		boolean doubleBond = false;
-		Atom nextAtom = null;
+		org.openscience.cdk.interfaces.Atom nextAtom = null;
 		for (int i = 0; i < atoms.length; i++)
 		{
 			if (atoms[i] != parent && container.getBond(atoms[i], a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atoms[i], a, doubleBondConfiguration))

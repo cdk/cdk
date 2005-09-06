@@ -119,7 +119,7 @@ public class HBondDonorCountDescriptor implements Descriptor {
           continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
         }
         // explicit hydrogens
-        Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
+        org.openscience.cdk.interfaces.Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
         for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
         {
           if(neighbours[neighbourIndex].getSymbol().equals("H"))

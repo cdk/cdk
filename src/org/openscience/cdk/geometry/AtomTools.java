@@ -70,9 +70,9 @@ public class AtomTools {
         	org.openscience.cdk.interfaces.Atom atom = atomContainer.getAtomAt(i);
             // is this atom without 3D coords, and has only one ligand?
             if (atom.getPoint3d() == null) {
-                Atom connectedAtoms[] = atomContainer.getConnectedAtoms(atom);
+            	org.openscience.cdk.interfaces.Atom connectedAtoms[] = atomContainer.getConnectedAtoms(atom);
                 if (connectedAtoms.length == 1) {
-                    Atom refAtom = connectedAtoms[0];
+                	org.openscience.cdk.interfaces.Atom refAtom = connectedAtoms[0];
                     if (refAtom.getPoint3d() != null) {
                         refAtoms.addAtom(refAtom);
                         // store atoms with no coords and ref atoms in a 
@@ -91,7 +91,7 @@ public class AtomTools {
         double angle = TETRAHEDRAL_ANGLE;
         for (int i = 0; i < refAtoms.getAtomCount(); i++) {
         	org.openscience.cdk.interfaces.Atom refAtom = refAtoms.getAtomAt(i);
-            Atom noCoordLigands[] = noCoords.getConnectedAtoms(refAtom);
+        	org.openscience.cdk.interfaces.Atom noCoordLigands[] = noCoords.getConnectedAtoms(refAtom);
             int nLigands = noCoordLigands.length;
             int nwanted = nLigands;
             String elementType = refAtom.getSymbol();
@@ -104,7 +104,7 @@ public class AtomTools {
             Point3d[] newPoints = calculate3DCoordinatesForLigands(
                 atomContainer, refAtom, nwanted, length, angle);
             for (int j = 0; j < nLigands; j++) {
-                Atom ligand = noCoordLigands[j];
+            	org.openscience.cdk.interfaces.Atom ligand = noCoordLigands[j];
                 Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
                 ligand.setPoint3d(newPoint);
             }

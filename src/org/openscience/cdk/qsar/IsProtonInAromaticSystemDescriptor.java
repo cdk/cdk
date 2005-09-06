@@ -143,7 +143,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
-		Atom[] neighboor = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
+		org.openscience.cdk.interfaces.Atom[] neighboor = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
 		org.openscience.cdk.interfaces.Atom target = ac.getAtomAt(atomPosition);
 		if(target.getSymbol().equals("H")) {
 			//System.out.println("aromatic proton");
@@ -151,7 +151,7 @@ public class IsProtonInAromaticSystemDescriptor implements Descriptor {
 				isProtonInAromaticSystem = 1;
 			}
 			else {
-				Atom[] betaAtoms = ac.getConnectedAtoms(neighboor[0]);
+				org.openscience.cdk.interfaces.Atom[] betaAtoms = ac.getConnectedAtoms(neighboor[0]);
 				for (int i = 0; i < betaAtoms.length; i++) {
 					if(betaAtoms[0].getFlag(CDKConstants.ISAROMATIC)) {
 						isProtonInAromaticSystem = 2;

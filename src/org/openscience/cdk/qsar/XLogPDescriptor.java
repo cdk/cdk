@@ -701,7 +701,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The hydrogenCount value
 	 */
 	private int getHydrogenCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		int hcounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("H")) {
@@ -720,7 +720,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The alogenCount value
 	 */
 	private int getAlogenCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		int acounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("F") || neighboors[i].getSymbol().equals("I") || neighboors[i].getSymbol().equals("Cl") || neighboors[i].getSymbol().equals("Br")) {
@@ -739,7 +739,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The nitrogenOrOxygenCount value
 	 */
 	private int getNitrogenOrOxygenCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		int nocounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("N") || neighboors[i].getSymbol().equals("O")) {
@@ -760,7 +760,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The aromaticCarbonsCount value
 	 */
 	private int getAromaticCarbonsCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		int carocounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("C")) {
@@ -781,7 +781,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The carbonsCount value
 	 */
 	private int getCarbonsCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		int ccounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("C")) {
@@ -802,7 +802,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The doubleBondedCarbonsCount value
 	 */
 	private int getDoubleBondedCarbonsCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		Bond bond = null;
 		int cdbcounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
@@ -827,7 +827,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The doubleBondedOxygenCount value
 	 */
 	private int getDoubleBondedOxygenCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		Bond bond = null;
 		int odbcounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
@@ -852,7 +852,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The doubleBondedSulfurCount value
 	 */
 	private int getDoubleBondedSulfurCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		Bond bond = null;
 		int odbcounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
@@ -877,7 +877,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The doubleBondedNitrogenCount value
 	 */
 	private int getDoubleBondedNitrogenCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		Bond bond = null;
 		int ndbcounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
@@ -902,7 +902,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The aromaticNitrogensCount value
 	 */
 	private int getAromaticNitrogensCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		int narocounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (neighboors[i].getSymbol().equals("N")) {
@@ -925,7 +925,7 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The piSystemsCount value
 	 */
 	private int getPiSystemsCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
 		int picounter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
 			if (ac.getMaximumBondOrder(neighboors[i]) > 1.0) {
@@ -944,8 +944,8 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The presenceOfCarbonil value
 	 */
 	private int getPresenceOfCarbonil(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] neighboors = ac.getConnectedAtoms(atom);
-		Atom[] second = null;
+		org.openscience.cdk.interfaces.Atom[] neighboors = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] second = null;
 		Bond bond = null;
 		int counter = 0;
 		for (int i = 0; i < neighboors.length; i++) {
@@ -975,10 +975,10 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The ifCarbonIsHydrophobic value
 	 */
 	private int getIfCarbonIsHydrophobic(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Atom[] first = ac.getConnectedAtoms(atom);
-		Atom[] second = null;
-		Atom[] third = null;
-		Atom[] fourth = null;
+		org.openscience.cdk.interfaces.Atom[] first = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] second = null;
+		org.openscience.cdk.interfaces.Atom[] third = null;
+		org.openscience.cdk.interfaces.Atom[] fourth = null;
 		int presence = 0;
 		if (first.length > 0) {
 			for (int i = 0; i < first.length; i++) {
