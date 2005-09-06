@@ -39,7 +39,7 @@ import org.openscience.cdk.ChemObjectListener;
  *  }
  *  </pre>
  *
- * @cdk.module data
+ * @cdk.module interfaces
  *
  * @author     steinbeck
  * @cdk.created    2000-10-02
