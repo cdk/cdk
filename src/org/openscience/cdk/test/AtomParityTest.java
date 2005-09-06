@@ -93,7 +93,7 @@ public class AtomParityTest extends CDKTestCase {
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
-        Atom[] neighbors = parity.getSurroundingAtoms();
+        org.openscience.cdk.interfaces.Atom[] neighbors = parity.getSurroundingAtoms();
         assertEquals(4, neighbors.length);
         assertEquals(carbon1, neighbors[0]);
         assertEquals(carbon2, neighbors[1]);
@@ -170,8 +170,8 @@ public class AtomParityTest extends CDKTestCase {
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
 
 		AtomParity clone = (AtomParity)parity.clone();
-        Atom[] atoms = parity.getSurroundingAtoms();
-        Atom[] atomsClone = clone.getSurroundingAtoms();
+		org.openscience.cdk.interfaces.Atom[] atoms = parity.getSurroundingAtoms();
+		org.openscience.cdk.interfaces.Atom[] atomsClone = clone.getSurroundingAtoms();
         assertEquals(atoms.length, atomsClone.length);
 		for (int f = 0; f < atoms.length; f++) {
 			for (int g = 0; g < atomsClone.length; g++) {

@@ -71,7 +71,7 @@ public class AtomParity implements java.io.Serializable, org.openscience.cdk.int
      *
      * @return The atom for which this parity is defined
      */
-    public Atom getAtom() { 
+    public org.openscience.cdk.interfaces.Atom getAtom() { 
         return centralAtom;
     }
     
@@ -82,7 +82,7 @@ public class AtomParity implements java.io.Serializable, org.openscience.cdk.int
      * @return The four atoms that define the stereochemistry for
      *         this parity
      */
-    public Atom[] getSurroundingAtoms() {
+    public org.openscience.cdk.interfaces.Atom[] getSurroundingAtoms() {
         return neighbors;
     }
     

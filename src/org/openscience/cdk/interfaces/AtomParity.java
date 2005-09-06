@@ -31,7 +31,7 @@ package org.openscience.cdk.interfaces;
  * Represents the concept of an atom parity identifying the stereochemistry
  * around an atom, given four neighbouring atoms.
  *
- * @cdk.module data
+ * @cdk.module interfaces
  *
  * @author      egonw
  * @cdk.created 2005-08-24
@@ -45,7 +45,7 @@ public interface AtomParity extends Cloneable {
      *
      * @return The atom for which this parity is defined
      */
-    public org.openscience.cdk.Atom getAtom();
+    public Atom getAtom();
     
     /**
      * Returns the four atoms that define the stereochemistry for
@@ -54,7 +54,7 @@ public interface AtomParity extends Cloneable {
      * @return The four atoms that define the stereochemistry for
      *         this parity
      */
-    public org.openscience.cdk.Atom[] getSurroundingAtoms();
+    public Atom[] getSurroundingAtoms();
     
     /**
      * Returns the parity value.
