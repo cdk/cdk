@@ -45,8 +45,8 @@ public class Torsions {
 	
 	org.openscience.cdk.interfaces.Bond[] bond = null;
 	Atom[] atomInBond = null;
-	Bond[] bondConnectedBefore = null;
-	Bond[] bondConnectedAfter = null;
+	org.openscience.cdk.interfaces.Bond[] bondConnectedBefore = null;
+	org.openscience.cdk.interfaces.Bond[] bondConnectedAfter = null;
 
 	ForceFieldTools ffTools = new ForceFieldTools();
 	private LoggingTool logger;

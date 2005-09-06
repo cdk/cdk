@@ -285,7 +285,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
                 int atomtohandle=0;
                 if(bonds[i].getAtomAt(0).getSymbol().equals("N"))
                   atomtohandle=1;
-                Bond[] bondstohandle=atomContainer.getConnectedBonds(bonds[i].getAtomAt(atomtohandle));
+                org.openscience.cdk.interfaces.Bond[] bondstohandle=atomContainer.getConnectedBonds(bonds[i].getAtomAt(atomtohandle));
                 for(int k=0;k<bondstohandle.length;k++){
                   if(bondstohandle[k].getOrder()==1 && bondstohandle[k].getFlag(CDKConstants.ISAROMATIC)){
                     bondstohandle[k].setOrder(2);
@@ -616,7 +616,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.Atom atom, double bondOrderSum, Bond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
+	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.Atom atom, double bondOrderSum, org.openscience.cdk.interfaces.Bond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
         throws CDKException {
 
         int missingHydrogen = 0;

@@ -239,7 +239,7 @@ public class Fingerprinter
 	 */
 	static void depthFirstSearch(AtomContainer ac, org.openscience.cdk.interfaces.Atom root, Vector currentPath, int currentDepth, int searchDepth)
 	{
-		Bond[] bonds = ac.getConnectedBonds(root);
+		org.openscience.cdk.interfaces.Bond[] bonds = ac.getConnectedBonds(root);
 
 		/*
 		 *  try
@@ -375,7 +375,7 @@ public class Fingerprinter
 	 *@param  bond  Description of the Parameter
 	 *@return       The bondSymbol value
 	 */
-	private static String getBondSymbol(Bond bond)
+	private static String getBondSymbol(org.openscience.cdk.interfaces.Bond bond)
 	{
 		String bondSymbol = "";
 		if (bond.getFlag(CDKConstants.ISAROMATIC))

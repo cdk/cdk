@@ -540,7 +540,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public Bond[] getConnectedBonds(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.Bond[] getConnectedBonds(org.openscience.cdk.interfaces.Atom atom)
   {
     Vector bondsVec=getConnectedBondsVector(atom);
 		Bond[] conBonds = new Bond[bondsVec.size()];

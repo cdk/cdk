@@ -222,7 +222,7 @@ public class Polarizability {
 	 *@return       The numberOfHydrogen value
 	 */
 	private int getNumberOfHydrogen(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
-		Bond[] bonds = ac.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.Bond[] bonds = ac.getConnectedBonds(atom);
 		org.openscience.cdk.interfaces.Atom connectedAtom = null;
 		int hCounter = 0;
 		for (int i = 0; i < bonds.length; i++) {

@@ -712,7 +712,7 @@ public class RDFProtonDescriptor implements Descriptor {
 		double distance = 0;
 		double distance_tmp = 0;
 		Atom[] atomsInBond = bond.getAtoms();
-		Bond[] bondsAtLeft = mol.getConnectedBonds(atomsInBond[0]);
+		org.openscience.cdk.interfaces.Bond[] bondsAtLeft = mol.getConnectedBonds(atomsInBond[0]);
 		int partial = 0;
 		for(int i=0; i<bondsAtLeft.length;i++) {
 			values = calculateDistanceBetweenAtomAndBond(mol, atom, bondsAtLeft[i]);

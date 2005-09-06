@@ -324,9 +324,9 @@ public class RingPlacer
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
 		 */ 
-		Bond[] bonds = ring.getConnectedBonds(startAtom);
+		org.openscience.cdk.interfaces.Bond[] bonds = ring.getConnectedBonds(startAtom);
 		
-		Bond currentBond = bonds[0];
+		org.openscience.cdk.interfaces.Bond currentBond = bonds[0];
 		
 		Vector atomsToDraw = new Vector();
 		/* 

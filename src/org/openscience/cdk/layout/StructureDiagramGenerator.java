@@ -683,7 +683,7 @@ public class StructureDiagramGenerator
 	private AtomContainer getUnplacedAtoms(org.openscience.cdk.interfaces.Atom atom)
 	{
 		AtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
-		Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
 		org.openscience.cdk.interfaces.Atom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
@@ -708,7 +708,7 @@ public class StructureDiagramGenerator
 	private AtomContainer getPlacedAtoms(org.openscience.cdk.interfaces.Atom atom)
 	{
 		AtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
-		Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
 		org.openscience.cdk.interfaces.Atom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{

@@ -108,7 +108,7 @@ public class EquivalentClassPartitioner
 		 double nodeSequence[]=new double[atoms.length];
 		 for(int i=0;i<atoms.length;i++)
 		 {
-			 Bond[] bonds=atomContainer.getConnectedBonds(atoms[i]);
+			 org.openscience.cdk.interfaces.Bond[] bonds=atomContainer.getConnectedBonds(atoms[i]);
 			
 			 if(bonds.length==1)
 			 {

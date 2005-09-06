@@ -292,7 +292,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public org.openscience.cdk.Bond[] getConnectedBonds(Atom atom);
+	public Bond[] getConnectedBonds(Atom atom);
   
 	/**
 	 *  Returns a Vector of all Bonds connected to the given atom.
