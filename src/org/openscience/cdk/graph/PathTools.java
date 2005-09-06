@@ -254,7 +254,7 @@ public class PathTools  {
 			molecule.addAtom(atom);
             // first copy LonePair's and SingleElectron's of this Atom as they need
             // to be copied too
-            ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
+			org.openscience.cdk.interfaces.ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
             //System.out.println("found #ec's: " + eContainers.length);
             for (int i=0; i<eContainers.length; i++) {
                 if (!(eContainers[i] instanceof org.openscience.cdk.interfaces.Bond)) {

@@ -613,7 +613,7 @@ public class AtomContainerTest extends CDKTestCase {
         container2.addBond(b3);
         container2.addBond(b2);
 
-        AtomContainer intersection = container1.getIntersection(container2);
+        org.openscience.cdk.interfaces.AtomContainer intersection = container1.getIntersection(container2);
         assertEquals(2, intersection.getAtomCount());
         assertEquals(1, intersection.getBondCount());
         assertTrue(intersection.contains(b2));

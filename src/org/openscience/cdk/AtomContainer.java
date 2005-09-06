@@ -575,7 +575,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom the connected electronContainers are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public ElectronContainer[] getConnectedElectronContainers(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.ElectronContainer[] getConnectedElectronContainers(org.openscience.cdk.interfaces.Atom atom)
 	{
 		Vector bondsVec = new Vector();
 		for (int i = 0; i < electronContainerCount; i++)
@@ -827,7 +827,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *                    AtomContainer and another given one
 	 */
 
-	public AtomContainer getIntersection(org.openscience.cdk.interfaces.AtomContainer container)
+	public org.openscience.cdk.interfaces.AtomContainer getIntersection(org.openscience.cdk.interfaces.AtomContainer container)
 	{
 		AtomContainer intersection = new org.openscience.cdk.AtomContainer();
 
@@ -1069,7 +1069,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		int position = getAtomNumber(atom);
 		if (position != -1)
 		{
-			ElectronContainer[] electronContainers = getConnectedElectronContainers(atom);
+			org.openscience.cdk.interfaces.ElectronContainer[] electronContainers = getConnectedElectronContainers(atom);
 			for (int f = 0; f < electronContainers.length; f++)
 			{
 				removeElectronContainer(electronContainers[f]);

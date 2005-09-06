@@ -309,7 +309,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@param  atom  The atom the connected electronContainers are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public org.openscience.cdk.ElectronContainer[] getConnectedElectronContainers(Atom atom);
+	public ElectronContainer[] getConnectedElectronContainers(Atom atom);
 
 
 	/**
@@ -426,7 +426,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *                    AtomContainer and another given one
 	 */
 
-	public org.openscience.cdk.AtomContainer getIntersection(AtomContainer container);
+	public AtomContainer getIntersection(AtomContainer container);
 	
 	/**
 	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
