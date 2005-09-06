@@ -378,7 +378,7 @@ public interface AtomContainer extends ChemObject, ChemObjectListener {
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public org.openscience.cdk.SingleElectron[] getSingleElectron(Atom atom);
+	public SingleElectron[] getSingleElectron(Atom atom);
 	/**
 	 *  Returns the sum of the SingleElectron for a given Atom.
 	 *

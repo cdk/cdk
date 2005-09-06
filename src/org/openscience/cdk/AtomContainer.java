@@ -717,7 +717,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public SingleElectron[] getSingleElectron(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.SingleElectron[] getSingleElectron(org.openscience.cdk.interfaces.Atom atom)
 	{
 		Vector lps = new Vector();
 		for (int i = 0; i < getElectronContainerCount(); i++)
