@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -283,6 +282,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 			// load the plugins that come with JCP itself
 			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
+			pluginManager.loadPlugin("org.openscience.cdkplugin.dadmlbrowser.DadmlBrowserPlugin");
+			pluginManager.loadPlugin("org.openscience.cdkplugin.aatemplate.AminoAcidTemplatesPlugin");
 
 			// load the user plugins
 			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
