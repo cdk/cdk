@@ -232,7 +232,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @param  number  The position of the AtomContainer to be returned.
 	 * @return         The AtomContainer at position <code>number</code> .
 	 */
-	public AtomContainer getAtomContainer(int number) {
+	public org.openscience.cdk.interfaces.AtomContainer getAtomContainer(int number) {
 		return (AtomContainer)atomContainers[number];
 	}
 

@@ -127,7 +127,7 @@ public interface SetOfAtomContainers extends ChemObject {
 	 * @param  number  The position of the AtomContainer to be returned.
 	 * @return         The AtomContainer at position <code>number</code> .
 	 */
-	public org.openscience.cdk.AtomContainer getAtomContainer(int number);
+	public AtomContainer getAtomContainer(int number);
 
 	/**
 	 * Returns the multiplier for the AtomContainer at position <code>number</code> in the
