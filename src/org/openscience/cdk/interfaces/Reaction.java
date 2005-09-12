@@ -36,7 +36,7 @@ package org.openscience.cdk.interfaces;
  * and is not intended to represent reaction trajectories. Such can better
  * be represented with a ChemSequence.
  *
- * @cdk.module data
+ * @cdk.module  interfaces
  *
  * @author      Egon Willighagen <elw38@cam.ac.uk>
  * @cdk.created 2003-02-13
