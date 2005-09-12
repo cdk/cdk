@@ -100,7 +100,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	 * @param   atom  A atom from the bond above to assign a search direction
 	 * @return  The next bond in the order given by the above assignment   
 	 */
-	public Bond getNextBond(org.openscience.cdk.interfaces.Bond bond, org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.Bond getNextBond(org.openscience.cdk.interfaces.Bond bond, org.openscience.cdk.interfaces.Atom atom)
 	{
 		Bond tempBond;
 		for (int f = 0; f < getElectronContainerCount(); f++) {

@@ -30,9 +30,9 @@ package org.openscience.cdk.interfaces;
  * such that atom i (1 < i < N) is bonded to
  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
  *
- * @cdk.module data
+ * @cdk.module  interfaces
  *
- * @cdk.keyword    ring
+ * @cdk.keyword ring
  */
 public interface Ring extends AtomContainer {
 
@@ -52,7 +52,7 @@ public interface Ring extends AtomContainer {
 	 * @param   atom  A atom from the bond above to assign a search direction
 	 * @return  The next bond in the order given by the above assignment   
 	 */
-	public org.openscience.cdk.Bond getNextBond(Bond bond, Atom atom);
+	public Bond getNextBond(Bond bond, Atom atom);
 	
 	/**
 	 * Returns the sum of all bond orders in the ring.

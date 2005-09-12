@@ -263,7 +263,7 @@ public class RingPlacer
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
             if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.Bond) break;
         }
-        Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
+        org.openscience.cdk.interfaces.Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -455,7 +455,7 @@ public class RingPlacer
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
             if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.Bond) break;
         }
-        Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
+        org.openscience.cdk.interfaces.Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
