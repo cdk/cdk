@@ -105,7 +105,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
      * @return A SetOfMolecules containing the reactants in this reaction
      * @see    #setReactants
      */
-    public SetOfMolecules getReactants() {
+    public org.openscience.cdk.interfaces.SetOfMolecules getReactants() {
         return (SetOfMolecules)reactants;
     }
 

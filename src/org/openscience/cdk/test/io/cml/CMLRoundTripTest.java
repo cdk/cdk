@@ -399,7 +399,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Reaction roundTrippedReaction = roundTripReaction(reaction);
         
         assertNotNull(roundTrippedReaction);
-        SetOfMolecules reactants = roundTrippedReaction.getReactants();
+        org.openscience.cdk.interfaces.SetOfMolecules reactants = roundTrippedReaction.getReactants();
         assertNotNull(reactants);
         assertEquals(1, reactants.getMoleculeCount());
         Molecule roundTrippedReactant = reactants.getMolecule(0);

@@ -65,7 +65,7 @@ public interface Reaction extends ChemObject {
      * @return A SetOfMolecules containing the reactants in this reaction
      * @see    #setReactants
      */
-    public org.openscience.cdk.SetOfMolecules getReactants();
+    public SetOfMolecules getReactants();
 
     /**
      * Assigns a  to the reactants in this reaction.
