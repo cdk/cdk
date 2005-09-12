@@ -155,8 +155,8 @@ public class DADMLReader {
      *
      * @return The Molecule that was read
      */
-    private Molecule readMolecule() {
-        Molecule molecule = null;
+    private org.openscience.cdk.interfaces.Molecule readMolecule() {
+    	org.openscience.cdk.interfaces.Molecule molecule = null;
         try {
             URL resource = this.resolveLink(query);
             // this has to be reformulated
@@ -267,8 +267,8 @@ public class DADMLReader {
         return links;
     }
 
-    private Molecule downloadURL(URL resource) {
-        Molecule molecule = new Molecule();
+    private org.openscience.cdk.interfaces.Molecule downloadURL(URL resource) {
+    	org.openscience.cdk.interfaces.Molecule molecule = new Molecule();
         logger.debug("Downloading from URL: ", resource);
         try {
             URLConnection connection = resource.openConnection();

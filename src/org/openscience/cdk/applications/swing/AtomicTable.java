@@ -44,7 +44,7 @@ public class AtomicTable extends JPanel implements CDKChangeListener {
   private JTable table;
 	private String title = "Molecule Viewer";
   
-	public AtomicTable(AtomContainer atomContainer) {
+	public AtomicTable(org.openscience.cdk.interfaces.AtomContainer atomContainer) {
     AtomContainerModel acm = new AtomContainerModel(atomContainer);
     table = new JTable(acm);
     table.setPreferredScrollableViewportSize(new Dimension(500,300));
@@ -72,12 +72,12 @@ public class AtomicTable extends JPanel implements CDKChangeListener {
 	
   class AtomContainerModel extends AbstractTableModel {
 
-    private AtomContainer atomContainer;
+    private org.openscience.cdk.interfaces.AtomContainer atomContainer;
     
     final String[] columnNames = {"atom", "x2", "y2", "x3", 
                                   "y3", "z3", "charge"};
     
-    public AtomContainerModel(AtomContainer ac) {
+    public AtomContainerModel(org.openscience.cdk.interfaces.AtomContainer ac) {
       atomContainer = ac;
     }
     

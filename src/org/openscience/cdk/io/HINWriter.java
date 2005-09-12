@@ -117,7 +117,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
         for (int molnum = 0; molnum < som.getMoleculeCount(); molnum++) {
 
-            Molecule mol = som.getMolecule(molnum);
+        	org.openscience.cdk.interfaces.Molecule mol = som.getMolecule(molnum);
 
             try {
 

@@ -147,7 +147,7 @@ public class XindiceReader {
         return mols;
     }
         
-    private Molecule getMolecule(ChemFile cf) {
+    private org.openscience.cdk.interfaces.Molecule getMolecule(ChemFile cf) {
         ChemSequence cs = cf.getChemSequence(0);
         ChemModel cm = cs.getChemModel(0);
         SetOfMolecules som = cm.getSetOfMolecules();

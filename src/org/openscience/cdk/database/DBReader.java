@@ -86,8 +86,8 @@ public class DBReader {
 	    }
     }
 	
-	private ChemObject readMolecule() {
-		Molecule mol = null;
+	private org.openscience.cdk.interfaces.ChemObject readMolecule() {
+		org.openscience.cdk.interfaces.Molecule mol = null;
 		CMLReader cmlr;
 		StringReader reader;
 		Statement st;
@@ -118,7 +118,7 @@ public class DBReader {
 		return mol;
     }
 
-	private Molecule getMolecule(ChemFile cf) {		
+	private org.openscience.cdk.interfaces.Molecule getMolecule(ChemFile cf) {		
 		ChemSequence cs = cf.getChemSequence(0);
 		ChemModel cm = cs.getChemModel(0);
 		SetOfMolecules som = cm.getSetOfMolecules();

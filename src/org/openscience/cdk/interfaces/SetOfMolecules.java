@@ -26,7 +26,7 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents a set of Molecules.
  * 
- * @cdk.module  data
+ * @cdk.module  interfaces
  * @author      egonw
  * @cdk.created 2005-08-25
  */
@@ -62,7 +62,7 @@ public interface SetOfMolecules extends SetOfAtomContainers {
      * @param  number  The position of the Molecule to be returned. 
      * @return         The Molecule at position <code>number</code> . 
      */
-    public org.openscience.cdk.Molecule getMolecule(int number);
+    public Molecule getMolecule(int number);
     
     
     /**

@@ -651,7 +651,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(Molecule molecule, String outputFilename) throws IOException {
+    private void write(org.openscience.cdk.interfaces.Molecule molecule, String outputFilename) throws IOException {
         try {
             cow.write(molecule);
         } catch (CDKException exception) {

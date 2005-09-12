@@ -78,7 +78,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Atom atom = new Atom("N");
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -91,7 +91,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setID("N1");
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -105,7 +105,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setPoint2d(p2d);
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -120,7 +120,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setPoint3d(p3d);
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -136,7 +136,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setFractionalPoint3d(p3d);
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -151,7 +151,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setLabel("Glu55");
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -167,7 +167,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setFormalCharge(formalCharge);
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -183,7 +183,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setCharge(partialCharge);
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -199,7 +199,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setStereoParity(stereo);
         mol.addAtom(atom);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -211,7 +211,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Atom atom = new Atom("C");
         atom.setMassNumber(13);
         mol.addAtom(atom);
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -227,7 +227,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Bond bond = new Bond(atom, atom2, 1.0);
         mol.addBond(bond);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(2, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getBondCount());
@@ -248,7 +248,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         bond.setID("b1");
         mol.addBond(bond);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         org.openscience.cdk.interfaces.Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
         assertEquals(bond.getID(), roundTrippedBond.getID());
     }
@@ -264,7 +264,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         bond.setStereo(stereo);
         mol.addBond(bond);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(2, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getBondCount());
@@ -279,7 +279,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      *
      * @see org.openscience.cdk.CMLFragmentsTest
      */
-    private Molecule roundTripMolecule(Molecule mol) {
+    private org.openscience.cdk.interfaces.Molecule roundTripMolecule(Molecule mol) {
         StringWriter stringWriter = new StringWriter();
         try {
             CMLWriter writer = new CMLWriter(stringWriter);
@@ -291,7 +291,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             fail(message);
         }
         
-        Molecule roundTrippedMol = null;
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = null;
         try {
             String cmlString = stringWriter.toString();
             logger.debug("CML string: " + cmlString);
@@ -368,7 +368,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         double charge = -0.267;
         atom.setCharge(charge);
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.Atom roundTrippedAtom = roundTrippedMol.getAtomAt(0);
@@ -381,7 +381,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         mol.addAtom(atom);
         mol.addElectronContainer(new SingleElectron(atom));
         
-        Molecule roundTrippedMol = roundTripMolecule(mol);
+        org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getElectronContainerCount());
@@ -402,7 +402,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         org.openscience.cdk.interfaces.SetOfMolecules reactants = roundTrippedReaction.getReactants();
         assertNotNull(reactants);
         assertEquals(1, reactants.getMoleculeCount());
-        Molecule roundTrippedReactant = reactants.getMolecule(0);
+        org.openscience.cdk.interfaces.Molecule roundTrippedReactant = reactants.getMolecule(0);
         assertEquals(1, roundTrippedReactant.getAtomCount());
     }
 }

@@ -34,9 +34,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.CMLWriter;
@@ -78,7 +78,7 @@ public class DBWriter {
     }
 
     public ChemObject highestSupportedChemObject() {
-        return new SetOfMolecules();
+        return new org.openscience.cdk.SetOfMolecules();
     };
 
 	public void write(ChemObject object) throws CDKException {

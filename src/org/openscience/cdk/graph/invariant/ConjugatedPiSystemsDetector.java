@@ -72,7 +72,7 @@ public class ConjugatedPiSystemsDetector {
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
-    public static SetOfAtomContainers detect(AtomContainer ac) {
+    public static SetOfAtomContainers detect(org.openscience.cdk.interfaces.AtomContainer ac) {
 
         SetOfAtomContainers piSystemSet = new SetOfAtomContainers();
 
@@ -140,7 +140,7 @@ public class ConjugatedPiSystemsDetector {
      *@param  currentAtom  The Atom to check
      *@return              -1 if isolated, 0 if conjugated, 1 if cumulative db
      */
-    private static int checkAtom(AtomContainer ac, org.openscience.cdk.interfaces.Atom currentAtom) {
+    private static int checkAtom(org.openscience.cdk.interfaces.AtomContainer ac, org.openscience.cdk.interfaces.Atom currentAtom) {
         int check = -1;
         Vector atoms = ac.getConnectedAtomsVector(currentAtom);
         Vector bonds = ac.getConnectedBondsVector(currentAtom);

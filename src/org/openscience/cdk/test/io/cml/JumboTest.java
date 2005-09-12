@@ -95,7 +95,7 @@ public class JumboTest extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 24);
             assertEquals(mol.getBondCount(), 28);
@@ -131,7 +131,7 @@ public class JumboTest extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 15);
             assertEquals(mol.getBondCount(), 16);
@@ -167,7 +167,7 @@ public class JumboTest extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 11);
             assertEquals(mol.getBondCount(), 12);

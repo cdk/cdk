@@ -138,7 +138,7 @@ public class JmolTest extends CDKTestCase {
             assertEquals(1, som.getMoleculeCount());
 
             // test the molecule
-            Molecule mol = som.getMolecule(0);
+            org.openscience.cdk.interfaces.Molecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 25);
             assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -172,7 +172,7 @@ public class JmolTest extends CDKTestCase {
             assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 
             // test the molecule
-            Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
             assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -206,7 +206,7 @@ public class JmolTest extends CDKTestCase {
             assertEquals(1, som.getMoleculeCount());
 
             // test the molecule
-            Molecule mol = som.getMolecule(0);
+            org.openscience.cdk.interfaces.Molecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
             assertTrue(GeometryTools.has3DCoordinates(mol));

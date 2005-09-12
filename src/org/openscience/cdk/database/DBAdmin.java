@@ -353,7 +353,7 @@ public class DBAdmin {
 				  logger.info("number of molecules in model " + model + ": " +
                                       setOfMolecules.getMoleculeCount());
 	                          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
-                                      Molecule molecule = setOfMolecules.getMolecule(i);
+	                        	  org.openscience.cdk.interfaces.Molecule molecule = setOfMolecules.getMolecule(i);
 			              dbw.write(molecule);
                                   }
                              }

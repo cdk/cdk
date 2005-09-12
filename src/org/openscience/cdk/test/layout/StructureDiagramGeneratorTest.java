@@ -264,7 +264,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		    ChemSequence seq = chemFile.getChemSequence(0);
 		    ChemModel model = seq.getChemModel(0);
-		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
+		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
 		    MoleculeViewer2D.display(mol, true);
 		    //System.out.println(new SmilesGenerator().createSMILES(mol));
 		} catch (Exception e) 

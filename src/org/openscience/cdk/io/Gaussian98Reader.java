@@ -419,7 +419,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	{
 		logger.info("Reading partial atomic charges");
 		SetOfMolecules moleculeSet = model.getSetOfMolecules();
-		Molecule molecule = moleculeSet.getMolecule(0);
+		org.openscience.cdk.interfaces.Molecule molecule = moleculeSet.getMolecule(0);
 		String line = input.readLine();
 		// skip first line after "Total atomic charges"
 		while (input.ready())

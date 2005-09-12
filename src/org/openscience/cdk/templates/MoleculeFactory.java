@@ -718,14 +718,14 @@ public class MoleculeFactory {
 	}
 	
 	
-	public static Molecule loadMolecule(String inFile)
+	public static org.openscience.cdk.interfaces.Molecule loadMolecule(String inFile)
 	{
 		MDLReader mr = null;
 		ChemFile chemFile = null;
 		ChemSequence chemSequence = null;
 		ChemModel chemModel = null;
 		SetOfMolecules setOfMolecules = null;
-		Molecule molecule = null;
+		org.openscience.cdk.interfaces.Molecule molecule = null;
 		try
 		{
 			FileInputStream fis = new FileInputStream(inFile);

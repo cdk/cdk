@@ -108,7 +108,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      * @param  number  The position of the Molecule to be returned. 
      * @return         The Molecule at position <code>number</code> . 
      */
-    public Molecule getMolecule(int number)
+    public org.openscience.cdk.interfaces.Molecule getMolecule(int number)
     {
         return (Molecule)super.getAtomContainer(number);
     }

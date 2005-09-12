@@ -69,7 +69,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	public void testDetectButadiene()
 	{
         logger.info("Entering testDetectButadiene.");
-        Molecule mol = null;
+        org.openscience.cdk.interfaces.Molecule mol = null;
 		try
 		{
 			String filename = "data/butadiene.cml";
@@ -101,7 +101,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     public void testDetectNaphtalene()
 	{
         logger.info("Entering testDetectNaphtalene.");
-        Molecule mol = null;
+        org.openscience.cdk.interfaces.Molecule mol = null;
 		try
 		{
 			String filename = "data/naphtalene.cml";
@@ -133,7 +133,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     public void testDetectToluene()
 	{
         logger.info("Entering testDetectToluene.");
-        Molecule mol = null;
+        org.openscience.cdk.interfaces.Molecule mol = null;
 		try
 		{
 			String filename = "data/toluene.cml";
@@ -287,8 +287,8 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         
 	}
     
-    private Molecule readCMLMolecule(String filename) {
-        Molecule mol = null;
+    private org.openscience.cdk.interfaces.Molecule readCMLMolecule(String filename) {
+    	org.openscience.cdk.interfaces.Molecule mol = null;
         try {
             logger.debug("Filename: " + filename);
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

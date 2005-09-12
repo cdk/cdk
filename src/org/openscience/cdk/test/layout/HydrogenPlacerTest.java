@@ -127,7 +127,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		    ChemSequence seq = chemFile.getChemSequence(0);
 		    ChemModel model = seq.getChemModel(0);
-		    Molecule mol = model.getSetOfMolecules().getMolecule(0);
+		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
 		    double bondLength = GeometryTools.getBondLengthAverage(mol);
 		    HydrogenAdder ha = new HydrogenAdder();
 		    logger.debug("Read Reserpine");

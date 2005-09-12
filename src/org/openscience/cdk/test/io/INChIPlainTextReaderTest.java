@@ -85,7 +85,7 @@ public class INChIPlainTextReaderTest extends CDKTestCase {
             assertNotNull(model);
             SetOfMolecules moleculeSet = model.getSetOfMolecules();
             assertNotNull(moleculeSet);
-            Molecule molecule = moleculeSet.getMolecule(0);
+            org.openscience.cdk.interfaces.Molecule molecule = moleculeSet.getMolecule(0);
             assertNotNull(molecule);
             
             assertEquals(11, molecule.getAtomCount());

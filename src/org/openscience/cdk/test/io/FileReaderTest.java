@@ -83,7 +83,7 @@ public class FileReaderTest {
             System.out.println("  number of molecules in model " + model + ": " +
                                setOfMolecules.getMoleculeCount());
 	          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
-              Molecule m = setOfMolecules.getMolecule(i);
+	        	  org.openscience.cdk.interfaces.Molecule m = setOfMolecules.getMolecule(i);
               // since there is no Renderer3D yet, project in XY plane
               if (!GeometryTools.has2DCoordinates(m)) Projector.project2D(m);
               MoleculeViewer2D mv = new MoleculeViewer2D(m);
