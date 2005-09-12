@@ -28,7 +28,7 @@ package org.openscience.cdk.interfaces;
  * A set of AtomContainers.
  *
  * @author     egonw
- * @cdk.module data
+ * @cdk.module interfaces
  */
 public interface SetOfAtomContainers extends ChemObject {
 
