@@ -42,8 +42,12 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.cli.UnrecognizedOptionException;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -58,6 +62,7 @@ public class JChemPaint implements SwingConstants
 {
 
 	private static JChemPaint jchempaintInstance = null;
+	private static ChemModel model = null;
 	private LoggingTool logger;
 
 	/**
@@ -142,8 +147,8 @@ public class JChemPaint implements SwingConstants
 
 			// Process command line arguments
 			String modelFilename = "";
-			FileReader contentToOpen = null;
 			args = line.getArgs();
+			FileReader contentToOpen;
 			if (args.length > 0)
 			{
 				modelFilename = args[0];
@@ -155,6 +160,9 @@ public class JChemPaint implements SwingConstants
 				}
 				// ok, file exists
 				contentToOpen = new FileReader(file);
+				ChemObjectReader cor = new MDLReader(contentToOpen);
+				model = (ChemModel) cor.read((ChemObject) new ChemModel());
+				model.setID(file.getName());
 			}
 
 			JChemPaint jcp = JChemPaint.getInstance();
@@ -175,6 +183,8 @@ public class JChemPaint implements SwingConstants
 		logger = new LoggingTool(this);
 		logger.dumpSystemProperties();
 		JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
+		if(model == null )frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
+		else frame = JChemPaintEditorPanel.getFrameWithModel(model);
 		frame.addWindowListener(new JChemPaintPanel.AppCloser());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//for testing the ViewerOnlyPanel

@@ -49,7 +49,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
@@ -58,7 +57,6 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
-import org.openscience.cdk.applications.plugin.CDKEditBus;
 import org.openscience.cdk.applications.plugin.CDKPluginManager;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -428,7 +426,25 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		JFrame jcpf = getNewFrame(model);
 		return jcpf;
 	}
-
+	/**
+	 *  Creates a new JFrame that owns a new JChemPaintModel and returns it which contains
+	 *  a model.
+	 *
+	 *@param  model  The JChemPaintModel
+	 *@return        The new JFrame containing the JChemPaintEditorPanel
+	 */
+	public static JFrame getFrameWithModel(ChemModel mod)
+	{
+		JChemPaintModel model = new JChemPaintModel(mod);
+		model.setTitle(mod.getID());
+		model.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
+		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
+		String version = self.getImplementationVersion();
+		model.setSoftware("JChemPaint " + version);
+		model.setGendate((Calendar.getInstance()).getTime().toString());
+		JFrame jcpf = getNewFrame(model);
+		return jcpf;
+	}
 
 	/**
 	 *  Creates a new JChemPaintEditorPanel and assigns a given Model to it.
