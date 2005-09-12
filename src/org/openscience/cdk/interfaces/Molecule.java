@@ -26,7 +26,7 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents a set of Molecules.
  * 
- * @cdk.module  data
+ * @cdk.module  interfaces
  * @author      egonw
  * @cdk.created 2005-08-25
  */
