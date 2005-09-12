@@ -77,7 +77,7 @@ public class AtomTypeTools {
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		Atom atom = null;
 		String hoseCode = "";
-		RingSet ringSetA = null;
+		org.openscience.cdk.interfaces.RingSet ringSetA = null;
 		RingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		
 		try {
@@ -94,7 +94,7 @@ public class AtomTypeTools {
 			if (ringSetMolecule.contains(atom)) {
 				ringSetA = ringSetMolecule.getRings(atom);
 				RingSetManipulator.sort(ringSetA);
-				Ring sring = (Ring) ringSetA.lastElement();
+				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);
 				atom.setRingSize(sring.getRingSize());
 				atom.setChemicalGroupConstant(ringSystemClassifier(sring, sg.createSMILES(new Molecule(sring))));
 				atom.setFlag(CDKConstants.ISINRING, true);

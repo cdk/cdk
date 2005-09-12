@@ -90,7 +90,7 @@ public class GeometricMinimizer {
 		
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
-		RingSet rs = ffc.assignAtomTyps((Molecule) molecule);
+		org.openscience.cdk.interfaces.RingSet rs = ffc.assignAtomTyps((Molecule) molecule);
 		PotentialParameterSet = ffc.getParameterSet();
 	}
 	

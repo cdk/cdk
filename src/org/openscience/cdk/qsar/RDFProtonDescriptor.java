@@ -210,7 +210,7 @@ public class RDFProtonDescriptor implements Descriptor {
 				}
 			}
 			// SET ISINRING FLAGS FOR ATOMS
-			Vector ringsWithThisAtom = null;
+			org.openscience.cdk.interfaces.RingSet ringsWithThisAtom = null;
 			Atom[] atomsInContainer = ac.getAtoms();
 			
 			for (int w = 0; w < atomsInContainer.length; w++) {

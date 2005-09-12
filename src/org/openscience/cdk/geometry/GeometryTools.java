@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.AtomEnumeration;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -305,7 +305,7 @@ public class GeometryTools {
 		double centerX = 0;
 		double centerY = 0;
 		for (int i = 0; i < ringSet.size(); i++) {
-			Point2d centerPoint = GeometryTools.get2DCenter((Ring) ringSet.elementAt(i));
+			Point2d centerPoint = GeometryTools.get2DCenter((org.openscience.cdk.interfaces.Ring)ringSet.get(i));
 			centerX += centerPoint.x;
 			centerY += centerPoint.y;
 		}

@@ -29,9 +29,9 @@ import java.util.List;
 /**
  * Maintains a set of Ring objects.
  *
- * @cdk.module data
+ * @cdk.module  interfaces
  *
- * @cdk.keyword     ring, set of
+ * @cdk.keyword ring, set of
  */
 public interface RingSet extends List {
 
@@ -58,7 +58,7 @@ public interface RingSet extends List {
 	 * @param   atom  The atom to be checked
 	 * @return   A vector of all rings that this bond is part of  
 	 */
-	public org.openscience.cdk.RingSet getRings(Atom atom);
+	public RingSet getRings(Atom atom);
 	
 	/**
 	 * Returns all the rings in the RingSet that share

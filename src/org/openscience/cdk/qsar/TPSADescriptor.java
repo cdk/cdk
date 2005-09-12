@@ -213,7 +213,7 @@ public class TPSADescriptor implements Descriptor {
 		if (checkAromaticity) {
 			HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 		}
-		RingSet rsAtom = null;
+		org.openscience.cdk.interfaces.RingSet rsAtom = null;
 		Ring ring = null;
 		String profile = "";
 		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
@@ -282,7 +282,7 @@ public class TPSADescriptor implements Descriptor {
 					RingSetManipulator.sort(rsAtom);
 					for (int f = 0; f < rsAtom.size(); f++)
 					{
-						ring = (Ring)rsAtom.elementAt(f);
+						ring = (Ring)rsAtom.get(f);
 						if (ring.getRingSize() == 3) {
 							isin3ring = 1;
 						}

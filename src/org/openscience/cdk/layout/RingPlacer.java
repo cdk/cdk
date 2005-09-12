@@ -112,7 +112,7 @@ public class RingPlacer
 		logger.debug("RingPlacer.placeRingSubstituents() start");
 		Ring ring = null;
 		Atom atom = null;
-		RingSet rings = null;
+		org.openscience.cdk.interfaces.RingSet rings = null;
 		AtomContainer unplacedPartners = new org.openscience.cdk.AtomContainer();;
 		AtomContainer sharedAtoms = new org.openscience.cdk.AtomContainer();
 		AtomContainer primaryAtoms = new org.openscience.cdk.AtomContainer();

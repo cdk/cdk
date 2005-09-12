@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 
 /**
  * @cdk.module standard
@@ -50,7 +50,7 @@ public class RingSetManipulator {
 	public static AtomContainer getAllInOneContainer(RingSet ringSet) {
 		AtomContainer container = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < ringSet.size(); i++) {
-			container.add((Ring)ringSet.elementAt(i));
+			container.add((Ring)ringSet.get(i));
 		}
 		return container;
 	}
@@ -101,7 +101,7 @@ public class RingSetManipulator {
 		for (int i = 0; i < ringSet.size(); i++)
 		{
 			/* Take each ring */
-			ring1 = (Ring)ringSet.elementAt(i);
+			ring1 = (Ring)ringSet.get(i);
 			/* look at each Atom in this ring whether it is part of any other ring */
 			for (int j = 0; j < ring1.getAtomCount(); j++)
 			{
@@ -109,7 +109,7 @@ public class RingSetManipulator {
 				/* Look at each of the other rings in the ringset */
 				for (int k = i + 1; k < ringSet.size(); k++)
 				{
-					ring2 = (Ring)ringSet.elementAt(k);
+					ring2 = (Ring)ringSet.get(k);
 					if (ring1 != ring2)
 					{
 						for (int l = 0; l < ring2.getAtomCount(); l++)
@@ -134,6 +134,6 @@ public class RingSetManipulator {
 				mostComplexPosition = i;
 			}
 		}
-		return (Ring) ringSet.elementAt(mostComplexPosition);
+		return (Ring) ringSet.get(mostComplexPosition);
 	}
 }

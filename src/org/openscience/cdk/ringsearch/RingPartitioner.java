@@ -33,7 +33,7 @@ import java.util.Vector;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 
 /**
  *  Partitions a RingSet into RingSets of connected rings. Rings which share an
@@ -65,14 +65,14 @@ public class RingPartitioner {
         Ring ring;
         RingSet tempRingSet = null;
         //RingSet rs = (RingSet)ringSet.clone();
-        RingSet rs = new RingSet();
+        RingSet rs = new org.openscience.cdk.RingSet();
         for (int f = 0; f < ringSet.size(); f++) {
-            rs.addElement(ringSet.elementAt(f));
+            rs.add(ringSet.get(f));
         }
         do {
-            ring = (Ring) rs.elementAt(0);
-            RingSet newRs = new RingSet();
-            newRs.addElement(ring);
+            ring = (Ring) rs.get(0);
+            RingSet newRs = new org.openscience.cdk.RingSet();
+            newRs.add(ring);
             tempRingSet = walkRingSystem(rs, ring, newRs);
             if (debug) {
                 System.out.println("found ringset with ringcount: " + tempRingSet.size());
@@ -126,11 +126,11 @@ public class RingPartitioner {
         if (debug) {
             System.out.println("walkRingSystem -> tempRings.size(): " + tempRings.size());
         }
-        rs.removeElement(ring);
+        rs.remove(ring);
         for (int f = 0; f < tempRings.size(); f++) {
             tempRing = (Ring) tempRings.elementAt(f);
             if (!newRs.contains(tempRing)) {
-                newRs.addElement(tempRing);
+                newRs.add(tempRing);
                 newRs.add(walkRingSystem(rs, tempRing, newRs));
             }
         }

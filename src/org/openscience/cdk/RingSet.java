@@ -124,7 +124,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public RingSet getRings(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.RingSet getRings(org.openscience.cdk.interfaces.Atom atom)
 	{
 		RingSet rings = new RingSet();
 		Ring ring;

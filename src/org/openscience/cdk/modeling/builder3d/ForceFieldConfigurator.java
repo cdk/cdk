@@ -43,7 +43,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -278,7 +278,7 @@ public class ForceFieldConfigurator {
 				atom.setFlag(CDKConstants.ISALIPHATIC, false);
 				ringSetA = ringSetMolecule.getRings(atom);
 				RingSetManipulator.sort(ringSetA);
-				Ring sring = (Ring) ringSetA.lastElement();
+				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);
 				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
 				isInHeteroRing = isHeteroRingSystem(RingSetManipulator.getAllInOneContainer(ringSetA));
 			} else {

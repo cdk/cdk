@@ -205,7 +205,7 @@ public class ModelBuilder3D {
 			return 1;
 		}
 		//Assing Atoms to Rings,Aliphatic and Atomtype
-		RingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
+		org.openscience.cdk.interfaces.RingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
 		Vector ringSystems = null;
 		RingSet largestRingSet = null;
 		double NumberOfRingAtoms = 0;
