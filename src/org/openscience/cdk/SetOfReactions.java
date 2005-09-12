@@ -101,7 +101,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	 * @param  number  The position of the Reaction to be returned
 	 * @return         The Reaction at position <code>number</code>
 	 */
-    public Reaction getReaction(int number) {
+    public org.openscience.cdk.interfaces.Reaction getReaction(int number) {
         return (Reaction)reactions[number];
     }
     
@@ -111,7 +111,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	 *
 	 * @return    The array of Reactions of this container 
 	 */
-	public Reaction[] getReactions() {
+	public org.openscience.cdk.interfaces.Reaction[] getReactions() {
         Reaction[] result = new Reaction[reactionCount];
         for (int i=0; i < reactionCount; i++) {
             result[i] = (Reaction)reactions[i];
@@ -146,7 +146,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
         buffer.append("SetOfReactions(");
         buffer.append(this.hashCode()).append(", ");
         buffer.append("R=").append(getReactionCount()).append(", ");
-        Reaction[] reactions = getReactions();
+        org.openscience.cdk.interfaces.Reaction[] reactions = getReactions();
         for (int i=0; i<reactions.length; i++) {
             buffer.append(reactions[i].toString());
         }

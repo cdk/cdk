@@ -76,7 +76,7 @@ public class SetOfReactionsTest extends CDKTestCase {
 		reactionSet.addReaction(new Reaction()); // 3
 		reactionSet.addReaction(new Reaction()); // 4
         
-        Reaction[] reactions = reactionSet.getReactions();
+		org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
         assertNotNull(reactions);
         assertEquals(4, reactions.length);
         for (int i=0; i<reactions.length; i++) {

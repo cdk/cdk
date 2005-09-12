@@ -320,7 +320,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         return roundTrippedMol;
     }
     
-    private Reaction roundTripReaction(Reaction reaction) {
+    private org.openscience.cdk.interfaces.Reaction roundTripReaction(Reaction reaction) {
         StringWriter stringWriter = new StringWriter();
         try {
             CMLWriter writer = new CMLWriter(stringWriter);
@@ -332,7 +332,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             fail(message);
         }
         
-        Reaction roundTrippedReaction = null;
+        org.openscience.cdk.interfaces.Reaction roundTrippedReaction = null;
         try {
             String cmlString = stringWriter.toString();
             logger.debug("CML string: " + cmlString);
@@ -396,7 +396,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         reactant.addAtom(atom);
         reaction.addReactant(reactant);
         
-        Reaction roundTrippedReaction = roundTripReaction(reaction);
+        org.openscience.cdk.interfaces.Reaction roundTrippedReaction = roundTripReaction(reaction);
         
         assertNotNull(roundTrippedReaction);
         org.openscience.cdk.interfaces.SetOfMolecules reactants = roundTrippedReaction.getReactants();

@@ -385,7 +385,7 @@ public class Convertor {
     }
 
     private void writeSetOfReactions(SetOfReactions reactionSet, Element nodeToAppend) throws CMLException{
-        Reaction[] reactions = reactionSet.getReactions();
+    	org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
         logger.debug("Writing SetOfReactions: ", reactions.length);
         if (reactions.length > 0) {
             ReactionListImpl reactionlist=new ReactionListImpl(doc);
@@ -402,7 +402,7 @@ public class Convertor {
         }
     }
     
-    private void writeReaction(Reaction reaction, Element nodeToAppend) throws CMLException{
+    private void writeReaction(org.openscience.cdk.interfaces.Reaction reaction, Element nodeToAppend) throws CMLException{
         logger.debug("Writing Reaction...");
         // create CML atom and bond ids
         if (useCmlIdentifiers) {

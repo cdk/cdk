@@ -585,7 +585,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		SetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet != null)
 		{
-			Reaction[] reactions = reactionSet.getReactions();
+			org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
 			for (int i = 1; i <= reactions.length; i++)
 			{
 				org.openscience.cdk.interfaces.AtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);

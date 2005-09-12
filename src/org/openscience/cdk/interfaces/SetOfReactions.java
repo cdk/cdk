@@ -27,7 +27,7 @@ package org.openscience.cdk.interfaces;
 /** 
  * A set of reactions, for example those taking part in a reaction.
  *
- * @cdk.module data
+ * @cdk.module  interfaces
  *
  * @cdk.keyword reaction
  */
@@ -47,14 +47,14 @@ public interface SetOfReactions extends ChemObject {
 	 * @param  number  The position of the Reaction to be returned
 	 * @return         The Reaction at position <code>number</code>
 	 */
-    public org.openscience.cdk.Reaction getReaction(int number);
+    public Reaction getReaction(int number);
 
 	/**
 	 * Returns the array of Reactions of this container.
 	 *
 	 * @return    The array of Reactions of this container 
 	 */
-	public org.openscience.cdk.Reaction[] getReactions();
+	public Reaction[] getReactions();
 	
 	/**
 	 * Returns the number of Reactions in this Container.

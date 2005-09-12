@@ -91,7 +91,7 @@ public class CreateReactionAction extends JCPAction
 			logger.debug("Deleted atom from old container...");
 
 			// add reaction
-			Reaction reaction = new Reaction();
+			org.openscience.cdk.interfaces.Reaction reaction = new Reaction();
 			reaction.setID("reaction-" + System.currentTimeMillis());
 			logger.debug("type: ", type);
 			if ("addReactantToNew".equals(type))
@@ -188,7 +188,7 @@ public class CreateReactionAction extends JCPAction
 	{
 		if (reactionSet != null)
 		{
-			Reaction[] reactions = reactionSet.getReactions();
+			org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
 			String[] ids = new String[reactions.length];
 			for (int i = 0; i < reactions.length; i++)
 			{
@@ -209,9 +209,9 @@ public class CreateReactionAction extends JCPAction
 	 *@param  id           Description of the Parameter
 	 *@return              The reaction value
 	 */
-	private Reaction getReaction(SetOfReactions reactionSet, String id)
+	private org.openscience.cdk.interfaces.Reaction getReaction(SetOfReactions reactionSet, String id)
 	{
-		Reaction[] reactions = reactionSet.getReactions();
+		org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
 		for (int i = 0; i < reactions.length; i++)
 		{
 			if (reactions[i].getID().equals(id))

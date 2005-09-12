@@ -143,7 +143,7 @@ public class IDCreator {
      * Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
      * accordingly, when no ID is given.
      */
-    public void createIDs(Reaction reaction) {
+    public void createIDs(org.openscience.cdk.interfaces.Reaction reaction) {
         if (tabuList == null) tabuList = ReactionManipulator.getAllIDs(reaction);
         
         if (reaction.getID() == null) {
@@ -163,7 +163,7 @@ public class IDCreator {
     }
     
     public void createIDs(SetOfReactions reactionSet) {
-        Reaction[] reactions = reactionSet.getReactions();
+    	org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
         for (int i=0; i<reactions.length; i++) {
             createIDs(reactions[i]);
         }

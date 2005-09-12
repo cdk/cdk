@@ -224,10 +224,10 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 				{
 					SetOfReactions newSet = new SetOfReactions();
 					// FIXME, this does not preserve reactionset properties!
-					Reaction[] reactions = reactionSet.getReactions();
+					org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
 					for (int j = 0; j < reactions.length; j++)
 					{
-						Reaction reaction = reactions[j];
+						org.openscience.cdk.interfaces.Reaction reaction = reactions[j];
 						Reaction newReaction = new Reaction();
 						// FIXME, this does not preserve reaction properties!
 						Molecule[] reactants = reaction.getReactants().getMolecules();
