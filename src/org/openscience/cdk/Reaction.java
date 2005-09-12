@@ -126,7 +126,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
      * @return A SetOfMolecules containing the products in this reaction
      * @see    #setProducts
      */
-    public SetOfMolecules getProducts() {
+    public org.openscience.cdk.interfaces.SetOfMolecules getProducts() {
         return (SetOfMolecules)products;
     }
     
@@ -147,7 +147,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
      * @return A SetOfMolecules containing the agents in this reaction
      * @see    #addAgent
      */
-    public SetOfMolecules getAgents() {
+    public org.openscience.cdk.interfaces.SetOfMolecules getAgents() {
         return (SetOfMolecules)agents;
     }
     

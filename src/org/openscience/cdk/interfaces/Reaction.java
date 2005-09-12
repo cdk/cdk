@@ -81,7 +81,7 @@ public interface Reaction extends ChemObject {
      * @return A  containing the products in this reaction
      * @see    #setProducts
      */
-    public org.openscience.cdk.SetOfMolecules getProducts();
+    public SetOfMolecules getProducts();
     
 	/**
      * Assigns a  to the products of this reaction.
@@ -97,7 +97,7 @@ public interface Reaction extends ChemObject {
      * @return A  containing the agents in this reaction
      * @see    #addAgent
      */
-    public org.openscience.cdk.SetOfMolecules getAgents();
+    public SetOfMolecules getAgents();
     
     /**
      * Adds a reactant to this reaction.
