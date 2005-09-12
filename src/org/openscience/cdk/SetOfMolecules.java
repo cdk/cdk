@@ -69,7 +69,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      * @param  moleculeSet  The SetOfMolecules 
      */
     public void add(org.openscience.cdk.interfaces.SetOfMolecules moleculeSet) {
-        Molecule[] mols = moleculeSet.getMolecules();
+    	org.openscience.cdk.interfaces.Molecule[] mols = moleculeSet.getMolecules();
         for (int i=0; i< mols.length; i++) {
             addMolecule(mols[i]);
         }
@@ -90,7 +90,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      *
      * @return    The array of Molecules of this container 
      */
-    public Molecule[] getMolecules() {
+    public org.openscience.cdk.interfaces.Molecule[] getMolecules() {
         Molecule[] result = new Molecule[super.getAtomContainerCount()];
         org.openscience.cdk.interfaces.AtomContainer[] containers = super.getAtomContainers();
         for (int i=0; i<containers.length; i++) {
@@ -131,7 +131,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
 	 */
 	public Object clone() {
 		SetOfMolecules clone = new SetOfMolecules();
-		Molecule[] result = getMolecules();
+		org.openscience.cdk.interfaces.Molecule[] result = getMolecules();
 		for (int i = 0; i < result.length; i++) {
 			clone.addMolecule((Molecule) result[i].clone());
 		}

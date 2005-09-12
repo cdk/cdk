@@ -64,7 +64,7 @@ import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 
 public class SSSRFinder {
 
-	private AtomContainer atomContainer;
+	private org.openscience.cdk.interfaces.AtomContainer atomContainer;
 	private CycleBasis cycleBasis;
 	
 	/**
@@ -80,7 +80,7 @@ public class SSSRFinder {
 	 *
 	 * @param   ac the molecule to be searched for rings 
 	 */
-	public SSSRFinder(AtomContainer ac) {
+	public SSSRFinder(org.openscience.cdk.interfaces.AtomContainer ac) {
 		this.atomContainer = ac;
 	}
 	
@@ -204,7 +204,7 @@ public class SSSRFinder {
 		return cycleBasis;
 	}
 	
-	private static RingSet toRingSet(AtomContainer ac, Collection cycles) {
+	private static RingSet toRingSet(org.openscience.cdk.interfaces.AtomContainer ac, Collection cycles) {
 		
 		RingSet ringSet = new RingSet();
 

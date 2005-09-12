@@ -9,7 +9,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -49,7 +49,7 @@ public class CleanUpEditTest extends ChangeCoordsEditTest {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * (non-Javadoc).
 	 * 
 	 * @see org.openscience.cdk.test.applications.undoredo.ChangeCoordsEditTest#testRedo()
 	 */
@@ -92,8 +92,8 @@ public class CleanUpEditTest extends ChangeCoordsEditTest {
 		if (molecule != null) {
 			if (molecule.getAtomCount() > 2) {
 				diagramGenerator.setMolecule(molecule);
-				diagramGenerator.generateExperimentalCoordinates(new Vector2d(
-						0, 1));
+				diagramGenerator.generateExperimentalCoordinates(
+						new Vector2d(0, 1));
 				cleanedMol = diagramGenerator.getMolecule();
 			}
 		}

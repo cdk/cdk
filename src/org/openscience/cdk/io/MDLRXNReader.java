@@ -42,7 +42,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
@@ -192,7 +192,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
                 Molecule reactant = (Molecule)reader.read(
-                  new Molecule());
+                  new org.openscience.cdk.Molecule());
                   
                 // add reactant
                 reaction.addReactant(reactant);
@@ -221,7 +221,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
                 Molecule product = (Molecule)reader.read(
-                  new Molecule());
+                  new org.openscience.cdk.Molecule());
                   
                 // add reactant
                 reaction.addProduct(product);

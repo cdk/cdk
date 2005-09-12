@@ -30,7 +30,7 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Fragment;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -138,7 +138,7 @@ public class IUPACNameGenerator {
         /** First calculate some general statistics that
          *  can speed up the application of rules.
          */
-        Molecule molecule = new Molecule(m);
+        Molecule molecule = new org.openscience.cdk.Molecule(m);
         try {
             hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
         } catch (Exception exception) {

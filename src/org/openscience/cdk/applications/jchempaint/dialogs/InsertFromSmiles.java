@@ -41,7 +41,7 @@ import javax.swing.JTextField;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;

@@ -87,7 +87,7 @@ public class AlphaRenderer2D extends Renderer2D {
 protected RingSet getRingSet(AtomContainer atomCon)
 {
   RingSet ringSet = new RingSet();
-  Molecule[] molecules = null;
+  org.openscience.cdk.interfaces.Molecule[] molecules = null;
 
   try
   {

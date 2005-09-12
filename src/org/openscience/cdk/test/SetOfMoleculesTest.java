@@ -129,7 +129,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
         som.addMolecule(new Molecule());
         som.addMolecule(new Molecule());
 
-        Molecule[] mols = som.getMolecules();
+        org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
         assertEquals(7, mols.length);
     }
     
@@ -142,7 +142,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     public void testGetMolecules() {
         SetOfMolecules som = new SetOfMolecules();
         
-        Molecule[] mols = som.getMolecules();
+        org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
         assertEquals(0, mols.length);
         
         som.addMolecule(new Molecule());

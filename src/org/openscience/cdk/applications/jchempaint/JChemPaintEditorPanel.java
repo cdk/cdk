@@ -574,7 +574,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		SetOfMolecules moleculeSet = model.getSetOfMolecules();
 		if (moleculeSet != null)
 		{
-			Molecule[] mols = moleculeSet.getMolecules();
+			org.openscience.cdk.interfaces.Molecule[] mols = moleculeSet.getMolecules();
 			for (int i = 0; i < mols.length; i++)
 			{
 				GeometryTools.center(mols[i], baseDim);

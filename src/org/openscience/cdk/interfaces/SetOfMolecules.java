@@ -53,7 +53,7 @@ public interface SetOfMolecules extends SetOfAtomContainers {
      *
      * @return    The array of Molecules of this container 
      */
-    public org.openscience.cdk.Molecule[] getMolecules();
+    public Molecule[] getMolecules();
     
     /**
      * Returns the Molecule at position <code>number</code> in the

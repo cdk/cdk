@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ElectronContainer;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -242,7 +242,7 @@ public class StructureDiagramGenerator
     public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
         // first make a shallow copy: Atom/Bond references are kept
         Molecule original = molecule;
-        Molecule shallowCopy = (Molecule)molecule.shallowCopy();
+        Molecule shallowCopy = (Molecule)((org.openscience.cdk.Molecule)molecule).shallowCopy();
         // ok, delete H's from 
         org.openscience.cdk.interfaces.Atom[] atoms = shallowCopy.getAtoms();
         for (int i = 0; i < atoms.length; i++) {

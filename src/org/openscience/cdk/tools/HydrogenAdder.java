@@ -35,7 +35,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.Isotope;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -169,11 +169,11 @@ public class HydrogenAdder {
     {
 	    logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-      Molecule[] molecules = moleculeSet.getMolecules();
+      org.openscience.cdk.interfaces.Molecule[] molecules = moleculeSet.getMolecules();
       AtomContainer changedAtomsAndBonds = new org.openscience.cdk.AtomContainer();
       AtomContainer intermediateContainer= null;
       for (int k = 0; k < molecules.length; k++) {
-        Molecule molPart = molecules[k];
+    	  org.openscience.cdk.interfaces.Molecule molPart = molecules[k];
         org.openscience.cdk.interfaces.Atom[] atoms = molPart.getAtoms();
          for (int i = 0; i < atoms.length; i++) {
             intermediateContainer = addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
@@ -288,7 +288,7 @@ public class HydrogenAdder {
       Molecule[] molecules = moleculeSet.getMolecules();
       HashMap hydrogenAtomMap = new HashMap();
       for (int k = 0; k < molecules.length; k++) {
-        Molecule molPart = molecules[k];
+    	org.openscience.cdk.interfaces.Molecule molPart = molecules[k];
         org.openscience.cdk.interfaces.Atom[] atoms = molPart.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
             int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);

@@ -168,7 +168,7 @@ public class FileConvertor {
                 AtomContainer[] containers = (AtomContainer[])ChemFileManipulator.getAllAtomContainers(content);
                 AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
                 for (int i=0; i<containers.length; i++) {
-                	AtomContainer container = containers[i];
+                	org.openscience.cdk.interfaces.AtomContainer container = containers[i];
                 	org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
                         for (int j=0; j<atoms.length; j++) {
@@ -619,10 +619,10 @@ public class FileConvertor {
         try {
 	        if (apply2DCleanup) {
 				logger.info("Creating 2D coordinates");
-				Molecule[] mols = som.getMolecules();
+				org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
 	           	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 				for (int i=0; i<mols.length; i++) {
-					Molecule molecule = mols[i];
+					org.openscience.cdk.interfaces.Molecule molecule = mols[i];
 		            try {
 		                sdg.setMolecule(molecule, false); // false -> don't make clone!
 		                sdg.generateCoordinates(new Vector2d(0, 1));

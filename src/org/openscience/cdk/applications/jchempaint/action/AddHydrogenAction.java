@@ -156,10 +156,10 @@ public class AddHydrogenAction extends JCPAction
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();
         try
 		{
-			Molecule[] mols = som.getMolecules();
+        	org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
 			for (int i = 0; i < mols.length; i++)
 			{
-				Molecule molecule = mols[i];
+				org.openscience.cdk.interfaces.Molecule molecule = mols[i];
 				if (molecule != null)
 				{
 					if (type.equals("implicit"))

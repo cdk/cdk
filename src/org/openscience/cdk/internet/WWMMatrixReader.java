@@ -44,7 +44,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
@@ -153,11 +153,11 @@ public class WWMMatrixReader {
 
         wwmm.setCollection(coll);
         wwmm.setQuery(index, query);
-        Molecule m = (Molecule)wwmm.read(new Molecule());
+        Molecule m = (Molecule)wwmm.read(new org.openscience.cdk.Molecule());
         if (!GeometryTools.has2DCoordinates(m)) {
                         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
                         try {
-                                sdg.setMolecule(new Molecule(m));
+                                sdg.setMolecule(new org.openscience.cdk.Molecule(m));
                                 sdg.generateCoordinates(new Vector2d(0, 1));
                                 m = sdg.getMolecule();
                         } catch (Exception exc) {

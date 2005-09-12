@@ -126,7 +126,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertNotNull(moleculeSet);
 		assertEquals(3, moleculeSet.getMoleculeCount());
         
-        Molecule[] molecules = moleculeSet.getMolecules();
+		org.openscience.cdk.interfaces.Molecule[] molecules = moleculeSet.getMolecules();
         assertTrue(ConnectivityChecker.isConnected(molecules[0]));
         assertTrue(ConnectivityChecker.isConnected(molecules[1]));
         assertTrue(ConnectivityChecker.isConnected(molecules[2]));
@@ -164,7 +164,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertNotNull(moleculeSet);
 		assertEquals(2, moleculeSet.getMoleculeCount());
         
-        Molecule[] molecules = moleculeSet.getMolecules();
+		org.openscience.cdk.interfaces.Molecule[] molecules = moleculeSet.getMolecules();
         assertTrue(ConnectivityChecker.isConnected(molecules[0]));
         assertTrue(ConnectivityChecker.isConnected(molecules[1]));
         

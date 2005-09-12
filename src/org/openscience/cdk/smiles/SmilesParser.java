@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
@@ -107,7 +107,7 @@ public class SmilesParser
 	Atom[] rings = null;
 	double[] ringbonds = null;
 	int thisRing = -1;
-	Molecule molecule = null;
+	org.openscience.cdk.Molecule molecule = null;
 	String currentSymbol = null;
 
 
@@ -175,7 +175,7 @@ public class SmilesParser
 	 *@exception  InvalidSmilesException  Exception thrown when the SMILES string
 	 *      is invalid
 	 */
-	public Molecule parseSmiles(String smiles) throws InvalidSmilesException
+	public org.openscience.cdk.Molecule parseSmiles(String smiles) throws InvalidSmilesException
 	{
 		logger.debug("parseSmiles()...");
 		Bond bond = null;
@@ -184,7 +184,7 @@ public class SmilesParser
 		boolean bondExists = true;
 		thisRing = -1;
 		currentSymbol = null;
-		molecule = new Molecule();
+		molecule = new org.openscience.cdk.Molecule();
 		position = 0;
 		// we don't want more than 1024 rings
 		rings = new Atom[1024];

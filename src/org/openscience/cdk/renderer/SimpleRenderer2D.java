@@ -99,7 +99,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 		logger.debug("inside paintMolecule()");
 		customizeRendering(graphics);
 		RingSet ringSet = new RingSet();
-		Molecule[] molecules = null;
+		org.openscience.cdk.interfaces.Molecule[] molecules = null;
 		try
 		{
 			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();

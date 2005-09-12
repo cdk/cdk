@@ -34,7 +34,7 @@ import javax.swing.JPanel;
 
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;

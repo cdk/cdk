@@ -227,7 +227,7 @@ public class DescriptorEngine {
      * @param  molecule  The molecule for which we want to calculate descriptors   
      * @throws CDKException if an error occured during descriptor calculation
      */
-    public void process(Molecule molecule) throws CDKException {
+    public void process(org.openscience.cdk.interfaces.Molecule molecule) throws CDKException {
         for (int i = 0; i < descriptors.size(); i++) {    
             Descriptor descriptor = (Descriptor)descriptors.get(i);
             try {

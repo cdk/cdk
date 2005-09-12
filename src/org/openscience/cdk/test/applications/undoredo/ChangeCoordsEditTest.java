@@ -4,8 +4,7 @@ import java.util.HashMap;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.applications.undoredo.ChangeCoordsEdit;
 import org.openscience.cdk.test.CDKTestCase;
 

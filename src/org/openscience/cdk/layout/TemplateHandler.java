@@ -155,7 +155,7 @@ public class TemplateHandler
 	 *@param  molecule  The molecule to be check for potential templates
 	 *@return           True if there was a possible mapping
 	 */
-	public boolean mapTemplates(Molecule molecule) throws CDKException
+	public boolean mapTemplates(org.openscience.cdk.interfaces.Molecule molecule) throws CDKException
 	{
 		boolean mapped = false;
 		Molecule template = null;
@@ -165,7 +165,7 @@ public class TemplateHandler
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = (Molecule) templates.elementAt(f);
-			if (UniversalIsomorphismTester.isSubgraph(new org.openscience.cdk.AtomContainer(molecule), new org.openscience.cdk.AtomContainer(template)))
+			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
 			{
 				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(new org.openscience.cdk.AtomContainer(molecule), new org.openscience.cdk.AtomContainer(template));
 				logger.debug("Found a subgraph mapping of size " + list.size());

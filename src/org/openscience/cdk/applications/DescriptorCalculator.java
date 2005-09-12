@@ -132,7 +132,7 @@ public class DescriptorCalculator {
         writer.flush();
     }
 
-    private void printCMLMolecule(Writer writer, Molecule molecule) throws Exception {
+    private void printCMLMolecule(Writer writer, org.openscience.cdk.interfaces.Molecule molecule) throws Exception {
         logger.info("Writing output in CML format");
         StringWriter stringWriter = new StringWriter();
         CMLWriter cmlWriter = new CMLWriter(stringWriter);
@@ -142,7 +142,7 @@ public class DescriptorCalculator {
         writer.write(stringWriter.toString());
         writer.flush();
     }
-    private void printTXTMolecule(Writer writer, Molecule molecule) throws Exception {
+    private void printTXTMolecule(Writer writer, org.openscience.cdk.interfaces.Molecule molecule) throws Exception {
         logger.info("Writing output in TXT format");
         String headerLine = "";
         StringWriter stringWriter = new StringWriter();
@@ -193,7 +193,7 @@ public class DescriptorCalculator {
         writer.flush();
     }
     
-    private void processMolecule(Writer writer, Molecule molecule) throws Exception {
+    private void processMolecule(Writer writer, org.openscience.cdk.interfaces.Molecule molecule) throws Exception {
         boolean engineError = false;
         try {
             engine.process(molecule);
@@ -229,7 +229,7 @@ public class DescriptorCalculator {
                     new StringReader(toProcess)
                 );
                 SetOfMolecules moleculeSet = (SetOfMolecules)reader.read(new SetOfMolecules());
-                Molecule[] molecules = moleculeSet.getMolecules();
+                org.openscience.cdk.interfaces.Molecule[] molecules = moleculeSet.getMolecules();
                 for (int i=0; i<molecules.length; i++) {
                     processMolecule(writer, molecules[i]);
                 }
