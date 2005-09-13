@@ -89,7 +89,7 @@ public class CleanupAction extends JCPAction
 			logger.debug("getting ChemModel");
 			ChemModel model = jcpmodel.getChemModel();
 			logger.debug("got ChemModel");
-			SetOfMolecules som = model.getSetOfMolecules();
+			org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
 			if (som != null)
 			{
 				logger.debug("no mols in som: ", som.getMoleculeCount());

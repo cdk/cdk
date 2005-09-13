@@ -331,7 +331,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         ChemModel model = seq.getChemModel(0);
         assertNotNull(model);
         
-        SetOfMolecules moleculeSet = model.getSetOfMolecules();
+        org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = model.getSetOfMolecules();
         assertNotNull(moleculeSet);
         
         assertEquals(moleculeSet.getMoleculeCount(), numberOfMolecules);

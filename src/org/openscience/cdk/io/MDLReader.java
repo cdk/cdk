@@ -164,7 +164,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
     private ChemModel readChemModel(ChemModel chemModel) throws CDKException {
-        SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+    	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
         if (setOfMolecules == null) {
             setOfMolecules = new SetOfMolecules();
         }

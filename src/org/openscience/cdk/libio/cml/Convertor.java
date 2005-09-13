@@ -331,7 +331,7 @@ public class Convertor {
         writeProperties(container, nodeToAppend);
     }
 
-    private void writeSetOfMolecules(SetOfMolecules som, Element nodeToAppend) throws CMLException{
+    private void writeSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules som, Element nodeToAppend) throws CMLException{
         logger.debug("Writing SOM");
         // create CML atom and bond ids
         if (useCmlIdentifiers) {
@@ -368,7 +368,7 @@ public class Convertor {
         CmlImpl cml=new CmlImpl(doc);
         nodeToAppend.appendChild(cml);
         Crystal crystal = model.getCrystal();
-        SetOfMolecules som = model.getSetOfMolecules();
+        org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
         SetOfReactions reactionSet = model.getSetOfReactions();
         if (crystal != null) {
             writeCrystal(crystal, cml);

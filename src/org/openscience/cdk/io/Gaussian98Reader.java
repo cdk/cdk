@@ -418,7 +418,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	private void readPartialCharges(ChemModel model) throws CDKException, IOException
 	{
 		logger.info("Reading partial atomic charges");
-		SetOfMolecules moleculeSet = model.getSetOfMolecules();
+		org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = model.getSetOfMolecules();
 		org.openscience.cdk.interfaces.Molecule molecule = moleculeSet.getMolecule(0);
 		String line = input.readLine();
 		// skip first line after "Total atomic charges"

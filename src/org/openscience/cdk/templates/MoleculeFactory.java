@@ -724,7 +724,7 @@ public class MoleculeFactory {
 		ChemFile chemFile = null;
 		ChemSequence chemSequence = null;
 		ChemModel chemModel = null;
-		SetOfMolecules setOfMolecules = null;
+		org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = null;
 		org.openscience.cdk.interfaces.Molecule molecule = null;
 		try
 		{

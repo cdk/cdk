@@ -40,7 +40,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
 	/**
 	 *  A SetOfMolecules.
 	 */
-	protected org.openscience.cdk.interfaces.SetOfAtomContainers setOfMolecules = null;
+	protected org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = null;
 
 	/**
 	 *  A SetOfReactions.
@@ -70,7 +70,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setSetOfMolecules
 	 */
-	public SetOfMolecules getSetOfMolecules()
+	public org.openscience.cdk.interfaces.SetOfMolecules getSetOfMolecules()
 	{
 		return (SetOfMolecules)this.setOfMolecules;
 	}
@@ -83,7 +83,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #getSetOfMolecules
 	 */
-	public void setSetOfMolecules(org.openscience.cdk.interfaces.SetOfAtomContainers setOfMolecules)
+	public void setSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
 		this.setOfMolecules.addListener(this);

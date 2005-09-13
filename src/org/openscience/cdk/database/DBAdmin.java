@@ -349,7 +349,7 @@ public class DBAdmin {
                                  chemSequence.getChemModelCount());
 			     for (int model = 0; model < chemSequence.getChemModelCount(); model++) {
 				  ChemModel chemModel = chemSequence.getChemModel(model);
-				  SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+				  org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
 				  logger.info("number of molecules in model " + model + ": " +
                                       setOfMolecules.getMoleculeCount());
 	                          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {

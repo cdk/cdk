@@ -149,7 +149,7 @@ public class InsertFromSmiles extends JFrame
                 JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
                 Renderer2DModel renderModel = jcpModel.getRendererModel();
                 ChemModel chemModel = jcpModel.getChemModel();
-                SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+                org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
                 if (moleculeSet == null) {
                     moleculeSet = new SetOfMolecules();
                 }

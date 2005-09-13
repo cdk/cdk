@@ -239,7 +239,7 @@ public class SaveAsAction extends JCPAction
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
-		SetOfMolecules som = model.getSetOfMolecules();
+		org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
 		cow.write(som);
 		cow.close();
 	}
@@ -288,7 +288,7 @@ public class SaveAsAction extends JCPAction
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
-		SetOfMolecules som = model.getSetOfMolecules();
+		org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
 		cow.write(som);
 		cow.close();
 	}

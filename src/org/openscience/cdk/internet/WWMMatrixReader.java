@@ -243,7 +243,7 @@ public class WWMMatrixReader {
             logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
             if (chemSequence.getChemModelCount() > 0) {
                 ChemModel chemModel = chemSequence.getChemModel(0);
-                SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+                org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
                 logger.debug("#mols in model: " + setOfMolecules.getMoleculeCount());
                 if (setOfMolecules.getMoleculeCount() > 0) {
                     m = setOfMolecules.getMolecule(0);

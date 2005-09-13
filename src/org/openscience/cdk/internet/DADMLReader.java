@@ -281,7 +281,7 @@ public class DADMLReader {
             ChemSequence chemSequence = chemFile.getChemSequence(0);
             logger.debug("#models in sequence: ", chemSequence.getChemModelCount());
             ChemModel chemModel = chemSequence.getChemModel(0);
-            SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             logger.debug("#mols in model: ", moleculeSet.getMoleculeCount());
             molecule = moleculeSet.getMolecule(0);
         } catch (UnsupportedChemObjectException exception) {

@@ -54,7 +54,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 import org.openscience.cdk.applications.plugin.CDKPluginManager;

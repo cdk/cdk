@@ -52,7 +52,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
@@ -637,7 +637,7 @@ public class FileConvertor {
         } catch (CDKException exception) {
             int count = som.getMoleculeCount();
             boolean needMoreFiles =
-              (compare(new SetOfMolecules(), cow.highestSupportedChemObject()) < 0) && (count > 1);
+              (compare(new org.openscience.cdk.SetOfMolecules(), cow.highestSupportedChemObject()) < 0) && (count > 1);
             logger.info("Cannot write SetOfMolecules, recursing into Molecules's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {

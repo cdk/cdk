@@ -30,12 +30,9 @@ package org.openscience.cdk.tools;
 
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfAtomContainers;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.interfaces.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;

@@ -146,7 +146,7 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  moleculeSet  Description of the Parameter
 	 *@param  graphics     Description of the Parameter
 	 */
-	public void paintSetOfMolecules(SetOfMolecules moleculeSet, Graphics2D graphics) {
+	public void paintSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules moleculeSet, Graphics2D graphics) {
 		logger.debug("painting set of molecules");
 		org.openscience.cdk.interfaces.AtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
 		Molecule[] molecules = null;

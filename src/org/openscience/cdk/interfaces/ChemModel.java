@@ -38,7 +38,7 @@ public interface ChemModel extends ChemObject {
 	 * @return   The SetOfMolecules of this ChemModel
      * @see      #setSetOfMolecules
 	 */
-	public org.openscience.cdk.SetOfMolecules getSetOfMolecules();
+	public SetOfMolecules getSetOfMolecules();
 
 	/**
 	 * Sets the SetOfMolecules of this ChemModel.
@@ -46,7 +46,7 @@ public interface ChemModel extends ChemObject {
 	 * @param   setOfMolecules  the content of this model
      * @see      #getSetOfMolecules
 	 */
-	public void setSetOfMolecules(SetOfAtomContainers setOfMolecules);	
+	public void setSetOfMolecules(SetOfMolecules setOfMolecules);	
 
 	/**
 	 * Returns the RingSet of this ChemModel.

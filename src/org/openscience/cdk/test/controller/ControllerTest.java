@@ -48,7 +48,7 @@ public class ControllerTest
 	ChemFile chemFile;
 	ChemSequence chemSequence;
 	ChemModel chemModel;
-	SetOfMolecules setOfMolecules;
+	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
 	org.openscience.cdk.interfaces.Molecule molecule;
 	PopupController2D inputAdapter;
 	

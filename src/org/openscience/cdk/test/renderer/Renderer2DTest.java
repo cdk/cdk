@@ -56,7 +56,7 @@ public class Renderer2DTest extends JPanel
 	ChemFile chemFile;
 	ChemSequence chemSequence;
 	ChemModel chemModel;
-	SetOfMolecules setOfMolecules;
+	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
 	org.openscience.cdk.interfaces.Molecule molecule;
 
 	Renderer2DModel r2dm;
