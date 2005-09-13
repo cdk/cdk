@@ -108,6 +108,11 @@
 
     <target id="unjar-cdkjars" name="unjar-cdkjars">
 	 <unjar dest="${appjars.dir}">
+            <fileset dir="${plugin.dir}">
+                <include name="dirbrowser.jar"/>
+                <include name="dadmlbrowser.jar"/>
+                <include name="aminoacidtemplates.jar"/>
+            </fileset>
             <fileset dir="${dist}/jar">
                 <include name="cdk-applications.jar"/>
                 <include name="cdk-core.jar"/>
@@ -124,11 +129,6 @@
                 <include name="cdk-jchempaint.jar"/>
                 <include name="cdk-jchempaint.application.jar"/>
                 <include name="cdk-jchempaint.applet.jar"/>
-            </fileset>
-            <fileset dir="${plugin.dir}">
-                <include name="dirbrowser.jar"/>
-                <include name="dadmlbrowser.jar"/>
-                <include name="aminoacidtemplates.jar"/>
             </fileset>
         </unjar>
     </target>
