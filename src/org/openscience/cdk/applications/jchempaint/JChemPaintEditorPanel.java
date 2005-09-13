@@ -114,7 +114,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 
 	public JChemPaintEditorPanel(int lines, Dimension panelDimension) {
-	    this(1, panelDimension, false);
+	    this(lines, panelDimension, false);
 	}
 	/**
 	 *  Constructor for the panel
@@ -291,8 +291,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
 			}
 		} catch (Exception exc) {
-			logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-			logger.debug(exc);
+			//logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
+			//logger.debug(exc);
 		}
 	}
 
