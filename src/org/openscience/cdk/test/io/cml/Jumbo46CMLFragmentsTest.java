@@ -275,7 +275,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         cmlStringB.append("  </molecule>\n");
         
         ChemFile chemFile = parseCMLString(cmlStringB.toString());
-        Crystal crystal = checkForCrystalFile(chemFile);
+        org.openscience.cdk.interfaces.Crystal crystal = checkForCrystalFile(chemFile);
         assertEquals(4, crystal.getZ());
         assertEquals("Fm3m", crystal.getSpaceGroup());
         assertEquals(2, crystal.getAtomCount());
@@ -343,7 +343,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         return mol;
     }
 
-    private Crystal checkForCrystalFile(ChemFile chemFile) {
+    private org.openscience.cdk.interfaces.Crystal checkForCrystalFile(ChemFile chemFile) {
         assertNotNull(chemFile);
         
         assertEquals(chemFile.getChemSequenceCount(), 1);
@@ -354,7 +354,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         ChemModel model = seq.getChemModel(0);
         assertNotNull(model);
         
-        Crystal crystal = model.getCrystal();
+        org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
         assertNotNull(crystal);
         
         return crystal;

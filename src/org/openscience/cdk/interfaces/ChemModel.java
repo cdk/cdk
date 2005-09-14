@@ -28,7 +28,7 @@ package org.openscience.cdk.interfaces;
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
  *
- * @cdk.module data
+ * @cdk.module interfaces
  */
 public interface ChemModel extends ChemObject {
 
@@ -54,7 +54,7 @@ public interface ChemModel extends ChemObject {
 	 * @return the ringset of this model
      * @see      #setRingSet
 	 */
-	public org.openscience.cdk.RingSet getRingSet();
+	public RingSet getRingSet();
 
 	/**
 	 * Sets the RingSet of this ChemModel.
@@ -70,7 +70,7 @@ public interface ChemModel extends ChemObject {
      * @return The crystal in this model
      * @see      #setCrystal
      */
-    public org.openscience.cdk.Crystal getCrystal();
+    public Crystal getCrystal();
 
     /**
      * Sets the Crystal contained in this ChemModel.
@@ -86,7 +86,7 @@ public interface ChemModel extends ChemObject {
      * @return The SetOfReactions in this model
      * @see      #setSetOfReactions
      */
-    public org.openscience.cdk.SetOfReactions getSetOfReactions();
+    public SetOfReactions getSetOfReactions();
 
     /**
      * Sets the SetOfReactions contained in this ChemModel.

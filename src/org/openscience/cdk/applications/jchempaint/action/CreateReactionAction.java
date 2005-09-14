@@ -63,7 +63,7 @@ public class CreateReactionAction extends JCPAction
 
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		ChemModel model = jcpmodel.getChemModel();
-		SetOfReactions reactionSet = model.getSetOfReactions();
+		org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
 		{
 			reactionSet = new SetOfReactions();
@@ -209,7 +209,7 @@ public class CreateReactionAction extends JCPAction
 	 *@param  id           Description of the Parameter
 	 *@return              The reaction value
 	 */
-	private org.openscience.cdk.interfaces.Reaction getReaction(SetOfReactions reactionSet, String id)
+	private org.openscience.cdk.interfaces.Reaction getReaction(org.openscience.cdk.interfaces.SetOfReactions reactionSet, String id)
 	{
 		org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
 		for (int i = 0; i < reactions.length; i++)

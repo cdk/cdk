@@ -85,7 +85,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             if (sequence != null) {
                 ChemModel model = sequence.getChemModel(0);
                 if (model != null) {
-                    Crystal crystal = model.getCrystal();
+                	org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
                     if (crystal != null) {
                         write(crystal);
                     } else {

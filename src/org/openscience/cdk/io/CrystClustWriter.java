@@ -96,7 +96,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 
     // Private procedures
 
-    private void write(ChemSequence cs) {
+    private void write(ChemSequence cs) throws UnsupportedChemObjectException {
         int count = cs.getChemModelCount();
         for (int i=0; i < count; i++) {
             write("frame: " + (i+1) + "\n");

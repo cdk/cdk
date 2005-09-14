@@ -596,7 +596,7 @@ public class FileConvertor {
             cow.write(cm);
         } catch (CDKException exception) {
             logger.info("Cannot write ChemModel, trying Crystal.");
-            Crystal crystal = cm.getCrystal();
+            org.openscience.cdk.interfaces.Crystal crystal = cm.getCrystal();
             if (crystal != null) {
                 write(crystal, outputFilename);
             }
@@ -607,7 +607,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(Crystal c, String outputFilename) throws IOException {
+    private void write(org.openscience.cdk.interfaces.Crystal c, String outputFilename) throws IOException {
         try {
             cow.write(c);
         } catch (CDKException exception) {

@@ -272,7 +272,7 @@ public class Convertor {
         }
     }
 
-    private void writeCrystal(Crystal crystal, Element nodeToAppend) throws CMLException {
+    private void writeCrystal(org.openscience.cdk.interfaces.Crystal crystal, Element nodeToAppend) throws CMLException {
         MoleculeImpl mol = new MoleculeImpl(doc);
         
         // output the crystal info
@@ -367,9 +367,9 @@ public class Convertor {
         logger.debug("Writing ChemModel");
         CmlImpl cml=new CmlImpl(doc);
         nodeToAppend.appendChild(cml);
-        Crystal crystal = model.getCrystal();
+        org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
         org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
-        SetOfReactions reactionSet = model.getSetOfReactions();
+        org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
         if (crystal != null) {
             writeCrystal(crystal, cml);
         }
@@ -384,7 +384,7 @@ public class Convertor {
         }
     }
 
-    private void writeSetOfReactions(SetOfReactions reactionSet, Element nodeToAppend) throws CMLException{
+    private void writeSetOfReactions(org.openscience.cdk.interfaces.SetOfReactions reactionSet, Element nodeToAppend) throws CMLException{
     	org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
         logger.debug("Writing SetOfReactions: ", reactions.length);
         if (reactions.length > 0) {

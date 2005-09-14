@@ -99,8 +99,8 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setRingSet
 	 */
-	public RingSet getRingSet() {
-		return (RingSet)this.ringSet;
+	public org.openscience.cdk.interfaces.RingSet getRingSet() {
+		return this.ringSet;
 	}
 
 
@@ -124,8 +124,8 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setCrystal
      */
-    public Crystal getCrystal() {
-        return (Crystal)this.crystal;
+    public org.openscience.cdk.interfaces.Crystal getCrystal() {
+        return this.crystal;
     }
 
     /**
@@ -148,8 +148,8 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setSetOfReactions
      */
-    public SetOfReactions getSetOfReactions() {
-        return (SetOfReactions)this.setOfReactions;
+    public org.openscience.cdk.interfaces.SetOfReactions getSetOfReactions() {
+        return this.setOfReactions;
     }
 
     /**

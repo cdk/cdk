@@ -97,7 +97,7 @@ public class JmolTest extends CDKTestCase {
             assertNotNull(model);
 
             // test the molecule
-            Crystal crystal = model.getCrystal();
+            org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
             assertNotNull(crystal);
             assertEquals(4*42, crystal.getAtomCount());
             assertTrue(GeometryTools.has3DCoordinates(crystal));
