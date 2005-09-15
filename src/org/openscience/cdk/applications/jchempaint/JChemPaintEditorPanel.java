@@ -50,7 +50,7 @@ import javax.swing.event.EventListenerList;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
@@ -483,9 +483,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		{
 			inputAdapter.setPopupMenu(new Bond(), new JChemPaintPopupMenu(this, "bond"));
 		}
-		if (inputAdapter.getPopupMenu(new ChemModel()) == null)
+		if (inputAdapter.getPopupMenu(new org.openscience.cdk.ChemModel()) == null)
 		{
-			inputAdapter.setPopupMenu(new ChemModel(), new JChemPaintPopupMenu(this, "chemmodel"));
+			inputAdapter.setPopupMenu(new org.openscience.cdk.ChemModel(), new JChemPaintPopupMenu(this, "chemmodel"));
 		}
 		if (inputAdapter.getPopupMenu(new Reaction()) == null)
 		{

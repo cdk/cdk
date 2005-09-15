@@ -62,7 +62,7 @@ public class CreateReactionAction extends JCPAction
 		logger.debug("CreateReaction action");
 
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		ChemModel model = jcpmodel.getChemModel();
+		org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
 		org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
 		{

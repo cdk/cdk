@@ -300,7 +300,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             ChemSequence sequence = file.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(1, sequence.getChemModelCount());
-            ChemModel chemModel = sequence.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
             org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             assertNotNull(moleculeSet);

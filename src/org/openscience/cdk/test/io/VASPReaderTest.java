@@ -68,7 +68,7 @@ public class VASPReaderTest extends CDKTestCase {
             ChemSequence sequence = chemFile.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(6, sequence.getChemModelCount());
-            ChemModel model = sequence.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = sequence.getChemModel(0);
             assertNotNull(model);
             org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
             assertNotNull(crystal);

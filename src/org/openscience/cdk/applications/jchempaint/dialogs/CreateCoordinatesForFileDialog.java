@@ -47,7 +47,7 @@ import javax.swing.JRadioButton;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;

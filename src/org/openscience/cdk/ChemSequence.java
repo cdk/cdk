@@ -97,8 +97,8 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
      *
      * @see       #addChemModel
      */
-     public ChemModel[] getChemModels() {
-         ChemModel[] returnModels = new ChemModel[getChemModelCount()];
+     public org.openscience.cdk.interfaces.ChemModel[] getChemModels() {
+    	 org.openscience.cdk.interfaces.ChemModel[] returnModels = new ChemModel[getChemModelCount()];
          System.arraycopy(this.chemModels, 0, returnModels, 0, returnModels.length);
          return returnModels;
      }
@@ -114,9 +114,9 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
      *
      * @see            #addChemModel
 	 */
-	public ChemModel getChemModel(int number)
+	public org.openscience.cdk.interfaces.ChemModel getChemModel(int number)
 	{
-		return (ChemModel)chemModels[number];
+		return chemModels[number];
 	}
 	
 	/**
@@ -145,11 +145,11 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
 	public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("ChemSequence(#M=");
-        ChemModel[] models = getChemModels();
+        org.openscience.cdk.interfaces.ChemModel[] models = getChemModels();
         buffer.append(models.length);
         buffer.append(", ");
         for (int i=0; i<models.length; i++) {
-            ChemModel model = models[i];
+        	org.openscience.cdk.interfaces.ChemModel model = models[i];
             buffer.append(model.toString());
         }
         buffer.append(")");

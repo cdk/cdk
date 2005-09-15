@@ -79,7 +79,7 @@ public class MDLReaderTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
             org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
@@ -311,7 +311,7 @@ public class MDLReaderTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
             org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
@@ -337,7 +337,7 @@ public class MDLReaderTest extends CDKTestCase {
             ChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(9, sequence.getChemModelCount());
-            ChemModel model = sequence.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = sequence.getChemModel(0);
             assertNotNull(model);
             
             org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();

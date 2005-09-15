@@ -81,7 +81,7 @@ public class INChIReaderTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = model.getSetOfMolecules();
             assertNotNull(moleculeSet);

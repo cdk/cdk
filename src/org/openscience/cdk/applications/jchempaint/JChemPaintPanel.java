@@ -459,7 +459,7 @@ private UndoableEditSupport undoSupport;
 		}
 		this.jchemPaintModel = model;
 		jchemPaintModel.addChangeListener(this);
-		ChemModel chemModel = model.getChemModel();
+		org.openscience.cdk.interfaces.ChemModel chemModel = model.getChemModel();
 		scaleAndCenterMolecule(chemModel);
 		drawingPanel.setJChemPaintModel(model);
 	}
@@ -606,7 +606,7 @@ private UndoableEditSupport undoSupport;
 			logger.info("  # model in seq(" + i + "): ", chemModelCount);
 
 			for (int j = 0; j < chemModelCount; j++) {
-				ChemModel chemModel = chemSequence.getChemModel(j);
+				org.openscience.cdk.interfaces.ChemModel chemModel = chemSequence.getChemModel(j);
 				processChemModel(chemModel);
 			}
 		}
@@ -681,7 +681,7 @@ private UndoableEditSupport undoSupport;
 	 *
 	 *@param  chemModel  Description of the Parameter
 	 */
-	public void processChemModel(ChemModel chemModel) {
+	public void processChemModel(org.openscience.cdk.interfaces.ChemModel chemModel) {
 		// check for bonds
 		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
 			String error = "Model does not have bonds. Cannot depict contents.";
@@ -758,7 +758,7 @@ private UndoableEditSupport undoSupport;
 			logger.info("  # model in seq(" + i + "): " + chemModelCount);
 
 			for (int j = 0; j < chemModelCount; j++) {
-				ChemModel chemModel = chemSequence.getChemModel(j);
+				org.openscience.cdk.interfaces.ChemModel chemModel = chemSequence.getChemModel(j);
 				showChemModel(chemModel);
 			}
 		}

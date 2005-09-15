@@ -109,7 +109,7 @@ public class PDBReaderTest extends TestCase {
             oSeq.setProperty(new String("test.chemsequence"), new String("test.chemsequence")); 
             assertEquals(new String("test.chemsequence"), oSeq.getProperty("test.chemsequence"));
 
-            ChemModel oModel = oSeq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel oModel = oSeq.getChemModel(0);
             assertNotNull(oModel);
             assertEquals(1, oModel.getSetOfMolecules().getMoleculeCount());
 
@@ -183,7 +183,7 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(seq);
       assertEquals(1, seq.getChemModelCount());
       
-      ChemModel model = seq.getChemModel(0);
+      org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
       assertNotNull(model);
       assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 

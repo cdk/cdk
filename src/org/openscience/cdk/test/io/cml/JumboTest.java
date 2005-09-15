@@ -90,7 +90,7 @@ public class JumboTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
@@ -126,7 +126,7 @@ public class JumboTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
@@ -162,7 +162,7 @@ public class JumboTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 

@@ -363,7 +363,7 @@ public class Convertor {
         }
     }
 
-    private void writeChemModel(ChemModel model, Element nodeToAppend) throws CMLException {
+    private void writeChemModel(org.openscience.cdk.interfaces.ChemModel model, Element nodeToAppend) throws CMLException {
         logger.debug("Writing ChemModel");
         CmlImpl cml=new CmlImpl(doc);
         nodeToAppend.appendChild(cml);

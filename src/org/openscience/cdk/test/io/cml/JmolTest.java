@@ -93,7 +93,7 @@ public class JmolTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
 
             // test the molecule
@@ -131,7 +131,7 @@ public class JmolTest extends CDKTestCase {
             ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(34, seq.getChemModelCount());
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
@@ -167,7 +167,7 @@ public class JmolTest extends CDKTestCase {
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
             //System.out.println("NO models: " + seq.getChemModelCount());
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 
@@ -200,7 +200,7 @@ public class JmolTest extends CDKTestCase {
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
             //System.out.println("NO models: " + seq.getChemModelCount());
-            ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
             assertEquals(1, som.getMoleculeCount());

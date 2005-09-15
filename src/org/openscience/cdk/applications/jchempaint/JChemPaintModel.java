@@ -36,7 +36,7 @@ import javax.swing.event.EventListenerList;
 
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -78,7 +78,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 
 	/**  Creates an empty JChemPaintModel */
 	public JChemPaintModel() {
-		this(new ChemModel());
+		this(new org.openscience.cdk.ChemModel());
 	}
 
 	/**

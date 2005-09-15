@@ -47,7 +47,7 @@ public class ControllerTest
 	MDLReader mr;
 	ChemFile chemFile;
 	ChemSequence chemSequence;
-	ChemModel chemModel;
+	org.openscience.cdk.interfaces.ChemModel chemModel;
 	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
 	org.openscience.cdk.interfaces.Molecule molecule;
 	PopupController2D inputAdapter;

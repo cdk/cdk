@@ -73,7 +73,7 @@ public class EditAction extends JCPAction {
 
 		JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
 		Renderer2DModel renderModel = jcpModel.getRendererModel();
-		ChemModel chemModel = jcpModel.getChemModel();
+		org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
 		if (type.equals("cut")) {
 			org.openscience.cdk.interfaces.Atom atomInRange = null;
 			ChemObject object = getSource(event);

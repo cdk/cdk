@@ -123,7 +123,7 @@ public class RSSHandler extends DefaultHandler {
         } else if (uri.equals("http://purl.org/rss/1.0/")) {
             // Deal with RSS 1.0 elements
             if (local.equals("item")) {
-                ChemModel model = null;
+            	org.openscience.cdk.interfaces.ChemModel model = null;
                 if (cmlString.length() > 0) {
                     StringReader reader = new StringReader(cmlString);
                     logger.debug("Parsing CML String: ", cmlString);

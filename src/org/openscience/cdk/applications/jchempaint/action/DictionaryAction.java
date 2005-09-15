@@ -50,7 +50,7 @@ public class DictionaryAction extends JCPAction {
     public void actionPerformed(ActionEvent event) {
         logger.debug("Dictionary Action triggered");
         JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
-        ChemModel chemModel = jcpModel.getChemModel();
+        org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
         
         // make explicit references
         CDKDictionaryReferences.makeReferencesExplicit(chemModel);

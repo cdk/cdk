@@ -447,7 +447,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertNotNull(seq);
         
         assertEquals(seq.getChemModelCount(), 1);
-        ChemModel model = seq.getChemModel(0);
+        org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
         assertNotNull(model);
         
         org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = model.getSetOfMolecules();
@@ -470,7 +470,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertNotNull(seq);
         
         assertEquals(seq.getChemModelCount(), 1);
-        ChemModel model = seq.getChemModel(0);
+        org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
         assertNotNull(model);
         
         org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();

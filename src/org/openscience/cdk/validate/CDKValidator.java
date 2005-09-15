@@ -66,7 +66,7 @@ public class CDKValidator extends AbstractValidator {
         
     private ValidationReport validateChemSequenceNulls(ChemSequence sequence) {
         ValidationReport report = new ValidationReport();
-        ChemModel[] models = sequence.getChemModels();
+        org.openscience.cdk.interfaces.ChemModel[] models = sequence.getChemModels();
         ValidationTest hasNulls = new ValidationTest(sequence,
             "ChemSequence contains a null ChemModel."
         );

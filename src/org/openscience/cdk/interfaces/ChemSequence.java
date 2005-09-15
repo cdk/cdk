@@ -28,7 +28,7 @@ package org.openscience.cdk.interfaces;
  * store the course of a reaction. Each state of the reaction would be
  * stored in one ChemModel.
  *
- * @cdk.module data
+ * @cdk.module  interfaces
  *
  * @cdk.keyword animation
  * @cdk.keyword reaction
@@ -50,7 +50,7 @@ public interface ChemSequence extends ChemObject {
      * @return    The array of ChemModels in this container
      * @see       #addChemModel
      */
-     public org.openscience.cdk.ChemModel[] getChemModels();
+     public ChemModel[] getChemModels();
 
 	/**
 	 * Returns the ChemModel at position <code>number</code> in the
@@ -60,7 +60,7 @@ public interface ChemSequence extends ChemObject {
 	 * @return         The ChemModel at position <code>number</code>.
      * @see            #addChemModel
 	 */
-	public org.openscience.cdk.ChemModel getChemModel(int number);
+	public ChemModel getChemModel(int number);
 	
 	/**
 	 * Returns the number of ChemModels in this Container.

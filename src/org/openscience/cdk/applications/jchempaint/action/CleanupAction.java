@@ -87,7 +87,7 @@ public class CleanupAction extends JCPAction
 			diagramGenerator.setBondLength(bondLength * 2.0);
 			// FIXME this extra factor should not be necessary
 			logger.debug("getting ChemModel");
-			ChemModel model = jcpmodel.getChemModel();
+			org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
 			logger.debug("got ChemModel");
 			org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
 			if (som != null)

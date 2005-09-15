@@ -38,11 +38,10 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
