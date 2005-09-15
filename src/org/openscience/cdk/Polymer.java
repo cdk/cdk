@@ -113,7 +113,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public Monomer getMonomer(String cName) {
+	public org.openscience.cdk.interfaces.Monomer getMonomer(String cName) {
 		return (Monomer)monomers.get(cName);
 	}
 	

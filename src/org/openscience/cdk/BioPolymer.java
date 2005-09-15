@@ -33,17 +33,16 @@ import java.util.Hashtable;
 
 
 /**
- *
  * A BioPolymer is a subclass of a Polymer which is supposed to store
  * additional informations about the Polymer which are connected to BioPolymers.
  *
- * @cdk.module data
+ * @cdk.module  data
  *
- * @author     Edgar Luttmann <edgar@uni-paderborn.de>
- * @cdk.created    2001-08-06 
+ * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @cdk.created 2001-08-06 
  *
- * @cdk.keyword    polymer
- * @cdk.keyword    biopolymer
+ * @cdk.keyword polymer
+ * @cdk.keyword biopolymer
  */
 public class BioPolymer extends Polymer implements java.io.Serializable, org.openscience.cdk.interfaces.BioPolymer
 {
@@ -155,7 +154,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public Monomer getMonomer(String monName, String strandName) {
+	public org.openscience.cdk.interfaces.Monomer getMonomer(String monName, String strandName) {
 	    Strand strand = (Strand)strands.get(strandName); 
 	    
 	    if(strand != null)	{
@@ -220,7 +219,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public Strand getStrand(String cName) {
+	public org.openscience.cdk.interfaces.Strand getStrand(String cName) {
 		return (Strand)strands.get(cName);
 	}
 	

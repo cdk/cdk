@@ -27,17 +27,16 @@
  *  */
 package org.openscience.cdk.interfaces;
 
-
 /**
  * A Monomer is an AtomContainer which stores additional monomer specific 
  * informations for a group of Atoms.
  *
- * @cdk.module data
+ * @cdk.module  interfaces
  *
- * @author     Edgar Luttmann <edgar@uni-paderborn.de>
- * @cdk.created    2001-08-06 
+ * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @cdk.created 2001-08-06 
  *
- * @cdk.keyword    monomer
+ * @cdk.keyword monomer
  */
 public interface Monomer extends AtomContainer {
 

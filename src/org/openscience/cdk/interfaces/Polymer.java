@@ -32,7 +32,7 @@ import java.util.Collection;
 /**
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
  *
- * @cdk.module data
+ * @cdk.module  interfaces
  *
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
@@ -71,7 +71,7 @@ public interface Polymer extends Molecule {
 	 * @param cName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for
 	 */
-	public org.openscience.cdk.Monomer getMonomer(String cName);
+	public Monomer getMonomer(String cName);
 	
 	/**
 	 * Returns a collection of the names of all <code>Monomer</code>s in this

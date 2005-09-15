@@ -34,7 +34,7 @@ import java.util.Hashtable;
  * A Strand is an AtomContainer which stores additional strand specific
  * informations for a group of Atoms.
  *
- * @cdk.module  data
+ * @cdk.module  interfaces
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  */
