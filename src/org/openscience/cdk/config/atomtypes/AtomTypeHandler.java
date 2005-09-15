@@ -54,6 +54,7 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
     private final int SCALAR_RINGSIZE = 9;
     private final int SCALAR_ISAROMATIC = 10;
     private final int SCALAR_FORMALCHARGE=11;
+    private final int SCALAR_VANDERWAALSRADIUS=12;
     
     
     private LoggingTool logger;
@@ -127,7 +128,9 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                 	atomType.setChemicalGroupConstant(Integer.parseInt(currentChars));
                 } else if (scalarType == SCALAR_ISAROMATIC){
                 	atomType.setIsAromatic(true);
-                } 
+                } else if (scalarType == SCALAR_VANDERWAALSRADIUS){
+                	atomType.setVanderwaalsRadius(Double.parseDouble(currentChars));
+                }
                 
             } catch (Exception exception) {
                 logger.error("Value (", currentChars, ") is not off the expected type: ", exception.getMessage());
@@ -192,6 +195,8 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                     	scalarType = SCALAR_CHEMICALGROUPCONSTANT;	
                     } else if ("cdk:aromaticAtom".equals(atts.getValue(i))) {
                     	scalarType = SCALAR_ISAROMATIC;	
+                    } else if ("emboss:vdwrad".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_VANDERWAALSRADIUS;
                     }
                 }
             }
