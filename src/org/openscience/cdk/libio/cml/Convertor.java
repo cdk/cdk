@@ -350,7 +350,7 @@ public class Convertor {
         }
     }
 
-    private void writeChemSequence(ChemSequence chemseq, Element nodeToAppend) throws CMLException {
+    private void writeChemSequence(org.openscience.cdk.interfaces.ChemSequence chemseq, Element nodeToAppend) throws CMLException {
         int count = chemseq.getChemModelCount();
         if (count > 1){
             ListImpl list=new ListImpl(doc);

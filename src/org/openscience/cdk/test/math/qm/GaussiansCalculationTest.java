@@ -82,7 +82,7 @@ public class GaussiansCalculationTest
       }
       ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-      ChemSequence[] chemSequence = chemFile.getChemSequences();
+      org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
       org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
       AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
       org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();

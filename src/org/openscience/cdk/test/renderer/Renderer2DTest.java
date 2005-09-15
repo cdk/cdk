@@ -54,7 +54,7 @@ public class Renderer2DTest extends JPanel
 	MDLReader mr;
         CMLReader cr;
 	ChemFile chemFile;
-	ChemSequence chemSequence;
+	org.openscience.cdk.interfaces.ChemSequence chemSequence;
 	org.openscience.cdk.interfaces.ChemModel chemModel;
 	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
 	org.openscience.cdk.interfaces.Molecule molecule;

@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * document
  *
  * @author     egonw
- * @cdk.module data
+ * @cdk.module interfaces
  */
 public interface ChemFile extends ChemObject {
 
@@ -47,7 +47,7 @@ public interface ChemFile extends ChemObject {
 	 * @return    The array of ChemSequences of this container
 	 * @see       #addChemSequence
 	 */
-	public org.openscience.cdk.ChemSequence[] getChemSequences();
+	public ChemSequence[] getChemSequences();
 
 	/**
 	 * Returns the ChemSequence at position <code>number</code> in the container.
@@ -56,7 +56,7 @@ public interface ChemFile extends ChemObject {
 	 * @return         The ChemSequence at position <code>number</code>.
 	 * @see            #addChemSequence
 	 */
-	public org.openscience.cdk.ChemSequence getChemSequence(int number);
+	public ChemSequence getChemSequence(int number);
 
 	/**
 	 * Returns the number of ChemSequences in this Container.

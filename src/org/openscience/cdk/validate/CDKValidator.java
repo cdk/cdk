@@ -49,7 +49,7 @@ public class CDKValidator extends AbstractValidator {
 
     private ValidationReport validateChemFileNulls(ChemFile chemFile) {
         ValidationReport report = new ValidationReport();
-        ChemSequence[] sequences = chemFile.getChemSequences();
+        org.openscience.cdk.interfaces.ChemSequence[] sequences = chemFile.getChemSequences();
         ValidationTest hasNulls = new ValidationTest(chemFile,
             "ChemFile contains a null ChemSequence."
         );

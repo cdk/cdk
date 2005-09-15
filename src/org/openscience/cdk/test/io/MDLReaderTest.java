@@ -76,7 +76,7 @@ public class MDLReaderTest extends CDKTestCase {
             
             assertNotNull(chemFile);
             assertEquals(1, chemFile.getChemSequenceCount());
-            ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
             org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
@@ -264,7 +264,7 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
             assertEquals(1, fileContents.getChemSequenceCount());
-            ChemSequence sequence = fileContents.getChemSequence(0);
+            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(9, sequence.getChemModelCount());
             for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -308,7 +308,7 @@ public class MDLReaderTest extends CDKTestCase {
             ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
             assertNotNull(chemFile);
             assertEquals(1, chemFile.getChemSequenceCount());
-            ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
             org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
@@ -334,7 +334,7 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
             assertEquals(1, fileContents.getChemSequenceCount());
-            ChemSequence sequence = fileContents.getChemSequence(0);
+            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(9, sequence.getChemModelCount());
             org.openscience.cdk.interfaces.ChemModel model = sequence.getChemModel(0);

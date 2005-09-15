@@ -600,7 +600,7 @@ private UndoableEditSupport undoSupport;
 		logger.info("  # sequences: ", chemSequenceCount);
 
 		for (int i = 0; i < chemSequenceCount; i++) {
-			ChemSequence chemSequence = chemFile.getChemSequence(i);
+			org.openscience.cdk.interfaces.ChemSequence chemSequence = chemFile.getChemSequence(i);
 
 			int chemModelCount = chemSequence.getChemModelCount();
 			logger.info("  # model in seq(" + i + "): ", chemModelCount);
@@ -752,7 +752,7 @@ private UndoableEditSupport undoSupport;
 		logger.info("  # sequences: " + chemSequenceCount);
 
 		for (int i = 0; i < chemSequenceCount; i++) {
-			ChemSequence chemSequence = chemFile.getChemSequence(i);
+			org.openscience.cdk.interfaces.ChemSequence chemSequence = chemFile.getChemSequence(i);
 
 			int chemModelCount = chemSequence.getChemModelCount();
 			logger.info("  # model in seq(" + i + "): " + chemModelCount);

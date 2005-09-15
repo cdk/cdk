@@ -278,7 +278,7 @@ public class DADMLReader {
             ChemObjectReader reader = new ReaderFactory().createReader(bufReader);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             logger.debug("#sequences: ", chemFile.getChemSequenceCount());
-            ChemSequence chemSequence = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.ChemSequence chemSequence = chemFile.getChemSequence(0);
             logger.debug("#models in sequence: ", chemSequence.getChemModelCount());
             org.openscience.cdk.interfaces.ChemModel chemModel = chemSequence.getChemModel(0);
             org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();

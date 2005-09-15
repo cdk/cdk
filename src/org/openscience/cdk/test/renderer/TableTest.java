@@ -60,7 +60,7 @@ public class TableTest {
         }
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        ChemSequence chemSequence;
+        org.openscience.cdk.interfaces.ChemSequence chemSequence;
         org.openscience.cdk.interfaces.ChemModel chemModel;
         org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
         for (int sequence = 0; sequence < chemFile.getChemSequenceCount(); sequence++) {

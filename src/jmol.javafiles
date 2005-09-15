@@ -6,7 +6,7 @@ org/openscience/cdk/CDKConstants.java
 org/openscience/cdk/ChemFile.java
 org/openscience/cdk/ChemModel.java
 org/openscience/cdk/ChemObject.java
-org/openscience/cdk/ChemObjectListener.java
+org.openscience.cdk.interfaces.ChemObjectListener.java
 org/openscience/cdk/ChemSequence.java
 org/openscience/cdk/Crystal.java
 org/openscience/cdk/ElectronContainer.java

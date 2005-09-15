@@ -324,7 +324,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         assertNotNull(chemFile);
         
         assertEquals(chemFile.getChemSequenceCount(), 1);
-        ChemSequence seq = chemFile.getChemSequence(0);
+        org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
         assertNotNull(seq);
         
         assertEquals(seq.getChemModelCount(), 1);
@@ -347,7 +347,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         assertNotNull(chemFile);
         
         assertEquals(chemFile.getChemSequenceCount(), 1);
-        ChemSequence seq = chemFile.getChemSequence(0);
+        org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
         assertNotNull(seq);
         
         assertEquals(seq.getChemModelCount(), 1);

@@ -110,7 +110,7 @@ public class OverlapResolverTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
 			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
-			ChemSequence[] chemSequence = chemFile.getChemSequences();
+			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			
@@ -145,7 +145,7 @@ public class OverlapResolverTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
 			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
-			ChemSequence[] chemSequence = chemFile.getChemSequences();
+			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
@@ -173,7 +173,7 @@ public class OverlapResolverTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
 			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
-			ChemSequence[] chemSequence = chemFile.getChemSequences();
+			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
@@ -202,7 +202,7 @@ public class OverlapResolverTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
 			ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
-			ChemSequence[] chemSequence = chemFile.getChemSequences();
+			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
 			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);

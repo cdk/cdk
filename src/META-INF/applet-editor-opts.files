@@ -184,7 +184,7 @@ org/openscience/cdk/Bond.class
 org/openscience/cdk/ChemFile.class
 org/openscience/cdk/ChemModel.class
 org/openscience/cdk/ChemObject.class
-org/openscience/cdk/ChemObjectListener.class
+org.openscience.cdk.interfaces.ChemObjectListener.class
 org/openscience/cdk/ChemSequence.class
 org/openscience/cdk/config/AtomTypeFactory.class
 org/openscience/cdk/config/data/isotopes.xml

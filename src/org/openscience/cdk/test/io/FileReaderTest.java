@@ -69,7 +69,7 @@ public class FileReaderTest {
         }
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        ChemSequence chemSequence;
+        org.openscience.cdk.interfaces.ChemSequence chemSequence;
         org.openscience.cdk.interfaces.ChemModel chemModel;
         org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
         System.out.println("  number of sequences: " + chemFile.getChemSequenceCount());

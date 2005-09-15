@@ -50,7 +50,7 @@
         <listitem><para>org.openscience.cdk.CDKConstants</para></listitem>
         <listitem><para>org.openscience.cdk.ChemModel</para></listitem>
         <listitem><para>org.openscience.cdk.ChemObject</para></listitem>
-        <listitem><para>org.openscience.cdk.ChemObjectListener</para></listitem>
+        <listitem><para>org.openscience.cdk.interfaces.ChemObjectListener</para></listitem>
         <listitem><para>org.openscience.cdk.ChemSequence</para></listitem>
         <listitem><para>org.openscience.cdk.ElectronContainer</para></listitem>
         <listitem><para>org.openscience.cdk.Element</para></listitem>
