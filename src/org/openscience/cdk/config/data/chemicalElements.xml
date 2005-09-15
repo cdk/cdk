@@ -1,6 +1,10 @@
-<elementTypeList xmlns="http://www.xml-cml.org/schema/cml2/core"
+<list xmlns="http://www.xml-cml.org/schema/cml2/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
+  
+  xmlns:cdk="http://cdk.sf.net/dict/cdk/"
+  xmlns:cvs="https://www.cvshome.org/"
+  
   id="chemicalElement" title="Properties of the elements">
 
   <metadataList>
@@ -1130,4 +1134,4 @@
       <scalar dataType="xsd:String" dictRef="cdk:phase">Synthetic</scalar>
   </elementType>
 
-</elementTypeList>
+</list>

@@ -1,8 +1,10 @@
 <dictionary xmlns="http://www.xml-cml.org/schema/cml2/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
-  id="emboss"
-  title="The Emboss Dictionary: http://emboss.sourceforge.net/">
+
+  xmlns:cvs="https://www.cvshome.org/"
+
+  id="emboss" title="The Emboss Dictionary: http://emboss.sourceforge.net/">
 
   <annotation>
     <documentation>
@@ -22,7 +24,7 @@
     </definition>
     <description>
     </description>
-  </entry>   
+  </entry>
   
 </dictionary>
 

@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <list xmlns="http://www.xml-cml.org/schema/cml2/core"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd"
+    
+  xmlns:cdk="http://cdk.sf.net/dict/cdk/">
 
     <isotopeList id="H">
         <isotope id="H1" isotopeNumber="1" elementType="H">
