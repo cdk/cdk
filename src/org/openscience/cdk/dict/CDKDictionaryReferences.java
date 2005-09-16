@@ -30,7 +30,6 @@ package org.openscience.cdk.dict;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.Molecule;

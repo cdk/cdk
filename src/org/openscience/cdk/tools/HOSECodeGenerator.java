@@ -36,7 +36,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;

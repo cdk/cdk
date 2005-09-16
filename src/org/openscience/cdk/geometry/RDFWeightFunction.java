@@ -27,8 +27,6 @@
  */
 package org.openscience.cdk.geometry;
 
-import org.openscience.cdk.Atom;
-
 /**
  * Weight function used in the <code>RDFCalculator</code>.
  *

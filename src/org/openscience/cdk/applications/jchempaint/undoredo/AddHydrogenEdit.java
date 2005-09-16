@@ -10,7 +10,6 @@ import javax.swing.undo.CannotUndoException;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;

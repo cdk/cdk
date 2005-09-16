@@ -31,8 +31,6 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Graphics2D;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.ringsearch.SSSRFinder;

@@ -33,7 +33,6 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;

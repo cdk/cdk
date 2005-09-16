@@ -28,7 +28,6 @@ import java.util.Vector;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.templates.MoleculeFactory;

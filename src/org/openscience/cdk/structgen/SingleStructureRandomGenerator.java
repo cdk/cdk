@@ -30,7 +30,6 @@ package org.openscience.cdk.structgen;
 
 import java.util.Random;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;

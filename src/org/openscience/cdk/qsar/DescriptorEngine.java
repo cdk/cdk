@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;

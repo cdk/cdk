@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.tools.LoggingTool;

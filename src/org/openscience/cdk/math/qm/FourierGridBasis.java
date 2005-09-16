@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.math.qm;
 
-import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.math.Function;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;

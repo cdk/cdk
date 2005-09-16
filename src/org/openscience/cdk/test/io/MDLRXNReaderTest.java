@@ -35,7 +35,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.test.CDKTestCase;

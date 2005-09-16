@@ -26,7 +26,6 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.HashSet;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.PseudoAtom;
 
 /**

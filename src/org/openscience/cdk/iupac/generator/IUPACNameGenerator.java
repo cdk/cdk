@@ -27,7 +27,6 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Fragment;
 import org.openscience.cdk.interfaces.Molecule;

@@ -28,7 +28,6 @@ import java.io.IOException;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Element;

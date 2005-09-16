@@ -30,7 +30,6 @@ package org.openscience.cdk.geometry;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Crystal;
 

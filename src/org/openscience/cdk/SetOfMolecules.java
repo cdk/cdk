@@ -24,7 +24,6 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
 
 /** 
  * A set of molecules, for example those taking part in a reaction.

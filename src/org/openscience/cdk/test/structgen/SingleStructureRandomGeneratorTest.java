@@ -30,7 +30,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;

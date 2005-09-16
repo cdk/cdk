@@ -33,7 +33,6 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.test.CDKTestCase;

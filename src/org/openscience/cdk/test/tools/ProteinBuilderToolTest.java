@@ -27,7 +27,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 

@@ -8,7 +8,6 @@ import javax.vecmath.GVector;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.LoggingTool;
 

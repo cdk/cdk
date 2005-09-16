@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.math.qm;
  
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
 

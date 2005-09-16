@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.ChemObject;
-
 /**
  * Tool to mark ChemObject's as having a problem. There are two levels:
  * a problem, and a warning, to allow for different coloring by renderer's.

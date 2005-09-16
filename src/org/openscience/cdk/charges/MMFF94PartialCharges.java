@@ -26,7 +26,6 @@ package org.openscience.cdk.charges;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;

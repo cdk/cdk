@@ -26,11 +26,8 @@ package org.openscience.cdk.graph;
 
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 

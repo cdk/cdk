@@ -30,7 +30,6 @@ import java.io.StringReader;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.ChemicalRSSReader;
 import org.openscience.cdk.tools.LoggingTool;

@@ -29,7 +29,6 @@ package org.openscience.cdk.structgen.stochastic.operator;
 import java.util.Vector;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.math.RandomNumbersTool;
 import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;

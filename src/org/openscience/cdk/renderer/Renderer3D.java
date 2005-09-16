@@ -36,7 +36,6 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.JPanel;
 import javax.vecmath.Matrix4d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 
 /**

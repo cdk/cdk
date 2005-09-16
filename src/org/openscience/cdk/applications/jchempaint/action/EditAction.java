@@ -35,7 +35,6 @@ import javax.swing.JOptionPane;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;

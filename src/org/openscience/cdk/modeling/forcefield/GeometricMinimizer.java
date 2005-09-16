@@ -7,7 +7,6 @@ import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.RingSet;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 import org.openscience.cdk.tools.LoggingTool;
 

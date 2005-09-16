@@ -29,7 +29,6 @@ import java.util.Hashtable;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Molecule;

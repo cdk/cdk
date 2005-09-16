@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.iupac.generator.sectiona;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.NoSuchAtomException;

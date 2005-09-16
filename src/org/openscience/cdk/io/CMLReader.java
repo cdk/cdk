@@ -44,7 +44,6 @@ import org.openscience.cdk.io.cml.ChemFileCDO;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
-import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

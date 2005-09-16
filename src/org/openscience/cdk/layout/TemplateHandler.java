@@ -35,7 +35,6 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;

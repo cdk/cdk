@@ -25,7 +25,6 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 

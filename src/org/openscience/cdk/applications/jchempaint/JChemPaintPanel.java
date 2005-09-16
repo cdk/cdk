@@ -66,7 +66,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEditSupport;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -76,7 +75,6 @@ import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
 import org.openscience.cdk.applications.plugin.CDKEditBus;
-import org.openscience.cdk.applications.undoredo.UndoAdapter;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;

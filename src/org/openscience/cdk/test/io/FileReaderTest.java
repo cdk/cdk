@@ -29,11 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.swing.AtomicTable;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.geometry.GeometryTools;

@@ -26,7 +26,6 @@ package org.openscience.cdk.applications;
 import java.io.File;
 import java.io.FileReader;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;

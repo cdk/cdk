@@ -25,7 +25,6 @@
 package org.openscience.cdk.validate;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 
 /**

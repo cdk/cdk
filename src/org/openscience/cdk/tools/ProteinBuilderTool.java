@@ -36,8 +36,6 @@ import org.openscience.cdk.Strand;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
-
 import java.util.HashMap;
 
 /**

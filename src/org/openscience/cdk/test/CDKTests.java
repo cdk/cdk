@@ -34,7 +34,6 @@ import org.openscience.cdk.test.applications.undoredo.AddHydrogenEditTest;
 import org.openscience.cdk.test.applications.undoredo.AdjustBondOrdersEditTest;
 import org.openscience.cdk.test.applications.undoredo.ChangeAtomSymbolEditTest;
 import org.openscience.cdk.test.applications.undoredo.ChangeChargeEditTest;
-import org.openscience.cdk.test.applications.undoredo.ChangeCoordsEditTest;
 import org.openscience.cdk.test.applications.undoredo.ChangeIsotopeEditTest;
 import org.openscience.cdk.test.applications.undoredo.CleanUpEditTest;
 import org.openscience.cdk.test.applications.undoredo.ConvertToPseudoAtomEditTest;

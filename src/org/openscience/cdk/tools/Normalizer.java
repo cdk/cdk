@@ -31,9 +31,7 @@ package org.openscience.cdk.tools;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;

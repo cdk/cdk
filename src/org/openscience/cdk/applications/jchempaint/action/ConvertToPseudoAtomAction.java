@@ -33,7 +33,6 @@ import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;

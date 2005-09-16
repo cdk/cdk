@@ -34,7 +34,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.event.CDKChangeListener;
 
 /**

@@ -32,7 +32,6 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.MFAnalyser;
 
