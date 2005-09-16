@@ -60,14 +60,14 @@ public class ChemModelTest extends CDKTestCase {
 	    assertNotNull(chemModel);
     }
 
-    public void testSetSetOfMolecules_SetOfAtomContainers() {
+    public void testSetSetOfMolecules_SetOfMolecules() {
 	    ChemModel chemModel = new ChemModel();
 	    SetOfMolecules crystal = new SetOfMolecules();
         chemModel.setSetOfMolecules(crystal);
         assertEquals(crystal, chemModel.getSetOfMolecules());
     }
     public void testGetSetOfMolecules() {
-    	testSetSetOfMolecules_SetOfAtomContainers();
+    	testSetSetOfMolecules_SetOfMolecules();
     }
     
     public void testSetSetOfReactions_SetOfReactions() {
