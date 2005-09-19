@@ -70,7 +70,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
      *
      * @param container  the AtomContainer providing the atoms and bonds
      */
-    public Crystal(AtomContainer container) {
+    public Crystal(org.openscience.cdk.interfaces.AtomContainer container) {
         this();
         add(container);
     }
@@ -79,7 +79,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
      * Adds the atoms in the AtomContainer as cell content. Symmetry related 
      * atoms should not be added unless P1 space group is used.
      */
-    public void add(AtomContainer container) {
+    public void add(org.openscience.cdk.interfaces.AtomContainer container) {
         super.add(container);
     }
 
