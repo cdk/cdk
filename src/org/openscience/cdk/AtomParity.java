@@ -40,8 +40,8 @@ package org.openscience.cdk;
  */
 public class AtomParity implements java.io.Serializable, org.openscience.cdk.interfaces.AtomParity  {
     
-    private Atom centralAtom;
-    private Atom[] neighbors;
+    private org.openscience.cdk.interfaces.Atom centralAtom;
+    private org.openscience.cdk.interfaces.Atom[] neighbors;
     private int parity;
     
     /**
@@ -54,9 +54,13 @@ public class AtomParity implements java.io.Serializable, org.openscience.cdk.int
      * @param fourth      Fourth Atom of four that define the stereochemistry
      * @param parity      +1 or -1, defining the parity
      */
-    public AtomParity(Atom centralAtom, 
-                      Atom first, Atom second, Atom third, Atom fourth,
-                      int parity) {
+    public AtomParity(
+    		org.openscience.cdk.interfaces.Atom centralAtom, 
+    		org.openscience.cdk.interfaces.Atom first, 
+    		org.openscience.cdk.interfaces.Atom second, 
+    		org.openscience.cdk.interfaces.Atom third, 
+    		org.openscience.cdk.interfaces.Atom fourth,
+    		int parity) {
         this.centralAtom = centralAtom;
         this.neighbors = new Atom[4];
         this.neighbors[0] = first;
