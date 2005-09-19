@@ -58,8 +58,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      protected org.openscience.cdk.interfaces.Crystal crystal = null;
 
 	/**
-	 *  Constructs an new ChemModel with a non-null, but 
-     *  empty setOfMolecules.
+	 *  Constructs an new ChemModel with a null setOfMolecules.
 	 */
 	public ChemModel() {}
 
