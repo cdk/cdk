@@ -39,18 +39,9 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.interfaces.Isotope;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -166,9 +157,9 @@ public class MDLReader extends DefaultChemObjectReader {
     private ChemModel readChemModel(ChemModel chemModel) throws CDKException {
     	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
         if (setOfMolecules == null) {
-            setOfMolecules = new SetOfMolecules();
+            setOfMolecules = chemModel.getBuilder().newSetOfMolecules();
         }
-        Molecule m = readMolecule(new Molecule());
+        Molecule m = readMolecule(chemModel.getBuilder().newMolecule());
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
@@ -182,19 +173,19 @@ public class MDLReader extends DefaultChemObjectReader {
 	 * @return    The ChemFile that was read from the MDL file.
 	 */
     private ChemFile readChemFile(ChemFile chemFile) throws CDKException {
-        ChemSequence chemSequence = new ChemSequence();
+        ChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
         
-        ChemModel chemModel = new ChemModel();
-		SetOfMolecules setOfMolecules = new SetOfMolecules();
-		Molecule m = readMolecule(new Molecule());
+        ChemModel chemModel = chemFile.getBuilder().newChemModel();
+		SetOfMolecules setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
+		Molecule m = readMolecule(chemFile.getBuilder().newMolecule());
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
         chemModel.setSetOfMolecules(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         
-        setOfMolecules = new SetOfMolecules();
-        chemModel = new ChemModel();
+        setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
+        chemModel = chemFile.getBuilder().newChemModel();
 		String str;
         try {
             String line;
@@ -204,7 +195,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 // reading mol files
 		str = new String(line);
 		if (str.equals("$$$$")) {
-		    m = readMolecule(new Molecule());
+		    m = readMolecule(chemFile.getBuilder().newMolecule());
 		    
 		    if (m != null) {
 			setOfMolecules.addMolecule(m);
@@ -212,8 +203,8 @@ public class MDLReader extends DefaultChemObjectReader {
 			chemModel.setSetOfMolecules(setOfMolecules);
 			chemSequence.addChemModel(chemModel);
 			
-			setOfMolecules = new SetOfMolecules();
-			chemModel = new ChemModel();
+			setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
+			chemModel = chemFile.getBuilder().newChemModel();
 			
 		    }
 		} else {
@@ -345,7 +336,7 @@ public class MDLReader extends DefaultChemObjectReader {
 
                 logger.debug("Atom type: ", element);
                 if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(new org.openscience.cdk.Atom(element));
+                    atom = isotopeFactory.configure(molecule.getBuilder().newAtom(element));
                 } else {
                     logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     atom = new PseudoAtom(element);
@@ -451,14 +442,14 @@ public class MDLReader extends DefaultChemObjectReader {
                 Atom a2 = molecule.getAtomAt(atom2 - 1);
                 if (order == 4) {
                     // aromatic bond
-                    bond = new Bond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
+                    bond = molecule.getBuilder().newBond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
                     // mark both atoms and the bond as aromatic
                     bond.setFlag(CDKConstants.ISAROMATIC, true);
                     a1.setFlag(CDKConstants.ISAROMATIC, true);
                     a2.setFlag(CDKConstants.ISAROMATIC, true);
                     molecule.addBond(bond);
                 } else {
-                    bond = new Bond(a1, a2, (double) order, stereo);
+                    bond = molecule.getBuilder().newBond(a1, a2, (double) order, stereo);
                     molecule.addBond(bond);
                 }
             }
@@ -517,7 +508,7 @@ public class MDLReader extends DefaultChemObjectReader {
                                 for (int j=2; j <= spinMultiplicity; j++) {
                                     // 2 means doublet -> one unpaired electron
                                     // 3 means triplet -> two unpaired electron
-                                    molecule.addElectronContainer(new SingleElectron(radical));
+                                    molecule.addElectronContainer(molecule.getBuilder().newSingleElectron(radical));
                                 }
                             }
                         }
