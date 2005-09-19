@@ -33,6 +33,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
 
@@ -440,6 +441,10 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 			e.printStackTrace(System.err);
 		}
 		return copy;
+	}
+	
+	public ChemObjectBuilder getBuilder() {
+		return DefaultChemObjectBuilder.getInstance();
 	}
 
 }

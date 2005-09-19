@@ -192,6 +192,12 @@ public interface ChemObject extends Cloneable {
      * @return Object the clone of this ChemObject.
      */
     public Object clone();
+    
+    /**
+     * Returns a ChemObjectBuilder for the data classes that extend
+     * this class.
+     */
+    public ChemObjectBuilder getBuilder();
 }
 
 
