@@ -219,33 +219,23 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 	public org.openscience.cdk.interfaces.SetOfAtomContainers newSetOfAtomContainers() {
 		return new SetOfAtomContainers();
 	}
-	
-	/**
-	 * Constructs an empty SetOfReactions.
-	 */
+
+	public org.openscience.cdk.interfaces.SetOfMolecules newSetOfMolecules() {
+		return new SetOfMolecules();
+	}
+
 	public org.openscience.cdk.interfaces.SetOfReactions newSetOfReactions() {
 		return new SetOfReactions();
 	}
 	
-    /**
-     * Constructs an single electron orbital with an associated Atom.
-     */
     public org.openscience.cdk.interfaces.SingleElectron newSingleElectron() {
     	return new SingleElectron();
     }
     
-    /**
-     * Constructs an single electron orbital on an Atom.
-     *
-     * @param atom The atom to which the single electron belongs.
-     */
     public org.openscience.cdk.interfaces.SingleElectron newSingleElectron(org.openscience.cdk.interfaces.Atom atom) {
     	return new SingleElectron(atom);   
     }
 
-	/**
-	 * Contructs a new Strand.
-	 */	
 	public org.openscience.cdk.interfaces.Strand newStrand() {
 		return new Strand();
 	}

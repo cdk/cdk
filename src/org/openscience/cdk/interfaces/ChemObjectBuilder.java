@@ -329,6 +329,11 @@ public interface ChemObjectBuilder {
 	 */
 	public SetOfAtomContainers newSetOfAtomContainers();
 	
+	/**  
+	 * Constructs an empty SetOfMolecules.
+	 */
+	public SetOfMolecules newSetOfMolecules();
+	
 	/**
 	 * Constructs an empty SetOfReactions.
 	 */

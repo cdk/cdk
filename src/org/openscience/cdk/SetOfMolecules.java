@@ -52,6 +52,8 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class SetOfMolecules extends SetOfAtomContainers implements org.openscience.cdk.interfaces.SetOfMolecules {
 
+	public SetOfMolecules() {}
+	
     /**
      *  Adds an molecule to this container.
      *
