@@ -45,7 +45,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 		super();
 	}
 	
-	public Ring(AtomContainer ac)
+	public Ring(org.openscience.cdk.interfaces.AtomContainer ac)
 	{
 		super(ac);
 	}
