@@ -36,14 +36,13 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -123,9 +122,9 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemSequence) {
-            return readChemSequence();
+            return readChemSequence((ChemSequence)object);
         } else if (object instanceof ChemFile) {
-            return readChemFile();
+            return readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Object " + object.getClass().getName() + " is not supported");
         }
@@ -135,15 +134,13 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         input.close();
     }
     
-    private ChemFile readChemFile() throws CDKException {
-        ChemFile chemFile = new ChemFile();
-        ChemSequence sequence = readChemSequence();
+    private ChemFile readChemFile(ChemFile chemFile) throws CDKException {
+        ChemSequence sequence = readChemSequence(chemFile.getBuilder().newChemSequence());
         chemFile.addChemSequence(sequence);
         return chemFile;
     }
     
-    private ChemSequence readChemSequence() throws CDKException {
-        ChemSequence sequence = new ChemSequence();
+    private ChemSequence readChemSequence(ChemSequence sequence) throws CDKException {
         ChemModel model = null;
         
         try {
@@ -155,7 +152,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 if (line.indexOf("Standard orientation:") >= 0) {
                     
                     // Found a set of coordinates
-                    model = new ChemModel();
+                    model = sequence.getBuilder().newChemModel();
                     try {
                         readCoordinates(model);
                     } catch (IOException exception) {
@@ -174,7 +171,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                         // Add current frame to file and create a new one.
                         sequence.addChemModel(model);
                         fireFrameRead();
-                        model = new ChemModel();
+                        model = sequence.getBuilder().newChemModel();
                         readCoordinates(model);
                     } else if (line.indexOf("SCF Done:") >= 0) {
                         // Found an energy
@@ -270,12 +267,12 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             } else {
                 throw new IOException("Error reading coordinates");
             }
-            Atom atom = new Atom(isotopeFactory.getElementSymbol(atomicNumber));
+            Atom atom = model.getBuilder().newAtom(isotopeFactory.getElementSymbol(atomicNumber));
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }
-        SetOfMolecules moleculeSet = new SetOfMolecules();
-        moleculeSet.addMolecule(new Molecule(container));
+        SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+        moleculeSet.addMolecule(model.getBuilder().newMolecule(container));
         model.setSetOfMolecules(moleculeSet);
     }
 

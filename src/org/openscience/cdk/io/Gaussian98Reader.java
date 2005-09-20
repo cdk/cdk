@@ -37,15 +37,15 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -187,10 +187,10 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 
 		if (object instanceof ChemFile)
 		{
-			ChemFile file = null;
+			ChemFile file = (ChemFile)object;
 			try
 			{
-				file = readChemFile();
+				file = readChemFile(file);
 			} catch (IOException exception)
 			{
 				throw new CDKException(
@@ -225,10 +225,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@exception  IOException   if an I/O error occurs
 	 *@exception  CDKException  Description of the Exception
 	 */
-	private ChemFile readChemFile() throws CDKException, IOException
+	private ChemFile readChemFile(ChemFile chemFile) throws CDKException, IOException
 	{
-		ChemFile chemFile = new ChemFile();
-		ChemSequence sequence = new ChemSequence();
+		ChemSequence sequence = chemFile.getBuilder().newChemSequence();
 		ChemModel model = null;
 		String line = input.readLine();
 		String levelOfTheory = "";
@@ -242,7 +241,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 			{
 
 				// Found a set of coordinates
-				model = new ChemModel();
+				model = chemFile.getBuilder().newChemModel();
 				readCoordinates(model);
 				break;
 			}
@@ -276,7 +275,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 						logger.info("Skipping frame, because I was told to do");
 					}
 					fireFrameRead();
-					model = new ChemModel();
+					model = chemFile.getBuilder().newChemModel();
 					modelCounter++;
 					readCoordinates(model);
 				} else if (line.indexOf("SCF Done:") >= 0)
@@ -332,8 +331,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 */
 	private void readCoordinates(ChemModel model) throws CDKException, IOException
 	{
-		SetOfMolecules moleculeSet = new SetOfMolecules();
-		Molecule molecule = new Molecule();
+		SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+		Molecule molecule = model.getBuilder().newMolecule();
 		String line = input.readLine();
 		line = input.readLine();
 		line = input.readLine();
@@ -394,7 +393,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 			{
 				throw new IOException("Error reading z coordinate");
 			}
-			Atom atom = new Atom(isotopeFactory.getElementSymbol(atomicNumber));
+			Atom atom = model.getBuilder().newAtom(isotopeFactory.getElementSymbol(atomicNumber));
 			atom.setPoint3d(new Point3d(x, y, z));
 			molecule.addAtom(atom);
 		}
