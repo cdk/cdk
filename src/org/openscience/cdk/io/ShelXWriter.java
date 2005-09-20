@@ -97,10 +97,6 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         }
     };
 
-    public ChemObject highestSupportedChemObject() {
-        return new Crystal();
-    }
-
     // Private procedures
 
     private void write(Crystal crystal) {

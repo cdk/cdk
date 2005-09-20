@@ -95,10 +95,6 @@ public class HINWriter extends DefaultChemObjectWriter {
         }
     }
 
-    public ChemObject highestSupportedChemObject() {
-        return new SetOfMolecules();
-    }
-
     /**
      * writes all the molecules supplied in a SetOfMolecules class to
      * a single HIN file. You can also supply a single Molecule object

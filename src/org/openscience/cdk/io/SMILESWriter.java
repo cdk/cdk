@@ -109,10 +109,6 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 		}
 	}
 
-    public ChemObject highestSupportedChemObject() {
-        return new SetOfMolecules();
-    }
-
 	/**
 	 * Writes a list of molecules to an OutputStream
 	 *

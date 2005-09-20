@@ -18,6 +18,10 @@
      The data classes interfaces now only use interfaces, and cdk-interfaces
      no longer depends on cdk-data
    </apiChange>
+   <apiChange contributor="egonw">
+     Removed ChemObjectWriter.highestSupportedChemObject() as it depended
+     on an implementing data class, and the CDK library did not depend on it
+   </apiChange>
   </release>
   
   <release id="20050826">

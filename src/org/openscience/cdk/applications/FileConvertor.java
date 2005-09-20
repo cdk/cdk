@@ -545,7 +545,7 @@ public class FileConvertor {
     * the generalized mechanism below.
     */
     private void write(ChemFile chemFile, String outputFilename) throws IOException {
-        if (compare(new ChemFile(), cow.highestSupportedChemObject()) >= 0) {
+        if (cow.accepts(new ChemFile())) {
             // Can write ChemFile, do so
             try {
                 cow.write(chemFile);
@@ -555,8 +555,7 @@ public class FileConvertor {
         } else {
             logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
             int count = chemFile.getChemSequenceCount();
-            boolean needMoreFiles =
-              (compare(new ChemSequence(), cow.highestSupportedChemObject()) < 0) && (count > 1);
+            boolean needMoreFiles = (cow.accepts(new ChemSequence())) && (count > 1);
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
@@ -574,8 +573,7 @@ public class FileConvertor {
             cow.write(sequence);
         } catch (CDKException exception) {
             int count = sequence.getChemModelCount();
-            boolean needMoreFiles =
-              (compare(new ChemModel(), cow.highestSupportedChemObject()) < 0) && (count > 1);
+            boolean needMoreFiles = (cow.accepts(new ChemModel())) && (count > 1);
             logger.info("Cannot write ChemSequence, recursing into ChemModel's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
@@ -634,8 +632,7 @@ public class FileConvertor {
             cow.write(som);
         } catch (CDKException exception) {
             int count = som.getMoleculeCount();
-            boolean needMoreFiles =
-              (compare(new org.openscience.cdk.SetOfMolecules(), cow.highestSupportedChemObject()) < 0) && (count > 1);
+            boolean needMoreFiles = (cow.accepts(new org.openscience.cdk.SetOfMolecules())) && (count > 1);
             logger.info("Cannot write SetOfMolecules, recursing into Molecules's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
@@ -657,21 +654,7 @@ public class FileConvertor {
             logger.debug(exception);
         }
     }
-
-    /**
-     * Returns -1 if first object is 'larger' than second, zero
-     * if equal and 1 if second is 'larger'.
-     */
-    private int compare(ChemObject one, ChemObject two) {
-        String oneName = one.getClass().getName();
-        int oneIndex   = chemObjectNames.indexOf(oneName);
-        String twoName = two.getClass().getName();
-        int twoIndex   = chemObjectNames.indexOf(twoName);
-        int diff = twoIndex - oneIndex;
-        logger.debug("Comparing ", oneName, " and ", twoName, ": " + diff);
-        return diff;
-    }
-
+    
 }
 
 

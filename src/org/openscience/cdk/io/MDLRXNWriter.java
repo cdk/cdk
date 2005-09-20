@@ -120,10 +120,6 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 		}
 	}
 	
-    public ChemObject highestSupportedChemObject() {
-        return new Reaction();
-    }
-
 	/**
 	 * Writes a Reaction to an OutputStream in MDL sdf format.
 	 *

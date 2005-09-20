@@ -82,10 +82,6 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         }
     };
 
-    public ChemObject highestSupportedChemObject() {
-        return new ChemSequence();
-    }
-
     /**
      * Flushes the output and closes this object
      */

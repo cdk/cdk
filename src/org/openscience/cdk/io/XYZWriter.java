@@ -85,10 +85,6 @@ public class XYZWriter extends DefaultChemObjectWriter {
         }
     }
 
-    public ChemObject highestSupportedChemObject() {
-        return new Molecule();
-    }
-    
     /**
     * writes a single frame in XYZ format to the Writer.
     * @param mol the Molecule to write

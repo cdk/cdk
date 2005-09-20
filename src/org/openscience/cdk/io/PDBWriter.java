@@ -97,10 +97,6 @@ public class PDBWriter extends DefaultChemObjectWriter {
         }
     }
     
-    public ChemObject highestSupportedChemObject() {
-        return new ChemFile();
-    }
-    
    /**
     * Writes a single frame in PDB format to the Writer.
     *

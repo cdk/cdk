@@ -221,10 +221,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
         }
     };
 
-    public ChemObject highestSupportedChemObject() {
-        return new ChemFile();
-    }
-    
     private void initIOSettings() {
         cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
           "Should the output use CML identifiers?", 

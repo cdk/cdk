@@ -133,10 +133,6 @@ public class SVGWriter extends DefaultChemObjectWriter {
         }
     }
 
-    public ChemObject highestSupportedChemObject() {
-        return new Molecule();
-    }
-
     /**
      * Writes the content from molecule to output.
      *

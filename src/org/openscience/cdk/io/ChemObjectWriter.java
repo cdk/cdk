@@ -53,13 +53,4 @@ public interface ChemObjectWriter extends ChemObjectIO {
      */
     public void write(ChemObject object) throws CDKException;
 
-    /**
-     * Returns an instance of a Class containing the most information.
-     *
-     * For example, the ShelX format can only output one crystal structure
-     * at a time. Accordingly highestSupportedChemObject() will return
-     * an instance of Crystal and not of ChemFile.
-     */
-    public ChemObject highestSupportedChemObject();
-
 }

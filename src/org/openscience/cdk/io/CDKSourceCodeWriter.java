@@ -102,10 +102,6 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         }
     }
     
-    public ChemObject highestSupportedChemObject() {
-        return new Molecule();
-    }
-
     public void writeMolecule(Molecule molecule) throws Exception {
         writer.write("{\n");
         writer.write("  Molecule mol = new Molecule();\n");
