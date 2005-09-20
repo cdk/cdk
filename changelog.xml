@@ -7,8 +7,16 @@
    <addition contributor="egonw">
      Added getAllChemObjects() methods to the cdk.tools.manipulators
    </addition>
+    <addition contributor="egonw">
+      Added a cdk.interfaces.ChemObjectBuilder for constructing data classes
+      when the implementating package is unknown
+    </addition>
    <apiChange contributor="egonw">
      ChemObjectListener was moved to the cdk.interfaces package
+   </apiChange>
+   <apiChange contributor="egonw">
+     The data classes interfaces now only use interfaces, and cdk-interfaces
+     no longer depends on cdk-data
    </apiChange>
   </release>
   
