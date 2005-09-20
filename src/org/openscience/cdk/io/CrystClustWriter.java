@@ -31,8 +31,8 @@ import java.io.Writer;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.CrystClustFormat;

@@ -39,12 +39,12 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.CIFFormat;
@@ -120,9 +120,9 @@ public class CIFReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            ChemFile cf = null;
+            ChemFile cf = (ChemFile)object;
             try {
-                cf = readChemFile();
+                cf = readChemFile(cf);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input.");
             }
@@ -138,11 +138,10 @@ public class CIFReader extends DefaultChemObjectReader {
      *
      * @return a ChemFile with the coordinates, charges, vectors, etc.
      */
-    private ChemFile readChemFile() throws IOException {
-        ChemFile file = new ChemFile();
-        ChemSequence seq = new ChemSequence();
-        ChemModel model = new ChemModel();
-        crystal = new Crystal();
+    private ChemFile readChemFile(ChemFile file) throws IOException {
+        ChemSequence seq = file.getBuilder().newChemSequence();
+        ChemModel model = file.getBuilder().newChemModel();
+        crystal = file.getBuilder().newCrystal();
 
         String line = input.readLine();
         boolean end_found = false;
@@ -333,7 +332,7 @@ public class CIFReader extends DefaultChemObjectReader {
                 }
                 int colIndex = 0;
                 // process one row
-                Atom atom = new Atom("C");
+                Atom atom = crystal.getBuilder().newAtom("C");
                 Point3d frac = new Point3d();
                 Point3d real = new Point3d();
                 boolean hasFractional = false;

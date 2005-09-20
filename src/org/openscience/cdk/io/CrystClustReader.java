@@ -33,12 +33,12 @@ import java.io.Reader;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -89,17 +89,16 @@ public class CrystClustReader extends DefaultChemObjectReader {
 
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            ChemFile cf = readChemFile();
+            ChemFile cf = readChemFile((ChemFile)object);
             return cf;
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }
     }
 
-    private ChemFile readChemFile() throws CDKException {
-        ChemFile file = new ChemFile();
-        ChemSequence seq = new ChemSequence();
-        ChemModel model = new ChemModel();
+    private ChemFile readChemFile(ChemFile file) throws CDKException {
+        ChemSequence seq = file.getBuilder().newChemSequence();
+        ChemModel model = file.getBuilder().newChemModel();
         Crystal crystal = null;
         
         int lineNumber = 0;
@@ -111,8 +110,8 @@ public class CrystClustReader extends DefaultChemObjectReader {
                 logger.debug((lineNumber++) + ": ", line);
                 if (line.startsWith("frame:")) {
                     logger.debug("found new frame");
-                    model = new ChemModel();
-                    crystal = new Crystal();
+                    model = file.getBuilder().newChemModel();
+                    crystal = file.getBuilder().newCrystal();
                     
                     // assume the file format is correct
                     
@@ -192,7 +191,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         cart.z = Double.parseDouble(line); // z
-                        Atom atom = new Atom(symbol);
+                        Atom atom = file.getBuilder().newAtom(symbol);
                         atom.setCharge(charge);
                         // convert cartesian coords to fractional
                         Point3d frac = CrystalGeometryTools.cartesianToFractional(a, b, c, cart);

@@ -40,7 +40,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.CMLFormat;

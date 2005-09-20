@@ -34,14 +34,14 @@ import java.io.StringReader;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PhysicalConstants;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
@@ -179,7 +179,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	public ChemObject read(ChemObject object) throws CDKException {
 		if (object instanceof ChemFile) {
 			try {
-				return (ChemObject) readChemFile();
+				return (ChemObject) readChemFile((ChemFile)object);
 			} catch (IOException e) {
 				return null;
 			}
@@ -199,11 +199,10 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.GamessReader#input
 	 */
 	//TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)? 
-	private ChemFile readChemFile() throws IOException {
-		ChemFile file = new ChemFile();
-		ChemSequence sequence = new ChemSequence(); // TODO Answer the question : Is this line needed ?
-		ChemModel model = new ChemModel(); // TODO Answer the question : Is this line needed ?
-		SetOfMolecules moleculeSet = new SetOfMolecules();
+	private ChemFile readChemFile(ChemFile file) throws IOException {
+		ChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
+		ChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
+		SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
 		
 		model.setSetOfMolecules(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?
@@ -223,7 +222,9 @@ public class GamessReader extends DefaultChemObjectReader {
 				 * The following line do no contain data, so it is ignored.
 				 */
 				this.input.readLine();
-				moleculeSet.addMolecule(this.readCoordinates(GamessReader.BOHR_UNIT));
+				moleculeSet.addMolecule(this.readCoordinates(
+					file.getBuilder().newMolecule(), GamessReader.BOHR_UNIT
+			    ));
 				//break; //<- stops when the first set of coordinates is found.
 			} else if (currentReadLine.indexOf(" COORDINATES OF ALL ATOMS ARE (ANGS)") >= 0) {
 
@@ -233,7 +234,9 @@ public class GamessReader extends DefaultChemObjectReader {
 				this.input.readLine();
 				this.input.readLine();
 
-				moleculeSet.addMolecule(this.readCoordinates(GamessReader.ANGSTROM_UNIT));
+				moleculeSet.addMolecule(this.readCoordinates(
+					file.getBuilder().newMolecule(), GamessReader.ANGSTROM_UNIT
+				));
 				//break; //<- stops when the first set of coordinates is found.
 			}
 			currentReadLine = this.input.readLine();
@@ -257,14 +260,13 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.GamessReader#input
 	 */
 	//TODO Update method comments with appropriate information.
-	private Molecule readCoordinates(boolean coordinatesUnits) throws IOException {
+	private Molecule readCoordinates(Molecule molecule, boolean coordinatesUnits) throws IOException {
 		
 		/*
 		 * Coordinates must all be given in angstr???ms.
 		 */ 
 		double unitScaling = GamessReader.scalesCoordinatesUnits(coordinatesUnits);
 		
-		Molecule extractedMolecule = new Molecule();
 		String retrievedLineFromFile;
 		
 		while (this.input.ready() == true) {
@@ -314,10 +316,10 @@ public class GamessReader extends DefaultChemObjectReader {
 					throw new IOException("Error reading coordinates");
 				}
 			}
-			Atom atom = new Atom(atomicSymbol, new Point3d(coordinates[0],coordinates[1],coordinates[2]));
-			extractedMolecule.addAtom(atom);
+			Atom atom = molecule.getBuilder().newAtom(atomicSymbol, new Point3d(coordinates[0],coordinates[1],coordinates[2]));
+			molecule.addAtom(atom);
 		}
-		return extractedMolecule;
+		return molecule;
 	}
 	
 	/**
