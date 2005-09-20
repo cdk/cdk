@@ -52,6 +52,17 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class SetOfMolecules extends SetOfAtomContainers implements org.openscience.cdk.interfaces.SetOfMolecules {
 
+	/**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 * 
+	 */
+	private static final long serialVersionUID = -861287315770869699L;
+
 	public SetOfMolecules() {}
 	
     /**

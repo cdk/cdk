@@ -40,7 +40,17 @@ package org.openscience.cdk;
 public class AminoAcid extends Monomer implements java.io.Serializable
 {
 
-    /** The atom that constitutes the N-terminus. */
+    /**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = -5032283549467862509L;
+	
+	/** The atom that constitutes the N-terminus. */
     private org.openscience.cdk.interfaces.Atom nTerminus;
     /** The atom that constitutes the C-terminus. */
     private org.openscience.cdk.interfaces.Atom cTerminus;

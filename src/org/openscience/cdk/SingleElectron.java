@@ -43,7 +43,17 @@ package org.openscience.cdk;
 public class SingleElectron extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.SingleElectron
 {
 
-    /** Number of electron for this class is defined as one. */
+    /**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = 7796574734668490940L;
+
+	/** Number of electron for this class is defined as one. */
     protected final int electronCount = 1;
 
     /** The atom with which this single electron is associated. */

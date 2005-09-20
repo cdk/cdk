@@ -49,6 +49,16 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
 public class AtomContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.AtomContainer , ChemObjectListener {
 
 	/**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = 5678100348445919254L;
+
+	/**
 	 *  Number of atoms contained by this object.
 	 */
 	protected int atomCount;

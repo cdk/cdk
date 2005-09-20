@@ -47,7 +47,17 @@ import java.util.Enumeration;
  */
 public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumeration {
 
-    /** Counts the current element. */
+    /**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = -1792810428672771080L;
+
+	/** Counts the current element. */
     private int atomEnumerationCounter = 0;
     /** Contains the atoms to enumerate. */
     private AtomContainer container;

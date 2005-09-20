@@ -60,11 +60,21 @@ import javax.vecmath.Point3d;
  */
 public class Atom extends AtomType implements java.io.Serializable, org.openscience.cdk.interfaces.Atom  {
     
-        /* Let's keep this exact specification
-         * of what kind of point2d we're talking of here,
-         * sinces there are so many around in the java standard api */
+	/* Let's keep this exact specification
+	 * of what kind of point2d we're talking of here,
+	 * sinces there are so many around in the java standard api */
 
-        /**
+	/**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = -3137373012494608794L;
+	
+		/**
          *  A 2D point specifying the location of this atom in a 2D coordinate 
          *  space.
          */

@@ -60,7 +60,17 @@ package org.openscience.cdk;
 public class Isotope extends Element implements java.io.Serializable, org.openscience.cdk.interfaces.Isotope 
 {
 
-    /** Exact mass of this isotope. */
+    /**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = 6389365978927575858L;
+
+	/** Exact mass of this isotope. */
     public double exactMass = (double) -1;
     /** Natural abundance of this isotope. */
     public double naturalAbundance = (double) -1;

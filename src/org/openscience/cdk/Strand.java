@@ -40,6 +40,16 @@ import java.util.Hashtable;
  */
 public class Strand extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Strand
 {
+	/**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = 4200943086350928356L;
+
 	/** The list of all Monomers in the Strand.*/
 	private Hashtable monomers;
 	/** The name of this strand (e.g. A, B). */

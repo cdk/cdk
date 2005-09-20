@@ -40,7 +40,17 @@ import javax.vecmath.Vector3d;
 public class Crystal extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Crystal
 {
 
-    /** The a axis. */
+    /**
+     * Determines if a de-serialized object is compatible with this class.
+     *
+     * This value must only be changed if and only if the new version
+     * of this class is imcompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * /serialization/spec/version.doc.html>details</a>.
+	 */
+	private static final long serialVersionUID = 5919649450390509278L;
+
+	/** The a axis. */
     private Vector3d aAxis;
     /** The b axis. */
     private Vector3d bAxis;
