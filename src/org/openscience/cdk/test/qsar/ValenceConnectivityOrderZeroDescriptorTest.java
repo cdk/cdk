@@ -56,5 +56,13 @@ import org.openscience.cdk.test.CDKTestCase;
 		DoubleResult retval = (DoubleResult)descriptor.calculate(mol).getValue();
 		assertEquals(testResult[0], retval.doubleValue(), 0.0001);
 	}
+	
+	public void testSFBug1298108() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Descriptor descriptor = new ValenceConnectivityOrderZeroDescriptor();
+		SmilesParser sp = new SmilesParser();
+		AtomContainer mol = sp.parseSmiles("[Cu]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
+		DoubleResult retval = (DoubleResult)descriptor.calculate(mol).getValue();
+	}
+	
 }
 
