@@ -37,15 +37,15 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -113,19 +113,23 @@ public class Mol2Reader extends DefaultChemObjectReader {
      */
      public ChemObject read(ChemObject object) throws CDKException {
          if (object instanceof ChemFile) {
-             ChemFile file = new ChemFile();
-             ChemSequence sequence = new ChemSequence();
-             ChemModel model = new ChemModel();
-             SetOfMolecules moleculeSet = new SetOfMolecules();
-             moleculeSet.addMolecule(readMolecule());
+             ChemFile file = (ChemFile)object;
+             ChemSequence sequence = file.getBuilder().newChemSequence();
+             ChemModel model = file.getBuilder().newChemModel();
+             SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
+             moleculeSet.addMolecule(readMolecule(
+                 model.getBuilder().newMolecule()
+             ));
              model.setSetOfMolecules(moleculeSet);
              sequence.addChemModel(model);
              file.addChemSequence(sequence);
              return file;
          } else if (object instanceof ChemModel) {
-             ChemModel model = new ChemModel();
-             SetOfMolecules moleculeSet = new SetOfMolecules();
-             moleculeSet.addMolecule(readMolecule());
+             ChemModel model = (ChemModel)object;
+             SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+             moleculeSet.addMolecule(readMolecule(
+                 model.getBuilder().newMolecule()
+             ));
              model.setSetOfMolecules(moleculeSet);
              return model;
          } else {
@@ -149,9 +153,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
      *
      * @return  The Reaction that was read from the MDL file.
      */
-    private Molecule readMolecule() throws CDKException {
-        Molecule molecule = new Molecule();
-        
+    private Molecule readMolecule(Molecule molecule) throws CDKException {
         AtomTypeFactory atFactory = null;
         try {
             atFactory = AtomTypeFactory.getInstance(
@@ -214,7 +216,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             atomType = atFactory.getAtomType("X");
                             logger.error("Could not find specified atom type: ", atomTypeStr);
                         }
-                        Atom atom = new Atom("X");
+                        Atom atom = molecule.getBuilder().newAtom("X");
                         atom.setID(nameStr);
                         atom.setAtomTypeName(atomTypeStr);
                         atFactory.configure(atom);

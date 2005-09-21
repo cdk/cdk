@@ -34,8 +34,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.HINFormat;
@@ -78,7 +78,7 @@ public class HINWriter extends DefaultChemObjectWriter {
     public void write(ChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             try {
-                SetOfMolecules som = new SetOfMolecules();
+                SetOfMolecules som = object.getBuilder().newSetOfMolecules();
                 som.addMolecule((Molecule)object);
                 writeMolecule(som);
             } catch(Exception ex) {

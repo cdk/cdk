@@ -36,14 +36,14 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.HINFormat;
@@ -109,7 +109,7 @@ public class HINReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            return (ChemObject)readChemFile();
+            return (ChemObject)readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -137,12 +137,10 @@ public class HINReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private ChemFile readChemFile() {
-        
-        ChemFile file = new ChemFile();
-        ChemSequence chemSequence = new ChemSequence();
-        ChemModel chemModel = new ChemModel();
-        SetOfMolecules setOfMolecules = new SetOfMolecules();
+    private ChemFile readChemFile(ChemFile file) {
+        ChemSequence chemSequence = file.getBuilder().newChemSequence();
+        ChemModel chemModel = file.getBuilder().newChemModel();
+        SetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
         String info;
 
         StringTokenizer tokenizer;
@@ -170,7 +168,7 @@ public class HINReader extends DefaultChemObjectReader {
                     info = getMolName(line);
                     line = input.readLine();
                 }
-                Molecule m = new Molecule();
+                Molecule m = file.getBuilder().newMolecule();
                 m.setProperty(CDKConstants.TITLE ,info);
 
                 // Each elemnt of cons is an ArrayList of length 3 which stores
@@ -200,7 +198,7 @@ public class HINReader extends DefaultChemObjectReader {
                     double z = Double.parseDouble(toks[9]);
                     int nbond = Integer.parseInt(toks[10]);
 
-                    Atom atom = new Atom(sym, new Point3d(x,y,z));
+                    Atom atom = file.getBuilder().newAtom(sym, new Point3d(x,y,z));
                     atom.setCharge(charge);
 
                     for (int j = 11; j < (11+nbond*2); j += 2) {

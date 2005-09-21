@@ -34,12 +34,12 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -102,15 +102,13 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemModel) {
-            return (ChemObject) readChemModel();
+            return (ChemObject) readChemModel((ChemModel)object);
         } else {
-            throw new CDKException("Only supported is ChemSequence.");
+            throw new CDKException("Only supported is ChemModel.");
         }
     }
     
-    private ChemModel readChemModel() throws CDKException {
-        ChemModel model = new ChemModel();
-        
+    private ChemModel readChemModel(ChemModel model) throws CDKException {
         int[] atoms = new int[1];
         double[] atomxs = new double[1];
         double[] atomys = new double[1];
@@ -225,7 +223,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                     AtomContainer container = new org.openscience.cdk.AtomContainer();
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
-                            Atom atom = new Atom(IsotopeFactory.getInstance().getElementSymbol(atoms[i]));
+                            Atom atom = model.getBuilder().newAtom(IsotopeFactory.getInstance().getElementSymbol(atoms[i]));
                             atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);
@@ -242,8 +240,8 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         container.addBond(bondatomid1[i], bondatomid2[i], bondorder[i]);
                     }
                     
-                    SetOfMolecules moleculeSet = new SetOfMolecules();
-                    moleculeSet.addMolecule(new Molecule(container));
+                    SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+                    moleculeSet.addMolecule(model.getBuilder().newMolecule(container));
                     model.setSetOfMolecules(moleculeSet);
                     
                     return model;
