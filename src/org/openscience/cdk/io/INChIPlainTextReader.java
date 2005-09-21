@@ -36,13 +36,13 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
@@ -125,7 +125,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            return (ChemObject)readChemFile();
+            return (ChemObject)readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -138,15 +138,14 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      *
      * @return ChemFile with the content read from the input
      */
-    private ChemFile readChemFile() throws CDKException {
-        ChemFile cf = null;
+    private ChemFile readChemFile(ChemFile cf) throws CDKException {
         // have to do stuff here
         try {
             String line = input.readLine();
             while (line != null) {
                 if (line.startsWith("INChI=")) {
                     // ok, the fun starts
-                    cf = new ChemFile();
+                    cf = cf.getBuilder().newChemFile();
                     // ok, we need to parse things like:
                     // INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H
                     final String INChI = line.substring(6);
@@ -157,14 +156,16 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     final String connections = tokenizer.nextToken().substring(1); // 1-2-4-6-5-3-1
                     final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
                     
-                    AtomContainer parsedContent = inchiTool.processFormula(formula);
+                    AtomContainer parsedContent = inchiTool.processFormula(
+                    		cf.getBuilder().newAtomContainer(), formula
+                    );
                     inchiTool.processConnections(connections, parsedContent, -1);
                     
-                    SetOfMolecules moleculeSet = new SetOfMolecules();
-                    moleculeSet.addMolecule(new Molecule(parsedContent));
-                    ChemModel model = new ChemModel();
+                    SetOfMolecules moleculeSet = cf.getBuilder().newSetOfMolecules();
+                    moleculeSet.addMolecule(cf.getBuilder().newMolecule(parsedContent));
+                    ChemModel model = cf.getBuilder().newChemModel();
                     model.setSetOfMolecules(moleculeSet);
-                    ChemSequence sequence = new ChemSequence();
+                    ChemSequence sequence = cf.getBuilder().newChemSequence();
                     sequence.addChemModel(model);
                     cf.addChemSequence(sequence);
                 }

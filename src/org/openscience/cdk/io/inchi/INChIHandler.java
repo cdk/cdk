@@ -102,7 +102,9 @@ public class INChIHandler extends DefaultHandler {
         } else if ("formula".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
-                tautomer = new Molecule(inchiTool.processFormula(currentChars));
+                tautomer = new Molecule(inchiTool.processFormula(
+                	setOfMolecules.getBuilder().newAtomContainer(), currentChars
+                ));
             } else {
                 logger.warn("Cannot set atom info for empty tautomer");
             }

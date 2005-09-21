@@ -27,9 +27,9 @@ package org.openscience.cdk.io.inchi;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -49,9 +49,8 @@ public class INChIContentProcessorTool {
      * Processes the content from the formula field of the INChI.
      * Typical values look like C6H6, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
      */
-    public AtomContainer processFormula(String atomsEncoding) {
+    public AtomContainer processFormula(AtomContainer parsedContent, String atomsEncoding) {
         logger.debug("Parsing atom data: ", atomsEncoding);
-        AtomContainer parsedContent = new org.openscience.cdk.AtomContainer();
 
         Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d+)?(.*)");
         String remainder = atomsEncoding;
@@ -71,7 +70,7 @@ public class INChIContentProcessorTool {
                     }
                     logger.debug("  occurence: ", occurence);
                     for (int i=1; i<=occurence; i++) {
-                        parsedContent.addAtom(new Atom(symbol));
+                        parsedContent.addAtom(parsedContent.getBuilder().newAtom(symbol));
                     }
                 }
                 remainder = matcher.group(3);
@@ -124,7 +123,7 @@ public class INChIContentProcessorTool {
                     org.openscience.cdk.interfaces.Atom targetAtom = container.getAtomAt(target-1);
                     if (source != -1) {
                     	org.openscience.cdk.interfaces.Atom sourceAtom = container.getAtomAt(source-1);
-                        bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
+                        bondToAdd = container.getBuilder().newBond(sourceAtom, targetAtom, 1.0);
                         container.addBond(bondToAdd);
                     }
                     remainder = matcher.group(2);

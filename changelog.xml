@@ -22,6 +22,10 @@
      Removed ChemObjectWriter.highestSupportedChemObject() as it depended
      on an implementing data class, and the CDK library did not depend on it
    </apiChange>
+   <apiChange contributor="egonw">
+     INChIContentProcessor.processConnections() now takes an additional
+     cdk.interfaces.AtomContainer as parameter
+   </apiChange>
   </release>
   
   <release id="20050826">
