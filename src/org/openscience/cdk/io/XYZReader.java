@@ -38,14 +38,14 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -109,7 +109,7 @@ public class XYZReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            return (ChemObject)readChemFile();
+            return (ChemObject)readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -123,9 +123,8 @@ public class XYZReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private ChemFile readChemFile() {
-        ChemFile file = new ChemFile();
-        ChemSequence chemSequence = new ChemSequence();
+    private ChemFile readChemFile(ChemFile file) {
+        ChemSequence chemSequence = file.getBuilder().newChemSequence();
         
         int number_of_atoms = 0;
         StringTokenizer tokenizer;
@@ -140,10 +139,10 @@ public class XYZReader extends DefaultChemObjectReader {
                 number_of_atoms = Integer.parseInt(token);
                 String info = input.readLine();
                 
-                ChemModel chemModel = new ChemModel();
-                SetOfMolecules setOfMolecules = new SetOfMolecules();
+                ChemModel chemModel = file.getBuilder().newChemModel();
+                SetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
                 
-                Molecule m = new Molecule();
+                Molecule m = file.getBuilder().newMolecule();
                 m.setProperty(CDKConstants.TITLE, info);
 
                 for (int i = 0; i < number_of_atoms; i++) {
@@ -174,7 +173,7 @@ public class XYZReader extends DefaultChemObjectReader {
                             if (fields == 8) 
                                 charge = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            Atom atom = new Atom(atomtype, new Point3d(x,y,z));
+                            Atom atom = file.getBuilder().newAtom(atomtype, new Point3d(x,y,z));
                             atom.setCharge(charge);
                             m.addAtom(atom);
                         }

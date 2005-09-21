@@ -34,11 +34,13 @@ import java.io.Writer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -78,15 +80,15 @@ public class PDBWriter extends DefaultChemObjectWriter {
             writeCrystal((Crystal)object);
         } else if (object instanceof ChemFile){
             ChemFile chemFile = (ChemFile)object;
-            org.openscience.cdk.interfaces.ChemSequence sequence = chemFile.getChemSequence(0);
+            ChemSequence sequence = chemFile.getChemSequence(0);
             if (sequence != null) {
-            	org.openscience.cdk.interfaces.ChemModel model = sequence.getChemModel(0);
+            	ChemModel model = sequence.getChemModel(0);
                 if (model != null) {
-                	org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
+                	Crystal crystal = model.getCrystal();
                     if (crystal != null) {
                         write(crystal);
                     } else {
-                        writeMolecule(new Molecule(
+                        writeMolecule(model.getBuilder().newMolecule(
                             (AtomContainer)ChemModelManipulator.getAllInOneContainer(model)
                         ));
                     }
@@ -173,7 +175,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 Point3d cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
                 atom.setPoint3d(cart);
             }
-           writeMolecule(new Molecule(crystal));
+           writeMolecule(crystal.getBuilder().newMolecule(crystal));
        } catch (IOException exception) {
            throw new CDKException("Error while writing file: " + exception.getMessage());
        }

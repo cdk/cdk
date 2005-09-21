@@ -40,17 +40,17 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.BioPolymer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Monomer;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Monomer;
 import org.openscience.cdk.PDBAtom;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.Strand;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.Strand;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
@@ -136,7 +136,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 */
 	public ChemObject read(ChemObject oObj) throws CDKException {
 		if (oObj instanceof ChemFile) {
-			return (ChemObject)readChemFile();
+			return (ChemObject)readChemFile((ChemFile)oObj);
 		} else {
 			throw new CDKException("Only supported is reading of ChemFile objects.");
 		}
@@ -154,18 +154,17 @@ public class PDBReader extends DefaultChemObjectReader {
 	 *
 	 * @return The ChemFile that was read from the PDB file.
 	 */
-	private ChemFile readChemFile() 	{
+	private ChemFile readChemFile(ChemFile oFile) 	{
 		// initialize all containers
-		ChemFile oFile = new ChemFile();
-		ChemSequence oSeq = new ChemSequence();
-		ChemModel oModel = new ChemModel();
-		SetOfMolecules oSet = new SetOfMolecules();
+		ChemSequence oSeq = oFile.getBuilder().newChemSequence();
+		ChemModel oModel = oFile.getBuilder().newChemModel();
+		SetOfMolecules oSet = oFile.getBuilder().newSetOfMolecules();
 		
 		// some variables needed
 		StringBuffer cLine;
 		String cCol;
 		PDBAtom oAtom;
-		BioPolymer oBP = new BioPolymer();
+		BioPolymer oBP = oFile.getBuilder().newBioPolymer();
 		StringBuffer cResidue;
 		String oObj;
 		org.openscience.cdk.interfaces.Monomer oMonomer;
@@ -209,14 +208,14 @@ public class PDBReader extends DefaultChemObjectReader {
 						// search for an existing strand or create a new one.
 						oStrand = oBP.getStrand(String.valueOf(chain));
 						if (oStrand == null) {
-							oStrand = new Strand();
+							oStrand = oFile.getBuilder().newStrand();
 							oStrand.setStrandName(String.valueOf(chain));
 						}
 						
 						// search for an existing monomer or create a new one.
 						oMonomer = oBP.getMonomer(cResidue.toString(), String.valueOf(chain));
 						if (oMonomer == null) {
-							oMonomer = new Monomer();
+							oMonomer = oFile.getBuilder().newMonomer();
 							oMonomer.setMonomerName(cResidue.toString());
 							oMonomer.setMonomerType(oAtom.getResName());
 						}
@@ -235,7 +234,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					} else if (cCol.equals("TER   ")) {
 						// start new strand						
 						chain++;
-						oStrand = new Strand();
+						oStrand = oFile.getBuilder().newStrand();
 						oStrand.setStrandName(String.valueOf(chain));
 						logger.debug("Added new STRAND");
 					} else if (cCol.equals("END   ")) {
@@ -402,13 +401,13 @@ public class PDBReader extends DefaultChemObjectReader {
 				// If nothing's wrong, add bonds
 				int bondID = Integer.parseInt((String)monomer.getProperty(AminoAcids.ID));
 				for (int l = 0; l < Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_BONDS)); l++) {
-					Bond bond = new Bond(strand.getAtomAt(AABondInfo[bondID + l][1] + atoms), strand.getAtomAt(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
+					Bond bond = pol.getBuilder().newBond(strand.getAtomAt(AABondInfo[bondID + l][1] + atoms), strand.getAtomAt(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
 					pol.addBond(bond);
 				}
 				
 				// If not first residue, connect residues
 				if (atomsInLastResidue != 0)	{
-					Bond bond = new Bond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
+					Bond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
 					pol.addBond(bond);
 				}
 				
@@ -420,7 +419,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				// atoms == mol.getAtomCount()...
 				if(strand.getAtomCount() < atoms && ((PDBAtom)strand.getAtomAt(atoms)).getOxt())	{
 //				if(strand.getAtomCount() < atoms && ((String)strand.getAtomAt(atoms).getProperty("oxt")).equals("1"))	{
-					Bond bond = new Bond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
+					Bond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
 					pol.addBond(bond);
 				}
 			}

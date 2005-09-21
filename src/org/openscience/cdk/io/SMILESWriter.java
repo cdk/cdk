@@ -37,7 +37,7 @@ import java.io.Writer;
 
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;

@@ -39,12 +39,12 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -116,14 +116,14 @@ public class ShelXReader extends DefaultChemObjectReader {
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             try {
-                return readChemFile();
+                return readChemFile((ChemFile)object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage());
             }
         } else if (object instanceof Crystal) {
             try {
-                return readCrystal();
+                return readCrystal((Crystal)object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage());
@@ -139,20 +139,17 @@ public class ShelXReader extends DefaultChemObjectReader {
      *
      * @return a ChemFile with the coordinates, charges, vectors, etc.
      */
-    private ChemFile readChemFile() throws IOException {
-        ChemFile file = new ChemFile();
-        ChemSequence seq = new ChemSequence();
-        ChemModel model = new ChemModel();
-        Crystal crystal = readCrystal();
+    private ChemFile readChemFile(ChemFile file) throws IOException {
+        ChemSequence seq = file.getBuilder().newChemSequence();
+        ChemModel model = file.getBuilder().newChemModel();
+        Crystal crystal = readCrystal(file.getBuilder().newCrystal());
         model.setCrystal(crystal);
         seq.addChemModel(model);
         file.addChemSequence(seq);
         return file;
     }
 
-    private Crystal readCrystal() throws IOException {
-        Crystal crystal = new Crystal();
-
+    private Crystal readCrystal(Crystal crystal) throws IOException {
         String line = input.readLine();
         boolean end_found = false;
         while (input.ready() && line != null && !end_found) {
@@ -341,7 +338,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                     logger.info("Adding atom: " + atype + ", " + frac[0]
                                                         + ", " + frac[1]
                                                         + ", " + frac[2]);
-                    Atom atom = new Atom(atype);
+                    Atom atom = crystal.getBuilder().newAtom(atype);
                     atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                     crystal.addAtom(atom);
                     logger.debug("Atom added: ", atom);

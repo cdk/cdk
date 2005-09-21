@@ -41,16 +41,17 @@ import java.util.regex.Pattern;
 
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
@@ -137,7 +138,7 @@ public class PMPReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            return (ChemObject)readChemFile();
+            return (ChemObject)readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -154,11 +155,10 @@ public class PMPReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private ChemFile readChemFile() {
-        ChemFile chemFile = new ChemFile();
-        ChemSequence chemSequence = new ChemSequence();
-        ChemModel chemModel = new ChemModel();
-        Crystal crystal = new Crystal();
+    private ChemFile readChemFile(ChemFile chemFile) {
+        ChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
+        ChemModel chemModel = chemFile.getBuilder().newChemModel();
+        Crystal crystal = chemFile.getBuilder().newCrystal();
 
         try {
             String line = input.readLine();
@@ -181,7 +181,7 @@ public class PMPReader extends DefaultChemObjectReader {
                         Matcher objHeaderMatcher = objHeader.matcher(line);
                         if (objHeaderMatcher.matches()) {
                             String object = objHeaderMatcher.group(2);
-                            constructObject(object);
+                            constructObject(chemFile.getBuilder(), object);
                             int id = Integer.parseInt(objHeaderMatcher.group(1));
                             // System.out.println(object + " id: " + id);
                             line = input.readLine();
@@ -193,7 +193,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                     // ok, forget about nesting and hope for the best
                                     object = objHeaderMatcher.group(2);
                                     id = Integer.parseInt(objHeaderMatcher.group(1));
-                                    constructObject(object);
+                                    constructObject(chemFile.getBuilder(), object);
                                 } else if (objCommandMatcher.matches()) {
                                     String format = objCommandMatcher.group(1);
                                     String command = objCommandMatcher.group(2);
@@ -220,11 +220,11 @@ public class PMPReader extends DefaultChemObjectReader {
                     som.addMolecule(molecule);
                     modelModel.setSetOfMolecules(som);
                 } else if (line.startsWith("%%Traj Start")) {
-                    chemSequence = new ChemSequence();
+                    chemSequence = chemFile.getBuilder().newChemSequence();
                     while (input.ready() && line != null && !(line.startsWith("%%Traj End"))) {
                         if (line.startsWith("%%Start Frame")) {
-                            chemModel = new ChemModel();
-                            crystal = new Crystal();
+                            chemModel = chemFile.getBuilder().newChemModel();
+                            crystal = chemFile.getBuilder().newCrystal();
                             AtomContainer atomC = ChemModelManipulator.getAllInOneContainer(modelModel);
                             while (input.ready() && line != null && !(line.startsWith("%%End Frame"))) {
                                 // process frame data
@@ -359,15 +359,15 @@ public class PMPReader extends DefaultChemObjectReader {
         }
     }
     
-    private void constructObject(String object) {
+    private void constructObject(ChemObjectBuilder builder, String object) {
         if ("Atom".equals(object)) {
-            chemObject = new Atom("C");
+            chemObject = builder.newAtom("C");
         } else if ("Bond".equals(object)) {
-            chemObject = new Bond();
+            chemObject = builder.newBond();
         } else if ("Model".equals(object)) {
-            modelModel = new ChemModel();
-            som = new SetOfMolecules();
-            molecule = new Molecule();
+            modelModel = builder.newChemModel();
+            som = builder.newSetOfMolecules();
+            molecule = builder.newMolecule();
         } else {
             logger.error("Cannot construct PMP object type: " + object);
         }

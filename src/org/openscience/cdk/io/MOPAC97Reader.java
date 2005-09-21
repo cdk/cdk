@@ -33,9 +33,9 @@ import java.io.StringReader;
 
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MOPAC97Format;
@@ -104,8 +104,8 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         JmolAdapter adapter = new SmarterJmolAdapter(null);
         // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);
-        AtomContainer container = new Convertor().convert(model);
-		return new Molecule(container);
+        molecule.add(new Convertor().convert(model));
+		return molecule;
 	}
     
     public void close() throws IOException {

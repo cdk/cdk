@@ -35,12 +35,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
@@ -115,12 +115,14 @@ public class SMILESReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof SetOfMolecules) {
-            return (ChemObject)readSetOfMolecules();
+            return (ChemObject)readSetOfMolecules((SetOfMolecules)object);
         } else if (object instanceof ChemFile) {
-            ChemFile file = new ChemFile();
-            ChemSequence sequence = new ChemSequence();
-            ChemModel chemModel = new ChemModel();
-            chemModel.setSetOfMolecules(readSetOfMolecules());
+            ChemFile file = (ChemFile)object;
+            ChemSequence sequence = file.getBuilder().newChemSequence();
+            ChemModel chemModel = file.getBuilder().newChemModel();
+            chemModel.setSetOfMolecules(readSetOfMolecules(
+            	file.getBuilder().newSetOfMolecules()
+            ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
             return (ChemObject) file;
@@ -137,8 +139,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private SetOfMolecules readSetOfMolecules() {
-        SetOfMolecules som = new SetOfMolecules();
+    private SetOfMolecules readSetOfMolecules(SetOfMolecules som) {
         try {
             String line = input.readLine().trim();
             while (line != null) {

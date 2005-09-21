@@ -36,13 +36,13 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -126,9 +126,9 @@ public class VASPReader extends DefaultChemObjectReader {
 
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            ChemFile cf = null;
+            ChemFile cf = (ChemFile)object;
             try {
-                cf = readChemFile();
+                cf = readChemFile(cf);
             } catch (IOException exception) {
                 String error = "Input/Output error while reading from input: " +
                     exception.getMessage();
@@ -142,16 +142,14 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
     
-    private ChemFile readChemFile() throws CDKException, IOException {
-        ChemFile file = new ChemFile();
-        ChemSequence seq = readChemSequence();
+    private ChemFile readChemFile(ChemFile file) throws CDKException, IOException {
+        ChemSequence seq = readChemSequence(file.getBuilder().newChemSequence());
         file.addChemSequence(seq);
         return file;
     }
     
-    private ChemSequence readChemSequence() throws CDKException, IOException {
-        ChemSequence sequence = new ChemSequence();
-        ChemModel chemModel = new ChemModel();
+    private ChemSequence readChemSequence(ChemSequence sequence) throws CDKException, IOException {
+        ChemModel chemModel = sequence.getBuilder().newChemModel();
         Crystal crystal = null;
         
         // Get the info line (first token of the first line)
@@ -199,8 +197,8 @@ public class VASPReader extends DefaultChemObjectReader {
             
             logger.debug("New crystal started...");
             
-            crystal = new Crystal();
-            chemModel = new ChemModel();
+            crystal = sequence.getBuilder().newCrystal();
+            chemModel = sequence.getBuilder().newChemModel();
             
             // Get acell
             for(int i=0; i<3; i++) {
@@ -250,7 +248,7 @@ public class VASPReader extends DefaultChemObjectReader {
                                       rprim[2][2]*acell[2]));
             for (int i=0; i<atomType.length; i++) {
                 String symbol = isotopeFac.getElement(atomType[i]).getSymbol();
-                Atom atom = new Atom(symbol);
+                Atom atom = sequence.getBuilder().newAtom(symbol);
                 atom.setAtomicNumber(atomType[i]);
                 // convert fractional to cartesian
                 double[] frac = new double[3];

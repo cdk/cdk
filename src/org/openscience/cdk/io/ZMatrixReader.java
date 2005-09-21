@@ -38,14 +38,14 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -110,7 +110,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
   public ChemObject read(ChemObject object) throws CDKException 
   {
     if (object instanceof ChemFile) 
-      return (ChemObject)readChemFile();
+      return (ChemObject)readChemFile((ChemFile)object);
     else 
       throw new CDKException("Only ChemFile objects can be read.");
   }
@@ -121,10 +121,8 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    *
    * @return A ChemFile containing the data parsed from input.
    */
-  private ChemFile readChemFile()
-  {
-    ChemFile file = new ChemFile();
-    ChemSequence chemSequence = new ChemSequence();
+  private ChemFile readChemFile(ChemFile file) {
+    ChemSequence chemSequence = file.getBuilder().newChemSequence();
         
     int number_of_atoms = 0;
     StringTokenizer tokenizer;
@@ -144,10 +142,10 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         number_of_atoms = Integer.parseInt(token);
         String info = input.readLine();
                 
-        ChemModel chemModel = new ChemModel();
-        SetOfMolecules setOfMolecules = new SetOfMolecules();
+        ChemModel chemModel = file.getBuilder().newChemModel();
+        SetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
                 
-        Molecule m = new Molecule();
+        Molecule m = file.getBuilder().newMolecule();
         m.setProperty(CDKConstants.TITLE ,info);
 
         String[] types = new String[number_of_atoms];
@@ -217,7 +215,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         Point3d[] cartCoords = ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
         
         for (i=0; i<number_of_atoms; i++) {
-              m.addAtom(new Atom(types[i], cartCoords[i]));
+              m.addAtom(file.getBuilder().newAtom(types[i], cartCoords[i]));
         }
 
         System.out.println("molecule:\n"+m);
