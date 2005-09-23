@@ -89,7 +89,7 @@ public class PrintAction extends JCPAction implements Printable {
 			jcpPanel.getDrawingPanel().paint(g2d);
 			jcpPanel.getDrawingPanel().setDoubleBuffered(true);
 			//enable selection again
-			jcpPanel.getJChemPaintModel().getRendererModel().setSelectedPart(beforePrinting);
+			if (beforePrinting != null) jcpPanel.getJChemPaintModel().getRendererModel().setSelectedPart(beforePrinting);
 			return (PAGE_EXISTS);
 		}
 	}
