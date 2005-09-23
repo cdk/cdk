@@ -284,7 +284,7 @@ public class CDKPluginManager {
                 if (APIVersionTester.isBiggerOrEqual("1.6", plugin.getAPIVersion())) {
                     try {
                         plugin.stateChanged(sourceEvent);
-                    } catch (Exception exception) {
+                    } catch (Throwable exception) {
                         logger.warn("Exception thrown in plugin. Ignore, but user is invited to report the problem:");
                         logger.warn("  ", exception.getMessage());
                         logger.debug(exception);
