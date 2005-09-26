@@ -33,6 +33,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -76,6 +77,7 @@ import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
 import org.openscience.cdk.applications.plugin.CDKEditBus;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
@@ -135,11 +137,9 @@ public abstract class JChemPaintPanel
 	 *  remembers last action in toolbar for switching on/off buttons
 	 */
 	public JComponent lastAction;
-  Dimension viewerDimension;
-private UndoManager undoManager;
-private UndoableEditSupport undoSupport;
-
-
+    Dimension viewerDimension;
+    private UndoManager undoManager;
+    private UndoableEditSupport undoSupport;
 
 	/**
 	 *  Constructor for the JChemPaintPanel object
@@ -165,7 +165,7 @@ private UndoableEditSupport undoSupport;
 		add(mainContainer, BorderLayout.CENTER);
 		setSize(new Dimension(600, 400));
 		setPreferredSize(new Dimension(600, 400));
-    instances.add(this);
+        instances.add(this);
 	}
 
 
@@ -630,7 +630,8 @@ private UndoableEditSupport undoSupport;
 	 *
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
-	public void scaleAndCenterMolecule(AtomContainer ac, Dimension dim) {
+	public void scaleAndCenterMolecule(AtomContainer ac, Dimension dim){
+    	((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
 	    org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
@@ -714,7 +715,7 @@ private UndoableEditSupport undoSupport;
 		} else {
 			JFrame jcpf = JChemPaintEditorPanel.getNewFrame(jcpm);
 			jcpf.show();
-			scaleAndCenterMolecule(chemModel);
+			jcpm.fireChange();
 			jcpf.pack();
 			lastUsedJCPP = (JChemPaintPanel) jcpf.getContentPane().getComponents()[0];
 		}
