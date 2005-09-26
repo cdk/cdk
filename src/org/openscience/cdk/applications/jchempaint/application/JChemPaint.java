@@ -182,9 +182,11 @@ public class JChemPaint implements SwingConstants
 	{
 		logger = new LoggingTool(this);
 		logger.dumpSystemProperties();
-		JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
-		if(model == null )frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
-		else frame = JChemPaintEditorPanel.getFrameWithModel(model);
+		JFrame frame = null;
+		if(model == null )
+			frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
+		else 
+			frame = JChemPaintEditorPanel.getFrameWithModel(model);
 		frame.addWindowListener(new JChemPaintPanel.AppCloser());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//for testing the ViewerOnlyPanel
