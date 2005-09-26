@@ -34,7 +34,8 @@
     
   <target name="compile">
     <javac srcdir="${src}" destdir="${build}" optimize="${optimization}" 
-           debug="${debug}" deprecation="${deprecation}" target="1.1"
+           debug="${debug}" deprecation="${deprecation}" 
+	   source="1.4" target="1.4"
            includesfile="${src}/jmol.javafiles">
       <classpath refid="project.class.path" />
     </javac>
