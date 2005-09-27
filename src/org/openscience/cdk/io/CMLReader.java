@@ -172,7 +172,7 @@ public class CMLReader extends DefaultChemObjectReader {
      */
     public ChemObject read(ChemObject object) throws CDKException {
       if (object instanceof ChemFile) {
-        return (ChemObject)readChemFile();
+        return readChemFile((ChemFile)object);
       } else {
         throw new CDKException("Only supported is reading of ChemFile objects.");
       }
@@ -180,9 +180,9 @@ public class CMLReader extends DefaultChemObjectReader {
 
     // private functions
 
-    private ChemFile readChemFile() throws CDKException {
+    private ChemFile readChemFile(ChemFile file) throws CDKException {
         logger.debug("Started parsing from input...");
-        ChemFileCDO cdo = new ChemFileCDO();
+        ChemFileCDO cdo = new ChemFileCDO(file);
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

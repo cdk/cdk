@@ -27,20 +27,22 @@ import java.util.Hashtable;
 
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
@@ -54,8 +56,10 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */ 
-public class ChemFileCDO extends ChemFile implements CDOInterface {
+public class ChemFileCDO implements ChemFile, CDOInterface {
 
+	private ChemFile currentChemFile;
+	
     private AtomContainer currentMolecule;
     private SetOfMolecules currentSetOfMolecules;
     private ChemModel currentChemModel;
@@ -77,19 +81,20 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     private double crystal_axis_y;
     private double crystal_axis_z;
 
-    protected org.openscience.cdk.tools.LoggingTool logger;
+    protected LoggingTool logger;
 
     /**
      * Basic contructor
      */
-    public ChemFileCDO() {
+    public ChemFileCDO(ChemFile file) {
       logger = new LoggingTool(this);
-      currentChemSequence = new ChemSequence();
-      currentChemModel = new ChemModel();
-      currentSetOfMolecules = new SetOfMolecules();
+      currentChemFile = file;
+      currentChemSequence = file.getBuilder().newChemSequence();
+      currentChemModel = file.getBuilder().newChemModel();
+      currentSetOfMolecules = file.getBuilder().newSetOfMolecules();
       currentSetOfReactions = null;
       currentReaction = null;
-      currentMolecule = new Molecule();
+      currentMolecule = file.getBuilder().newMolecule();
       atomEnumeration = new Hashtable();
     }
 
@@ -101,10 +106,10 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
      */
     public void startDocument() {
       logger.info("New CDO Object");
-      currentChemSequence = new ChemSequence();
-      currentChemModel = new ChemModel();
-      currentSetOfMolecules = new SetOfMolecules();
-      currentMolecule = new Molecule();
+      currentChemSequence = currentChemFile.getBuilder().newChemSequence();
+      currentChemModel = currentChemFile.getBuilder().newChemModel();
+      currentSetOfMolecules = currentChemFile.getBuilder().newSetOfMolecules();
+      currentMolecule = currentChemFile.getBuilder().newMolecule();
       atomEnumeration = new Hashtable();
     }
 
@@ -152,25 +157,25 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
     public void startObject(String objectType) {
       logger.debug("START:" + objectType);
       if (objectType.equals("Molecule")) {
-          if (currentChemModel == null) currentChemModel = new ChemModel();
-          if (currentSetOfMolecules == null) currentSetOfMolecules = new SetOfMolecules();
-          currentMolecule = new Molecule();
+          if (currentChemModel == null) currentChemModel = currentChemFile.getBuilder().newChemModel();
+          if (currentSetOfMolecules == null) currentSetOfMolecules = currentChemFile.getBuilder().newSetOfMolecules();
+          currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("Atom")) {
-        currentAtom = new Atom("H");
+        currentAtom = currentChemFile.getBuilder().newAtom("H");
         logger.debug("Atom # " + numberOfAtoms);
         numberOfAtoms++;
       } else if (objectType.equals("Bond")) {
           bond_id = null;
           bond_stereo = -99;
       } else if (objectType.equals("Animation")) {
-        currentChemSequence = new ChemSequence();
+        currentChemSequence = currentChemFile.getBuilder().newChemSequence();
       } else if (objectType.equals("Frame")) {
-        currentChemModel = new ChemModel();
+        currentChemModel = currentChemFile.getBuilder().newChemModel();
       } else if (objectType.equals("SetOfMolecules")) {
-        currentSetOfMolecules = new SetOfMolecules();
-        currentMolecule = new Molecule();
+        currentSetOfMolecules = currentChemFile.getBuilder().newSetOfMolecules();
+        currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("Crystal")) {
-        currentMolecule = new Crystal(currentMolecule);
+        currentMolecule = currentChemFile.getBuilder().newCrystal(currentMolecule);
       } else if (objectType.equals("a-axis") ||
                  objectType.equals("b-axis") ||
                  objectType.equals("c-axis")) {
@@ -178,16 +183,16 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
           crystal_axis_y = 0.0;
           crystal_axis_z = 0.0;
       } else if (objectType.equals("SetOfReactions")) {
-          currentSetOfReactions = new SetOfReactions();
+          currentSetOfReactions = currentChemFile.getBuilder().newSetOfReactions();
       } else if (objectType.equals("Reaction")) {
           if (currentSetOfReactions == null) startObject("SetOfReactions");
-          currentReaction = new Reaction();
+          currentReaction = currentChemFile.getBuilder().newReaction();
       } else if (objectType.equals("Reactant")) {
           if (currentReaction == null) startObject("Reaction");
-          currentMolecule = new Molecule();
+          currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("Product")) {
           if (currentReaction == null) startObject("Reaction");
-          currentMolecule = new Molecule();
+          currentMolecule = currentChemFile.getBuilder().newMolecule();
       }
     }
 
@@ -226,7 +231,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
             } else {
             	org.openscience.cdk.interfaces.Atom a1 = currentMolecule.getAtomAt(bond_a1);
             	org.openscience.cdk.interfaces.Atom a2 = currentMolecule.getAtomAt(bond_a2);
-                Bond b = new Bond(a1, a2, bond_order);
+                Bond b = currentChemFile.getBuilder().newBond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {
                     b.setStereo(bond_stereo);
@@ -326,14 +331,14 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
       } else if (objectType.equals("PseudoAtom")) {
         if (propertyType.equals("label")) {
             if (!(currentAtom instanceof PseudoAtom)) {
-                currentAtom = new PseudoAtom(currentAtom);
+                currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
             }
             ((PseudoAtom)currentAtom).setLabel(propertyValue);
         }
       } else if (objectType.equals("Atom")) {
         if (propertyType.equals("type")) {
             if (propertyValue.equals("R") && !(currentAtom instanceof PseudoAtom)) {
-                currentAtom = new PseudoAtom(currentAtom);
+                currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
             }
             currentAtom.setSymbol(propertyValue);
         } else if (propertyType.equals("x2")) {
@@ -368,7 +373,7 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         } else if (propertyType.equals("spinMultiplicity")) {
             int unpairedElectrons = new Integer(propertyValue).intValue() -1;
             for (int i=0; i<unpairedElectrons; i++) {
-                currentMolecule.addElectronContainer(new SingleElectron(currentAtom));
+                currentMolecule.addElectronContainer(currentChemFile.getBuilder().newSingleElectron(currentAtom));
             }
         } else if (propertyType.equals("id")) {
           logger.debug("id: ", propertyValue);
@@ -475,5 +480,93 @@ public class ChemFileCDO extends ChemFile implements CDOInterface {
         objects.add("Product");
       return objects;
     }
+
+	public void addChemSequence(org.openscience.cdk.interfaces.ChemSequence chemSequence) {
+		currentChemFile.addChemSequence(chemSequence);
+	}
+
+	public org.openscience.cdk.interfaces.ChemSequence[] getChemSequences() {
+		return currentChemFile.getChemSequences();
+	}
+
+	public org.openscience.cdk.interfaces.ChemSequence getChemSequence(int number) {
+		return currentChemFile.getChemSequence(number);
+	}
+
+	public int getChemSequenceCount() {
+		return currentChemFile.getChemSequenceCount();
+	}
+
+	public void addListener(ChemObjectListener col) {
+		currentChemFile.addListener(col);
+	}
+
+	public int getListenerCount() {
+		return currentChemFile.getListenerCount();
+	}
+
+	public void removeListener(ChemObjectListener col) {
+		currentChemFile.removeListener(col);
+	}
+
+	public void notifyChanged() {
+		currentChemFile.notifyChanged();
+	}
+
+	public void notifyChanged(ChemObjectChangeEvent evt) {
+		currentChemFile.notifyChanged(evt);
+	}
+
+	public void setProperty(Object description, Object property) {
+		currentChemFile.setProperty(description, property);
+	}
+
+	public void removeProperty(Object description) {
+		currentChemFile.removeProperty(description);
+	}
+
+	public Object getProperty(Object description) {
+		return currentChemFile.getProperty(description);
+	}
+
+	public Hashtable getProperties() {
+		return currentChemFile.getProperties();
+	}
+
+	public String getID() {
+		return currentChemFile.getID();
+	}
+
+	public void setID(String identifier) {
+		currentChemFile.setID(identifier);
+	}
+
+	public void setFlag(int flag_type, boolean flag_value) {
+		currentChemFile.setFlag(flag_type, flag_value);
+	}
+
+	public boolean getFlag(int flag_type) {
+		return currentChemFile.getFlag(flag_type);
+	}
+
+	public void setProperties(Hashtable properties) {
+		currentChemFile.setProperties(properties);
+	}
+
+	public void setFlags(boolean[] flagsNew) {
+		currentChemFile.setFlags(flagsNew);
+	}
+
+	public boolean[] getFlags() {
+		return currentChemFile.getFlags();
+	}
+
+	public Object clone() {
+		return currentChemFile.clone();
+	}
+
+	public ChemObjectBuilder getBuilder() {
+		return currentChemFile.getBuilder();
+	}
 }
 

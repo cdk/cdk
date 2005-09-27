@@ -28,7 +28,7 @@ import java.util.Enumeration;
 
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
@@ -106,7 +106,7 @@ public class AminoAcids {
         // Create set of AtomContainers
         aminoAcids = new AminoAcid[20];
 
-        ChemFile list = new ChemFile();
+        ChemFile list = new org.openscience.cdk.ChemFile();
         CMLReader reader = new CMLReader(
         	AminoAcids.class.getClassLoader().getResourceAsStream(
         			"data/templates/list_aminoacids.cml"

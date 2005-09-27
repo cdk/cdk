@@ -36,7 +36,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
@@ -300,7 +300,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         ChemFile chemFile = null;
         try {
             CMLReader reader = new CMLReader(new StringReader(cmlString));
-            chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            chemFile = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
         } catch (CDKException exception) {
             fail();
         }

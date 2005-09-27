@@ -33,7 +33,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
@@ -130,7 +130,7 @@ public class AllRingsFinderTest extends CDKTestCase
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
 		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
-		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
@@ -162,7 +162,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
 		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
-		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);

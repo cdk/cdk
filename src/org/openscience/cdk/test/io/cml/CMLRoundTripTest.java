@@ -39,7 +39,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
@@ -293,7 +293,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             logger.debug("CML string: " + cmlString);
             CMLReader reader = new CMLReader(new StringReader(cmlString));
             
-            ChemFile file = (ChemFile)reader.read(new ChemFile());
+            ChemFile file = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
             assertNotNull(file);
             assertEquals(1, file.getChemSequenceCount());
             org.openscience.cdk.interfaces.ChemSequence sequence = file.getChemSequence(0);
@@ -334,7 +334,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             logger.debug("CML string: " + cmlString);
             CMLReader reader = new CMLReader(new StringReader(cmlString));
             
-            ChemFile file = (ChemFile)reader.read(new ChemFile());
+            ChemFile file = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
             assertNotNull(file);
             assertEquals(1, file.getChemSequenceCount());
             org.openscience.cdk.interfaces.ChemSequence sequence = file.getChemSequence(0);
