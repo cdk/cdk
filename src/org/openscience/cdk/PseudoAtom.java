@@ -39,7 +39,7 @@ package org.openscience.cdk;
  * @see  Atom
  */
 public class PseudoAtom extends Atom 
-  implements java.io.Serializable, Cloneable, org.openscience.cdk.interfaces.Atom 
+  implements java.io.Serializable, Cloneable, org.openscience.cdk.interfaces.PseudoAtom 
 {
 
     /**

@@ -23,7 +23,12 @@
  */
 package org.openscience.cdk;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.PseudoAtom;
 
 /**
  * A helper class to instantiate a ChemObject for a specific implementation.
@@ -238,6 +243,26 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 
 	public org.openscience.cdk.interfaces.Strand newStrand() {
 		return new Strand();
+	}
+
+	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom() {
+		return new PseudoAtom();
+	}
+
+	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label) {
+		return new PseudoAtom(label);
+	}
+
+	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(org.openscience.cdk.interfaces.Atom atom) {
+		return new PseudoAtom(atom);
+	}
+
+	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label, Point3d point3d) {
+		return new PseudoAtom(label, point3d);
+	}
+
+	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label, Point2d point2d) {
+		return new PseudoAtom(label, point2d);
 	}
 }
 

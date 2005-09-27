@@ -355,7 +355,42 @@ public interface ChemObjectBuilder {
 	 * Contructs a new Strand.
 	 */	
 	public Strand newStrand();
-	
+
+    /**
+     * Constructs an empty PseudoAtom.
+     */
+    public PseudoAtom newPseudoAtom();
+    
+    /**
+     * Constructs an PseudoAtom from a label.
+     *
+     * @param   label  The String describing the PseudoAtom
+     */
+    public PseudoAtom newPseudoAtom(String label);
+
+    /**
+     * Constructs an PseudoAtom from an existing Atom object.
+     *
+     * @param   atom  Atom from which the PseudoAtom is constructed
+     */
+    public PseudoAtom newPseudoAtom(Atom atom);
+
+    /**
+     * Constructs an PseudoAtom from a label and a Point3d.
+     *
+     * @param   label   The String describing the PseudoAtom
+     * @param   point3d The 3D coordinates of the atom
+     */
+    public PseudoAtom newPseudoAtom(String label, javax.vecmath.Point3d point3d);
+
+    /**
+     * Constructs an PseudoAtom from a label and a Point2d.
+     *
+     * @param   label   The String describing the PseudoAtom
+     * @param   point2d The 2D coordinates of the atom
+     */
+    public PseudoAtom newPseudoAtom(String label, javax.vecmath.Point2d point2d);
+		
 }
 
 
