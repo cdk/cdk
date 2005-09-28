@@ -32,10 +32,10 @@ package org.openscience.cdk.ringsearch;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
 
@@ -109,8 +109,8 @@ public class AllRingsFinder
 			startTime = System.currentTimeMillis();
 		}
 		Vector pathes = new Vector();
-		RingSet ringSet = new RingSet();
-		AtomContainer ac = new org.openscience.cdk.AtomContainer();
+		RingSet ringSet = atomContainer.getBuilder().newRingSet();
+		AtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		originalAc = atomContainer;
 		ac.add(atomContainer);
 		if (debug)
@@ -311,7 +311,7 @@ public class AllRingsFinder
 					System.out.println("Removing path " + path.toString(originalAc) + " which is a ring.");
 				}
 				path.removeElementAt(0);
-				ring = new Ring();
+				ring = ac.getBuilder().newRing();
 				for (int g = 0; g < path.size(); g++)
 				{
 					ring.addAtom((Atom) path.elementAt(g));

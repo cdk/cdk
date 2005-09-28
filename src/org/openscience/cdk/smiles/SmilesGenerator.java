@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;

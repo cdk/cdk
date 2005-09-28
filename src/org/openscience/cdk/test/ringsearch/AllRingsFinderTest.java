@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -100,7 +100,7 @@ public class AllRingsFinderTest extends CDKTestCase
 			ringSet = arf.findAllRings(molecule);
 			for (int i = 0; i < ringSet.size(); i++) 
 			{
-				Ring ring = (Ring)ringSet.elementAt(i);
+				Ring ring = (Ring)ringSet.get(i);
 				for (int j = 0; j < ring.getElectronContainerCount(); j++) 
 				{
 					org.openscience.cdk.interfaces.ElectronContainer ec = ring.getElectronContainerAt(j);

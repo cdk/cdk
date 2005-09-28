@@ -90,6 +90,8 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
         	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
         }
         
+        System.out.println("MM2 Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
+        
         assertEquals("Sthi",mol.getAtomAt(0).getAtomTypeName());
         assertEquals("Csp2",mol.getAtomAt(7).getAtomTypeName());
         assertEquals("Csp",mol.getAtomAt(51).getAtomTypeName());

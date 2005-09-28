@@ -39,7 +39,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.geometry.GeometryTools;
 
 /**
@@ -120,7 +120,7 @@ public class RingPlacer
 		Point2d centerOfRingGravity = null;
 		for (int j = 0; j < rs.size(); j++)
 		{
-			ring = (Ring)rs.elementAt(j); /* Get the j-th Ring in RingSet rs */
+			ring = (Ring)rs.get(j); /* Get the j-th Ring in RingSet rs */
 			for (int k = 0; k < ring.getAtomCount(); k++)
 			{
 				unplacedPartners.removeAllElements();
@@ -490,7 +490,7 @@ public class RingPlacer
 	{
 		for (int i = 0; i < rs.size(); i++)
 		{
-			if (!((Ring)rs.elementAt(i)).getFlag(CDKConstants.ISPLACED)) 
+			if (!((Ring)rs.get(i)).getFlag(CDKConstants.ISPLACED)) 
 			{
 				return false;
 			}
@@ -510,7 +510,7 @@ public class RingPlacer
 		boolean allPlaced = true;
 		for (int i = 0; i < rs.size(); i++)
 		{
-			ring = (Ring)rs.elementAt(i);
+			ring = (Ring)rs.get(i);
 			allPlaced = true;
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{

@@ -24,11 +24,11 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKChemicalRingConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -88,26 +88,28 @@ public class AtomTypeTools {
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atom = (Atom)molecule.getAtomAt(i);
+			org.openscience.cdk.Atom atom2 = (org.openscience.cdk.Atom)molecule.getAtomAt(i);
 			//Atom aromatic is set by HueckelAromaticityDetector
 			//Atom in ring?
 			if (ringSetMolecule.contains(atom)) {
 				ringSetA = ringSetMolecule.getRings(atom);
 				RingSetManipulator.sort(ringSetA);
 				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);
-				atom.setRingSize(sring.getRingSize());
-				atom.setChemicalGroupConstant(ringSystemClassifier(sring, sg.createSMILES(new Molecule(sring))));
-				atom.setFlag(CDKConstants.ISINRING, true);
-				atom.setFlag(CDKConstants.ISALIPHATIC, false);
+				atom2.setRingSize(sring.getRingSize());
+				atom2.setChemicalGroupConstant(ringSystemClassifier(
+						sring, sg.createSMILES(atom2.getBuilder().newMolecule(sring))
+				));
+				atom2.setFlag(CDKConstants.ISINRING, true);
+				atom2.setFlag(CDKConstants.ISALIPHATIC, false);
 			}else{
-				atom.setChemicalGroupConstant(CDKChemicalRingConstants.ISNOT_IN_RING);
-				atom.setFlag(CDKConstants.ISINRING, false);
-				atom.setFlag(CDKConstants.ISALIPHATIC,true);
+				atom2.setChemicalGroupConstant(CDKChemicalRingConstants.ISNOT_IN_RING);
+				atom2.setFlag(CDKConstants.ISINRING, false);
+				atom2.setFlag(CDKConstants.ISALIPHATIC,true);
 			}
 			try {
-				hoseCode = hcg.getHOSECode(molecule, atom, 3);
+				hoseCode = hcg.getHOSECode(molecule, atom2, 3);
 				hoseCode=removeAromaticityFlagsFromHoseCode(hoseCode);
-				atom.setSphericalMatcher(hoseCode);
+				atom2.setSphericalMatcher(hoseCode);
 			} catch (CDKException ex1) {
 				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString());
 			}

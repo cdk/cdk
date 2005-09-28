@@ -93,7 +93,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
         }
         
-        //System.out.println("Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
+        System.out.println("MMFF94 Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
         //System.out.println("Atom 0:"+mol.getAtomAt(256).getAtomTypeName());
         
         assertEquals("Sthi",mol.getAtomAt(0).getAtomTypeName());

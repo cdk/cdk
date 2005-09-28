@@ -29,18 +29,19 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.List;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -498,7 +499,7 @@ public class StructureDiagramGenerator
 			{
 				thisRing = 0;
 			}
-			ring = (Ring) rs.elementAt(thisRing);
+			ring = (Ring) rs.get(thisRing);
 		} while (!allPlaced(rs));
 		logger.debug("End of layoutRingSet");
 	}
@@ -858,7 +859,7 @@ public class StructureDiagramGenerator
 	{
 		for (int f = 0; f < rs.size(); f++)
 		{
-			((Ring) rs.elementAt(f)).setFlag(CDKConstants.ISPLACED, false);
+			((Ring) rs.get(f)).setFlag(CDKConstants.ISPLACED, false);
 		}
 	}
 
@@ -869,11 +870,11 @@ public class StructureDiagramGenerator
 	 *@param  rings  The Vector to be checked
 	 *@return        Description of the Return Value
 	 */
-	private boolean allPlaced(Vector rings)
+	private boolean allPlaced(List rings)
 	{
 		for (int f = 0; f < rings.size(); f++)
 		{
-			if (!((Ring) rings.elementAt(f)).getFlag(CDKConstants.ISPLACED))
+			if (!((Ring) rings.get(f)).getFlag(CDKConstants.ISPLACED))
 			{
 				logger.debug("allPlaced->Ring " + f + " not placed");
 				return false;
@@ -888,12 +889,12 @@ public class StructureDiagramGenerator
 	 *
 	 *@param  rings  The Vector to be checked
 	 */
-	private void markRingAtoms(Vector rings)
+	private void markRingAtoms(List rings)
 	{
 		Ring ring = null;
 		for (int i = 0; i < rings.size(); i++)
 		{
-			ring = (Ring) rings.elementAt(i);
+			ring = (Ring) rings.get(i);
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
 				ring.getAtomAt(j).setFlag(CDKConstants.ISINRING, true);
@@ -959,7 +960,7 @@ public class StructureDiagramGenerator
 		int unplacedCounter = 0;
 		for (int f = 0; f < sssr.size(); f++)
 		{
-			ring = (Ring) sssr.elementAt(f);
+			ring = (Ring) sssr.get(f);
 			if (!ring.getFlag(CDKConstants.ISPLACED))
 			{
 				logger.debug("Ring with " + ring.getAtomCount() + " atoms is not placed.");

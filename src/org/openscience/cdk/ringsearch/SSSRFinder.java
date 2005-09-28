@@ -34,10 +34,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org._3pq.jgrapht.UndirectedGraph;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
@@ -206,14 +206,14 @@ public class SSSRFinder {
 	
 	private static RingSet toRingSet(org.openscience.cdk.interfaces.AtomContainer ac, Collection cycles) {
 		
-		RingSet ringSet = new RingSet();
+		RingSet ringSet = ac.getBuilder().newRingSet();
 
 		Iterator cycleIterator = cycles.iterator();
 		
 		while (cycleIterator.hasNext()) {
 			SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
 			
-			Ring ring = new Ring();
+			Ring ring = ac.getBuilder().newRing();
 			
 			List vertices = cycle.vertexList();
 			

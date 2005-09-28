@@ -32,8 +32,8 @@ package org.openscience.cdk.aromaticity;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ElectronContainer;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -182,7 +182,7 @@ public class HueckelAromaticityDetector
 		RingSetManipulator.sort(ringSet);
 		for (int f = 0; f < ringSet.size(); f++)
 		{
-			ring = (Ring) ringSet.elementAt(f);
+			ring = (Ring) ringSet.get(f);
 			logger.debug("Testing for aromaticity in ring no ", f);
 			if (AromaticityCalculator.isAromatic(ring, atomContainer))
 			{

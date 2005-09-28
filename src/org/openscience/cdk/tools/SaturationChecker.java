@@ -31,14 +31,13 @@ package org.openscience.cdk.tools;
 import java.io.IOException;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -502,7 +501,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
     
 	public void saturateRingSystems(AtomContainer atomContainer) throws CDKException
 	{
-		RingSet rs = new SSSRFinder(new Molecule(atomContainer)).findSSSR();
+		RingSet rs = new SSSRFinder(atomContainer.getBuilder().newMolecule(atomContainer)).findSSSR();
 		Vector ringSets = RingPartitioner.partitionRings(rs);
 		AtomContainer ac = null;
 		org.openscience.cdk.interfaces.Atom atom = null;
