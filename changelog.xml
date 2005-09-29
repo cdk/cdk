@@ -7,10 +7,14 @@
    <addition contributor="egonw">
      Added getAllChemObjects() methods to the cdk.tools.manipulators
    </addition>
-    <addition contributor="egonw">
-      Added a cdk.interfaces.ChemObjectBuilder for constructing data classes
-      when the implementating package is unknown
-    </addition>
+   <addition contributor="egonw">
+     Added a cdk.interfaces.ChemObjectBuilder for constructing data classes
+     when the implementating package is unknown
+   </addition>
+   <addition contributor="egonw">
+     CMLReader now reuses the passed ChemObject, so that one can have a CML 
+     file's content be read into a custom ChemObject
+   </addition>
    <apiChange contributor="egonw">
      ChemObjectListener was moved to the cdk.interfaces package
    </apiChange>
