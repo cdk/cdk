@@ -30,8 +30,16 @@ package org.openscience.cdk.tools;
 
 import java.util.Vector;
 
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -92,18 +100,18 @@ public class IDCreator {
             container.setID("m" + moleculeCount);
         }
         
-        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+        Atom[] atoms = container.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-        	org.openscience.cdk.interfaces.Atom atom = atoms[i];
+        	Atom atom = atoms[i];
             if (atom.getID() == null) {
                 atomCount++;
                 while (tabuList.contains("a" + atomCount)) atomCount++;
                 atoms[i].setID("a" + atomCount);
             }
         }
-        org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
+        Bond[] bonds = container.getBonds();
         for (int i=0; i<bonds.length; i++) {
-        	org.openscience.cdk.interfaces.Bond bond = bonds[i];
+        	Bond bond = bonds[i];
             if (bond.getID() == null) {
                 bondCount++;
                 while (tabuList.contains("b" + bondCount)) bondCount++;
@@ -112,6 +120,10 @@ public class IDCreator {
         }
     }
 
+    public void createIDs(SetOfMolecules containerSet) {
+    	createIDs((SetOfAtomContainers)containerSet);
+    }    
+    
     /**
      * Labels the Atom's and Bond's in each AtomContainer using the a1, a2, b1, b2
      * scheme often used in CML. It will also set id's for all AtomContainers, naming
@@ -140,7 +152,7 @@ public class IDCreator {
      * Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
      * accordingly, when no ID is given.
      */
-    public void createIDs(org.openscience.cdk.interfaces.Reaction reaction) {
+    public void createIDs(Reaction reaction) {
         if (tabuList == null) tabuList = ReactionManipulator.getAllIDs(reaction);
         
         if (reaction.getID() == null) {
@@ -160,10 +172,36 @@ public class IDCreator {
     }
     
     public void createIDs(SetOfReactions reactionSet) {
-    	org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
+    	Reaction[] reactions = reactionSet.getReactions();
         for (int i=0; i<reactions.length; i++) {
             createIDs(reactions[i]);
         }
     }
     
+    public void createIDs(ChemFile file) {
+    	ChemSequence[] sequences = file.getChemSequences();
+    	for (int i=0; i<sequences.length; i++) {
+    		createIDs(sequences[i]);
+    	}
+    }
+    
+    public void createIDs(ChemSequence sequence) {
+    	ChemModel[] models = sequence.getChemModels();
+    	for (int i=0; i<models.length; i++) {
+    		createIDs(models[i]);
+    	}
+    }
+    
+    public void createIDs(ChemModel model) {
+    	Crystal crystal = model.getCrystal();
+    	if (crystal != null) createIDs(crystal);
+    	SetOfMolecules moleculeSet = model.getSetOfMolecules();
+    	if (moleculeSet != null) createIDs(moleculeSet);
+    	SetOfReactions reactionSet = model.getSetOfReactions();
+    	if (reactionSet != null) createIDs(reactionSet);
+    }
+    
+    public void createIDs(Crystal crystal) {
+    	createIDs((AtomContainer)crystal);
+    }
 }
