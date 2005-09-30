@@ -384,6 +384,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					return false;
 				}
 				Monomer monomer = (Monomer)AAs.get(anAtom.getResName());
+		
 				atomsInPresentResidue = Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_ATOMS));
 				
 				/* Check if there's something wrong with the residue record (e.g. it doesn't contain the
@@ -454,7 +455,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				new Double(cLine.substring(46, 54)).doubleValue()
 			)
 		);
-		oAtom.setAtomTypeName(rawAtomName);
+		
         oAtom.setRecord(cLine);
         oAtom.setSerial(Integer.parseInt(cLine.substring(6, 11).trim()));
         oAtom.setName((new String(cLine.substring(12, 16))).trim());
@@ -463,6 +464,7 @@ public class PDBReader extends DefaultChemObjectReader {
         oAtom.setChainID((new String(cLine.substring(21, 22))).trim());
         oAtom.setResSeq((new String(cLine.substring(22, 26))).trim());
         oAtom.setICode((new String(cLine.substring(26, 27))).trim());
+        oAtom.setAtomTypeName(oAtom.getResName()+"."+rawAtomName);
 		if (cLine.length() >= 59) {
             String frag = cLine.substring(54, 60).trim();
             if (frag.length() > 0) {
