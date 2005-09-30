@@ -40,6 +40,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -49,6 +51,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * Writes MDL mol files and SD files.
@@ -151,37 +154,33 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
     /**
      * Writes a ChemObject to the MDL molfile formated output. 
-     * It can only output ChemObjects of type Molecule and
+     * It can only output ChemObjects of type ChemFile, Molecule and
      * SetOfMolecules.
      *
-     * @param object class must be of type Molecule or SetOfMolecules.
+     * @param object class must be of type ChemFile, Molecule or SetOfMolecules.
      *
      * @see org.openscience.cdk.ChemFile
      */
-	public void write(ChemObject object) throws CDKException
-	{
-		if (object instanceof SetOfMolecules)
-		{
-		    writeSetOfMolecules((SetOfMolecules)object);
-		}
-		else if (object instanceof Molecule)
-		{
+	public void write(ChemObject object) throws CDKException {
+		if (object instanceof SetOfMolecules) {
+			writeSetOfMolecules((SetOfMolecules)object);
+		} else if (object instanceof ChemFile) {
+			writeChemFile((ChemFile)object);
+		} else if (object instanceof Molecule) {
 			try{
-        boolean[] isVisible=new boolean[((Molecule)object).getAtomCount()];
-        for(int i=0;i<isVisible.length;i++){
-          isVisible[i]=true;
-        }
-		    writeMolecule((Molecule)object,isVisible);
+				boolean[] isVisible=new boolean[((Molecule)object).getAtomCount()];
+				for(int i=0;i<isVisible.length;i++){
+					isVisible[i]=true;
+				}
+				writeMolecule((Molecule)object,isVisible);
 			}
-			catch (Exception ex){
+			catch (Exception ex) {
 				logger.error(ex.getMessage());
 				logger.debug(ex);
-                throw new CDKException("Exception while writing MDL file: " + ex.getMessage());
+				throw new CDKException("Exception while writing MDL file: " + ex.getMessage());
 			}
-		}
-		else
-		{
-		    throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
+		} else {
+			throw new CDKException("Only supported is writing of ChemFile, SetOfMolecules and Molecule objects.");
 		}
 	}
 	
@@ -209,8 +208,19 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		}
 	}
 	
-	
-
+	private void writeChemFile(ChemFile file) {
+		AtomContainer[] molecules = ChemFileManipulator.getAllAtomContainers(file);
+		for (int i=0; i<molecules.length; i++) {
+			try {
+				boolean[] isVisible=new boolean[molecules[i].getAtomCount()];
+				for(int k=0;k<isVisible.length;k++){
+					isVisible[k]=true;
+				}
+				writeMolecule(file.getBuilder().newMolecule(molecules[i]), isVisible);
+			} catch (Exception exc) {
+			}
+		}
+	}
 	
 
 	/**
