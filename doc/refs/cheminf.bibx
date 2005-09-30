@@ -661,6 +661,19 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="MH1997">
+    <bibtex:article>
+        <bibtex:author>Hendlich, M. and Rippmann, F. and Bernickel, G.
+        </bibtex:author>
+        <bibtex:title>LIGSITE: Automatic and efficient detection of potential small molecule-binding sites in proteins</bibtex:title>
+      <bibtex:journal>Journal of Molecular Graphics and Modelling</bibtex:journal>
+      <bibtex:year>1997</bibtex:year>
+      <bibtex:volume>15</bibtex:volume>
+      <bibtex:pages>359-363</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+
   <bibtex:entry id="EIS95">
     <bibtex:article>
         <bibtex:author>Eisenhaber, F. and Lijnzaad, P. and Argos, P. and Sander, C. and Scharf, M.
