@@ -4,6 +4,9 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
 
   <release id="cvs">
+   <addition contributor="chhoppe">
+     Added a method to find pockets and cavities in BioPolymers, cdk.protein.ProteinPocketFinder()
+   </addition>
    <addition contributor="egonw">
      Added getAllChemObjects() methods to the cdk.tools.manipulators
    </addition>
