@@ -4,6 +4,9 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
 
   <release id="cvs">
+   <addition contributor="egonw">
+     Added option to set the cause of a CDKException.
+   </addition>
    <addition contributor="chhoppe">
      Added a method to find pockets and cavities in BioPolymers, cdk.protein.ProteinPocketFinder()
    </addition>
