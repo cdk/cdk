@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -66,8 +67,21 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 	public MM2AtomTypeMatcher() {
 		logger = new LoggingTool(this);
 		atomTypeTools=new AtomTypeTools();
+		try {
+			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml");
+		} catch (Exception ex1) {
+            logger.error(ex1.getMessage());
+			logger.debug(ex1);
+		}
 	}
 
+	private String getSphericalMatcher(AtomType type) throws CDKException {
+		return (String)type.getProperty(CDKConstants.SPHERICAL_MATCHER);
+	}
+
+	private String getSphericalMatcher(String type) throws CDKException {
+		return getSphericalMatcher(factory.getAtomType(type));
+	}
 
 	/**
 	 * Assign the mm2 atom type to a given atom.
@@ -84,13 +98,10 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 		org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atomInterface;
 		//System.out.println("****** Configure MM2 AtomType via findMatching ******");
 		//System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
-		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
-		try {
-			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml");
-		} catch (Exception ex1) {
-            logger.error(ex1.getMessage());
-			logger.debug(ex1);
-		}
+		String atomSphericalMatcher = (String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
+		int atomChemicalGroupConstant = ((Integer)atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue();
+		int atomRingSize = ((Integer)atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue();
+		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atomSphericalMatcher + " ");
 					
 		if (atom instanceof PseudoAtom) {
 				return factory.getAtomTypes("DU")[0];
@@ -105,16 +116,16 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 		//System.out.println("Atom maxBond"+maxBondOrder+" ChemicalGroupConstant"+atom.getChemicalGroupConstant());
 		for (int j = 0; j < atomTypeIds.length; j++){
 			tmpMaxBondOrder = factory.getAtomType(atomTypeIds[j]).getMaxBondOrder();
-			logger.debug(j + "ATOM TYPE "+ tmpMaxBondOrder + " " +factory.getAtomType(atomTypeIds[j]).getSphericalMatcher());
-			p1 =Pattern.compile(factory.getAtomType(atomTypeIds[j]).getSphericalMatcher());
-			mat1 = p1.matcher(atom.getSphericalMatcher());
+			logger.debug(j + "ATOM TYPE "+ tmpMaxBondOrder + " " +getSphericalMatcher(atomTypeIds[j]));
+			p1 =Pattern.compile(getSphericalMatcher(atomTypeIds[j]));
+			mat1 = p1.matcher(atomSphericalMatcher);
 			if (mat1.matches()) {
 				ID = atomTypeIds[j];
 				if (atomTypeIds[j].equals("C")) {
-					if (atom.getChemicalGroupConstant()!=-1) {
-						if (atom.getRingSize()==3) {
+					if (atomChemicalGroupConstant!=-1) {
+						if (atomRingSize==3) {
 							ID="CR3R";
-						}else if (atom.getChemicalGroupConstant()==5){
+						}else if (atomChemicalGroupConstant==5){
 							ID="Car";	
 						}else if (maxBondOrder>1) {
 							ID="Csp2";
@@ -122,11 +133,11 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 					}
 										
 					if (atom.getSymbol().equals("S")){
-						if (atom.getChemicalGroupConstant()==8){
+						if (atomChemicalGroupConstant==8){
 							ID="Sthi";
 						}else{						
-							p1 = Pattern.compile(factory.getAtomType("S").getSphericalMatcher());
-							mat1 = p1.matcher(atom.getSphericalMatcher());
+							p1 = Pattern.compile(getSphericalMatcher("S"));
+							mat1 = p1.matcher(atomSphericalMatcher);
 							if (mat1.matches()) {
 								ID="S";
 							}
@@ -134,30 +145,30 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 					}
 					
 				} else if (atomTypeIds[j].equals("Csp2")) {
-					if (atom.getChemicalGroupConstant()!=-1) {
-						if (atom.getChemicalGroupConstant()==5) {
+					if (atomChemicalGroupConstant!=-1) {
+						if (atomChemicalGroupConstant==5) {
 							ID="Car";
-						}else if (atom.getRingSize()==3) {
+						}else if (atomRingSize==3) {
 							ID="CE3R";
 						}
 					}
-					p1 = Pattern.compile(factory.getAtomType("C=").getSphericalMatcher());
-					mat1 = p1.matcher(atom.getSphericalMatcher());
+					p1 = Pattern.compile(getSphericalMatcher("C="));
+					mat1 = p1.matcher(atomSphericalMatcher);
 					if (mat1.matches()) {
 						ID="C=";
 					}
 				} else if (atomTypeIds[j].equals("O")) {
 					//OH/Ether
-					if (atom.getChemicalGroupConstant()!=-1) {
-						if (atom.getChemicalGroupConstant()==6){
+					if (atomChemicalGroupConstant!=-1) {
+						if (atomChemicalGroupConstant==6){
 							ID="Oar";//furan
-						}else if (atom.getRingSize()==3) {
+						}else if (atomRingSize==3) {
 							ID="OR";//epoxy
 						}
 					}
-					p1 = Pattern.compile(factory.getAtomType("OX").getSphericalMatcher());
-					mat1 = p1.matcher(atom.getSphericalMatcher());
-					if (mat1.matches() & atom.getChemicalGroupConstant()==-1) {
+					p1 = Pattern.compile(getSphericalMatcher("OX"));
+					mat1 = p1.matcher(atomSphericalMatcher);
+					if (mat1.matches() & atomChemicalGroupConstant==-1) {
 						ID="OX";
 					}
 					
@@ -166,25 +177,25 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 						ID="Nsp2";
 					}
 					
-					if (atom.getChemicalGroupConstant()==4) {
+					if (atomChemicalGroupConstant==4) {
 						ID="NPYL";//Pyrole
-					}else if (atom.getChemicalGroupConstant()==10){
+					}else if (atomChemicalGroupConstant==10){
 						ID="-N=";
-						p1 = Pattern.compile(factory.getAtomType("NPD+").getSphericalMatcher());
-						mat1 = p1.matcher(atom.getSphericalMatcher());
+						p1 = Pattern.compile(getSphericalMatcher("NPD+"));
+						mat1 = p1.matcher(atomSphericalMatcher);
 						if (mat1.matches()) {
 							ID="NPD+";
 						}
 					}else{
 						//Amid
-						p1 = Pattern.compile(factory.getAtomType("Namid").getSphericalMatcher());
-						mat1 = p1.matcher(atom.getSphericalMatcher());
-						if (mat1.matches() & atom.getChemicalGroupConstant()==-1) {
+						p1 = Pattern.compile(getSphericalMatcher("Namid"));
+						mat1 = p1.matcher(atomSphericalMatcher);
+						if (mat1.matches() & atomChemicalGroupConstant==-1) {
 							ID="Nsp2";
 						}else{
-							p1 = Pattern.compile(factory.getAtomType("N2OX").getSphericalMatcher());
-							mat1 = p1.matcher(atom.getSphericalMatcher());	
-							if (mat1.matches() & atom.getChemicalGroupConstant()==-1) {
+							p1 = Pattern.compile(getSphericalMatcher("N2OX"));
+							mat1 = p1.matcher(atomSphericalMatcher);	
+							if (mat1.matches() & atomChemicalGroupConstant==-1) {
 								ID="N2OX";
 							}
 						}
@@ -192,35 +203,35 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 					
 					
 				} else if (atomTypeIds[j].equals("Nsp2")) {
-					if (atom.getChemicalGroupConstant()==12) {
+					if (atomChemicalGroupConstant==12) {
 							ID="=N-";//Pyridin
 					}
 					//Azo
-					p1 = Pattern.compile(factory.getAtomType("-N=").getSphericalMatcher());
-					mat1 = p1.matcher(atom.getSphericalMatcher());
-					if (mat1.matches() & atom.getChemicalGroupConstant()==-1) {
+					p1 = Pattern.compile(getSphericalMatcher("-N="));
+					mat1 = p1.matcher(atomSphericalMatcher);
+					if (mat1.matches() & atomChemicalGroupConstant==-1) {
 						ID="-N=";
 					}else{
-						p1 = Pattern.compile(factory.getAtomType("N=C").getSphericalMatcher());
-						mat1 = p1.matcher(atom.getSphericalMatcher());	
+						p1 = Pattern.compile(getSphericalMatcher("N=C"));
+						mat1 = p1.matcher(atomSphericalMatcher);	
 						if (mat1.matches()) {
 							ID="N=C";
 						}
 						
-						p1 = Pattern.compile(factory.getAtomType("N2OX").getSphericalMatcher());
-						mat1 = p1.matcher(atom.getSphericalMatcher());	
+						p1 = Pattern.compile(getSphericalMatcher("N2OX"));
+						mat1 = p1.matcher(atomSphericalMatcher);	
 						if (mat1.matches()) {
 							ID="N2OX";
 						}
 						
-						p1 = Pattern.compile(factory.getAtomType("NO2").getSphericalMatcher());
-						mat1 = p1.matcher(atom.getSphericalMatcher());	
+						p1 = Pattern.compile(getSphericalMatcher("NO2"));
+						mat1 = p1.matcher(atomSphericalMatcher);	
 						if (mat1.matches()) {
 							ID="NO2";
 						}
 						
-						p1 = Pattern.compile(factory.getAtomType("=N=").getSphericalMatcher());
-						mat1 = p1.matcher(atom.getSphericalMatcher());	
+						p1 = Pattern.compile(getSphericalMatcher("=N="));
+						mat1 = p1.matcher(atomSphericalMatcher);	
 						if (mat1.matches()) {
 							ID="=N=";
 						}
@@ -233,21 +244,21 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 					}
 				} else if (atomTypeIds[j].equals("HO")) {
 					//Enol,amid
-					p1 = Pattern.compile(factory.getAtomType("HOC").getSphericalMatcher());
-					mat1 = p1.matcher(atom.getSphericalMatcher());
-					if (mat1.matches() & atom.getChemicalGroupConstant()==-1) {
+					p1 = Pattern.compile(getSphericalMatcher("HOC"));
+					mat1 = p1.matcher(atomSphericalMatcher);
+					if (mat1.matches() & atomChemicalGroupConstant==-1) {
 						ID="HN2";
 					}
 					//COOH
-					p1 = Pattern.compile(factory.getAtomType("HOCO").getSphericalMatcher());
-					mat1 = p1.matcher(atom.getSphericalMatcher());
-					if (mat1.matches() & atom.getChemicalGroupConstant()==-1) {
+					p1 = Pattern.compile(getSphericalMatcher("HOCO"));
+					mat1 = p1.matcher(atomSphericalMatcher);
+					if (mat1.matches() & atomChemicalGroupConstant==-1) {
 						ID="HOCO";
 					}
 				} else if (atomTypeIds[j].equals("HN")) {
 					
-					p1 = Pattern.compile(factory.getAtomType("HN2").getSphericalMatcher());
-					mat1 = p1.matcher(atom.getSphericalMatcher());
+					p1 = Pattern.compile(getSphericalMatcher("HN2"));
+					mat1 = p1.matcher(atomSphericalMatcher);
 					if (mat1.matches()) {
 						ID="HN2";
 					}
