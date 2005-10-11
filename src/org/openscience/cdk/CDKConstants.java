@@ -170,13 +170,13 @@ public class CDKConstants {
          */
         public final static int MAPPED = 5;
 
-        public final static int IS_HYDROGENBOND_DONOR = 70;
-        public final static int IS_HYDROGENBOND_ACCEPTOR = 71;
+        public final static int IS_HYDROGENBOND_DONOR = 6;
+        public final static int IS_HYDROGENBOND_ACCEPTOR = 7;
 
     /**
      * Maximum flags array index.
      */
-    public final static int MAX_FLAG_INDEX = 5;
+    public final static int MAX_FLAG_INDEX = 7;
 
     /**
      * Flag used for JUnit testing the pointer functionality.
