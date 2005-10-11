@@ -95,21 +95,23 @@ public class AtomTypeTools {
 				ringSetA = ringSetMolecule.getRings(atom);
 				RingSetManipulator.sort(ringSetA);
 				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);
-				atom2.setRingSize(sring.getRingSize());
-				atom2.setChemicalGroupConstant(ringSystemClassifier(
-						sring, sg.createSMILES(atom2.getBuilder().newMolecule(sring))
+				atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(sring.getRingSize()));
+				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(ringSystemClassifier(
+						sring, sg.createSMILES(atom2.getBuilder().newMolecule(sring)))
 				));
 				atom2.setFlag(CDKConstants.ISINRING, true);
 				atom2.setFlag(CDKConstants.ISALIPHATIC, false);
 			}else{
-				atom2.setChemicalGroupConstant(CDKChemicalRingConstants.ISNOT_IN_RING);
+				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, 
+					new Integer(CDKChemicalRingConstants.ISNOT_IN_RING)
+				);
 				atom2.setFlag(CDKConstants.ISINRING, false);
 				atom2.setFlag(CDKConstants.ISALIPHATIC,true);
 			}
 			try {
 				hoseCode = hcg.getHOSECode(molecule, atom2, 3);
 				hoseCode=removeAromaticityFlagsFromHoseCode(hoseCode);
-				atom2.setSphericalMatcher(hoseCode);
+				atom2.setProperty(CDKConstants.SPHERICAL_MATCHER, hoseCode);
 			} catch (CDKException ex1) {
 				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString());
 			}

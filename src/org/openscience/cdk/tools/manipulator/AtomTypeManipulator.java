@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomType;
 
@@ -60,10 +61,13 @@ public class AtomTypeManipulator {
         atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
         if (atomType instanceof org.openscience.cdk.AtomType) {
         	org.openscience.cdk.AtomType type = (org.openscience.cdk.AtomType)atomType;
-        	((org.openscience.cdk.AtomType)atom).setAcceptor(type.getAcceptor());
-        	((org.openscience.cdk.AtomType)atom).setDonor(type.getDonor());
-        	((org.openscience.cdk.AtomType)atom).setChemicalGroupConstant(type.getChemicalGroupConstant());
-        	((org.openscience.cdk.AtomType)atom).setIsAromatic(type.getIsAromatic());
+        	atom.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, type.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        	atom.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, type.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+        	Object constant = type.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
+        	if (constant != null) {
+        		atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, constant);
+        	}
+        	atom.setFlag(CDKConstants.ISAROMATIC, type.getFlag(CDKConstants.ISAROMATIC));
         }
             
         Object color = atomType.getProperty("org.openscience.cdk.renderer.color");
