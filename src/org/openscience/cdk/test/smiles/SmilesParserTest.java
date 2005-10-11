@@ -242,6 +242,23 @@ public class SmilesParserTest extends CDKTestCase
 		}
 	}
 
+	/**
+	 *  Test for SF #1296113 "SmilesParser does not finish in reasonable time"
+	 */
+	public void testSFBug1296113()
+	{
+		try
+		{
+			String smiles = "S(=O)(=O)(-O)-c1c2c(c(ccc2-N-c2ccccc2)-N=N-c2c3c(c(cc2)-N=N-c2c4c(c(ccc4)-S(=O)(=O)-O)ccc2)cccc3)ccc1";
+			Molecule molecule = sp.parseSmiles(smiles);
+			assertNotNull(molecule);
+		} catch (Exception exception)
+		{
+			fail(exception.getMessage());
+		}
+	}
+
+	
 
 	/**
 	 *  A unit test for JUnit
@@ -1221,7 +1238,7 @@ public class SmilesParserTest extends CDKTestCase
 		logger.info("Running the SmilesParserTest tests...");
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
-		spt.testSFBug1095696();
+		spt.testSFBug1296113();
 	}
 }
 
