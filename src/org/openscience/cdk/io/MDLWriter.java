@@ -332,11 +332,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
                     line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
                     line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
                 }
-                if (bond.getFlag(CDKConstants.ISAROMATIC) && writeAromatic) {
-                    line += formatMDLInt(4,3);
-                } else {
-                    line += formatMDLInt((int)bond.getOrder(),3);
-                }
+                line += formatMDLInt((int)bond.getOrder(),3);
                 line += "  ";
                 switch(bond.getStereo()){
                     case CDKConstants.STEREO_BOND_UP:
