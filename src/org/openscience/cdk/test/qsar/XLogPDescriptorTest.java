@@ -63,12 +63,20 @@ public class XLogPDescriptorTest extends CDKTestCase {
 		//System.out.println("Cumarine:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue());
 		assertEquals(4.54, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
 		
-		//2. Test for aspirin, a bug was filed 1296383
-		mol = sp.parseSmiles("CC(=O)OC1=CC=CC=C1C(=O)O"); // aspirin
+		
+	}
+	
+	public void testApirinBug1296383() throws ClassNotFoundException, CDKException, java.lang.Exception {
+//		2. Test for aspirin, a bug was filed 1296383
+		Descriptor descriptor = new XLogPDescriptor();
+		Object[] params = {new Boolean(true)};
+		descriptor.setParameters(params);
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CC(=O)OC1=CC=CC=C1C(=O)O"); // aspirin
+		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		//System.out.println("Aspirin:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue());
 		assertEquals(1.97, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
-		
 	}
 	
 }
