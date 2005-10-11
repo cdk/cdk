@@ -204,7 +204,7 @@ public class MMFF94BasedParameterSetReader {
 		atomType.setSymbol(rootType);
 		Color co = new Color(rl, gl, bl);
 		atomType.setProperty("org.openscience.cdk.renderer.color", co);
-		atomType.setID(sid);
+		atomType.setAtomTypeName(sid);
 		atomTypes.addElement(atomType);
 	}
 	

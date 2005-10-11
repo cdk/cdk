@@ -136,14 +136,14 @@ public class AtomPlacer3D {
 					!chain.getAtomAt(i).getFlag(CDKConstants.VISITED)) {
 				//System.out.print("Counter:" + counter);
 				nextAtomNr = molecule.getAtomNumber(chain.getAtomAt(i));
-				ID2 = molecule.getAtomAt(first_atoms[counter - 1]).getID();
-				ID1 = molecule.getAtomAt(nextAtomNr).getID();
+				ID2 = molecule.getAtomAt(first_atoms[counter - 1]).getAtomTypeName();
+				ID1 = molecule.getAtomAt(nextAtomNr).getAtomTypeName();
 				distances[counter] = getBondLengthValue(ID1, ID2);
 				//System.out.print(" Distance:" + distances[counter]);
 				first_atoms[counter] = nextAtomNr;
 				second_atoms[counter] = first_atoms[counter - 1];
 				if (counter > 1) {
-					ID3 = molecule.getAtomAt(first_atoms[counter - 2]).getID();
+					ID3 = molecule.getAtomAt(first_atoms[counter - 2]).getAtomTypeName();
 					hybridisation = getHybridisationState(molecule.getAtomAt(first_atoms[counter - 1]));
 					angles[counter] = getAngleValue(ID1, ID2, ID3);
 					//Check if sp,sp2
