@@ -115,21 +115,21 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                         atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
                     }
                 } else if (scalarType == SCALAR_DA){
-                	if ("A".equals(currentChars)) {
-                		 atomType.setAcceptor(true);
-                	}else if ("D".equals(currentChars)){
-                		atomType.setDonor(true);
-                	}
+                    if ("A".equals(currentChars)) {
+                        atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
+                    } else if ("D".equals(currentChars)){
+                        atomType.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, true);
+                    }
                 } else if (scalarType == SCALAR_SPHERICALMATCHER){	
-                	atomType.setSphericalMatcher(currentChars);
+                    atomType.setProperty(CDKConstants.SPHERICAL_MATCHER, currentChars);
                 } else if (scalarType == SCALAR_RINGSIZE){	
-                	atomType.setRingSize(Integer.parseInt(currentChars));
+                    atomType.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(currentChars));
                 } else if (scalarType == SCALAR_CHEMICALGROUPCONSTANT){	
-                	atomType.setChemicalGroupConstant(Integer.parseInt(currentChars));
+                    atomType.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(currentChars));
                 } else if (scalarType == SCALAR_ISAROMATIC){
-                	atomType.setIsAromatic(true);
+                    atomType.setFlag(CDKConstants.ISAROMATIC, true);
                 } else if (scalarType == SCALAR_VANDERWAALSRADIUS){
-                	atomType.setVanderwaalsRadius(Double.parseDouble(currentChars));
+                    atomType.setVanderwaalsRadius(Double.parseDouble(currentChars));
                 }
                 
             } catch (Exception exception) {

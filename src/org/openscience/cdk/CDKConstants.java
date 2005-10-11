@@ -170,6 +170,9 @@ public class CDKConstants {
          */
         public final static int MAPPED = 5;
 
+        public final static int IS_HYDROGENBOND_DONOR = 70;
+        public final static int IS_HYDROGENBOND_ACCEPTOR = 71;
+
     /**
      * Maximum flags array index.
      */
@@ -235,6 +238,17 @@ public class CDKConstants {
       * isotropic shielding value of a standard (e.g. TMS).
       */
     public static final String ISOTROPIC_SHIELDING = "IsotropicShielding";
+
+    /****************************************
+    * Some predefined property names for    *
+    * AtomTypes                             *
+    ****************************************/
+
+    public static final String PART_OF_RING_OF_SIZE = "Part of ring of size";
+
+    public static final String CHEMICAL_GROUP_CONSTANT = "Chemical Group";
+
+    public static final String SPHERICAL_MATCHER = "HOSE code spherical matcher";
 
 }
 

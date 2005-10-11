@@ -93,40 +93,7 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
      * includes implicit hydrogens.
      */
     protected int formalNeighbourCount;
-    
-    /**
-     *  Property if atom is Lewis or Bronsted acceptor
-     */
-    protected boolean acceptor=false;
-    
-    /**
-     *  Property if atom is Lewis or Bronsted donor
-     */
-    protected boolean donor=false;   
-    
-    /**
-     *  Stores the CDKRingConstant for this atom type.
-     */
-    protected int chemicalGroupConstant=0;   
-    
-    /**
-     *  Stores the size of the ring to which this atom type belongs.
-     */
-    protected int ringSize=0;
-    
-    /**
-     *  Stores the information if this atom type is aromatic.
-     */
-    protected boolean isAromatic=false;
-    
-    /**
-     *  Stores the spherical matching code,eg.
-     *  A regular expression for the hose code description of this atom type.
-     *  This is a work around for the missing SMARTS handling.
-     */
-    protected String sphericalMatcher=null;   
-    
-    
+
     /**
 	 *  Constructor for the AtomType object.
      *
@@ -386,145 +353,6 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
 	{
 		return this.electronValency;
 	}
-
-	/**
-	 * Sets the property of acceptor (Lewis or Bronsted type) type boolean
-	 * @param  isAcceptor  boolean
-	 *
-	 */
-	public void setAcceptor(boolean isAcceptor)
-	{
-		this.acceptor = isAcceptor;
-		notifyChanged();
-	}
-
-	/**
-	 *  Gets the the acceptor type of the AtomType object.
-	 *  
-	 *  returns boolean
-	 *
-	 */
-	public boolean getAcceptor()
-	{
-		return this.acceptor;
-	}
-
-	/**
-	 * Sets the property of donor (Lewis or Bronsted type) type boolean
-	 * @param  isDonor  boolean
-	 *
-	 */
-	public void setDonor(boolean isDonor)
-	{
-		this.donor = isDonor;
-		notifyChanged();
-	}
-
-	/**
-	 *  Gets the the donor type of the AtomType object.
-	 *  
-	 *  returns boolean
-	 *
-	 */
-	public boolean getDonor()
-	{
-		return this.donor;
-	}
-	
-	/**
-	 * Sets the property to which chemical group (e.g. ring system) the atom type belongs.
-	 * Values can be found in CDKChemicalGroupConstants
-	 * 
-	 * @param  chemicalGroupCDKConstant  int
-	 *
-	 */
-	public void setChemicalGroupConstant(int chemicalGroupCDKConstant)
-	{
-		this.chemicalGroupConstant = chemicalGroupCDKConstant;
-		notifyChanged();
-	}
-
-	/**
-	 *  Gets the property to which ring system the atom type belongs.
-	 *  
-	 *  returns ringConstant int
-	 *
-	 */
-	public int getChemicalGroupConstant()
-	{
-		return this.chemicalGroupConstant;
-	}
-	
-	/**
-	 * Sets ring size for which the atom type is defined.
-	 * 
-	 * @param  sizeOfRingSystem  int
-	 *
-	 */
-	public void setRingSize(int sizeOfRingSystem)
-	{
-		this.ringSize = sizeOfRingSystem;
-		notifyChanged();
-	}
-
-	/**
-	 *  Gets the ring size for which the atom type is defined.
-	 *  
-	 *  returns ringSize int
-	 *
-	 */
-	public int getRingSize()
-	{
-		return this.ringSize;
-	}
-	
-	/**
-	 * Sets if atom type is aromatic.
-	 * 
-	 * @param  ISAROMATIC  boolean
-	 *
-	 */
-	public void setIsAromatic(boolean ISAROMATIC)
-	{
-		this.isAromatic = ISAROMATIC;
-		notifyChanged();
-	}
-
-	/**
-	 *  Gets if atom type is defined as aromatic.
-	 *  
-	 *  returns isAromatic boolean
-	 *
-	 */
-	public boolean getIsAromatic()
-	{
-		return this.isAromatic;
-	}
-	
-	/**
-	 * Sets regular expression/or e.g. hoseCode for the corresponding atom to the atom type,
-	 * (In an atom it stores the e.g. hose code, 
-	 * in atomType for AtomtypeFactory it stores the regular expression)
-	 * 
-	 * @param  description  String
-	 *
-	 */
-	public void setSphericalMatcher(String description)
-	{
-		this.sphericalMatcher = description;
-		notifyChanged();
-	}
-
-	/**
-	 *  Gets the regular expression for the hose code of the corresponding atom to the atom type.
-	 *  
-	 *  returns regularExpression String
-	 *
-	 */
-	public String getSphericalMatcher()
-	{
-		return this.sphericalMatcher;
-	}
 	
 	
     public String toString() {
@@ -539,12 +367,6 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
         resultString.append("CR:").append(getCovalentRadius()).append(", ");
         resultString.append("VDWR:").append(getVanderwaalsRadius()).append(", ");
         resultString.append("EV:").append(getValency()).append(", ");
-        resultString.append("A:").append(getAcceptor()).append(", ");
-        resultString.append("D:").append(getDonor()).append(", ");
-        resultString.append("ChemicalGroupCode:").append(getChemicalGroupConstant()).append(", ");
-        resultString.append("RingSize:").append(getRingSize()).append(", ");
-        resultString.append("Aromatic:").append(getIsAromatic()).append(", ");
-        resultString.append("SphericalDescriptor:").append(getSphericalMatcher()).append(", ");
         resultString.append(super.toString());
         resultString.append(")");
         return resultString.toString(); 
