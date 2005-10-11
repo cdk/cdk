@@ -23,22 +23,29 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 
 /**
- * Calculates the Weiner number for a molecular graph.
- * 
- *  Wiener path number: half the sum of all the distance matrix entries; Wiener
- *  polarity number: half the sum of all the distance matrix entries with a
- *  value of 3. For more informations, see
- *  <a href="http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH">here</a> or
- *  <a href="http://www.csam.montclair.edu/~burch/bpnew.pdf">here</a>.
+ * This descriptor calculates the Wiener numbers. This includes the Wiener Path number 
+ * and the Wiener Polarity Number.
+ * <BR>
+ * Further information is given in   
+ * Wiener path number: half the sum of all the distance matrix entries; Wiener
+ * polarity number: half the sum of all the distance matrix entries with a
+ * value of 3. For more information see Todeschini R, Consonni V, Handbook of Molecular
+ * Descriptors, In: Mannhold R, Kubinyi H, Timmermann H (Eds.), Methods and Principles in 
+ * Medicinal Chemistry, Vol. 11, Wiley-VCH 2000, Weinheim, New York.
+ * <p>
+ * This descriptor uses no parameters.
+ * <p>
+ * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
+ * or <b>explicit hydrogens</b>.
  *
  *@author         mfe4
  *@cdk.created        December 7, 2004
@@ -114,7 +121,7 @@ public class WienerNumbersDescriptor implements Descriptor {
 
 
     /**
-     * Calculate the Weiner numbers.
+     * Calculate the Wiener numbers.
      *
      *@param  atomContainer   The {@link AtomContainer} for which this descriptor is to be calculated
      *@return                   wiener numbers as array of 2 doubles
@@ -122,8 +129,8 @@ public class WienerNumbersDescriptor implements Descriptor {
      */
     public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
         wienerNumbers = new DoubleArrayResult(2);
-        double wienerPathNumber = 0; //weinerPath
-        double wienerPolarityNumber = 0; //weinerPol
+        double wienerPathNumber = 0; //wienerPath
+        double wienerPolarityNumber = 0; //wienerPol
 
         // "matr" is the connection matrix
         matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));
