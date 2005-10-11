@@ -29,15 +29,18 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ConvertToRadicalEdit;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -53,14 +56,25 @@ public class ConvertToRadicalAction extends JCPAction {
         if (object != null) {
             if (object instanceof Atom) {
                 Atom atom = (Atom)object;
+                
                 AtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
-                ElectronContainer electronContainer = new SingleElectron(atom);
-                relevantContainer.addElectronContainer(electronContainer);
-                UndoableEdit  edit = new ConvertToRadicalEdit(relevantContainer, 
-                        electronContainer);
-                jcpPanel.getUndoSupport().postEdit(edit);
-                logger.info("Added single electron to atom");
-                logger.debug("new AC: ", relevantContainer);
+                double number = controlLonePair(relevantContainer, atom);
+                
+                if(number > 0.0)
+                {
+                	ElectronContainer electronContainer = new SingleElectron(atom);
+                    relevantContainer.addElectronContainer(electronContainer);
+                    UndoableEdit  edit = new ConvertToRadicalEdit(relevantContainer, 
+                            electronContainer);
+                    jcpPanel.getUndoSupport().postEdit(edit);
+                    logger.info("Added single electron to atom");
+                    logger.debug("new AC: ", relevantContainer);
+                    
+                }
+                else JOptionPane.showMessageDialog(jcpPanel,"A radical cannot be added to this atom." +
+        		" Re-try with less hydrogens.");
+
+            
             } else {
                 logger.error("Object not an Atom! Cannot convert into a radical!");
             }
@@ -68,5 +82,33 @@ public class ConvertToRadicalAction extends JCPAction {
             logger.warn("Cannot convert a null object!");
         }
         jcpmodel.fireChange();
+    }
+    private double controlLonePair(AtomContainer container, Atom atom)
+    {
+    	double nLonePair = 0.0;
+    	AtomTypeFactory atomATF = null;
+		try
+		{
+			atomATF = AtomTypeFactory
+					.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml");
+	    	
+			if(atomATF != null)
+			{
+
+				AtomType atomType = atomATF.getAtomType(atom.getSymbol());
+		    	double bondOrderSum = container.getBondOrderSum(atom);
+				int charge = atom.getFormalCharge();
+				int hcount = atom.getHydrogenCount();
+				int valency = atomType.getValency();
+				nLonePair = (valency - (hcount + bondOrderSum) - charge) / 2;
+			}
+		} catch (Exception ex1)
+		{
+			logger.error(ex1.getMessage());
+			logger.debug(ex1);
+		}
+		return nLonePair;
+		
+		
     }
 }
