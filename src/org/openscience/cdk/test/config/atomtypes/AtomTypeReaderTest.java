@@ -29,7 +29,9 @@ import java.util.Vector;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -98,4 +100,52 @@ public class AtomTypeReaderTest extends CDKTestCase {
         assertEquals(2, types.size());
     }
     
+    public void testReadAtomTypes_FF() {
+        String data = 
+            "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              " +
+            "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    " +
+            "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"" +
+            "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      " +
+            "                                                                                             " +
+            "  <metadataList>                                                                             " +
+            "    <metadata name=\"cvs:last-change-by\" content=\"$Author$\"/>                     " +
+            "    <metadata name=\"cvs:date\" content=\"$Date$\"/>                   " +
+            "    <metadata name=\"cvs:revision\" content=\"$Revision$\"/>                           " +
+            "  </metadataList>                                                                            " +
+            "                                                                                             " +
+            " <atomType id=\"C\">" +
+            "	<!-- for example in CC-->" +
+            "   <atom elementType=\"C\" formalCharge=\"0\">" +
+            "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:maxBondOrder\">1.0</scalar>" +
+            "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:bondOrderSum\">4.0</scalar>" +
+            "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:formalNeighbourCount\">4</scalar>" +
+            "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:valency\">4</scalar>" +
+            "   </atom>" +
+            "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>" +
+            "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:DA\">-</scalar>" +
+            "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:sphericalMatcher\">[CSP]-[0-4][-]?+;</scalar>" +
+            "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringSize\">3</scalar>" +
+            "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringConstant\">3</scalar>" +    
+            "</atomTypeList>";
+        
+        AtomTypeReader reader = new AtomTypeReader(
+            new StringReader(data)
+        );
+        assertNotNull(reader);
+        Vector types = reader.readAtomTypes();
+        assertNotNull(types);
+        assertEquals(1, types.size());
+        
+        Object object = types.elementAt(0);
+        assertNotNull(object);
+        assertTrue(object instanceof AtomType);
+        AtomType atomType = (AtomType)object;
+        
+        assertEquals("[CSP]-[0-4][-]?+;", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
+        assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+
+        assertEquals(3, ((Integer)atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());
+        assertEquals(3, ((Integer)atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());
+    }
 }
