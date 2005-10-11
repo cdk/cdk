@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.Hashtable;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Ring;
@@ -44,13 +46,23 @@ public class DeAromatizationTool {
 	 */
 	public static boolean deAromatize(Ring ring) {
 		boolean result = false;
+		Hashtable elementCounts = new MFAnalyser(ring).getFormulaHashtable();
 		if (ring.getRingSize() == 6) {
-			result = DeAromatizationTool.deAromatizeBenzene(ring);
+			if (((Integer)elementCounts.get("C")).intValue() == 6) {
+				result = DeAromatizationTool.deAromatizeBenzene(ring);
+			} else if (((Integer)elementCounts.get("C")).intValue() == 5 &&
+			           ((Integer)elementCounts.get("N")).intValue() == 1) {
+				result = DeAromatizationTool.deAromatizePyridine(ring);
+			}
 		}
 		return result;
 	}
 	
-	public static boolean deAromatizeBenzene(Ring ring) {
+	private static boolean deAromatizePyridine(Ring ring) {
+		return deAromatizeBenzene(ring); // same task to do
+	}
+	
+	private static boolean deAromatizeBenzene(Ring ring) {
 		Bond[] bonds = ring.getBonds();
 		if (bonds.length != 6) return false;
 		for (int i = 0; i<bonds.length; i++) {
