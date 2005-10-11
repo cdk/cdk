@@ -94,7 +94,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintMolecule(org.openscience.cdk.interfaces.AtomContainer atomCon, Graphics2D graphics) {
-		logger.debug("inside paintMolecule()");
+        logger.debug("inside paintMolecule()");
 		customizeRendering(graphics);
 		RingSet ringSet = new RingSet();
 		org.openscience.cdk.interfaces.Molecule[] molecules = null;
@@ -112,7 +112,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 			SSSRFinder sssrf = new SSSRFinder(molecules[i]);
 			ringSet.add(sssrf.findSSSR());
 		}
-		paintBonds(atomCon, ringSet, graphics);
+        paintBonds(atomCon, ringSet, graphics);
 		paintAtoms(atomCon, graphics);
 		if (r2dm.getSelectRect() != null)
 		{

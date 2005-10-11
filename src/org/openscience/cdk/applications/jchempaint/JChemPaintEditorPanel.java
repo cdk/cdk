@@ -32,6 +32,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileReader;
@@ -50,10 +51,8 @@ import javax.swing.event.EventListenerList;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 import org.openscience.cdk.applications.plugin.CDKPluginManager;
 import org.openscience.cdk.controller.PopupController2D;
@@ -61,10 +60,15 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 import org.openscience.cdk.validate.BasicValidator;
 import org.openscience.cdk.validate.CDKValidator;
 import org.openscience.cdk.validate.DictionaryValidator;
@@ -503,16 +507,25 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		try
 		{
 			logger.info("Making snapshot... ");
-			snapImage = createImage(this.getSize().width, this.getSize().height);
-			logger.info("created...");
-
-			Graphics snapGraphics = snapImage.getGraphics();
-			paint(snapGraphics);
+            Renderer2D r2d = new Renderer2D(jchemPaintModel.getRendererModel());
+            r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
+            ChemModel model = (ChemModel) jchemPaintModel.getChemModel().clone();
+            AtomContainer ac = SetOfMoleculesManipulator.getAllInOneContainer(model.getSetOfMolecules());
+            Dimension dim = GeometryTools.get2DDimension(ac);
+            GeometryTools.translateAllPositive(ac);
+            snapImage = createImage((int)dim.getWidth()+20, (int)dim.getHeight()+20);
+            Graphics2D snapGraphics = (Graphics2D) snapImage.getGraphics();
+            snapGraphics.setBackground(Color.WHITE);
+            snapGraphics.clearRect(0,0,(int)dim.getWidth()+20, (int)dim.getHeight()+20);
+            r2d.useScreenSize=false;
+            r2d.paintMolecule(ac, (Graphics2D) snapGraphics);
+            r2d.useScreenSize=true;
+            logger.info("created...");
 
 			logger.debug("painting succeeded.");
 		} catch (NullPointerException e)
 		{
-			snapImage = null;
+            snapImage = null;
 		}
 		return snapImage;
 	}

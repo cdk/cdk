@@ -99,6 +99,8 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	protected Renderer2DModel r2dm;
 
 	int graphicsHeight;
+    
+    public boolean useScreenSize=true;
 
 
 	/**
@@ -1074,7 +1076,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		if (GeometryTools.has2DCoordinates(bond))
 		{
-			paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
+            paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
 		}
 	}
 
@@ -1174,11 +1176,11 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public void paintOneBond(int[] coords, Color bondColor, Graphics2D graphics)
 	{
 		graphics.setColor(bondColor);
-		int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
+        int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
 		int[] screenCoords = getScreenCoordinates(newCoords);
 		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
-		graphics.fillPolygon(xCoords, yCoords, 4);
+        graphics.fillPolygon(xCoords, yCoords, 4);
 	}
 
 
@@ -1331,6 +1333,12 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		double zoomFactor = r2dm.getZoomFactor();
 		screenCoordinate.x = (int) ((double) p.x * zoomFactor);
 		screenCoordinate.y = graphicsHeight - (int) ((double) p.y * zoomFactor);
+        if(useScreenSize){
+            screenCoordinate.y=graphicsHeight - screenCoordinate.y;
+        }else{
+            screenCoordinate.y+=10;
+            screenCoordinate.x+=10;
+        }
 		return screenCoordinate;
 	}
 
@@ -1344,7 +1352,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	protected int[] getScreenCoordinates(int[] coords)
 	{
-		graphicsHeight = (int) r2dm.getBackgroundDimension().getHeight();
+        graphicsHeight = (int) r2dm.getBackgroundDimension().getHeight();
 		logger.debug("HEIGHT: " + graphicsHeight);
 		int[] screenCoordinates = new int[coords.length];
 		double zoomFactor = r2dm.getZoomFactor();
@@ -1352,7 +1360,13 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		for (int i = 0; i < coordCount; i++)
 		{
 			screenCoordinates[i * 2] = (int) ((double) coords[i * 2] * zoomFactor);
-			screenCoordinates[i * 2 + 1] = graphicsHeight - (int) ((double) coords[i * 2 + 1] * zoomFactor);
+			screenCoordinates[i * 2 + 1] = (int) ((double) coords[i * 2 + 1] * zoomFactor);
+            if(useScreenSize){
+                screenCoordinates[i * 2 + 1]=graphicsHeight - screenCoordinates[i * 2 + 1];
+            }else{
+                screenCoordinates[i * 2 + 1]+=10;
+                screenCoordinates[i * 2]+=10;
+            }
 		}
 		return screenCoordinates;
 	}
