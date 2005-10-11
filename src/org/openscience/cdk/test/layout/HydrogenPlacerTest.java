@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.test.layout;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -37,6 +38,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
@@ -65,6 +67,18 @@ public class HydrogenPlacerTest extends CDKTestCase {
     public static Test suite() {
         return new TestSuite(HydrogenPlacerTest.class);
     }
+    
+    public void testBug933572() throws IOException, ClassNotFoundException, CDKException{
+        Molecule ac=new Molecule();
+        ac.addAtom(new Atom("H"));
+        ac.getAtomAt(0).setPoint2d(new Point2d(0,0));
+        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(ac);
+        HydrogenPlacer hPlacer = new HydrogenPlacer();
+        hPlacer.placeHydrogens2D(ac, 36);
+        for(int i=0;i<ac.getAtomCount();i++){
+            assertNotNull(ac.getAtomAt(i).getPoint2d());
+        }
+     }
 
     public void testPlaceHydrogens2D() throws Exception {
 	    HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
