@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -662,29 +660,25 @@ public class XLogPDescriptor implements Descriptor {
 		SmilesParser sp = new SmilesParser();
 		AtomContainer paba = sp.parseSmiles("CS(=O)(=O)c1ccc(N)cc1");
 		// p-amino sulphonic acid
-		QueryAtomContainer pabaQuery = QueryAtomContainerCreator.createBasicQueryContainer(paba);
-		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, pabaQuery)) {
+		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, paba)) {
 			xlogP -= 0.501;
 		}
 
 		AtomContainer aminoacid = sp.parseSmiles("NC=O");
 		// alpha amino acid
-		QueryAtomContainer aminoacidquery = QueryAtomContainerCreator.createBasicQueryContainer(aminoacid);
-		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, aminoacidquery)) {
+		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, aminoacid)) {
 			xlogP -= 2.166;
 		}
 
 		AtomContainer salicilic = sp.parseSmiles("O=C(O)c1ccccc1O");
 		// salicylic acid
-		QueryAtomContainer salicilicquery = QueryAtomContainerCreator.createBasicQueryContainer(salicilic);
-		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, salicilicquery)) {
-			xlogP += 0.554;
+		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, salicilic)) {
+		xlogP += 0.554;
 		}
 
 		AtomContainer orthopair = sp.parseSmiles("OCCO");
 		// ortho oxygen pair
-		QueryAtomContainer orthopairquery = QueryAtomContainerCreator.createBasicQueryContainer(orthopair);
-		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, orthopairquery)) {
+		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, orthopair)) {
 			xlogP -= 0.268;
 		}
 
