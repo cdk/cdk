@@ -171,8 +171,8 @@ public class AtomTypeTest extends CDKTestCase {
     public void testSetAcceptor_boolean(){
     	boolean acceptor=true;
     	AtomType a = new AtomType("C");
-        a.setAcceptor(acceptor);
-        assertTrue(a.getAcceptor());    	
+        a.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, acceptor);
+        assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));    	
     }
     public void testGetAcceptor(){
     	testSetAcceptor_boolean();
@@ -181,8 +181,8 @@ public class AtomTypeTest extends CDKTestCase {
     public void testSetDonor_boolean(){
     	boolean donor=true;
     	AtomType a = new AtomType("C");
-        a.setDonor(donor);
-        assertTrue(a.getDonor());    	
+        a.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, donor);
+        assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));    	
     }
     public void testGetDonor(){
     	testSetDonor_boolean();    	
@@ -191,8 +191,8 @@ public class AtomTypeTest extends CDKTestCase {
     public void testSetChemicalGroupConstant_int(){
     	int benzol=6;
     	AtomType a = new AtomType("C");
-        a.setChemicalGroupConstant(benzol);
-        assertEquals(6,a.getChemicalGroupConstant());    	
+        a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(benzol));
+        assertEquals(benzol,((Integer)a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());    	
     }    
     public void testGetChemicalGroupConstant(){
     	testSetChemicalGroupConstant_int();
@@ -201,18 +201,17 @@ public class AtomTypeTest extends CDKTestCase {
     public void  testSetRingSize_int(){
     	int five=5;
     	AtomType a = new AtomType("C");
-        a.setRingSize(five);
-        assertEquals(5,a.getRingSize());    	    	
+        a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(five));
+        assertEquals(five,((Integer)a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());    	
     }    
     public void  testGetRingSize(){
     	 testSetRingSize_int();
     }
     
     public void testSetIsAromatic_boolean(){
-    	boolean isAromatic=true;
     	AtomType a = new AtomType("C");
-        a.setIsAromatic(isAromatic);
-        assertTrue(a.getIsAromatic());
+        a.setFlag(CDKConstants.ISAROMATIC, true);
+        assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
     }    
     public void  testGetIsAromatic(){
     	testSetIsAromatic_boolean();
@@ -221,8 +220,8 @@ public class AtomTypeTest extends CDKTestCase {
     public void testSetSphericalMatcher_String(){
     	String hoseCode="C-4;HHHC(;///***)";
     	AtomType a = new AtomType("C");
-        a.setSphericalMatcher(hoseCode);
-        assertEquals("C-4;HHHC(;///***)",a.getSphericalMatcher());  
+        a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, hoseCode);
+        assertEquals(hoseCode,a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));    	
     }    
     public void testGetSphericalMatcher(){
     	testSetSphericalMatcher_String();
@@ -321,60 +320,6 @@ public class AtomTypeTest extends CDKTestCase {
         
         at.setHybridization(2);
         assertEquals(1, clone.getHybridization());
-    }
-    
-    public void testClone_Acceptor(){
-    	AtomType at = new AtomType("C");
-        at.setAcceptor(true);
-        AtomType clone = (AtomType)at.clone();
-        
-        at.setAcceptor(false);
-        assertTrue(clone.getAcceptor());
-    }
-    
-    public void testClone_Donor(){
-    	AtomType at = new AtomType("C");
-        at.setDonor(true);
-        AtomType clone = (AtomType)at.clone();
-        
-        at.setDonor(false);
-        assertTrue(clone.getDonor());
-    }
-    
-    public void testClone_ChemicalGroupConstant() {
-        AtomType at = new AtomType("C");
-        at.setChemicalGroupConstant(6);
-        AtomType clone = (AtomType)at.clone();
-        
-        at.setChemicalGroupConstant(1);
-        assertEquals(6, clone.getChemicalGroupConstant());
-    }
-    
-    public void testClone_RingSize() {
-        AtomType at = new AtomType("C");
-        at.setRingSize(6);
-        AtomType clone = (AtomType)at.clone();
-        
-        at.setRingSize(1);
-        assertEquals(6, clone.getRingSize());
-    }
-    
-    public void testClone_isAromatic(){
-    	AtomType at = new AtomType("C");
-        at.setIsAromatic(true);
-        AtomType clone = (AtomType)at.clone();
-        
-        at.setIsAromatic(false);
-        assertTrue(clone.getIsAromatic());
-    }
-    
-    public void testClone_SphericalMatcher() {
-        AtomType at = new AtomType("C");
-        at.setSphericalMatcher("C-[4];HHCC(//**");
-        AtomType clone = (AtomType)at.clone();
-        
-        at.setSphericalMatcher("C-[3];HHCC(//**");
-        assertEquals("C-[4];HHCC(//**", clone.getSphericalMatcher());
     }
     
     /**
