@@ -52,20 +52,20 @@ public class HydrogenPlacer {
 	public final static boolean debug1 = false;
 	
 	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength){
-		LoggingTool logger = new LoggingTool(this);
-		logger.debug("Entering Hydrogen Placement...");
-		org.openscience.cdk.interfaces.Atom atom = null; 
-		for (int f = 0; f < atomContainer.getAtomCount();f++)
-		{
-			atom = atomContainer.getAtomAt(f);
-			if (!atom.getSymbol().equals("H"))
-			{
-				if (debug1) System.out.println("Now placing hydrogens at atom " + f);
-				logger.debug("Now placing hydrogens at atom " + f);
-        placeHydrogens2D(atomContainer, atom, bondLength);
-   		}
-		}
-		logger.debug("Hydrogen Placement finished");
+	    LoggingTool logger = new LoggingTool(this);
+	    logger.debug("Entering Hydrogen Placement...");
+	    org.openscience.cdk.interfaces.Atom atom = null; 
+	    for (int f = 0; f < atomContainer.getAtomCount();f++)
+	    {
+	        atom = atomContainer.getAtomAt(f);
+//	        if (!atom.getSymbol().equals("H"))
+//	        {
+	            if (debug1) System.out.println("Now placing hydrogens at atom " + f);
+	            logger.debug("Now placing hydrogens at atom " + f);
+	            placeHydrogens2D(atomContainer, atom, bondLength);
+//	        }
+	    }
+	    logger.debug("Hydrogen Placement finished");
 	}
 	
 	

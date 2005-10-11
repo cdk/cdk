@@ -1081,7 +1081,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		if (position != -1)
 		{
 			org.openscience.cdk.interfaces.ElectronContainer[] electronContainers = getConnectedElectronContainers(atom);
-			for (int f = 0; f < electronContainers.length; f++)
+           for (int f = 0; f < electronContainers.length; f++)
 			{
 				removeElectronContainer(electronContainers[f]);
 			}
