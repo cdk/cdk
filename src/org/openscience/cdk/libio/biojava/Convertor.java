@@ -28,10 +28,20 @@
  */
 package org.openscience.cdk.libio.biojava;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
+import java.util.HashMap;
+
+import org.biojava.bio.symbol.SymbolList;
+
+import org.openscience.cdk.AminoAcid;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.BioPolymer;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Strand;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.templates.AminoAcids;
+import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**
  * Abstract class that provides convertor procedures to
@@ -39,12 +49,31 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
  * classes and visa versa.
  *
  * @cdk.module libio-biojava
+ * @cdk.reuires biojava-1.4.jar
  *
  * @cdk.keyword    BioJava
  * @cdk.keyword    class convertor
  */
 public class Convertor {
 
-	// TODO: implement convertor methods
+	/**
+	 * Convert a BioJava SymbolList into a BioPolymer object containing
+	 * a full AtomContainer based connection table.
+	 * 
+	 * @param source        BioJava SymbolList object
+	 * @return              CDK BioPolymer
+	 * @throws CDKException
+	 * 
+	 * @see org.openscience.cdk.interfaces.BioPolymer
+	 */
+	public static BioPolymer convert(SymbolList source) throws CDKException {
+		return ProteinBuilderTool.createProtein(source.seqString());
+	}
+
+	// TODO: implement convertor methods below
+	
+	public static SymbolList convert(BioPolymer sequence) {
+	    return null;	
+	}	
 	
 }
