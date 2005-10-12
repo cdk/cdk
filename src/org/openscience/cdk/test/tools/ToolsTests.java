@@ -39,6 +39,7 @@ public class ToolsTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.tools Tests");
         suite.addTest(BremserPredictorTest.suite());
+        suite.addTest(DeAromatizationToolTest.suite());
         suite.addTest(HOSECodeTest.suite());
         suite.addTest(HydrogenAdderTest.suite());
         suite.addTest(HydrogenAdder2Test.suite());
