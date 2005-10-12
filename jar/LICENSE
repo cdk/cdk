@@ -6,6 +6,9 @@ base.jar, cmlAll.jar, pmrlib.jar, stmml.jar
 LGPL :
 jmolApis.jar, jmolIO.jar, jfontchooser.jar
 
+GPL :
+biojava-1.4.jar
+
 The licenses of these jars have to be checked:
 stmml.jar
 batik-awt-util.jar
