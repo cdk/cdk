@@ -394,7 +394,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 					if (!(atomInRange.getSymbol().equals(symbol)))
 					{
 						// only change symbol if needed
-
+                        String formerSymbol = atomInRange.getSymbol();
 						atomInRange.setSymbol(symbol);
 						// configure the atom, so that the atomic number matches the symbol
 						try
@@ -419,6 +419,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						/*
 						 *  ---
 						 */
+                        UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
+                        c2dm.getUndoSupport().postEdit(edit);
 						r2dm.fireChange();
 						fireChange();
 					}
@@ -466,6 +468,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						 *  ---
 						 */
 						// undoredo support
+                        System.out.println("hier");
 						UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
 						c2dm.getUndoSupport().postEdit(edit);
 						r2dm.fireChange();
