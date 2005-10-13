@@ -482,14 +482,14 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
 				{
-					double formerCharge = atomInRange.getCharge();
+					int formerCharge = atomInRange.getFormalCharge();
 					atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
 
 					// update atom
 					AtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
 					updateAtom(container, atomInRange);
 					//undoredo support
-					UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getCharge());
+                    UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
 					c2dm.getUndoSupport().postEdit(edit);
 					r2dm.fireChange();
 					fireChange();
@@ -500,13 +500,13 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
 				{
-					double formerCharge = atomInRange.getCharge();
+					int formerCharge = atomInRange.getFormalCharge();
 					atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
 					// update atom
 					AtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
 					updateAtom(container, atomInRange);
 					//undoredo support
-					UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getCharge());
+                    UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
 					c2dm.getUndoSupport().postEdit(edit);
 					r2dm.fireChange();
 					fireChange();

@@ -41,7 +41,7 @@ public class ChangeChargeEditTest extends CDKTestCase {
 		Iterator it = atoms.iterator();
 		while (it.hasNext()) {
 			Atom atom = (Atom) it.next();
-			double[] charges = (double[]) atomChargeMap.get(atom);
+			int[] charges = (int[]) atomChargeMap.get(atom);
 			UndoableEdit edit = new ChangeChargeEdit(atom, charges[0],
 					charges[1]);
 			edit.undo();
@@ -60,7 +60,7 @@ public class ChangeChargeEditTest extends CDKTestCase {
 		Iterator it = atoms.iterator();
 		while (it.hasNext()) {
 			Atom atom = (Atom) it.next();
-			double[] charges = (double[]) atomChargeMap.get(atom);
+			int[] charges = (int[]) atomChargeMap.get(atom);
 			UndoableEdit edit = new ChangeChargeEdit(atom, charges[0],
 					charges[1]);
 			edit.undo();
@@ -76,11 +76,11 @@ public class ChangeChargeEditTest extends CDKTestCase {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
-			double formerCharge = atom.getCharge();
+			int formerCharge = atom.getFormalCharge();
 			atom.setCharge(atom.getCharge() + 1);
-			double[] charges = new double[2];
+			int[] charges = new int[2];
 			charges[0] = formerCharge;
-			charges[1] = atom.getCharge();
+			charges[1] = atom.getFormalCharge();
 			atomChargeMap.put(atom, charges);
 		}
 		return atomChargeMap;

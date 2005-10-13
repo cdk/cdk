@@ -17,9 +17,9 @@ public class ChangeChargeEdit extends AbstractUndoableEdit {
 
 	private Atom atom;
 
-	private double formerCharge;
+	private int formerCharge;
 
-	private double newCharge;
+	private int newCharge;
 
 	/**
 	 * @param atomInRange
@@ -29,8 +29,8 @@ public class ChangeChargeEdit extends AbstractUndoableEdit {
 	 * @param newCharge
 	 *            The new charge of this atom
 	 */
-	public ChangeChargeEdit(Atom atomInRange, double formerCharge,
-			double newCharge) {
+	public ChangeChargeEdit(Atom atomInRange, int formerCharge,
+			int newCharge) {
 		this.atom = atomInRange;
 		this.formerCharge = formerCharge;
 		this.newCharge = newCharge;
@@ -42,9 +42,7 @@ public class ChangeChargeEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#redo()
 	 */
 	public void redo() throws CannotRedoException {
-		this.atom.setCharge(newCharge);
-		// TODO is it neccessary to update the atom like in
-		// AbstractController2D.updateATom()??
+		this.atom.setFormalCharge(newCharge);
 	}
 
 	/*
@@ -53,9 +51,7 @@ public class ChangeChargeEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#undo()
 	 */
 	public void undo() throws CannotUndoException {
-		this.atom.setCharge(formerCharge);
-		// TODO is it neccessary to update the atom like in
-		// AbstractController2D.updateATom()??
+		this.atom.setFormalCharge(formerCharge);
 	}
 
 	/*
