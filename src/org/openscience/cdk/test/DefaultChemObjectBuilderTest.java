@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
@@ -192,5 +193,125 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Bond);
 	}
 	
+	public void testNewBond_Atom_Atom_double() {
+		Object object = rootObject.getBuilder().newBond(
+			rootObject.getBuilder().newAtom(),
+			rootObject.getBuilder().newAtom(),
+			1.0
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Bond);
+	}
 	
+	public void testNewBond_Atom_Atom_double_int() {
+		Object object = rootObject.getBuilder().newBond(
+			rootObject.getBuilder().newAtom(),
+			rootObject.getBuilder().newAtom(),
+			1.0, 1
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Bond);
+	}
+	
+	public void testNewChemFile() {
+		Object object = rootObject.getBuilder().newChemFile();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof ChemFile);
+	}
+	
+	public void testNewChemModel() {
+		Object object = rootObject.getBuilder().newChemModel();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof ChemModel);
+	}
+
+	public void testNewChemSequence() {
+		Object object = rootObject.getBuilder().newChemSequence();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof ChemSequence);
+	}
+	
+	public void testNewCrystal() {
+		Object object = rootObject.getBuilder().newCrystal();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Crystal);
+	}
+	
+	public void testNewCrystal_AtomContainer() {
+		Object object = rootObject.getBuilder().newCrystal(
+			rootObject.getBuilder().newAtomContainer()
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Crystal);
+	}
+	
+	public void testNewElectronContainer() {
+		Object object = rootObject.getBuilder().newCrystal();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof ElectronContainer);
+	}
+
+	public void testNewElement() {
+		Object object = rootObject.getBuilder().newElement();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Element);
+	}
+	
+	public void testNewElement_String() {
+		Object object = rootObject.getBuilder().newElement("C");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Element);
+	}
+	
+	public void testNewElement_String_int() {
+		Object object = rootObject.getBuilder().newElement("C", 6);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Element);
+	}
+
+	// public void testNewIsotope_int_String_double_double() {}
+	// public void testNewIsotope_int_String_int_double_double() {}
+	// public void testNewIsotope_String() {}
+	// public void testNewIsotope_String_int() {}
+
+	public void testNewLonePair() {
+		Object object = rootObject.getBuilder().newLonePair();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof LonePair);
+	}	
+
+	public void testNewLonePair_Atom() {
+		Object object = rootObject.getBuilder().newLonePair(
+			rootObject.getBuilder().newAtom()
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof LonePair);
+	}	
+
 }
