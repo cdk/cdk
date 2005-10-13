@@ -66,8 +66,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEditSupport;
-
-import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -84,7 +82,6 @@ import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
 /**
  *  JPanel that contains a full JChemPaint program, either viewer or full
  *  editor.
@@ -591,7 +588,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  chemFile  Description of the Parameter
 	 */
-	public void processChemFile(ChemFile chemFile) {
+	public void processChemFile(org.openscience.cdk.interfaces.ChemFile chemFile) {
 		logger.info("Information read from file:");
 
 		int chemSequenceCount = chemFile.getChemSequenceCount();
