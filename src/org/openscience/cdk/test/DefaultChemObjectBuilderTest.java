@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomParity;
 import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.BioPolymer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
@@ -162,6 +163,33 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
 		assertTrue(object instanceof AtomType);
+	}
+	
+	public void testNewBioPolymer() {
+		Object object = rootObject.getBuilder().newBioPolymer();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof BioPolymer);
+	}
+	
+	public void testNewBond() {
+		Object object = rootObject.getBuilder().newBond();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Bond);
+	}
+	
+	public void testNewBond_Atom_Atom() {
+		Object object = rootObject.getBuilder().newBond(
+			rootObject.getBuilder().newAtom(),
+			rootObject.getBuilder().newAtom()
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Bond);
 	}
 	
 	
