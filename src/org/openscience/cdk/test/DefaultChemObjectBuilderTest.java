@@ -25,10 +25,14 @@
 
 package org.openscience.cdk.test;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomParity;
 import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.BioPolymer;
@@ -80,5 +84,85 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
 		assertTrue(object instanceof Atom);
 	}
-	    
+	 
+	public void testNewAtom_String() {
+		Object object = rootObject.getBuilder().newAtom("C");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Atom);
+	}
+	
+	public void testNewAtom_String_Point2d() {
+		Object object = rootObject.getBuilder().newAtom("C", new Point2d(1.0, 2.0));
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Atom);
+	}
+	
+	public void testNewAtom_String_Point3d() {
+		Object object = rootObject.getBuilder().newAtom("C", new Point3d(1.0, 2.0, 3.0));
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Atom);
+	}
+	
+	public void testNewAtomContainer() {
+		Object object = rootObject.getBuilder().newAtomContainer();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof AtomContainer);
+	}
+	
+	public void testNewAtomContainer_int_int() {
+		Object object = rootObject.getBuilder().newAtomContainer(10,10);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof AtomContainer);
+	}
+	
+	public void testNewAtomContainer_AtomContainer() {
+		Object object = rootObject.getBuilder().newAtomContainer(rootObject.getBuilder().newAtomContainer());
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof AtomContainer);
+	}
+	
+	public void testNewAtomyParity_Atom_Atom_Atom_Atom_int() {
+		Object object = rootObject.getBuilder().newAtomParity(
+				rootObject.getBuilder().newAtom(),
+				rootObject.getBuilder().newAtom(),
+				rootObject.getBuilder().newAtom(),
+				rootObject.getBuilder().newAtom(),
+				rootObject.getBuilder().newAtom(),
+				1
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof AtomParity);
+	}
+	
+	public void testNewAtomType_String() {
+		Object object = rootObject.getBuilder().newAtomType("Carom");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof AtomType);
+	}
+	
+	public void testNewAtomType_String_String() {
+		Object object = rootObject.getBuilder().newAtomType("Carom");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof AtomType);
+	}
+	
+	
 }
