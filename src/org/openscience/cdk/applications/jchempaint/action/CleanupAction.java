@@ -91,21 +91,21 @@ public class CleanupAction extends JCPAction
 			org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
 			if (som != null)
 			{
+                
 				logger.debug("no mols in som: ", som.getMoleculeCount());
 				SetOfMolecules newsom = new SetOfMolecules();
 				Molecule[] mols = som.getMolecules();
 				for (int i = 0; i < mols.length; i++)
 				{
                     Molecule molecule = mols[i];
-                    Molecule cleanedMol = relayoutMolecule(mols[i]);
+                     Molecule cleanedMol = relayoutMolecule(mols[i]);
 					newsom.addMolecule(cleanedMol);
-                    
-					org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
+                    org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
 					org.openscience.cdk.interfaces.Atom[] newAtoms = cleanedMol.getAtoms();
                     for (int j=0; j<atoms.length; j++) {
                         Point2d oldCoord = atoms[j].getPoint2d();
                         Point2d newCoord = newAtoms[j].getPoint2d();
-                        if (!oldCoord.equals(newCoord)) {
+                         if (!oldCoord.equals(newCoord)) {
                             Point2d[] coords = new Point2d[2];
                             coords[0] = newCoord;
                             coords[1] = oldCoord;
@@ -115,7 +115,7 @@ public class CleanupAction extends JCPAction
 				}
 				model.setSetOfMolecules(newsom);
                 
-                UndoableEdit  edit = new CleanUpEdit(atomCoordsMap);
+                UndoableEdit  edit = new CleanUpEdit(atomCoordsMap, jcpPanel);
                 jcpPanel.getUndoSupport().postEdit(edit);
 			}
 			org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
