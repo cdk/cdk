@@ -39,7 +39,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
@@ -147,10 +147,10 @@ public class OpenAction extends JCPAction {
 
 			String error = null;
 			ChemModel chemModel = null;
-			if (cor.accepts(new ChemFile())) {
+			if (cor.accepts(new org.openscience.cdk.ChemFile())) {
 				// try to read a ChemFile
 				try {
-					chemFile = (ChemFile) cor.read((ChemObject) new ChemFile());
+					chemFile = (ChemFile) cor.read((ChemObject) new org.openscience.cdk.ChemFile());
 					if (chemFile != null) {
 												
 						jcpPanel.processChemFile(chemFile);
