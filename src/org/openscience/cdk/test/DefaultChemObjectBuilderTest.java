@@ -314,4 +314,129 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof LonePair);
 	}	
 
+	public void testNewMolecule() {
+		Object object = rootObject.getBuilder().newMolecule();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Molecule);
+	}	
+
+	public void testNewMolecule_int_int() {
+		Object object = rootObject.getBuilder().newMolecule(5,5);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Molecule);
+	}	
+
+	public void testNewMolecule_AtomContainer() {
+		Object object = rootObject.getBuilder().newMolecule(
+			rootObject.getBuilder().newAtomContainer()
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Molecule);
+	}	
+
+	public void testNewMonomer() {
+		Object object = rootObject.getBuilder().newMonomer();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Monomer);
+	}	
+
+	public void testNewPolymer() {
+		Object object = rootObject.getBuilder().newPolymer();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Polymer);
+	}	
+
+	public void testNewPseudoAtom() {
+		Object object = rootObject.getBuilder().newPseudoAtom();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof PseudoAtom);
+	}	
+
+	public void testNewPseudoAtom_Atom() {
+		Object object = rootObject.getBuilder().newPseudoAtom(
+			rootObject.getBuilder().newAtom()
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof PseudoAtom);
+	}	
+
+	public void testNewPseudoAtom_String() {
+		Object object = rootObject.getBuilder().newPseudoAtom("Glu178");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof PseudoAtom);
+	}	
+
+	public void testNewPseudoAtom_String_Point2d() {
+		Object object = rootObject.getBuilder().newPseudoAtom("Glue178", new Point2d(1.0,2.0));
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof PseudoAtom);
+	}	
+
+	public void testNewPseudoAtom_String_Point3d() {
+		Object object = rootObject.getBuilder().newPseudoAtom("Glue178", new Point3d(1.0,2.0,3.0));
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof PseudoAtom);
+	}	
+
+	public void testNewReaction() {
+		Object object = rootObject.getBuilder().newReaction();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Reaction);
+	}
+
+	public void testNewRing() {
+		Object object = rootObject.getBuilder().newRing();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Ring);
+	}	
+
+	public void testNewRing_int() {
+		Object object = rootObject.getBuilder().newRing(5);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Ring);
+	}	
+
+	public void testNewRing_int_String() {
+		Object object = rootObject.getBuilder().newRing(5,"C");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Ring);
+	}	
+
+	public void testNewRingSet() {
+		Object object = rootObject.getBuilder().newRingSet();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof RingSet);
+	}	
+
+
 }
