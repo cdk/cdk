@@ -436,7 +436,56 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
 		assertTrue(object instanceof RingSet);
-	}	
+	}
 
+	public void testNewSetOfAtomContainers() {
+		Object object = rootObject.getBuilder().newSetOfAtomContainers();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof SetOfAtomContainers);
+	}
+
+	public void testNewSetOfMolecules() {
+		Object object = rootObject.getBuilder().newSetOfMolecules();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof SetOfMolecules);
+	}
+
+	public void testNewSetOfReactions() {
+		Object object = rootObject.getBuilder().newSetOfReactions();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof SetOfReactions);
+	}
+
+	public void testNewSingleElectron() {
+		Object object = rootObject.getBuilder().newSingleElectron();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof SingleElectron);
+	}
+
+	public void testNewSingleElectron_Atom() {
+		Object object = rootObject.getBuilder().newSingleElectron(
+			rootObject.getBuilder().newAtom()
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof SingleElectron);
+	}
+	
+	public void testNewStrand() {
+		Object object = rootObject.getBuilder().newStrand();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Strand);
+	}
 
 }
