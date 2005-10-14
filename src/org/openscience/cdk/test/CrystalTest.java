@@ -22,7 +22,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
  * 
  */
-
 package org.openscience.cdk.test;
 
 import javax.vecmath.Vector3d;
@@ -36,7 +35,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Crystal;
 
 /**
- * Checks the funcitonality of the Crystal.
+ * Checks the functionality of the Crystal.
  *
  * @cdk.module test
  */
