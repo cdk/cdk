@@ -31,6 +31,7 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomParity;
@@ -39,7 +40,7 @@ import org.openscience.cdk.interfaces.BioPolymer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.ElectronContainer;
@@ -79,6 +80,12 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
         return new TestSuite(DefaultChemObjectBuilderTest.class);
     }
 
+    public void testGetInstance() {
+    	Object builder = DefaultChemObjectBuilder.getInstance();
+    	assertNotNull(builder);
+    	assertTrue(builder instanceof ChemObjectBuilder);
+    }
+    
 	public void testNewAtom() {
 		Object object = rootObject.getBuilder().newAtom();
 		assertNotNull(object);
@@ -135,7 +142,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof AtomContainer);
 	}
 	
-	public void testNewAtomyParity_Atom_Atom_Atom_Atom_int() {
+	public void testNewAtomyParity_Atom_Atom_Atom_Atom_Atom_int() {
 		Object object = rootObject.getBuilder().newAtomParity(
 				rootObject.getBuilder().newAtom(),
 				rootObject.getBuilder().newAtom(),
@@ -291,10 +298,41 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Element);
 	}
 
-	// public void testNewIsotope_int_String_double_double() {}
-	// public void testNewIsotope_int_String_int_double_double() {}
-	// public void testNewIsotope_String() {}
-	// public void testNewIsotope_String_int() {}
+	public void testNewIsotope_int_String_double_double() {
+		Object object = rootObject.getBuilder().newIsotope(
+			12, "C", 12.001, 100.0
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Isotope);
+	}
+	
+	public void testNewIsotope_int_String_int_double_double() {
+		Object object = rootObject.getBuilder().newIsotope(
+			12, "C", 6, 12.001, 100.0
+		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		
+		assertTrue(object instanceof Isotope);
+	}
+	
+	public void testNewIsotope_String() {
+		Object object = rootObject.getBuilder().newIsotope("N");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		
+		assertTrue(object instanceof Isotope);
+	}
+	
+	public void testNewIsotope_String_int() {
+		Object object = rootObject.getBuilder().newIsotope("N", 5);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		
+		assertTrue(object instanceof Isotope);
+	}
 
 	public void testNewLonePair() {
 		Object object = rootObject.getBuilder().newLonePair();
@@ -424,6 +462,16 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
 	public void testNewRing_int_String() {
 		Object object = rootObject.getBuilder().newRing(5,"C");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof Ring);
+	}	
+
+	public void testNewRing_AtomContainer() {
+		Object object = rootObject.getBuilder().newRing(
+			rootObject.getBuilder().newAtomContainer()
+		);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
