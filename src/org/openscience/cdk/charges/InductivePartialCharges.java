@@ -28,9 +28,9 @@ import java.io.IOException;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
