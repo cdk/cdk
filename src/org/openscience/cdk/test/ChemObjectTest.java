@@ -34,6 +34,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
@@ -64,7 +65,14 @@ public class ChemObjectTest extends CDKTestCase {
         ChemObject chemObject = new ChemObject();
         assertNotNull(chemObject);
     }
-    
+
+    public void testGetBuilder() {
+    	ChemObject chemObject = new ChemObject();
+    	Object object = chemObject.getBuilder();
+    	assertNotNull(object);
+    	assertTrue(object instanceof DefaultChemObjectBuilder);
+    }
+    	
     public void testSetProperty_Object_Object() {
         ChemObject chemObject = new ChemObject();
         String cDescription = new String("description");
