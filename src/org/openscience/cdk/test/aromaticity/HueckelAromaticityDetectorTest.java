@@ -539,6 +539,20 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		}
 
 	}
+  
+  public void testBug1328739() throws Exception{
+      String filename = "data/mdl/bug1328739.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			Molecule molecule = (Molecule) reader.read((ChemObject) new Molecule());
+      HueckelAromaticityDetector.detectAromaticity(molecule);
+      assertTrue(molecule.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBondAt(1).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBondAt(2).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBondAt(3).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBondAt(4).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBondAt(6).getFlag(CDKConstants.ISAROMATIC));
+  }
 
 	/**
 	 *  A unit test for JUnit
