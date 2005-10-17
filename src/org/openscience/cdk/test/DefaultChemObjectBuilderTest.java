@@ -61,7 +61,7 @@ import org.openscience.cdk.interfaces.SingleElectron;
 import org.openscience.cdk.interfaces.Strand;
 
 /**
- * Checks the funcitonality of the Crystal.
+ * Checks the functionality of the Crystal.
  *
  * @cdk.module test
  */
@@ -142,7 +142,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof AtomContainer);
 	}
 	
-	public void testNewAtomyParity_Atom_Atom_Atom_Atom_Atom_int() {
+	public void testNewAtomParity_Atom_Atom_Atom_Atom_Atom_int() {
 		Object object = rootObject.getBuilder().newAtomParity(
 				rootObject.getBuilder().newAtom(),
 				rootObject.getBuilder().newAtom(),
