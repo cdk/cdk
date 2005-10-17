@@ -2,14 +2,11 @@ package org.openscience.cdk.applications.undoredo;
 
 import java.util.HashMap;
 
-import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
-
 /**
  * Undo/Redo Edit class for the CleanUpAction using the ChangeCoordsEdit
  * superclass for providing undo/redo functionality
  * 
  * @author tohel
- * 
  */
 public class CleanUpEdit extends ChangeCoordsEdit {
 
@@ -19,8 +16,8 @@ public class CleanUpEdit extends ChangeCoordsEdit {
 	 *            with the former and the changed coordinates as Point2ds
 	 * @param jcpPanel 
 	 */
-	public CleanUpEdit(HashMap atomCoordsMap, JChemPaintPanel jcpPanel) {
-		super(atomCoordsMap, jcpPanel);
+	public CleanUpEdit(HashMap atomCoordsMap) {
+		super(atomCoordsMap);
 	}
 
 	/*

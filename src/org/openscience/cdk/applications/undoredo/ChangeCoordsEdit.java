@@ -9,7 +9,6 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.interfaces.Atom;
 
 /**
@@ -17,27 +16,15 @@ import org.openscience.cdk.interfaces.Atom;
  * actions, containing the methods for undoing and redoing the regarding changes
  * 
  * @author tohel
- * 
  */
 public class ChangeCoordsEdit extends AbstractUndoableEdit {
 
     private HashMap atomCoordsMap;
 
-    private JChemPaintPanel jcpPanel;
-
     /**
      * @param atomCoordsMap
      *            A HashMap containing the changed atoms as key and an Array
      *            with the former and the changed coordinates as Point2ds
-     * @param jcpPanel
-     */
-    public ChangeCoordsEdit(HashMap atomCoordsMap, JChemPaintPanel jcpPanel) {
-        this.atomCoordsMap = atomCoordsMap;
-        this.jcpPanel = jcpPanel;
-    }
-
-    /**
-     * @param atomCoordsMap
      */
     public ChangeCoordsEdit(HashMap atomCoordsMap) {
         this.atomCoordsMap = atomCoordsMap;
@@ -56,9 +43,9 @@ public class ChangeCoordsEdit extends AbstractUndoableEdit {
             Point2d[] coords = (Point2d[]) atomCoordsMap.get(atom);
             atom.setPoint2d(coords[0]);
         }
-        if (jcpPanel != null) {
-            jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
-        }
+        // if (jcpPanel != null) {
+        //    jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
+        // }
     }
 
     /*
@@ -74,9 +61,9 @@ public class ChangeCoordsEdit extends AbstractUndoableEdit {
             Point2d[] coords = (Point2d[]) atomCoordsMap.get(atom);
             atom.setPoint2d(coords[1]);
         }
-        if (jcpPanel != null) {
-            jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
-        }
+        // if (jcpPanel != null) {
+        //    jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());
+        // }
     }
 
     /*

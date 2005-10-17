@@ -7,7 +7,6 @@ import java.util.HashMap;
  * for providing undo/redo functionality
  * 
  * @author tohel
- * 
  */
 public class FlipEdit extends ChangeCoordsEdit {
 

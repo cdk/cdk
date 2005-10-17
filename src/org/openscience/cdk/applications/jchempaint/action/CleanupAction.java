@@ -115,7 +115,7 @@ public class CleanupAction extends JCPAction
 				}
 				model.setSetOfMolecules(newsom);
                 
-                UndoableEdit  edit = new CleanUpEdit(atomCoordsMap, jcpPanel);
+                UndoableEdit  edit = new CleanUpEdit(atomCoordsMap);
                 jcpPanel.getUndoSupport().postEdit(edit);
 			}
 			org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
