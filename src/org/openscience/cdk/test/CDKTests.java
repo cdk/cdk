@@ -73,6 +73,7 @@ import org.openscience.cdk.test.reaction.ReactionBalancerTest;
 import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
 import org.openscience.cdk.test.ringsearch.RingPartitionerTest;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
+import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
@@ -156,6 +157,8 @@ public class CDKTests
         suite.addTest(AllRingsFinderTest.suite());
         suite.addTest(RingSearchTest.suite());
         suite.addTest(RingPartitionerTest.suite());
+        // from cdk.test.similarity
+        suite.addTest(TanimotoTest.suite());
         // from cdk.test.smiles
         suite.addTest(SmilesGeneratorTest.suite());
         suite.addTest(SmilesParserTest.suite());
