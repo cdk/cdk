@@ -118,15 +118,18 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
 		for (int j = 0; j < atomTypeIds.length; j++){
         	tmpMaxBondOrder = factory.getAtomType(atomTypeIds[j]).getMaxBondOrder();
         	String atomSphericalMatcher = (String)factory.getAtomType(atomTypeIds[j]).getProperty(CDKConstants.SPHERICAL_MATCHER);
-			logger.debug(j + "ATOM TYPE "+ tmpMaxBondOrder + " " +atomSphericalMatcher);
+			logger.debug(j + " ATOM TYPE "+ tmpMaxBondOrder + " " +atomSphericalMatcher);
 			p1 =Pattern.compile(atomSphericalMatcher);
 			mat1 = p1.matcher((String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER));
 			if (mat1.matches()) {
 				ID = atomTypeIds[j];
 				Object property = atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
-	        	int atomChemGroupConstant = ((Integer)property).intValue();
+	        		int atomChemGroupConstant = ((Integer)property).intValue();
 				Object ringSize = atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE);
-				int atomRingSize = ((Integer)ringSize).intValue();
+				int atomRingSize = -1;
+				if (ringSize != null) {
+					atomRingSize = ((Integer)ringSize).intValue();
+				}
 				if (atomTypeIds[j].equals("C")) {
 					if (atomChemGroupConstant != -1) {//in Ring
 						if (ringSize != null && maxBondOrder == 1){
