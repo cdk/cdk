@@ -88,8 +88,9 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
        
         att.assignAtomTypePropertiesToAtom(mol);
         for (int i=0;i<mol.getAtomCount();i++){
-        	//System.out.print("atomNr:"+i);
+        	System.out.print("atomNr:" + mol.getAtomAt(i).toString());
         	AtomType matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
+        	assertNotNull(matched);
         	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
         }
         
