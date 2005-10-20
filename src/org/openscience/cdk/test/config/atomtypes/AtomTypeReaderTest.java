@@ -120,12 +120,13 @@ public class AtomTypeReaderTest extends CDKTestCase {
             "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:bondOrderSum\">4.0</scalar>" +
             "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:formalNeighbourCount\">4</scalar>" +
             "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:valency\">4</scalar>" +
-            "   </atom>" +
             "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>" +
             "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:DA\">-</scalar>" +
             "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:sphericalMatcher\">[CSP]-[0-4][-]?+;</scalar>" +
             "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringSize\">3</scalar>" +
-            "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringConstant\">3</scalar>" +    
+            "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringConstant\">3</scalar>" +
+            "   </atom>" +
+            " </atomType>" + 
             "</atomTypeList>";
         
         AtomTypeReader reader = new AtomTypeReader(
