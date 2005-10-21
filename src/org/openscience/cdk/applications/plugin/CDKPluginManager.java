@@ -258,9 +258,14 @@ public class CDKPluginManager {
                                 logger.debug("Plugin URL: ", plugins[i].toURL());
                                 URL u = new URL("jar", "", plugins[i].toURL() + "!/");
                                 ClassLoader loader = new PluginClassLoader(u);
-                                loadPlugin(loader, pluginName);
-                                logger.info("  loaded.");
-                                break;
+                                try {
+                                    loadPlugin(loader, pluginName);
+                                    logger.info("  loaded.");
+                                    break;
+                                } catch (Throwable exception) {
+                                    logger.error("  could not load Plugin.class (continuing search): ", exception.getMessage());
+                                    logger.debug(exception);
+                                }
                             }
                         }
                     } catch (IOException exception) {
