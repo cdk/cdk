@@ -353,9 +353,9 @@ public class LoggingTool {
     private void debugThrowable(Throwable problem) {
         if (problem != null) {
             if (problem instanceof Error) {
-                debug("Error: " + problem.getMessage());
+                debug("Error: ", problem.getMessage());
             } else {
-                debug("Exception: " + problem.getMessage());
+                debug("Exception: ", problem.getMessage());
             }
             java.io.StringWriter stackTraceWriter = new java.io.StringWriter();
             problem.printStackTrace(new PrintWriter(stackTraceWriter));
@@ -376,6 +376,11 @@ public class LoggingTool {
                 error("Serious error in LoggingTool while printing exception stack trace: " + 
                       ioException.getMessage());
                 logger.debug(ioException);
+            }
+            Throwable cause = problem.getCause(); 
+            if (cause != null) {
+            	debug("Caused by: ");
+            	debugThrowable(cause);
             }
         }
     }
