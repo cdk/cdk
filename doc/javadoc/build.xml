@@ -30,7 +30,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="JavaDocStats" path="."/>
+            <doclet name="net.sf.cdk.tools.JavaDocStats" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
@@ -42,7 +42,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="MakeKeywordIndexDoclet" path="."/>
+            <doclet name="net.sf.cdk.tools.MakeKeywordIndexDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
@@ -55,7 +55,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="MakeDictionaryIndexDoclet" path="."/>
+            <doclet name="net.sf.cdk.tools.MakeDictionaryIndexDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
@@ -68,7 +68,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="MakeClassesDotModDoclet" path="."/>
+            <doclet name="net.sf.cdk.tools.MakeClassesDotModDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
@@ -80,7 +80,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="MakeClassesDotWebDotModDoclet" path="."/>
+            <doclet name="net.sf.cdk.tools.MakeClassesDotWebDotModDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
@@ -92,7 +92,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="MakeJavaFilesFilesDoclet" path="."/>
+            <doclet name="net.sf.cdk.tools.MakeJavaFilesFilesDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
@@ -104,7 +104,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="MakeJarDependencyDoclet" path="."/>
+            <doclet name="net.sf.cdk.tools.MakeJarDependencyDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
@@ -116,7 +116,7 @@
         <javadoc private="false" public="true">
             <classpath refid="project.class.path" />
 
-            <doclet name="XMIDoclet" path="."/>
+            <doclet name="net.sf.cdk.tools.XMIDoclet" path="."/>
 
             <packageset dir="../../src/">
               <include name="org/openscience/cdk/**"/>
