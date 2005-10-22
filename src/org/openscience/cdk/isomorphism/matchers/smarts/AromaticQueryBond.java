@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
@@ -50,7 +51,7 @@ public class AromaticQueryBond extends SMARTSBond {
 		StringBuffer s = new StringBuffer();
 		s.append("AromaticQueryBond(");
         s.append(this.hashCode() + ", ");
-        org.openscience.cdk.interfaces.Atom[] atoms = getAtoms();
+        Atom[] atoms = getAtoms();
 		s.append("#A:" + atoms.length);
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i] == null) {

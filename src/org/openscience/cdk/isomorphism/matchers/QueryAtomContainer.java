@@ -61,7 +61,6 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
     }
     
 	public String toString() {
-		ElectronContainer ec;
 		StringBuffer s = new StringBuffer();
 		s.append("QueryAtomContainer(");
 		s.append(this.hashCode() + ", ");

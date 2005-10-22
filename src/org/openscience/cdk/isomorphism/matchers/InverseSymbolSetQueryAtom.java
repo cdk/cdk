@@ -26,7 +26,7 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.HashSet;
 
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.Atom;
 
 /**
  *  A QueryAtom that matches all symbols but those in this container. You may
@@ -39,7 +39,7 @@ import org.openscience.cdk.PseudoAtom;
  *@see           SymbolSetQueryAtom
  *@cdk.module    extra
  */
-public class InverseSymbolSetQueryAtom extends PseudoAtom implements QueryAtom {
+public class InverseSymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implements QueryAtom {
 
     private HashSet symbols = new HashSet();
 
@@ -56,7 +56,7 @@ public class InverseSymbolSetQueryAtom extends PseudoAtom implements QueryAtom {
      *@param  atom  The atom to be matched by this QueryAtom
      *@return       true if Atom matched
      */
-    public boolean matches(org.openscience.cdk.interfaces.Atom atom) {
+    public boolean matches(Atom atom) {
         return !symbols.contains(atom.getSymbol());
     }
 

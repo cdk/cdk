@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
@@ -44,11 +46,11 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createBasicQueryContainer(AtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+        Atom[] atoms = container.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolQueryAtom(atoms[i]));
         }
-        org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
+        Bond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
@@ -75,11 +77,11 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createSymbolAndChargeQueryContainer(AtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+        Atom[] atoms = container.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(atoms[i]));
         }
-        org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
+        Bond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
@@ -107,7 +109,7 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createAnyAtomContainer(AtomContainer container, boolean aromaticity) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+        Atom[] atoms = container.getAtoms();
 
         for (int i = 0; i < atoms.length; i++) {
             if (aromaticity && atoms[i].getFlag(CDKConstants.ISAROMATIC)) {
@@ -117,7 +119,7 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
+        Bond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));

@@ -36,14 +36,15 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBon
     }
 
     public OrderQueryBond(QueryAtom atom1, QueryAtom atom2, double order) {
-        super((Atom)atom1, (Atom)atom2, order);
+        super(atom1, atom2, order);
     }
     
 	public boolean matches(Bond bond) {
         if (this.getOrder() == bond.getOrder()) {
             // bond orders match
             return true;
-        } else if (this.getFlag(CDKConstants.ISAROMATIC) && bond.getFlag(CDKConstants.ISAROMATIC)) {
+        } else if (this.getFlag(CDKConstants.ISAROMATIC) && 
+        		   bond.getFlag(CDKConstants.ISAROMATIC)) {
             // or both are aromatic
         } // else
         return false;

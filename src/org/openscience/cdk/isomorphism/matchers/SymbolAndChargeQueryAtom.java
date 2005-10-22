@@ -23,21 +23,21 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 
 /**
  * @cdk.module extra
  */
-public class SymbolAndChargeQueryAtom extends Atom implements QueryAtom {
+public class SymbolAndChargeQueryAtom extends org.openscience.cdk.Atom implements QueryAtom {
     
     public SymbolAndChargeQueryAtom() {}
     
-    public SymbolAndChargeQueryAtom(org.openscience.cdk.interfaces.Atom atom) {
+    public SymbolAndChargeQueryAtom(Atom atom) {
         super(atom.getSymbol());
         setFormalCharge(atom.getFormalCharge());
     }
     
-    public boolean matches(org.openscience.cdk.interfaces.Atom atom) {
+    public boolean matches(Atom atom) {
         return this.getSymbol().equals(atom.getSymbol())&&this.getFormalCharge()==atom.getFormalCharge();
     };
 
@@ -45,8 +45,8 @@ public class SymbolAndChargeQueryAtom extends Atom implements QueryAtom {
 		StringBuffer s = new StringBuffer();
 		s.append("SymbolAndChargeQueryAtom(");
 		s.append(this.hashCode() + ", ");
-		s.append(getSymbol());
-    s.append(getFormalCharge());
+		s.append(getSymbol() + ", ");
+		s.append(getFormalCharge());
 		s.append(")");
 		return s.toString();
     }

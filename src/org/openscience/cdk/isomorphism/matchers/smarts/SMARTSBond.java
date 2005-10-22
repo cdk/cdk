@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 
@@ -33,15 +33,15 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
  *
  * @cdk.module extra
  */
-public class SMARTSBond extends Bond implements QueryBond {
+public class SMARTSBond extends org.openscience.cdk.Bond implements QueryBond {
     
     public SMARTSBond() {}
     
     public SMARTSBond(QueryAtom atom1, QueryAtom atom2, double order) {
-        super((Atom)atom1, (Atom)atom2, order);
+        super(atom1, atom2, order);
     }
 
-	public boolean matches(org.openscience.cdk.interfaces.Bond bond) {
+	public boolean matches(Bond bond) {
         return false;
     };
 }

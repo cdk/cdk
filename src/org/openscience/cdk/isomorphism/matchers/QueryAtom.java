@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.Atom;
 /**
  * @cdk.module standard
  */
-public interface QueryAtom {
+public interface QueryAtom extends Atom {
     
 	public boolean matches(Atom atom);
     
