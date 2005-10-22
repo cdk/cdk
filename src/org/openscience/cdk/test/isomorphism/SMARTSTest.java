@@ -30,17 +30,22 @@ package org.openscience.cdk.test.isomorphism;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.SymbolAndChargeQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -88,13 +93,13 @@ public class SMARTSTest extends CDKTestCase {
 	
     private AtomContainer createEthane() {
         AtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
-        Atom carbon = new Atom("C");
-        Atom carbon2 = new Atom("C");
+        Atom carbon = new org.openscience.cdk.Atom("C");
+        Atom carbon2 = carbon.getBuilder().newAtom("C");
         carbon.setHydrogenCount(3);
         carbon2.setHydrogenCount(3);
         container.addAtom(carbon);
         container.addAtom(carbon2);
-        container.addBond(new Bond(carbon, carbon2, 1));
+        container.addBond(carbon.getBuilder().newBond(carbon, carbon2, 1));
         return container;
     }
     
@@ -122,5 +127,35 @@ public class SMARTSTest extends CDKTestCase {
         assertFalse(UniversalIsomorphismTester.isSubgraph(container, query1));
     }
 
+	public void testMatchInherited() {
+		try {
+			SymbolQueryAtom c1 = new SymbolQueryAtom(
+				new org.openscience.cdk.Atom("C")
+			);
+			SymbolAndChargeQueryAtom c2 = new
+			SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
+			
+			AtomContainer c = MoleculeFactory.makeAlkane(2);
+			
+			QueryAtomContainer query1 = new QueryAtomContainer();
+			query1.addAtom(c1);
+			query1.addAtom(c2);
+			query1.addBond(new OrderQueryBond(c1,c2,CDKConstants.BONDORDER_SINGLE));
+			assertTrue(UniversalIsomorphismTester.isSubgraph(c,query1));
+			
+			QueryAtomContainer query = new
+			QueryAtomContainer();
+			query.addAtom(c1);
+			query.addAtom(c2);
+			query.addBond(new AnyOrderQueryBond(c1, c2,
+				CDKConstants.BONDORDER_SINGLE)
+			);
+			assertTrue(UniversalIsomorphismTester.isSubgraph(c,query));
+			
+		} catch (CDKException exception) {
+			fail(exception.getMessage());
+		}
+		
+	}
 }
 
