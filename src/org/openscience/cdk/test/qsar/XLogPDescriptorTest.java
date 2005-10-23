@@ -76,7 +76,7 @@ public class XLogPDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		//System.out.println("Aspirin:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue());
-		assertEquals(1.97, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+		assertEquals(1.973, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.01); //at:  16
 	}
 	
 }
