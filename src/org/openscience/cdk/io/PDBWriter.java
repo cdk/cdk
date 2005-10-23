@@ -143,7 +143,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
            writer.write(terRecordName, 0, terRecordName.length());
            writer.newLine();
        } catch (IOException exception) {
-           throw new CDKException("Error while writing file: " + exception.getMessage());
+           throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
        }
    }
    
@@ -176,7 +176,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             }
            writeMolecule(crystal.getBuilder().newMolecule(crystal));
        } catch (IOException exception) {
-           throw new CDKException("Error while writing file: " + exception.getMessage());
+           throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
        }
    }
 

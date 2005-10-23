@@ -95,7 +95,7 @@ public class SMARTSParser {
             container = parser.Parse();
         } catch (ParseException exception) {
             throw new CDKException("The string " + stringToParse + " is not a valid" +
-              " SMARTS string: " + exception.getMessage());
+              " SMARTS string: " + exception.getMessage(), exception);
         }
         return container;
     }

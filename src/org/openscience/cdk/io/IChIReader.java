@@ -191,11 +191,11 @@ public class IChIReader extends DefaultChemObjectReader {
         } catch (IOException e) {
             logger.error("IOException: ", e.getMessage());
             logger.debug(e);
-            throw new CDKException("Error while reading IChI: " + e.getMessage());
+            throw new CDKException("Error while reading IChI: " + e.getMessage(), e);
         } catch (SAXException saxe) {
             logger.error("SAXException: ", saxe.getClass().getName());
             logger.debug(saxe);
-            throw new CDKException("Error while reading IChI: " + saxe.getMessage());
+            throw new CDKException("Error while reading IChI: " + saxe.getMessage(), saxe);
         }
         return cf;
     }

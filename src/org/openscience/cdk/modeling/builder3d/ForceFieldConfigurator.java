@@ -155,7 +155,7 @@ public class ForceFieldConfigurator {
 				try{
 					this.setMM2Parameters();
 				}catch (Exception ex1){
-					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString());	
+					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString(), ex1);	
 				}
 			}else if (ffName.equals("mmff94") || !check) {
 				//System.out.println("ForceFieldConfigurator: open Force Field mmff94");
@@ -168,7 +168,7 @@ public class ForceFieldConfigurator {
 				try{
 					this.setMMFF94Parameters();
 				}catch (Exception ex2){
-					throw new CDKException("Problems with set MM2Parameters due to"+ex2.toString());	
+					throw new CDKException("Problems with set MM2Parameters due to"+ex2.toString(), ex2);	
 				}
 			}
 		}
@@ -201,7 +201,7 @@ public class ForceFieldConfigurator {
 		try{
 			mm2.readParameterSets();
 		}catch(Exception ex1){
-			throw new CDKException("Problem within readParameterSets due to:"+ex1.toString());
+			throw new CDKException("Problem within readParameterSets due to:"+ex1.toString(), ex1);
 		}
 		parameterSet = mm2.getParamterSet();
 		atomTypes = mm2.getAtomTypes();
@@ -292,7 +292,7 @@ public class ForceFieldConfigurator {
 				//System.out.print("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
 			} catch (CDKException ex1) {
 				//System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
-				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString());
+				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString(), ex1);
 			}
 			try {
 				configureAtom(atom, hoseCode, isInHeteroRing);

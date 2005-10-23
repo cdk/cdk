@@ -126,7 +126,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                 return readCrystal((Crystal)object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
-                throw new CDKException(e.getMessage());
+                throw new CDKException(e.getMessage(), e);
             }
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");

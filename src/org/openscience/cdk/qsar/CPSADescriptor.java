@@ -196,7 +196,7 @@ public class CPSADescriptor implements Descriptor {
             peoe= new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliPartialCharges(container, true);
         } catch (Exception e) {
-            throw new CDKException("Problem assigning Gasteiger - Marsili partial charges");
+            throw new CDKException("Problem assigning Gasteiger - Marsili partial charges", e);
         }
         MFAnalyser mfa = new MFAnalyser(container);
         NumericalSurface surface = new NumericalSurface(container);

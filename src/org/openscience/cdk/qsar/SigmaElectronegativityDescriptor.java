@@ -141,7 +141,7 @@ public class SigmaElectronegativityDescriptor implements Descriptor {
       return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(sigmaElectronegativity));
 		} catch (Exception ex1) {
       ex1.printStackTrace();
-			throw new CDKException("Problems with GasteigerMarsiliPartialCharges due to " + ex1.toString());
+			throw new CDKException("Problems with GasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
 		}
 	}
 

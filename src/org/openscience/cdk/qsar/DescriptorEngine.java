@@ -236,7 +236,7 @@ public class DescriptorEngine {
             } catch (CDKException exception) {
                 logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
                 logger.debug(exception);
-                throw new CDKException("Could not calculate descriptor value for: "+ descriptor.getClass().getName());
+                throw new CDKException("Could not calculate descriptor value for: "+ descriptor.getClass().getName(), exception);
             }
         }
     }

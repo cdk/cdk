@@ -191,7 +191,7 @@ public class RDFProtonDescriptor implements Descriptor {
           GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
           peoe.assignGasteigerMarsiliPartialCharges(mol, true);
         } catch (Exception ex1) {
-          throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString());
+          throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }
       }
 			if (checkAromaticity) {

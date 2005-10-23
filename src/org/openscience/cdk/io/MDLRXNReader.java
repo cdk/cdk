@@ -156,7 +156,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             input.readLine(); // fourth line
         } catch (IOException exception) {
             logger.debug(exception);
-            throw new CDKException("Error while reading header of RXN file");
+            throw new CDKException("Error while reading header of RXN file", exception);
         }
 
         int reactantCount = 0;
@@ -172,7 +172,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             logger.info("Expecting " + productCount + " products in file");
         } catch (Exception exception) {
             logger.debug(exception);
-            throw new CDKException("Error while counts line of RXN file");
+            throw new CDKException("Error while counts line of RXN file", exception);
         }
         
         // now read the reactants
@@ -201,7 +201,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             throw exception;
         } catch (Exception exception) {
             logger.debug(exception);
-            throw new CDKException("Error while reading reactant");
+            throw new CDKException("Error while reading reactant", exception);
         }
         
         // now read the products
@@ -230,7 +230,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             throw exception;
         } catch (Exception exception) {
             logger.debug(exception);
-            throw new CDKException("Error while reading products");
+            throw new CDKException("Error while reading products", exception);
         }
         
         // now try to map things, if wanted

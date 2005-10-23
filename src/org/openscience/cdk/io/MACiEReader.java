@@ -180,7 +180,7 @@ public class MACiEReader extends DefaultChemObjectReader {
              String message = "Error while reading file, line number: " + input.getLineNumber();
              logger.error(message);
              logger.debug(exception);
-             throw new CDKException(message);
+             throw new CDKException(message, exception);
          }
          throw new CDKException("Only supported are ChemSequence and ChemModel.");
      }

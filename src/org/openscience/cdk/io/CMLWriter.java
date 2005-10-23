@@ -188,7 +188,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
                                                     prefix);
                 cmldoc.appendChild(convertor.convert(object,cmldoc));
             } catch (CMLException ex){
-                throw new CDKException(ex.getMessage());
+                throw new CDKException(ex.getMessage(), ex);
             }
 
             if (!fragment) {
@@ -216,7 +216,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             String error = "Error while transforming XML string: " + ex.getMessage();
             logger.error(error);
             logger.debug(ex);
-            throw new CDKException(error);
+            throw new CDKException(error, ex);
         }
     };
 

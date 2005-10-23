@@ -81,7 +81,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                 som.addMolecule((Molecule)object);
                 writeMolecule(som);
             } catch(Exception ex) {
-                throw new CDKException("Error while writing HIN file: " + ex.getMessage());
+                throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
             }
         } else if (object instanceof SetOfMolecules) {
             try {

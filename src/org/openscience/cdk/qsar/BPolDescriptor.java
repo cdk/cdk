@@ -135,7 +135,7 @@ public class BPolDescriptor implements Descriptor {
 			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(bpol));
 		} catch (Exception ex1) {
                     logger.debug(ex1);
-			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString());
+			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);
 		}
 	}
 

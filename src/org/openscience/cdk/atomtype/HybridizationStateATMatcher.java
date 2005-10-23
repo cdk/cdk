@@ -112,7 +112,7 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
         } catch (Exception ex1) {
             logger.error(ex1.getMessage());
             logger.debug(ex1);
-            throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+            throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
         }
         return null;
     }

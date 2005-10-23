@@ -252,14 +252,14 @@ public class MDLReader extends DefaultChemObjectReader {
             String error = "Error while parsing SDF";
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
         }
 		try {
 			input.close();
 		} catch (Exception exc) {
             String error = "Error while closing file: " + exc.getMessage();
             logger.error(error);
-			throw new CDKException(error);
+			throw new CDKException(error, exc);
 		}
 
         chemFile.addChemSequence(chemSequence);
@@ -493,7 +493,7 @@ public class MDLReader extends DefaultChemObjectReader {
                         String error = "Error (" + exception.getMessage() + ") while parsing line "
                                        + linecount + ": " + line + " in property block.";
                         logger.error(error);
-                        throw new CDKException("NumberFormatException in isotope information on line: " + line);
+                        throw new CDKException("NumberFormatException in isotope information on line: " + line, exception);
                     }
                 } else if (line.startsWith("M  RAD")) {
                     try {
@@ -516,7 +516,7 @@ public class MDLReader extends DefaultChemObjectReader {
                         String error = "Error (" + exception.getMessage() + ") while parsing line "
                                        + linecount + ": " + line + " in property block.";
                         logger.error(error);
-                        throw new CDKException("NumberFormatException in radical information on line: " + line);
+                        throw new CDKException("NumberFormatException in radical information on line: " + line, exception);
                     }
                 } else if (line.startsWith("G  ")) {
                     try {
@@ -540,7 +540,7 @@ public class MDLReader extends DefaultChemObjectReader {
                         String error = "Error (" + exception.toString() + ") while parsing line "
                         + linecount + ": " + line + " in property block.";
                         logger.error(error);
-                        throw new CDKException("NumberFormatException in group information on line: " + line);
+                        throw new CDKException("NumberFormatException in group information on line: " + line, exception);
                     }
                 }
                 if (!lineRead) {
@@ -554,7 +554,7 @@ public class MDLReader extends DefaultChemObjectReader {
             String error = "Error while parsing line " + linecount + ": " + line + " in property block: " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
 		}
 		return molecule;
 	}
@@ -569,7 +569,7 @@ public class MDLReader extends DefaultChemObjectReader {
           "no");
     }
     
-    private void customizeJob() {
+    public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
     }
 

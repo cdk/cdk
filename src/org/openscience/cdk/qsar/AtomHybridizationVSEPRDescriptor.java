@@ -208,7 +208,7 @@ public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 		{
 			logger.error(ex1.getMessage());
 			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
 		}
 	}
 	

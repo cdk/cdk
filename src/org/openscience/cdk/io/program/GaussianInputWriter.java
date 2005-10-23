@@ -91,7 +91,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             try {
                 writeMolecule((Molecule)object);
             } catch(Exception ex) {
-                throw new CDKException("Error while writing Gaussian input file: " + ex.getMessage());
+                throw new CDKException("Error while writing Gaussian input file: " + ex.getMessage(), ex);
             }
         } else {
             throw new CDKException("GaussianInputWriter only supports output of Molecule classes.");

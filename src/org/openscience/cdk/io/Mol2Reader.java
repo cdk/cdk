@@ -163,7 +163,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
             String error = "Could not instantiate an AtomTypeFactory";
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
         }
         try {
             String line = input.readLine();
@@ -182,7 +182,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         String error = "Error while reading atom count from MOLECULE block";
                         logger.error(error);
                         logger.debug(nfExc);
-                        throw new CDKException(error);
+                        throw new CDKException(error, nfExc);
                     }
                     if (tokenizer.hasMoreTokens()) {
                         try {
@@ -191,7 +191,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             String error = "Error while reading atom and bond counts";
                             logger.error(error);
                             logger.debug(nfExc);
-                            throw new CDKException(error);
+                            throw new CDKException(error, nfExc);
                         }
                     } else {
                         bondCount = 0;
@@ -229,7 +229,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             String error = "Error while reading atom coordinates";
                             logger.error(error);
                             logger.debug(nfExc);
-                            throw new CDKException(error);
+                            throw new CDKException(error, nfExc);
                         }
                         molecule.addAtom(atom);
                     }
@@ -271,7 +271,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             String error = "Error while reading bond information";
                             logger.error(error);
                             logger.debug(nfExc);
-                            throw new CDKException(error);
+                            throw new CDKException(error, nfExc);
                         }
                     }
                 }
@@ -281,7 +281,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
             String error = "Error while reading general structure";
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
         }
         return molecule;
     }

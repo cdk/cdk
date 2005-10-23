@@ -178,7 +178,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String error = "Error while parsing atom index";
                     logger.error(error);
                     logger.debug(exception);
-                    throw new CDKException(error);
+                    throw new CDKException(error, exception);
                 }
                 // parse the element
                 String element = tokenizer.nextToken();
@@ -205,7 +205,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String error = "Error while parsing atom coordinates";
                     logger.error(error);
                     logger.debug(exception);
-                    throw new CDKException(error);
+                    throw new CDKException(error, exception);
                 }
                 // atom-atom mapping
                 String mapping = tokenizer.nextToken();
@@ -234,7 +234,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             value + ": " + exception.getMessage();
                             logger.error(error);
                             logger.debug(exception);
-                            throw new CDKException(error);
+                            throw new CDKException(error, exception);
                         }
                     }
                 }
@@ -267,7 +267,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String error = "Error while parsing bond index";
                     logger.error(error);
                     logger.debug(exception);
-                    throw new CDKException(error);
+                    throw new CDKException(error, exception);
                 }
                 // parse the order
                 try {
@@ -282,7 +282,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String error = "Error while parsing bond index";
                     logger.error(error);
                     logger.debug(exception);
-                    throw new CDKException(error);
+                    throw new CDKException(error, exception);
                 }
                 // parse index atom 1
                 try {
@@ -294,7 +294,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String error = "Error while parsing index atom 1 in bond";
                     logger.error(error);
                     logger.debug(exception);
-                    throw new CDKException(error);
+                    throw new CDKException(error, exception);
                 }
                 // parse index atom 2
                 try {
@@ -306,7 +306,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String error = "Error while parsing index atom 2 in bond";
                     logger.error(error);
                     logger.debug(exception);
-                    throw new CDKException(error);
+                    throw new CDKException(error, exception);
                 }
                 // the rest are key=value fields
                 if (command.indexOf("=") != -1) {
@@ -335,7 +335,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             value + ": " + exception.getMessage();
                             logger.error(error);
                             logger.debug(exception);
-                            throw new CDKException(error);
+                            throw new CDKException(error, exception);
                         }
                     }
                 }
@@ -397,7 +397,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             value + ": " + exception.getMessage();
                             logger.error(error);
                             logger.debug(exception);
-                            throw new CDKException(error);
+                            throw new CDKException(error, exception);
                         }
                         if (atomID != -1 && label.length() > 0) {
                         	org.openscience.cdk.interfaces.Atom atom = readData.getAtomAt(atomID-1);
@@ -485,7 +485,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             String error = "Unexpected error while reading file: " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
         }
         return line;
     }
@@ -497,7 +497,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             String error = "Unexpected error while reading file: " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
         }
     }
 

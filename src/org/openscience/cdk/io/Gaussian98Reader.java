@@ -193,8 +193,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 			} catch (IOException exception)
 			{
 				throw new CDKException(
-						"Error while reading file: " + exception.toString()
-						);
+					"Error while reading file: " + exception.toString(),
+					exception
+				);
 			}
 			return file;
 		} else

@@ -142,13 +142,13 @@ public class ValenceConnectivityOrderOneDescriptor implements Descriptor {
 						elfac = IsotopeFactory.getInstance();
 					} catch (Exception exc) {
                                             logger.debug(exc);
-						throw new CDKException("Problem instantiating IsotopeFactory: " + exc.toString());
+						throw new CDKException("Problem instantiating IsotopeFactory: " + exc.toString(), exc);
 					}
 					try {
 						element = elfac.getElement(symbol);
 					} catch (Exception exc) {
                                             logger.debug(exc);
-						throw new CDKException("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString());
+						throw new CDKException("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString(), exc);
 					}
 					atomicNumber = element.getAtomicNumber();
 					valence = ((Integer)valences.get(symbol)).intValue();

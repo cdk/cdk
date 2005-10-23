@@ -296,7 +296,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				atom.setFlag(CDKConstants.VISITED, true);
 			} catch (Exception exc)
 			{
-				throw new CDKException("Error in HOSECodeGenerator->breadthFirstSearch.");
+				throw new CDKException("Error in HOSECodeGenerator->breadthFirstSearch.", exc);
 			}
 		}
     Collections.sort(sphereNodes,new TreeNodeComparator());

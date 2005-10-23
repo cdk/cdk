@@ -136,7 +136,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             String error = "Unexpected error while reading file: " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
         }
         return line;
     }
@@ -163,7 +163,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                     logger.info("Expecting " + productCount + " products in file");
                 } catch (Exception exception) {
                     logger.debug(exception);
-                    throw new CDKException("Error while counts line of RXN file");
+                    throw new CDKException("Error while counts line of RXN file", exception);
                 }
                 foundCOUNTS = true;
             } else {
@@ -200,7 +200,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 String error = "Error while reading reactant: " + exception.getMessage();
                 logger.error(error);
                 logger.debug(exception);
-                throw new CDKException(error);
+                throw new CDKException(error, exception);
             }
         }
         
@@ -233,7 +233,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 String error = "Error while reading product: " + exception.getMessage();
                 logger.error(error);
                 logger.debug(exception);
-                throw new CDKException(error);
+                throw new CDKException(error, exception);
             }
         }
         
@@ -247,7 +247,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             String error = "Unexpected error while reading file: " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
-            throw new CDKException(error);
+            throw new CDKException(error, exception);
         }
     }
 

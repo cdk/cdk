@@ -175,7 +175,7 @@ public class InductivePartialCharges {
 			return paulingElectronegativities;
 		} catch (Exception ex1) {
 			logger.debug(ex1);
-			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString());
+			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);
 		}
 	}
 

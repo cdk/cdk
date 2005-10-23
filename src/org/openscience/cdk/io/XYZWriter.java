@@ -77,7 +77,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
             try {
                 writeMolecule((Molecule)object);
             } catch(Exception ex) {
-                throw new CDKException("Error while writing XYZ file: " + ex.getMessage());
+                throw new CDKException("Error while writing XYZ file: " + ex.getMessage(), ex);
             }
         } else {
             throw new CDKException("XYZWriter only supports output of Molecule classes.");

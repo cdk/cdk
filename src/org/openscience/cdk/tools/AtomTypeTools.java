@@ -113,7 +113,7 @@ public class AtomTypeTools {
 				hoseCode=removeAromaticityFlagsFromHoseCode(hoseCode);
 				atom2.setProperty(CDKConstants.SPHERICAL_MATCHER, hoseCode);
 			} catch (CDKException ex1) {
-				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString());
+				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString(), ex1);
 			}
 		}
 		return ringSetMolecule;

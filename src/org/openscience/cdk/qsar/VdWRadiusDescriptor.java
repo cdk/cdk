@@ -150,7 +150,7 @@ public class VdWRadiusDescriptor implements Descriptor {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vdwradius));
         } catch (Exception ex1) {
             logger.debug(ex1);
-            throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+            throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
         }
     }
 

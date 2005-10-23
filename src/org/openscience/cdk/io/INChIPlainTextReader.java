@@ -172,7 +172,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                 line = input.readLine();
             }
         } catch (Exception exception) {
-            throw new CDKException("Error while reading INChI file: " + exception.getMessage());
+            throw new CDKException("Error while reading INChI file: " + exception.getMessage(), exception);
         }
         return cf;
     }

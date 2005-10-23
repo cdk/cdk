@@ -133,7 +133,7 @@ public class VASPReader extends DefaultChemObjectReader {
                     exception.getMessage();
                 logger.error(error);
                 logger.debug(exception);
-                throw new CDKException(error);
+                throw new CDKException(error, exception);
             }
             return cf;
         } else {

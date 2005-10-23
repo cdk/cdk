@@ -205,18 +205,18 @@ public class CMLReader extends DefaultChemObjectReader {
             String error = "Error while reading file: " + e.getMessage();
             logger.error(error);
             logger.debug(e);
-            throw new CDKException(error);
+            throw new CDKException(error, e);
         } catch (SAXParseException saxe) {
             SAXParseException spe = (SAXParseException)saxe;
             String error = "Found well-formedness error in line " + spe.getLineNumber();
             logger.error(error);
             logger.debug(saxe);
-            throw new CDKException(error);
+            throw new CDKException(error, saxe);
         } catch (SAXException saxe) {
             String error = "Error while parsing XML: " + saxe.getMessage();
             logger.error(error);
             logger.debug(saxe);
-            throw new CDKException(error);
+            throw new CDKException(error, saxe);
         }
         return cdo;
     }

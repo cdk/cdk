@@ -90,7 +90,7 @@ public class TemplateHandler3D{
 			fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
 			imdl=new IteratingMDLReader(fin);
 		}catch (Exception exc1){
-			throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz");
+			throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
 		}
 		//System.out.println("TEMPLATE addMolecule");
 		Molecule molecule=null;

@@ -177,7 +177,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 			catch (Exception ex) {
 				logger.error(ex.getMessage());
 				logger.debug(ex);
-				throw new CDKException("Exception while writing MDL file: " + ex.getMessage());
+				throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
 			}
 		} else {
 			throw new CDKException("Only supported is writing of ChemFile, SetOfMolecules and Molecule objects.");

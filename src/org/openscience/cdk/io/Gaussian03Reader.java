@@ -155,7 +155,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                     try {
                         readCoordinates(model);
                     } catch (IOException exception) {
-                        throw new CDKException("Error while reading coordinates: " + exception.toString());
+                        throw new CDKException("Error while reading coordinates: " + exception.toString(), exception);
                     }
                     break;
                 }
@@ -180,7 +180,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                         try {
                             readFrequencies(model);
                         } catch (IOException exception) {
-                            throw new CDKException("Error while reading frequencies: " + exception.toString());
+                            throw new CDKException("Error while reading frequencies: " + exception.toString(), exception);
                         }
                     } else if (line.indexOf("Mulliken atomic charges") >= 0) {
                         readPartialCharges(model);
@@ -189,7 +189,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                         try {
                             readNMRData(model, line);
                         } catch (IOException exception) {
-                            throw new CDKException("Error while reading NMR data: " + exception.toString());
+                            throw new CDKException("Error while reading NMR data: " + exception.toString(), exception);
                         }
                     } else if (line.indexOf("GINC") >= 0) {
                         // Found calculation level of theory
@@ -204,7 +204,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 fireFrameRead();
             }
         } catch (IOException exception) {
-            throw new CDKException("Error while reading general structure: " + exception.toString());
+            throw new CDKException("Error while reading general structure: " + exception.toString(), exception);
         }
         return sequence;
     }

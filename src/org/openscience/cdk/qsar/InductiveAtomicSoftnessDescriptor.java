@@ -174,7 +174,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
                 radiusTarget = type.getCovalentRadius();
             } catch (Exception ex1) {
                 logger.debug(ex1);
-                throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+                throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
             }
 
             for (int i = 0; i < allAtoms.length; i++) {
@@ -189,7 +189,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
                         type = factory.getAtomType(symbol);
                     } catch (Exception ex1) {
                         logger.debug(ex1);
-                        throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+                        throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
                     }
 
                     radius = type.getCovalentRadius();

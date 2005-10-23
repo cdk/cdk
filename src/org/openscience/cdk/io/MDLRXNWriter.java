@@ -160,7 +160,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             logger.error(ex.getMessage());
             logger.debug(ex);
             System.out.println("HUHU2");
-            throw new CDKException("Exception while writing MDL file: " + ex.getMessage());
+            throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
         }
 	}
 	
@@ -182,7 +182,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                 } catch (Exception ex) {
                     logger.error(ex.getMessage());
                     logger.debug(ex);
-                    throw new CDKException("Exception while creating MDLWriter: " + ex.getMessage());
+                    throw new CDKException("Exception while creating MDLWriter: " + ex.getMessage(), ex);
                 }
                 mdlwriter.write(mol);
                 writer.write(sw.toString());

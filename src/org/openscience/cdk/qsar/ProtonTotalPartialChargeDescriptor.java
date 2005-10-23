@@ -129,7 +129,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
 		//	hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			peoe.assignGasteigerMarsiliPartialCharges(mol, true);
 		} catch (Exception ex1) {
-			throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString());
+			throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
 		}
 		org.openscience.cdk.interfaces.Atom target = mol.getAtomAt(atomPosition);
 		org.openscience.cdk.interfaces.Atom[] neighboors = mol.getConnectedAtoms(target);

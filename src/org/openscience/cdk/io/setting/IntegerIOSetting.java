@@ -48,7 +48,7 @@ public class IntegerIOSetting extends IOSetting {
             Integer.parseInt(setting);
             this.setting = setting;
         } catch (NumberFormatException exception) {
-            throw new CDKException("Setting " + setting + " is not an integer.");
+            throw new CDKException("Setting " + setting + " is not an integer.", exception);
         }
     }
     

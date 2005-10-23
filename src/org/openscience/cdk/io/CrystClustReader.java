@@ -216,7 +216,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
             String message = "Error while parsing CrystClust file: " + exception.getMessage();
             logger.error(message);
             logger.debug(exception);
-            throw new CDKException(message);
+            throw new CDKException(message, exception);
         }
         return file;
     }
