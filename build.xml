@@ -89,8 +89,8 @@
             <!-- Checks which parts of CDK can be build. -->
             <condition property="docletsAreCompiled">
                 <and>
-                    <available classname="MakeJavaFilesFilesDoclet" classpath="${doc}/javadoc"/>
-                    <available classname="MakeCDKSetFilesDoclet" classpath="${doc}/javadoc"/>
+                    <available classname="net.sf.cdk.tools.MakeJavaFilesFilesDoclet" classpath="${doc}/javadoc"/>
+                    <available classname="net.sf.cdk.tools.MakeCDKSetFilesDoclet" classpath="${doc}/javadoc"/>
                 </and>
             </condition>
             <available classname="joelib.molecule.JOEAtom" 
