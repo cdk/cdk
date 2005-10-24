@@ -100,7 +100,7 @@ public class ChemModelManipulator {
      * @return  The AtomContainer with all the Molecules of this container
      */
     public static AtomContainer getAllInOneContainer(ChemModel chemModel) {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        AtomContainer container = chemModel.getBuilder().newAtomContainer();
         Crystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             container.add(crystal);
@@ -115,23 +115,27 @@ public class ChemModelManipulator {
         }
         return container;
     }
-    
-    /**
-     * This badly named methods tries to determine which AtomContainer in the
-     * ChemModel is best suited to contain added Atom's and Bond's.
-     */
+
     public static AtomContainer createNewMolecule(ChemModel chemModel) {
         // Add a new molecule either the set of molecules
-        Molecule molecule = new org.openscience.cdk.Molecule();
+        Molecule molecule = chemModel.getBuilder().newMolecule();
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             moleculeSet.addMolecule(molecule);
         } else {
-            SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
+            SetOfMolecules moleculeSet = chemModel.getBuilder().newSetOfMolecules();
             moleculeSet.addMolecule(molecule);
             chemModel.setSetOfMolecules(moleculeSet);
         }
         return molecule;
+    }
+
+    public static ChemModel newChemModel(AtomContainer molecule) {
+        ChemModel model = molecule.getBuilder().newChemModel();
+        SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+        moleculeSet.addAtomContainer(molecule);
+        model.setSetOfMolecules(moleculeSet);
+        return model;
     }
 
     /**
@@ -185,7 +189,7 @@ public class ChemModelManipulator {
      * Returns all the AtomContainer's of a ChemModel.
      */
     public static AtomContainer[] getAllAtomContainers(ChemModel chemModel) {
-        SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
+        SetOfMolecules moleculeSet = chemModel.getBuilder().newSetOfMolecules();
         if (chemModel.getSetOfMolecules() != null) {
             moleculeSet.add(chemModel.getSetOfMolecules());
         }
