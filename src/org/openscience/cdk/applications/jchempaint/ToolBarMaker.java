@@ -219,7 +219,7 @@ public class ToolBarMaker
 				if (button != null)
 				{
           box.add(button);
-					if (i == 0)
+					if (i == 2)
 					{
 						button.setBackground(Color.GRAY);
 					} else
