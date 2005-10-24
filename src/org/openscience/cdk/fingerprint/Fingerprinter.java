@@ -57,12 +57,12 @@ import org.openscience.cdk.tools.LoggingTool;
  *  The FingerPrinter assumes that hydrogens are explicitely given! <p>
  *
  *  <font color="#FF0000">Warning: The aromaticity detection for this
- *  SmilesGenerator relies on AllRingsFinder, which is known to take very long
+ *  FingerPrinter relies on AllRingsFinder, which is known to take very long
  *  for some molecules with many cycles or special cyclic topologies. Thus, the
  *  AllRingsFinder has a built-in timeout of 5 seconds after which it aborts and
  *  throws an Exception. If you want your SMILES generated at any expense, you
  *  need to create your own AllRingsFinder, set the timeout to a higher value,
- *  and assign it to this SmilesGenerator. In the vast majority of cases,
+ *  and assign it to this FingerPrinter. In the vast majority of cases,
  *  however, the defaults will be fine. </font> <p>
  *
  *  <font color="#FF0000">Another Warning : The daylight manual says:
