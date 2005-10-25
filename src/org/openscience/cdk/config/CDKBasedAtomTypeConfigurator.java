@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.tools.LoggingTool;
@@ -83,7 +84,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
             Object object = atomTypes.elementAt(f);
             if (object == null) {
                 System.out.println("Expecting an object but found null!");
-                if (!(object instanceof org.openscience.cdk.AtomType)) {
+                if (!(object instanceof AtomType)) {
                     System.out.println("Expecting cdk.AtomType class, but got: " + object.getClass().getName());
                 }
             }

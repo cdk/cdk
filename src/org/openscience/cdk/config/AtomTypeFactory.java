@@ -338,7 +338,7 @@ public class AtomTypeFactory {
 	 *
 	 * @return    The allAtomTypes value
 	 */
-	public org.openscience.cdk.AtomType[] getAllAtomTypes()
+	public AtomType[] getAllAtomTypes()
 	{
 		logger.debug("Returning list of size: ", getSize());
 		Vector atomtypeList = new Vector();
@@ -350,7 +350,7 @@ public class AtomTypeFactory {
 		}
 		AtomType[] atomTypes = new AtomType[atomtypeList.size()];
 		atomtypeList.copyInto(atomTypes);
-		return (org.openscience.cdk.AtomType[])atomTypes;
+		return atomTypes;
 	}
 
 
