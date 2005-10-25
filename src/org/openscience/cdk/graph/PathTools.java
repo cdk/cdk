@@ -30,10 +30,10 @@ package org.openscience.cdk.graph;
 
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 
 /**
  * Tools class with methods for handling molecular graphs.
@@ -209,8 +209,9 @@ public class PathTools  {
       * @param   a the atom to start from
       * @param   max the number of neighbours to return
       * @return  the average bond length 
-     */  public static org.openscience.cdk.interfaces.Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
-    Molecule mol=new Molecule();
+     */  
+  public static org.openscience.cdk.interfaces.Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
+    Molecule mol=new org.openscience.cdk.Molecule();
     Vector v=new Vector();
     v.add(a);
     breadthFirstSearch(ac, v, mol, max);
