@@ -104,6 +104,7 @@ public class SmilesParser
 	String smiles = null;
 	double bondStatus = -1;
 	double bondStatusForRingClosure = 1;
+    boolean bondIsAromatic = false;
 	Atom[] rings = null;
 	double[] ringbonds = null;
 	int thisRing = -1;
@@ -181,6 +182,7 @@ public class SmilesParser
 		Bond bond = null;
 		nodeCounter = 0;
 		bondStatus = 0;
+        bondIsAromatic = false;
 		boolean bondExists = true;
 		thisRing = -1;
 		currentSymbol = null;
@@ -258,6 +260,9 @@ public class SmilesParser
 					{
 						logger.debug("Creating bond between ", atom.getSymbol(), " and ", lastNode.getSymbol());
 						bond = new Bond(atom, lastNode, bondStatus);
+                        if (bondIsAromatic) {
+                            bond.setFlag(CDKConstants.ISAROMATIC, true);
+                        }
 						molecule.addBond(bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
@@ -265,6 +270,7 @@ public class SmilesParser
 					nodeCounter++;
 					position = position + currentSymbol.length();
 					bondExists = true;
+                    bondIsAromatic = false;
 				} else if (mychar == '=')
 				{
 					position++;
@@ -334,10 +340,14 @@ public class SmilesParser
 					if (lastNode != null && bondExists)
 					{
 						bond = new Bond(atom, lastNode, bondStatus);
+                        if (bondIsAromatic) {
+                            bond.setFlag(CDKConstants.ISAROMATIC, true);
+                        }
 						molecule.addBond(bond);
 						logger.debug("Added bond: ", bond);
 					}
 					bondStatus = CDKConstants.BONDORDER_SINGLE;
+                    bondIsAromatic = false;
 					lastNode = atom;
 					nodeCounter++;
 					position = position + currentSymbol.length() + 2;
@@ -352,6 +362,10 @@ public class SmilesParser
 					bondExists = true;
 					// a simple single bond
 					position++;
+                } else if (mychar == ':') {
+                    bondExists = true;
+                    bondIsAromatic = true;
+                    position++;
 				} else if (mychar == '/' || mychar == '\\')
 				{
 					logger.warn("Ignoring stereo information for double bond");
@@ -807,7 +821,11 @@ public class SmilesParser
 		{
 			partner = thisNode;
 			bond = new Bond(atom, partner, bondStat);
+            if (bondIsAromatic) {
+                bond.setFlag(CDKConstants.ISAROMATIC, true);
+            }
 			molecule.addBond(bond);
+            bondIsAromatic = false;
 			rings[thisRing] = null;
 			ringbonds[thisRing] = -1;
 
