@@ -73,6 +73,7 @@ public class PiContactDetectionDescriptor implements Descriptor {
 	private int secondAtom = 0;
 	private boolean checkAromaticity = false;
 	SetOfAtomContainers acSet = null;
+  private AtomContainer acold=null;
 
 
 	/**
@@ -153,7 +154,10 @@ public class PiContactDetectionDescriptor implements Descriptor {
 
 		org.openscience.cdk.interfaces.Atom first = ac.getAtomAt(firstAtom);
 		org.openscience.cdk.interfaces.Atom second = ac.getAtomAt(secondAtom);
-		acSet = ConjugatedPiSystemsDetector.detect(mol);
+        if(acold!=ac){
+          acold=ac;
+          acSet = ConjugatedPiSystemsDetector.detect(mol);
+        }
 		org.openscience.cdk.interfaces.AtomContainer[] detected = acSet.getAtomContainers();
 
 		org.openscience.cdk.interfaces.Atom[] neighboorsFirst = mol.getConnectedAtoms(first);

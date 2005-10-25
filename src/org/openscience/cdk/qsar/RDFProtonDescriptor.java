@@ -78,7 +78,8 @@ public class RDFProtonDescriptor implements Descriptor {
 	private boolean checkAromaticity = false;
   private AtomContainer acold=null;
   private RingSet rs = null;
-
+  private SetOfAtomContainers acSet=null;
+  
 	/**
 	 *  Constructor for the RDFProtonDescriptor object
 	 */
@@ -183,6 +184,8 @@ public class RDFProtonDescriptor implements Descriptor {
 			Molecule mol = new Molecule(ac);
       if(ac!=acold){
         acold=ac;
+   			// DETECTION OF pi SYSTEMS
+        acSet = ConjugatedPiSystemsDetector.detect(mol);
         if(precalculatedringset==null)
           rs = (new AllRingsFinder()).findAllRings(ac);
         else
@@ -219,9 +222,7 @@ public class RDFProtonDescriptor implements Descriptor {
 				}
 			}
 			
-			// DETECTION OF pi SYSTEMS
-			SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
-			AtomContainer detected = acSet.getAtomContainer(0);			
+   		AtomContainer detected = acSet.getAtomContainer(0);			
 			
 			// neighboors[0] is the atom joined to the target proton:
 			Atom[] neighboors = mol.getConnectedAtoms(target);
