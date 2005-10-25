@@ -211,7 +211,7 @@ public class PathTools  {
       * @return  the average bond length 
      */  
   public static org.openscience.cdk.interfaces.Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
-    Molecule mol=new org.openscience.cdk.Molecule();
+    Molecule mol= ac.getBuilder().newMolecule();
     Vector v=new Vector();
     v.add(a);
     breadthFirstSearch(ac, v, mol, max);
