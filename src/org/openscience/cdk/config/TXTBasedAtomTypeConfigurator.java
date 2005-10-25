@@ -31,7 +31,8 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * AtomType list configurator that uses the AtomTypes originally
@@ -63,7 +64,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     /**
      * Read a text based configuration file
      */
-    public Vector readAtomTypes() throws IOException {
+    public Vector readAtomTypes(ChemObjectBuilder builder) throws IOException {
         Vector atomTypes = new Vector();
 
         if (ins == null) {
@@ -118,7 +119,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                             "Malformed Number");
                         }
                         
-                        AtomType atomType = new AtomType(name, rootType);
+                        AtomType atomType = builder.newAtomType(name, rootType);
                         atomType.setAtomicNumber(atomicNumber);
                         atomType.setExactMass(mass);
                         atomType.setVanderwaalsRadius(vdwaals);

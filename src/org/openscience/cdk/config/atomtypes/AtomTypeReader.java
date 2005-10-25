@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Vector;
 
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -110,7 +111,7 @@ public class AtomTypeReader {
      *
      * @return a Vector with atom types. Is empty if some reading error occured.
      */
-    public Vector readAtomTypes() {
+    public Vector readAtomTypes(ChemObjectBuilder builder) {
     	Vector isotopes = new Vector();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
@@ -119,7 +120,7 @@ public class AtomTypeReader {
             logger.warn("Cannot deactivate validation: ", exception.getMessage());
             logger.debug(exception);
         }
-        AtomTypeHandler handler = new AtomTypeHandler();
+        AtomTypeHandler handler = new AtomTypeHandler(builder);
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));

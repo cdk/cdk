@@ -27,6 +27,7 @@ package org.openscience.cdk.test.config.atomtypes;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.atomtypes.AtomTypeHandler;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -50,18 +51,18 @@ public class AtomTypeHandlerTest extends CDKTestCase {
     // serious testing is done in AtomTypeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
-    public void testAtomTypeHandler() {
-        AtomTypeHandler handler = new AtomTypeHandler();
+    public void testAtomTypeHandler_ChemObjectBuilder() {
+        AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
     }
     
     public void testGetAtomTypes() {
-        AtomTypeHandler handler = new AtomTypeHandler();
+        AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read
         assertNull(handler.getAtomTypes());
     }
     
     public void testStartDocument() {
-        AtomTypeHandler handler = new AtomTypeHandler();
+        AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
         assertNull(handler.getAtomTypes());
     }

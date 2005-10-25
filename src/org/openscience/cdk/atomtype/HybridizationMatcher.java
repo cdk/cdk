@@ -53,14 +53,6 @@ public class HybridizationMatcher implements AtomTypeMatcher {
 	 */
 	public HybridizationMatcher() {
 		logger = new LoggingTool(this);
-        if (factory == null) {
-            try {
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
-            } catch (Exception ex1) {
-                logger.error(ex1.getMessage());
-                logger.debug(ex1);
-            }
-        }
 	}
 
 
@@ -74,6 +66,17 @@ public class HybridizationMatcher implements AtomTypeMatcher {
 	 * @return                 the matching AtomType
 	 */
 	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atom) throws CDKException {
+        if (factory == null) {
+            try {
+                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml",
+                          atom.getBuilder());
+            } catch (Exception ex1) {
+                logger.error(ex1.getMessage());
+                logger.debug(ex1);
+                throw new CDKException("Could not instantiate the AtomType list!", ex1);
+            }
+        }
+
         AtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (int i=0; i<types.length; i++) {
             AtomType type = types[i];

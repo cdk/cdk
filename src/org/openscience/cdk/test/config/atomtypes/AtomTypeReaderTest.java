@@ -29,6 +29,7 @@ import java.util.Vector;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.AtomType;
@@ -58,7 +59,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
         assertNotNull(reader);
     }
     
-    public void testReadAtomTypes() {
+    public void testReadAtomTypes_ChemObjectBuilder() {
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader(
             "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              " +
@@ -83,7 +84,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             "</atomTypeList>")
         );
         assertNotNull(reader);
-        Vector types = reader.readAtomTypes();
+        Vector types = reader.readAtomTypes(new ChemObject().getBuilder());
         assertNotNull(types);
         assertEquals(2, types.size());
     }
@@ -115,7 +116,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             new StringReader(data)
         );
         assertNotNull(reader);
-        Vector types = reader.readAtomTypes();
+        Vector types = reader.readAtomTypes(new ChemObject().getBuilder());
         assertNotNull(types);
         assertEquals(2, types.size());
     }
@@ -153,7 +154,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             new StringReader(data)
         );
         assertNotNull(reader);
-        Vector types = reader.readAtomTypes();
+        Vector types = reader.readAtomTypes(new ChemObject().getBuilder());
         assertNotNull(types);
         assertEquals(1, types.size());
         

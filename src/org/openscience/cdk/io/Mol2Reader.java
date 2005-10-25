@@ -157,7 +157,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
         AtomTypeFactory atFactory = null;
         try {
             atFactory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/mol2_atomtypes.xml"
+                "org/openscience/cdk/config/data/mol2_atomtypes.xml", molecule.getBuilder()
             );
         } catch (Exception exception) {
             String error = "Could not instantiate an AtomTypeFactory";

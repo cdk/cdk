@@ -71,7 +71,6 @@ public class InductivePartialCharges {
 					1.7, 1.9, 2.2, 2.2, 2.2, 2.4, 1.9, 1.8, 1.8, 1.9, 2.0, 2.2, 0, 0.7, 0.9, 1.1};
 		}
 		logger = new LoggingTool(this);
-		factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
 	}
 
 
@@ -83,6 +82,11 @@ public class InductivePartialCharges {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public AtomContainer assignInductivePartialCharges(AtomContainer ac) throws Exception {
+        if (factory == null) {
+            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+                ac.getBuilder());
+        }
+
 		int stepsLimit = 9;
 		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
 		double[] pChInch = new double[atoms.length * (stepsLimit + 1)];

@@ -31,8 +31,8 @@ package org.openscience.cdk.tools;
 import java.io.IOException;
 
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
@@ -105,7 +105,7 @@ public class ValencyHybridChecker extends ValencyChecker {
         
         logger.debug("Calculating number of missing hydrogen atoms");
         // get default atom
-        AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+        org.openscience.cdk.interfaces.AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if (atomTypes.length == 0) {
             logger.warn("Element not found in configuration file: ", atom);
             return 0;
@@ -113,7 +113,7 @@ public class ValencyHybridChecker extends ValencyChecker {
 
         logger.debug("Found atomtypes: ", atomTypes.length);
         for (int f = 0; f < atomTypes.length; f++) {
-            AtomType type = atomTypes[f];
+            org.openscience.cdk.interfaces.AtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
                 int formalNeighbourCount = type.getFormalNeighbourCount();
@@ -149,7 +149,7 @@ public class ValencyHybridChecker extends ValencyChecker {
             return true;
         }
 
-		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+		org.openscience.cdk.interfaces.AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if (atomTypes.length == 0) {
             logger.warn("Missing entry in atom type list for ", atom.getSymbol());
             return true;
@@ -167,7 +167,7 @@ public class ValencyHybridChecker extends ValencyChecker {
 
         boolean elementPlusChargeMatches = false;
         for (int f = 0; f < atomTypes.length; f++) {
-            AtomType type = atomTypes[f];
+            org.openscience.cdk.interfaces.AtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 if (bondOrderSum + hcount == type.getBondOrderSum() && 
                     maxBondOrder <= type.getMaxBondOrder()) {

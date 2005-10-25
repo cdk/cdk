@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ElectronContainer;
-import org.openscience.cdk.LonePair;
+import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.Molecule;
 
 /**

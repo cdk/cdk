@@ -52,12 +52,13 @@ import org.openscience.cdk.io.ReaderFactory;
  * The detection of pocket and cavities in a bioPolymer is done similar to the program 
  * LIGSITE {@cdk.cite MH1997}.
  * 
- * TODO:
- * Optimisation of the cubic grid placement 
+ * <p>TODO: Optimisation of the cubic grid placement 
  *
  * @author      cho
  * @cdk.created 2005-09-30
  * @cdk.module     experimental
+ * @cdk.keyword    protein
+ * @cdk.keyword    pocket
  */
 public class ProteinPocketFinder {
 
@@ -895,8 +896,9 @@ public class ProteinPocketFinder {
 		AtomTypeFactory atf = null;
 		Atom[] atoms = protein.getAtoms();
 		try {
-			atf = AtomTypeFactory
-					.getInstance(vanDerWaalsFile);
+			atf = AtomTypeFactory.getInstance(
+                vanDerWaalsFile, atoms[0].getBuilder()
+            );
 		} catch (Exception ex1) {
 			System.out.println("Problem with AtomTypeFactory due to:"
 					+ ex1.toString());

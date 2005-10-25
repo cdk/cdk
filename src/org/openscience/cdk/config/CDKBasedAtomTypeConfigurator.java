@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -53,7 +54,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         this.ins = ins;
     }
     
-    public Vector readAtomTypes() throws IOException {
+    public Vector readAtomTypes(ChemObjectBuilder builder) throws IOException {
         Vector atomTypes = new Vector(0);
         if (ins == null) {
             try {
@@ -77,7 +78,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         }
         if (ins == null) throw new IOException("There was a problem getting an input stream");
         AtomTypeReader reader = new AtomTypeReader(new InputStreamReader(ins));
-        atomTypes = reader.readAtomTypes();
+        atomTypes = reader.readAtomTypes(builder);
         for (int f = 0; f < atomTypes.size(); f++) {
             Object object = atomTypes.elementAt(f);
             if (object == null) {

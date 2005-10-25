@@ -30,11 +30,12 @@ package org.openscience.cdk.tools;
 
 import java.io.IOException;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 
@@ -54,6 +55,7 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class ValencyChecker implements ValencyCheckerInterface {
 
+	private String atomTypeList = null;
 	protected AtomTypeFactory structgenATF;
 	protected LoggingTool logger;
 
@@ -62,10 +64,25 @@ public class ValencyChecker implements ValencyCheckerInterface {
 	}
 
 	public ValencyChecker(String atomTypeList) throws IOException, ClassNotFoundException {
-		structgenATF = AtomTypeFactory.getInstance(atomTypeList);
+		this.atomTypeList = atomTypeList;
 		logger = new LoggingTool(this);
         logger.info("Using configuration file: ", atomTypeList);
 	}
+
+    /**
+     * @param builder the ChemObjectBuilder implementation used to construct the AtomType's.
+     */
+    protected AtomTypeFactory getAtomTypeFactory(ChemObjectBuilder builder) throws CDKException {
+        if (structgenATF == null) {
+            try {
+                structgenATF = AtomTypeFactory.getInstance(atomTypeList, builder);
+            } catch (Exception exception) {
+                logger.debug(exception);
+                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
+            }
+        }
+        return structgenATF;
+    }
 
     /**
      * Checks wether an Atom is saturated by comparing it with known AtomTypes.
@@ -77,7 +94,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
             return true;
         }
 
-		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+		org.openscience.cdk.interfaces.AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if (atomTypes.length == 0) {
             logger.warn("Missing entry in atom type list for ", atom.getSymbol());
             return true;
@@ -95,7 +112,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
 
         boolean elementPlusChargeMatches = false;
         for (int f = 0; f < atomTypes.length; f++) {
-            AtomType type = atomTypes[f];
+            org.openscience.cdk.interfaces.AtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 if (bondOrderSum + hcount == type.getBondOrderSum() && 
                     maxBondOrder <= type.getMaxBondOrder()) {
@@ -184,7 +201,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
         
         logger.debug("Calculating number of missing hydrogen atoms");
         // get default atom
-        AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+        org.openscience.cdk.interfaces.AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if (atomTypes.length == 0) {
             logger.warn("Element not found in configuration file: ", atom);
             return 0;
@@ -192,7 +209,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
 
         logger.debug("Found atomtypes: ", atomTypes.length);
         for (int f = 0; f < atomTypes.length; f++) {
-            AtomType type = atomTypes[f];
+            org.openscience.cdk.interfaces.AtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
                 missingHydrogen = (int) (type.getBondOrderSum() - bondOrderSum);
@@ -285,15 +302,15 @@ public class ValencyChecker implements ValencyCheckerInterface {
     	org.openscience.cdk.interfaces.Atom atom = atoms[0];
     	org.openscience.cdk.interfaces.Atom partner = atoms[1];
         logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
-        AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
-        AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+        org.openscience.cdk.interfaces.AtomType[] atomTypes1 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(atom.getSymbol());
+        org.openscience.cdk.interfaces.AtomType[] atomTypes2 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(partner.getSymbol());
         for (int atCounter1=0; atCounter1<atomTypes1.length; atCounter1++) {
-            AtomType aType1 = atomTypes1[atCounter1];
+            org.openscience.cdk.interfaces.AtomType aType1 = atomTypes1[atCounter1];
             logger.debug("  condidering atom type: ", aType1);
             if (couldMatchAtomType(atomContainer, atom, aType1)) {
                 logger.debug("  trying atom type: ", aType1);
                 for (int atCounter2=0; atCounter2<atomTypes2.length; atCounter2++) {
-                    AtomType aType2 = atomTypes2[atCounter2];
+                    org.openscience.cdk.interfaces.AtomType aType2 = atomTypes2[atCounter2];
                     logger.debug("  condidering partner type: ", aType1);
                     if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
                         logger.debug("    with atom type: ", aType2);
@@ -332,8 +349,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
 	public boolean isSaturated(org.openscience.cdk.interfaces.AtomContainer container) throws CDKException {
         return allSaturated(container);
     }
-	public boolean allSaturated(org.openscience.cdk.interfaces.AtomContainer ac) throws CDKException
-	{
+	public boolean allSaturated(org.openscience.cdk.interfaces.AtomContainer ac) throws CDKException {
         logger.debug("Are all atoms saturated?");
         for (int f = 0; f < ac.getAtomCount(); f++) {
             if (!isSaturated(ac.getAtomAt(f), ac)) {

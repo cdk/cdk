@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.RingSet;
@@ -67,17 +68,32 @@ public class SaturationChecker implements ValencyCheckerInterface {
 
 	public SaturationChecker() throws IOException, ClassNotFoundException
 	{
-		structgenATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml");
 		logger = new LoggingTool(this);
 	}
 
+    /**
+     * @param builder the ChemObjectBuilder implementation used to construct the AtomType's.
+     */
+    protected AtomTypeFactory getAtomTypeFactory(ChemObjectBuilder builder) throws CDKException {
+        if (structgenATF == null) {
+            try {
+                structgenATF = AtomTypeFactory.getInstance(
+                    "org/openscience/cdk/config/data/structgen_atomtypes.xml", 
+                    builder
+                );
+            } catch (Exception exception) {
+                logger.debug(exception);
+                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
+            }
+        }
+        return structgenATF;
+    }
 
 	public boolean hasPerfectConfiguration(Atom atom, AtomContainer ac) throws CDKException
 	{
-
 		double bondOrderSum = ac.getBondOrderSum(atom);
 		double maxBondOrder = ac.getMaximumBondOrder(atom);
-		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+		AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
       return true;
 		logger.debug("*** Checking for perfect configuration ***");
@@ -134,6 +150,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
      * <b>both</b> Atoms in the bond are unsaturated.
      */
     public boolean isUnsaturated(org.openscience.cdk.interfaces.Bond bond, AtomContainer atomContainer) throws CDKException {
+
     	org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
         boolean isUnsaturated = true;
         for (int i=0; i<atoms.length; i++) {
@@ -159,7 +176,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
      * Checks wether an Atom is saturated by comparing it with known AtomTypes.
      */
 	public boolean isSaturated(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.AtomContainer ac) throws CDKException {
-		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+		AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if(atomTypes.length==0)
           return true;
         double bondOrderSum = ac.getBondOrderSum(atom);
@@ -194,7 +211,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 */
 	public boolean isOverSaturated(Atom atom, AtomContainer ac) throws CDKException
 	{
-		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+		AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
       return false;
 		double bondOrderSum = ac.getBondOrderSum(atom);
@@ -231,7 +248,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 */
 	public double getCurrentMaxBondOrder(org.openscience.cdk.interfaces.Atom atom, AtomContainer ac) throws CDKException
 	{
-		AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+		AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
       return 0;
 		double bondOrderSum = ac.getBondOrderSum(atom);
@@ -378,8 +395,8 @@ public class SaturationChecker implements ValencyCheckerInterface {
     	org.openscience.cdk.interfaces.Atom atom = atoms[0];
     	org.openscience.cdk.interfaces.Atom partner = atoms[1];
         logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
-        AtomType[] atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
-        AtomType[] atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+        AtomType[] atomTypes1 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(atom.getSymbol());
+        AtomType[] atomTypes2 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(partner.getSymbol());
         boolean bondOrderIncreased = true;
         while (bondOrderIncreased && !isSaturated(bond, atomContainer)) {
             logger.debug("Can increase bond order");
@@ -446,7 +463,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 			{
 				atom = atomContainer.getAtomAt(f);
 				logger.debug("symbol: ", atom.getSymbol());
-				atomTypes1 = structgenATF.getAtomTypes(atom.getSymbol());
+				atomTypes1 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if(atomTypes1.length>0){
           logger.debug("first atom type: ", atomTypes1[0]);
           if (atomContainer.getBondCount(atom) == i)
@@ -457,7 +474,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
               {
                 partner = partners[g];
                 logger.debug("Atom has " + partners.length + " partners");
-                atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+                atomTypes2 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(partner.getSymbol());
                 if(atomTypes2.length==0)
                   return;
                 if (atomContainer.getBond(partner,atom).getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum() - partner.getHydrogenCount())
@@ -479,7 +496,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
               {
                 partner = partners[g];
                 logger.debug("Atom has " + partners.length + " partners");
-                atomTypes2 = structgenATF.getAtomTypes(partner.getSymbol());
+                atomTypes2 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(partner.getSymbol());
                 if(atomTypes2.length==0)
                   return;
                 if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum() - partner.getHydrogenCount())
@@ -617,7 +634,6 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	 */
 	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.Atom atom, double bondOrderSum, org.openscience.cdk.interfaces.Bond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
         throws CDKException {
-
         int missingHydrogen = 0;
         if (atom instanceof PseudoAtom) {
             // don't figure it out... it simply does not lack H's
@@ -626,7 +642,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
         } else {
             logger.info("Calculating number of missing hydrogen atoms");
             // get default atom
-            AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+            AtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
             if(atomTypes.length==0 && throwExceptionForUnknowAtom)
               return 0;
             logger.debug("Found atomtypes: " + atomTypes.length);

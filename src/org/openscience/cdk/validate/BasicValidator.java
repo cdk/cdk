@@ -226,7 +226,8 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/structgen_atomtypes.xml"
+                "org/openscience/cdk/config/data/structgen_atomtypes.xml", 
+                bond.getBuilder()
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
                 org.openscience.cdk.interfaces.Atom atom = bond.getAtomAt(i);
@@ -234,8 +235,8 @@ public class BasicValidator extends AbstractValidator {
                     // ok, all is fine; we don't know the properties of pseudo atoms
                     break;
                 }
-                AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
-                AtomType failedOn = null;
+                org.openscience.cdk.interfaces.AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+                org.openscience.cdk.interfaces.AtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
                     if (bond.getOrder() <= atomTypes[j].getMaxBondOrder()) {
@@ -308,10 +309,11 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/valency_atomtypes.xml"
+                "org/openscience/cdk/config/data/valency_atomtypes.xml", 
+                atom.getBuilder()
             );
             int bos = (int)molecule.getBondOrderSum(atom);
-            AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+            org.openscience.cdk.interfaces.AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
             if (atomTypes.length == 0) {
                 checkBondSum.setDetails(
                     "Cannot validate bond order sum for atom not in valency atom type list: " +
@@ -319,10 +321,10 @@ public class BasicValidator extends AbstractValidator {
                 );
                 report.addWarning(checkBondSum);
             } else {
-                AtomType failedOn = null;
+                org.openscience.cdk.interfaces.AtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
-                    AtomType type = atomTypes[j];
+                    org.openscience.cdk.interfaces.AtomType type = atomTypes[j];
                     if (atom.getFormalCharge() == type.getFormalCharge()) {
                         foundMatchingAtomType = true;
                         if (bos == type.getBondOrderSum()) {

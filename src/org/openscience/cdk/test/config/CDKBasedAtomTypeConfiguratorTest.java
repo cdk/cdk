@@ -29,6 +29,7 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfigurator;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -55,12 +56,14 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase
         assertNotNull(configurator);
     }
     
-    public void testReadAtomTypes() throws Exception {
+    public void testReadAtomTypes_ChemObjectBuilder() throws Exception {
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
         String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         configurator.setInputStream(ins);
-        assertNotSame(new Integer(0), new Integer(configurator.readAtomTypes().size()));
+        assertNotSame(new Integer(0), new Integer(
+            configurator.readAtomTypes(new ChemObject().getBuilder()).size())
+        );
     }
     
     public void testSetInputStream_InputStream() throws Exception {

@@ -367,7 +367,8 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				int labelX = (int) (atom.getPoint2d().x - 2);
 				int labelY = (int) (atom.getPoint2d().y + 2);
         try{
-          AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+          AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt",
+              atom.getBuilder());
           factory.configure(atom);
         }catch(Exception ex){
            //We choose black if reading not possible

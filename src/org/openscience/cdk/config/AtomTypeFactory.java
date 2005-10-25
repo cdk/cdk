@@ -32,8 +32,9 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -51,14 +52,17 @@ import org.openscience.cdk.tools.LoggingTool;
  *  there is one AtomTypeFactory instance. An instance of this class is
  *  obtained with:
  *  <pre>
- *  AtomTypeFactory factory = AtomTypeFactory.getInstance();
+ *  AtomTypeFactory factory = AtomTypeFactory.getInstance(someChemObjectBuilder);
  *  </pre>
  *  For each atom type list a separate AtomTypeFactory is instantiated.
  *
  *  <p>To get all the atom types of an element from a specific list, this 
  *  code can be used:
  *  <pre>
- *  AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
+ *  AtomTypeFactory factory = AtomTypeFactory.getInstance(
+ *    "org/openscience/cdk/config/data/jmol_atomtypes.txt",
+      someChemObjectBuilder
+ *  );
  *  AtomType[] types = factory.getAtomTypes("C");
  *  </pre>
  *
@@ -91,7 +95,9 @@ public class AtomTypeFactory {
     private static LoggingTool logger;
     private static Hashtable tables = null;
     private Vector atomTypes = null;
-    
+
+    private ChemObjectBuilder builder = null;
+
 	/**
 	 * Private constructor for the AtomTypeFactory singleton.
 	 *
@@ -99,12 +105,12 @@ public class AtomTypeFactory {
 	 * @exception  OptionalDataException   What ever that may be
 	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-    private AtomTypeFactory(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
+    private AtomTypeFactory(String configFile, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
         atomTypes = new Vector(100);
-        readConfiguration(configFile);
+        readConfiguration(configFile, builder);
     }
 
 	/**
@@ -114,12 +120,12 @@ public class AtomTypeFactory {
 	 * @exception  OptionalDataException   What ever that may be
 	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-    private AtomTypeFactory(InputStream ins, String format) throws IOException, OptionalDataException, ClassNotFoundException {
+    private AtomTypeFactory(InputStream ins, String format, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
         atomTypes = new Vector(100);
-        readConfiguration(ins, format);
+        readConfiguration(ins, format, builder);
     }
 
     /**
@@ -134,8 +140,8 @@ public class AtomTypeFactory {
      * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(InputStream ins, String format) throws IOException, OptionalDataException, ClassNotFoundException {
-        return new AtomTypeFactory(ins, format);
+    public static AtomTypeFactory getInstance(InputStream ins, String format, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+        return new AtomTypeFactory(ins, format, builder);
     }
 
     /**
@@ -147,8 +153,8 @@ public class AtomTypeFactory {
      * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance() throws IOException, OptionalDataException, ClassNotFoundException {
-        return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml");
+    public static AtomTypeFactory getInstance(ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+        return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", builder);
     }
 
     /**
@@ -166,12 +172,12 @@ public class AtomTypeFactory {
      * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(String configFile) throws IOException, OptionalDataException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(String configFile, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         if (tables == null) {
             tables = new Hashtable();
         }
         if (!(tables.containsKey(configFile))) {
-            tables.put(configFile, new AtomTypeFactory(configFile));
+            tables.put(configFile, new AtomTypeFactory(configFile, builder));
         }
         return (AtomTypeFactory)tables.get(configFile);
     }
@@ -181,7 +187,7 @@ public class AtomTypeFactory {
 	 *
 	 * @param  configFile  name of the config file
 	 */
-	private void readConfiguration(String fileName)
+	private void readConfiguration(String fileName, ChemObjectBuilder builder)
 	{
 		logger.info("Reading config file from ", fileName);
 
@@ -222,7 +228,7 @@ public class AtomTypeFactory {
         } else if (fileName.endsWith(XML_EXTENSION)) {
             format = XML_EXTENSION;
         }
-        readConfiguration(ins, format);
+        readConfiguration(ins, format, builder);
     }
     
     private AtomTypeConfigurator constructConfigurator(String format) {
@@ -243,13 +249,13 @@ public class AtomTypeFactory {
         return null;
     }
     
-    private void readConfiguration(InputStream ins, String format) {
+    private void readConfiguration(InputStream ins, String format, ChemObjectBuilder builder) {
     	AtomTypeConfigurator atc = constructConfigurator(format);
 		if (atc != null) {
 			atc.setInputStream(ins);
 			try
 			{
-				atomTypes = atc.readAtomTypes();
+				atomTypes = atc.readAtomTypes(builder);
 			} catch (Exception exc)
 			{
 				logger.error("Could not read AtomType's from file due to: ", exc.getMessage());
@@ -344,7 +350,7 @@ public class AtomTypeFactory {
 		}
 		AtomType[] atomTypes = new AtomType[atomtypeList.size()];
 		atomtypeList.copyInto(atomTypes);
-		return atomTypes;
+		return (org.openscience.cdk.AtomType[])atomTypes;
 	}
 
 

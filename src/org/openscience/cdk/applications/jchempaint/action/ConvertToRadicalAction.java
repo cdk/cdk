@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -89,8 +89,10 @@ public class ConvertToRadicalAction extends JCPAction {
     	AtomTypeFactory atomATF = null;
 		try
 		{
-			atomATF = AtomTypeFactory
-					.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml");
+			atomATF = AtomTypeFactory.getInstance(
+                "org/openscience/cdk/config/data/valency2_atomtypes.xml",
+                atom.getBuilder()
+            );
 	    	
 			if(atomATF != null)
 			{

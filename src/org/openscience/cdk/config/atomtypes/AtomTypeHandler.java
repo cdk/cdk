@@ -25,8 +25,9 @@ package org.openscience.cdk.config.atomtypes;
 
 import java.util.Vector;
 
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -62,8 +63,11 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
     private int scalarType;
     private AtomType atomType;
 
-    public AtomTypeHandler() {
+    private static ChemObjectBuilder builder;
+
+    public AtomTypeHandler(ChemObjectBuilder builder) {
         logger = new LoggingTool(this);
+        this.builder = builder;
     }
 
     public Vector getAtomTypes() {
@@ -149,7 +153,7 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
         logger.debug("  raw: ", raw);
         
         if ("atomType".equals(local)) {
-            atomType = new AtomType("R");
+            atomType = builder.newAtomType("R");
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("id".equals(atts.getQName(i))) {
                     atomType.setAtomTypeName(atts.getValue(i));

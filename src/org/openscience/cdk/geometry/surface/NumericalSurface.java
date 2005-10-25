@@ -315,7 +315,7 @@ public class NumericalSurface {
     private void configVDWRadius() {
         try {
             AtomTypeFactory factory =
-                AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt");
+                AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt", atoms[0].getBuilder());
             for (int i=0; i<atoms.length; i++) {
                 factory.configure(atoms[i]);
             }

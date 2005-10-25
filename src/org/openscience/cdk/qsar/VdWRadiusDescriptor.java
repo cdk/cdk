@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar;
 import java.io.IOException;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -71,7 +71,6 @@ public class VdWRadiusDescriptor implements Descriptor {
      */
     public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {
         logger = new LoggingTool(this);
-        factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
     }
 
 
@@ -142,6 +141,16 @@ public class VdWRadiusDescriptor implements Descriptor {
      */
 
     public DescriptorValue calculate(AtomContainer container) throws CDKException {
+        if (factory == null) 
+            try {
+                factory = AtomTypeFactory.getInstance(
+                    "org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+                    container.getBuilder()
+                );
+            } catch (Exception exception) {
+                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
+            }
+
         double vdwradius = 0;
         try {
             String symbol = container.getAtomAt(atomPosition).getSymbol();

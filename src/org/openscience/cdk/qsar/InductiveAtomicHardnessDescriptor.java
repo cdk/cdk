@@ -29,7 +29,7 @@ import java.io.IOException;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -97,7 +97,6 @@ public class InductiveAtomicHardnessDescriptor implements Descriptor {
 	 */
 	public InductiveAtomicHardnessDescriptor() throws IOException, ClassNotFoundException {
 		logger = new LoggingTool(this);
-		factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
 	}
 
 
@@ -157,6 +156,16 @@ public class InductiveAtomicHardnessDescriptor implements Descriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+		if (factory == null)
+            try {
+                factory = AtomTypeFactory.getInstance(
+                    "org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+                    ac.getBuilder()
+                );
+            } catch (Exception exception) {
+                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
+            }
+
 		org.openscience.cdk.interfaces.Atom[] allAtoms = null;
 		org.openscience.cdk.interfaces.Atom target = null;
 		double atomicHardness = 0;

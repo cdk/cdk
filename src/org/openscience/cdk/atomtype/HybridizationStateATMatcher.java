@@ -86,7 +86,8 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
         bondOrderSum = atomContainer.getBondOrderSum(atom);
         maxbondOrder = atomContainer.getMaximumBondOrder(atom);
         try {
-            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
+            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml",
+                atom.getBuilder());
 
             // take the array of atom types for the given element...
             type = factory.getAtomTypes(symbol);

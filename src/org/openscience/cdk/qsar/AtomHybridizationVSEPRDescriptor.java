@@ -25,7 +25,7 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -198,7 +198,8 @@ public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 	{
 		try {
       if(atomATF==null)
-        atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml");
+        atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml", 
+            container.getBuilder());
 
 			// take atomtype for the given element...
 			AtomType atomType = atomATF.getAtomType(atom.getSymbol());

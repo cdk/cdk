@@ -71,12 +71,6 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
 	public MMFF94AtomTypeMatcher() {
 		logger = new LoggingTool(this);
 		atomTypeTools=new AtomTypeTools();
-		try {
-			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mmff94_atomtypes.xml");
-		} catch (Exception ex1) {
-            logger.error(ex1.getMessage());
-			logger.debug(ex1);
-		}
 	}
 
 	private String getSphericalMatcher(AtomType type) throws CDKException {
@@ -99,6 +93,18 @@ public class MMFF94AtomTypeMatcher implements AtomTypeMatcher {
      * @return                 the matching AtomType (AtomType class)
 	 */
 	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atomInterface) throws CDKException {
+        if (factory == null) {
+		try {
+			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mmff94_atomtypes.xml",
+                atomContainer.getBuilder()
+            );
+		} catch (Exception ex1) {
+            logger.error(ex1.getMessage());
+			logger.debug(ex1);
+                throw new CDKException("Could not instantiate the AtomType list!", ex1);
+		}
+        }
+
 		org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atomInterface;
 		//System.out.println("****** Configure MMFF94 AtomType via findMatching ******");
 		//System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");

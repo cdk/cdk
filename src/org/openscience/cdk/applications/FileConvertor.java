@@ -164,7 +164,10 @@ public class FileConvertor {
 
                 // apply modifications
                 AtomContainer[] containers = (AtomContainer[])ChemFileManipulator.getAllAtomContainers(content);
-                AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt");
+                AtomTypeFactory factory = AtomTypeFactory.getInstance(
+                    "org/openscience/cdk/config/data/jmol_atomtypes.txt",
+                    content.getBuilder()
+                );
                 for (int i=0; i<containers.length; i++) {
                 	org.openscience.cdk.interfaces.AtomContainer container = containers[i];
                 	org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
