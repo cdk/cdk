@@ -30,6 +30,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -258,7 +259,23 @@ public class SmilesParserTest extends CDKTestCase
 		}
 	}
 
-	
+    /**
+     *  A unit test for JUnit for SF bug #1324105;
+     */
+    public void testAromaticSmiles2()
+    {
+        try
+        {
+            String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
+            Molecule molecule = sp.parseSmiles(smiles);
+            Bond[] bonds = molecule.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                assertTrue(bonds[i].getFlag(CDKConstants.ISAROMATIC));
+            }
+        } catch (Exception exception) {
+            fail(exception.getMessage());
+        }
+    }
 
 	/**
 	 *  A unit test for JUnit
