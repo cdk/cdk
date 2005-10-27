@@ -74,7 +74,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	{
 		try
 		{	
-			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H10O1");
+			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H10O1","");
 			Vector structures=gdg.getStructures();
 			everythingOk(structures);
 		}
@@ -94,7 +94,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	{
 		try
 		{	
-			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H12");
+			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H12","");
 			Vector smiles=gdg.getSMILES();
 			//for(int i=0;i<smiles.size();i++)
 			//	System.out.println(smiles.get(i));
