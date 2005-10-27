@@ -68,9 +68,10 @@ public class GENMDeterministicGenerator
 	 *  Constructor for the GENMDeterministicGenerator object. This constructor is only 
 	 *  for molecular formula
 	 * @param	mf	molecular formula string
+	 * @param   path        Path to the file used for writing structures. Leave blank if current directory should be used.
 	 *
 	 */
-	 public GENMDeterministicGenerator(String mf) throws java.lang.Exception
+	 public GENMDeterministicGenerator(String mf, String path) throws java.lang.Exception
 	{
 		numberOfSetFragment=0;
 		numberOfStructure=0;
@@ -85,7 +86,7 @@ public class GENMDeterministicGenerator
 		
 		logger = new org.openscience.cdk.tools.LoggingTool(this);
 		
-		structureout=new PrintWriter(new FileWriter("structuredata.txt"),true);
+		structureout=new PrintWriter(new FileWriter(path+"structuredata.txt"),true);
 		
 		initializeParameters();
 		analyseMolecularFormula(mfa);
@@ -98,9 +99,10 @@ public class GENMDeterministicGenerator
 	 * Constructor for GENMDeterministicGenerator object. This constructor could be 
 	 * used for a set of basic units.
 	 * @param	basicUnits	Vector contain a basic unit set
+	 * @param   path        Path to the file used for writing structures. Leave blank if current directory should be used.
 	 *
 	 */
-	public GENMDeterministicGenerator(Vector basicUnits) throws IOException,Exception
+	public GENMDeterministicGenerator(Vector basicUnits, String path) throws IOException,Exception
 	{
 		numberOfSetFragment=0;
 		numberOfStructure=0;
@@ -111,7 +113,7 @@ public class GENMDeterministicGenerator
 		
 		logger = new org.openscience.cdk.tools.LoggingTool(this);
 		
-		structureout=new PrintWriter(new FileWriter("structuredata.txt"),true);
+		structureout=new PrintWriter(new FileWriter(path+"structuredata.txt"),true);
 		
 		initializeParameters();
 		if(basicUnits!=null)getBasicUnit(basicUnits);
