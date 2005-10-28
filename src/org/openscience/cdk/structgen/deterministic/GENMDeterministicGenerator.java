@@ -2684,7 +2684,7 @@ public class GENMDeterministicGenerator
 			 for(j=i+1;j<size;j++)
 				 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
 		 
-		 SmilesGenerator sg = new SmilesGenerator();
+		 SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
 		 String smilesString = sg.createSMILES(mol);
 		 smiles.addElement(smilesString);
 	 }

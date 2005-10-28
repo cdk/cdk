@@ -30,7 +30,7 @@ package org.openscience.cdk.exception;
 /**
  * Exception that is thrown by CDK classes when some problem has occured.
  *
- * @cdk.module data
+ * @cdk.module core
  */
 public class CDKException extends Exception {
 

@@ -36,6 +36,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -524,7 +525,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			}
 		}
         try {
-            Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope(symbol);
+            Isotope isotope = IsotopeFactory.getInstance(new ChemObject().getBuilder()).getMajorIsotope(symbol);
             return ((double) 800000 - isotope.getMassNumber());
         } catch (Exception exception) {
             System.err.println("Could not find major isotope for this element!!! : " + symbol);

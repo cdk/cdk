@@ -76,7 +76,6 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class Gaussian98Reader extends DefaultChemObjectReader
 {
 
-	private IsotopeFactory isotopeFactory;
 	private BufferedReader input;
 	private LoggingTool logger;
 	private int atomCount = 0;
@@ -140,17 +139,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		} else
 		{
 			this.input = new BufferedReader(input);
-		}
-		try
-		{
-			isotopeFactory = IsotopeFactory.getInstance();
-			logger.info("IsotopeFactory instantiated: " + isotopeFactory);
-			logger.info(" #isotopes defined: " + isotopeFactory.getSize());
-		} catch (Exception exception)
-		{
-			// should not happen
-			logger.error("Could not instantiate IsotopeFactory");
-			logger.debug(exception);
 		}
 		initIOSettings();
 	}
@@ -393,7 +381,13 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 			{
 				throw new IOException("Error reading z coordinate");
 			}
-			Atom atom = model.getBuilder().newAtom(isotopeFactory.getElementSymbol(atomicNumber));
+                        String symbol = "Du";
+                        try {
+                            symbol = IsotopeFactory.getInstance(model.getBuilder()).getElementSymbol(atomicNumber);
+                        } catch (Exception exception) {
+                            throw new CDKException("Could not determine element symbol!", exception);
+                        }
+			Atom atom = model.getBuilder().newAtom(symbol);
 			atom.setPoint3d(new Point3d(x, y, z));
 			molecule.addAtom(atom);
 		}

@@ -39,6 +39,10 @@
      INChIContentProcessor.processConnections() now takes an additional
      cdk.interfaces.AtomContainer as parameter
    </apiChange>
+   <apiChange contributor="egonw">
+     The AtomTypeFactory and IsotopeFactory now require a ChemObjectBuilder
+     to be passed
+   </apiChange>
   </release>
   
   <release id="20050826">

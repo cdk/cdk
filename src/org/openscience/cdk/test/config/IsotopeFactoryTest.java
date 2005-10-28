@@ -29,7 +29,8 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Element;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -53,24 +54,25 @@ public class IsotopeFactoryTest extends CDKTestCase
 		return new TestSuite(IsotopeFactoryTest.class);
 	}
 
-    public void testGetInstance() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+    public void testGetInstance_ChemObjectBuilder() throws Exception {
+        IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        assertNotNull(isofac);
     }
     
 	public void testGetSize() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		assertTrue(isofac.getSize() > 0);
     }
 	
 	public void testConfigure_Atom() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Atom atom = new Atom("H");
         isofac.configure(atom);
         assertEquals(1, atom.getAtomicNumber());
     }
 	
 	public void testConfigure_Atom_Isotope() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Atom atom = new Atom("H");
         Isotope isotope = new org.openscience.cdk.Isotope("H", 2);
         isofac.configure(atom, isotope);
@@ -78,44 +80,44 @@ public class IsotopeFactoryTest extends CDKTestCase
     }
 	
 	public void testGetMajorIsotope_String() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         Isotope isotope = isofac.getMajorIsotope("Te");
         if (standAlone) System.out.println("Isotope: " + isotope);
 		assertEquals(129.906229, isotope.getExactMass(), 0.0001);
 	}
     
 	public void testGetMajorIsotope_int() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         Isotope isotope = isofac.getMajorIsotope(17);
 		assertEquals("Cl", isotope.getSymbol());
 	}
     
     public void testGetElement_String() throws Exception {
-		IsotopeFactory elfac = IsotopeFactory.getInstance();
+		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         Element element = elfac.getElement("Br");
 		assertEquals(35, element.getAtomicNumber());
 	}    
 
     public void testGetElement_int() throws Exception {
-		IsotopeFactory elfac = IsotopeFactory.getInstance();
+		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         Element element = elfac.getElement(6);
 		assertEquals("C", element.getSymbol());
 	}    
 
     public void testGetElementSymbol_int() throws Exception {
-		IsotopeFactory elfac = IsotopeFactory.getInstance();
+		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         String symbol = elfac.getElementSymbol(8);
 		assertEquals("O", symbol);
 	}    
 
     public void testGetIsotopes_String() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         Isotope[] list = isofac.getIsotopes("He");
 		assertEquals(2, list.length);
 	}    
 
     public void testIsElement_String() throws Exception {
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		assertTrue(isofac.isElement("C"));
 	}
     
@@ -127,7 +129,7 @@ public class IsotopeFactoryTest extends CDKTestCase
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("F"));
         container.addAtom(new Atom("Cl"));
-		IsotopeFactory isofac = IsotopeFactory.getInstance();
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         isofac.configureAtoms(container);
         org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
         for (int i=0; i<atoms.length; i++) {
@@ -139,7 +141,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 		try {
 			IsotopeFactoryTest ift = new IsotopeFactoryTest("IsotopeFactoryTest");
 			ift.standAlone = true;
-			ift.testGetInstance();
+			ift.testGetInstance_ChemObjectBuilder();
 		} catch(Exception exc) {
 			exc.printStackTrace();
 		}

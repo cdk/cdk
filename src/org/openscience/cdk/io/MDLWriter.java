@@ -86,7 +86,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
     private LoggingTool logger;
-    private IsotopeFactory isotopeFactory = null;
     private int moleculeNumber;
     public Map sdFields=null;
     private boolean writeAromatic=true;
@@ -131,17 +130,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
     public MDLWriter(Writer out) throws Exception {
         writer = new BufferedWriter(out);
         logger = new LoggingTool(this);
-        try {
-            isotopeFactory = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            logger.error("Failed to initiate isotope factory: ", exception.getMessage());
-            logger.debug(exception);
-            if (exception instanceof CDKException) {
-                throw exception;
-            } else {
-                throw new CDKException("Failed to initiate isotope factory: " + exception.getMessage());
-            }
-        }
         this.moleculeNumber = 1;
     }
 
@@ -375,7 +363,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         	org.openscience.cdk.interfaces.Atom atom = atoms[i];
             if (!(atom instanceof PseudoAtom)) {
                 int atomicMass = atom.getMassNumber();
-                int majorMass = isotopeFactory.getMajorIsotope(atom.getSymbol()).getMassNumber();
+                int majorMass = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();
                 if (atomicMass != 0 && atomicMass != majorMass) {
                     writer.write("M  ISO  1 ");
                     writer.write(formatMDLInt(i+1,3));

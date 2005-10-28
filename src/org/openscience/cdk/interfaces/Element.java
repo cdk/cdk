@@ -39,7 +39,7 @@ public interface Element extends ChemObject {
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Element element = new Element("C");
-	 *   IsotopeFactory if = IsotopeFactory.getInstance();
+	 *   IsotopeFactory if = IsotopeFactory.getInstance(element.getBuilder());
 	 *   if.configure(element);
 	 * </pre>
 	 * </p>      

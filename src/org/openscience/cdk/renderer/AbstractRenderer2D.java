@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.RingSet;
@@ -124,7 +125,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 
 		try
 		{
-			isotopeFactory = IsotopeFactory.getInstance();
+			isotopeFactory = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		} catch (Exception exception)
 		{
 			logger.error("Error while instantiating IsotopeFactory");
@@ -279,7 +280,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			try
 			{
-				if (atom.getMassNumber() != IsotopeFactory.getInstance().
+				if (atom.getMassNumber() != IsotopeFactory.getInstance(new ChemObject().getBuilder()).
 						getMajorIsotope(atom.getSymbol()).getMassNumber())
 				{
 					drawSymbol = true;

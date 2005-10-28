@@ -57,7 +57,6 @@ public class AtomTypeTools {
 	public AtomTypeTools() {
 		logger = new LoggingTool(this);
 		hcg = new HOSECodeGenerator();
-		sg=new SmilesGenerator();
 	}
 	
 	/**
@@ -73,6 +72,8 @@ public class AtomTypeTools {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public RingSet assignAtomTypePropertiesToAtom(Molecule molecule) throws Exception{
+        SmilesGenerator sg = new SmilesGenerator(molecule.getBuilder());
+
 		//System.out.println("assignAtomTypePropertiesToAtom Start ...");
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		Atom atom = null;

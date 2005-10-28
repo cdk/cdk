@@ -36,7 +36,8 @@ import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
@@ -108,15 +109,17 @@ public class SmilesGenerator
 	private final String UP = "up";
 	private final String DOWN = "down";
 
+	private ChemObjectBuilder builder;
 
 	/**
 	 *  Default constructor
 	 */
-	public SmilesGenerator()
+	public SmilesGenerator(ChemObjectBuilder builder)
 	{
+		this.builder = builder;
 		try
 		{
-			isotopeFactory = IsotopeFactory.getInstance();
+			isotopeFactory = IsotopeFactory.getInstance(builder);
 		} catch (IOException e)
 		{
 			e.printStackTrace();

@@ -136,7 +136,7 @@ public class GravitationalIndexDescriptor implements Descriptor {
         double mass1 = 0;
         double mass2 = 0;
         try {
-            factory = IsotopeFactory.getInstance();
+            factory = IsotopeFactory.getInstance(container.getBuilder());
         } catch (Exception e) {
             logger.debug(e);
         }

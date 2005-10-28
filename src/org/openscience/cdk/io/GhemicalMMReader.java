@@ -222,7 +222,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                     AtomContainer container = new org.openscience.cdk.AtomContainer();
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
-                            Atom atom = model.getBuilder().newAtom(IsotopeFactory.getInstance().getElementSymbol(atoms[i]));
+                            Atom atom = model.getBuilder().newAtom(IsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));
                             atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);

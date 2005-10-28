@@ -132,7 +132,7 @@ public class Convertor {
             try {
                 // try to give the atom the correct symbol
                 org.openscience.cdk.config.IsotopeFactory ef =
-                    org.openscience.cdk.config.IsotopeFactory.getInstance();
+                    org.openscience.cdk.config.IsotopeFactory.getInstance(convertedAtom.getBuilder());
                 org.openscience.cdk.Element e = ef.getElement(atom.getAtomicNum());
                 convertedAtom = new Atom(e.getSymbol());
             } catch (java.lang.Exception e) {

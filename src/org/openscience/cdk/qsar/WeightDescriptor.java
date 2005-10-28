@@ -138,7 +138,7 @@ public class WeightDescriptor implements Descriptor {
             try {
                 for (int i = 0; i < atoms.length; i++) {
                     //System.out.println("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
-                    weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                    weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
                     weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
                 }
             } catch (Exception e) {
@@ -149,7 +149,7 @@ public class WeightDescriptor implements Descriptor {
             try {
                 for (int i = 0; i < atoms.length; i++) {
                     if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-                        weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
                     }
                     else {
                         weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
@@ -163,7 +163,7 @@ public class WeightDescriptor implements Descriptor {
             try {
                 for (int i = 0; i < atoms.length; i++) {
                     if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-                        weight += IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
                     }
                 }
             } catch (Exception e) {

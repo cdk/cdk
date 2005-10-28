@@ -33,6 +33,8 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.tools.LoggingTool;
@@ -41,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Used to store and return data of a particular isotope. As this class is a
  * singleton class, one gets an instance with: 
  * <pre>
- * IsotopeFactory ifac = IsotopFactory.getInstance();
+ * IsotopeFactory ifac = IsotopFactory.getInstance(new ChemObject().getBuilder());
  * </pre>
  *
  * <p>Data about the isotopes are read from the file
@@ -52,7 +54,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>The use of this class is examplified as follows. To get information 
  * about the major isotope of hydrogen, one can use this code:
  * <pre>
- *   IsotopeFactory factory = IsotopeFactory.getInstance();
+ *   IsotopeFactory factory = IsotopeFactory.getInstance(new ChemObject().getBuilder());
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre> 
  *
@@ -81,7 +83,7 @@ public class IsotopeFactory
 	 *      ObjectInputStream
 	 *@exception  ClassNotFoundException  A problem instantiating the isotopes
 	 */
-	private IsotopeFactory() throws IOException, OptionalDataException,
+	private IsotopeFactory(ChemObjectBuilder builder) throws IOException, OptionalDataException,
 			ClassNotFoundException
 	{
         logger = new LoggingTool(this);
@@ -104,7 +106,7 @@ public class IsotopeFactory
             logger.error(errorMessage);
 			throw new IOException(errorMessage);
 		}
-        IsotopeReader reader = new IsotopeReader(new InputStreamReader(ins));
+        IsotopeReader reader = new IsotopeReader(new InputStreamReader(ins), builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
         //isotopes = (Vector) in.readObject();
         isotopes = reader.readIsotopes();
@@ -118,18 +120,19 @@ public class IsotopeFactory
 
 
 	/**
-	 *  Returns an IsotopeFactory instance.
+	 * Returns an IsotopeFactory instance.
 	 *
-	 *@return                             The instance value
-	 *@exception  IOException             Description of the Exception
-	 *@exception  OptionalDataException   Description of the Exception
-	 *@exception  ClassNotFoundException  Description of the Exception
+         * @param      builder                 ChemObjectBuilder used to construct the Isotope's
+	 * @return                             The instance value
+	 * @exception  IOException             Description of the Exception
+	 * @exception  OptionalDataException   Description of the Exception
+	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
-	public static IsotopeFactory getInstance()
+	public static IsotopeFactory getInstance(ChemObjectBuilder builder)
 			 throws IOException, OptionalDataException, ClassNotFoundException
 	{
         if (ifac == null) {
-            ifac = new IsotopeFactory();
+            ifac = new IsotopeFactory(builder);
         }
         return ifac;
 	}
@@ -245,10 +248,10 @@ public class IsotopeFactory
 	 *@param  symbol  The element symbol for the requested element
 	 *@return         The configured element
 	 */
-	public org.openscience.cdk.Element getElement(String symbol)
+	public Element getElement(String symbol)
 	{
 		Isotope isotope = getMajorIsotope(symbol);
-		return (org.openscience.cdk.Element) isotope;
+		return isotope;
 	}
 
 
@@ -258,10 +261,10 @@ public class IsotopeFactory
 	 *@param  atomicNumber  The elements atomic number
 	 *@return               The Element
 	 */
-	public org.openscience.cdk.Element getElement(int atomicNumber)
+	public Element getElement(int atomicNumber)
 	{
 		Isotope isotope = getMajorIsotope(atomicNumber);
-		return (org.openscience.cdk.Element) isotope;
+		return isotope;
 	}
 
     /**

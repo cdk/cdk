@@ -163,7 +163,7 @@ public class MFAnalyser {
 		Isotope i;
 		IsotopeFactory si = null;
 		try {
-			si = IsotopeFactory.getInstance();
+			si = IsotopeFactory.getInstance(getAtomContainer().getBuilder());
 		} catch (Exception exception) {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}
@@ -191,7 +191,7 @@ public class MFAnalyser {
 	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
 	public double getNaturalMass(Element element) throws java.io.IOException, ClassNotFoundException {
-		Isotope[] isotopes = IsotopeFactory.getInstance().getIsotopes(element.getSymbol());
+		Isotope[] isotopes = IsotopeFactory.getInstance(getAtomContainer().getBuilder()).getIsotopes(element.getSymbol());
 		double summedAbundances = 0;
 		double summedWeightedAbundances = 0;
 		for (int i = 0; i < isotopes.length; i++) {
@@ -213,7 +213,7 @@ public class MFAnalyser {
 		float mass = 0;
 		IsotopeFactory si = null;
 		try {
-			si = IsotopeFactory.getInstance();
+			si = IsotopeFactory.getInstance(getAtomContainer().getBuilder());
 		} catch (Exception exception) {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}

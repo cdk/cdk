@@ -133,7 +133,7 @@ public class InductivePartialCharges {
 		String symbol = null;
 		int atomicNumber = 0;
 		try {
-			ifac = IsotopeFactory.getInstance();
+			ifac = IsotopeFactory.getInstance(ac.getBuilder());
 			for (int i = 0; i < atoms.length; i++) {
 				symbol = ac.getAtomAt(i).getSymbol();
 				element = ifac.getElement(symbol);

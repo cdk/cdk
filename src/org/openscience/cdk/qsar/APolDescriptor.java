@@ -25,7 +25,7 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -132,7 +132,7 @@ public class APolDescriptor implements Descriptor {
         double apol = 0;
         int atomicNumber = 0;
         try {
-            ifac = IsotopeFactory.getInstance();			
+            ifac = IsotopeFactory.getInstance(container.getBuilder());			
             Element element = null;
             org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
             String symbol = null;

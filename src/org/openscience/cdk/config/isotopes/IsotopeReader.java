@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Vector;
 
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -53,15 +54,17 @@ public class IsotopeReader {
     private Reader input;
 
     private LoggingTool logger;
+    private ChemObjectBuilder builder;
 
     /**
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
      *
      * @param input Reader with the XML source
      */
-    public IsotopeReader(Reader input) {
+    public IsotopeReader(Reader input, ChemObjectBuilder builder) {
         this.init();
         this.input = input;
+        this.builder = builder;
     }
 
     private void init() {
@@ -128,7 +131,7 @@ public class IsotopeReader {
             logger.warn("Cannot deactivate validation: ", exception.getMessage());
             logger.debug(exception);
         }
-        IsotopeHandler handler = new IsotopeHandler();
+        IsotopeHandler handler = new IsotopeHandler(builder);
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));

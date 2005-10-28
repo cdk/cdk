@@ -399,7 +399,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						// configure the atom, so that the atomic number matches the symbol
 						try
 						{
-							IsotopeFactory.getInstance().configure(atomInRange);
+							IsotopeFactory.getInstance(atomInRange.getBuilder()).configure(atomInRange);
 						} catch (Exception exception)
 						{
 							logger.error("Error while configuring atom");
@@ -447,7 +447,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						// configure the atom, so that the atomic number matches the symbol
 						try
 						{
-							IsotopeFactory.getInstance().configure(atomInRange);
+							IsotopeFactory.getInstance(atomInRange.getBuilder()).configure(atomInRange);
 						} catch (Exception exception)
 						{
 							logger.error("Error while configuring atom");

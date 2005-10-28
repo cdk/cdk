@@ -71,7 +71,7 @@ public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 	public void redo() throws CannotRedoException {
 		this.atom.setSymbol(symbol);
 		try {
-			IsotopeFactory.getInstance().configure(atom);
+			IsotopeFactory.getInstance(atom.getBuilder()).configure(atom);
 		} catch (OptionalDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +93,7 @@ public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 	public void undo() throws CannotUndoException {
 		this.atom.setSymbol(formerSymbol);
 		try {
-			IsotopeFactory.getInstance().configure(atom);
+			IsotopeFactory.getInstance(atom.getBuilder()).configure(atom);
 		} catch (OptionalDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

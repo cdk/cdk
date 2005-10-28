@@ -27,6 +27,7 @@ package org.openscience.cdk.test.config.isotopes;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.isotopes.IsotopeHandler;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -50,18 +51,18 @@ public class IsotopeHandlerTest extends CDKTestCase {
     // serious testing is done in IsotopeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
-    public void testIsotopeHandler() {
-        IsotopeHandler handler = new IsotopeHandler();
+    public void testIsotopeHandler_ChemObjectBuilder() {
+        IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
     }
     
     public void testGetIsotopes() {
-        IsotopeHandler handler = new IsotopeHandler();
+        IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read
         assertNull(handler.getIsotopes());
     }
     
     public void testStartDocument() {
-        IsotopeHandler handler = new IsotopeHandler();
+        IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
         assertNull(handler.getIsotopes());
     }

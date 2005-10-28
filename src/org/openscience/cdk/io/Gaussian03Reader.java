@@ -75,18 +75,12 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class Gaussian03Reader extends DefaultChemObjectReader {
 
-    private IsotopeFactory isotopeFactory;
     private BufferedReader input;
     private LoggingTool logger;
     
     public Gaussian03Reader(Reader reader) {
         input = new BufferedReader(reader);
         logger = new LoggingTool(this);
-        try {
-            isotopeFactory = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            // should not happen
-        }
     }
     
     public Gaussian03Reader(InputStream input) {
@@ -266,7 +260,13 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             } else {
                 throw new IOException("Error reading coordinates");
             }
-            Atom atom = model.getBuilder().newAtom(isotopeFactory.getElementSymbol(atomicNumber));
+            String symbol = "Du";
+            try {
+                symbol = IsotopeFactory.getInstance(model.getBuilder()).getElementSymbol(atomicNumber);
+            } catch (Exception exception) {
+                throw new CDKException("Could not determine element symbol!", exception);
+            }
+            Atom atom = model.getBuilder().newAtom(symbol);
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }

@@ -752,7 +752,7 @@ public class MoleculeFactory {
 	{
 		try
 		{
-            IsotopeFactory.getInstance().configureAtoms(mol);
+            IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
 		}
 		catch(Exception exc)
 		{

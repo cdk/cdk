@@ -260,12 +260,12 @@ public class HydrogenAdder {
     {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
         
-        Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope("H");
+        Isotope isotope = IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
         atom.setHydrogenCount(0);
         AtomContainer changedAtomsAndBonds = new org.openscience.cdk.AtomContainer();
         for (int i = 1; i <= count; i++) {
             Atom hydrogen = new Atom("H");
-            IsotopeFactory.getInstance().configure(hydrogen, isotope);
+            IsotopeFactory.getInstance(container.getBuilder()).configure(hydrogen, isotope);
             totalContainer.addAtom(hydrogen);
             Bond newBond = new Bond((Atom)atom, hydrogen, 1.0);
             totalContainer.addBond(newBond);

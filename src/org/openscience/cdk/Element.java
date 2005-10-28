@@ -30,7 +30,7 @@ package org.openscience.cdk;
  * <p>Use the IsotopeFactory to get a ready-to-use elements
  * by symbol or atomic number:
  * <pre>
- *   IsotopeFactory if = IsotopeFactory.getInstance();
+ *   IsotopeFactory if = IsotopeFactory.getInstance(new Element().getBuilder());
  *   Element e1 = if.getElement("C");
  *   Element e2 = if.getElement(12);
  * </pre>
@@ -99,7 +99,7 @@ public class Element extends ChemObject implements java.io.Serializable, org.ope
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Element element = new Element("C");
-	 *   IsotopeFactory if = IsotopeFactory.getInstance();
+	 *   IsotopeFactory if = IsotopeFactory.getInstance(element.getBuilder());
 	 *   if.configure(element);
 	 * </pre>
 	 * </p>      

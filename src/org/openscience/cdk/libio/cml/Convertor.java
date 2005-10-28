@@ -134,7 +134,6 @@ public class Convertor {
     public final static int COORDINATES_2D = 2;
     private static LoggingTool logger;
     private CMLDocument doc;
-    private IsotopeFactory isotopeFactory;
     private boolean useCmlIdentifiers;
     private boolean setNamespaceUri;
     private boolean schemaInstanceOutput;
@@ -151,12 +150,6 @@ public class Convertor {
 
     public Convertor (boolean useCmlIdentifiers, boolean setNamespaceUri, boolean schemaInstanceOutput, String instanceLocation, String prefix) {
         logger = new LoggingTool(this);
-        try {
-            isotopeFactory = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            logger.error("Failed to initiate isotope factory: ", exception.getMessage());
-            logger.debug(exception);
-        }
         this.useCmlIdentifiers = useCmlIdentifiers;
         this.setNamespaceUri = setNamespaceUri;
         this.schemaInstanceOutput = schemaInstanceOutput;
@@ -582,14 +575,19 @@ public class Convertor {
         }
         int massNumber = atom.getMassNumber();
         if (!(atom instanceof PseudoAtom)) {
-            Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
-            if (majorIsotope != null) {
-                int majorMassNumber = majorIsotope.getMassNumber();
-                if (massNumber != 0 && massNumber != majorMassNumber) {
-                    atomimpl.setAttribute("isotope", massNumber+"");
+            try {
+                Isotope majorIsotope = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol());
+                if (majorIsotope != null) {
+                    int majorMassNumber = majorIsotope.getMassNumber();
+                    if (massNumber != 0 && massNumber != majorMassNumber) {
+                        atomimpl.setAttribute("isotope", massNumber+"");
+                    }
+                } else {
+                    logger.warn("Could not find major isotope for : " + atom.getSymbol());
                 }
-            } else {
-                logger.warn("Could not find major isotope for : " + atom.getSymbol());
+            } catch (Exception exception) {
+                logger.error("Could not find major isotope!", exception.getMessage());
+                logger.debug(exception);
             }
         }
         if (atom.getCharge() != 0.0) {

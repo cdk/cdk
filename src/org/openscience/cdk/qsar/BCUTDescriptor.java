@@ -259,7 +259,8 @@ public class BCUTDescriptor implements Descriptor {
         try {
             for (int i = 0; i < ac.getAtomCount(); i++) {
                 if (ac.getAtomAt(i).getSymbol().equals("H")) continue;
-                diagvalue[j] = IsotopeFactory.getInstance().getMajorIsotope( ac.getAtomAt(i).getSymbol() ).getExactMass();
+                diagvalue[j] = IsotopeFactory.getInstance(ac.getBuilder()).
+                    getMajorIsotope( ac.getAtomAt(i).getSymbol() ).getExactMass();
                 j++;        
             }
         } catch (Exception e) {

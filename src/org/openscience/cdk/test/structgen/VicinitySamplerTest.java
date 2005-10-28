@@ -81,7 +81,7 @@ public class VicinitySamplerTest extends CDKTestCase
 		for (int f = 0; f < structures.size(); f++)
 		{
 			temp = (Molecule)structures.elementAt(f);
-			sg = new SmilesGenerator();
+			sg = new SmilesGenerator(temp.getBuilder());
 			//System.out.println(sg.createSMILES(temp) + " Structure " + (f + 1));
 		}
 
@@ -92,7 +92,7 @@ public class VicinitySamplerTest extends CDKTestCase
 	{
 		try
 		{
-			IsotopeFactory.getInstance().configureAtoms(mol);
+			IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
 		}
 		catch(Exception exc)
 		{

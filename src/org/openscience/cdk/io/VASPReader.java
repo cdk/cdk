@@ -35,8 +35,8 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
@@ -66,7 +66,6 @@ public class VASPReader extends DefaultChemObjectReader {
     protected int repVal = 0;
     
     protected BufferedReader inputBuffer;
-    private IsotopeFactory isotopeFac;
     
     // VASP VARIABLES
     int natom = 1;
@@ -86,12 +85,6 @@ public class VASPReader extends DefaultChemObjectReader {
      */
     public VASPReader(Reader input) {
         logger = new LoggingTool(this);
-        try {
-            isotopeFac = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            logger.error("Error while instantiating isotope factory.");
-            logger.debug(exception);
-        }
         if (input instanceof BufferedReader) {
             this.inputBuffer = (BufferedReader)input;
         } else {
@@ -219,8 +212,12 @@ public class VASPReader extends DefaultChemObjectReader {
             
             for(int i = 0; i < ntype; i++) {
                 for(int j = 0; j < natom_type[i] ; j++) {
-                    
-                    atomType[atomIndex] = isotopeFac.getElement(anames[i]).getAtomicNumber();
+                    try {
+                        atomType[atomIndex] = IsotopeFactory.getInstance(sequence.getBuilder()).
+                            getElement(anames[i]).getAtomicNumber();
+                    } catch (Exception exception) {
+                        throw new CDKException("Could not determine atomic number!", exception);
+                    }
                     logger.debug("aname: " + anames[i]);
                     logger.debug("atomType: " + atomType[atomIndex]);
                     
@@ -246,7 +243,13 @@ public class VASPReader extends DefaultChemObjectReader {
                                       rprim[2][1]*acell[2],
                                       rprim[2][2]*acell[2]));
             for (int i=0; i<atomType.length; i++) {
-                String symbol = isotopeFac.getElement(atomType[i]).getSymbol();
+                String symbol = "Du";
+                try {
+                    symbol = IsotopeFactory.getInstance(sequence.getBuilder()).
+                        getElement(atomType[i]).getSymbol();
+                } catch (Exception exception) {
+                    throw new CDKException("Could not determine element symbol!", exception);
+                }
                 Atom atom = sequence.getBuilder().newAtom(symbol);
                 atom.setAtomicNumber(atomType[i]);
                 // convert fractional to cartesian

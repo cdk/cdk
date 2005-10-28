@@ -75,7 +75,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
     private LoggingTool logger = null;
-    private IsotopeFactory isotopeFactory = null;
 
     private Pattern keyValueTuple;
     private Pattern keyValueTuple2;
@@ -84,12 +83,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
-        try {
-            isotopeFactory = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            logger.error("Failed to initiate isotope factory: " + exception.getMessage());
-            logger.debug(exception);
-        }
         /* compile patterns */
         keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)"); // e.g. CHG=-1
         keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)"); // e.g. ATOMS=(1 31)
@@ -182,9 +175,15 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
                 // parse the element
                 String element = tokenizer.nextToken();
+                boolean isElement = false;
+                try {
+                    isElement = IsotopeFactory.getInstance(atom.getBuilder()).isElement(element);
+                } catch (Exception exception) {
+                    throw new CDKException("Could not determine if element exists!", exception);
+                }
                 if (isPseudoAtom(element)) {
                     atom = new PseudoAtom(atom);
-                } else if (isotopeFactory.isElement(element)) {
+                } else if (isElement) {
                     atom.setSymbol(element);
                 } else {
                     String error = "Cannot parse element of type: " + element;

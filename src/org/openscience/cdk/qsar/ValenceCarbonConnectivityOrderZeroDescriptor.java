@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar;
 import java.util.Hashtable;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -128,7 +128,7 @@ public class ValenceCarbonConnectivityOrderZeroDescriptor implements Descriptor 
                     symbol = atoms[i].getSymbol();
                     if(!symbol.equals("H")) {
                         try {
-                            elfac = IsotopeFactory.getInstance();
+                            elfac = IsotopeFactory.getInstance(atomContainer.getBuilder());
                         } catch (Exception exc) {
                             logger.debug(exc);
                             throw new CDKException("Problem instantiating IsotopeFactory: " + exc.toString(), exc);

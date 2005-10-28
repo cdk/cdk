@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -184,7 +184,7 @@ public class BasicValidator extends AbstractValidator {
         } else {
             // check wether atom is really an element
             try {
-                IsotopeFactory isotopeFactory = IsotopeFactory.getInstance();
+                IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(atom.getBuilder());
                 Element element = isotopeFactory.getElement(atom.getSymbol());
                 if (element == null) {
                     isElementOrPseudo.setDetails(
@@ -276,7 +276,7 @@ public class BasicValidator extends AbstractValidator {
             "Isotope with this mass number is not known for this element."
         );
         try {
-            IsotopeFactory isotopeFac = IsotopeFactory.getInstance();
+            IsotopeFactory isotopeFac = IsotopeFactory.getInstance(isotope.getBuilder());
             Isotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
             if (isotope.getMassNumber() != 0) {
                 boolean foundKnownIsotope = false;

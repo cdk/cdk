@@ -110,7 +110,7 @@ public class KabschAlignment {
         double[] am = new double[a.length];
         IsotopeFactory factory = null;
         try {
-            factory = IsotopeFactory.getInstance();
+            factory = IsotopeFactory.getInstance(a[0].getBuilder());
         } catch (Exception e) {
             System.out.println(e.toString());
         }

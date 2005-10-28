@@ -81,7 +81,6 @@ public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
     private LoggingTool logger = null;
-    private IsotopeFactory isotopeFactory = null;
 
     private BooleanIOSetting forceReadAs3DCoords;
     
@@ -123,12 +122,6 @@ public class MDLReader extends DefaultChemObjectReader {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
-        try {
-            isotopeFactory = IsotopeFactory.getInstance();
-        } catch (Exception exception) {
-            logger.error("Failed to initiate isotope factory: ", exception.getMessage());
-            logger.debug(exception);
-        }
 	}
 
 
@@ -335,8 +328,8 @@ public class MDLReader extends DefaultChemObjectReader {
                 String element = line.substring(31,34).trim();
 
                 logger.debug("Atom type: ", element);
-                if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(molecule.getBuilder().newAtom(element));
+                if (IsotopeFactory.getInstance(molecule.getBuilder()).isElement(element)) {
+                    atom = IsotopeFactory.getInstance(molecule.getBuilder()).configure(molecule.getBuilder().newAtom(element));
                 } else {
                     logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     atom = new PseudoAtom(element);
@@ -352,7 +345,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     try {
                         int massDiff = Integer.parseInt(massDiffString);
                         if (massDiff != 0) {
-                            Isotope major = isotopeFactory.getMajorIsotope(element);
+                            Isotope major = IsotopeFactory.getInstance(molecule.getBuilder()).getMajorIsotope(element);
                             atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
                         }
                     } catch (Exception exception) {

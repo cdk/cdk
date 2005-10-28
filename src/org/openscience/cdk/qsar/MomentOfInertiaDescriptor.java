@@ -132,7 +132,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
     public DescriptorValue calculate(AtomContainer container) throws CDKException {
         IsotopeFactory factory = null;
         try {
-            factory = IsotopeFactory.getInstance();
+            factory = IsotopeFactory.getInstance(container.getBuilder());
         } catch (Exception e) {
             logger.debug(e);
         }

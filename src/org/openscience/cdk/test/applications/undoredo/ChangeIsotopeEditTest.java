@@ -103,7 +103,7 @@ public class ChangeIsotopeEditTest extends CDKTestCase {
 		HashMap isotopesMap = new HashMap();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
-			Isotope isotope = IsotopeFactory.getInstance().getMajorIsotope(
+			Isotope isotope = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(
 					atom.getSymbol());
 			int isotopeNumber = isotope.getMassNumber();
 			int formerIsotopeNumber = isotopeNumber;

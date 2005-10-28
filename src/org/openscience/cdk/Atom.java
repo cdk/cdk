@@ -43,7 +43,7 @@ import javax.vecmath.Point3d;
  * to the constructured are null. Atoms can be configured by using
  * the IsotopeFactory.configure() method:
  * <pre>
- *   IsotopeFactory if = IsotopeFactory.getInstance();
+ *   IsotopeFactory if = IsotopeFactory.getInstance(a.getBuilder());
  *   if.configure(a);
  * </pre>
  *
@@ -56,7 +56,7 @@ import javax.vecmath.Point3d;
  * @cdk.created    2000-10-02
  * @cdk.keyword    atom
  *
- * @see  org.openscience.cdk.config.IsotopeFactory#getInstance()
+ * @see  org.openscience.cdk.config.IsotopeFactory#getInstance(ChemObjectBuilder)
  */
 public class Atom extends AtomType implements java.io.Serializable, org.openscience.cdk.interfaces.Atom  {
     

@@ -69,7 +69,7 @@ public class ChangeIsotopeAction extends JCPAction
                  int formerIsotopeNumber = 0;
 				try
 				{
-					Isotope isotope = IsotopeFactory.getInstance().
+					Isotope isotope = IsotopeFactory.getInstance(atom.getBuilder()).
 							getMajorIsotope(atom.getSymbol());
 					isotopeNumber = isotope.getMassNumber();
                     formerIsotopeNumber = isotopeNumber;
