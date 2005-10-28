@@ -56,6 +56,7 @@ public class DataClassesTests {
         suite.addTest(ChemObjectTest.suite());
         suite.addTest(ChemSequenceTest.suite());
         suite.addTest(CrystalTest.suite());
+        suite.addTest(DefaultChemObjectBuilder.suite());
         suite.addTest(ElectronContainerTest.suite());
         suite.addTest(ElementTest.suite());
         suite.addTest(IsotopeTest.suite());
