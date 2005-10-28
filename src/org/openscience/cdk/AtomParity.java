@@ -38,7 +38,7 @@ package org.openscience.cdk;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public class AtomParity implements java.io.Serializable, org.openscience.cdk.interfaces.AtomParity  {
+public class AtomParity extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.AtomParity  {
     
     /**
      * Determines if a de-serialized object is compatible with this class.
