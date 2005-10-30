@@ -78,11 +78,11 @@ public class CreateSmilesAction extends JCPAction
 		{
 			dialog = new TextViewDialog(frame, "SMILES", null, false, 40, 2);
 		}
-		SmilesGenerator generator = new SmilesGenerator();
 		String smiles = "";
 		try
 		{
 			ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
+            SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
 			AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 			Molecule molecule = new Molecule(container);
 			smiles = generator.createSMILES(molecule);
