@@ -116,16 +116,20 @@ public class ProteinBuilderTool {
         for (int i=0; i<sequence.length(); i++) {
             String aminoAcidCode = "" + sequence.charAt(i);
             logger.debug("Adding AA: " + aminoAcidCode);
-            AminoAcid aminoAcid = (AminoAcid)templates.get(aminoAcidCode);
-            aminoAcid = (AminoAcid)aminoAcid.clone();
-            aminoAcid.setMonomerName(aminoAcidCode + i);
-            if (aminoAcid == null) {
-                throw new CDKException("Cannot build sequence; unknown amino acid: " + aminoAcidCode);
+            if (aminoAcideCode.equals(" ")) {
+                // fine, just skip spaces
+            } else {
+                AminoAcid aminoAcid = (AminoAcid)templates.get(aminoAcidCode);
+                if (aminoAcid == null) {
+                    throw new CDKException("Cannot build sequence! Unknown amino acid: " + aminoAcidCode);
+                }
+                aminoAcid = (AminoAcid)aminoAcid.clone();
+                aminoAcid.setMonomerName(aminoAcidCode + i);
+                logger.debug("protein: ", protein);
+                logger.debug("strand: ", strand);
+                addAminoAcidAtCTerminus(protein, aminoAcid, strand, previousAA);
+                previousAA = aminoAcid;
             }
-            logger.debug("protein: ", protein);
-            logger.debug("strand: ", strand);
-            addAminoAcidAtCTerminus(protein, aminoAcid, strand, previousAA);
-            previousAA = aminoAcid;
         }
         // add the last oxygen of the protein
         Atom oxygen = new Atom("O");
