@@ -46,7 +46,7 @@ public class ChangeChargeEditTest extends CDKTestCase {
 					charges[1]);
 			edit.undo();
 			edit.redo();
-			assertTrue(atom.getCharge() == charges[1]);
+			assertTrue(atom.getFormalCharge() == charges[1]);
 		}
 	}
 
@@ -64,7 +64,7 @@ public class ChangeChargeEditTest extends CDKTestCase {
 			UndoableEdit edit = new ChangeChargeEdit(atom, charges[0],
 					charges[1]);
 			edit.undo();
-			assertTrue(atom.getCharge() == charges[0]);
+			assertTrue(atom.getFormalCharge() == charges[0]);
 		}
 	}
 
@@ -77,7 +77,7 @@ public class ChangeChargeEditTest extends CDKTestCase {
 		for (int i = 0; i < mol.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
 			int formerCharge = atom.getFormalCharge();
-			atom.setCharge(atom.getCharge() + 1);
+			atom.setFormalCharge(atom.getFormalCharge() + 1);
 			int[] charges = new int[2];
 			charges[0] = formerCharge;
 			charges[1] = atom.getFormalCharge();
