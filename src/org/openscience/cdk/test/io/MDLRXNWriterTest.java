@@ -64,7 +64,8 @@ public class MDLRXNWriterTest extends CDKTestCase {
         return new TestSuite(MDLRXNWriterTest.class);
     }
 
-    public void testRXNWriter() {
+    // FIXME: this used to be a test, but it's a stupid test
+    public void xtestRXNWriter() {
         
         String filename = "data/mdl/reaction-1.rxn";
         

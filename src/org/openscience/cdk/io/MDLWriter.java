@@ -34,10 +34,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.AtomContainer;
@@ -245,7 +248,23 @@ public class MDLWriter extends DefaultChemObjectWriter {
         if(title.length()>80)
           title=title.substring(0,80);
         writer.write(title + "\n");
-        writer.write("  CDK\n");
+        
+        /* From CTX spec
+         * This line has the format:
+         * IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR
+         * (FORTRAN: A2<--A8--><---A10-->A2I2<--F10.5-><---F12.5--><-I6-> )
+         * User's first and last initials (l), program name (P),
+         * date/time (M/D/Y,H:m), dimensional codes (d), scaling factors (S, s), 
+         * energy (E) if modeling program input, internal registry number (R) 
+         * if input through MDL form.
+         * A blank line can be substituted for line 2.
+         */
+        writer.write("  CDK    ");
+        writer.write(new SimpleDateFormat("M/d/y,H:m",Locale.US).format(
+        		     Calendar.getInstance(TimeZone.getDefault()).getTime())
+        );
+        writer.write('\n');
+        
         String comment = (String)molecule.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
         if(comment.length()>80)
@@ -385,7 +404,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
             Object element = iterator.next();
             writer.write("> <"+(String)element+">");
             writer.newLine();
-            writer.write((String)sdFields.get(element));
+            writer.write(sdFields.get(element).toString());
             writer.newLine();
             writer.newLine();
           }
