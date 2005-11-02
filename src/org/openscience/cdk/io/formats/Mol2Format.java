@@ -38,7 +38,9 @@ public class Mol2Format implements ChemFormatMatcher {
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.Mol2Reader";
     }
-    public String getWriterClassName() { return null; }
+    public String getWriterClassName() { 
+      return "org.openscience.cdk.io.Mol2Writer"; 
+    }
 
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("<TRIPOS>") >= 0) {

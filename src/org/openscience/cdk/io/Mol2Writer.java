@@ -31,7 +31,9 @@ import java.io.Writer;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -41,6 +43,7 @@ import org.openscience.cdk.io.formats.Mol2Format;
 /**
  * An output Writer that writes molecular data into the
  * <a href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</a>.
+ * Writes the atoms and the bonds only at this moment.
  *
  * @cdk.module io
  *
@@ -100,8 +103,101 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         boolean writecharge = true;
 
         try {
-            // should write something
-            throw new IOException("Not implemented yet!");
+
+/*
+#        Name: benzene 
+#        Creating user name: tom 
+#        Creation time: Wed Dec 28 00:18:30 1988 
+
+#        Modifying user name: tom 
+#        Modification time: Wed Dec 28 00:18:30 1988
+*/
+
+            if (mol.getProperty(CDKConstants.TITLE) != null) {
+                writer.write("#        Name: " + mol.getProperty(CDKConstants.TITLE) + "\n");
+            }
+            // FIXME: add other types of meta data
+            writer.newLine();
+
+/*
+@<TRIPOS>MOLECULE 
+benzene 
+12 12 1  0       0 
+SMALL 
+NO_CHARGES 
+*/
+
+            writer.write("@<TRIPOS>MOLECULE\n");
+            writer.write(mol.getID() + "\n");
+            writer.write(mol.getAtomCount() + " " + 
+                        mol.getBondCount() +
+                        "\n"); // that's the minimum amount of info required the format
+            writer.write("SMALL\n"); // no biopolymer
+            writer.write("NO CHARGES\n"); // other options include Gasteiger charges
+
+/*
+@<TRIPOS>ATOM 
+1       C1      1.207   2.091   0.000   C.ar    1       BENZENE 0.000 
+2       C2      2.414   1.394   0.000   C.ar    1       BENZENE 0.000 
+3       C3      2.414   0.000   0.000   C.ar    1       BENZENE 0.000 
+4       C4      1.207   -0.697  0.000   C.ar    1       BENZENE 0.000 
+5       C5      0.000   0.000   0.000   C.ar    1       BENZENE 0.000 
+6       C6      0.000   1.394   0.000   C.ar    1       BENZENE 0.000 
+7       H1      1.207   3.175   0.000   H       1       BENZENE 0.000 
+8       H2      3.353   1.936   0.000   H       1       BENZENE 0.000 
+9       H3      3.353   -0.542  0.000   H       1       BENZENE 0.000 
+10      H4      1.207   -1.781  0.000   H       1       BENZENE 0.000 
+11      H5      -0.939  -0.542  0.000   H       1       BENZENE 0.000 
+12      H6      -0.939  1.936   0.000   H       1       BENZENE 0.000 
+*/
+
+            // write atom block
+            writer.write("@<TRIPOS>ATOM\n");
+            Atom[] atoms = mol.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                writer.write(i + " " +
+                             atoms[i].getID() + " ");
+                if (atoms[i].getPoint3d() != null) {
+                    writer.write(atoms[i].getX3d() + " ");
+                    writer.write(atoms[i].getY3d() + " ");
+                    writer.write(atoms[i].getZ3d() + " ");
+                } else if (atoms[i].getPoint2d() != null) {
+                    writer.write(atoms[i].getX2d() + " ");
+                    writer.write(atoms[i].getY2d() + " ");
+                    writer.write(" 0.000 ");
+                } else {
+                    writer.write("0.000 0.000 0.000 ");
+                }
+                writer.write(atoms[i].getSymbol()); // FIXME: should use perceived Mol2 Atom Types!
+            }
+
+/*
+@<TRIPOS>BOND 
+1       1       2       ar 
+2       1       6       ar 
+3       2       3       ar 
+4       3       4       ar 
+5       4       5       ar 
+6       5       6       ar 
+7       1       7       1 
+8       2       8       1 
+9       3       9       1 
+10      4       10      1 
+11      5       11      1 
+12      6       12      1
+*/
+
+            // write bond block
+            writer.write("@<TRIPOS>BOND\n");
+            Bond[] bonds = mol.getBonds();
+            for (int i=0; i<bonds.length; i++) {
+                writer.write(i + " " +
+                             mol.getAtomNumber(bonds[i].getAtomAt(0)) + " " +
+                             mol.getAtomNumber(bonds[i].getAtomAt(1)) + " " +
+                             ((int)bonds[i].getOrder()) + 
+                             "\n");
+            } 
+
         } catch (IOException e) {
             throw e;
         }
