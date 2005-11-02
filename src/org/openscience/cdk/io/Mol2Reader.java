@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads a molecule from an Mol2 file, such as written by Sybyl.
- * See the specs <a href="http://www.tripos.com/custResources/mol2Files/">here</a>.
+ * See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
  *
  * @cdk.module io
  *
