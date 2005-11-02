@@ -116,7 +116,7 @@ public class ProteinBuilderTool {
         for (int i=0; i<sequence.length(); i++) {
             String aminoAcidCode = "" + sequence.charAt(i);
             logger.debug("Adding AA: " + aminoAcidCode);
-            if (aminoAcideCode.equals(" ")) {
+            if (aminoAcidCode.equals(" ")) {
                 // fine, just skip spaces
             } else {
                 AminoAcid aminoAcid = (AminoAcid)templates.get(aminoAcidCode);
