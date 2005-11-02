@@ -152,7 +152,7 @@ public class PathTools  {
 	 *@return                                                        true if the
 	 *      target atom was found during this function call
 	 */
-	public static boolean depthFirstTargetSearch(AtomContainer molecule, org.openscience.cdk.interfaces.Atom root, org.openscience.cdk.interfaces.Atom target, AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException {
+	public static boolean depthFirstTargetSearch(org.openscience.cdk.interfaces.AtomContainer molecule, org.openscience.cdk.interfaces.Atom root, org.openscience.cdk.interfaces.Atom target, org.openscience.cdk.interfaces.AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException {
 		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(root);
 		org.openscience.cdk.interfaces.Atom nextAtom = null;
 		root.setFlag(CDKConstants.VISITED, true);
