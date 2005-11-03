@@ -576,6 +576,17 @@
     </bibtex:book>
   </bibtex:entry>
 
+  <bibtex:entry id="WANG00">
+    <bibtex:article>
+        <bibtex:author>Wang, R., Gao, Y., and Lai, L.</bibtex:author>
+        <bibtex:title>Calculating partition coefficient by atom-additive method</bibtex:title>
+      <bibtex:journal>Perspectives in Drug Discovery and Design</bibtex:journal>
+      <bibtex:year>2000</bibtex:year>
+      <bibtex:volume>19</bibtex:volume>
+      <bibtex:pages>47-66</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="WANG97">
     <bibtex:article>
         <bibtex:author>Wang, R., Fu, Y., and Lai, L.</bibtex:author>
