@@ -84,6 +84,7 @@ import org.openscience.cdk.graph.MoleculeGraphs;
  *  In question: 
  *  	-Correction factor for salicylic acid (in paper, but not used by the program)
  *  	-Amid classification is not consequent (in 6 rings (R2)N-C(R)=0 is eg 46 and in !6 membered rings it is amid)
+ *  		-sometimes O=C(R)-N(R)-C(R)=O is an amid ... sometimes not 
  *		-Value for internal H bonds is in paper 0.429 but for no454 it is 0.643
  *
  *@author         mfe4, chhoppe
@@ -428,7 +429,7 @@ public class XLogPDescriptor implements Descriptor {
 					//System.out.println("XLOGP: 66		 1.178");
 				}
 				else {
-					if (getPresenceOfCarbonil(ac, atoms[i])==1) {
+					if (getPresenceOfCarbonil(ac, atoms[i])>=1) {
 						// amidic nitrogen
 						if (hsCount == 0) {
 							if (getAtomTypeXCount(ac, atoms[i]) == 0) {
