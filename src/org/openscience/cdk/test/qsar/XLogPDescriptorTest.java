@@ -60,7 +60,7 @@ public class XLogPDescriptorTest extends CDKTestCase {
 //	Molecule mol = sp.parseSmiles("COc1ccccc1C(C3=C(O)c2ccccc2CC3=O)c5c(O)c4ccccc4oc5=O"); // a cumarine
 //	HydrogenAdder hAdder = new HydrogenAdder();
 //	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-//	//System.out.println("Cumarine:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue());
+//	System.out.println("Cumarine:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue());
 //	//assertEquals(4.54, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
 //	
 //	
@@ -226,6 +226,7 @@ public class XLogPDescriptorTest extends CDKTestCase {
 	public void testno454() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		//xlogp program gives a result of -0.89, because one N is classified as in ring and not as amid
 		//if one takes a 5 or 7 ring than the program assignes amid ... strange
+		//sometimes amid is O=C-N-C=O sometimes not...
 		Descriptor descriptor = new XLogPDescriptor();
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
@@ -234,7 +235,20 @@ public class XLogPDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		//System.out.println("no454:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-		assertEquals(-1.46, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+		assertEquals(-2.11, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+	}
+	
+	public void testno498() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		//even here the amid assignment is very strange
+		Descriptor descriptor = new XLogPDescriptor();
+		Object[] params = {new Boolean(true)};
+		descriptor.setParameters(params);
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("O=C1N(C)C=CC(=O)N1C"); // xlogp training set molecule no498
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		//System.out.println("no498:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
+		assertEquals(-0.59, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
 	}
 }
 
