@@ -222,5 +222,19 @@ public class XLogPDescriptorTest extends CDKTestCase {
 		//System.out.println("no1274:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
 		assertEquals(-1.487, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
 	}
+	
+	public void testno454() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		//xlogp program gives a result of -0.89, because one N is classified as in ring and not as amid
+		//if one takes a 5 or 7 ring than the program assignes amid ... strange
+		Descriptor descriptor = new XLogPDescriptor();
+		Object[] params = {new Boolean(true)};
+		descriptor.setParameters(params);
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("O=C1NC(=O)C=CN1C1OC(CO)C(O)C1O"); // xlogp training set molecule no454
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		//System.out.println("no454:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
+		assertEquals(-1.46, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+	}
 }
 
