@@ -36,10 +36,14 @@ import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -77,8 +81,10 @@ import org.openscience.cdk.graph.MoleculeGraphs;
  *  -ring system >3
  *  -aromatic ring systems >=6
  *  
- *  In question: Correction factor for salicylic acid (in paper, but not used by the program)
- *
+ *  In question: 
+ *  	-Correction factor for salicylic acid (in paper, but not used by the program)
+ *  	-Amid classification is not consequent (in 6 rings (R2)N-C(R)=0 is eg 46 and in !6 membered rings it is amid)
+ *		-Value for internal H bonds is in paper 0.429 but for no454 it is 0.643
  *
  *@author         mfe4, chhoppe
  *@cdk.created    2004-11-03
@@ -532,10 +538,10 @@ public class XLogPDescriptor implements Descriptor {
 							}else if (hsCount == 1) {
 								if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 //									 like pyrrole
-									if (atoms[i].getFlag(CDKConstants.ISAROMATIC)) {
+									if (atoms[i].getFlag(CDKConstants.ISAROMATIC)|| (rs.contains(atoms[i])&& ringSize>3 && getPiSystemsCount(ac,atoms[i])>=1)) {
 										xlogP += 0.545;
 										hBondDonors.add(new Integer(i));
-										//System.out.println("XLOGP: 46		 0.545");
+										//System.out.println("XLOGP: 46		 0.545");										
 									} else {
 										if (getPiSystemsCount(ac, atoms[i]) == 0) {
 											xlogP -= 0.112;
@@ -586,11 +592,15 @@ public class XLogPDescriptor implements Descriptor {
 			if (symbol.equals("O")) {
 				if (bondCount == 1 && maxBondOrder==2.0) {
 					xlogP -= 0.399;
-					hBondAcceptors.add(new Integer(i));
+					if (!getPresenceOfHydroxy(ac,atoms[i])){
+						hBondAcceptors.add(new Integer(i));
+					}
 					//System.out.println("XLOGP: 75	A=O	-0.399");
 				}else if(bondCount == 1 && hsCount==0 && (getPresenceOfNitro(ac,atoms[i]) || getPresenceOfCarbonil(ac,atoms[i])==1)){
 						xlogP -= 0.399;
-						hBondAcceptors.add(new Integer(i));
+						if (!getPresenceOfHydroxy(ac,atoms[i])){
+							hBondAcceptors.add(new Integer(i));
+						}
 						//System.out.println("XLOGP: 75	A=O	-0.399");					
 				}else if (bondCount >= 1) {
 					if (hsCount == 0 && bondCount==2) {
@@ -612,19 +622,19 @@ public class XLogPDescriptor implements Descriptor {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP -= 0.467;
 								hBondDonors.add(new Integer(i));
-								//hBondAcceptors.add(new Integer(i));
+								hBondAcceptors.add(new Integer(i));
 								//System.out.println("XLOGP: 69	R-OH	-0.467");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP += 0.082;
 								hBondDonors.add(new Integer(i));
-								//hBondAcceptors.add(new Integer(i));
+								hBondAcceptors.add(new Integer(i));
 								//System.out.println("XLOGP: 70	R-OH.1	 0.082");
 							}
 						}else if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 							xlogP -= 0.522;
 							hBondDonors.add(new Integer(i));
-							//hBondAcceptors.add(new Integer(i));
+							hBondAcceptors.add(new Integer(i));
 							//System.out.println("XLOGP: 71	X-OH	-0.522");
 						}
 					}
@@ -722,12 +732,14 @@ public class XLogPDescriptor implements Descriptor {
 				}
 			}
 		}
-		
+		//System.out.println("XLOGP: Before Correction:"+xlogP);
 		List path=null;
 		SimpleGraph moleculeGraph=null;
-		////System.out.println("Acceptors:"+hBondAcceptors.size()+" Donors:"+hBondDonors.size());
+		int [][] pairCheck=null;
+//		//System.out.println("Acceptors:"+hBondAcceptors.size()+" Donors:"+hBondDonors.size());
 		if (hBondAcceptors.size()>0 && hBondDonors.size()>0){
 			moleculeGraph=MoleculeGraphs.getMoleculeGraph(ac);
+			pairCheck=initializeHydrogenPairCheck(new int[atoms.length][atoms.length]);
 		}
 		for (int i=0; i<hBondAcceptors.size();i++){
 			for (int j=0; j<hBondDonors.size();j++){
@@ -735,17 +747,23 @@ public class XLogPDescriptor implements Descriptor {
 					path=BFSShortestPath.findPathBetween(moleculeGraph,atoms[((Integer)hBondAcceptors.get(i)).intValue()], atoms[((Integer)hBondDonors.get(j)).intValue()]);
 //					//System.out.println(" Acc:"+checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()])
 //										+" S:"+atoms[((Integer)hBondAcceptors.get(i)).intValue()].getSymbol()
+//										+" Nr:"+((Integer)hBondAcceptors.get(i)).intValue()
 //										+" Don:"+checkRingLink(rs,ac,atoms[((Integer)hBondDonors.get(j)).intValue()])
 //										+" S:"+atoms[((Integer)hBondDonors.get(j)).intValue()].getSymbol()
+//										+" Nr:"+((Integer)hBondDonors.get(j)).intValue()
 //										+" i:"+i+" j:"+j+" path:"+path.size());
 					if (checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()]) && checkRingLink(rs,ac,atoms[((Integer)hBondDonors.get(j)).intValue()])){
-						if (path.size()==3){
+						if (path.size()==3 && pairCheck[((Integer)hBondAcceptors.get(i)).intValue()][((Integer)hBondDonors.get(j)).intValue()]==0){
 							xlogP += 0.429;
+							pairCheck[((Integer)hBondAcceptors.get(i)).intValue()][((Integer)hBondDonors.get(j)).intValue()]=1;
+							pairCheck[((Integer)hBondDonors.get(j)).intValue()][((Integer)hBondAcceptors.get(i)).intValue()]=1;
 							//System.out.println("XLOGP: Internal HBonds 1-4	 0.429");
 						}
 					}else{
-						if (path.size()==4){
+						if (path.size()==4 && pairCheck[((Integer)hBondAcceptors.get(i)).intValue()][((Integer)hBondDonors.get(j)).intValue()]==0){
 							xlogP += 0.429;
+							pairCheck[((Integer)hBondAcceptors.get(i)).intValue()][((Integer)hBondDonors.get(j)).intValue()]=1;
+							pairCheck[((Integer)hBondDonors.get(j)).intValue()][((Integer)hBondAcceptors.get(i)).intValue()]=1;
 							//System.out.println("XLOGP: Internal HBonds 1-5	 0.429");
 						}
 					}
@@ -803,8 +821,22 @@ public class XLogPDescriptor implements Descriptor {
 			}
 		}
 
-		AtomContainer orthopair = sp.parseSmiles("OCCO");
-		// ortho oxygen pair
+		
+//		 ortho oxygen pair
+		//AtomContainer orthopair = sp.parseSmiles("OCCO");
+		QueryAtomContainer orthopair=new QueryAtomContainer();
+		AromaticAtom atom1=new AromaticAtom();
+		atom1.setSymbol("C");
+		AromaticAtom atom2=new AromaticAtom();
+		atom2.setSymbol("C");
+		SymbolQueryAtom atom3=new SymbolQueryAtom();
+		atom3.setSymbol("O");
+		SymbolQueryAtom atom4=new SymbolQueryAtom();
+		atom4.setSymbol("O");
+		orthopair.addBond(new AromaticQueryBond(atom1,atom2,1.5));
+		orthopair.addBond(new OrderQueryBond(atom1,atom3,1));
+		orthopair.addBond(new OrderQueryBond(atom2,atom4,1));
+		
 		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, orthopair)) {
 			xlogP -= 0.268;
 			//System.out.println("XLOGP: Ortho oxygen pair	-0.268");
@@ -812,6 +844,22 @@ public class XLogPDescriptor implements Descriptor {
 
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(xlogP));
 	}
+	
+	/**
+	 * Method initialise the HydrogenpairCheck with a value
+	 *
+	 * @param double	value
+	 * @return void
+	 */
+	public int[][] initializeHydrogenPairCheck(int [][] pairCheck) {
+		for (int i = 0; i < pairCheck.length; i++) {
+			for (int j = 0; j < pairCheck[0].length; j++) {
+					pairCheck[i][j] = 0;
+			}
+		}
+		return pairCheck;
+	}
+	
 	
 	/**
 	 *  Check if atom or neighbour atom is part of a ring
@@ -1106,6 +1154,34 @@ public class XLogPDescriptor implements Descriptor {
 		return picounter;
 	}
 
+	/**
+	 *  Gets the presenceOf Hydroxy group attribute of the XLogPDescriptor object.
+	 *
+	 *@param  ac    Description of the Parameter
+	 *@param  atom  Description of the Parameter
+	 *@return       The presenceOfCarbonil value
+	 */
+	private boolean getPresenceOfHydroxy(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
+		org.openscience.cdk.interfaces.Atom[] neighbours = ac.getConnectedAtoms(atom);
+		org.openscience.cdk.interfaces.Atom[] first = null;
+		if (neighbours[0].getSymbol().equals("C")) {
+			first = ac.getConnectedAtoms(neighbours[0]);
+			for (int i = 0; i < first.length; i++) {
+				if (first[i].getSymbol().equals("O")) {
+					if(ac.getBond(neighbours[0], first[i]).getOrder()==1){
+						if (ac.getBondCount(first[i])>1 && getHydrogenCount(ac,first[i])==0){
+							return false;
+						}else{							
+							return true;
+						}
+					}
+				}
+			}
+		}		
+		return false;
+	}
+	
+	
 	/**
 	 *  Gets the presenceOfN=O attribute of the XLogPDescriptor object.
 	 *
