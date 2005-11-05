@@ -65,7 +65,7 @@ public class AtomContainerManipulator {
             container.setAtomAt(container.getAtomNumber(atom), newAtom);
             ElectronContainer[] electronContainers = container.getElectronContainers();
             for (int i=0; i<electronContainers.length; i++) {
-                if (electronContainers[i] instanceof org.openscience.cdk.interfaces.Bond) {
+                if (electronContainers[i] instanceof Bond) {
                     Bond bond = (Bond)electronContainers[i];
                     if (bond.contains(atom)) {
                         for (int j=0; j<bond.getAtomCount(); j++) {
@@ -118,7 +118,7 @@ public class AtomContainerManipulator {
         return hCount;
     }
 
-    public static Vector getAllIDs(org.openscience.cdk.interfaces.AtomContainer mol) {
+    public static Vector getAllIDs(AtomContainer mol) {
         Vector idList = new Vector();
         if (mol != null) {
             if (mol.getID() != null) idList.addElement(mol.getID());
@@ -151,7 +151,7 @@ public class AtomContainerManipulator {
         List remove = new ArrayList();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
-        Molecule mol = new org.openscience.cdk.Molecule();
+        Molecule mol = atomContainer.getBuilder().newMolecule();
         int count = atomContainer.getAtomCount();
         for (int i = 0;
                 i < count;
@@ -180,7 +180,7 @@ public class AtomContainerManipulator {
         {
             // Check bond.
             final Bond bond = atomContainer.getBondAt(i);
-            org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
+            Atom[] atoms = bond.getAtoms();
             boolean removedBond = false;
             final int length = atoms.length;
             for (int k = 0;

@@ -81,7 +81,7 @@ public class ReactionManipulator {
     }
     
     public static AtomContainer getAllInOneContainer(Reaction reaction) {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        AtomContainer container = reaction.getBuilder().newAtomContainer();
         if (reaction == null) {
             return container;
         }
@@ -99,7 +99,7 @@ public class ReactionManipulator {
     }
     
     public static SetOfMolecules getAllMolecules(Reaction reaction) {
-        SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
+        SetOfMolecules moleculeSet = reaction.getBuilder().newSetOfMolecules();
         Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             moleculeSet.addMolecule(reactants[i]);
@@ -116,13 +116,13 @@ public class ReactionManipulator {
      * Reaction.
      */
     public static Reaction reverse(Reaction reaction) {
-        Reaction reversedReaction = new org.openscience.cdk.Reaction();
-        if (reaction.getDirection() == org.openscience.cdk.Reaction.BIDIRECTIONAL) {
-            reversedReaction.setDirection(org.openscience.cdk.Reaction.BIDIRECTIONAL);
-        } else if (reaction.getDirection() == org.openscience.cdk.Reaction.FORWARD) {
-            reversedReaction.setDirection(org.openscience.cdk.Reaction.BACKWARD);
-        } else if (reaction.getDirection() == org.openscience.cdk.Reaction.BACKWARD) {
-            reversedReaction.setDirection(org.openscience.cdk.Reaction.FORWARD);
+        Reaction reversedReaction = reaction.getBuilder().newReaction();
+        if (reaction.getDirection() == Reaction.BIDIRECTIONAL) {
+            reversedReaction.setDirection(Reaction.BIDIRECTIONAL);
+        } else if (reaction.getDirection() == Reaction.FORWARD) {
+            reversedReaction.setDirection(Reaction.BACKWARD);
+        } else if (reaction.getDirection() == Reaction.BACKWARD) {
+            reversedReaction.setDirection(Reaction.FORWARD);
         }
         Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {

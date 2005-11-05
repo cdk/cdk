@@ -59,16 +59,13 @@ public class AtomTypeManipulator {
         atom.setFormalCharge(atomType.getFormalCharge());
         atom.setHybridization(atomType.getHybridization());
         atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
-        if (atomType instanceof org.openscience.cdk.AtomType) {
-        	org.openscience.cdk.AtomType type = (org.openscience.cdk.AtomType)atomType;
-        	atom.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, type.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
-        	atom.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, type.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
-        	Object constant = type.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
-        	if (constant != null) {
-        		atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, constant);
-        	}
-        	atom.setFlag(CDKConstants.ISAROMATIC, type.getFlag(CDKConstants.ISAROMATIC));
+        atom.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        atom.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+        Object constant = atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
+        if (constant != null) {
+        	atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, constant);
         }
+        atom.setFlag(CDKConstants.ISAROMATIC, atomType.getFlag(CDKConstants.ISAROMATIC));
             
         Object color = atomType.getProperty("org.openscience.cdk.renderer.color");
         if (color != null) {

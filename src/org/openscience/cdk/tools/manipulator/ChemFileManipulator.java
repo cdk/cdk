@@ -55,7 +55,7 @@ public class ChemFileManipulator {
      * @return  The AtomContainer with all the Molecules of this container
      */
     public static AtomContainer getAllInOneContainer(ChemFile file) {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        AtomContainer container = file.getBuilder().newAtomContainer();
         for (int i=0; i<file.getChemSequenceCount(); i++) {
             ChemSequence sequence = file.getChemSequence(i);
             container.add(ChemSequenceManipulator.getAllInOneContainer(sequence));

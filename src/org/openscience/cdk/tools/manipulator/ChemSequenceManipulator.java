@@ -54,7 +54,7 @@ public class ChemSequenceManipulator {
      * @return  The AtomContainer with all the Molecules of this container
      */
     public static AtomContainer getAllInOneContainer(ChemSequence sequence) {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        AtomContainer container = sequence.getBuilder().newAtomContainer();
         for (int i=0; i<sequence.getChemModelCount(); i++) {
             ChemModel model = sequence.getChemModel(i);
             container.add(ChemModelManipulator.getAllInOneContainer(model));
