@@ -44,7 +44,18 @@ package org.openscience.cdk.interfaces;
  * @cdk.bug     1095690
  */
 public interface Reaction extends ChemObject {
-    
+
+	/** Reaction of which the equilibrium is not set. */
+    public static final int UNKNOWN_DIRECTION = 0;
+    /** Reaction equalibrium which is (almost) fully on the product side. 
+        Often denoted with a forward arrow. */
+    public static final int FORWARD           = 1;
+    /** Reaction equalibrium which is (almost) fully on the reactant side. 
+        Often denoted with a backward arrow. */
+    public static final int BACKWARD          = 2;
+    /** Reaction equalibrium state. Often denoted by a double arrow. */
+    public static final int BIDIRECTIONAL     = 3;
+
     /**
      * Returns the number of reactants in this reaction.
      *
