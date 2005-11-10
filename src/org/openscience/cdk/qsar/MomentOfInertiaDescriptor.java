@@ -136,6 +136,7 @@ public class MomentOfInertiaDescriptor implements Descriptor {
         } catch (Exception e) {
             logger.debug(e);
         }
+        factory.configureAtoms(container);
 
         DoubleArrayResult retval = new DoubleArrayResult(7);
 
@@ -145,37 +146,39 @@ public class MomentOfInertiaDescriptor implements Descriptor {
         double[][] imat = new double[3][3];
         Point3d centerOfMass = GeometryTools.get3DCentreOfMass(container);
 
-        // make the MI tensor
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                double sum = 0.0;
-                int delta;
-                if (i == j) delta = 1;
-                else delta = 0;
-
-
-                for (int k = 0; k < container.getAtomCount(); k++) {
-                    double[] xyz = new double[3];
-                    double mass = 0.0;
-                    double radius = 0.0;
-
-                    org.openscience.cdk.interfaces.Atom currentAtom = container.getAtomAt(k);
-                    if (currentAtom.getPoint3d() == null) {
-                        throw new CDKException("Atom "+k+" did not have any 3D coordinates. These are required");
-                    }
-
-                    mass = factory.getMajorIsotope( currentAtom.getSymbol() ).getMassNumber();
-
-                    radius = centerOfMass.distance( currentAtom.getPoint3d() );
-
-                    xyz[0] = currentAtom.getPoint3d().x - centerOfMass.x;
-                    xyz[1] = currentAtom.getPoint3d().y - centerOfMass.y;
-                    xyz[2] = currentAtom.getPoint3d().z - centerOfMass.z;
-
-                    sum = sum + mass * (radius*radius*delta - xyz[i]*xyz[j]);
-                }
-                imat[i][j] = sum;
+        double xdif;
+        double ydif;
+        double zdif;
+        double xsq;
+        double ysq;
+        double zsq;
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            org.openscience.cdk.interfaces.Atom currentAtom = container.getAtomAt(i);
+            if (currentAtom.getPoint3d() == null) {
+                throw new CDKException("Atom "+i+" did not have any 3D coordinates. These are required");
             }
+
+            double mass = factory.getMajorIsotope(currentAtom.getSymbol()).getExactMass();
+
+            xdif = currentAtom.getPoint3d().x - centerOfMass.x;
+            ydif = currentAtom.getPoint3d().y - centerOfMass.y;
+            zdif = currentAtom.getPoint3d().z - centerOfMass.z;
+            xsq = xdif * xdif;
+            ysq = ydif * ydif;
+            zsq = zdif * zdif;
+
+            imat[0][0] += mass * (ysq + zsq);
+            imat[1][1] += mass * (xsq + zsq);
+            imat[2][2] += mass * (xsq + ysq);
+
+            imat[1][0] += -1 * mass * ydif * xdif;
+            imat[0][1] = imat[1][0];
+
+            imat[2][0] += -1 * mass * xdif * zdif;
+            imat[0][2] = imat[2][0];
+
+            imat[2][1] += -1 * mass * ydif * zdif;
+            imat[1][2] = imat[2][1];
         }
 
         // diagonalize the MI tensor
@@ -183,9 +186,13 @@ public class MomentOfInertiaDescriptor implements Descriptor {
         EigenvalueDecomposition eigenDecomp = tmp.eig();
         double[] eval = eigenDecomp.getRealEigenvalues();
 
-        retval.add( eval[0] );
-        retval.add( eval[1] );
         retval.add( eval[2] );
+        retval.add( eval[1] );
+        retval.add( eval[0] );
+
+        double etmp = eval[0];
+        eval[0] = eval[2];
+        eval[2] = etmp;
 
         if (Math.abs(eval[1]) > 1e-3) retval.add( eval[0]/eval[1] );
         else retval.add( 1000 );
