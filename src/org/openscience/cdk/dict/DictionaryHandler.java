@@ -82,12 +82,20 @@ public class DictionaryHandler extends DefaultHandler {
         // to QSAR metadata and save that. Currently it does'nt 
         // differentiate between descriptorType or descriptorClass.
         // Do we need to differentiate?
+        //
+        // RG: I think so and so I save a combination of the dictRef attribute
+        // and the content attribute
         if ("metadata".equals(local) && inMetadataList) {
-            for (int i = 0; i < atts.getLength(); i++) {
-                if (atts.getQName(i).equals("content")) {
-                    String content = atts.getValue(i);
+            for (int i = 0; i < atts.getLength()-1; i += 2) {
+
+                String dictRefValue = "";
+                if (atts.getQName(i).equals("dictRef")) {
+                    dictRefValue = atts.getValue(i);
+                }
+                if (atts.getQName(i+1).equals("content")) {
+                    String content = atts.getValue(i+1);
                     if (content.indexOf("qsar-descriptors-metadata:") == 0) {
-                        entry.setDescriptorMetadata(content);
+                        entry.setDescriptorMetadata(dictRefValue+"/"+content);
                     }
                 }
             }
