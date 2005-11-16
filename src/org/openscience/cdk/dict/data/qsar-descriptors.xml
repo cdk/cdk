@@ -72,6 +72,7 @@
     </annotation>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:hybridDescriptor"/>
     </metadataList>
   </entry>
 
@@ -182,6 +183,7 @@
     </definition>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
 
@@ -218,8 +220,8 @@
       </documentation>
     </annotation>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
-      <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:topologicalDescriptor"/>
-      <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:electronicDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
 
@@ -251,6 +253,7 @@
     </annotation>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:hybridDescriptor"/>
     </metadataList>
   </entry>
   
@@ -287,6 +290,7 @@
     </annotation>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
 
@@ -303,6 +307,7 @@
     </definition>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
 
@@ -320,7 +325,139 @@
     </definition>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:geometricalDescriptor"/>
+      <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
+  
+ 
+
+<entry id="apol" term="apol">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="aromaticAtomsCount" term="aromaticAtomsCount">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="aromaticBondsCount" term="aromaticBondsCount">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="bpol" term="bpol">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="CPSA" term="CPSA">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:hybridDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi1C" term="chi1C">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi0C" term="chi0C">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi1" term="chi1">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi0" term="chi0">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="eccentricConnectivityIndex" term="eccentricConnectivityIndex">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="hBondacceptors" term="hBondacceptors">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="hBondDonors" term="hBondDonors">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="kierValues" term="kierValues">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="petitjeanNumber" term="petitjeanNumber">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="rotatableBondsCount" term="rotatableBondsCount">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="vAdjMa" term="vAdjMa">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi1vC" term="chi1vC">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi0vC" term="chi0vC">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi1v" term="chi1v">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="chi0v" term="chi0v">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
+<entry id="wienerNumbers" term="wienerNumbers">
+  <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+    <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
+    <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
+  </metadataList>
+</entry>
   
 </dictionary>
