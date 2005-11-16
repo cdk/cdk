@@ -44,6 +44,7 @@ import org.openscience.cdk.applications.undoredo.CleanUpEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 
@@ -79,7 +80,12 @@ public class CleanupAction extends JCPAction
         logger.info("Going to performe a clean up...");
 		if (jcpPanel.getJChemPaintModel() != null)
 		{
-			if (diagramGenerator == null) diagramGenerator = new StructureDiagramGenerator();
+			if (diagramGenerator == null) {
+                diagramGenerator = new StructureDiagramGenerator();
+                diagramGenerator.setTemplateHandler(
+                    new TemplateHandler()
+                );
+            }
 			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 			Renderer2DModel renderModel = jcpmodel.getRendererModel();
 			double bondLength = renderModel.getBondLength() / renderModel.getScaleFactor();
