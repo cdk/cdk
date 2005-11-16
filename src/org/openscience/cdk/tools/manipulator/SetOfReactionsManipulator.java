@@ -65,7 +65,7 @@ public class SetOfReactionsManipulator {
     }
     
     public static AtomContainer getAllInOneContainer(SetOfReactions set) {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        AtomContainer container = set.getBuilder().newAtomContainer();
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
@@ -75,7 +75,7 @@ public class SetOfReactionsManipulator {
     }
     
     public static SetOfMolecules getAllMolecules(SetOfReactions set) {
-        SetOfMolecules moleculeSet = new org.openscience.cdk.SetOfMolecules();
+        SetOfMolecules moleculeSet = set.getBuilder().newSetOfMolecules();
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];

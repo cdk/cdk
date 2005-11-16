@@ -73,7 +73,7 @@ public class SetOfAtomContainersManipulator {
      * @return  The AtomContainer with all the AtomContainers of this set
      */
     public static AtomContainer getAllInOneContainer(SetOfAtomContainers set) {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        AtomContainer container = set.getBuilder().newAtomContainer();
         AtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
             container.add(acs[i]);
