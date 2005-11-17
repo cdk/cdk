@@ -34,9 +34,11 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
@@ -44,6 +46,8 @@ import org.openscience.cdk.io.cml.ChemFileCDO;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.DeAromatizationTool;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -217,6 +221,10 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.error(error);
             logger.debug(saxe);
             throw new CDKException(error, saxe);
+        }
+		RingSet rs=new AllRingsFinder().findAllRings(file.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0));
+		for(int i=0;i<rs.size();i++){
+			DeAromatizationTool.deAromatize((Ring)rs.get(i));  
         }
         return cdo;
     }
