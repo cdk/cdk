@@ -40,8 +40,9 @@ public class DeAromatizationTool {
 	 * Methods that takes a ring of which all bonds are aromatic, and assigns single
 	 * and double bonds. It does this in a non-general way by looking at the ring
 	 * size and take everything as a special case.
-	 * 
+	 *
 	 * @param ring Ring to dearomatize
+	 * @cdk.module     standard
 	 * @return  False if it could not convert the aromatic ring bond into single and double bonds
 	 */
 	public static boolean deAromatize(Ring ring) {
