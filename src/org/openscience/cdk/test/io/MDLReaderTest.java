@@ -44,10 +44,12 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
+ * A test case for SDF files is available as separate Class.
  *
  * @cdk.module test
  *
  * @see org.openscience.cdk.io.MDLReader
+ * @see org.openscience.cdk.test.io.SDFReaderTest
  */
 public class MDLReaderTest extends CDKTestCase {
 
@@ -253,24 +255,6 @@ public class MDLReaderTest extends CDKTestCase {
         }
     }
 
-    public void testSDFFile() {
-        String filename = "data/mdl/test.sdf"; // a multi molecule SDF file
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
-            ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
-            assertEquals(1, fileContents.getChemSequenceCount());
-            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
-            assertNotNull(sequence);
-            assertEquals(9, sequence.getChemModelCount());
-            for (int i=0; i<sequence.getChemModelCount(); i++) {
-                assertNotNull(sequence.getChemModel(i));
-            }
-        } catch (Exception e) {
-            fail(e.toString());
-        }
-    }
-
     /** 
      * Problem was filed as bug #835571
      */
@@ -320,31 +304,6 @@ public class MDLReaderTest extends CDKTestCase {
         } catch (Throwable problem) {
             problem.printStackTrace();
             fail();
-        }
-    }
-
-    public void testDataFromSDFReading() {
-        String filename = "data/mdl/test.sdf"; // a multi molecule SDF file
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
-            ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
-            assertEquals(1, fileContents.getChemSequenceCount());
-            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
-            assertNotNull(sequence);
-            assertEquals(9, sequence.getChemModelCount());
-            org.openscience.cdk.interfaces.ChemModel model = sequence.getChemModel(0);
-            assertNotNull(model);
-            
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
-            assertNotNull(som);
-            assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.Molecule m = som.getMolecule(0);
-            assertNotNull(m);
-            assertEquals("1", m.getProperty("E_NSC"));
-            assertEquals("553-97-9", m.getProperty("E_CAS"));
-        } catch (Exception e) {
-            fail(e.toString());
         }
     }
     

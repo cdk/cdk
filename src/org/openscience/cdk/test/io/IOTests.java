@@ -51,6 +51,7 @@ public class IOTests {
         suite.addTest(INChIReaderTest.suite());
         suite.addTest(INChIPlainTextReaderTest.suite());
         suite.addTest(MDLReaderTest.suite());
+          suite.addTest(SDFReaderTest.suite());
         suite.addTest(MDLWriterTest.suite());
         suite.addTest(MDLRXNReaderTest.suite());
         suite.addTest(MDLRXNWriterTest.suite());
