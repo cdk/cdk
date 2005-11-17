@@ -100,15 +100,7 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
       currentSetOfReactions = null;
       currentReaction = null;
       currentMolecule = file.getBuilder().newMolecule();
-      atomEnumeration = new Hashtable();
-      try{
-	      RingSet rs=new AllRingsFinder().findAllRings(currentMolecule);
-	      for(int i=0;i<rs.size();i++){
-	    	  DeAromatizationTool.deAromatize((Ring)rs.get(i));  
-	      }
-      }catch(CDKException ex){
-    	  logger.warn("Could not handle aromatic rings");
-      }      
+      atomEnumeration = new Hashtable();    
     }
 
     // procedures required by CDOInterface
