@@ -27,25 +27,30 @@ import java.util.Hashtable;
 
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
-import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.DeAromatizationTool;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -96,6 +101,14 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
       currentReaction = null;
       currentMolecule = file.getBuilder().newMolecule();
       atomEnumeration = new Hashtable();
+      try{
+	      RingSet rs=new AllRingsFinder().findAllRings(currentMolecule);
+	      for(int i=0;i<rs.size();i++){
+	    	  DeAromatizationTool.deAromatize((Ring)rs.get(i));  
+	      }
+      }catch(CDKException ex){
+    	  logger.warn("Could not handle aromatic rings");
+      }      
     }
 
     // procedures required by CDOInterface
@@ -238,6 +251,7 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
                 }
                 if (bond_order == CDKConstants.BONDORDER_AROMATIC) {
                     b.setFlag(CDKConstants.ISAROMATIC, true);
+                    b.setOrder(1);
                 }
                 currentMolecule.addBond(b);
             }
