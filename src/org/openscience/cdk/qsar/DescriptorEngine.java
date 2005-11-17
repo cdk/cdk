@@ -376,10 +376,10 @@ public class DescriptorEngine {
                 Enumeration e = j.entries();
                 while (e.hasMoreElements()) {
                     JarEntry je = (JarEntry) e.nextElement();
-                    if (je.toString().contains(".class")) {
+                    if (je.toString().indexOf(".class") != -1) {
                         String tmp = je.toString().replace('/', '.').replaceAll(".class", "");
-                        if (!tmp.contains(packageName)) continue;
-                        if (tmp.contains("$")) continue;
+                        if (!(tmp.indexOf(packageName) != -1)) continue;
+                        if (tmp.indexOf("$") != -1) continue;
                         classlist.add(tmp);
                     }
                 }
