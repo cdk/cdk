@@ -105,9 +105,8 @@ public class DescriptorCalculator {
     private void initEngine() {
         if (descTypes != null) {
             engine = new DescriptorEngine(descTypes);
-        } else {
-            engine = new DescriptorEngine();
-        }
+        } else
+            engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
     }
 
     public static void main(String[] args) {
@@ -278,8 +277,8 @@ public class DescriptorCalculator {
         options.addOption("h", "help", false, "give this help page");
         options.addOption("s","smiles", false, "input one SMILES string");
         options.addOption("t","type",true,
-                "specify which types of descriptor to calculate (comma seperated list). "+
-                "Possible values are: constitutional, molecular, topological, geometrical, electronic");
+                "specify which type of descriptor to calculate. "+
+                "Possible values are: molecular, atomic");
         options.addOption("o","output",true,
                 "Format in which to output descriptors. Options are 'cml' or'txt' to"+
                 "indicate CML output or comma seperated text");

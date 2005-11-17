@@ -34,7 +34,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.Descriptor;
-import org.openscience.cdk.qsar.RDFProtonDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
 

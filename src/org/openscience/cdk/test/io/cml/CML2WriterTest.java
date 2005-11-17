@@ -42,7 +42,7 @@ import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.qsar.Descriptor;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.WeightDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;

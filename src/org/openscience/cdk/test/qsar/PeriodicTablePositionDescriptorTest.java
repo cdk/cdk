@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.Descriptor;
-import org.openscience.cdk.qsar.PeriodicTablePositionDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;

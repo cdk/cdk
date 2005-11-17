@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.Descriptor;
-import org.openscience.cdk.qsar.ProtonTotalPartialChargeDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;

@@ -43,7 +43,7 @@ public class DescriptorEngineTest extends CDKTestCase {
     }
     
     public void testConstructor() {
-            DescriptorEngine engine = new DescriptorEngine();
+            DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
             assertTrue(engine != null);
     }
 }

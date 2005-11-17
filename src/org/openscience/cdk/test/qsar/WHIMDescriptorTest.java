@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 
 import junit.framework.Test;
@@ -34,7 +32,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.Descriptor;
-import org.openscience.cdk.qsar.WHIMDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;

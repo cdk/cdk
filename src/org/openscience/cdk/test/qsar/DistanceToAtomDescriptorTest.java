@@ -32,7 +32,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.Descriptor;
-import org.openscience.cdk.qsar.DistanceToAtomDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
 
