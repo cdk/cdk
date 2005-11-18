@@ -209,6 +209,7 @@ org/openscience/cdk/graph/BiconnectivityInspector.class
 org/openscience/cdk/graph/ConnectivityChecker.class
 org/openscience/cdk/graph/MoleculeGraphs.class
 org/openscience/cdk/graph/PathTools.class
+org/openscience/cdk/graph/SpanningTree.class
 org/openscience/cdk/io/ChemObjectIO.class
 org/openscience/cdk/io/ChemObjectReader.class
 org/openscience/cdk/io/ChemObjectWriter.class
@@ -249,12 +250,18 @@ org/openscience/cdk/renderer/color/CDK2DAtomColors.class
 org/openscience/cdk/renderer/Renderer2D.class
 org/openscience/cdk/renderer/Renderer2DModel.class
 org/openscience/cdk/Ring.class
+org/openscience/cdk/ringsearch/AllRingsFinder.class
 org/openscience/cdk/ringsearch/cyclebasis/CycleBasis.class
 org/openscience/cdk/ringsearch/cyclebasis/SimpleCycleBasis$AuxiliaryGraph.class
 org/openscience/cdk/ringsearch/cyclebasis/SimpleCycleBasis.class
 org/openscience/cdk/ringsearch/cyclebasis/SimpleCycle.class
 org/openscience/cdk/ringsearch/RingPartitioner.class
 org/openscience/cdk/ringsearch/SSSRFinder.class
+org/openscience/cdk/ringsearch/Path.class
+org/openscience/cdk/ringsearch/Queue.class
+org/openscience/cdk/smiles/SmilesGenerator$1.class
+org/openscience/cdk/smiles/SmilesGenerator$BrokenBond.class
+org/openscience/cdk/smiles/SmilesGenerator.class
 org/openscience/cdk/RingSet.class
 org/openscience/cdk/SetOfAtomContainers.class
 org/openscience/cdk/SetOfMolecules.class
@@ -270,6 +277,8 @@ org/openscience/cdk/tools/manipulator/SetOfMoleculesManipulator.class
 org/openscience/cdk/tools/SaturationChecker.class
 org/openscience/cdk/tools/ValencyChecker.class
 org/openscience/cdk/tools/ValencyCheckerInterface.class
+org/openscience/cdk/tools/DeAromatizationTool.class
+org/openscience/cdk/tools/ElementComparator.class
 org/openscience/cdk/validate/ProblemMarker.class
 org/openscience/cdk/validate/ValidatorInterface.class
 org/xml/sax/ext/Attributes2.class
