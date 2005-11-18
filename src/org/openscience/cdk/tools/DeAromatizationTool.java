@@ -56,6 +56,13 @@ public class DeAromatizationTool {
 	 * @return  False if it could not convert the aromatic ring bond into single and double bonds
 	 */
 	public static boolean deAromatize(Ring ring) {
+		boolean allaromatic=true;
+		for(int i=0;i<ring.getBondCount();i++){
+			if(!ring.getBondAt(i).getFlag(CDKConstants.ISAROMATIC))
+				allaromatic=false;
+		}
+		if(!allaromatic)
+			return false;
 		boolean result = false;
 		Hashtable elementCounts = new MFAnalyser(ring).getFormulaHashtable();
 		if (ring.getRingSize() == 6) {
