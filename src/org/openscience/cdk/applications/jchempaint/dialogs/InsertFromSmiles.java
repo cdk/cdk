@@ -48,6 +48,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -156,6 +157,7 @@ public class InsertFromSmiles extends JFrame
 
 				// ok, now generate 2D coordinates
 				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                sdg.setTemplateHandler(new TemplateHandler());
 				try
 				{
 					sdg.setMolecule(m);

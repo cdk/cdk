@@ -52,6 +52,7 @@ import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.SVGWriter;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -70,7 +71,7 @@ public class CopyPasteAction extends JCPAction{
 	private DataFlavor svgFlavor = new DataFlavor(
 		"image/svg+xml",          "scalable vector graphics");
 	private DataFlavor cmlFlavor = new DataFlavor(
-			"image/cml",          "chemical markup language");
+		  "image/cml",          "chemical markup language");
     
 	public void actionPerformed(ActionEvent e) {
     	try {
@@ -120,7 +121,11 @@ public class CopyPasteAction extends JCPAction{
         			try{
         				SmilesParser sp = new SmilesParser();
         				topaste = sp.parseSmiles((String) transfer.getTransferData (DataFlavor.stringFlavor));
-        				new StructureDiagramGenerator((Molecule)topaste).generateCoordinates();
+        				StructureDiagramGenerator sdg = new StructureDiagramGenerator((Molecule)topaste);
+                        sdg.setTemplateHandler(
+                            new TemplateHandler()
+                        );
+                        sdg.generateCoordinates();
         				jcpPanel.scaleAndCenterMolecule(topaste,jcpPanel.getSize());
         			}catch(Exception ex){
         				//we just try smiles
