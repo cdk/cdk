@@ -241,38 +241,41 @@ public class JCPPropertyHandler
 
 
 	/**
-	 *  Gets the gUIDefinition attribute of the JCPPropertyHandler object
+	 * Gets the gUIDefinition attribute of the JCPPropertyHandler object
 	 *
-	 *@return    The gUIDefinition value
+	 * @return    The gUIDefinition value
 	 */
 	public ResourceBundle getGUIDefinition()
 	{
-		if (guiDefinition == null)
-		{
-			String guiString = null;
-			try
-			{
-				guiString = System.getProperty("gui");
-			} catch (Exception exc)
-			{
-				logger.error("Could not read a system property. I might be in a sandbox.");
-			}
-			if (guiString == null)
-			{
-				guiString = "stable";
-			}
-			try
-			{
-				String resource = "org.openscience.cdk.applications.jchempaint.resources.text.JCPGUI_" + guiString;
-				guiDefinition = ResourceBundle.getBundle(resource, Locale.getDefault());
-			} catch (Exception exc)
-			{
-				logger.error("Could not read a GUI definition.");
-				logger.debug(exc);
-			}
-		}
-		return guiDefinition;
-	}
+        if (guiDefinition == null)
+        {
+            String guiString = null;
+            try
+            {
+                guiString = System.getProperty("gui");
+            } catch (Exception exc)
+            {
+                logger.error("Could not read a system property. I might be in a sandbox.");
+            }
+            if (guiString == null)
+            {
+                guiString = "stable";
+            }
+            guiDefinition = getGUIDefinition(guiString);
+        }
+        return guiDefinition;
+    }
+
+    public ResourceBundle getGUIDefinition(String guiString) {
+        try {
+            String resource = "org.openscience.cdk.applications.jchempaint.resources.text.JCPGUI_" + guiString;
+            guiDefinition = ResourceBundle.getBundle(resource, Locale.getDefault());
+        } catch (Exception exc) {
+            logger.error("Could not read a GUI definition: " + exc.getMessage());
+            logger.debug(exc);
+        }
+        return guiDefinition;
+    }
 
 	public Properties getJCPShort_Cuts() {
 		if (shortCutProps == null) {

@@ -53,6 +53,7 @@ public class JChemPaintMenuBar extends JMenuBar {
 
 	private LoggingTool logger;
 
+    private String guiString = "stable";
 
 	/**
 	 *  The default constructor method. Adds the plugin menu.
@@ -63,6 +64,10 @@ public class JChemPaintMenuBar extends JMenuBar {
 		this(jcpPanel, true);
 	}
 
+    public JChemPaintMenuBar(JChemPaintPanel jcpPanel, String guiString) {
+        this(jcpPanel, true);
+        this.guiString = guiString;
+    }
 
 	/**
 	 *  The more flexible constructor method.
@@ -82,8 +87,7 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 * @param  addPluginMenu   Description of the Parameter
 	 * @param  menuDefinition  Description of the Parameter
 	 */
-	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu,
-			String menuDefinition) {
+	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition) {
 		logger = new LoggingTool(this);
 		createMenubar(jcpPanel, addPluginMenu, menuDefinition);
 	}
@@ -100,7 +104,8 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 * @param  addPluginMenu   Description of the Parameter
 	 * @param  menuDefinition  Description of the Parameter
 	 */
-	protected void createMenubar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition) {
+	protected void createMenubar(JChemPaintPanel jcpPanel, boolean addPluginMenu, 
+        String menuDefinition) {
 		addNormalMenuBar(jcpPanel, menuDefinition);
 		if (addPluginMenu) {
 			logger.info("Creating plugin menu");
@@ -207,7 +212,7 @@ public class JChemPaintMenuBar extends JMenuBar {
 	public String getMenuResourceString(String key) {
 		String str;
 		try {
-			str = JCPPropertyHandler.getInstance().getGUIDefinition().getString(key);
+			str = JCPPropertyHandler.getInstance().getGUIDefinition(this.guiString).getString(key);
 		} catch (MissingResourceException mre) {
 			str = null;
 		}

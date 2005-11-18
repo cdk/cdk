@@ -102,7 +102,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	boolean showMenuBar = true;
 	boolean showToolBar = true;
 	boolean showStatusBar = true;
-	
+
+    String guiString = "stable";
+
   protected CDKPluginManager pluginManager = null;
 	protected EventListenerList changeListeners = null;
 	
@@ -116,21 +118,26 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 
 	public JChemPaintEditorPanel(int lines, Dimension panelDimension) {
-	    this(lines, panelDimension, false);
+	    this(lines, panelDimension, false, "stable");
 	}
+
+    public JChemPaintEditorPanel(int lines, Dimension panelDimension, String guiString) {
+        this(lines, panelDimension, false, guiString);
+    }
 	/**
 	 *  Constructor for the panel
 	 *
 	 *@param  lines  How many lines should the horizontal toolbar have?
 	 */
-	public JChemPaintEditorPanel(int lines, Dimension panelDimension, boolean isEmbedded)
+	public JChemPaintEditorPanel(int lines, Dimension panelDimension, 
+                                 boolean isEmbedded, String guiString)
 	{
 		super();
 		if (isEmbedded == true) {
 		    this.setEmbedded();
 		}
 		setupPluginManager();
-	    customizeView();
+        this.guiString = guiString; customizeView();
 		super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
 		if (logger == null)
@@ -194,7 +201,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public void customizeView() {
 		if (showMenuBar) {
 			if (menu == null) {
-				menu = new JChemPaintMenuBar(this);
+				menu = new JChemPaintMenuBar(this, this.guiString);
 			}
 			add(menu, BorderLayout.NORTH);
 			revalidate();
