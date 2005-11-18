@@ -466,7 +466,7 @@ public class CMLCoreModule implements ModuleInterface {
         String cData = currentChars;
         
         if ("bond".equals(name)) {
-            if (!stereoGiven)
+        	if (!stereoGiven)
                 bondStereo.addElement("");
             if (bondStereo.size() > bondDictRefs.size())
                 bondDictRefs.addElement(null);
@@ -760,7 +760,8 @@ public class CMLCoreModule implements ModuleInterface {
                 }
             } else if (xpath.toString().endsWith("bond/scalar/")) {
                 if (DICTREF.equals("mdl:stereo")) {
-                    bondStereo.addElement(cData.trim());
+                	bondStereo.addElement(cData.trim());
+                    stereoGiven=true;
                 }
             } else if (xpath.toString().endsWith("atom/scalar/")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
