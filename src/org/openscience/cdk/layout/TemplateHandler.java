@@ -35,11 +35,11 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -48,15 +48,15 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- *  Helper class for Structure Diagram Generation. Handles templates. This is
- *  our layout solution for ring systems which are notoriously difficult to
- *  layout, like cubane, adamantane, porphyrin, etc.
+ * Helper class for Structure Diagram Generation. Handles templates. This is
+ * our layout solution for ring systems which are notoriously difficult to
+ * layout, like cubane, adamantane, porphyrin, etc.
  *
- *@author     steinbeck
- *@cdk.created    September 4, 2003
- *@cdk.keyword    layout
- *@cdk.keyword    2D-coordinates
- * @cdk.require java1.4+
+ * @author       steinbeck
+ * @cdk.created  2003-09-04
+ * @cdk.keyword  layout
+ * @cdk.keyword  2D-coordinates
+ * @cdk.require  java1.4+
  */
 public class TemplateHandler
 {
@@ -71,7 +71,7 @@ public class TemplateHandler
 
 
 	/**
-	 *  The empty constructor.
+	 * Creates a new TemplateHandler.
 	 */
 	public TemplateHandler()
 	{
@@ -82,9 +82,9 @@ public class TemplateHandler
 
 
 	/**
-	 *  Loads all existing templates into memory To add templates to be used in
-	 *  SDG, place a drawing with the new template in data/templates and add the
-	 *  template filename to data/templates/template.list
+	 * Loads all existing templates into memory. To add templates to be used in
+	 * SDG, place a drawing with the new template in data/templates and add the
+	 * template filename to data/templates/template.list
 	 */
 	public void loadTemplates()
 	{
@@ -102,8 +102,8 @@ public class TemplateHandler
                     this.getClass().getClassLoader().getResourceAsStream(line)
                 );
                 ChemFile file = (ChemFile)structureReader.read(new org.openscience.cdk.ChemFile());
-				templates.addElement(new Molecule(
-                    (AtomContainer)ChemFileManipulator.getAllInOneContainer(file)
+				templates.addElement(file.getBuilder().newMolecule(
+                    ChemFileManipulator.getAllInOneContainer(file)
                 ));
 				logger.debug("Successfully read template ", line);
 			}
@@ -117,10 +117,9 @@ public class TemplateHandler
 	}
 
 	/**
-	 *  Adds a Molecule to the list of 
-	 *  templates use by this TemplateHandler
+	 * Adds a Molecule to the list of templates use by this TemplateHandler
 	 *
-	 *@param  molecule  The molecule to be added to the TemplateHandler
+	 * @param  molecule  The molecule to be added to the TemplateHandler
 	 */
 	public void addMolecule(Molecule molecule)
 	{
@@ -129,15 +128,14 @@ public class TemplateHandler
 	
 	public Molecule removeMolecule(Molecule molecule)  throws CDKException
 	{
-		AtomContainer ac1 = new org.openscience.cdk.AtomContainer(molecule);
+		AtomContainer ac1 = molecule.getBuilder().newAtomContainer(molecule);
 		AtomContainer ac2 = null;
 		Molecule mol2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			mol2 = (Molecule)templates.elementAt(f);
-			ac2 = new org.openscience.cdk.AtomContainer(mol2);
-			if (UniversalIsomorphismTester.isIsomorph(new org.openscience.cdk.AtomContainer(ac1), new org.openscience.cdk.AtomContainer(ac2)))
-			{
+			ac2 = molecule.getBuilder().newAtomContainer(mol2);
+			if (UniversalIsomorphismTester.isIsomorph(ac1, ac2)) {
 				templates.removeElementAt(f);
 				return mol2;
 			}
@@ -147,15 +145,15 @@ public class TemplateHandler
 
 
 	/**
-	 *  Checks if one of the loaded templates is a substructure in the given
-	 *  Molecule. If so, it assigns the coordinates from the template to the
-	 *  respective atoms in the Molecule.
+	 * Checks if one of the loaded templates is a substructure in the given
+	 * Molecule. If so, it assigns the coordinates from the template to the
+	 * respective atoms in the Molecule, and marks the atoms as ISPLACED.
 	 *
-	 *@param  molecule  The molecule to be check for potential templates
-	 *@return           True if there was a possible mapping
+	 * @param  molecule  The molecule to be check for potential templates
+	 * @return           True if there was a possible mapping
 	 */
-	public boolean mapTemplates(org.openscience.cdk.interfaces.Molecule molecule) throws CDKException
-	{
+	public boolean mapTemplates(Molecule molecule) throws CDKException {
+        logger.debug("Trying to map a molecule...");
 		boolean mapped = false;
 		Molecule template = null;
 		RMap map = null;
@@ -166,7 +164,10 @@ public class TemplateHandler
 			template = (Molecule) templates.elementAt(f);
 			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
 			{
-				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(new org.openscience.cdk.AtomContainer(molecule), new org.openscience.cdk.AtomContainer(template));
+				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(
+                    molecule.getBuilder().newAtomContainer(molecule), 
+                    molecule.getBuilder().newAtomContainer(template)
+                );
 				logger.debug("Found a subgraph mapping of size " + list.size());
 				for (int i = 0; i < list.size(); i++)
 				{
@@ -178,7 +179,9 @@ public class TemplateHandler
 					atom1.setFlag(CDKConstants.ISPLACED, true);
 				}
 				mapped = true;
-			}
+			} else {
+                logger.warn("Structure does not match template: ", template.getID());
+            }
 		}
 		return mapped;
 	}
