@@ -28,55 +28,48 @@
  */
 package org.openscience.cdk.dict;
 
-import java.util.Vector;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import org.openscience.cdk.tools.LoggingTool;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.ParsingException;
 
 /**
- * Entry in a Dictionary.
- * 
+ * Dictionary with entries build from an OWL file.
+ *
  * @author       Egon Willighagen <egonw@users.sf.net>
- * @cdk.created  2003-08-23
+ * @cdk.created  2005-11-18
  * @cdk.keyword  dictionary
  *
- * @see          Dictionary
+ * @cdk.depends  xom-1.0.jar
  */
-public class Entry {
-    
-    private String term;
-    private String id;
-    private Vector descriptorInfo;
-    
-    public Entry(String id, String term) {
-        this.id = id.toLowerCase();
-        this.term = term;
-        this.descriptorInfo = new Vector();
-    }
-    
-    public Entry() {
-        this("", "");
-        this.descriptorInfo = new Vector();
-    }
-    
-    public void setTerm(String term) {
-        this.term = term;
-    }
-    
-    public String getTerm() {
-        return this.term;
-    }
-    
-    public void setID(String id) {
-        this.id = id.toLowerCase();
-    }
-    
-    public String getID() {
-        return this.id;
+public class OWLFile extends Dictionary {
+
+    public OWLFile() {
+        super();
     }
 
-    public void setDescriptorMetadata(String metadata) {
-        this.descriptorInfo.add( metadata );
+    public static Dictionary unmarshal(Reader reader) {
+        LoggingTool logger = new LoggingTool(Dictionary.class);
+        Dictionary dict = new Dictionary();
+        try {
+            Builder parser = new Builder();
+            Document doc = parser.build(reader);
+        } catch (ParsingException ex) {
+            logger.error("Dictionary is not well-formed: ", ex.getMessage());
+            logger.debug("Error at line " + ex.getLineNumber(),
+                         ", column " + ex.getColumnNumber());
+        } catch (IOException ex) { 
+            logger.error("Due to an IOException, the parser could not check:",
+                ex.getMessage()
+            );
+            logger.debug(ex);
+        }
+        return dict;
     }
-    public Vector getDescriptorMetadata() {
-        return this.descriptorInfo;
-    }
-    
+
 }

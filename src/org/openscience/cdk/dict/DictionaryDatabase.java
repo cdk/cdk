@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.dict;
 
+import org.openscience.cdk.tools.LoggingTool;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Enumeration;
@@ -47,22 +48,28 @@ public class DictionaryDatabase {
 
     public final static String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
     
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
     
     private String[] dictionaryNames = {
         "chemical", "elements", "qsar-descriptors"
+    };
+    private String[] dictionaryTypes = {
+        "xml", "xml", "owl"
     };
     
     private Hashtable dictionaries;
 
     public DictionaryDatabase() {
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+        logger = new LoggingTool(this);
         
         // read dictionaries distributed with CDK
         dictionaries = new Hashtable();
         for (int i=0; i<dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
-            Dictionary dictionary = readDictionary("org/openscience/cdk/dict/data/" + name + ".xml");
+            String type = dictionaryTypes[i];
+            Dictionary dictionary = readDictionary(
+                "org/openscience/cdk/dict/data/" + name, type
+            );
             if (dictionary != null) {
                 dictionaries.put(name.toLowerCase(), dictionary);
                 logger.debug("Read dictionary: ", name);
@@ -70,13 +77,17 @@ public class DictionaryDatabase {
         }
     }
 
-    private Dictionary readDictionary(String databaseLocator) {
+    private Dictionary readDictionary(String databaseLocator, String type) {
         Dictionary dictionary = null;
         logger.info("Reading dictionary from ", databaseLocator);
         try {
             InputStreamReader reader = new InputStreamReader(
                 this.getClass().getClassLoader().getResourceAsStream(databaseLocator));
-            dictionary = Dictionary.unmarshal(reader);
+            if (type.equals("owl")) {
+                dictionary = OWLFile.unmarshal(reader);
+            } else { // assume XML using Castor
+                dictionary = Dictionary.unmarshal(reader);
+            }
         } catch (Exception exception) {
             dictionary = null;
             logger.error("Could not read dictionary ", databaseLocator);
