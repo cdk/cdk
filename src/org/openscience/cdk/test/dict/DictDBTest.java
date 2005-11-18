@@ -22,58 +22,36 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-
 package org.openscience.cdk.test.dict;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * Checks the functionality of the DictRef class.
+ * Checks the functionality of the DictionaryDatabase class.
  *
  * @cdk.module test
  *
- * @see org.openscience.cdk.dict.DictRef
+ * @see org.openscience.cdk.dict.DictionaryDatabase
  */
-public class DictRefTest extends CDKTestCase {
+public class DictDBTest extends CDKTestCase {
 
-    public DictRefTest(String name) {
+    public DictDBTest(String name) {
         super(name);
     }
 
     public void setUp() {}
 
     public static Test suite() {
-        return new TestSuite(DictRefTest.class);
+        return new TestSuite(DictDBTest.class);
     }
     
-    // test constructors
-    
-    public void testDictRef_String_String() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	assertNotNull(dictRef);
+    public void testDictionaryDatabase() {
+        DictionaryDatabase db = new DictionaryDatabase();
+        assertEquals(3, db.getDictionaryNames().length);
     }
     
-    public void testGetType() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	assertEquals("bar:foo", dictRef.getType());
-    }
-    
-    public void testGetDictRef() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	assertEquals("bla", dictRef.getDictRef());
-    }
-    
-    /** Test for RFC #9 */
-    public void testToString() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
-        String description = dictRef.toString();
-        for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
-        }
-    }
 }

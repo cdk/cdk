@@ -51,6 +51,7 @@ import org.openscience.cdk.test.charges.InductivePartialChargesTest;
 import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.test.config.ConfigTests;
 import org.openscience.cdk.test.dict.DictRefTest;
+import org.openscience.cdk.test.dict.DictDBTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
@@ -81,7 +82,7 @@ import org.openscience.cdk.test.templates.AminoAcidsTest;
 import org.openscience.cdk.test.tools.ToolsTests;
 
 /**
- * TestSuite that runs all the sample tests
+ * TestSuite that runs all the sample tests.
  *
  * @cdk.module test
  * @cdk.depends log4j.jar
@@ -120,6 +121,7 @@ public class CDKTests
         suite.addTest(MM2AtomTypeMatcherTest.suite());
         // from cdk.test.dict
         suite.addTest(DictRefTest.suite());
+        suite.addTest(DictDBTest.suite());
         // from cdk.test.charges
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
         suite.addTest(MMFF94PartialChargesTest.suite());
