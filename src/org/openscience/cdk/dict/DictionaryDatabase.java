@@ -51,7 +51,7 @@ public class DictionaryDatabase {
     private LoggingTool logger;
     
     private String[] dictionaryNames = {
-        "chemical", "elements", "qsar-descriptors"
+        "chemical", "elements", "descriptor-algorithms"
     };
     private String[] dictionaryTypes = {
         "xml", "xml", "owl"
@@ -79,6 +79,7 @@ public class DictionaryDatabase {
 
     private Dictionary readDictionary(String databaseLocator, String type) {
         Dictionary dictionary = null;
+        databaseLocator += "." + type;
         logger.info("Reading dictionary from ", databaseLocator);
         try {
             InputStreamReader reader = new InputStreamReader(

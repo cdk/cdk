@@ -79,4 +79,7 @@ public class Entry {
         return this.descriptorInfo;
     }
     
+    public String toString() {
+        return "Entry[" + getID() + "](" + getTerm() + ")";
+    }
 }

@@ -34,8 +34,11 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.openscience.cdk.tools.LoggingTool;
+import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
+import nu.xom.Elements;
+import nu.xom.Element;
 import nu.xom.ParsingException;
 
 /**
@@ -49,6 +52,10 @@ import nu.xom.ParsingException;
  */
 public class OWLFile extends Dictionary {
 
+    private static String ownNS = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
+    private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    private static String rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
+
     public OWLFile() {
         super();
     }
@@ -59,15 +66,30 @@ public class OWLFile extends Dictionary {
         try {
             Builder parser = new Builder();
             Document doc = parser.build(reader);
+            Element root = doc.getRootElement();
+            logger.debug("Found root element: ", root.getQualifiedName());
+            Elements entries = root.getChildElements("Descriptor", ownNS);
+            logger.info("Found #descriptors in OWL dict:", entries.size());
+            for (int i=0; i<entries.size(); i++) {
+                Element entry = entries.get(i);
+                Attribute id = entry.getAttribute("ID", rdfNS);
+                logger.debug("ID: ", id);
+                Element label = entry.getFirstChildElement("label", rdfsNS);
+                logger.debug("label: ", label);
+                Entry dbEntry = new Entry(id.getValue(), label.getValue());
+                logger.debug("Added entry: ", dbEntry); 
+            }
         } catch (ParsingException ex) {
             logger.error("Dictionary is not well-formed: ", ex.getMessage());
             logger.debug("Error at line " + ex.getLineNumber(),
                          ", column " + ex.getColumnNumber());
+            dict = null;
         } catch (IOException ex) { 
             logger.error("Due to an IOException, the parser could not check:",
                 ex.getMessage()
             );
             logger.debug(ex);
+            dict = null;
         }
         return dict;
     }
