@@ -51,7 +51,9 @@ public class DictDBTest extends CDKTestCase {
     
     public void testDictionaryDatabase() {
         DictionaryDatabase db = new DictionaryDatabase();
-        assertEquals(3, db.getDictionaryNames().length);
+        assertTrue(db.hasDictionary("chemical"));
+        assertTrue(db.hasDictionary("elements"));
+        assertTrue(db.hasDictionary("descriptor-algorithms"));
     }
     
 }
