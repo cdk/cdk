@@ -267,6 +267,7 @@
       Descriptor based on the number of aromatic atoms of a molecule.
     </definition>
       <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="aromaticBondsCount"><rdfs:label>Aromatic Bonds Count</rdfs:label>
@@ -277,6 +278,7 @@
       Descriptor based on the number of aromatic bonds of a molecule.
     </definition>
       <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
 
 <Descriptor rdf:ID="BCUT"><rdfs:label>BCUT</rdfs:label>
@@ -288,6 +290,7 @@
       described by Pearlman et al. <bibtex:cite ref="PEA99"/>.
     </definition>
   <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    <isClassifiedAs rdf:resource="#hybridDescriptor"/>
 </Descriptor>
 
 <Descriptor rdf:ID="bondCount"><rdfs:label>Bond Count</rdfs:label>
@@ -325,6 +328,7 @@
       Polarizabilities derive from periodic tables.
     </description>
       <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="chi0"><rdfs:label>Connectivity index (order 0)</rdfs:label>
@@ -357,6 +361,7 @@
    </description>
     <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="chi0C"/ -->
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
  
 <Descriptor rdf:ID="chi0C"><rdfs:label>Carbon connectivity index (order 0)</rdfs:label>
@@ -390,6 +395,7 @@
     </description>
     <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi0"/ -->
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="chi1"><rdfs:label>Connectivity index (order 1)</rdfs:label>
@@ -434,6 +440,7 @@
     </description>
     <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="chi1C"/ -->
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="chi1C"><rdfs:label>Carbon connectivity index (order 1)</rdfs:label>
@@ -479,6 +486,7 @@
     </description>
     <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi1"/ -->
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="distanceToAtom"><rdfs:label>Distance to Atom</rdfs:label>
@@ -529,6 +537,7 @@
         Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
     </description>
       <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="hBondDonors"><rdfs:label>Hydrogen Bond Donors</rdfs:label>
@@ -546,6 +555,7 @@
 	must have an N-H bond, an O-H bond, or a F-H bond
     </description>
       <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="gravitationalIndex"><rdfs:label>Gravitational Index</rdfs:label>
@@ -564,6 +574,8 @@
     </description>
     <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="gravitationalIndex_SquareAndCubeRoots"/ -->
     <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    
 </Descriptor>
 
 <Descriptor rdf:ID="gravitationalIndex_SquareAndCubeRoots"><rdfs:label>Gravitational Index (Square and Cube Roots)</rdfs:label>
@@ -582,7 +594,6 @@
       This descriptor is described by Wessel et al. <bibtex:cite ref="WES98"/>.
     </description>
     <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="gravitationalIndex" / -->
-      <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="atomicHardness"><rdfs:label>Inductive atomic hardness</rdfs:label>
@@ -795,6 +806,7 @@
 	suppressed graph. Also, let p2 denote the number of paths of length 2 and let p3 denote the number of paths of length 3
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
 
 <Descriptor rdf:ID="lipinskifailures"><rdfs:label>Lipinski's Rule of Five</rdfs:label>
@@ -818,6 +830,7 @@
       its LogP is over 5;
     </description>
       <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
 
 <Descriptor rdf:ID="momentOfInertia"><rdfs:label>Moments of Inertia</rdfs:label>
@@ -833,6 +846,7 @@
         of the principal moments. Als calculates the radius of gyration.
     </definition>
       <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="period"><rdfs:label>Period of an atom</rdfs:label>
@@ -881,6 +895,7 @@
         </mrow>.
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="piContact"><rdfs:label>Pi-contact of two atoms</rdfs:label>
@@ -1146,6 +1161,7 @@
         The number of rotatable bonds is given by the SMARTS specified by Daylight on <bibtex:cite ref="DAY01"/>.
     </description>
   <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+  <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="sigmaElectronegativity"><rdfs:label>Sigma Electronegativity</rdfs:label>
@@ -1199,6 +1215,7 @@
     </definition>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
       <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
   
@@ -1215,6 +1232,8 @@
       Descriptor based on the weight of atoms of a certain element type.
       If no element is specified, the returned value is the Molecular Weight
     </definition>
+  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+  <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="WHIM"><rdfs:label>WHIM</rdfs:label>
@@ -1229,6 +1248,7 @@
       Holistic descriptors described by Todeschini et al <bibtex:cite ref="TOD98"/>.
     </definition>
   <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+  <isClassifiedAs rdf:resource="#hybridDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="wienerNumbers"><rdfs:label>Wiener Numbers</rdfs:label>
@@ -1246,6 +1266,7 @@
       Wiener polarity number: half the sum of all the distance matrix entries with a value of 3.
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="vAdjMa"><rdfs:label>Vertex adjacency information magnitude</rdfs:label>
@@ -1273,6 +1294,7 @@
 	    If m is zero, then zero is returned.
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="chi0v"><rdfs:label>Valence connectivity index (order 1)</rdfs:label>
@@ -1367,6 +1389,7 @@
 	over all bonds between heavy atoms i and j.
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="chi1vC"><rdfs:label>Valence carbon connectivity index (order 1)</rdfs:label>
@@ -1462,6 +1485,7 @@
 	connectivity index takes into account only bonds between carbon atoms.
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="chi0v"><rdfs:label>Valence connectivity index (order 0)</rdfs:label>
@@ -1551,6 +1575,7 @@
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0.
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="chi0vC"><rdfs:label>Valence carbon connectivity index (order 0)</rdfs:label>
@@ -1641,6 +1666,7 @@
 	the carbon valence connectivity index takes into account only carbon atoms with <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0.
     </description>
       <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
   
 <Descriptor rdf:ID="vdwradius"><rdfs:label>Van der Waals radius</rdfs:label>
@@ -1663,17 +1689,80 @@
       For a description of the methodology see <bibtex:cite ref="WANG97"/>.
     </description>
       <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
 
 <Descriptor rdf:ID="zagrebIndex"><rdfs:label>Zagreb Index</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2004-11-26</dc:date>
+    <dc:contributor rdf:resourrce="#mf"/>
+    <dc:contributor rdf:resourrce="#elw"/>
+    <dc:date>2004-11-26</dc:date>
     <definition>
-      The sum of the squared atom degrees of all heavy atoms.
+        The sum of the squared atom degrees of all heavy atoms.
     </definition>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
 </Descriptor>
+
+<Descriptor rdf:ID="eccentricConnectivityIndex"><rdfs:label>Eccentric Connectivity Index</rdfs:label>
+    <dc:contributor rdf:resourrce="#rg"/>
+    <dc:date>2005-03-19</dc:date>
+    <definition>
+        A topological descriptor combining distance and adjacency information.
+    </definition>
+    <description>
+
+        The eccentric connectivity index for a hydrogen supressed molecular graph is given by the 
+        expression
+
+        <math display="block" overflow="scroll">
+            <msup>
+                <mi>&#x03BE;</mi>
+                <mi>c</mi>
+
+            </msup>
+            <mo>=</mo>
+            <munder>
+                <mo>&#x2211;</mo>
+                <mrow>
+                    <mi>i</mi>
+                    <mo>=</mo>
+
+                    <mn>1</mn>
+                </mrow>
+            </munder>
+            <mi>n</mi>
+            <mi>E</mi>
+            <mo>&#x2061;</mo>
+            <mfenced>
+
+                <mi>i</mi>
+            </mfenced>
+            <mi>V</mi>
+            <mo>&#x2061;</mo>
+            <mfenced>
+                <mi>i</mi>
+            </mfenced>
+
+        </math>
+        where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the 
+        i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
+        i<sup>th</sup> atom.
+    </description>
+    <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+</Descriptor>
+
+<Descriptor rdf:ID="CPSA"><rdfs:label>Charged Partial Surface Areas</rdfs:label>
+    <dc:contributor rdf:resourrce="#rg"/>
+    <dc:date>2005-05-16</dc:date>
+    <definition>
+        A variety of descriptors combining surface area and partial charge information
+    </definition>
+    <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+</Descriptor>
+
 
 <!-- The Bibliography -->
 
