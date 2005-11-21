@@ -72,6 +72,11 @@ import org.openscience.cdk.graph.MoleculeGraphs;
  *     <td>false</td>
  *     <td>True is the aromaticity has to be checked</td>
  *   </tr>
+ *   <tr>
+ *     <td>salicylFlag</td>
+ *     <td>false</td>
+ *     <td>True is to use the salicyl acid correction factor</td>
+ *   </tr>
  * </table>
  * 
  * changed 2005-11-03 by chhoppe
@@ -83,13 +88,19 @@ import org.openscience.cdk.graph.MoleculeGraphs;
  *  -pi system does not consider P or S
  *  -ring system >3
  *  -aromatic ring systems >=6
+ *  -N atomtypes: (ring) is always (ring)c
  *  
  *  In question: 
  *  	-Correction factor for salicylic acid (in paper, but not used by the program)
  *  	-Amid classification is not consequent (in 6 rings (R2)N-C(R)=0 is eg 46 and in !6 membered rings it is amid)
  *  		-sometimes O=C(R)-N(R)-C(R)=O is an amid ... sometimes not 
  *		-Value for internal H bonds is in paper 0.429 but for no454 it is 0.643
- *
+ * 
+ * changed 2005-11-21 by chhoppe
+ * 	-added new parameter for the salicyl acid correction factor
+ *  -Corrected P and S perception for charges
+ * 
+ * 
  *@author         mfe4, chhoppe
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
@@ -99,12 +110,12 @@ import org.openscience.cdk.graph.MoleculeGraphs;
 public class XLogPDescriptor implements Descriptor {
     
 	private boolean checkAromaticity = false;
-
+	private boolean salicylFlag=false;
 	/**
 	 *  Constructor for the XLogPDescriptor object.
 	 */
 	public XLogPDescriptor() { }
-
+	
 
 	/**
 	 *  Gets the specification attribute of the XLogPDescriptor object.
@@ -128,27 +139,31 @@ public class XLogPDescriptor implements Descriptor {
          *@see #getParameters
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("XLogPDescriptor only expects one parameter");
+		if (params.length > 2) {
+			throw new CDKException("XLogPDescriptor only expects two parameter");
 		}
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The first parameter must be of type Boolean");
+		}else if(!(params[1] instanceof Boolean)) {
+			throw new CDKException("The second parameter must be of type Boolean");
 		}
 		// ok, all should be fine
 		checkAromaticity = ((Boolean) params[0]).booleanValue();
+		salicylFlag=((Boolean) params[1]).booleanValue();
 	}
 
 
 	/**
-	 *  Gets the parameters attribute of the XLogPDescriptor object.
+	 *Gets the parameters attribute of the XLogPDescriptor object.
 	 *
-	 *@return    The parameters value
-         *@see #setParameters
+	 *@return    The parameters value [boolean checkAromaticity, boolean salicylFlag] 
+     *@see #setParameters
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[1];
+		Object[] params = new Object[2];
 		params[0] = new Boolean(checkAromaticity);
+		params[1] = new Boolean(salicylFlag);
 		return params;
 	}
 
@@ -184,7 +199,7 @@ public class XLogPDescriptor implements Descriptor {
 		int checkAminoAcid=1;//if 0 no check, if >1 check
 		for (int i = 0; i < atoms.length; i++) {
 			if (xlogPOld==xlogP & i>0 & !symbol.equals("H")){
-				//System.out.println("\nXlogPAssignmentError: Could not assign atom number:"+(i-1));
+				System.out.println("\nXlogPAssignmentError: Could not assign atom number:"+(i-1));
 			}
 			atomRingSet=rs.getRings(atoms[i]);
 			aromaticRing=false;
@@ -204,21 +219,21 @@ public class XLogPDescriptor implements Descriptor {
 			hsCount = getHydrogenCount(ac, atoms[i]);
 			maxBondOrder = ac.getMaximumBondOrder(atoms[i]);
 			if (!symbol.equals("H")){
-				//System.out.print("i:"+i+" Symbol:"+symbol+" "+" bondC:"+bondCount+" hsC:"+hsCount+" maxBO:"+maxBondOrder+" Arom:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" AtomTypeX:"+getAtomTypeXCount(ac, atoms[i])+" PiSys:"+getPiSystemsCount(ac, atoms[i])+" C=:"+getDoubleBondedCarbonsCount(ac, atoms[i])+" AromCc:"+getAromaticCarbonsCount(ac,atoms[i])+"\t");
+				System.out.print("i:"+i+" Symbol:"+symbol+" "+" bondC:"+bondCount+" Charge:"+atoms[i].getFormalCharge()+" hsC:"+hsCount+" maxBO:"+maxBondOrder+" Arom:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" AtomTypeX:"+getAtomTypeXCount(ac, atoms[i])+" PiSys:"+getPiSystemsCount(ac, atoms[i])+" C=:"+getDoubleBondedCarbonsCount(ac, atoms[i])+" AromCc:"+getAromaticCarbonsCount(ac,atoms[i])+"\t");
 			}
 			if (symbol.equals("C")) {
 				if (bondCount == 2) {
 					// C sp
 					if (hsCount >= 1) {
 						xlogP += 0.209;
-						//System.out.println("XLOGP: 38		 0.209");
+						System.out.println("XLOGP: 38		 0.209");
 					} else {
 						if (maxBondOrder == 2.0) {
 							xlogP += 2.073;
-							//System.out.println("XLOGP: 40		 2.037");
+							System.out.println("XLOGP: 40		 2.037");
 						} else if (maxBondOrder == 3.0) {
 							xlogP += 0.33;
-							//System.out.println("XLOGP: 39		 0.33");
+							System.out.println("XLOGP: 39		 0.33");
 						}
 					}
 				}
@@ -229,28 +244,28 @@ public class XLogPDescriptor implements Descriptor {
 							if (hsCount == 0) {
 								if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 									xlogP += 0.296;
-									//System.out.println("XLOGP: 34		 0.296");
+									System.out.println("XLOGP: 34		 0.296");
 								} else {
 									xlogP -= 0.151;
-									//System.out.println("XLOGP: 35		-0.151");
+									System.out.println("XLOGP: 35		-0.151");
 								}
 							} else {
 								xlogP += 0.337;
-								//System.out.println("XLOGP: 32		 0.337");
+								System.out.println("XLOGP: 32		 0.337");
 							}
 						//} else if (getAromaticCarbonsCount(ac, atoms[i]) < 2 && getAromaticNitrogensCount(ac, atoms[i]) > 1) {
 						} else if (getAromaticNitrogensCount(ac, atoms[i]) >= 1) {
 							if (hsCount == 0) {
 								if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 									xlogP += 0.174;
-									//System.out.println("XLOGP: 36		 0.174");
+									System.out.println("XLOGP: 36		 0.174");
 								} else {
 									xlogP += 0.366;
-									//System.out.println("XLOGP: 37		 0.366");
+									System.out.println("XLOGP: 37		 0.366");
 								}
 							} else if (getHydrogenCount(ac, atoms[i]) == 1) {
 								xlogP += 0.126;
-								//System.out.println("XLOGP: 33		 0.126");
+								System.out.println("XLOGP: 33		 0.126");
 							}
 						}
 					//NOT aromatic, but sp2
@@ -259,28 +274,28 @@ public class XLogPDescriptor implements Descriptor {
 							if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 								if (getPiSystemsCount(ac, atoms[i]) <= 1) {
 									xlogP += 0.05;
-									//System.out.println("XLOGP: 26		 0.05");
+									System.out.println("XLOGP: 26		 0.05");
 								} else {
 									xlogP += 0.013;
-									//System.out.println("XLOGP: 27		 0.013");
+									System.out.println("XLOGP: 27		 0.013");
 								}
 							}
 							if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 								if (getPiSystemsCount(ac, atoms[i]) == 0) {
 									xlogP -= 0.03;
-									//System.out.println("XLOGP: 28		-0.03");
+									System.out.println("XLOGP: 28		-0.03");
 								} else {
 									xlogP -= 0.027;
-									//System.out.println("XLOGP: 29		-0.027");
+									System.out.println("XLOGP: 29		-0.027");
 								}
 							}
 							if (getAtomTypeXCount(ac, atoms[i]) == 2) {
 								if (getPiSystemsCount(ac, atoms[i]) ==0) {
 									xlogP += 0.005;
-									//System.out.println("XLOGP: 30		 0.005");
+									System.out.println("XLOGP: 30		 0.005");
 								} else {
 									xlogP -= 0.315;
-									//System.out.println("XLOGP: 31		-0.315");
+									System.out.println("XLOGP: 31		-0.315");
 								}
 							}
 						}
@@ -288,30 +303,30 @@ public class XLogPDescriptor implements Descriptor {
 							if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 								if (getPiSystemsCount(ac, atoms[i]) == 0) {
 									xlogP += 0.466;
-									//System.out.println("XLOGP: 22		 0.466");
+									System.out.println("XLOGP: 22		 0.466");
 								}
 								if (getPiSystemsCount(ac, atoms[i]) == 1) {
 									xlogP += 0.136;
-									//System.out.println("XLOGP: 23		 0.136");
+									System.out.println("XLOGP: 23		 0.136");
 								}
 							} else {
 								if (getPiSystemsCount(ac, atoms[i]) == 0) {
 									xlogP += 0.001;
-									//System.out.println("XLOGP: 24		 0.001");
+									System.out.println("XLOGP: 24		 0.001");
 								}
 								if (getPiSystemsCount(ac, atoms[i]) == 1) {
 									xlogP -= 0.31;
-									//System.out.println("XLOGP: 25		-0.31");
+									System.out.println("XLOGP: 25		-0.31");
 								}
 							}
 						}
 						if (hsCount == 2) {
 							xlogP += 0.42;
-							//System.out.println("XLOGP: 21		 0.42");
+							System.out.println("XLOGP: 21		 0.42");
 						}
 						if (getIfCarbonIsHydrophobic(ac, atoms[i])) {
 							xlogP += 0.211;
-							//System.out.println("XLOGP: Hydrophobic Carbon	0.211");
+							System.out.println("XLOGP: Hydrophobic Carbon	0.211");
 						}
 					}//sp2 NOT aromatic
 				}
@@ -322,23 +337,23 @@ public class XLogPDescriptor implements Descriptor {
 						if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP -= 0.006;
-								//System.out.println("XLOGP: 16		-0.006");
+								System.out.println("XLOGP: 16		-0.006");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP -= 0.57;
-								//System.out.println("XLOGP: 17		-0.57");
+								System.out.println("XLOGP: 17		-0.57");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) >= 2) {
 								xlogP -= 0.317;
-								//System.out.println("XLOGP: 18		-0.317");
+								System.out.println("XLOGP: 18		-0.317");
 							}
 						} else {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP -= 0.316;
-								//System.out.println("XLOGP: 19		-0.316");
+								System.out.println("XLOGP: 19		-0.316");
 							} else {
 								xlogP -= 0.723;
-								//System.out.println("XLOGP: 20		-0.723");
+								System.out.println("XLOGP: 20		-0.723");
 							}
 						}
 					}
@@ -346,28 +361,28 @@ public class XLogPDescriptor implements Descriptor {
 						if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP += 0.127;
-								//System.out.println("XLOGP: 10		 0.127");
+								System.out.println("XLOGP: 10		 0.127");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP -= 0.243;
-								//System.out.println("XLOGP: 11		-0.243");
+								System.out.println("XLOGP: 11		-0.243");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) >= 2) {
 								xlogP -= 0.499;
-								//System.out.println("XLOGP: 12		-0.499");
+								System.out.println("XLOGP: 12		-0.499");
 							}
 						} else {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP -= 0.205;
-								//System.out.println("XLOGP: 13		-0.205");
+								System.out.println("XLOGP: 13		-0.205");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP -= 0.305;
-								//System.out.println("XLOGP: 14		-0.305");
+								System.out.println("XLOGP: 14		-0.305");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) >= 2) {
 								xlogP -= 0.709;
-								//System.out.println("XLOGP: 15		-0.709");
+								System.out.println("XLOGP: 15		-0.709");
 							}
 						}
 					}
@@ -375,28 +390,28 @@ public class XLogPDescriptor implements Descriptor {
 						if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP += 0.358;
-								//System.out.println("XLOGP:  4		 0.358");
+								System.out.println("XLOGP:  4		 0.358");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP -= 0.008;
-								//System.out.println("XLOGP:  5		-0.008");
+								System.out.println("XLOGP:  5		-0.008");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 2) {
 								xlogP -= 0.185;
-								//System.out.println("XLOGP:  6		-0.185");
+								System.out.println("XLOGP:  6		-0.185");
 							}
 						} else {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP -= 0.137;
-								//System.out.println("XLOGP:  7		-0.137");
+								System.out.println("XLOGP:  7		-0.137");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP -= 0.303;
-								//System.out.println("XLOGP:  8		-0.303");
+								System.out.println("XLOGP:  8		-0.303");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 2) {
 								xlogP -= 0.815;
-								//System.out.println("XLOGP:  9		-0.815");
+								System.out.println("XLOGP:  9		-0.815");
 							}
 						}
 					}
@@ -404,21 +419,21 @@ public class XLogPDescriptor implements Descriptor {
 						if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP += 0.528;
-								//System.out.println("XLOGP:  1		 0.528");
+								System.out.println("XLOGP:  1		 0.528");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP += 0.267;
-								//System.out.println("XLOGP:  2		 0.267");
+								System.out.println("XLOGP:  2		 0.267");
 							}
 						}else{
 						//if (getNitrogenOrOxygenCount(ac, atoms[i]) == 1) {
 							xlogP -= 0.032;
-							//System.out.println("XLOGP:  3		-0.032");
+							System.out.println("XLOGP:  3		-0.032");
 						}
 					}
 					if (getIfCarbonIsHydrophobic(ac, atoms[i])) {
 						xlogP += 0.211;
-						//System.out.println("XLOGP: Hydrophobic Carbon	0.211");
+						System.out.println("XLOGP: Hydrophobic Carbon	0.211");
 					}
 				}//csp3
 				
@@ -429,7 +444,7 @@ public class XLogPDescriptor implements Descriptor {
 				//NO2
 				if (ac.getBondOrderSum(atoms[i]) >= 3.0 && getOxygenCount(ac, atoms[i]) >= 2 && maxBondOrder==2) {
 					xlogP += 1.178;
-					//System.out.println("XLOGP: 66		 1.178");
+					System.out.println("XLOGP: 66		 1.178");
 				}
 				else {
 					if (getPresenceOfCarbonil(ac, atoms[i])>=1) {
@@ -437,78 +452,78 @@ public class XLogPDescriptor implements Descriptor {
 						if (hsCount == 0) {
 							if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 								xlogP += 0.078;
-								//System.out.println("XLOGP: 57		 0.078");
+								System.out.println("XLOGP: 57		 0.078");
 							}
 							if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 								xlogP -= 0.118;
-								//System.out.println("XLOGP: 58		-0.118");
+								System.out.println("XLOGP: 58		-0.118");
 							}
 						}
 						if (hsCount == 1) {
 							if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 								xlogP -= 0.096;
 								hBondDonors.add(new Integer(i));
-								//System.out.println("XLOGP: 55		-0.096");
+								System.out.println("XLOGP: 55		-0.096");
 							} else {
 								xlogP -= 0.044;
 								hBondDonors.add(new Integer(i));
-								//System.out.println("XLOGP: 56		-0.044");
+								System.out.println("XLOGP: 56		-0.044");
 							}
 						}
 						if (hsCount == 2) {
 							xlogP -= 0.646;
 							hBondDonors.add(new Integer(i));
-							//System.out.println("XLOGP: 54		-0.646");
+							System.out.println("XLOGP: 54		-0.646");
 						}
 					} else {//NO amidic nitrogen
 						if (bondCount == 1) {
 							// -C#N
 							if (getCarbonsCount(ac, atoms[i]) == 1) {
 								xlogP -= 0.566;
-								//System.out.println("XLOGP: 68		-0.566");
+								System.out.println("XLOGP: 68		-0.566");
 							}
 						}else if (bondCount == 2) {
 							// N sp2
 							if (atoms[i].getFlag(CDKConstants.ISAROMATIC)&& aromaticRing) {
 								xlogP -= 0.493;
-								//System.out.println("XLOGP: 67		-0.493");
+								System.out.println("XLOGP: 67		-0.493");
 								if (checkAminoAcid!=0){ checkAminoAcid+=1;}								
 							} else {
 								if (getDoubleBondedCarbonsCount(ac, atoms[i]) == 0) {
 									if (getDoubleBondedNitrogenCount(ac, atoms[i]) == 0) {
 										if (getDoubleBondedOxygenCount(ac, atoms[i]) == 1) {
 											xlogP += 0.427;
-											//System.out.println("XLOGP: 65		 0.427");
+											System.out.println("XLOGP: 65		 0.427");
 										}
 									}
 									if (getDoubleBondedNitrogenCount(ac, atoms[i]) == 1) {
 										if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 											xlogP += 0.536;
-											//System.out.println("XLOGP: 63		 0.536");
+											System.out.println("XLOGP: 63		 0.536");
 										}
 										if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 											xlogP -= 0.597;
-											//System.out.println("XLOGP: 64		-0.597");
+											System.out.println("XLOGP: 64		-0.597");
 										}
 									}
 								}else if (getDoubleBondedCarbonsCount(ac, atoms[i]) == 1) {
 									if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 										if (getPiSystemsCount(ac, atoms[i]) == 0) {
 											xlogP += 0.007;
-											//System.out.println("XLOGP: 59		 0.007");
+											System.out.println("XLOGP: 59		 0.007");
 										}
 										if (getPiSystemsCount(ac, atoms[i]) == 1) {
 											xlogP -= 0.275;
-											//System.out.println("XLOGP: 60		-0.275");
+											System.out.println("XLOGP: 60		-0.275");
 										}
 									}else if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 										if (getPiSystemsCount(ac, atoms[i]) == 0) {
 											xlogP += 0.366;
-											//System.out.println("XLOGP: 61		 0.366");
+											System.out.println("XLOGP: 61		 0.366");
 										}
 										if (getPiSystemsCount(ac, atoms[i]) == 1) {
 											xlogP += 0.251;
-											//System.out.println("XLOGP: 62		 0.251");
+											System.out.println("XLOGP: 62		 0.251");
 										}
 									}
 								}
@@ -516,27 +531,28 @@ public class XLogPDescriptor implements Descriptor {
 						}else if (bondCount == 3) {
 							// N sp3
 							if (hsCount == 0) {
-								if (rs.contains(atoms[i])&&ringSize>3) {
+								//if (rs.contains(atoms[i])&&ringSize>3) {
+								if (atoms[i].getFlag(CDKConstants.ISAROMATIC)|| (rs.contains(atoms[i])&& ringSize>3 && getPiSystemsCount(ac,atoms[i])>=1)){
 									if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 										xlogP += 0.881;
-										//System.out.println("XLOGP: 51		 0.881");
+										System.out.println("XLOGP: 51		 0.881");
 									} else {
 										xlogP -= 0.01;
-										//System.out.println("XLOGP: 53		-0.01");
+										System.out.println("XLOGP: 53		-0.01");
 									}
 								} else {
 									if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 										if (getPiSystemsCount(ac, atoms[i]) == 0) {
 											xlogP += 0.159;
-											//System.out.println("XLOGP: 49		 0.159");
+											System.out.println("XLOGP: 49		 0.159");
 										}
 										if (getPiSystemsCount(ac, atoms[i]) > 0) {
 											xlogP += 0.761;
-											//System.out.println("XLOGP: 50		 0.761");
+											System.out.println("XLOGP: 50		 0.761");
 										}
 									} else {
 										xlogP -= 0.239;
-										//System.out.println("XLOGP: 52		-0.239");
+										System.out.println("XLOGP: 52		-0.239");
 									}
 								}
 							}else if (hsCount == 1) {
@@ -545,28 +561,28 @@ public class XLogPDescriptor implements Descriptor {
 									if (atoms[i].getFlag(CDKConstants.ISAROMATIC)|| (rs.contains(atoms[i])&& ringSize>3 && getPiSystemsCount(ac,atoms[i])>=1)) {
 										xlogP += 0.545;
 										hBondDonors.add(new Integer(i));
-										//System.out.println("XLOGP: 46		 0.545");										
+										System.out.println("XLOGP: 46		 0.545");										
 									} else {
 										if (getPiSystemsCount(ac, atoms[i]) == 0) {
 											xlogP -= 0.112;
 											hBondDonors.add(new Integer(i));
-											//System.out.println("XLOGP: 44		-0.112");
+											System.out.println("XLOGP: 44		-0.112");
 										}
 										if (getPiSystemsCount(ac, atoms[i]) > 0) {
 											xlogP += 0.166;
 											hBondDonors.add(new Integer(i));
-											//System.out.println("XLOGP: 45		 0.166");
+											System.out.println("XLOGP: 45		 0.166");
 										}
 									}
 								} else {
 									if (rs.contains(atoms[i])) {
 										xlogP += 0.153;
 										hBondDonors.add(new Integer(i));
-										//System.out.println("XLOGP: 48		 0.153");
+										System.out.println("XLOGP: 48		 0.153");
 									} else {
 										xlogP += 0.324;
 										hBondDonors.add(new Integer(i));
-										//System.out.println("XLOGP: 47		 0.324");
+										System.out.println("XLOGP: 47		 0.324");
 									}
 								}
 							}else if (hsCount == 2) {
@@ -574,19 +590,19 @@ public class XLogPDescriptor implements Descriptor {
 									if (getPiSystemsCount(ac, atoms[i]) == 0) {
 										xlogP -= 0.534;
 										hBondDonors.add(new Integer(i));
-										//System.out.println("XLOGP: 41		-0.534");
+										System.out.println("XLOGP: 41		-0.534");
 									}
 									if (getPiSystemsCount(ac, atoms[i]) == 1) {
 										xlogP -= 0.329;
 										hBondDonors.add(new Integer(i));
-										//System.out.println("XLOGP: 42		-0.329");
+										System.out.println("XLOGP: 42		-0.329");
 									}
 									
 									if (checkAminoAcid!=0){ checkAminoAcid+=1;}
 								} else {
 									xlogP -= 1.082;
 									hBondDonors.add(new Integer(i));
-									//System.out.println("XLOGP: 43		-1.082");
+									System.out.println("XLOGP: 43		-1.082");
 								}
 							}
 						}
@@ -599,27 +615,27 @@ public class XLogPDescriptor implements Descriptor {
 					if (!getPresenceOfHydroxy(ac,atoms[i])){
 						hBondAcceptors.add(new Integer(i));
 					}
-					//System.out.println("XLOGP: 75	A=O	-0.399");
+					System.out.println("XLOGP: 75	A=O	-0.399");
 				}else if(bondCount == 1 && hsCount==0 && (getPresenceOfNitro(ac,atoms[i]) || getPresenceOfCarbonil(ac,atoms[i])==1)){
 						xlogP -= 0.399;
 						if (!getPresenceOfHydroxy(ac,atoms[i])){
 							hBondAcceptors.add(new Integer(i));
 						}
-						//System.out.println("XLOGP: 75	A=O	-0.399");					
+						System.out.println("XLOGP: 75	A=O	-0.399");					
 				}else if (bondCount >= 1) {
 					if (hsCount == 0 && bondCount==2) {
 						if (getAtomTypeXCount(ac, atoms[i]) == 0) {
 							if (getPiSystemsCount(ac, atoms[i]) == 0) {
 								xlogP += 0.084;
-								//System.out.println("XLOGP: 72	R-O-R	 0.084");
+								System.out.println("XLOGP: 72	R-O-R	 0.084");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) > 0) {
 								xlogP += 0.435;
-								//System.out.println("XLOGP: 73	R-O-R.1	 0.435");
+								System.out.println("XLOGP: 73	R-O-R.1	 0.435");
 							}
 						}else if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 							xlogP += 0.105;
-							//System.out.println("XLOGP: 74	R-O-X	 0.105");
+							System.out.println("XLOGP: 74	R-O-X	 0.105");
 						}
 					}else{
 						if (getAtomTypeXCount(ac, atoms[i]) == 0) {
@@ -627,91 +643,90 @@ public class XLogPDescriptor implements Descriptor {
 								xlogP -= 0.467;
 								hBondDonors.add(new Integer(i));
 								hBondAcceptors.add(new Integer(i));
-								//System.out.println("XLOGP: 69	R-OH	-0.467");
+								System.out.println("XLOGP: 69	R-OH	-0.467");
 							}
 							if (getPiSystemsCount(ac, atoms[i]) == 1) {
 								xlogP += 0.082;
 								hBondDonors.add(new Integer(i));
 								hBondAcceptors.add(new Integer(i));
-								//System.out.println("XLOGP: 70	R-OH.1	 0.082");
+								System.out.println("XLOGP: 70	R-OH.1	 0.082");
 							}
 						}else if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 							xlogP -= 0.522;
 							hBondDonors.add(new Integer(i));
 							hBondAcceptors.add(new Integer(i));
-							//System.out.println("XLOGP: 71	X-OH	-0.522");
+							System.out.println("XLOGP: 71	X-OH	-0.522");
 						}
 					}
 				}
 			}
 			if (symbol.equals("S")) {
-				if (bondCount == 1 && maxBondOrder==2) {
+				if ((bondCount == 1 && maxBondOrder==2) || (bondCount == 1 && atoms[i].getFormalCharge()==-1)) {
 					xlogP -= 0.148;
-					//System.out.println("XLOGP: 78	A=S	-0.148");
+					System.out.println("XLOGP: 78	A=S	-0.148");
 				}else if (bondCount == 2) {
 					if (hsCount == 0) {
 						xlogP += 0.255;
-						//System.out.println("XLOGP: 77	A-S-A	 0.255");
+						System.out.println("XLOGP: 77	A-S-A	 0.255");
 					} else {
 						xlogP += 0.419;
-						//System.out.println("XLOGP: 76	A-SH	 0.419");
+						System.out.println("XLOGP: 76	A-SH	 0.419");
 					}
 				}else if (bondCount == 3) {
 					if (getAtomTypeXCount(ac, atoms[i]) == 1) {
 						xlogP -= 1.375;
-						//System.out.println("XLOGP: 79	A-SO-A	-1.375");
+						System.out.println("XLOGP: 79	A-SO-A	-1.375");
 					}
 				}else if (bondCount == 4) {
 					if (getDoubleBondedOxygenCount(ac, atoms[i]) >= 2) {
 						xlogP -= 0.168;
-						//System.out.println("XLOGP: 80	A-SO2-A	-0.168");
+						System.out.println("XLOGP: 80	A-SO2-A	-0.168");
 					}
 				}
 			}
 			if (symbol.equals("P")) {
-				if (getDoubleBondedSulfurCount(ac, atoms[i]) == 1 && bondCount==5) {
+				if (getDoubleBondedSulfurCount(ac, atoms[i]) >= 1 && bondCount>=4) {
 					xlogP += 1.253;
-					//System.out.println("XLOGP: 82	S=PA3	 1.253");
-				}
-				if (getOxygenCount(ac,atoms[i])>=1 || getDoubleBondedOxygenCount(ac, atoms[i]) == 1 && bondCount>=4) {
+					System.out.println("XLOGP: 82	S=PA3	 1.253");
+				}else if (getOxygenCount(ac,atoms[i])>=1 || getDoubleBondedOxygenCount(ac, atoms[i]) == 1 && bondCount>=4) {
 					xlogP -= 0.447;
-					//System.out.println("XLOGP: 81	O=PA3	-0.447");
+					System.out.println("XLOGP: 81	O=PA3	-0.447");
 				}
 			}
 			if (symbol.equals("F")) {
 				if (getPiSystemsCount(ac, atoms[i]) == 0) {
 					xlogP += 0.375;
-					//System.out.println("XLOGP: 83	F.0	 0.375");
+					System.out.println("XLOGP: 83	F.0	 0.375");
 				}else if (getPiSystemsCount(ac, atoms[i]) == 1) {
 					xlogP += 0.202;
-					//System.out.println("XLOGP: 84	F.1	 0.202");
+					System.out.println("XLOGP: 84	F.1	 0.202");
 				}
 			}
 			if (symbol.equals("Cl")) {
 				if (getPiSystemsCount(ac, atoms[i]) == 0) {
 					xlogP += 0.512;
-					//System.out.println("XLOGP: 85	Cl.0	 0.512");
+					System.out.println("XLOGP: 85	Cl.0	 0.512");
 				}else if (getPiSystemsCount(ac, atoms[i]) == 1) {
 					xlogP += 0.663;
-					//System.out.println("XLOGP: 86	Cl.1	 0.663");
+					System.out.println("XLOGP: 86	Cl.1	 0.663");
 				}
 			}
 			if (symbol.equals("Br")) {
 				if (getPiSystemsCount(ac, atoms[i]) == 0) {
 					xlogP += 0.85;
-					//System.out.println("XLOGP: 87	Br.0	 0.85");
+					System.out.println("XLOGP: 87	Br.0	 0.85");
 				}else if (getPiSystemsCount(ac, atoms[i]) == 1) {
 					xlogP += 0.839;
-					//System.out.println("XLOGP: 88	Br.1	 0.839");
+					System.out.println("XLOGP: 88	Br.1	 0.839");
 				}
 			}
 			if (symbol.equals("I")) {
 				if (getPiSystemsCount(ac, atoms[i]) == 0) {
 					xlogP += 1.05;
-					//System.out.println("XLOGP: 89	I.0	 1.05");
+					System.out.println("XLOGP: 89	I.0	 1.05");
 				}else if (getPiSystemsCount(ac, atoms[i]) == 1) {
 					xlogP += 1.109;
-					//System.out.println("XLOGP: 90	I.1	 1.109");
+					System.out.println("XLOGP: 90	I.1	 1.109");
 				}
 			}
 			
@@ -719,28 +734,28 @@ public class XLogPDescriptor implements Descriptor {
 			int halcount=getHalogenCount(ac, atoms[i]);
 			if ( halcount== 2) {
 				xlogP += 0.137;
-				//System.out.println("XLOGP: Halogen 1-3 pair	 0.137");
+				System.out.println("XLOGP: Halogen 1-3 pair	 0.137");
 			}else if (halcount==3){
 				xlogP += (3*0.137);
-				//System.out.println("XLOGP: Halogen 1-3 pair	 0.411");
+				System.out.println("XLOGP: Halogen 1-3 pair	 0.411");
 			}else if (halcount==4){
 				xlogP += (6*0.137);
-				//System.out.println("XLOGP: Halogen 1-3 pair	 1.902");
+				System.out.println("XLOGP: Halogen 1-3 pair	 1.902");
 			}
 			
 //			sp2 Oxygen 1-5 pair
 			if (getPresenceOfCarbonil(ac, atoms[i]) == 2) {// sp2 oxygen 1-5 pair
 				if(!rs.contains(atoms[i])) { 
 					xlogP += 0.580;
-					//System.out.println("XLOGP: sp2 Oxygen 1-5 pair	 0.580");
+					System.out.println("XLOGP: sp2 Oxygen 1-5 pair	 0.580");
 				}
 			}
 		}
-		//System.out.println("XLOGP: Before Correction:"+xlogP);
+		System.out.println("XLOGP: Before Correction:"+xlogP);
 		List path=null;
 		SimpleGraph moleculeGraph=null;
 		int [][] pairCheck=null;
-//		//System.out.println("Acceptors:"+hBondAcceptors.size()+" Donors:"+hBondDonors.size());
+//		System.out.println("Acceptors:"+hBondAcceptors.size()+" Donors:"+hBondDonors.size());
 		if (hBondAcceptors.size()>0 && hBondDonors.size()>0){
 			moleculeGraph=MoleculeGraphs.getMoleculeGraph(ac);
 			pairCheck=initializeHydrogenPairCheck(new int[atoms.length][atoms.length]);
@@ -749,7 +764,7 @@ public class XLogPDescriptor implements Descriptor {
 			for (int j=0; j<hBondDonors.size();j++){
 				if (checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()]) || checkRingLink(rs,ac,atoms[((Integer)hBondDonors.get(j)).intValue()])){
 					path=BFSShortestPath.findPathBetween(moleculeGraph,atoms[((Integer)hBondAcceptors.get(i)).intValue()], atoms[((Integer)hBondDonors.get(j)).intValue()]);
-//					//System.out.println(" Acc:"+checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()])
+//					System.out.println(" Acc:"+checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()])
 //										+" S:"+atoms[((Integer)hBondAcceptors.get(i)).intValue()].getSymbol()
 //										+" Nr:"+((Integer)hBondAcceptors.get(i)).intValue()
 //										+" Don:"+checkRingLink(rs,ac,atoms[((Integer)hBondDonors.get(j)).intValue()])
@@ -761,14 +776,14 @@ public class XLogPDescriptor implements Descriptor {
 							xlogP += 0.429;
 							pairCheck[((Integer)hBondAcceptors.get(i)).intValue()][((Integer)hBondDonors.get(j)).intValue()]=1;
 							pairCheck[((Integer)hBondDonors.get(j)).intValue()][((Integer)hBondAcceptors.get(i)).intValue()]=1;
-							//System.out.println("XLOGP: Internal HBonds 1-4	 0.429");
+							System.out.println("XLOGP: Internal HBonds 1-4	 0.429");
 						}
 					}else{
 						if (path.size()==4 && pairCheck[((Integer)hBondAcceptors.get(i)).intValue()][((Integer)hBondDonors.get(j)).intValue()]==0){
 							xlogP += 0.429;
 							pairCheck[((Integer)hBondAcceptors.get(i)).intValue()][((Integer)hBondDonors.get(j)).intValue()]=1;
 							pairCheck[((Integer)hBondDonors.get(j)).intValue()][((Integer)hBondAcceptors.get(i)).intValue()]=1;
-							//System.out.println("XLOGP: Internal HBonds 1-5	 0.429");
+							System.out.println("XLOGP: Internal HBonds 1-5	 0.429");
 						}
 					}
 				}	
@@ -801,7 +816,7 @@ public class XLogPDescriptor implements Descriptor {
 						if (ac.getBondCount(atom1)==2 && getHydrogenCount(ac, atom1)==0){
 						}else{
 							xlogP -= 2.166;
-							//System.out.println("XLOGP: alpha amino acid	-2.166");
+							System.out.println("XLOGP: alpha amino acid	-2.166");
 							break;
 						}
 					}
@@ -813,15 +828,15 @@ public class XLogPDescriptor implements Descriptor {
 		// p-amino sulphonic acid
 		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, paba)) {
 			xlogP -= 0.501;
-			//System.out.println("XLOGP: p-amino sulphonic acid	-0.501");
+			System.out.println("XLOGP: p-amino sulphonic acid	-0.501");
 		}
 
 		AtomContainer salicilic = sp.parseSmiles("O=C(O)c1ccccc1O");
 		// salicylic acid
-		if (ac.getAtomCount()==salicilic.getAtomCount()){
+		if (salicylFlag){
 			if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, salicilic)) {
 				xlogP += 0.554;
-				//System.out.println("XLOGP: salicylic acid	 0.554");
+				System.out.println("XLOGP: salicylic acid	 0.554");
 			}
 		}
 
@@ -843,7 +858,7 @@ public class XLogPDescriptor implements Descriptor {
 		
 		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, orthopair)) {
 			xlogP -= 0.268;
-			//System.out.println("XLOGP: Ortho oxygen pair	-0.268");
+			System.out.println("XLOGP: Ortho oxygen pair	-0.268");
 		}
 
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(xlogP));
@@ -1068,18 +1083,21 @@ public class XLogPDescriptor implements Descriptor {
 	private int getDoubleBondedSulfurCount(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
 		org.openscience.cdk.interfaces.Atom[] neighbours = ac.getConnectedAtoms(atom);
 		Bond bond = null;
-		int odbcounter = 0;
+		int sdbcounter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("S")) {
+				if (atom.getFormalCharge()==1 && neighbours[i].getFormalCharge()==-1){
+					sdbcounter+=1;
+				}
 				bond = ac.getBond(neighbours[i], atom);
 				if (!neighbours[i].getFlag(CDKConstants.ISAROMATIC)) {
 					if (bond.getOrder() == 2.0) {
-						odbcounter += 1;
+						sdbcounter += 1;
 					}
 				}
 			}
 		}
-		return odbcounter;
+		return sdbcounter;
 	}
 
 
@@ -1311,8 +1329,9 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
-		String[] params = new String[1];
+		String[] params = new String[2];
 		params[0] = "checkAromaticity";
+		params[0] = "salicylFlag";
 		return params;
 	}
 
@@ -1325,8 +1344,9 @@ public class XLogPDescriptor implements Descriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[1];
+		Object[] paramTypes = new Object[2];
 		paramTypes[0] = new Boolean(true);
+		paramTypes[1] = new Boolean(false);
 		return paramTypes;
 	}
 }
