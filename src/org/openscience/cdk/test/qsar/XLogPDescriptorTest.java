@@ -284,8 +284,20 @@ public class XLogPDescriptorTest extends CDKTestCase {
 		Molecule mol = sp.parseSmiles("Clc1ccc2Sc3ccccc3N(CCCN3CCN(C)CC3)c2c1"); // xlogp training set molecule 1810
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		System.out.println("no1810:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-		//assertEquals(4.56, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+		//System.out.println("no1810:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
+		assertEquals(4.56, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+	}
+	
+	public void test1822() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Descriptor descriptor = new XLogPDescriptor();
+		Object[] params = {new Boolean(true),new Boolean(false)};
+		descriptor.setParameters(params);
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[S+]([O-])(CCC1C(=O)N(N(c2ccccc2)C1=O)c1ccccc1)c1ccccc1"); // xlogp training set molecule 1822
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		//System.out.println("no1822:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
+		assertEquals(2.36, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
 	}
 }
 
