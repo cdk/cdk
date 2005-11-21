@@ -30,13 +30,17 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import javax.swing.JOptionPane;
+
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 
@@ -59,13 +63,12 @@ public class CreateReactionAction extends JCPAction
 		ChemObject object = getSource(event);
 
 		logger.debug("CreateReaction action");
-
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
-		org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
+		ChemModel model = jcpmodel.getChemModel();
+		SetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
 		{
-			reactionSet = new SetOfReactions();
+			reactionSet = model.getBuilder().newSetOfReactions();
 		}
 		AtomContainer container = null;
 		if (object instanceof Atom)
@@ -82,7 +85,7 @@ public class CreateReactionAction extends JCPAction
 		{
 			AtomContainer newContainer = (AtomContainer) container.clone();
 			// delete atoms in current model
-			org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+			Atom[] atoms = container.getAtoms();
 			for (int i = 0; i < atoms.length; i++)
 			{
 				ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, atoms[i]);
@@ -90,12 +93,12 @@ public class CreateReactionAction extends JCPAction
 			logger.debug("Deleted atom from old container...");
 
 			// add reaction
-			org.openscience.cdk.interfaces.Reaction reaction = new Reaction();
+			Reaction reaction = model.getBuilder().newReaction();
 			reaction.setID("reaction-" + System.currentTimeMillis());
 			logger.debug("type: ", type);
 			if ("addReactantToNew".equals(type))
 			{
-				reaction.addReactant(new Molecule(newContainer));
+				reaction.addReactant(model.getBuilder().newMolecule(newContainer));
 				reactionSet.addReaction(reaction);
 			} else if ("addReactantToExisting".equals(type))
 			{
@@ -107,24 +110,25 @@ public class CreateReactionAction extends JCPAction
 				} else
 				{
 //					XXX needs fixing
-					/*Object[] ids = getReactionIDs(reactionSet);
+					Object[] ids = getReactionIDs(reactionSet);
 					
 					String s = (String) JOptionPane.showInputDialog(
-							jcpPanel.getFrame(),
+							//jcpPanel.getFrame(),
+                            null,
 							"Reaction Chooser",
 							"Choose reaction to add reaction to",
 							JOptionPane.PLAIN_MESSAGE,
 							null,
 							ids,
 							ids[0]
-							);*/
-					String s = "";
+							);
+					//String s2 = "";
 
 					if ((s != null) && (s.length() > 0))
 					{
 						String selectedReactionID = s;
 						reaction = getReaction(reactionSet, selectedReactionID);
-						reaction.addReactant(new Molecule(newContainer));
+						reaction.addReactant(model.getBuilder().newMolecule(newContainer));
 					} else
 					{
 						logger.error("No reaction selected");
@@ -132,7 +136,7 @@ public class CreateReactionAction extends JCPAction
 				}
 			} else if ("addProductToNew".equals(type))
 			{
-				reaction.addProduct(new Molecule(newContainer));
+				reaction.addProduct(model.getBuilder().newMolecule(newContainer));
 				reactionSet.addReaction(reaction);
 			} else if ("addProductToExisting".equals(type))
 			{
@@ -144,24 +148,25 @@ public class CreateReactionAction extends JCPAction
 				} else
 				{
 					//XXX needs fixing
-					/*
+					
 					Object[] ids = getReactionIDs(reactionSet);
 					String s = (String) JOptionPane.showInputDialog(
-							jcpPanel.getFrame(),
-							"Reaction Chooser",
+                            //jcpPanel.getFrame(),
+							null,
+                            "Reaction Chooser",
 							"Choose reaction to add reaction to",
 							JOptionPane.PLAIN_MESSAGE,
 							null,
 							ids,
 							ids[0]
-							);*/
-					String s = "";
+							);
+					//String s2 = "";
 
 					if ((s != null) && (s.length() > 0))
 					{
 						String selectedReactionID = s;
 						reaction = getReaction(reactionSet, selectedReactionID);
-						reaction.addProduct(new Molecule(newContainer));
+						reaction.addProduct(model.getBuilder().newMolecule(newContainer));
 					} else
 					{
 						logger.error("No reaction selected");
