@@ -160,9 +160,9 @@ public class ReaderFactory {
         BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
         
         /* Search file for a line containing an identifying keyword */
-        String line = buffer.readLine();
+        String line = null;
         int lineNumber = 1;
-        while (buffer.ready() && (line != null)) {
+        while ((line = buffer.readLine()) != null) {
             logger.debug(lineNumber + ": ", line);
             for (int i=0; i<formats.size(); i++) {
                 ChemFormatMatcher cfMatcher = (ChemFormatMatcher)formats.elementAt(i);
@@ -171,7 +171,6 @@ public class ReaderFactory {
                     return cfMatcher;
                 }
             }
-            line = buffer.readLine();
             lineNumber++;
         }
         
