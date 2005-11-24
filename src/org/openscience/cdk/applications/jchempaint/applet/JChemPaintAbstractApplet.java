@@ -67,7 +67,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	private static String[][] paramInfo = {
 			{ "background", "color", 	"Background color as integer" },
       { "atomNumbersVisible", "true or false", "should atom numbers be shown"},
-			{ "load", "url", "URL of the chemical data" }, };
+			{ "load", "url", "URL of the chemical data" },
+			{ "detachable", "true or false", "should applet be detachable by double click"},};
 
 	public String getAppletInfo() {
 		return appletInfo;
@@ -127,6 +128,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		theModel.setGendate((Calendar.getInstance()).getTime().toString());
 		jcpp.setJChemPaintModel(theModel);
 		jcpp.registerModel(theModel);
+		if(getParameter("detachable")!=null && getParameter("detachable").equals("true"))
+			jcpp.addFilePopUpMenu();		
     if(theJcpp.getJChemPaintModel()!=null){
       jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
       if(theModel.getChemModel().getSetOfMolecules()!=null){
