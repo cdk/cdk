@@ -90,6 +90,10 @@ public class ReaderFactory {
     public void registerFormat(ChemFormatMatcher format) {
         formats.addElement(format);
     }
+    
+    public Vector getFormats(){
+    	return formats;
+    }
 
     private void loadReaders() {
         if (formats == null) {
