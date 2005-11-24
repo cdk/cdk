@@ -211,26 +211,32 @@ public class XLogPDescriptor implements Descriptor {
 		for (int i = 0; i < atoms.length; i++) {
 			//			Problem fused ring systems
 			atomRingSet=rs.getRings(atoms[i]);
-			ssrf=new SSSRFinder(RingSetManipulator.getAllInOneContainer(atomRingSet));
-			atomRingSet=ssrf.findEssentialRings();			
-			
 			atoms[i].setProperty("IS_IN_AROMATIC_RING", new Boolean(false));
 			atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(0));
-			
-			for (int j=0;j<atomRingSet.size();j++){
-				if (j==0){
-					atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(((Ring)atomRingSet.get(j)).getRingSize()));
+			//System.out.print("atomRingSet.size "+atomRingSet.size());
+			if (atomRingSet.size()>0){
+				if (atomRingSet.size()>1){
+					ssrf=new SSSRFinder(RingSetManipulator.getAllInOneContainer(atomRingSet));
+					atomRingSet=ssrf.findEssentialRings();
+					//System.out.println(" SSSRatomRingSet.size "+atomRingSet.size());
 				}
-			
-				if (((Ring)atomRingSet.get(j)).contains(atoms[i])){
-					if (((Ring)atomRingSet.get(j)).getRingSize()>=6 && atoms[i].getFlag(CDKConstants.ISAROMATIC)){
-						atoms[i].setProperty("IS_IN_AROMATIC_RING", new Boolean(true));
-					}
-					if (((Ring)atomRingSet.get(j)).getRingSize()<((Integer)atoms[i].getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue()){
+				for (int j=0;j<atomRingSet.size();j++){
+					if (j==0){
 						atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(((Ring)atomRingSet.get(j)).getRingSize()));
 					}
+					
+					if (((Ring)atomRingSet.get(j)).contains(atoms[i])){
+						if (((Ring)atomRingSet.get(j)).getRingSize()>=6 && atoms[i].getFlag(CDKConstants.ISAROMATIC)){
+							atoms[i].setProperty("IS_IN_AROMATIC_RING", new Boolean(true));
+						}
+						if (((Ring)atomRingSet.get(j)).getRingSize()<((Integer)atoms[i].getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue()){
+							atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(((Ring)atomRingSet.get(j)).getRingSize()));
+						}
+					}
 				}
-			}
+			}//else{
+				//System.out.println();
+			//}
 		}
 		
 		
