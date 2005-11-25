@@ -63,7 +63,7 @@ public class AtomPlacer
 	/**
 	 *  The molecule to be laid out. To be assigned from outside
 	 */
-	 Molecule molecule = null;
+	 AtomContainer molecule = null;
 
 	final  Comparator ATOM_ORDER =
 		new Comparator()
@@ -100,7 +100,7 @@ public class AtomPlacer
 	 *
 	 *@return    the molecule the AtomPlacer currently works with
 	 */
-	public Molecule getMolecule()
+	public AtomContainer getMolecule()
 	{
 		return this.molecule;
 	}
@@ -111,7 +111,7 @@ public class AtomPlacer
 	 *
 	 *@param  molecule  the molecule the AtomPlacer currently works with
 	 */
-	public void setMolecule(Molecule molecule)
+	public void setMolecule(AtomContainer molecule)
 	{
 		this.molecule = molecule;
 	}
@@ -711,7 +711,7 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public  String listNumbers(Molecule mol, AtomContainer ac) throws org.openscience.cdk.exception.CDKException
+	public  String listNumbers(AtomContainer mol, AtomContainer ac) throws org.openscience.cdk.exception.CDKException
 	{
 		String s = "Numbers: ";
 		for (int f = 0; f < ac.getAtomCount(); f++)
@@ -734,7 +734,7 @@ public class AtomPlacer
 	 *      atoms in an AtomContainer
 	 *@exception  java.lang.Exception  Description of the Exception
 	 */
-	public String listNumbers(Molecule mol, Vector ac) throws java.lang.Exception
+	public String listNumbers(AtomContainer mol, Vector ac) throws java.lang.Exception
 	{
 		String s = "Numbers: ";
 		for (int f = 0; f < ac.size(); f++)
@@ -867,7 +867,7 @@ public class AtomPlacer
 		return tempMorganMatrix;
 	}
 	
-	public boolean shouldBeLinear(org.openscience.cdk.interfaces.Atom atom, Molecule molecule)
+	public boolean shouldBeLinear(org.openscience.cdk.interfaces.Atom atom, AtomContainer molecule)
 	{
 		int sum = 0;
 		Bond[] bonds = molecule.getConnectedBonds(atom);

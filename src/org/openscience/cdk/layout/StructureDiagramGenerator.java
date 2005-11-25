@@ -525,19 +525,9 @@ public class StructureDiagramGenerator
 	{
 		int safetyCounter = 0;
 		org.openscience.cdk.interfaces.Atom atom = null;
-		double xDiff;
-		double yDiff;
-		Atom[] atoms = null;
-		Bond[] bonds = null;
 		AtomContainer unplacedAtoms = null;
 		AtomContainer placedAtoms = null;
 		AtomContainer longestUnplacedChain = null;
-
-		double startAngle = 0;
-
-		double addAngle = 0;
-
-		double unoccupiedAngle = 0;
 
 		Vector2d direction = null;
 		Vector2d startVector = null;
@@ -547,15 +537,13 @@ public class StructureDiagramGenerator
 			safetyCounter++;
 			done = false;
 			atom = getNextAtomWithAliphaticUnplacedNeigbors();
-			System.err.println(atom+"");
 			if (atom != null)
 			{
 				unplacedAtoms = getUnplacedAtoms(atom);
 				placedAtoms = getPlacedAtoms(atom);
 
 				longestUnplacedChain = atomPlacer.getLongestUnplacedChain(molecule, atom);
-				System.err.println(longestUnplacedChain.getAtomCount()+" luc");
-
+				
 				logger.debug("---start of longest unplaced chain---");
 				try
 				{
