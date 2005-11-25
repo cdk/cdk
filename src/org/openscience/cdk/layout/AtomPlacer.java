@@ -34,14 +34,16 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -323,14 +325,18 @@ public class AtomPlacer
 	 */
 	public void placeLinearChain(AtomContainer ac, Vector2d initialBondVector, double bondLength)
 	{
+		AtomContainer withh=(AtomContainer) ac.clone();
+		try{
+			new HydrogenAdder().addExplicitHydrogensToSatisfyValency((Molecule)withh);
+		}catch(Exception ex){
+			logger.debug("Excpetion in hydrogen adding. This could mean that cleanup does not respect E/Z");
+		}
+	    new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
 		logger.debug("Placing linear chain of length " + ac.getAtomCount());
 		Vector2d bondVector = initialBondVector;
 		Atom atom = null;
 		Point2d atomPoint = null;
-		Point2d nextAtomPoint = null;
 		Atom nextAtom = null;
-		Atom rootAtom = ac.getAtomAt(0);
-		Point2d tempAtomPoint = null;
 		for (int f = 0; f < ac.getAtomCount() - 1; f++)
 		{
 			atom = ac.getAtomAt(f);
@@ -341,7 +347,15 @@ public class AtomPlacer
 			atomPoint.add(bondVector);
 			nextAtom.setPoint2d(atomPoint);
 			nextAtom.setFlag(CDKConstants.ISPLACED, true);
-			bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule));
+			boolean trans=false;
+			try{
+				if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtomAt(f-2),withh.getAtomAt(f-1)))){
+					trans=BondTools.isCisTrans(withh.getAtomAt(f-3),withh.getAtomAt(f-2),withh.getAtomAt(f-1),withh.getAtomAt(f-0),withh);
+				}
+			}catch(Exception ex){
+				logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
+			}
+			bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),trans);
 		}
 	}
 
@@ -360,7 +374,7 @@ public class AtomPlacer
 	 *@return                  A vector pointing to the location of the next atom
 	 *      to draw
 	 */
-	public Vector2d getNextBondVector(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom previousAtom, Point2d distanceMeasure)
+	public Vector2d getNextBondVector(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom previousAtom, Point2d distanceMeasure, boolean trans)
 	{
     if (logger.isDebugEnabled())
     {
@@ -368,7 +382,9 @@ public class AtomPlacer
 		  logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
     }  
 		double angle = GeometryTools.getAngle(previousAtom.getX2d() - atom.getX2d(), previousAtom.getY2d() - atom.getY2d());
-		double addAngle = Math.toRadians(120);;
+		double addAngle = Math.toRadians(120);
+		if(!trans)
+			addAngle=Math.toRadians(60);
 		if (shouldBeLinear(atom, molecule)) addAngle = Math.toRadians(180);
 		
 		angle += addAngle;

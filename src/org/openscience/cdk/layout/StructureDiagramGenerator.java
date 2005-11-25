@@ -43,10 +43,17 @@ import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -378,6 +385,7 @@ public class StructureDiagramGenerator
 
 		} else
 		{
+			
 			logger.debug("*** Start of handling purely aliphatic molecules. ***");
 			/*
 			 *  We are here because there are no rings in the molecule
@@ -539,12 +547,14 @@ public class StructureDiagramGenerator
 			safetyCounter++;
 			done = false;
 			atom = getNextAtomWithAliphaticUnplacedNeigbors();
+			System.err.println(atom+"");
 			if (atom != null)
 			{
 				unplacedAtoms = getUnplacedAtoms(atom);
 				placedAtoms = getPlacedAtoms(atom);
 
 				longestUnplacedChain = atomPlacer.getLongestUnplacedChain(molecule, atom);
+				System.err.println(longestUnplacedChain.getAtomCount()+" luc");
 
 				logger.debug("---start of longest unplaced chain---");
 				try
@@ -573,7 +583,7 @@ public class StructureDiagramGenerator
 					{
 						logger.debug("Less than one atoms placed already");
 						logger.debug("Trying to get next bond vector.");
-						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), GeometryTools.get2DCenter(molecule));
+						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), GeometryTools.get2DCenter(molecule),true);
 
 					}
 
