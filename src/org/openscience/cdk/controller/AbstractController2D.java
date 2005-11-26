@@ -709,7 +709,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 						{
 							Vector2d bondVector = atomPlacer.getNextBondVector(
 									atomInRange, placedAtoms.getAtomAt(0), 
-									GeometryTools.get2DCenter(new org.openscience.cdk.Molecule(atomCon))
+									GeometryTools.get2DCenter(new org.openscience.cdk.Molecule(atomCon)),
+									false // FIXME: is this correct? (see SF bug #1367002)
 							);
 							Point2d atomPoint = new Point2d(atomInRange.getPoint2d());
 							bondVector.normalize();
