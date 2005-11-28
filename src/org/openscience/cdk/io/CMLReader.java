@@ -71,6 +71,7 @@ public class CMLReader extends DefaultChemObjectReader {
     private XMLReader parser;
     private Reader input;
     private String url;
+    private double aromaticOrder=1.5;
 
     private LoggingTool logger;
 
@@ -187,6 +188,7 @@ public class CMLReader extends DefaultChemObjectReader {
     private ChemFile readChemFile(ChemFile file) throws CDKException {
         logger.debug("Started parsing from input...");
         ChemFileCDO cdo = new ChemFileCDO(file);
+        cdo.setAromaticOrder(aromaticOrder);
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
@@ -222,9 +224,11 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.debug(saxe);
             throw new CDKException(error, saxe);
         }
-		RingSet rs=new AllRingsFinder().findAllRings(file.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0));
-		for(int i=0;i<rs.size();i++){
-			DeAromatizationTool.deAromatize((Ring)rs.get(i));  
+        if(aromaticOrder==1){
+			RingSet rs=new AllRingsFinder().findAllRings(file.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0));
+			for(int i=0;i<rs.size();i++){
+				DeAromatizationTool.deAromatize((Ring)rs.get(i));  
+	        }
         }
         return cdo;
     }
@@ -236,5 +240,24 @@ public class CMLReader extends DefaultChemObjectReader {
 	public boolean accepts(ChemObject object) {
 		return (object instanceof ChemFile);
 	}
+
+	/**
+	 * return the aromaticValue value
+	 * 
+	 * @return aromaticValue 
+	 */
+	public double getAromaticOrder() {
+		return aromaticOrder;
+	}
+
+	/**
+	 * Sets the aromaticOrder value. This is the bond order aromatic bonds will get, default 1.5
+	 * 
+	 * @param aromaticOrder
+	 */
+	public void setAromaticOrder(double aromaticOrder) {
+		this.aromaticOrder = aromaticOrder;
+	}
+	
 }
 
