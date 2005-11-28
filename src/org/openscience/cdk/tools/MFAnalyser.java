@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -40,13 +41,15 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -58,6 +61,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module     standard
  * @cdk.keyword    molecule, molecular mass
  * @cdk.keyword    molecule, molecular formula
+ * @cdk.keyword    molecule, double bond equivalents
  */
 public class MFAnalyser {
 
@@ -153,6 +157,23 @@ public class MFAnalyser {
 	}
 
 
+	/**
+	 * returns the number of double bond equivalents in this molecule
+	 *
+	 * @return    The number of DBEs
+	 */
+	public float getDBE() throws IOException, ClassNotFoundException{
+		int valencies[]=new int[5];
+		AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", getAtomContainer().getBuilder());
+		AtomContainer ac = getAtomContainer();
+		for (int f = 0; f < ac.getAtomCount(); f++) {
+   		    AtomType[] types = factory.getAtomTypes(ac.getAtomAt(f).getSymbol());
+   		    valencies[(int)types[0].getBondOrderSum()]++;
+		}
+		return  1 + (valencies[4]) + (valencies[3] /2) - (valencies[1] /2);
+	}
+	
+	
 	/**
 	 * returns the exact mass for a given molecular formula, using major isotope for each element.
 	 *
