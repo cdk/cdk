@@ -147,6 +147,8 @@ public class OpenAction extends JCPAction {
 
 			String error = null;
 			ChemModel chemModel = null;
+			if(cor instanceof CMLReader)
+				((CMLReader)cor).setAromaticOrder(1);
 			if (cor.accepts(new org.openscience.cdk.ChemFile())) {
 				// try to read a ChemFile
 				try {
