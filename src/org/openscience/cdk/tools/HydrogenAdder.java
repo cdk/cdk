@@ -167,7 +167,7 @@ public class HydrogenAdder {
      */
     public AtomContainer addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
-	    logger.debug("Start of addExplicitHydrogensToSatisfyValency");
+    	logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
       org.openscience.cdk.interfaces.Molecule[] molecules = moleculeSet.getMolecules();
       AtomContainer changedAtomsAndBonds = new org.openscience.cdk.AtomContainer();
@@ -237,7 +237,7 @@ public class HydrogenAdder {
         // add explicit hydrogens
 	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, org.openscience.cdk.interfaces.Atom atom)");
         int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
-	logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
+  logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
         AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
 	logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     return changedAtomsAndBonds;
