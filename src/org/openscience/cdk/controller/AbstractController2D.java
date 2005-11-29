@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk.controller;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.KeyEvent;
@@ -44,17 +45,8 @@ import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.applications.undoredo.BondChangeEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
@@ -64,12 +56,22 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
  *  Class that acts on MouseEvents and KeyEvents.
@@ -743,8 +745,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				}
 				r2dm.fireChange();
 				fireChange();
-				centerAtom(newAtom1);
-				centerAtom(newAtom2);
+				centerAtom(newAtom1,chemModel);
+				centerAtom(newAtom2,chemModel);
 			}
 
 			if (c2dm.getDrawMode() == Controller2DModel.SELECT && wasDragged)
@@ -1013,7 +1015,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 				}
 				for (int i = 0; i < newRing.getAtomCount(); i++)
 				{
-					centerAtom(newRing.getAtomAt(i));
+					centerAtom(newRing.getAtomAt(i),chemModel);
 				}
 				undoRedoContainer.add(newRing);
 				UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Benzene");
@@ -1752,8 +1754,30 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 	 *
 	 * @param  atom  The Atom to be centered
 	 */
-	 void centerAtom(Atom atom)
+	 void centerAtom(Atom atom, ChemModel chemModel)
 	{
+		 double smallestx=Integer.MAX_VALUE;
+		 double largestx=Integer.MIN_VALUE;
+		 double smallesty=Integer.MAX_VALUE;
+		 double largesty=Integer.MIN_VALUE;
+		 AtomContainer allinone=SetOfMoleculesManipulator.getAllInOneContainer(chemModel.getSetOfMolecules());
+		 for(int i=0;i<allinone.getAtomCount();i++){
+			 if(allinone.getAtomAt(i).getPoint2d().x<smallestx)
+				 smallestx=allinone.getAtomAt(i).getPoint2d().x;
+			 if(allinone.getAtomAt(i).getPoint2d().y<smallesty)
+				 smallesty=allinone.getAtomAt(i).getPoint2d().y;
+			 if(allinone.getAtomAt(i).getPoint2d().x>largestx)
+				 largestx=allinone.getAtomAt(i).getPoint2d().x;
+			 if(allinone.getAtomAt(i).getPoint2d().y>largesty)
+				 largesty=allinone.getAtomAt(i).getPoint2d().y;
+		 }
+		 int xstretch=((int)(largestx-smallestx))+10;
+		 int ystretch=((int)(largesty-smallesty))+10;
+		 if(xstretch<r2dm.getBackgroundDimension().width)
+			 xstretch=r2dm.getBackgroundDimension().width;
+		 if(ystretch<r2dm.getBackgroundDimension().height)
+			 ystretch=r2dm.getBackgroundDimension().height;
+		 r2dm.setBackgroundDimension(new Dimension(xstretch,ystretch));
 		if (atom == null)
 		{
 			return;
