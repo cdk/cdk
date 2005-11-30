@@ -31,10 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 
 /**
@@ -50,6 +52,13 @@ public class SetOfAtomContainersManipulator {
             AtomContainer container = acs[i];
             if (container.contains(atom)) {
                 container.removeAtomAndConnectedElectronContainers(atom);
+                Molecule[] molecules = ConnectivityChecker.partitionIntoMolecules(container).getMolecules();
+                if(molecules.length>1){
+                	set.removeAtomContainer(container);
+                	for(int k=0;k<molecules.length;k++){
+                		set.addAtomContainer(molecules[k]);
+                	}
+                }
                 return;
             }
         }
@@ -61,6 +70,13 @@ public class SetOfAtomContainersManipulator {
             AtomContainer container = acs[i];
             if (container.contains(electrons)) {
                 container.removeElectronContainer(electrons);
+                Molecule[] molecules = ConnectivityChecker.partitionIntoMolecules(container).getMolecules();
+                if(molecules.length>1){
+                	set.removeAtomContainer(container);
+                	for(int k=0;k<molecules.length;k++){
+                		set.addAtomContainer(molecules[k]);
+                	}
+                }
                 return;
             }
         }
