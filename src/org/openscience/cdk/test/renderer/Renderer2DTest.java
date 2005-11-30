@@ -107,7 +107,7 @@ public class Renderer2DTest extends JPanel
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		renderer.paintMolecule(molecule, (Graphics2D)g);
+		renderer.paintMolecule(molecule, (Graphics2D)g,false);
 	}
 
 	/**

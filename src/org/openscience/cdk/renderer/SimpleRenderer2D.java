@@ -92,20 +92,26 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	 *
 	 *@param  atomCon   Description of the Parameter
 	 *@param  graphics  Description of the Parameter
+	 *@param  split     If true the molecule will be partitioned in single molecules before painted. Typically not needed a performance killler
 	 */
-	public void paintMolecule(org.openscience.cdk.interfaces.AtomContainer atomCon, Graphics2D graphics) {
+	public void paintMolecule(org.openscience.cdk.interfaces.AtomContainer atomCon, Graphics2D graphics, boolean split) {
         logger.debug("inside paintMolecule()");
 		customizeRendering(graphics);
 		RingSet ringSet = new RingSet();
-		org.openscience.cdk.interfaces.Molecule[] molecules = null;
-		try
-		{
-			molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
-		} catch (Exception exception)
-		{
-			logger.warn("Could not partition molecule: ", exception.getMessage());
-			logger.debug(exception);
-			return;
+		org.openscience.cdk.interfaces.AtomContainer[] molecules = null;
+		if(split){
+			try
+			{
+				molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
+			} catch (Exception exception)
+			{
+				logger.warn("Could not partition molecule: ", exception.getMessage());
+				logger.debug(exception);
+				return;
+			}
+		}else {
+			molecules=new org.openscience.cdk.interfaces.AtomContainer[1];
+			molecules[0]=atomCon;
 		}
 		for (int i = 0; i < molecules.length; i++)
 		{

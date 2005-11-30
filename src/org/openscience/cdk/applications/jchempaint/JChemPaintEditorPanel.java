@@ -525,7 +525,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             snapGraphics.setBackground(Color.WHITE);
             snapGraphics.clearRect(0,0,(int)dim.getWidth()+20, (int)dim.getHeight()+20);
             r2d.useScreenSize=false;
-            r2d.paintMolecule(ac, (Graphics2D) snapGraphics);
+            r2d.paintMolecule(ac, (Graphics2D) snapGraphics,false);
             r2d.useScreenSize=true;
             logger.info("created...");
 

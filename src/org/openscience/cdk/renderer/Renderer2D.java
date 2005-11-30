@@ -114,7 +114,7 @@ public class Renderer2D extends SimpleRenderer2D
 		}
 		if (model.getSetOfMolecules() != null)
 		{
-			paintSetOfMolecules(model.getSetOfMolecules(), graphics);
+			paintSetOfMolecules(model.getSetOfMolecules(), graphics,false);
 		} else
 		{
 			logger.debug("setOfMolecules is null");
@@ -143,25 +143,30 @@ public class Renderer2D extends SimpleRenderer2D
 	 *
 	 *@param  moleculeSet  Description of the Parameter
 	 *@param  graphics     Description of the Parameter
+	 *@param  split        If true the setOfMolecule will be united and then splitted again in single molecules before painted. Typically not needed a performance killler
 	 */
-	public void paintSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules moleculeSet, Graphics2D graphics) {
+	public void paintSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules moleculeSet, Graphics2D graphics, boolean split) {
 		logger.debug("painting set of molecules");
-		org.openscience.cdk.interfaces.AtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
 		Molecule[] molecules = null;
-		try
-		{
-			molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();
-			logger.debug("We have " + molecules.length + " molecules on screen");
-		} catch (Exception exception)
-		{
-			logger.warn("Could not partition molecule: ", exception.getMessage());
-			logger.debug(exception);
-			return;
+		if(split){
+			org.openscience.cdk.interfaces.AtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
+			try
+			{
+				molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();
+				logger.debug("We have " + molecules.length + " molecules on screen");
+			} catch (Exception exception)
+			{
+				logger.warn("Could not partition molecule: ", exception.getMessage());
+				logger.debug(exception);
+				return;
+			}
+		}else{
+			molecules=moleculeSet.getMolecules();
 		}
 		for (int i = 0; i < molecules.length; i++)
 		{
 			logger.debug("painting molecule " + i);
-			paintMolecule(molecules[i], graphics);
+			paintMolecule(molecules[i], graphics,false);
 		}
 	}
 
@@ -260,11 +265,11 @@ public class Renderer2D extends SimpleRenderer2D
 	
 		// paint reactants content
 		paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
-		paintMolecule(reactantContainer, graphics);
+		paintMolecule(reactantContainer, graphics,false);
 	
 		// paint products content
 		paintBoundingBox(minmaxProducts, "Products", width, graphics);
-		paintMolecule(productContainer, graphics);
+		paintMolecule(productContainer, graphics,false);
 	
 		if (productContainer.getAtomCount() > 0 && reactantContainer.getAtomCount() > 0)
 		{
