@@ -1771,8 +1771,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			 if(allinone.getAtomAt(i).getPoint2d().y>largesty)
 				 largesty=allinone.getAtomAt(i).getPoint2d().y;
 		 }
-		 int xstretch=((int)(largestx-smallestx))+10;
-		 int ystretch=((int)(largesty-smallesty))+10;
+		 int xstretch=((int)(largestx-smallestx))+20;
+		 int ystretch=((int)(largesty-smallesty))+20;
 		 if(xstretch<r2dm.getBackgroundDimension().width)
 			 xstretch=r2dm.getBackgroundDimension().width;
 		 if(ystretch<r2dm.getBackgroundDimension().height)
