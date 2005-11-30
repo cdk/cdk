@@ -39,6 +39,7 @@ public class ManipulatorsTests {
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(SetOfMoleculesManipulatorTest.suite());
         suite.addTest(AtomContainerManipulatorTest.suite());
+        suite.addTest(SetOfAtomContainersManipulatorTest.suite());
         return suite;
     }
 
