@@ -50,7 +50,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	 *  Constructor for the JChemPaintViewerOnlyPanel object
 	 */
 	public JChemPaintViewerOnlyPanel() {
-		this(null);
+		this(null, "stable");
 	}
 
 
@@ -59,8 +59,9 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	 *
 	 *@param  panelDimension  Description of the Parameter
 	 */
-	public JChemPaintViewerOnlyPanel(Dimension panelDimension) {
+	public JChemPaintViewerOnlyPanel(Dimension panelDimension, String guiString) {
 		super();
+		this.guiString=guiString;
 		super.setJChemPaintModel(new JChemPaintModel());
 		setViewerOnly();
 //		buildFilePopUpMenu();

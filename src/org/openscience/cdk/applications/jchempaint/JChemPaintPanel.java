@@ -137,7 +137,8 @@ public abstract class JChemPaintPanel
     Dimension viewerDimension;
     private UndoManager undoManager;
     private UndoableEditSupport undoSupport;
-
+    String guiString = "stable";
+    
 	/**
 	 *  Constructor for the JChemPaintPanel object
 	 */
@@ -855,6 +856,8 @@ public abstract class JChemPaintPanel
 	 * 
 	 */
 	public void addFilePopUpMenu() {
+		if(guiString.equals("applet"))
+			return;
 	    String key = "popupmenubar";
 		String[] itemKeys = StringHelper.tokenize(getMenuResourceString(key));
 		JPopupMenu popupMenu = new JPopupMenu();

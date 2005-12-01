@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
+import java.applet.Applet;
 import java.lang.reflect.Field;
 import java.util.MissingResourceException;
 import java.util.Properties;
@@ -61,12 +62,11 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 * @param  jcpPanel  Description of the Parameter
 	 */
 	public JChemPaintMenuBar(JChemPaintPanel jcpPanel) {
-		this(jcpPanel, true);
+		this(jcpPanel, true, "stable");
 	}
 
     public JChemPaintMenuBar(JChemPaintPanel jcpPanel, String guiString) {
-        this(jcpPanel, true);
-        this.guiString = guiString;
+        this(jcpPanel, true, guiString);
     }
 
 	/**
@@ -75,8 +75,8 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 * @param  jcpPanel       Description of the Parameter
 	 * @param  addPluginMenu  Description of the Parameter
 	 */
-	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu) {
-		this(jcpPanel, addPluginMenu, null);
+	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String guiString) {
+		this(jcpPanel, addPluginMenu, null, guiString);
 	}
 
 
@@ -87,9 +87,10 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 * @param  addPluginMenu   Description of the Parameter
 	 * @param  menuDefinition  Description of the Parameter
 	 */
-	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition) {
+	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition, String guiString) {
 		logger = new LoggingTool(this);
-		createMenubar(jcpPanel, addPluginMenu, menuDefinition);
+		this.guiString = guiString;
+    	createMenubar(jcpPanel, addPluginMenu, menuDefinition);
 	}
 
 

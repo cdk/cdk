@@ -103,9 +103,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	boolean showToolBar = true;
 	boolean showStatusBar = true;
 
-    String guiString = "stable";
-
-  protected CDKPluginManager pluginManager = null;
+    protected CDKPluginManager pluginManager = null;
 	protected EventListenerList changeListeners = null;
 	
 	/**
@@ -137,8 +135,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		    this.setEmbedded();
 		}
 		setupPluginManager();
-        this.guiString = guiString; customizeView();
-		super.setJChemPaintModel(new JChemPaintModel());
+        this.guiString = guiString;
+        customizeView();
+        super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
 		if (logger == null)
 		{
