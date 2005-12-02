@@ -29,18 +29,20 @@
  */
 package org.openscience.cdk.renderer;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Iterator;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
@@ -167,6 +169,17 @@ public class Renderer2D extends SimpleRenderer2D
 		{
 			logger.debug("painting molecule " + i);
 			paintMolecule(molecules[i], graphics,false);
+		}
+		if(r2dm.getMerge()!=null){
+			Iterator it=r2dm.getMerge().keySet().iterator();
+			while(it.hasNext()){
+				Atom atom1=(Atom)it.next();
+				int[] coords = { (int)atom1.getPoint2d().x,(int)atom1.getPoint2d().y};
+				int[] screenCoords = getScreenCoordinates(coords);
+				graphics.setColor(Color.MAGENTA);
+				graphics.drawOval((int)(screenCoords[0]-r2dm.getBondLength()/2),(int)(screenCoords[1]-r2dm.getBondLength()/2),(int)r2dm.getBondLength(),(int)r2dm.getBondLength());
+				
+			}
 		}
 	}
 
