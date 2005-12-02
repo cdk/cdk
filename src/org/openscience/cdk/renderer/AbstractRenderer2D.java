@@ -240,7 +240,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			paintColouredAtomBackground(atom, r2dm.getHighlightColor(), graphics);
 		}
-		if(r2dm.getMerge().get(atom)!=null || r2dm.getMerge().keySet().contains(atom)){
+		if(r2dm.getMerge().get(atom)!=null || r2dm.getMerge().values().contains(atom)){
 			paintColouredAtomBackground(atom, Color.MAGENTA, graphics);
 		}
 
