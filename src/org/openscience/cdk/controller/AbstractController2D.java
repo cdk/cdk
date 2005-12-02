@@ -39,6 +39,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.undo.UndoableEdit;
@@ -275,6 +276,14 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			int deltaX = mouseX - prevDragCoordX;
 			int deltaY = mouseY - prevDragCoordY;
 			moveSelectedAtomsWith(deltaX, deltaY);
+			AtomContainer selected=r2dm.getSelectedPart();
+			r2dm.getMerge().clear();
+			for(int i=0;i<selected.getAtomCount();i++){
+				Atom inrange=getAtomInRange((int)selected.getAtomAt(i).getPoint2d().x, (int)selected.getAtomAt(i).getPoint2d().y, selected.getAtomAt(i));
+				if(inrange!=null && inrange!=selected.getAtomAt(i)){
+					r2dm.getMerge().put(selected.getAtomAt(i),inrange);
+				}
+			}
 			/*
 			 *  PRESERVE THIS. This notifies the
 			 *  the listener responsible for
@@ -1100,6 +1109,42 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					// then it was dragging nearest Bond or Atom
 					r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
 				}
+				if(r2dm.getMerge().size()>0){
+					Iterator it=r2dm.getMerge().keySet().iterator();
+					while(it.hasNext()){
+						Atom atom1=(Atom)it.next();
+						Atom atom2=(Atom)r2dm.getMerge().get(atom1);
+						int contains1=-1;
+						int contains2=-1;
+						SetOfMolecules som=chemModel.getSetOfMolecules();
+						for(int i=0;i<som.getAtomContainerCount();i++){
+							if(chemModel.getSetOfMolecules().getAtomContainer(i).contains(atom1))
+								contains1=i;
+							if(chemModel.getSetOfMolecules().getAtomContainer(i).contains(atom2))
+								contains2=i;
+							if(contains1>-1 && contains2>-1)
+								break;
+						}
+						if(contains1>contains2){
+							int prov=contains1;
+							contains1=contains2;
+							contains2=prov;
+						}
+						if(contains1!=contains2){
+							som.getAtomContainer(contains1).add(som.getAtomContainer(contains2));
+							som.removeAtomContainer(contains2);
+						}
+						Bond[] bondson2=som.getAtomContainer(contains1).getConnectedBonds(atom2);
+						for(int i=0;i<bondson2.length;i++){
+							if(bondson2[i].getAtomAt(0)==atom2)
+								bondson2[i].setAtomAt(atom1,0);
+							if(bondson2[i].getAtomAt(1)==atom2)
+								bondson2[i].setAtomAt(atom1,1);
+						}
+						som.getAtomContainer(contains1).removeAtom(atom2);
+						r2dm.getMerge().clear();
+					}
+				}
 			}
 
 			if (wasDragged)
@@ -1333,8 +1378,27 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 */
 	private Atom getAtomInRange(int X, int Y)
 	{
+		return getAtomInRange(X,Y,null);
+	}
+	
+	
+	/**
+	 *  Returns an Atom if it is in a certain range of the given point. Used to
+	 *  highlight an atom that is near the cursor. <p>
+	 *
+	 *  <b>Important: the coordinates must be given in world coordinates and not in
+	 *  screen coordinates!
+	 *
+	 *@param  X  The x world coordinate of the point
+	 *@param  Y  The y world coordinate of the point
+	 *@return    An Atom if it is in a certain range of the given point
+	 */
+	private Atom getAtomInRange(int X, int Y, Atom ignore)
+	{
 		double highlightRadius = r2dm.getHighlightRadius();
 		AtomContainer atomCon = getAllInOneContainer(chemModel);
+		if(ignore!=null)
+			atomCon.removeAtomAndConnectedElectronContainers(ignore);
 		Atom closestAtom = GeometryTools.getClosestAtom(X, Y, atomCon);
 		if (closestAtom != null)
 		{

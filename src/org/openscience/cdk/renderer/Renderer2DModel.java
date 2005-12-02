@@ -136,6 +136,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     private boolean compact=false;
     
+	private HashMap merge=new HashMap();
+    
     /**
      * @return null if no custom font set
      */
@@ -925,4 +927,18 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
   public HashMap getToolTipTextMap(){
     return toolTipTextMap;
   }
+
+/**
+ * @return Returns the merge.
+ */
+public HashMap getMerge() {
+	return merge;
+}
+
+/**
+ * @param merge The merge to set.
+ */
+public void setMerge(HashMap merge) {
+	this.merge = merge;
+}
 }
