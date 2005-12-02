@@ -41,27 +41,34 @@ import java.util.Vector;
  */
 public class Entry {
     
-    private String term;
+	private String className;
+    private String label;
     private String id;
     private Vector descriptorInfo;
+	private String definition;
+	private String description;
+	private Object rawContent;
     
     public Entry(String id, String term) {
         this.id = id.toLowerCase();
-        this.term = term;
+        this.label = term;
         this.descriptorInfo = new Vector();
+    }
+    
+    public Entry(String id) {
+    	this(id, "");
     }
     
     public Entry() {
         this("", "");
-        this.descriptorInfo = new Vector();
     }
     
-    public void setTerm(String term) {
-        this.term = term;
+    public void setLabel(String term) {
+        this.label = term;
     }
     
-    public String getTerm() {
-        return this.term;
+    public String getLabel() {
+        return this.label;
     }
     
     public void setID(String id) {
@@ -72,14 +79,59 @@ public class Entry {
         return this.id;
     }
 
+    public String getDefinition() {
+    	return this.definition;
+    }
+    
+    public void setDefinition(String def) {
+    	this.definition = def;
+    }
+    
+    public String getDescription() {
+    	return this.description;
+    }
+
+    public void setDescription(String description) {
+    	this.description = description;
+    }
+    
     public void setDescriptorMetadata(String metadata) {
         this.descriptorInfo.add( metadata );
     }
+    
     public Vector getDescriptorMetadata() {
         return this.descriptorInfo;
     }
     
     public String toString() {
-        return "Entry[" + getID() + "](" + getTerm() + ")";
+        return "Entry[" + getID() + "](" + getLabel() + ")";
     }
+
+	/**
+	 * @return Returns the rawContent.
+	 */
+	public Object getRawContent() {
+		return rawContent;
+	}
+
+	/**
+	 * @param rawContent The rawContent to set.
+	 */
+	public void setRawContent(Object rawContent) {
+		this.rawContent = rawContent;
+	}
+
+	/**
+	 * @return Returns the className.
+	 */
+	public String getClassName() {
+		return className;
+	}
+
+	/**
+	 * @param className The className to set.
+	 */
+	public void setClassName(String className) {
+		this.className = className;
+	}
 }

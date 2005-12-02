@@ -41,8 +41,7 @@ import java.util.Hashtable;
  * @author     Egon Willighagen
  * @cdk.created    2003-04-06
  * @cdk.keyword    dictionary
- * @cdk.depends    stmml.jar
- * @cdk.depends    castor.jar
+ * @cdk.depends    xom.jar
  */
 public class DictionaryDatabase {
 
@@ -124,22 +123,26 @@ public class DictionaryDatabase {
         return dictionaryNames;
     }
     
+    public Dictionary getDictionary(String dictionaryName) {
+    	return (Dictionary)dictionaries.get(dictionaryName);
+    }
+    
     /**
      * Returns a String[] with the id's of all entries in the specified database.
      */
     public String[] getDictionaryEntries(String dictionaryName) {
-        Dictionary dictionary = (Dictionary)dictionaries.get(dictionaryName);
+        Dictionary dictionary = getDictionary(dictionaryName);
         if (dictionary == null) {
             logger.error("Cannot find requested dictionary");
             return new String[0];
         } else {
             // FIXME: dummy method that needs an implementation
-            Entry[] entries = dictionary.getEntry();
+            Entry[] entries = dictionary.getEntries();
             String[] entryNames = new String[entries.length];
             logger.info("Found ", "" + entryNames.length, " entries in dictionary ", 
               dictionaryName);
             for (int i=0; i<entries.length; i++) {
-                entryNames[i] = entries[i].getTerm();
+                entryNames[i] = entries[i].getLabel();
             }
             return entryNames;
         }
@@ -147,7 +150,7 @@ public class DictionaryDatabase {
 
     public Entry[] getDictionaryEntry(String dictionaryName) {
         Dictionary dictionary = (Dictionary)dictionaries.get(dictionaryName);
-        return( dictionary.getEntry() );
+        return dictionary.getEntries();
     }
     
     /**

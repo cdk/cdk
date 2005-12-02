@@ -27,7 +27,9 @@ package org.openscience.cdk.test.dict;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -54,6 +56,23 @@ public class DictDBTest extends CDKTestCase {
         assertTrue(db.hasDictionary("chemical"));
         assertTrue(db.hasDictionary("elements"));
         assertTrue(db.hasDictionary("descriptor-algorithms"));
+    }
+    
+    public void testOWLDictionary() {
+    	DictionaryDatabase db = new DictionaryDatabase();
+    	Dictionary dict = db.getDictionary("descriptor-algorithms");
+    	assertTrue(dict.size() > 0);
+    }
+    
+    public void testOWLEntry() {
+    	DictionaryDatabase db = new DictionaryDatabase();
+    	Dictionary dict = db.getDictionary("descriptor-algorithms");
+    	Entry entry = dict.getEntry("apol");
+    	assertNotNull(entry);
+    	assertEquals("Atomic Polarizabilities", entry.getLabel());
+    	String def = entry.getDefinition();
+    	assertNotNull(def);
+    	assertTrue(def.length() > 0);
     }
     
 }

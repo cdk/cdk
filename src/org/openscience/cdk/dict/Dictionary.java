@@ -93,7 +93,7 @@ public class Dictionary {
         entries.put(entry.getID().toLowerCase(), entry);
     }
     
-    public Entry[] getEntry() {
+    public Entry[] getEntries() {
         int size = entries.size();
         Entry[] entryArray = new Entry[size];
         Enumeration elements = entries.elements();
@@ -107,5 +107,13 @@ public class Dictionary {
     
     public boolean hasEntry(String id) {
         return entries.containsKey(id);
+    }
+    
+    public Entry getEntry(String id) {
+        return (Entry)entries.get(id);
+    }
+    
+    public int size() {
+    	return entries.size();
     }
 }

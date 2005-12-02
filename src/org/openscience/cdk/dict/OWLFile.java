@@ -30,8 +30,6 @@ package org.openscience.cdk.dict;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 import org.openscience.cdk.tools.LoggingTool;
 import nu.xom.Attribute;
@@ -52,7 +50,6 @@ import nu.xom.ParsingException;
  */
 public class OWLFile extends Dictionary {
 
-    private static String ownNS = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
     private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     private static String rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
 
@@ -61,23 +58,30 @@ public class OWLFile extends Dictionary {
     }
 
     public static Dictionary unmarshal(Reader reader) {
-        LoggingTool logger = new LoggingTool(Dictionary.class);
-        Dictionary dict = new Dictionary();
+        LoggingTool logger = new LoggingTool(OWLFile.class);
+        Dictionary dict = new OWLFile();
         try {
             Builder parser = new Builder();
             Document doc = parser.build(reader);
             Element root = doc.getRootElement();
             logger.debug("Found root element: ", root.getQualifiedName());
-            Elements entries = root.getChildElements("Descriptor", ownNS);
-            logger.info("Found #descriptors in OWL dict:", entries.size());
+            
+            // Extract ownNS from root element
+            final String ownNS = root.getBaseURI();
+            logger.debug("Found ontology namespace: ", ownNS);
+            
+            // process the defined facts
+            Elements entries = root.getChildElements();
+            logger.info("Found #elements in OWL dict:", entries.size());
             for (int i=0; i<entries.size(); i++) {
                 Element entry = entries.get(i);
-                Attribute id = entry.getAttribute("ID", rdfNS);
-                logger.debug("ID: ", id);
-                Element label = entry.getFirstChildElement("label", rdfsNS);
-                logger.debug("label: ", label);
-                Entry dbEntry = new Entry(id.getValue(), label.getValue());
-                logger.debug("Added entry: ", dbEntry); 
+                if (entry.getNamespaceURI().equals(ownNS)) {
+                	Entry dbEntry = unmarshal(entry, ownNS); 
+                	dict.addEntry(dbEntry);
+                	logger.debug("Added entry: ", dbEntry);
+                } else {
+                	logger.debug("Found a non-fact: ", entry.getQualifiedName());
+                }
             }
         } catch (ParsingException ex) {
             logger.error("Dictionary is not well-formed: ", ex.getMessage());
@@ -94,4 +98,28 @@ public class OWLFile extends Dictionary {
         return dict;
     }
 
+    public static Entry unmarshal(Element entry, String ownNS) {
+    	LoggingTool logger = new LoggingTool(OWLFile.class);
+    	
+    	// create a new entry by ID
+        Attribute id = entry.getAttribute("ID", rdfNS);
+        logger.debug("ID: ", id);
+        Entry dbEntry = new Entry(id.getValue());
+
+        // set additional, optional data
+        Element label = entry.getFirstChildElement("label", rdfsNS);
+        logger.debug("label: ", label);
+        if (label != null) dbEntry.setLabel(label.getValue());
+        dbEntry.setClassName(entry.getQualifiedName());
+        Element definition = entry.getFirstChildElement("definition", ownNS);
+        if (definition != null) {
+        	dbEntry.setDefinition(definition.toString());
+        }
+        Element description = entry.getFirstChildElement("description", ownNS);
+        if (description != null) {
+        	dbEntry.setDescription(description.toString());
+        }
+        return dbEntry;
+    }
+    
 }

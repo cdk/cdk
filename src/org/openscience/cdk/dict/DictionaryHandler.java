@@ -69,7 +69,7 @@ public class DictionaryHandler extends DefaultHandler {
                 if (atts.getQName(i).equals("id")) {
                     entry.setID(atts.getValue(i));
                 } else if (atts.getQName(i).equals("term")) {
-                    entry.setTerm(atts.getValue(i));
+                    entry.setLabel(atts.getValue(i));
                 }
             }
         } 
