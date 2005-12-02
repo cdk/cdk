@@ -1022,9 +1022,18 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						atomCon.add(newRing);
 					}
 				}
+				double highlightRadius = r2dm.getHighlightRadius();
 				for (int i = 0; i < newRing.getAtomCount(); i++)
 				{
-					centerAtom(newRing.getAtomAt(i),chemModel);
+					Atom atom=newRing.getAtomAt(i);
+					centerAtom(atom,chemModel);
+					//We make sure atoms don't overlap
+					//Solution is a bit crude, we would need to find an unoccupied place (and even the bond display should be optimized)
+					Atom inrange=getAtomInRange((int)atom.getPoint2d().x, (int)atom.getPoint2d().y, atom);
+					if(inrange!=null && Math.sqrt(Math.pow(inrange.getX2d() - atom.getPoint2d().x, 2) + Math.pow(inrange.getY2d() - atom.getPoint2d().y, 2)) < highlightRadius/4){
+						atom.getPoint2d().x-=highlightRadius/4;
+						atom.getPoint2d().y-=highlightRadius/4;
+					}
 				}
 				undoRedoContainer.add(newRing);
 				UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Benzene");
