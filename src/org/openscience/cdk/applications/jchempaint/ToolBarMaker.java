@@ -170,29 +170,29 @@ public class ToolBarMaker
 	 */
 	public static Component createToolbar(int orientation, String kind, JChemPaintPanel jcpp, int lines)
 	{
-    JToolBar toolbar2 = new JToolBar(orientation);
+		JToolBar toolbar2 = new JToolBar(orientation);
 		String[] toolKeys = StringHelper.tokenize(getToolbarResourceString(kind));
 		JButton button = null;
 
 		if (toolKeys.length != 0)
 		{
-			String[] sdiToolKeys = new String[(toolKeys.length) - 4];
-			for (int i = 4; i < toolKeys.length; i++)
+			String[] sdiToolKeys = new String[(toolKeys.length)];
+			for (int i = 0; i < toolKeys.length; i++)
 			{
-				int j = i - 4;
+				int j = i - 0;
 				sdiToolKeys[j] = toolKeys[i];
 			}
 			toolKeys = sdiToolKeys;
 		}
 
-    Box box=null;
-    int counter=0;
-    boolean alladded=false;
+		Box box=null;
+		int counter=0;
+		boolean alladded=false;
 		for (int i = 0; i < toolKeys.length; i++)
 		{
 			if (toolKeys[i].equals("-"))
 			{
-        toolbar2.add(box);
+				toolbar2.add(box);
 				if (orientation == SwingConstants.HORIZONTAL)
 				{
 					toolbar2.add(Box.createHorizontalStrut(5));
@@ -200,17 +200,18 @@ public class ToolBarMaker
 				{
 					toolbar2.add(Box.createVerticalStrut(5));
 				}
-        counter=0;
-			} else
+				counter=0;
+			} 
+			else
 			{
-        if(counter % lines==0){
-          if(box!=null)
-            toolbar2.add(box);
-          box=new Box(BoxLayout.Y_AXIS);
-          alladded=false;
-        }else{
-          alladded=true;
-        }
+				if(counter % lines==0){
+					if(box!=null)
+						toolbar2.add(box);
+					box=new Box(BoxLayout.Y_AXIS);
+					alladded=false;
+				}else{
+					alladded=true;
+				}
 				button = (JButton) createToolbarButton(toolKeys[i], jcpp);
 				/*if (toolKeys[i].equals("lasso"))
 				{
@@ -218,7 +219,7 @@ public class ToolBarMaker
 				}*/
 				if (button != null)
 				{
-          box.add(button);
+					box.add(button);
 					if (i == 2)
 					{
 						button.setBackground(Color.GRAY);
@@ -228,16 +229,15 @@ public class ToolBarMaker
 					}
 				} else
 				{
-          System.err.println("not created "+toolKeys[i]);
-					logger.error("Could not create button");
+					logger.error("Could not create button"+toolKeys[i]);
 				}
-        counter++;
+				counter++;
 			}
 		}
-    if(!alladded){
-      if(box!=null)
-        toolbar2.add(box);
-    }
+		if(!alladded){
+			if(box!=null)
+				toolbar2.add(box);
+		}
 		if (orientation == SwingConstants.HORIZONTAL)
 		{
 			toolbar2.add(Box.createHorizontalGlue());
