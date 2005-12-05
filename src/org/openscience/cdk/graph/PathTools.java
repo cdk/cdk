@@ -30,9 +30,12 @@ package org.openscience.cdk.graph;
 
 import java.util.Vector;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.Molecule;
 
 /**
@@ -152,9 +155,9 @@ public class PathTools  {
 	 *@return                                                        true if the
 	 *      target atom was found during this function call
 	 */
-	public static boolean depthFirstTargetSearch(org.openscience.cdk.interfaces.AtomContainer molecule, org.openscience.cdk.interfaces.Atom root, org.openscience.cdk.interfaces.Atom target, org.openscience.cdk.interfaces.AtomContainer path) throws org.openscience.cdk.exception.NoSuchAtomException {
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(root);
-		org.openscience.cdk.interfaces.Atom nextAtom = null;
+	public static boolean depthFirstTargetSearch(AtomContainer molecule, Atom root, Atom target, AtomContainer path) throws NoSuchAtomException {
+		Bond[] bonds = molecule.getConnectedBonds(root);
+		Atom nextAtom = null;
 		root.setFlag(CDKConstants.VISITED, true);
 		for (int f = 0; f < bonds.length; f++) {
 			nextAtom = bonds[f].getConnectedAtom(root);
@@ -210,12 +213,12 @@ public class PathTools  {
       * @param   max the number of neighbours to return
       * @return  the average bond length 
      */  
-  public static org.openscience.cdk.interfaces.Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
+  public static Atom[] findClosestByBond(AtomContainer ac, Atom a, int max){
     Molecule mol= ac.getBuilder().newMolecule();
     Vector v=new Vector();
     v.add(a);
     breadthFirstSearch(ac, v, mol, max);
-    org.openscience.cdk.interfaces.Atom[] returnValue=new Atom[mol.getAtoms().length-1];
+    Atom[] returnValue = new Atom[mol.getAtoms().length-1];
     int k=0;
     for(int i=0;i<mol.getAtoms().length;i++){
       if(mol.getAtoms()[i]!=a){
@@ -244,7 +247,7 @@ public class PathTools  {
 	 */
 	public static void breadthFirstSearch(AtomContainer ac, Vector sphere, Molecule molecule, int max) {
 		Atom atom = null;
-		org.openscience.cdk.interfaces.Atom nextAtom = null;
+		Atom nextAtom = null;
 		Vector newSphere = new Vector();
 		for (int f = 0; f < sphere.size(); f++) {
 			atom = (Atom) sphere.elementAt(f);
@@ -253,10 +256,10 @@ public class PathTools  {
 			molecule.addAtom(atom);
             // first copy LonePair's and SingleElectron's of this Atom as they need
             // to be copied too
-			org.openscience.cdk.interfaces.ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
+			ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
             //System.out.println("found #ec's: " + eContainers.length);
             for (int i=0; i<eContainers.length; i++) {
-                if (!(eContainers[i] instanceof org.openscience.cdk.interfaces.Bond)) {
+                if (!(eContainers[i] instanceof Bond)) {
                     // ok, no bond, thus LonePair or SingleElectron
                     // System.out.println("adding non bond " + eContainers[i]);
                     molecule.addElectronContainer(eContainers[i]);
@@ -302,7 +305,7 @@ public class PathTools  {
 	 *@param  cutOff      Stop the path search when this cutOff sphere count has been reached
 	 *@return             The shortest path between the starting sphere and the target atom
 	 */
-	public static int breadthFirstTargetSearch(AtomContainer ac, Vector sphere, org.openscience.cdk.interfaces.Atom target, int pathLength, int cutOff) {
+	public static int breadthFirstTargetSearch(AtomContainer ac, Vector sphere, Atom target, int pathLength, int cutOff) {
 		if (pathLength == 0) resetFlags(ac);
 		pathLength++;
 		if (pathLength > cutOff) {
@@ -310,11 +313,11 @@ public class PathTools  {
 		}
 		Atom atom = null;
 
-		org.openscience.cdk.interfaces.Atom nextAtom = null;
+		Atom nextAtom = null;
 		Vector newSphere = new Vector();
 		for (int f = 0; f < sphere.size(); f++) {
 			atom = (Atom) sphere.elementAt(f);
-			org.openscience.cdk.interfaces.Bond[] bonds = ac.getConnectedBonds(atom);
+			Bond[] bonds = ac.getConnectedBonds(atom);
 			for (int g = 0; g < bonds.length; g++) {
 				if (!bonds[g].getFlag(CDKConstants.VISITED)) {
 					bonds[g].setFlag(CDKConstants.VISITED, true);

@@ -29,11 +29,12 @@
 package org.openscience.cdk.graph;
 
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.NoSuchAtomException;
 
 
@@ -136,7 +137,7 @@ public class SpanningTree {
 		for (int i = 0; i < V; i++) {
 			(atomContainer.getAtomAt(i)).setProperty("ST_ATOMNO", Integer.toString(i+1));
 		}
-		org.openscience.cdk.interfaces.Bond bond;
+		Bond bond;
 		int v1,v2;
 		bondsInTree = new boolean[E];
 		
@@ -171,7 +172,7 @@ public class SpanningTree {
 		
 	}
 	public AtomContainer getSpanningTree() {
-		AtomContainer ac = new org.openscience.cdk.AtomContainer();
+		AtomContainer ac = molecule.getBuilder().newAtomContainer();
 		for (int a=0 ; a < V; a++) ac.addAtom(molecule.getAtomAt(a));
 		for (int b=0; b < E; b++ ) if (bondsInTree[b])
 			ac.addBond(molecule.getBondAt(b));
@@ -192,21 +193,21 @@ public class SpanningTree {
 	}	
 	public AtomContainer getPath(AtomContainer spt,Atom a1, Atom a2) throws NoSuchAtomException {
 		
-		AtomContainer path = new org.openscience.cdk.AtomContainer();
+		AtomContainer path = spt.getBuilder().newAtomContainer();
 		PathTools.resetFlags(spt);
 		path.addAtom(a1);
 		PathTools.depthFirstTargetSearch(spt,a1,a2,path);		
 		return path;
 	}
-	private Ring getRing(AtomContainer spt, org.openscience.cdk.interfaces.Bond bond) throws NoSuchAtomException {
-		Ring ring = new Ring();
+	private Ring getRing(AtomContainer spt, Bond bond) throws NoSuchAtomException {
+		Ring ring = spt.getBuilder().newRing();
 		PathTools.resetFlags(spt);
 		ring.addAtom(bond.getAtomAt(0));		
 		PathTools.depthFirstTargetSearch(spt,bond.getAtomAt(0),bond.getAtomAt(1),ring);		
 		ring.addBond(bond);
 		return ring;
 	}
-	private void getBondsInRing(AtomContainer mol,Ring ring, int[] bonds) {
+	private void getBondsInRing(AtomContainer mol, Ring ring, int[] bonds) {
 		for (int i=0; i < ring.getBondCount(); i++ ) {
 			int m = mol.getBondNumber(ring.getBondAt(i));
 			bonds[m] = 1;
@@ -214,7 +215,7 @@ public class SpanningTree {
 	}
 	
 	public RingSet getBasicRings() throws NoSuchAtomException {
-		RingSet ringset = new RingSet();
+		RingSet ringset = molecule.getBuilder().newRingSet();
 		AtomContainer spt = getSpanningTree();
 		for (int i = 0; i < E; i++) if (!bondsInTree[i])  
 			ringset.add(getRing(spt,molecule.getBondAt(i)));
@@ -288,7 +289,7 @@ public class SpanningTree {
 			if (c > 1) break;  //at least one common bond
 		}
 		if (c < 2) return null;
-		Ring ring = new Ring();
+		Ring ring = molecule.getBuilder().newRing();
 		Ring ring1 = (Ring) ringset.get(i);
 		Ring ring2 = (Ring) ringset.get(j);
 		for (int b= 0; b < cb[i].length; b++) {

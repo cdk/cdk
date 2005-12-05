@@ -26,10 +26,13 @@ package org.openscience.cdk.graph;
 
 import java.util.Vector;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -59,12 +62,12 @@ public class ConnectivityChecker
 	 * @param   atomContainer  The AtomContainer to be check for connectedness
 	 * @return                 true if the AtomContainer is connected   
 	 */
-	public static boolean isConnected(org.openscience.cdk.interfaces.AtomContainer atomContainer)
+	public static boolean isConnected(AtomContainer atomContainer)
 	{
-		AtomContainer ac = new org.openscience.cdk.AtomContainer();
-		org.openscience.cdk.interfaces.Atom atom = null;
-		org.openscience.cdk.interfaces.Bond bond = null;
-		Molecule molecule = new Molecule();
+		AtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+		Atom atom = null;
+		Bond bond = null;
+		Molecule molecule = atomContainer.getBuilder().newMolecule();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -72,7 +75,7 @@ public class ConnectivityChecker
 			atomContainer.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atomContainer.getAtomAt(f));
 		}
-		org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
+		Bond[] bonds = atomContainer.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
@@ -100,12 +103,12 @@ public class ConnectivityChecker
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
-	public static SetOfMolecules partitionIntoMolecules(org.openscience.cdk.interfaces.AtomContainer atomContainer) {
-		AtomContainer ac = new org.openscience.cdk.AtomContainer();
-		org.openscience.cdk.interfaces.Atom atom = null;
-		org.openscience.cdk.interfaces.ElectronContainer eContainer = null;
+	public static SetOfMolecules partitionIntoMolecules(AtomContainer atomContainer) {
+		AtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+		Atom atom = null;
+		ElectronContainer eContainer = null;
 		Molecule molecule = null;
-		SetOfMolecules molecules = new SetOfMolecules();
+		SetOfMolecules molecules = atomContainer.getBuilder().newSetOfMolecules();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -113,7 +116,7 @@ public class ConnectivityChecker
 			atom.setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atom);
 		}
-		org.openscience.cdk.interfaces.ElectronContainer[] eContainers = atomContainer.getElectronContainers();
+		ElectronContainer[] eContainers = atomContainer.getElectronContainers();
 		for (int f = 0; f < eContainers.length; f++){
 			eContainer = eContainers[f];
 			eContainer.setFlag(CDKConstants.VISITED, false);
@@ -121,7 +124,7 @@ public class ConnectivityChecker
 		}
 		while(ac.getAtomCount() > 0) {
 			atom = ac.getAtomAt(0);
-			molecule = new Molecule();
+			molecule = atomContainer.getBuilder().newMolecule();
 			sphere.removeAllElements();
 			sphere.addElement(atom);
 			atom.setFlag(CDKConstants.VISITED, true);
