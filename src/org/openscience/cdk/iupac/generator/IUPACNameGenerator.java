@@ -27,10 +27,10 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Vector;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Fragment;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;

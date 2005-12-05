@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.templates.MoleculeFactory;
