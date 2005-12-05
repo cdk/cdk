@@ -76,7 +76,7 @@ public class GENMDeterministicGenerator
 		numberOfSetFragment=0;
 		numberOfStructure=0;
 		System.out.println(mf);
-		MFAnalyser mfa = new MFAnalyser(mf);
+		MFAnalyser mfa = new MFAnalyser(mf, new AtomContainer());
 		molecularFormula=new int[12];
 		numberOfBasicUnit=new int[23];
 		numberOfBasicFragment=new int[34];

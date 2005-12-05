@@ -60,7 +60,7 @@ public class MFAnalyserTest extends CDKTestCase {
 	}
 
 	public void testAnalyseMF()	{
-		MFAnalyser mfa = new MFAnalyser("C10H16");
+		MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
 		AtomContainer ac = mfa.getAtomContainer();
 		MFAnalyser mfa2 = new MFAnalyser(ac);
 		String mf = mfa2.getMolecularFormula();
@@ -68,35 +68,41 @@ public class MFAnalyserTest extends CDKTestCase {
 	}
 	
     public void testGetAtomContainer() {
-        MFAnalyser mfa = new MFAnalyser("C10H16");
+        MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
         AtomContainer ac = mfa.getAtomContainer();
         assertEquals(26, ac.getAtomCount());        
     }
     
     public void testGetElementCount() {
-        MFAnalyser mfa = new MFAnalyser("C10H16");
+        MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
         assertEquals(2, mfa.getElementCount());        
-    
-        mfa = new MFAnalyser("CH3OH");
+    }
+        	
+    public void testGetElementCount2() {
+        MFAnalyser mfa = new MFAnalyser("CH3OH", new org.openscience.cdk.AtomContainer());
         assertEquals(3, mfa.getElementCount());        
     }
     
     public void testGetAtomCount_String() {
-        MFAnalyser mfa = new MFAnalyser("C10H16");
+        MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
         assertEquals(10, mfa.getAtomCount("C"));        
         assertEquals(16, mfa.getAtomCount("H"));        
+    }
     
-        mfa = new MFAnalyser("CH3OH");
+    public void testGetAtomCount_String2() {
+        MFAnalyser mfa = new MFAnalyser("CH3OH", new org.openscience.cdk.AtomContainer());
         assertEquals(1, mfa.getAtomCount("C"));        
         assertEquals(1, mfa.getAtomCount("O"));        
         assertEquals(4, mfa.getAtomCount("H"));        
     }
     
     public void testGetHeavyAtoms() {
-        MFAnalyser mfa = new MFAnalyser("C10H16");
+        MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
         assertEquals(10, mfa.getHeavyAtoms().size());        
+    }
     
-        mfa = new MFAnalyser("CH3OH");
+    public void testGetHeavyAtoms2() {
+        MFAnalyser mfa = new MFAnalyser("CH3OH", new org.openscience.cdk.AtomContainer());
         assertEquals(2, mfa.getHeavyAtoms().size());        
     }
     
@@ -158,7 +164,7 @@ public class MFAnalyserTest extends CDKTestCase {
     }
     
     public void testGetNaturalMass_ELement() throws Exception {
-        MFAnalyser mfa = new MFAnalyser("CH4");
+        MFAnalyser mfa = new MFAnalyser("CH4", new org.openscience.cdk.AtomContainer());
         assertEquals(1.0079760, mfa.getNaturalMass(new Element("H")), 0.1);
     }
     

@@ -78,10 +78,11 @@ public class MFAnalyser {
 	 * is built based on this analysis
 	 *
 	 * @param  MF  Description of the Parameter
+	 * @param target TODO
 	 */
-	public MFAnalyser(String MF) {
+	public MFAnalyser(String MF, AtomContainer target) {
 		this.MF = MF;
-		this.atomContainer = analyseMF(MF);
+		this.atomContainer = analyseMF(MF, target);
 	}
 
 
@@ -394,9 +395,10 @@ public class MFAnalyser {
 	 * Method that actually does the work of analysing the molecular formula
 	 *
 	 * @param  MF  Description of the Parameter
+	 * @param target TODO
 	 * @return     Description of the Return Value
 	 */
-	private AtomContainer analyseMF(String MF) {
+	private AtomContainer analyseMF(String MF, AtomContainer target) {
 		AtomContainer ac = new org.openscience.cdk.AtomContainer(); //FIXME: clean up API
 
 		char ThisChar;
