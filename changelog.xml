@@ -4,6 +4,10 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
 
   <release id="cvs">
+   <bugfix contributor="egonw">
+     Fixed reading of SDF files created by common software, as reported
+     by a coworker of Uli.
+   </bugfix>
    <addition contributor="egonw">
      Added a basic Mol2 writer that outputs atoms and bonds
    </addition>

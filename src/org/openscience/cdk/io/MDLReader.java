@@ -229,8 +229,10 @@ public class MDLReader extends DefaultChemObjectReader {
 			String data = line;
 			while ((line = input.readLine()) != null &&
 			       line.trim().length() > 0) {
-                if (line.equals("$$$$"))
-                	throw new CDKException("Expecting data line here, but found end of molecule!");
+                if (line.equals("$$$$")) {
+                	logger.error("Expecting data line here, but found end of molecule: ", line);
+                	break;
+                }
                 logger.debug("data line: ", line);
 			    data += line;
 			}
@@ -291,7 +293,7 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.info("Reading header");
             line = input.readLine(); linecount++;
             if (line == null) {
-                return molecule;
+                return null;
             }
             logger.debug("Line " + linecount + ": " + line);
 

@@ -106,7 +106,7 @@ public class SDFReaderTest extends CDKTestCase {
         }
     }
     
-    public void testSDF4File() {
+    public void testSDFFile4() {
         String filename = "data/mdl/test4.sdf"; // a multi molecule SDF file
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
