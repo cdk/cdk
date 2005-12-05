@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.RingSet;
 
 /**
  * @cdk.module standard
+ * @cdk.bug    1117775
  */
 public class RingSetManipulator {
     
@@ -48,7 +49,9 @@ public class RingSetManipulator {
 	 * @return an AtomContainer with all atoms and bonds from the RingSet
 	 */
 	public static AtomContainer getAllInOneContainer(RingSet ringSet) {
-		AtomContainer container = new org.openscience.cdk.AtomContainer();
+		// FIXME: make RingSet a subclass of ChemObject (see bug #) and clean up
+		// the code in the next line
+		AtomContainer container = ((Ring)ringSet.get(0)).getBuilder().newAtomContainer();
 		for (int i = 0; i < ringSet.size(); i++) {
 			container.add((Ring)ringSet.get(i));
 		}

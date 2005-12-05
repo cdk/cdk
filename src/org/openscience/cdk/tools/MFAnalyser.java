@@ -41,15 +41,15 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -273,12 +273,12 @@ public class MFAnalyser {
 		for (int i = 0;
 				i < count;
 				i++) {
-			final org.openscience.cdk.interfaces.Atom[] atoms = ac.getBondAt(i).getAtoms();
+			final Atom[] atoms = ac.getBondAt(i).getAtoms();
 			final int length = atoms.length;
 			for (int k = 0;
 					k < length;
 					k++) {
-				final org.openscience.cdk.interfaces.Atom atom = atoms[k];
+				final Atom atom = atoms[k];
 				if (atom.getSymbol().equals(H_ELEMENT_SYMBOL)) {
 					(h.contains(atom) ? multi_h : h).add(atom);
 				}
@@ -310,7 +310,7 @@ public class MFAnalyser {
 		// lists removed Hs.
 
 		// Clone atoms except those to be removed.
-		Molecule mol = new Molecule();
+		Molecule mol = ac.getBuilder().newMolecule();
 		int count = ac.getAtomCount();
 		for (int i = 0;
 				i < count;
@@ -334,8 +334,8 @@ public class MFAnalyser {
 				i < count;
 				i++) {
 			// Check bond.
-			final org.openscience.cdk.interfaces.Bond bond = ac.getBondAt(i);
-			org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
+			final Bond bond = ac.getBondAt(i);
+			Atom[] atoms = bond.getAtoms();
 			boolean remove_bond = false;
 			final int length = atoms.length;
 			for (int k = 0;
@@ -397,7 +397,7 @@ public class MFAnalyser {
 	 * @return     Description of the Return Value
 	 */
 	private AtomContainer analyseMF(String MF) {
-		AtomContainer ac = new org.openscience.cdk.AtomContainer();
+		AtomContainer ac = new org.openscience.cdk.AtomContainer(); //FIXME: clean up API
 
 		char ThisChar;
 		/*
