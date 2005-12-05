@@ -274,7 +274,7 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
      * @return        Return true, if the atomtypes are equal
      */
     public boolean compare(Object object) {
-        if (!(object instanceof AtomType)) {
+        if (!(object instanceof org.openscience.cdk.interfaces.AtomType)) {
             return false;
         }
         if (!super.compare(object)) {

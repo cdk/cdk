@@ -304,12 +304,12 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 			while (keys.hasMoreElements())
 			{
 				Object key = keys.nextElement();
-				if (key instanceof ChemObject)
+				if (key instanceof org.openscience.cdk.interfaces.ChemObject)
 				{
 					key = ((ChemObject) key).clone();
 				}
 				Object value = properties.get(key);
-				if (value instanceof ChemObject)
+				if (value instanceof org.openscience.cdk.interfaces.ChemObject)
 				{
 					value = ((ChemObject) value).clone();
 				}
@@ -331,7 +331,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 */
 	public boolean compare(Object object)
 	{
-		if (!(object instanceof ChemObject))
+		if (!(object instanceof org.openscience.cdk.interfaces.ChemObject))
 		{
 			return false;
 		}
