@@ -31,7 +31,9 @@ package org.openscience.cdk.test.tools;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.DeAromatizationTool;
 
@@ -52,6 +54,8 @@ public class DeAromatizationToolTest extends CDKTestCase {
 
 	public void testBezene() {
 		Ring benzene = new Ring(6, "C");
+		Bond[] bond = benzene.getBonds();
+		for (int i=0; i<bond.length; i++) bond[i].setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(benzene);
 		assertTrue(success);
 	}
@@ -59,13 +63,15 @@ public class DeAromatizationToolTest extends CDKTestCase {
 	public void testPyridine() {
 		Ring pyridine = new Ring(6, "C");
 		pyridine.getAtomAt(0).setSymbol("N");
+		Bond[] bond = pyridine.getBonds();
+		for (int i=0; i<bond.length; i++) bond[i].setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(pyridine);
 		assertTrue(success);
 	}
 	
 	public void test() {
-		Ring benzene = new Ring(4, "C");
-		boolean success = DeAromatizationTool.deAromatize(benzene);
+		Ring butadiene = new Ring(4, "C");
+		boolean success = DeAromatizationTool.deAromatize(butadiene);
 		assertFalse(success);
 	}
 	
