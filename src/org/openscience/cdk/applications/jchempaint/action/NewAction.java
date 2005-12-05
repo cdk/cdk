@@ -33,6 +33,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  * Opens a new empty JChemPaintFrame.
@@ -52,7 +53,7 @@ public class NewAction extends JCPAction {
       if(jcpPanel.isEmbedded()){
         int clear=jcpPanel.showWarning();
         if(clear==JOptionPane.YES_OPTION){
-          jcpPanel.setJChemPaintModel(null);
+          jcpPanel.setJChemPaintModel(new JChemPaintModel());
         }
       }else{
         JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
