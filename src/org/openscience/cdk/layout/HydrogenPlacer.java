@@ -32,9 +32,9 @@ import java.util.Vector;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -54,7 +54,7 @@ public class HydrogenPlacer {
 	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength){
 	    LoggingTool logger = new LoggingTool(this);
 	    logger.debug("Entering Hydrogen Placement...");
-	    org.openscience.cdk.interfaces.Atom atom = null; 
+	    Atom atom = null; 
 	    for (int f = 0; f < atomContainer.getAtomCount();f++)
 	    {
 	        atom = atomContainer.getAtomAt(f);
@@ -77,19 +77,19 @@ public class HydrogenPlacer {
 	
 	}
 	
-	public  void placeHydrogens2D(AtomContainer atomContainer, org.openscience.cdk.interfaces.Atom atom, double bondLength)
+	public  void placeHydrogens2D(AtomContainer atomContainer, Atom atom, double bondLength)
 	{
 		LoggingTool logger = new LoggingTool(this);
 		
 		double startAngle = 0.0;
 		double addAngle = 0.0; 
 		AtomPlacer atomPlacer = new AtomPlacer();
-		atomPlacer.setMolecule(atomContainer.getBuilder().newMolecule(atomContainer));
+		atomPlacer.setMolecule(atomContainer);
 		Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
-		org.openscience.cdk.interfaces.Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
-		AtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
-		AtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
+		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
+		AtomContainer placedAtoms = atomContainer.getBuilder().newAtomContainer();
+		AtomContainer unplacedAtoms = atomContainer.getBuilder().newAtomContainer();
 		
 		for (int f = 0; f < connectedAtoms.length; f++) {
 			if (connectedAtoms[f].getSymbol().equals("H") && connectedAtoms[f].getPoint2d()==null) {
