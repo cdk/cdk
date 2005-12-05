@@ -59,6 +59,16 @@
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-others.jar" includepattern="**/*"/>
 		<!-- the main jar file is packed from a list, but it must be packed as last file because it contains INDEX.LIST -->
 		<jar destfile="${dist}/jar/jchempaint-applet-core.jar" index="true">
+			<manifest>
+		                <section name="org/openscience/cdk/applications/jchempaint/">
+                		    <attribute name="Specification-Title" value="JChemPaint"/>
+		                    <attribute name="Specification-Version" value="1.0"/>
+		                    <attribute name="Specification-Vendor" value="The CDK Project"/>
+		                    <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                		    <attribute name="Implementation-Version" value="${jcp.version}"/>
+		                    <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                		</section>
+		        </manifest>
 			<fileset dir="${appjars.dir}">
 				<includesfile name="${metainf}/applet-core.files"/>
 				<exclude name="org/apache/log4j/**"/>

@@ -9,7 +9,7 @@
         <jar jarfile="${dist}/jar/jchempaint-${jcp.version}.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.openscience.cdk.applications.jchempaint.application.JChemPaint"/>
-                <section name="org.openscience.cdk">
+                <section name="org/openscience/cdk/">
                     <attribute name="Specification-Title" value="JChemPaint"/>
                     <attribute name="Specification-Version" value="2.2"/>
                     <attribute name="Specification-Vendor" value="The CDK Project"/>
@@ -50,7 +50,7 @@
         <jar jarfile="${dist}/jar/jchempaint-${jcp.version}.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.openscience.cdk.applications.jchempaint.application.JChemPaint"/>
-                <section name="org.openscience.cdk">
+                <section name="org/openscience/cdk/">
                     <attribute name="Specification-Title" value="JChemPaint"/>
                     <attribute name="Specification-Version" value="1.0"/>
                     <attribute name="Specification-Vendor" value="The CDK Project"/>
