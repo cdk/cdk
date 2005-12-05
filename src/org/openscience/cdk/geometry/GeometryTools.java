@@ -30,6 +30,7 @@
 package org.openscience.cdk.geometry;
 
 import java.awt.Dimension;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -42,7 +43,6 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.AtomEnumeration;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -327,7 +327,7 @@ public class GeometryTools {
 
 		double totalmass = 0.0;
 
-		AtomEnumeration atoms = (AtomEnumeration) ac.atoms();
+		Enumeration atoms = ac.atoms();
 		while (atoms.hasMoreElements()) {
 			Atom a = (Atom) atoms.nextElement();
 			double mass = a.getExactMass();
@@ -399,7 +399,7 @@ public class GeometryTools {
 
 		double totalmass = 0.0;
 
-		AtomEnumeration atoms = (AtomEnumeration) ac.atoms();
+		Enumeration atoms = ac.atoms();
 		while (atoms.hasMoreElements()) {
 			Atom a = (Atom) atoms.nextElement();
 			double mass = a.getExactMass();
