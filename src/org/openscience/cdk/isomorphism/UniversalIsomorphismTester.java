@@ -38,13 +38,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
@@ -329,59 +328,61 @@ public class UniversalIsomorphismTester {
    * @return                   a list of rMapList that represent the search solutions
    */
   public static List search(AtomContainer g1, AtomContainer g2, BitSet c1,
-      BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
-        
-    //Test for single atom cases
-    if(g2.getAtomCount() == 1) {
-	List arrayList = new ArrayList();
-        if (g2 instanceof QueryAtomContainer) {
-            QueryAtom atom = (QueryAtom)g2.getAtomAt(0);
-            for(int i=0;i<g1.getAtomCount();i++){
-                if(atom.matches(g1.getAtomAt(i)))
-                    arrayList.add(new RMap(i,0));
-            }
-  	} else {
-	    String atomSymbol = g2.getAtomAt(0).getSymbol();
-            for(int i=0;i<g1.getAtomCount();i++){
-                if(g1.getAtomAt(i).getSymbol().equals(atomSymbol))
-                    arrayList.add(new RMap(i,0));
-            }
-        }
-        return arrayList;
-    } else if (g1.getAtomCount() == 1) {
-	List arrayList = new ArrayList();
-        if (g2 instanceof QueryAtomContainer) {
-        	org.openscience.cdk.interfaces.Atom atom = g1.getAtomAt(0);
-            for(int i=0;i<g2.getAtomCount();i++){
-                if(((QueryAtom)g2.getAtomAt(i)).matches(atom))
-                    arrayList.add(new RMap(0,i));
-            }
-  	} else {
-	    String atomSymbol = g1.getAtomAt(0).getSymbol();
-            for(int i=0;i<g2.getAtomCount();i++){
-                if(g2.getAtomAt(i).getSymbol().equals(atomSymbol))
-                    arrayList.add(new RMap(0,i));
-            }
-        }
-        return arrayList;
-    }
-
-    // reset result
-    ArrayList rMapsList = new ArrayList();
-
-    // build the RGraph corresponding to this problem
-    RGraph rGraph = buildRGraph(g1, g2);
-    // parse the RGraph with the given constrains and options
-    rGraph.parse(c1, c2, findAllStructure, findAllMap);
-    List solutionList = rGraph.getSolutions();
-
-    // convertions of RGraph's internal solutions to G1/G2 mappings
-    for (Iterator i = solutionList.iterator(); i.hasNext(); ) {
-      BitSet set = (BitSet) i.next();
-      rMapsList.add(rGraph.bitSetToRMap(set));
-    }
-
-    return rMapsList;
+		  BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
+	  
+	  //Test for single atom cases
+	  if (g2.getAtomCount() == 1) {
+		  List arrayList = new ArrayList();
+		  Atom atom = g2.getAtomAt(0);
+		  
+		  if (atom instanceof QueryAtom) {
+			  QueryAtom qAtom = (QueryAtom)atom;
+			  for (int i=0; i<g1.getAtomCount(); i++){
+				  if(qAtom.matches(g1.getAtomAt(i)))
+					  arrayList.add(new RMap(i,0));
+			  }
+		  } else {
+			  String atomSymbol = atom.getSymbol();
+			  for(int i=0; i<g1.getAtomCount(); i++){
+				  if(g1.getAtomAt(i).getSymbol().equals(atomSymbol))
+					  arrayList.add(new RMap(i,0));
+			  }
+		  }
+		  return arrayList;
+	  } else if (g1.getAtomCount() == 1) {
+		  List arrayList = new ArrayList();
+		  
+		  Atom atom = g1.getAtomAt(0);
+		  for (int i=0; i<g2.getAtomCount(); i++) {
+		      Atom atom2 = g2.getAtomAt(i);
+		      if (atom2 instanceof QueryAtom) {
+		    	  QueryAtom qAtom = (QueryAtom)atom2;
+		    	  if (qAtom.matches(atom))
+		    		  arrayList.add(new RMap(0,i));
+		      } else {
+		    	  if(atom2.getSymbol().equals(atom.getSymbol()))
+					  arrayList.add(new RMap(0,i));
+		      }
+		  }
+		  return arrayList;
+	  }
+	  
+	  // reset result
+	  ArrayList rMapsList = new ArrayList();
+	  
+	  // build the RGraph corresponding to this problem
+	  RGraph rGraph = buildRGraph(g1, g2);
+	  // parse the RGraph with the given constrains and options
+	  rGraph.parse(c1, c2, findAllStructure, findAllMap);
+	  List solutionList = rGraph.getSolutions();
+	  
+	  // convertions of RGraph's internal solutions to G1/G2 mappings
+	  for (Iterator i = solutionList.iterator(); i.hasNext(); ) {
+		  BitSet set = (BitSet) i.next();
+		  rMapsList.add(rGraph.bitSetToRMap(set));
+	  }
+	  
+	  return rMapsList;
   }
   
   //////////////////////////////////////
@@ -396,15 +397,15 @@ public class UniversalIsomorphismTester {
    * @return           an AtomContainer
    */
   public static AtomContainer project(List rMapList, AtomContainer g, int id) {
-    AtomContainer ac = new org.openscience.cdk.AtomContainer();
+    AtomContainer ac = g.getBuilder().newAtomContainer();
 
-    org.openscience.cdk.interfaces.Bond[] bondList = g.getBonds();
+    Bond[] bondList = g.getBonds();
 
     Hashtable table = new Hashtable();
     Atom a1 = null;
     Atom a2 = null;
-    org.openscience.cdk.interfaces.Atom a = null;
-    org.openscience.cdk.interfaces.Bond bond = null;
+    Atom a = null;
+    Bond bond = null;
 
     for (Iterator i = rMapList.iterator(); i.hasNext(); ) {
       RMap rMap = (RMap) i.next();
@@ -431,7 +432,7 @@ public class UniversalIsomorphismTester {
         ac.addAtom(a2);
         table.put(a, a2);
       }
-      Bond newBond = new Bond(a1, a2, bond.getOrder());
+      Bond newBond = g.getBuilder().newBond(a1, a2, bond.getOrder());
       newBond.setFlag(
         CDKConstants.ISAROMATIC,
         bond.getFlag(CDKConstants.ISAROMATIC)
@@ -521,21 +522,21 @@ public class UniversalIsomorphismTester {
   public static List makeAtomsMapOfBondsMap(List l, AtomContainer g1, AtomContainer g2) {
     if(l==null)
       return(l);
-    org.openscience.cdk.interfaces.Bond[] bonds1 = g1.getBonds();
-    org.openscience.cdk.interfaces.Bond[] bonds2 = g2.getBonds();
+    Bond[] bonds1 = g1.getBonds();
+    Bond[] bonds2 = g2.getBonds();
     List result = new Vector();
     for (int i = 0; i < l.size(); i++) {
-    	org.openscience.cdk.interfaces.Bond bond1 = bonds1[((RMap) l.get(i)).getId1()];
-    	org.openscience.cdk.interfaces.Bond bond2 = bonds2[((RMap) l.get(i)).getId2()];
-      org.openscience.cdk.interfaces.Atom[] atom1 = bond1.getAtoms();
-      org.openscience.cdk.interfaces.Atom[] atom2 = bond2.getAtoms();
+    	Bond bond1 = bonds1[((RMap) l.get(i)).getId1()];
+    	Bond bond2 = bonds2[((RMap) l.get(i)).getId2()];
+      Atom[] atom1 = bond1.getAtoms();
+      Atom[] atom2 = bond2.getAtoms();
       for (int j = 0; j < 2; j++) {
-    	  org.openscience.cdk.interfaces.Bond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
+    	  Bond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
         for (int k = 0; k < bondsConnectedToAtom1j.length; k++) {
           if (bondsConnectedToAtom1j[k] != bond1) {
-        	  org.openscience.cdk.interfaces.Bond testBond = bondsConnectedToAtom1j[k];
+        	  Bond testBond = bondsConnectedToAtom1j[k];
             for (int m = 0; m < l.size(); m++) {
-            	org.openscience.cdk.interfaces.Bond testBond2 = null;
+            	Bond testBond2 = null;
               if (((RMap) l.get(m)).getId1() == g1.getBondNumber(testBond)) {
                 testBond2 = bonds2[((RMap) l.get(m)).getId2()];
                 for (int n = 0; n < 2; n++) {
@@ -582,20 +583,21 @@ public class UniversalIsomorphismTester {
   private static void nodeConstructor(RGraph gr, AtomContainer ac1, AtomContainer ac2)  throws CDKException{
     // resets the target graph.
     gr.clear();
-    org.openscience.cdk.interfaces.Bond[] bondsA1 = ac1.getBonds();
-    org.openscience.cdk.interfaces.Bond[] bondsA2 = ac2.getBonds();
+    Bond[] bondsA1 = ac1.getBonds();
+    Bond[] bondsA2 = ac2.getBonds();
     int k = 0;
 
     // compares each bond of G1 to each bond of G2
     for (int i = 0; i < bondsA1.length; i++) {
       for (int j = 0; j < bondsA2.length; j++) {
           if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
-            throw new CDKException("Timeout exceeded in getOverlaps");
-          if (ac2 instanceof QueryAtomContainer) {
-              QueryBond queryBond = (QueryBond)bondsA2[j];
-              QueryAtom atom1 = (QueryAtom)(bondsA2[j].getAtomAt(0));
-              QueryAtom atom2 = (QueryAtom)(bondsA2[j].getAtomAt(1));
-              org.openscience.cdk.interfaces.Bond bond = bondsA1[i];
+        	  throw new CDKException("Timeout exceeded in getOverlaps");
+          Bond bondA2 = bondsA2[j];
+          if (bondA2 instanceof QueryBond) {
+              QueryBond queryBond = (QueryBond)bondA2;
+              QueryAtom atom1 = (QueryAtom)(bondA2.getAtomAt(0));
+              QueryAtom atom2 = (QueryAtom)(bondA2.getAtomAt(1));
+              Bond bond = bondsA1[i];
               if (queryBond.matches(bond)) {
                   // ok, bonds match
                   if (atom1.matches(bond.getAtomAt(0)) && atom2.matches(bond.getAtomAt(1)) ||
@@ -658,13 +660,13 @@ public class UniversalIsomorphismTester {
       x.getForbidden().set(i);
     }
 
-    org.openscience.cdk.interfaces.Bond a1 = null;
-    org.openscience.cdk.interfaces.Bond a2 = null;
-    org.openscience.cdk.interfaces.Bond b1 = null;
-    org.openscience.cdk.interfaces.Bond b2 = null;
+    Bond a1 = null;
+    Bond a2 = null;
+    Bond b1 = null;
+    Bond b2 = null;
 
-    org.openscience.cdk.interfaces.Bond[] bondsA1 = ac1.getBonds();
-    org.openscience.cdk.interfaces.Bond[] bondsA2 = ac2.getBonds();
+    Bond[] bondsA1 = ac1.getBonds();
+    Bond[] bondsA2 = ac2.getBonds();
 
     gr.setFirstGraphSize(ac1.getBondCount());
     gr.setSecondGraphSize(ac2.getBondCount());
@@ -685,7 +687,7 @@ public class UniversalIsomorphismTester {
         b1 = bondsA1[((RNode) gr.getGraph().get(j)).getRMap().getId1()];
         b2 = bondsA2[((RNode) gr.getGraph().get(j)).getRMap().getId2()];
 
-        if (ac2 instanceof QueryAtomContainer) {
+        if (a1 instanceof QueryBond) {
             if (a1.equals(b1) || a2.equals(b2) ||
                 !queryAdjacency(a1, b1, a2, b2)) {
                 x.getForbidden().set(j);
@@ -717,7 +719,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static boolean hasCommonAtom(org.openscience.cdk.interfaces.Bond a, org.openscience.cdk.interfaces.Bond b) {
+  private static boolean hasCommonAtom(Bond a, Bond b) {
       
     if (a.contains(b.getAtomAt(0))) {
       return true;
@@ -736,7 +738,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static String getCommonSymbol(org.openscience.cdk.interfaces.Bond a, org.openscience.cdk.interfaces.Bond b) {
+  private static String getCommonSymbol(Bond a, Bond b) {
     String symbol = "";
     
     if (a.contains(b.getAtomAt(0))) {
@@ -756,10 +758,10 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static boolean queryAdjacency(org.openscience.cdk.interfaces.Bond a1, org.openscience.cdk.interfaces.Bond b1, org.openscience.cdk.interfaces.Bond a2, org.openscience.cdk.interfaces.Bond b2) {
+  private static boolean queryAdjacency(Bond a1, Bond b1, Bond a2, Bond b2) {
       
-	  org.openscience.cdk.interfaces.Atom atom1 = null;
-	  org.openscience.cdk.interfaces.Atom atom2 = null;
+	  Atom atom1 = null;
+	  Atom atom2 = null;
       
       if (a1.contains(b1.getAtomAt(0))) {
           atom1 = b1.getAtomAt(0);
