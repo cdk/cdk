@@ -133,7 +133,7 @@ public class AtomPlacer
 	 *      Atoms
 	 *@param  sharedAtomsCenter   The 2D centre of the placed Atoms
 	 */
-	public void distributePartners(org.openscience.cdk.interfaces.Atom atom, AtomContainer placedNeighbours, Point2d sharedAtomsCenter,
+	public void distributePartners(Atom atom, AtomContainer placedNeighbours, Point2d sharedAtomsCenter,
 			AtomContainer unplacedNeighbours, double bondLength)
 	{
 		double occupiedAngle = 0;
@@ -374,7 +374,7 @@ public class AtomPlacer
 	 *@return                  A vector pointing to the location of the next atom
 	 *      to draw
 	 */
-	public Vector2d getNextBondVector(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom previousAtom, Point2d distanceMeasure, boolean trans)
+	public Vector2d getNextBondVector(Atom atom, Atom previousAtom, Point2d distanceMeasure, boolean trans)
 	{
     if (logger.isDebugEnabled())
     {
@@ -486,7 +486,7 @@ public class AtomPlacer
 	 *@param  unplacedPartners  A vector for the unplaced bonding partners to go in
 	 *@param  placedPartners    A vector for the placed bonding partners to go in
 	 */
-	public void partitionPartners(org.openscience.cdk.interfaces.Atom atom, AtomContainer unplacedPartners, AtomContainer placedPartners)
+	public void partitionPartners(Atom atom, AtomContainer unplacedPartners, AtomContainer placedPartners)
 	{
 		Atom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
@@ -572,17 +572,17 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public AtomContainer getLongestUnplacedChain(Molecule molecule, org.openscience.cdk.interfaces.Atom startAtom) throws org.openscience.cdk.exception.CDKException
+	public AtomContainer getLongestUnplacedChain(Molecule molecule, Atom startAtom) throws org.openscience.cdk.exception.CDKException
 	{
 		logger.debug("Start of getLongestUnplacedChain.");
 		//ConnectivityChecker cc = new ConnectivityChecker();
 		int longest = 0;
 		int longestPathLength = 0;
-		AtomContainer[] pathes = new org.openscience.cdk.AtomContainer[molecule.getAtomCount()];
+		AtomContainer[] pathes = new AtomContainer[molecule.getAtomCount()];
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			molecule.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
-			pathes[f] = new org.openscience.cdk.AtomContainer();
+			pathes[f] = molecule.getBuilder().newAtomContainer();
 			pathes[f].addAtom(startAtom);
 
 		}
@@ -622,7 +622,7 @@ public class AtomPlacer
 	public  void breadthFirstSearch(AtomContainer ac, Vector sphere, AtomContainer[] pathes) throws org.openscience.cdk.exception.CDKException
 	{
 		Atom atom = null;
-		org.openscience.cdk.interfaces.Atom nextAtom = null;
+		Atom nextAtom = null;
 		int atomNr;
 		int nextAtomNr;
 		AtomContainer path = null;
@@ -646,7 +646,7 @@ public class AtomPlacer
 					{
 						nextAtomNr = ac.getAtomNumber(nextAtom);
 						logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-						pathes[nextAtomNr] = new org.openscience.cdk.AtomContainer(pathes[atomNr]);
+						pathes[nextAtomNr] = ac.getBuilder().newAtomContainer(pathes[atomNr]);
 						logger.debug("Making copy of path " + (atomNr + 1) + " to form new path " + (nextAtomNr + 1));
 						logger.debug("Old path " + (atomNr + 1) + " looks like: " + listNumbers(molecule, pathes[atomNr]));
 						logger.debug("Copied path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
@@ -802,7 +802,7 @@ public class AtomPlacer
 	 */
 	public AtomContainer getPlacedAtoms(AtomContainer ac)
 	{
-		AtomContainer ret = new org.openscience.cdk.AtomContainer();
+		AtomContainer ret = ac.getBuilder().newAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			if (ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED))
@@ -867,7 +867,7 @@ public class AtomPlacer
 		return tempMorganMatrix;
 	}
 	
-	public boolean shouldBeLinear(org.openscience.cdk.interfaces.Atom atom, AtomContainer molecule)
+	public boolean shouldBeLinear(Atom atom, AtomContainer molecule)
 	{
 		int sum = 0;
 		Bond[] bonds = molecule.getConnectedBonds(atom);
