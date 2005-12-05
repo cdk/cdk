@@ -84,7 +84,7 @@ public class HydrogenPlacer {
 		double startAngle = 0.0;
 		double addAngle = 0.0; 
 		AtomPlacer atomPlacer = new AtomPlacer();
-		atomPlacer.setMolecule((Molecule)atomContainer);
+		atomPlacer.setMolecule(atomContainer.getBuilder().newMolecule(atomContainer));
 		Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
 		org.openscience.cdk.interfaces.Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
