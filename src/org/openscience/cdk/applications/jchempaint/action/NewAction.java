@@ -32,8 +32,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
-import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 
 /**
  * Opens a new empty JChemPaintFrame.
@@ -53,7 +53,11 @@ public class NewAction extends JCPAction {
       if(jcpPanel.isEmbedded()){
         int clear=jcpPanel.showWarning();
         if(clear==JOptionPane.YES_OPTION){
-          jcpPanel.setJChemPaintModel(new JChemPaintModel());
+        	if(jcpPanel.getJChemPaintModel().getChemModel().getSetOfMolecules()!=null)
+        		jcpPanel.getJChemPaintModel().getChemModel().getSetOfMolecules().removeAllAtomContainers();
+        	if(jcpPanel.getJChemPaintModel().getChemModel().getSetOfReactions()!=null)
+        		jcpPanel.getJChemPaintModel().getChemModel().getSetOfReactions().removeAllReactions();
+        	jcpPanel.repaint();
         }
       }else{
         JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();

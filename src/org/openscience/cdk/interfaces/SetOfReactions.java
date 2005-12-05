@@ -62,5 +62,6 @@ public interface SetOfReactions extends ChemObject {
 	 * @return     The number of Reactions in this Container
 	 */
 	public int getReactionCount();
+	public void removeAllReactions();
 
 }
