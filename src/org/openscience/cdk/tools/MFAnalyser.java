@@ -394,13 +394,11 @@ public class MFAnalyser {
 	/**
 	 * Method that actually does the work of analysing the molecular formula
 	 *
-	 * @param  MF  Description of the Parameter
-	 * @param target TODO
-	 * @return     Description of the Return Value
+	 * @param  MF  molecular formula to create an AtomContainer from
+	 * @param  ac  AtomContainer in which the Atom's and Bond's will be stored 
+	 * @return     the filled AtomContainer
 	 */
-	private AtomContainer analyseMF(String MF, AtomContainer target) {
-		AtomContainer ac = new org.openscience.cdk.AtomContainer(); //FIXME: clean up API
-
+	private AtomContainer analyseMF(String MF, AtomContainer ac) {
 		char ThisChar;
 		/*
 		 *  Buffer for
@@ -449,7 +447,7 @@ public class MFAnalyser {
 					RecentElementCount = 1;
 				}
 				for (int g = 0; g < RecentElementCount; g++) {
-					ac.addAtom(new org.openscience.cdk.Atom(RecentElementSymbol));
+					ac.addAtom(ac.getBuilder().newAtom(RecentElementSymbol));
 				}
 			}
 		}

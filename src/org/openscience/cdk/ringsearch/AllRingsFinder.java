@@ -34,6 +34,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -84,7 +85,7 @@ public class AllRingsFinder
 	public RingSet findAllRings(AtomContainer atomContainer) throws CDKException
 	{
 		startTime = System.currentTimeMillis();
-		SpanningTree spanningTree = new SpanningTree((org.openscience.cdk.AtomContainer) atomContainer.clone());
+		SpanningTree spanningTree = new SpanningTree((AtomContainer) atomContainer.clone());
 		spanningTree.identifyBonds();
 		if (spanningTree.getBondsCyclicCount() < 37)
 		{
@@ -124,7 +125,7 @@ public class AllRingsFinder
 		}
 		if (useSSSR)
 		{
-			SSSRFinder sssrf = new SSSRFinder((org.openscience.cdk.AtomContainer)atomContainer);
+			SSSRFinder sssrf = new SSSRFinder(atomContainer);
 			RingSet sssr = sssrf.findSSSR();
 			Vector ringSets = RingPartitioner.partitionRings(sssr);
 
@@ -154,7 +155,7 @@ public class AllRingsFinder
 	 */
 	private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws CDKException
 	{
-		org.openscience.cdk.interfaces.Atom atom = null;
+		Atom atom = null;
 		/*
 		 *  First we convert the molecular graph into a a path graph by
 		 *  creating a set of two membered pathes from all the bonds in the molecule
@@ -221,7 +222,7 @@ public class AllRingsFinder
 	 *@param  rings             The ringset to be extended
 	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
 	 */
-	private void remove(org.openscience.cdk.interfaces.Atom atom, AtomContainer ac, Vector pathes, RingSet rings) throws CDKException
+	private void remove(Atom atom, AtomContainer ac, Vector pathes, RingSet rings) throws CDKException
 	{
 		Path path1 = null;
 		Path path2 = null;
@@ -300,7 +301,7 @@ public class AllRingsFinder
 	{
 		Path path = null;
 		Ring ring = null;
-		org.openscience.cdk.interfaces.Bond bond = null;
+		Bond bond = null;
 		for (int f = 0; f < pathes.size(); f++)
 		{
 			path = (Path) pathes.elementAt(f);
@@ -316,7 +317,7 @@ public class AllRingsFinder
 				{
 					ring.addAtom((Atom) path.elementAt(g));
 				}
-				org.openscience.cdk.interfaces.Bond[] bonds = ac.getBonds();
+				Bond[] bonds = ac.getBonds();
 				for (int g = 0; g < bonds.length; g++)
 				{
 					bond = bonds[g];
@@ -340,9 +341,9 @@ public class AllRingsFinder
 	 */
 	private void initPathGraph(AtomContainer ac, Vector pathes)
 	{
-		org.openscience.cdk.interfaces.Bond bond = null;
+		Bond bond = null;
 		Path path = null;
-		org.openscience.cdk.interfaces.Bond[] bonds = ac.getBonds();
+		Bond[] bonds = ac.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
@@ -363,13 +364,13 @@ public class AllRingsFinder
 	 *@param  ac  The AtomContainer to search
 	 *@return     The selected Atom
 	 */
-	private org.openscience.cdk.interfaces.Atom selectAtom(AtomContainer ac)
+	private Atom selectAtom(AtomContainer ac)
 	{
 		int minDegree = 999;
 		// :-)
 		int degree = minDegree;
-		org.openscience.cdk.interfaces.Atom minAtom = null;
-		org.openscience.cdk.interfaces.Atom atom = null;
+		Atom minAtom = null;
+		Atom atom = null;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtomAt(f);

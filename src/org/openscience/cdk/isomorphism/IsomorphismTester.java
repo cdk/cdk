@@ -26,7 +26,7 @@ package org.openscience.cdk.isomorphism;
 
 import java.util.Arrays;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 

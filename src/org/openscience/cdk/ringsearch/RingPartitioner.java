@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.RingSet;
  *  RingSet are considered connected.
  *
  * @cdk.module standard
+ * @cdk.bug    1117775
  */
 public class RingPartitioner {
     
@@ -61,16 +62,16 @@ public class RingPartitioner {
     public static Vector partitionRings(RingSet ringSet) {
         Vector ringSets = new Vector();
         if (ringSet.size() == 0) return ringSets;
-        Ring ring;
         RingSet tempRingSet = null;
-        //RingSet rs = (RingSet)ringSet.clone();
-        RingSet rs = new org.openscience.cdk.RingSet();
+        Ring ring = (Ring)ringSet.get(0);
+        if (ring == null) return ringSets;
+        RingSet rs = ring.getBuilder().newRingSet();
         for (int f = 0; f < ringSet.size(); f++) {
             rs.add(ringSet.get(f));
         }
         do {
             ring = (Ring) rs.get(0);
-            RingSet newRs = new org.openscience.cdk.RingSet();
+            RingSet newRs = ring.getBuilder().newRingSet();
             newRs.add(ring);
             tempRingSet = walkRingSystem(rs, ring, newRs);
             if (debug) {
@@ -91,9 +92,11 @@ public class RingPartitioner {
      *@return          The AtomContainer containing the bonds and atoms of the ringSet.
      */
     public static AtomContainer convertToAtomContainer(RingSet ringSet) {
-        AtomContainer ac = new org.openscience.cdk.AtomContainer();
+    	Ring ring = (Ring) ringSet.get(0);
+    	if (ring == null) return null;
+        AtomContainer ac = ring.getBuilder().newAtomContainer();
         for (int i = 0; i < ringSet.size(); i++) {
-            Ring ring = (Ring) ringSet.get(i);
+            ring = (Ring) ringSet.get(i);
             for (int r = 0; r < ring.getBondCount(); r++) {
             	org.openscience.cdk.interfaces.Bond bond = ring.getBondAt(r);
                 if (!ac.contains(bond)) {
