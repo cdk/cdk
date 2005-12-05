@@ -153,7 +153,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	   AllRingsFinder acually stops for the given examples. 
 	   And it does, after a very long time. 
 	   So, the test is commented our because of its long runtime */
-	public void testBug777488()
+	public void saTestBug777488()
 	{
 	        //String filename = "data/Bug646.cml";
                 String filename = "data/cml/testBug777488-1-AllRingsFinder.cml";
@@ -180,7 +180,6 @@ public class AllRingsFinderTest extends CDKTestCase
 		    fail(e.toString());
 		}
 	}
-
 	
 	private void display(Molecule molecule)
 	{	
@@ -209,7 +208,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
 		arft.setStandAlone(true);
 		//arft.testAllRingsFinder();
-		arft.testBug777488();
+		arft.saTestBug777488();
 		//arft.testBigMoleculeWithIsolatedRings();
 	}	
 }
