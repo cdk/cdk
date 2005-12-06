@@ -65,7 +65,7 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
         return new TestSuite(MM2AtomTypeMatcherTest.class);
     }
     
-    public void xtestMMFF94AtomTypeMatcher() {
+    public void testMMFF94AtomTypeMatcher() {
     	MM2AtomTypeMatcher matcher = new MM2AtomTypeMatcher();
 	    assertNotNull(matcher);
     }
@@ -102,6 +102,7 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
         	AtomType matched = null;
         	try {
         		matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
+        		logger.debug("Found AtomType: ", matched);
         	} catch (Exception exception) {
         		logger.error("Could not percieve atom type: " + exception.getMessage());
         		logger.debug(exception);
