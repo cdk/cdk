@@ -60,33 +60,43 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
         return new TestSuite(MM2AtomTypeMatcherTest.class);
     }
     
-    public void testMMFF94AtomTypeMatcher() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void xtestMMFF94AtomTypeMatcher() {
     	MM2AtomTypeMatcher matcher = new MM2AtomTypeMatcher();
 	    assertNotNull(matcher);
-	    
     }
     
-    public void testFindMatchingAtomType_AtomContainer_Atom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-    	//System.out.println("**** START MM2 ATOMTYPE TEST ******");
+    public void testFindMatchingAtomType_AtomContainer_Atom() {
+    	System.out.println("**** START MM2 ATOMTYPE TEST ******");
     	AtomTypeTools att=new AtomTypeTools();
     	Molecule mol=null;
     	MM2AtomTypeMatcher atm= new MM2AtomTypeMatcher();
         BufferedReader fin =null;
         InputStream ins=null;
+        System.out.println("**** reading MOL file ******");
 		try{
 			ins = this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
 			fin = new BufferedReader(new InputStreamReader(ins));
-			//fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
 			MDLReader mdl=new MDLReader(fin);
 			mol=(Molecule)mdl.read(new Molecule());
-		}catch (Exception exc1){
-			System.out.println("Problems loading file due to "+exc1.toString());
+		} catch (Exception exc1){
+			fail("Problems loading file due to "+exc1.getMessage());
 		}
-		//System.out.println("Molecule load:"+mol.getAtomCount());
-        att.assignAtomTypePropertiesToAtom(mol);
+		assertTrue(mol.getAtomCount() > 0);
+		System.out.println("Molecule load:"+mol.getAtomCount());
+		try {
+			att.assignAtomTypePropertiesToAtom(mol);
+		} catch (Exception exception) {
+			fail("Could not atom type properties: " + exception.getMessage());
+		}
         for (int i=0;i<mol.getAtomCount();i++){
-        	//System.out.print("atomNr:"+i);
-        	AtomType matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
+        	System.out.print("atomNr:"+i);
+        	AtomType matched = null;
+        	try {
+        		matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
+        	} catch (Exception exception) {
+        		fail("Could not percieve atom type: " + exception.getMessage());
+        	}
+        	assertNotNull(matched);
         	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
         }
         
