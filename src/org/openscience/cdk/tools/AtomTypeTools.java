@@ -76,10 +76,10 @@ public class AtomTypeTools {
 
 		//System.out.println("assignAtomTypePropertiesToAtom Start ...");
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
-		Atom atom = null;
 		String hoseCode = "";
 		org.openscience.cdk.interfaces.RingSet ringSetA = null;
 		RingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
+		logger.debug(ringSetMolecule);
 		
 		try {
 			HueckelAromaticityDetector.detectAromaticity(molecule);
@@ -89,11 +89,12 @@ public class AtomTypeTools {
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
+			// FIXME: remove casting
 			org.openscience.cdk.Atom atom2 = (org.openscience.cdk.Atom)molecule.getAtomAt(i);
 			//Atom aromatic is set by HueckelAromaticityDetector
 			//Atom in ring?
-			if (ringSetMolecule.contains(atom)) {
-				ringSetA = ringSetMolecule.getRings(atom);
+			if (ringSetMolecule.contains((org.openscience.cdk.interfaces.Atom)atom2)) {
+				ringSetA = ringSetMolecule.getRings(atom2);
 				RingSetManipulator.sort(ringSetA);
 				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);
 				atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(sring.getRingSize()));
@@ -130,6 +131,8 @@ public class AtomTypeTools {
 	 *@return     chemicalRingConstant
 	 */
 	private int ringSystemClassifier(Ring ring, String smile) {
+		
+		logger.debug("Comparing ring systems: SMILES=", smile);
 		
 		if (smile.equals("c1ccnc1"))return 4;
 		else if (smile.equals("c1ccoc1"))return 6;
