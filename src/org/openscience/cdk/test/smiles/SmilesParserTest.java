@@ -511,6 +511,16 @@ public class SmilesParserTest extends CDKTestCase {
 		}
 	}
 
+	public void testReadingOfOneCharElements() {
+		try {
+			String smiles = "[K]";
+			Molecule mol = sp.parseSmiles(smiles);
+			assertEquals(1, mol.getAtomCount());
+			assertEquals("K", mol.getAtomAt(0).getSymbol());
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+	}
 
 	/**
 	 *  A unit test for JUnit
