@@ -116,12 +116,16 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
                         atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
                     } else if ("sp3".equals(currentChars)) {
                         atomType.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
+                    } else {
+                    	logger.warn("Unrecognized hybridization in config file: ", currentChars);
                     }
                 } else if (scalarType == SCALAR_DA){
                     if ("A".equals(currentChars)) {
                         atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
                     } else if ("D".equals(currentChars)){
                         atomType.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, true);
+                    } else {
+                    	logger.warn("Unrecognized H-bond donor/acceptor pattern in config file: ", currentChars);
                     }
                 } else if (scalarType == SCALAR_SPHERICALMATCHER){	
                     atomType.setProperty(CDKConstants.SPHERICAL_MATCHER, currentChars);
