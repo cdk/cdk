@@ -68,6 +68,13 @@ public class SetOfReactionsTest extends CDKTestCase {
 		reactionSet.addReaction(new Reaction()); // 4
         assertEquals(4, reactionSet.getReactionCount());
     }
+    
+    public void testRemoveAllReactions(){
+  		SetOfReactions reactionSet = new SetOfReactions();
+   		reactionSet.addReaction(new Reaction());
+   		reactionSet.removeAllReactions();
+   		assertEquals(0,reactionSet.getReactions().length);
+    }
 
     public void testGetReactions() {
 		SetOfReactions reactionSet = new SetOfReactions();
