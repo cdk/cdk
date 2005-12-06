@@ -107,7 +107,11 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 		logger.debug("****** Configure MM2 AtomType via findMatching ******");
 		String atomSphericalMatcher = (String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
 		int atomChemicalGroupConstant = ((Integer)atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue();
-		int atomRingSize = ((Integer)atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue();
+		int atomRingSize = 0; // not all atom types have ring sizes define; 0 is default 
+	    Object oRingSize = atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE);
+	    if (oRingSize != null) {
+	    	atomRingSize = ((Integer)oRingSize).intValue();
+	    }
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atomSphericalMatcher + " ");
 					
 		if (atom instanceof PseudoAtom) {
