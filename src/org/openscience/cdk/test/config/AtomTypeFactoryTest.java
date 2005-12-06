@@ -215,4 +215,50 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		
         assertEquals("C", atom.getSymbol());
 	}
+    
+    /**
+     * Test reading from a XML config file with content like:
+     * <pre>
+     *   <atomType id="C">
+     *    <!-- for example in CC-->
+     *    <atom elementType="C" formalCharge="0">
+     *      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
+     *      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
+     *      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+     *      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
+     *    </atom>
+     *    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+     *    <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
+     *    <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">[CSP]-[0-4][-]?+;[A-Za-z\+\-&amp;&amp;[^=%]]{0,6}[(].*+</scalar>
+     *  </atomType>
+     * </pre>
+     *
+     */
+    public void testGetAtomTypeFromMM2() {
+    	AtomTypeFactory factory = null;
+		try {
+            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml", 
+                new ChemObject().getBuilder());
+
+    		AtomType atomType = factory.getAtomType("C");
+            assertNotNull(atomType);
+            assertEquals("C", atomType.getSymbol());
+            assertEquals("C", atomType.getAtomTypeName());
+            assertEquals("[CSP]-[0-4][-]?+;[A-Za-z\\+\\-&&[^=%]]{0,6}[(].*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
+            assertEquals(CDKConstants.HYBRIDIZATION_SP3, atomType.getHybridization());
+            
+            atomType = factory.getAtomType("Sthi");
+            assertNotNull(atomType);
+            assertEquals("S", atomType.getSymbol());
+            assertEquals("Sthi", atomType.getAtomTypeName());
+            assertEquals("S-[2];[H]{0,3}+=C.*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
+            assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
+            assertTrue(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+            assertEquals(new Integer(5), atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
+            		
+		} catch(Exception exc) {
+			fail("Problem getting AtomType from AtomTypeFactory: "  +  exc.getMessage());
+		}    
+    }
+    
 }
