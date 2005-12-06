@@ -164,6 +164,8 @@ public class AtomTypeFactory {
      *  <li>org/openscience/cdk/config/data/mol2_atomtypes.xml
      *  <li>org/openscience/cdk/config/data/structgen_atomtypes.xml
      *  <li>org/openscience/cdk/config/data/valency_atomtypes.xml
+     *  <li>org/openscience/cdk/config/data/mm2_atomtypes.xml
+     *  <li>org/openscience/cdk/config/data/mmff94_atomtypes.xml
      * </ul>
      *
      * @param  configFile             String the name of the data file
