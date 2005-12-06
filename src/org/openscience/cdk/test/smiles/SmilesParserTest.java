@@ -38,6 +38,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -50,24 +51,25 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.module     test
  *@cdk.created    2003-09-19
  */
-public class SmilesParserTest extends CDKTestCase
-{
+public class SmilesParserTest extends CDKTestCase {
+	
+	private LoggingTool logger;
 	boolean standAlone = false;
-
 	private SmilesParser sp;
-
 
 	/**
 	 *  Constructor for the SmilesParserTest object
 	 *
 	 *@param  name  Description of the Parameter
 	 */
-	public SmilesParserTest(String name)
-	{
+	public SmilesParserTest(String name) {
 		super(name);
-		sp = new SmilesParser();
 	}
 
+	public void setUp() {
+		sp = new SmilesParser();
+		logger = new LoggingTool(this);
+	}
 
 	/**
 	 *  A unit test suite for JUnit
@@ -246,7 +248,7 @@ public class SmilesParserTest extends CDKTestCase
 	/**
 	 *  Test for SF #1296113 "SmilesParser does not finish in reasonable time"
 	 */
-	public void testSFBug1296113()
+	public void xtestSFBug1296113()
 	{
 		try
 		{
@@ -1242,6 +1244,26 @@ public class SmilesParserTest extends CDKTestCase
 		}
 	}
 
+	/**
+	 * @cdk.bug 1306780
+	 */
+	public void testParseK() {
+		SmilesParser p = new SmilesParser();
+		try {
+			Molecule mol = p.parseSmiles("C=CCC(=NOS(=O)(=O)[O-])SC1OC(CO)C(O)C(O)C1(O).[Na+]");
+			assertNotNull(mol);
+			assertEquals(23, mol.getAtomCount());
+			mol = p.parseSmiles("C=CCC(=NOS(=O)(=O)[O-])SC1OC(CO)C(O)C(O)C1(O).[K]");
+			assertNotNull(mol);
+			assertEquals(23, mol.getAtomCount());
+			mol = p.parseSmiles("C=CCC(=NOS(=O)(=O)[O-])SC1OC(CO)C(O)C(O)C1(O).[K+]");
+			assertNotNull(mol);
+			assertEquals(23, mol.getAtomCount());
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
 
 	/**
 	 *  The main program for the SmilesParserTest class
@@ -1255,7 +1277,7 @@ public class SmilesParserTest extends CDKTestCase
 		logger.info("Running the SmilesParserTest tests...");
 		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
 		spt.setStandAlone(true);
-		spt.testSFBug1296113();
+		spt.xtestSFBug1296113();
 	}
 }
 
