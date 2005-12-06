@@ -54,7 +54,24 @@
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_openscience_cdk_applications.jar" includepattern="org/openscience/cdk/applications/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_openscience_cdk.jar" includepattern="org/openscience/cdk/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_openscience.jar" includepattern="org/openscience/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_3pq.jar" includepattern="org/_3pq/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_apache.jar" includepattern="org/apache/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_omegahat.jar" includepattern="org/omegahat/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_w3c.jar" includepattern="org/w3c/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_xmlcml.jar" includepattern="org/xmlcml/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_xml.jar" includepattern="org/xml/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org.jar" includepattern="org/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-com_ozten.jar" includepattern="com/ozten/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-gnu_xml.jar" includepattern="gnu/xml/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-Jama.jar" includepattern="Jama/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-jas.jar" includepattern="jas/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-javax_help.jar" includepattern="javax/help/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-javax_media.jar" includepattern="javax/media/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-javax_vecmath.jar" includepattern="javax/vecmath/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-javax_xml.jar" includepattern="javax/xml/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-jumbo.jar" includepattern="jumbo/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-nu.jar" includepattern="nu/**"/>
+		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-uk.jar" includepattern="uk/**"/>
 		<!-- the following jar contains all other classes and resources -->
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-others.jar" includepattern="**/*"/>
 		<!-- the main jar file is packed from a list, but it must be packed as last file because it contains INDEX.LIST -->
