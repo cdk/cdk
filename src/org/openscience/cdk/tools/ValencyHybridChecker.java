@@ -33,8 +33,10 @@ import java.io.IOException;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -53,13 +55,39 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.keyword  atom, valency
  */
-public class ValencyHybridChecker extends ValencyChecker {
+public class ValencyHybridChecker implements ValencyCheckerInterface {
+
+	private String atomTypeList = null;
+	protected AtomTypeFactory structgenATF;
+	protected LoggingTool logger;
 
 	public ValencyHybridChecker() throws IOException, ClassNotFoundException {
-        super("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
+        this("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
 	}
 
-    /**
+	public ValencyHybridChecker(String atomTypeList) throws IOException, ClassNotFoundException {
+		this.atomTypeList = atomTypeList;
+		logger = new LoggingTool(this);
+        logger.info("Using configuration file: ", atomTypeList);
+	}
+
+	/**
+     * Determines of all atoms on the AtomContainer are saturated.
+     */
+	public boolean isSaturated(org.openscience.cdk.interfaces.AtomContainer container) throws CDKException {
+        return allSaturated(container);
+    }
+	public boolean allSaturated(org.openscience.cdk.interfaces.AtomContainer ac) throws CDKException {
+        logger.debug("Are all atoms saturated?");
+        for (int f = 0; f < ac.getAtomCount(); f++) {
+            if (!isSaturated(ac.getAtomAt(f), ac)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+	/**
      * Determines if the atom can be of type AtomType. That is, it sees if this
      * AtomType only differs in bond orders, or implicit hydrogen count.
      */
@@ -190,5 +218,26 @@ public class ValencyHybridChecker extends ValencyChecker {
         throw new CDKException("The atom with element " + atom.getSymbol() +
                                " and charge " + charge + " is not found.");
     }
+
+	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.AtomContainer container) throws CDKException {
+        return this.calculateNumberOfImplicitHydrogens(atom, 
+            container.getBondOrderSum(atom),
+            container.getMaximumBondOrder(atom),
+            container.getConnectedAtoms(atom).length
+        );
+    }
+
+    protected AtomTypeFactory getAtomTypeFactory(ChemObjectBuilder builder) throws CDKException {
+        if (structgenATF == null) {
+            try {
+                structgenATF = AtomTypeFactory.getInstance(atomTypeList, builder);
+            } catch (Exception exception) {
+                logger.debug(exception);
+                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
+            }
+        }
+        return structgenATF;
+    }
+
 }
 
