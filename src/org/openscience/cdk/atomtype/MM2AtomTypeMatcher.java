@@ -80,8 +80,11 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 	/**
 	 * Assign the mm2 atom type to a given atom.
 	 * Before this method can be called the following has to be done:
-	 * atomContainer=(AtomContainer)atomTypeTools.assignAtomTypePropertiesToAtom(new Molecule(atomContainer));
-	 *
+	 * <pre>
+	 * atomContainer = (AtomContainer)atomTypeTools.assignAtomTypePropertiesToAtom(
+	 *   new Molecule(atomContainer)
+	 * );
+	 * </pre>
 	 * 
 	 * @param  atomContainer   AtomContainer
 	 * @param  atom            the target atom
@@ -90,19 +93,18 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 	 */
 	public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atomInterface) throws CDKException {
         if (factory == null) {
-		try {
-			factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
-                atomContainer.getBuilder());
-		} catch (Exception ex1) {
-            logger.error(ex1.getMessage());
-			logger.debug(ex1);
-                throw new CDKException("Could not instantiate the AtomType list!", ex1);
-		}
+        	try {
+        		factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
+        				atomContainer.getBuilder());
+        	} catch (Exception ex1) {
+        		logger.error("Could not instantiate the AtomType list!", ex1.getMessage());
+        		logger.debug(ex1);
+        		throw new CDKException("Could not instantiate the AtomType list!", ex1);
+        	}
         }
 
 		org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atomInterface;
-		//System.out.println("****** Configure MM2 AtomType via findMatching ******");
-		//System.out.print(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
+		logger.debug("****** Configure MM2 AtomType via findMatching ******");
 		String atomSphericalMatcher = (String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
 		int atomChemicalGroupConstant = ((Integer)atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue();
 		int atomRingSize = ((Integer)atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue();
@@ -118,7 +120,7 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 		Matcher mat1=null;
 		double tmpMaxBondOrder = 0;
 		maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-		//System.out.println("Atom maxBond"+maxBondOrder+" ChemicalGroupConstant"+atom.getChemicalGroupConstant());
+		logger.debug("Atom maxBond"+maxBondOrder+" ChemicalGroupConstant "+atomChemicalGroupConstant);
 		for (int j = 0; j < atomTypeIds.length; j++){
 			tmpMaxBondOrder = factory.getAtomType(atomTypeIds[j]).getMaxBondOrder();
 			logger.debug(j + "ATOM TYPE "+ tmpMaxBondOrder + " " +getSphericalMatcher(atomTypeIds[j]));
@@ -269,18 +271,17 @@ public class MM2AtomTypeMatcher implements AtomTypeMatcher {
 					}
 				} 
 				atomTypeFlag = true;
-				//System.out.println(" MATCH AtomTypeID:"+j+ " " + ID);
 				logger.debug(" MATCH AtomTypeID:"+j+ " " + ID);
 				break;
 			}//IF
 		}//for end
 		if (atomTypeFlag) {
 			atomTypeFlag = false;
-			//System.out.println("ID in factory true:"+ID);
+			logger.debug("ID in factory true:"+ID);
 			return factory.getAtomType(ID);
 		} else {
-			//System.out.println("NoSuchAtomTypeException: Atom is unkown with Symbol:" + atom.getSymbol() + " does not MATCH AtomType. HoseCode:" + atom.getSphericalMatcher());
-			//System.out.println("ID in factory false:"+ID);
+			logger.debug("NoSuchAtomTypeException: Atom is unkown with Symbol:" + atom.getSymbol() + " does not MATCH AtomType. HoseCode:" + atomSphericalMatcher);
+			logger.debug("ID in factory false:"+ID);
 			return factory.getAtomType("DU");
 		}
 	}
