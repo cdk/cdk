@@ -40,6 +40,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.AtomTypeTools;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -51,11 +52,15 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
 
-    public MMFF94AtomTypeMatcherTest(String name) {
+	private LoggingTool logger;
+
+	public MMFF94AtomTypeMatcherTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	logger = new LoggingTool(this);
+    }
 
     public static Test suite() {
         return new TestSuite(MMFF94AtomTypeMatcherTest.class);
@@ -83,18 +88,18 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
 			MDLReader mdl=new MDLReader(fin);
 			mol=(Molecule)mdl.read(new Molecule());
 		}catch (Exception exc1){
-			System.out.println("Problems loading file due to "+exc1.toString());
+			fail("Problems loading file due to "+exc1.toString());
 		}
        
         att.assignAtomTypePropertiesToAtom(mol);
         for (int i=0;i<mol.getAtomCount();i++){
-        	System.out.print("atomNr:" + mol.getAtomAt(i).toString());
+        	logger.debug("atomNr:" + mol.getAtomAt(i).toString());
         	AtomType matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
         	assertNotNull(matched);
         	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
         }
         
-        System.out.println("MMFF94 Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
+        logger.debug("MMFF94 Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
         //System.out.println("Atom 0:"+mol.getAtomAt(256).getAtomTypeName());
         
         assertEquals("Sthi",mol.getAtomAt(0).getAtomTypeName());
