@@ -33,6 +33,7 @@ import java.io.IOException;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
@@ -72,6 +73,152 @@ public class ValencyHybridChecker implements ValencyCheckerInterface {
 	}
 
 	/**
+	 * Saturates a molecule by setting appropriate bond orders.
+	 *
+	 * @cdk.keyword            bond order, calculation
+     *
+     * @cdk.created 2003-10-03
+	 */
+    public void saturate(AtomContainer atomContainer) throws CDKException {
+        logger.info("Saturating atomContainer by adjusting bond orders...");
+        boolean allSaturated = allSaturated(atomContainer);
+        if (!allSaturated) {
+            logger.info("Saturating bond orders is needed...");
+            boolean succeeded = saturate(atomContainer.getBonds(), atomContainer);
+            if (!succeeded) {
+                throw new CDKException("Could not saturate this atomContainer!");
+            }
+        }
+    }
+
+    /**
+     * Saturates a set of Bonds in an AtomContainer.
+     */
+    public boolean saturate(org.openscience.cdk.interfaces.Bond[] bonds, AtomContainer atomContainer) throws CDKException {
+        logger.debug("Saturating bond set of size: ", bonds.length);
+        boolean bondsAreFullySaturated = false;
+        if (bonds.length > 0) {
+        	org.openscience.cdk.interfaces.Bond bond = bonds[0];
+
+            // determine bonds left
+            int leftBondCount = bonds.length-1;
+            Bond[] leftBonds = new Bond[leftBondCount];
+            System.arraycopy(bonds, 1, leftBonds, 0, leftBondCount);
+
+            // examine this bond
+            logger.debug("Examining this bond: ", bond);
+            if (isSaturated(bond, atomContainer)) {
+                logger.debug("OK, bond is saturated, now try to saturate remaining bonds (if needed)");
+                bondsAreFullySaturated = saturate(leftBonds, atomContainer);
+            } else if (isUnsaturated(bond, atomContainer)) {
+                logger.debug("Ok, this bond is unsaturated, and can be saturated");
+                // two options now: 
+                // 1. saturate this one directly
+                // 2. saturate this one by saturating the rest
+                logger.debug("Option 1: Saturating this bond directly, then trying to saturate rest");
+                // considering organic bonds, the max order is 3, so increase twice
+                double increment = 1.0;
+                boolean bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer, increment);
+                bondsAreFullySaturated = bondOrderIncreased && saturate(bonds, atomContainer);
+                if (bondsAreFullySaturated) {
+                    logger.debug("Option 1: worked");
+                } else {
+                    logger.debug("Option 1: failed. Trying option 2.");
+                    logger.debug("Option 2: Saturing this bond by saturating the rest");
+                    // revert the increase (if succeeded), then saturate the rest
+                    if (bondOrderIncreased) unsaturateByDecreasingBondOrder(bond, increment);
+                    bondsAreFullySaturated = saturate(leftBonds, atomContainer) &&
+                                             isSaturated(bond, atomContainer);
+                    if (!bondsAreFullySaturated) logger.debug("Option 2: failed");
+                }
+            } else {
+                logger.debug("Ok, this bond is unsaturated, but cannot be saturated");
+                // try recursing and see if that fixes things
+                bondsAreFullySaturated = saturate(leftBonds, atomContainer) &&
+                                         isSaturated(bond, atomContainer);
+            }
+        } else {
+            bondsAreFullySaturated = true; // empty is saturated by default
+        }
+        return bondsAreFullySaturated;
+    }
+
+    public boolean unsaturateByDecreasingBondOrder(org.openscience.cdk.interfaces.Bond bond, double decrement) {
+        if (bond.getOrder() > decrement) {
+            bond.setOrder(bond.getOrder() - decrement);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Returns wether a bond is unsaturated. A bond is unsaturated if 
+     * <b>all</b> Atoms in the bond are unsaturated.
+     */
+    public boolean isUnsaturated(org.openscience.cdk.interfaces.Bond bond, AtomContainer atomContainer) throws CDKException {
+        logger.debug("isBondUnsaturated?: ", bond);
+        org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
+        boolean isUnsaturated = true;
+        for (int i=0; i<atoms.length && isUnsaturated; i++) {
+            isUnsaturated = isUnsaturated && !isSaturated(atoms[i], atomContainer);
+        }
+        logger.debug("Bond is unsaturated?: ", isUnsaturated);
+        return isUnsaturated;
+    }
+
+    /**
+     * Tries to saturate a bond by increasing its bond orders by 1.0.
+     *
+     * @return true if the bond could be increased
+     */
+    public boolean saturateByIncreasingBondOrder(org.openscience.cdk.interfaces.Bond bond, AtomContainer atomContainer, double increment) throws CDKException {
+    	org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
+    	org.openscience.cdk.interfaces.Atom atom = atoms[0];
+    	org.openscience.cdk.interfaces.Atom partner = atoms[1];
+        logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
+        org.openscience.cdk.interfaces.AtomType[] atomTypes1 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(atom.getSymbol());
+        org.openscience.cdk.interfaces.AtomType[] atomTypes2 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(partner.getSymbol());
+        for (int atCounter1=0; atCounter1<atomTypes1.length; atCounter1++) {
+            org.openscience.cdk.interfaces.AtomType aType1 = atomTypes1[atCounter1];
+            logger.debug("  condidering atom type: ", aType1);
+            if (couldMatchAtomType(atomContainer, atom, aType1)) {
+                logger.debug("  trying atom type: ", aType1);
+                for (int atCounter2=0; atCounter2<atomTypes2.length; atCounter2++) {
+                    org.openscience.cdk.interfaces.AtomType aType2 = atomTypes2[atCounter2];
+                    logger.debug("  condidering partner type: ", aType1);
+                    if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
+                        logger.debug("    with atom type: ", aType2);
+                        if (bond.getOrder() < aType2.getMaxBondOrder() && 
+                        bond.getOrder() < aType1.getMaxBondOrder()) {
+                            bond.setOrder(bond.getOrder() + increment);
+                            logger.debug("Bond order now ", bond.getOrder());
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns wether a bond is saturated. A bond is saturated if 
+     * <b>both</b> Atoms in the bond are saturated.
+     */
+    public boolean isSaturated(org.openscience.cdk.interfaces.Bond bond, org.openscience.cdk.interfaces.AtomContainer atomContainer) throws CDKException {
+        logger.debug("isBondSaturated?: ", bond);
+        org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
+        boolean isSaturated = true;
+        for (int i=0; i<atoms.length; i++) {
+            logger.debug("isSaturated(Bond, AC): atom I=", i);
+            isSaturated = isSaturated && isSaturated(atoms[i], atomContainer);
+        }
+        logger.debug("isSaturated(Bond, AC): result=", isSaturated);
+        return isSaturated;
+    }
+
+    /**
      * Determines of all atoms on the AtomContainer are saturated.
      */
 	public boolean isSaturated(org.openscience.cdk.interfaces.AtomContainer container) throws CDKException {
@@ -237,6 +384,15 @@ public class ValencyHybridChecker implements ValencyCheckerInterface {
             }
         }
         return structgenATF;
+    }
+
+    /**
+     * Determines if the atom can be of type AtomType.
+     */
+    public boolean couldMatchAtomType(org.openscience.cdk.interfaces.AtomContainer container, org.openscience.cdk.interfaces.Atom atom, AtomType type) {
+        double bondOrderSum = container.getBondOrderSum(atom);
+        double maxBondOrder = container.getMaximumBondOrder(atom);
+        return couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type);
     }
 
 }
