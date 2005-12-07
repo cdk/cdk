@@ -50,7 +50,13 @@ public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
         listenerList.removeElement(listener);
     }
 
+    /**
+     * @deprecated
+     */
     public boolean accepts(ChemObject object) {
+        return accepts(object.getClass());
+    }
+    public boolean accepts(Class objectClass) {
         // leave it up the write(ChemObject) to decide by default
         return true;
     }

@@ -50,6 +50,14 @@
      The AtomTypeFactory and IsotopeFactory now require a ChemObjectBuilder
      to be passed
    </apiChange>
+   <apiChange contributor="egonw">
+     The constructor MFAnalyser(String) now requires a second parameter being
+     an AtomContainer
+   </apiChange>
+   <apiChange contributor="egonw" implements="1261434">
+     The ChemObjectIO interfaces deprecates accepts(ChemObject) in favor of
+     the new accepts(Class)
+   </apiChange>
   </release>
   
   <release id="20050826">

@@ -58,8 +58,15 @@ public interface ChemObjectIO {
 
     /**
      * Returns whether the given ChemObject can be read or not.
+     * 
+     * @deprecated Use accepts(Class) instead.
      */
     public boolean accepts(ChemObject object);
+    
+    /**
+     * Returns whether the given ChemObject can be read or not.
+     */
+    public boolean accepts(Class classObject);
     
     /**
      * Closes the Reader's resources.
