@@ -353,16 +353,21 @@ public class PeriodicTablePanel extends JPanel
 	private JButton createButton(String elementS)
 	{
 		PeriodicTableElement element = factory.configure(new PeriodicTableElement(elementS));
-		String colorF = "000000";
+//		 String colorF = "000000";
+		Color colorF = new Color(0,0,0);
 		String colorPh = element.getPhase();
 		if(colorPh.equals("Solid"))
-			colorF = "000000"; 
+//			colorF = "000000"; 
+			colorF = new Color(0,0,0);
 		else if(colorPh.equals("Gas"))
-			colorF = "CC0033"; 
+//			colorF = "CC0033"; 
+			colorF = new Color(200,0,0);
 		else if(colorPh.equals("Liquid"))
-			colorF = "3300CC"; 
+//			colorF = "3300CC"; 
+			colorF = new Color(0,0,200);
 		else if(colorPh.equals("Synthetic"))
-			colorF = "FFCC00";
+//			colorF = "FFCC00";
+			colorF = new Color(235,208,6);
 		
 		Color colorB = null;
 		String serie = element.getChemicalSerie();
@@ -530,11 +535,14 @@ public class PeriodicTablePanel extends JPanel
 		 *@param  e        Description of the Parameter
 		 */
 		public ElementButton(
-			PeriodicTableElement element, ElementButtonAction e, String color)
+			PeriodicTableElement element, ElementButtonAction e, Color color)
 		{
-			super("<html><p><u><FONT SIZE=-2>"+element.getAtomicNumber()+
-				"</FONT></u></p><p><font COLOR="+color+">"
-				+element.getSymbol()+"<font></p></html>");
+			/* too long time loading */
+//			super("<html><p><u><FONT SIZE=-2>"+element.getAtomicNumber()+
+//				"</FONT></u></p><p><font COLOR="+color+">"
+//				+element.getSymbol()+"<font></p></html>");
+			super(element.getSymbol());
+			setForeground(color);
 			
 			this.element = element;
 			setFont(new Font("Times-Roman",Font.BOLD, 15));
