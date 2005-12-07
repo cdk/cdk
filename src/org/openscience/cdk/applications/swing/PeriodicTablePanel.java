@@ -101,11 +101,11 @@ public class PeriodicTablePanel extends JPanel
 			logger.debug(ex1);
 		}
 		layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(611, 515));
+		layeredPane.setPreferredSize(new Dimension(611, 575));
 		layeredPane.setBorder(BorderFactory.createTitledBorder(
                                     "Periodic Table for CDK"));
 		JPanel tp = PTPanel();
-		tp.setBounds(8,85,600, 420);
+		tp.setBounds(8,85,600, 480);
 		
 		JButton button = new JButton("Reload");
 		button.setVerticalTextPosition(AbstractButton.BOTTOM);
@@ -132,7 +132,7 @@ public class PeriodicTablePanel extends JPanel
 		panel.setLayout(new GridLayout(0, 18));
 		
 		//--------------------------------
-		JButton butt = new JButton("<html><p></p><p>IA</p></html>");
+		JButton butt = new JButton("IA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		//--------------------------------
@@ -141,36 +141,36 @@ public class PeriodicTablePanel extends JPanel
 			Box.createHorizontalGlue();
 			panel.add(Box.createHorizontalGlue());
 		}
-		butt = new JButton("<html><p></p><p>VIIIA</p></html>");
+		butt = new JButton("VIIIA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		
 		panel.add(createButton("H"));
 		
-		butt = new JButton("<html><p></p><p>IIA</p></html>");
+		butt = new JButton("IIA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		for (int i = 0; i < 10; i++)
 		{
 			panel.add(Box.createHorizontalGlue());
 		}
-		butt = new JButton("<html><p></p><p>IIIA</p></html>");
+		butt = new JButton("IIIA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		
-		butt = new JButton("<html><p></p><p>VIA</p></html>");
+		butt = new JButton("VIA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		
-		butt = new JButton("<html><p></p><p>VA</p></html>");
+		butt = new JButton("VA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		
-		butt = new JButton("<html><p></p><p>VIA</p></html>");
+		butt = new JButton("VIA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		
-		butt = new JButton("<html><p></p><p>VIIA</p></html>");
+		butt = new JButton("VIIA");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		//
@@ -196,34 +196,34 @@ public class PeriodicTablePanel extends JPanel
 		panel.add(createButton("Na"));
 		panel.add(createButton("Mg"));
 		
-		butt = new JButton("<html><p></p><p>IIIB</p></html>");
+		butt = new JButton("IIIB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>IVB</p></html>");
+		butt = new JButton("IVB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>VB</p></html>");
+		butt = new JButton("VB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>VIB</p></html>");
+		butt = new JButton("VIB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>VIIB</p></html>");
+		butt = new JButton("VIIB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>--</p></html>");
+		butt = new JButton("--");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>VIIIB</p></html>");
+		butt = new JButton("VIIIB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>--</p></html>");
+		butt = new JButton("--");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>IB</p></html>");
+		butt = new JButton("IB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
-		butt = new JButton("<html><p></p><p>IIB</p></html>");
+		butt = new JButton("IIB");
 		butt.setBorder(new EmptyBorder(2,2,2,2));
 		panel.add(butt);
 		//no metall
