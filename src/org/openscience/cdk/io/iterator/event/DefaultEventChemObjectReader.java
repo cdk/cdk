@@ -58,6 +58,9 @@ public abstract class DefaultEventChemObjectReader implements EventChemObjectRea
     }
 
     public boolean accepts(ChemObject object) {
+    	return accepts(object.getClass());
+    }
+    public boolean accepts(Class objectClass) {
         // leave it up the read(ChemObject) to decide by default
         return true;
     }
