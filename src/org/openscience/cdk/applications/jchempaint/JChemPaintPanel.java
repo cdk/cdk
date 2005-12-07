@@ -512,7 +512,7 @@ public abstract class JChemPaintPanel
 		String error = null;
 		ChemFile chemFile = null;
 		ChemModel chemModel = null;
-		if (cor.accepts(new ChemFile())) {
+		if (cor.accepts(ChemFile.class)) {
 			// try to read a ChemFile
 			try {
 				chemFile = (ChemFile) cor.read((ChemObject) new ChemFile());
@@ -532,7 +532,7 @@ public abstract class JChemPaintPanel
 			JOptionPane.showMessageDialog(this, error);
 			return;
 		}
-		if (cor.accepts(new ChemModel())) {
+		if (cor.accepts(ChemModel.class)) {
 			// try to read a ChemModel
 			try {
 				chemModel = (ChemModel) cor.read((ChemObject) new ChemModel());

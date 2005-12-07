@@ -71,7 +71,7 @@ public class SDFSubstructureFinder {
 	    File input = new File(ifilename);
 	    if (!input.isDirectory()) {
 		ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
-		if (reader.accepts(new Molecule())) {
+		if (reader.accepts(Molecule.class)) {
 		   substructure = (Molecule)reader.read(new Molecule());
 		}
 	    }

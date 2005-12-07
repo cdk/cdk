@@ -82,7 +82,7 @@ public class SubstructureFinder {
                     File input = new File(ifilename);
                     if (!input.isDirectory()) {
                         ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
-                        if (reader.accepts(new Molecule())) {
+                        if (reader.accepts(Molecule.class)) {
                             Molecule molecule = (Molecule)reader.read(new Molecule());
                             if (molecule != null) {
                                 boolean matches = UniversalIsomorphismTester.isSubgraph(molecule, substructure);

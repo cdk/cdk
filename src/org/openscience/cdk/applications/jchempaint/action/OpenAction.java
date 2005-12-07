@@ -149,7 +149,7 @@ public class OpenAction extends JCPAction {
 			ChemModel chemModel = null;
 			if(cor instanceof CMLReader)
 				((CMLReader)cor).setAromaticOrder(1);
-			if (cor.accepts(new org.openscience.cdk.ChemFile())) {
+			if (cor.accepts(ChemFile.class)) {
 				// try to read a ChemFile
 				try {
 					chemFile = (ChemFile) cor.read((ChemObject) new org.openscience.cdk.ChemFile());
@@ -179,7 +179,7 @@ public class OpenAction extends JCPAction {
 				JOptionPane.showMessageDialog(jcpPanel, error);
 				return;
 			}
-			if (cor.accepts(new ChemModel())) {
+			if (cor.accepts(ChemModel.class)) {
 				// try to read a ChemModel
 				try {
 					chemModel = (ChemModel) cor.read((ChemObject) new ChemModel());

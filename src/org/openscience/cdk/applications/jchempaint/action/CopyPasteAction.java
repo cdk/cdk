@@ -109,9 +109,9 @@ public class CopyPasteAction extends JCPAction{
 	        	}
     			AtomContainer topaste = null;
         		if (reader != null) {
-        			if (reader.accepts(new Molecule())) { 
+        			if (reader.accepts(Molecule.class)) { 
         				topaste = (AtomContainer) reader.read(new Molecule());
-        			} else if (reader.accepts(new ChemFile())) {
+        			} else if (reader.accepts(ChemFile.class)) {
         				topaste = ChemFileManipulator.getAllInOneContainer(
         						(ChemFile)reader.read(new ChemFile())
         				);
