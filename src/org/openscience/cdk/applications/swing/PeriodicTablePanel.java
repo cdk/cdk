@@ -65,7 +65,6 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class PeriodicTablePanel extends JPanel
 {
-	
 	Vector listeners = null;
 	PeriodicTableElement selectedElement = null;
 	
@@ -75,6 +74,17 @@ public class PeriodicTablePanel extends JPanel
 	
 	private ElementPTFactory factory;
 	private LoggingTool logger;
+	
+	public static int APPLICATION = 0;
+	/*default*/
+	public static int JCP = 1;
+	/* 
+	 * set if the button should be written with html - which takes 
+	 * too long time for loading
+	 * APPLICATION = with html
+	 * JCP = default
+	 */ 	
+	private int controlViewerButton;
 	
 	/**
 	*  Constructor of the PeriodicTablePanel object
@@ -112,9 +122,11 @@ public class PeriodicTablePanel extends JPanel
 		layeredPane.add(panel, new Integer(1));
 		add(layeredPane);
 	}
-
+	
 	private JPanel PTPanel()
 	{
+
+		controlViewerButton = PeriodicTablePanel.JCP;
 		JPanel panel = new JPanel();
 		listeners = new Vector();
 		panel.setLayout(new GridLayout(0, 18));
@@ -353,21 +365,25 @@ public class PeriodicTablePanel extends JPanel
 	private JButton createButton(String elementS)
 	{
 		PeriodicTableElement element = factory.configure(new PeriodicTableElement(elementS));
-//		 String colorF = "000000";
+		String colorFS = "000000";
 		Color colorF = new Color(0,0,0);
 		String colorPh = element.getPhase();
-		if(colorPh.equals("Solid"))
-//			colorF = "000000"; 
+		if(colorPh.equals("Solid")){
+			colorFS = "000000"; 
 			colorF = new Color(0,0,0);
-		else if(colorPh.equals("Gas"))
-//			colorF = "CC0033"; 
+		}
+		else if(colorPh.equals("Gas")){
+			colorFS = "CC0033"; 
 			colorF = new Color(200,0,0);
-		else if(colorPh.equals("Liquid"))
-//			colorF = "3300CC"; 
+		}
+		else if(colorPh.equals("Liquid")){
+			colorFS = "3300CC"; 
 			colorF = new Color(0,0,200);
-		else if(colorPh.equals("Synthetic"))
-//			colorF = "FFCC00";
+		}
+		else if(colorPh.equals("Synthetic")){
+			colorFS = "FFCC00";
 			colorF = new Color(235,208,6);
+		}
 		
 		Color colorB = null;
 		String serie = element.getChemicalSerie();
@@ -392,7 +408,7 @@ public class PeriodicTablePanel extends JPanel
 		else if(serie.equals("Actinides"))
 			colorB = new Color(255,255,200);
 		
-		JButton button = new ElementButton(element, new ElementButtonAction(), colorF);
+		JButton button = new ElementButton(element, new ElementButtonAction(), getTextButton(element,colorFS), colorF);
 		button.setBackground(colorB);
 		
 		return button;
@@ -455,6 +471,22 @@ public class PeriodicTablePanel extends JPanel
 		}
 	}
 
+	/**
+	 * get the format which the text will be introduce into the button
+	 * 
+	 * @param element The PeriodicTableElement
+	 * @return the String to show
+	 */
+	public String getTextButton(PeriodicTableElement element, String color){
+		String buttonString = null;
+		switch (controlViewerButton) {
+			case 0: buttonString ="<html><p><u><FONT SIZE=-2>"+element.getAtomicNumber()+"</FONT></u></p><p><font COLOR="+color+">"
+			+element.getSymbol()+"<font></p></html>";break;
+			case 1: buttonString = element.getSymbol();break;
+			default: buttonString = element.getSymbol();break;
+		}
+		return buttonString;
+	}
 
 
 	/**
@@ -526,23 +558,21 @@ public class PeriodicTablePanel extends JPanel
 			super("H");
 			this.element = factory.configure(element);
 		}
-
-
 		/**
 		 *  Constructor for the ElementButton object
-		 *
-		 *@param  element  Description of the Parameter
-		 *@param  e        Description of the Parameter
+		 * 
+		 * @param element Description of the Parameter
+		 * @param e       Description of the Parameter
+		 * @param color   Description of the Parameter
+		 * @param controlViewer Description of the Parameter
 		 */
 		public ElementButton(
-			PeriodicTableElement element, ElementButtonAction e, Color color)
+				PeriodicTableElement element, ElementButtonAction e,String buttonString, Color color)
 		{
-			/* too long time loading */
-//			super("<html><p><u><FONT SIZE=-2>"+element.getAtomicNumber()+
-//				"</FONT></u></p><p><font COLOR="+color+">"
-//				+element.getSymbol()+"<font></p></html>");
-			super(element.getSymbol());
-			setForeground(color);
+			super(buttonString);
+			if(controlViewerButton == JCP){
+				setForeground(color);
+			}
 			
 			this.element = element;
 			setFont(new Font("Times-Roman",Font.BOLD, 15));
@@ -550,8 +580,6 @@ public class PeriodicTablePanel extends JPanel
 			setToolTipText(element.getName());
 			addActionListener(e);
 		}
-
-
 		/**
 		 *  Gets the element attribute of the ElementButton object
 		 *
@@ -575,48 +603,50 @@ public class PeriodicTablePanel extends JPanel
 		Color color = new Color(255,255,255);
 		Point origin = new Point(90, 20);   	
 		JLabel label;
-		if(element != null)
-		{
-			label = new JLabel("<html><PRE>   <FONT SIZE=+2>"
-				+element.getSymbol()+"</FONT>"
-				+":   At.No "+element.getAtomicNumber()
-				+", Group "+element.getGroup()+", Period "
-				+ element.getPeriod()+"</PRE></html>");
-			pan.add(label,BorderLayout.NORTH);
-			
-			label = new JLabel("<html><PRE><FONT SIZE=-2>"
-				+" CAS id: "+element.getCASid()+"<br>"
-				+" Name: "+element.getName()+"<br>"
-				+" Serie: "+element.getChemicalSerie()+"<br>"
-				+" State: "+element.getPhase()+"<br>"
-				+" Appar: XXXX<br>"
-				+" Mp: 0.0000<br>"
-				+" Bp: 0.0000<br>"
-				+" Conduc: 0.0000<br>"
-				+" Densit: 0.0000<br>"
-				+" VaporH: 0.0000<br>"
-				+" XXXX: 0.0000<br>"
-				+" XXXX: 0.0000<br>"
-				+"</FONT></PRE></html>");
-			label.setMinimumSize(new Dimension(145,150));
-			pan.add(label,BorderLayout.WEST);
-			
-			label = new JLabel("<html><PRE><FONT SIZE=-2>"
-				+" At. Weight: 0.000000<br>"
-				+" At. Radius: 0.0000<br>"
-				+" Cov Radius: 0.0000<br>"
-				+" VW Radius: 0.0000<br>"
-				+" Io Radius: 0.0000<br>"
-				+" e config: 1s1<br>"
-				+" Valency e: 1s1<br>"
-				+" Electro: 0.0<br>"
-				+" Oxid: 1<br>"
-				+" IP: 0.0000<br>"
-				+" Crist: XXXXXX<br>"
-				+" XXXX: 0.0000<br>"
-				+"</FONT></PRE></html>");
-			label.setMinimumSize(new Dimension(145,150));
-			pan.add(label,BorderLayout.EAST);
+		if(element != null){
+			if(controlViewerButton == PeriodicTablePanel.APPLICATION)
+			{
+				label = new JLabel("<html><PRE>   <FONT SIZE=+2>"
+					+element.getSymbol()+"</FONT>"
+					+":   At.No "+element.getAtomicNumber()
+					+", Group "+element.getGroup()+", Period "
+					+ element.getPeriod()+"</PRE></html>");
+				pan.add(label,BorderLayout.NORTH);
+				
+				label = new JLabel("<html><PRE><FONT SIZE=-2>"
+					+" CAS id: "+element.getCASid()+"<br>"
+					+" Name: "+element.getName()+"<br>"
+					+" Serie: "+element.getChemicalSerie()+"<br>"
+					+" State: "+element.getPhase()+"<br>"
+					+" Appar: XXXX<br>"
+					+" Mp: 0.0000<br>"
+					+" Bp: 0.0000<br>"
+					+" Conduc: 0.0000<br>"
+					+" Densit: 0.0000<br>"
+					+" VaporH: 0.0000<br>"
+					+" XXXX: 0.0000<br>"
+					+" XXXX: 0.0000<br>"
+					+"</FONT></PRE></html>");
+				label.setMinimumSize(new Dimension(145,150));
+				pan.add(label,BorderLayout.WEST);
+				
+				label = new JLabel("<html><PRE><FONT SIZE=-2>"
+					+" At. Weight: 0.000000<br>"
+					+" At. Radius: 0.0000<br>"
+					+" Cov Radius: 0.0000<br>"
+					+" VW Radius: 0.0000<br>"
+					+" Io Radius: 0.0000<br>"
+					+" e config: 1s1<br>"
+					+" Valency e: 1s1<br>"
+					+" Electro: 0.0<br>"
+					+" Oxid: 1<br>"
+					+" IP: 0.0000<br>"
+					+" Crist: XXXXXX<br>"
+					+" XXXX: 0.0000<br>"
+					+"</FONT></PRE></html>");
+				label.setMinimumSize(new Dimension(145,150));
+				pan.add(label,BorderLayout.EAST);
+			}
 		}
 		else
 		{
@@ -645,6 +675,14 @@ public class PeriodicTablePanel extends JPanel
 		pan.setBorder(BorderFactory.createLineBorder(Color.black));
 		pan.setBounds(origin.x, origin.y, 295, 210);
 		return pan;
+	}
+	/**
+	 * set the form to do a button {html or normal)
+	 * 
+	 * @param controlViewer
+	 */
+	public void setControlViewer(int controlViewer){
+		this.controlViewerButton = controlViewer;
 	}
 }
 
