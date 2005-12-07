@@ -41,6 +41,7 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
+import org.openscience.cdk.applications.jchempaint.action.ElementAction;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -67,8 +68,11 @@ public class ToolBarMaker
 		{
 			logger = new LoggingTool(ToolBarMaker.class);
 		}
-
-		return (JToolBar)createToolbar(SwingConstants.HORIZONTAL, "toolbar", jcpp, lines);
+		
+		JToolBar maintoolbar=(JToolBar)createToolbar(SwingConstants.HORIZONTAL, "toolbar", jcpp, lines, false);
+		JToolBar elementtoolbar=(JToolBar)createToolbar(SwingConstants.HORIZONTAL, "elementtoolbar", jcpp, lines*2, true);
+		maintoolbar.add(elementtoolbar);
+		return maintoolbar;
 	}
 
 
@@ -97,65 +101,76 @@ public class ToolBarMaker
 	 *  ActionListener to it.
 	 *
 	 *@param  key  String The string used to identify the button
+	 *@param  elementtype  If true a special type of button for element symbols will be created
 	 *@return      JButton The JButton with already added ActionListener
 	 */
 
-	static JButton createToolbarButton(String key, JChemPaintPanel jcpp)
+	static JButton createToolbarButton(String key, JChemPaintPanel jcpp, boolean elementtype)
 	{
 		JCPPropertyHandler jcpph = JCPPropertyHandler.getInstance();
-		logger.debug("Trying to find resource for key: ", key);
-		URL url = jcpph.getResource(key + JCPAction.imageSuffix);
-		logger.debug("Trying to find resource: ", url);
-		if (url == null)
-		{
-			logger.error("Cannot find resource: ", key, JCPAction.imageSuffix);
-			return null;
-		}
-		ImageIcon image = new ImageIcon(url);
-		if (image == null)
-		{
-			logger.error("Cannot find image: ", url);
-			return null;
-		}
-		JButton b =
-			new JButton(image)
+		JButton b = null;
+		if(!elementtype){
+			logger.debug("Trying to find resource for key: ", key);
+			URL url = jcpph.getResource(key + JCPAction.imageSuffix);
+			logger.debug("Trying to find resource: ", url);
+			if (url == null)
 			{
-				public float getAlignmentY()
+				logger.error("Cannot find resource: ", key, JCPAction.imageSuffix);
+				return null;
+			}
+			ImageIcon image = new ImageIcon(url);
+			if (image == null)
+			{
+				logger.error("Cannot find image: ", url);
+				return null;
+			}
+			b =
+				new JButton(image)
 				{
-					return 0.5f;
+					public float getAlignmentY()
+					{
+						return 0.5f;
+					}
+				};
+				String astr = jcpph.getResourceString(key + JCPAction.actionSuffix);
+				if (astr == null)
+				{
+					astr = key;
 				}
-			};
-		b.setRequestFocusEnabled(false);
-		b.setMargin(new Insets(1, 1, 1, 1));
-		String astr = jcpph.getResourceString(key + JCPAction.actionSuffix);
-		if (astr == null)
-		{
-			astr = key;
-		}
-		JCPAction a = new JCPAction().getAction(jcpp, astr);
-		if (a != null)
-		{
-			b.setActionCommand(astr);
-			logger.debug("Coupling action to button...");
+				JCPAction a = new JCPAction().getAction(jcpp, astr);
+				if (a != null)
+				{
+					b.setActionCommand(astr);
+					logger.debug("Coupling action to button...");
+					b.addActionListener(a);
+					b.setEnabled(a.isEnabled());
+				} else
+				{
+					logger.error("Could not find JCPAction class for:", astr);
+					b.setEnabled(false);
+				}
+				try
+				{
+					String tip = JCPLocalizationHandler.getInstance().getString(key + JCPConstants.TIPSUFFIX);
+					if (tip != null)
+					{
+						b.setToolTipText(tip);
+					}
+				} catch (MissingResourceException e)
+				{
+					logger.warn("Could not find Tooltip resource for: ", key);
+					logger.debug(e);
+				}
+		}else{
+			b=new JButton(key);
+			JCPAction a = new ElementAction(key,jcpp);
 			b.addActionListener(a);
 			b.setEnabled(a.isEnabled());
-		} else
-		{
-			logger.error("Could not find JCPAction class for:", astr);
-			b.setEnabled(false);
 		}
-		try
-		{
-			String tip = JCPLocalizationHandler.getInstance().getString(key + JCPConstants.TIPSUFFIX);
-			if (tip != null)
-			{
-				b.setToolTipText(tip);
-			}
-		} catch (MissingResourceException e)
-		{
-			logger.warn("Could not find Tooltip resource for: ", key);
-			logger.debug(e);
-		}
+		b.setRequestFocusEnabled(false);
+		b.setMargin(new Insets(1, 1, 1, 1));
+		if(key.equals("bond"))
+			jcpp.lastAction=b;
 		return b;
 	}
 
@@ -166,9 +181,10 @@ public class ToolBarMaker
 	 *
 	 *@param  orientation  int The orientation of the toolbar
 	 *@param  kind         String The String used to identify the toolbar
+	 *@param  elementtype  If true a special type of toolbar for element symbols will be created
 	 *@return              Component The created toolbar
 	 */
-	public static Component createToolbar(int orientation, String kind, JChemPaintPanel jcpp, int lines)
+	public static Component createToolbar(int orientation, String kind, JChemPaintPanel jcpp, int lines, boolean elementtype)
 	{
 		JToolBar toolbar2 = new JToolBar(orientation);
 		String[] toolKeys = StringHelper.tokenize(getToolbarResourceString(kind));
@@ -208,11 +224,11 @@ public class ToolBarMaker
 					if(box!=null)
 						toolbar2.add(box);
 					box=new Box(BoxLayout.Y_AXIS);
-					alladded=false;
-				}else{
 					alladded=true;
+				}else{
+					alladded=false;
 				}
-				button = (JButton) createToolbarButton(toolKeys[i], jcpp);
+				button = (JButton) createToolbarButton(toolKeys[i], jcpp, elementtype);
 				/*if (toolKeys[i].equals("lasso"))
 				{
 					selectButton = button;
@@ -220,7 +236,7 @@ public class ToolBarMaker
 				if (button != null)
 				{
 					box.add(button);
-					if (i == 2)
+					if (toolKeys[i].equals("bond") && !elementtype)
 					{
 						button.setBackground(Color.GRAY);
 					} else

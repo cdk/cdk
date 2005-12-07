@@ -274,6 +274,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		//drawingPanel.setJChemPaintModel(model);
 		drawingPanel.addMouseListener(inputAdapter);
 		drawingPanel.addMouseMotionListener(inputAdapter);
+		//Somehow this registration does not work. If it would, element symbols could be changed via keyboard
+		drawingPanel.addKeyListener(inputAdapter);
 	}
 		
 	

@@ -57,10 +57,10 @@ import org.openscience.cdk.interfaces.Molecule;
  */
 public class AtomContainerManipulator {
 
-    public static void replaceAtomByAtom(AtomContainer container, Atom atom, Atom newAtom) {
+    public static boolean replaceAtomByAtom(AtomContainer container, Atom atom, Atom newAtom) {
         if (!container.contains(atom)) {
             // it should complain
-	    return;
+	    return false;
         } else {
             container.setAtomAt(container.getAtomNumber(atom), newAtom);
             ElectronContainer[] electronContainers = container.getElectronContainers();
@@ -81,6 +81,7 @@ public class AtomContainerManipulator {
                     }
                 }
             }
+            return true;
         }
     }
 

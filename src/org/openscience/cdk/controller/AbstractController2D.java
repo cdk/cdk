@@ -62,6 +62,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.Ring;
@@ -71,6 +72,7 @@ import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
@@ -441,6 +443,18 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						oldCommonElement = 0;
 					}
 					currentCommonElement.put(atomInRange, new Integer(oldCommonElement));
+				}else{
+					int startX = r2dm.getPointerVectorStart().x;
+					int startY = r2dm.getPointerVectorStart().y;
+					Atom newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
+					AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
+					atomCon.addAtom(newAtom1);
+					// update atoms
+					updateAtom(atomCon, newAtom1);
+					chemModel.getSetOfMolecules().addAtomContainer(atomCon);
+					//FIXME undoredo
+					r2dm.fireChange();
+					fireChange();
 				}
 			}
 			if (c2dm.getDrawMode() == Controller2DModel.ELEMENT)
@@ -479,8 +493,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						 *  ---
 						 */
 						// undoredo support
-                        System.out.println("hier");
-						UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
+            UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
 						c2dm.getUndoSupport().postEdit(edit);
 						r2dm.fireChange();
 						fireChange();
@@ -1256,7 +1269,17 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 */
 	public void keyTyped(KeyEvent e)
 	{
-		logger.debug("Key typed");
+		try{
+			logger.debug("Key typed");
+			if(r2dm.getHighlightedAtom()!=null){
+				IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
+				Isotope iso=ifa.getMajorIsotope(e.getKeyChar());
+				if(iso!=null)
+					r2dm.getHighlightedAtom().setSymbol(e.getKeyChar()+"");
+			}
+		}catch(Exception ex){
+			logger.debug("Exception "+ex.getMessage()+" in keyPressed in AbstractController");
+		}
 	}
 
 

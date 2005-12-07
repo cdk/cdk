@@ -60,7 +60,6 @@ public class AdjustBondOrdersAction extends JCPAction
         HashMap changedBonds = null;
         ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
 		logger.debug("Adjusting bondorders: ", type);
-        System.out.println("hier: " + type);
 		if (type.equals("clear"))
 		{
 			try
