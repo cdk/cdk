@@ -443,23 +443,10 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						oldCommonElement = 0;
 					}
 					currentCommonElement.put(atomInRange, new Integer(oldCommonElement));
-				}else{
-					int startX = r2dm.getPointerVectorStart().x;
-					int startY = r2dm.getPointerVectorStart().y;
-					Atom newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
-					AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
-					atomCon.addAtom(newAtom1);
-					// update atoms
-					updateAtom(atomCon, newAtom1);
-					chemModel.getSetOfMolecules().addAtomContainer(atomCon);
-					//FIXME undoredo
-					r2dm.fireChange();
-					fireChange();
 				}
 			}
 			if (c2dm.getDrawMode() == Controller2DModel.ELEMENT)
 			{
-
 				Atom atomInRange = r2dm.getHighlightedAtom();
 				if (atomInRange != null)
 				{
@@ -498,6 +485,18 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						r2dm.fireChange();
 						fireChange();
 					}
+				}else{
+					int startX = r2dm.getPointerVectorStart().x;
+					int startY = r2dm.getPointerVectorStart().y;
+					Atom newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
+					AtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
+					atomCon.addAtom(newAtom1);
+					// update atoms
+					updateAtom(atomCon, newAtom1);
+					chemModel.getSetOfMolecules().addAtomContainer(atomCon);
+					//FIXME undoredo
+					r2dm.fireChange();
+					fireChange();
 				}
 			}
 
