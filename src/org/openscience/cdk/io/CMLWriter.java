@@ -40,19 +40,19 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import nu.xom.Element;
+
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
-import org.openscience.cdk.libio.cml.Convertor;
+import org.openscience.cdk.libio.cml.Jumbo5Convertor;
 import org.openscience.cdk.tools.LoggingTool;
-import org.xmlcml.cml.CMLDocument;
-import org.xmlcml.cml.CMLDocumentFactory;
-import org.xmlcml.cml.CMLException;
-import org.xmlcml.cmlimpl.DocumentFactoryImpl;
+import org. xmlcml.cml.base.*;
 
 
 /**
@@ -82,10 +82,8 @@ import org.xmlcml.cmlimpl.DocumentFactoryImpl;
  * <p>For atoms it outputs: coordinates, element type and formal charge.
  * For bonds it outputs: order, atoms (2, or more) and wedges.
  *
- * @cdk.module  libio-cml
- * @cdk.depends base.jar
- * @cdk.depends pmrlib.jar
- * @cdk.depends cmlAll.jar
+ * @cdk.module  xom-1.0.jar
+ * @cdk.depends jumbo50.jar
  * @cdk.bug     905062
  *
  * @see java.io.FileWriter
@@ -163,18 +161,35 @@ public class CMLWriter extends DefaultChemObjectWriter {
         output.close();
     }
 
+    public boolean accepts(Class objectClass) {
+    	if (Molecule.class.isInstance(objectClass))
+    		return true;
+    	
+    	return false;
+    }
+    
     /**
      * Serializes the ChemObject to CML and redirects it to the output Writer.
      *
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(ChemObject object) throws CDKException {
+        if (!accepts(object.getClass())) return;
+
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
         customizeJob();
-        
         prefix = namespacePrefix.getSetting();
         
+        Element element = Jumbo5Convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+        try {
+        	output.write(element.toXML());
+        } catch (IOException exception) {
+        	throw new CDKException("Could not write XML output: " + exception.getMessage(), exception);
+        }
+        
+        /* FIXME: port the below code to XOM 
+         
         CMLDocument cmldoc = null;
         
         if (!done) {
@@ -182,7 +197,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             CMLDocumentFactory docfac = DocumentFactoryImpl.newInstance();
             cmldoc = (CMLDocument) docfac.createDocument();
             try {
-                Convertor convertor = new Convertor(cmlIds.isSet(),namespacedOutput.isSet(), 
+                Jumbo5Convertor convertor = new Convertor(cmlIds.isSet(),namespacedOutput.isSet(), 
                                                     schemaInstanceOutput.isSet(), 
                                                     instanceLocation.getSetting(),
                                                     prefix);
@@ -217,7 +232,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
             logger.error(error);
             logger.debug(ex);
             throw new CDKException(error, ex);
-        }
+        } */
     };
 
     private void initIOSettings() {
