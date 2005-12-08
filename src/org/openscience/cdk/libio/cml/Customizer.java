@@ -30,7 +30,6 @@ package org.openscience.cdk.libio.cml;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Molecule;
-import nu.xom.Element;
 
 /**
  * Interface for classes that allow the Convertor to be customized for certain
@@ -41,10 +40,27 @@ import nu.xom.Element;
  * @author        egonw
  * @cdk.created   2005-05-04
  * @cdk.module    data
+ * 
+ * @cdk.depends   xom-1.0.jar
  */
 public interface Customizer {
 
-    public void customize(Object convertor, Atom atom, Element nodeToAdd) throws Exception;
-    public void customize(Object convertor, Molecule molecule, Element nodeToAdd) throws Exception;
+	/**
+	 * Customized the nodeToAdd for the given Atom.
+	 * 
+	 * @param atom       Atom to base the customization on 
+	 * @param nodeToAdd  XOM Element to customize
+	 * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
+	 */
+    public void customize(Atom atom, Object nodeToAdd) throws Exception;
+    
+    /**
+     * Customized the nodeToAdd for the given Molecule.
+     * 
+     * @param molecule   Molecule to base the customization on 
+     * @param nodeToAdd  XOM Element to customize
+     * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
+     */
+    public void customize(Molecule molecule, Object nodeToAdd) throws Exception;
 }
 
