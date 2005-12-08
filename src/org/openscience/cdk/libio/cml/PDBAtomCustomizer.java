@@ -33,10 +33,10 @@ import nu.xom.Element;
 
 import org.xmlcml.cml.element.CMLScalar;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PDBAtom;
-import org.openscience.cdk.exception.CDKException;
 
 /**
  * Customizer for the libio-cml Convertor to be able to export details for
@@ -49,103 +49,102 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class PDBAtomCustomizer implements Customizer {
 
-    public void customize(Object object, Atom atom, Element nodeToAdd) throws Exception {
-        if (!(object instanceof Jumbo5Convertor)) {
-            throw new CDKException("The convertor is not instanceof Convertor!");
-        }
-        Jumbo5Convertor convertor = (Jumbo5Convertor)object;
-        
+    public void customize(Atom atom, Object nodeToAdd) throws Exception {
+    	if (!(nodeToAdd instanceof Element))
+    		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+    	
+    	Element element = (Element)nodeToAdd;
         if (atom instanceof PDBAtom) {
             PDBAtom pdbAtom = (PDBAtom)atom;
             if (pdbAtom.getAltLoc() != null) {
             	CMLScalar scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:altLoc"));
                 scalar.appendChild(pdbAtom.getAltLoc());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getChainID() != null) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:chainID"));
                 scalar.appendChild(pdbAtom.getChainID());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:hetAtom"));
                 scalar.appendChild(""+pdbAtom.getHetAtom());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getICode() != null) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:iCode"));
                 scalar.appendChild(pdbAtom.getICode());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getName() != null) {
                 Element scalar = new Element("label");
                 scalar.addAttribute(new Attribute("dictRef", "pdb:name"));
                 scalar.appendChild(pdbAtom.getName());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:oxt"));
                 scalar.appendChild("" + pdbAtom.getOxt());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getRecord() != null) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:record"));
                 scalar.appendChild(pdbAtom.getRecord());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getResName() != null) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:resName"));
                 scalar.appendChild(pdbAtom.getResName());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getResSeq() != null) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:resSeq"));
                 scalar.appendChild(pdbAtom.getResSeq());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getSegID() != null) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:segID"));
                 scalar.appendChild(pdbAtom.getSegID());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getSerial() != 0) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:serial"));
                 scalar.appendChild("" + pdbAtom.getSerial());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
             if (pdbAtom.getTempFactor() != -1.0) {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:tempFactor"));
                 scalar.appendChild("" + pdbAtom.getTempFactor());
-                nodeToAdd.appendChild(scalar);
+                element.appendChild(scalar);
             }
             
-            nodeToAdd.addAttribute(new Attribute("occupancy", "" + pdbAtom.getOccupancy()));
+            element.addAttribute(new Attribute("occupancy", "" + pdbAtom.getOccupancy()));
         }
     }
 
-    public void customize(Object object, Molecule molecule, Element nodeToAdd) throws Exception {
+    public void customize(Molecule molecule, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
 }

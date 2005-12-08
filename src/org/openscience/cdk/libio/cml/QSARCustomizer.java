@@ -31,6 +31,9 @@ package org.openscience.cdk.libio.cml;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import nu.xom.Attribute;
+import nu.xom.Element;
+
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -42,7 +45,12 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.w3c.dom.Element;
+import org.xmlcml.cml.element.CMLArray;
+import org.xmlcml.cml.element.CMLMetadata;
+import org.xmlcml.cml.element.CMLMetadataList;
+import org.xmlcml.cml.element.CMLProperty;
+import org.xmlcml.cml.element.CMLPropertyList;
+import org.xmlcml.cml.element.CMLScalar;
 
 /**
  * Customizer for the libio-cml Convertor to be able to export details for
@@ -62,16 +70,15 @@ public class QSARCustomizer implements Customizer {
 
     private final String namespace = "http://www.xml-cml.org/schema/cml2/core";
     
-    public void customize(Object convertor, Atom atom, Element nodeToAdd) throws Exception {
+    public void customize(Atom atom, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
     
-    public void customize(Object object, Molecule molecule, Element nodeToAdd) throws Exception {
-        if (!(object instanceof Convertor)) {
-            throw new CDKException("The convertor is not instanceof Convertor!");
-        }
-        Convertor convertor = (Convertor)object;
-
+    public void customize(Molecule molecule, Object nodeToAdd) throws Exception {
+    	if (!(nodeToAdd instanceof Element))
+    		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+    	
+    	Element element = (Element)nodeToAdd;
         Hashtable props = molecule.getProperties();
         Enumeration keys = props.keys();
         Element propList = null;
@@ -82,37 +89,37 @@ public class QSARCustomizer implements Customizer {
                 DescriptorValue value = (DescriptorValue)props.get(key);
                 DescriptorResult result = value.getValue();
                 if (propList == null) {
-                    propList = convertor.createElement("propertyList");
+                    propList = new CMLPropertyList();
                 }
-                Element property = convertor.createElement("property");
+                Element property = new CMLProperty();
                 // setup up the metadata list
-                Element metadataList = convertor.createElement("metadataList");
-                metadataList.setAttribute("xmlns:" + QSARMETA_NAMESPACE, QSARMETA_URI);
+                Element metadataList = new CMLMetadataList();
+                metadataList.addAttribute(new Attribute("xmlns:" + QSARMETA_NAMESPACE, QSARMETA_URI));
                 String specsRef = specs.getSpecificationReference();
                 if (specsRef.startsWith(QSARDICT_URI)) {
                     specsRef = QSARDICT_NAMESPACE + ":" + specsRef.substring(QSARDICT_URI.length()+1);
-                    property.setAttribute("xmlns:" + QSARDICT_NAMESPACE, QSARDICT_URI);
+                    property.addAttribute(new Attribute("xmlns:" + QSARDICT_NAMESPACE, QSARDICT_URI));
                 }
-                Element metaData = convertor.createElement("metadata");
-                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationTitle");
-                metaData.setAttribute("content", specs.getImplementationTitle());
+                Element metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationTitle"));
+                metaData.addAttribute(new Attribute("content", specs.getImplementationTitle()));
                 metadataList.appendChild(metaData);
-                metaData = convertor.createElement("metadata");
-                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationIdentifier");
-                metaData.setAttribute("content", specs.getImplementationIdentifier());
+                metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationIdentifier"));
+                metaData.addAttribute(new Attribute("content", specs.getImplementationIdentifier()));
                 metadataList.appendChild(metaData);
-                metaData = convertor.createElement("metadata");
-                metaData.setAttribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationVendor");
-                metaData.setAttribute("content", specs.getImplementationVendor());
+                metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationVendor"));
+                metaData.addAttribute(new Attribute("content", specs.getImplementationVendor()));
                 metadataList.appendChild(metaData);
                 // add parameter setting to the metadata list
                 Object[] params = value.getParameters();
                 if (params != null && params.length > 0) {
                     String[] paramNames = value.getParameterNames();
-                    Element paramSettings = convertor.createElement("metadataList");
-                    paramSettings.setAttribute("title", QSARMETA_NAMESPACE + ":" + "descriptorParameters");
+                    Element paramSettings = new CMLMetadataList();
+                    paramSettings.addAttribute(new Attribute("title", QSARMETA_NAMESPACE + ":" + "descriptorParameters"));
                     for (int i=0; i<params.length; i++) {
-                        Element paramSetting = convertor.createElement("metadata");
+                        Element paramSetting = new CMLMetadata();
                         String paramName = paramNames[i];
                         Object paramVal = params[i];
                         if (paramName == null) {
@@ -120,63 +127,63 @@ public class QSARCustomizer implements Customizer {
                         } else if (paramVal == null) {
                             // logger.error("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
                         } else {
-                            paramSetting.setAttribute("title", paramNames[i]);
-                            paramSetting.setAttribute("content", params[i].toString());
+                            paramSetting.addAttribute(new Attribute("title", paramNames[i]));
+                            paramSetting.addAttribute(new Attribute("content", params[i].toString()));
                             paramSettings.appendChild(paramSetting);
                         }
                     }
                     metadataList.appendChild(paramSettings);
                 }
                 property.appendChild(metadataList);
-                Element scalar = this.createScalar(convertor, result);
-                scalar.setAttribute("dictRef", specsRef);
+                Element scalar = this.createScalar(result);
+                scalar.addAttribute(new Attribute("dictRef", specsRef));
                 // add the actual descriptor value
                 property.appendChild(scalar);
                 propList.appendChild(property);
             } // else: disregard all other properties
         }
         if (propList != null) {
-            nodeToAdd.appendChild(propList);
+            element.appendChild(propList);
         }
     }
 
-    private Element createScalar(Convertor convertor, DescriptorResult value) {
+    private Element createScalar(DescriptorResult value) {
         Element scalar = null;
         if (value instanceof DoubleResult) {
-            scalar = convertor.createElement("scalar");
-            scalar.setAttribute("dataType", "xsd:double");
-            scalar.appendChild(convertor.createTextNode("" + ((DoubleResult)value).doubleValue()));
+            scalar = new CMLScalar();
+            scalar.addAttribute(new Attribute("dataType", "xsd:double"));
+            scalar.appendChild("" + ((DoubleResult)value).doubleValue());
         } else if (value instanceof IntegerResult) {
-            scalar = convertor.createElement("scalar");
-            scalar.setAttribute("dataType", "xsd:int");
-            scalar.appendChild(convertor.createTextNode("" + ((IntegerResult)value).intValue()));
+            scalar = new CMLScalar();
+            scalar.addAttribute(new Attribute("dataType", "xsd:int"));
+            scalar.appendChild("" + ((IntegerResult)value).intValue());
         } else if (value instanceof BooleanResult) {
-            scalar = convertor.createElement("scalar");
-            scalar.setAttribute("dataType", "xsd:boolean");
-            scalar.appendChild(convertor.createTextNode("" + ((BooleanResult)value).booleanValue()));
+            scalar = new CMLScalar();
+            scalar.addAttribute(new Attribute("dataType", "xsd:boolean"));
+            scalar.appendChild("" + ((BooleanResult)value).booleanValue());
         } else if (value instanceof IntegerArrayResult) {
             IntegerArrayResult result = (IntegerArrayResult)value;
-            scalar = convertor.createElement("array");
-            scalar.setAttribute("dataType", "xsd:int");
-            scalar.setAttribute("size", "" + result.size());
+            scalar = new CMLArray();
+            scalar.addAttribute(new Attribute("dataType", "xsd:int"));
+            scalar.addAttribute(new Attribute("size", "" + result.size()));
             StringBuffer buffer = new StringBuffer();
             for (int i=0; i<result.size(); i++) {
                 buffer.append(result.get(i) + " ");
             }
-            scalar.appendChild(convertor.createTextNode(buffer.toString()));
+            scalar.appendChild(buffer.toString());
         } else if (value instanceof DoubleArrayResult) {
             DoubleArrayResult result = (DoubleArrayResult)value;
-            scalar = convertor.createElement("array");
-            scalar.setAttribute("dataType", "xsd:double");
-            scalar.setAttribute("size", "" + result.size());
+            scalar = new CMLArray();
+            scalar.addAttribute(new Attribute("dataType", "xsd:double"));
+            scalar.addAttribute(new Attribute("size", "" + result.size()));
             StringBuffer buffer = new StringBuffer();
             for (int i=0; i<result.size(); i++) {
                 buffer.append(result.get(i) + " ");
             }
-            scalar.appendChild(convertor.createTextNode(buffer.toString()));
+            scalar.appendChild(buffer.toString());
         } else {
             // logger.error("Could not convert this object to a scalar element: ", value);
-            scalar.appendChild(convertor.createTextNode(value.toString()));
+            scalar.appendChild(value.toString());
         }
         return scalar;
      }
