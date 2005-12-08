@@ -52,7 +52,6 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Jumbo5Convertor;
 import org.openscience.cdk.tools.LoggingTool;
-import org. xmlcml.cml.base.*;
 
 
 /**
@@ -82,9 +81,10 @@ import org. xmlcml.cml.base.*;
  * <p>For atoms it outputs: coordinates, element type and formal charge.
  * For bonds it outputs: order, atoms (2, or more) and wedges.
  *
- * @cdk.module  xom-1.0.jar
- * @cdk.depends jumbo50.jar
- * @cdk.bug     905062
+ * @cdk.module       libio-cml
+ * @cdk.builddepends xom-1.0.jar
+ * @cdk.depends      jumbo50.jar
+ * @cdk.bug          905062
  *
  * @see java.io.FileWriter
  * @see java.io.StringWriter
