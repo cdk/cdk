@@ -50,7 +50,7 @@ import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
-import org.openscience.cdk.libio.cml.Jumbo5Convertor;
+import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -181,7 +181,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         customizeJob();
         prefix = namespacePrefix.getSetting();
         
-        Element element = Jumbo5Convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+        Element element = Convertor.cdkMoleculeToCMLMolecule((Molecule)object);
         try {
         	output.write(element.toXML());
         } catch (IOException exception) {
