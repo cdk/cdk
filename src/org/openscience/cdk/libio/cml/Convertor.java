@@ -28,6 +28,7 @@ import org.xmlcml.cml.element.CMLScalar;
  * @cdk.keyword      CML
  * @cdk.keyword      class convertor
  * @cdk.builddepends jumbo50.jar
+ * @cdk.require      java1.5
  */
 public class Convertor {
 

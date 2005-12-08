@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * in data/cmltest.
  *
  * @cdk.module test
- * @cdk.require java1.4
+ * @cdk.require java1.5
  */
 public class CML2WriterTest extends CDKTestCase {
 

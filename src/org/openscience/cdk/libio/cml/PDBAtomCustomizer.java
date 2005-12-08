@@ -46,6 +46,7 @@ import org.openscience.cdk.PDBAtom;
  * @cdk.created   2005-05-04
  * @cdk.module    pdb-cml
  * @cdk.set       libio-cml-customizers
+ * @cdk.require   java1.5
  */
 public class PDBAtomCustomizer implements Customizer {
 

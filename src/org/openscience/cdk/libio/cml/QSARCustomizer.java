@@ -60,6 +60,7 @@ import org.xmlcml.cml.element.CMLScalar;
  * @cdk.created   2005-05-04
  * @cdk.module    qsar-cml
  * @cdk.set       libio-cml-customizers
+ * @cdk.require   java1.5
  */
 public class QSARCustomizer implements Customizer {
 
