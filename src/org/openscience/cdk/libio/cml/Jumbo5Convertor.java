@@ -22,6 +22,13 @@ import org.xmlcml.cml.element.CMLBond;
 import org.xmlcml.cml.element.CMLMolecule;
 import org.xmlcml.cml.element.CMLScalar;
 
+/**
+ * @cdk.module       libio-cml
+ * 
+ * @cdk.keyword      CML
+ * @cdk.keyword      class convertor
+ * @cdk.builddepends jumbo50.jar
+ */
 public class Jumbo5Convertor {
 
 	public static CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure) {

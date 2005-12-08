@@ -119,7 +119,7 @@ import org.xmlcml.cmlimpl.SymmetryImpl;
  * @author        shk3
  * @author        egonw
  * @cdk.created   2004-02-19
- * @cdk.module    libio-cml
+ * @cdk.module    obsolete
  * @cdk.keyword   CML
  * @cdk.keyword   class convertor
  * @cdk.bug       905062
