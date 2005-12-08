@@ -43,13 +43,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.applications.undoredo.BondChangeEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
@@ -96,7 +96,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private final static int DRAG_MAKING_SQUARE_SELECTION = 4;
 	private final static int DRAG_MAKING_LASSO_SELECTION = 5;
 	private final static int DRAG_DRAWING_PROPOSED_ATOMATOMMAP = 6;
-
+	
+	protected Vector lastAction=new Vector();
+	protected JButton moveButton=null;
 	
 	AtomContainer atomContainer;
 	protected ChemModel chemModel;
@@ -341,6 +343,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		{
 			r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
 		}
+		
+		System.err.println(r2dm.getSelectedPart()+"  "+atomInRange+"  "+bondInRange);
+		if(r2dm.getSelectedPart()!=null && !(r2dm.getSelectedPart().contains(atomInRange) || r2dm.getSelectedPart().contains(bondInRange))){
+			r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
+		}
 
 		if (c2dm.getDrawMode() == Controller2DModel.MOVE)
 		{
@@ -367,9 +374,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond()))){
 				if(r2dm.getSelectedPart().getAtomCount()>0)
 					c2dm.setDrawMode(Controller2DModel.MOVE);
-				((PopupController2D)this).jcpp.lastAction.setBackground(Color.LIGHT_GRAY);
-				((PopupController2D)this).jcpp.lastAction=((JChemPaintEditorPanel)((PopupController2D)this).jcpp).moveButton;
-				((JChemPaintEditorPanel)((PopupController2D)this).jcpp).moveButton.setBackground(Color.GRAY);
+				((JButton)lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
+				lastAction.set(0,moveButton);
+				moveButton.setBackground(Color.GRAY);
 				dragMode = DRAG_MOVING_SELECTED;
 			}else{
 				dragMode = DRAG_MAKING_LASSO_SELECTION;

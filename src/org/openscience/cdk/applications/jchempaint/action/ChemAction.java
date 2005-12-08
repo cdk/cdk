@@ -32,10 +32,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.EventObject;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeEvent;
 
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
@@ -61,9 +61,9 @@ public class ChemAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		jcpPanel.lastAction.setBackground(Color.LIGHT_GRAY);
+		((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
 		((JComponent) e.getSource()).setBackground(Color.GRAY);
-		jcpPanel.lastAction = (JComponent) e.getSource();
+		jcpPanel.lastAction.set(0,(JComponent) e.getSource());
 		logger.debug("ChemAction performed!");
 		JChemPaintModel jcpm;
 		Controller2DModel c2dm;

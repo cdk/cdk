@@ -31,8 +31,10 @@ package org.openscience.cdk.controller;
 
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
+import java.util.Vector;
 
-import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
+import javax.swing.JButton;
+
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -51,12 +53,11 @@ public class PopupController2D extends Controller2D {
 	private LoggingTool logger;
 
 	private static Hashtable popupMenus = null;
-	
-	protected JChemPaintPanel jcpp=null;
 
-	public PopupController2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm, JChemPaintPanel jcpp) {
+	public PopupController2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm, Vector lastAction, JButton moveButton) {
 		this(chemModel,r2dm,c2dm);
-		this.jcpp=jcpp;
+		this.lastAction=lastAction;
+		this.moveButton=moveButton;
 	}
 	
 	public PopupController2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm) {

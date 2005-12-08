@@ -132,8 +132,9 @@ public abstract class JChemPaintPanel
 	public JChemPaintPanel lastUsedJCPP = null;
 	/**
 	 *  remembers last action in toolbar for switching on/off buttons
+	 *  This is a vector containing only one element, the button last used
 	 */
-	public JComponent lastAction;
+	public Vector lastAction;
     Dimension viewerDimension;
     private UndoManager undoManager;
     private UndoableEditSupport undoSupport;
