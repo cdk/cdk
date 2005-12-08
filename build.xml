@@ -99,7 +99,7 @@
             <available classname="org.jmol.api.JmolAdapter" 
                 classpath="${lib}/jmolApis.jar" 
                 property="jmol.present"/>
-            <available file="${lib}/cmlAll_1.4.jar" 
+            <available file="${lib}/jumbo50.jar" 
                 property="cmllibs.present"/>
             <available classname="javax.media.j3d.Canvas3D"
                 property="java3D.present"/>
@@ -163,23 +163,8 @@
 
 
         <target id="init" name="init" depends="check, setupBuildDir"/>
-        <target id="customize" name="customize" depends="javacc,
-               customizeForJ14, customizeForJ15"/>
+        <target id="customize" name="customize" depends="javacc"/>
 
-        <target name="customizeForJ14" id="customizeForJ14" depends="check"
-            if="isJava14">
-            <!-- modify the dependencies for CMLDOM as we need separate jars
-                 when compiling with J1.4 and J1.5 -->
-            <replace dir="src/META-INF" token="_1.5" value="_1.4"/>
-        </target>
-        
-        <target name="customizeForJ15" id="customizeForJ15" depends="check"
-            if="isJava15">
-            <!-- modify the dependencies for CMLDOM as we need separate jars
-                 when compiling with J1.4 and J1.5 -->
-            <replace dir="src/META-INF" token="_1.4" value="_1.5"/>
-        </target>
-        
         <target id="setupBuildDir" name="setupBuildDir">
                 <tstamp />
                 <mkdir dir="${build}" />
