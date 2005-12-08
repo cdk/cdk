@@ -47,4 +47,12 @@ public class CDKTestCase extends TestCase {
         super(name);
     }
     
+    public boolean runSlowTests() {
+    	if (System.getProperty("runSlowTests", "false").equals("true")) 
+    		return true;
+    	
+    	// else
+    	return false;
+    }
+
 }
