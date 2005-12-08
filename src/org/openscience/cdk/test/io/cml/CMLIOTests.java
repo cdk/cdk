@@ -47,9 +47,9 @@ public class CMLIOTests {
         suite.addTest(CMLFragmentsTest.suite());
         suite.addTest(Jumbo46CMLFragmentsTest.suite());
         
-        // the following classes require Java 1.4
-        if (System.getProperty("java.version").startsWith("1.4")) {
-            System.out.println("Found required Java 1.4, so running CML2 tests.");
+        // the following classes require Java 1.5
+        if (System.getProperty("java.version").startsWith("1.5")) {
+            System.out.println("Found required Java 1.5, so running the CML2 tests.");
             try {
                 Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2Test");
                 suite.addTest(new TestSuite(testClass));
@@ -74,6 +74,8 @@ public class CMLIOTests {
                 System.out.println("Could not load the CML Roundtrip test: " + exception.getMessage());
                 exception.printStackTrace();
             }
+        } else {
+        	System.out.println("Did not find the required Java 1.5, so not running the CML2 tests.");
         }
         return suite;
     }
