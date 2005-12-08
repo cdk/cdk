@@ -155,6 +155,8 @@ public class ModelBuilder3dTest extends CDKTestCase {
     }
     
     public void testModelBuilder3D_c1ccccc1C0(){
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
 		ModelBuilder3D mb3d=new ModelBuilder3D();
     HydrogenAdder hAdder=new HydrogenAdder();
     String smile="c1ccccc1C=0";

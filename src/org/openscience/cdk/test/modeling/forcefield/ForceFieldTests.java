@@ -154,6 +154,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *  A unit test for JUnit (MMFF94EnergyFunction minimization with Conjugate Gradient Method)
 	 */
 	public void testMMFF94EnergyFunctionMinimizationWithConjugateGradientMethod()  throws Exception {
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
 		double[] testResult = {-0.07595612546512087,-0.2802911393253983,0.07600307966977722,0.39068800204256576,
 			-1.059191412353933,-1.1279995182727496,-0.8886677181682512,-0.8100194941301619,0.5795261081533215,
 			0.7455735487932257,-0.14810094365682494,0.7847092409972136,-0.43744626781215895,0.7059121981158619,

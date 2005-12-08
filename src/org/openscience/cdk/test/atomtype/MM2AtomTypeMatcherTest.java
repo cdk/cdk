@@ -71,6 +71,8 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
     }
     
     public void testFindMatchingAtomType_AtomContainer_Atom() {
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
     	logger.debug("**** START MM2 ATOMTYPE TEST ******");
     	AtomTypeTools att=new AtomTypeTools();
     	Molecule mol=null;

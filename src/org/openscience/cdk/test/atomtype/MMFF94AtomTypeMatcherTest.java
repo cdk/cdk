@@ -73,6 +73,8 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
     }
     
     public void testFindMatchingAtomType_AtomContainer_Atom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
     	//System.out.println("**** START ATOMTYPE TEST ******");
     	AtomTypeTools att=new AtomTypeTools();
     	//SmilesParser sp = new SmilesParser();
