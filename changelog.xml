@@ -4,6 +4,13 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
 
   <release id="cvs">
+   <apiChange contributor="tohel egonw">
+     Upgraded CMLDOM to Jumbo 5.0
+   </apiChange>
+   <addition>
+     Added a cdk.test.CDKTestCase.assertEquals(Point2d, Point2d, double) and
+     the Point3D equivalent
+   </addition>
    <bugfix contributor="egonw">
      Fixed reading of SDF files created by common software, as reported
      by a coworker of Uli.
