@@ -44,7 +44,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestCase for the reading CML files using a few test files
  * in data/cmltest as found in the Jmol distribution
- * (http://jmol.sf.org/).
+ * (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
  *
  * @cdk.module test
  */
@@ -72,7 +72,7 @@ public class JmolTest extends CDKTestCase {
 
     /**
      * Special CML characteristics:
-     * - <crystal>
+     * <ul><li> &lt;crystal></li></ul>
      */
     public void testEstron() {
         String filename = "data/cmltest/estron.cml";
