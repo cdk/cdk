@@ -23,6 +23,9 @@
  */
 package org.openscience.cdk.test;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import junit.framework.TestCase;
 
 import org.openscience.cdk.tools.LoggingTool;
@@ -55,4 +58,15 @@ public class CDKTestCase extends TestCase {
     	return false;
     }
 
+    public void assertEquals(Point2d p1, Point2d p2, double error) {
+        assertEquals(p1.x, p2.x, error);
+        assertEquals(p1.y, p2.y, error);
+    }
+        
+    public void assertEquals(Point3d p1, Point3d p2, double error) {
+        assertEquals(p1.x, p2.x, error);
+        assertEquals(p1.y, p2.y, error);
+        assertEquals(p1.z, p2.z, error);
+    }
+        
 }

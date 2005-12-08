@@ -118,13 +118,6 @@ public class HydrogenPlacerTest extends CDKTestCase {
         assertNotNull(h2.getPoint2d());
     }
     
-
-    private void assertEquals(Point2d p1, Point2d p2, double error) throws Exception {
-        assertEquals(p1.x, p2.x, error);
-        assertEquals(p1.y, p2.y, error);
-    }
-    
-    
     /* This one tests adding hydrogens to all atoms of a molecule and doing the layout for them.
     *  It is intended for visually checking the work of HydrogenPlacer, not to be run
     *  as a JUnit test. Thus the name withouth "test".
