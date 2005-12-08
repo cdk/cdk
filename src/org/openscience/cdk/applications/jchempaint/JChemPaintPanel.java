@@ -134,7 +134,7 @@ public abstract class JChemPaintPanel
 	 *  remembers last action in toolbar for switching on/off buttons
 	 *  This is a vector containing only one element, the button last used
 	 */
-	public Vector lastAction;
+	public Vector lastAction=new Vector();
     Dimension viewerDimension;
     private UndoManager undoManager;
     private UndoableEditSupport undoSupport;

@@ -97,7 +97,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private final static int DRAG_MAKING_LASSO_SELECTION = 5;
 	private final static int DRAG_DRAWING_PROPOSED_ATOMATOMMAP = 6;
 	
-	protected Vector lastAction=new Vector();
+	protected Vector lastAction=null;
 	protected JButton moveButton=null;
 	
 	AtomContainer atomContainer;
@@ -344,7 +344,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
 		}
 		
-		System.err.println(r2dm.getSelectedPart()+"  "+atomInRange+"  "+bondInRange);
 		if(r2dm.getSelectedPart()!=null && !(r2dm.getSelectedPart().contains(atomInRange) || r2dm.getSelectedPart().contains(bondInRange))){
 			r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
 		}
