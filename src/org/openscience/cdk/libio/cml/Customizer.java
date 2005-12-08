@@ -30,7 +30,7 @@ package org.openscience.cdk.libio.cml;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Molecule;
-import org.w3c.dom.Element;
+import nu.xom.Element;
 
 /**
  * Interface for classes that allow the Convertor to be customized for certain
