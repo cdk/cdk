@@ -33,14 +33,8 @@ public class ElementAction extends JCPAction {
         Controller2DModel renderModel = jcpModel.getControllerModel();
         renderModel.setDrawElement(symbol);
         renderModel.setDrawMode(renderModel.ELEMENT);
-        if (jcpPanel.lastAction != null)
-		{
-			jcpPanel.lastAction.setBackground(Color.LIGHT_GRAY);
-		} else
-		{
-			(((JChemPaintEditorPanel)jcpPanel).getToolBar().getComponentAtIndex(7)).setBackground(Color.LIGHT_GRAY);
-		}
-        ((JComponent) e.getSource()).setBackground(Color.GRAY);
+        jcpPanel.lastAction.setBackground(Color.LIGHT_GRAY);
+		((JComponent) e.getSource()).setBackground(Color.GRAY);
         jcpPanel.lastAction=((JComponent) e.getSource());
     }
 

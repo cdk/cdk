@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk.controller;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Polygon;
@@ -48,6 +49,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Mapping;
+import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.applications.undoredo.BondChangeEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
@@ -72,7 +74,6 @@ import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
@@ -363,12 +364,21 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			dragMode = DRAG_MAKING_SQUARE_SELECTION;
 		} else if (c2dm.getDrawMode() == Controller2DModel.LASSO)
 		{
-			dragMode = DRAG_MAKING_LASSO_SELECTION;
+			if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond()))){
+				if(r2dm.getSelectedPart().getAtomCount()>0)
+					c2dm.setDrawMode(Controller2DModel.MOVE);
+				((PopupController2D)this).jcpp.lastAction.setBackground(Color.LIGHT_GRAY);
+				((PopupController2D)this).jcpp.lastAction=((JChemPaintEditorPanel)((PopupController2D)this).jcpp).moveButton;
+				((JChemPaintEditorPanel)((PopupController2D)this).jcpp).moveButton.setBackground(Color.GRAY);
+				dragMode = DRAG_MOVING_SELECTED;
+			}else{
+				dragMode = DRAG_MAKING_LASSO_SELECTION;
+			}
 		} else if (c2dm.getDrawMode() == Controller2DModel.RING ||
 				c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 		{
 			dragMode = DRAG_DRAWING_PROPOSED_RING;
-		}
+		}			
 	}
 
 

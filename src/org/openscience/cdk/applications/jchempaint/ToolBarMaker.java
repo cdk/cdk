@@ -171,6 +171,8 @@ public class ToolBarMaker
 		b.setMargin(new Insets(1, 1, 1, 1));
 		if(key.equals("bond"))
 			jcpp.lastAction=b;
+		if(key.equals("move"))
+			jcpp.moveButton=b;
 		return b;
 	}
 

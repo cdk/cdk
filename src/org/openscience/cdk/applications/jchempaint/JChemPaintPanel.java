@@ -138,6 +138,8 @@ public abstract class JChemPaintPanel
     private UndoManager undoManager;
     private UndoableEditSupport undoSupport;
     String guiString = "stable";
+    //we remember the moveButton since this is special
+    public JButton moveButton=null;
     
 	/**
 	 *  Constructor for the JChemPaintPanel object
