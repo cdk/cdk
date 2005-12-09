@@ -253,6 +253,10 @@ public class SaveAsAction extends JCPAction
 	 */
 	protected void saveAsCML2(ChemObject object, File outFile) throws Exception
 	{
+		if(Float.parseFloat(System.getProperty("java.specification.version"))<1.5){
+			JOptionPane.showMessageDialog(null,"For saving as CML you need Java 1.5 or higher!");
+			return;
+		}
 		logger.info("Saving the contents in a CML 2.0 file...");
         String fileName = outFile.toString();
         if (!fileName.endsWith(".cml")) {
