@@ -50,8 +50,8 @@ import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.charges.InductivePartialChargesTest;
 import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.test.config.ConfigTests;
-import org.openscience.cdk.test.dict.DictRefTest;
 import org.openscience.cdk.test.dict.DictDBTest;
+import org.openscience.cdk.test.dict.DictRefTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
@@ -65,6 +65,7 @@ import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
+import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.test.math.MathToolsTest;
 import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
 import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
@@ -145,6 +146,8 @@ public class CDKTests
         suite.addTest(HydrogenPlacerTest.suite());
         suite.addTest(OverlapResolverTest.suite());
         suite.addTest(TemplateHandlerTest.suite());
+        // from cdk.test.libio.openbabel
+        suite.addTest(OpenBabelConvertTest.suite());
         // from cdk.test.math
         suite.addTest(MathToolsTest.suite());
         // from cdk.test.modeling
