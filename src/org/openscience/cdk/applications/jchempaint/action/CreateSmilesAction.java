@@ -32,11 +32,17 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 
@@ -79,14 +85,26 @@ public class CreateSmilesAction extends JCPAction
 			dialog = new TextViewDialog(frame, "SMILES", null, false, 40, 2);
 		}
 		String smiles = "";
+		String chiralsmiles ="";
 		try
 		{
 			ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
             SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
 			AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 			Molecule molecule = new Molecule(container);
+			Molecule moleculewithh=(Molecule)molecule.clone();
+			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
+			double bondLength = GeometryTools.getBondLengthAverage(container);
+		    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
 			smiles = generator.createSMILES(molecule);
-			dialog.setMessage("Generated SMILES:", smiles);
+			boolean[] bool=new boolean[moleculewithh.getBondCount()];
+		    SmilesGenerator sg = new SmilesGenerator(model.getBuilder());
+			for(int i=0;i<bool.length;i++){
+		      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBondAt(i)))
+				bool[i]=true;
+			}
+			chiralsmiles=generator.createChiralSMILES(moleculewithh,bool);
+			dialog.setMessage("Generated SMILES:", "SMILES: "+smiles+System.getProperty("line.separator")+"nchiral SMILES: "+chiralsmiles);
 		} catch (Exception exception)
 		{
 			String message = "Error while creating SMILES: " + exception.getMessage();
