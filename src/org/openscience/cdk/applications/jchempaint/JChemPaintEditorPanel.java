@@ -200,7 +200,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public void customizeView() {
 		if (showMenuBar) {
 			if (menu == null) {
-				menu = new JChemPaintMenuBar(this, this.guiString);
+				if(guiString.equals("applet"))
+					menu = new JChemPaintMenuBar(this, false,this.guiString);
+				else
+					menu = new JChemPaintMenuBar(this, this.guiString);
 			}
 			add(menu, BorderLayout.NORTH);
 			revalidate();
