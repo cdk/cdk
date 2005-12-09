@@ -74,6 +74,7 @@ import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
@@ -1177,10 +1178,13 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 								bondson2[i].setAtomAt(atom1,0);
 							if(bondson2[i].getAtomAt(1)==atom2)
 								bondson2[i].setAtomAt(atom1,1);
+							if(bondson2[i].getAtomAt(0)==bondson2[i].getAtomAt(1)){
+								som.getAtomContainer(contains1).removeElectronContainer(bondson2[i]);
+							}
 						}
 						som.getAtomContainer(contains1).removeAtom(atom2);
-						r2dm.getMerge().clear();
 					}
+					r2dm.getMerge().clear();
 				}
 			}
 
