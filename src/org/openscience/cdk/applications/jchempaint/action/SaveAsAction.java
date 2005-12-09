@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
@@ -37,9 +38,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
@@ -48,6 +46,9 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilterInterface;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.ChemObjectWriter;
@@ -121,94 +122,103 @@ public class SaveAsAction extends JCPAction
 	 */
 	protected void saveAs(ActionEvent event)
 	{
-
-		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
-		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(jcpPanel.getCurrentWorkDirectory());
-		JCPSaveFileFilter.addChoosableFileFilters(chooser);
-		if (jcpPanel.getCurrentSaveFileFilter() != null)
-		{
-			// XXX needs fixing
-			// chooser.setFileFilter(jcpPanel.getCurrentSaveFileFilter());
-		}
-		if (currentFilter != null)
-		{
-			chooser.setFileFilter(currentFilter);
-		}
-		chooser.setFileView(new JCPFileView());
-
-		int returnVal = chooser.showSaveDialog(jcpPanel);
-		
-		ChemObject object = getSource(event);
-		currentFilter = chooser.getFileFilter();
-		if (returnVal == JFileChooser.APPROVE_OPTION)
-		{
-			type = ((JCPFileFilterInterface) currentFilter).getType();
-			File outFile = chooser.getSelectedFile();
-
-			ChemModel model = (ChemModel) jcpm.getChemModel();
-			if (object == null)
+		int ready=1;
+		while(ready==1){
+			JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(jcpPanel.getCurrentWorkDirectory());
+			JCPSaveFileFilter.addChoosableFileFilters(chooser);
+			if (jcpPanel.getCurrentSaveFileFilter() != null)
 			{
-				// called from main menu
-				try
-				{
-					if (type.equals(JCPSaveFileFilter.mol))
-					{
-						saveAsMol(model, outFile);
-					} else if (type.equals(JCPSaveFileFilter.cml))
-					{
-						saveAsCML2(model, outFile);
-					} else if (type.equals(JCPSaveFileFilter.smiles))
-					{
-						saveAsSMILES(model, outFile);
-					} else if (type.equals(JCPSaveFileFilter.svg))
-					{
-						saveAsSVG(model, outFile);
-					} else if (type.equals(JCPSaveFileFilter.cdk))
-					{
-						saveAsCDKSourceCode(model, outFile);
-					} else
-					{
-						String error = "Cannot save file in this format: " + type;
-						logger.error(error);
-						JOptionPane.showMessageDialog(jcpPanel, error);
-						return;
-					}
-					jcpm.resetIsModified();
-				} catch (Exception exc)
-				{
-					String error = "Error while writing file: " + exc.getMessage();
-					logger.error(error);
-					logger.debug(exc);
-					JOptionPane.showMessageDialog(jcpPanel, error);
+				// XXX needs fixing
+				// chooser.setFileFilter(jcpPanel.getCurrentSaveFileFilter());
+			}
+			if (currentFilter != null)
+			{
+				chooser.setFileFilter(currentFilter);
+			}
+			chooser.setFileView(new JCPFileView());
+	
+			int returnVal = chooser.showSaveDialog(jcpPanel);
+			
+			ChemObject object = getSource(event);
+			currentFilter = chooser.getFileFilter();
+			if (returnVal == JFileChooser.APPROVE_OPTION)
+			{
+				type = ((JCPFileFilterInterface) currentFilter).getType();
+				File outFile = chooser.getSelectedFile();
+				if(outFile.exists()){
+					ready=JOptionPane.showConfirmDialog((Component)null,"File "+outFile.getName()+" already exists. Do you want to overwrite it?","File already exists",JOptionPane.YES_NO_OPTION);
+				}else{
+					ready=0;
 				}
-
-			} else if (object instanceof Reaction)
-			{
-				try
-				{
-					if (type.equals(JCPSaveFileFilter.cml))
+				if(ready==0){
+					
+					ChemModel model = (ChemModel) jcpm.getChemModel();
+					if (object == null)
 					{
-						saveAsCML2(object, outFile);
-					} else
+						// called from main menu
+						try
+						{
+							if (type.equals(JCPSaveFileFilter.mol))
+							{
+								saveAsMol(model, outFile);
+							} else if (type.equals(JCPSaveFileFilter.cml))
+							{
+								saveAsCML2(model, outFile);
+							} else if (type.equals(JCPSaveFileFilter.smiles))
+							{
+								saveAsSMILES(model, outFile);
+							} else if (type.equals(JCPSaveFileFilter.svg))
+							{
+								saveAsSVG(model, outFile);
+							} else if (type.equals(JCPSaveFileFilter.cdk))
+							{
+								saveAsCDKSourceCode(model, outFile);
+							} else
+							{
+								String error = "Cannot save file in this format: " + type;
+								logger.error(error);
+								JOptionPane.showMessageDialog(jcpPanel, error);
+								return;
+							}
+							jcpm.resetIsModified();
+						} catch (Exception exc)
+						{
+							String error = "Error while writing file: " + exc.getMessage();
+							logger.error(error);
+							logger.debug(exc);
+							JOptionPane.showMessageDialog(jcpPanel, error);
+						}
+		
+					} else if (object instanceof Reaction)
 					{
-						String error = "Cannot save reaction in this format: " + type;
-						logger.error(error);
-						JOptionPane.showMessageDialog(jcpPanel, error);
+						try
+						{
+							if (type.equals(JCPSaveFileFilter.cml))
+							{
+								saveAsCML2(object, outFile);
+							} else
+							{
+								String error = "Cannot save reaction in this format: " + type;
+								logger.error(error);
+								JOptionPane.showMessageDialog(jcpPanel, error);
+							}
+						} catch (Exception exc)
+						{
+							String error = "Error while writing file: " + exc.getMessage();
+							logger.error(error);
+							logger.debug(exc);
+							JOptionPane.showMessageDialog(jcpPanel, error);
+						}
 					}
-				} catch (Exception exc)
-				{
-					String error = "Error while writing file: " + exc.getMessage();
-					logger.error(error);
-					logger.debug(exc);
-					JOptionPane.showMessageDialog(jcpPanel, error);
+					jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
+					jcpPanel.setCurrentSaveFileFilter(chooser.getFileFilter());
+					jcpPanel.setIsAlreadyAFile(outFile);
+					jcpPanel.getJChemPaintModel().setTitle(outFile.getName());
+					((JFrame)jcpPanel.getParent().getParent().getParent().getParent()).setTitle(outFile.getName());
 				}
 			}
-			jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
-			jcpPanel.setCurrentSaveFileFilter(chooser.getFileFilter());
-      jcpPanel.setIsAlreadyAFile(outFile);
-      jcpPanel.getJChemPaintModel().setTitle(outFile.getName());
-      ((JFrame)jcpPanel.getParent().getParent().getParent().getParent()).setTitle(outFile.getName());
 		}
 	}
 

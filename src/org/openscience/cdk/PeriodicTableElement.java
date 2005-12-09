@@ -23,6 +23,8 @@
  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 package org.openscience.cdk;
+import java.util.HashMap;
+
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -116,7 +118,7 @@ public class PeriodicTableElement extends Element
 	*/
 	public void setName(String name) 
 	{
-		this.name = name;
+		this.name=name;
 		notifyChanged();
 	}
 

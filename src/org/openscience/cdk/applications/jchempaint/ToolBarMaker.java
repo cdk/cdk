@@ -32,6 +32,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 import java.net.URL;
+import java.util.Locale;
 import java.util.MissingResourceException;
 
 import javax.swing.Box;
@@ -41,8 +42,10 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
+import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.applications.jchempaint.action.ElementAction;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
+import org.openscience.cdk.config.ElementPTFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
