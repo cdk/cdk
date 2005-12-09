@@ -162,20 +162,13 @@ public class CMLWriter extends DefaultChemObjectWriter {
         output.close();
     }
 
-    public boolean accepts(Class objectClass) {
-    	if (Molecule.class.isInstance(objectClass))
-    		return true;
-    	
-    	return false;
-    }
-    
     /**
      * Serializes the ChemObject to CML and redirects it to the output Writer.
      *
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(ChemObject object) throws CDKException {
-        if (!accepts(object.getClass())) return;
+        if (!(object instanceof Molecule)) return;
 
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
@@ -183,6 +176,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
         prefix = namespacePrefix.getSetting();
         
         Element element = Convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+        logger.debug("Element: " + element);
+        logger.debug("  XML -> ", element.toXML());
+        logger.debug("  XML -> ", element.toString());
         try {
         	output.write(element.toXML());
         } catch (IOException exception) {
