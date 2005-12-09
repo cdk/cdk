@@ -166,6 +166,8 @@ public class ToolBarMaker
 			JCPAction a = new ElementAction(key,jcpp);
 			b.addActionListener(a);
 			b.setEnabled(a.isEnabled());
+			if(JCPLocalizationHandler.getInstance().getString("singleelementTooltip")!=null)
+				b.setToolTipText(JCPLocalizationHandler.getInstance().getString("singleelementTooltip")+" "+key);
 		}
 		b.setRequestFocusEnabled(false);
 		b.setMargin(new Insets(1, 1, 1, 1));
