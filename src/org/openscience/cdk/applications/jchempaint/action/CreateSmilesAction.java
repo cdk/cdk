@@ -104,7 +104,7 @@ public class CreateSmilesAction extends JCPAction
 				bool[i]=true;
 			}
 			chiralsmiles=generator.createChiralSMILES(moleculewithh,bool);
-			dialog.setMessage("Generated SMILES:", "SMILES: "+smiles+System.getProperty("line.separator")+"nchiral SMILES: "+chiralsmiles);
+			dialog.setMessage("Generated SMILES:", "SMILES: "+smiles+System.getProperty("line.separator")+"chiral SMILES: "+chiralsmiles);
 		} catch (Exception exception)
 		{
 			String message = "Error while creating SMILES: " + exception.getMessage();
