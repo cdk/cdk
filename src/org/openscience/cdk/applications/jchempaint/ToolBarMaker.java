@@ -205,7 +205,6 @@ public class ToolBarMaker
 
 		Box box=null;
 		int counter=0;
-		boolean alladded=false;
 		for (int i = 0; i < toolKeys.length; i++)
 		{
 			if (toolKeys[i].equals("-"))
@@ -226,9 +225,6 @@ public class ToolBarMaker
 					if(box!=null)
 						toolbar2.add(box);
 					box=new Box(BoxLayout.Y_AXIS);
-					alladded=true;
-				}else{
-					alladded=false;
 				}
 				button = (JButton) createToolbarButton(toolKeys[i], jcpp, elementtype);
 				/*if (toolKeys[i].equals("lasso"))
@@ -252,10 +248,8 @@ public class ToolBarMaker
 				counter++;
 			}
 		}
-		if(!alladded){
-			if(box!=null)
+		if(box!=null)
 				toolbar2.add(box);
-		}
 		if (orientation == SwingConstants.HORIZONTAL)
 		{
 			toolbar2.add(Box.createHorizontalGlue());
