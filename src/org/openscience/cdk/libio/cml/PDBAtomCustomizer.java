@@ -35,7 +35,7 @@ import org.xmlcml.cml.element.CMLScalar;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.PDBAtom;
 
 /**
@@ -145,7 +145,7 @@ public class PDBAtomCustomizer implements Customizer {
         }
     }
 
-    public void customize(Molecule molecule, Object nodeToAdd) throws Exception {
+    public void customize(AtomContainer molecule, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
 }
