@@ -30,16 +30,10 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
+import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
@@ -54,7 +48,6 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.tools.LoggingTool;
-
 
 /**
  * Serializes a SetOfMolecules or a Molecule object to CML 2 code.
@@ -98,22 +91,15 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CMLWriter extends DefaultChemObjectWriter {
 
-	// TODO: clean up constructors
-	
     private OutputStream output;
     private Writer writer;
 
-    private BooleanIOSetting xmlDecl;
     private BooleanIOSetting cmlIds;
     private BooleanIOSetting namespacedOutput;
     private StringIOSetting namespacePrefix;
     private BooleanIOSetting schemaInstanceOutput;
     private StringIOSetting instanceLocation;
     private BooleanIOSetting indent;
-    
-    private boolean done;
-    private boolean fragment;
-    private String prefix = "";
     
     private LoggingTool logger;
 
@@ -125,12 +111,19 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public CMLWriter(Writer out) {
-        this(out, false);
+        this.writer = out;
+        output = new OutputStream() {
+			public void write(int b) throws IOException {
+				writer.write(b);
+			}
+        };
+        initIOSettings();
     }
 
     public CMLWriter(OutputStream output) {
         this.output = output;
         writer = null;
+        initIOSettings();
     }
     
     public CMLWriter() {
@@ -141,31 +134,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
         return new CMLFormat();
     }
     
-    /**
-     * Constructs a new CMLWriter class. Output will be stored in the Writer
-     * class given as parameter. The CML code will be valid CML code with a
-     * XML header. More than object can be stored.
-     *
-     * @param w         Writer to redirect the output to.
-     * @param fragment  Boolean denoting that the content is not
-     */
-    public CMLWriter(Writer w, boolean fragment) {
-        this(fragment);
-        this.writer = w;
-        output = new OutputStream() {
-			public void write(int b) throws IOException {
-				writer.write(b);
-			}
-        };
-    }
-
-    public CMLWriter(boolean fragment) {
-        logger = new LoggingTool(this);
-        this.fragment = fragment;
-        this.done = false;
-        initIOSettings();
-    }
-
     /**
      * Flushes the output and closes this object
      */
@@ -184,7 +152,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
         customizeJob();
-        prefix = namespacePrefix.getSetting();
         
         Convertor convertor = new Convertor(
         	cmlIds.isSet(), 
@@ -201,9 +168,13 @@ public class CMLWriter extends DefaultChemObjectWriter {
                 serializer.setIndent(2);
             }
             
-            if (fragment || !xmlDecl.isSet()) {
-                logger.info("Omiting XML declaration");
-                // don't know how to do this yet
+            if (schemaInstanceOutput.isSet()) {
+            	root.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            	root.addAttribute(new Attribute(
+            	  	"xsi:schemaLocation=",
+            	  	"http://www.w3.org/2001/XMLSchema-instance",
+            	  	"http://www.xml-cml.org/schema/cml2/core " + instanceLocation.getSetting()
+            	));
             }
             
         	serializer.write(doc);
@@ -230,10 +201,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
           "What should the namespace prefix be? [empty is no prefix]",
           "");
           
-        xmlDecl = new BooleanIOSetting("XMLDeclaration", IOSetting.LOW,
-          "Should the output use have a XMLDeclaration?", 
-          "true");
-          
         schemaInstanceOutput = new BooleanIOSetting("SchemaInstance", IOSetting.LOW,
           "Should the output use the Schema-Instance attribute?", 
           "false");
@@ -248,7 +215,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
     
     private void customizeJob() {
-        fireIOSettingQuestion(xmlDecl);
         fireIOSettingQuestion(cmlIds);
         fireIOSettingQuestion(namespacedOutput);
         if (namespacedOutput.isSet()) {
@@ -262,14 +228,13 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[7];
-        settings[0] = xmlDecl;
-        settings[1] = cmlIds;
-        settings[2] = namespacedOutput;
-        settings[3] = namespacePrefix;
-        settings[4] = schemaInstanceOutput;
-        settings[5] = instanceLocation;
-        settings[6] = indent;
+        IOSetting[] settings = new IOSetting[6];
+        settings[0] = cmlIds;
+        settings[1] = namespacedOutput;
+        settings[2] = namespacePrefix;
+        settings[3] = schemaInstanceOutput;
+        settings[4] = instanceLocation;
+        settings[5] = indent;
         return settings;
     }
     
