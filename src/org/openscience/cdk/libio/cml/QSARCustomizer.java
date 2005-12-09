@@ -93,13 +93,13 @@ public class QSARCustomizer implements Customizer {
                 Element property = new CMLProperty();
                 // setup up the metadata list
                 Element metadataList = new CMLMetadataList();
-                metadataList.addAttribute(new Attribute("xmlns:" + QSARMETA_NAMESPACE, QSARMETA_URI));
+                metadataList.addNamespaceDeclaration(QSARMETA_NAMESPACE, QSARMETA_URI);
                 String specsRef = specs.getSpecificationReference();
                 if (specsRef.startsWith(QSARDICT_URI)) {
                     specsRef = QSARDICT_NAMESPACE + ":" + specsRef.substring(QSARDICT_URI.length()+1);
-                    property.addAttribute(new Attribute("xmlns:" + QSARDICT_NAMESPACE, QSARDICT_URI));
+                    property.addNamespaceDeclaration(QSARDICT_NAMESPACE, QSARDICT_URI);
                 }
-                Element metaData = new CMLMetadata();
+                CMLMetadata metaData = new CMLMetadata();
                 metaData.addAttribute(new Attribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationTitle"));
                 metaData.addAttribute(new Attribute("content", specs.getImplementationTitle()));
                 metadataList.appendChild(metaData);

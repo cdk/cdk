@@ -1,15 +1,20 @@
 package org.openscience.cdk.libio.cml;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OptionalDataException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
@@ -18,7 +23,9 @@ import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
+import org.xmlcml.cml.base.CMLException;
 import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
 import org.xmlcml.cml.element.CMLCrystal;
@@ -35,7 +42,12 @@ import org.xmlcml.cml.element.CMLScalar;
  */
 public class Convertor {
 
-	private boolean useCMLIDs;
+	private LoggingTool logger;
+	
+    private final static String CUSTOMIZERS_LIST = "libio-cml-customizers.set";
+    private static List customizers = null;
+    
+    private boolean useCMLIDs;
 	private String prefix;
 	
 	/**
@@ -45,27 +57,73 @@ public class Convertor {
 	 * @param prefix     Namespace prefix to use. If null, then no prefix is used;
 	 */
 	public Convertor(boolean useCMLIDs, String prefix) {
+		logger = new LoggingTool(this);
 		this.useCMLIDs = useCMLIDs;
 		this.prefix = prefix;
+        setupCustomizers();
 	}
 	
-	public CMLCrystal cdkCrystalToCMLCrystal(Crystal crystal) {
+    private void setupCustomizers() {
+    	if (customizers == null) {
+    		customizers = new Vector();
+    		try {
+    			logger.debug("Starting loading Customizers...");
+    			BufferedReader reader = new BufferedReader(new InputStreamReader(
+    					this.getClass().getClassLoader().getResourceAsStream(CUSTOMIZERS_LIST)
+    			));
+    			int customizerCount = 0;
+    			while (reader.ready()) {
+    				// load them one by one
+    				String customizerName = reader.readLine();
+    				customizerCount++;
+    				try {
+    					Customizer customizer = (Customizer)this.getClass().getClassLoader().
+    					loadClass(customizerName).newInstance();
+    					customizers.add(customizer);
+    					logger.info("Loaded Customizer: ", customizer.getClass().getName());
+    				} catch (ClassNotFoundException exception) {
+    					logger.info("Could not find this Customizer: ", customizerName);
+    					logger.debug(exception);
+    				} catch (Exception exception) {
+    					logger.warn("Could not load this Customizer: ", customizerName);
+    					logger.warn(exception.getMessage());
+    					logger.debug(exception);
+    				}
+    			}
+    			logger.info("Number of loaded customizers: ", customizerCount);
+    		} catch (Exception exception) {
+    			logger.error("Could not load this list: ", CUSTOMIZERS_LIST);
+    			logger.debug(exception);
+    		}
+    	}
+    }
+    	
+    public CMLMolecule cdkCrystalToCMLMolecule(Crystal crystal) {
+		CMLMolecule molecule = cdkAtomContainerToCMLMolecule(crystal);
 		CMLCrystal cmlCrystal = new CMLCrystal();
 		this.checkPrefix(cmlCrystal);
-		return cmlCrystal;
+		cmlCrystal.setZ(crystal.getZ());
+		double[] params = CrystalGeometryTools.cartesianToNotional(
+			crystal.getA(), crystal.getB(), crystal.getC()
+		);
+		logger.debug("Number of cell params: ", params.length);
+		try {
+			cmlCrystal.setCellParameters(params);
+		} catch (CMLException exception) {
+			logger.error("Could not set crystal cell parameters!");
+		}
+		molecule.addCrystal(cmlCrystal);
+		return molecule;
 	}
 	
 	public CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure) {
-		CMLMolecule cmlMolecule = cdkAtomContainerToCMLMolecule(structure);
-		return cmlMolecule;
+		return cdkAtomContainerToCMLMolecule(structure);
 	}
 	
 	public CMLMolecule cdkAtomContainerToCMLMolecule(AtomContainer structure) {
 		CMLMolecule cmlMolecule = new CMLMolecule();
 		this.checkPrefix(cmlMolecule);
-		if (structure.getID() != null) {
-			cmlMolecule.setId(structure.getID());
-		}
+		if (structure.getID() != null) cmlMolecule.setId(structure.getID());
 		if (structure.getProperty(CDKConstants.TITLE) != null) {
 			cmlMolecule.setTitle((String)structure.getProperty(CDKConstants.TITLE));
 		}
@@ -77,7 +135,19 @@ public class Convertor {
 			CMLBond cmlBond = cdkBondToCMLBond(structure.getBondAt(i));
 			cmlMolecule.addBond(cmlBond);
 		}
-		return cmlMolecule;
+
+        Iterator elements = customizers.iterator();
+        while (elements.hasNext()) {
+        	Customizer customizer = (Customizer)elements.next();
+        	try {
+        		customizer.customize(structure, cmlMolecule);
+        	} catch (Exception exception) {
+        		logger.error("Error while customizing CML output with customizer: ",
+        				customizer.getClass().getName());
+        		logger.debug(exception);
+        	}
+        }
+        return cmlMolecule;
 	}
 	
 	private boolean addDictRef(ChemObject object, CMLElement cmlElement) {
@@ -156,7 +226,19 @@ public class Convertor {
         }
 		writeProperties(cdkAtom, cmlAtom);
 		//skipped the "spinMultiplicity" - see org.openscience.cdk.libio.cml.Convertor line 600-604
-		return cmlAtom;
+
+		Iterator elements = customizers.iterator();
+        while (elements.hasNext()) {
+            Customizer customizer = (Customizer)elements.next();
+            try {
+                customizer.customize(cdkAtom, cmlAtom);
+            } catch (Exception exception) {
+                logger.error("Error while customizing CML output with customizer: ",
+                    customizer.getClass().getName());
+                logger.debug(exception);
+            }
+        }
+        return cmlAtom;
 	}
 	
 	public CMLBond cdkBondToCMLBond(Bond cdkBond) {
@@ -210,15 +292,15 @@ public class Convertor {
                this.checkPrefix(scalar);
                scalar.setDataType("xsd:string");
                scalar.setDictRef("mdl:stereo");
-                if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP) {
-                  scalar.setValue("W");
-                }else{
-                	scalar.setValue("H");
-                }
-                cmlBond.appendChild(scalar);
-            }
-            if (cdkBond.getProperties().size() > 0) writeProperties(cdkBond, cmlBond);
-            
+           if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+        	   scalar.setValue("W");
+           }else{
+        	   scalar.setValue("H");
+           }
+           cmlBond.appendChild(scalar);
+        }
+        if (cdkBond.getProperties().size() > 0) writeProperties(cdkBond, cmlBond);
+        
 		return cmlBond;
 	}
 	
