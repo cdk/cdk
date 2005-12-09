@@ -211,3 +211,9 @@ org/openscience/cdk/validate/ProblemMarker.class
 org/xml/sax/ext/Attributes2.class
 org/xml/sax/ext/DefaultHandler2.class
 org/xml/sax/ext/EntityResolver2.class
+org/openscience/cdk/applications/swing/PeriodicTablePanel$ElementButton.class
+org/openscience/cdk/config/ElementPTFactory.class 
+org/openscience/cdk/config/elements.ElementPTReader.class
+org/openscience/cdk/config/elements.ElementPTHandler.class
+org/openscience/cdk/PeriodicTableElement.class
+
