@@ -7,16 +7,17 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.PseudoAtom;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
@@ -48,12 +49,17 @@ public class Convertor {
 		this.prefix = prefix;
 	}
 	
-	public CMLCrystal cdkMoleculeToCMLCrystal(Crystal crystal) {
+	public CMLCrystal cdkCrystalToCMLCrystal(Crystal crystal) {
 		CMLCrystal cmlCrystal = new CMLCrystal();
 		return cmlCrystal;
 	}
 	
 	public CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure) {
+		CMLMolecule cmlMolecule = cdkAtomContainerToCMLMolecule(structure);
+		return cmlMolecule;
+	}
+	
+	public CMLMolecule cdkAtomContainerToCMLMolecule(AtomContainer structure) {
 		CMLMolecule cmlMolecule = new CMLMolecule();
 		if (structure.getID() != null) {
 			cmlMolecule.setId(structure.getID());

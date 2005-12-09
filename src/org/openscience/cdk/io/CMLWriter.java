@@ -38,7 +38,10 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
 
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.CMLFormat;
@@ -117,12 +120,14 @@ public class CMLWriter extends DefaultChemObjectWriter {
 				writer.write(b);
 			}
         };
+        logger = new LoggingTool(this);
         initIOSettings();
     }
 
     public CMLWriter(OutputStream output) {
         this.output = output;
         writer = null;
+        logger = new LoggingTool(this);
         initIOSettings();
     }
     
@@ -147,7 +152,13 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(ChemObject object) throws CDKException {
-        if (!(object instanceof Molecule)) return;
+        if (object instanceof Molecule) {
+        } else if (object instanceof Crystal) {
+        } else if (object instanceof Atom) {
+        } else if (object instanceof Bond) {
+        } else {
+        	throw new CDKException("Cannot write this unsupported ChemObject: " + object.getClass().getName());
+        }
 
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
@@ -157,7 +168,16 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	cmlIds.isSet(), 
         	(namespacePrefix.getSetting().length() >0) ? namespacePrefix.getSetting() : null
         );
-        Element root = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+        Element root = null;
+        if (object instanceof Molecule) {
+        	root = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+        } else if (object instanceof Crystal) {
+        	root = convertor.cdkCrystalToCMLCrystal((Crystal)object);
+        } else if (object instanceof Atom) {
+        	root = convertor.cdkAtomToCMLAtom((Atom)object);
+        } else if (object instanceof Bond) {
+        	root = convertor.cdkBondToCMLBond((Bond)object);
+        }
         Document doc = new Document(root);
         
         try {
@@ -181,12 +201,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } catch (Exception exception) {
         	throw new CDKException("Could not write XML output: " + exception.getMessage(), exception);
         }
-        
-        // TODO: fix complying to these IO props:
-        //  - xmlDecl
-        //  - schemaInstanceOutput
-        //  - instanceLocation
-    };
+    }
 
     private void initIOSettings() {
         cmlIds = new BooleanIOSetting("CMLIDs", IOSetting.LOW,
