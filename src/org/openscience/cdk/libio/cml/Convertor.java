@@ -14,11 +14,13 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
+import org.xmlcml.cml.element.CMLCrystal;
 import org.xmlcml.cml.element.CMLMolecule;
 import org.xmlcml.cml.element.CMLScalar;
 
@@ -32,7 +34,26 @@ import org.xmlcml.cml.element.CMLScalar;
  */
 public class Convertor {
 
-	public static CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure) {
+	private boolean useCMLIDs;
+	private String prefix;
+	
+	/**
+	 * Constructs a CML convertor.
+	 * 
+	 * @param useCMLIDs  Uses object IDs like 'a1' instead of 'a&lt;hash>'.
+	 * @param prefix     Namespace prefix to use. If null, then no prefix is used;
+	 */
+	public Convertor(boolean useCMLIDs, String prefix) {
+		this.useCMLIDs = useCMLIDs;
+		this.prefix = prefix;
+	}
+	
+	public CMLCrystal cdkMoleculeToCMLCrystal(Crystal crystal) {
+		CMLCrystal cmlCrystal = new CMLCrystal();
+		return cmlCrystal;
+	}
+	
+	public CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure) {
 		CMLMolecule cmlMolecule = new CMLMolecule();
 		if (structure.getID() != null) {
 			cmlMolecule.setId(structure.getID());
@@ -51,7 +72,7 @@ public class Convertor {
 		return cmlMolecule;
 	}
 	
-	private static boolean addDictRef(ChemObject object, CMLElement cmlElement) {
+	private boolean addDictRef(ChemObject object, CMLElement cmlElement) {
         Hashtable properties = object.getProperties();
         Iterator iter = properties.keySet().iterator();
         while (iter.hasNext()) {
@@ -68,7 +89,7 @@ public class Convertor {
         return false;
     }
 	
-	 private static boolean addAtomID(Atom cdkAtom, CMLAtom cmlAtom) {
+	 private boolean addAtomID(Atom cdkAtom, CMLAtom cmlAtom) {
 	        if(cdkAtom.getID()!=null && !cdkAtom.getID().equals("")) { 
 	        	cmlAtom.setId(cdkAtom.getID());
 	        }
@@ -78,7 +99,7 @@ public class Convertor {
 	        return true;
 	    }
 
-	private static CMLAtom cdkAtomToCMLAtom(Atom cdkAtom) {
+	public CMLAtom cdkAtomToCMLAtom(Atom cdkAtom) {
 		CMLAtom cmlAtom = new CMLAtom();
 		addAtomID(cdkAtom, cmlAtom);
 		addDictRef(cdkAtom, cmlAtom);
@@ -128,7 +149,7 @@ public class Convertor {
 		return cmlAtom;
 	}
 	
-	private static CMLBond cdkBondToCMLBond(Bond cdkBond) {
+	public CMLBond cdkBondToCMLBond(Bond cdkBond) {
 		CMLBond cmlBond = new CMLBond();
 		if (cdkBond.getID() == null || cdkBond.getID().length() == 0) {
 			cmlBond.setId("b" + cdkBond.hashCode());
@@ -188,7 +209,7 @@ public class Convertor {
 		return cmlBond;
 	}
 	
-    private static void writeProperties(ChemObject object, CMLElement cmlElement) {
+    private void writeProperties(ChemObject object, CMLElement cmlElement) {
         Hashtable props = object.getProperties();
         Enumeration keys = props.keys();
         CMLElement propList = null;
@@ -218,7 +239,7 @@ public class Convertor {
         }
     }
 
-	private static void mapFractionalCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
+	private void mapFractionalCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
 		if (cdkAtom.getPoint3d() != null) {
 			cmlAtom.setXFract(cdkAtom.getPoint3d().x);
 			cmlAtom.setYFract(cdkAtom.getPoint3d().y);
@@ -226,7 +247,7 @@ public class Convertor {
 		}
 	}
 
-	private static void map3DCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
+	private void map3DCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
 		if (cdkAtom.getPoint3d() != null) {
 			cmlAtom.setX3(cdkAtom.getPoint3d().x);
 			cmlAtom.setY3(cdkAtom.getPoint3d().y);
@@ -234,7 +255,7 @@ public class Convertor {
 		}
 	}
 
-	private static void map2DCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
+	private void map2DCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
 		if (cdkAtom.getPoint2d() != null) {
 			cmlAtom.setX2(cdkAtom.getPoint2d().x);
 			cmlAtom.setY2(cdkAtom.getPoint2d().y);

@@ -86,7 +86,7 @@ public class CML2WriterTest extends CDKTestCase {
             logger.debug(exception);
             fail(exception.getMessage());
         }
-		logger.debug("******************************");
+		logger.debug("****************************** testCMLWriterBenzene()");
         logger.debug(writer.toString());
 		logger.debug("******************************");
         assertTrue(writer.toString().indexOf("</molecule>") != -1);
@@ -113,7 +113,7 @@ public class CML2WriterTest extends CDKTestCase {
             fail(exception.getMessage());
         }
         String cmlContent = writer.toString();
-		logger.debug("******************************");
+		logger.debug("****************************** testCMLCrystal()");
         logger.debug(cmlContent);
 		logger.debug("******************************");
         assertTrue(cmlContent.indexOf("</crystal>") != -1); // the cystal info has to be present
@@ -137,7 +137,7 @@ public class CML2WriterTest extends CDKTestCase {
             fail(exception.getMessage());
         }
         String cmlContent = writer.toString();
-        logger.debug("******************************");
+        logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
         assertTrue(cmlContent.indexOf("<property xmlns:qsardict") != -1);
@@ -161,7 +161,7 @@ public class CML2WriterTest extends CDKTestCase {
             fail(exception.getMessage());
         }
         String cmlContent = writer.toString();
-        logger.debug("******************************");
+        logger.debug("****************************** testPDBAtomCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
         assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
