@@ -51,6 +51,7 @@ public class Convertor {
 	
 	public CMLCrystal cdkCrystalToCMLCrystal(Crystal crystal) {
 		CMLCrystal cmlCrystal = new CMLCrystal();
+		this.checkPrefix(cmlCrystal);
 		return cmlCrystal;
 	}
 	
@@ -61,6 +62,7 @@ public class Convertor {
 	
 	public CMLMolecule cdkAtomContainerToCMLMolecule(AtomContainer structure) {
 		CMLMolecule cmlMolecule = new CMLMolecule();
+		this.checkPrefix(cmlMolecule);
 		if (structure.getID() != null) {
 			cmlMolecule.setId(structure.getID());
 		}
@@ -107,6 +109,7 @@ public class Convertor {
 
 	public CMLAtom cdkAtomToCMLAtom(Atom cdkAtom) {
 		CMLAtom cmlAtom = new CMLAtom();
+		this.checkPrefix(cmlAtom);
 		addAtomID(cdkAtom, cmlAtom);
 		addDictRef(cdkAtom, cmlAtom);
 		if (cdkAtom instanceof PseudoAtom) {
@@ -145,6 +148,7 @@ public class Convertor {
 		}
 		if (cdkAtom.getCharge() != 0.0) {
             CMLScalar scalar = new CMLScalar();
+            this.checkPrefix(scalar);
 //            scalar.setDataType("xsd:float");
             scalar.setDictRef("cdk:partialCharge");
             scalar.setValue(cdkAtom.getCharge());
@@ -157,6 +161,7 @@ public class Convertor {
 	
 	public CMLBond cdkBondToCMLBond(Bond cdkBond) {
 		CMLBond cmlBond = new CMLBond();
+		this.checkPrefix(cmlBond);
 		if (cdkBond.getID() == null || cdkBond.getID().length() == 0) {
 			cmlBond.setId("b" + cdkBond.hashCode());
         }else{
@@ -191,6 +196,7 @@ public class Convertor {
         	cmlBond.setOrder("T");
         } else {
             CMLScalar scalar = new CMLScalar();
+            this.checkPrefix(scalar);
 //            scalar.setDataType("xsd:float");
             scalar.setDictRef("cdk:bondOrder");
             scalar.setTitle("order");
@@ -201,6 +207,7 @@ public class Convertor {
         if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP ||
         		cdkBond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
                CMLScalar scalar = new CMLScalar();
+               this.checkPrefix(scalar);
                scalar.setDataType("xsd:string");
                scalar.setDictRef("mdl:stereo");
                 if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP) {
@@ -224,6 +231,7 @@ public class Convertor {
             if (key instanceof DictRef) {
                 Object value = props.get(key);
                 CMLScalar scalar = new CMLScalar();
+                this.checkPrefix(scalar);
                 scalar.setDictRef(((DictRef)key).getType());
                 scalar.setValue(value.toString());
                 cmlElement.appendChild(scalar);
@@ -234,6 +242,7 @@ public class Convertor {
                 } else if (!(stringKey.startsWith("org.openscience.cdk"))) {
                     Object value = props.get(key);
                     CMLScalar scalar = new CMLScalar();
+                    this.checkPrefix(scalar);
                     scalar.setTitle((String)key);
                     scalar.setValue(value.toString());
                     cmlElement.appendChild(scalar);
@@ -266,6 +275,10 @@ public class Convertor {
 			cmlAtom.setX2(cdkAtom.getPoint2d().x);
 			cmlAtom.setY2(cdkAtom.getPoint2d().y);
 		}
+	}
+	
+	private void checkPrefix (CMLElement element) {
+		if (this.prefix != null) element.setNamespacePrefix(this.prefix);
 	}
 
 }
