@@ -40,7 +40,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import nu.xom.Document;
 import nu.xom.Element;
+import nu.xom.Serializer;
 
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
@@ -96,7 +98,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CMLWriter extends DefaultChemObjectWriter {
 
-    private Writer output;
+	// TODO: clean up constructors
+	
+    private OutputStream output;
+    private Writer writer;
 
     private BooleanIOSetting xmlDecl;
     private BooleanIOSetting cmlIds;
@@ -123,8 +128,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
         this(out, false);
     }
 
-    public CMLWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public CMLWriter(OutputStream output) {
+        this.output = output;
+        writer = null;
     }
     
     public CMLWriter() {
@@ -145,7 +151,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
      */
     public CMLWriter(Writer w, boolean fragment) {
         this(fragment);
-        output = w;
+        this.writer = w;
+        output = new OutputStream() {
+			public void write(int b) throws IOException {
+				writer.write(b);
+			}
+        };
     }
 
     public CMLWriter(boolean fragment) {
@@ -175,61 +186,35 @@ public class CMLWriter extends DefaultChemObjectWriter {
         customizeJob();
         prefix = namespacePrefix.getSetting();
         
-        Element element = Convertor.cdkMoleculeToCMLMolecule((Molecule)object);
-        logger.debug("Element: " + element);
-        logger.debug("  XML -> ", element.toXML());
-        logger.debug("  XML -> ", element.toString());
+        Convertor convertor = new Convertor(
+        	cmlIds.isSet(), 
+        	(namespacePrefix.getSetting().length() >0) ? namespacePrefix.getSetting() : null
+        );
+        Element root = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+        Document doc = new Document(root);
+        
         try {
-        	output.write(element.toXML());
-        } catch (IOException exception) {
+            Serializer serializer = new Serializer(output, "ISO-8859-1");
+            
+            if (indent.isSet()) {
+                logger.info("Indenting XML output");
+                serializer.setIndent(2);
+            }
+            
+            if (fragment || !xmlDecl.isSet()) {
+                logger.info("Omiting XML declaration");
+                // don't know how to do this yet
+            }
+            
+        	serializer.write(doc);
+        } catch (Exception exception) {
         	throw new CDKException("Could not write XML output: " + exception.getMessage(), exception);
         }
         
-        /* FIXME: port the below code to XOM 
-         
-        CMLDocument cmldoc = null;
-        
-        if (!done) {
-            
-            CMLDocumentFactory docfac = DocumentFactoryImpl.newInstance();
-            cmldoc = (CMLDocument) docfac.createDocument();
-            try {
-                Jumbo5Convertor convertor = new Convertor(cmlIds.isSet(),namespacedOutput.isSet(), 
-                                                    schemaInstanceOutput.isSet(), 
-                                                    instanceLocation.getSetting(),
-                                                    prefix);
-                cmldoc.appendChild(convertor.convert(object,cmldoc));
-            } catch (CMLException ex){
-                throw new CDKException(ex.getMessage(), ex);
-            }
-
-            if (!fragment) {
-                done = true;
-            }
-        } else {
-            logger.warn("I'm done. But what does this mean?!");
-        };
-        
-        try {
-            TransformerFactory tFactory = TransformerFactory.newInstance();
-            Transformer transformer = tFactory.newTransformer();
-            if (fragment || !xmlDecl.isSet()) {
-                logger.info("Omiting XML declaration");
-                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            }
-            if (indent.isSet()) {
-                logger.info("Indenting XML output");
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            }
-            DOMSource source = new DOMSource(cmldoc);
-            StreamResult result = new StreamResult(output);
-            transformer.transform(source, result);
-        } catch (javax.xml.transform.TransformerException ex) {
-            String error = "Error while transforming XML string: " + ex.getMessage();
-            logger.error(error);
-            logger.debug(ex);
-            throw new CDKException(error, ex);
-        } */
+        // TODO: fix complying to these IO props:
+        //  - xmlDecl
+        //  - schemaInstanceOutput
+        //  - instanceLocation
     };
 
     private void initIOSettings() {
