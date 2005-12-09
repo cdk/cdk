@@ -34,9 +34,16 @@ import java.io.StringWriter;
 
 import javax.swing.JFrame;
 
+import nu.xom.Element;
+
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.libio.cml.Convertor;
+import org.xmlcml.cml.element.CMLCml;
 
 
 /**
@@ -67,13 +74,17 @@ public class ShowChemObjectDumpAction extends JCPAction
 			dialog = new TextViewDialog(frame, "ChemObject Dump", new Dimension(500, 300));
 		}
 
-		StringWriter stringWriter = new StringWriter();
-		CMLWriter cmlWriter = new CMLWriter(stringWriter, true);
-		try
-		{
-			cmlWriter.write(object);
-			cmlWriter.close();
-			dialog.setText(stringWriter.toString());
+		Convertor convertor = new Convertor(false, null);
+		try {
+			Element cmlDOM = new CMLCml();
+			if (object instanceof Molecule) {
+				cmlDOM = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+			} else if (object instanceof Atom) {
+				cmlDOM = convertor.cdkAtomToCMLAtom((Atom)object);
+			} else if (object instanceof Bond) {
+				cmlDOM = convertor.cdkBondToCMLBond((Bond)object);
+			}
+			dialog.setText(cmlDOM.toXML());
 		} catch (Exception exception)
 		{
 			String message = "CML Writer cannot write ChemOject: " + object.getClass().getName();
