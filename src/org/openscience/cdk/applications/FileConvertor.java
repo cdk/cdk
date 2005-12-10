@@ -31,6 +31,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.lang.reflect.Constructor;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -55,7 +56,6 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
-import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.ChemObjectIO;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ChemObjectWriter;
@@ -285,9 +285,7 @@ public class FileConvertor {
     private ChemObjectWriter getChemObjectWriter(String format, Writer fileWriter) {
         ChemObjectWriter writer = null;
         try {
-            if (format.equalsIgnoreCase("CML")) {
-                writer = new CMLWriter(fileWriter);
-            } else if (format.equalsIgnoreCase("MOL")) {
+            if (format.equalsIgnoreCase("MOL")) {
                 writer = new MDLWriter(fileWriter);
             } else if (format.equalsIgnoreCase("SMI")) {
                 writer = new SMILESWriter(fileWriter);
@@ -314,6 +312,13 @@ public class FileConvertor {
                 if (propsListener != null) {
                     writer.addChemObjectIOListener(propsListener);
                 }
+            } else if (format.equalsIgnoreCase("CML")) {
+            	Class cmlWriterClass = this.getClass().getClassLoader().loadClass("org.opscience.cdk.io.CMLWriter");
+            	if (cmlWriterClass != null) {
+                    writer = (ChemObjectWriter)cmlWriterClass.newInstance();
+            	}
+            	Constructor constructor = writer.getClass().getConstructor(new Class[]{Writer.class});
+            	writer = (ChemObjectWriter)constructor.newInstance(new Object[]{fileWriter});
             } else {
                 logger.debug(format + " -> null");
             }
