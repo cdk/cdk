@@ -260,6 +260,8 @@
                 <classpath>
                     <fileset dir="${lib}">
                         <include name="*.jar" />
+                    	<!-- some jars require some Java version -->
+                    	<exclude name="jumbo50.jar" unless="isJava15"/>
                     </fileset>
                     <fileset dir="${lib}/libio">
                         <include name="*.jar" />
@@ -280,6 +282,8 @@
                 <classpath>
                     <fileset dir="${lib}">
                         <include name="*.jar" />
+                    	<!-- some jars require some Java version -->
+                    	<exclude name="jumbo50.jar" unless="isJava15"/>
                     </fileset>
                     <fileset dir="${lib}/libio">
                         <include name="*.jar" />
