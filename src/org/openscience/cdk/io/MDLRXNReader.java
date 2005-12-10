@@ -35,15 +35,16 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MDLRXNFormat;
@@ -110,17 +111,17 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      */
      public ChemObject read(ChemObject object) throws CDKException {
          if (object instanceof Reaction) {
-             return (ChemObject) readReaction();
+             return (ChemObject) readReaction(object.getBuilder());
          } else if (object instanceof ChemModel) {
-             ChemModel model = new ChemModel();
-             SetOfReactions reactionSet = new SetOfReactions();
-             reactionSet.addReaction(readReaction());
+             ChemModel model = object.getBuilder().newChemModel();
+             SetOfReactions reactionSet = object.getBuilder().newSetOfReactions();
+             reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setSetOfReactions(reactionSet);
              return model;
          } else if (object instanceof ChemFile) {
-             ChemFile chemFile = new ChemFile();
-             ChemSequence sequence = new ChemSequence();
-             sequence.addChemModel((ChemModel)read(new ChemModel()));
+             ChemFile chemFile = object.getBuilder().newChemFile();
+             ChemSequence sequence = object.getBuilder().newChemSequence();
+             sequence.addChemModel((ChemModel)read(object.getBuilder().newChemModel()));
              chemFile.addChemSequence(sequence);
              return chemFile;
          } else {
@@ -147,8 +148,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      *
      * @return  The Reaction that was read from the MDL file.
      */
-    private Reaction readReaction() throws CDKException {
-        Reaction reaction = new Reaction();
+    private Reaction readReaction(ChemObjectBuilder builder) throws CDKException {
+        Reaction reaction = (Reaction)builder.newReaction();
         try {
             input.readLine(); // first line should be $RXN
             input.readLine(); // second line
