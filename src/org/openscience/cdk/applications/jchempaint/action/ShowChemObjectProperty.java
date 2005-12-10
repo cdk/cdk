@@ -41,8 +41,9 @@ import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
  *  Shows the contect of a specified property (i.e. as defined in the type of
  *  this JCPAction).
  *
- * @cdk.module jchempaint
- * @author     steinbeck
+ * @cdk.module  jchempaint
+ * @author      steinbeck
+ * @cdk.require java1.5
  */
 public class ShowChemObjectProperty extends JCPAction
 {

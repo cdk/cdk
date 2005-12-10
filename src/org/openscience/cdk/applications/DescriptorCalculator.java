@@ -47,11 +47,11 @@ import java.util.Properties;
  *
  * @cdk.module applications
  *
- * @author      Egon Willighagen
- * @cdk.require java1.4+
+ * @author           Egon Willighagen
+ * @cdk.require      java1.5
  * @cdk.keyword      command line util descriptor calculation
  * @cdk.builddepends commons-cli-1.0.jar
- * @cdk.created 2004-12-02
+ * @cdk.created      2004-12-02
  */
 public class DescriptorCalculator {
 
