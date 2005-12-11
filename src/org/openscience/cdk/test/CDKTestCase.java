@@ -50,6 +50,15 @@ public class CDKTestCase extends TestCase {
         super(name);
     }
     
+    /**
+     * Determines of slow JUnit tests are to be run. You can set this
+     * from the command line when running Ant: 
+     * <pre>
+     *   ant -f build.xml -DrunSlowTests=false test-all
+     * </pre>
+     * 
+     * @return
+     */
     public boolean runSlowTests() {
     	if (System.getProperty("runSlowTests", "true").equals("false")) 
     		return false;
@@ -58,11 +67,27 @@ public class CDKTestCase extends TestCase {
     	return true;
     }
 
+    /**
+     * Compares two Point2d objects, and asserts that the XY coordinates
+     * are identical within the given error.
+     * 
+     * @param p1    first Point2d
+     * @param p2    second Point2d
+     * @param error maximal allowed error
+     */
     public void assertEquals(Point2d p1, Point2d p2, double error) {
         assertEquals(p1.x, p2.x, error);
         assertEquals(p1.y, p2.y, error);
     }
         
+    /**
+     * Compares two Point3d objects, and asserts that the XY coordinates
+     * are identical within the given error.
+     * 
+     * @param p1    first Point3d
+     * @param p2    second Point3d
+     * @param error maximal allowed error
+     */
     public void assertEquals(Point3d p1, Point3d p2, double error) {
         assertEquals(p1.x, p2.x, error);
         assertEquals(p1.y, p2.y, error);
