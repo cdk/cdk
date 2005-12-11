@@ -242,18 +242,15 @@ public class Convertor {
 		this.checkPrefix(cmlAtom);
 		addAtomID(cdkAtom, cmlAtom);
 		addDictRef(cdkAtom, cmlAtom);
+		cmlAtom.setElementType(cdkAtom.getSymbol());
 		if (cdkAtom instanceof PseudoAtom) {
 			 String label = ((PseudoAtom)cdkAtom).getLabel();
 	         if (label != null) cmlAtom.setTitle(label);
 	         cmlAtom.setElementType("Du");
 		}
-		else {
-			cmlAtom.setElementType(cdkAtom.getSymbol());
-		}
 		map2DCoordsToCML(cmlAtom, cdkAtom);
 		map3DCoordsToCML(cmlAtom, cdkAtom);
 		mapFractionalCoordsToCML(cmlAtom, cdkAtom);
-		cmlAtom.setElementType(cdkAtom.getSymbol());
 		cmlAtom.setFormalCharge(cdkAtom.getFormalCharge());
 		cmlAtom.setHydrogenCount(cdkAtom.getHydrogenCount());
 		
