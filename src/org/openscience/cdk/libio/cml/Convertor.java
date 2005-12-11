@@ -394,10 +394,10 @@ public class Convertor {
     }
 
 	private void mapFractionalCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
-		if (cdkAtom.getPoint3d() != null) {
-			cmlAtom.setXFract(cdkAtom.getPoint3d().x);
-			cmlAtom.setYFract(cdkAtom.getPoint3d().y);
-			cmlAtom.setZFract(cdkAtom.getPoint3d().z);
+		if (cdkAtom.getFractionalPoint3d() != null) {
+			cmlAtom.setXFract(cdkAtom.getFractionalPoint3d().x);
+			cmlAtom.setYFract(cdkAtom.getFractionalPoint3d().y);
+			cmlAtom.setZFract(cdkAtom.getFractionalPoint3d().z);
 		}
 	}
 
