@@ -30,7 +30,6 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.io.StringWriter;
 
 import javax.swing.JFrame;
 
@@ -41,7 +40,6 @@ import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
-import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.xmlcml.cml.element.CMLCml;
 
@@ -49,8 +47,10 @@ import org.xmlcml.cml.element.CMLCml;
 /**
  * Allow to dump a ChemObject to a newly opened screen
  *
- * @cdk.module jchempaint
- * @author     steinbeck
+ * @cdk.module      jchempaint
+ * @author          steinbeck
+ * @cdk.require     java1.5
+ * @cdk.builddepend xom-1.0.jar
  */
 public class ShowChemObjectDumpAction extends JCPAction
 {
