@@ -36,6 +36,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.Constructor;
 
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.ChemFile;
@@ -44,7 +46,6 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ChemObjectWriter;
 import org.openscience.cdk.io.MDLReader;
@@ -196,10 +197,16 @@ public class CopyPasteAction extends JCPAction{
     	  cow.close();
     	  svg=sw.toString();
     	  // CML output
-    	  sw=new StringWriter();
-    	  cow = new CMLWriter(sw);
-    	  cow.write(tocopy);
-    	  cow.close();
+    	  sw = new StringWriter();
+    	  Class cmlWriterClass = this.getClass().getClassLoader().
+    	    loadClass("org.opscience.cdk.io.CMLWriter");
+    	  if (cmlWriterClass != null) {
+    		  cow = (ChemObjectWriter)cmlWriterClass.newInstance();
+    		  Constructor constructor = cow.getClass().getConstructor(new Class[]{Writer.class});
+    		  cow = (ChemObjectWriter)constructor.newInstance(new Object[]{sw});
+    		  cow.write(tocopy);
+    		  cow.close();
+    	  }
     	  cml=sw.toString();      
       }
     	
