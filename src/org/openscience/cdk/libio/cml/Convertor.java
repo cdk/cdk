@@ -50,6 +50,8 @@ import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.base.CMLException;
@@ -57,6 +59,11 @@ import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
 import org.xmlcml.cml.element.CMLCrystal;
 import org.xmlcml.cml.element.CMLMolecule;
+import org.xmlcml.cml.element.CMLProduct;
+import org.xmlcml.cml.element.CMLProductList;
+import org.xmlcml.cml.element.CMLReactant;
+import org.xmlcml.cml.element.CMLReactantList;
+import org.xmlcml.cml.element.CMLReaction;
 import org.xmlcml.cml.element.CMLScalar;
 
 /**
@@ -124,7 +131,33 @@ public class Convertor {
     		}
     	}
     }
+
+    public CMLReaction cdkReactionToCMLReaction(Reaction reaction) {
+    	CMLReaction cmlReaction = new CMLReaction();
     	
+    	// reactants
+    	CMLReactantList cmlReactants = new CMLReactantList();
+    	Molecule[] reactants = reaction.getReactants().getMolecules();
+    	for (int i=0; i<reactants.length; i++) {
+    		CMLReactant cmlReactant = new CMLReactant();
+    		cmlReactant.addMolecule(cdkMoleculeToCMLMolecule(reactants[i]));
+    		cmlReactants.addReactant(cmlReactant);
+    	}
+
+    	// products
+    	CMLProductList cmlProducts = new CMLProductList();
+    	Molecule[] products = reaction.getProducts().getMolecules();
+    	for (int i=0; i<products.length; i++) {
+    		CMLProduct cmlProduct = new CMLProduct();
+    		cmlProduct.addMolecule(cdkMoleculeToCMLMolecule(products[i]));
+    		cmlProducts.addProduct(cmlProduct);
+    	}
+    	
+    	cmlReaction.addReactantList(cmlReactants);
+    	cmlReaction.addProductList(cmlProducts);
+    	return cmlReaction;
+    }
+    
     public CMLMolecule cdkCrystalToCMLMolecule(Crystal crystal) {
 		CMLMolecule molecule = cdkAtomContainerToCMLMolecule(crystal);
 		CMLCrystal cmlCrystal = new CMLCrystal();
