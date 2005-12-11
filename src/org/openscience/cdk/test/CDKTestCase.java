@@ -51,11 +51,11 @@ public class CDKTestCase extends TestCase {
     }
     
     public boolean runSlowTests() {
-    	if (System.getProperty("runSlowTests", "false").equals("true")) 
-    		return true;
+    	if (System.getProperty("runSlowTests", "true").equals("false")) 
+    		return false;
     	
     	// else
-    	return false;
+    	return true;
     }
 
     public void assertEquals(Point2d p1, Point2d p2, double error) {
