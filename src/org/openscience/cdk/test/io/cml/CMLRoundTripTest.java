@@ -147,7 +147,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(atom.getFractZ3d(), roundTrippedAtom.getFractZ3d(), 0.00001);
     }
     
-    public void xtestPseudoAtom() {
+    public void testPseudoAtom() {
         Molecule mol = new Molecule();
         PseudoAtom atom = new PseudoAtom("N");
         atom.setLabel("Glu55");
@@ -162,7 +162,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals("Glu55", ((PseudoAtom)roundTrippedAtom).getLabel());
     }
     
-    public void xtestAtomFormalCharge() {
+    public void testAtomFormalCharge() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         int formalCharge = +1;
@@ -176,7 +176,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(atom.getFormalCharge(), roundTrippedAtom.getFormalCharge());
     }
     
-    public void xtestAtomPartialCharge() {
+    public void testAtomPartialCharge() {
         if (true) return;
         fail("Have to figure out how to store partial charges in CML2");
         Molecule mol = new Molecule();
@@ -192,7 +192,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(atom.getCharge(), roundTrippedAtom.getCharge(), 0.0001);
     }
     
-    public void xtestAtomStereoParity() {
+    public void testAtomStereoParity() {
         if (true) return;
         fail("Have to figure out how to store atom parity in CML2");
         Molecule mol = new Molecule();
@@ -208,7 +208,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(atom.getStereoParity(), roundTrippedAtom.getStereoParity());
     }
     
-    public void xtestIsotope() {
+    public void testIsotope() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         atom.setMassNumber(13);
@@ -220,7 +220,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(atom.getMassNumber(), roundTrippedAtom.getMassNumber());
     }
     
-    public void xtestBond() {
+    public void testBond() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -240,7 +240,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(bond.getOrder(), roundTrippedBond.getOrder(), 0.0001);
     }
     
-    public void xtestBondID() {
+    public void testBondID() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -255,7 +255,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(bond.getID(), roundTrippedBond.getID());
     }
     
-    public void xtestBondStereo() {
+    public void testBondStereo() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -361,7 +361,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         return roundTrippedReaction;
     }
 
-    public void xtestPartialCharge() {
+    public void testPartialCharge() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         mol.addAtom(atom);
@@ -375,7 +375,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(charge, roundTrippedAtom.getCharge(), 0.0001);
     }
 
-    public void xtestSpinMultiplicity() {
+    public void testSpinMultiplicity() {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         mol.addAtom(atom);
