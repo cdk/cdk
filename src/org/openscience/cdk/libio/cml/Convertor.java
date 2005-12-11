@@ -188,7 +188,11 @@ public class Convertor {
 			cmlMolecule.setTitle((String)structure.getProperty(CDKConstants.TITLE));
 		}
  		for (int i= 0; i<structure.getAtomCount(); i++) {
-			CMLAtom cmlAtom = cdkAtomToCMLAtom(structure.getAtomAt(i));
+ 			Atom cdkAtom = structure.getAtomAt(i);
+			CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
+			if (structure.getSingleElectronSum(cdkAtom) > 0) {
+				cmlAtom.setSpinMultiplicity(structure.getSingleElectronSum(cdkAtom)+1);
+	        }
 			cmlMolecule.addAtom(cmlAtom);
 		}
 		for (int i= 0; i<structure.getBondCount(); i++) {
@@ -282,8 +286,7 @@ public class Convertor {
             cmlAtom.addScalar(scalar);
         }
 		writeProperties(cdkAtom, cmlAtom);
-		//skipped the "spinMultiplicity" - see org.openscience.cdk.libio.cml.Convertor line 600-604
-
+		
 		Iterator elements = customizers.iterator();
         while (elements.hasNext()) {
             Customizer customizer = (Customizer)elements.next();
