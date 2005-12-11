@@ -28,11 +28,14 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.LoggingTool;
 /**
  *  Description of the Class
  *
@@ -44,12 +47,15 @@ import org.openscience.cdk.tools.HydrogenAdder;
 public class ModelBuilder3dTest extends CDKTestCase {
 	
 	boolean standAlone = false;
+	private LoggingTool logger;
 	
 	/**
 	 *  Constructor for the ModelBuilder3dTest
 	 *@param  name  Description of the Parameter
 	 */
-	public  ModelBuilder3dTest(){}
+	public  ModelBuilder3dTest(){
+		logger = new LoggingTool(this);
+	}
 
 
 	/**
@@ -176,4 +182,46 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	fail(exc.toString());
 		}
 	}
+
+    /**
+     * Test for SF bug #1309731.
+     */
+    public void testModelBuilder3D_keepChemObjectIDs(){
+		ModelBuilder3D mb3d = new ModelBuilder3D();
+		
+		Molecule methanol = new org.openscience.cdk.Molecule();
+		ChemObjectBuilder builder = methanol.getBuilder();
+		
+		Atom carbon1 = builder.newAtom("C");
+		carbon1.setID("carbon1");
+		methanol.addAtom(carbon1);
+		for (int i=0; i<3; i++) {
+			Atom hydrogen = builder.newAtom("H");
+			methanol.addAtom(hydrogen);
+			methanol.addBond(builder.newBond(carbon1, hydrogen, 1.0));
+		}
+		Atom oxygen1 = builder.newAtom("O");
+		oxygen1.setID("oxygen1");
+		methanol.addAtom(oxygen1);
+		methanol.addBond(builder.newBond(carbon1, oxygen1, 1.0));
+		Atom hydrogen = builder.newAtom("H");
+		methanol.addAtom(hydrogen);
+		methanol.addBond(builder.newBond(hydrogen, oxygen1, 1.0));
+		
+		assertEquals(6, methanol.getAtomCount());
+		assertEquals(5, methanol.getBondCount());
+
+		try {
+			mb3d.setMolecule(methanol,false);
+			mb3d.generate3DCoordinates();
+		} catch (Exception exc) {
+			logger.error("Cannot layout molecule: ", exc.getMessage());
+			logger.debug(exc);
+			fail(exc.getMessage());
+		}
+		
+		assertEquals("carbon1", carbon1.getID());
+		assertEquals("oxygen1", oxygen1.getID());
+	}
+
 }
