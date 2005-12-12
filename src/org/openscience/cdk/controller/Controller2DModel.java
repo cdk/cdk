@@ -55,6 +55,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	public final static int DECCHARGE=16;
 	public final static int BENZENERING=17;
 	public final static int MAPATOMATOM=18;
+	public final static int ENTERELEMENT = 19;
 	
 	private int drawMode = 0;
 	private int ringSize = 6;

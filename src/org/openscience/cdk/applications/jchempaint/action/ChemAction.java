@@ -169,6 +169,9 @@ public class ChemAction extends JCPAction
 			} else if (type.equals("map"))
 			{
 				c2dm.setDrawMode(Controller2DModel.MAPATOMATOM);
+			} else if (type.equals("enterelement"))
+			{
+				c2dm.setDrawMode(Controller2DModel.ENTERELEMENT);
 			}
 		}
 		jcpPanel.stateChanged(new ChangeEvent(this));

@@ -44,6 +44,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -74,7 +75,6 @@ import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
@@ -533,6 +533,27 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					c2dm.getUndoSupport().postEdit(edit);
 					r2dm.fireChange();
 					fireChange();
+				}
+			}
+			if (c2dm.getDrawMode() == Controller2DModel.ENTERELEMENT)
+			{
+				Atom atomInRange = r2dm.getHighlightedAtom();
+				if (atomInRange != null)
+				{
+					String x=JOptionPane.showInputDialog(null,"Enter new element symbol");
+					try{
+						if(Character.isLowerCase(x.toCharArray()[0]))
+							x=Character.toUpperCase(x.charAt(0))+x.substring(1);
+						IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
+						Isotope iso=ifa.getMajorIsotope(x);
+						if(iso!=null)
+							r2dm.getHighlightedAtom().setSymbol(x);
+						//FIXME undo redo
+						r2dm.fireChange();
+						fireChange();
+					}catch(Exception ex){
+						logger.debug(ex.getMessage()+" in SELECTELEMENT");
+					}
 				}
 			}
 			if (c2dm.getDrawMode() == Controller2DModel.DECCHARGE)
