@@ -169,9 +169,9 @@ public class ToolBarMaker
 			b.setEnabled(a.isEnabled());
 			if(JCPLocalizationHandler.getInstance().getString("singleelementTooltip")!=null)
 				b.setToolTipText(JCPLocalizationHandler.getInstance().getString("singleelementTooltip")+" "+key);
-			b.setSize(30,20);
-			b.setPreferredSize(new Dimension(30,20));
-			b.setMaximumSize(new Dimension(30,20));
+			b.setSize(30,15);
+			b.setPreferredSize(new Dimension(30,15));
+			b.setMaximumSize(new Dimension(30,15));
 		}
 		b.setRequestFocusEnabled(false);
 		b.setMargin(new Insets(1, 1, 1, 1));
