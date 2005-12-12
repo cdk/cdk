@@ -30,9 +30,9 @@ package org.openscience.cdk.applications.jchempaint;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Insets;
 import java.net.URL;
-import java.util.Locale;
 import java.util.MissingResourceException;
 
 import javax.swing.Box;
@@ -42,10 +42,8 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.applications.jchempaint.action.ElementAction;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
-import org.openscience.cdk.config.ElementPTFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -171,6 +169,9 @@ public class ToolBarMaker
 			b.setEnabled(a.isEnabled());
 			if(JCPLocalizationHandler.getInstance().getString("singleelementTooltip")!=null)
 				b.setToolTipText(JCPLocalizationHandler.getInstance().getString("singleelementTooltip")+" "+key);
+			b.setSize(30,20);
+			b.setPreferredSize(new Dimension(30,20));
+			b.setMaximumSize(new Dimension(30,20));
 		}
 		b.setRequestFocusEnabled(false);
 		b.setMargin(new Insets(1, 1, 1, 1));
