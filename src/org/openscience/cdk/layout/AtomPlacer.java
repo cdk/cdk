@@ -326,12 +326,14 @@ public class AtomPlacer
 	public void placeLinearChain(AtomContainer ac, Vector2d initialBondVector, double bondLength)
 	{
 		AtomContainer withh=(AtomContainer) ac.clone();
-		try{
-			new HydrogenAdder().addExplicitHydrogensToSatisfyValency((Molecule)withh);
-		}catch(Exception ex){
-			logger.debug("Excpetion in hydrogen adding. This could mean that cleanup does not respect E/Z");
+		if(GeometryTools.has2DCoordinatesNew(ac)==2){
+			try{
+				new HydrogenAdder().addExplicitHydrogensToSatisfyValency((Molecule)withh);
+			}catch(Exception ex){
+				logger.debug("Excpetion in hydrogen adding. This could mean that cleanup does not respect E/Z");
+			}
+		    new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
 		}
-	    new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
 		logger.debug("Placing linear chain of length " + ac.getAtomCount());
 		Vector2d bondVector = initialBondVector;
 		Atom atom = null;
@@ -348,14 +350,16 @@ public class AtomPlacer
 			nextAtom.setPoint2d(atomPoint);
 			nextAtom.setFlag(CDKConstants.ISPLACED, true);
 			boolean trans=false;
-			try{
-				if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtomAt(f-2),withh.getAtomAt(f-1)))){
-					trans=BondTools.isCisTrans(withh.getAtomAt(f-3),withh.getAtomAt(f-2),withh.getAtomAt(f-1),withh.getAtomAt(f-0),withh);
+			if(GeometryTools.has2DCoordinatesNew(ac)==2){
+				try{
+					if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtomAt(f-2),withh.getAtomAt(f-1)))){
+						trans=BondTools.isCisTrans(withh.getAtomAt(f-3),withh.getAtomAt(f-2),withh.getAtomAt(f-1),withh.getAtomAt(f-0),withh);
+					}
+				}catch(Exception ex){
+					logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
 				}
-			}catch(Exception ex){
-				logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
+				bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),trans);
 			}
-			bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),trans);
 		}
 	}
 
