@@ -169,7 +169,7 @@ public class JumboTest extends CDKTestCase {
             assertEquals(mol.getAtomCount(), 11);
             assertEquals(mol.getBondCount(), 12);
             assertTrue(!GeometryTools.has3DCoordinates(mol));
-            assertTrue(!GeometryTools.has2DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }

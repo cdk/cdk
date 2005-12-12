@@ -109,7 +109,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 
 		JPanel optionPane = new JPanel();
 		optionPane.setLayout(new GridLayout(0, 1));
-		JLabel label = new JLabel("The file does not contain 2D Coordinates. Should I create those?");
+		JLabel label = new JLabel("The file does not contain 2D Coordinates or only some. Should I create those?");
 		optionPane.add(label);
 		optionPane.add(radioPanel);
 

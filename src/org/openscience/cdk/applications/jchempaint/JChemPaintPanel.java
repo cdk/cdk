@@ -691,7 +691,7 @@ public abstract class JChemPaintPanel
 		}
 
 		// check for coordinates
-		if (!(GeometryTools.has2DCoordinates(ChemModelManipulator.getAllInOneContainer(chemModel)))) {
+		if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
 			String error = "Model does not have coordinates. Cannot open file.";
 			logger.warn(error);
 			JOptionPane.showMessageDialog(this, error);
@@ -699,6 +699,21 @@ public abstract class JChemPaintPanel
 			frame.pack();
 			frame.show();
 			return;
+		} else if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
+			int result=JOptionPane.showConfirmDialog(this,"Model has some 2d coordinates. Do you want to show only the atoms with 2d coordiantes?","Only some 2d cooridantes",JOptionPane.YES_NO_OPTION);
+			if(result>1){
+				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
+				frame.pack();
+				frame.show();
+				return;
+			}else{
+				for(int i=0;i<chemModel.getSetOfMolecules().getAtomContainerCount();i++){
+					for(int k=0;i<chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomCount();k++){
+						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k).getPoint2d()==null)
+							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k));
+					}						
+				}
+			}
 		}
 
 		JChemPaintModel jcpm = new JChemPaintModel(chemModel);
@@ -780,7 +795,7 @@ public abstract class JChemPaintPanel
 		}
 
 		// check for coordinates
-		if (!(GeometryTools.has2DCoordinates(ChemModelManipulator.getAllInOneContainer(chemModel)))) {
+		if (!(GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
 
 			String error = "Model does not have coordinates. Will ask for coord generation.";
 			logger.warn(error);
@@ -790,6 +805,21 @@ public abstract class JChemPaintPanel
 			frame.show();
 			frame.moveToFront();
 			return;
+		} else if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
+			int result=JOptionPane.showConfirmDialog(this,"Model has some 2d coordinates. Do you want to show only the atoms with 2d coordiantes?","Only some 2d cooridantes",JOptionPane.YES_NO_OPTION);
+			if(result>1){
+				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
+				frame.pack();
+				frame.show();
+				return;
+			}else{
+				for(int i=0;i<chemModel.getSetOfMolecules().getAtomContainerCount();i++){
+					for(int k=0;i<chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomCount();k++){
+						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k).getPoint2d()==null)
+							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k));
+					}						
+				}
+			}
 		}
 
 		setJChemPaintModel(new JChemPaintModel((ChemModel)chemModel));

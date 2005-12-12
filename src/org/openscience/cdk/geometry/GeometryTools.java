@@ -678,13 +678,34 @@ public class GeometryTools {
 	 *@return    boolean indication that 2D coordinates are available
 	 */
 	public static boolean has2DCoordinates(AtomContainer m) {
+		return has2DCoordinatesNew(m)>0;
+	}
+	
+	
+	/**
+	 *  Determines if this AtomContainer contains 2D coordinates for some or all molecules.
+	 *
+	 *@param  m  Description of the Parameter
+	 *@return    0 no 2d, 1=some, 2= for each atom
+	 */
+	public static int has2DCoordinatesNew(AtomContainer m) {
+		boolean no2d=false;
+		boolean with2d=false;
 		Atom[] atoms = m.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i].getPoint2d() == null) {
-				return false;
+				no2d=true;
+			}else{
+				with2d=true;
 			}
 		}
-		return true;
+		if(!no2d && with2d){
+			return 2;
+		} else if(no2d && with2d){
+			return 1;
+		} else{
+			return 0;
+		}
 	}
 
 
