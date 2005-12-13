@@ -546,9 +546,26 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 							x=Character.toUpperCase(x.charAt(0))+x.substring(1);
 						IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
 						Isotope iso=ifa.getMajorIsotope(x);
+						String formerSymbol=r2dm.getHighlightedAtom().getSymbol();
 						if(iso!=null)
 							r2dm.getHighlightedAtom().setSymbol(x);
-						//FIXME undo redo
+						// update atom
+						AtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
+						updateAtom(container, atomInRange);
+
+						/*
+						 *  PRESERVE THIS. This notifies the
+						 *  the listener responsible for
+						 *  undo and redo storage that it
+						 *  should store this change of an atom symbol
+						 */
+//						isUndoableChange = true;
+						/*
+						 *  ---
+						 */
+						// undoredo support
+            UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, x);
+						c2dm.getUndoSupport().postEdit(edit);
 						r2dm.fireChange();
 						fireChange();
 					}catch(Exception ex){
