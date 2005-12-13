@@ -56,12 +56,14 @@ public class OpenBabelConvertTest extends CDKTestCase {
     }
 
     public static Test suite() {
-    	if(OpenBabelConvert.hasOpenBabel(getPATH())){
+    	TestSuite suite = new TestSuite("The OpenBabel Tests");
+    	if (OpenBabelConvert.hasOpenBabel(getPATH())) {
     		System.out.println("Found OpenBabel: running tests.");
-    		return new TestSuite(OpenBabelConvertTest.class);
-    	}else
+    		suite.addTest(new TestSuite(OpenBabelConvertTest.class));
+    	} else {
     		System.out.println("No OpenBabel found: not running tests.");
-    		return null;
+    	}
+    	return suite;
     }
 
     public void test5_Hexen_3_one() {
