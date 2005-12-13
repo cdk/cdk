@@ -94,10 +94,16 @@ public class OpenBabelConvertTest extends CDKTestCase {
         }
     }
     private static File getPATH(){
-    	File PATH;
-    	if(OpenBabelConvert.getOperatingSystem() == OpenBabelConvert.SYSTEM_WINDOWS)
-    			PATH = new File("C:/Programme/openbabel-2.0.0awins/babel.exe");
-    	else PATH = new File("/usr/local/bin/babel");
+    	String[] possibilities = {
+    		"C:/Programme/openbabel-2.0.0awins/babel.exe", // likely??
+    		"/usr/bin/babel", // most POSIX systems
+    		"/usr/local/bin/babel" // private installation
+    	};
+    	File PATH = null;
+    	for (int i=0; i<possibilities.length; i++) {
+    		PATH = new File(possibilities[i]);
+    	    if (PATH.exists()) break;
+        }
     	return PATH;
     }
 }
