@@ -51,7 +51,7 @@ import org.openscience.cdk.Strand;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
- * A helper class to instantiate a ChemObject for a specific implementation.
+ * A helper class to instantiate a ChemObject for the debug implementation.
  *
  * @author        egonw
  * @cdk.module    data-debug
@@ -86,15 +86,15 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
     }
 		
 	public org.openscience.cdk.interfaces.AtomContainer newAtomContainer() {
-		return new AtomContainer();
+		return new DebugAtomContainer();
 	}
     
 	public org.openscience.cdk.interfaces.AtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
-		return new AtomContainer(atomCount, electronContainerCount);
+		return new DebugAtomContainer(atomCount, electronContainerCount);
 	}
     
 	public org.openscience.cdk.interfaces.AtomContainer newAtomContainer(org.openscience.cdk.interfaces.AtomContainer container) {
-		return new AtomContainer(container);
+		return new DebugAtomContainer(container);
 	}
 	
     public org.openscience.cdk.interfaces.AtomParity newAtomParity(
@@ -198,15 +198,15 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
     }
 
 	public org.openscience.cdk.interfaces.Molecule newMolecule() {
-		return new Molecule();
+		return new DebugMolecule();
 	}
 
 	public org.openscience.cdk.interfaces.Molecule newMolecule(int atomCount, int electronContainerCount) {
-		return new Molecule(atomCount, electronContainerCount);
+		return new DebugMolecule(atomCount, electronContainerCount);
 	}
 
 	public org.openscience.cdk.interfaces.Molecule newMolecule(org.openscience.cdk.interfaces.AtomContainer container) {
-		return new Molecule(container);
+		return new DebugMolecule(container);
 	}
 
 	public org.openscience.cdk.interfaces.Monomer newMonomer () {
