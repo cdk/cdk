@@ -193,11 +193,16 @@ public class Convertor {
 			if (structure.getSingleElectronSum(cdkAtom) > 0) {
 				cmlAtom.setSpinMultiplicity(structure.getSingleElectronSum(cdkAtom)+1);
 	        }
-			cmlMolecule.addAtom(cmlAtom);
+			cmlMolecule.addAtom(cmlAtom, false);
 		}
 		for (int i= 0; i<structure.getBondCount(); i++) {
 			CMLBond cmlBond = cdkBondToCMLBond(structure.getBondAt(i));
-			cmlMolecule.addBond(cmlBond);
+			try {
+				cmlMolecule.addBond(cmlBond);
+			} catch (CMLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
         Iterator elements = customizers.iterator();
