@@ -50,6 +50,7 @@ import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.charges.InductivePartialChargesTest;
 import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.test.config.ConfigTests;
+import org.openscience.cdk.test.debug.DebugDataClassesTests;
 import org.openscience.cdk.test.dict.DictDBTest;
 import org.openscience.cdk.test.dict.DictRefTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
@@ -101,10 +102,13 @@ public class CDKTests
     public static Test suite( )
     {
         TestSuite suite= new TestSuite("All CDK Tests");
+
+        // Tests for data classes
+        suite.addTest(DataClassesTests.suite());
+        suite.addTest(DebugDataClassesTests.suite());
         
         // Package Test Suites
         suite.addTest(ConfigTests.suite());
-        suite.addTest(DataClassesTests.suite());
         suite.addTest(CoreClassesTests.suite());
         suite.addTest(IOTests.suite());
         suite.addTest(ToolsTests.suite());
