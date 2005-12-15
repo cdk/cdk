@@ -108,22 +108,34 @@ public class DebugAtom extends org.openscience.cdk.Atom implements Atom {
 
 	public Point2d getPoint2d() {
 		Point2d point2d = super.getPoint2d();
-		logger.debug("Getting fractional point2d: x=" + point2d.x + 
+		if (point2d == null) {
+			logger.debug("Getting point2d: null");
+		} else {
+			logger.debug("Getting point2d: x=" + point2d.x + 
 			     ", y=" + point2d.y);
+		}
 		return point2d;
 	}
 
 	public Point3d getPoint3d() {
 		Point3d point3d = super.getPoint3d();
-		logger.debug("Getting fractional point3d: x=" + point3d.x + 
+		if (point3d == null) {
+			logger.debug("Getting point3d: null");
+		} else {
+			logger.debug("Getting point3d: x=" + point3d.x + 
 			     ", y=" + point3d.y, ", z=" + point3d.z);
+		}
 		return point3d;
 	}
 
 	public Point3d getFractionalPoint3d() {
 		Point3d point3d = super.getFractionalPoint3d();
-		logger.debug("Getting fractional point3d: x=" + point3d.x + 
+		if (point3d == null) {
+			logger.debug("Getting fractional point3d: null");
+		} else {
+			logger.debug("Getting fractional point3d: x=" + point3d.x + 
 			     ", y=" + point3d.y, ", z=" + point3d.z);
+		}
 		return point3d;
 	}
 
