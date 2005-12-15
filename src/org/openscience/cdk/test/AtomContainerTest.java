@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class AtomContainerTest extends CDKTestCase {
 
-	ChemObjectBuilder builder;
+	protected ChemObjectBuilder builder;
 	
     public AtomContainerTest(String name) {
         super(name);
