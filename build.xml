@@ -440,8 +440,9 @@
             <antcall target="compile-init"/>
             <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
-            <antcall target="compile-module"><param name="module" value="data"/></antcall>
             <antcall target="compile-module"><param name="module" value="standard"/></antcall>
+            <antcall target="compile-module"><param name="module" value="data"/></antcall>
+            <antcall target="compile-module"><param name="module" value="data-debug"/></antcall>
             <antcall target="compile-module"><param name="module" value="render"/></antcall>
             <antcall target="compile-module"><param name="module" value="io"/></antcall>
             <antcall target="compile-module"><param name="module" value="io-jmol"/></antcall>
