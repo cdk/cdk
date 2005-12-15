@@ -78,7 +78,6 @@ public class ChemObjectTest extends CDKTestCase {
     	Object object = chemObject.getBuilder();
     	assertNotNull(object);
     	assertTrue(object instanceof ChemObjectBuilder);
-        assertTrue(object instanceof DefaultChemObjectBuilder);
     }
     	
     public void testSetProperty_Object_Object() {
