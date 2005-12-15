@@ -58,7 +58,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      *
      */
     public LonePair() {
-        atom = null;
+        this.atom = null;
     }
 
     /**
@@ -87,7 +87,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * @see    #setAtom
 	 */
 	public org.openscience.cdk.interfaces.Atom getAtom() {
-		return (Atom)this.atom;
+		return this.atom;
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
 		}
         // clone the Atom
         if (atom != null) {
-		    clone.atom = (Atom)((Atom)atom).clone(); 
+		    clone.atom = (org.openscience.cdk.interfaces.Atom)((org.openscience.cdk.interfaces.Atom)atom).clone(); 
         }
 		return clone;
 	}
