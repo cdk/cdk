@@ -26,6 +26,7 @@ package org.openscience.cdk.debug;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.BioPolymer;
@@ -67,6 +68,10 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 			instance = new DebugChemObjectBuilder();
 		}
 		return instance;
+	}
+	
+	public org.openscience.cdk.interfaces.AminoAcid newAminoAcid() {
+		return new AminoAcid();
 	}
 	
 	public org.openscience.cdk.interfaces.Atom newAtom() {
