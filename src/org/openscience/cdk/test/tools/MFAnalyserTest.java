@@ -168,6 +168,12 @@ public class MFAnalyserTest extends CDKTestCase {
         assertEquals(1.0079760, mfa.getNaturalMass(new Element("H")), 0.1);
     }
     
+    public void testGetNaturalMass() throws Exception {
+    	MFAnalyser mfa = new MFAnalyser("C8H10O2Cl2", new Molecule());
+    	System.err.println( mfa.getNaturalMass()+"");
+    	assertEquals((float)209.0718 , mfa.getNaturalMass() ,.0001);
+    }
+    
     public void testGetHTMLMolecularFormulaWithCharge() {
     	org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(0);
         MFAnalyser mfa = new MFAnalyser(molecule);
