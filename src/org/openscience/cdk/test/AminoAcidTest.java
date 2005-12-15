@@ -30,8 +30,10 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.AminoAcid;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * TestCase for the AminoAcid class.
@@ -43,38 +45,44 @@ import org.openscience.cdk.Atom;
  */
 public class AminoAcidTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
     public AminoAcidTest(String name) {
         super(name);
     }
 
+    public void setUp() {
+       	builder = DefaultChemObjectBuilder.getInstance();
+    }
+    
     public static Test suite() {
         return new TestSuite(AminoAcidTest.class);
     }
 
     public void testAminoAcid() {
-        AminoAcid oAminoAcid = new AminoAcid();
+        AminoAcid oAminoAcid = builder.newAminoAcid();
         assertNotNull(oAminoAcid);
     }
     
     public void testAddCTerminus_Atom() {
-        AminoAcid m = new AminoAcid();
-        Atom cTerminus = new Atom("C");
+        AminoAcid m = builder.newAminoAcid();
+        Atom cTerminus = builder.newAtom("C");
         m.addCTerminus(cTerminus);
         assertEquals(cTerminus, m.getCTerminus());
     }
     public void testGetCTerminus() {
-        AminoAcid m = new AminoAcid();
+        AminoAcid m = builder.newAminoAcid();
         assertNull(m.getCTerminus());
     }
 
     public void testAddNTerminus_Atom() {
-        AminoAcid m = new AminoAcid();
-        Atom nTerminus = new Atom("N");
+        AminoAcid m = builder.newAminoAcid();
+        Atom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
         assertEquals(nTerminus, m.getNTerminus());
     }
     public void testGetNTerminus() {
-        AminoAcid m = new AminoAcid();
+        AminoAcid m = builder.newAminoAcid();
         assertNull(m.getNTerminus());
     }
     
@@ -82,8 +90,8 @@ public class AminoAcidTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        AminoAcid m = new AminoAcid();
-        Atom nTerminus = new Atom("N");
+        AminoAcid m = builder.newAminoAcid();
+        Atom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
@@ -93,7 +101,7 @@ public class AminoAcidTest extends CDKTestCase {
     }
 
     public void testClone() {
-        AminoAcid aa = new AminoAcid();
+        AminoAcid aa = builder.newAminoAcid();
         Object clone = aa.clone();
         assertTrue(clone instanceof AminoAcid);
         assertNotSame(aa, clone);

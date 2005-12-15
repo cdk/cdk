@@ -30,8 +30,10 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -40,11 +42,15 @@ import org.openscience.cdk.CDKConstants;
  */
 public class AtomTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
     public AtomTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(AtomTest.class);
@@ -54,7 +60,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the Atom(String symbol) method.
      */
     public void testAtom() {
-        Atom a = new Atom();
+        Atom a = builder.newAtom();
         assertNotNull(a);
     }
 
@@ -62,7 +68,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the Atom(String symbol) method.
      */
     public void testAtom_String() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         assertEquals("C", a.getSymbol());
         assertNull(a.getPoint2d());
         assertNull(a.getPoint3d());
@@ -75,7 +81,7 @@ public class AtomTest extends CDKTestCase {
     public void testAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
-        Atom a = new Atom("C", point3d);
+        Atom a = builder.newAtom("C", point3d);
         assertEquals("C", a.getSymbol());
         assertEquals(point3d, a.getPoint3d());
         assertNull(a.getPoint2d());
@@ -88,7 +94,7 @@ public class AtomTest extends CDKTestCase {
     public void testAtom_String_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
 
-        Atom a = new Atom("C", point2d);
+        Atom a = builder.newAtom("C", point2d);
         assertEquals("C", a.getSymbol());
         assertEquals(point2d, a.getPoint2d());
         assertNull(a.getPoint3d());
@@ -101,7 +107,7 @@ public class AtomTest extends CDKTestCase {
     public void testSetCharge_double() {
         double charge = 0.15;
 
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setCharge(charge);
         assertEquals(charge, a.getCharge(), 0.001);
     }
@@ -115,7 +121,7 @@ public class AtomTest extends CDKTestCase {
     public void testSetHydrogenCount_int() {
         int count = 1;
 
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setHydrogenCount(count);
         assertEquals(count, a.getHydrogenCount());
     }
@@ -127,7 +133,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the setFractional3D() methods.
      */
     public void testSetFractionalPoint3d_Point3d() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
         assertNotNull(fract);
@@ -140,39 +146,39 @@ public class AtomTest extends CDKTestCase {
     }
     
     public void testGetFractX3d() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.6, 0.7));
         assertEquals(0.5, a.getFractX3d(), 0.001);
     }
 
     public void testGetFractY3d() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.6, 0.7));
         assertEquals(0.6, a.getFractY3d(), 0.001);
     }
 
     public void testGetFractZ3d() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.6, 0.7));
         assertEquals(0.7, a.getFractZ3d(), 0.001);
     }
 
     public void testSetFractX3d_double() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setFractX3d(0.5);
         Point3d point3d = a.getFractionalPoint3d();
         assertEquals(0.5, point3d.x, 0.001);
     }
 
     public void testSetFractY3d_double() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setFractY3d(0.5);
         Point3d point3d = a.getFractionalPoint3d();
         assertEquals(0.5, point3d.y, 0.001);
     }
 
     public void testSetFractZ3d_double() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setFractZ3d(0.5);
         Point3d point3d = a.getFractionalPoint3d();
         assertEquals(0.5, point3d.z, 0.001);
@@ -182,21 +188,21 @@ public class AtomTest extends CDKTestCase {
      * Method to test the set[XYZ]3D() methods.
      */
     public void testSetX3d_double() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setX3d(1.0);
 
         assertNotNull(a.getPoint3d());
         assertEquals(1.0, a.getPoint3d().x, 0.001);
     }
     public void testSetY3d_double() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setY3d(2.0);
 
         assertNotNull(a.getPoint3d());
         assertEquals(2.0, a.getPoint3d().y, 0.001);
     }
     public void testSetZ3d_double() {
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setZ3d(3.0);
 
         assertNotNull(a.getPoint3d());
@@ -209,26 +215,26 @@ public class AtomTest extends CDKTestCase {
     public void testGetX3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        Atom a = new Atom("C", point3d);
+        Atom a = builder.newAtom("C", point3d);
         assertEquals(point3d.x, a.getX3d(), 0.001);
     }
     public void testGetY3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        Atom a = new Atom("C", point3d);
+        Atom a = builder.newAtom("C", point3d);
         assertEquals(point3d.y, a.getY3d(), 0.001);
     }
     public void testGetZ3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        Atom a = new Atom("C", point3d);
+        Atom a = builder.newAtom("C", point3d);
         assertEquals(point3d.z, a.getZ3d(), 0.001);
     }
 
     public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        Atom a = new Atom("C", point3d);
+        Atom a = builder.newAtom("C", point3d);
 	assertNotNull(a.getPoint3d());
         assertEquals(point3d.x, a.getPoint3d().x, 0.001);
         assertEquals(point3d.y, a.getPoint3d().y, 0.001);
@@ -237,7 +243,7 @@ public class AtomTest extends CDKTestCase {
     public void testSetPoint3d_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setPoint3d(point3d);
         assertEquals(point3d, a.getPoint3d());
     }
@@ -247,7 +253,7 @@ public class AtomTest extends CDKTestCase {
      */
     public void testSetX2d_double() {
 
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setX2d(1.0);
 
         assertNotNull(a.getPoint2d());
@@ -255,7 +261,7 @@ public class AtomTest extends CDKTestCase {
     }
     public void testSetY2d_double() {
 
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setY2d(2.0);
 
         assertNotNull(a.getPoint2d());
@@ -265,20 +271,20 @@ public class AtomTest extends CDKTestCase {
     public void testGetX2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
-        Atom a = new Atom("C", point2d);
+        Atom a = builder.newAtom("C", point2d);
         assertEquals(point2d.x, a.getX2d(), 0.001);
     }
 
     public void testGetY2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
-        Atom a = new Atom("C", point2d);
+        Atom a = builder.newAtom("C", point2d);
         assertEquals(point2d.y, a.getY2d(), 0.001);
     }
     public void testGetPoint2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
-        Atom a = new Atom("C", point2d);
+        Atom a = builder.newAtom("C", point2d);
         assertNotNull(a.getPoint2d());
         assertEquals(point2d.x, a.getPoint2d().x, 0.001);
         assertEquals(point2d.y, a.getPoint2d().y, 0.001);
@@ -286,7 +292,7 @@ public class AtomTest extends CDKTestCase {
     public void testSetPoint2d_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setPoint2d(point2d);
         assertEquals(point2d, a.getPoint2d());
     }
@@ -297,7 +303,7 @@ public class AtomTest extends CDKTestCase {
     public void testSetStereoParity_int() {
         int parity = CDKConstants.STEREO_ATOM_PARITY_PLUS;
 
-        Atom a = new Atom("C");
+        Atom a = builder.newAtom("C");
         a.setStereoParity(parity);
         assertEquals(parity, a.getStereoParity());
     }
@@ -309,29 +315,30 @@ public class AtomTest extends CDKTestCase {
      * Method to test the compare() method.
      */
     public void testCompare_Object() {
-        Atom atom = new Atom("C");
-        assertTrue(atom.compare(atom));
-        Atom hydrogen = new Atom("H");
-        assertFalse(atom.compare(hydrogen));
-        assertFalse(atom.compare("C"));
+        Atom someAtom = builder.newAtom("C");
+        if (someAtom instanceof org.openscience.cdk.Atom) {
+        	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
+        	assertTrue(atom.compare(atom));
+        	Atom hydrogen = builder.newAtom("H");
+        	assertFalse(atom.compare(hydrogen));
+        	assertFalse(atom.compare("C"));
+        }
     }
     
     /**
      * Method to test the clone() method
      */
     public void testClone() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         Object clone = atom.clone();
         assertTrue(clone instanceof Atom);
-        Atom copy = (Atom)clone;
-        assertTrue(atom.compare(copy));
     }
     
     /**
      * Method to test the clone() method
      */
     public void testClone_Point2d() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         atom.setPoint2d(new Point2d(2, 3));
         Atom clone = (Atom)atom.clone();
 
@@ -344,7 +351,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone_Point3d() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
         Atom clone = (Atom)atom.clone();
 
@@ -357,7 +364,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone_FractionalPoint3d() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         Atom clone = (Atom)atom.clone();
 
@@ -370,7 +377,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone_HydrogenCount() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         atom.setHydrogenCount(3);
         Atom clone = (Atom)atom.clone();
 
@@ -383,7 +390,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone_StereoParity() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         atom.setStereoParity(3);
         Atom clone = (Atom)atom.clone();
 
@@ -396,7 +403,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone_Charge() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         atom.setCharge(1.0);
         Atom clone = (Atom)atom.clone();
 
@@ -409,7 +416,7 @@ public class AtomTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue('\n' != description.charAt(i));

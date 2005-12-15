@@ -32,9 +32,9 @@ import java.util.Hashtable;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
@@ -49,6 +49,8 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class ChemObjectTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
 	public ChemObjectTest(String name) {
 		super(name);
 	}
@@ -58,17 +60,21 @@ public class ChemObjectTest extends CDKTestCase {
         return suite;
 	}
 
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
+
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(new TestSuite(ChemObjectTest.class));
 	}
 
     public void testChemObject() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         assertNotNull(chemObject);
     }
 
     public void testGetBuilder() {
-    	ChemObject chemObject = new ChemObject();
+    	ChemObject chemObject = builder.newChemObject();
     	Object object = chemObject.getBuilder();
     	assertNotNull(object);
     	assertTrue(object instanceof ChemObjectBuilder);
@@ -76,7 +82,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     	
     public void testSetProperty_Object_Object() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
         chemObject.setProperty(cDescription, cProperty);
@@ -84,7 +90,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
 
     public void testSetProperties_Hashtable() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         Hashtable props = new Hashtable();
         String cDescription = new String("description");
         String cProperty = new String("property");
@@ -94,7 +100,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
 
     public void testGetProperties() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         assertNotNull(chemObject.getProperties());
         assertEquals(0, chemObject.getProperties().size());
     }
@@ -103,12 +109,12 @@ public class ChemObjectTest extends CDKTestCase {
     }
 
     public void testGetProperty_Object() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         assertNull(chemObject.getProperty("dummy"));
     }
 
     public void testRemoveProperty_Object() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
         chemObject.setProperty(cDescription, cProperty);
@@ -118,35 +124,35 @@ public class ChemObjectTest extends CDKTestCase {
     }
 
     public void testSetID_String() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         String id = "objectX";
         chemObject.setID(id);
         assertEquals(id, chemObject.getID());
     }
     
     public void testGetID() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         assertNull(chemObject.getID());
     }
     
     public void testSetFlags_arrayboolean(){
-      ChemObject chemObject=new ChemObject();
+      ChemObject chemObject=builder.newChemObject();
       chemObject.setFlag(1,true);
-      ChemObject chemObject2=new ChemObject();
+      ChemObject chemObject2=builder.newChemObject();
       chemObject2.setFlags(chemObject.getFlags());
       assertTrue(chemObject2.getFlag(1));
     }
     
     public void testGetFlags(){
-      ChemObject chemObject=new ChemObject();
+      ChemObject chemObject=builder.newChemObject();
       chemObject.setFlag(1,true);
-      ChemObject chemObject2=new ChemObject();
+      ChemObject chemObject2=builder.newChemObject();
       chemObject2.setFlags(chemObject.getFlags());
       assertTrue(chemObject2.getFlag(1));
     }
 
     public void testSetFlag_int_boolean() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         chemObject.setFlag(0, true);
         assertTrue(chemObject.getFlag(0));
     }
@@ -155,7 +161,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testClone() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         chemObject.setFlag(3, true);
         
         // test cloning of itself
@@ -164,7 +170,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testClone_Flags() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         chemObject1.setFlag(3, true);
         ChemObject chemObject2 = (ChemObject)chemObject1.clone();
 
@@ -174,7 +180,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
 
     public void testClone_Identifier() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         chemObject1.setID("co1");
         ChemObject chemObject2 = (ChemObject)chemObject1.clone();
 
@@ -184,7 +190,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testClone_Properties() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         Hashtable props1 = new Hashtable();
         chemObject1.setProperties(props1);
         ChemObject chemObject2 = (ChemObject)chemObject1.clone();
@@ -199,9 +205,9 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testClone_Properties2() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         Hashtable props1 = new Hashtable();
-        Atom atom = new Atom("C");
+        Atom atom = builder.newAtom("C");
         props1.put("atom", atom);
         chemObject1.setProperties(props1);
         ChemObject chemObject2 = (ChemObject)chemObject1.clone();
@@ -217,7 +223,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testClone_ChemObjectListeners() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
         ChemObject chemObject2 = (ChemObject)chemObject1.clone();
@@ -228,7 +234,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testAddListener_ChemObjectListener() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         assertEquals(0, chemObject1.getListenerCount());
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
@@ -236,7 +242,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testRemoveListener_ChemObjectListener() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
         assertEquals(1, chemObject1.getListenerCount());
@@ -245,7 +251,7 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
     public void testGetListenerCount() {
-        ChemObject chemObject1 = new ChemObject();
+        ChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
         assertEquals(1, chemObject1.getListenerCount());
@@ -256,24 +262,15 @@ public class ChemObjectTest extends CDKTestCase {
     }
     
    public void testShallowCopy() {
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         Object clone = chemObject.clone();
         assertNotNull(clone);
         assertTrue(clone instanceof ChemObject);
     }
 
-    public void testCompare_Object() {
-        ChemObject chemObject = new ChemObject();
-        assertTrue(chemObject.compare(chemObject));
-        ChemObject secondObject = new ChemObject();
-        assertTrue(chemObject.compare(secondObject));
-        secondObject.setID("second");
-        assertFalse(chemObject.compare(secondObject));
-    }
-    
     public void testStateChanged_ChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
@@ -292,7 +289,7 @@ public class ChemObjectTest extends CDKTestCase {
     
     public void testNotifyChanged() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
@@ -301,7 +298,7 @@ public class ChemObjectTest extends CDKTestCase {
     
     public void testNotifyChanged_ChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        ChemObject chemObject = new ChemObject();
+        ChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
