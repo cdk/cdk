@@ -28,10 +28,12 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the Molecule class.
@@ -42,11 +44,15 @@ import org.openscience.cdk.Molecule;
  */
 public class MoleculeTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
     public MoleculeTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(MoleculeTest.class);
@@ -55,12 +61,12 @@ public class MoleculeTest extends CDKTestCase {
     // test constructors
     
     public void testMolecule() {
-        Molecule m = new Molecule();
+        Molecule m = builder.newMolecule();
         assertTrue(m != null);
     }
 
     public void testMolecule_int_int() {
-        Molecule m = new Molecule(5,5);
+        Molecule m = builder.newMolecule(5,5);
         assertTrue(m != null);
         assertEquals(0, m.getAtoms().length);
         assertEquals(0, m.getElectronContainers().length);
@@ -68,29 +74,29 @@ public class MoleculeTest extends CDKTestCase {
 
     public void testMolecule_AtomContainer() {
         AtomContainer acetone = new org.openscience.cdk.AtomContainer();
-        Atom c1 = new Atom("C");
-        Atom c2 = new Atom("C");
-        Atom o = new Atom("O");
-        Atom c3 = new Atom("C");
+        Atom c1 = builder.newAtom("C");
+        Atom c2 = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
+        Atom c3 = builder.newAtom("C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = new Bond(c1, c2,1);
-        Bond b2 = new Bond(c1, o, 2);
-        Bond b3 = new Bond(c1, c3,1);
+        Bond b1 = builder.newBond(c1, c2,1);
+        Bond b2 = builder.newBond(c1, o, 2);
+        Bond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        Molecule m = new Molecule(acetone);
+        Molecule m = builder.newMolecule(acetone);
         assertTrue(m != null);
         assertEquals(4, m.getAtomCount());
         assertEquals(3, m.getBondCount());
     }
 
 	public void testClone() {
-        Molecule molecule = new Molecule();
+        Molecule molecule = builder.newMolecule();
         Object clone = molecule.clone();
         assertTrue(clone instanceof Molecule);
 	assertNotSame(molecule, clone);
@@ -98,7 +104,7 @@ public class MoleculeTest extends CDKTestCase {
 
     /** Test for RFC #9 */
     public void testToString() {
-        Molecule m = new Molecule();
+        Molecule m = builder.newMolecule();
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
