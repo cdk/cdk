@@ -167,6 +167,11 @@ public interface ChemObjectBuilder {
 	public ChemModel newChemModel();
 	
 	/**
+	 * Constructs an new ChemObject with a null setOfMolecules.
+	 */
+	public ChemObject newChemObject();
+	
+	/**
 	 * Constructs an empty ChemSequence.
 	 */
 	public ChemSequence newChemSequence();   

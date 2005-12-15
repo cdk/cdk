@@ -33,6 +33,7 @@ import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.ElectronContainer;
@@ -146,6 +147,10 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 
 	public org.openscience.cdk.interfaces.ChemModel newChemModel() {
 		return new ChemModel();
+	}
+	
+	public org.openscience.cdk.interfaces.ChemObject newChemObject() {
+		return new DebugChemObject();
 	}
 	
 	public org.openscience.cdk.interfaces.ChemSequence newChemSequence() {

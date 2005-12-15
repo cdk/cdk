@@ -127,6 +127,10 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new ChemModel();
 	}
 	
+	public org.openscience.cdk.interfaces.ChemObject newChemObject() {
+		return new ChemObject();
+	}
+	
 	public org.openscience.cdk.interfaces.ChemSequence newChemSequence() {
 		return new ChemSequence();   
 	}
