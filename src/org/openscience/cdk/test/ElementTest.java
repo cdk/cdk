@@ -28,8 +28,10 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Element;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.Element;
 
 /**
  * Checks the funcitonality of the Element class.
@@ -40,11 +42,15 @@ import org.openscience.cdk.Element;
  */
 public class ElementTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
     public ElementTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(ElementTest.class);
@@ -53,17 +59,17 @@ public class ElementTest extends CDKTestCase {
     // test constructors
     
     public void testElement() {
-        Element e = new Element();
+        Element e = builder.newElement();
         assertTrue(e instanceof ChemObject);
     }
     
     public void testElement_String() {
-        Element e = new Element("C");
+        Element e = builder.newElement("C");
         assertEquals("C", e.getSymbol());
     }
     
     public void testElement_String_int() {
-        Element e = new Element("H", 1);
+        Element e = builder.newElement("H", 1);
         assertEquals("H", e.getSymbol());
         assertEquals(1, e.getAtomicNumber());
     }
@@ -71,35 +77,35 @@ public class ElementTest extends CDKTestCase {
     // test methods
     
     public void testSetSymbol_String() {
-        Element e = new Element();
+        Element e = builder.newElement();
         e.setSymbol("C");
         assertEquals("C", e.getSymbol());
     }
         
     public void testGetSymbol() {
-        Element e = new Element("X");
+        Element e = builder.newElement("X");
         assertEquals("X", e.getSymbol());
     }
         
     public void testSetAtomicNumber_int() {
-        Element e = new Element("H");
+        Element e = builder.newElement("H");
         e.setAtomicNumber(1);
         assertEquals(1, e.getAtomicNumber());
     }
 
     public void testGetAtomicNumber() {
-        Element e = new Element("D", 1);
+        Element e = builder.newElement("D", 1);
         assertEquals(1, e.getAtomicNumber());
     }
 
     public void testClone() {
-        Element elem = new Element();
+        Element elem = builder.newElement();
         Object clone = elem.clone();
         assertTrue(clone instanceof Element);
     }
     
     public void testClone_Symbol() {
-        Element elem = new Element("C");
+        Element elem = builder.newElement("C");
         Element clone = (Element)elem.clone();
         
         // test cloning of symbol
@@ -108,7 +114,7 @@ public class ElementTest extends CDKTestCase {
     }
     
     public void testClone_AtomicNumber() {
-        Element elem = new Element("C", 6);
+        Element elem = builder.newElement("C", 6);
         Element clone = (Element)elem.clone();
         
         // test cloning of atomic number
@@ -118,7 +124,7 @@ public class ElementTest extends CDKTestCase {
     
     /** Test for RFC #9 */
     public void testToString() {
-        Element elem = new Element();
+        Element elem = builder.newElement();
         String description = elem.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
@@ -126,11 +132,4 @@ public class ElementTest extends CDKTestCase {
         }
     }
 
-    public void testCompare_Object() {
-        Element elem = new Element("Li");
-        assertTrue(elem.compare(elem));
-        Element hydrogen = new Element("H");
-        assertFalse(elem.compare(hydrogen));
-        assertFalse(elem.compare("Li"));
-    }
 }
