@@ -21,11 +21,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.dataclasses;
+package org.openscience.cdk.debug;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -39,21 +38,33 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module data-debug
  */
-public class DebugAtomType extends org.openscience.cdk.AtomType
-    implements AtomType {
+public class DebugIsotope extends org.openscience.cdk.Isotope
+    implements Isotope {
 
 	LoggingTool logger = new LoggingTool();
 
-	public DebugAtomType(String elementSymbol) {
+	public DebugIsotope(String elementSymbol) {
 		super(elementSymbol);
-		logger.debug("Instantiated a DebugAtomType: symbol= ", elementSymbol);
-	}
-
-	public DebugAtomType(String identifier, String elementSymbol) {
-		super(identifier, elementSymbol);
-		logger.debug("Instantiated a DebugAtomType: identifier= " + identifier + " symbol= ", elementSymbol);
+		logger.debug("Instantiated a DebugIsotope.");
 	}
 	
+	public DebugIsotope(int atomicNumber, String elementSymbol, 
+			int massNumber, double exactMass, double abundance) {
+		super(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
+		logger.debug("Instantiated a DebugIsotope.");
+	}
+
+	public DebugIsotope(int atomicNumber, String elementSymbol, 
+			double exactMass, double abundance) {
+		super(atomicNumber, elementSymbol, exactMass, abundance);
+		logger.debug("Instantiated a DebugIsotope.");
+	}
+
+	public DebugIsotope(String elementSymbol, int massNumber) {
+		super(elementSymbol, massNumber);
+		logger.debug("Instantiated a DebugIsotope.");
+	}
+
 	public int getAtomicNumber() {
 		logger.debug("Getting atomic number: ", super.getAtomicNumber());
 		return super.getAtomicNumber();
@@ -199,96 +210,5 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		logger.debug("Setting mass number: ", massNumber);
 		super.setMassNumber(massNumber);
 	}
-
-	public void setAtomTypeName(String identifier) {
-		logger.debug("Setting atom type name: ", identifier);
-		super.setAtomTypeName(identifier);
-	}
-
-	public void setMaxBondOrder(double maxBondOrder) {
-		logger.debug("Setting max bond order: ", maxBondOrder);
-		super.setMaxBondOrder(maxBondOrder);
-	}
-
-	public void setBondOrderSum(double bondOrderSum) {
-		logger.debug("Setting bond order sum: ", bondOrderSum);
-		super.setBondOrderSum(bondOrderSum);
-	}
-
-	public String getAtomTypeName() {
-		logger.debug("Getting atom type name: ", super.getAtomTypeName());
-		return super.getAtomTypeName();
-	}
-
-	public double getMaxBondOrder() {
-		logger.debug("Getting max bond order: ", super.getMaxBondOrder());
-		return super.getMaxBondOrder();
-	}
-
-	public double getBondOrderSum() {
-		logger.debug("Getting bond order sum: ", super.getBondOrderSum());
-		return super.getBondOrderSum();
-	}
-
-	public void setFormalCharge(int charge) {
-		logger.debug("Setting formal charge: ", charge);
-		super.setFormalCharge(charge);
-	}
-
-	public int getFormalCharge() {
-		logger.debug("Getting formal charge: ", super.getFormalCharge());
-		return super.getFormalCharge();
-	}
-
-	public void setFormalNeighbourCount(int count) {
-		logger.debug("Setting forml neighbour count: ", count);
-		super.setFormalNeighbourCount(count);
-	}
-
-	public int getFormalNeighbourCount() {
-		logger.debug("Getting formal neighbour count: ", super.getFormalNeighbourCount());
-		return super.getFormalNeighbourCount();
-	}
-
-	public void setHybridization(int hybridization) {
-		logger.debug("Setting hybridization: ", hybridization);
-		super.setHybridization(hybridization);
-	}
-
-	public int getHybridization() {
-		logger.debug("Getting hybridization: ", super.getHybridization());
-		return super.getHybridization();
-	}
-
-	public void setVanderwaalsRadius(double radius) {
-		logger.debug("Setting vanderwaals radius: ", radius);
-		super.setVanderwaalsRadius(radius);
-	}
-
-	public double getVanderwaalsRadius() {
-		logger.debug("Getting vanderwaals radius: ", super.getVanderwaalsRadius());
-		return super.getVanderwaalsRadius();
-	}
-
-	public void setCovalentRadius(double radius) {
-		logger.debug("Setting covalent radius: ", radius);
-		super.setCovalentRadius(radius);
-	}
-
-	public double getCovalentRadius() {
-		logger.debug("Getting covalent radius: ", super.getCovalentRadius());
-		return super.getCovalentRadius();
-	}
-
-	public void setValency(int valency) {
-		logger.debug("Setting valency: ", valency);
-		super.setValency(valency);
-	}
-
-	public int getValency() {
-		logger.debug("Getting valency: ", super.getValency());
-		return super.getValency();
-	}
-
 
 }

@@ -21,14 +21,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.dataclasses;
+package org.openscience.cdk.debug;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -37,10 +37,45 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module data-debug
  */
-public class DebugChemObject extends org.openscience.cdk.ChemObject
-    implements ChemObject {
+public class DebugElement extends org.openscience.cdk.Element
+    implements Element {
 
 	LoggingTool logger = new LoggingTool();
+
+	public DebugElement() {
+		super();
+		logger.debug("Instantiated a DebugElement");
+	}
+	
+	public DebugElement(String symbol) {
+		super(symbol);
+		logger.debug("Instantiated a DebugElement: symbol= ", symbol);
+	}
+	
+	public DebugElement(String symbol, int atomicNumber) {
+		super(symbol, atomicNumber);
+		logger.debug("Instantiated a DebugElement: symbol= ", symbol + " atomic number= " + atomicNumber);
+	}
+	
+	public int getAtomicNumber() {
+		logger.debug("Getting atomic number: ", super.getAtomicNumber());
+		return super.getAtomicNumber();
+	}
+
+	public void setAtomicNumber(int atomicNumber) {
+		logger.debug("Setting atomic number: ", atomicNumber);
+		super.setAtomicNumber(atomicNumber);
+	}
+
+	public String getSymbol() {
+		logger.debug("Getting symbol: ", super.getSymbol());
+		return super.getSymbol();
+	}
+
+	public void setSymbol(String symbol) {
+		logger.debug("Setting symbol: ", symbol);
+		super.setSymbol(symbol);
+	}
 
 	public void addListener(ChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.dataclasses;
+package org.openscience.cdk.debug;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
-import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SingleElectron;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -46,20 +45,20 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module data-debug
  */
-public class DebugMolecule extends org.openscience.cdk.Molecule
-    implements Molecule {
+public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
+    implements AtomContainer {
 
 	LoggingTool logger = new LoggingTool();
 
-	public DebugMolecule() {
+	public DebugAtomContainer() {
 		super();
 	}
-
-	public DebugMolecule(int atomCount, int electronContainerCount) {
+    
+	public DebugAtomContainer(int atomCount, int electronContainerCount) {
 		super(atomCount, electronContainerCount);
 	}
-
-	public DebugMolecule(org.openscience.cdk.interfaces.AtomContainer container) {
+    
+	public DebugAtomContainer(org.openscience.cdk.interfaces.AtomContainer container) {
 		super(container);
 	}
 
