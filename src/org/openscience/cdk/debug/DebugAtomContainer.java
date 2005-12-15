@@ -58,7 +58,7 @@ public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
 		super(atomCount, electronContainerCount);
 	}
     
-	public DebugAtomContainer(org.openscience.cdk.interfaces.AtomContainer container) {
+	public DebugAtomContainer(AtomContainer container) {
 		super(container);
 	}
 
