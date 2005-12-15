@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugAtomType extends org.openscience.cdk.AtomType
     implements AtomType {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger = new LoggingTool(DebugAtomType.class);
 
 	public DebugAtomType(String elementSymbol) {
 		super(elementSymbol);
@@ -50,8 +50,10 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 	}
 
 	public DebugAtomType(String identifier, String elementSymbol) {
-		super(identifier, elementSymbol);
+		super(elementSymbol); // cannot use super(identifier, elementSymbol); that gives a NPE
 		logger.debug("Instantiated a DebugAtomType: identifier= " + identifier + " symbol= ", elementSymbol);
+		this.setSymbol(elementSymbol);
+		this.setAtomTypeName(identifier);
 	}
 	
 	public int getAtomicNumber() {

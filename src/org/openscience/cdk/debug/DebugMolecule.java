@@ -49,18 +49,23 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugMolecule extends org.openscience.cdk.Molecule
     implements Molecule {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger;
 
 	public DebugMolecule() {
 		super();
+		logger = new LoggingTool(this);
 	}
 
 	public DebugMolecule(int atomCount, int electronContainerCount) {
 		super(atomCount, electronContainerCount);
+		logger = new LoggingTool(this);
 	}
 
 	public DebugMolecule(org.openscience.cdk.interfaces.AtomContainer container) {
-		super(container);
+		super(); // cannot call super(container) because the logger has not been
+		         // instantiated yet, and will cause a NPE
+		logger = new LoggingTool(this);
+		add(container);
 	}
 
 	public void addAtomParity(AtomParity parity) {
@@ -274,7 +279,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 	}
 
 	public void add(AtomContainer atomContainer) {
-		logger.debug("Adding atom container: ", atomContainer);
+		logger.debug("Adding atom container: " + atomContainer);
 		super.add(atomContainer);
 	}
 

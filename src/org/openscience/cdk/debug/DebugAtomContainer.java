@@ -138,8 +138,8 @@ public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
 	}
 
 	public LonePair[] getLonePairs(Atom atom) {
-		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs().length);
-		return super.getLonePairs();
+		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs(atom).length);
+		return super.getLonePairs(atom);
 	}
 
 	public Atom getFirstAtom() {
