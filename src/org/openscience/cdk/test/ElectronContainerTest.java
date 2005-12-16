@@ -28,7 +28,9 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the ElectronContainer class.
@@ -39,24 +41,28 @@ import org.openscience.cdk.ElectronContainer;
  */
 public class ElectronContainerTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
     public ElectronContainerTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(ElectronContainerTest.class);
     }
     
     public void testElectronContainer() {
-        ElectronContainer ec = new ElectronContainer();
+        ElectronContainer ec = builder.newElectronContainer();
         assertNotNull(ec);
         assertEquals(0, ec.getElectronCount());
     }
     
     public void testSetElectronCount_int() {
-        ElectronContainer ec = new ElectronContainer();
+        ElectronContainer ec = builder.newElectronContainer();
         ec.setElectronCount(3);
         assertEquals(3, ec.getElectronCount());
     }
@@ -65,7 +71,7 @@ public class ElectronContainerTest extends CDKTestCase {
     }
 
     public void testClone() {
-        ElectronContainer ec = new ElectronContainer();
+        ElectronContainer ec = builder.newElectronContainer();
         ec.setElectronCount(2);
         Object clone = ec.clone();
         assertNotNull(clone);

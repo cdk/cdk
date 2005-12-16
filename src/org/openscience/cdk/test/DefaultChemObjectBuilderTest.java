@@ -67,14 +67,15 @@ import org.openscience.cdk.interfaces.Strand;
  */
 public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
-	private static org.openscience.cdk.ChemObject rootObject;
+	protected org.openscience.cdk.ChemObject rootObject;
 	
     public DefaultChemObjectBuilderTest(String name) {
         super(name);
-        rootObject = new org.openscience.cdk.ChemObject();
     }
 
-    public void setUp() {}
+    public void setUp() {
+        rootObject = new org.openscience.cdk.ChemObject();
+    }
 
     public static Test suite() {
         return new TestSuite(DefaultChemObjectBuilderTest.class);

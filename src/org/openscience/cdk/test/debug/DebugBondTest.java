@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -20,40 +20,35 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * 
  */
 package org.openscience.cdk.test.debug;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.exception.CDKExceptionTest;
-import org.openscience.cdk.test.exception.NoSuchAtomExceptionTest;
+import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.openscience.cdk.test.AtomContainerTest;
+import org.openscience.cdk.test.AtomTest;
+import org.openscience.cdk.test.BondTest;
 
 /**
- * TestSuite that runs all the sample tests.
+ * Checks the funcitonality of the AtomContainer.
  *
  * @cdk.module test
  */
-public class DebugDataClassesTests {
+public class DebugBondTest extends BondTest {
 
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.debug Tests");
-        
-        suite.addTest(DebugCoverageTest.suite());
-        
-        suite.addTest(DebugChemObjectBuilderTest.suite());
-        
-        suite.addTest(DebugAtomContainerTest.suite());
-        suite.addTest(DebugAtomTest.suite());
-        suite.addTest(DebugAtomTypeTest.suite());
-        suite.addTest(DebugBondTest.suite());
-        suite.addTest(DebugChemObjectTest.suite());
-        suite.addTest(DebugElectronContainerTest.suite());
-        suite.addTest(DebugElementTest.suite());
-        suite.addTest(DebugIsotopeTest.suite());
-        suite.addTest(DebugMoleculeTest.suite());
-        
-        return suite;
+    public DebugBondTest(String name) {
+        super(name);
+    }
+
+    public void setUp() {
+    	super.builder = DebugChemObjectBuilder.getInstance();
+    }
+
+    public static Test suite() {
+        return new TestSuite(DebugBondTest.class);
     }
 
 }

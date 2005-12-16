@@ -32,9 +32,11 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * Checks the functionality of the Bond class.
@@ -45,18 +47,22 @@ import org.openscience.cdk.CDKConstants;
  */
 public class BondTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
     public BondTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(BondTest.class);
     }
     
     public void testBond() {
-        Bond bond = new Bond();
+        Bond bond = builder.newBond();
         assertEquals(2, bond.getAtomCount());
         assertTrue(bond.getAtomAt(0) == null);
         assertTrue(bond.getAtomAt(1) == null);
@@ -65,9 +71,9 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testBond_Atom_Atom() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
-        Bond bond = new Bond(c, o);
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
+        Bond bond = builder.newBond(c, o);
         
         assertEquals(2, bond.getAtomCount());
         assertEquals(c, bond.getAtomAt(0));
@@ -77,9 +83,9 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testBond_Atom_Atom_double() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
-        Bond bond = new Bond(c, o, 2.0);
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
+        Bond bond = builder.newBond(c, o, 2.0);
         
         assertEquals(2, bond.getAtomCount());
         assertEquals(c, bond.getAtomAt(0));
@@ -89,9 +95,9 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testBond_Atom_Atom_double_int() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
-        Bond bond = new Bond(c, o, 1.0, CDKConstants.STEREO_BOND_UP);
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
+        Bond bond = builder.newBond(c, o, 1.0, CDKConstants.STEREO_BOND_UP);
         
         assertEquals(2, bond.getAtomCount());
         assertEquals(c, bond.getAtomAt(0));
@@ -101,40 +107,40 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testCompare_Object() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
-        Bond b2 = new Bond(c, o, 2.0); // same C=O bond
+        Bond b = builder.newBond(c, o, 2.0); // C=O bond
+        Bond b2 = builder.newBond(c, o, 2.0); // same C=O bond
         
         assertTrue(b.compare(b2));
     }
     
     public void testContains_Atom() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
+        Bond b = builder.newBond(c, o, 2.0); // C=O bond
         
         assertTrue(b.contains(c));
         assertTrue(b.contains(o));
     }
     
     public void testGetAtomCount() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
+        Bond b = builder.newBond(c, o, 2.0); // C=O bond
         
         assertEquals(2.0, b.getAtomCount(), 0.001);
     }
     
     public void testSetAtoms_arrayAtom() {
         Atom[] atomsToAdd = new Atom[2];
-        atomsToAdd[0] = new Atom("C");
-        atomsToAdd[1] = new Atom("O");
+        atomsToAdd[0] = builder.newAtom("C");
+        atomsToAdd[1] = builder.newAtom("O");
         
-        Bond b = new Bond();
+        Bond b = builder.newBond();
         b.setAtoms(atomsToAdd);
         
         org.openscience.cdk.interfaces.Atom[] atoms = b.getAtoms();
@@ -144,10 +150,10 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testGetAtoms() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
+        Bond b = builder.newBond(c, o, 2.0); // C=O bond
         
         org.openscience.cdk.interfaces.Atom[] atoms = b.getAtoms();
         assertEquals(2, atoms.length);
@@ -156,32 +162,32 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testGetAtomsVector() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
+        Bond b = builder.newBond(c, o, 2.0); // C=O bond
         
-        Vector atoms = b.getAtomsVector();
-        assertEquals(2, atoms.size());
-        assertEquals(c, atoms.elementAt(0));
-        assertEquals(o, atoms.elementAt(1));
+        Atom[] atoms = b.getAtoms();
+        assertEquals(2, atoms.length);
+        assertEquals(c, atoms[0]);
+        assertEquals(o, atoms[1]);
     }
     
     public void testGetAtomAt_int() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
+        Bond b = builder.newBond(c, o, 2.0); // C=O bond
         
         assertEquals(c, b.getAtomAt(0));
         assertEquals(o, b.getAtomAt(1));
     }
     
     public void testSetAtomAt_Atom_int() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond();
+        Bond b = builder.newBond();
         b.setAtomAt(c, 0);
         b.setAtomAt(o, 1);
         
@@ -190,24 +196,24 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testGetConnectedAtom_Atom() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0); // C=O bond
+        Bond b = builder.newBond(c, o, 2.0); // C=O bond
         
         assertEquals(c, b.getConnectedAtom(o));
         assertEquals(o, b.getConnectedAtom(c));
     }
     
     public void testIsConnectedTo_Bond() {
-        Atom c1 = new Atom("C");
-        Atom o = new Atom("O");
-        Atom c2 = new Atom("C");
-        Atom c3 = new Atom("C");
+        Atom c1 = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
+        Atom c2 = builder.newAtom("C");
+        Atom c3 = builder.newAtom("C");
         
-        Bond b1 = new Bond(c1, o);
-        Bond b2 = new Bond(o, c2);
-        Bond b3 = new Bond(c2, c3);
+        Bond b1 = builder.newBond(c1, o);
+        Bond b2 = builder.newBond(o, c2);
+        Bond b3 = builder.newBond(c2, c3);
         
         assertTrue(b1.isConnectedTo(b2));
         assertTrue(b2.isConnectedTo(b1));
@@ -218,12 +224,12 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testGetOrder() {
-        Bond b = new Bond(new Atom("C"), new Atom("O"), 2.0); // C=O bond
+        Bond b = builder.newBond(builder.newAtom("C"), builder.newAtom("O"), 2.0); // C=O bond
         
         assertEquals(2.0, b.getOrder(), 0.001);
     }
     public void testSetOrder_double() {
-        Bond b = new Bond(new Atom("C"), new Atom("O"), 2.0); // C=O bond
+        Bond b = builder.newBond(builder.newAtom("C"), builder.newAtom("O"), 2.0); // C=O bond
         
         assertEquals(2.0, b.getOrder(), 0.001);
         
@@ -232,35 +238,35 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testSetStereo_int() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0, CDKConstants.STEREO_BOND_DOWN);
+        Bond b = builder.newBond(c, o, 2.0, CDKConstants.STEREO_BOND_DOWN);
         
         b.setStereo(CDKConstants.STEREO_BOND_UP);
         assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
     }
     public void testGetStereo() {
-        Atom c = new Atom("C");
-        Atom o = new Atom("O");
+        Atom c = builder.newAtom("C");
+        Atom o = builder.newAtom("O");
         
-        Bond b = new Bond(c, o, 2.0, CDKConstants.STEREO_BOND_UP);
+        Bond b = builder.newBond(c, o, 2.0, CDKConstants.STEREO_BOND_UP);
         assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
     }
     
     public void testGet2DCenter() {
-        Atom o = new Atom("O", new Point2d(0.0, 0.0));
-        Atom c = new Atom("C", new Point2d(1.0, 1.0));
-        Bond b = new Bond(c,o);
+        Atom o = builder.newAtom("O", new Point2d(0.0, 0.0));
+        Atom c = builder.newAtom("C", new Point2d(1.0, 1.0));
+        Bond b = builder.newBond(c,o);
         
         assertEquals(0.5, b.get2DCenter().x, 0.001);
         assertEquals(0.5, b.get2DCenter().y, 0.001);
     }
 
     public void testGet3DCenter() {
-        Atom o = new Atom("O", new Point3d(0.0, 0.0, 0.0));
-        Atom c = new Atom("C", new Point3d(1.0, 1.0, 1.0));
-        Bond b = new Bond(c,o);
+        Atom o = builder.newAtom("O", new Point3d(0.0, 0.0, 0.0));
+        Atom c = builder.newAtom("C", new Point3d(1.0, 1.0, 1.0));
+        Bond b = builder.newBond(c,o);
         
         assertEquals(0.5, b.get3DCenter().x, 0.001);
         assertEquals(0.5, b.get3DCenter().y, 0.001);
@@ -268,16 +274,16 @@ public class BondTest extends CDKTestCase {
     }
 
     public void testClone() {
-        Bond bond = new Bond();
+        Bond bond = builder.newBond();
         Object clone = bond.clone();
         assertNotNull(clone);
         assertTrue(clone instanceof org.openscience.cdk.interfaces.Bond);
     }
 
     public void testClone_Atom() {
-        Atom atom1 = new Atom("C");
-        Atom atom2 = new Atom("O");
-        Bond bond = new Bond(atom1, atom2);
+        Atom atom1 = builder.newAtom("C");
+        Atom atom2 = builder.newAtom("O");
+        Bond bond = builder.newBond(atom1, atom2);
         Bond clone = (Bond)bond.clone();
         
         // test cloning of atoms
@@ -286,9 +292,9 @@ public class BondTest extends CDKTestCase {
     }
 
     public void testClone_Order() {
-        Atom atom1 = new Atom("C");
-        Atom atom2 = new Atom("O");
-        Bond bond = new Bond(atom1, atom2, 1.0);
+        Atom atom1 = builder.newAtom("C");
+        Atom atom2 = builder.newAtom("O");
+        Bond bond = builder.newBond(atom1, atom2, 1.0);
         Bond clone = (Bond)bond.clone();
         
         // test cloning of bond order
@@ -297,9 +303,9 @@ public class BondTest extends CDKTestCase {
     }
 
     public void testClone_Stereo() {
-        Atom atom1 = new Atom("C");
-        Atom atom2 = new Atom("O");
-        Bond bond = new Bond(atom1, atom2, 1.0, 1);
+        Atom atom1 = builder.newAtom("C");
+        Atom atom2 = builder.newAtom("O");
+        Bond bond = builder.newBond(atom1, atom2, 1.0, 1);
         Bond clone = (Bond)bond.clone();
         
         // test cloning of bond order
@@ -309,7 +315,7 @@ public class BondTest extends CDKTestCase {
 
     /** Test for RFC #9 */
     public void testToString() {
-        Bond bond = new Bond();
+        Bond bond = builder.newBond();
         String description = bond.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
