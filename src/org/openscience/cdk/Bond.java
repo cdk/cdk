@@ -138,7 +138,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 */
 	public org.openscience.cdk.interfaces.Atom[] getAtoms()
 	{
-		org.openscience.cdk.interfaces.Atom[] returnAtoms = new Atom[getAtomCount()];
+		org.openscience.cdk.interfaces.Atom[] returnAtoms = new org.openscience.cdk.interfaces.Atom[getAtomCount()];
 		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
 		return returnAtoms;
 	}
@@ -193,7 +193,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 */
 	public org.openscience.cdk.interfaces.Atom getAtomAt(int position)
 	{
-		return (Atom)atoms[position];
+		return (org.openscience.cdk.interfaces.Atom)atoms[position];
 	}
 
 
