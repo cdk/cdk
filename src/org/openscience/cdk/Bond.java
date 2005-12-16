@@ -80,8 +80,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	/**
 	 *  Constructs an empty bond.
 	 */
-	public Bond()
-	{
+	public Bond() {
 		this(null, null, 0.0, CDKConstants.STEREO_BOND_NONE);
 	}
 
@@ -123,10 +122,10 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	public Bond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order, int stereo)
 	{
 		atoms = new Atom[2];
-		setAtomAt(atom1, 0);
-		setAtomAt(atom2, 1);
-		setOrder(order);
-		setStereo(stereo);
+		atoms[0] = atom1;
+		atoms[1] = atom2;
+		this.order = order;
+		this.stereo = stereo;
 	}
 
 
