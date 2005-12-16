@@ -170,7 +170,6 @@ public class MFAnalyserTest extends CDKTestCase {
     
     public void testGetNaturalMass() throws Exception {
     	MFAnalyser mfa = new MFAnalyser("C8H10O2Cl2", new Molecule());
-    	System.err.println( mfa.getNaturalMass()+"");
     	assertEquals((float)209.0718 , mfa.getNaturalMass() ,.0001);
     }
     
