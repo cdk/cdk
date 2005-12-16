@@ -49,22 +49,19 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugMolecule extends org.openscience.cdk.Molecule
     implements Molecule {
 
-	LoggingTool logger;
+	LoggingTool logger = new LoggingTool(DebugMolecule.class);
 
 	public DebugMolecule() {
 		super();
-		logger = new LoggingTool(this);
 	}
 
 	public DebugMolecule(int atomCount, int electronContainerCount) {
 		super(atomCount, electronContainerCount);
-		logger = new LoggingTool(this);
 	}
 
 	public DebugMolecule(org.openscience.cdk.interfaces.AtomContainer container) {
 		super(); // cannot call super(container) because the logger has not been
 		         // instantiated yet, and will cause a NPE
-		logger = new LoggingTool(this);
 		add(container);
 	}
 

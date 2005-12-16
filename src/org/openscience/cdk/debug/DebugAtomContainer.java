@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
     implements AtomContainer {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
 	public DebugAtomContainer() {
 		super();

@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugElement extends org.openscience.cdk.Element
     implements Element {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger = new LoggingTool(DebugElement.class);
 
 	public DebugElement() {
 		super();

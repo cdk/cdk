@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugIsotope extends org.openscience.cdk.Isotope
     implements Isotope {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger = new LoggingTool(DebugIsotope.class);
 
 	public DebugIsotope(String elementSymbol) {
 		super(elementSymbol);

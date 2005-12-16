@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugBond extends org.openscience.cdk.Bond
     implements Bond {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger = new LoggingTool(DebugBond.class);
 	
 	public DebugBond() {
 		super();

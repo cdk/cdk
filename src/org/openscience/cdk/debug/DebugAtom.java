@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class DebugAtom extends org.openscience.cdk.Atom implements Atom {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger = new LoggingTool(DebugAtom.class);
 	
 	public DebugAtom() {
 		super();

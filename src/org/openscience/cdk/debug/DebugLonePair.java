@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugLonePair extends org.openscience.cdk.LonePair
     implements LonePair {
 
-	LoggingTool logger = new LoggingTool(this);
+	LoggingTool logger = new LoggingTool(DebugLonePair.class);
 
 	public Atom getAtom() {
 		logger.debug("Getting atom: ", super.getAtom());
