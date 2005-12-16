@@ -25,15 +25,11 @@ package org.openscience.cdk.debug;
 
 import java.util.Hashtable;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -42,25 +38,24 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module data-debug
  */
-public class DebugBond extends org.openscience.cdk.Bond
-    implements Bond {
+public class DebugLonePair extends org.openscience.cdk.LonePair
+    implements LonePair {
 
-	LoggingTool logger = new LoggingTool();
-	
-	public DebugBond() {
-		super();
+	LoggingTool logger = new LoggingTool(this);
+
+	public Atom getAtom() {
+		logger.debug("Getting atom: ", super.getAtom());
+		return super.getAtom();
 	}
-	
-	public DebugBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
-		super(atom1, atom2);
+
+	public void setAtom(Atom atom) {
+		logger.debug("Setting atom: ", atom);
+		super.setAtom(atom);
 	}
-	
-	public DebugBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order) {
-		super(atom1, atom2, order);
-	}
-	
-	public DebugBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order, int stereo) {
-		super(atom1, atom2, order, stereo);
+
+	public boolean contains(Atom atom) {
+		logger.debug("Contains atom: ", atom);
+		return super.contains(atom);
 	}
 
 	public int getElectronCount() {
@@ -167,80 +162,5 @@ public class DebugBond extends org.openscience.cdk.Bond
 	public ChemObjectBuilder getBuilder() {
 		return DebugChemObjectBuilder.getInstance();
 	}
-
-	public Atom[] getAtoms() {
-		logger.debug("Getting atoms: ", super.getAtoms().length);
-		return super.getAtoms();
-	}
-
-	public void setAtoms(Atom[] atoms) {
-		logger.debug("Setting atoms: ", atoms.length);
-		super.setAtoms(atoms);
-	}
-
-	public int getAtomCount() {
-		logger.debug("Getting atom count: ", super.getAtomCount());
-		return super.getAtomCount();
-	}
-
-	public Atom getAtomAt(int position) {
-		logger.debug("Getting atom at position: ", position);
-		return super.getAtomAt(position);
-	}
-
-	public Atom getConnectedAtom(Atom atom) {
-		logger.debug("Getting connected atom to atom: ", atom);
-		return super.getConnectedAtom(atom);
-	}
-
-	public boolean contains(Atom atom) {
-		logger.debug("Contains atom: ", atom);
-		return super.contains(atom);
-	}
-
-	public void setAtomAt(Atom atom, int position) {
-		logger.debug("Setting atom at position: ", atom);
-		super.setAtomAt(atom, position);
-	}
-
-	public double getOrder() {
-		logger.debug("Getting order: ", super.getOrder());
-		return super.getOrder();
-	}
-
-	public void setOrder(double order) {
-		logger.debug("Setting order: ", order);
-		super.setOrder(order);
-	}
-
-	public int getStereo() {
-		logger.debug("Getting stereo: ", super.getStereo());
-		return super.getStereo();
-	}
-
-	public void setStereo(int stereo) {
-		logger.debug("Setting stereo: ", stereo);
-		super.setStereo(stereo);
-	}
-
-	public Point2d get2DCenter() {
-		logger.debug("Getting 2d center: ", super.get2DCenter());
-		return super.get2DCenter();
-	}
-
-	public Point3d get3DCenter() {
-		logger.debug("Getting 3d center: ", super.get3DCenter());
-		return super.get3DCenter();
-	}
-
-	public boolean compare(Object object) {
-		logger.debug("Comparing to object: ", object);
-		return super.compare(object);
-	}
-
-	public boolean isConnectedTo(Bond bond) {
-		logger.debug("Is connected to bond: ", bond);
-		return super.isConnectedTo(bond);
-	}
-
+	
 }

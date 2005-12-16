@@ -28,16 +28,18 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.BondTest;
+import org.openscience.cdk.test.AtomContainerTest;
+import org.openscience.cdk.test.AtomTest;
+import org.openscience.cdk.test.LonePairTest;
 
 /**
  * Checks the funcitonality of the AtomContainer.
  *
  * @cdk.module test
  */
-public class DebugBondTest extends BondTest {
+public class DebugLonePairTest extends LonePairTest {
 
-    public DebugBondTest(String name) {
+    public DebugLonePairTest(String name) {
         super(name);
     }
 
@@ -46,7 +48,7 @@ public class DebugBondTest extends BondTest {
     }
 
     public static Test suite() {
-        return new TestSuite(DebugBondTest.class);
+        return new TestSuite(DebugLonePairTest.class);
     }
 
 }

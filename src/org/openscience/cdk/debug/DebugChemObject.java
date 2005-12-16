@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugChemObject extends org.openscience.cdk.ChemObject
     implements ChemObject {
 
-	LoggingTool logger = new LoggingTool();
+	LoggingTool logger = new LoggingTool(this);
 
 	public void addListener(ChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

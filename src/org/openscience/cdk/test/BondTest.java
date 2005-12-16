@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.test;
 
-import java.util.Vector;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -78,7 +76,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(2, bond.getAtomCount());
         assertEquals(c, bond.getAtomAt(0));
         assertEquals(o, bond.getAtomAt(1));
-        assertTrue(bond.getOrder() == 1.0);
+        assertEquals(1.0, bond.getOrder(), 0.0001);
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     

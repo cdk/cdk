@@ -126,19 +126,19 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 
 	public org.openscience.cdk.interfaces.Bond newBond() {
-		return new Bond();
+		return new DebugBond();
 	}
 	
 	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
-		return new Bond(atom1, atom2);
+		return new DebugBond(atom1, atom2);
 	}
 	
 	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order) {
-		return new Bond(atom1, atom2, order);
+		return new DebugBond(atom1, atom2, order);
 	}
 	
 	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order, int stereo) {
-		return new Bond(atom1, atom2, order, stereo);
+		return new DebugBond(atom1, atom2, order, stereo);
 	}
 	
 	public org.openscience.cdk.interfaces.ChemFile newChemFile() {
@@ -166,7 +166,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
     }
     
     public org.openscience.cdk.interfaces.ElectronContainer newElectronContainer() {
-    	return new ElectronContainer();
+    	return new DebugElectronContainer();
     }
     
     public org.openscience.cdk.interfaces.Element newElement() {
@@ -200,7 +200,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 
     public org.openscience.cdk.interfaces.LonePair newLonePair() {
-    	return new LonePair();
+    	return new DebugLonePair();
     }
 
     public org.openscience.cdk.interfaces.LonePair newLonePair(org.openscience.cdk.interfaces.Atom atom) {

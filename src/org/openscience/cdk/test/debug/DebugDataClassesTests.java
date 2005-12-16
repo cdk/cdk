@@ -51,6 +51,7 @@ public class DebugDataClassesTests {
         suite.addTest(DebugElectronContainerTest.suite());
         suite.addTest(DebugElementTest.suite());
         suite.addTest(DebugIsotopeTest.suite());
+        suite.addTest(DebugLonePairTest.suite());
         suite.addTest(DebugMoleculeTest.suite());
         
         return suite;
