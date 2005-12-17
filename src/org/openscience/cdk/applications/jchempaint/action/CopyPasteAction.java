@@ -198,8 +198,13 @@ public class CopyPasteAction extends JCPAction{
     	  svg=sw.toString();
     	  // CML output
     	  sw = new StringWriter();
-    	  Class cmlWriterClass = this.getClass().getClassLoader().
-    	    loadClass("org.opscience.cdk.io.CMLWriter");
+    	  Class cmlWriterClass = null;
+    	  try {
+    		  cmlWriterClass = this.getClass().getClassLoader().loadClass("org.openscience.cdk.io.CMLWriter");
+    	  } catch (Exception exception) {
+    		  logger.error("Could not load CMLWriter: ", exception.getMessage());
+    		  logger.debug(exception);
+    	  }
     	  if (cmlWriterClass != null) {
     		  cow = (ChemObjectWriter)cmlWriterClass.newInstance();
     		  Constructor constructor = cow.getClass().getConstructor(new Class[]{Writer.class});
