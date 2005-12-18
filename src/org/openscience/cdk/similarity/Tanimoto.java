@@ -1,7 +1,4 @@
-package org.openscience.cdk.similarity;
-
-/*
- *  $RCSfile$
+/*  $RCSfile$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -29,18 +26,10 @@ package org.openscience.cdk.similarity;
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+package org.openscience.cdk.similarity;
+
 
 import java.util.BitSet;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  Calculates the Tanimoto coefficient for a given pair of two 
@@ -48,29 +37,23 @@ import org.openscience.cdk.tools.LoggingTool;
  *  quantitatively measure the "distance" or similarity of 
  *  two chemical structures. 
  *
- *  You can use the FingerPrinter class to retrieve two fingerprint bitsets.
+ *  <p>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
  *  We assume that you have two structures stored in cdk.Molecule objects.
- *  A tanimoto coefficient can then be calculated like: <pre>
- *
+ *  A tanimoto coefficient can then be calculated like:
+ *  <pre>
  *   BitSet fingerprint1 = Fingerprinter.getFingerprint(molecule1);
  *   BitSet fingerprint2 = Fingerprinter.getFingerprint(molecule2);
  *   float tanimoto_coefficient = Tanimoto.calculate(fingerprint1, fingerprint2);
- *   
- * </pre> <p>
+ *  </pre>
  *
- *  The FingerPrinter assumes that hydrogens are explicitely given, if this 
- *  is desired! <p>
- *  Once the two BitSets have been generated, 
+ *  <p>The FingerPrinter assumes that hydrogens are explicitely given, if this 
+ *  is desired! 
  *
  *@author         steinbeck
  *@cdk.created    2005-10-19
- *@cdk.keyword    tanimoto
  *@cdk.keyword    jaccard
- *@cdk.keyword    similarity
+ *@cdk.keyword    similarity, tanimoto
  */
-
-import java.util.BitSet;
-
 public class Tanimoto 
 {
 
