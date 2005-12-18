@@ -1,7 +1,6 @@
 package org.openscience.cdk.test.geometry.alignment;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 
 import junit.framework.Test;

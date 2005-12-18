@@ -34,7 +34,6 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.tools.LoggingTool;
 

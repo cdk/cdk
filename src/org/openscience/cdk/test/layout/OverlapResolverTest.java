@@ -33,7 +33,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.layout.OverlapResolver;

@@ -27,18 +27,13 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Crystal;
-import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.LonePair;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Polymer;
 import org.openscience.cdk.PseudoAtom;

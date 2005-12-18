@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Ring;

@@ -28,19 +28,10 @@
  */
 package org.openscience.cdk.libio.biojava;
 
-import java.util.HashMap;
-
 import org.biojava.bio.symbol.SymbolList;
 
-import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.BioPolymer;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.Strand;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.matrix.ConnectionMatrix;
-import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**

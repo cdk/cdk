@@ -51,7 +51,6 @@ import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.base.CMLException;

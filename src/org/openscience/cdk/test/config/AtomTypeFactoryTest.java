@@ -32,7 +32,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomType;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.test.CDKTestCase;

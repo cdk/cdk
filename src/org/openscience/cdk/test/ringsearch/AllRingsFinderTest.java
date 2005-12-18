@@ -34,7 +34,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.RingSet;

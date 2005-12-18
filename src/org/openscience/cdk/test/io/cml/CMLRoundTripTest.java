@@ -28,7 +28,6 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.StringReader;
-import java.io.StringWriter;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -47,7 +46,6 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;

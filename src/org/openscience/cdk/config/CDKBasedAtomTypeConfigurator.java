@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.tools.LoggingTool;

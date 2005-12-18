@@ -34,7 +34,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;

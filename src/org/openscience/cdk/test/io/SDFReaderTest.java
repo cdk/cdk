@@ -29,19 +29,14 @@ package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the reading MDL mol files using one test file.

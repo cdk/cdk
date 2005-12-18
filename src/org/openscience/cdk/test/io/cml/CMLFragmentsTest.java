@@ -37,7 +37,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;

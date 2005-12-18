@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.applet.Applet;
 import java.lang.reflect.Field;
 import java.util.MissingResourceException;
 import java.util.Properties;

@@ -32,13 +32,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
-import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;

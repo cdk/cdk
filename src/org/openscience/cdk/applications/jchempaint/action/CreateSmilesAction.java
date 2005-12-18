@@ -32,17 +32,14 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 

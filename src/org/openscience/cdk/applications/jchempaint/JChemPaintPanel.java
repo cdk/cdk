@@ -51,7 +51,6 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;

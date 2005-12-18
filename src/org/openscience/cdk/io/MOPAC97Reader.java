@@ -32,7 +32,6 @@ import java.io.StringReader;
 
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
-import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.exception.CDKException;

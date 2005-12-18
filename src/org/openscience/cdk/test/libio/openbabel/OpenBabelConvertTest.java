@@ -35,7 +35,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.libio.openbabel.OpenBabelConvert;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

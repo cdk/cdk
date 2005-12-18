@@ -33,7 +33,6 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.atomtype.MM2AtomTypeMatcher;
