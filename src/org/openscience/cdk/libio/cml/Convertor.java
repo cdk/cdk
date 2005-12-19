@@ -424,6 +424,8 @@ public class Convertor {
 	}
 	
 	private void checkPrefix (CMLElement element) {
+		prefix.trim();
+		if (this.prefix.length() == 0) prefix = null;
 		if (this.prefix != null) element.setNamespacePrefix(this.prefix);
 	}
 
