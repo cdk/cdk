@@ -93,7 +93,7 @@ public class MFAnalyserTest extends CDKTestCase {
         MFAnalyser mfa = new MFAnalyser("CH3OH", new org.openscience.cdk.AtomContainer());
         assertEquals(1, mfa.getAtomCount("C"));        
         assertEquals(1, mfa.getAtomCount("O"));        
-        assertEquals(4, mfa.getAtomCount("H"));        
+        assertEquals(4, mfa.getAtomCount("H")); 
     }
     
     public void testGetHeavyAtoms() {

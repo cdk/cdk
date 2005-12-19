@@ -34,14 +34,18 @@ import java.util.Vector;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -111,6 +115,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 			
 			
 	boolean debug = false;
+	
+	private AtomContainer acold=null;
+	private RingSet soar=null;
 
 	/**
 	 *  The rank order for the given element symbols
@@ -152,7 +159,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
   
   
-  public Vector[] getSpheres(AtomContainer ac, Atom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
+  public Vector[] getSpheres(Molecule ac, Atom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
 	{
 		centerCode = "";
 		this.atomContainer = ac;
@@ -172,7 +179,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 *  depends on the order the preceding node in its branch
 		 */
 		HOSECode = new StringBuffer();
-		createCenterCode(root);
+		createCenterCode(root,ac,ringsize);
 		breadthFirstSearch(root, false);
 		createCode();
 		fillUpSphereDelimiters();
@@ -190,8 +197,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  IMPORTANT: if you want aromaticity to be included in the code, you need
 	 *  to run the AtomContainer ac to the HueckelAromaticityDetector prior to 
 	 *  using getHOSECode(). This method only gives proper results if the molecule is
-   *  fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
-   *  This method is known to fail for protons sometimes.
+ *  fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
+ *  This method is known to fail for protons sometimes.
 	 *
 	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
 	 *@param  root The root atom for which to produce the HOSE code
@@ -200,6 +207,28 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
 	 */
 	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
+	{
+		return getHOSECode(ac,root,noOfSpheres, false);
+	}
+	
+	
+	/**
+	 *  Produces a HOSE code for Atom 'root' in the AtomContainer 'ac'. The HOSE
+	 *  code is produced for the number of spheres given by noOfSpheres
+	 *  IMPORTANT: if you want aromaticity to be included in the code, you need
+	 *  to run the AtomContainer ac to the HueckelAromaticityDetector prior to 
+	 *  using getHOSECode(). This method only gives proper results if the molecule is
+   *  fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
+   *  This method is known to fail for protons sometimes.
+	 *
+	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
+	 *@param  root The root atom for which to produce the HOSE code
+	 *@param  noOfSpheres  The number of spheres to look at
+	 *@param  ringsize  The size of the ring(s) it is in is included in center atom code
+	 *@return The HOSECode value
+	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
+	 */
+	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
 	{
     CanonicalLabeler canLabler = new CanonicalLabeler();
     canLabler.canonLabel(ac);
@@ -220,7 +249,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 *  depends on the order the preceding node in its branch
 		 */
 		HOSECode = new StringBuffer();
-		createCenterCode(root);
+		createCenterCode(root, ac, ringsize);
 		breadthFirstSearch(root,true);
 		createCode();
 		fillUpSphereDelimiters();
@@ -231,11 +260,32 @@ public class HOSECodeGenerator implements java.io.Serializable
 		return HOSECode.toString();
 	}
 
-	private void createCenterCode(Atom root)
+	private void createCenterCode(Atom root, AtomContainer ac, boolean ringsize)
 	{
 		int partnerCount = 0;
 		partnerCount = atomContainer.getBondCount(root) + root.getHydrogenCount(); 
-		centerCode = root.getSymbol() + "-" + partnerCount + createChargeCode(root)+";";
+		centerCode = root.getSymbol() + "-" + partnerCount + createChargeCode(root)+(ringsize ? getRingcode(root, ac) : "" )+";";
+	}
+	
+	
+	private String getRingcode(Atom root, AtomContainer ac){
+		if(ac!=acold){
+			soar=new SSSRFinder(ac).findSSSR();
+		}
+		boolean[] bool=new boolean[1000];
+		StringBuffer sb=new StringBuffer();
+		for(int i=0;i<soar.getRings(root).size();i++){
+			if(((Ring)soar.getRings(root).get(i)).getAtomCount()<bool.length)
+				bool[((Ring)soar.getRings(root).get(i)).getAtomCount()]=true;
+		}
+		for(int i=0;i<bool.length;i++){
+			if(bool[i])
+				sb.append(i+"");
+		}
+		if(sb.toString().equals(""))
+			return "";
+		else
+			return "-"+sb.toString();
 	}
   
   private String createChargeCode(Atom atom){
