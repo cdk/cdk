@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * http://www.iupac.org/inchi/
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

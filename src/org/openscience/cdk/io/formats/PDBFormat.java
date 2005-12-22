@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

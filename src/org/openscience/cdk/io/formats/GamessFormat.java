@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * http://www.msg.ameslab.gov/GAMESS/doc.menu.html
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

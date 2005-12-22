@@ -25,6 +25,8 @@ package org.openscience.cdk.io.formats;
 
 
 /**
+ * http://www.emsl.pnl.gov/docs/nwchem/
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

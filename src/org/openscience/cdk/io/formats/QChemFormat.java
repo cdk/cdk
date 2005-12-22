@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * http://www.q-chem.com/
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

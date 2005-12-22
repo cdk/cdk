@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2005  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,31 +24,21 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.tripos.com/data/support/mol2.pdf
+ * http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml
+ * 
+ * @author Miguel Rojas
  * 
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class Mol2Format implements ChemFormatMatcher {
+public class BSFormat implements ChemFormatMatcher {
 
-    public Mol2Format() {}
+    public BSFormat() {}
     
     public String getFormatName() {
-        return "Mol2 (Sybyl)";
+        return "Ball and Stick";
     }
-
-    public String getReaderClassName() { 
-      return "org.openscience.cdk.io.Mol2Reader";
-    }
-    public String getWriterClassName() { 
-      return "org.openscience.cdk.io.Mol2Writer"; 
-    }
-
-    public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("<TRIPOS>") >= 0) {
-            return true;
-        }
-        return false;
-    }
-
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
+    public boolean matches(int lineNumber, String line) { return false; }
 }

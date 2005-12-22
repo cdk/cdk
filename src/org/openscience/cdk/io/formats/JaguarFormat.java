@@ -25,6 +25,8 @@ package org.openscience.cdk.io.formats;
 
 
 /**
+ * http://www.schrodinger.com/
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

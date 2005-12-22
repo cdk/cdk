@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * http://www.uku.fi/~thassine/ghemical/
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

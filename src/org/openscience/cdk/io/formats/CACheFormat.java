@@ -33,7 +33,7 @@ public class CACheFormat implements ChemFormatMatcher {
     public CACheFormat() {}
 
     public String getFormatName() {
-        return "CAChe";
+        return "CAChe MolStruct";
     }
 
     public String getReaderClassName() { return null; }
