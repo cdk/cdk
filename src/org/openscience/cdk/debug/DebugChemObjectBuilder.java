@@ -67,7 +67,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 	
 	public org.openscience.cdk.interfaces.AminoAcid newAminoAcid() {
-		return new AminoAcid();
+		return new DebugAminoAcid();
 	}
 	
 	public org.openscience.cdk.interfaces.Atom newAtom() {
@@ -215,7 +215,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 
 	public org.openscience.cdk.interfaces.Monomer newMonomer () {
-		return new Monomer();
+		return new DebugMonomer();
 	}
 	
 	public org.openscience.cdk.interfaces.Polymer newPolymer() {
