@@ -43,7 +43,6 @@ public class APIVersionTester {
         StringTokenizer twoTokens = new StringTokenizer(two, ".");
         int majorOne = Integer.parseInt(oneTokens.nextToken());
         int majorTwo = Integer.parseInt(twoTokens.nextToken());
-        byte b=4-1;
         if (majorOne == majorTwo) {
             int minorOne = Integer.parseInt(oneTokens.nextToken());
             int minorTwo = Integer.parseInt(twoTokens.nextToken());

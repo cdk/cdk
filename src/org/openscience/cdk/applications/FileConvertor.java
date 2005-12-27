@@ -44,13 +44,17 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -103,6 +107,7 @@ public class FileConvertor {
 
     private LoggingTool logger;
 
+    private ChemObjectBuilder builder;
     private ChemObjectReader cor;
     private String oformat;
     private ChemObjectWriter cow;
@@ -124,6 +129,8 @@ public class FileConvertor {
         logger = new LoggingTool();
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
+        
+        builder = DefaultChemObjectBuilder.getInstance();
 
         settingListener = new TextGUIListener(level);
         propsListener = null;
@@ -157,7 +164,7 @@ public class FileConvertor {
                     return false;
                 }
 
-                ChemFile content = (ChemFile)cor.read((ChemObject)new ChemFile());
+                ChemFile content = (ChemFile)cor.read(builder.newChemFile());
                 if (content == null) {
                     return false;
                 }
@@ -169,8 +176,8 @@ public class FileConvertor {
                     content.getBuilder()
                 );
                 for (int i=0; i<containers.length; i++) {
-                	org.openscience.cdk.interfaces.AtomContainer container = containers[i];
-                	org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+                	AtomContainer container = containers[i];
+                	Atom[] atoms = container.getAtoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
                         for (int j=0; j<atoms.length; j++) {
                             if (!(atoms[j] instanceof PseudoAtom)) {
@@ -187,7 +194,7 @@ public class FileConvertor {
                         logger.info("Adding Hydrogens...");
                         HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
                         adder.addExplicitHydrogensToSatisfyValency(
-                            new Molecule((AtomContainer)container)
+                        	builder.newMolecule(container)
                         );
                     } else if (applyHRemoval) {
                         for (int atomi=0; atomi<atoms.length; atomi++) {
@@ -207,7 +214,7 @@ public class FileConvertor {
                         logger.info("Creating 2D coordinates");
                         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
                         try {
-                            sdg.setMolecule(new Molecule(container), false); // false -> don't make clone!
+                            sdg.setMolecule(builder.newMolecule(container), false); // false -> don't make clone!
                             sdg.generateCoordinates(new Vector2d(0, 1));
                             container = sdg.getMolecule();
                             logger.debug("###########", container);
@@ -552,7 +559,7 @@ public class FileConvertor {
     * and we want to output as much information as possible, use
     * the generalized mechanism below.
     */
-    private void write(ChemFile chemFile, String outputFilename) throws IOException {
+    private void write(ChemFile chemFile, String outputFilename) throws IOException { // NOPMD
         if (cow.accepts(chemFile.getClass())) {
             // Can write ChemFile, do so
             try {
@@ -576,7 +583,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(org.openscience.cdk.interfaces.ChemSequence sequence, String outputFilename) throws IOException {
+    private void write(ChemSequence sequence, String outputFilename) throws IOException {  // NOPMD
         try {
             cow.write(sequence);
         } catch (CDKException exception) {
@@ -595,12 +602,12 @@ public class FileConvertor {
         }
     }
 
-    private void write(org.openscience.cdk.interfaces.ChemModel cm, String outputFilename) throws IOException {
+    private void write(ChemModel cm, String outputFilename) throws IOException {  // NOPMD
         try {
             cow.write(cm);
         } catch (CDKException exception) {
             logger.info("Cannot write ChemModel, trying Crystal.");
-            org.openscience.cdk.interfaces.Crystal crystal = cm.getCrystal();
+            Crystal crystal = cm.getCrystal();
             if (crystal != null) {
                 write(crystal, outputFilename);
             }
@@ -611,7 +618,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(org.openscience.cdk.interfaces.Crystal c, String outputFilename) throws IOException {
+    private void write(Crystal c, String outputFilename) throws IOException {  // NOPMD
         try {
             cow.write(c);
         } catch (CDKException exception) {
@@ -623,10 +630,10 @@ public class FileConvertor {
         try {
 	        if (apply2DCleanup) {
 				logger.info("Creating 2D coordinates");
-				org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
+				Molecule[] mols = som.getMolecules();
 	           	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 				for (int i=0; i<mols.length; i++) {
-					org.openscience.cdk.interfaces.Molecule molecule = mols[i];
+					Molecule molecule = mols[i];
 		            try {
 		                sdg.setMolecule(molecule, false); // false -> don't make clone!
 		                sdg.generateCoordinates(new Vector2d(0, 1));
@@ -654,7 +661,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(org.openscience.cdk.interfaces.Molecule molecule, String outputFilename) throws IOException {
+    private void write(Molecule molecule, String outputFilename) throws IOException {
         try {
             cow.write(molecule);
         } catch (CDKException exception) {
