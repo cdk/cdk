@@ -51,6 +51,8 @@ import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.test.tools.IDCreatorTest;
+import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.base.CMLException;
@@ -83,6 +85,8 @@ public class Convertor {
     private boolean useCMLIDs;
 	private String prefix;
 	
+	private IDCreator idCreator;
+	
 	/**
 	 * Constructs a CML convertor.
 	 * 
@@ -93,6 +97,7 @@ public class Convertor {
 		logger = new LoggingTool(this);
 		this.useCMLIDs = useCMLIDs;
 		this.prefix = prefix;
+		if (useCMLIDs) idCreator = new IDCreator();
         setupCustomizers();
 	}
 	
@@ -132,14 +137,21 @@ public class Convertor {
     }
 
     public CMLReaction cdkReactionToCMLReaction(Reaction reaction) {
+    	return cdkReactionToCMLReaction(reaction, true);
+    }
+    private CMLReaction cdkReactionToCMLReaction(Reaction reaction, boolean setIDs) {
     	CMLReaction cmlReaction = new CMLReaction();
+    	
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(reaction);
+    	}
     	
     	// reactants
     	CMLReactantList cmlReactants = new CMLReactantList();
     	Molecule[] reactants = reaction.getReactants().getMolecules();
     	for (int i=0; i<reactants.length; i++) {
     		CMLReactant cmlReactant = new CMLReactant();
-    		cmlReactant.addMolecule(cdkMoleculeToCMLMolecule(reactants[i]));
+    		cmlReactant.addMolecule(cdkMoleculeToCMLMolecule(reactants[i], false));
     		cmlReactants.addReactant(cmlReactant);
     	}
 
@@ -148,7 +160,7 @@ public class Convertor {
     	Molecule[] products = reaction.getProducts().getMolecules();
     	for (int i=0; i<products.length; i++) {
     		CMLProduct cmlProduct = new CMLProduct();
-    		cmlProduct.addMolecule(cdkMoleculeToCMLMolecule(products[i]));
+    		cmlProduct.addMolecule(cdkMoleculeToCMLMolecule(products[i], false));
     		cmlProducts.addProduct(cmlProduct);
     	}
     	
@@ -158,8 +170,16 @@ public class Convertor {
     }
     
     public CMLMolecule cdkCrystalToCMLMolecule(Crystal crystal) {
-		CMLMolecule molecule = cdkAtomContainerToCMLMolecule(crystal);
+    	return cdkCrystalToCMLMolecule(crystal, true);
+    }
+    private CMLMolecule cdkCrystalToCMLMolecule(Crystal crystal, boolean setIDs) {
+    	CMLMolecule molecule = cdkAtomContainerToCMLMolecule(crystal, false);
 		CMLCrystal cmlCrystal = new CMLCrystal();
+
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(crystal);
+    	}
+    	    	
 		this.checkPrefix(cmlCrystal);
 		cmlCrystal.setZ(crystal.getZ());
 		double[] params = CrystalGeometryTools.cartesianToNotional(
@@ -176,11 +196,22 @@ public class Convertor {
 	}
 	
 	public CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure) {
-		return cdkAtomContainerToCMLMolecule(structure);
+		return cdkMoleculeToCMLMolecule(structure, true);
+	}
+	private CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure, boolean setIDs) {
+		return cdkAtomContainerToCMLMolecule(structure, true);
 	}
 	
 	public CMLMolecule cdkAtomContainerToCMLMolecule(AtomContainer structure) {
+		return cdkAtomContainerToCMLMolecule(structure, true);
+	}
+	private CMLMolecule cdkAtomContainerToCMLMolecule(AtomContainer structure, boolean setIDs) {
 		CMLMolecule cmlMolecule = new CMLMolecule();
+
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(structure);
+    	}
+    	    	
 		this.checkPrefix(cmlMolecule);
 		if (structure.getID() != null) cmlMolecule.setId(structure.getID());
 		if (structure.getProperty(CDKConstants.TITLE) != null) {
