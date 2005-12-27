@@ -32,6 +32,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.AminoAcid;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomParity;
@@ -88,6 +89,14 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
         assertTrue(builder instanceof DefaultChemObjectBuilder);
     }
     
+	public void testNewAminoAcid() {
+		Object object = rootObject.getBuilder().newAminoAcid();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof AminoAcid);
+	}
+	 
 	public void testNewAtom() {
 		Object object = rootObject.getBuilder().newAtom();
 		assertNotNull(object);
@@ -240,6 +249,12 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
 		assertTrue(object instanceof ChemModel);
+	}
+
+	public void testNewChemObject() {
+		Object object = rootObject.getBuilder().newChemObject();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 	}
 
 	public void testNewChemSequence() {
