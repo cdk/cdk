@@ -37,8 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import nu.xom.Attribute;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
@@ -58,7 +56,6 @@ import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
-import org.openscience.cdk.test.tools.IDCreatorTest;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
@@ -107,7 +104,7 @@ public class Convertor {
 		logger = new LoggingTool(this);
 		this.useCMLIDs = useCMLIDs;
 		this.prefix = prefix;
-		if (useCMLIDs) idCreator = new IDCreator();
+		idCreator = new IDCreator();
         setupCustomizers();
 	}
 	
