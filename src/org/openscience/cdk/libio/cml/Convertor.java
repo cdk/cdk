@@ -37,6 +37,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import nu.xom.Attribute;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
@@ -45,12 +47,17 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.test.tools.IDCreatorTest;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
@@ -58,13 +65,16 @@ import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.base.CMLException;
 import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
+import org.xmlcml.cml.element.CMLCml;
 import org.xmlcml.cml.element.CMLCrystal;
+import org.xmlcml.cml.element.CMLList;
 import org.xmlcml.cml.element.CMLMolecule;
 import org.xmlcml.cml.element.CMLProduct;
 import org.xmlcml.cml.element.CMLProductList;
 import org.xmlcml.cml.element.CMLReactant;
 import org.xmlcml.cml.element.CMLReactantList;
 import org.xmlcml.cml.element.CMLReaction;
+import org.xmlcml.cml.element.CMLReactionList;
 import org.xmlcml.cml.element.CMLScalar;
 
 /**
@@ -136,6 +146,107 @@ public class Convertor {
     	}
     }
 
+    public CMLCml cdkChemFileToCMLList(ChemFile file) {
+    	return cdkChemFileToCMLList(file, true);
+    }
+    private CMLCml cdkChemFileToCMLList(ChemFile file, boolean setIDs) {
+    	CMLCml cmlList = new CMLCml();
+    	cmlList.setDictRef("cdk:document");
+    	
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(file);
+    	}
+    	
+    	if (file.getChemSequenceCount() > 0) {
+    		ChemSequence[] sequences = file.getChemSequences();
+    		for (int i=0; i<sequences.length; i++) {
+    			cmlList.appendChild(cdkChemSequenceToCMLList(sequences[i]));
+    		}
+    	}
+    	
+    	return cmlList;
+    }
+    
+    public CMLList cdkChemSequenceToCMLList(ChemSequence sequence) {
+    	return cdkChemSequenceToCMLList(sequence, true);
+    }
+    private CMLList cdkChemSequenceToCMLList(ChemSequence sequence, boolean setIDs) {
+    	CMLList cmlList = new CMLList();
+    	cmlList.setDictRef("cdk:sequence");
+    	
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(sequence);
+    	}
+    	
+    	if (sequence.getChemModelCount() > 0) {
+    		ChemModel[] models = sequence.getChemModels();
+    		for (int i=0; i<models.length; i++) {
+    			cmlList.appendChild(cdkChemModelToCMLList(models[i]));
+    		}
+    	}
+    	
+    	return cmlList;
+    }
+    
+    public CMLList cdkChemModelToCMLList(ChemModel model) {
+    	return cdkChemModelToCMLList(model, true);
+    }
+    private CMLList cdkChemModelToCMLList(ChemModel model, boolean setIDs) {
+    	CMLList cmlList = new CMLList();
+    	cmlList.setDictRef("cdk:model");
+    	
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(model);
+    	}
+    	
+    	if (model.getCrystal() != null) {
+    		cmlList.appendChild(cdkCrystalToCMLMolecule(model.getCrystal(), false));
+    	}
+    	if (model.getSetOfReactions() != null) {
+    		cmlList.appendChild(cdkSetOfReactionsToCMLReactionList(model.getSetOfReactions(), false));
+    	}
+    	if (model.getSetOfMolecules() != null) {
+    		cmlList.appendChild(cdkSetOfMoleculesToCMLList(model.getSetOfMolecules(), false));
+    	}
+    	
+    	return cmlList;
+    }
+    
+    public CMLReactionList cdkSetOfReactionsToCMLReactionList(SetOfReactions reactionSet) {
+    	return cdkSetOfReactionsToCMLReactionList(reactionSet, true);
+    }
+    private CMLReactionList cdkSetOfReactionsToCMLReactionList(SetOfReactions reactionSet, boolean setIDs) {
+    	CMLReactionList reactionList = new CMLReactionList();
+    	
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(reactionSet);
+    	}
+    	
+    	Reaction[] reactions = reactionSet.getReactions();
+    	for (int i=0; i<reactions.length; i++) {
+    		reactionList.appendChild(cdkReactionToCMLReaction(reactions[i], false));
+    	}
+    	
+		return reactionList;
+    }
+    
+    public CMLList cdkSetOfMoleculesToCMLList(SetOfMolecules moleculeSet) {
+    	return cdkSetOfMoleculesToCMLList(moleculeSet, true);
+    }
+    private CMLList cdkSetOfMoleculesToCMLList(SetOfMolecules moleculeSet, boolean setIDs) {
+    	CMLList cmlList = new CMLList();
+    	
+    	if (useCMLIDs && setIDs) {
+    		idCreator.createIDs(moleculeSet);
+    	}
+    	
+    	Molecule[] molecules = moleculeSet.getMolecules(); 
+    	for (int i=0; i<molecules.length; i++) {
+    		cmlList.appendChild(cdkMoleculeToCMLMolecule(molecules[i], false));
+    	}
+    	return cmlList;
+    }
+    
     public CMLReaction cdkReactionToCMLReaction(Reaction reaction) {
     	return cdkReactionToCMLReaction(reaction, true);
     }
