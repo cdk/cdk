@@ -92,7 +92,10 @@ public class StretchBendInteractions {
 			if (atomConnected.length > 1) {
 				for (int i = 0; i < atomConnected.length; i++) {
 					for (int k = i + 1; k < atomConnected.length; k++) {
-						stretchBendInteractionsData = pc.getBondAngleInteractionData(atomConnected[i].getID(), molecule.getAtomAt(j).getID(), atomConnected[k].getID());
+						stretchBendInteractionsData = pc.getBondAngleInteractionData(
+							atomConnected[i].getAtomTypeName(), 
+							molecule.getAtomAt(j).getAtomTypeName(), atomConnected[k].getAtomTypeName()
+						);
 						//logger.debug("stretchBendInteractionsData : " + stretchBendInteractionsData);
 						l += 1;
 						kbaIJK[l] = ((Double) stretchBendInteractionsData.get(0)).doubleValue();
@@ -101,9 +104,9 @@ public class StretchBendInteractions {
 						//logger.debug("kbaIJK[" + l + "] = " + kbaIJK[l]);
 						//logger.debug("kbaKJI[" + l + "] = " + kbaKJI[l]);
 
-						bondData = pc.getBondData(atomConnected[i].getID(), molecule.getAtomAt(j).getID());
+						bondData = pc.getBondData(atomConnected[i].getAtomTypeName(), molecule.getAtomAt(j).getAtomTypeName());
 						r0IJ[l] = ((Double) bondData.get(0)).doubleValue();
-						bondData = pc.getBondData(atomConnected[k].getID(), molecule.getAtomAt(j).getID());
+						bondData = pc.getBondData(atomConnected[k].getAtomTypeName(), molecule.getAtomAt(j).getAtomTypeName());
 						r0KJ[l] = ((Double) bondData.get(0)).doubleValue();
 						
 						bondijAtomPosition[l] = new int[2];

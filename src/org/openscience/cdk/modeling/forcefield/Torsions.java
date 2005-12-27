@@ -83,10 +83,10 @@ public class Torsions {
 								if (bondConnectedAfter[ba].compare(bond[b])) {}
 								else {
 									torsionNumber += 1;
-									//logger.debug("atomi : " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getID());
-									//logger.debug("atomj : " + atomInBond[0].getID());
-									//logger.debug("atomk : " + atomInBond[1].getID());
-									//logger.debug("atoml : " + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getID());
+									//logger.debug("atomi : " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName());
+									//logger.debug("atomj : " + atomInBond[0].getAtomTypeName());
+									//logger.debug("atomk : " + atomInBond[1].getAtomTypeName());
+									//logger.debug("atoml : " + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
 								}
 							}
 						}
@@ -130,15 +130,15 @@ public class Torsions {
 											//+ ", "+ atomInBond[0].getSymbol() + ", " + atomInBond[1].getSymbol() + ", " 
 											//+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getSymbol());
 									
-									torsionsData = (Vector)parameterSet.get("torsion" + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getID() + ";" 
-																+ atomInBond[0].getID() + ";" 
-																+ atomInBond[1].getID() + ";" 
-																+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getID());
+									torsionsData = (Vector)parameterSet.get("torsion" + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName() + ";" 
+																+ atomInBond[0].getAtomTypeName() + ";" 
+																+ atomInBond[1].getAtomTypeName() + ";" 
+																+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
 									if (torsionsData == null) {
-										torsionsData = (Vector)parameterSet.get("torsion" + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getID() + ";"
-																+ atomInBond[1].getID() + ";" 
-																+ atomInBond[0].getID() + ";" 
-																+ bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getID());
+										torsionsData = (Vector)parameterSet.get("torsion" + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName() + ";"
+																+ atomInBond[1].getAtomTypeName() + ";" 
+																+ atomInBond[0].getAtomTypeName() + ";" 
+																+ bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName());
 									}
 									
 									//logger.debug("torsionsData " + m + ": " + torsionsData);

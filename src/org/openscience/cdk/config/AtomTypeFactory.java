@@ -96,8 +96,6 @@ public class AtomTypeFactory {
     private static Hashtable tables = null;
     private Vector atomTypes = null;
 
-    private ChemObjectBuilder builder = null;
-
 	/**
 	 * Private constructor for the AtomTypeFactory singleton.
 	 *

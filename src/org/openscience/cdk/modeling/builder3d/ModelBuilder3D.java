@@ -413,11 +413,11 @@ public class ModelBuilder3D {
 		noCoords.addAtom(unplacedAtom);
 		Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
 		Atom atomB = atomNeighbours.getAtomAt(0);
-		double length = ap3d.getBondLengthValue(atomA.getID(), unplacedAtom.getID());
-		double angle = (ap3d.getAngleValue(atomB.getID(), atomA.getID(), unplacedAtom.getID())) * Math.PI / 180;
+		double length = ap3d.getBondLengthValue(atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName());
+		double angle = (ap3d.getAngleValue(atomB.getAtomTypeName(), atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName())) * Math.PI / 180;
 		/*
-		 *  System.out.println("A:"+atomA.getSymbol()+" "+atomA.getID()+" B:"+atomB.getSymbol()+" "+atomB.getID()
-		 *  +" unplaced Atom:"+unplacedAtom.getID()+" BL:"+length+" Angle:"+angle
+		 *  System.out.println("A:"+atomA.getSymbol()+" "+atomA.getAtomTypeName()+" B:"+atomB.getSymbol()+" "+atomB.getAtomTypeName()
+		 *  +" unplaced Atom:"+unplacedAtom.getAtomTypeName()+" BL:"+length+" Angle:"+angle
 		 *  +" FormalNeighbour:"+atomA.getFormalNeighbourCount()+" HYB:"+atomA.getFlag(CDKConstants.HYBRIDIZATION_SP2)
 		 *  +" #Neigbhours:"+atomNeighbours.getAtomCount());
 		 */

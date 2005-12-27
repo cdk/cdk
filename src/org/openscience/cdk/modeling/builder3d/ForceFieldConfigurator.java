@@ -242,7 +242,7 @@ public class ForceFieldConfigurator {
 		AtomType at = null;
     		for (int i = 0; i < atomTypes.size(); i++) {
 			at = (AtomType) atomTypes.get(i);
-			if (at.getID().equals(ID)) {
+			if (at.getAtomTypeName().equals(ID)) {
 				return at;
 			}
 		}

@@ -151,7 +151,7 @@ public class AtomTetrahedralLigandPlacer3D {
 		double distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 :
 				atom1.getCovalentRadius() + atom2.getCovalentRadius();
 		if (pSet != null) {
-			distance = getDistanceValue(atom1.getID(), atom2.getID());
+			distance = getDistanceValue(atom1.getAtomTypeName(), atom2.getAtomTypeName());
 		}
 		Vector3d vect = new Vector3d(point2);
 		vect.sub(point1);
@@ -705,9 +705,9 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Gets the distance between two atoms out of the parameter set
+	 * Gets the distance between two atoms out of the parameter set.
 	 *
-	 *@param  id1            id of the paramter set for atom1 (atom1.getID())
+	 *@param  id1            id of the paramter set for atom1 (atom1.getAtomTypeName())
 	 *@param  id2            id of the paramter set for atom2
 	 *@return                The distanceValue value
 	 *@exception  Exception  Description of the Exception

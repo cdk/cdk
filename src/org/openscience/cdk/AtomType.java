@@ -95,6 +95,11 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
     protected int formalNeighbourCount;
 
     /**
+     * String representing the identifier for this atom type.
+     */
+    private String identifier;
+    
+    /**
 	 *  Constructor for the AtomType object.
      *
      * @param elementSymbol  Symbol of the atom
@@ -114,7 +119,7 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
 	public AtomType(String identifier, String elementSymbol)
 	{
 		this(elementSymbol);
-		setAtomTypeName(identifier);
+		this.identifier = identifier;
 	}
 
 
@@ -127,7 +132,7 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
 	 */
 	public void setAtomTypeName(String identifier)
 	{
-		setID(identifier);
+		this.identifier = identifier;
 		notifyChanged();
 	}
 
@@ -169,7 +174,7 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
 	 */
 	public String getAtomTypeName()
 	{
-		return getID();
+		return this.identifier;
 	}
 
 

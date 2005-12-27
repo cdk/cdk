@@ -93,7 +93,8 @@ public class BondStretching {
 			}
 			
 			//logger.debug("atomsInBond " + i + " : " + atomsInBond);
-			bondData = pc.getBondData(atomsInBond[0].getID(), atomsInBond[1].getID());
+			bondData = pc.getBondData(atomsInBond[0].getAtomTypeName(), 
+					                  atomsInBond[1].getAtomTypeName());
 			//logger.debug("bondData : " + bondData);
 			r0[i] = ((Double) bondData.get(0)).doubleValue();
 			k2[i] = ((Double) bondData.get(1)).doubleValue();

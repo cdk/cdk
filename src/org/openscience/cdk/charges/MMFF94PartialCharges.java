@@ -90,7 +90,7 @@ public class MMFF94PartialCharges {
 		for(int i= 0; i < atoms.length; i++) {
 			//System.out.println("ATOM "+i+ " " +atoms[i].getSymbol());
 			thisAtom = atoms[i];
-			data = (Vector) parameterSet.get("data"+thisAtom.getID());
+			data = (Vector) parameterSet.get("data"+thisAtom.getAtomTypeName());
 			neighboors = ac.getConnectedAtoms(thisAtom);
 			formalCharge = thisAtom.getCharge();
 			theta = ((Double)data.get(5)).doubleValue();
@@ -98,13 +98,13 @@ public class MMFF94PartialCharges {
 			sumOfFormalCharges = 0;
 			sumOfBondIncrements = 0;
 			for(int n = 0; n < neighboors.length; n++) {
-				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getID());
-				if (parameterSet.containsKey("bond"+thisAtom.getID()+";"+neighboors[n].getID())) {
-					bondData = (Vector) parameterSet.get("bond"+thisAtom.getID()+";"+neighboors[n].getID());
+				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getAtomTypeName());
+				if (parameterSet.containsKey("bond"+thisAtom.getAtomTypeName()+";"+neighboors[n].getAtomTypeName())) {
+					bondData = (Vector) parameterSet.get("bond"+thisAtom.getAtomTypeName()+";"+neighboors[n].getAtomTypeName());
 					sumOfBondIncrements -= ((Double) bondData.get(4)).doubleValue();
 				}
-				else if (parameterSet.containsKey("bond"+neighboors[n].getID()+";"+thisAtom.getID())) {
-					bondData = (Vector) parameterSet.get("bond"+neighboors[n].getID()+";"+thisAtom.getID());
+				else if (parameterSet.containsKey("bond"+neighboors[n].getAtomTypeName()+";"+thisAtom.getAtomTypeName())) {
+					bondData = (Vector) parameterSet.get("bond"+neighboors[n].getAtomTypeName()+";"+thisAtom.getAtomTypeName());
 					sumOfBondIncrements += ((Double) bondData.get(4)).doubleValue();
 				}
 				else {

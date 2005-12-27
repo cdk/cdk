@@ -106,7 +106,9 @@ public class AngleBending {
 			if (atomConnected.length > 1) {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {
-						angleData = pc.getAngleData(atomConnected[j].getID(), molecule.getAtomAt(i).getID(), atomConnected[k].getID());
+						angleData = pc.getAngleData(atomConnected[j].getAtomTypeName(), 
+								                    molecule.getAtomAt(i).getAtomTypeName(), 
+								                    atomConnected[k].getAtomTypeName());
 						//logger.debug("angleData : " + angleData);
 						l += 1;
 						v0[l] = ((Double) angleData.get(0)).doubleValue();
