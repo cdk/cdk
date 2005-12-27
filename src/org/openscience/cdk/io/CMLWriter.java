@@ -40,9 +40,15 @@ import nu.xom.Serializer;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -153,6 +159,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
      */
     public void write(ChemObject object) throws CDKException {
         if (object instanceof Molecule) {
+        } else if (object instanceof Reaction) {
+        } else if (object instanceof SetOfReactions) {
+        } else if (object instanceof SetOfMolecules) {
+        } else if (object instanceof ChemSequence) {
+        } else if (object instanceof ChemModel) {
+        } else if (object instanceof ChemFile) {
         } else if (object instanceof Crystal) {
         } else if (object instanceof Atom) {
         } else if (object instanceof Bond) {
@@ -177,6 +189,18 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	root = convertor.cdkAtomToCMLAtom((Atom)object);
         } else if (object instanceof Bond) {
         	root = convertor.cdkBondToCMLBond((Bond)object);
+        } else if (object instanceof Reaction) {
+        	root = convertor.cdkReactionToCMLReaction((Reaction)object);
+        } else if (object instanceof SetOfReactions) {
+        	root = convertor.cdkSetOfReactionsToCMLReactionList((SetOfReactions)object);
+        } else if (object instanceof SetOfMolecules) {
+        	root = convertor.cdkSetOfMoleculesToCMLList((SetOfMolecules)object);
+        } else if (object instanceof ChemSequence) {
+        	root = convertor.cdkChemSequenceToCMLList((ChemSequence)object);
+        } else if (object instanceof ChemModel) {
+        	root = convertor.cdkChemModelToCMLList((ChemModel)object);
+        } else if (object instanceof ChemFile) {
+        	root = convertor.cdkChemFileToCMLList((ChemFile)object);
         }
         Document doc = new Document(root);
         
