@@ -71,6 +71,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
      * Constructs a new crystal with zero length cell axis.
      */
     public Crystal() {
+    	super();
         setZeroAxes();
     }
 
@@ -81,8 +82,8 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
      * @param container  the AtomContainer providing the atoms and bonds
      */
     public Crystal(org.openscience.cdk.interfaces.AtomContainer container) {
-        this();
-        add(container);
+        super(container);
+        setZeroAxes();
     }
 
     /**
@@ -259,7 +260,6 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
         aAxis = new Vector3d(0.0, 0.0, 0.0);
         bAxis = new Vector3d(0.0, 0.0, 0.0);
         cAxis = new Vector3d(0.0, 0.0, 0.0);
-	notifyChanged();
     }
 
 }
