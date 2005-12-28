@@ -140,16 +140,20 @@ public class RuleOfFiveDescriptor implements Descriptor {
         int lipinskifailures = 0;
 
         Descriptor xlogP = new XLogPDescriptor();
-        Object[] xlogPparams = {new Boolean(checkAromaticity)};
+        Object[] xlogPparams = {
+        	new Boolean(checkAromaticity),
+        	Boolean.TRUE,
+        };
         xlogP.setParameters(xlogPparams);
         double xlogPvalue = ((DoubleResult)xlogP.calculate(mol).getValue()).doubleValue();
 
         Descriptor acc = new HBondAcceptorCountDescriptor();
-        acc.setParameters(xlogPparams);
+        Object[] hBondparams = { new Boolean(checkAromaticity) };
+        acc.setParameters(hBondparams);
         int acceptors = ((IntegerResult)acc.calculate(mol).getValue()).intValue();
 
         Descriptor don = new HBondDonorCountDescriptor();
-        don.setParameters(xlogPparams);
+        don.setParameters(hBondparams);
         int donors = ((IntegerResult)don.calculate(mol).getValue()).intValue();
 
         Descriptor mw = new WeightDescriptor();
@@ -158,7 +162,7 @@ public class RuleOfFiveDescriptor implements Descriptor {
         double mwvalue = ((DoubleResult)mw.calculate(mol).getValue()).doubleValue();
 
         Descriptor rotata = new RotatableBondsCountDescriptor();
-        rotata.setParameters(xlogPparams);
+        rotata.setParameters(hBondparams);
         int rotatablebonds = ((IntegerResult)rotata.calculate(mol).getValue()).intValue();
 
         if(xlogPvalue > 5.0) { lipinskifailures += 1; }
