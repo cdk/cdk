@@ -862,9 +862,10 @@ public class XLogPDescriptor implements Descriptor {
 			//System.out.println("XLOGP: p-amino sulphonic acid	-0.501");
 		}
 
-		AtomContainer salicilic = sp.parseSmiles("O=C(O)c1ccccc1O");
+		
 		// salicylic acid
 		if (salicylFlag){
+			AtomContainer salicilic = sp.parseSmiles("O=C(O)c1ccccc1O");
 			if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, salicilic)) {
 				xlogP += 0.554;
 				//System.out.println("XLOGP: salicylic acid	 0.554");
