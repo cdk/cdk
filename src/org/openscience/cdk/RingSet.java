@@ -255,28 +255,4 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
         return buffer.toString();
     }
     
-    
-  /**
-   * Checks if <code>atom1</code> and <code>atom2</code> share membership in the same ring or ring system.
-   * Membership in the same ring is checked if the RingSet contains the SSSR of a molecule; membership in
-   * the same ring or same ring system is checked if the RingSet contains all rings of a molecule.<BR><BR>
-   * <B>Important:</B> This method only returns meaningful results if <code>atom1</code> and
-   * <code>atom2</code> are members of the same molecule for which the RingSet was calculated!
-   *
-   * @param atom1 The first atom
-   * @param atom2 The second atom
-   * @return ???boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
-   */
-  public boolean isSameRing(Atom atom1, Atom atom2)
-  {
-    Iterator iterator = this.iterator();
-    while(iterator.hasNext())
-    {
-      Ring ring = (Ring) iterator.next();
-      if(ring.contains(atom1))
-        if(ring.contains(atom2))
-          return true;
-    }
-    return false;
-  }
-}
+ }

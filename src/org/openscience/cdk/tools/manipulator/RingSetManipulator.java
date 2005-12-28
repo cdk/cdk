@@ -28,6 +28,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Atom;
@@ -139,4 +140,28 @@ public class RingSetManipulator {
 		}
 		return (Ring) ringSet.get(mostComplexPosition);
 	}
+
+	  /**
+	   * Checks if <code>atom1</code> and <code>atom2</code> share membership in the same ring or ring system.
+	   * Membership in the same ring is checked if the RingSet contains the SSSR of a molecule; membership in
+	   * the same ring or same ring system is checked if the RingSet contains all rings of a molecule.<BR><BR>
+	   * <B>Important:</B> This method only returns meaningful results if <code>atom1</code> and
+	   * <code>atom2</code> are members of the same molecule for which the RingSet was calculated!
+	   *
+	   * @param atom1 The first atom
+	   * @param atom2 The second atom
+	   * @return ???boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
+	   */
+	  public static boolean isSameRing(RingSet ringSet, Atom atom1, Atom atom2)
+	  {
+	    Iterator iterator = ringSet.iterator();
+	    while(iterator.hasNext())
+	    {
+	      Ring ring = (Ring) iterator.next();
+	      if(ring.contains(atom1))
+	        if(ring.contains(atom2))
+	          return true;
+	    }
+	    return false;
+	  }
 }

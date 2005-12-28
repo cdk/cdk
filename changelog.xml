@@ -7,6 +7,9 @@
    <apiChange contributor="tohel egonw">
      Upgraded CMLDOM to Jumbo 5.0
    </apiChange>
+   <apiChange contributor="egonw">
+     Moved RingSet.isSameRing() method to RingSetManipulator.
+   </apiChange>
    <addition>
      Added a cdk.test.CDKTestCase.assertEquals(Point2d, Point2d, double) and
      the Point3D equivalent
