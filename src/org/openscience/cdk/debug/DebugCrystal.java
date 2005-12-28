@@ -23,10 +23,11 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
@@ -35,11 +36,10 @@ import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
-import org.openscience.cdk.interfaces.Monomer;
 import org.openscience.cdk.interfaces.SingleElectron;
-import org.openscience.cdk.interfaces.Strand;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -48,10 +48,20 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module data-debug
  */
-public class DebugStrand extends org.openscience.cdk.Strand
-    implements Strand {
+public class DebugCrystal extends org.openscience.cdk.Crystal
+    implements Crystal {
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+	LoggingTool logger;
+
+	public DebugCrystal() {
+		super();
+		logger = new LoggingTool(DebugCrystal.class);
+	}
+    
+	public DebugCrystal(AtomContainer container) {
+		super(container);
+		logger = new LoggingTool(DebugCrystal.class);
+	}
 
 	public void addAtomParity(AtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);
@@ -454,58 +464,58 @@ public class DebugStrand extends org.openscience.cdk.Strand
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public String getStrandName() {
-		logger.debug("Getting strand name: ", super.getStrandName());
-		return super.getStrandName();
+	public void setA(Vector3d newAxis) {
+		logger.debug("Setting A axis to: ", newAxis);
+		super.setA(newAxis);
 	}
 
-	public String getStrandType() {
-		logger.debug("Getting strand type: ", super.getStrandType());
-		return super.getStrandType();
+	public Vector3d getA() {
+		logger.debug("Getting A axis: ", super.getA());
+		return super.getA();
 	}
 
-	public void setStrandName(String cStrandName) {
-		logger.debug("Setting strand name to: ", cStrandName);
-		super.setStrandName(cStrandName);
+	public void setB(Vector3d newAxis) {
+		logger.debug("Setting B axis to: ", newAxis);
+		super.setB(newAxis);
 	}
 
-	public void setStrandType(String cStrandType) {
-		logger.debug("Setting strand type to: ", cStrandType);
-		super.setStrandType(cStrandType);
+	public Vector3d getB() {
+		logger.debug("Getting B axis: ", super.getB());
+		return super.getB();
 	}
 
-	public void addAtom(Atom oAtom, Monomer oMonomer) {
-		logger.debug("Adding atom to monomer: ", oAtom, oMonomer);
-		super.addAtom(oAtom, oMonomer);
+	public void setC(Vector3d newAxis) {
+		logger.debug("Setting C axis to: ", newAxis);
+		super.setC(newAxis);
 	}
 
-	public int getMonomerCount() {
-		logger.debug("Getting monomer count: ", super.getMonomerCount());
-		return super.getMonomerCount();
+	public Vector3d getC() {
+		logger.debug("Getting C axis: ", super.getC());
+		return super.getC();
 	}
 
-	public Monomer getMonomer(String cName) {
-		logger.debug("Getting monomer for String: ", cName);
-		return super.getMonomer(cName);
+	public String getSpaceGroup() {
+		logger.debug("Getting space group: ", super.getSpaceGroup());
+		return super.getSpaceGroup();
 	}
 
-	public Collection getMonomerNames() {
-		logger.debug("Getting monomer names");
-		return super.getMonomerNames();
+	public void setSpaceGroup(String group) {
+		logger.debug("Setting space group to: ", group);
+		super.setSpaceGroup(group);
 	}
 
-	public void removeMonomer(String name) {
-		logger.debug("Removing monomer by string: ", name);
-		super.removeMonomer(name);
+	public int getZ() {
+		logger.debug("Getting Z: ", super.getZ());
+		return super.getZ();
 	}
 
-	public Hashtable getMonomers() {
-		logger.debug("Getting monomers as hashtable");
-		return super.getMonomers();
+	public void setZ(int value) {
+		logger.debug("Settting Z to: ", value);
+		super.setZ(value);
 	}
 
 	public void stateChanged(ChemObjectChangeEvent event) {
-		logger.debug("Receiving state changed event: ", event);
+		logger.debug("Receiving state changed: ", event);
 		super.stateChanged(event);
 	}
 

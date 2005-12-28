@@ -153,11 +153,11 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 	
     public org.openscience.cdk.interfaces.Crystal newCrystal() {
-    	return new Crystal();
+    	return new DebugCrystal();
     }
     
     public org.openscience.cdk.interfaces.Crystal newCrystal(org.openscience.cdk.interfaces.AtomContainer container) {
-    	return new Crystal(container);
+    	return new DebugCrystal(container);
     }
     
     public org.openscience.cdk.interfaces.ElectronContainer newElectronContainer() {
@@ -267,7 +267,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
     }
 
 	public org.openscience.cdk.interfaces.Strand newStrand() {
-		return new Strand();
+		return new DebugStrand();
 	}
 
 	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom() {

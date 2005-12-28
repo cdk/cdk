@@ -60,9 +60,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 	}
 
 	public DebugMolecule(org.openscience.cdk.interfaces.AtomContainer container) {
-		super(); // cannot call super(container) because the logger has not been
-		         // instantiated yet, and will cause a NPE
-		add(container);
+		super(container);
 	}
 
 	public void addAtomParity(AtomParity parity) {
