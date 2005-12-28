@@ -1336,7 +1336,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 					try {
 						newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
 					} catch (Exception exc) {
-						System.out.println("natoms[g]: " + natoms[g]);
 						exc.printStackTrace();
 					}
 				}
@@ -1365,7 +1364,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 */
 	protected void growElectronContainerArray()
 	{
-		growArraySize = electronContainers.length;
+		growArraySize = (electronContainers.length < growArraySize) ? growArraySize : electronContainers.length;
 		org.openscience.cdk.interfaces.ElectronContainer[] newelectronContainers = new org.openscience.cdk.interfaces.ElectronContainer[electronContainers.length + growArraySize];
 		System.arraycopy(electronContainers, 0, newelectronContainers, 0, electronContainers.length);
 		electronContainers = newelectronContainers;
@@ -1379,7 +1378,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 */
 	protected void growAtomArray()
 	{
-		growArraySize = atoms.length;
+		growArraySize = (atoms.length < growArraySize) ? growArraySize : atoms.length;
 		org.openscience.cdk.interfaces.Atom[] newatoms = new org.openscience.cdk.interfaces.Atom[atoms.length + growArraySize];
 		System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
 		atoms = newatoms;
