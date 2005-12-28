@@ -107,8 +107,19 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 */
 	public AtomContainer(org.openscience.cdk.interfaces.AtomContainer container)
 	{
-		this();
-		this.add(container);
+		this.atomCount = container.getAtomCount();
+		this.electronContainerCount = container.getElectronContainerCount();
+		atoms = new org.openscience.cdk.interfaces.Atom[this.atomCount];
+		electronContainers = new org.openscience.cdk.interfaces.ElectronContainer[this.electronContainerCount];
+
+		for (int f = 0; f < container.getAtomCount(); f++) {
+			atoms[f] = container.getAtomAt(f);
+			container.getAtomAt(f).addListener(this);
+		}
+		for (int f = 0; f < container.getElectronContainerCount(); f++) {
+			electronContainers[f] = container.getElectronContainerAt(f);
+			container.getElectronContainerAt(f).addListener(this);
+		}
 	}
 
 
@@ -385,7 +396,6 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 				lps.add(electronContainer);
 			}
 		}
-		System.out.println("LP size:" + lps.size());
 		org.openscience.cdk.interfaces.LonePair[] result = new org.openscience.cdk.interfaces.LonePair[lps.size()];
 		lps.copyInto(result);
 		return result;
