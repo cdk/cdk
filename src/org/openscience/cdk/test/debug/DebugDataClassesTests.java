@@ -36,8 +36,6 @@ public class DebugDataClassesTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.debug Tests");
         
-        suite.addTest(DebugCoverageTest.suite());
-        
         suite.addTest(DebugChemObjectBuilderTest.suite());
         
         suite.addTest(DebugAminoAcidTest.suite());
