@@ -31,7 +31,7 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.ElementTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the funcitonality of DebugElement.
  *
  * @cdk.module test
  */
