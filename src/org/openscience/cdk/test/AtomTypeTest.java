@@ -237,6 +237,16 @@ public class AtomTypeTest extends CDKTestCase {
     }
     
     /**
+     * Test for bug #1309731.
+     */
+    public void testAtomTypeNameAndIDBug() {
+    	AtomType a = builder.newAtomType("C");
+    	a.setID("carbon1");
+    	a.setAtomTypeName("C.sp3");
+    	assertEquals("carbon1", a.getID());
+    }
+    
+    /**
      * Method to test the clone() method
      */
     public void testClone() {
