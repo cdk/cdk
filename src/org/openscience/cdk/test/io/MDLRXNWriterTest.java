@@ -37,7 +37,10 @@ import java.io.StringWriter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.io.MDLRXNWriter;
 import org.openscience.cdk.test.CDKTestCase;
@@ -53,51 +56,34 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MDLRXNWriterTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
+    private ChemObjectBuilder builder;
 
     public MDLRXNWriterTest(String name) {
         super(name);
         logger = new LoggingTool(this);
     }
 
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
+    
     public static Test suite() {
         return new TestSuite(MDLRXNWriterTest.class);
     }
 
-    // FIXME: this used to be a test, but it's a stupid test
-    public void xtestRXNWriter() {
+    public void testRoundtrip() {
+        Reaction reaction = builder.newReaction();
+        Molecule hydroxide = builder.newMolecule();
+        hydroxide.addAtom(builder.newAtom("O"));
+        reaction.addReactant(hydroxide);
+        Molecule proton = builder.newMolecule();
+        proton.addAtom(builder.newAtom("H"));
+        reaction.addReactant(proton);
+        Molecule water = builder.newMolecule();
+        water.addAtom(builder.newAtom("O"));
+        reaction.addProduct(water);
         
-        String filename = "data/mdl/reaction-1.rxn";
-        
-        String originalFile = "";
-        try {
-        	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    		BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            while (br.ready()) {
-                originalFile += br.readLine() + "\n";
-            }
-            br.close();
-        } catch (Exception ex) {
-            logger.error("Error while testing MDLRXNWriter.");
-            logger.debug(ex);
-            fail(ex.getMessage());
-        }
-        
-        Reaction reaction = new Reaction();
-        try {
-        	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    		BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            MDLRXNReader reader = new MDLRXNReader(br);
-            reaction = (Reaction)reader.read(reaction);
-            reader.close();
-        } catch (Exception ex) {
-            logger.error("Error while reading an MDL file");
-            logger.debug(ex);
-            fail(ex.getMessage());
-        }
-        
-        assertEquals(2, reaction.getReactantCount());
-        assertEquals(1, reaction.getProductCount());
-        
+        // now serialize to MDL RXN
         StringWriter writer = new StringWriter(10000);
         String file = "";
         try {
@@ -112,35 +98,27 @@ public class MDLRXNWriterTest extends CDKTestCase {
         }
         
         assertTrue(file.length() > 0);
-        assertTrue(originalFile.length() > 0);
         
-        BufferedReader br1 = new BufferedReader(new StringReader(file));
-        BufferedReader br2 = new BufferedReader(new StringReader(originalFile));
-        
+        // now deserialize the MDL RXN output
+        Reaction reaction2 = builder.newReaction();
         try {
-            int lineCounter = 0;
-            while (br1.ready()) {
-                String line = br1.readLine();
-                String line2 = br2.readLine();
-                if (line == null || line2 == null) break;
-                assertTrue(line.trim().equals(line2.trim()));
-                lineCounter++;
-            }
-            assertEquals(60, lineCounter);
-        } catch (IOException ex) {
+        	MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
+        	reaction2 = (Reaction)reader.read(reaction2);
+            reader.close();
+        } catch (Exception ex) {
             logger.error("Error while reading an MDL file");
             logger.debug(ex);
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
             fail(ex.getMessage());
         }
         
-        try {
-            writer.close();
-        } catch (Exception ex) {}
-        
+        assertEquals(2, reaction2.getReactantCount());
+        assertEquals(1, reaction2.getProductCount());
     }
+    
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         junit.textui.TestRunner.run(suite());
     }
     
