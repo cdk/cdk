@@ -27,9 +27,11 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.SetOfAtomContainers;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 
 /**
@@ -41,63 +43,67 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class SetOfAtomContainersTest extends CDKTestCase {
 
+	protected ChemObjectBuilder builder;
+	
     public SetOfAtomContainersTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+       	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(SetOfAtomContainersTest.class);
     }
     
     public void testSetOfAtomContainers() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
         assertNotNull(som);
         assertEquals(0, som.getAtomContainerCount());
     }
     
     public void testGetAtomContainerCount() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
         
         assertEquals(3, som.getAtomContainerCount());
     }
     
     public void testAdd_SetOfAtomContainers() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
         
-        SetOfAtomContainers tested = new SetOfAtomContainers();
+        SetOfAtomContainers tested = builder.newSetOfAtomContainers();
         assertEquals(0, tested.getAtomContainerCount());
         tested.add(som);
         assertEquals(3, tested.getAtomContainerCount());
     }
 
     public void testGetAtomContainer_int() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
 
         assertNotNull(som.getAtomContainer(2)); // third molecule should exist
         assertNull(som.getAtomContainer(3)); // fourth molecule must not exist
     }
     
     public void testGetMultiplier_int() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer());
 
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
     public void testSetMultiplier_int_double() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer());
 
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
         som.setMultiplier(0, 2.0);
@@ -105,10 +111,10 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testSetMultipliers_arraydouble() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        AtomContainer container = builder.newAtomContainer();
         som.addAtomContainer(container);
-        AtomContainer container2 = new org.openscience.cdk.AtomContainer();
+        AtomContainer container2 = builder.newAtomContainer();
         som.addAtomContainer(container2);
 
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
@@ -122,8 +128,8 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testSetMultiplier_AtomContainer_double() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        AtomContainer container = builder.newAtomContainer();
         som.addAtomContainer(container);
 
         assertEquals(1.0, som.getMultiplier(container), 0.00001);
@@ -132,8 +138,8 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testGetMultipliers() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer(), 1.0);
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer(), 1.0);
         
         double[] multipliers = som.getMultipliers();
         assertNotNull(multipliers);
@@ -141,32 +147,32 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
         
     public void testGetMultiplier_AtomContainer() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer());
 
-        assertEquals(-1.0, som.getMultiplier(new org.openscience.cdk.AtomContainer()), 0.00001);
+        assertEquals(-1.0, som.getMultiplier(builder.newAtomContainer()), 0.00001);
     }
     
     public void testAddAtomContainer_AtomContainer() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
 
         assertEquals(5, som.getAtomContainerCount());
         
         // now test it to make sure it properly grows the array
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
 
         assertEquals(7, som.getAtomContainerCount());        
     }
     
     public void testAddAtomContainer_AtomContainer_double() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer(), 2.0);
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        som.addAtomContainer(builder.newAtomContainer(), 2.0);
         assertEquals(1, som.getAtomContainerCount());
         assertEquals(2.0, som.getMultiplier(0), 0.00001);
     }
@@ -174,29 +180,29 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     public void testGrowAtomContainerArray() {
         // this test assumes that the growSize = 5 !
         // if not, there is need for the array to grow
-        SetOfAtomContainers som = new SetOfAtomContainers();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
         
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
 
         org.openscience.cdk.interfaces.AtomContainer[] mols = som.getAtomContainers();
         assertEquals(7, mols.length);
     }
     
     public void testGetAtomContainers() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
         
         org.openscience.cdk.interfaces.AtomContainer[] mols = som.getAtomContainers();
         assertEquals(0, mols.length);
         
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
-        som.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
 
         mols = som.getAtomContainers();
         assertEquals(3, mols.length);
@@ -206,7 +212,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testToString() {
-        SetOfAtomContainers containerSet = new SetOfAtomContainers();
+        SetOfAtomContainers containerSet = builder.newSetOfAtomContainers();
         String description = containerSet.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
@@ -215,7 +221,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
      public void testClone() {
-        SetOfAtomContainers containerSet = new SetOfAtomContainers();
+        SetOfAtomContainers containerSet = builder.newSetOfAtomContainers();
         Object clone = containerSet.clone();
         assertTrue(clone instanceof SetOfAtomContainers);
 	assertNotSame(containerSet, clone);
@@ -223,17 +229,17 @@ public class SetOfAtomContainersTest extends CDKTestCase {
 
     public void testStateChanged_ChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        SetOfAtomContainers chemObject = new SetOfAtomContainers();
+        SetOfAtomContainers chemObject = builder.newSetOfAtomContainers();
         chemObject.addListener(listener);
         
-        chemObject.addAtomContainer(new org.openscience.cdk.AtomContainer());
+        chemObject.addAtomContainer(builder.newAtomContainer());
         assertTrue(listener.changed);
     }
 
     public void testRemoveAtomContainer_AtomContainer() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        AtomContainer ac1 = new org.openscience.cdk.AtomContainer();
-        AtomContainer ac2 = new org.openscience.cdk.AtomContainer();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        AtomContainer ac1 = builder.newAtomContainer();
+        AtomContainer ac2 = builder.newAtomContainer();
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         som.removeAtomContainer(ac1);
@@ -242,9 +248,9 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testRemoveAllAtomContainers() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        AtomContainer ac1 = new org.openscience.cdk.AtomContainer();
-        AtomContainer ac2 = new org.openscience.cdk.AtomContainer();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        AtomContainer ac1 = builder.newAtomContainer();
+        AtomContainer ac2 = builder.newAtomContainer();
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         
@@ -254,9 +260,9 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testRemoveAtomContainer_int() {
-        SetOfAtomContainers som = new SetOfAtomContainers();
-        AtomContainer ac1 = new org.openscience.cdk.AtomContainer();
-        AtomContainer ac2 = new org.openscience.cdk.AtomContainer();
+        SetOfAtomContainers som = builder.newSetOfAtomContainers();
+        AtomContainer ac1 = builder.newAtomContainer();
+        AtomContainer ac2 = builder.newAtomContainer();
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         som.removeAtomContainer(0);

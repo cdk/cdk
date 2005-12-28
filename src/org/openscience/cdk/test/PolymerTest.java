@@ -33,10 +33,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Monomer;
-import org.openscience.cdk.Polymer;
-import org.openscience.cdk.Strand;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.Monomer;
+import org.openscience.cdk.interfaces.Polymer;
+import org.openscience.cdk.interfaces.Strand;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * TestCase for the Polymer class.
@@ -48,11 +50,17 @@ import org.openscience.cdk.Strand;
  */
 public class PolymerTest extends TestCase {
 
+	protected ChemObjectBuilder builder;
+	
 	public PolymerTest(String name) {
 		super(name);
 	}
 
-	public static Test suite() {
+    public void setUp() {
+       	builder = DefaultChemObjectBuilder.getInstance();
+    }
+
+    public static Test suite() {
 		return new TestSuite(PolymerTest.class);
 	}
 
@@ -61,16 +69,16 @@ public class PolymerTest extends TestCase {
 	}
 
 	public void testPolymer() {
-		Polymer oPolymer = new Polymer();
+		Polymer oPolymer = builder.newPolymer();
 		assertNotNull(oPolymer);
 		assertEquals(oPolymer.getMonomerCount(), 0);
 	}
 	
 	public void testAddAtom_Atom() {
-		Polymer oPolymer = new Polymer();
+		Polymer oPolymer = builder.newPolymer();
 		
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
+		Atom oAtom1 = builder.newAtom("C1");
+		Atom oAtom2 = builder.newAtom("C2");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2);
 
@@ -79,13 +87,13 @@ public class PolymerTest extends TestCase {
 	}
     
 	public void testAddAtom_Atom_Monomer() {
-		Polymer oPolymer = new Polymer();
-		Monomer oMono1 = new Monomer();
+		Polymer oPolymer = builder.newPolymer();
+		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = null;
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
+		Atom oAtom1 = builder.newAtom("C1");
+		Atom oAtom2 = builder.newAtom("C2");
+		Atom oAtom3 = builder.newAtom("C3");
 		
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
@@ -105,16 +113,16 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testGetMonomerCount() {
-		Polymer oPolymer = new Polymer();
+		Polymer oPolymer = builder.newPolymer();
 		assertEquals(0, oPolymer.getMonomerCount());
 		
-		Monomer oMono1 = new Monomer();
+		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = new Monomer();
+		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
+		Atom oAtom1 = builder.newAtom("C1");
+		Atom oAtom2 = builder.newAtom("C2");
+		Atom oAtom3 = builder.newAtom("C3");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
@@ -124,15 +132,15 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testGetMonomer_String() {
-		Polymer oPolymer = new Polymer();
+		Polymer oPolymer = builder.newPolymer();
 		
-		Monomer oMono1 = new Monomer();
+		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = new Monomer();
+		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
+		Atom oAtom1 = builder.newAtom("C1");
+		Atom oAtom2 = builder.newAtom("C2");
+		Atom oAtom3 = builder.newAtom("C3");
 		oPolymer.addAtom(oAtom1, oMono1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
@@ -143,21 +151,21 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testGetMonomerNames() {
-		Polymer oPolymer = new Polymer();
+		Polymer oPolymer = builder.newPolymer();
 		assertEquals(0, oPolymer.getMonomerNames().size());
 		
-		Monomer oMono1 = new Monomer();
+		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = new Monomer();
+		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
+		Atom oAtom1 = builder.newAtom("C1");
+		Atom oAtom2 = builder.newAtom("C2");
+		Atom oAtom3 = builder.newAtom("C3");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
 		Hashtable monomers = new Hashtable();
-		Monomer oMon = new Monomer();
+		Monomer oMon = builder.newMonomer();
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
 
@@ -168,10 +176,10 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testRemoveMonomer_String()	{
-		Polymer oPolymer = new Polymer();
-		Monomer oMono1 = new Monomer();
+		Polymer oPolymer = builder.newPolymer();
+		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = new Atom("C1");
+		Atom oAtom1 = builder.newAtom("C1");
 		oPolymer.addAtom(oAtom1, oMono1);
 		assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
 		assertEquals(1, oPolymer.getAtomCount());
@@ -185,13 +193,13 @@ public class PolymerTest extends TestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Strand oStrand = new Strand();
-		Monomer oMono1 = new Monomer();
+        Strand oStrand = builder.newStrand();
+		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = new Monomer();
+		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
+		Atom oAtom2 = builder.newAtom("C2");
+		Atom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 		Hashtable monomers = new Hashtable();
