@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$
  * $Author$    
  * $Date$    
  * $Revision$
@@ -20,40 +20,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * 
  */
 package org.openscience.cdk.test.debug;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.openscience.cdk.test.CrystalTest;
+
 /**
- * TestSuite that runs all the sample tests.
+ * Checks the funcitonality of the AtomContainer.
  *
  * @cdk.module test
  */
-public class DebugDataClassesTests {
+public class DebugCrystalTest extends CrystalTest {
 
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.debug Tests");
-        
-        suite.addTest(DebugChemObjectBuilderTest.suite());
-        
-        suite.addTest(DebugAminoAcidTest.suite());
-        suite.addTest(DebugAtomContainerTest.suite());
-        suite.addTest(DebugAtomTest.suite());
-        suite.addTest(DebugAtomTypeTest.suite());
-        suite.addTest(DebugBondTest.suite());
-        suite.addTest(DebugChemObjectTest.suite());
-        suite.addTest(DebugCrystalTest.suite());
-        suite.addTest(DebugElectronContainerTest.suite());
-        suite.addTest(DebugElementTest.suite());
-        suite.addTest(DebugIsotopeTest.suite());
-        suite.addTest(DebugLonePairTest.suite());
-        suite.addTest(DebugMoleculeTest.suite());
-        suite.addTest(DebugMonomerTest.suite());
-        suite.addTest(DebugStrandTest.suite());
-        
-        return suite;
+    public DebugCrystalTest(String name) {
+        super(name);
+    }
+
+    public void setUp() {
+    	super.builder = DebugChemObjectBuilder.getInstance();
+    }
+
+    public static Test suite() {
+        return new TestSuite(DebugCrystalTest.class);
     }
 
 }
