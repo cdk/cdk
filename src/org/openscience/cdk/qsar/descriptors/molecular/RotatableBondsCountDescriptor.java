@@ -93,8 +93,8 @@ public class RotatableBondsCountDescriptor implements Descriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("RotatableBondsCount only expects less than two parameters");
+		if (params.length != 1) {
+			throw new CDKException("RotatableBondsCount expects one parameter");
 		}
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The parameter must be of type Boolean");

@@ -166,8 +166,8 @@ public class TPSADescriptor implements Descriptor {
          *@see #getParameters
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("TPSADescriptor only expects one parameter");
+		if (params.length != 1) {
+			throw new CDKException("TPSADescriptor expects one parameter");
 		}
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The first parameter must be of type Boolean");

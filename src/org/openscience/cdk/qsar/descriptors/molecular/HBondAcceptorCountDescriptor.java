@@ -101,7 +101,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
      * @exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
+        if (params.length != 1) {
             throw new CDKException("HBondAcceptorCountDescriptor expects a single parameter");
         }
         if (!(params[0] instanceof Boolean)) {
