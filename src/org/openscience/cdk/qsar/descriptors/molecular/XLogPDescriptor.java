@@ -150,8 +150,8 @@ public class XLogPDescriptor implements Descriptor {
          *@see #getParameters
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 2) {
-			throw new CDKException("XLogPDescriptor only expects two parameter");
+		if (params.length != 2) {
+			throw new CDKException("XLogPDescriptor expects two parameter");
 		}
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The first parameter must be of type Boolean");
