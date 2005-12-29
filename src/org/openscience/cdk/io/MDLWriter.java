@@ -32,6 +32,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -43,14 +44,14 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -87,11 +88,32 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class MDLWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter writer;
+    static BufferedWriter writer;
     private LoggingTool logger;
     private int moleculeNumber;
     public Map sdFields=null;
     private boolean writeAromatic=true;
+    
+
+    
+    /**
+     * Contructs a new MDLWriter that can write an array of 
+     * Molecules to a Writer.
+     *
+     * @param   out  The Writer to write to
+     */
+    public MDLWriter(Writer out) throws Exception {
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
+        this.moleculeNumber = 1;
+    }
 
     /**
      * Contructs a new MDLWriter that can write an array of
@@ -99,12 +121,28 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param   out  The OutputStream to write to
      */
-    public MDLWriter(OutputStream out) throws Exception {
-        this(new BufferedWriter(new OutputStreamWriter(out)));
+    public MDLWriter(OutputStream output) throws Exception {
+        this(new OutputStreamWriter(output));
+    }
+    
+    public MDLWriter()  throws Exception {
+        this(new StringWriter());
     }
 
     public ChemFormat getFormat() {
         return new MDLFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
     
     public void dontWriteAromatic(){
@@ -124,18 +162,6 @@ public class MDLWriter extends DefaultChemObjectWriter {
       sdFields=map;
     }
     
-    /**
-     * Contructs a new MDLWriter that can write an array of 
-     * Molecules to a Writer.
-     *
-     * @param   out  The Writer to write to
-     */
-    public MDLWriter(Writer out) throws Exception {
-        writer = new BufferedWriter(out);
-        logger = new LoggingTool(this);
-        this.moleculeNumber = 1;
-    }
-
     /**
      * Flushes the output and closes this object.
      */

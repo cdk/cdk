@@ -34,16 +34,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.SVGFormat;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.tools.LoggingTool;
 import org.w3c.dom.DOMImplementation;
@@ -76,30 +78,43 @@ public class SVGWriter extends DefaultChemObjectWriter {
     static BufferedWriter writer;
 
     /**
-     * Contructs a new SMILESWriter that can write a list of SMILES to a Writer
-     *
-     * @param   out  The Writer to write to
+     * Constructor.
+     * @param output the stream to write the SVG file to.
      */
     public SVGWriter(Writer out) {
-        logger = new LoggingTool(this);
-        try {
-            writer = new BufferedWriter(out);
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
         } catch (Exception exc) {
         }
     }
 
-    public SVGWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public SVGWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
+    }
+    
+    public SVGWriter() {
+        this(new StringWriter());
     }
     
     public ChemFormat getFormat() {
-        return new ChemFormat() {
-            public String getFormatName() {
-                return "Scalable Vector Graphics";
-            }
-            public String getReaderClassName() { return null; };
-            public String getWriterClassName() { return null; };
-        };
+        return new SVGFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
 
     /**

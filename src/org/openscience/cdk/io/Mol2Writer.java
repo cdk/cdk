@@ -30,13 +30,14 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * An output Writer that writes molecular data into the
@@ -49,26 +50,43 @@ import org.openscience.cdk.io.formats.Mol2Format;
  */
 public class Mol2Writer extends DefaultChemObjectWriter {
 
-    static BufferedWriter writer;
-
+	static BufferedWriter writer;
+	private LoggingTool logger;
+    
     /**
     * Constructs a new Mol2 writer.
-    * @param out the stream to write the XYZ file to.
+    * @param out the stream to write the Mol2 file to.
     */
     public Mol2Writer(Writer out) {
-        if (out instanceof BufferedWriter) {
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
+    }
+
+    public Mol2Writer(OutputStream output) {
+        this(new OutputStreamWriter(output));
+    }
+
+    public ChemFormat getFormat() {
+        return new Mol2Format();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
         } else {
             writer = new BufferedWriter(out);
         }
     }
 
-    public Mol2Writer(OutputStream input) {
-        this(new OutputStreamWriter(input));
-    }
-
-    public ChemFormat getFormat() {
-        return new Mol2Format();
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
 
     /**

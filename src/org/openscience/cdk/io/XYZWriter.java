@@ -28,15 +28,17 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module io
@@ -47,29 +49,54 @@ import org.openscience.cdk.io.formats.XYZFormat;
  */
 public class XYZWriter extends DefaultChemObjectWriter {
   
-    static BufferedWriter writer;
+	static BufferedWriter writer;
+    private LoggingTool logger;
 
     /**
     * Constructor.
-    * @param out the stream to write the XYZ file to.
+    * @param output the stream to write the XYZ file to.
     */
     public XYZWriter(Writer out) {
-        writer = new BufferedWriter(out);
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
     }
 
-    public XYZWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public XYZWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
+    }
+    
+    public XYZWriter() {
+        this(new StringWriter());
     }
     
     public ChemFormat getFormat() {
         return new XYZFormat();
     }
     
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
+    }
+    
     /**
      * Flushes the output and closes this object.
      */
     public void close() throws IOException {
-        writer.close();
+    	writer.close();
     }
     
     public void write(ChemObject object) throws CDKException {
@@ -101,7 +128,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
             
             String s2 = null; // FIXME: add some interesting comment
             if (s2 != null) {
-                writer.write(s2, 0, s2.length());
+            	writer.write(s2, 0, s2.length());
             }
             writer.newLine();
             
@@ -129,7 +156,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
                 
             }
         } catch (IOException e) {
-            throw e;
+//            throw e;
+            logger.error("Error while writing file: ", e.getMessage());
+            logger.debug(e);
         }
     }
 }

@@ -33,12 +33,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -62,19 +63,39 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public SMILESWriter(Writer out) {
-        logger = new LoggingTool(this);
-        try {
-            writer = new BufferedWriter(out);
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
         } catch (Exception exc) {
         }
     }
 
-    public SMILESWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public SMILESWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
+    }
+    
+    public SMILESWriter() {
+        this(new StringWriter());
     }
     
     public ChemFormat getFormat() {
         return new SMILESFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
 
     /**

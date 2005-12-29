@@ -23,19 +23,23 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
-import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.CrystClustFormat;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Rather stupid file format used for storing crystal information.
@@ -47,7 +51,8 @@ import org.openscience.cdk.io.formats.CrystClustFormat;
  */
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
-    private Writer output;
+	static BufferedWriter writer;
+    private LoggingTool logger;
 
     /**
      * Constructs a new CrystClustWriter class. Output will be stored in the Writer
@@ -56,16 +61,41 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public CrystClustWriter(Writer out) {
-        output = out;
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
     }
 
-    public CrystClustWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public CrystClustWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
+    }
+    
+    public CrystClustWriter() {
+        this(new StringWriter());
     }
     
     public ChemFormat getFormat() {
         return new CrystClustFormat();
     }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
+    }
+    
     
     /**
      * Serializes the ChemObject to CrystClust format and redirects it to the output Writer.
@@ -86,7 +116,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object
      */
     public void close() throws IOException {
-        output.close();
+    	writer.close();
     }
 
     // Private procedures
@@ -164,7 +194,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 
     private void write(String s) {
         try {
-            output.write(s);
+        	writer.write(s);
         } catch (IOException e) {
             System.err.println("CMLWriter IOException while printing \"" +
                                 s + "\":\n" + e.toString());

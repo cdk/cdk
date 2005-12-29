@@ -25,9 +25,11 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -35,12 +37,13 @@ import java.util.Vector;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 
 import freeware.PrintfFormat;
@@ -57,7 +60,8 @@ import freeware.PrintfFormat;
  */
 public class ShelXWriter extends DefaultChemObjectWriter {
 
-    private Writer output;
+	static BufferedWriter writer;
+	private LoggingTool logger;
 
     /**
      * Constructs a new ShelXWriter class. Output will be stored in the Writer
@@ -66,22 +70,46 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public ShelXWriter(Writer out) {
-        output = out;
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
     }
 
-    public ShelXWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public ShelXWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
+    }
+    
+    public ShelXWriter() {
+        this(new StringWriter());
     }
     
     public ChemFormat getFormat() {
         return new ShelXFormat();
     }
     
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
+    }
+    
     /**
      * Flushes the output and closes this object
      */
     public void close() throws IOException {
-        output.close();
+    	writer.close();
     }
 
     /**
@@ -170,7 +198,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
 
     private void write(String s) {
         try {
-            output.write(s);
+        	writer.write(s);
         } catch (IOException e) {
             System.err.println("CMLWriter IOException while printing \"" +
                                 s + "\":\n" + e.toString());

@@ -25,14 +25,17 @@ package org.openscience.cdk.io.program;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.GaussianInputFormat;
@@ -41,6 +44,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.IntegerIOSetting;
 import org.openscience.cdk.io.setting.OptionIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * File writer thats generates input files for Gaussian calculation
@@ -55,7 +59,8 @@ import org.openscience.cdk.io.setting.StringIOSetting;
 public class GaussianInputWriter extends DefaultChemObjectWriter {
   
     static BufferedWriter writer;
-
+    private LoggingTool logger;
+    
     IOSetting method;
     IOSetting basis;
     IOSetting comment;
@@ -70,16 +75,40 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     * Gaussian QM job.
     */
     public GaussianInputWriter(Writer out) {
-        this();
-        writer = new BufferedWriter(out);
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
+        initIOSettings();
+    }
+    
+    public GaussianInputWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
     }
     
     public GaussianInputWriter() {
-        initIOSettings();
+        this(new StringWriter());
     }
 
     public ChemFormat getFormat() {
         return new GaussianInputFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
 
     public void close() throws IOException {

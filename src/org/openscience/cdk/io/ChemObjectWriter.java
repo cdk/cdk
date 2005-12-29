@@ -27,11 +27,14 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import java.io.OutputStream;
+import java.io.Writer;
+
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.ChemObject;
 
 /**
- * This class is the interface that all IO readers should implement.
+ * This class is the interface that all IO writers should implement.
  * Programs need only care about this interface for any kind of IO.
  *
  * <p>Currently, database IO and file IO is supported. Internet IO is
@@ -52,5 +55,17 @@ public interface ChemObjectWriter extends ChemObjectIO {
      *            does not support the data in the object
      */
     public void write(ChemObject object) throws CDKException;
+    
+    /**
+     * Sets the Writer from which this ChemObjectWriter should write
+     * the contents.
+     */
+    public void setWriter(Writer writer) throws CDKException;
+
+    /**
+     * Sets the OutputStream from which this ChemObjectWriter should write
+     * the contents.
+     */
+    public void setWriter(OutputStream writer) throws CDKException;
 
 }

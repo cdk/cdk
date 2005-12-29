@@ -27,17 +27,19 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.HINFormat;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Writer that outputs in the HIN format.
@@ -49,22 +51,47 @@ import org.openscience.cdk.io.formats.HINFormat;
  */
 public class HINWriter extends DefaultChemObjectWriter {
 
-    private static BufferedWriter writer;
-
+	static BufferedWriter writer;
+    private LoggingTool logger; 
+    
     /**
      * Constructor.
      * @param out the stream to write the HIN file to.
      */
     public HINWriter(Writer out) {
-        writer = new BufferedWriter(out);
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
     }
 
-    public HINWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public HINWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
+    }
+    
+    public HINWriter() {
+        this(new StringWriter());
     }
     
     public ChemFormat getFormat() {
         return new HINFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
 
     /**

@@ -29,7 +29,10 @@
 package org.openscience.cdk.io;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -143,6 +146,14 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     public ChemFormat getFormat() {
         return new CMLFormat();
+    }
+    
+    public void setWriter(Writer writer) throws CDKException {
+        this.writer = writer;
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
     
     /**

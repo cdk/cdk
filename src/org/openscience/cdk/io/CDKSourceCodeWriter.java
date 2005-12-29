@@ -27,15 +27,19 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.tools.IDCreator;
@@ -61,7 +65,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter writer;
+	static BufferedWriter writer;
     private LoggingTool logger;
 
     /**
@@ -70,16 +74,37 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public CDKSourceCodeWriter(Writer out) {
-        writer = new BufferedWriter(out);
-        logger = new LoggingTool(this);
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
     }
 
     public CDKSourceCodeWriter(OutputStream out) {
         this(new OutputStreamWriter(out));
     }
-
+    public CDKSourceCodeWriter() {
+        this(new StringWriter());
+    }
     public ChemFormat getFormat() {
         return new CDKSourceCodeFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
     
     /**

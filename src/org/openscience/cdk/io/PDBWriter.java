@@ -33,6 +33,8 @@ import java.io.Writer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -40,10 +42,9 @@ import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import freeware.PrintfFormat;
@@ -55,21 +56,43 @@ import freeware.PrintfFormat;
  */
 public class PDBWriter extends DefaultChemObjectWriter {
 
-    static BufferedWriter writer;
-
+	static BufferedWriter writer;
+    private LoggingTool logger;
+    
     /**
      * Creates a PDB writer.
-     */
-    public PDBWriter (Writer out) {
-        writer = new BufferedWriter(out);
+    * @param output the stream to write the XYZ file to.
+    */
+    public PDBWriter(Writer out) {
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
     }
 
-    public PDBWriter(OutputStream input) {
-        this(new OutputStreamWriter(input));
+    public PDBWriter(OutputStream output) {
+        this(new OutputStreamWriter(output));
     }
     
     public ChemFormat getFormat() {
         return new PDBFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
     }
     
     public void write(ChemObject object) throws CDKException {

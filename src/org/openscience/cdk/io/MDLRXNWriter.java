@@ -38,9 +38,9 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.ChemObject;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -65,22 +65,9 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MDLRXNWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter writer;
+	static BufferedWriter writer;
     private LoggingTool logger;
 
-    /**
-     * Contructs a new MDLWriter that can write an array of
-     * Molecules to a given OutputStream.
-     *
-     * @param   out  The OutputStream to write to
-     */
-    public MDLRXNWriter(OutputStream out) throws Exception {
-        this(new BufferedWriter(new OutputStreamWriter(out)));
-    }
-
-    public ChemFormat getFormat() {
-        return new MDLFormat();
-    }
     
     /**
      * Contructs a new MDLWriter that can write an array of 
@@ -89,10 +76,47 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public MDLRXNWriter(Writer out) throws Exception {
-        writer = new BufferedWriter(out);
-        logger = new LoggingTool(this);
+    	logger = new LoggingTool(this);
+    	try {
+    		if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter)out;
+            } else {
+                writer = new BufferedWriter(out);
+            }
+        } catch (Exception exc) {
+        }
     }
 
+    /**
+     * Contructs a new MDLWriter that can write an array of
+     * Molecules to a given OutputStream.
+     *
+     * @param   output  The OutputStream to write to
+     */
+    public MDLRXNWriter(OutputStream output) throws Exception {
+        this(new BufferedWriter(new OutputStreamWriter(output)));
+    }
+    
+    public MDLRXNWriter() throws Exception{
+        this(new StringWriter());
+    }
+
+    public ChemFormat getFormat() {
+        return new MDLFormat();
+    }
+    
+    public void setWriter(Writer out) throws CDKException {
+    	if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter)out;
+        } else {
+            writer = new BufferedWriter(out);
+        }
+    }
+
+    public void setWriter(OutputStream output) throws CDKException {
+    	setWriter(new OutputStreamWriter(output));
+    }
+    
     /**
      * Flushes the output and closes this object.
      */
