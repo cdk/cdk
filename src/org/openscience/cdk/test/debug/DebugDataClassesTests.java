@@ -42,6 +42,7 @@ public class DebugDataClassesTests {
         suite.addTest(DebugAtomContainerTest.suite());
         suite.addTest(DebugAtomTest.suite());
         suite.addTest(DebugAtomTypeTest.suite());
+        suite.addTest(DebugBioPolymerTest.suite());
         suite.addTest(DebugBondTest.suite());
         suite.addTest(DebugChemObjectTest.suite());
         suite.addTest(DebugCrystalTest.suite());
@@ -51,6 +52,8 @@ public class DebugDataClassesTests {
         suite.addTest(DebugLonePairTest.suite());
         suite.addTest(DebugMoleculeTest.suite());
         suite.addTest(DebugMonomerTest.suite());
+        suite.addTest(DebugPolymerTest.suite());
+        suite.addTest(DebugReactionTest.suite());
         suite.addTest(DebugStrandTest.suite());
         
         return suite;

@@ -32,8 +32,10 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
+import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
  * Checks the functionality of the BioPolymer class.
@@ -44,11 +46,15 @@ import org.openscience.cdk.Strand;
  */
 public class BioPolymerTest extends CDKTestCase {
 
-    public BioPolymerTest(String name) {
+	protected ChemObjectBuilder builder;
+
+	public BioPolymerTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(BioPolymerTest.class);

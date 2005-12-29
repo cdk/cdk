@@ -117,7 +117,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 
 	public org.openscience.cdk.interfaces.BioPolymer newBioPolymer(){
-		return new BioPolymer();
+		return new DebugBioPolymer();
 	}
 
 	public org.openscience.cdk.interfaces.Bond newBond() {
@@ -219,11 +219,11 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 	
 	public org.openscience.cdk.interfaces.Polymer newPolymer() {
-		return new Polymer();
+		return new DebugPolymer();
 	}
 
     public org.openscience.cdk.interfaces.Reaction newReaction() {
-    	return new Reaction();	
+    	return new DebugReaction();	
     }
 	
 	public org.openscience.cdk.interfaces.Ring newRing() {
