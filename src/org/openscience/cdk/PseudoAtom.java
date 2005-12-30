@@ -69,15 +69,15 @@ public class PseudoAtom extends Atom
     public PseudoAtom(String label) {
         super("R");
         this.label = label;
-        this.fractionalPoint3d = null;
-        this.point3d = null;
-        this.point2d = null;
+        super.fractionalPoint3d = null;
+        super.point3d = null;
+        super.point2d = null;
         // set these default, unchangable values
-        super.setHydrogenCount(0);
-        super.setStereoParity(0);
-        super.setExactMass(0.0);
-        super.setFormalCharge(0);
-        super.setCharge(0.0);
+        super.hydrogenCount = 0;
+        super.stereoParity = 0;
+        super.exactMass = 0.0;
+        super.formalCharge = 0;
+        super.charge = 0.0;
     }
 
     /**
@@ -87,16 +87,15 @@ public class PseudoAtom extends Atom
      */
     public PseudoAtom(org.openscience.cdk.interfaces.Atom atom) {
         super("R");
-        super.setProperties(atom.getProperties());
-        this.fractionalPoint3d = atom.getFractionalPoint3d();
-        this.point3d = atom.getPoint3d();
-        this.point2d = atom.getPoint2d();
+        super.fractionalPoint3d = atom.getFractionalPoint3d();
+        super.point3d = atom.getPoint3d();
+        super.point2d = atom.getPoint2d();
         this.label = atom.getSymbol();
-        super.setHydrogenCount(atom.getHydrogenCount());
-        super.setStereoParity(atom.getStereoParity());
-        super.setExactMass(atom.getExactMass());
-        super.setFormalCharge(atom.getFormalCharge());
-        super.setCharge(atom.getCharge());
+        super.hydrogenCount = 0;
+        super.stereoParity = 0;
+        super.exactMass = 0.0;
+        super.formalCharge = 0;
+        super.charge = 0.0;
     }
 
     /**
