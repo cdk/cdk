@@ -62,6 +62,8 @@ public class FingerPrinter {
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
 
+        Fingerprinter fingerprinter = new Fingerprinter();
+        
         // loop over all files
         for (int i=0; i<args.length; i++) {
             String ifilename = args[i];
@@ -74,7 +76,7 @@ public class FingerPrinter {
                         org.openscience.cdk.interfaces.AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
                         if (containers.length > 0) {
                             for (int j = 0; j < containers.length; j++) {
-                                String print = Fingerprinter.getFingerprint(containers[j]).toString();
+                                String print = fingerprinter.getFingerprint(containers[j]).toString();
                                 System.out.println(ifilename + " ("+ j +"): fingerprint=" + print);
                             }
                         }

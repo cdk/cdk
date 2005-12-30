@@ -64,8 +64,9 @@ public class TanimotoTest extends CDKTestCase
 	{
 		Molecule mol1 = MoleculeFactory.makeIndole();
 		Molecule mol2 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = Fingerprinter.getFingerprint(mol1);
-		BitSet bs2 = Fingerprinter.getFingerprint(mol2);
+		Fingerprinter fingerprinter = new Fingerprinter();
+		BitSet bs1 = fingerprinter.getFingerprint(mol1);
+		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
 		if (!standAlone) assertEquals(tanimoto, 0.59, 0.01);
@@ -74,8 +75,9 @@ public class TanimotoTest extends CDKTestCase
 	{
 		Molecule mol1 = MoleculeFactory.makeIndole();
 		Molecule mol2 = MoleculeFactory.makeIndole();
-		BitSet bs1 = Fingerprinter.getFingerprint(mol1);
-		BitSet bs2 = Fingerprinter.getFingerprint(mol2);
+		Fingerprinter fingerprinter = new Fingerprinter();
+		BitSet bs1 = fingerprinter.getFingerprint(mol1);
+		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
 		if (!standAlone) assertEquals(tanimoto, 1.0, 0.001);

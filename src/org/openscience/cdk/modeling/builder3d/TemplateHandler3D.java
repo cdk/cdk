@@ -151,7 +151,7 @@ public class TemplateHandler3D{
 		AtomContainer template=null;
 		QueryAtomContainer queryRingSystem=QueryAtomContainerCreator.createAnyAtomContainer(ringSystems,false);
 		QueryAtomContainer query=null;
-		BitSet ringSystemFingerprint=Fingerprinter.getFingerprint(queryRingSystem);
+		BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(queryRingSystem);
 		RMap map = null;
 		org.openscience.cdk.interfaces.Atom atom1 = null;
 		org.openscience.cdk.interfaces.Atom atom2 = null;

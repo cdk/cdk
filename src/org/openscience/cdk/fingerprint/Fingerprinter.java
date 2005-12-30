@@ -77,85 +77,72 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.keyword    fingerprint
  *@cdk.keyword    similarity
  */
-public class Fingerprinter
-{
-	static int defaultSize = 1024;
-	static int defaultSearchDepth = 6;
+public class Fingerprinter implements IFingerprinter {
+	
+	private final static int defaultSize = 1024;
+	private final static int defaultSearchDepth = 6;
+	
+	private int size;
+	private int searchDepth;
+	private AllRingsFinder ringFinder;
+	
 	static Hashtable pathes;
 	final static boolean debug = true;
 	static int debugCounter = 0;
 
 	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
 
-
 	/**
-	 *  Generates a fingerprint of the default size for the given AtomContainer
-	 *
-	 *@param  ac                       The AtomContainer for which a Fingerprint is
-	 *      generated default size of the fingerprint= 1024 default depth of
-	 *      search= 6
-	 *@return                          The Fingerprint (A one-dimensional bit
-	 *      array)
-	 *@exception  Exception            Description of the Exception
+	 * Creates a fingerprint generator of length <code>defaultSize</code>
+	 * and with a search depth of <code>defaultSearchDepth</code>.
 	 */
-	public static BitSet getFingerprint(AtomContainer ac) throws Exception
-	{
-		return getFingerprint(ac, defaultSize, defaultSearchDepth, null);
+	public Fingerprinter() {
+		this(defaultSize, defaultSearchDepth, null);
 	}
-
-
-	/**
-	 *  Generates a fingerprint of a given size for the given AtomContainer
-	 *
-	 *@param  ac                       The AtomContainer for which a Fingerprint is
-	 *      generated
-	 *@param  size                     The desired size of the fingerprint
-	 *@return                          The Fingerprint (A one-dimensional bit
-	 *      array)
-	 *@exception  Exception            Description of the Exception
-	 */
-	public static BitSet getFingerprint(AtomContainer ac, int size) throws Exception
-	{
-		return getFingerprint(ac, size, defaultSearchDepth, null);
+	
+	public Fingerprinter(int size) {
+		this(size, defaultSearchDepth, null);
 	}
-
-	/**
-	 *  Generates a fingerprint of a given size for the given AtomContainer
-	 *
-	 *@param  ac		The AtomContainer for which a Fingerprint is generated
-	 *@param  size          The desired size of the fingerprint
-	 *@param  searchDepth   The desired depth of search
-	 *@return               The Fingerprint (A one-dimensional bit array)
-	 *@exception  Exception thrown if something goes wrong
-	 */
-	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth) throws Exception
-	{
-		return getFingerprint(ac, size, searchDepth, null);
-
+	
+	public Fingerprinter(int size, int searchDepth) {
+		this(size, searchDepth, null);
 	}
-		
+	
 	/**
-	 *  Generates a fingerprint of a given size for the given AtomContainer
+	 * Constructs a fingerprint generator that creates fingerprints of
+	 * the given size, using a generation algorithm with the given search
+	 * depth, and which uses the given AllRingsFinder to reuse previous
+	 * results.
 	 *
-	 *@param  ac		The AtomContainer for which a Fingerprint is generated
-	 *@param  size          The desired size of the fingerprint
-	 *@param  searchDepth   The desired depth of search
-	 *@param  ringFinder           The AllRingsFinder to be used by the aromaticity detection
-	 *@return               The Fingerprint (A one-dimensional bit array)
-	 *@exception  Exception thrown if something goes wrong
+	 * @param  ac	       The AtomContainer for which a Fingerprint is generated
+	 * @param  size        The desired size of the fingerprint
+	 * @param  searchDepth The desired depth of search
+	 * @param  ringFinder  The AllRingsFinder to be used by the aromaticity detection
+	 * @return             The Fingerprint (A one-dimensional bit array)
+	 * @exception          Exception thrown if something goes wrong
 	 */
-	public static BitSet getFingerprint(AtomContainer ac, int size, int searchDepth, AllRingsFinder ringFinder) throws Exception
-	{
+    public Fingerprinter(int size, int searchDepth, AllRingsFinder ringFinder) {
+		this.size = size;
+		this.searchDepth = searchDepth;
+		this.ringFinder = ringFinder;
+	}
+	
+	/**
+	 * Generates a fingerprint of the default size for the given AtomContainer.
+	 *
+	 *@param     ac         The AtomContainer for which a Fingerprint is generated
+	 *@exception Exception  Description of the Exception
+	 */
+	public BitSet getFingerprint(AtomContainer ac) throws Exception {
 		String path = null;
 		int position = -1;
-		boolean isAromatic = false;
-		// logger.debug("Entering Fingerprinter");
-		// logger.debug("Starting Aromaticity Detection");
-		//long before = System.currentTimeMillis();
-		isAromatic = HueckelAromaticityDetector.detectAromaticity(ac, false, ringFinder);
-		//long after = System.currentTimeMillis();
-		//logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
-		// logger.debug("Finished Aromaticity Detection");
+		logger.debug("Entering Fingerprinter");
+		logger.debug("Starting Aromaticity Detection");
+		long before = System.currentTimeMillis();
+		HueckelAromaticityDetector.detectAromaticity(ac, false, ringFinder);
+		long after = System.currentTimeMillis();
+		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
+		logger.debug("Finished Aromaticity Detection");
 		findPathes(ac, searchDepth);
 		BitSet bs = new BitSet(size);
 		for (Enumeration e = pathes.elements(); e.hasMoreElements(); )

@@ -87,8 +87,10 @@ public class FingerprinterTest extends CDKTestCase
 		 * using the fingerprinter.
 		*/
 		
-		BitSet superBS = Fingerprinter.getFingerprint(superstructure);
-		BitSet subBS = Fingerprinter.getFingerprint(substructure);
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		BitSet superBS = fingerprinter.getFingerprint(superstructure);
+		BitSet subBS = fingerprinter.getFingerprint(substructure);
 		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
 
 		if (standAlone)
@@ -123,8 +125,10 @@ public class FingerprinterTest extends CDKTestCase
 		 * using the fingerprinter.
 		*/
 		
-		BitSet superBS = Fingerprinter.getFingerprint(superstructure);
-		BitSet subBS = Fingerprinter.getFingerprint(substructure);
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		BitSet superBS = fingerprinter.getFingerprint(superstructure);
+		BitSet subBS = fingerprinter.getFingerprint(substructure);
 		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
 
 		if (standAlone)
@@ -161,8 +165,10 @@ public class FingerprinterTest extends CDKTestCase
 		 * using the fingerprinter.
 		*/
 		
-		BitSet superBS = Fingerprinter.getFingerprint(structure2);
-		BitSet subBS = Fingerprinter.getFingerprint(structure1);
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		BitSet superBS = fingerprinter.getFingerprint(structure2);
+		BitSet subBS = fingerprinter.getFingerprint(structure1);
 		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
 		if (standAlone)
 		{
@@ -198,8 +204,10 @@ public class FingerprinterTest extends CDKTestCase
 		 * using the fingerprinter.
 		*/
 		
-		BitSet superBS = Fingerprinter.getFingerprint(superstructure);
-		BitSet subBS = Fingerprinter.getFingerprint(substructure);
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		BitSet superBS = fingerprinter.getFingerprint(superstructure);
+		BitSet subBS = fingerprinter.getFingerprint(substructure);
 		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
 		if (standAlone)
 		{
@@ -235,8 +243,10 @@ public class FingerprinterTest extends CDKTestCase
 		 * whether the two give the same bitstring.
 		*/
 		
-		BitSet bs1 = Fingerprinter.getFingerprint(structure1);
-		BitSet bs2 = Fingerprinter.getFingerprint(structure2);
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		BitSet bs1 = fingerprinter.getFingerprint(structure1);
+		BitSet bs2 = fingerprinter.getFingerprint(structure2);
 		// now we do the boolean XOR on the two bitsets, leading
 		// to a bitset that has all the bits set to "true" which differ
 		// between the two original bitsets
@@ -252,26 +262,30 @@ public class FingerprinterTest extends CDKTestCase
 			logger.debug("differing bits: " + bs1);
 			logger.debug("number of differing bits: " + cardinality);
 		}
-		assertTrue(cardinality==0);
+		assertEquals(0, cardinality);
 	}
 
 
 	public void testFingerprinter() throws java.lang.Exception
 	{
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
 		Molecule mol = MoleculeFactory.makeIndole();
-		BitSet bs = Fingerprinter.getFingerprint(mol);
+		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = Fingerprinter.getFingerprint(frag1);
-		if (!standAlone) assertTrue(Fingerprinter.isSubset(bs, bs1));
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
 	
 	public void testFingerprinterArguments() throws java.lang.Exception
 	{
+		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
+		
 		Molecule mol = MoleculeFactory.makeIndole();
-		BitSet bs = Fingerprinter.getFingerprint(mol,1024,7);
+		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = Fingerprinter.getFingerprint(frag1,1024,7);
-		if (!standAlone) assertTrue(Fingerprinter.isSubset(bs, bs1));
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
 	
 	public static Molecule makeFragment1()
