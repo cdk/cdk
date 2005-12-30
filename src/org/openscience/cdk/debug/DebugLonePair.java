@@ -43,6 +43,14 @@ public class DebugLonePair extends org.openscience.cdk.LonePair
 
 	LoggingTool logger = new LoggingTool(DebugLonePair.class);
 
+    public DebugLonePair() {
+    	super();
+    }
+
+    public DebugLonePair(Atom atom) {
+    	super(atom);
+    }
+    
 	public Atom getAtom() {
 		logger.debug("Getting atom: ", super.getAtom());
 		return super.getAtom();
