@@ -4,6 +4,9 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
 
   <release id="cvs">
+   <addition contributor="egonw">
+     Added a substructure based Fingerprinter.
+   </addition>
    <apiChange contributor="egonw">
      Fingerprinter is now an object, and getFingerprint() a non-static method.
    </apiChange>
