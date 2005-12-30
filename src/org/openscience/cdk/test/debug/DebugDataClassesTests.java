@@ -52,8 +52,12 @@ public class DebugDataClassesTests {
         suite.addTest(DebugLonePairTest.suite());
         suite.addTest(DebugMoleculeTest.suite());
         suite.addTest(DebugMonomerTest.suite());
+        suite.addTest(DebugPseudoAtomTest.suite());
         suite.addTest(DebugPolymerTest.suite());
         suite.addTest(DebugReactionTest.suite());
+        suite.addTest(DebugSetOfAtomContainersTest.suite());
+        suite.addTest(DebugSetOfMoleculesTest.suite());
+        suite.addTest(DebugSingleElectronTest.suite());
         suite.addTest(DebugStrandTest.suite());
         
         return suite;

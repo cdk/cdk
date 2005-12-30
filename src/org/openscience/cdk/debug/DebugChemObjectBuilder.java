@@ -26,25 +26,13 @@ package org.openscience.cdk.debug;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.AtomParity;
-import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.LonePair;
-import org.openscience.cdk.Monomer;
-import org.openscience.cdk.Polymer;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.Reaction;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.SetOfAtomContainers;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.Strand;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
@@ -199,7 +187,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
     }
 
     public org.openscience.cdk.interfaces.LonePair newLonePair(org.openscience.cdk.interfaces.Atom atom) {
-    	return new LonePair(atom);
+    	return new DebugLonePair(atom);
     }
 
 	public org.openscience.cdk.interfaces.Molecule newMolecule() {
@@ -247,11 +235,11 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 
 	public org.openscience.cdk.interfaces.SetOfAtomContainers newSetOfAtomContainers() {
-		return new SetOfAtomContainers();
+		return new DebugSetOfAtomContainers();
 	}
 
 	public org.openscience.cdk.interfaces.SetOfMolecules newSetOfMolecules() {
-		return new SetOfMolecules();
+		return new DebugSetOfMolecules();
 	}
 
 	public org.openscience.cdk.interfaces.SetOfReactions newSetOfReactions() {
@@ -259,11 +247,11 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 	
     public org.openscience.cdk.interfaces.SingleElectron newSingleElectron() {
-    	return new SingleElectron();
+    	return new DebugSingleElectron();
     }
     
     public org.openscience.cdk.interfaces.SingleElectron newSingleElectron(org.openscience.cdk.interfaces.Atom atom) {
-    	return new SingleElectron(atom);   
+    	return new DebugSingleElectron(atom);   
     }
 
 	public org.openscience.cdk.interfaces.Strand newStrand() {
@@ -271,23 +259,23 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 	}
 
 	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom() {
-		return new PseudoAtom();
+		return new DebugPseudoAtom();
 	}
 
 	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label) {
-		return new PseudoAtom(label);
+		return new DebugPseudoAtom(label);
 	}
 
 	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(org.openscience.cdk.interfaces.Atom atom) {
-		return new PseudoAtom(atom);
+		return new DebugPseudoAtom(atom);
 	}
 
 	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label, Point3d point3d) {
-		return new PseudoAtom(label, point3d);
+		return new DebugPseudoAtom(label, point3d);
 	}
 
 	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label, Point2d point2d) {
-		return new PseudoAtom(label, point2d);
+		return new DebugPseudoAtom(label, point2d);
 	}
 }
 
