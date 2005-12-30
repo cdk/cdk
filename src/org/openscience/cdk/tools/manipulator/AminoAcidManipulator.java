@@ -69,5 +69,21 @@ public class AminoAcidManipulator {
 		}
 	}
 
+	/**
+	 * Adds the singly bonded oxygen from the acid group of the AminoAcid.
+	 * 
+	 * @param  acid         AminoAcid to which to add the oxygen
+	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid 
+	 */
+	public static void addAcidicOxygen(AminoAcid acid) throws CDKException {
+		if (acid.getCTerminus() == null) 
+			throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
+		
+		acid.addBond(
+			acid.getBuilder().newBond(acid.getCTerminus(), 
+			acid.getBuilder().newAtom("O"),
+			CDKConstants.BONDORDER_SINGLE)
+		);
+	}
 }
 
