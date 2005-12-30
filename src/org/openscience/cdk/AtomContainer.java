@@ -111,6 +111,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		this.electronContainerCount = container.getElectronContainerCount();
 		atoms = new org.openscience.cdk.interfaces.Atom[this.atomCount];
 		electronContainers = new org.openscience.cdk.interfaces.ElectronContainer[this.electronContainerCount];
+		atomParities = new Hashtable((int)(atomCount/2));
 
 		for (int f = 0; f < container.getAtomCount(); f++) {
 			atoms[f] = container.getAtomAt(f);
