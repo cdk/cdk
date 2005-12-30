@@ -27,8 +27,7 @@ public class StandardSubstructureSets {
 				"COC", // alkoxyalkane
 				"O=C[H]", // aldehyde
 				"O=S(=O)O", // sulfonate
-				"O=P(=O)O", // phosphate
-				"C1=CC=CC=C1" // phenyl
+				"O=P(=O)O" // phosphate
 		    };
 			for (int i=0; i<groups.length; i++) {
 			    functionalGroupSubstructureSet.addAtomContainer(

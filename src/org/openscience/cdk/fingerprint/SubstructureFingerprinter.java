@@ -58,7 +58,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
 	 */
 	public BitSet getFingerprint(AtomContainer ac) throws Exception {
 		int bitsetLength = substructureSet.getAtomContainerCount();
-		BitSet fingerPrint = new BitSet(bitsetLength);
+		BitSet fingerPrint = new BitSet();
 		
 		AtomContainer substructure = null;
 		for (int i=0; i<bitsetLength; i++) {

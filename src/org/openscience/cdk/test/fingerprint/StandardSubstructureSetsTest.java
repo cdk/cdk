@@ -40,6 +40,7 @@ import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -60,13 +61,14 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
 		SetOfAtomContainers set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
+
+			assertNotNull(set);
+			assertEquals(8, set.getAtomContainerCount());
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			fail(exception.getMessage());
 		}
-		
-		assertNotNull(set);
-		assertEquals(8, set.getAtomContainerCount());
+
 	}
 	
 }
