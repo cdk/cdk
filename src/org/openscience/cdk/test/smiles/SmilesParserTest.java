@@ -282,6 +282,24 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
+	public void testAromaticSmilesWithCharge()
+	{
+		try
+		{
+			String smiles = "c1cc[c-]cc1";
+			Molecule molecule = sp.parseSmiles(smiles);
+			assertTrue(molecule.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(molecule.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
+		} catch (Exception exception)
+		{
+			fail(exception.getMessage());
+		}
+	}
+
+
+	/**
+	 *  A unit test for JUnit
+	 */
 	public void testAromaticSmiles()
 	{
 		try
@@ -295,8 +313,8 @@ public class SmilesParserTest extends CDKTestCase {
 			fail(exception.getMessage());
 		}
 	}
-
-
+	
+	
 	/**
 	 *  Standalone method only! For JUnit testing, see the testSmilesX() methods.
 	 */
