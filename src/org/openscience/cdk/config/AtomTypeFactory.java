@@ -193,26 +193,23 @@ public class AtomTypeFactory {
 
 		InputStream ins = null;
 		{
-			// try to see if this configFile is an actual file
-			File file = new File(fileName);
-            if (file.exists()) {
-                logger.debug("configFile is a File");
-                // what's next?
-                try {
-                    ins = new FileInputStream(file);
-                } catch (Exception exception) {
-                    logger.error(exception.getMessage());
-                    logger.debug(exception);
-                }
-			} else {
-			 
-                logger.debug("configFile must be a stream");
-                // assume it is a default config file in distro
-                /*
-                *  this has to be this.getClass.getClassLoader.getResource,
-                *  getClass.getResource fails, elw
-                */
-                ins = this.getClass().getClassLoader().getResourceAsStream(fileName);
+			//try to see if this is a resource
+			ins = this.getClass().getClassLoader().getResourceAsStream(fileName);
+			if(ins==null){
+				// try to see if this configFile is an actual file
+				File file = new File(fileName);
+	            if (file.exists()) {
+	                logger.debug("configFile is a File");
+	                // what's next?
+	                try {
+	                    ins = new FileInputStream(file);
+	                } catch (Exception exception) {
+	                    logger.error(exception.getMessage());
+	                    logger.debug(exception);
+	                }
+	            } else {
+	            	logger.error("no stream and no file");
+	            }
             }
             
 			if (ins == null)

@@ -31,6 +31,9 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -161,6 +164,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     }
     
     public void testModelBuilder3D_c1ccccc1C0(){
+
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
 		ModelBuilder3D mb3d=new ModelBuilder3D();
@@ -183,6 +187,31 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		}
 	}
 
+    public void testModelBuilder3D_c1ccccccc1CC(){
+
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
+		ModelBuilder3D mb3d=new ModelBuilder3D();
+    HydrogenAdder hAdder=new HydrogenAdder();
+    String smile="c1ccccccc1CC";
+		try {
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles(smile);
+			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+			mb3d.setTemplateHandler();
+			mb3d.setMolecule(mol,false);
+			mb3d.generate3DCoordinates();
+		} catch (Exception exc) {
+			System.out.println("Cannot layout molecule with SMILE: "+smile);
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+    	fail(exc.toString());
+		}
+	}
+
+    
     /**
      * Test for SF bug #1309731.
      */
