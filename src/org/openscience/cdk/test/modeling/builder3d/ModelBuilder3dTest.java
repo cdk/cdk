@@ -187,13 +187,12 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		}
 	}
 
-    public void testModelBuilder3D_c1ccccccc1CC(){
-
+    public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception{
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
 		ModelBuilder3D mb3d=new ModelBuilder3D();
     HydrogenAdder hAdder=new HydrogenAdder();
-    String smile="c1ccccccc1CC";
+    String smile="C1CCCCCCC1CC";
 		try {
 			SmilesParser sp = new SmilesParser();
 			Molecule mol = sp.parseSmiles(smile);
@@ -252,5 +251,4 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		assertEquals("carbon1", carbon1.getID());
 		assertEquals("oxygen1", oxygen1.getID());
 	}
-
 }
