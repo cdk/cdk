@@ -258,6 +258,12 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
                      ((AtomContainer)list2.get(0)).getAtomCount());
     }
     
+    public void testItself() throws Exception{
+    	String smiles="C1CCCCCCC1CC";
+       	QueryAtomContainer query=QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser().parseSmiles(smiles),true);
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(new SmilesParser().parseSmiles(smiles),query));
+    }
+    
 	public static void main(String[] args)
 	{
 		try{
