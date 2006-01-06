@@ -55,6 +55,10 @@
             <echo message="    ${ANT_HOME}: ${ant.home}" />
             <echo message="       hasAnt16: ${hasAnt16}" />
             <echo message="" />
+            <echo message="JavaDoc Environment:" />
+            <echo message="    SUN JavaDoc: ${sunJavaDoc}" />
+            <echo message="  gjdoc JavaDoc: ${gjdocJavaDoc}" />
+            <echo message="" />
             <echo message="CDK Environment:" />
             <echo message="    CDK version: ${version}" />
             <echo message="      build.xml: $Id$" />
@@ -143,6 +147,15 @@
                     </uptodate>
                 </and>
             </condition>
+            <condition property="sunJavaDoc">
+              <or>
+                <available file="${java.ext.dirs}/tools.jar" />
+                <available file="${java.ext.dirs}/tools.jar/../../../lib/" />
+              </or>
+            </condition>
+            <condition property="gjdocJavaDoc">
+              <available file="/usr/share/java/gnu-classpath-tools-gjdoc.jar" />
+            </condition>
             <condition property="rispresent">
                 <and>
                     <or>
@@ -214,12 +227,12 @@
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
                    includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
                 <classpath>
-                    <fileset dir="${java.ext.dirs}">
-                        <include name="tools.jar" />
-                    </fileset>
-                    <fileset dir="${java.ext.dirs}/../../../lib">
-                        <include name="tools.jar" />
-                    </fileset>
+                  <fileset dir="${java.ext.dirs}">
+                    <include name="tools.jar" if="sunJavaDoc" unless="gjdocJavaDoc"/>
+                  </fileset>
+                  <fileset dir="/usr/share/java">
+                    <include name="com-sun-javadoc.jar" if="gjdocJavaDoc"/>
+                  </fileset>
                 </classpath>
             </javac>
         </target>
