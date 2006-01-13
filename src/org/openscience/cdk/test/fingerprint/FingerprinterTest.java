@@ -277,6 +277,17 @@ public class FingerprinterTest extends CDKTestCase
 		assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
 	
+	public void testExtendedFingerprinter() throws java.lang.Exception
+	{
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = fingerprinter.getExtendedFingerprint(mol);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = fingerprinter.getExtendedFingerprint(frag1);
+		assertTrue(Fingerprinter.isSubset(bs, bs1));
+	}
+	
 	public void testFingerprinterArguments() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
