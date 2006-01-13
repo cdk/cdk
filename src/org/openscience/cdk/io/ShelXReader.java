@@ -42,7 +42,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.exception.CDKException;
@@ -113,7 +113,7 @@ public class ShelXReader extends DefaultChemObjectReader {
      *
      * @return the content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             try {
                 return readChemFile((ChemFile)object);

@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
@@ -116,15 +116,15 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     private void init() {}
 
     /**
-     * Reads a ChemObject of type object from input.
+     * Reads a IChemObject of type object from input.
      * Supported types are: ChemFile.
      *
-     * @param  object type of requested ChemObject
+     * @param  object type of requested IChemObject
      * @return the content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            return (ChemObject)readChemFile((ChemFile)object);
+            return (IChemObject)readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }

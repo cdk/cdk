@@ -109,37 +109,37 @@ public class CDKConstants {
         public final static int HYBRIDIZATION_SP3D5 = 8;
         /** 
          * Carbon NMR shift contant for use as a key in the
-         * ChemObject.physicalProperties hashtable.
+         * IChemObject.physicalProperties hashtable.
          * @see org.openscience.cdk.ChemObject
          */
         public final static String NMRSHIFT_CARBON = "carbon nmr shift";
 
         /** Hydrogen NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable.
+          * IChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public final static String NMRSHIFT_HYDROGEN = "hydrogen nmr shift";
 
         /** Nitrogen NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable.
+          * IChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public final static String NMRSHIFT_NITROGEN = "nitrogen nmr shift";
 
         /** Phosphorus NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable.
+          * IChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public final static String NMRSHIFT_PHOSPORUS = "phosphorus nmr shift";
 
         /** Fluorine NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable.
+          * IChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public final static String NMRSHIFT_FLUORINE = "fluorine nmr shift";
 
         /** Deuterium NMR shift contant for use as a key in the
-          * ChemObject.physicalProperties hashtable.
+          * IChemObject.physicalProperties hashtable.
           * @see org.openscience.cdk.ChemObject
           */
         public final static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
@@ -193,10 +193,10 @@ public class CDKConstants {
     * ChemObjects                           *
     ****************************************/
 
-    /** The title for a ChemObject. */
+    /** The title for a IChemObject. */
     public static final String TITLE = "Title";
 
-    /** A remark for a ChemObject.*/
+    /** A remark for a IChemObject.*/
     public static final String REMARK = "Remark";
 
     /** A String comment. */
@@ -208,7 +208,7 @@ public class CDKConstants {
     /** A List of annotation remarks. */
     public static final String ANNOTATIONS = "Annotations";
 
-    /** A description for a ChemObject. */
+    /** A description for a IChemObject. */
     public static final String DESCRIPTION = "Description";
 
 

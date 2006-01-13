@@ -34,7 +34,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -98,11 +98,11 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     
     
     /**
-     * Serializes the ChemObject to CrystClust format and redirects it to the output Writer.
+     * Serializes the IChemObject to CrystClust format and redirects it to the output Writer.
      *
      * @param object A Molecule of SetOfMolecules object
      */
-    public void write(ChemObject object) throws UnsupportedChemObjectException {
+    public void write(IChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof Crystal) {
             write((Crystal)object);
         }   else if (object instanceof ChemSequence) {

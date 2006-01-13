@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 
 /**
- * A helper class to instantiate a ChemObject for a specific implementation.
+ * A helper class to instantiate a IChemObject for a specific implementation.
  *
  * @author        egonw
  * @cdk.module    data
@@ -127,7 +127,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new ChemModel();
 	}
 	
-	public org.openscience.cdk.interfaces.ChemObject newChemObject() {
+	public org.openscience.cdk.interfaces.IChemObject newChemObject() {
 		return new ChemObject();
 	}
 	

@@ -41,7 +41,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -98,18 +98,18 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     }
 
   /**
-   *  Returns a ChemObject of type object bye reading from
+   *  Returns a IChemObject of type object bye reading from
    *  the input. 
    *
    *  The function supports only reading of ChemFile's.
    *
-   * @param     object  ChemObject that types the class to return.
-   * @throws    Exception when a ChemObject is requested that cannot be read.
+   * @param     object  IChemObject that types the class to return.
+   * @throws    Exception when a IChemObject is requested that cannot be read.
    */
-  public ChemObject read(ChemObject object) throws CDKException 
+  public IChemObject read(IChemObject object) throws CDKException 
   {
     if (object instanceof ChemFile) 
-      return (ChemObject)readChemFile((ChemFile)object);
+      return (IChemObject)readChemFile((ChemFile)object);
     else 
       throw new CDKException("Only ChemFile objects can be read.");
   }

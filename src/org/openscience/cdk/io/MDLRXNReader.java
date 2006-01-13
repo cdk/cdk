@@ -38,7 +38,7 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.Mapping;
@@ -100,18 +100,18 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Takes an object which subclasses ChemObject, e.g.Molecule, and will read
+     * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation
-     * does not support a specific ChemObject it will throw an Exception.
+     * does not support a specific IChemObject it will throw an Exception.
      *
      * @param  object                              The object that subclasses
-     *      ChemObject
-     * @return                                     The ChemObject read
+     *      IChemObject
+     * @return                                     The IChemObject read
      * @exception  CDKException
      */
-     public ChemObject read(ChemObject object) throws CDKException {
+     public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof Reaction) {
-             return (ChemObject) readReaction(object.getBuilder());
+             return (IChemObject) readReaction(object.getBuilder());
          } else if (object instanceof ChemModel) {
              ChemModel model = object.getBuilder().newChemModel();
              SetOfReactions reactionSet = object.getBuilder().newSetOfReactions();
@@ -131,7 +131,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
          }
      }
      
-     public boolean accepts(ChemObject object) {
+     public boolean accepts(IChemObject object) {
          if (object instanceof Reaction) {
              return true;
          } else if (object instanceof ChemModel) {

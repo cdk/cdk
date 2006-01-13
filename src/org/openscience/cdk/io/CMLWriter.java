@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Molecule;
@@ -164,11 +164,11 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Serializes the ChemObject to CML and redirects it to the output Writer.
+     * Serializes the IChemObject to CML and redirects it to the output Writer.
      *
      * @param object A Molecule of SetOfMolecules object
      */
-    public void write(ChemObject object) throws CDKException {
+    public void write(IChemObject object) throws CDKException {
         if (object instanceof Molecule) {
         } else if (object instanceof Reaction) {
         } else if (object instanceof SetOfReactions) {
@@ -180,7 +180,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof Atom) {
         } else if (object instanceof Bond) {
         } else {
-        	throw new CDKException("Cannot write this unsupported ChemObject: " + object.getClass().getName());
+        	throw new CDKException("Cannot write this unsupported IChemObject: " + object.getClass().getName());
         }
 
         logger.debug("Writing object in CML of type: ", object.getClass().getName());

@@ -41,7 +41,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.io.CMLReader;
@@ -152,7 +152,7 @@ public class OpenAction extends JCPAction {
 			if (cor.accepts(ChemFile.class)) {
 				// try to read a ChemFile
 				try {
-					chemFile = (ChemFile) cor.read((ChemObject) new org.openscience.cdk.ChemFile());
+					chemFile = (ChemFile) cor.read((IChemObject) new org.openscience.cdk.ChemFile());
 					if (chemFile != null) {
 												
 						jcpPanel.processChemFile(chemFile);
@@ -182,7 +182,7 @@ public class OpenAction extends JCPAction {
 			if (cor.accepts(ChemModel.class)) {
 				// try to read a ChemModel
 				try {
-					chemModel = (ChemModel) cor.read((ChemObject) new ChemModel());
+					chemModel = (ChemModel) cor.read((IChemObject) new ChemModel());
 					if (chemModel != null) {
 						jcpPanel.processChemModel(chemModel);
 						//The following do apply either to the existing or the new frame

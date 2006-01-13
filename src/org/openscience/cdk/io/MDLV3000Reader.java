@@ -42,7 +42,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -112,7 +112,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             return readMolecule();
         }
@@ -510,7 +510,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return false;
     }
     
-    public boolean accepts(ChemObject object) {
+    public boolean accepts(IChemObject object) {
         if (object instanceof Molecule) {
             return true;
         }

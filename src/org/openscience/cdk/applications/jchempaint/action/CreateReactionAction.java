@@ -36,7 +36,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -58,7 +58,7 @@ public class CreateReactionAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent event)
 	{
-		ChemObject object = getSource(event);
+		IChemObject object = getSource(event);
 
 		logger.debug("CreateReaction action");
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();

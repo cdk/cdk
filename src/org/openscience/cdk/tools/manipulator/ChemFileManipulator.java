@@ -64,7 +64,7 @@ public class ChemFileManipulator {
     }
 
     /**
-     * Returns a List of all ChemObject in this ChemFile.
+     * Returns a List of all IChemObject in this ChemFile.
      *
      * @return  A list of all ChemObjects
      */

@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 
 
@@ -58,13 +58,13 @@ public class ShowChemObjectProperty extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent event)
 	{
-		ChemObject object = getSource(event);
+		IChemObject object = getSource(event);
 		// XXX needs fixing JFrame frame = (JFrame) jcpPanel.getFrame();
 		JFrame frame = new JFrame();
 		if (dialog == null)
 		{
 			dialog = new TextViewDialog(frame,
-					"ChemObject Property " + type,
+					"IChemObject Property " + type,
 					new Dimension(400, 100)
 					);
 		}

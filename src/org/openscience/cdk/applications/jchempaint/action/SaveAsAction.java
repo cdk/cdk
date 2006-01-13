@@ -50,7 +50,7 @@ import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
 import org.openscience.cdk.io.ChemObjectWriter;
 import org.openscience.cdk.io.MDLWriter;
@@ -142,7 +142,7 @@ public class SaveAsAction extends JCPAction
 	
 			int returnVal = chooser.showSaveDialog(jcpPanel);
 			
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			currentFilter = chooser.getFileFilter();
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 			{
@@ -262,7 +262,7 @@ public class SaveAsAction extends JCPAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	protected void saveAsCML2(ChemObject object, File outFile) throws Exception
+	protected void saveAsCML2(IChemObject object, File outFile) throws Exception
 	{
 		if(Float.parseFloat(System.getProperty("java.specification.version"))<1.5){
 			JOptionPane.showMessageDialog(null,"For saving as CML you need Java 1.5 or higher!");

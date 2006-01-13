@@ -30,7 +30,7 @@ package org.openscience.cdk.controller;
 
 import javax.swing.JPopupMenu;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * Basically, identical to the JPopupMenu class, except that this menu
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.ChemObject;
  *
  * <p>IMPORTANT: The very nature of this design can lead to race conditions.
  * It would be better that the Event passed to the popup menu would define
- * the ChemObject source.
+ * the IChemObject source.
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-07-36
@@ -46,13 +46,13 @@ import org.openscience.cdk.interfaces.ChemObject;
  */
 public class CDKPopupMenu extends JPopupMenu {
    
-   private ChemObject source;
+   private IChemObject source;
    
-   public void setSource(ChemObject object) {
+   public void setSource(IChemObject object) {
        this.source = object;
    }
    
-   public ChemObject getSource() {
+   public IChemObject getSource() {
        return this.source;
    }
    

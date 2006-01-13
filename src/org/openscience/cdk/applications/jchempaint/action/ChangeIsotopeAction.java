@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ChangeIsotopeEdit;
@@ -60,7 +60,7 @@ public class ChangeIsotopeAction extends JCPAction
 		JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
 		if (jcpm != null)
 		{
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			logger.debug("Source of call: ", object);
 			if (object instanceof Atom)
 			{

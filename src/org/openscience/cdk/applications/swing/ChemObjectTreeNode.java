@@ -41,7 +41,7 @@ import org.openscience.cdk.ChemObject;
  *
  * @author     egonw
  * @cdk.created    2004-08-22
- * @cdk.keyword    node, ChemObject tree
+ * @cdk.keyword    node, IChemObject tree
  * @cdk.require swing
  */
 public class ChemObjectTreeNode extends DefaultMutableTreeNode {

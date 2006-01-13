@@ -123,7 +123,7 @@ public class DictRefEditorTableModel extends AbstractTableModel {
     }
     
     /**
-     * Parses the properties of this ChemObject and looks for (read: start with)
+     * Parses the properties of this IChemObject and looks for (read: start with)
      * 'org.openscience.cdk.dict" entries. Based on such entries, it fills
      * the table with dictionary references.
      *

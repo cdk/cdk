@@ -38,7 +38,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.RingSet;
 
 /**
@@ -298,8 +298,8 @@ public class OverlapResolver
 	 */
 	public class OverlapPair
 	{
-		ChemObject chemObject1 = null;
-		ChemObject chemObject2 = null;
+		IChemObject chemObject1 = null;
+		IChemObject chemObject2 = null;
 
 
 		/**
@@ -308,7 +308,7 @@ public class OverlapResolver
 		 * @param  co1  Description of the Parameter
 		 * @param  co2  Description of the Parameter
 		 */
-		public OverlapPair(ChemObject co1, ChemObject co2)
+		public OverlapPair(IChemObject co1, IChemObject co2)
 		{
 			chemObject1 = co1;
 			chemObject2 = co2;

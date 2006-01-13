@@ -43,7 +43,7 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.SVGFormat;
 import org.openscience.cdk.renderer.Renderer2D;
@@ -137,9 +137,9 @@ public class SVGWriter extends DefaultChemObjectWriter {
     /**
      * Writes the content from object to output.
      *
-     * @param   object  ChemObject of which the data is outputted.
+     * @param   object  IChemObject of which the data is outputted.
      */
-    public void write(ChemObject object) throws CDKException {
+    public void write(IChemObject object) throws CDKException {
         if (object instanceof AtomContainer) {
             writeAtomContainer((AtomContainer)object);
         } else {

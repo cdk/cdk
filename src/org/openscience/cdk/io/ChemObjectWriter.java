@@ -31,7 +31,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * This class is the interface that all IO writers should implement.
@@ -54,7 +54,7 @@ public interface ChemObjectWriter extends ChemObjectIO {
      * @exception CDKException is thrown if the output
      *            does not support the data in the object
      */
-    public void write(ChemObject object) throws CDKException;
+    public void write(IChemObject object) throws CDKException;
     
     /**
      * Sets the Writer from which this ChemObjectWriter should write

@@ -25,7 +25,7 @@ package org.openscience.cdk.io;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
@@ -53,11 +53,11 @@ public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
     /**
      * @deprecated
      */
-    public boolean accepts(ChemObject object) {
+    public boolean accepts(IChemObject object) {
         return accepts(object.getClass());
     }
     public boolean accepts(Class objectClass) {
-        // leave it up the write(ChemObject) to decide by default
+        // leave it up the write(IChemObject) to decide by default
         return true;
     }
     

@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.EnzymeResidueLocator;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -58,7 +58,7 @@ public class ConvertToAction extends JCPAction
 	public void actionPerformed(ActionEvent event)
 	{
 		logger.debug("Converting to: ", type);
-		ChemObject object = getSource(event);
+		IChemObject object = getSource(event);
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
 		if (object != null)

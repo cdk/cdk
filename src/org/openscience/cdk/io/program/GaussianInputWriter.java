@@ -35,7 +35,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.GaussianInputFormat;
@@ -115,7 +115,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         writer.close();
     }
     
-    public void write(ChemObject object) throws CDKException {
+    public void write(IChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             try {
                 writeMolecule((Molecule)object);
@@ -127,7 +127,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         }
     }
 
-    public ChemObject highestSupportedChemObject() {
+    public IChemObject highestSupportedChemObject() {
         return new Molecule();
     }
     

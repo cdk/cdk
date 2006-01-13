@@ -53,7 +53,7 @@ public class CDKDictionaryReferences {
 
     private static String prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
     
-    public static void makeReferencesExplicit(org.openscience.cdk.interfaces.ChemObject object) {
+    public static void makeReferencesExplicit(org.openscience.cdk.interfaces.IChemObject object) {
         if (object instanceof Atom) {
             makeReferencesExplicitForAtom((Atom)object);
         } else if (object instanceof org.openscience.cdk.interfaces.Bond) {

@@ -25,7 +25,7 @@ package org.openscience.cdk.io.iterator;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.io.listener.ReaderListener;
@@ -57,11 +57,11 @@ public abstract class DefaultIteratingChemObjectReader implements IteratingChemO
         listenerList.removeElement(listener);
     }
 
-    public boolean accepts(ChemObject object) {
+    public boolean accepts(IChemObject object) {
     	return accepts(object.getClass());
     }
     public boolean accepts(Class objectClass) {
-        // leave it up the read(ChemObject) to decide by default
+        // leave it up the read(IChemObject) to decide by default
         return true;
     }
     

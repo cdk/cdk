@@ -28,7 +28,7 @@ import java.io.FileReader;
 import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
@@ -94,7 +94,7 @@ public class File2Text {
     	ChemFile file = (ChemFile)reader.read(new ChemFile());
     	Iterator iter = ChemFileManipulator.getAllChemObjects(file).iterator();
     	while (iter.hasNext()) {
-    		ChemObject object = (ChemObject)iter.next();
+    		IChemObject object = (IChemObject)iter.next();
     		if (object.getProperty(CDKConstants.REMARK) != null) {
     			buffer.append("Remark: ").append(object.getProperty(CDKConstants.REMARK)).append("\n");
     		}

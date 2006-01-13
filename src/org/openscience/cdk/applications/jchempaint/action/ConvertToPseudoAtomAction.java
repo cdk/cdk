@@ -33,7 +33,7 @@ import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ConvertToPseudoAtomEdit;
@@ -48,7 +48,7 @@ public class ConvertToPseudoAtomAction extends JCPAction {
 
     public void actionPerformed(ActionEvent event) {
         logger.debug("Converting to: ", type);
-        ChemObject object = getSource(event);
+        IChemObject object = getSource(event);
         JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
         org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
         if (object != null) {

@@ -37,7 +37,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -118,9 +118,9 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     /**
      * Writes the content from object to output.
      *
-     * @param   object  ChemObject of which the data is outputted.
+     * @param   object  IChemObject of which the data is outputted.
      */
-	public void write(ChemObject object) throws CDKException {
+	public void write(IChemObject object) throws CDKException {
 		if (object instanceof SetOfMolecules) {
 		    writeSetOfMolecules((SetOfMolecules)object);
 		} else if (object instanceof Molecule) {

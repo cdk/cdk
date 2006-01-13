@@ -43,7 +43,7 @@ import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Displays a ChemObject as a tree. An example tree looks like this:
+ * Displays a IChemObject as a tree. An example tree looks like this:
  * <pre>
  *   ChemModel
  *    +- SetOfMolecules
@@ -54,14 +54,14 @@ import org.openscience.cdk.tools.LoggingTool;
  *        +- Molecule
  * </pre>
  *
- * <p>For each ChemObject it will add child nodes for each variable
- * it has that is either a ChemObject or a ChemObject[].
+ * <p>For each IChemObject it will add child nodes for each variable
+ * it has that is either a IChemObject or a IChemObject[].
  *
  * @cdk.module applications
  *
  * @author     egonw
  * @cdk.created    2002-12-29
- * @cdk.keyword    tree, ChemObject
+ * @cdk.keyword    tree, IChemObject
  * @cdk.require swing
  */
 public class ChemObjectTree extends JPanel {
@@ -72,7 +72,7 @@ public class ChemObjectTree extends JPanel {
     private TreeSelectionListener treeListener;
 
 	/**
-	 * Constructs a JPanel showing a ChemObject in a tree.
+	 * Constructs a JPanel showing a IChemObject in a tree.
 	 */
 	public ChemObjectTree() {
         logger = new LoggingTool(this);
@@ -84,7 +84,7 @@ public class ChemObjectTree extends JPanel {
 	}
 
     /**
-     * Displays the ChemObject in tree format.
+     * Displays the IChemObject in tree format.
      */
     public void paintChemObject(ChemObject object) {
         // make a new tree
@@ -120,13 +120,13 @@ public class ChemObjectTree extends JPanel {
     }
     
     /**
-     * Generate a tree of ChemObject's.
+     * Generate a tree of IChemObject's.
      */
     private DefaultMutableTreeNode getTree(ChemObject object) {
         DefaultMutableTreeNode node = new ChemObjectTreeNode(object);
         Class reflectedClass = object.getClass();
         logger.debug("getTree for class: ", reflectedClass);
-        // get all fields in this ChemObject
+        // get all fields in this IChemObject
         Field[] fields = getFields(reflectedClass);
         logger.debug(reflectedClass.getName(), " #fields: " + fields.length); 
         for (int i=0; i<fields.length; i++) {
@@ -140,7 +140,7 @@ public class ChemObjectTree extends JPanel {
                 if (fieldObject != null) {
                     logger.debug("Field value: ", fieldObject.getClass().getName());
                     if (fieldObject instanceof ChemObject) {
-                        // yes, found a ChemObject!
+                        // yes, found a IChemObject!
                         logger.debug("Recursing into this object");
                         node.add(getTree((ChemObject)fieldObject));
                     } else if (fieldObject instanceof ChemObject[]) {
@@ -186,7 +186,7 @@ public class ChemObjectTree extends JPanel {
     private Field[] getFields(Class reflectedClass) {
         Field[] fields = reflectedClass.getDeclaredFields();
         if (fields.length == 0) {
-            // try its super class (as long as it is still a ChemObject
+            // try its super class (as long as it is still a IChemObject
             Class superClass = reflectedClass.getSuperclass();
             try {
                 if (superClass.newInstance() instanceof ChemObject) {

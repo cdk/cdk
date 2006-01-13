@@ -25,7 +25,7 @@ package org.openscience.cdk.io;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.io.listener.ReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -57,16 +57,16 @@ public abstract class DefaultChemObjectReader implements ChemObjectReader {
     }
 
     /**
-     * Returns true if the Reader supports reading into a ChemObject of
+     * Returns true if the Reader supports reading into a IChemObject of
      * this type.
      * 
      * @deprecated
      */
-    public boolean accepts(ChemObject object) {
+    public boolean accepts(IChemObject object) {
         return accepts(object.getClass());
     }
     public boolean accepts(Class objectClass) {
-        // leave it up the read(ChemObject) to decide by default
+        // leave it up the read(IChemObject) to decide by default
         return true;
     }
     

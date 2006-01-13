@@ -35,7 +35,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -111,7 +111,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         writer.close();
     }
 
-    public void write(ChemObject object) throws CDKException {
+    public void write(IChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             try {
                 writeMolecule((Molecule)object);

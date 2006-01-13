@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  *@author        steinbeck
  *@cdk.module    data
  */
-public class ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ChemObject
+public class ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemObject
 {
 
 	/**
@@ -63,11 +63,11 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 */
 	private Vector chemObjectListeners;
 	/**
-	 *  A hashtable for the storage of any kind of properties of this ChemObject.
+	 *  A hashtable for the storage of any kind of properties of this IChemObject.
 	 */
 	private Hashtable properties;
 	/**
-	 *  You will frequently have to use some flags on a ChemObject. For example, if
+	 *  You will frequently have to use some flags on a IChemObject. For example, if
 	 *  you want to draw a molecule and see if you've already drawn an atom, or in
 	 *  a ring search to check whether a vertex has been visited in a graph
 	 *  traversal. Use these flags while addressing particular positions in the
@@ -83,7 +83,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Constructs a new ChemObject.
+	 *  Constructs a new IChemObject.
 	 */
 	public ChemObject()
 	{
@@ -109,7 +109,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Use this to add yourself to this ChemObject as a listener. In order to do
+	 *  Use this to add yourself to this IChemObject as a listener. In order to do
 	 *  so, you must implement the ChemObjectListener Interface.
 	 *
 	 *@param  col  the ChemObjectListener
@@ -143,7 +143,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 	/**
 	 *  Use this to remove a ChemObjectListener from the ListenerList of this
-	 *  ChemObject. It will then not be notified of change in this object anymore.
+	 *  IChemObject. It will then not be notified of change in this object anymore.
 	 *
 	 *@param  col  The ChemObjectListener to be removed
 	 *@see         #addListener
@@ -211,7 +211,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Sets a property for a ChemObject.
+	 *  Sets a property for a IChemObject.
 	 *
 	 *@param  description  An object description of the property (most likely a
 	 *      unique string)
@@ -227,7 +227,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Removes a property for a ChemObject.
+	 *  Removes a property for a IChemObject.
 	 *
 	 *@param  description  The object description of the property (most likely a
 	 *      unique string)
@@ -244,7 +244,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Returns a property for the ChemObject.
+	 *  Returns a property for the IChemObject.
 	 *
 	 *@param  description  An object description of the property (most likely a
 	 *      unique string)
@@ -263,7 +263,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Returns a Map with the ChemObject's properties.
+	 *  Returns a Map with the IChemObject's properties.
 	 *
 	 *@return    The object's properties as an Hashtable
 	 *@see       #setProperties
@@ -274,7 +274,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	}
 
 	/**
-	 *  Clones this <code>ChemObject</code>. It clones the identifier, flags,
+	 *  Clones this <code>IChemObject</code>. It clones the identifier, flags,
 	 *  properties and pointer vectors. The ChemObjectListeners are not cloned, and
 	 *  neither is the content of the pointer vectors.
 	 *
@@ -304,12 +304,12 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 			while (keys.hasMoreElements())
 			{
 				Object key = keys.nextElement();
-				if (key instanceof org.openscience.cdk.interfaces.ChemObject)
+				if (key instanceof org.openscience.cdk.interfaces.IChemObject)
 				{
 					key = ((ChemObject) key).clone();
 				}
 				Object value = properties.get(key);
-				if (value instanceof org.openscience.cdk.interfaces.ChemObject)
+				if (value instanceof org.openscience.cdk.interfaces.IChemObject)
 				{
 					value = ((ChemObject) value).clone();
 				}
@@ -324,14 +324,14 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Compare a ChemObject with this ChemObject.
+	 *  Compare a IChemObject with this IChemObject.
 	 *
 	 *@param  object  Object of type AtomType
 	 *@return         Return true, if the atomtypes are equal
 	 */
 	public boolean compare(Object object)
 	{
-		if (!(object instanceof org.openscience.cdk.interfaces.ChemObject))
+		if (!(object instanceof org.openscience.cdk.interfaces.IChemObject))
 		{
 			return false;
 		}
@@ -435,9 +435,9 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
     }
 
 	/**
-     * Clones this <code>ChemObject</code>, but preserves references to <code>Object</code>s.
+     * Clones this <code>IChemObject</code>, but preserves references to <code>Object</code>s.
      *
-	 * @return    Shallow copy of this ChemObject
+	 * @return    Shallow copy of this IChemObject
 	 * @see       #clone
 	 */
 	public Object shallowCopy()

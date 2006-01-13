@@ -26,7 +26,7 @@ package org.openscience.cdk.debug;
 import java.util.Hashtable;
 
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;

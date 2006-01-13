@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  * @author     egonw
  * @cdk.module interfaces
  */
-public interface SetOfAtomContainers extends ChemObject {
+public interface SetOfAtomContainers extends IChemObject {
 
 	/**
 	 * Adds an atomContainer to this container.

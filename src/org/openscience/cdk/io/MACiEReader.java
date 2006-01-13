@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.EnzymeResidueLocator;
 import org.openscience.cdk.PseudoAtom;
@@ -155,15 +155,15 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Takes an object which subclasses ChemObject, e.g. Molecule, and will read
+     * Takes an object which subclasses IChemObject, e.g. Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation
-     * does not support a specific ChemObject it will throw an Exception.
+     * does not support a specific IChemObject it will throw an Exception.
      *
-     * @param  object The object that subclasses ChemObject
-     * @return        The ChemObject read
+     * @param  object The object that subclasses IChemObject
+     * @return        The IChemObject read
      * @exception     CDKException
      */
-     public ChemObject read(ChemObject object) throws CDKException {
+     public IChemObject read(IChemObject object) throws CDKException {
          customizeJob();
          
          try {
@@ -185,7 +185,7 @@ public class MACiEReader extends DefaultChemObjectReader {
          throw new CDKException("Only supported are ChemSequence and ChemModel.");
      }
 
-     public boolean accepts(ChemObject object) {
+     public boolean accepts(IChemObject object) {
          if (object instanceof ChemSequence) {
              return true;
          } else if (object instanceof ChemModel) {
@@ -195,7 +195,7 @@ public class MACiEReader extends DefaultChemObjectReader {
          } else if (object == null) {
              logger.warn("MACiEReader can not read null objects.");
          } else {
-             logger.warn("MACiEReader can not read ChemObject of type: ", 
+             logger.warn("MACiEReader can not read IChemObject of type: ", 
                          object.getClass().getName());
          }
          return false;
@@ -208,7 +208,7 @@ public class MACiEReader extends DefaultChemObjectReader {
      *
      * @return  The Reaction that was read from the MDL file.
      */
-    private ChemObject readReactions(boolean selectEntry) throws CDKException, IOException {
+    private IChemObject readReactions(boolean selectEntry) throws CDKException, IOException {
         ChemSequence entries = new ChemSequence();
         currentEntry = null;
         int entryCounter = 0;
@@ -534,7 +534,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         }
     }
     
-    private void addDictRefedAnnotation(ChemObject object, String type, String values) {
+    private void addDictRefedAnnotation(IChemObject object, String type, String values) {
         StringTokenizer tokenizer = new StringTokenizer(values, ",");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();

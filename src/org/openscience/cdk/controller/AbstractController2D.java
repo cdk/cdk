@@ -64,7 +64,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
@@ -1155,7 +1155,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				} else
 				{
 					// one atom clicked or one bond clicked
-					ChemObject chemObj = getChemObjectInRange(mouseX, mouseY);
+					IChemObject chemObj = getChemObjectInRange(mouseX, mouseY);
 					AtomContainer container = new org.openscience.cdk.AtomContainer();
 					if (chemObj instanceof Atom)
 					{
@@ -1425,9 +1425,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *@param  Y  Current mouse x
 	 *@return    The chemObjectInRange value
 	 */
-	public ChemObject getChemObjectInRange(int X, int Y)
+	public IChemObject getChemObjectInRange(int X, int Y)
 	{
-		ChemObject objectInRange = getAtomInRange(X, Y);
+		IChemObject objectInRange = getAtomInRange(X, Y);
 		if (objectInRange != null)
 		{
 			// logger.debug("Returning nearest Atom: " + objectInRange);
@@ -1746,7 +1746,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 */
 	 void highlightNearestChemObject(int mouseX, int mouseY)
 	{
-		ChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
+		IChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
 		if (objectInRange instanceof Atom)
 		{
 			r2dm.setHighlightedAtom((Atom) objectInRange);

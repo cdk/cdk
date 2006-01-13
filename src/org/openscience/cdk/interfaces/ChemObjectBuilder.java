@@ -24,7 +24,7 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A helper class to instantiate a ChemObject for a specific implementation.
+ * A helper class to instantiate a IChemObject for a specific implementation.
  *
  * @author        egonw
  * @cdk.module    interfaces
@@ -167,9 +167,9 @@ public interface ChemObjectBuilder {
 	public ChemModel newChemModel();
 	
 	/**
-	 * Constructs an new ChemObject with a null setOfMolecules.
+	 * Constructs an new IChemObject with a null setOfMolecules.
 	 */
-	public ChemObject newChemObject();
+	public IChemObject newChemObject();
 	
 	/**
 	 * Constructs an empty ChemSequence.

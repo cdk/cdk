@@ -31,7 +31,7 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 import java.io.Reader;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -55,7 +55,7 @@ import org.openscience.cdk.exception.CDKException;
 public interface ChemObjectReader extends ChemObjectIO {
 
     /**
-     * Reads an ChemObject of type "object" from input. The constructor
+     * Reads an IChemObject of type "object" from input. The constructor
      * of the actual implementation may take a Reader as input to get
      * a very flexible reader that can read from string, files, etc.
      * 
@@ -67,7 +67,7 @@ public interface ChemObjectReader extends ChemObjectIO {
      *            the type of information is not available from 
      *            the input
      **/
-    public ChemObject read(ChemObject object) throws CDKException;
+    public IChemObject read(IChemObject object) throws CDKException;
 
     /**
      * Sets the Reader from which this ChemObjectReader should read

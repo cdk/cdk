@@ -39,7 +39,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -116,7 +116,7 @@ public class VASPReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
             ChemFile cf = (ChemFile)object;
             try {

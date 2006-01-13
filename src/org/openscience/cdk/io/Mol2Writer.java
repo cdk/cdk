@@ -33,7 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
@@ -96,7 +96,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         writer.close();
     }
 
-    public void write(ChemObject object) throws CDKException {
+    public void write(IChemObject object) throws CDKException {
         if (object instanceof Molecule) {
             try {
                 writeMolecule((Molecule)object);

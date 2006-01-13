@@ -49,37 +49,37 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 	 */
 	private static final long serialVersionUID = -6541915644492043503L;
 
-	private org.openscience.cdk.interfaces.ChemObject[] relation;
+	private org.openscience.cdk.interfaces.IChemObject[] relation;
     
     /**
      * Constructs an unconnected lone pair.
      *
-     * @param objectOne The first ChemObject of the mapping
-     * @param objectTwo The second ChemObject of the mapping
+     * @param objectOne The first IChemObject of the mapping
+     * @param objectTwo The second IChemObject of the mapping
      */
-    public Mapping(org.openscience.cdk.interfaces.ChemObject objectOne, org.openscience.cdk.interfaces.ChemObject objectTwo) {
+    public Mapping(org.openscience.cdk.interfaces.IChemObject objectOne, org.openscience.cdk.interfaces.IChemObject objectTwo) {
         relation = new ChemObject[2];
         relation[0] = objectOne;
         relation[1] = objectTwo;
     }
 
     /**
-     * Returns an array of the two ChemObject's.
+     * Returns an array of the two IChemObject's.
      *
-     * @return An array of two ChemObject's that define the mapping
+     * @return An array of two IChemObject's that define the mapping
      */
     public ChemObject[] getRelatedChemObjects() {
         return (ChemObject[])relation;
     }
 
 	/**
-	 * Clones this <code>Mapoing</code> and the mapped <code>ChemObject</code>s.
+	 * Clones this <code>Mapoing</code> and the mapped <code>IChemObject</code>s.
 	 *
 	 * @return  The cloned object
 	 */
 	public Object clone() {
 		Mapping clone = (Mapping)super.clone();
-        // clone the related ChemObject's
+        // clone the related IChemObject's
         if (relation != null) {
 		    ((Mapping)clone).relation = new ChemObject[relation.length];
             for (int f = 0; f < relation.length; f++) {

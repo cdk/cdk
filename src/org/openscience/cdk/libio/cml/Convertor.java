@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Isotope;
@@ -357,7 +357,7 @@ public class Convertor {
         return cmlMolecule;
 	}
 	
-	private boolean addDictRef(ChemObject object, CMLElement cmlElement) {
+	private boolean addDictRef(IChemObject object, CMLElement cmlElement) {
         Hashtable properties = object.getProperties();
         Iterator iter = properties.keySet().iterator();
         while (iter.hasNext()) {
@@ -507,7 +507,7 @@ public class Convertor {
 		return cmlBond;
 	}
 	
-    private void writeProperties(ChemObject object, CMLElement cmlElement) {
+    private void writeProperties(IChemObject object, CMLElement cmlElement) {
         Hashtable props = object.getProperties();
         Enumeration keys = props.keys();
         CMLElement propList = null;

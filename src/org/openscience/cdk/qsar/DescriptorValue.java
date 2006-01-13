@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.qsar.result.DescriptorResult;
 
 /**
- * Class that is used to store descriptor values as ChemObject properties.
+ * Class that is used to store descriptor values as IChemObject properties.
  *
  * @cdk.module standard
  */

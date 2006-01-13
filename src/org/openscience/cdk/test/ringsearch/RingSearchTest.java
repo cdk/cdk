@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -145,7 +145,7 @@ public class RingSearchTest extends CDKTestCase
 			String filename = "data/mdl/figueras-test-sep3D.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
-			molecule = (Molecule) reader.read((ChemObject) new org.openscience.cdk.Molecule());
+			molecule = (Molecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
             RingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -176,7 +176,7 @@ public class RingSearchTest extends CDKTestCase
 			String filename = "data/mdl/figueras-test-buried.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
-			molecule = (Molecule) reader.read((ChemObject) new org.openscience.cdk.Molecule());
+			molecule = (Molecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
             RingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -207,7 +207,7 @@ public class RingSearchTest extends CDKTestCase
 			String filename = "data/mdl/figueras-test-inring.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
-			molecule = (Molecule) reader.read((ChemObject) new org.openscience.cdk.Molecule());
+			molecule = (Molecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
             RingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -231,7 +231,7 @@ public class RingSearchTest extends CDKTestCase
 			String filename = "data/mdl/too.many.rings.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
-			molecule = (Molecule) reader.read((ChemObject) new org.openscience.cdk.Molecule());
+			molecule = (Molecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
             RingSet ringSet = new SSSRFinder(molecule).findSSSR();

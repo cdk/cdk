@@ -154,10 +154,10 @@ public class GamessReaderTest extends CDKTestCase {
 	public void testAccepts() {
 		Assert.assertNotNull("TEST: The GamessReader object is constructed", this.gamessReaderUnderTest);
 
-		//The given object is a ChemObject object
+		//The given object is a IChemObject object
 		try {
 			Assert.assertTrue("TEST: GamessReader only accepts ChemFile object.", this.gamessReaderUnderTest.accepts(new ChemObject()));
-			fail("TEST: GamessReader only accepts ChemFile object RULE VIOLATION with ChemObject.");			
+			fail("TEST: GamessReader only accepts ChemFile object RULE VIOLATION with IChemObject.");			
 		} catch (AssertionFailedError e) {
 		}	
 
@@ -166,7 +166,7 @@ public class GamessReaderTest extends CDKTestCase {
 	}
 
 	/**
-	 * Tests the <code>read(ChemObject object)</code> method for the "GamessReader" object.
+	 * Tests the <code>read(IChemObject object)</code> method for the "GamessReader" object.
 	 * 
 	 * <p><b>Contract</b>:
 	 * <br><code>Preconditions</code>:
@@ -179,17 +179,17 @@ public class GamessReaderTest extends CDKTestCase {
 	 * </ul>
 	 * <code>Postconditions</code>:
 	 * <ul>
-	 * 	<li>The <code>read(ChemObject object)</code> method must return a "ChemObject" instance.</li>
+	 * 	<li>The <code>read(IChemObject object)</code> method must return a "IChemObject" instance.</li>
 	 * </ul>
 	 * 
-	 * @throws	CDKException	may be thrown by the "ChemObject" object.
+	 * @throws	CDKException	may be thrown by the "IChemObject" object.
 	 * 
 	 * @see org.openscience.cdk.ChemObject
 	 */
 	//TODO Update method comments with appropriate information.
 	public void testRead() throws CDKException {
 		Assert.assertNotNull("TEST: The GamessReader object is constructed.", this.gamessReaderUnderTest);
-		Assert.assertTrue("TEST: read(ChemObject) returns a ChemObject.", this.gamessReaderUnderTest.read(new ChemFile()) instanceof ChemObject);
+		Assert.assertTrue("TEST: read(IChemObject) returns a IChemObject.", this.gamessReaderUnderTest.read(new ChemFile()) instanceof ChemObject);
 	}
 
 	/**

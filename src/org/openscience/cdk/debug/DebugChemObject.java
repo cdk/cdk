@@ -25,7 +25,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugChemObject extends org.openscience.cdk.ChemObject
-    implements ChemObject {
+    implements IChemObject {
 
 	LoggingTool logger = new LoggingTool(DebugChemObject.class);
 

@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.BioPolymer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Monomer;
@@ -124,19 +124,19 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	/**
 	 *
-	 * Takes an object which subclasses ChemObject, e.g. Molecule, and will
+	 * Takes an object which subclasses IChemObject, e.g. Molecule, and will
 	 * read this (from file, database, internet etc). If the specific
-	 * implementation does not support a specific ChemObject it will throw
+	 * implementation does not support a specific IChemObject it will throw
 	 * an Exception.
 	 *
-	 * @param oObj  The object that subclasses ChemObject
-	 * @return      The ChemObject read  
+	 * @param oObj  The object that subclasses IChemObject
+	 * @return      The IChemObject read  
 	 * @exception   CDKException  
 	 *
 	 */
-	public ChemObject read(ChemObject oObj) throws CDKException {
+	public IChemObject read(IChemObject oObj) throws CDKException {
 		if (oObj instanceof ChemFile) {
-			return (ChemObject)readChemFile((ChemFile)oObj);
+			return (IChemObject)readChemFile((ChemFile)oObj);
 		} else {
 			throw new CDKException("Only supported is reading of ChemFile objects.");
 		}

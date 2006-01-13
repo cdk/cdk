@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.module interfaces
  * @cdk.keyword element
  */
-public interface Element extends ChemObject {
+public interface Element extends IChemObject {
 
     /**
      * Returns the atomic number of this element.

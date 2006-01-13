@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
@@ -79,7 +79,7 @@ public class PMPReader extends DefaultChemObjectReader {
     private SetOfMolecules som;
     private ChemModel modelModel;
     private Molecule molecule;
-    private ChemObject chemObject;
+    private IChemObject chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
     private Hashtable atomids = new Hashtable();
     private Hashtable bondids = new Hashtable();
@@ -130,15 +130,15 @@ public class PMPReader extends DefaultChemObjectReader {
 
     /**
      * reads the content from a PMP input. It can only return a
-     * ChemObject of type ChemFile
+     * IChemObject of type ChemFile
      *
      * @param object class must be of type ChemFile
      *
      * @see ChemFile
      */
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            return (ChemObject)readChemFile((ChemFile)object);
+            return (IChemObject)readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }

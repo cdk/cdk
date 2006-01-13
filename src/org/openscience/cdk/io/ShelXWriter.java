@@ -39,7 +39,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
@@ -113,11 +113,11 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Serializes the ChemObject to ShelX and redirects it to the output Writer.
+     * Serializes the IChemObject to ShelX and redirects it to the output Writer.
      *
      * @param object A Molecule of SetOfMolecules object
      */
-    public void write(ChemObject object) throws CDKException {
+    public void write(IChemObject object) throws CDKException {
         if (object instanceof Crystal) {
             write((Crystal)object);
         } else {

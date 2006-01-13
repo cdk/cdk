@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  *   <li>cutSelected, deletes all selected atoms and electron containers
  *   <li>selectAll, selects all atoms and electron containers
  *   <li>selectFromChemObject,selects all atoms and electron containers in
- *       the ChemObject set in the event source
+ *       the IChemObject set in the event source
  * </ul>
  *
  * @author        hel
@@ -68,14 +68,14 @@ public class EditAction extends JCPAction {
 	public void actionPerformed(ActionEvent event) {
 		// learn some stuff about event
 		logger.debug("Event source: ", event.getSource().getClass().getName());
-		logger.debug("  ChemObject: ", getSource(event));
+		logger.debug("  IChemObject: ", getSource(event));
 
 		JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
 		Renderer2DModel renderModel = jcpModel.getRendererModel();
 		org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
 		if (type.equals("cut")) {
 			org.openscience.cdk.interfaces.Atom atomInRange = null;
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			logger.debug("Source of call: ", object);
 			if (object instanceof Atom) {
 				atomInRange = (Atom) object;
@@ -113,7 +113,7 @@ public class EditAction extends JCPAction {
 			renderModel.setSelectedPart(ChemModelManipulator.getAllInOneContainer(jcpModel.getChemModel()));
 			jcpModel.fireChange();
 		} else if (type.equals("selectMolecule")) {
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			if (object instanceof Atom) {
 				renderModel.setSelectedPart(ChemModelManipulator.getRelevantAtomContainer(jcpModel.getChemModel(),(Atom)object));
 			} else if (object instanceof org.openscience.cdk.interfaces.Bond) {
@@ -124,7 +124,7 @@ public class EditAction extends JCPAction {
 			jcpModel.fireChange();
 		} else if (type.equals("selectFromChemObject")) {
 			// FIXME: implement for others than Reaction, Atom, Bond
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			if (object instanceof Atom) {
 				AtomContainer container = new org.openscience.cdk.AtomContainer();
 				container.addAtom((Atom) object);
@@ -146,7 +146,7 @@ public class EditAction extends JCPAction {
 			}
 		}
 		else if (type.equals("selectReactionReactants")) {
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			if (object instanceof Reaction) {
 				Reaction reaction = (Reaction) object;
 				renderModel.setSelectedPart(SetOfMoleculesManipulator.getAllInOneContainer(reaction.getReactants()));
@@ -157,7 +157,7 @@ public class EditAction extends JCPAction {
 			}
 		}
 		else if (type.equals("selectReactionProducts")) {
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			if (object instanceof Reaction) {
 				Reaction reaction = (Reaction) object;
 				renderModel.setSelectedPart(SetOfMoleculesManipulator.getAllInOneContainer(reaction.getProducts()));

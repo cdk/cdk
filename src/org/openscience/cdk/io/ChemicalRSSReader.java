@@ -34,7 +34,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.chemrss.RSSHandler;
@@ -170,11 +170,11 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Read a ChemObject from input
+     * Read a IChemObject from input
      *
      * @return the content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof ChemSequence) {
             return parseRSSFile();
         } else {

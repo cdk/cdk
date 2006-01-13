@@ -32,7 +32,7 @@ import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Method;
 
 import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 import org.openscience.cdk.controller.Controller2D;
 
@@ -92,7 +92,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
       int[] mouseCoords = controller.getWorldCoordinates(screenCoords);
       int mouseX = mouseCoords[0];
       int mouseY = mouseCoords[1];
-      ChemObject objectInRange = controller.getChemObjectInRange(mouseX, mouseY);
+      IChemObject objectInRange = controller.getChemObjectInRange(mouseX, mouseY);
       if (objectInRange!=lastHighlighted && objectInRange instanceof Atom)
       {
         getTheJcpp().getJChemPaintModel().getRendererModel().setHighlightColor(Color.red);

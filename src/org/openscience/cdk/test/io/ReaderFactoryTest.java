@@ -202,7 +202,7 @@ public class ReaderFactoryTest extends CDKTestCase {
             if (read) {
                 // ok, reseting worked
             } else {
-                fail("Reading an ChemObject from the Reader did not work properly.");
+                fail("Reading an IChemObject from the Reader did not work properly.");
             }
         } catch (junit.framework.AssertionFailedError exception) {
             throw exception;

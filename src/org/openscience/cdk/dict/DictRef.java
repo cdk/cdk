@@ -29,8 +29,8 @@
 package org.openscience.cdk.dict;
 
 /**
- * Object that can be used as key in ChemObject.setProperty(key, value) to
- * denote that this property is a dictionary reference for this ChemObject.
+ * Object that can be used as key in IChemObject.setProperty(key, value) to
+ * denote that this property is a dictionary reference for this IChemObject.
  *
  * @author      Egon Willighagen
  * @cdk.created 2003-08-24

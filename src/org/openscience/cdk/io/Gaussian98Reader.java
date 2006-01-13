@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -150,7 +150,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@param  object  Description of the Parameter
 	 *@return         Description of the Return Value
 	 */
-	public boolean accepts(ChemObject object)
+	public boolean accepts(IChemObject object)
 	{
 		if (object instanceof ChemFile)
 		{
@@ -168,7 +168,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@return                   Description of the Return Value
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public ChemObject read(ChemObject object) throws CDKException
+	public IChemObject read(IChemObject object) throws CDKException
 	{
 		customizeJob();
 

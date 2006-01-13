@@ -104,7 +104,7 @@ public class RingSetTest extends CDKTestCase {
         }
     }
     
-    /* FIXME: make RingSet inherited from ChemObject, see #1117775
+    /* FIXME: make RingSet inherited from IChemObject, see #1117775
     public void testClone() {
         RingSet ringset = builder.newRingSet();
         Ring ring = builder.newRing();

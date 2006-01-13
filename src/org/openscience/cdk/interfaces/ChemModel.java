@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.module interfaces
  */
-public interface ChemModel extends ChemObject {
+public interface ChemModel extends IChemObject {
 
 	/**
 	 * Returns the SetOfMolecules of this ChemModel.

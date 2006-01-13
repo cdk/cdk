@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -43,7 +43,7 @@ import org.openscience.cdk.applications.swing.editor.PseudoAtomEditor;
 import org.openscience.cdk.applications.swing.editor.ReactionEditor;
 
 /**
- * Action for triggering an edit of a ChemObject
+ * Action for triggering an edit of a IChemObject
  *
  * @author        E.L. Willighagen <elw38@cam.ac.uk>
  * @cdk.module    jchempaint
@@ -58,7 +58,7 @@ public class EditChemObjectPropsAction extends JCPAction {
 	public void actionPerformed(ActionEvent event) {
 		if (jcpPanel.getJChemPaintModel() != null) {
 			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			logger.debug("Showing object properties for: ", object);
 			ChemObjectEditor editor = null;
 			if (object instanceof PseudoAtom) {

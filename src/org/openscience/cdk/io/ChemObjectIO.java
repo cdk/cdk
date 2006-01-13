@@ -30,7 +30,7 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.listener.ChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -57,14 +57,14 @@ public interface ChemObjectIO {
     public ChemFormat getFormat();
 
     /**
-     * Returns whether the given ChemObject can be read or not.
+     * Returns whether the given IChemObject can be read or not.
      * 
      * @deprecated Use accepts(Class) instead.
      */
-    public boolean accepts(ChemObject object);
+    public boolean accepts(IChemObject object);
     
     /**
-     * Returns whether the given ChemObject can be read or not.
+     * Returns whether the given IChemObject can be read or not.
      */
     public boolean accepts(Class classObject);
     

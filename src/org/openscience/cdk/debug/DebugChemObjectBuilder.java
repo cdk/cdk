@@ -36,7 +36,7 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
- * A helper class to instantiate a ChemObject for the debug implementation.
+ * A helper class to instantiate a IChemObject for the debug implementation.
  *
  * @author        egonw
  * @cdk.module    data-debug
@@ -132,7 +132,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 		return new ChemModel();
 	}
 	
-	public org.openscience.cdk.interfaces.ChemObject newChemObject() {
+	public org.openscience.cdk.interfaces.IChemObject newChemObject() {
 		return new DebugChemObject();
 	}
 	

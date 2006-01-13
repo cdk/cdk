@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.ElectronContainer;
@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Engine that performs the validation by traversing the ChemObject
+ * Engine that performs the validation by traversing the IChemObject
  * hierarchy. Basic use of the ValidatorEngine is:
  * <pre>
  * ValidatorEngine engine = new ValidatorEngine();
@@ -199,7 +199,7 @@ public class ValidatorEngine implements ValidatorInterface {
         }
         return report;
     }
-    public ValidationReport validateChemObject(ChemObject subject) {
+    public ValidationReport validateChemObject(IChemObject subject) {
         logger.info("Validating org.openscience.cdk.ChemObject");
         ValidationReport report = new ValidationReport();
         // apply validators

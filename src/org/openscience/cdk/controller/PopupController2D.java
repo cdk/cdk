@@ -36,7 +36,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -109,19 +109,19 @@ public class PopupController2D extends Controller2D {
 	 *@param  chemObject  The new popupMenu value
 	 *@param  menu        The new popupMenu value
 	 */
-	public void setPopupMenu(ChemObject chemObject, CDKPopupMenu menu) {
+	public void setPopupMenu(IChemObject chemObject, CDKPopupMenu menu) {
 		PopupController2D.popupMenus.put(chemObject.getClass().getName(), menu);
 	}
 
 
 	/**
-	 *  Returns the popup menu for this ChemObject if it is set, and null
+	 *  Returns the popup menu for this IChemObject if it is set, and null
 	 *  otherwise.
 	 *
 	 *@param  chemObject  Description of the Parameter
 	 *@return             The popupMenu value
 	 */
-	public CDKPopupMenu getPopupMenu(ChemObject chemObject) {
+	public CDKPopupMenu getPopupMenu(IChemObject chemObject) {
         Class classSearched = chemObject.getClass();
         logger.debug("Searching popup for: ", classSearched.getName());
         while (classSearched.getName().startsWith("org.openscience.cdk")) {
@@ -145,7 +145,7 @@ public class PopupController2D extends Controller2D {
 	 */
 	private void popupMenuForNearestChemObject(int mouseX, int mouseY, MouseEvent event)
 	{
-		ChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
+		IChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
 		CDKPopupMenu popupMenu = getPopupMenu(objectInRange);
     if (popupMenu != null)
 		{

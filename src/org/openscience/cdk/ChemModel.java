@@ -176,7 +176,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
     
     /**
      * Returns a String representation of the contents of this
-     * ChemObject.
+     * IChemObject.
      *
      * @return String representation of content
      */

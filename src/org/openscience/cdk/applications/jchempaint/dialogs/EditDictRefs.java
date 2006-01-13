@@ -88,7 +88,7 @@ public class EditDictRefs extends JFrame  {
     }
     
     /**
-     * Sets the ChemObject that is being edited.
+     * Sets the IChemObject that is being edited.
      */
     public void setChemObject(ChemObject object) {
         tableModel.setChemObject(object);

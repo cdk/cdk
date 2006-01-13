@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
@@ -555,7 +555,7 @@ public class FileConvertor {
     }
 
     /**
-    * Since we do not know what kind of ChemObject the Writer supports,
+    * Since we do not know what kind of IChemObject the Writer supports,
     * and we want to output as much information as possible, use
     * the generalized mechanism below.
     */

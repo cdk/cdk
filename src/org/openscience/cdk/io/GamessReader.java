@@ -36,7 +36,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PhysicalConstants;
@@ -127,12 +127,12 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * <p>The "Reader" object may be an instantiable object from the "Reader" 
 	 * hierarchy.
 	 * <br>For more detail about the "Reader" objects that are really accepted 
-	 * by this "GamessReader" see <code>accepts(ChemObject)</code> method
+	 * by this "GamessReader" see <code>accepts(IChemObject)</code> method
 	 * documentation.
 	 * 
 	 * @param	inputReader		The "Reader" object given as input parameter.
 	 * 
-	 * @see org.openscience.cdk.io.GamessReader#accepts(ChemObject)
+	 * @see org.openscience.cdk.io.GamessReader#accepts(IChemObject)
 	 * @see	java.io.Reader
 	 *  
 	 */
@@ -152,7 +152,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.ChemObjectIO#accepts(org.openscience.cdk.ChemObject)
 	 */
 	//TODO Update comment with appropriate information to comply Constructor's documentation. 
-	public boolean accepts(ChemObject object) {
+	public boolean accepts(IChemObject object) {
 		if (object instanceof ChemFile) {
 			return true;
 		} else {
@@ -175,10 +175,10 @@ public class GamessReader extends DefaultChemObjectReader {
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)
 	 * @see org.openscience.cdk.io.ChemObjectReader#read(org.openscience.cdk.ChemObject)
 	 */
-	public ChemObject read(ChemObject object) throws CDKException {
+	public IChemObject read(IChemObject object) throws CDKException {
 		if (object instanceof ChemFile) {
 			try {
-				return (ChemObject) readChemFile((ChemFile)object);
+				return (IChemObject) readChemFile((ChemFile)object);
 			} catch (IOException e) {
 				return null;
 			}

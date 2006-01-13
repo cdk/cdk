@@ -36,7 +36,7 @@ import java.io.StringReader;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
@@ -171,11 +171,11 @@ public class CMLReader extends DefaultChemObjectReader {
     
 
 	/**
-     * Read a ChemObject from input
+     * Read a IChemObject from input
      *
      * @return the content in a ChemFile object
      */
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
       if (object instanceof ChemFile) {
         return readChemFile((ChemFile)object);
       } else {
@@ -237,7 +237,7 @@ public class CMLReader extends DefaultChemObjectReader {
         input.close();
     }
 
-	public boolean accepts(ChemObject object) {
+	public boolean accepts(IChemObject object) {
 		return (object instanceof ChemFile);
 	}
 

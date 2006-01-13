@@ -49,7 +49,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
@@ -144,7 +144,7 @@ public class ValidateFrame extends JFrame  {
         treePanel.add(scrollPane);
     }
 
-    public void validate(ChemObject object) {
+    public void validate(IChemObject object) {
         ValidationReport report  = null;
         // System.out.println("Validating class: " + object.getClass().getName());
         if (object instanceof ChemModel) {
@@ -197,7 +197,7 @@ public class ValidateFrame extends JFrame  {
         while (errors.hasMoreElements()) {
             ValidationTest error = (ValidationTest)errors.nextElement();
             DefaultMutableTreeNode node = new DefaultMutableTreeNode();
-            ChemObject object = error.getChemObject();
+            IChemObject object = error.getChemObject();
             if (object instanceof Atom) {
                 node.setUserObject(new AtomErrorNode(error, (Atom)object));
                 ProblemMarker.markWithError((Atom)object);

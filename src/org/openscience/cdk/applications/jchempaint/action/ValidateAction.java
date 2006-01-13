@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JCheckBoxMenuItem;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ValidateFrame;
@@ -64,7 +64,7 @@ public class ValidateAction extends JCPAction
 		logger.debug("detected validate action: ", type);
 		if (type.equals("run"))
 		{
-			ChemObject object = getSource(event);
+			IChemObject object = getSource(event);
 			if (object == null)
 			{
 				// called from main menu
@@ -154,7 +154,7 @@ public class ValidateAction extends JCPAction
 	 *
 	 *@param  object  Description of the Parameter
 	 */
-	private void runValidate(ChemObject object)
+	private void runValidate(IChemObject object)
 	{
 		logger.info("Running validation");
 		clearValidate();

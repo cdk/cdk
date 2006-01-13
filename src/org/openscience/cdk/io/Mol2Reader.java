@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -103,15 +103,15 @@ public class Mol2Reader extends DefaultChemObjectReader {
     }
 
     /**
-     * Takes an object which subclasses ChemObject, e.g.Molecule, and will read
+     * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
      * this from from the Reader. If the specific implementation
-     * does not support a specific ChemObject it will throw an Exception.
+     * does not support a specific IChemObject it will throw an Exception.
      *
-     * @param  object The object that subclasses ChemObject
-     * @return        The ChemObject read
+     * @param  object The object that subclasses IChemObject
+     * @return        The IChemObject read
      * @exception     CDKException
      */
-     public ChemObject read(ChemObject object) throws CDKException {
+     public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof ChemFile) {
              ChemFile file = (ChemFile)object;
              ChemSequence sequence = file.getBuilder().newChemSequence();
@@ -139,7 +139,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
          }
      }
      
-     public boolean accepts(ChemObject object) {
+     public boolean accepts(IChemObject object) {
          if (object instanceof ChemFile) {
          } else if (object instanceof ChemModel) {
              return true;

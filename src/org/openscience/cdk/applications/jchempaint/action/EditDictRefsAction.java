@@ -29,7 +29,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.dialogs.EditDictRefs;
 
 
@@ -48,7 +48,7 @@ public class EditDictRefsAction extends JCPAction {
             if (frame == null) {
                 frame = new EditDictRefs();
             }
-            ChemObject object = getSource(event);
+            IChemObject object = getSource(event);
             logger.debug("Showing dictionary references for: ", object);
             frame.setChemObject((org.openscience.cdk.ChemObject)object);
             frame.pack();

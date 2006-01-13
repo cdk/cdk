@@ -112,7 +112,7 @@ public interface CDKPluginInterface {
     public void stop();
     
     /**
-     * Method called when the active ChemObject is changed and is used
+     * Method called when the active IChemObject is changed and is used
      * to keep the information in the plugin synchronized with the
      * application.
      */

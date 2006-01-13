@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.ElectronContainer;
@@ -53,7 +53,7 @@ import org.openscience.cdk.interfaces.SetOfReactions;
  */ 
 public class AbstractValidator implements ValidatorInterface {
 
-    public ValidationReport validateChemObject(ChemObject subject) {
+    public ValidationReport validateChemObject(IChemObject subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }

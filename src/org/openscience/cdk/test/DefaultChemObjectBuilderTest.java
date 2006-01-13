@@ -498,8 +498,8 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 	public void testNewRingSet() {
 		Object object = rootObject.getBuilder().newRingSet();
 		assertNotNull(object);
-        // FIXME: apparently RingSet does not extend ChemObject !
-		// assertTrue(object instanceof org.openscience.cdk.interfaces.ChemObject);
+        // FIXME: apparently RingSet does not extend IChemObject !
+		// assertTrue(object instanceof org.openscience.cdk.interfaces.IChemObject);
 
 		assertTrue(object instanceof RingSet);
 	}

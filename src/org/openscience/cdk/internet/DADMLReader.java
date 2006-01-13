@@ -131,12 +131,12 @@ public class DADMLReader {
     }
 
     /**
-     * Takes an object which subclasses ChemObject, e.g.Molecule, and will read this
+     * Takes an object which subclasses IChemObject, e.g.Molecule, and will read this
      * (from file, database, internet etc). If the specific implementation does not
-     * support a specific ChemObject it will throw an Exception.
+     * support a specific IChemObject it will throw an Exception.
      *
-     * @param   object  The object that subclasses ChemObject
-     * @return   The ChemObject read
+     * @param   object  The object that subclasses IChemObject
+     * @return   The IChemObject read
      * @exception   UnsupportedChemObjectException
      */
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
@@ -282,7 +282,7 @@ public class DADMLReader {
             logger.debug("#mols in model: ", moleculeSet.getMoleculeCount());
             molecule = moleculeSet.getMolecule(0);
         } catch (UnsupportedChemObjectException exception) {
-            logger.error("Unsupported ChemObject type: ", exception.getMessage());
+            logger.error("Unsupported IChemObject type: ", exception.getMessage());
             logger.debug(exception);
         } catch (FileNotFoundException exception) {
             logger.error("File not found: ", exception.getMessage());

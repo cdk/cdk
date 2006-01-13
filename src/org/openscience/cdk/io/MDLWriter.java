@@ -50,7 +50,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
@@ -64,13 +64,13 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * one or more molecules. This class is capable of writing both mol files and
  * SD files. The correct format is automatically chosen:
  * <ul>
- * <li>if {@link #write(ChemObject)} is called with a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules}
+ * <li>if {@link #write(IChemObject)} is called with a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules}
  * as an argument a SD files is written</li>
  * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(Molecule) this one} or
  * {@link #writeMolecule(Molecule, boolean[]) that one}) is called the first time, a mol file is written</li>
  * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
  * </ul><BR>
- * Thus, to write several molecules to a single SD file you can either use {@link #write(ChemObject)} and pass
+ * Thus, to write several molecules to a single SD file you can either use {@link #write(IChemObject)} and pass
  * a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules} or you can repeatedly call one of the two
  * writeMolecule methods.<BR><BR>
  * For writing a MDL molfile you can this code:
@@ -170,7 +170,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Writes a ChemObject to the MDL molfile formated output. 
+     * Writes a IChemObject to the MDL molfile formated output. 
      * It can only output ChemObjects of type ChemFile, Molecule and
      * SetOfMolecules.
      *
@@ -178,7 +178,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @see org.openscience.cdk.ChemFile
      */
-	public void write(ChemObject object) throws CDKException {
+	public void write(IChemObject object) throws CDKException {
 		if (object instanceof SetOfMolecules) {
 			writeSetOfMolecules((SetOfMolecules)object);
 		} else if (object instanceof ChemFile) {

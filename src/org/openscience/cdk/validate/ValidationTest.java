@@ -24,10 +24,10 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
- * Error found during sematical validation of a ChemObject.
+ * Error found during sematical validation of a IChemObject.
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-03-28
@@ -37,24 +37,24 @@ import org.openscience.cdk.interfaces.ChemObject;
  */ 
 public class ValidationTest {
     
-    /** ChemObject which has the error. */
-    private ChemObject object;
+    /** IChemObject which has the error. */
+    private IChemObject object;
     /** String representation of the found error. */
     private String error;
     /** Multiline String with details on the error. */
     private String details;
 
-    public ValidationTest(ChemObject object, String error) {
+    public ValidationTest(IChemObject object, String error) {
         this(object, error, "");
     }
     
-    public ValidationTest(ChemObject object, String error, String details) {
+    public ValidationTest(IChemObject object, String error, String details) {
         this.object = object;
         this.error = error;
         this.details = details;
     }
 
-    public ChemObject getChemObject() {
+    public IChemObject getChemObject() {
         return this.object;
     }
     

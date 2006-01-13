@@ -34,7 +34,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
@@ -77,11 +77,11 @@ public class DBWriter {
         // FIXME: connection should be closed
     }
 
-    public ChemObject highestSupportedChemObject() {
+    public IChemObject highestSupportedChemObject() {
         return new org.openscience.cdk.SetOfMolecules();
     };
 
-	public void write(ChemObject object) throws CDKException {
+	public void write(IChemObject object) throws CDKException {
 		if (object instanceof Molecule) {
 			writeMolecule((Molecule)object);
 		} else if (object instanceof SetOfMolecules) {

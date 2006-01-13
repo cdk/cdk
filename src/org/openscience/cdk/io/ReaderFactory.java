@@ -130,7 +130,7 @@ public class ReaderFactory {
     }
 
     /**
-     * Creates a String of the Class name of the <code>ChemObject</code> reader
+     * Creates a String of the Class name of the <code>IChemObject</code> reader
      * for this file format. The input is read line-by-line
      * until a line containing an identifying string is
      * found.

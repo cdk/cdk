@@ -40,7 +40,7 @@ import java.util.Locale;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -125,14 +125,14 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Writes a ChemObject to the MDL RXN file formated output. 
+     * Writes a IChemObject to the MDL RXN file formated output. 
      * It can only output ChemObjects of type Reaction
      *
      * @param object class must be of type Molecule or SetOfMolecules.
      *
      * @see org.openscience.cdk.ChemFile
      */
-	public void write(ChemObject object) throws CDKException
+	public void write(IChemObject object) throws CDKException
 	{
 		if (object instanceof Reaction)
 		{

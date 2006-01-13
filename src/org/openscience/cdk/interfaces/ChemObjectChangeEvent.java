@@ -28,7 +28,7 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Event fired by CDK ChemObject classes to their registered listeners
+ * Event fired by CDK IChemObject classes to their registered listeners
  * in case something changes within them.
  *
  * @cdk.module interfaces

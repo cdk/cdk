@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.Element;
 
@@ -60,7 +60,7 @@ public class ElementTest extends CDKTestCase {
     
     public void testElement() {
         Element e = builder.newElement();
-        assertTrue(e instanceof ChemObject);
+        assertTrue(e instanceof IChemObject);
     }
     
     public void testElement_String() {

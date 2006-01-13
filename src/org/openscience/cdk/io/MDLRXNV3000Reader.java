@@ -32,7 +32,7 @@ import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfReactions;
@@ -91,9 +91,9 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof Reaction) {
-             return (ChemObject) readReaction();
+             return (IChemObject) readReaction();
          } else if (object instanceof ChemModel) {
              ChemModel model = new ChemModel();
              SetOfReactions reactionSet = new SetOfReactions();
@@ -251,7 +251,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
     }
 
-    public boolean accepts(ChemObject object) {
+    public boolean accepts(IChemObject object) {
         if (object instanceof Reaction) {
             return true;
         } else if (object instanceof ChemModel) {

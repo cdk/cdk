@@ -37,7 +37,7 @@ import nu.xom.Element;
 
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 import org.openscience.cdk.libio.cml.Convertor;
@@ -45,7 +45,7 @@ import org.xmlcml.cml.element.CMLCml;
 
 
 /**
- * Allow to dump a ChemObject to a newly opened screen
+ * Allow to dump a IChemObject to a newly opened screen
  *
  * @cdk.module      jchempaint
  * @author          steinbeck
@@ -65,13 +65,13 @@ public class ShowChemObjectDumpAction extends JCPAction
 	 */
 	public void actionPerformed(ActionEvent event)
 	{
-		ChemObject object = getSource(event);
+		IChemObject object = getSource(event);
 		// XXX needs fixing
 		// JFrame frame = (JFrame) jcpPanel.getFrame();
 		JFrame frame = new JFrame();
 		if (dialog == null)
 		{
-			dialog = new TextViewDialog(frame, "ChemObject Dump", new Dimension(500, 300));
+			dialog = new TextViewDialog(frame, "IChemObject Dump", new Dimension(500, 300));
 		}
 
 		Convertor convertor = new Convertor(false, null);

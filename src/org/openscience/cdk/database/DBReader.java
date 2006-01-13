@@ -79,11 +79,11 @@ public class DBReader {
 	    if (object instanceof Molecule) {
 	        return (ChemObject)readMolecule();
 	    } else {
-	        throw new CDKException("ChemObject is not supported Molecule.");
+	        throw new CDKException("IChemObject is not supported Molecule.");
 	    }
     }
 	
-	private org.openscience.cdk.interfaces.ChemObject readMolecule() {
+	private org.openscience.cdk.interfaces.IChemObject readMolecule() {
 		org.openscience.cdk.interfaces.Molecule mol = null;
 		CMLReader cmlr;
 		StringReader reader;

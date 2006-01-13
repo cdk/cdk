@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -100,15 +100,15 @@ public class HINReader extends DefaultChemObjectReader {
 
     /**
      * Reads the content from a HIN input. It can only return a
-     * ChemObject of type ChemFile
+     * IChemObject of type ChemFile
      *
      * @param object class must be of type ChemFile
      *
      * @see org.openscience.cdk.ChemFile
      */
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof ChemFile) {
-            return (ChemObject)readChemFile((ChemFile)object);
+            return (IChemObject)readChemFile((ChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }

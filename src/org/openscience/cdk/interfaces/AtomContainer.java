@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  * @author     steinbeck
  * @cdk.created    2000-10-02
  */
-public interface AtomContainer extends ChemObject, ChemObjectListener {
+public interface AtomContainer extends IChemObject, ChemObjectListener {
 
     /**
      * Adds an AtomParity to this container. If a parity is already given for the

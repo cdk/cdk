@@ -37,7 +37,7 @@ import java.io.StringReader;
 
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -107,15 +107,15 @@ public class SMILESReader extends DefaultChemObjectReader {
 
     /**
      * reads the content from a XYZ input. It can only return a
-     * ChemObject of type ChemFile
+     * IChemObject of type ChemFile
      *
      * @param object class must be of type ChemFile
      *
      * @see ChemFile
      */
-    public ChemObject read(ChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof SetOfMolecules) {
-            return (ChemObject)readSetOfMolecules((SetOfMolecules)object);
+            return (IChemObject)readSetOfMolecules((SetOfMolecules)object);
         } else if (object instanceof ChemFile) {
             ChemFile file = (ChemFile)object;
             ChemSequence sequence = file.getBuilder().newChemSequence();
@@ -125,7 +125,7 @@ public class SMILESReader extends DefaultChemObjectReader {
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
-            return (ChemObject) file;
+            return (IChemObject) file;
         } else {
             throw new CDKException("Only supported is reading of SetOfMolecules objects.");
         }

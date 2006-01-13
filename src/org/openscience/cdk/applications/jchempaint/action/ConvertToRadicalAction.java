@@ -40,7 +40,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ConvertToRadicalEdit;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -50,7 +50,7 @@ public class ConvertToRadicalAction extends JCPAction {
 
     public void actionPerformed(ActionEvent event) {
         logger.debug("Converting to radical: ", type);
-        ChemObject object = getSource(event);
+        IChemObject object = getSource(event);
         JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
         org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
         if (object != null) {

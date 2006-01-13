@@ -38,7 +38,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.interfaces.Molecule;
@@ -95,7 +95,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     	setWriter(new OutputStreamWriter(output));
     }
     
-    public void write(ChemObject object) throws CDKException {
+    public void write(IChemObject object) throws CDKException {
         if (object instanceof Molecule){
             writeMolecule((Molecule)object);
         } else if (object instanceof Crystal){
