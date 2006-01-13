@@ -35,11 +35,15 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
@@ -133,7 +137,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getFingerprint(AtomContainer ac) throws Exception {
+	private BitSet getFingerprint(AtomContainer ac, int size) throws Exception {
 		String path = null;
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
@@ -156,6 +160,61 @@ public class Fingerprinter implements IFingerprinter {
 	}
 
 
+	/**
+	 * Generates a fingerprint of the default size for the given AtomContainer.
+	 *
+	 *@param     ac         The AtomContainer for which a Fingerprint is generated
+	 *@exception Exception  Description of the Exception
+	 */
+	public BitSet getFingerprint(AtomContainer ac) throws Exception {
+		return getFingerprint(ac,size);
+	}
+
+	
+	/**
+	 * Generates a fingerprint of the default size for the given AtomContainer, using path and ring metrics
+	 *
+	 *@param     ac         The AtomContainer for which a Fingerprint is generated
+	 *@exception Exception  Description of the Exception
+	 */
+	public BitSet getExtendedFingerprint(AtomContainer ac) throws Exception {
+		return getExtendedFingerprint(ac,null);
+	}
+		
+	/**
+	 * Generates a fingerprint of the default size for the given AtomContainer, using path and ring metrics
+	 *
+	 *@param     ac         The AtomContainer for which a Fingerprint is generated
+	 *@param     rs         A SSSR of ac (if not calculated, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
+	 *@exception Exception  Description of the Exception
+	 */
+	public BitSet getExtendedFingerprint(AtomContainer ac, RingSet rs) throws Exception {
+		BitSet bs= getFingerprint(ac, size-25);
+		MFAnalyser mfa=new MFAnalyser(ac);
+		float weight=mfa.getCanonicalMass();
+		for(int i=1;i<11;i++){
+			if(weight>(100*i))
+				bs.set(size-26+i);
+		}
+		if(rs==null){
+			rs=new SSSRFinder(ac).findSSSR();
+		}
+		for(int i=0;i<7;i++){
+			if(rs.size()>i)
+				bs.set(size-15+i);
+		}
+		for(int i=0;i<rs.size();i++){
+			for(int k=3;k<11;k++){
+				if(((Ring)rs.get(i)).getAtomCount()==k){
+					bs.set(size-8+k-3);
+					break;					
+				}					
+			}
+		}
+		return bs;
+	}
+	
+	
 	/**
 	 *  Checks whether all the positive bits in BitSet bs2 occur in BitSet bs1. If
 	 *  so, the molecular structure from which bs2 was generated is a possible
