@@ -56,7 +56,7 @@ import java.util.jar.JarFile;
  * </pre>
  * The class allows the user to obtain a List of all the available descriptors in terms of their
  * Java class names as well as instances of each descriptor class.   For each descriptor, it is possible to
- * obtain its type and class(es) as described in the CDK qsar-descriptors XML dictionary.
+ * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
  *
  * @cdk.created 2004-12-02
  * @cdk.module qsar
@@ -133,15 +133,17 @@ public class DescriptorEngine {
     }
 
     /**
-     * Returns the type of the decsriptor as defined in the descriptor dictionary.
+     * Returns the type of the descriptor as defined in the descriptor dictionary.
      * <p/>
      * The method will look for the identifier specified by the user in the QSAR descriptor
-     * dictionary. If a corresponding entry is found, the meta-data list is examined to
-     * look for a dictRef attribute that contains a descriptorType value. if such an attribute is
-     * found, the value of the contents attribute  is returned.
+     * dictionary. If a corresponding entry is found, first child element that is called
+     * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the type of
+     * descriptor (electronic, topological etc) as well as the class of descriptor (molecular, atomic)
+     * to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
+     * indicates the descriptors class (since we know it from its package location)
      * <p/>
-     * The method assumes that any descriptor entry will have only one dictRef attribute with
-     * a value of <i>  qsar-descriptors-metadata:descriptorType</i>.
+     * The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
+     * the descriptors type.
      * <p/>
      * The descriptor can be identified either by the name of the class implementing the descriptor
      * or else the specification reference value of the descriptor which can be obtained from an instance
@@ -154,7 +156,7 @@ public class DescriptorEngine {
      */
     public String getDictionaryType(String identifier) {
 
-        Entry[] dictEntries = dictDB.getDictionaryEntry("qsar-descriptors");
+        Entry[] dictEntries = dictDB.getDictionaryEntry("descriptor-algorithms");
 
         String specRef = null;
 
