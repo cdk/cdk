@@ -28,15 +28,15 @@
  */
 package org.openscience.cdk.dict;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Enumeration;
-import java.util.Hashtable;
-
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 /**
  * Dictionary with entries.
@@ -51,6 +51,7 @@ import org.xml.sax.XMLReader;
 public class Dictionary {
 
     private Hashtable entries;
+    private String ownNS = null;
     
     public Dictionary() {
         entries = new Hashtable();
@@ -115,5 +116,12 @@ public class Dictionary {
     
     public int size() {
     	return entries.size();
+    }
+
+    public void setNS(String ns) {
+        ownNS = ns;
+    }
+    public String getNS() {
+        return ownNS;
     }
 }

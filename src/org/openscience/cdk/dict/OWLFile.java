@@ -52,6 +52,7 @@ public class OWLFile extends Dictionary {
         super();
     }
 
+
     public static Dictionary unmarshal(Reader reader) {
         LoggingTool logger = new LoggingTool(OWLFile.class);
         Dictionary dict = new OWLFile();
@@ -62,7 +63,10 @@ public class OWLFile extends Dictionary {
             logger.debug("Found root element: ", root.getQualifiedName());
             
             // Extract ownNS from root element
+//            final String ownNS = root.getBaseURI();
             final String ownNS = root.getBaseURI();
+            dict.setNS(ownNS);
+
             logger.debug("Found ontology namespace: ", ownNS);
             
             // process the defined facts
@@ -119,7 +123,7 @@ public class OWLFile extends Dictionary {
         }
 
         if (entry.getQualifiedName().equals("Descriptor")) dbEntry.setRawContent(entry);
-        
+
         return dbEntry;
     }
     
