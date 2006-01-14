@@ -28,16 +28,11 @@
  */
 package org.openscience.cdk.dict;
 
+import nu.xom.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 import java.io.IOException;
 import java.io.Reader;
-
-import org.openscience.cdk.tools.LoggingTool;
-import nu.xom.Attribute;
-import nu.xom.Builder;
-import nu.xom.Document;
-import nu.xom.Elements;
-import nu.xom.Element;
-import nu.xom.ParsingException;
 
 /**
  * Dictionary with entries build from an OWL file.
@@ -100,8 +95,8 @@ public class OWLFile extends Dictionary {
 
     public static Entry unmarshal(Element entry, String ownNS) {
     	LoggingTool logger = new LoggingTool(OWLFile.class);
-    	
-    	// create a new entry by ID
+
+        // create a new entry by ID
         Attribute id = entry.getAttribute("ID", rdfNS);
         logger.debug("ID: ", id);
         Entry dbEntry = new Entry(id.getValue());
@@ -110,7 +105,10 @@ public class OWLFile extends Dictionary {
         Element label = entry.getFirstChildElement("label", rdfsNS);
         logger.debug("label: ", label);
         if (label != null) dbEntry.setLabel(label.getValue());
+
         dbEntry.setClassName(entry.getQualifiedName());
+        logger.debug("class name: ", dbEntry.getClassName());
+
         Element definition = entry.getFirstChildElement("definition", ownNS);
         if (definition != null) {
         	dbEntry.setDefinition(definition.toString());
@@ -119,6 +117,9 @@ public class OWLFile extends Dictionary {
         if (description != null) {
         	dbEntry.setDescription(description.toString());
         }
+
+        if (entry.getQualifiedName().equals("Descriptor")) dbEntry.setRawContent(entry);
+        
         return dbEntry;
     }
     
