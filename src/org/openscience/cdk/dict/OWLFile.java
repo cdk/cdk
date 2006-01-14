@@ -115,11 +115,11 @@ public class OWLFile extends Dictionary {
 
         Element definition = entry.getFirstChildElement("definition", ownNS);
         if (definition != null) {
-        	dbEntry.setDefinition(definition.toString());
+            dbEntry.setDefinition(definition.getValue());
         }
         Element description = entry.getFirstChildElement("description", ownNS);
         if (description != null) {
-        	dbEntry.setDescription(description.toString());
+        	dbEntry.setDescription(description.getValue());
         }
 
         if (entry.getQualifiedName().equals("Descriptor")) dbEntry.setRawContent(entry);
