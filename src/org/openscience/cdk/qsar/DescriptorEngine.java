@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar;
 
+import nu.xom.*;
+
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
@@ -60,14 +62,18 @@ import java.util.jar.JarFile;
  *
  * @cdk.created 2004-12-02
  * @cdk.module qsar
+ * @cdk.depends xom-1.0.jar
  * @see DescriptorSpecification
+ * @see Dictionary
+ * @see org.openscience.cdk.dict.OWLFile
  */
 public class DescriptorEngine {
+    private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
     public static final int ATOMIC = 1;
     public static final int MOLECULAR = 2;
 
-    private DictionaryDatabase dictDB = null;
+    private org.openscience.cdk.dict.Dictionary dict = null;
     private List classNames = null;
     private List descriptors = null;
     private List speclist = null;
@@ -93,7 +99,8 @@ public class DescriptorEngine {
         initializeSpecifications(descriptors);
 
         // get the dictionary for the descriptors
-        dictDB = new DictionaryDatabase();
+        DictionaryDatabase dictDB = new DictionaryDatabase();
+        dict = dictDB.getDictionary("descriptor-algorithms");
     }
 
     /**
@@ -137,10 +144,10 @@ public class DescriptorEngine {
      * <p/>
      * The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, first child element that is called
-     * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the type of
-     * descriptor (electronic, topological etc) as well as the class of descriptor (molecular, atomic)
+     * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the class of
+     * descriptor (electronic, topological etc) as well as the type of descriptor (molecular, atomic)
      * to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
-     * indicates the descriptors class (since we know it from its package location)
+     * indicates the descriptors class.
      * <p/>
      * The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
      * the descriptors type.
@@ -149,50 +156,48 @@ public class DescriptorEngine {
      * or else the specification reference value of the descriptor which can be obtained from an instance
      * of the descriptor class.
      *
-     * @param identifier A String containing either the descriptors class name or else the descriptors
+     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
      *                   specification reference
      * @return The type of the descriptor as stored in the dictionary, null if no entry is found matching
      *         the supplied identifier
      */
     public String getDictionaryType(String identifier) {
 
-        Entry[] dictEntries = dictDB.getDictionaryEntry("descriptor-algorithms");
-
+        Entry[] dictEntries = dict.getEntries();
         String specRef = null;
 
         // see if we got a descriptors java class name
         for (int i = 0; i < classNames.size(); i++) {
-            String className = (String) classNames.get(i);
+            String className = (String) classNames.get(i);            
             if (className.equals(identifier)) {
+                System.out.println("Found a match");
                 Descriptor descriptor = (Descriptor) descriptors.get(i);
                 DescriptorSpecification descSpecification = descriptor.getSpecification();
-                specRef = descSpecification.getSpecificationReference();
+                String[] tmp = descSpecification.getSpecificationReference().split(":");
+                specRef = tmp[2];
             }
         }
 
-        // if we are here we have a SpecificationReference
+
+        // if we are here and specRef = null we have a SpecificationReference
         if (specRef == null) {
             String[] tmp = identifier.split(":");
             specRef = tmp[2];
         }
 
-
         for (int j = 0; j < dictEntries.length; j++) {
+            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
-                Vector metaData = dictEntries[j].getDescriptorMetadata();
-                for (Iterator iter = metaData.iterator(); iter.hasNext();) {
-                    String metaDataEntry = (String) iter.next();
-                    String[] values = metaDataEntry.split("/");
+                Element rawElement = (Element) dictEntries[j].getRawContent();
+                Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
 
-                    if (values == null) continue;
-                    if (values.length != 2) continue;
-                    if (!values[0].startsWith("qsar-descriptors-metadata") ||
-                            !values[1].startsWith("qsar-descriptors-metadata")) continue;
-
-                    String[] dictRef = values[0].split(":");
-                    String[] content = values[1].split(":");
-
-                    if (dictRef[1].toLowerCase().equals("descriptortype")) return content[1];
+                for (int i = 0; i < classifications.size(); i++) {
+                    Element e = classifications.get(i);
+                    Attribute attr = e.getAttribute("resource", rdfNS);
+                    if (attr.getValue().contains("molecularDescriptor") || attr.getValue().contains("atomicDescriptor")) {
+                        String[] tmp = attr.getValue().split("#");
+                        return tmp[1];
+                    }
                 }
             }
         }
@@ -200,15 +205,17 @@ public class DescriptorEngine {
     }
 
     /**
-     * Returns the type of the decsriptor as defined in the descriptor dictionary.
+     * Returns the type of the descriptor as defined in the descriptor dictionary.
      * <p/>
      * The method will look for the identifier specified by the user in the QSAR descriptor
-     * dictionary. If a corresponding entry is found, the meta-data list is examined to
-     * look for a dictRef attribute that contains a descriptorType value. if such an attribute is
-     * found, the value of the contents attribute  is returned.
+     * dictionary. If a corresponding entry is found, first child element that is called
+     * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the class of
+     * descriptor (electronic, topological etc) as well as the type of descriptor (molecular, atomic)
+     * to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
+     * indicates the descriptors class.
      * <p/>
-     * The method assumes that any descriptor entry will have only one dictRef attribute with
-     * a value of <i>  qsar-descriptors-metadata:descriptorType</i>.
+     * The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
+     * the descriptors type.
      * <p/>
      * The descriptor can be identified it DescriptorSpecification object
      *
@@ -234,15 +241,14 @@ public class DescriptorEngine {
      * or else the specification reference value of the descriptor which can be obtained from an instance
      * of the descriptor class.
      *
-     * @param identifier A String containing either the descriptors class name or else the descriptors
+     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
      *                   specification reference
      * @return A List containing the names of the QSAR descriptor classes that this  descriptor was declared
      *         to belong to. If an entry for the specified identifier was not found, null is returned.
      */
     public String[] getDictionaryClass(String identifier) {
 
-
-        Entry[] dictEntries = dictDB.getDictionaryEntry("qsar-descriptors");
+        Entry[] dictEntries = dict.getEntries();
 
         String specRef = null;
 
@@ -252,7 +258,8 @@ public class DescriptorEngine {
             if (className.equals(identifier)) {
                 Descriptor descriptor = (Descriptor) descriptors.get(i);
                 DescriptorSpecification descSpecification = descriptor.getSpecification();
-                specRef = descSpecification.getSpecificationReference();
+                String[] tmp = descSpecification.getSpecificationReference().split(":");
+                specRef = tmp[2];
             }
         }
 
@@ -265,21 +272,23 @@ public class DescriptorEngine {
         List dictClasses = new ArrayList();
 
         for (int j = 0; j < dictEntries.length; j++) {
+            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
-                Vector metaData = dictEntries[j].getDescriptorMetadata();
-                for (Iterator iter = metaData.iterator(); iter.hasNext();) {
-                    String[] values = ((String) iter.next()).split("/");
-
-                    if (values.length != 2) continue;
-                    if (!values[0].startsWith("qsar-descriptors-metadata") ||
-                            !values[1].startsWith("qsar-descriptors-metadata")) continue;
-
-                    String[] dictRef = values[0].split(":");
-                    String[] content = values[1].split(":");
-                    if (dictRef[1].equals("descriptorClass")) dictClasses.add(content[1]);
+                Element rawElement = (Element) dictEntries[j].getRawContent();
+                Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
+                for (int i = 0; i < classifications.size(); i++) {
+                    Element e = classifications.get(i);
+                    Attribute attr = e.getAttribute("resource", rdfNS);
+                    if (attr.getValue().contains("molecularDescriptor") || attr.getValue().contains("atomicDescriptor")) {
+                        continue;
+                    }
+                    String[] tmp = attr.getValue().split("#");
+                    dictClasses.add(tmp[1]);
                 }
             }
         }
+
+
         if (dictClasses.size() == 0) return null;
         else
             return (String[]) dictClasses.toArray(new String[]{});
