@@ -24,8 +24,9 @@
  */
 package org.openscience.cdk.qsar;
 
-import nu.xom.*;
-
+import nu.xom.Attribute;
+import nu.xom.Element;
+import nu.xom.Elements;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
@@ -168,7 +169,7 @@ public class DescriptorEngine {
 
         // see if we got a descriptors java class name
         for (int i = 0; i < classNames.size(); i++) {
-            String className = (String) classNames.get(i);            
+            String className = (String) classNames.get(i);
             if (className.equals(identifier)) {
                 System.out.println("Found a match");
                 Descriptor descriptor = (Descriptor) descriptors.get(i);
@@ -177,7 +178,6 @@ public class DescriptorEngine {
                 specRef = tmp[2];
             }
         }
-
 
         // if we are here and specRef = null we have a SpecificationReference
         if (specRef == null) {
@@ -295,7 +295,7 @@ public class DescriptorEngine {
     }
 
     /**
-     * Returns the class(es) of the decsriptor as defined in the descriptor dictionary.
+     * Returns the class(es) of the descriptor as defined in the descriptor dictionary.
      * <p/>
      * The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, the meta-data list is examined to
@@ -313,6 +313,67 @@ public class DescriptorEngine {
 
     public String[] getDictionaryClass(DescriptorSpecification descriptorSpecification) {
         return getDictionaryClass(descriptorSpecification.getSpecificationReference());
+    }
+
+
+    /**
+     * Gets the definition of the descriptor.
+     * <p/>
+     * All descriptors in the descriptor dictioanry will have a definition element. This function
+     * returns the value of that element. Many descriptors also have a description element which is
+     * more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
+     * and I'm not sure what I should return it as
+     *
+     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
+     *                   specification reference
+     * @return The definition
+     */
+    public String getDictionaryDefinition(String identifier) {
+        Entry[] dictEntries = dict.getEntries();
+
+        String specRef = null;
+        String definition = null;
+
+        // see if we got a descriptors java class name
+        for (int i = 0; i < classNames.size(); i++) {
+            String className = (String) classNames.get(i);
+            if (className.equals(identifier)) {
+                Descriptor descriptor = (Descriptor) descriptors.get(i);
+                DescriptorSpecification descSpecification = descriptor.getSpecification();
+                String[] tmp = descSpecification.getSpecificationReference().split(":");
+                specRef = tmp[2];
+            }
+        }
+
+        // if we are here and specRef==null we have a SpecificationReference
+        if (specRef == null) {
+            String[] tmp = identifier.split(":");
+            specRef = tmp[2];
+        }
+
+        for (int j = 0; j < dictEntries.length; j++) {
+            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
+            if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
+                definition = dictEntries[j].getDefinition();
+                break;
+            }
+        }
+        return definition;
+    }
+
+    /**
+     * Gets the definition of the descriptor.
+     * <p/>
+     * All descriptors in the descriptor dictioanry will have a definition element. This function
+     * returns the value of that element. Many descriptors also have a description element which is
+     * more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
+     * and I'm not sure what I should return it as
+     *
+     * @param descriptorSpecification A DescriptorSpecification object
+     * @return The definition
+     */
+    public String getDictionaryDefinition(DescriptorSpecification descriptorSpecification) {
+        return getDictionaryDefinition(descriptorSpecification.getSpecificationReference());
     }
 
     /**
