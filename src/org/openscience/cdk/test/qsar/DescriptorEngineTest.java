@@ -23,10 +23,11 @@
  */
 package org.openscience.cdk.test.qsar;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.qsar.DescriptorEngine;
+import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -35,16 +36,59 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test
  */
 public class DescriptorEngineTest extends CDKTestCase {
-	
-   public  DescriptorEngineTest() {}
-    
+
+    public DescriptorEngineTest() {
+    }
+
     public static Test suite() {
         return new TestSuite(DescriptorEngineTest.class);
     }
-    
+
     public void testConstructor() {
-            DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
-            assertTrue(engine != null);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        assertTrue(engine != null);
+    }
+
+    public void testDictionaryType() {
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+
+        String className = "org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptor";
+        DescriptorSpecification specRef = new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
+
+        Assert.assertEquals("molecularDescriptor", engine.getDictionaryType(className));
+        Assert.assertEquals("molecularDescriptor", engine.getDictionaryType(specRef));
+    }
+
+    public void testDictionaryClass() {
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+
+        String className = "org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor";
+        DescriptorSpecification specRef = new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
+
+        String[] dictClass = engine.getDictionaryClass(className);
+        Assert.assertEquals(2, dictClass.length);
+        System.out.println(dictClass[0]+" "+dictClass[1]);
+        Assert.assertTrue("topologicalDescriptor".equals(dictClass[0]));
+        Assert.assertTrue("electronicDescriptor".equals(dictClass[1]));
+
+        dictClass = engine.getDictionaryClass(specRef);
+        Assert.assertEquals(2, dictClass.length);
+        Assert.assertTrue("topologicalDescriptor".equals(dictClass[0]));
+        Assert.assertTrue("electronicDescriptor".equals(dictClass[1]));
+    }
+
+    public void testAvailableClass() {
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        String[] availClasses = engine.getAvailableDictionaryClasses();
+        Assert.assertEquals(5, availClasses.length);                
     }
 }
 

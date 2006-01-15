@@ -165,25 +165,7 @@ public class DescriptorEngine {
     public String getDictionaryType(String identifier) {
 
         Entry[] dictEntries = dict.getEntries();
-        String specRef = null;
-
-        // see if we got a descriptors java class name
-        for (int i = 0; i < classNames.size(); i++) {
-            String className = (String) classNames.get(i);
-            if (className.equals(identifier)) {
-                System.out.println("Found a match");
-                Descriptor descriptor = (Descriptor) descriptors.get(i);
-                DescriptorSpecification descSpecification = descriptor.getSpecification();
-                String[] tmp = descSpecification.getSpecificationReference().split(":");
-                specRef = tmp[2];
-            }
-        }
-
-        // if we are here and specRef = null we have a SpecificationReference
-        if (specRef == null) {
-            String[] tmp = identifier.split(":");
-            specRef = tmp[2];
-        }
+        String specRef = getSpecRef(identifier);
 
         for (int j = 0; j < dictEntries.length; j++) {
             if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
@@ -250,25 +232,7 @@ public class DescriptorEngine {
 
         Entry[] dictEntries = dict.getEntries();
 
-        String specRef = null;
-
-        // see if we got a descriptors java class name
-        for (int i = 0; i < classNames.size(); i++) {
-            String className = (String) classNames.get(i);
-            if (className.equals(identifier)) {
-                Descriptor descriptor = (Descriptor) descriptors.get(i);
-                DescriptorSpecification descSpecification = descriptor.getSpecification();
-                String[] tmp = descSpecification.getSpecificationReference().split(":");
-                specRef = tmp[2];
-            }
-        }
-
-        // if we are here and specRef==null we have a SpecificationReference
-        if (specRef == null) {
-            String[] tmp = identifier.split(":");
-            specRef = tmp[2];
-        }
-
+        String specRef = getSpecRef(identifier);
         List dictClasses = new ArrayList();
 
         for (int j = 0; j < dictEntries.length; j++) {
@@ -331,25 +295,8 @@ public class DescriptorEngine {
     public String getDictionaryDefinition(String identifier) {
         Entry[] dictEntries = dict.getEntries();
 
-        String specRef = null;
+        String specRef = getSpecRef(identifier);
         String definition = null;
-
-        // see if we got a descriptors java class name
-        for (int i = 0; i < classNames.size(); i++) {
-            String className = (String) classNames.get(i);
-            if (className.equals(identifier)) {
-                Descriptor descriptor = (Descriptor) descriptors.get(i);
-                DescriptorSpecification descSpecification = descriptor.getSpecification();
-                String[] tmp = descSpecification.getSpecificationReference().split(":");
-                specRef = tmp[2];
-            }
-        }
-
-        // if we are here and specRef==null we have a SpecificationReference
-        if (specRef == null) {
-            String[] tmp = identifier.split(":");
-            specRef = tmp[2];
-        }
 
         for (int j = 0; j < dictEntries.length; j++) {
             if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
@@ -489,6 +436,26 @@ public class DescriptorEngine {
             Descriptor descriptor = (Descriptor) descriptors.get(i);
             speclist.add(descriptor.getSpecification());
         }
+    }
+
+    private String getSpecRef(String identifier) {
+        String specRef = null;
+        // see if we got a descriptors java class name
+        for (int i = 0; i < classNames.size(); i++) {
+            String className = (String) classNames.get(i);
+            if (className.equals(identifier)) {
+                Descriptor descriptor = (Descriptor) descriptors.get(i);
+                DescriptorSpecification descSpecification = descriptor.getSpecification();
+                String[] tmp = descSpecification.getSpecificationReference().split("#");
+                specRef = tmp[1];
+            }
+        }
+        // if we are here and specRef==null we have a SpecificationReference
+        if (specRef == null) {
+            String[] tmp = identifier.split("#");
+            specRef = tmp[1];
+        }
+        return specRef;
     }
 }
 
