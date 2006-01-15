@@ -2133,12 +2133,12 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="WeightedPath">
+    <Descriptor rdf:ID="weightedPath">
         <rdfs:label>Weighted path descriptors</rdfs:label>
         <dc:contributor rdf:resourrce="#rg"/>
         <dc:date>2006-01-15</dc:date>
         <definition>
-            The weighted path (molecular ID) decsriptors described by Randic. They characterize molecular branching.
+            The weighted path (molecular ID) descriptors described by Randic. They characterize molecular branching.
         </definition>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>

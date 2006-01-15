@@ -61,7 +61,7 @@ import java.util.List;
  * @cdk.created 2006-01-15
  * @cdk.module qsar
  * @cdk.set qsar-descriptors
- * @cdk.dictref qsar-descriptors:weightedPathIndex
+ * @cdk.dictref qsar-descriptors:weightedPath
  */
 public class WeightedPathDescriptor implements Descriptor {
 
@@ -70,7 +70,7 @@ public class WeightedPathDescriptor implements Descriptor {
 
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPathIndex",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
