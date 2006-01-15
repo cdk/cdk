@@ -1,0 +1,236 @@
+/*
+ *  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+package org.openscience.cdk.qsar.descriptors.molecular;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Evaluates the weighted path descriptors.
+ * <p/>
+ * These decsriptors were described  by Randic ({@cdk.cite RAN84}) and characterize molecular
+ * branching. Five descriptors are calculated, based on the implementation in the ADAPT
+ * software package. The class returns a <code.DoubleArrayResult</code> containing the five
+ * descriptors in the order described below.
+ * <p/>
+ * <center>
+ * <table border=1>
+ * <caption><a name="dmwp">DMWP</a></caption>
+ * <tr>
+ * <td>WTPT1</td><td>molecular ID</td></tr><tr>
+ * <td>WTPT2</td><td> molecular ID / number of atoms</td></tr><tr>
+ * <td>WTPT3</td><td> sum of path lengths starting
+ * from heteroatoms</td></tr><tr>
+ * <p/>
+ * <td>WTPT4</td><td> sum of path lengths starting
+ * from oxygens</td></tr><tr>
+ * <td>WTPT5</td><td> sum of path lengths starting
+ * from nitrogens</td></tr>
+ * </table>
+ * </center>
+ *
+ * @author Rajarshi Guha
+ * @cdk.created 2006-01-15
+ * @cdk.module qsar
+ * @cdk.set qsar-descriptors
+ * @cdk.dictref qsar-descriptors:weightedPathIndex
+ */
+public class WeightedPathDescriptor implements Descriptor {
+
+    public WeightedPathDescriptor() {
+    }
+
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPathIndex",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
+    }
+
+
+    /**
+     * Sets the parameters attribute of the WeightedPathDescriptor object.
+     *
+     * @param params The new parameters value
+     * @throws org.openscience.cdk.exception.CDKException
+     *          Description of the Exception
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        // no parameters for this descriptor
+    }
+
+    /**
+     * Gets the parameters attribute of the WeightedPathDescriptor object.
+     *
+     * @return The parameters value
+     */
+    public Object[] getParameters() {
+        // no parameters to return
+        return (null);
+    }
+
+    /**
+     * Gets the parameterNames attribute of the WeightedPathDescriptor object.
+     *
+     * @return The parameterNames value
+     */
+    public String[] getParameterNames() {
+        // no param names to return
+        return (null);
+    }
+
+
+    /**
+     * Gets the parameterType attribute of the WeightedPathDescriptor object.
+     *
+     * @param name Description of the Parameter
+     * @return The parameterType value
+     */
+    public Object getParameterType(String name) {
+        return (null);
+    }
+
+    /**
+     * Calculates the weighted path descriptors.
+     *
+     * @param container Parameter is the atom container.
+     * @return A DoubleArrayResult value representing the weighted path values
+     */
+
+    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+        AtomContainer local = AtomContainerManipulator.removeHydrogens(container);
+        int natom = local.getAtomCount();
+        DoubleArrayResult retval = new DoubleArrayResult();
+
+        ArrayList pathList = new ArrayList();
+
+        // unique paths
+        for (int i = 0; i < natom - 1; i++) {
+            Atom a = local.getAtomAt(i);
+            for (int j = i + 1; j < natom; j++) {
+                Atom b = local.getAtomAt(j);
+                pathList.addAll(PathTools.getAllPaths(local, a, b));
+            }
+        }
+
+        // heteroatoms
+        double[] pathWts = getPathWeights(pathList, local);
+        double mid = 0.0;
+        for (int i = 0; i < pathWts.length; i++)
+            mid += pathWts[i];
+        mid += natom; // since we don't calculate paths of length 0 above
+
+        retval.add(mid);
+        retval.add(mid / (double) natom);
+
+        pathList.clear();
+        int count = 0;
+        for (int i = 0; i < natom; i++) {
+            Atom a = local.getAtomAt(i);
+            if (a.getSymbol().equalsIgnoreCase("C")) continue;
+            count++;
+            for (int j = 0; j < natom; j++) {
+                Atom b = local.getAtomAt(j);
+                if (a.equals(b)) continue;
+                pathList.addAll(PathTools.getAllPaths(local, a, b));
+            }
+        }
+        pathWts = getPathWeights(pathList, local);
+        mid = 0.0;
+        for (int i = 0; i < pathWts.length; i++)
+            mid += pathWts[i];
+        mid += count;
+        retval.add(mid);
+
+        // oxygens
+        pathList.clear();
+        count = 0;
+        for (int i = 0; i < natom; i++) {
+            Atom a = local.getAtomAt(i);
+            if (!a.getSymbol().equalsIgnoreCase("O")) continue;
+            count++;
+            for (int j = 0; j < natom; j++) {
+                Atom b = local.getAtomAt(j);
+                if (a.equals(b)) continue;
+                pathList.addAll(PathTools.getAllPaths(local, a, b));
+            }
+        }
+        pathWts = getPathWeights(pathList, local);
+        mid = 0.0;
+        for (int i = 0; i < pathWts.length; i++)
+            mid += pathWts[i];
+        mid += count;
+        retval.add(mid);
+
+        // nitrogens
+        pathList.clear();
+        count = 0;
+        for (int i = 0; i < natom; i++) {
+            Atom a = local.getAtomAt(i);
+            if (!a.getSymbol().equalsIgnoreCase("N")) continue;
+            count++;
+            for (int j = 0; j < natom; j++) {
+                Atom b = local.getAtomAt(j);
+                if (a.equals(b)) continue;
+                pathList.addAll(PathTools.getAllPaths(local, a, b));
+            }
+        }
+        pathWts = getPathWeights(pathList, local);
+        mid = 0.0;
+        for (int i = 0; i < pathWts.length; i++)
+            mid += pathWts[i];
+        mid += count;
+        retval.add(mid);
+
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+    }
+
+    double[] getPathWeights(List pathList, AtomContainer atomContainer) {
+        double[] pathWts = new double[pathList.size()];
+        for (int i = 0; i < pathList.size(); i++) {
+            List p = (List) pathList.get(i);
+            pathWts[i] = 1.0;
+            for (int j = 0; j < p.size() - 1; j++) {
+                Atom a = (Atom) p.get(j);
+                Atom b = (Atom) p.get(j + 1);
+                int n1 = atomContainer.getConnectedAtomsVector(a).size();
+                int n2 = atomContainer.getConnectedAtomsVector(b).size();
+                pathWts[i] /= Math.sqrt(n1 * n2);
+            }
+        }
+        return pathWts;
+    }
+
+}
+    
+
