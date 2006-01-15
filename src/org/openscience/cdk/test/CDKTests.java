@@ -70,7 +70,7 @@ import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.test.math.MathToolsTest;
 import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
 import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
-import org.openscience.cdk.test.qsar.QSARDescriptorTests;
+import org.openscience.cdk.test.qsar.descriptors.QSARDescriptorTests;
 import org.openscience.cdk.test.qsar.model.QSARRModelTests;
 import org.openscience.cdk.test.reaction.ReactionBalancerTest;
 import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
