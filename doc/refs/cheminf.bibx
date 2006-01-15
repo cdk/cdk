@@ -717,39 +717,50 @@
       <bibtex:keywords>XML, CML, Java</bibtex:keywords>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="XML">
-    <bibtex:misc>
-      <bibtex:author>World Wide Web Consortium</bibtex:author>
-      <bibtex:title>Extensible Markup Language (XML) 1.0</bibtex:title>
-      <bibtex:month>Feb</bibtex:month>
-      <bibtex:year>1998</bibtex:year>
-      <bibtex:url>http://www.w3.org/TR/1998/REC-xml-19980210</bibtex:url>
-    </bibtex:misc>
+      <bibtex:misc>
+          <bibtex:author>World Wide Web Consortium</bibtex:author>
+          <bibtex:title>Extensible Markup Language (XML) 1.0</bibtex:title>
+          <bibtex:month>Feb</bibtex:month>
+          <bibtex:year>1998</bibtex:year>
+          <bibtex:url>http://www.w3.org/TR/1998/REC-xml-19980210</bibtex:url>
+      </bibtex:misc>
   </bibtex:entry>
 
-    <bibtex:entry id="PET92">
+  <bibtex:entry id="PET92">
       <bibtex:article>
           <bibtex:author>  Petitjean, M.
           </bibtex:author>
-          <bibtex:title></bibtex:title>
-        <bibtex:journal>Journal of Chemical Information and Computer Sciencey</bibtex:journal>
-        <bibtex:year>1992</bibtex:year>
-        <bibtex:volume>32</bibtex:volume>
-        <bibtex:pages>331-337</bibtex:pages>
+          <bibtex:title>Applications of the radius-diameter diagram to the classification of topological and geometrical shapes of chemical compounds</bibtex:title>
+          <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+          <bibtex:year>1992</bibtex:year>
+          <bibtex:volume>32</bibtex:volume>
+          <bibtex:pages>331-337</bibtex:pages>
       </bibtex:article>
-    </bibtex:entry>
-        <bibtex:entry id="BAT95">
-          <bibtex:article>
-              <bibtex:author>  Bath et al.
-              </bibtex:author>
-              <bibtex:title></bibtex:title>
-            <bibtex:journal>Journal of Chemical Information and Computer Sciencey</bibtex:journal>
-            <bibtex:year>1995</bibtex:year>
-            <bibtex:volume>35</bibtex:volume>
-            <bibtex:pages>714-716</bibtex:pages>
-          </bibtex:article>
-        </bibtex:entry>
+  </bibtex:entry>
+  <bibtex:entry id="BAT95">
+      <bibtex:article>
+          <bibtex:author> Bath, P.A. and Poirette, A.R. and Willet, P. and Allen, F.H.
+          </bibtex:author>
+          <bibtex:title>The Extent of the Relationship between the Graph-Theoretical and the Geometrical Shape Coefficients of Chemical Compounds</bibtex:title>
+          <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+          <bibtex:year>1995</bibtex:year>
+          <bibtex:volume>35</bibtex:volume>
+          <bibtex:pages>714-716</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+  <bibtex:entry id="RAN84">
+      <bibtex:article>
+          <bibtex:author>Randic, M.
+          </bibtex:author>
+          <bibtex:title>On molecular identification numbers  </bibtex:title>
+          <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+          <bibtex:year>1984</bibtex:year>
+          <bibtex:volume>24</bibtex:volume>
+          <bibtex:pages>164-175</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
 
 
 
