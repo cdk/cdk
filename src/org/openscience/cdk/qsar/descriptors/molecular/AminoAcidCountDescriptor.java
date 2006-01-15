@@ -23,18 +23,19 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.List;
-
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.AminoAcid;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.templates.AminoAcids;
+
+import java.util.List;
+
 
 /**
  *  Class that returns the number of amino acids in an atom container.
@@ -47,17 +48,17 @@ import org.openscience.cdk.templates.AminoAcids;
  */
 public class AminoAcidCountDescriptor implements IDescriptor {
 
-	private SetOfAtomContainers substructureSet;
+    private SetOfAtomContainers substructureSet;
 
-	/**
+    /**
      *  Constructor for the AromaticAtomsCountDescriptor object.
      */
     public AminoAcidCountDescriptor() {
-    	AminoAcid[] aas = AminoAcids.createAAs();
-    	substructureSet = aas[0].getBuilder().newSetOfAtomContainers();
-    	for (int i=0; i<aas.length; i++) {
-    		substructureSet.addAtomContainer(aas[i]);
-    	}
+        AminoAcid[] aas = AminoAcids.createAAs();
+        substructureSet = aas[0].getBuilder().newSetOfAtomContainers();
+        for (int i=0; i<aas.length; i++) {
+            substructureSet.addAtomContainer(aas[i]);
+        }
     }
 
     /**
@@ -117,21 +118,21 @@ public class AminoAcidCountDescriptor implements IDescriptor {
      * @see #setParameters
      */
     public DescriptorValue calculate(AtomContainer ac) throws CDKException {
-    	int resultLength = substructureSet.getAtomContainerCount();
-    	IntegerArrayResult results = new IntegerArrayResult(resultLength);
-		
-		AtomContainer substructure = null;
-		for (int i=0; i<resultLength; i++) {
-			substructure = substructureSet.getAtomContainer(i);
-			List maps = UniversalIsomorphismTester.getSubgraphMaps(ac, substructure);
-			if (maps != null) { 
-				results.add(maps.size());
-			}
-		}
-		
-		return new DescriptorValue(getSpecification(), getParameterNames(), 
-			getParameters(), results
-		);
+        int resultLength = substructureSet.getAtomContainerCount();
+        IntegerArrayResult results = new IntegerArrayResult(resultLength);
+
+        AtomContainer substructure;
+        for (int i=0; i<resultLength; i++) {
+            substructure = substructureSet.getAtomContainer(i);
+            List maps = UniversalIsomorphismTester.getSubgraphMaps(ac, substructure);
+            if (maps != null) {
+                results.add(maps.size());
+            }
+        }
+
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+            getParameters(), results
+        );
     }
 
     /**
