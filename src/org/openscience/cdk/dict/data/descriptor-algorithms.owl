@@ -1,2005 +1,2306 @@
 <?xml version="1.0"?>
 <!DOCTYPE rdf:RDF [
-     <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-     <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
-     <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
-   ]>
+        <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+        <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+        <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+        <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+        ]>
 <rdf:RDF
-  xmlns       ="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
-  xmlns:owl   ="&owl;"
-  xml:base    ="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
-  xmlns:rdf   ="&rdf;"
-  xmlns:rdfs  ="&rdfs;"
-  xmlns:bibtex="http://bibtexml.sf.net/"
-  xmlns:dc    ="http://dublincore.org/"
-  xmlns:cvs   ="https://www.cvshome.org/"
->
+        xmlns="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
+        xmlns:owl="&owl;"
+        xml:base="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
+        xmlns:rdf="&rdf;"
+        xmlns:rdfs="&rdfs;"
+        xmlns:bibtex="http://bibtexml.sf.net/"
+        xmlns:dc="http://dublincore.org/"
+        xmlns:cvs="https://www.cvshome.org/"
+        >
 
-<owl:Ontology rdf:about="">
-  <rdfs:label>Descriptor Ontology</rdfs:label>
-  <owl:versionInfo>$Id$</owl:versionInfo>
-  <dc:date>$Date$</dc:date>
-  <cvs:last-changed-by>$Author$</cvs:last-changed-by>
-  <cvs:revision>$Revision$</cvs:revision>
-  <rdfs:comment rdf:parseType="literal">
-    Add some comment here.
-  </rdfs:comment>
-</owl:Ontology>
+    <owl:Ontology rdf:about="">
+        <rdfs:label>Descriptor Ontology</rdfs:label>
+        <owl:versionInfo>$Id$</owl:versionInfo>
+        <dc:date>$Date$</dc:date>
+        <cvs:last-changed-by>$Author$</cvs:last-changed-by>
+        <cvs:revision>$Revision$</cvs:revision>
+        <rdfs:comment rdf:parseType="literal">
+            Add some comment here.
+        </rdfs:comment>
+    </owl:Ontology>
 
-<!-- classes and properties -->
+    <!-- classes and properties -->
 
-<owl:Class rdf:ID="Category"/>
+    <owl:Class rdf:ID="Category"/>
 
-<owl:Class rdf:ID="Algorithm"/>
+    <owl:Class rdf:ID="Algorithm"/>
 
-<owl:Class rdf:ID="Descriptor">
-  <owl:subClassOf rdf:resource="#Algorithm"/>
-  <rdfs:comment>
-    A descriptor is an algorithm that operates on a chemical
-    entity (commonly atoms and molecules)
-    and returns a numerical (descriptor) value which described
-    certain information on that entity.
-  </rdfs:comment>
-</owl:Class>
+    <owl:Class rdf:ID="Descriptor">
+        <owl:subClassOf rdf:resource="#Algorithm"/>
+        <rdfs:comment>
+            A descriptor is an algorithm that operates on a chemical
+            entity (commonly atoms and molecules)
+            and returns a numerical (descriptor) value which described
+            certain information on that entity.
+        </rdfs:comment>
+    </owl:Class>
 
-<owl:Class rdf:ID="Reference"/>
+    <owl:Class rdf:ID="Reference"/>
 
-<owl:Class rdf:ID="Contributor"/>
+    <owl:Class rdf:ID="Contributor"/>
 
-<owl:Class rdf:ID="DataFeature"/>
+    <owl:Class rdf:ID="DataFeature"/>
 
-<owl:Class rdf:ID="DataRepresentation">
-  <owl:subClassOf rdf:resource="#DataFeature"/>
-</owl:Class>
+    <owl:Class rdf:ID="DataRepresentation">
+        <owl:subClassOf rdf:resource="#DataFeature"/>
+    </owl:Class>
 
-<owl:Class rdf:ID="Implementation"/>
+    <owl:Class rdf:ID="Implementation"/>
 
-<owl:ObjectProperty rdf:ID="isA">
-  <rdfs:label>Is A</rdfs:label>
-  <rdf:domain rdf:resource="&owl;Thing"/>
-  <rdf:range rdf:resource="&owl;Thing"/>
-</owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="isA">
+        <rdfs:label>Is A</rdfs:label>
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="&owl;Thing"/>
+    </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:ID="instanceOf">
-  <rdfs:label>Instance Of</rdfs:label>
-  <rdf:domain rdf:resource="&owl;Implementation"/>
-  <rdf:range rdf:resource="&owl;Algorithm"/>
-</owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="instanceOf">
+        <rdfs:label>Instance Of</rdfs:label>
+        <rdf:domain rdf:resource="&owl;Implementation"/>
+        <rdf:range rdf:resource="&owl;Algorithm"/>
+    </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:ID="isClassifiedAs">
-  <rdfs:label>Is Classified As</rdfs:label>
-  <rdf:domain rdf:resource="&owl;Thing"/>
-  <rdf:range rdf:resource="#Category"/>
-</owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="isClassifiedAs">
+        <rdfs:label>Is Classified As</rdfs:label>
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="#Category"/>
+    </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:ID="requires">
-  <rdfs:label>Requires</rdfs:label>
-  <rdf:domain rdf:resource="#Algorithm"/>
-  <rdf:range rdf:resource="#DataFeature"/>
-</owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="requires">
+        <rdfs:label>Requires</rdfs:label>
+        <rdf:domain rdf:resource="#Algorithm"/>
+        <rdf:range rdf:resource="#DataFeature"/>
+    </owl:ObjectProperty>
 
-<owl:DataProperty rdf:ID="definition">
-  <rdf:domain rdf:resource="&owl;Thing"/>
-  <rdf:range rdf:resource="rdfs:XMLLiteral"/>
-</owl:DataProperty>
+    <owl:DataProperty rdf:ID="definition">
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="rdfs:XMLLiteral"/>
+    </owl:DataProperty>
 
-<owl:DataProperty rdf:ID="description">
-  <rdf:domain rdf:resource="&owl;Thing"/>
-  <rdf:range rdf:resource="rdfs:XMLLiteral"/>
-</owl:DataProperty>
+    <owl:DataProperty rdf:ID="description">
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="rdfs:XMLLiteral"/>
+    </owl:DataProperty>
 
-<!-- the facts: Data Features -->
+    <!-- the facts: Data Features -->
 
-<DataFeature rdf:ID="has2DCoordinates">
-  <rdfs:label>has 2D Coordinates</rdfs:label>
-</DataFeature>
+    <DataFeature rdf:ID="has2DCoordinates">
+        <rdfs:label>has 2D Coordinates</rdfs:label>
+    </DataFeature>
 
-<DataFeature rdf:ID="has3DCoordinates">
-  <rdfs:label>has 3D Coordinates</rdfs:label>
-</DataFeature>
+    <DataFeature rdf:ID="has3DCoordinates">
+        <rdfs:label>has 3D Coordinates</rdfs:label>
+    </DataFeature>
 
-<DataFeature rdf:ID="hasFractionalUnitCellCoordinatesCoordinates">
-  <rdfs:label>has Fractional Unit Cell Coordinates Coordinates</rdfs:label>
-  <isClassifiedAs rdf:resource="#crystallography"/>
-</DataFeature>
+    <DataFeature rdf:ID="hasFractionalUnitCellCoordinatesCoordinates">
+        <rdfs:label>has Fractional Unit Cell Coordinates Coordinates</rdfs:label>
+        <isClassifiedAs rdf:resource="#crystallography"/>
+    </DataFeature>
 
-<DataFeature rdf:ID="hasPartialAtomicCharges">
-  <rdfs:label>has Partial Atomic Charges</rdfs:label>
-</DataFeature>
+    <DataFeature rdf:ID="hasPartialAtomicCharges">
+        <rdfs:label>has Partial Atomic Charges</rdfs:label>
+    </DataFeature>
 
-<DataRepresentation rdf:ID="DietzRepresentation">
-  <rdfs:label>Dietz Representation</rdfs:label>
-  <owl:equivalentClass rdfs:resource="#GraphRepresentation"/>
-  <!-- FIXME: add description and reference to Dietz' article in JCICS -->
-</DataRepresentation>
+    <DataRepresentation rdf:ID="DietzRepresentation">
+        <rdfs:label>Dietz Representation</rdfs:label>
+        <owl:equivalentClass rdfs:resource="#GraphRepresentation"/>
+        <!-- FIXME: add description and reference to Dietz' article in JCICS -->
+    </DataRepresentation>
 
-<DataRepresentation rdf:ID="GraphRepresentation">
-  <rdfs:label>Graph Representation</rdfs:label>
-  <owl:equivalentClass rdfs:resource="#DietzRepresentation"/>
-  <description>
-    Representation in which atoms are represented by graph nodes and 
-    bonds by graph edges. Consequently, bonds are always localized
-    between two atoms.
-  </description>
-</DataRepresentation>
+    <DataRepresentation rdf:ID="GraphRepresentation">
+        <rdfs:label>Graph Representation</rdfs:label>
+        <owl:equivalentClass rdfs:resource="#DietzRepresentation"/>
+        <description>
+            Representation in which atoms are represented by graph nodes and
+            bonds by graph edges. Consequently, bonds are always localized
+            between two atoms.
+        </description>
+    </DataRepresentation>
 
-<!-- the facts: Contributors -->
+    <!-- the facts: Contributors -->
 
-<Contributor rdf:ID="elw">
-  <rdfs:label>Egon Willighagen</rdfs:label>
-</Contributor>
+    <Contributor rdf:ID="elw">
+        <rdfs:label>Egon Willighagen</rdfs:label>
+    </Contributor>
 
-<Contributor rdf:ID="pmr">
-  <rdfs:label>Peter Murray-Rust</rdfs:label>
-</Contributor>
+    <Contributor rdf:ID="pmr">
+        <rdfs:label>Peter Murray-Rust</rdfs:label>
+    </Contributor>
 
-<Contributor rdf:ID="chhoppe">
-  <rdfs:label>Christian Hoppe</rdfs:label>
-</Contributor>
+    <Contributor rdf:ID="chhoppe">
+        <rdfs:label>Christian Hoppe</rdfs:label>
+    </Contributor>
 
-<Contributor rdf:ID="mf">
-  <rdfs:label>Matteo Floris</rdfs:label>
-</Contributor>
+    <Contributor rdf:ID="mf">
+        <rdfs:label>Matteo Floris</rdfs:label>
+    </Contributor>
 
-<!-- the facts: Categories -->
+    <!-- the facts: Categories -->
 
-<Category rdf:ID="descriptorCategories">
-  <rdfs:label>DescriptorCategories</rdfs:label>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2005-11-18</dc:date>
-</Category>
+    <Category rdf:ID="descriptorCategories">
+        <rdfs:label>DescriptorCategories</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2005-11-18</dc:date>
+    </Category>
 
-<Category rdf:ID="atomicDescriptor">
-  <rdfs:label>Atomic Descriptors</rdfs:label>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2005-11-18</dc:date>
-  <isClassifiedAs rdf:resource="#descriptorCategories"/>
-</Category>
+    <Category rdf:ID="atomicDescriptor">
+        <rdfs:label>Atomic Descriptors</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2005-11-18</dc:date>
+        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+    </Category>
 
-<Category rdf:ID="molecularDescriptor">
-  <rdfs:label>Molecular Descriptors</rdfs:label>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2005-11-18</dc:date>
-  <isClassifiedAs rdf:resource="#descriptorCategories"/>
-</Category>
+    <Category rdf:ID="molecularDescriptor">
+        <rdfs:label>Molecular Descriptors</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2005-11-18</dc:date>
+        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+    </Category>
 
-<Category rdf:ID="electronicDescriptor">
-  <rdfs:label>Electronic Descriptors</rdfs:label>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2005-02-07</dc:date>
-  <definition>
-    Descriptor relating to the electronic distribution in a molecule.
-  </definition>
-  <isClassifiedAs rdf:resource="#descriptorCategories"/>
-</Category>
+    <Category rdf:ID="electronicDescriptor">
+        <rdfs:label>Electronic Descriptors</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2005-02-07</dc:date>
+        <definition>
+            Descriptor relating to the electronic distribution in a molecule.
+        </definition>
+        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+    </Category>
 
-<Category rdf:ID="constitutionalDescriptor">
-  <rdfs:label>Constitutional Descriptor</rdfs:label>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2005-02-07</dc:date>
-  <definition>
-    Descriptor reflecting the molecular composition of a compound without
-    connectivity and geometry information.
-  </definition>
-  <isClassifiedAs rdf:resource="#descriptorCategories"/>
-</Category>
+    <Category rdf:ID="constitutionalDescriptor">
+        <rdfs:label>Constitutional Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2005-02-07</dc:date>
+        <definition>
+            Descriptor reflecting the molecular composition of a compound without
+            connectivity and geometry information.
+        </definition>
+        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+    </Category>
 
-<Category rdf:ID="geometricalDescriptor">
-  <rdfs:label>Geometrical Descriptor</rdfs:label>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2005-02-07</dc:date>
-  <definition>
-    Any descriptor derived from the three-dimensional structure of the molecule.
-  </definition>
-  <isClassifiedAs rdf:resource="#descriptorCategories"/>
-</Category>
+    <Category rdf:ID="geometricalDescriptor">
+        <rdfs:label>Geometrical Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2005-02-07</dc:date>
+        <definition>
+            Any descriptor derived from the three-dimensional structure of the molecule.
+        </definition>
+        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+    </Category>
 
-<Category rdf:ID="topologicalDescriptor">
-  <rdfs:label>Topological Descriptor</rdfs:label>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2005-02-07</dc:date>
-  <definition>
-    Descriptor reflecting the molecular connectivity without geometry information.
-  </definition>
-  <isClassifiedAs rdf:resource="#descriptorCategories"/>
-</Category>
+    <Category rdf:ID="topologicalDescriptor">
+        <rdfs:label>Topological Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="#elw"/>
+        <dc:date>2005-02-07</dc:date>
+        <definition>
+            Descriptor reflecting the molecular connectivity without geometry information.
+        </definition>
+        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+    </Category>
 
-<!-- the facts: Algorithms -->
+    <!-- the facts: Algorithms -->
 
-<Descriptor rdf:ID="apol">
-  <rdfs:label>Atomic Polarizabilities</rdfs:label>
-  <dc:contributor rdf:resource="#mf"/>
-  <dc:contributor rdf:resource="#elw"/>
-  <dc:date>2004-11-26</dc:date>
-  <definition>
-    Descriptor that calculates the sum of the atomic polarizabilities (including implicit hydrogens).
-  </definition>
-  <description>
-    Polarizabilities derive from periodic tables.
-  </description>
-  <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-  <requires rdf:resource="GraphRepresentation"/>
-</Descriptor>
-
-<Descriptor rdf:ID="atomCount">
-  <rdfs:label>Element Count</rdfs:label>
-  <dc:contributor rdf:resourrce="#mf"/>
+    <Descriptor rdf:ID="apol">
+        <rdfs:label>Atomic Polarizabilities</rdfs:label>
+        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="#elw"/>
         <dc:date>2004-11-26</dc:date>
-    <definition>
-      Descriptor based on the number of atoms of a certain element type.
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="atomDegree"><rdfs:label>Atomic Degree</rdfs:label>
+        <definition>
+            Descriptor that calculates the sum of the atomic polarizabilities (including implicit hydrogens).
+        </definition>
+        <description>
+            Polarizabilities derive from periodic tables.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <requires rdf:resource="GraphRepresentation"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="atomCount">
+        <rdfs:label>Element Count</rdfs:label>
         <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that calculates the number of not-Hs substituents of an atom.
-    </definition>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="atomHybridization"><rdfs:label>Atomic Hybridization</rdfs:label>
+        <definition>
+            Descriptor based on the number of atoms of a certain element type.
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="atomDegree">
+        <rdfs:label>Atomic Degree</rdfs:label>
         <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that returns the hybridization state of an atom.
-    </definition>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="atomValence"><rdfs:label>Atomic Valence</rdfs:label>
+        <definition>
+            Descriptor that calculates the number of not-Hs substituents of an atom.
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="atomHybridization">
+        <rdfs:label>Atomic Hybridization</rdfs:label>
         <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that calculates the valence of an atom.
-    </definition>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="aromaticAtomsCount"><rdfs:label>Aromatic Atoms Count</rdfs:label>
+        <definition>
+            Descriptor that returns the hybridization state of an atom.
+        </definition>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="atomValence">
+        <rdfs:label>Atomic Valence</rdfs:label>
         <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2004-11-26</dc:date>
-    <definition>
-      Descriptor based on the number of aromatic atoms of a molecule.
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="aromaticBondsCount"><rdfs:label>Aromatic Bonds Count</rdfs:label>
+        <definition>
+            Descriptor that calculates the valence of an atom.
+        </definition>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="aromaticAtomsCount">
+        <rdfs:label>Aromatic Atoms Count</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor based on the number of aromatic atoms of a molecule.
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="aromaticBondsCount">
+        <rdfs:label>Aromatic Bonds Count</rdfs:label>
         <dc:contributor rdf:resourrce="#mf"/>
         <dc:contributor rdf:resourrce="#elw"/>
         <dc:date>2004-11-26</dc:date>
-    <definition>
-      Descriptor based on the number of aromatic bonds of a molecule.
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
+        <definition>
+            Descriptor based on the number of aromatic bonds of a molecule.
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
 
-<Descriptor rdf:ID="BCUT"><rdfs:label>BCUT</rdfs:label>
+    <Descriptor rdf:ID="BCUT">
+        <rdfs:label>BCUT</rdfs:label>
         <dc:contributor rdf:resourrce="#rg"/>
         <dc:contributor rdf:resourrce="#elw"/>
         <dc:date>2005-01-27</dc:date>
-    <definition>
-      Eigenvalue based descriptor noted for its utility in chemical diversity
-      described by Pearlman et al. <bibtex:cite ref="PEA99"/>.
-    </definition>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    <isClassifiedAs rdf:resource="#hybridDescriptor"/>
-</Descriptor>
+        <definition>
+            Eigenvalue based descriptor noted for its utility in chemical diversity
+            described by Pearlman et al.
+            <bibtex:cite ref="PEA99"/>
+            .
+        </definition>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#hybridDescriptor"/>
+    </Descriptor>
 
-<Descriptor rdf:ID="bondCount"><rdfs:label>Bond Count</rdfs:label>
+    <Descriptor rdf:ID="bondCount">
+        <rdfs:label>Bond Count</rdfs:label>
         <dc:contributor rdf:resourrce="#mf"/>
         <dc:contributor rdf:resourrce="#elw"/>
         <dc:date>2004-11-26</dc:date>
-    <definition>
-      Descriptor based on the number of bonds of a certain bond order.
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="bondsToAtom"><rdfs:label>Bonds to Atom</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-    <definition>
-      Descriptor based on the number of bonds on the shortest path between two atoms.
-    </definition>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-</Descriptor>
+        <definition>
+            Descriptor based on the number of bonds of a certain bond order.
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
 
-<Descriptor rdf:ID="bpol"><rdfs:label>Bond Polarizabilities</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the sum of the absolute value of the difference between atomic 
-	polarizabilities of all bonded atoms in the molecule (including implicit hydrogens).
-    </definition>
-    <description>
-      Polarizabilities derive from periodic tables.
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="chi0"><rdfs:label>Connectivity index (order 0)</rdfs:label>
-    <annotation>
-      <documentation>
+    <Descriptor rdf:ID="bondsToAtom">
+        <rdfs:label>Bonds to Atom</rdfs:label>
         <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates atomic connectivity index (order 0).
-    </definition>
-    <description>
-      	Atomic connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-                <msub>
-                  <mi>d</mi>
-                  <mi>i</mi>
-                </msub>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all heavy atoms i with degree greather than zero.
-   </description>
-    <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="chi0C"/ -->
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
- 
-<Descriptor rdf:ID="chi0C"><rdfs:label>Carbon connectivity index (order 0)</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the carbon connectivity index (order 0).
-    </definition>
-    <description>
-      	While the atomic connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-                <msub>
-                  <mi>d</mi>
-                  <mi>i</mi>
-                </msub>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all heavy atoms i with degree greather than zero, carbon connectivity index 
-	takes into account only carbon atoms with degree greather than zero.
-    </description>
-    <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi0"/ -->
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="chi1"><rdfs:label>Connectivity index (order 1)</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates atomic connectivity index (order 1).
-    </definition>
-    <description>
-      	Atomic connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-		<mrow>
-		  <mo>(</mo>
-                  <mrow>
-                    <msub>
-                      <mi>d</mi>
-                      <mi>i</mi>
-                    </msub>
-		  </mrow>
-                  <mrow>
-                    <msub>
-                      <mi>d</mi>
-                      <mi>j</mi>
-                    </msub>
-		  </mrow>
-                  <mo>)</mo>
-                </mrow>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all bonds between heavy atoms i and j.
-    </description>
-    <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="chi1C"/ -->
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="chi1C"><rdfs:label>Carbon connectivity index (order 1)</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates carbon connectivity index (order 1).
-    </definition>
-    <description>
-      	While the atomic connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-		<mrow>
-		  <mo>(</mo>
-                  <mrow>
-                    <msub>
-                      <mi>d</mi>
-                      <mi>i</mi>
-                    </msub>
-		  </mrow>
-                  <mrow>
-                    <msub>
-                      <mi>d</mi>
-                      <mi>j</mi>
-                    </msub>
-		  </mrow>
-                  <mo>)</mo>
-                </mrow>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all bonds between heavy atoms i and j, the carbon connectivity index 
-	takes into account only bonds between carbon atoms.
-    </description>
-    <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi1"/ -->
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="distanceToAtom"><rdfs:label>Distance to Atom</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      Descriptor that calculates the 3D distance between two atoms.
-    </definition>
-      <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="effectivePolarizability"><rdfs:label>Effective Polarizability</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the effective polarizability of a given heavy atom.
-    </definition>
-    <description>
-      	Polarizabilities are assigned to the heavy atom by Polarizability class.
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-</Descriptor>
+        <definition>
+            Descriptor based on the number of bonds on the shortest path between two atoms.
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+    </Descriptor>
 
-<Descriptor rdf:ID="hBondacceptors"><rdfs:label>Hydrogen Bond Acceptors</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the number of hydrogen bond acceptors.
-    </definition>
-    <description>
-        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor is a heteroatom with no positive charge, note that negatively 
-        charged oxygen or sulphur are included. Excluded are halogens, including F, 
-        heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
-        Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="hBondDonors"><rdfs:label>Hydrogen Bond Donors</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the number of hydrogen bond donors.
-    </definition>
-    <description>
-        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor
-	must have an N-H bond, an O-H bond, or a F-H bond
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="gravitationalIndex"><rdfs:label>Gravitational Index</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#rg"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2004-11-24</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      Descriptor characterizing the mass distribution of the molecule.
-    </definition>
-    <description>
-      This descriptor is described by Katritzky et al. <bibtex:cite ref="KAT96"/>.
-    </description>
-    <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="gravitationalIndex_SquareAndCubeRoots"/ -->
-    <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    
-</Descriptor>
+    <Descriptor rdf:ID="bpol">
+        <rdfs:label>Bond Polarizabilities</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the sum of the absolute value of the difference between atomic
+            polarizabilities of all bonded atoms in the molecule (including implicit hydrogens).
+        </definition>
+        <description>
+            Polarizabilities derive from periodic tables.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
 
-<Descriptor rdf:ID="gravitationalIndex_SquareAndCubeRoots"><rdfs:label>Gravitational Index (Square and Cube Roots)</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#rg"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2004-11-25</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      Descriptor characterizing the mass distribution of the molecule as the square
-      or cube root of the gravitational index.
-    </definition>
-    <description>
-      This descriptor is described by Wessel et al. <bibtex:cite ref="WES98"/>.
-    </description>
-    <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="gravitationalIndex" / -->
-</Descriptor>
-  
-<Descriptor rdf:ID="atomicHardness"><rdfs:label>Inductive atomic hardness</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-04-21</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-       This class calculates the atomic hardness of a given atom.
-    </definition>
-    <description>
-       Inductive atomic hardness of an atom in a polyatomic system can be defined 
-       as the resistance to a change of the atomic charge.
-       This descriptor is described by Cherkasov <bibtex:cite ref="CHER2003"/>.
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="atomicSoftness"><rdfs:label>Inductive atomic softness</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-04-21</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-       This class calculates the atomic softness of a given atom.
-    </definition>
-    <description>
-       Inductive atomic softness of an atom in a polyatomic system can be defined 
-       as as charge delocalizing ability.
-       This descriptor is described by Cherkasov <bibtex:cite ref="CHER2003"/>.
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="isProtonInAromaticSystem"><rdfs:label>Proton belonging to an aromatic system</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      This Class contains a method that returns 1 if the protons is directly bonded to an aromatic system,
-      it returns 2 if the distance between aromatic system and proton is 2 bonds, 
-      and 0 for other positions.
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="isProtonInConjugatedPiSystem"><rdfs:label>Proton belonging to a pi-system</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      This Class contains a method that returns true if the protons is directly bonded to a pi system.
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="kierValues"><rdfs:label>Kier and Hall kappa molecular shape indices</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates Kier and Hall kappa molecular shape indices.
-    </definition>
-    <description>
-      	Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs.
-	First kappa shape index is given by
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mrow>
-	      <msup>
-                <mrow>
-		  <ci>n</ci>
-                  <mo>(</mo>
-                  <ci>n</ci>
-                  <mo>-</mo>
-                  <ci>1</ci>
-                  <mo>)</mo>
-                </mrow>
-                <ci>2</ci>
-              </msup>
-	    </mrow>
-            <mrow>
-	      <msup>
-                <mi>m</mi>
-                <mi>2</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>,
-	second kappa shape index is given by
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-	    <mrow>
-              <mrow>
-	        <mo>(</mo>
-                <ci>n</ci>
-                <mo>-</mo>
-                <ci>1</ci>
-                <mo>)</mo>
-	      </mrow>
-	      <mrow>
-	        <msup>
-                  <mrow>
-                    <mo>(</mo>
-                    <ci>n</ci>
-                    <mo>-</mo>
-                    <ci>2</ci>
-                    <mo>)</mo>
-                  </mrow>
-                  <mi>2</mi>
-                </msup>
-	      </mrow>
-	    </mrow>
-            <mrow>
-	      <msup>
-                <msub>
-                  <ci>p</ci>
-		  <ci>2</ci>
-                </msub>
-		<mi>2</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	and third kappa shape index is given by
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-	    <mrow>
-              <mrow>
-	        <mo>(</mo>
-                <ci>n</ci>
-                <mo>-</mo>
-                <ci>1</ci>
-                <mo>)</mo>
-	      </mrow>
-	      <mrow>
-	        <msup>
-                  <mrow>
-                    <mo>(</mo>
-                    <ci>n</ci>
-                    <mo>-</mo>
-                    <ci>3</ci>
-                    <mo>)</mo>
-                  </mrow>
-                  <mi>2</mi>
-                </msup>
-	      </mrow>
-	    </mrow>
-            <mrow>
-	      <msup>
-                <msub>
-                  <ci>p</ci>
-		  <ci>3</ci>
-                </msub>
-		<mi>2</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	for odd n and
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-	    <mrow>
-              <mrow>
-	        <mo>(</mo>
-                <ci>n</ci>
-                <mo>-</mo>
-                <ci>3</ci>
-                <mo>)</mo>
-	      </mrow>
-	      <mrow>
-	        <msup>
-                  <mrow>
-                    <mo>(</mo>
-                    <ci>n</ci>
-                    <mo>-</mo>
-                    <ci>2</ci>
-                    <mo>)</mo>
-                  </mrow>
-                  <mi>2</mi>
-                </msup>
-	      </mrow>
-	    </mrow>
-            <mrow>
-	      <msup>
-                <msub>
-                  <ci>p</ci>
-		  <ci>3</ci>
-                </msub>
-		<mi>2</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	for enev n, 
-	where n denotes the number of atoms in the hydrogen suppressed graph, m is the number of bonds in the hydrogen 
-	suppressed graph. Also, let p2 denote the number of paths of length 2 and let p3 denote the number of paths of length 3
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-
-<Descriptor rdf:ID="lipinskifailures"><rdfs:label>Lipinski's Rule of Five</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      This Class contains a method that returns the number failures of the
-      Lipinski's Rule Of Five.
-    </definition>
-    <description>
-      The Rule of 5 got its name from the cutoff values for each of the four parameters that define the potential of
-      a drug candidate for good absorption: all of these values are close to five or a multiple of five.
-      The original definition, given by Christopher A. Lipinski, says that poor absorption (or permeation) is <em>more likely</em> when:
-      the molecule has more than 5 H-bond donors and more than 10 H-bond acceptors;
-      its molecular weight is over 500.
-      its LogP is over 5;
-    </description>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-
-<Descriptor rdf:ID="momentOfInertia"><rdfs:label>Moments of Inertia</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#rg"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2005-02-07</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the principal moments of inertia and ratios
-        of the principal moments. Als calculates the radius of gyration.
-    </definition>
-      <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="period"><rdfs:label>Period of an atom</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-02-07</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that returns the period in the periodic table of an atom belonging to an atom container
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="petitjeanNumber"><rdfs:label>Petitjean Number</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-02-07</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the Petitjean Number of a molecule.
-    </definition>
-    <description>
-        According to the Petitjean definition, the eccentricity of a vertex corresponds to the 
-	distance from that vertex to the most remote vertex in the graph. The distance 
-	is obtained from the distance matrix as the count of edges between the two vertices.
-	If <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow>
-	is the largest matrix entry in row i of the distance matrix D, then the radius 
-	is defined as the smallest of the <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow>. 
-	The graph diameter D is defined as the largest vertex eccentricity in the graph.
-	Petitjean Number is the value of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-	    <mrow>
-              <mo>(</mo>
-              <ci>diameter</ci>
-              <mo>-</mo>
-              <ci>radius</ci>
-              <mo>)</mo>
-	    </mrow>
-            <ci>diameter</ci>
-          </mfrac>
-        </mrow>.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="piContact"><rdfs:label>Pi-contact of two atoms</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-02-07</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that check if two atoms have pi-contact (this is true when there is one and 
-	the same conjugated pi-system which contains both atoms, or directly linked neighboors of the atoms).
-    </definition>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="protonPartialCharge"><rdfs:label>Proton Total Partial Charge</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-02-07</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates partial charges of an heavy atom and its protons.
-    </definition>
-    <description>
-        Calculation is based on Gasteiger Marsili (PEOE)
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-</Descriptor>
-
-<Descriptor rdf:ID="rdfProtonCalculatedValues"><rdfs:label>RDF Proton Descriptor</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      Calculation of RDF proton descriptor based on <bibtex:cite ref="GAST2002"/>.
-    </definition>
-    <description>
-      A given proton is represented by 5 different descriptors.
-      The first one has the form
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-        <apply>
-          <eq/>
-          <apply>
-            <msub>
-              <ci>g</ci>
-              <ci>H</ci>
-            </msub>
-            <ci>r</ci>
-          </apply>
-          <apply>
-            <sum/>
-            <mrow>
-              <msub>
-                <ci>p</ci>
-                <ci>i</ci>
-              </msub>
-              <msup>
-                <ci>e</ci>
-                <mrow>
-                  <mo>-</mo>
-                  <ci>B</ci>
-                  <msup>
+    <Descriptor rdf:ID="chi0">
+        <rdfs:label>Connectivity index (order 0)</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates atomic connectivity index (order 0).
+        </definition>
+        <description>
+            Atomic connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
                     <mrow>
-                      <mo>(</mo>
-                      <ci>r</ci>
-                      <mo>-</mo>
-                      <msub>
+                        <msup>
+                            <msub>
+                                <mi>d</mi>
+                                <mi>i</mi>
+                            </msub>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all heavy atoms i with degree greather than zero.
+        </description>
+        <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="chi0C"/ -->
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi0C">
+        <rdfs:label>Carbon connectivity index (order 0)</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the carbon connectivity index (order 0).
+        </definition>
+        <description>
+            While the atomic connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <msub>
+                                <mi>d</mi>
+                                <mi>i</mi>
+                            </msub>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all heavy atoms i with degree greather than zero, carbon connectivity index
+            takes into account only carbon atoms with degree greather than zero.
+        </description>
+        <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi0"/ -->
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi1">
+        <rdfs:label>Connectivity index (order 1)</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates atomic connectivity index (order 1).
+        </definition>
+        <description>
+            Atomic connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>d</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mrow>
+                                    <msub>
+                                        <mi>d</mi>
+                                        <mi>j</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all bonds between heavy atoms i and j.
+        </description>
+        <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="chi1C"/ -->
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi1C">
+        <rdfs:label>Carbon connectivity index (order 1)</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates carbon connectivity index (order 1).
+        </definition>
+        <description>
+            While the atomic connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>d</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mrow>
+                                    <msub>
+                                        <mi>d</mi>
+                                        <mi>j</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all bonds between heavy atoms i and j, the carbon connectivity index
+            takes into account only bonds between carbon atoms.
+        </description>
+        <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi1"/ -->
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="distanceToAtom">
+        <rdfs:label>Distance to Atom</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the 3D distance between two atoms.
+        </definition>
+        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="effectivePolarizability">
+        <rdfs:label>Effective Polarizability</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the effective polarizability of a given heavy atom.
+        </definition>
+        <description>
+            Polarizabilities are assigned to the heavy atom by Polarizability class.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="hBondacceptors">
+        <rdfs:label>Hydrogen Bond Acceptors</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the number of hydrogen bond acceptors.
+        </definition>
+        <description>
+            As defined by Daylight website,
+            <bibtex:cite ref="DAY01"/>
+            , a H-bond acceptor is a heteroatom with no positive charge, note that negatively
+            charged oxygen or sulphur are included. Excluded are halogens, including F,
+            heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
+            Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="hBondDonors">
+        <rdfs:label>Hydrogen Bond Donors</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the number of hydrogen bond donors.
+        </definition>
+        <description>
+            As defined by Daylight website,
+            <bibtex:cite ref="DAY01"/>
+            , a H-bond acceptor
+            must have an N-H bond, an O-H bond, or a F-H bond
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="gravitationalIndex">
+        <rdfs:label>Gravitational Index</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2004-11-24</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor characterizing the mass distribution of the molecule.
+        </definition>
+        <description>
+            This descriptor is described by Katritzky et al.
+            <bibtex:cite ref="KAT96"/>
+            .
+        </description>
+        <!-- relatedEntry type="qsar-descriptors-metadata:isModificatedAs" href="gravitationalIndex_SquareAndCubeRoots"/ -->
+        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+
+    </Descriptor>
+
+    <Descriptor rdf:ID="gravitationalIndex_SquareAndCubeRoots">
+        <rdfs:label>Gravitational Index (Square and Cube Roots)</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2004-11-25</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor characterizing the mass distribution of the molecule as the square
+            or cube root of the gravitational index.
+        </definition>
+        <description>
+            This descriptor is described by Wessel et al.
+            <bibtex:cite ref="WES98"/>
+            .
+        </description>
+        <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="gravitationalIndex" / -->
+    </Descriptor>
+
+    <Descriptor rdf:ID="atomicHardness">
+        <rdfs:label>Inductive atomic hardness</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-04-21</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This class calculates the atomic hardness of a given atom.
+        </definition>
+        <description>
+            Inductive atomic hardness of an atom in a polyatomic system can be defined
+            as the resistance to a change of the atomic charge.
+            This descriptor is described by Cherkasov
+            <bibtex:cite ref="CHER2003"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="atomicSoftness">
+        <rdfs:label>Inductive atomic softness</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-04-21</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This class calculates the atomic softness of a given atom.
+        </definition>
+        <description>
+            Inductive atomic softness of an atom in a polyatomic system can be defined
+            as as charge delocalizing ability.
+            This descriptor is described by Cherkasov
+            <bibtex:cite ref="CHER2003"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="isProtonInAromaticSystem">
+        <rdfs:label>Proton belonging to an aromatic system</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This Class contains a method that returns 1 if the protons is directly bonded to an aromatic system,
+            it returns 2 if the distance between aromatic system and proton is 2 bonds,
+            and 0 for other positions.
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="isProtonInConjugatedPiSystem">
+        <rdfs:label>Proton belonging to a pi-system</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This Class contains a method that returns true if the protons is directly bonded to a pi system.
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="kierValues">
+        <rdfs:label>Kier and Hall kappa molecular shape indices</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates Kier and Hall kappa molecular shape indices.
+        </definition>
+        <description>
+            Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular
+            graphs.
+            First kappa shape index is given by
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <ci>n</ci>
+                                <mo>(</mo>
+                                <ci>n</ci>
+                                <mo>-</mo>
+                                <ci>1</ci>
+                                <mo>)</mo>
+                            </mrow>
+                            <ci>2</ci>
+                        </msup>
+                    </mrow>
+                    <mrow>
+                        <msup>
+                            <mi>m</mi>
+                            <mi>2</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            ,
+            second kappa shape index is given by
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <ci>n</ci>
+                            <mo>-</mo>
+                            <ci>1</ci>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <msup>
+                                <mrow>
+                                    <mo>(</mo>
+                                    <ci>n</ci>
+                                    <mo>-</mo>
+                                    <ci>2</ci>
+                                    <mo>)</mo>
+                                </mrow>
+                                <mi>2</mi>
+                            </msup>
+                        </mrow>
+                    </mrow>
+                    <mrow>
+                        <msup>
+                            <msub>
+                                <ci>p</ci>
+                                <ci>2</ci>
+                            </msub>
+                            <mi>2</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            and third kappa shape index is given by
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <ci>n</ci>
+                            <mo>-</mo>
+                            <ci>1</ci>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <msup>
+                                <mrow>
+                                    <mo>(</mo>
+                                    <ci>n</ci>
+                                    <mo>-</mo>
+                                    <ci>3</ci>
+                                    <mo>)</mo>
+                                </mrow>
+                                <mi>2</mi>
+                            </msup>
+                        </mrow>
+                    </mrow>
+                    <mrow>
+                        <msup>
+                            <msub>
+                                <ci>p</ci>
+                                <ci>3</ci>
+                            </msub>
+                            <mi>2</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            for odd n and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <ci>n</ci>
+                            <mo>-</mo>
+                            <ci>3</ci>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <msup>
+                                <mrow>
+                                    <mo>(</mo>
+                                    <ci>n</ci>
+                                    <mo>-</mo>
+                                    <ci>2</ci>
+                                    <mo>)</mo>
+                                </mrow>
+                                <mi>2</mi>
+                            </msup>
+                        </mrow>
+                    </mrow>
+                    <mrow>
+                        <msup>
+                            <msub>
+                                <ci>p</ci>
+                                <ci>3</ci>
+                            </msub>
+                            <mi>2</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            for enev n,
+            where n denotes the number of atoms in the hydrogen suppressed graph, m is the number of bonds in the
+            hydrogen
+            suppressed graph. Also, let p2 denote the number of paths of length 2 and let p3 denote the number of paths
+            of length 3
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="lipinskifailures">
+        <rdfs:label>Lipinski's Rule of Five</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This Class contains a method that returns the number failures of the
+            Lipinski's Rule Of Five.
+        </definition>
+        <description>
+            The Rule of 5 got its name from the cutoff values for each of the four parameters that define the potential
+            of
+            a drug candidate for good absorption: all of these values are close to five or a multiple of five.
+            The original definition, given by Christopher A. Lipinski, says that poor absorption (or permeation) is
+            <em>more likely</em>
+            when:
+            the molecule has more than 5 H-bond donors and more than 10 H-bond acceptors;
+            its molecular weight is over 500.
+            its LogP is over 5;
+        </description>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="momentOfInertia">
+        <rdfs:label>Moments of Inertia</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the principal moments of inertia and ratios
+            of the principal moments. Als calculates the radius of gyration.
+        </definition>
+        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="period">
+        <rdfs:label>Period of an atom</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that returns the period in the periodic table of an atom belonging to an atom container
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="petitjeanNumber">
+        <rdfs:label>Petitjean Number</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the Petitjean Number of a molecule.
+        </definition>
+        <description>
+            According to the Petitjean definition, the eccentricity of a vertex corresponds to the
+            distance from that vertex to the most remote vertex in the graph. The distance
+            is obtained from the distance matrix as the count of edges between the two vertices.
+            If
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>r</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the largest matrix entry in row i of the distance matrix D, then the radius
+            is defined as the smallest of the
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>r</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            .
+            The graph diameter D is defined as the largest vertex eccentricity in the graph.
+            Petitjean Number is the value of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mrow>
+                        <mo>(</mo>
+                        <ci>diameter</ci>
+                        <mo>-</mo>
+                        <ci>radius</ci>
+                        <mo>)</mo>
+                    </mrow>
+                    <ci>diameter</ci>
+                </mfrac>
+            </mrow>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="piContact">
+        <rdfs:label>Pi-contact of two atoms</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that check if two atoms have pi-contact (this is true when there is one and
+            the same conjugated pi-system which contains both atoms, or directly linked neighboors of the atoms).
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="protonPartialCharge">
+        <rdfs:label>Proton Total Partial Charge</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates partial charges of an heavy atom and its protons.
+        </definition>
+        <description>
+            Calculation is based on Gasteiger Marsili (PEOE)
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="rdfProtonCalculatedValues">
+        <rdfs:label>RDF Proton Descriptor</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Calculation of RDF proton descriptor based on
+            <bibtex:cite ref="GAST2002"/>
+            .
+        </definition>
+        <description>
+            A given proton is represented by 5 different descriptors.
+            The first one has the form
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <apply>
+                    <eq/>
+                    <apply>
+                        <msub>
+                            <ci>g</ci>
+                            <ci>H</ci>
+                        </msub>
                         <ci>r</ci>
-                        <ci>i</ci>
-                      </msub>
-                      <mo>)</mo>
-                    </mrow>
-                    <ci>2</ci>
-                  </msup>
-                </mrow>
-              </msup>
+                    </apply>
+                    <apply>
+                        <sum/>
+                        <mrow>
+                            <msub>
+                                <ci>p</ci>
+                                <ci>i</ci>
+                            </msub>
+                            <msup>
+                                <ci>e</ci>
+                                <mrow>
+                                    <mo>-</mo>
+                                    <ci>B</ci>
+                                    <msup>
+                                        <mrow>
+                                            <mo>(</mo>
+                                            <ci>r</ci>
+                                            <mo>-</mo>
+                                            <msub>
+                                                <ci>r</ci>
+                                                <ci>i</ci>
+                                            </msub>
+                                            <mo>)</mo>
+                                        </mrow>
+                                        <ci>2</ci>
+                                    </msup>
+                                </mrow>
+                            </msup>
+                        </mrow>
+                    </apply>
+                </apply>
             </mrow>
-          </apply>
-        </apply>
-      </mrow>
-      where i denotes an atom up to four not rotatable bonds away from the target proton, 
-      p is the partial atomic charge of the atom i, B is a smoothing parameter, 
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow> is the
-      3D distance between proton and atom i, and r is a running variable.
-      The second one is a topological form of the first one, where i is an atom up to the fifth sphere,
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow> is the
-      partial atomic charge of atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow>
-      is now the sum of bond length on the shortest path between the proton and atom i.
-      The third one has the form 
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-        <apply>
-          <eq/>
-          <apply>
-            <msub>
-              <ci>g</ci>
-              <ci>D</ci>
-            </msub>
-            <ci>r</ci>
-          </apply>
-          <apply>
-            <sum/>
-            <mrow>
-              <mfrac>
-                <mi>1</mi>
-                <mrow>
-                  <msup>
-                    <msub>
-                      <mi>r</mi>
-                      <mi>D,i</mi>
-                    </msub>
-                    <mi>2</mi>
-                  </msup>
-                </mrow>
-              </mfrac>
-              <msup>
-                <ci>e</ci>
-                <mrow>
-                  <mo>-</mo>
-                  <ci>B</ci>
-                  <msup>
-                    <mrow>
-                      <mo>(</mo>
-                      <ci>r</ci>
-                      <mo>-</mo>
-                      <msub>
-                        <ci>a</ci>
-                        <ci>D,i</ci>
-                      </msub>
-                      <mo>)</mo>
-                    </mrow>
-                    <ci>2</ci>
-                  </msup>
-                </mrow>
-              </msup>
+            where i denotes an atom up to four not rotatable bonds away from the target proton,
+            p is the partial atomic charge of the atom i, B is a smoothing parameter,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>r</mi>
+                    <mi>i</mi>
+                </msub>
             </mrow>
-          </apply>
-        </apply>
-      </mrow>
-      where i denotes a double bond up to the seventh sphere of nonrotatable bonds centered on the target proton, 
-      and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>D</mi></msub></mrow> and
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mi>D</mi></msub></mrow> are
-      geometric variables.
-      The fourth one has the form 
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-        <apply>
-          <eq/>
-          <apply>
-            <msub>
-              <ci>g</ci>
-              <ci>S</ci>
-            </msub>
-            <ci>r</ci>
-          </apply>
-          <apply>
-            <sum/>
-            <mrow>
-              <mfrac>
-                <mi>1</mi>
-                <mrow>
-                  <msup>
-                    <msub>
-                      <mi>r</mi>
-                      <mi>S,i</mi>
-                    </msub>
-                    <mi>2</mi>
-                  </msup>
-                </mrow>
-              </mfrac>
-              <msup>
-                <ci>e</ci>
-                <mrow>
-                  <mo>-</mo>
-                  <ci>B</ci>
-                  <msup>
-                    <mrow>
-                      <mo>(</mo>
-                      <ci>r</ci>
-                      <mo>-</mo>
-                      <msub>
-                        <ci>a</ci>
-                        <ci>S,i</ci>
-                      </msub>
-                      <mo>)</mo>
-                    </mrow>
-                    <ci>2</ci>
-                  </msup>
-                </mrow>
-              </msup>
+            is the
+            3D distance between proton and atom i, and r is a running variable.
+            The second one is a topological form of the first one, where i is an atom up to the fifth sphere,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
             </mrow>
-          </apply>
-        </apply>
-      </mrow>
-      where i denotes a single bond up to the seventh sphere of nonrotatable bonds centered on the target proton, 
-      and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>S</mi></msub></mrow> and
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mi>S</mi></msub></mrow> are
-      geometric variables.
-      The last one has the form 
-      <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-        <apply>
-          <eq/>
-          <apply>
-            <msub>
-              <ci>g</ci>
-              <ci>3</ci>
-            </msub>
-            <ci>r</ci>
-          </apply>
-          <apply>
-            <sum/>
-            <mrow>
-              <msup>
-                <ci>e</ci>
-                <mrow>
-                  <mo>-</mo>
-                  <ci>B</ci>
-                  <msup>
-                    <mrow>
-                      <mo>(</mo>
-                      <ci>r</ci>
-                      <mo>-</mo>
-                      <msub>
-                        <ci>a</ci>
-                        <ci>3,i</ci>
-                      </msub>
-                      <mo>)</mo>
-                    </mrow>
-                    <ci>2</ci>
-                  </msup>
-                </mrow>
-              </msup>
+            is the
+            partial atomic charge of atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>r</mi>
+                    <mi>i</mi>
+                </msub>
             </mrow>
-          </apply>
-        </apply>
-      </mrow>
-      where i denotes an atom three nonrotatable bonds away from the target proton and belonging to a 
-      six-membered ring, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mi>3</mi></msub></mrow> is
-      a dihedral angle in radian units.
-      Each values is returned as atom property.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="rotatableBondsCount"><rdfs:label>Rotatable Bonds Count</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-02-07</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the number of nonrotatable bonds on a molecule.
-    </definition>
-    <description>
-        The number of rotatable bonds is given by the SMARTS specified by Daylight on <bibtex:cite ref="DAY01"/>.
-    </description>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-  <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="sigmaElectronegativity"><rdfs:label>Sigma Electronegativity</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-02-07</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        This Class contains a method that returns the sigma electronegativity for a given atom.
-    </definition>
-    <description>
-        Sigma electronegativity is given by
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mi>X</mi>
-	  <mo>=</mo>
-	  <mi>a</mi>
-	  <mo>+</mo>
-	  <mi>b</mi>
-	  <mi>q</mi>
-	  <mo>+</mo>
-	  <mi>c</mi>
-	  <mrow>
-	    <mo>(</mo>
-	    <mrow>
-	      <msup>
-	        <mi>q</mi>
-	        <mi>2</mi>
-	      </msup>
-	    </mrow>
-	    <mo>)</mo>
-	  </mrow>
-	</mrow>,
-	where a, b and c are Gasteiger Marsili parameters, and q is the sigma charge.
-    </description>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="tpsa"><rdfs:label>Topological Polar Surface Area</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      Calculation of topological polar surface area based on fragment 
-      contributions <bibtex:cite ref="ERTL2000"/>.
-    </definition>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-  
+            is now the sum of bond length on the shortest path between the proton and atom i.
+            The third one has the form
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <apply>
+                    <eq/>
+                    <apply>
+                        <msub>
+                            <ci>g</ci>
+                            <ci>D</ci>
+                        </msub>
+                        <ci>r</ci>
+                    </apply>
+                    <apply>
+                        <sum/>
+                        <mrow>
+                            <mfrac>
+                                <mi>1</mi>
+                                <mrow>
+                                    <msup>
+                                        <msub>
+                                            <mi>r</mi>
+                                            <mi>D,i</mi>
+                                        </msub>
+                                        <mi>2</mi>
+                                    </msup>
+                                </mrow>
+                            </mfrac>
+                            <msup>
+                                <ci>e</ci>
+                                <mrow>
+                                    <mo>-</mo>
+                                    <ci>B</ci>
+                                    <msup>
+                                        <mrow>
+                                            <mo>(</mo>
+                                            <ci>r</ci>
+                                            <mo>-</mo>
+                                            <msub>
+                                                <ci>a</ci>
+                                                <ci>D,i</ci>
+                                            </msub>
+                                            <mo>)</mo>
+                                        </mrow>
+                                        <ci>2</ci>
+                                    </msup>
+                                </mrow>
+                            </msup>
+                        </mrow>
+                    </apply>
+                </apply>
+            </mrow>
+            where i denotes a double bond up to the seventh sphere of nonrotatable bonds centered on the target proton,
+            and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>r</mi>
+                    <mi>D</mi>
+                </msub>
+            </mrow>
+            and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>a</mi>
+                    <mi>D</mi>
+                </msub>
+            </mrow>
+            are
+            geometric variables.
+            The fourth one has the form
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <apply>
+                    <eq/>
+                    <apply>
+                        <msub>
+                            <ci>g</ci>
+                            <ci>S</ci>
+                        </msub>
+                        <ci>r</ci>
+                    </apply>
+                    <apply>
+                        <sum/>
+                        <mrow>
+                            <mfrac>
+                                <mi>1</mi>
+                                <mrow>
+                                    <msup>
+                                        <msub>
+                                            <mi>r</mi>
+                                            <mi>S,i</mi>
+                                        </msub>
+                                        <mi>2</mi>
+                                    </msup>
+                                </mrow>
+                            </mfrac>
+                            <msup>
+                                <ci>e</ci>
+                                <mrow>
+                                    <mo>-</mo>
+                                    <ci>B</ci>
+                                    <msup>
+                                        <mrow>
+                                            <mo>(</mo>
+                                            <ci>r</ci>
+                                            <mo>-</mo>
+                                            <msub>
+                                                <ci>a</ci>
+                                                <ci>S,i</ci>
+                                            </msub>
+                                            <mo>)</mo>
+                                        </mrow>
+                                        <ci>2</ci>
+                                    </msup>
+                                </mrow>
+                            </msup>
+                        </mrow>
+                    </apply>
+                </apply>
+            </mrow>
+            where i denotes a single bond up to the seventh sphere of nonrotatable bonds centered on the target proton,
+            and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>r</mi>
+                    <mi>S</mi>
+                </msub>
+            </mrow>
+            and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>a</mi>
+                    <mi>S</mi>
+                </msub>
+            </mrow>
+            are
+            geometric variables.
+            The last one has the form
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <apply>
+                    <eq/>
+                    <apply>
+                        <msub>
+                            <ci>g</ci>
+                            <ci>3</ci>
+                        </msub>
+                        <ci>r</ci>
+                    </apply>
+                    <apply>
+                        <sum/>
+                        <mrow>
+                            <msup>
+                                <ci>e</ci>
+                                <mrow>
+                                    <mo>-</mo>
+                                    <ci>B</ci>
+                                    <msup>
+                                        <mrow>
+                                            <mo>(</mo>
+                                            <ci>r</ci>
+                                            <mo>-</mo>
+                                            <msub>
+                                                <ci>a</ci>
+                                                <ci>3,i</ci>
+                                            </msub>
+                                            <mo>)</mo>
+                                        </mrow>
+                                        <ci>2</ci>
+                                    </msup>
+                                </mrow>
+                            </msup>
+                        </mrow>
+                    </apply>
+                </apply>
+            </mrow>
+            where i denotes an atom three nonrotatable bonds away from the target proton and belonging to a
+            six-membered ring, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>a</mi>
+                    <mi>3</mi>
+                </msub>
+            </mrow>
+            is
+            a dihedral angle in radian units.
+            Each values is returned as atom property.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
 
-<Descriptor rdf:ID="weight"><rdfs:label>Molecular Weight</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      Descriptor based on the weight of atoms of a certain element type.
-      If no element is specified, the returned value is the Molecular Weight
-    </definition>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-  <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="WHIM"><rdfs:label>WHIM</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#rg"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      Holistic descriptors described by Todeschini et al <bibtex:cite ref="TOD98"/>.
-    </definition>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-  <isClassifiedAs rdf:resource="#hybridDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="wienerNumbers"><rdfs:label>Wiener Numbers</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-01-27</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-      This class calculates Wiener path number and Wiener polarity number.
-    </definition>
-    <description>
-      Wiener path number: half the sum of all the distance matrix entries.
-      Wiener polarity number: half the sum of all the distance matrix entries with a value of 3.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="vAdjMa"><rdfs:label>Vertex adjacency information magnitude</rdfs:label>
-    <annotation>
-      <documentation>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2004-11-26</dc:date>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that calculates the vertex adjacency information of a molecule.
-    </definition>
-    <description>
-      	The values is given by 
-        <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-          <mn>1</mn>
-          <mo>+</mo>
-          <mo>log</mo>
-          <mn>2</mn>
-          <mo>*</mo>
-          <mn>m</mn>
-        </mrow>,
-        where m is the number of heavy-heavy bonds. 
-	    If m is zero, then zero is returned.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="chi0v"><rdfs:label>Valence connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that calculates atomic valence connectivity index (order 0).
-    </definition>
-    <description>
-      	Let 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mrow>
-            <msub>
-              <mi>v</mi>
-              <mi>i</mi>
-            </msub>
-	  </mrow>
-	  <mo>=</mo>
-	  <mrow>
-	    <mfrac>
-	      <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>)</mo>
-	      </mrow>
-              <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-		<mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mi>1</mi>
-                <mo>)</mo>
-              </mrow>
-            </mfrac>
-	  </mrow>
-        </mrow>,
-	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
-      	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
-	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
-	is the atomic number of atom i.
-      	Valence connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-		<mrow>
-		  <mo>(</mo>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>i</mi>
-                    </msub>
-		  </mrow>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>j</mi>
-                    </msub>
-		  </mrow>
-                  <mo>)</mo>
-                </mrow>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all bonds between heavy atoms i and j.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
+    <Descriptor rdf:ID="rotatableBondsCount">
+        <rdfs:label>Rotatable Bonds Count</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the number of nonrotatable bonds on a molecule.
+        </definition>
+        <description>
+            The number of rotatable bonds is given by the SMARTS specified by Daylight on
+            <bibtex:cite ref="DAY01"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
 
-<Descriptor rdf:ID="chi1v"><rdfs:label>Valence connectivity index (order 1)</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that calculates atomic valence connectivity index (order 1).
-    </definition>
-    <description>
-      	Let 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mrow>
-            <msub>
-              <mi>v</mi>
-              <mi>i</mi>
-            </msub>
-	  </mrow>
-	  <mo>=</mo>
-	  <mrow>
-	    <mfrac>
-	      <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>)</mo>
-	      </mrow>
-              <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-		<mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mi>1</mi>
-                <mo>)</mo>
-              </mrow>
-            </mfrac>
-	  </mrow>
-        </mrow>,
-	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
-      	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
-	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
-	is the atomic number of atom i.
-      	Valence connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-		<mrow>
-		  <mo>(</mo>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>i</mi>
-                    </msub>
-		  </mrow>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>j</mi>
-                    </msub>
-		  </mrow>
-                  <mo>)</mo>
-                </mrow>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all bonds between heavy atoms i and j.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-
-
-<Descriptor rdf:ID="chi1vC"><rdfs:label>Valence carbon connectivity index (order 1)</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that calculates carbon valence connectivity index (order 1).
-    </definition>
-    <description>
-      	Let 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mrow>
-            <msub>
-              <mi>v</mi>
-              <mi>i</mi>
-            </msub>
-	  </mrow>
-	  <mo>=</mo>
-	  <mrow>
-	    <mfrac>
-	      <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>)</mo>
-	      </mrow>
-              <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-		<mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mi>1</mi>
-                <mo>)</mo>
-              </mrow>
-            </mfrac>
-	  </mrow>
-        </mrow>,
-	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
-      	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
-	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
-	is the atomic number of atom i.
-      	While the valence connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-		<mrow>
-		  <mo>(</mo>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>i</mi>
-                    </msub>
-		  </mrow>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>j</mi>
-                    </msub>
-		  </mrow>
-                  <mo>)</mo>
-                </mrow>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all bonds between heavy atoms i and j, the carbon valence 
-	connectivity index takes into account only bonds between carbon atoms.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="chi0v"><rdfs:label>Valence connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that calculates atomic valence connectivity index (order 0).
-    </definition>
-    <description>
-      	Let 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mrow>
-            <msub>
-              <mi>v</mi>
-              <mi>i</mi>
-            </msub>
-	  </mrow>
-	  <mo>=</mo>
-	  <mrow>
-	    <mfrac>
-	      <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>)</mo>
-	      </mrow>
-              <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-		<mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mi>1</mi>
-                <mo>)</mo>
-              </mrow>
-            </mfrac>
-	  </mrow>
-        </mrow>,
-	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
-      	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
-	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
-	is the atomic number of atom i.
-      	Valence connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-		<mrow>
-		  <mo>(</mo>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>i</mi>
-                    </msub>
-		  </mrow>
-                  <mo>)</mo>
-                </mrow>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all heavy atoms i with 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="chi0vC"><rdfs:label>Valence carbon connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-    <definition>
-        Descriptor that calculates carbon valence connectivity index (order 0).
-    </definition>
-    <description>
-      	Let 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mrow>
-            <msub>
-              <mi>v</mi>
-              <mi>i</mi>
-            </msub>
-	  </mrow>
-	  <mo>=</mo>
-	  <mrow>
-	    <mfrac>
-	      <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>)</mo>
-	      </mrow>
-              <mrow>
-	        <mo>(</mo>
-	        <mrow>
-                  <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-		<mrow>
-                  <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                  </msub>
-	        </mrow>
-	        <mo>-</mo>
-	        <mi>1</mi>
-                <mo>)</mo>
-              </mrow>
-            </mfrac>
-	  </mrow>
-        </mrow>,
-	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
-      	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
-	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
-	is the atomic number of atom i.
-      	While the atomic valence connectivity is calculated as the sum of 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-	  <mfrac>
-            <mi>1</mi>
-            <mrow>
-	      <msup>
-		<mrow>
-		  <mo>(</mo>
-                  <mrow>
-                    <msub>
-                      <mi>v</mi>
-                      <mi>i</mi>
-                    </msub>
-		  </mrow>
-                  <mo>)</mo>
-                </mrow>
-		<mi>0.5</mi>
-              </msup>
-            </mrow>
-          </mfrac>
-        </mrow>
-	over all heavy atoms i with 
-	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0,
-	the carbon valence connectivity index takes into account only carbon atoms with <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0.
-    </description>
-      <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="vdwradius"><rdfs:label>Van der Waals radius</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:date>2005-01-27</dc:date>
-    <definition>
-      Descriptor that returns the VdW radius of a given atom.
-    </definition>
-  <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-  
-<Descriptor rdf:ID="xlogP"><rdfs:label>XLogP</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf"/>
-        <dc:contributor rdf:resourrce="#elw"/>
-        <dc:date>2005-01-27</dc:date>
-    <definition>
-      Prediction of logP based on the atom-type method called XLogP. 
-    </definition>
-    <description>
-      For a description of the methodology see <bibtex:cite ref="WANG97"/>.
-    </description>
-      <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-      <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-
-<Descriptor rdf:ID="zagrebIndex"><rdfs:label>Zagreb Index</rdfs:label>
-    <dc:contributor rdf:resourrce="#mf"/>
-    <dc:contributor rdf:resourrce="#elw"/>
-    <dc:date>2004-11-26</dc:date>
-    <definition>
-        The sum of the squared atom degrees of all heavy atoms.
-    </definition>
-    <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-
-<Descriptor rdf:ID="eccentricConnectivityIndex"><rdfs:label>Eccentric Connectivity Index</rdfs:label>
-    <dc:contributor rdf:resourrce="#rg"/>
-    <dc:date>2005-03-19</dc:date>
-    <definition>
-        A topological descriptor combining distance and adjacency information.
-    </definition>
-    <description>
-
-        The eccentric connectivity index for a hydrogen supressed molecular graph is given by the 
-        expression
-
-        <math display="block" overflow="scroll">
-            <msup>
-                <mi>&#x03BE;</mi>
+    <Descriptor rdf:ID="sigmaElectronegativity">
+        <rdfs:label>Sigma Electronegativity</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This Class contains a method that returns the sigma electronegativity for a given atom.
+        </definition>
+        <description>
+            Sigma electronegativity is given by
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>X</mi>
+                <mo>=</mo>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+                <mi>q</mi>
+                <mo>+</mo>
                 <mi>c</mi>
-
-            </msup>
-            <mo>=</mo>
-            <munder>
-                <mo>&#x2211;</mo>
                 <mrow>
-                    <mi>i</mi>
-                    <mo>=</mo>
-
-                    <mn>1</mn>
+                    <mo>(</mo>
+                    <mrow>
+                        <msup>
+                            <mi>q</mi>
+                            <mi>2</mi>
+                        </msup>
+                    </mrow>
+                    <mo>)</mo>
                 </mrow>
-            </munder>
-            <mi>n</mi>
-            <mi>E</mi>
-            <mo>&#x2061;</mo>
-            <mfenced>
+            </mrow>
+            ,
+            where a, b and c are Gasteiger Marsili parameters, and q is the sigma charge.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
 
-                <mi>i</mi>
-            </mfenced>
-            <mi>V</mi>
-            <mo>&#x2061;</mo>
-            <mfenced>
-                <mi>i</mi>
-            </mfenced>
-
-        </math>
-        where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the 
-        i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
-        i<sup>th</sup> atom.
-    </description>
-    <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
-
-<Descriptor rdf:ID="CPSA"><rdfs:label>Charged Partial Surface Areas</rdfs:label>
-    <dc:contributor rdf:resourrce="#rg"/>
-    <dc:date>2005-05-16</dc:date>
-    <definition>
-        A variety of descriptors combining surface area and partial charge information
-    </definition>
-    <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-    <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
-    <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-</Descriptor>
+    <Descriptor rdf:ID="tpsa">
+        <rdfs:label>Topological Polar Surface Area</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Calculation of topological polar surface area based on fragment
+            contributions
+            <bibtex:cite ref="ERTL2000"/>
+            .
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
 
 
-<!-- The Bibliography -->
+    <Descriptor rdf:ID="weight">
+        <rdfs:label>Molecular Weight</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor based on the weight of atoms of a certain element type.
+            If no element is specified, the returned value is the Molecular Weight
+        </definition>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
 
-<Reference rdf:ID="TRI92">
-  <bibtex:entry>
-    <bibtex:book>
-      <bibtex:author>Trinijastic, N.</bibtex:author>
-      <bibtex:title>Chemical Graph Theory</bibtex:title>
-      <bibtex:publisher>CRC Press</bibtex:publisher>
-      <bibtex:year>1992</bibtex:year>
-      <bibtex:isbn>0-8493-4256-2</bibtex:isbn>
-    </bibtex:book>
-  </bibtex:entry>
-</Reference>
+    <Descriptor rdf:ID="WHIM">
+        <rdfs:label>WHIM</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Holistic descriptors described by Todeschini et al
+            <bibtex:cite ref="TOD98"/>
+            .
+        </definition>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#hybridDescriptor"/>
+    </Descriptor>
 
-<Reference rdf:ID="PEA99">
-          <bibtex:entry>
+    <Descriptor rdf:ID="wienerNumbers">
+        <rdfs:label>Wiener Numbers</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-01-27</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This class calculates Wiener path number and Wiener polarity number.
+        </definition>
+        <description>
+            Wiener path number: half the sum of all the distance matrix entries.
+            Wiener polarity number: half the sum of all the distance matrix entries with a value of 3.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="vAdjMa">
+        <rdfs:label>Vertex adjacency information magnitude</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2004-11-26</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that calculates the vertex adjacency information of a molecule.
+        </definition>
+        <description>
+            The values is given by
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>1</mn>
+                <mo>+</mo>
+                <mo>log</mo>
+                <mn>2</mn>
+                <mo>*</mo>
+                <mn>m</mn>
+            </mrow>
+            ,
+            where m is the number of heavy-heavy bonds.
+            If m is zero, then zero is returned.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi0v">
+        <rdfs:label>Valence connectivity index (order 0)</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates atomic valence connectivity index (order 0).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            Valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>j</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all bonds between heavy atoms i and j.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+
+    <Descriptor rdf:ID="chi1v">
+        <rdfs:label>Valence connectivity index (order 1)</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates atomic valence connectivity index (order 1).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            Valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>j</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all bonds between heavy atoms i and j.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+
+    <Descriptor rdf:ID="chi1vC">
+        <rdfs:label>Valence carbon connectivity index (order 1)</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates carbon valence connectivity index (order 1).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            While the valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>j</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all bonds between heavy atoms i and j, the carbon valence
+            connectivity index takes into account only bonds between carbon atoms.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi0v">
+        <rdfs:label>Valence connectivity index (order 0)</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates atomic valence connectivity index (order 0).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            Valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all heavy atoms i with
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>v</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            greather than 0.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi0vC">
+        <rdfs:label>Valence carbon connectivity index (order 0)</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates carbon valence connectivity index (order 0).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            While the atomic valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all heavy atoms i with
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>v</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            greather than 0,
+            the carbon valence connectivity index takes into account only carbon atoms with
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>v</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            greather than 0.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="vdwradius">
+        <rdfs:label>Van der Waals radius</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:date>2005-01-27</dc:date>
+        <definition>
+            Descriptor that returns the VdW radius of a given atom.
+        </definition>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="xlogP">
+        <rdfs:label>XLogP</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:contributor rdf:resourrce="#elw"/>
+        <dc:date>2005-01-27</dc:date>
+        <definition>
+            Prediction of logP based on the atom-type method called XLogP.
+        </definition>
+        <description>
+            For a description of the methodology see
+            <bibtex:cite ref="WANG97"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="zagrebIndex">
+        <rdfs:label>Zagreb Index</rdfs:label>
+        <dc:contributor rdf:resourrce="#mf"/>
+        <dc:contributor rdf:resourrce="#elw"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            The sum of the squared atom degrees of all heavy atoms.
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="petitjeanShapeIndex">
+        <rdfs:label>Petitjean Shape Indices</rdfs:label>
+        <dc:contributor rdf:resourrce="#rg"/>
+        <dc:date>2006-01-15</dc:date>
+        <definition>
+            The topological and geometric shape indices described Petitjean and Bath et al.
+            respectively. Both measure the anisotropy in a molecule.
+        </definition>
+        <isClassifiedAs rdf:resource="#geometricDescriptor"/>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="eccentricConnectivityIndex">
+        <rdfs:label>Eccentric Connectivity Index</rdfs:label>
+        <dc:contributor rdf:resourrce="#rg"/>
+        <dc:date>2005-03-19</dc:date>
+        <definition>
+            A topological descriptor combining distance and adjacency information.
+        </definition>
+        <description>
+
+            The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
+            expression
+
+            <math display="block" overflow="scroll">
+                <msup>
+                    <mi>&#x03BE;</mi>
+                    <mi>c</mi>
+
+                </msup>
+                <mo>=</mo>
+                <munder>
+                    <mo>&#x2211;</mo>
+                    <mrow>
+                        <mi>i</mi>
+                        <mo>=</mo>
+
+                        <mn>1</mn>
+                    </mrow>
+                </munder>
+                <mi>n</mi>
+                <mi>E</mi>
+                <mo>&#x2061;</mo>
+                <mfenced>
+
+                    <mi>i</mi>
+                </mfenced>
+                <mi>V</mi>
+                <mo>&#x2061;</mo>
+                <mfenced>
+                    <mi>i</mi>
+                </mfenced>
+
+            </math>
+            where E(i) is the eccentricity of the i
+            <sup>th</sup>
+            atom (path length from the
+            i
+            <sup>th</sup>
+            atom to the atom farthest from it) and V(i) is the vertex degree of the
+            i
+            <sup>th</sup>
+            atom.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="CPSA">
+        <rdfs:label>Charged Partial Surface Areas</rdfs:label>
+        <dc:contributor rdf:resourrce="#rg"/>
+        <dc:date>2005-05-16</dc:date>
+        <definition>
+            A variety of descriptors combining surface area and partial charge information
+        </definition>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+
+    <!-- The Bibliography -->
+
+    <Reference rdf:ID="TRI92">
+        <bibtex:entry>
+            <bibtex:book>
+                <bibtex:author>Trinijastic, N.</bibtex:author>
+                <bibtex:title>Chemical Graph Theory</bibtex:title>
+                <bibtex:publisher>CRC Press</bibtex:publisher>
+                <bibtex:year>1992</bibtex:year>
+                <bibtex:isbn>0-8493-4256-2</bibtex:isbn>
+            </bibtex:book>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="PEA99">
+        <bibtex:entry>
             <bibtex:article>
-              <bibtex:author>Pearlman, R.S. and Smith, K.M.</bibtex:author>
-              <bibtex:title> Metric Validation and the Receptor-Relevant Subspace Concept</bibtex:title>
-              <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
-              <bibtex:year>1999</bibtex:year>
-              <bibtex:volume>39</bibtex:volume>
-              <bibtex:number>1</bibtex:number>
-              <bibtex:pages>28-35</bibtex:pages>
+                <bibtex:author>Pearlman, R.S. and Smith, K.M.</bibtex:author>
+                <bibtex:title>Metric Validation and the Receptor-Relevant Subspace Concept</bibtex:title>
+                <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+                <bibtex:year>1999</bibtex:year>
+                <bibtex:volume>39</bibtex:volume>
+                <bibtex:number>1</bibtex:number>
+                <bibtex:pages>28-35</bibtex:pages>
             </bibtex:article>
-          </bibtex:entry>
-</Reference>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="CHER2003">
-  <bibtex:entry>
+    <Reference rdf:ID="CHER2003">
+        <bibtex:entry>
             <bibtex:article>
-              <bibtex:author>Cherkasov, A.</bibtex:author>
-              <bibtex:title>Inductive Electronegativity Scale. Iterative Calculation of Inductive Partial Charges</bibtex:title>
-              <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
-              <bibtex:year>2003</bibtex:year>
-              <bibtex:volume>43</bibtex:volume>
-              <bibtex:pages>2039-2047</bibtex:pages>
-              <bibtex:doi>10.1021/ci034147w</bibtex:doi>
+                <bibtex:author>Cherkasov, A.</bibtex:author>
+                <bibtex:title>Inductive Electronegativity Scale. Iterative Calculation of Inductive Partial
+                    Charges</bibtex:title>
+                <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+                <bibtex:year>2003</bibtex:year>
+                <bibtex:volume>43</bibtex:volume>
+                <bibtex:pages>2039-2047</bibtex:pages>
+                <bibtex:doi>10.1021/ci034147w</bibtex:doi>
             </bibtex:article>
-          </bibtex:entry>
-</Reference>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="DAY01">
-  <bibtex:entry>
-    <bibtex:misc>
-      <bibtex:author>Daylight</bibtex:author>
-      <bibtex:title>SMILES on-line tutorial</bibtex:title>
-      <bibtex:url>http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html</bibtex:url>
-    </bibtex:misc>
-  </bibtex:entry>
-</Reference>
+    <Reference rdf:ID="DAY01">
+        <bibtex:entry>
+            <bibtex:misc>
+                <bibtex:author>Daylight</bibtex:author>
+                <bibtex:title>SMILES on-line tutorial</bibtex:title>
+                <bibtex:url>http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html</bibtex:url>
+            </bibtex:misc>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="WANG97">
-  <bibtex:entry>
+    <Reference rdf:ID="WANG97">
+        <bibtex:entry>
             <bibtex:article>
                 <bibtex:author>Wang, R., Fu, Y., and Lai, L.</bibtex:author>
                 <bibtex:title>A New Atom-Additive Method for Calculating Partition Coefficients</bibtex:title>
-              <bibtex:journal>Journal of Chemical Information and Computer
-                  Sciences</bibtex:journal>
-              <bibtex:year>1997</bibtex:year>
-              <bibtex:volume>37</bibtex:volume>
-              <bibtex:pages>615-621</bibtex:pages>
+                <bibtex:journal>Journal of Chemical Information and Computer
+                    Sciences</bibtex:journal>
+                <bibtex:year>1997</bibtex:year>
+                <bibtex:volume>37</bibtex:volume>
+                <bibtex:pages>615-621</bibtex:pages>
             </bibtex:article>
-          </bibtex:entry>
-</Reference>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="TOD98">
-  <bibtex:entry>
+    <Reference rdf:ID="TOD98">
+        <bibtex:entry>
             <bibtex:article>
-              <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
-              <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
-              <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
-              <bibtex:year>1998</bibtex:year>
-              <bibtex:pages>355-380</bibtex:pages>
+                <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
+                <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
+                <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
+                <bibtex:year>1998</bibtex:year>
+                <bibtex:pages>355-380</bibtex:pages>
             </bibtex:article>
-          </bibtex:entry>
-</Reference>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="ERTL2000">
-  <bibtex:entry>
+    <Reference rdf:ID="ERTL2000">
+        <bibtex:entry>
             <bibtex:article>
-              <bibtex:author>Ertl, P. and Rohde, B. and Selzer, P.</bibtex:author>
-              <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of 
-                 Fragment-Based Contributions and Its Application to the Prediction of 
-                 Drug Transport Properties</bibtex:title>
-              <bibtex:journal>J. Med. Chem.</bibtex:journal>
-              <bibtex:year>2000</bibtex:year>
-              <bibtex:volume>43</bibtex:volume>
-              <bibtex:number>20</bibtex:number>
-              <bibtex:pages>3714-3717</bibtex:pages>
-              <bibtex:doi>10.1021/jm000942e</bibtex:doi>
+                <bibtex:author>Ertl, P. and Rohde, B. and Selzer, P.</bibtex:author>
+                <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of
+                    Fragment-Based Contributions and Its Application to the Prediction of
+                    Drug Transport Properties</bibtex:title>
+                <bibtex:journal>J. Med. Chem.</bibtex:journal>
+                <bibtex:year>2000</bibtex:year>
+                <bibtex:volume>43</bibtex:volume>
+                <bibtex:number>20</bibtex:number>
+                <bibtex:pages>3714-3717</bibtex:pages>
+                <bibtex:doi>10.1021/jm000942e</bibtex:doi>
             </bibtex:article>
-          </bibtex:entry>
-</Reference>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="GAST2002">
-  <bibtex:entry>
+    <Reference rdf:ID="GAST2002">
+        <bibtex:entry>
             <bibtex:article>
-              <bibtex:author>Aires-de-Sousa, J. and Hemmer, M.C. and Gasteiger, J.</bibtex:author>
-              <bibtex:title>Prediction of 1H NMR Chemical Shifts Using Neural Networks</bibtex:title>
-              <bibtex:journal>Anal. Chem.</bibtex:journal>
-              <bibtex:year>2002</bibtex:year>
-              <bibtex:volume>74</bibtex:volume>
-              <bibtex:number>1</bibtex:number>
-              <bibtex:pages>80-90</bibtex:pages>
-              <bibtex:doi>10.1021/ac010737m</bibtex:doi>
+                <bibtex:author>Aires-de-Sousa, J. and Hemmer, M.C. and Gasteiger, J.</bibtex:author>
+                <bibtex:title>Prediction of 1H NMR Chemical Shifts Using Neural Networks</bibtex:title>
+                <bibtex:journal>Anal. Chem.</bibtex:journal>
+                <bibtex:year>2002</bibtex:year>
+                <bibtex:volume>74</bibtex:volume>
+                <bibtex:number>1</bibtex:number>
+                <bibtex:pages>80-90</bibtex:pages>
+                <bibtex:doi>10.1021/ac010737m</bibtex:doi>
             </bibtex:article>
-          </bibtex:entry>
-</Reference>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="WES98">
-  <bibtex:entry>
+    <Reference rdf:ID="WES98">
+        <bibtex:entry>
             <bibtex:article>
                 <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
                 </bibtex:author>
                 <bibtex:title>Prediction of Human Intestinal Absorption of Drug Compounds
-                From Molecular Structure</bibtex:title>
-              <bibtex:journal>Journal of Chemical Information and Computer
-                  Sciences</bibtex:journal>
-              <bibtex:year>1998</bibtex:year>
-              <bibtex:volume>38</bibtex:volume>
-              <bibtex:pages>726-735</bibtex:pages>
+                    From Molecular Structure</bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer
+                    Sciences</bibtex:journal>
+                <bibtex:year>1998</bibtex:year>
+                <bibtex:volume>38</bibtex:volume>
+                <bibtex:pages>726-735</bibtex:pages>
             </bibtex:article>
-          </bibtex:entry>
-</Reference>
+        </bibtex:entry>
+    </Reference>
 
-<Reference rdf:ID="KAT96">
-<bibtex:entry>
-  <bibtex:article>
-    <bibtex:author>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.</bibtex:author>
-    <bibtex:title>Correlation of Boiling Points With Molecular Structure. 1. A Training Set of 298 Diverse Organics and a Test Set of 9 Simple Inorganics</bibtex:title>
-    <bibtex:journal>J. Phys. Chem.</bibtex:journal>
-    <bibtex:year>1996</bibtex:year>
-    <bibtex:volume>100</bibtex:volume>
-    <bibtex:pages>10400-10407</bibtex:pages>
-  </bibtex:article>
-</bibtex:entry>
-</Reference>
+    <Reference rdf:ID="KAT96">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.</bibtex:author>
+                <bibtex:title>Correlation of Boiling Points With Molecular Structure. 1. A Training Set of 298 Diverse
+                    Organics and a Test Set of 9 Simple Inorganics</bibtex:title>
+                <bibtex:journal>J. Phys. Chem.</bibtex:journal>
+                <bibtex:year>1996</bibtex:year>
+                <bibtex:volume>100</bibtex:volume>
+                <bibtex:pages>10400-10407</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
 
+    <Reference rdf:ID="PET92">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Petitjean, M.
+                </bibtex:author>
+                <bibtex:title></bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer Sciencey</bibtex:journal>
+                <bibtex:year>1992</bibtex:year>
+                <bibtex:volume>32</bibtex:volume>
+                <bibtex:pages>331-337</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="BAT95">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Bath et al.
+                </bibtex:author>
+                <bibtex:title></bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer Sciencey</bibtex:journal>
+                <bibtex:year>1995</bibtex:year>
+                <bibtex:volume>35</bibtex:volume>
+                <bibtex:pages>714-716</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
 
 </rdf:RDF>
