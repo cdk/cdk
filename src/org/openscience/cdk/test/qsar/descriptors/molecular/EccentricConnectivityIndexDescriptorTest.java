@@ -29,6 +29,7 @@ import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
