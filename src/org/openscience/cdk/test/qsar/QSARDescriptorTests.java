@@ -27,6 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -88,6 +89,8 @@ import org.openscience.cdk.applications.swing.MoleculeListViewer;
 	suite.addTest(InductiveAtomicHardnessDescriptorTest.suite());
 	suite.addTest(InductiveAtomicSoftnessDescriptorTest.suite());
 	suite.addTest(CPSADescriptorTest.suite());
+	
+		suite.addTest(AminoAcidCountDescriptorTest.suite());
         return suite;
     }
     

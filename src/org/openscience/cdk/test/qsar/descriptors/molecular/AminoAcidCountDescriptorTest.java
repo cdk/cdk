@@ -1,0 +1,91 @@
+/* $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ * 
+ * Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ */
+package org.openscience.cdk.test.qsar.descriptors.molecular;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.descriptors.atomic.AtomCountDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor;
+import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.result.DescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.ProteinBuilderTool;
+
+/**
+ * TestSuite that runs a test for the AtomCountDescriptor.
+ *
+ * @cdk.module test
+ */
+ 
+public class AminoAcidCountDescriptorTest extends CDKTestCase {
+	
+	public  AminoAcidCountDescriptorTest() {}
+    
+	public static Test suite() {
+		return new TestSuite(AminoAcidCountDescriptorTest.class);
+	}
+    
+	public void testAACount() throws CDKException {
+        IDescriptor descriptor = new AminoAcidCountDescriptor();
+        
+        BioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
+        DescriptorResult result = descriptor.calculate(protein).getValue();
+        assertTrue(result instanceof IntegerArrayResult);
+        IntegerArrayResult iaResult = (IntegerArrayResult)result;
+        for (int i=0; i<iaResult.size(); i++) {
+        	assertTrue(iaResult.get(i) >= 1); // all AAs are found at least once
+        }
+        assertEquals(20, iaResult.get(8)); // glycine is in all of them, so 20 times
+	}
+
+	public void testFCount() throws CDKException {
+        IDescriptor descriptor = new AminoAcidCountDescriptor();
+        
+        BioPolymer protein = ProteinBuilderTool.createProtein("FF");
+        DescriptorResult result = descriptor.calculate(protein).getValue();
+        assertTrue(result instanceof IntegerArrayResult);
+        IntegerArrayResult iaResult = (IntegerArrayResult)result;
+        assertEquals(2, iaResult.get(8));
+        assertEquals(4, iaResult.get(5)); // thingy is symmetrical, so two mappings at each AA position possible
+	}
+
+	public void testTCount() throws CDKException {
+        IDescriptor descriptor = new AminoAcidCountDescriptor();
+        
+        BioPolymer protein = ProteinBuilderTool.createProtein("TT");
+        DescriptorResult result = descriptor.calculate(protein).getValue();
+        assertTrue(result instanceof IntegerArrayResult);
+        IntegerArrayResult iaResult = (IntegerArrayResult)result;
+        assertEquals(2, iaResult.get(8));
+        assertEquals(2, iaResult.get(16));
+	}
+}
+
