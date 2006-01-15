@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.qsar.Descriptor;
@@ -33,14 +34,14 @@ import javax.vecmath.Point3d;
 
 /**
  * Evaluates the Petitjean shape indices,
- *
+ * <p/>
  * These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
  * and considered the molecular graph. This class also implements the geometric analog
  * of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
- *
+ * <p/>
  * The descriptor returns a <code>DoubleArrayResult</code> which contains the topological
  * shape index and the geometric shape index in that order.
- * 
+ *
  * @author Rajarshi Guha
  * @cdk.created 2006-01-14
  * @cdk.module qsar
@@ -110,7 +111,7 @@ public class PetitjeanShapeIndexDescriptor implements Descriptor {
      * @return A DoubleArrayResult value representing the Petitjean shape indices
      */
 
-    public DescriptorValue calculate(AtomContainer container) {
+    public DescriptorValue calculate(AtomContainer container) throws CDKException {
         AtomContainer local = AtomContainerManipulator.removeHydrogens(container);
 
         int tradius = PathTools.getMolecularGraphRadius(local);
@@ -120,37 +121,41 @@ public class PetitjeanShapeIndexDescriptor implements Descriptor {
         retval.add((double) (tdiameter - tradius) / (double) tradius);
 
         // get the 3D distance matrix
-        int natom = container.getAtomCount();
-        double[][] distanceMatrix = new double[natom][natom];
-        for (int i = 0; i < natom; i++) {
-            for (int j = 0; j < natom; j++) {
-                if (i == j) {
-                    distanceMatrix[i][j] = 0.0;
-                    continue;
+        if (GeometryTools.has3DCoordinates(container)) {
+            int natom = container.getAtomCount();
+            double[][] distanceMatrix = new double[natom][natom];
+            for (int i = 0; i < natom; i++) {
+                for (int j = 0; j < natom; j++) {
+                    if (i == j) {
+                        distanceMatrix[i][j] = 0.0;
+                        continue;
+                    }
+
+                    Point3d a = container.getAtomAt(i).getPoint3d();
+                    Point3d b = container.getAtomAt(j).getPoint3d();
+                    distanceMatrix[i][j] = Math.sqrt((a.x - b.x) * (a.x - b.x) +
+                            (a.y - b.y) * (a.y - b.y) +
+                            (a.z - b.z) * (a.z - b.z));
                 }
-                Point3d a = container.getAtomAt(i).getPoint3d();
-                Point3d b = container.getAtomAt(j).getPoint3d();
-                distanceMatrix[i][j] =
-                        Math.sqrt((a.x - b.x) * (a.x - b.x) +
-                                (a.y - b.y) * (a.y - b.y) +
-                                (a.z - b.z) * (a.z - b.z));
             }
-        }
-        double gradius = 999999;
-        double gdiameter = -999999;
-        double[] geta = new double[natom];
-        for (int i = 0; i < natom; i++) {
-            double max = -99999;
-            for (int j = 0; j < natom; j++) {
-                if (distanceMatrix[i][j] > max) max = distanceMatrix[i][j];
+            double gradius = 999999;
+            double gdiameter = -999999;
+            double[] geta = new double[natom];
+            for (int i = 0; i < natom; i++) {
+                double max = -99999;
+                for (int j = 0; j < natom; j++) {
+                    if (distanceMatrix[i][j] > max) max = distanceMatrix[i][j];
+                }
+                geta[i] = max;
             }
-            geta[i] = max;
+            for (int i = 0; i < natom; i++) {
+                if (geta[i] < gradius) gradius = geta[i];
+                if (geta[i] > gdiameter) gdiameter = geta[i];
+            }
+            retval.add((gdiameter - gradius) / gradius);
+        } else {
+            throw new CDKException("Structure must have 3D coordinates");
         }
-        for (int i = 0; i < natom; i++) {
-            if (geta[i] < gradius) gradius = geta[i];
-            if (geta[i] > gdiameter) gdiameter = geta[i];
-        }
-        retval.add((gdiameter - gradius) / gradius);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
     }
