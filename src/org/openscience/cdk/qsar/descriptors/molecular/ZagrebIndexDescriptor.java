@@ -55,7 +55,7 @@ public class ZagrebIndexDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:zagrebIndex",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");

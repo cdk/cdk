@@ -111,7 +111,7 @@ public class InductiveAtomicSoftnessDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
-				"http://qsar.sourceforge.net/dicts/qsar-descriptors:atomicSoftness",
+				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicSoftness",
 				this.getClass().getName(),
 				"$Id$",
 				"The Chemistry Development Kit");

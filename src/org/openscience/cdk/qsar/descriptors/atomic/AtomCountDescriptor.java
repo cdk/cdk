@@ -87,7 +87,7 @@ public class AtomCountDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:atomCount",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

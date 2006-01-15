@@ -88,7 +88,7 @@ public class HBondAcceptorCountDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:hBondacceptors",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");

@@ -80,7 +80,7 @@ public class AtomDegreeDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:atomDegree",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

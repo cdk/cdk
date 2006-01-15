@@ -135,7 +135,7 @@ public class XLogPDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
-				"http://qsar.sourceforge.net/dicts/qsar-descriptors:xlogP",
+				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP",
 				this.getClass().getName(),
 				"$Id$",
 				"The Chemistry Development Kit");

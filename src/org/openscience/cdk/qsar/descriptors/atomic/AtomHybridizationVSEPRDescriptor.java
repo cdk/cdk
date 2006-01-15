@@ -108,7 +108,7 @@ public class AtomHybridizationVSEPRDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
-				"http://qsar.sourceforge.net/dicts/qsar-descriptors:atomHybridization",
+				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization",
 				this.getClass().getName(),
 				"$Id$",
 				"The Chemistry Development Kit");

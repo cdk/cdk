@@ -89,7 +89,7 @@ public class APolDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:apol",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

@@ -111,7 +111,7 @@ public class InductiveAtomicHardnessDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
-				"http://qsar.sourceforge.net/dicts/qsar-descriptors:atomicHardness",
+				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness",
 				this.getClass().getName(),
 				"$Id$",
 				"The Chemistry Development Kit");

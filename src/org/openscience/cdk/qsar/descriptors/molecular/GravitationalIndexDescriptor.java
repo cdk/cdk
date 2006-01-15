@@ -79,7 +79,7 @@ public class GravitationalIndexDescriptor implements Descriptor {
 
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:gravitationalIndex",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");

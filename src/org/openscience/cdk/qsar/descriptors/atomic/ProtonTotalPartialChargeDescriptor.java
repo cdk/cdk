@@ -76,7 +76,7 @@ public class ProtonTotalPartialChargeDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:protonPartialCharge",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");

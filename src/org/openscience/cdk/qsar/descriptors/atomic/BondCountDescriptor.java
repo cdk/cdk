@@ -72,7 +72,7 @@ public class BondCountDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:bondCount",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");

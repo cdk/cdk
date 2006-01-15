@@ -79,7 +79,7 @@ public class DistanceToAtomDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:distanceToAtom",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

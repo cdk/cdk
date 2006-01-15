@@ -82,7 +82,7 @@ public class BondsToAtomDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:bondsToAtom",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

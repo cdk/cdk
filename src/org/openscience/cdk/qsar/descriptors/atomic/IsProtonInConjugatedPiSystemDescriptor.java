@@ -85,7 +85,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:isProtonInConjugatedPiSystem",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");

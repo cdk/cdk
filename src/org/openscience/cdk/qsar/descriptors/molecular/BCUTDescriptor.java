@@ -107,7 +107,7 @@ public class BCUTDescriptor implements Descriptor {
 
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:BCUT",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

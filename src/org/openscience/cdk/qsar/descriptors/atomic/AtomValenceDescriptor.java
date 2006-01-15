@@ -117,7 +117,7 @@ public class AtomValenceDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:atomValence",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

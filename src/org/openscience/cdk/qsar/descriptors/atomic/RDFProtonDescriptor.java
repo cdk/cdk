@@ -97,7 +97,7 @@ public class RDFProtonDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:rdfProtonCalculatedValues",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");

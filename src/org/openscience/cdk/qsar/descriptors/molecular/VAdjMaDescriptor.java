@@ -58,7 +58,7 @@ public class VAdjMaDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:vAdjMa",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");

@@ -81,7 +81,7 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements Descriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi1vC",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chi1vC",
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");

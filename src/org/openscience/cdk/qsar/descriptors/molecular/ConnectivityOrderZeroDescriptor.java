@@ -59,7 +59,7 @@ public class ConnectivityOrderZeroDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi0",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chi0",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");

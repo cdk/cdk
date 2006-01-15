@@ -80,7 +80,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:chi0v",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chi0v",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

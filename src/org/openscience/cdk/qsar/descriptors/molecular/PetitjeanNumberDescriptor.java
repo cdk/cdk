@@ -64,7 +64,7 @@ public class PetitjeanNumberDescriptor implements Descriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:petitjeanNumber",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
