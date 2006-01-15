@@ -2060,7 +2060,7 @@
             The topological and geometric shape indices described Petitjean and Bath et al.
             respectively. Both measure the anisotropy in a molecule.
         </definition>
-        <isClassifiedAs rdf:resource="#geometricDescriptor"/>
+        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
