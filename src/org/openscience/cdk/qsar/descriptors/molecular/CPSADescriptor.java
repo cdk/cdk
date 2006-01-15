@@ -25,7 +25,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.surface.NumericalSurface;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.tools.LoggingTool;
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * <caption><a name="cpsa">A Summary of the 29 CPSA Descriptors</a></caption>
  * <thead>
  * <tr>
- * <th>Descriptor</th><th>Meaning</th>
+ * <th>IDescriptor</th><th>Meaning</th>
  * </tr>
  * </thead>
  * <tbody>
@@ -120,7 +120,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:CPSA
  */
-public class CPSADescriptor implements Descriptor {
+public class CPSADescriptor implements IDescriptor {
     
     private LoggingTool logger;
     

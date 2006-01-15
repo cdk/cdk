@@ -31,7 +31,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.module qsar
  */
-public interface Descriptor {
+public interface IDescriptor {
 
    /**
    * Returns a <code>Map</code> which specifies which descriptor

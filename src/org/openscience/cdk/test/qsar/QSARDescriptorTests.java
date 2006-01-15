@@ -39,7 +39,7 @@ import org.openscience.cdk.applications.swing.MoleculeListViewer;
     static MoleculeListViewer moleculeListViewer = null;
     
     public static Test suite() {
-        TestSuite suite = new TestSuite("All QSAR Descriptor Tests");
+        TestSuite suite = new TestSuite("All QSAR IDescriptor Tests");
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BondCountDescriptorTest.suite());
         suite.addTest(RotatableBondsCountDescriptorTest.suite());

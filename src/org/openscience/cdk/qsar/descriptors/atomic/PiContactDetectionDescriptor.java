@@ -31,7 +31,7 @@ import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -70,7 +70,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:piContact
  */
-public class PiContactDetectionDescriptor implements Descriptor {
+public class PiContactDetectionDescriptor implements IDescriptor {
 
     private int firstAtom = 0;
     private int secondAtom = 0;

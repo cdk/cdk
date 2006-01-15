@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -56,7 +56,7 @@ import java.util.Hashtable;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomValence
  */
-public class AtomValenceDescriptor implements Descriptor {
+public class AtomValenceDescriptor implements IDescriptor {
 
     private int targetPosition = 0;
     public Hashtable valencesTable;

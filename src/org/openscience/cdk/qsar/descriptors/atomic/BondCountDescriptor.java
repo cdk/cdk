@@ -27,12 +27,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
 /**
- *  Descriptor based on the number of bonds of a certain bond order.
+ *  IDescriptor based on the number of bonds of a certain bond order.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -54,7 +54,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondCount
  */
-public class BondCountDescriptor implements Descriptor {
+public class BondCountDescriptor implements IDescriptor {
 
     private double order = 1.0;
 

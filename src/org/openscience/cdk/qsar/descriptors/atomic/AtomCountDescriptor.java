@@ -27,12 +27,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
 /**
- * Descriptor based on the number of atoms of a certain element type.
+ * IDescriptor based on the number of atoms of a certain element type.
  *
  * It is
  * possible to use the wild card symbol '*' as element type to get the count of
@@ -58,7 +58,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomCount
  */
-public class AtomCountDescriptor implements Descriptor {
+public class AtomCountDescriptor implements IDescriptor {
 
     private String elementName = "*";
 

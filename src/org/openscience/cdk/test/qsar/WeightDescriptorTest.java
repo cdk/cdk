@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -50,7 +50,7 @@ public class WeightDescriptorTest extends CDKTestCase {
     
 	
 	public void testWeightDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Descriptor descriptor = new WeightDescriptor();
+		IDescriptor descriptor = new WeightDescriptor();
 		Object[] params = {"*"};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

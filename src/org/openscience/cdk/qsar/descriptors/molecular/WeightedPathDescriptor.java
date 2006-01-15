@@ -23,7 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -63,7 +63,7 @@ import java.util.List;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:weightedPath
  */
-public class WeightedPathDescriptor implements Descriptor {
+public class WeightedPathDescriptor implements IDescriptor {
 
     public WeightedPathDescriptor() {
     }

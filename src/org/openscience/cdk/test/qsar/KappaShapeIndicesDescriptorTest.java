@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
     
 	public void testKappaShapeIndicesDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={ 5,2.25, 4};
-		Descriptor descriptor = new KappaShapeIndicesDescriptor();
+		IDescriptor descriptor = new KappaShapeIndicesDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 		AtomContainerManipulator.removeHydrogens(mol);

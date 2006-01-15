@@ -30,7 +30,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -58,7 +58,7 @@ public class EccentricConnectivityIndexDescriptorTest extends CDKTestCase {
         AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
         AtomContainer ac = c[0];
 
-        Descriptor descriptor = new EccentricConnectivityIndexDescriptor();
+        IDescriptor descriptor = new EccentricConnectivityIndexDescriptor();
         IntegerResult retval = (IntegerResult)descriptor.calculate(ac).getValue();
         //System.out.println(retval.intValue());
 

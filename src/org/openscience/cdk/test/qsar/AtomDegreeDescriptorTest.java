@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptor;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -49,7 +49,7 @@ public class AtomDegreeDescriptorTest extends CDKTestCase {
 	}
     
 	public void testAtomDegreeDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Descriptor descriptor = new AtomDegreeDescriptor();
+		IDescriptor descriptor = new AtomDegreeDescriptor();
 		Object[] params = {new Integer(1)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

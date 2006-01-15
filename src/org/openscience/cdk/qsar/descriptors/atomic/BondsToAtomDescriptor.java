@@ -28,7 +28,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:bondsToAtom
  */
-public class BondsToAtomDescriptor implements Descriptor {
+public class BondsToAtomDescriptor implements IDescriptor {
 
     private int targetPosition = 0;
     private int focusPosition = 0;

@@ -43,7 +43,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -75,7 +75,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  */
-public class RDFProtonDescriptor implements Descriptor {
+public class RDFProtonDescriptor implements IDescriptor {
 
 	private int atomPosition = 0;
 	private boolean checkAromaticity = false;

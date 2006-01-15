@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridization
  */
-public class AtomHybridizationDescriptor implements Descriptor {
+public class AtomHybridizationDescriptor implements IDescriptor {
 
 	private int targetPosition = 0;
 	AtomTypeManipulator atman = null;

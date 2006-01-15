@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -51,7 +51,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
-public class HBondDonorCountDescriptor implements Descriptor {
+public class HBondDonorCountDescriptor implements IDescriptor {
 
     /**
      *  Constructor for the HBondDonorCountDescriptor object

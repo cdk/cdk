@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -48,7 +48,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierValues
  */
-public class KappaShapeIndicesDescriptor implements Descriptor {
+public class KappaShapeIndicesDescriptor implements IDescriptor {
 
     private ArrayList singlePaths = null;
     private ArrayList doublePaths = null;

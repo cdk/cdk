@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -49,7 +49,7 @@ public class RotatableBondsCountDescriptorTest extends CDKTestCase {
 	}
     
 	public void testRotatableBondsCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Descriptor descriptor = new RotatableBondsCountDescriptor();
+        IDescriptor descriptor = new RotatableBondsCountDescriptor();
         Object[] params = { new Boolean(true) };
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();

@@ -29,7 +29,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -56,7 +56,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
-public class ProtonTotalPartialChargeDescriptor implements Descriptor {
+public class ProtonTotalPartialChargeDescriptor implements IDescriptor {
 
     private int atomPosition = 0;
     private GasteigerMarsiliPartialCharges peoe = null;

@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -44,7 +44,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:chi0
  */
-public class ConnectivityOrderZeroDescriptor implements Descriptor {
+public class ConnectivityOrderZeroDescriptor implements IDescriptor {
 
     /**
      *  Constructor for the ConnectivityOrderZeroDescriptor object

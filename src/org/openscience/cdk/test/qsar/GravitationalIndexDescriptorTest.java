@@ -30,7 +30,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -58,7 +58,7 @@ public class GravitationalIndexDescriptorTest extends CDKTestCase {
             AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
             AtomContainer ac = c[0];
 
-            Descriptor descriptor = new GravitationalIndexDescriptor();
+            IDescriptor descriptor = new GravitationalIndexDescriptor();
             DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(ac).getValue();
 
             assertEquals(1756.5060703860984, retval.get(0), 0.00000001);

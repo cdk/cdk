@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -83,7 +83,7 @@ public class InductiveAtomicHardnessDescriptorTest extends CDKTestCase {
 		mol.addBond(0, 3, 1); // 1
 		mol.addBond(0, 4, 1); // 1
 		
-		Descriptor descriptor = new InductiveAtomicHardnessDescriptor();
+		IDescriptor descriptor = new InductiveAtomicHardnessDescriptor();
 		Object[] params = {new Integer(0)};
 		descriptor.setParameters(params);
 		

@@ -55,7 +55,7 @@ import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:lipinskifailures
  */
-public class RuleOfFiveDescriptor implements Descriptor {
+public class RuleOfFiveDescriptor implements IDescriptor {
     private boolean checkAromaticity = false;
 
 
@@ -139,7 +139,7 @@ public class RuleOfFiveDescriptor implements Descriptor {
 
         int lipinskifailures = 0;
 
-        Descriptor xlogP = new XLogPDescriptor();
+        IDescriptor xlogP = new XLogPDescriptor();
         Object[] xlogPparams = {
         	new Boolean(checkAromaticity),
         	Boolean.TRUE,
@@ -147,21 +147,21 @@ public class RuleOfFiveDescriptor implements Descriptor {
         xlogP.setParameters(xlogPparams);
         double xlogPvalue = ((DoubleResult)xlogP.calculate(mol).getValue()).doubleValue();
 
-        Descriptor acc = new HBondAcceptorCountDescriptor();
+        IDescriptor acc = new HBondAcceptorCountDescriptor();
         Object[] hBondparams = { new Boolean(checkAromaticity) };
         acc.setParameters(hBondparams);
         int acceptors = ((IntegerResult)acc.calculate(mol).getValue()).intValue();
 
-        Descriptor don = new HBondDonorCountDescriptor();
+        IDescriptor don = new HBondDonorCountDescriptor();
         don.setParameters(hBondparams);
         int donors = ((IntegerResult)don.calculate(mol).getValue()).intValue();
 
-        Descriptor mw = new WeightDescriptor();
+        IDescriptor mw = new WeightDescriptor();
         Object[] mwparams = {new String("")};
         mw.setParameters(mwparams);
         double mwvalue = ((DoubleResult)mw.calculate(mol).getValue()).doubleValue();
 
-        Descriptor rotata = new RotatableBondsCountDescriptor();
+        IDescriptor rotata = new RotatableBondsCountDescriptor();
         rotata.setParameters(hBondparams);
         int rotatablebonds = ((IntegerResult)rotata.calculate(mol).getValue()).intValue();
 

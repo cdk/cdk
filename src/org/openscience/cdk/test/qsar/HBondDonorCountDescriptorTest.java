@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -46,7 +46,7 @@ public class HBondDonorCountDescriptorTest extends CDKTestCase {
 	}
     
 	public void testHBondDonorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Descriptor descriptor = new HBondDonorCountDescriptor();
+		IDescriptor descriptor = new HBondDonorCountDescriptor();
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

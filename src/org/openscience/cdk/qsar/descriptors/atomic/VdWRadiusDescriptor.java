@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.AtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.tools.LoggingTool;
@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:vdwradius
  */
-public class VdWRadiusDescriptor implements Descriptor {
+public class VdWRadiusDescriptor implements IDescriptor {
 
     private int atomPosition = 0;
     private AtomTypeFactory factory = null;

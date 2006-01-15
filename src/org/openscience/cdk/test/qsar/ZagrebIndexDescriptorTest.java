@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -49,7 +49,7 @@ public class ZagrebIndexDescriptorTest extends CDKTestCase {
 	}
     
 	public void testZagrebIndexDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Descriptor descriptor = new ZagrebIndexDescriptor();
+		IDescriptor descriptor = new ZagrebIndexDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 		assertEquals(16, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);

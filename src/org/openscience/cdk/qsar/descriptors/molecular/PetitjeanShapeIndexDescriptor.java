@@ -23,7 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -48,7 +48,7 @@ import javax.vecmath.Point3d;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:petitjeanShapeIndex
  */
-public class PetitjeanShapeIndexDescriptor implements Descriptor {
+public class PetitjeanShapeIndexDescriptor implements IDescriptor {
 
     public PetitjeanShapeIndexDescriptor() {
     }

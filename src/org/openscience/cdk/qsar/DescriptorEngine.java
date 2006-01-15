@@ -128,7 +128,7 @@ public class DescriptorEngine {
     public void process(AtomContainer molecule) throws CDKException {
 
         for (int i = 0; i < descriptors.size(); i++) {
-            Descriptor descriptor = (Descriptor) descriptors.get(i);
+            IDescriptor descriptor = (IDescriptor) descriptors.get(i);
             try {
                 DescriptorValue value = descriptor.calculate(molecule);
                 molecule.setProperty(speclist.get(i), value);
@@ -168,7 +168,7 @@ public class DescriptorEngine {
         String specRef = getSpecRef(identifier);
 
         for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
+            if (!dictEntries[j].getClassName().equals("IDescriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
                 Element rawElement = (Element) dictEntries[j].getRawContent();
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
@@ -236,7 +236,7 @@ public class DescriptorEngine {
         List dictClasses = new ArrayList();
 
         for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
+            if (!dictEntries[j].getClassName().equals("IDescriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
                 Element rawElement = (Element) dictEntries[j].getRawContent();
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
@@ -299,7 +299,7 @@ public class DescriptorEngine {
         String definition = null;
 
         for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
+            if (!dictEntries[j].getClassName().equals("IDescriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
                 definition = dictEntries[j].getDefinition();
                 break;
@@ -417,14 +417,14 @@ public class DescriptorEngine {
         for (Iterator iter = descriptorClassNames.iterator(); iter.hasNext();) {
             String descriptorName = (String) iter.next();
             try {
-                Descriptor descriptor = (Descriptor) this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
+                IDescriptor descriptor = (IDescriptor) this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
                 descriptors.add(descriptor);
                 logger.info("Loaded descriptor: ", descriptorName);
             } catch (ClassNotFoundException exception) {
-                logger.error("Could not find this Descriptor: ", descriptorName);
+                logger.error("Could not find this IDescriptor: ", descriptorName);
                 logger.debug(exception);
             } catch (Exception exception) {
-                logger.error("Could not load this Descriptor: ", descriptorName);
+                logger.error("Could not load this IDescriptor: ", descriptorName);
                 logger.debug(exception);
             }
         }
@@ -433,7 +433,7 @@ public class DescriptorEngine {
     private void initializeSpecifications(List descriptors) {
         speclist = new Vector();
         for (int i = 0; i < descriptors.size(); i++) {
-            Descriptor descriptor = (Descriptor) descriptors.get(i);
+            IDescriptor descriptor = (IDescriptor) descriptors.get(i);
             speclist.add(descriptor.getSpecification());
         }
     }
@@ -444,7 +444,7 @@ public class DescriptorEngine {
         for (int i = 0; i < classNames.size(); i++) {
             String className = (String) classNames.get(i);
             if (className.equals(identifier)) {
-                Descriptor descriptor = (Descriptor) descriptors.get(i);
+                IDescriptor descriptor = (IDescriptor) descriptors.get(i);
                 DescriptorSpecification descSpecification = descriptor.getSpecification();
                 String[] tmp = descSpecification.getSpecificationReference().split("#");
                 specRef = tmp[1];

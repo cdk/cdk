@@ -31,7 +31,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -60,7 +60,7 @@ public class WHIMDescriptorTest extends CDKTestCase {
             AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
             AtomContainer ac = c[0];
 
-            Descriptor descriptor = new WHIMDescriptor();
+            IDescriptor descriptor = new WHIMDescriptor();
             Object[] params = new Object[1];
             params[0] = new String("unity");
             descriptor.setParameters(params);

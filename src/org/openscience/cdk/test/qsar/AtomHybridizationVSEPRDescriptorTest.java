@@ -33,7 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptor;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -54,7 +54,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
     
 	public void testAtomHybridizationVSEPRDescriptorTest_1() throws ClassNotFoundException, CDKException, java.lang.Exception 
 	{
-		Descriptor descriptor = new AtomHybridizationVSEPRDescriptor();
+		IDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 		
 		//O=CC
 		Molecule molecule = new Molecule();
@@ -86,7 +86,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 
 	public void testAtomHybridizationVSEPRDescriptorTest_2() throws ClassNotFoundException, CDKException, java.lang.Exception 
 	{
-		Descriptor descriptor = new AtomHybridizationVSEPRDescriptor();
+		IDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 		
 		//[O+]#CC
 		Molecule molecule = new Molecule();
@@ -118,7 +118,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 
 	public void testAtomHybridizationVSEPRDescriptorTest_3() throws ClassNotFoundException, CDKException, java.lang.Exception 
 	{
-		Descriptor descriptor = new AtomHybridizationVSEPRDescriptor();
+		IDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 		
 		//[C+]CC
 		Molecule molecule = new Molecule();
@@ -152,7 +152,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 
 	public void testAtomHybridizationVSEPRDescriptorTest_4() throws ClassNotFoundException, CDKException, java.lang.Exception 
 	{
-		Descriptor descriptor = new AtomHybridizationVSEPRDescriptor();
+		IDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 		
 		//SO3
 		Molecule molecule = new Molecule();
@@ -179,7 +179,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 
 	public void testAtomHybridizationVSEPRDescriptorTest_5() throws ClassNotFoundException, CDKException, java.lang.Exception 
 	{
-		Descriptor descriptor = new AtomHybridizationVSEPRDescriptor();
+		IDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 		
 		//XeF4
 		Molecule molecule = new Molecule();
@@ -210,7 +210,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 
 	public void testAtomHybridizationVSEPRDescriptorTest_6() throws ClassNotFoundException, CDKException, java.lang.Exception 
 	{
-		Descriptor descriptor = new AtomHybridizationVSEPRDescriptor();
+		IDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 		
 		//IF2-
 		Molecule molecule = new Molecule();

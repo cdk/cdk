@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.ValenceCarbonConnectivityOrderZeroDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -50,7 +50,7 @@ import org.openscience.cdk.test.CDKTestCase;
     
 	public void testValenceCarbonConnectivityOrderZeroDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={3.0625687,2.2071068};
-		Descriptor descriptor = new ValenceCarbonConnectivityOrderZeroDescriptor();
+		IDescriptor descriptor = new ValenceCarbonConnectivityOrderZeroDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 		DoubleResult retval = (DoubleResult)descriptor.calculate(mol).getValue();

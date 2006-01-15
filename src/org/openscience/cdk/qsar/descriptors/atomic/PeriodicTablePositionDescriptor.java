@@ -29,7 +29,7 @@ import java.util.Hashtable;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.tools.LoggingTool;
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:period
  */
-public class PeriodicTablePositionDescriptor implements Descriptor {
+public class PeriodicTablePositionDescriptor implements IDescriptor {
 
 	private int targetPosition = 0;
 	private LoggingTool logger;

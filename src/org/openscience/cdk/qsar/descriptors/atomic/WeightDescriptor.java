@@ -28,12 +28,12 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
 /**
- *  Descriptor based on the weight of atoms of a certain element type. 
+ *  IDescriptor based on the weight of atoms of a certain element type. 
  *
  *  If the wild-card symbol *
  *  is specified, the returned value is the molecular weight.
@@ -61,7 +61,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:weight
  */
-public class WeightDescriptor implements Descriptor {
+public class WeightDescriptor implements IDescriptor {
 
     private String elementName = "*";
 

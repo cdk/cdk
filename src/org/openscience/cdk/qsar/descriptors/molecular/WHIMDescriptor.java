@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.tools.LoggingTool;
@@ -89,7 +89,7 @@ import Jama.Matrix;
  * @cdk.set    qsar-descriptors
  * @cdk.dictref qsar-descriptors:WHIM
  */
-public class WHIMDescriptor implements Descriptor {
+public class WHIMDescriptor implements IDescriptor {
 
     LoggingTool logger;
     String type = "";

@@ -28,7 +28,7 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:wienerNumbers
  */
-public class WienerNumbersDescriptor implements Descriptor {
+public class WienerNumbersDescriptor implements IDescriptor {
 
     double[][] matr = null;
     DoubleArrayResult wienerNumbers = null;

@@ -31,7 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -59,7 +59,7 @@ public class BCUTDescriptorTest extends CDKTestCase {
             AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
             AtomContainer ac = c[0];
 
-            Descriptor descriptor = new BCUTDescriptor();
+            IDescriptor descriptor = new BCUTDescriptor();
             Object[] params = new Object[2];
             params[0] = new Integer(2);
             params[1] = new Integer(2);

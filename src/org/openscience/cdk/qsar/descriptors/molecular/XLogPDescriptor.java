@@ -46,7 +46,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -83,7 +83,7 @@ import org.openscience.cdk.graph.MoleculeGraphs;
  * 
  * changed 2005-11-03 by chhoppe
  *  -Internal hydrogen bonds are implemented
- * CDK Descriptor was validated against xlogp2.1
+ * CDK IDescriptor was validated against xlogp2.1
  * As mentioned in the xlogP tutorial don't use charges, always draw bonds. To some extend we can support charges
  * but not in every case.
  * CDK follows the program in following points (which is not documented in the paper):
@@ -117,7 +117,7 @@ import org.openscience.cdk.graph.MoleculeGraphs;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:xlogP
  */
-public class XLogPDescriptor implements Descriptor {
+public class XLogPDescriptor implements IDescriptor {
     
 	private boolean checkAromaticity = false;
 	private boolean salicylFlag=false;

@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
  
  public class QSARModelTests {
     public static Test suite() {
-        TestSuite suite = new TestSuite("All QSAR Descriptor Tests");
+        TestSuite suite = new TestSuite("All QSAR IDescriptor Tests");
 	return suite;
     }
     

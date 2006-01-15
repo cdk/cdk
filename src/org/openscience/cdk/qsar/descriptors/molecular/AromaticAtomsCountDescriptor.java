@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -58,7 +58,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aromaticAtomsCount
  */
-public class AromaticAtomsCountDescriptor implements Descriptor {
+public class AromaticAtomsCountDescriptor implements IDescriptor {
     private boolean checkAromaticity = false;
 
 

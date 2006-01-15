@@ -32,7 +32,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -61,7 +61,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rotatableBondsCount
  */
-public class RotatableBondsCountDescriptor implements Descriptor {
+public class RotatableBondsCountDescriptor implements IDescriptor {
 	private boolean includeTerminals = false;
 
 

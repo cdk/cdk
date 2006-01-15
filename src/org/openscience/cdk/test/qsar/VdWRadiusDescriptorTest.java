@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -47,7 +47,7 @@ public class VdWRadiusDescriptorTest extends CDKTestCase {
 	
 	public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={1.7};
-		Descriptor descriptor = new VdWRadiusDescriptor();
+		IDescriptor descriptor = new VdWRadiusDescriptor();
 		Object[] params = {new Integer(1)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

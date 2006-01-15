@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -50,7 +50,7 @@ public class BPolDescriptorTest extends CDKTestCase {
 	}
     
 	public void testBPolDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Descriptor descriptor = new BPolDescriptor() ;
+        IDescriptor descriptor = new BPolDescriptor() ;
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("O=C(O)CC"); 
         HydrogenAdder hAdder = new HydrogenAdder();

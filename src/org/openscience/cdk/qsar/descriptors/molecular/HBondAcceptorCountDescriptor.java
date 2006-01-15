@@ -29,7 +29,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 
@@ -72,7 +72,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondacceptors
  */
-public class HBondAcceptorCountDescriptor implements Descriptor {
+public class HBondAcceptorCountDescriptor implements IDescriptor {
     // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
     private boolean checkAromaticity = false;
 

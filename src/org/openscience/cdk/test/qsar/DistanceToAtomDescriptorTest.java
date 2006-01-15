@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.Descriptor;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -51,7 +51,7 @@ public class DistanceToAtomDescriptorTest extends CDKTestCase {
 	}
     
 	public void testDistanceToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Descriptor descriptor = new DistanceToAtomDescriptor();
+		IDescriptor descriptor = new DistanceToAtomDescriptor();
 		Object[] params = {new Integer(0), new Integer(2)};
 		descriptor.setParameters(params);
 		
