@@ -2144,6 +2144,17 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="ats">
+        <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
+        <dc:contributor rdf:resourrce="#rg"/>
+        <dc:date>2006-01-15</dc:date>
+        <definition>
+            The Moreau-Broto autocorrelation descriptors modified to remove dependency on molecular size.
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
     <!-- The Bibliography -->
 
     <Reference rdf:ID="TRI92">
