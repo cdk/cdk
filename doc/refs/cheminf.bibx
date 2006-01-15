@@ -28,7 +28,7 @@
     <bibtex:techreport>
       <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
       <bibtex:title>Cyclic Invariants for Molecular Graphs</bibtex:title>
-      <bibtex:institution>Lehrstuhl für Angewandte Geometrie und Diskrete Mathematik, Technische Universität München</bibtex:institution>
+      <bibtex:institution>Lehrstuhl fï¿½r Angewandte Geometrie und Diskrete Mathematik, Technische Universitï¿½t Mï¿½nchen</bibtex:institution>
       <bibtex:year>2004</bibtex:year>
       <bibtex:url>http://www-m9.ma.tum.de/dm/cycles/</bibtex:url>
     </bibtex:techreport>
@@ -210,8 +210,8 @@
   <bibtex:entry id="HAN93">
     <bibtex:phdthesis>
       <bibtex:author>Hanser, Th.</bibtex:author>
-      <bibtex:title>Apprentissage automatique de méthodes de synthèse à partir d'exemples</bibtex:title>
-      <bibtex:school>Université Louis Pasteur</bibtex:school>
+      <bibtex:title>Apprentissage automatique de mï¿½thodes de synthï¿½se ï¿½ partir d'exemples</bibtex:title>
+      <bibtex:school>Universitï¿½ Louis Pasteur</bibtex:school>
       <bibtex:year>1993</bibtex:year>
       <bibtex:address>Strasbourg</bibtex:address>
     </bibtex:phdthesis>
@@ -727,5 +727,30 @@
       <bibtex:url>http://www.w3.org/TR/1998/REC-xml-19980210</bibtex:url>
     </bibtex:misc>
   </bibtex:entry>
+
+    <bibtex:entry id="PET92">
+      <bibtex:article>
+          <bibtex:author>  Petitjean, M.
+          </bibtex:author>
+          <bibtex:title></bibtex:title>
+        <bibtex:journal>Journal of Chemical Information and Computer Sciencey</bibtex:journal>
+        <bibtex:year>1992</bibtex:year>
+        <bibtex:volume>32</bibtex:volume>
+        <bibtex:pages>331-337</bibtex:pages>
+      </bibtex:article>
+    </bibtex:entry>
+        <bibtex:entry id="BAT95">
+          <bibtex:article>
+              <bibtex:author>  Bath et al.
+              </bibtex:author>
+              <bibtex:title></bibtex:title>
+            <bibtex:journal>Journal of Chemical Information and Computer Sciencey</bibtex:journal>
+            <bibtex:year>1995</bibtex:year>
+            <bibtex:volume>35</bibtex:volume>
+            <bibtex:pages>714-716</bibtex:pages>
+          </bibtex:article>
+        </bibtex:entry>
+
+
 
 </bibtex:file>
