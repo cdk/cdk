@@ -38,11 +38,11 @@ import java.util.List;
 
 
 /**
- *  Class that returns the number of amino acids in an atom container.
+ * Class that returns the number of amino acids in an atom container.
  *
  * @author      egonw
  * @cdk.created 2006-01-15
- * @cdk.module  qsar
+ * @cdk.module  qsar-pdb
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aminoAcidsCount
  */
