@@ -147,10 +147,14 @@
                     </uptodate>
                 </and>
             </condition>
-            <condition property="sunJavaDoc">
+            <condition property="sunJavaDocInExt">
               <or>
                 <available file="${java.ext.dirs}/tools.jar" />
-                <!-- available file="${java.ext.dirs}/../../../lib/tools.jar" / -->
+              </or>
+            </condition>
+            <condition property="sunJavaDocInLib">
+              <or>
+                <available file="${java.home}/lib/tools.jar" />
               </or>
             </condition>
             <condition property="gjdocJavaDoc">
@@ -228,7 +232,10 @@
                    includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
                 <classpath>
                   <fileset dir="${java.ext.dirs}">
-                    <include name="tools.jar" if="sunJavaDoc" unless="gjdocJavaDoc"/>
+                    <include name="tools.jar" if="sunJavaDocInExt" unless="gjdocJavaDoc"/>
+                  </fileset>
+                  <fileset dir="${java.home}/lib">
+                    <include name="tools.jar" if="sunJavaDocInLib" unless="gjdocJavaDoc"/>
                   </fileset>
                   <fileset dir="/usr/share/java">
                     <include name="com-sun-javadoc.jar" if="gjdocJavaDoc"/>
