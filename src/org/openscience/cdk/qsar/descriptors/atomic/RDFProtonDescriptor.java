@@ -775,9 +775,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[2];
-		paramTypes[0] = new Integer(1);
-		paramTypes[1] = new Boolean(true);
-		return paramTypes;
+                if (name.equals("atomPosition")) return new Integer(0);
+                return new Boolean(true);
 	}
 }

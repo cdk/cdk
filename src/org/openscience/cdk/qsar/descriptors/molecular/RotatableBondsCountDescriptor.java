@@ -188,9 +188,7 @@ public class RotatableBondsCountDescriptor implements IDescriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[1];
-		paramTypes[0] = new Boolean(true);
-		return paramTypes;
+		return new Boolean(true);
 	}
 }
 

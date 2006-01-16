@@ -147,9 +147,7 @@ public class BondCountDescriptor implements IDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        Object[] paramTypes = new Object[1];
-        paramTypes[0] = new Double(0.0);
-        return paramTypes;
+        return new Double(0.0);
     }
 }
 

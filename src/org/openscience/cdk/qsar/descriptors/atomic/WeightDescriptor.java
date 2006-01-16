@@ -196,9 +196,7 @@ public class WeightDescriptor implements IDescriptor {
      *@return       An Object whose class is that of the parameter requested
      */
     public Object getParameterType(String name) {
-        Object[] paramTypes = new Object[1];
-        paramTypes[0] = new String();
-        return paramTypes;
+        return "";
     }
 }
 

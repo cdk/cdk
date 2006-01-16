@@ -186,9 +186,7 @@ public class HBondAcceptorCountDescriptor implements IDescriptor {
      * @return       The parameterType value
      */
     public Object getParameterType(String name) {
-        Object[] paramTypes = new Object[1];
-        paramTypes[0] = new Boolean(false);
-        return paramTypes;
+        return new Boolean(false);
     }
 }
 

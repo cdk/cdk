@@ -170,10 +170,7 @@ public class DistanceToAtomDescriptor implements IDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        Object[] paramTypes = new Object[2];
-        paramTypes[0] = new Integer(1);
-        paramTypes[1] = new Integer(1);
-        return paramTypes;
+        return new Integer(0);
     }
 }
 

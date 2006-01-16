@@ -228,11 +228,9 @@ public class PiContactDetectionDescriptor implements IDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        Object[] paramTypes = new Object[3];
-        paramTypes[0] = new Integer(1);
-        paramTypes[1] = new Integer(1);
-        paramTypes[2] = new Boolean(true);
-        return paramTypes;
+        if (name.equals("firstAtom")) return new Integer(0);
+        else if (name.equals("secondAtom")) return new Integer(0);
+        return new Boolean(true);
     }
 }
 
