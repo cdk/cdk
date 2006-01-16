@@ -1386,7 +1386,7 @@ public class XLogPDescriptor implements IDescriptor {
 	public String[] getParameterNames() {
 		String[] params = new String[2];
 		params[0] = "checkAromaticity";
-		params[0] = "salicylFlag";
+		params[1] = "salicylFlag";
 		return params;
 	}
 
@@ -1399,10 +1399,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		Object[] paramTypes = new Object[2];
-		paramTypes[0] = new Boolean(true);
-		paramTypes[1] = new Boolean(false);
-		return paramTypes;
+            return new Boolean(true);
 	}
 }
 
