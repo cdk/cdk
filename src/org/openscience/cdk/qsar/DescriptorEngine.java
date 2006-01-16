@@ -167,10 +167,14 @@ public class DescriptorEngine {
         Entry[] dictEntries = dict.getEntries();
         String specRef = getSpecRef(identifier);
 
+        logger.debug("Got identifier: "+identifier);
+        logger.debug("Final spec ref: "+specRef);
+
         for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("IDescriptor")) continue;
+            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
                 Element rawElement = (Element) dictEntries[j].getRawContent();
+                assert(rawElement != null);                
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
 
                 for (int i = 0; i < classifications.size(); i++) {
@@ -236,7 +240,7 @@ public class DescriptorEngine {
         List dictClasses = new ArrayList();
 
         for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("IDescriptor")) continue;
+            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
                 Element rawElement = (Element) dictEntries[j].getRawContent();
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
@@ -299,7 +303,7 @@ public class DescriptorEngine {
         String definition = null;
 
         for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("IDescriptor")) continue;
+            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
                 definition = dictEntries[j].getDefinition();
                 break;
@@ -378,7 +382,7 @@ public class DescriptorEngine {
      * @param packageName The name of the package containing the required descriptor
      * @return A list containing the classes in the specified package
      */
-    private List getDescriptorClassNameByPackage(String packageName) {
+    private List    getDescriptorClassNameByPackage(String packageName) {
 
         if (packageName == null || packageName.equals("")) {
             packageName = "org.openscience.cdk.qsar.descriptors";
@@ -389,6 +393,7 @@ public class DescriptorEngine {
         ArrayList classlist = new ArrayList();
 
         for (int i = 0; i < jars.length; i++) {
+            logger.debug("Looking in "+jars[i]);
             JarFile j;
             try {
                 j = new JarFile(jars[i]);
@@ -421,10 +426,10 @@ public class DescriptorEngine {
                 descriptors.add(descriptor);
                 logger.info("Loaded descriptor: ", descriptorName);
             } catch (ClassNotFoundException exception) {
-                logger.error("Could not find this IDescriptor: ", descriptorName);
+                logger.error("Could not find this Descriptor: ", descriptorName);
                 logger.debug(exception);
             } catch (Exception exception) {
-                logger.error("Could not load this IDescriptor: ", descriptorName);
+                logger.error("Could not load this Descriptor: ", descriptorName);
                 logger.debug(exception);
             }
         }

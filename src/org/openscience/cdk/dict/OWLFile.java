@@ -122,7 +122,7 @@ public class OWLFile extends Dictionary {
         	dbEntry.setDescription(description.getValue());
         }
 
-        if (entry.getQualifiedName().equals("IDescriptor")) dbEntry.setRawContent(entry);
+        if (entry.getQualifiedName().equals("Descriptor")) dbEntry.setRawContent(entry);
 
         return dbEntry;
     }

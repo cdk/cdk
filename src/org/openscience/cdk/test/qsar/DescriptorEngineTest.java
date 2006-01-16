@@ -35,7 +35,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test
  */
-public class DescriptorEngineTest extends CDKTestCase {
+public class    DescriptorEngineTest extends CDKTestCase {
 
     public DescriptorEngineTest() {
     }
@@ -47,6 +47,8 @@ public class DescriptorEngineTest extends CDKTestCase {
     public void testConstructor() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         assertTrue(engine != null);
+        assertTrue(engine.getDescriptorInstances().size() > 0);
+        assertTrue(engine.getDescriptorClassNames().size() > 0);
     }
 
     public void testDictionaryType() {

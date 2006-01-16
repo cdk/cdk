@@ -62,6 +62,7 @@ public class DictDBTest extends CDKTestCase {
     	DictionaryDatabase db = new DictionaryDatabase();
     	Dictionary dict = db.getDictionary("descriptor-algorithms");
     	assertTrue(dict.size() > 0);
+        assertTrue(dict.getNS() != null);
     }
     
     public void testOWLEntry() {
