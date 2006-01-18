@@ -32,9 +32,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.Monomer;
@@ -358,7 +358,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		return super.contains(atom);
 	}
 
-	public void addListener(ChemObjectListener col) {
+	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);
 	}
@@ -368,7 +368,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		return super.getListenerCount();
 	}
 
-	public void removeListener(ChemObjectListener col) {
+	public void removeListener(IChemObjectListener col) {
 		logger.debug("Removing listener: ", col);
 		super.removeListener(col);
 	}
@@ -378,7 +378,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		super.notifyChanged();
 	}
 
-	public void notifyChanged(ChemObjectChangeEvent evt) {
+	public void notifyChanged(IChemObjectChangeEvent evt) {
 		logger.debug("Notifying changed event: ", evt);
 		super.notifyChanged(evt);
 	}
@@ -449,7 +449,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
         return clone;
 	}
 
-	public ChemObjectBuilder getBuilder() {
+	public IChemObjectBuilder getBuilder() {
 		return DebugChemObjectBuilder.getInstance();
 	}
 
@@ -473,7 +473,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		super.setMonomerType(cMonomerType);
 	}
 
-	public void stateChanged(ChemObjectChangeEvent event) {
+	public void stateChanged(IChemObjectChangeEvent event) {
 		logger.debug("Received state changed event: ", event);
 		super.stateChanged(event);
 	}

@@ -129,7 +129,7 @@ public class RSSHandler extends DefaultHandler {
                     try {
                         ChemFile file = (ChemFile)cmlReader.read(new ChemFile());
                         if (file.getChemSequenceCount() > 0) {
-                        	org.openscience.cdk.interfaces.ChemSequence sequence = file.getChemSequence(0);
+                        	org.openscience.cdk.interfaces.IChemSequence sequence = file.getChemSequence(0);
                             if (sequence.getChemModelCount() > 0) {
                                 model = sequence.getChemModel(0);
                             } else {

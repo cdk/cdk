@@ -35,9 +35,9 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
  * TestCase for the IChemObject class.
@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class ChemObjectTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
 	public ChemObjectTest(String name) {
 		super(name);
@@ -77,7 +77,7 @@ public class ChemObjectTest extends CDKTestCase {
     	IChemObject chemObject = builder.newChemObject();
     	Object object = chemObject.getBuilder();
     	assertNotNull(object);
-    	assertTrue(object instanceof ChemObjectBuilder);
+    	assertTrue(object instanceof IChemObjectBuilder);
     }
     	
     public void testSetProperty_Object_Object() {
@@ -256,8 +256,8 @@ public class ChemObjectTest extends CDKTestCase {
         assertEquals(1, chemObject1.getListenerCount());
     }
 
-    class DummyChemObjectListener implements ChemObjectListener {
-        public void stateChanged(ChemObjectChangeEvent event) {};
+    class DummyChemObjectListener implements IChemObjectListener {
+        public void stateChanged(IChemObjectChangeEvent event) {};
     }
     
    public void testShallowCopy() {
@@ -310,16 +310,16 @@ public class ChemObjectTest extends CDKTestCase {
         assertTrue(true);
     }
 
-    private class ChemObjectListenerImpl implements ChemObjectListener {
+    private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
-        private ChemObjectChangeEvent event;
+        private IChemObjectChangeEvent event;
         
         private ChemObjectListenerImpl() {
             changed = false;
             event = null;
         }
         
-        public void stateChanged(ChemObjectChangeEvent e) {
+        public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
             event = e;
         }

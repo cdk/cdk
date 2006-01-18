@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -164,7 +164,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     moleculeSet.addMolecule(cf.getBuilder().newMolecule(parsedContent));
                     IChemModel model = cf.getBuilder().newChemModel();
                     model.setSetOfMolecules(moleculeSet);
-                    ChemSequence sequence = cf.getBuilder().newChemSequence();
+                    IChemSequence sequence = cf.getBuilder().newChemSequence();
                     sequence.addChemModel(model);
                     cf.addChemSequence(sequence);
                 }

@@ -29,9 +29,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the ChemSequence class.
@@ -57,7 +57,7 @@ public class ChemSequenceTest extends CDKTestCase {
 	assertNotNull(cs);
     }
     
-    public void testAddChemModel_ChemModel() {
+    public void testAddChemModel_IChemModel() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
@@ -128,14 +128,14 @@ public class ChemSequenceTest extends CDKTestCase {
         assertTrue(listener.changed);
     }
 
-    private class ChemObjectListenerImpl implements ChemObjectListener {
+    private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         
         private ChemObjectListenerImpl() {
             changed = false;
         }
         
-        public void stateChanged(ChemObjectChangeEvent e) {
+        public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
         
@@ -150,7 +150,7 @@ public class ChemSequenceTest extends CDKTestCase {
         assertTrue(clone instanceof ChemSequence);
     }    
         
-    public void testClone_ChemModel() {
+    public void testClone_IChemModel() {
 		ChemSequence sequence = new ChemSequence();
 		sequence.addChemModel(new ChemModel()); // 1
 		sequence.addChemModel(new ChemModel()); // 2

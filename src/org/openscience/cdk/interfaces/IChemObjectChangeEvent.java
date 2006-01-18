@@ -28,19 +28,13 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Classes implementing this interface must implement this method
- * such that they react appropriately to changes in the object they
- * are interested in.
+ * Event fired by CDK IChemObject classes to their registered listeners
+ * in case something changes within them.
  *
  * @cdk.module interfaces
  */
-public interface ChemObjectListener
-{
-	/**
-	 * Called by objects to notify objects that implemented this interface
-	 * and registered with them as ChemObjectListeners.
-     *
-     * @param event  a ChemObjectChangeEvent object
-	 */
-	public void stateChanged(ChemObjectChangeEvent event);
+public interface IChemObjectChangeEvent {
+    
+    public Object getSource();
+    
 }

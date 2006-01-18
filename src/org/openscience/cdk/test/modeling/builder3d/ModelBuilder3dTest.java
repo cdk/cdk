@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -218,7 +218,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		ModelBuilder3D mb3d = new ModelBuilder3D();
 		
 		Molecule methanol = new org.openscience.cdk.Molecule();
-		ChemObjectBuilder builder = methanol.getBuilder();
+		IChemObjectBuilder builder = methanol.getBuilder();
 		
 		IAtom carbon1 = builder.newAtom("C");
 		carbon1.setID("carbon1");

@@ -340,7 +340,7 @@ public class DBAdmin {
 			CMLReader mdlr = new CMLReader(new FileReader(file));
 			ChemFile cf = (ChemFile)mdlr.read(new ChemFile());
 	                for (int sequence = 0; sequence < cf.getChemSequenceCount(); sequence++) {
-	                	org.openscience.cdk.interfaces.ChemSequence chemSequence = cf.getChemSequence(sequence);
+	                	org.openscience.cdk.interfaces.IChemSequence chemSequence = cf.getChemSequence(sequence);
  			     logger.info("number of models in sequence " + sequence + ": " +
                                  chemSequence.getChemModelCount());
 			     for (int model = 0; model < chemSequence.getChemModelCount(); model++) {

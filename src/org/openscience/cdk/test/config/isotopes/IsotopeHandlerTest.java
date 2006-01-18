@@ -51,7 +51,7 @@ public class IsotopeHandlerTest extends CDKTestCase {
     // serious testing is done in IsotopeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
-    public void testIsotopeHandler_ChemObjectBuilder() {
+    public void testIsotopeHandler_IChemObjectBuilder() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
     }
     

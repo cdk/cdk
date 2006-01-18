@@ -34,7 +34,7 @@ import java.util.HashMap;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -260,7 +260,7 @@ public class HydrogenAdder {
     {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
         
-        Isotope isotope = IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
+        IIsotope isotope = IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
         atom.setHydrogenCount(0);
         IAtomContainer changedAtomsAndBonds = container.getBuilder().newAtomContainer();
         for (int i = 1; i <= count; i++) {

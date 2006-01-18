@@ -33,7 +33,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword animation
  * @cdk.keyword reaction
  */
-public interface ChemSequence extends IChemObject {
+public interface IChemSequence extends IChemObject {
 
 	/**
 	 * Adds an chemModel to this container.

@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -303,7 +303,7 @@ public class MFAnalyser {
 	 */
 	public float getMass() {
 		float mass = 0;
-		Isotope i;
+		IIsotope i;
 		IsotopeFactory si = null;
 		try {
 			si = IsotopeFactory.getInstance(getAtomContainer().getBuilder());
@@ -311,7 +311,7 @@ public class MFAnalyser {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}
 		IAtomContainer ac = getAtomContainer();
-		Isotope h = si.getMajorIsotope(H_ELEMENT_SYMBOL);
+		IIsotope h = si.getMajorIsotope(H_ELEMENT_SYMBOL);
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			i = si.getMajorIsotope(ac.getAtomAt(f).getSymbol());
 			if (i != null) {
@@ -334,7 +334,7 @@ public class MFAnalyser {
 	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
 	public double getNaturalMass(IElement element) throws java.io.IOException, ClassNotFoundException {
-		Isotope[] isotopes = IsotopeFactory.getInstance(getAtomContainer().getBuilder()).getIsotopes(element.getSymbol());
+		IIsotope[] isotopes = IsotopeFactory.getInstance(getAtomContainer().getBuilder()).getIsotopes(element.getSymbol());
 		double summedAbundances = 0;
 		double summedWeightedAbundances = 0;
 		for (int i = 0; i < isotopes.length; i++) {
@@ -365,7 +365,7 @@ public class MFAnalyser {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}
 		IAtomContainer ac = getAtomContainer();
-		Isotope h = si.getMajorIsotope("H");
+		IIsotope h = si.getMajorIsotope("H");
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			IElement i = si.getElement(ac.getAtomAt(f).getSymbol());
 			if (i != null) {
@@ -395,7 +395,7 @@ public class MFAnalyser {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}
 		IAtomContainer ac = getAtomContainer();
-		Isotope h = si.getMajorIsotope("H");
+		IIsotope h = si.getMajorIsotope("H");
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			IElement i = si.getElement(ac.getAtomAt(f).getSymbol());
 			if (i != null) {

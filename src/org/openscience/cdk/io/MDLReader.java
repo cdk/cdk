@@ -166,7 +166,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	 * @return    The ChemFile that was read from the MDL file.
 	 */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
-        ChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
+        IChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
         
         IChemModel chemModel = chemFile.getBuilder().newChemModel();
 		SetOfMolecules setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
@@ -349,7 +349,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     try {
                         int massDiff = Integer.parseInt(massDiffString);
                         if (massDiff != 0) {
-                            Isotope major = IsotopeFactory.getInstance(molecule.getBuilder()).getMajorIsotope(element);
+                            IIsotope major = IsotopeFactory.getInstance(molecule.getBuilder()).getMajorIsotope(element);
                             atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
                         }
                     } catch (Exception exception) {

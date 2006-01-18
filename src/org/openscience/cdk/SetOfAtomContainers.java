@@ -24,8 +24,8 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * A set of AtomContainers.
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  * @author        hel
  * @cdk.module    data
  */
-public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.SetOfAtomContainers, ChemObjectListener {
+public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.SetOfAtomContainers, IChemObjectListener {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -341,7 +341,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(ChemObjectChangeEvent event) {
+	public void stateChanged(IChemObjectChangeEvent event) {
 		notifyChanged(event);
 	}
 

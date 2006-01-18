@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
  * Class with convenience methods that provide methods from
@@ -57,7 +57,7 @@ public class ChemFileManipulator {
     public static IAtomContainer getAllInOneContainer(IChemFile file) {
         IAtomContainer container = file.getBuilder().newAtomContainer();
         for (int i=0; i<file.getChemSequenceCount(); i++) {
-            ChemSequence sequence = file.getChemSequence(i);
+            IChemSequence sequence = file.getChemSequence(i);
             container.add(ChemSequenceManipulator.getAllInOneContainer(sequence));
         }
         return container;
@@ -83,7 +83,7 @@ public class ChemFileManipulator {
      * Returns all the AtomContainer's of a ChemFile.
      */
     public static IAtomContainer[] getAllAtomContainers(IChemFile file) {
-        ChemSequence[] sequences = file.getChemSequences();
+        IChemSequence[] sequences = file.getChemSequences();
         int acCount = 0;
         Vector acArrays = new Vector();
         for (int i=0; i<sequences.length; i++) {
@@ -107,7 +107,7 @@ public class ChemFileManipulator {
     
     public static IChemModel[] getAllChemModels(IChemFile file)
     {
-	    ChemSequence[] sequences = file.getChemSequences();
+	    IChemSequence[] sequences = file.getChemSequences();
 	    int modelCounter = 0;
 	    int counter = 0;
 	    IChemModel[] tempModels = null;

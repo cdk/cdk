@@ -24,7 +24,7 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * The base class for all chemical objects in this cdk. It provides methods for
@@ -43,7 +43,7 @@ public interface IChemObject extends Cloneable {
 	 * @param  col  the ChemObjectListener
 	 * @see         #removeListener
 	 */
-	public void addListener(ChemObjectListener col);
+	public void addListener(IChemObjectListener col);
 
 	/**
 	 * Returns the number of ChemObjectListeners registered with this object.
@@ -59,7 +59,7 @@ public interface IChemObject extends Cloneable {
 	 * @param  col  The ChemObjectListener to be removed
 	 * @see         #addListener
 	 */
-	public void removeListener(ChemObjectListener col);
+	public void removeListener(IChemObjectListener col);
 
 
 	/**
@@ -77,7 +77,7 @@ public interface IChemObject extends Cloneable {
 	 * @param  evt  A ChemObjectChangeEvent pointing to the source of where
 	 *		        the change happend
 	 */
-	public void notifyChanged(ChemObjectChangeEvent evt);
+	public void notifyChanged(IChemObjectChangeEvent evt);
 
 	/**
 	 * Sets a property for a IChemObject.
@@ -197,7 +197,7 @@ public interface IChemObject extends Cloneable {
      * Returns a ChemObjectBuilder for the data classes that extend
      * this class.
      */
-    public ChemObjectBuilder getBuilder();
+    public IChemObjectBuilder getBuilder();
 }
 
 

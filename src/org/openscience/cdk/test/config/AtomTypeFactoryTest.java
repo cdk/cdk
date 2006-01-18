@@ -69,7 +69,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         assertNotSame(new Integer(0), new Integer(atf.getSize()));
     }
     
-    public void testGetInstance_InputStream_String_ChemObjectBuilder() {
+    public void testGetInstance_InputStream_String_IChemObjectBuilder() {
         try {
             String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
@@ -81,7 +81,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         }
     }
     
-    public void testGetInstance_String_ChemObjectBuilder() {
+    public void testGetInstance_String_IChemObjectBuilder() {
         try {
             String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
             AtomTypeFactory atf = AtomTypeFactory.getInstance(configFile, new ChemObject().getBuilder());
@@ -92,7 +92,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         }
     }
     
-    public void testGetInstance_ChemObjectBuilder() {
+    public void testGetInstance_IChemObjectBuilder() {
         try {
             AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
             assertNotNull(atf);

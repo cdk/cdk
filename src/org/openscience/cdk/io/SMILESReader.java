@@ -38,7 +38,7 @@ import java.io.StringReader;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
@@ -118,7 +118,7 @@ public class SMILESReader extends DefaultChemObjectReader {
             return (IChemObject)readSetOfMolecules((SetOfMolecules)object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
-            ChemSequence sequence = file.getBuilder().newChemSequence();
+            IChemSequence sequence = file.getBuilder().newChemSequence();
             IChemModel chemModel = file.getBuilder().newChemModel();
             chemModel.setSetOfMolecules(readSetOfMolecules(
             	file.getBuilder().newSetOfMolecules()

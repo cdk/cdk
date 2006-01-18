@@ -32,7 +32,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * AtomType list configurator that uses the AtomTypes originally
@@ -64,7 +64,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
     /**
      * Read a text based configuration file
      */
-    public Vector readAtomTypes(ChemObjectBuilder builder) throws IOException {
+    public Vector readAtomTypes(IChemObjectBuilder builder) throws IOException {
         Vector atomTypes = new Vector();
 
         if (ins == null) {

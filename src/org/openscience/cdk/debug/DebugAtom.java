@@ -29,9 +29,9 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -365,7 +365,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setSymbol(symbol);
 	}
 
-	public void addListener(ChemObjectListener col) {
+	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);
 	}
@@ -375,7 +375,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		return super.getListenerCount();
 	}
 
-	public void removeListener(ChemObjectListener col) {
+	public void removeListener(IChemObjectListener col) {
 		logger.debug("Removing listener: ", col);
 		super.removeListener(col);
 	}
@@ -385,7 +385,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.notifyChanged();
 	}
 
-	public void notifyChanged(ChemObjectChangeEvent evt) {
+	public void notifyChanged(IChemObjectChangeEvent evt) {
 		logger.debug("Notifying changed event: ", evt);
 		super.notifyChanged(evt);
 	}
@@ -456,7 +456,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
         return clone;
 	}
 
-	public ChemObjectBuilder getBuilder() {
+	public IChemObjectBuilder getBuilder() {
 		return DebugChemObjectBuilder.getInstance();
 	}
 

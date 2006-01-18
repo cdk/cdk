@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.PseudoAtom;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class PseudoAtomTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public PseudoAtomTest(String name) {
         super(name);

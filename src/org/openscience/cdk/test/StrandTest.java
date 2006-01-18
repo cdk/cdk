@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.Monomer;
 import org.openscience.cdk.interfaces.Strand;
 
@@ -48,7 +48,7 @@ import org.openscience.cdk.interfaces.Strand;
  */
 public class StrandTest extends TestCase {
 	
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public StrandTest(String name) {
 		super(name);

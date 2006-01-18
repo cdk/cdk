@@ -33,9 +33,9 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -83,7 +83,7 @@ public class IsotopeFactory
 	 *      ObjectInputStream
 	 *@exception  ClassNotFoundException  A problem instantiating the isotopes
 	 */
-	private IsotopeFactory(ChemObjectBuilder builder) throws IOException, OptionalDataException,
+	private IsotopeFactory(IChemObjectBuilder builder) throws IOException, OptionalDataException,
 			ClassNotFoundException
 	{
         logger = new LoggingTool(this);
@@ -128,7 +128,7 @@ public class IsotopeFactory
 	 * @exception  OptionalDataException   Description of the Exception
 	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
-	public static IsotopeFactory getInstance(ChemObjectBuilder builder)
+	public static IsotopeFactory getInstance(IChemObjectBuilder builder)
 			 throws IOException, OptionalDataException, ClassNotFoundException
 	{
         if (ifac == null) {
@@ -155,17 +155,17 @@ public class IsotopeFactory
 	 *@param  symbol  An element symbol to search for
 	 *@return         An array of isotopes that matches the given element symbol
 	 */
-	public Isotope[] getIsotopes(String symbol)
+	public IIsotope[] getIsotopes(String symbol)
 	{
   	ArrayList list = new ArrayList();
 		for (int f = 0; f < isotopes.size(); f++)
 		{
-			if (((Isotope) isotopes.elementAt(f)).getSymbol().equals(symbol))
+			if (((IIsotope) isotopes.elementAt(f)).getSymbol().equals(symbol))
 			{
-				list.add((Isotope) ((Isotope) isotopes.elementAt(f)).clone());
+				list.add((IIsotope) ((IIsotope) isotopes.elementAt(f)).clone());
 			}
 		}
-  	return (Isotope[]) list.toArray(new Isotope[list.size()]);
+  	return (IIsotope[]) list.toArray(new IIsotope[list.size()]);
 	}
 
 
@@ -182,16 +182,16 @@ public class IsotopeFactory
      *
      * @see #getMajorIsotope(String symbol)
      */
-    public Isotope getMajorIsotope(int atomicNumber) {
-        Isotope major = null;
+    public IIsotope getMajorIsotope(int atomicNumber) {
+        IIsotope major = null;
         for (int f = 0; f < isotopes.size(); f++) {
-            Isotope current = (Isotope) isotopes.elementAt(f);
+            IIsotope current = (IIsotope) isotopes.elementAt(f);
             if (current.getAtomicNumber() == atomicNumber) {
                 if (major == null) {
-                    major = (Isotope)current.clone();
+                    major = (IIsotope)current.clone();
                 } else {
                     if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
-                        major = (Isotope)current.clone();
+                        major = (IIsotope)current.clone();
                     }
                 }
             }
@@ -216,19 +216,19 @@ public class IsotopeFactory
      *@param  symbol  Description of the Parameter
      *@return         The Major Isotope value
      */
-    public Isotope getMajorIsotope(String symbol) {
-        Isotope major = null;
+    public IIsotope getMajorIsotope(String symbol) {
+        IIsotope major = null;
         if (majorIsotopes.contains(symbol)) {
-            major = (Isotope)majorIsotopes.get(symbol);
+            major = (IIsotope)majorIsotopes.get(symbol);
         } else {
             for (int f = 0; f < isotopes.size(); f++) {
-                Isotope current = (Isotope) isotopes.elementAt(f);
+                IIsotope current = (IIsotope) isotopes.elementAt(f);
                 if (current.getSymbol().equals(symbol)) {
                     if (major == null) {
-                        major = (Isotope)current.clone();
+                        major = (IIsotope)current.clone();
                     } else {
                         if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
-                            major = (Isotope)current.clone();
+                            major = (IIsotope)current.clone();
                         }
                     }
                 }
@@ -250,7 +250,7 @@ public class IsotopeFactory
 	 */
 	public IElement getElement(String symbol)
 	{
-		Isotope isotope = getMajorIsotope(symbol);
+		IIsotope isotope = getMajorIsotope(symbol);
 		return isotope;
 	}
 
@@ -263,7 +263,7 @@ public class IsotopeFactory
 	 */
 	public IElement getElement(int atomicNumber)
 	{
-		Isotope isotope = getMajorIsotope(atomicNumber);
+		IIsotope isotope = getMajorIsotope(atomicNumber);
 		return isotope;
 	}
 
@@ -274,7 +274,7 @@ public class IsotopeFactory
      * @return               The symbol of the Element
      */
     public String getElementSymbol(int atomicNumber) {
-        Isotope isotope = getMajorIsotope(atomicNumber);
+        IIsotope isotope = getMajorIsotope(atomicNumber);
         return isotope.getSymbol();
     }
 
@@ -287,7 +287,7 @@ public class IsotopeFactory
 	 */
 	public IAtom configure(IAtom atom)
 	{
-		Isotope isotope = getMajorIsotope(atom.getSymbol());
+		IIsotope isotope = getMajorIsotope(atom.getSymbol());
 		return configure(atom, isotope);
 	}
 
@@ -300,7 +300,7 @@ public class IsotopeFactory
 	 *@param  isotope  The isotope to read the data from
 	 *@return          The configured atom
 	 */
-	public IAtom configure(IAtom atom, Isotope isotope)
+	public IAtom configure(IAtom atom, IIsotope isotope)
 	{
 		atom.setMassNumber(isotope.getMassNumber());
 		atom.setSymbol(isotope.getSymbol());

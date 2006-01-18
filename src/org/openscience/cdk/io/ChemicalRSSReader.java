@@ -35,7 +35,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.chemrss.RSSHandler;
 import org.openscience.cdk.io.formats.CMLRSSFormat;
@@ -175,7 +175,7 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
      * @return the content in a ChemFile object
      */
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemSequence) {
+        if (object instanceof IChemSequence) {
             return parseRSSFile();
         } else {
             throw new CDKException("Only supported is reading of ChemSequence objects.");
@@ -184,7 +184,7 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
 
     // private functions
 
-    private ChemSequence parseRSSFile() throws CDKException {
+    private IChemSequence parseRSSFile() throws CDKException {
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the functionality of the Crystal.
@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class CrystalTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public CrystalTest(String name) {
         super(name);

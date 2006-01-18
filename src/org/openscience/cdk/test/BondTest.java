@@ -34,7 +34,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the functionality of the Bond class.
@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class BondTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public BondTest(String name) {
         super(name);
@@ -203,7 +203,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(o, b.getConnectedAtom(c));
     }
     
-    public void testIsConnectedTo_Bond() {
+    public void testIsConnectedTo_IBond() {
         IAtom c1 = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         IAtom c2 = builder.newAtom("C");

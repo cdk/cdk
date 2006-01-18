@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -199,7 +199,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	 */
 	//TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)? 
 	private IChemFile readChemFile(IChemFile file) throws IOException {
-		ChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
+		IChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
 		IChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
 		SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
 		

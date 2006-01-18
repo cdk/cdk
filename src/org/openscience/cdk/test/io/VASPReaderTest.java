@@ -61,7 +61,7 @@ public class VASPReaderTest extends CDKTestCase {
             VASPReader reader = new VASPReader(new InputStreamReader(ins));
             ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
             assertNotNull(chemFile);
-            org.openscience.cdk.interfaces.ChemSequence sequence = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(6, sequence.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);

@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the Ring class.
@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class RingTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public RingTest(String name) {
         super(name);
@@ -98,7 +98,7 @@ public class RingTest extends CDKTestCase {
         assertEquals(5, r.getRingSize());
     }
     
-    public void testGetNextBond_Bond_IAtom() {
+    public void testGetNextBond_IBond_IAtom() {
         Ring ring = builder.newRing();
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");

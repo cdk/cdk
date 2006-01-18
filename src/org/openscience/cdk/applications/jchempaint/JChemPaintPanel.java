@@ -598,7 +598,7 @@ public abstract class JChemPaintPanel
 		logger.info("  # sequences: ", chemSequenceCount);
 
 		for (int i = 0; i < chemSequenceCount; i++) {
-			org.openscience.cdk.interfaces.ChemSequence chemSequence = chemFile.getChemSequence(i);
+			org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(i);
 
 			int chemModelCount = chemSequence.getChemModelCount();
 			logger.info("  # model in seq(" + i + "): ", chemModelCount);
@@ -766,7 +766,7 @@ public abstract class JChemPaintPanel
 		logger.info("  # sequences: " + chemSequenceCount);
 
 		for (int i = 0; i < chemSequenceCount; i++) {
-			org.openscience.cdk.interfaces.ChemSequence chemSequence = chemFile.getChemSequence(i);
+			org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(i);
 
 			int chemModelCount = chemSequence.getChemModelCount();
 			logger.info("  # model in seq(" + i + "): " + chemModelCount);

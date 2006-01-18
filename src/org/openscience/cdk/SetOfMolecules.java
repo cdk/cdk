@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /** 
  * A set of molecules, for example those taking part in a reaction.
@@ -164,7 +164,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(ChemObjectChangeEvent event)
+	public void stateChanged(IChemObjectChangeEvent event)
 	{
 		notifyChanged(event);
 	}    

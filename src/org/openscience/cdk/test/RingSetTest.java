@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class RingSetTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public RingSetTest(String name) {
         super(name);
@@ -164,7 +164,7 @@ public class RingSetTest extends CDKTestCase {
         assertTrue(ringset.contains(ring2Atom2));
     }
     
-    public void testGetRings_Bond() {
+    public void testGetRings_IBond() {
         RingSet ringset = builder.newRingSet();
 
         IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule

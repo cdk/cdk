@@ -38,7 +38,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Monomer;
 import org.openscience.cdk.interfaces.Polymer;
 import org.openscience.cdk.interfaces.Strand;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * TestCase for the Polymer class.
@@ -50,7 +50,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class PolymerTest extends TestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
 	public PolymerTest(String name) {
 		super(name);

@@ -45,7 +45,7 @@ public class ControllerTest
 {
 	MDLReader mr;
 	ChemFile chemFile;
-	org.openscience.cdk.interfaces.ChemSequence chemSequence;
+	org.openscience.cdk.interfaces.IChemSequence chemSequence;
 	org.openscience.cdk.interfaces.IChemModel chemModel;
 	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
 	org.openscience.cdk.interfaces.Molecule molecule;

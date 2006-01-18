@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
 
 /**
@@ -54,7 +54,7 @@ public class DebugChemObjectBuilderTest extends DefaultChemObjectBuilderTest {
     public void testGetInstance() {
     	Object builder = DebugChemObjectBuilder.getInstance();
     	assertNotNull(builder);
-    	assertTrue(builder instanceof ChemObjectBuilder);
+    	assertTrue(builder instanceof IChemObjectBuilder);
         assertTrue(builder instanceof DebugChemObjectBuilder);
     }
     

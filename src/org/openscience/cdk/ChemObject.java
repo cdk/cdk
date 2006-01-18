@@ -33,9 +33,9 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -115,7 +115,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 *@param  col  the ChemObjectListener
 	 *@see         #removeListener
 	 */
-	public void addListener(ChemObjectListener col)
+	public void addListener(IChemObjectListener col)
 	{
 		Vector listeners = lazyChemObjectListeners();
 
@@ -148,7 +148,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 *@param  col  The ChemObjectListener to be removed
 	 *@see         #addListener
 	 */
-	public void removeListener(ChemObjectListener col) {
+	public void removeListener(IChemObjectListener col) {
         if (chemObjectListeners == null) {
 			return;
 		}
@@ -168,7 +168,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
         if (getListenerCount() > 0) {
             Vector listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
-                ((ChemObjectListener) listeners.elementAt(f)).stateChanged(
+                ((IChemObjectListener) listeners.elementAt(f)).stateChanged(
                     new org.openscience.cdk.event.ChemObjectChangeEvent(this)
                 );
             }
@@ -185,11 +185,11 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 *@param  evt  A ChemObjectChangeEvent pointing to the source of where
 	 *		the change happend
 	 */
-	public void notifyChanged(ChemObjectChangeEvent evt) {
+	public void notifyChanged(IChemObjectChangeEvent evt) {
         if (getListenerCount() > 0) {
             Vector listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
-                ((ChemObjectListener) listeners.elementAt(f)).stateChanged(evt);
+                ((IChemObjectListener) listeners.elementAt(f)).stateChanged(evt);
             }
         }
 	}
@@ -453,7 +453,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 		return copy;
 	}
 	
-	public ChemObjectBuilder getBuilder() {
+	public IChemObjectBuilder getBuilder() {
 		return DefaultChemObjectBuilder.getInstance();
 	}
 

@@ -27,7 +27,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 
 /**
@@ -36,7 +36,7 @@ import org.openscience.cdk.PseudoAtom;
  * @author        egonw
  * @cdk.module    data
  */
-public class DefaultChemObjectBuilder implements ChemObjectBuilder {
+public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 
 	private static DefaultChemObjectBuilder instance = null;
 	
@@ -131,7 +131,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new ChemObject();
 	}
 	
-	public org.openscience.cdk.interfaces.ChemSequence newChemSequence() {
+	public org.openscience.cdk.interfaces.IChemSequence newChemSequence() {
 		return new ChemSequence();   
 	}
 	
@@ -159,21 +159,21 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
     	return new Element(symbol, atomicNumber);
     }
 
-	public org.openscience.cdk.interfaces.Isotope newIsotope(String elementSymbol) {
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(String elementSymbol) {
 		return new Isotope(elementSymbol);
 	}
 	
-	public org.openscience.cdk.interfaces.Isotope newIsotope(int atomicNumber, String elementSymbol, 
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			int massNumber, double exactMass, double abundance) {
 		return new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
 	}
 
-	public org.openscience.cdk.interfaces.Isotope newIsotope(int atomicNumber, String elementSymbol, 
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			double exactMass, double abundance) {
 		return new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
 	}
 
-	public org.openscience.cdk.interfaces.Isotope newIsotope(String elementSymbol, int massNumber) {
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(String elementSymbol, int massNumber) {
 		return new Isotope(elementSymbol, massNumber);
 	}
 

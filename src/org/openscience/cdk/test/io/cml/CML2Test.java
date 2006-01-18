@@ -69,7 +69,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -107,7 +107,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -145,7 +145,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -177,7 +177,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -209,7 +209,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -241,7 +241,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -273,7 +273,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -305,7 +305,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -337,7 +337,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -369,7 +369,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -401,7 +401,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -433,7 +433,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -465,7 +465,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -497,7 +497,7 @@ public class CML2Test extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);

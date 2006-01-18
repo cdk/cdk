@@ -35,7 +35,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.CrystClustFormat;
@@ -105,8 +105,8 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     public void write(IChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof ICrystal) {
             write((ICrystal)object);
-        }   else if (object instanceof ChemSequence) {
-            write((ChemSequence)object);
+        }   else if (object instanceof IChemSequence) {
+            write((IChemSequence)object);
         } else {
             throw new UnsupportedChemObjectException("This object type is not supported.");
         }
@@ -121,7 +121,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 
     // Private procedures
 
-    private void write(ChemSequence cs) throws UnsupportedChemObjectException {
+    private void write(IChemSequence cs) throws UnsupportedChemObjectException {
         int count = cs.getChemModelCount();
         for (int i=0; i < count; i++) {
             write("frame: " + (i+1) + "\n");

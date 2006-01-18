@@ -47,8 +47,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -156,7 +156,7 @@ public class PMPReader extends DefaultChemObjectReader {
      * @return A ChemFile containing the data parsed from input.
      */
     private IChemFile readChemFile(IChemFile chemFile) {
-        ChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
+        IChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
         IChemModel chemModel = chemFile.getBuilder().newChemModel();
         ICrystal crystal = chemFile.getBuilder().newCrystal();
 
@@ -359,7 +359,7 @@ public class PMPReader extends DefaultChemObjectReader {
         }
     }
     
-    private void constructObject(ChemObjectBuilder builder, String object) {
+    private void constructObject(IChemObjectBuilder builder, String object) {
         if ("Atom".equals(object)) {
             chemObject = builder.newAtom("C");
         } else if ("Bond".equals(object)) {

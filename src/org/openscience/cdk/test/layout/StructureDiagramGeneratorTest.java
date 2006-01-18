@@ -208,7 +208,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 			//MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			 CMLReader reader = new CMLReader(new InputStreamReader(ins));
 		 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		 org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
+		 org.openscience.cdk.interfaces.IChemSequence[] chemSequence = chemFile.getChemSequences();
 		      org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
 		      IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 	
@@ -237,7 +237,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 			MDLReader reader = new MDLReader(new InputStreamReader(ins));
 			 //CMLReader reader = new CMLReader(new InputStreamReader(ins));
 		 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		 org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
+		 org.openscience.cdk.interfaces.IChemSequence[] chemSequence = chemFile.getChemSequences();
 		      org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
 		      IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 	
@@ -260,7 +260,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		try {
 		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
 		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		    org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
 		    MoleculeViewer2D.display(mol, true);

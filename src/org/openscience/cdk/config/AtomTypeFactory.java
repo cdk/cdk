@@ -33,7 +33,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -103,7 +103,7 @@ public class AtomTypeFactory {
 	 * @exception  OptionalDataException   What ever that may be
 	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-    private AtomTypeFactory(String configFile, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    private AtomTypeFactory(String configFile, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
@@ -118,7 +118,7 @@ public class AtomTypeFactory {
 	 * @exception  OptionalDataException   What ever that may be
 	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-    private AtomTypeFactory(InputStream ins, String format, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
@@ -138,7 +138,7 @@ public class AtomTypeFactory {
      * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(InputStream ins, String format, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         return new AtomTypeFactory(ins, format, builder);
     }
 
@@ -151,7 +151,7 @@ public class AtomTypeFactory {
      * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", builder);
     }
 
@@ -172,7 +172,7 @@ public class AtomTypeFactory {
      * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(String configFile, ChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
         if (tables == null) {
             tables = new Hashtable();
         }
@@ -187,7 +187,7 @@ public class AtomTypeFactory {
 	 *
 	 * @param  configFile  name of the config file
 	 */
-	private void readConfiguration(String fileName, ChemObjectBuilder builder)
+	private void readConfiguration(String fileName, IChemObjectBuilder builder)
 	{
 		logger.info("Reading config file from ", fileName);
 
@@ -246,7 +246,7 @@ public class AtomTypeFactory {
         return null;
     }
     
-    private void readConfiguration(InputStream ins, String format, ChemObjectBuilder builder) {
+    private void readConfiguration(InputStream ins, String format, IChemObjectBuilder builder) {
     	AtomTypeConfigurator atc = constructConfigurator(format);
 		if (atc != null) {
 			atc.setInputStream(ins);

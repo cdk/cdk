@@ -110,7 +110,7 @@ public class CDKDictionaryReferences {
         }
     }
 
-    private static void makeReferencesExplicitForIsotope(org.openscience.cdk.interfaces.Isotope isotope) {
+    private static void makeReferencesExplicitForIsotope(org.openscience.cdk.interfaces.IIsotope isotope) {
         int selfCounter = 0;
         isotope.setProperty(prefix + ":self:" + selfCounter++, "chemical:isotope");
     }

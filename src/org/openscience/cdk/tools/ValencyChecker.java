@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -72,7 +72,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
     /**
      * @param builder the ChemObjectBuilder implementation used to construct the AtomType's.
      */
-    protected AtomTypeFactory getAtomTypeFactory(ChemObjectBuilder builder) throws CDKException {
+    protected AtomTypeFactory getAtomTypeFactory(IChemObjectBuilder builder) throws CDKException {
         if (structgenATF == null) {
             try {
                 structgenATF = AtomTypeFactory.getInstance(atomTypeList, builder);

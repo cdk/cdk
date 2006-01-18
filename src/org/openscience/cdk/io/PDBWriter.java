@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -102,7 +102,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             writeCrystal((ICrystal)object);
         } else if (object instanceof IChemFile){
             IChemFile chemFile = (IChemFile)object;
-            ChemSequence sequence = chemFile.getChemSequence(0);
+            IChemSequence sequence = chemFile.getChemSequence(0);
             if (sequence != null) {
             	IChemModel model = sequence.getChemModel(0);
                 if (model != null) {

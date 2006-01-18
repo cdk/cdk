@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the ElectronContainer class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class ElectronContainerTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public ElectronContainerTest(String name) {
         super(name);

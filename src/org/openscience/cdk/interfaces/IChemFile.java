@@ -39,7 +39,7 @@ public interface IChemFile extends IChemObject {
 	 * @param  chemSequence  The chemSequence to be added to this container
 	 * @see                  #getChemSequences
 	 */
-	public void addChemSequence(ChemSequence chemSequence);
+	public void addChemSequence(IChemSequence chemSequence);
 
 	/**
 	 * Returns the array of ChemSequences of this container.
@@ -47,7 +47,7 @@ public interface IChemFile extends IChemObject {
 	 * @return    The array of ChemSequences of this container
 	 * @see       #addChemSequence
 	 */
-	public ChemSequence[] getChemSequences();
+	public IChemSequence[] getChemSequences();
 
 	/**
 	 * Returns the ChemSequence at position <code>number</code> in the container.
@@ -56,7 +56,7 @@ public interface IChemFile extends IChemObject {
 	 * @return         The ChemSequence at position <code>number</code>.
 	 * @see            #addChemSequence
 	 */
-	public ChemSequence getChemSequence(int number);
+	public IChemSequence getChemSequence(int number);
 
 	/**
 	 * Returns the number of ChemSequences in this Container.

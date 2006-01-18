@@ -37,11 +37,11 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
@@ -109,12 +109,12 @@ public class SmilesGenerator
 	private final String UP = "up";
 	private final String DOWN = "down";
 
-	private ChemObjectBuilder builder;
+	private IChemObjectBuilder builder;
 
 	/**
 	 *  Default constructor
 	 */
-	public SmilesGenerator(ChemObjectBuilder builder)
+	public SmilesGenerator(IChemObjectBuilder builder)
 	{
 		this.builder = builder;
 		try
@@ -1767,7 +1767,7 @@ public class SmilesGenerator
 	 */
 	private String generateMassString(IAtom a)
 	{
-		Isotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
+		IIsotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
 		if (majorIsotope.getMassNumber() == a.getMassNumber())
 		{
 			return "";

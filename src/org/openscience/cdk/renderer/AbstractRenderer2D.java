@@ -47,7 +47,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.Ring;
@@ -492,7 +492,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		String isotopeString = "";
 		if (atomicMassNumber != 0 && isotopeFactory != null)
 		{
-			Isotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+			IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
 			if (majorIsotope != null && atomicMassNumber != majorIsotope.getMassNumber())
 			{
 				graphics.setFont(subscriptFont);

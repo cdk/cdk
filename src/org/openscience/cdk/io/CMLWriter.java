@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
@@ -173,7 +173,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof Reaction) {
         } else if (object instanceof SetOfReactions) {
         } else if (object instanceof SetOfMolecules) {
-        } else if (object instanceof ChemSequence) {
+        } else if (object instanceof IChemSequence) {
         } else if (object instanceof IChemModel) {
         } else if (object instanceof IChemFile) {
         } else if (object instanceof ICrystal) {
@@ -206,8 +206,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	root = convertor.cdkSetOfReactionsToCMLReactionList((SetOfReactions)object);
         } else if (object instanceof SetOfMolecules) {
         	root = convertor.cdkSetOfMoleculesToCMLList((SetOfMolecules)object);
-        } else if (object instanceof ChemSequence) {
-        	root = convertor.cdkChemSequenceToCMLList((ChemSequence)object);
+        } else if (object instanceof IChemSequence) {
+        	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
         } else if (object instanceof IChemModel) {
         	root = convertor.cdkChemModelToCMLList((IChemModel)object);
         } else if (object instanceof IChemFile) {

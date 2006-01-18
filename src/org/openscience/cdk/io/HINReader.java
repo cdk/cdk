@@ -40,7 +40,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
@@ -137,7 +137,7 @@ public class HINReader extends DefaultChemObjectReader {
      * @return A ChemFile containing the data parsed from input.
      */
     private IChemFile readChemFile(IChemFile file) {
-        ChemSequence chemSequence = file.getBuilder().newChemSequence();
+        IChemSequence chemSequence = file.getBuilder().newChemSequence();
         IChemModel chemModel = file.getBuilder().newChemModel();
         SetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
         String info;

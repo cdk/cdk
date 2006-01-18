@@ -42,7 +42,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -575,7 +575,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			}
 		}
         try {
-            Isotope isotope = IsotopeFactory.getInstance(new ChemObject().getBuilder()).getMajorIsotope(symbol);
+            IIsotope isotope = IsotopeFactory.getInstance(new ChemObject().getBuilder()).getMajorIsotope(symbol);
             return ((double) 800000 - isotope.getMassNumber());
         } catch (Exception exception) {
             System.err.println("Could not find major isotope for this element!!! : " + symbol);

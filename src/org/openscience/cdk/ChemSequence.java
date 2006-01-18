@@ -24,8 +24,8 @@
 
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /** 
  * A sequence of ChemModels, which can, for example, be used to
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  * @cdk.keyword animation
  * @cdk.keyword reaction
  */
-public class ChemSequence extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ChemSequence, ChemObjectListener
+public class ChemSequence extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemSequence, IChemObjectListener
 {
 
 	/**
@@ -183,7 +183,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(ChemObjectChangeEvent event)
+	public void stateChanged(IChemObjectChangeEvent event)
 	{
 		notifyChanged(event);
 	}

@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
@@ -67,7 +67,7 @@ public class BasicValidator extends AbstractValidator {
         report.addReport(validateMaxBondOrder(subject));
         return report;
     }
-    public ValidationReport validateIsotope(Isotope subject) {
+    public ValidationReport validateIsotope(IIsotope subject) {
         return validateIsotopeExistence(subject);
     }
     public ValidationReport validateMolecule(Molecule subject) {
@@ -269,14 +269,14 @@ public class BasicValidator extends AbstractValidator {
     
     // the Isotope tests
     
-    public ValidationReport validateIsotopeExistence(Isotope isotope) {
+    public ValidationReport validateIsotopeExistence(IIsotope isotope) {
         ValidationReport report = new ValidationReport();
         ValidationTest isotopeExists = new ValidationTest(isotope,
             "Isotope with this mass number is not known for this element."
         );
         try {
             IsotopeFactory isotopeFac = IsotopeFactory.getInstance(isotope.getBuilder());
-            Isotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
+            IIsotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
             if (isotope.getMassNumber() != 0) {
                 boolean foundKnownIsotope = false;
                 for (int i=0; i<isotopes.length; i++) {

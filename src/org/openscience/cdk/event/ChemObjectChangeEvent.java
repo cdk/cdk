@@ -33,7 +33,7 @@ package org.openscience.cdk.event;
  *
  * @cdk.module data
  */
-public class ChemObjectChangeEvent extends java.util.EventObject implements org.openscience.cdk.interfaces.ChemObjectChangeEvent
+public class ChemObjectChangeEvent extends java.util.EventObject implements org.openscience.cdk.interfaces.IChemObjectChangeEvent
 {
 	/**
 	 * Constructs a ChemObjectChangeEvent with a reference 

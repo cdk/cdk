@@ -34,11 +34,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -167,7 +167,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        ChemSequence[] sequences = subject.getChemSequences();
+        IChemSequence[] sequences = subject.getChemSequences();
         for (int i=0; i< sequences.length; i++) {
             report.addReport(validateChemSequence(sequences[i]));
         }
@@ -212,7 +212,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into hierarchy
         return report;
     }
-    public ValidationReport validateChemSequence(ChemSequence subject) {
+    public ValidationReport validateChemSequence(IChemSequence subject) {
         logger.info("Validating org.openscience.cdk.ChemSequence");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -272,7 +272,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into hierarchy
         return report;
     }
-    public ValidationReport validateIsotope(Isotope subject) {
+    public ValidationReport validateIsotope(IIsotope subject) {
         logger.info("Validating org.openscience.cdk.Isotope");
         ValidationReport report = new ValidationReport();
         // apply validators

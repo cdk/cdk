@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the AtomType class.
@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class AtomTypeTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public AtomTypeTest(String name) {
         super(name);
@@ -270,7 +270,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_BondOrderSum() {
+    public void testClone_IBondOrderSum() {
         IAtomType at = builder.newAtomType("C");
         at.setBondOrderSum(1.0);
         IAtomType clone = (IAtomType)at.clone();

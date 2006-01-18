@@ -37,13 +37,13 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SingleElectron;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the AtomContainer.
@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class AtomContainerTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public AtomContainerTest(String name) {
         super(name);
@@ -118,7 +118,7 @@ public class AtomContainerTest extends CDKTestCase {
 		assertEquals(clonedMol.getAtomAt(0).getX2d(), 2.0, 0.001);
 	}
 
-    public void testClone_Bond() {
+    public void testClone_IBond() {
 		IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
 		molecule.addAtom(builder.newAtom("C")); // 1
 		molecule.addAtom(builder.newAtom("C")); // 2
@@ -139,7 +139,7 @@ public class AtomContainerTest extends CDKTestCase {
 		}
 	}
 
-    public void testClone_Bond2() {
+    public void testClone_IBond2() {
 		IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("C");
@@ -153,7 +153,7 @@ public class AtomContainerTest extends CDKTestCase {
         assertNotSame(atom2, clonedMol.getBondAt(0).getAtomAt(1));
 	}
 
-    public void testClone_Bond3() {
+    public void testClone_IBond3() {
 		IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("C");
@@ -1000,7 +1000,7 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(3, acetone.getElectronContainerCount());
     }
 
-    public void testAddBond_Bond() {
+    public void testAddBond_IBond() {
         // acetone molecule
         Molecule acetone = builder.newMolecule();
         IAtom c1 = builder.newAtom("C");
@@ -1355,7 +1355,7 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(3, acetone.getAtomNumber(o));
     }
     
-    public void testGetBondNumber_Bond() {
+    public void testGetBondNumber_IBond() {
         // acetone molecule
         Molecule acetone = builder.newMolecule();
         IAtom c1 = builder.newAtom("C");
@@ -1654,14 +1654,14 @@ public class AtomContainerTest extends CDKTestCase {
         assertTrue(listener.changed);
     }
 
-    private class ChemObjectListenerImpl implements ChemObjectListener {
+    private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         
         private ChemObjectListenerImpl() {
             changed = false;
         }
         
-        public void stateChanged(ChemObjectChangeEvent e) {
+        public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
         

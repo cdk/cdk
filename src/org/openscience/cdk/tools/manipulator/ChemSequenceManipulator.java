@@ -35,7 +35,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
  * Class with convenience methods that provide methods from
@@ -53,7 +53,7 @@ public class ChemSequenceManipulator {
      *
      * @return  The AtomContainer with all the Molecules of this container
      */
-    public static IAtomContainer getAllInOneContainer(ChemSequence sequence) {
+    public static IAtomContainer getAllInOneContainer(IChemSequence sequence) {
         IAtomContainer container = sequence.getBuilder().newAtomContainer();
         for (int i=0; i<sequence.getChemModelCount(); i++) {
             IChemModel model = sequence.getChemModel(i);
@@ -65,7 +65,7 @@ public class ChemSequenceManipulator {
     /**
      * Returns all the AtomContainer's of a ChemSequence.
      */
-    public static IAtomContainer[] getAllAtomContainers(ChemSequence sequence) {
+    public static IAtomContainer[] getAllAtomContainers(IChemSequence sequence) {
         IChemModel[] models = sequence.getChemModels();
         int acCount = 0;
         Vector acArrays = new Vector();
@@ -88,7 +88,7 @@ public class ChemSequenceManipulator {
         return containers;
     }
 
-	public static List getAllChemObjects(ChemSequence sequence) {
+	public static List getAllChemObjects(IChemSequence sequence) {
 		ArrayList list = new ArrayList();
         list.add(sequence);
         for (int i=0; i<sequence.getChemModelCount(); i++) {

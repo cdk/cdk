@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfReactions;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the SetOfReactions class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class SetOfReactionsTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public SetOfReactionsTest(String name) {
         super(name);

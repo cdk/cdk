@@ -26,7 +26,7 @@ package org.openscience.cdk.interfaces;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  * @author     steinbeck
  * @cdk.created    2000-10-02
  */
-public interface IAtomContainer extends IChemObject, ChemObjectListener {
+public interface IAtomContainer extends IChemObject, IChemObjectListener {
 
     /**
      * Adds an AtomParity to this container. If a parity is already given for the

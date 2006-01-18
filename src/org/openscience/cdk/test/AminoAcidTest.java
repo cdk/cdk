@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * TestCase for the AminoAcid class.
@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class AminoAcidTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public AminoAcidTest(String name) {
         super(name);

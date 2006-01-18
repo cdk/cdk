@@ -24,8 +24,8 @@
 
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /** 
  * An object containig multiple SetOfMolecules and 
@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  *
  * @cdk.module data
  */
-public class ChemModel extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemModel, ChemObjectListener
+public class ChemModel extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemModel, IChemObjectListener
 {
 
 	/**
@@ -243,7 +243,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(ChemObjectChangeEvent event)
+	public void stateChanged(IChemObjectChangeEvent event)
 	{
 		notifyChanged(event);
 	}

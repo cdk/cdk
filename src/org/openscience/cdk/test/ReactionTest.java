@@ -36,7 +36,7 @@ import org.openscience.cdk.Mapping;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * TestCase for the Reaction class.
@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class ReactionTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
 	public ReactionTest(String name) {
 		super(name);

@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
@@ -179,13 +179,13 @@ public class IDCreator {
     }
     
     public void createIDs(IChemFile file) {
-    	ChemSequence[] sequences = file.getChemSequences();
+    	IChemSequence[] sequences = file.getChemSequences();
     	for (int i=0; i<sequences.length; i++) {
     		createIDs(sequences[i]);
     	}
     }
     
-    public void createIDs(ChemSequence sequence) {
+    public void createIDs(IChemSequence sequence) {
     	IChemModel[] models = sequence.getChemModels();
     	for (int i=0; i<models.length; i++) {
     		createIDs(models[i]);

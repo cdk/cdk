@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -135,12 +135,12 @@ public class VASPReader extends DefaultChemObjectReader {
     }
     
     private IChemFile readChemFile(IChemFile file) throws CDKException, IOException {
-        ChemSequence seq = readChemSequence(file.getBuilder().newChemSequence());
+        IChemSequence seq = readChemSequence(file.getBuilder().newChemSequence());
         file.addChemSequence(seq);
         return file;
     }
     
-    private ChemSequence readChemSequence(ChemSequence sequence) throws CDKException, IOException {
+    private IChemSequence readChemSequence(IChemSequence sequence) throws CDKException, IOException {
         IChemModel chemModel = sequence.getBuilder().newChemModel();
         ICrystal crystal = null;
         

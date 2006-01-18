@@ -71,7 +71,7 @@ public class ZMatrixReaderTest extends CDKTestCase {
             
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
-            org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
+            org.openscience.cdk.interfaces.IChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
 			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);

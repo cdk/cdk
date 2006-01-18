@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -54,7 +54,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
         this.ins = ins;
     }
     
-    public Vector readAtomTypes(ChemObjectBuilder builder) throws IOException {
+    public Vector readAtomTypes(IChemObjectBuilder builder) throws IOException {
         Vector atomTypes = new Vector(0);
         if (ins == null) {
             try {

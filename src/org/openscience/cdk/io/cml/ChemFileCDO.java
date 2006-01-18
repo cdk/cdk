@@ -34,10 +34,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
@@ -63,7 +63,7 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
     private IAtomContainer currentMolecule;
     private SetOfMolecules currentSetOfMolecules;
     private IChemModel currentChemModel;
-    private ChemSequence currentChemSequence;
+    private IChemSequence currentChemSequence;
     private SetOfReactions currentSetOfReactions;
     private Reaction currentReaction;
     private IAtom currentAtom;
@@ -485,15 +485,15 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
       return objects;
     }
 
-	public void addChemSequence(org.openscience.cdk.interfaces.ChemSequence chemSequence) {
+	public void addChemSequence(org.openscience.cdk.interfaces.IChemSequence chemSequence) {
 		currentChemFile.addChemSequence(chemSequence);
 	}
 
-	public org.openscience.cdk.interfaces.ChemSequence[] getChemSequences() {
+	public org.openscience.cdk.interfaces.IChemSequence[] getChemSequences() {
 		return currentChemFile.getChemSequences();
 	}
 
-	public org.openscience.cdk.interfaces.ChemSequence getChemSequence(int number) {
+	public org.openscience.cdk.interfaces.IChemSequence getChemSequence(int number) {
 		return currentChemFile.getChemSequence(number);
 	}
 
@@ -501,7 +501,7 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
 		return currentChemFile.getChemSequenceCount();
 	}
 
-	public void addListener(ChemObjectListener col) {
+	public void addListener(IChemObjectListener col) {
 		currentChemFile.addListener(col);
 	}
 
@@ -509,7 +509,7 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
 		return currentChemFile.getListenerCount();
 	}
 
-	public void removeListener(ChemObjectListener col) {
+	public void removeListener(IChemObjectListener col) {
 		currentChemFile.removeListener(col);
 	}
 
@@ -517,7 +517,7 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
 		currentChemFile.notifyChanged();
 	}
 
-	public void notifyChanged(ChemObjectChangeEvent evt) {
+	public void notifyChanged(IChemObjectChangeEvent evt) {
 		currentChemFile.notifyChanged(evt);
 	}
 
@@ -569,7 +569,7 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
 		return currentChemFile.clone();
 	}
 
-	public ChemObjectBuilder getBuilder() {
+	public IChemObjectBuilder getBuilder() {
 		return currentChemFile.getBuilder();
 	}
 

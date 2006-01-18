@@ -27,7 +27,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -63,9 +63,9 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
     private int scalarType;
     private IAtomType atomType;
 
-    private static ChemObjectBuilder builder;
+    private static IChemObjectBuilder builder;
 
-    public AtomTypeHandler(ChemObjectBuilder builder) {
+    public AtomTypeHandler(IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         this.builder = builder;
     }

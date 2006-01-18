@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Monomer;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * TestCase for the Monomer class.
@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class MonomerTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
 	public MonomerTest(String name) {
 		super(name);

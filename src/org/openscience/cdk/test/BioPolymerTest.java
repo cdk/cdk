@@ -35,7 +35,7 @@ import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the functionality of the BioPolymer class.
@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class BioPolymerTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 
 	public BioPolymerTest(String name) {
         super(name);

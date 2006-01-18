@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -104,7 +104,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     }
 
     public boolean accepts(IChemObject object) {
-        if (object instanceof ChemSequence) {
+        if (object instanceof IChemSequence) {
             return true;
         } else if (object instanceof IChemFile) {
             return true;
@@ -114,8 +114,8 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     }
     
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemSequence) {
-            return readChemSequence((ChemSequence)object);
+        if (object instanceof IChemSequence) {
+            return readChemSequence((IChemSequence)object);
         } else if (object instanceof IChemFile) {
             return readChemFile((IChemFile)object);
         } else {
@@ -128,12 +128,12 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     }
     
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
-        ChemSequence sequence = readChemSequence(chemFile.getBuilder().newChemSequence());
+        IChemSequence sequence = readChemSequence(chemFile.getBuilder().newChemSequence());
         chemFile.addChemSequence(sequence);
         return chemFile;
     }
     
-    private ChemSequence readChemSequence(ChemSequence sequence) throws CDKException {
+    private IChemSequence readChemSequence(IChemSequence sequence) throws CDKException {
         IChemModel model = null;
         
         try {

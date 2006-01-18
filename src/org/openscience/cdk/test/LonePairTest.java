@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.LonePair;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the LonePair class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class LonePairTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public LonePairTest(String name) {
         super(name);

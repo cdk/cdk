@@ -26,9 +26,9 @@ package org.openscience.cdk.debug;
 import java.util.Hashtable;
 
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -42,7 +42,7 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
 
 	LoggingTool logger = new LoggingTool(DebugChemObject.class);
 
-	public void addListener(ChemObjectListener col) {
+	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);
 	}
@@ -52,7 +52,7 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
 		return super.getListenerCount();
 	}
 
-	public void removeListener(ChemObjectListener col) {
+	public void removeListener(IChemObjectListener col) {
 		logger.debug("Removing listener: ", col);
 		super.removeListener(col);
 	}
@@ -62,7 +62,7 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
 		super.notifyChanged();
 	}
 
-	public void notifyChanged(ChemObjectChangeEvent evt) {
+	public void notifyChanged(IChemObjectChangeEvent evt) {
 		logger.debug("Notifying changed event: ", evt);
 		super.notifyChanged(evt);
 	}
@@ -133,7 +133,7 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
         return clone;
 	}
 
-	public ChemObjectBuilder getBuilder() {
+	public IChemObjectBuilder getBuilder() {
 		return DebugChemObjectBuilder.getInstance();
 	}
 

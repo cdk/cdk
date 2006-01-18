@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
@@ -139,7 +139,7 @@ public class CIFReader extends DefaultChemObjectReader {
      * @return a ChemFile with the coordinates, charges, vectors, etc.
      */
     private IChemFile readChemFile(IChemFile file) throws IOException {
-        ChemSequence seq = file.getBuilder().newChemSequence();
+        IChemSequence seq = file.getBuilder().newChemSequence();
         IChemModel model = file.getBuilder().newChemModel();
         crystal = file.getBuilder().newCrystal();
 

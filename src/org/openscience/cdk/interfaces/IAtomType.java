@@ -36,7 +36,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.keyword atom, type
  */
-public interface IAtomType extends Isotope {
+public interface IAtomType extends IIsotope {
 
 	/**
 	 * Sets the if attribute of the AtomType object.

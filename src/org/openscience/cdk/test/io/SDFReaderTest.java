@@ -65,7 +65,7 @@ public class SDFReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
             assertEquals(1, fileContents.getChemSequenceCount());
-            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(9, sequence.getChemModelCount());
             for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -83,7 +83,7 @@ public class SDFReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
             assertEquals(1, fileContents.getChemSequenceCount());
-            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(9, sequence.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
@@ -108,7 +108,7 @@ public class SDFReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
             assertEquals(1, fileContents.getChemSequenceCount());
-            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(2, sequence.getChemModelCount());
             for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -126,7 +126,7 @@ public class SDFReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
             assertEquals(1, fileContents.getChemSequenceCount());
-            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(2, sequence.getChemModelCount());
             for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -144,7 +144,7 @@ public class SDFReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(new InputStreamReader(ins));
             ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
             assertEquals(1, fileContents.getChemSequenceCount());
-            org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(2, sequence.getChemModelCount());
             for (int i=0; i<sequence.getChemModelCount(); i++) {

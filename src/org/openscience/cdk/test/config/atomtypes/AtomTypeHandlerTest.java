@@ -51,7 +51,7 @@ public class AtomTypeHandlerTest extends CDKTestCase {
     // serious testing is done in AtomTypeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
-    public void testAtomTypeHandler_ChemObjectBuilder() {
+    public void testAtomTypeHandler_IChemObjectBuilder() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
     }
     

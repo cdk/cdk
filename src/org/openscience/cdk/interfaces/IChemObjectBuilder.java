@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * @author        egonw
  * @cdk.module    interfaces
  */
-public interface ChemObjectBuilder {
+public interface IChemObjectBuilder {
 
     /**
      * Constructs an completely unset Atom.
@@ -174,7 +174,7 @@ public interface ChemObjectBuilder {
 	/**
 	 * Constructs an empty ChemSequence.
 	 */
-	public ChemSequence newChemSequence();   
+	public IChemSequence newChemSequence();   
 	
     /**
      * Constructs a new crystal with zero length cell axis.
@@ -221,7 +221,7 @@ public interface ChemObjectBuilder {
 	 *
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 */
-	public Isotope newIsotope(String elementSymbol);
+	public IIsotope newIsotope(String elementSymbol);
 	
 	/**
 	 * Constructor for the Isotope object.
@@ -232,7 +232,7 @@ public interface ChemObjectBuilder {
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
 	 * @param  abundance      The natural abundance of the isotope
 	 */
-	public Isotope newIsotope(int atomicNumber, String elementSymbol, 
+	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			int massNumber, double exactMass, double abundance);
 
 	/**
@@ -243,7 +243,7 @@ public interface ChemObjectBuilder {
 	 * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
 	 * @param  abundance      The natural abundance of the isotope
 	 */
-	public Isotope newIsotope(int atomicNumber, String elementSymbol, 
+	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			double exactMass, double abundance);
 
 	/**
@@ -252,7 +252,7 @@ public interface ChemObjectBuilder {
 	 * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
 	 * @param  massNumber     The atomic mass of the isotope, 16 for Oxygen, e.g.
 	 */
-	public Isotope newIsotope(String elementSymbol, int massNumber);
+	public IIsotope newIsotope(String elementSymbol, int massNumber);
 	
     /**
      * Constructs an unconnected lone pair.

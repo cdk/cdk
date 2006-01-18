@@ -43,7 +43,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -114,7 +114,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
      public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof IChemFile) {
              IChemFile file = (IChemFile)object;
-             ChemSequence sequence = file.getBuilder().newChemSequence();
+             IChemSequence sequence = file.getBuilder().newChemSequence();
              IChemModel model = file.getBuilder().newChemModel();
              SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
              moleculeSet.addMolecule(readMolecule(

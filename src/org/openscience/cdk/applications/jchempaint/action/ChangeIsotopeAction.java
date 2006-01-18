@@ -34,7 +34,7 @@ import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ChangeIsotopeEdit;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -69,7 +69,7 @@ public class ChangeIsotopeAction extends JCPAction
                  int formerIsotopeNumber = 0;
 				try
 				{
-					Isotope isotope = IsotopeFactory.getInstance(atom.getBuilder()).
+					IIsotope isotope = IsotopeFactory.getInstance(atom.getBuilder()).
 							getMajorIsotope(atom.getSymbol());
 					isotopeNumber = isotope.getMassNumber();
                     formerIsotopeNumber = isotopeNumber;

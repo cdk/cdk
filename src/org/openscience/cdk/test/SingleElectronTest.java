@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.SingleElectron;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the funcitonality of the SingleElectron class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  */
 public class SingleElectronTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public SingleElectronTest(String name) {
         super(name);

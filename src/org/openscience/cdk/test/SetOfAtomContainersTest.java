@@ -29,10 +29,10 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the SetOfMolecules class.
@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
  */
 public class SetOfAtomContainersTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public SetOfAtomContainersTest(String name) {
         super(name);
@@ -270,14 +270,14 @@ public class SetOfAtomContainersTest extends CDKTestCase {
         assertEquals(ac2, som.getAtomContainer(0));
     }
     
-    private class ChemObjectListenerImpl implements ChemObjectListener {
+    private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         
         private ChemObjectListenerImpl() {
             changed = false;
         }
         
-        public void stateChanged(ChemObjectChangeEvent e) {
+        public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
         

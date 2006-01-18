@@ -48,9 +48,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
@@ -155,7 +155,7 @@ public class Convertor {
     	}
     	
     	if (file.getChemSequenceCount() > 0) {
-    		ChemSequence[] sequences = file.getChemSequences();
+    		IChemSequence[] sequences = file.getChemSequences();
     		for (int i=0; i<sequences.length; i++) {
     			cmlList.appendChild(cdkChemSequenceToCMLList(sequences[i]));
     		}
@@ -164,10 +164,10 @@ public class Convertor {
     	return cmlList;
     }
     
-    public CMLList cdkChemSequenceToCMLList(ChemSequence sequence) {
+    public CMLList cdkChemSequenceToCMLList(IChemSequence sequence) {
     	return cdkChemSequenceToCMLList(sequence, true);
     }
-    private CMLList cdkChemSequenceToCMLList(ChemSequence sequence, boolean setIDs) {
+    private CMLList cdkChemSequenceToCMLList(IChemSequence sequence, boolean setIDs) {
     	CMLList cmlList = new CMLList();
     	cmlList.setDictRef("cdk:sequence");
     	
@@ -404,7 +404,7 @@ public class Convertor {
 		int massNumber = cdkAtom.getMassNumber();
 		if (!(cdkAtom instanceof PseudoAtom)) {
 			try {
-				Isotope majorIsotope = IsotopeFactory.getInstance(cdkAtom.getBuilder()).getMajorIsotope(cdkAtom.getSymbol());
+				IIsotope majorIsotope = IsotopeFactory.getInstance(cdkAtom.getBuilder()).getMajorIsotope(cdkAtom.getSymbol());
 				
 				if (majorIsotope != null) {
 					int majorMassNumber = majorIsotope.getMassNumber();

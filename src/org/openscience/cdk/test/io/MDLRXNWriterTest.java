@@ -39,7 +39,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.io.MDLRXNWriter;
@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class MDLRXNWriterTest extends CDKTestCase {
 
     private org.openscience.cdk.tools.LoggingTool logger;
-    private ChemObjectBuilder builder;
+    private IChemObjectBuilder builder;
 
     public MDLRXNWriterTest(String name) {
         super(name);

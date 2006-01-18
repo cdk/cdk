@@ -12,7 +12,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.undoredo.ChangeIsotopeEdit;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -103,7 +103,7 @@ public class ChangeIsotopeEditTest extends CDKTestCase {
 		HashMap isotopesMap = new HashMap();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
-			Isotope isotope = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(
+			IIsotope isotope = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(
 					atom.getSymbol());
 			int isotopeNumber = isotope.getMassNumber();
 			int formerIsotopeNumber = isotopeNumber;

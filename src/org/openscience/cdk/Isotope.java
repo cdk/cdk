@@ -57,7 +57,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword     isotope
  */
-public class Isotope extends Element implements java.io.Serializable, org.openscience.cdk.interfaces.Isotope 
+public class Isotope extends Element implements java.io.Serializable, org.openscience.cdk.interfaces.IIsotope 
 {
 
     /**

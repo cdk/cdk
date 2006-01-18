@@ -65,7 +65,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.Ring;
@@ -545,7 +545,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						if(Character.isLowerCase(x.toCharArray()[0]))
 							x=Character.toUpperCase(x.charAt(0))+x.substring(1);
 						IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
-						Isotope iso=ifa.getMajorIsotope(x);
+						IIsotope iso=ifa.getMajorIsotope(x);
 						String formerSymbol=r2dm.getHighlightedAtom().getSymbol();
 						if(iso!=null)
 							r2dm.getHighlightedAtom().setSymbol(x);
@@ -1330,7 +1330,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			logger.debug("Key typed");
 			if(r2dm.getHighlightedAtom()!=null){
 				IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
-				Isotope iso=ifa.getMajorIsotope(e.getKeyChar());
+				IIsotope iso=ifa.getMajorIsotope(e.getKeyChar());
 				if(iso!=null)
 					r2dm.getHighlightedAtom().setSymbol(e.getKeyChar()+"");
 			}

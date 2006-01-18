@@ -56,7 +56,7 @@ public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase
         assertNotNull(configurator);
     }
     
-    public void testReadAtomTypes_ChemObjectBuilder() throws Exception {
+    public void testReadAtomTypes_IChemObjectBuilder() throws Exception {
         String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();

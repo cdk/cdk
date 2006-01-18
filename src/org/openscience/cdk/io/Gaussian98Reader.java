@@ -42,7 +42,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -215,7 +215,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 */
 	private IChemFile readChemFile(IChemFile chemFile) throws CDKException, IOException
 	{
-		ChemSequence sequence = chemFile.getBuilder().newChemSequence();
+		IChemSequence sequence = chemFile.getBuilder().newChemSequence();
 		IChemModel model = null;
 		String line = input.readLine();
 		String levelOfTheory = "";

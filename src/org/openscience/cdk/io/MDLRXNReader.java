@@ -39,8 +39,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.Reaction;
@@ -120,7 +120,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
              return model;
          } else if (object instanceof IChemFile) {
              IChemFile chemFile = object.getBuilder().newChemFile();
-             ChemSequence sequence = object.getBuilder().newChemSequence();
+             IChemSequence sequence = object.getBuilder().newChemSequence();
              sequence.addChemModel((IChemModel)read(object.getBuilder().newChemModel()));
              chemFile.addChemSequence(sequence);
              return chemFile;
@@ -148,7 +148,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      *
      * @return  The Reaction that was read from the MDL file.
      */
-    private Reaction readReaction(ChemObjectBuilder builder) throws CDKException {
+    private Reaction readReaction(IChemObjectBuilder builder) throws CDKException {
         Reaction reaction = (Reaction)builder.newReaction();
         try {
             input.readLine(); // first line should be $RXN

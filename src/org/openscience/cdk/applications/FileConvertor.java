@@ -50,8 +50,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
@@ -107,7 +107,7 @@ public class FileConvertor {
 
     private LoggingTool logger;
 
-    private ChemObjectBuilder builder;
+    private IChemObjectBuilder builder;
     private ChemObjectReader cor;
     private String oformat;
     private ChemObjectWriter cow;
@@ -570,7 +570,7 @@ public class FileConvertor {
         } else {
             logger.info("Cannot write ChemFile, recursing into ChemSequence's.");
             int count = chemFile.getChemSequenceCount();
-            boolean needMoreFiles = (cow.accepts(ChemSequence.class)) && (count > 1);
+            boolean needMoreFiles = (cow.accepts(IChemSequence.class)) && (count > 1);
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file
@@ -583,7 +583,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(ChemSequence sequence, String outputFilename) throws IOException {  // NOPMD
+    private void write(IChemSequence sequence, String outputFilename) throws IOException {  // NOPMD
         try {
             cow.write(sequence);
         } catch (CDKException exception) {

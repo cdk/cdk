@@ -25,8 +25,8 @@ package org.openscience.cdk.config.isotopes;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -56,13 +56,13 @@ public class IsotopeHandler extends DefaultHandler {
     private String currentChars;
     private Vector isotopes;
 
-    private Isotope workingIsotope;
+    private IIsotope workingIsotope;
     private String currentElement;
     private String dictRef;
     
-    private ChemObjectBuilder builder;
+    private IChemObjectBuilder builder;
 
-    public IsotopeHandler(ChemObjectBuilder builder) {
+    public IsotopeHandler(IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         this.builder = builder;
     }
@@ -139,8 +139,8 @@ public class IsotopeHandler extends DefaultHandler {
         currentChars += new String(chars, start, length);
     }
 
-    private Isotope createIsotopeOfElement(String currentElement, Attributes atts) {
-        Isotope isotope = builder.newIsotope(currentElement);
+    private IIsotope createIsotopeOfElement(String currentElement, Attributes atts) {
+        IIsotope isotope = builder.newIsotope(currentElement);
         for (int i = 0; i < atts.getLength(); i++) {
             try {
                 if ("id".equals(atts.getQName(i))) {

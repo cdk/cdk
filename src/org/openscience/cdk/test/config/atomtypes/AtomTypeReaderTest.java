@@ -59,7 +59,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
         assertNotNull(reader);
     }
     
-    public void testReadAtomTypes_ChemObjectBuilder() {
+    public void testReadAtomTypes_IChemObjectBuilder() {
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader(
             "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              " +

@@ -33,7 +33,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfReactions;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * A helper class to instantiate a IChemObject for the debug implementation.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ChemObjectBuilder;
  * @author        egonw
  * @cdk.module    data-debug
  */
-public class DebugChemObjectBuilder implements ChemObjectBuilder {
+public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
 	private static DebugChemObjectBuilder instance = null;
 	
@@ -136,7 +136,7 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
 		return new DebugChemObject();
 	}
 	
-	public org.openscience.cdk.interfaces.ChemSequence newChemSequence() {
+	public org.openscience.cdk.interfaces.IChemSequence newChemSequence() {
 		return new ChemSequence();   
 	}
 	
@@ -164,21 +164,21 @@ public class DebugChemObjectBuilder implements ChemObjectBuilder {
     	return new DebugElement(symbol, atomicNumber);
     }
 
-	public org.openscience.cdk.interfaces.Isotope newIsotope(String elementSymbol) {
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(String elementSymbol) {
 		return new DebugIsotope(elementSymbol);
 	}
 	
-	public org.openscience.cdk.interfaces.Isotope newIsotope(int atomicNumber, String elementSymbol, 
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			int massNumber, double exactMass, double abundance) {
 		return new DebugIsotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
 	}
 
-	public org.openscience.cdk.interfaces.Isotope newIsotope(int atomicNumber, String elementSymbol, 
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			double exactMass, double abundance) {
 		return new DebugIsotope(atomicNumber, elementSymbol, exactMass, abundance);
 	}
 
-	public org.openscience.cdk.interfaces.Isotope newIsotope(String elementSymbol, int massNumber) {
+	public org.openscience.cdk.interfaces.IIsotope newIsotope(String elementSymbol, int massNumber) {
 		return new DebugIsotope(elementSymbol, massNumber);
 	}
 

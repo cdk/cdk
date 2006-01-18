@@ -31,11 +31,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ChemSequence;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -81,7 +81,7 @@ public class AbstractValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateChemSequence(ChemSequence subject) {
+    public ValidationReport validateChemSequence(IChemSequence subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
@@ -97,7 +97,7 @@ public class AbstractValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateIsotope(Isotope subject) {
+    public ValidationReport validateIsotope(IIsotope subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }

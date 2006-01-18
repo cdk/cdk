@@ -98,7 +98,7 @@ public class PDBReaderTest extends TestCase {
             oChemFile.setProperty(new String("test.chemfile"), new String("test.chemfile")); 
             assertEquals(new String("test.chemfile"), oChemFile.getProperty("test.chemfile"));
 
-            org.openscience.cdk.interfaces.ChemSequence oSeq = oChemFile.getChemSequence(0);
+            org.openscience.cdk.interfaces.IChemSequence oSeq = oChemFile.getChemSequence(0);
             assertNotNull(oSeq);			
             assertEquals(oSeq.getChemModelCount(), 1);
 
@@ -175,7 +175,7 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(chemFile);
       assertEquals(1, chemFile.getChemSequenceCount());
 
-      org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
+      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
       assertNotNull(seq);
       assertEquals(1, seq.getChemModelCount());
       

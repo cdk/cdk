@@ -29,8 +29,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  * Checks the funcitonality of the Isotope class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.Isotope;
  */
 public class IsotopeTest extends CDKTestCase {
 
-	protected ChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 	
     public IsotopeTest(String name) {
         super(name);
@@ -56,12 +56,12 @@ public class IsotopeTest extends CDKTestCase {
     }
     
     public void testIsotope_String() {
-        Isotope i = builder.newIsotope("C");
+        IIsotope i = builder.newIsotope("C");
         assertEquals("C", i.getSymbol());
     }
     
     public void testIsotope_int_String_int_double_double() {
-        Isotope i = builder.newIsotope(6, "C", 12, 12.001, 80.0);
+        IIsotope i = builder.newIsotope(6, "C", 12, 12.001, 80.0);
         assertEquals(12, i.getMassNumber());
         assertEquals("C", i.getSymbol());
         assertEquals(6, i.getAtomicNumber());
@@ -70,13 +70,13 @@ public class IsotopeTest extends CDKTestCase {
     }
     
     public void testIsotope_String_int() {
-        Isotope i = builder.newIsotope("C", 12);
+        IIsotope i = builder.newIsotope("C", 12);
         assertEquals(12, i.getMassNumber());
         assertEquals("C", i.getSymbol());
     }
     
     public void testIsotope_int_String_double_double() {
-        Isotope i = builder.newIsotope(6, "C", 12.001, 80.0);
+        IIsotope i = builder.newIsotope(6, "C", 12.001, 80.0);
         assertEquals("C", i.getSymbol());
         assertEquals(6, i.getAtomicNumber());
         assertEquals(12.001, i.getExactMass(), 0.001);
@@ -84,7 +84,7 @@ public class IsotopeTest extends CDKTestCase {
     }
     
     public void testSetNaturalAbundance_double() {
-        Isotope i = builder.newIsotope("C");
+        IIsotope i = builder.newIsotope("C");
         i.setNaturalAbundance(80.0);
         assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
@@ -93,7 +93,7 @@ public class IsotopeTest extends CDKTestCase {
     }
     
     public void testSetExactMass_double() {
-        Isotope i = builder.newIsotope("C");
+        IIsotope i = builder.newIsotope("C");
         i.setExactMass(12.03);
         assertEquals(12.03, i.getExactMass(), 0.001);
     }
@@ -102,7 +102,7 @@ public class IsotopeTest extends CDKTestCase {
     }
 
     public void testSetMassNumber_int() {
-        Isotope i = builder.newIsotope("D");
+        IIsotope i = builder.newIsotope("D");
         i.setMassNumber(2);
         assertEquals(2, i.getMassNumber());
     }
@@ -114,18 +114,18 @@ public class IsotopeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone() {
-        Isotope iso = builder.newIsotope("C");
+        IIsotope iso = builder.newIsotope("C");
         Object clone = iso.clone();
-        assertTrue(clone instanceof Isotope);
+        assertTrue(clone instanceof IIsotope);
     }
     
     /**
      * Method to test the clone() method
      */
     public void testClone_ExactMass() {
-        Isotope iso = builder.newIsotope("C");
+        IIsotope iso = builder.newIsotope("C");
         iso.setExactMass(1.0);
-        Isotope clone = (Isotope)iso.clone();
+        IIsotope clone = (IIsotope)iso.clone();
         
         // test cloning of exact mass
         iso.setExactMass(2.0);
@@ -136,9 +136,9 @@ public class IsotopeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone_NaturalAbundance() {
-        Isotope iso = builder.newIsotope("C");
+        IIsotope iso = builder.newIsotope("C");
         iso.setNaturalAbundance(1.0);
-        Isotope clone = (Isotope)iso.clone();
+        IIsotope clone = (IIsotope)iso.clone();
         
         // test cloning of exact mass
         iso.setNaturalAbundance(2.0);
@@ -149,9 +149,9 @@ public class IsotopeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     public void testClone_MassNumber() {
-        Isotope iso = builder.newIsotope("C");
+        IIsotope iso = builder.newIsotope("C");
         iso.setMassNumber(12);
-        Isotope clone = (Isotope)iso.clone();
+        IIsotope clone = (IIsotope)iso.clone();
         
         // test cloning of exact mass
         iso.setMassNumber(13);
@@ -162,7 +162,7 @@ public class IsotopeTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Isotope iso = builder.newIsotope("C");
+        IIsotope iso = builder.newIsotope("C");
         String description = iso.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');

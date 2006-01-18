@@ -27,8 +27,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  * @author     steinbeck
  * @cdk.created    2000-10-02
  */
-public class AtomContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IAtomContainer , ChemObjectListener {
+public class AtomContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IAtomContainer , IChemObjectListener {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -1391,7 +1391,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@param  event  A change event pointing to the source of the change
 	 */
-	public void stateChanged(ChemObjectChangeEvent event)
+	public void stateChanged(IChemObjectChangeEvent event)
 	{
 		notifyChanged(event);
 	}   

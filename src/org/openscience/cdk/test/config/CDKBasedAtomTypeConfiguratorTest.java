@@ -56,7 +56,7 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase
         assertNotNull(configurator);
     }
     
-    public void testReadAtomTypes_ChemObjectBuilder() throws Exception {
+    public void testReadAtomTypes_IChemObjectBuilder() throws Exception {
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
         String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);

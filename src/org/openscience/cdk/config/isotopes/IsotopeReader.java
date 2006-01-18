@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.ChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -54,14 +54,14 @@ public class IsotopeReader {
     private Reader input;
 
     private LoggingTool logger;
-    private ChemObjectBuilder builder;
+    private IChemObjectBuilder builder;
 
     /**
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
      *
      * @param input Reader with the XML source
      */
-    public IsotopeReader(Reader input, ChemObjectBuilder builder) {
+    public IsotopeReader(Reader input, IChemObjectBuilder builder) {
         this.init();
         this.input = input;
         this.builder = builder;

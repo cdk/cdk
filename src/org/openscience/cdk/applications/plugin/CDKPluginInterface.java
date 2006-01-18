@@ -26,7 +26,7 @@ package org.openscience.cdk.applications.plugin;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
  * Interface that CDK Plugins must implement. The version of this
@@ -116,7 +116,7 @@ public interface CDKPluginInterface {
      * to keep the information in the plugin synchronized with the
      * application.
      */
-    public void stateChanged(ChemObjectChangeEvent e);
+    public void stateChanged(IChemObjectChangeEvent e);
 }
 
 

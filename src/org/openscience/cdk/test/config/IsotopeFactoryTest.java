@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.Isotope;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -54,7 +54,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 		return new TestSuite(IsotopeFactoryTest.class);
 	}
 
-    public void testGetInstance_ChemObjectBuilder() throws Exception {
+    public void testGetInstance_IChemObjectBuilder() throws Exception {
         IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         assertNotNull(isofac);
     }
@@ -74,21 +74,21 @@ public class IsotopeFactoryTest extends CDKTestCase
 	public void testConfigure_IAtom_Isotope() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Atom atom = new Atom("H");
-        Isotope isotope = new org.openscience.cdk.Isotope("H", 2);
+        IIsotope isotope = new org.openscience.cdk.Isotope("H", 2);
         isofac.configure(atom, isotope);
         assertEquals(2, atom.getMassNumber());
     }
 	
 	public void testGetMajorIsotope_String() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-        Isotope isotope = isofac.getMajorIsotope("Te");
+        IIsotope isotope = isofac.getMajorIsotope("Te");
         if (standAlone) System.out.println("Isotope: " + isotope);
 		assertEquals(129.906229, isotope.getExactMass(), 0.0001);
 	}
     
 	public void testGetMajorIsotope_int() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-        Isotope isotope = isofac.getMajorIsotope(17);
+        IIsotope isotope = isofac.getMajorIsotope(17);
 		assertEquals("Cl", isotope.getSymbol());
 	}
     
@@ -112,7 +112,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 
     public void testGetIsotopes_String() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-        Isotope[] list = isofac.getIsotopes("He");
+        IIsotope[] list = isofac.getIsotopes("He");
 		assertEquals(2, list.length);
 	}    
 
@@ -141,7 +141,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 		try {
 			IsotopeFactoryTest ift = new IsotopeFactoryTest("IsotopeFactoryTest");
 			ift.standAlone = true;
-			ift.testGetInstance_ChemObjectBuilder();
+			ift.testGetInstance_IChemObjectBuilder();
 		} catch(Exception exc) {
 			exc.printStackTrace();
 		}

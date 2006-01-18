@@ -29,9 +29,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.interfaces.ChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
  * Checks the funcitonality of the ChemSequence class.
@@ -124,14 +124,14 @@ public class ChemFileTest extends CDKTestCase {
         assertTrue(listener.changed);
     }
 
-    private class ChemObjectListenerImpl implements ChemObjectListener {
+    private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         
         private ChemObjectListenerImpl() {
             changed = false;
         }
         
-        public void stateChanged(ChemObjectChangeEvent e) {
+        public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
         
