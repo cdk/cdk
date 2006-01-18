@@ -28,7 +28,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.AminoAcid;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.exception.CDKException;
@@ -50,7 +50,7 @@ public class AminoAcidManipulator {
 	 * @param acid AminoAcid from which to remove the oxygen
 	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid 
 	 */
-	public static void removeAcidicOxygen(AminoAcid acid) throws CDKException {
+	public static void removeAcidicOxygen(IAminoAcid acid) throws CDKException {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
 		
@@ -75,7 +75,7 @@ public class AminoAcidManipulator {
 	 * @param  acid         AminoAcid to which to add the oxygen
 	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid 
 	 */
-	public static void addAcidicOxygen(AminoAcid acid) throws CDKException {
+	public static void addAcidicOxygen(IAminoAcid acid) throws CDKException {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 		

@@ -24,7 +24,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.AminoAcid;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -54,7 +54,7 @@ public class AminoAcidCountDescriptor implements IDescriptor {
      *  Constructor for the AromaticAtomsCountDescriptor object.
      */
     public AminoAcidCountDescriptor() {
-        AminoAcid[] aas = AminoAcids.createAAs();
+        IAminoAcid[] aas = AminoAcids.createAAs();
         substructureSet = aas[0].getBuilder().newSetOfAtomContainers();
         for (int i=0; i<aas.length; i++) {
             substructureSet.addAtomContainer(aas[i]);

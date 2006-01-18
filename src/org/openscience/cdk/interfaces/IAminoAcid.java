@@ -37,7 +37,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.created 2005-12-05
  * @cdk.keyword amino acid
  */
-public interface AminoAcid extends Monomer {
+public interface IAminoAcid extends Monomer {
 
     /**
      * Retrieves the N-terminus atom.

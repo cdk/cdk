@@ -49,7 +49,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return instance;
 	}
 	
-	public org.openscience.cdk.interfaces.AminoAcid newAminoAcid() {
+	public org.openscience.cdk.interfaces.IAminoAcid newAminoAcid() {
 		return new AminoAcid();
 	}
 	

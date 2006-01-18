@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
-import org.openscience.cdk.interfaces.AminoAcid;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
@@ -108,7 +108,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 				
-		    AminoAcid[] aas = AminoAcids.createAAs();
+		    IAminoAcid[] aas = AminoAcids.createAAs();
 			IFingerprinter printer = new SubstructureFingerprinter(set);
 
 			assertNotNull(set);

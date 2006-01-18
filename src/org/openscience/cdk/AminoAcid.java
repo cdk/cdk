@@ -37,7 +37,7 @@ package org.openscience.cdk;
  * @cdk.created 2005-08-11
  * @cdk.keyword amino acid
  */
-public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces.AminoAcid, java.io.Serializable
+public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces.IAminoAcid, java.io.Serializable
 {
 
     /**

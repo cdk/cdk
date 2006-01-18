@@ -31,7 +31,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.AminoAcid;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
@@ -60,29 +60,29 @@ public class AminoAcidTest extends CDKTestCase {
     }
 
     public void testAminoAcid() {
-        AminoAcid oAminoAcid = builder.newAminoAcid();
+        IAminoAcid oAminoAcid = builder.newAminoAcid();
         assertNotNull(oAminoAcid);
     }
     
     public void testAddCTerminus_Atom() {
-        AminoAcid m = builder.newAminoAcid();
+        IAminoAcid m = builder.newAminoAcid();
         Atom cTerminus = builder.newAtom("C");
         m.addCTerminus(cTerminus);
         assertEquals(cTerminus, m.getCTerminus());
     }
     public void testGetCTerminus() {
-        AminoAcid m = builder.newAminoAcid();
+        IAminoAcid m = builder.newAminoAcid();
         assertNull(m.getCTerminus());
     }
 
     public void testAddNTerminus_Atom() {
-        AminoAcid m = builder.newAminoAcid();
+        IAminoAcid m = builder.newAminoAcid();
         Atom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
         assertEquals(nTerminus, m.getNTerminus());
     }
     public void testGetNTerminus() {
-        AminoAcid m = builder.newAminoAcid();
+        IAminoAcid m = builder.newAminoAcid();
         assertNull(m.getNTerminus());
     }
     
@@ -90,7 +90,7 @@ public class AminoAcidTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        AminoAcid m = builder.newAminoAcid();
+        IAminoAcid m = builder.newAminoAcid();
         Atom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
         String description = m.toString();
@@ -101,9 +101,9 @@ public class AminoAcidTest extends CDKTestCase {
     }
 
     public void testClone() {
-        AminoAcid aa = builder.newAminoAcid();
+        IAminoAcid aa = builder.newAminoAcid();
         Object clone = aa.clone();
-        assertTrue(clone instanceof AminoAcid);
+        assertTrue(clone instanceof IAminoAcid);
         assertNotSame(aa, clone);
     }
 }

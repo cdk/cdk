@@ -27,7 +27,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AminoAcid;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.Atom;
 import org.openscience.cdk.interfaces.AtomContainer;
 import org.openscience.cdk.interfaces.AtomParity;
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
-    implements AminoAcid {
+    implements IAminoAcid {
 
 	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 

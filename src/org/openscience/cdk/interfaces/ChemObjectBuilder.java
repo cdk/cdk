@@ -34,7 +34,7 @@ public interface ChemObjectBuilder {
     /**
      * Constructs an completely unset Atom.
      */
-	public AminoAcid newAminoAcid();
+	public IAminoAcid newAminoAcid();
 	
     /**
      * Constructs an completely unset Atom.
