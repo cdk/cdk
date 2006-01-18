@@ -52,7 +52,7 @@ public class MappingTest extends CDKTestCase {
         return new TestSuite(MappingTest.class);
     }
     
-    public void testMapping_ChemObject_ChemObject() {
+    public void testMapping_IChemObject_IChemObject() {
         Mapping mapping = new Mapping(new Atom(), new Atom());
         assertNotNull(mapping);
     }
