@@ -37,8 +37,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -106,7 +106,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     public boolean accepts(IChemObject object) {
         if (object instanceof ChemSequence) {
             return true;
-        } else if (object instanceof ChemFile) {
+        } else if (object instanceof IChemFile) {
             return true;
         } else {
             return false;
@@ -116,8 +116,8 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof ChemSequence) {
             return readChemSequence((ChemSequence)object);
-        } else if (object instanceof ChemFile) {
-            return readChemFile((ChemFile)object);
+        } else if (object instanceof IChemFile) {
+            return readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Object " + object.getClass().getName() + " is not supported");
         }
@@ -127,14 +127,14 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         input.close();
     }
     
-    private ChemFile readChemFile(ChemFile chemFile) throws CDKException {
+    private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
         ChemSequence sequence = readChemSequence(chemFile.getBuilder().newChemSequence());
         chemFile.addChemSequence(sequence);
         return chemFile;
     }
     
     private ChemSequence readChemSequence(ChemSequence sequence) throws CDKException {
-        ChemModel model = null;
+        IChemModel model = null;
         
         try {
             String line = input.readLine();
@@ -209,7 +209,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      * @param     model        the destination ChemModel
      * @exception IOException  if an I/O error occurs
      */
-    private void readCoordinates(ChemModel model) throws CDKException, IOException {
+    private void readCoordinates(IChemModel model) throws CDKException, IOException {
         IAtomContainer container = new org.openscience.cdk.AtomContainer();
         String line = input.readLine();
         line = input.readLine();
@@ -278,7 +278,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     /**
      * Reads partial atomic charges and add the to the given ChemModel.
      */
-    private void readPartialCharges(ChemModel model) throws CDKException, IOException {
+    private void readPartialCharges(IChemModel model) throws CDKException, IOException {
         logger.info("Reading partial atomic charges");
         org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = model.getSetOfMolecules();
         org.openscience.cdk.interfaces.Molecule molecule = moleculeSet.getMolecule(0);
@@ -317,7 +317,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      * @param frame  the destination ChemModel
      * @exception IOException  if an I/O error occurs
      */
-    private void readFrequencies(ChemModel model) throws IOException {
+    private void readFrequencies(IChemModel model) throws IOException {
         /* This is yet to be ported. Vibrations don't exist yet in CDK.
         String line = input.readLine();
         line = input.readLine();
@@ -381,7 +381,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     /**
      * Reads NMR nuclear shieldings.
      */
-    private void readNMRData(ChemModel model, String labelLine) throws IOException {
+    private void readNMRData(IChemModel model, String labelLine) throws IOException {
         /* FIXME: this is yet to be ported. CDK does not have shielding stuff.
         // Determine label for properties
         String label;

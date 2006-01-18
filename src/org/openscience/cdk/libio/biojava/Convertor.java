@@ -30,7 +30,7 @@ package org.openscience.cdk.libio.biojava;
 
 import org.biojava.bio.symbol.SymbolList;
 
-import org.openscience.cdk.interfaces.BioPolymer;
+import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
@@ -55,15 +55,15 @@ public class Convertor {
 	 * @return              CDK BioPolymer
 	 * @throws CDKException
 	 * 
-	 * @see org.openscience.cdk.interfaces.BioPolymer
+	 * @see org.openscience.cdk.interfaces.IBioPolymer
 	 */
-	public static BioPolymer convert(SymbolList source) throws CDKException {
+	public static IBioPolymer convert(SymbolList source) throws CDKException {
 		return ProteinBuilderTool.createProtein(source.seqString());
 	}
 
 	// TODO: implement convertor methods below
 	
-	public static SymbolList convert(BioPolymer sequence) {
+	public static SymbolList convert(IBioPolymer sequence) {
 	    return null;	
 	}	
 	

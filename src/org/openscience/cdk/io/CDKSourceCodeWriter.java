@@ -135,9 +135,9 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");\n");
         }
-        org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
         for (int i=0; i<bonds.length; i++) {
-        	org.openscience.cdk.interfaces.Bond bond = bonds[i];
+        	org.openscience.cdk.interfaces.IBond bond = bonds[i];
             writeBond(bond);
             writer.write("  mol.addBond(" + bond.getID() + ");\n");
         }
@@ -149,7 +149,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
                      "\");\n");
     }
     
-    public void writeBond(org.openscience.cdk.interfaces.Bond bond) throws Exception {
+    public void writeBond(org.openscience.cdk.interfaces.IBond bond) throws Exception {
         writer.write("  Bond " + bond.getID() + " = new Bond(" + 
                      bond.getAtomAt(0).getID() + ", " +
                      bond.getAtomAt(1).getID() + ", " +

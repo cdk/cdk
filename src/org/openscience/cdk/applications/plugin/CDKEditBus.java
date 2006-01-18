@@ -25,8 +25,8 @@ package org.openscience.cdk.applications.plugin;
 
 import java.io.Reader;
 
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 
 /**
  * Interface that applications must have an implementation for in
@@ -51,7 +51,7 @@ public interface CDKEditBus {
      *
      * @see org.openscience.cdk.ChemFile
      */
-    public void showChemFile(ChemFile file);
+    public void showChemFile(IChemFile file);
     /**
      * Tells the application in which the plugin is loaded to
      * show the chemistry in the given String.
@@ -63,7 +63,7 @@ public interface CDKEditBus {
      *
      * @see org.openscience.cdk.ChemModel
      */
-    public void showChemModel(ChemModel model);
+    public void showChemModel(IChemModel model);
 
     /**
      * Asks the application to return the active ChemModel.
@@ -72,7 +72,7 @@ public interface CDKEditBus {
      *
      * @see org.openscience.cdk.ChemFile
      */
-    public ChemModel getChemModel();
+    public IChemModel getChemModel();
     /**
      * Asks the application to return the active ChemFile.
      * It may return a <code>NoSuchMethodError</code> when the
@@ -80,7 +80,7 @@ public interface CDKEditBus {
      *
      * @see org.openscience.cdk.ChemModel
      */
-    public ChemFile getChemFile();
+    public IChemFile getChemFile();
     
     /**
      * Runs a script in the application implementing this EditBus. The

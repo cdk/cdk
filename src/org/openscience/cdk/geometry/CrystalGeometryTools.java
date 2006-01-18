@@ -31,7 +31,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 
 /**
  * A set of static methods for working with crystal coordinates.
@@ -250,7 +250,7 @@ public class CrystalGeometryTools {
 	/**
      * Creates cartesian coordinates for all Atoms in the Crystal.
 	 */
-    public static void fractionalToCartesian(Crystal crystal) {
+    public static void fractionalToCartesian(ICrystal crystal) {
     	org.openscience.cdk.interfaces.IAtom[] atoms = crystal.getAtoms();
         Vector3d aAxis = crystal.getA();
         Vector3d bAxis = crystal.getB();

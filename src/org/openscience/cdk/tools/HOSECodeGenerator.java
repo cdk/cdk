@@ -319,7 +319,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		TreeNode tempNode = null;
 		IAtom[] conAtoms = atomContainer.getConnectedAtoms(root);
 		IAtom atom;
-		org.openscience.cdk.interfaces.Bond bond = null;
+		org.openscience.cdk.interfaces.IBond bond = null;
 		sphereNodes.removeAllElements();
     sphereNodesWithAtoms.removeAllElements();
 		for (int i = 0; i < conAtoms.length; i++)
@@ -376,7 +376,7 @@ public class HOSECodeGenerator implements java.io.Serializable
         IAtom[] conAtoms = null;
 		TreeNode treeNode = null;
 		nextSphereNodes = new Vector();
-		org.openscience.cdk.interfaces.Bond bond = null;
+		org.openscience.cdk.interfaces.IBond bond = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
 		{
 			treeNode = (TreeNode) sphereNodes.elementAt(i);

@@ -42,7 +42,7 @@ import java.util.Hashtable;
  * @cdk.keyword polymer
  * @cdk.keyword biopolymer
  */
-public interface BioPolymer extends Polymer {
+public interface IBioPolymer extends Polymer {
 
 	/**
 	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the

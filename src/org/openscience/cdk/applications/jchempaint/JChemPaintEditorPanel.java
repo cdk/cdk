@@ -60,7 +60,7 @@ import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -445,7 +445,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *@param  model  The JChemPaintModel
 	 *@return        The new JFrame containing the JChemPaintEditorPanel
 	 */
-	public static JFrame getFrameWithModel(ChemModel mod)
+	public static JFrame getFrameWithModel(IChemModel mod)
 	{
 		JChemPaintModel model = new JChemPaintModel(mod);
 		model.setTitle(mod.getID());
@@ -519,7 +519,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			logger.info("Making snapshot... ");
             Renderer2D r2d = new Renderer2D(jchemPaintModel.getRendererModel());
             r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
-            ChemModel model = (ChemModel) jchemPaintModel.getChemModel().clone();
+            IChemModel model = (IChemModel) jchemPaintModel.getChemModel().clone();
             IAtomContainer ac = SetOfMoleculesManipulator.getAllInOneContainer(model.getSetOfMolecules());
             Dimension dim = GeometryTools.get2DDimension(ac);
             GeometryTools.translateAllPositive(ac);
@@ -563,7 +563,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *@param  model    Description of the Parameter
 	 *@return          Description of the Return Value
 	 */
-	private Dimension makeChemModelFit(Dimension baseDim, ChemModel model)
+	private Dimension makeChemModelFit(Dimension baseDim, IChemModel model)
 	{
 		Dimension newDim = new Dimension(baseDim);
 		// a bit ugly, but assume moleculeSet *or* reactionSet
@@ -589,7 +589,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *@param  baseDim  Description of the Parameter
 	 *@param  model    Description of the Parameter
 	 */
-	private void layoutInTable(Dimension baseDim, ChemModel model)
+	private void layoutInTable(Dimension baseDim, IChemModel model)
 	{
 		// a bit ugly, but assume moleculeSet *or* reactionSet
 		SetOfMolecules moleculeSet = model.getSetOfMolecules();
@@ -722,7 +722,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     public void stateChanged(ChangeEvent e)
    {
         if(e.getSource() instanceof JChemPaintPanel) {
-            ChemModel editorModel = ((JChemPaintPanel)e.getSource()).getJChemPaintModel().getChemModel();
+            IChemModel editorModel = ((JChemPaintPanel)e.getSource()).getJChemPaintModel().getChemModel();
             JViewport viewPort =((JScrollPane) ((Container) this.getComponent(0)).getComponent(0)).getViewport();
             if (viewPort.getView() == null) {
                 viewPort.add(this.getDrawingPanel());

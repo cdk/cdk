@@ -43,7 +43,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -501,7 +501,7 @@ public class GeometryTools {
 	 *@param  bond  The given bond
 	 *@return       The array with the coordinates
 	 */
-	public static int[] getBondCoordinates(Bond bond) {
+	public static int[] getBondCoordinates(IBond bond) {
 		if (bond.getAtomAt(0).getPoint2d() == null ||
 				bond.getAtomAt(1).getPoint2d() == null) {
 			logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
@@ -555,13 +555,13 @@ public class GeometryTools {
 	 *@param  atomCon    The molecule that is searched for the closest bond
 	 *@return            The bond that is closest to the given coordinates
 	 */
-	public static Bond getClosestBond(int xPosition, int yPosition, IAtomContainer atomCon) {
+	public static IBond getClosestBond(int xPosition, int yPosition, IAtomContainer atomCon) {
 		Point2d bondCenter;
-		Bond closestBond = null;
-		Bond currentBond;
+		IBond closestBond = null;
+		IBond currentBond;
 		double smallestMouseDistance = -1;
 		double mouseDistance;
-		Bond[] bonds = atomCon.getBonds();
+		IBond[] bonds = atomCon.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			currentBond = bonds[i];
 			bondCenter = get2DCenter(currentBond.getAtoms());
@@ -635,10 +635,10 @@ public class GeometryTools {
 	 */
 	public static double getBondLengthAverage(IAtomContainer ac) {
 		double bondLengthSum = 0;
-		Bond[] bonds = ac.getBonds();
+		IBond[] bonds = ac.getBonds();
 		int bondCounter = 0;
 		for (int f = 0; f < bonds.length; f++) {
-			Bond bond = bonds[f];
+			IBond bond = bonds[f];
 			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtomAt(0);
 			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtomAt(1);
 			if (atom1.getPoint2d() != null &&
@@ -657,7 +657,7 @@ public class GeometryTools {
 	 *@param  bond  Description of the Parameter
 	 *@return       The geometric length of this bond
 	 */
-	public static double getLength2D(Bond bond) {
+	public static double getLength2D(IBond bond) {
 		if (bond.getAtomAt(0) == null ||
 				bond.getAtomAt(1) == null) {
 			return 0.0;
@@ -726,7 +726,7 @@ public class GeometryTools {
 	 *@param  b  Description of the Parameter
 	 *@return    boolean indication that 2D coordinates are available
 	 */
-	public static boolean has2DCoordinates(Bond b) {
+	public static boolean has2DCoordinates(IBond b) {
 		org.openscience.cdk.interfaces.IAtom[] atoms = b.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i].getPoint2d() == null) {
@@ -780,7 +780,7 @@ public class GeometryTools {
 	 *@return            The normalizationFactor value
 	 */
 	public static double getNormalizationFactor(IAtomContainer container) {
-		Bond[] bonds = container.getBonds();
+		IBond[] bonds = container.getBonds();
 		double bondlength = 0.0;
 		double ratio = 0.0;
 		/*

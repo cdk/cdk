@@ -33,7 +33,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 
@@ -74,7 +74,7 @@ public class RingSetManipulator {
 	 * @param   bond  A bond which must be contained by the heaviest ring 
 	 * @return  The ring with the higest number of double bonds connected to a given bond
 	 */
-	public static Ring getHeaviestRing(RingSet ringSet, Bond bond)
+	public static Ring getHeaviestRing(RingSet ringSet, IBond bond)
 	{
 		Vector rings = ringSet.getRings(bond);
 		Ring ring = null;

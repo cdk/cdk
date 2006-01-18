@@ -36,10 +36,10 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SingleElectron;
@@ -179,9 +179,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -216,9 +216,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -252,9 +252,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -288,9 +288,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -326,9 +326,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -358,9 +358,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -373,7 +373,7 @@ public class AtomContainerTest extends CDKTestCase {
         
 		for (int i = 0; i < acetone.getElectronContainerCount(); i++) {
             try {
-            	org.openscience.cdk.interfaces.ElectronContainer ec = acetone.getElectronContainerAt(i);
+            	org.openscience.cdk.interfaces.IElectronContainer ec = acetone.getElectronContainerAt(i);
                 if (ec == null) {
                     fail("ElectronContainer is unexpectedly null!");
                 }
@@ -413,9 +413,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -458,9 +458,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -480,9 +480,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -503,9 +503,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -532,9 +532,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -601,9 +601,9 @@ public class AtomContainerTest extends CDKTestCase {
         IAtom c2 = builder.newAtom("C");
         IAtom c3 = builder.newAtom("C");
         
-        Bond b1 = builder.newBond(c1, o);
-        Bond b2 = builder.newBond(o, c2);
-        Bond b3 = builder.newBond(c2, c3);
+        IBond b1 = builder.newBond(c1, o);
+        IBond b2 = builder.newBond(o, c2);
+        IBond b3 = builder.newBond(c2, c3);
         
         IAtomContainer container1 = new org.openscience.cdk.AtomContainer();
         container1.addAtom(c1);
@@ -665,9 +665,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,3.0);
-        Bond b2 = builder.newBond(c1, o, 2.0);
-        Bond b3 = builder.newBond(c1, c3,1.0);
+        IBond b1 = builder.newBond(c1, c2,3.0);
+        IBond b2 = builder.newBond(c1, o, 2.0);
+        IBond b3 = builder.newBond(c1, c3,1.0);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -683,11 +683,11 @@ public class AtomContainerTest extends CDKTestCase {
         IAtom c2 = builder.newAtom("C");
         container.addAtom(c1);
         container.addAtom(c2);
-        Bond b = builder.newBond(c1, c2, 3);
+        IBond b = builder.newBond(c1, c2, 3);
         container.setElectronContainerAt(3, b);
         
-        assertTrue(container.getElectronContainerAt(3) instanceof org.openscience.cdk.interfaces.Bond);
-        Bond bond = (Bond)container.getElectronContainerAt(3);
+        assertTrue(container.getElectronContainerAt(3) instanceof org.openscience.cdk.interfaces.IBond);
+        IBond bond = (IBond)container.getElectronContainerAt(3);
         assertEquals(3.0, bond.getOrder(), 0.00001);
     }
     
@@ -702,9 +702,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -729,9 +729,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -753,9 +753,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -876,9 +876,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(o);
         acetone.addLonePair(2);
         acetone.addLonePair(2);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -900,9 +900,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(o);
         acetone.addLonePair(2);
         acetone.addLonePair(2);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -926,9 +926,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(o);
         acetone.addLonePair(2);
         acetone.addLonePair(2);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -952,9 +952,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(o);
         acetone.addLonePair(2);
         acetone.addLonePair(2);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -983,9 +983,9 @@ public class AtomContainerTest extends CDKTestCase {
         LonePair firstLP = builder.newLonePair(o);
         acetone.addElectronContainer(firstLP);
         acetone.addElectronContainer(builder.newLonePair(o));
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1011,15 +1011,15 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
         
         assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1039,14 +1039,14 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        ElectronContainer[] electronContainers = new ElectronContainer[3];
+        IElectronContainer[] electronContainers = new IElectronContainer[3];
         electronContainers[0] = builder.newBond(c1, c2,1);
         electronContainers[1] = builder.newBond(c1, o, 2);
         electronContainers[2] = builder.newBond(c1, c3,1);
         acetone.setElectronContainers(electronContainers);
         
         assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1066,7 +1066,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        ElectronContainer[] electronContainers = new ElectronContainer[3];
+        IElectronContainer[] electronContainers = new IElectronContainer[3];
         electronContainers[0] = builder.newBond(c1, c2,1);
         electronContainers[1] = builder.newBond(c1, o, 2);
         electronContainers[2] = builder.newBond(c1, c3,1);
@@ -1078,7 +1078,7 @@ public class AtomContainerTest extends CDKTestCase {
         
         assertEquals(0, tested.getAtomCount());
         assertEquals(4, tested.getBondCount());
-        org.openscience.cdk.interfaces.Bond[] bonds = tested.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = tested.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1094,7 +1094,7 @@ public class AtomContainerTest extends CDKTestCase {
         IAtom o = builder.newAtom("O");
         acetone.addAtom(c);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c, o, 2.0);
+        IBond b1 = builder.newBond(c, o, 2.0);
         acetone.addElectronContainer(b1);
         acetone.addElectronContainer(builder.newLonePair(o));
         acetone.addElectronContainer(builder.newSingleElectron(c));
@@ -1111,7 +1111,7 @@ public class AtomContainerTest extends CDKTestCase {
         IAtom o = builder.newAtom("O");
         acetone.addAtom(c);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c, o, 2.0);
+        IBond b1 = builder.newBond(c, o, 2.0);
         acetone.addElectronContainer(b1);
         acetone.addElectronContainer(builder.newLonePair(o));
         SingleElectron single = builder.newSingleElectron(c);
@@ -1132,9 +1132,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1162,7 +1162,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(1, 2, 1);
         
         assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1193,7 +1193,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(1, 2, 1, CDKConstants.STEREO_BOND_NONE);
         
         assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.Bond[] bonds = acetone.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
@@ -1222,9 +1222,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1251,9 +1251,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1276,9 +1276,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1302,9 +1302,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1366,9 +1366,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1388,9 +1388,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1410,9 +1410,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1432,9 +1432,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1455,9 +1455,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1478,9 +1478,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1504,9 +1504,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1533,9 +1533,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1562,9 +1562,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1591,9 +1591,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -1681,7 +1681,7 @@ public class AtomContainerTest extends CDKTestCase {
         IAtom o = builder.newAtom("O");
         acetone.addAtom(c);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c, o, 2.0);
+        IBond b1 = builder.newBond(c, o, 2.0);
         acetone.addElectronContainer(b1);
         SingleElectron single1 = builder.newSingleElectron(c);
         SingleElectron single2 = builder.newSingleElectron(c);

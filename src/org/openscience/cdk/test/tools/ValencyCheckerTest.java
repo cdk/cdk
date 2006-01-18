@@ -266,7 +266,7 @@ public class ValencyCheckerTest extends CDKTestCase
         butadiene.addBond(new Bond(carbon3, carbon4, 1.0));
         
         satcheck.saturate(butadiene); // fix bond orders
-        org.openscience.cdk.interfaces.Bond[] bonds = butadiene.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = butadiene.getBonds();
         assertEquals(1.0, bonds[0].getOrder(), 0.0001);
         assertEquals(2.0, bonds[1].getOrder(), 0.0001);
         assertEquals(2.0, bonds[2].getOrder(), 0.0001);
@@ -287,7 +287,7 @@ public class ValencyCheckerTest extends CDKTestCase
         satcheck.saturate(benzene); // fix bond orders
         
         // test for three single + three double bonds
-        org.openscience.cdk.interfaces.Bond[] bonds = benzene.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = benzene.getBonds();
         double totalBondOrder = 0.0;
         for (int i=0; i<bonds.length; i++) {
             totalBondOrder += bonds[i].getOrder();

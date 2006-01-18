@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.libio.openbabel;
 
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 
 import java.io.BufferedReader;
@@ -103,7 +103,7 @@ public class OpenBabelConvert {
     /*PATH of babel*/
     private String PATH = null;
 
-    private ChemFile chemFile;
+    private IChemFile chemFile;
 
     /**
      * Constructor of the ConvertOpenBabel
@@ -275,7 +275,7 @@ public class OpenBabelConvert {
         try {
             FileReader readerFile = new FileReader(file);
             CMLReader reader = new CMLReader(readerFile);
-            chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
+            chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -310,7 +310,7 @@ public class OpenBabelConvert {
      *
      * @return The ChemFile value
      */
-    public ChemFile getChemFile() {
+    public IChemFile getChemFile() {
         return chemFile;
     }
 

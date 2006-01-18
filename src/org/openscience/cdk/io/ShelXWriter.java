@@ -40,7 +40,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -118,8 +118,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof Crystal) {
-            write((Crystal)object);
+        if (object instanceof ICrystal) {
+            write((ICrystal)object);
         } else {
             throw new CDKException("Only Crystal objects can be read.");
         }
@@ -127,7 +127,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
 
     // Private procedures
 
-    private void write(Crystal crystal) {
+    private void write(ICrystal crystal) {
         write("TITLE Produced with CDK (http://cdk.sf.net/)\n");
         Vector3d a = crystal.getA();
         Vector3d b = crystal.getB();

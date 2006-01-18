@@ -146,7 +146,7 @@ public class GravitationalIndexDescriptor implements IDescriptor {
 
         double sum = 0;
         for (int i = 0; i < container.getBondCount(); i++) {
-        	org.openscience.cdk.interfaces.Bond bond = container.getBondAt(i);
+        	org.openscience.cdk.interfaces.IBond bond = container.getBondAt(i);
 
             if (bond.getAtomCount() != 2) {
                 System.out.println("GravitationalIndex: Only handles 2 center bonds");
@@ -170,7 +170,7 @@ public class GravitationalIndexDescriptor implements IDescriptor {
         // heavy atoms only
         double heavysum = 0;
         for (int i = 0; i < container.getBondCount(); i++) {
-        	org.openscience.cdk.interfaces.Bond b = container.getBondAt(i);
+        	org.openscience.cdk.interfaces.IBond b = container.getBondAt(i);
 
             if (b.getAtomCount() != 2) {
                 System.out.println("GravitationalIndex: Only handles 2 center bonds");

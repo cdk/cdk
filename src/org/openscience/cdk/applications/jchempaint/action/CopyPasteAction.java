@@ -134,7 +134,7 @@ public class CopyPasteAction extends JCPAction{
         		}
 	            if (topaste != null) {
 	                topaste = (IAtomContainer)topaste.clone();
-	                org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
+	                org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();
 	                //translate the new structure a bit
 	                GeometryTools.translate2D(topaste, 25, 25); //in pixels
 	                //paste the new structure into the active model

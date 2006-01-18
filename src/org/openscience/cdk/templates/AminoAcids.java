@@ -28,7 +28,7 @@ import java.util.Enumeration;
 
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
@@ -65,7 +65,7 @@ public class AminoAcids {
         int total = 0;
         for (int aa=0; aa<aminoAcids.length; aa++) {
         	AminoAcid acid = aminoAcids[aa];
-        	org.openscience.cdk.interfaces.Bond[] bonds = acid.getBonds();
+        	org.openscience.cdk.interfaces.IBond[] bonds = acid.getBonds();
         	logger.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + bonds.length);
         	total += bonds.length;
         	logger.debug("total #bonds: ", total);
@@ -106,14 +106,14 @@ public class AminoAcids {
         // Create set of AtomContainers
         aminoAcids = new AminoAcid[20];
 
-        ChemFile list = new org.openscience.cdk.ChemFile();
+        IChemFile list = new org.openscience.cdk.ChemFile();
         CMLReader reader = new CMLReader(
         	AminoAcids.class.getClassLoader().getResourceAsStream(
         			"data/templates/list_aminoacids.cml"
         	)
         );
         try {
-        	list = (ChemFile)reader.read(list);
+        	list = (IChemFile)reader.read(list);
         	IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(list);
         	for (int i=0; i<containers.length; i++) {
         		logger.debug("Adding AA: ", containers[i]);
@@ -151,7 +151,7 @@ public class AminoAcids {
         				aminoAcid.addAtom(atom);
         			}
         		}
-        		org.openscience.cdk.interfaces.Bond[] bonds = containers[i].getBonds();
+        		org.openscience.cdk.interfaces.IBond[] bonds = containers[i].getBonds();
         		for (int bondCount=0; bondCount<bonds.length; bondCount++) {
         			aminoAcid.addBond(bonds[bondCount]);
         		}

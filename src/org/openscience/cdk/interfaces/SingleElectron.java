@@ -40,7 +40,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired
  */
-public interface SingleElectron extends ElectronContainer {
+public interface SingleElectron extends IElectronContainer {
 
     /**
      * Returns the associated Atom.

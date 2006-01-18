@@ -130,7 +130,7 @@ public class HuLuIndexTool
 	{
 		boolean debug = false;
 		org.openscience.cdk.interfaces.IAtom atom,headAtom,endAtom;
-		org.openscience.cdk.interfaces.Bond bond;
+		org.openscience.cdk.interfaces.IBond bond;
 		int headAtomPosition,endAtomPosition;
 
 		int k = 0;
@@ -190,7 +190,7 @@ public class HuLuIndexTool
 				else
 					valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtomAt(j).getHydrogenCount();					
 			}
-			org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
+			org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
 			for (int j = 0; j < bonds.length; j++)
 			{
 				bond = bonds[j];

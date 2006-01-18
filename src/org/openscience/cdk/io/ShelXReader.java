@@ -40,11 +40,11 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -114,16 +114,16 @@ public class ShelXReader extends DefaultChemObjectReader {
      * @return the content in a ChemFile object
      */
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemFile) {
+        if (object instanceof IChemFile) {
             try {
-                return readChemFile((ChemFile)object);
+                return readChemFile((IChemFile)object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage());
             }
-        } else if (object instanceof Crystal) {
+        } else if (object instanceof ICrystal) {
             try {
-                return readCrystal((Crystal)object);
+                return readCrystal((ICrystal)object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage(), e);
@@ -139,17 +139,17 @@ public class ShelXReader extends DefaultChemObjectReader {
      *
      * @return a ChemFile with the coordinates, charges, vectors, etc.
      */
-    private ChemFile readChemFile(ChemFile file) throws IOException {
+    private IChemFile readChemFile(IChemFile file) throws IOException {
         ChemSequence seq = file.getBuilder().newChemSequence();
-        ChemModel model = file.getBuilder().newChemModel();
-        Crystal crystal = readCrystal(file.getBuilder().newCrystal());
+        IChemModel model = file.getBuilder().newChemModel();
+        ICrystal crystal = readCrystal(file.getBuilder().newCrystal());
         model.setCrystal(crystal);
         seq.addChemModel(model);
         file.addChemSequence(seq);
         return file;
     }
 
-    private Crystal readCrystal(Crystal crystal) throws IOException {
+    private ICrystal readCrystal(ICrystal crystal) throws IOException {
         String line = input.readLine();
         boolean end_found = false;
         while (input.ready() && line != null && !end_found) {

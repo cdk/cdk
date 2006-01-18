@@ -40,7 +40,7 @@ import nu.xom.Element;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
@@ -231,7 +231,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         assertEquals(2, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getBondCount());
-        org.openscience.cdk.interfaces.Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond roundTrippedBond = roundTrippedMol.getBondAt(0);
         assertEquals(2, roundTrippedBond.getAtomCount());
         assertEquals("C", roundTrippedBond.getAtomAt(0).getSymbol()); // preserved direction?
         assertEquals("O", roundTrippedBond.getAtomAt(1).getSymbol());
@@ -249,7 +249,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         mol.addBond(bond);
         
         org.openscience.cdk.interfaces.Molecule roundTrippedMol = roundTripMolecule(mol);
-        org.openscience.cdk.interfaces.Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond roundTrippedBond = roundTrippedMol.getBondAt(0);
         assertEquals(bond.getID(), roundTrippedBond.getID());
     }
     
@@ -268,7 +268,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         assertEquals(2, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getBondCount());
-        org.openscience.cdk.interfaces.Bond roundTrippedBond = roundTrippedMol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond roundTrippedBond = roundTrippedMol.getBondAt(0);
         assertEquals(bond.getStereo(), roundTrippedBond.getStereo());
     }
     
@@ -296,13 +296,13 @@ public class CMLRoundTripTest extends CDKTestCase {
             logger.debug("CML string: " + cmlString);
             CMLReader reader = new CMLReader(new StringReader(cmlString));
             
-            ChemFile file = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
+            IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
             assertNotNull(file);
             assertEquals(1, file.getChemSequenceCount());
             org.openscience.cdk.interfaces.ChemSequence sequence = file.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(1, sequence.getChemModelCount());
-            org.openscience.cdk.interfaces.ChemModel chemModel = sequence.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
             org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             assertNotNull(moleculeSet);
@@ -336,13 +336,13 @@ public class CMLRoundTripTest extends CDKTestCase {
             logger.debug("CML string: ", cmlString);
             CMLReader reader = new CMLReader(new StringReader(cmlString));
             
-            ChemFile file = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
+            IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
             assertNotNull(file);
             assertEquals(1, file.getChemSequenceCount());
             org.openscience.cdk.interfaces.ChemSequence sequence = file.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(1, sequence.getChemModelCount());
-            org.openscience.cdk.interfaces.ChemModel chemModel = sequence.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
             org.openscience.cdk.interfaces.SetOfReactions reactionSet = chemModel.getSetOfReactions();
             assertNotNull(reactionSet);

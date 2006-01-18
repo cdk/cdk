@@ -38,7 +38,7 @@ import javax.vecmath.Point3d;
  * @cdk.keyword atom
  * @cdk.keyword electron
  */
-public interface Bond extends ElectronContainer {
+public interface IBond extends IElectronContainer {
 
 	/**
 	 * Returns the array of atoms making up this bond.
@@ -164,6 +164,6 @@ public interface Bond extends ElectronContainer {
 	 * @param  bond  The bond which is checked to be connect with this one
 	 * @return       True, if the bonds share an atom, otherwise false
 	 */
-	public boolean isConnectedTo(Bond bond);
+	public boolean isConnectedTo(IBond bond);
 }
 

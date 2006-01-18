@@ -190,7 +190,7 @@ public class BCUTDescriptor implements IDescriptor {
             for (int i = 0; i < natom-1; i++) {
                 for (int j = i+1; j < natom; j++) {
                     for (int k = 0; k < local.getBondCount(); k++) {
-                    	org.openscience.cdk.interfaces.Bond b = local.getBondAt(k);
+                    	org.openscience.cdk.interfaces.IBond b = local.getBondAt(k);
                         if (b.contains(local.getAtomAt(i)) && b.contains(local.getAtomAt(j))) {
                             if (b.getOrder() == CDKConstants.BONDORDER_SINGLE) m[i][j] = 0.1;
                             else if (b.getOrder() == CDKConstants.BONDORDER_DOUBLE) m[i][j] = 0.2;

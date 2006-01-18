@@ -34,7 +34,7 @@ package org.openscience.cdk;
  * @cdk.keyword lone-pair
  * @cdk.keyword bond
  */
-public class ElectronContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ElectronContainer 
+public class ElectronContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IElectronContainer 
 {
 	/**
      * Determines if a de-serialized object is compatible with this class.

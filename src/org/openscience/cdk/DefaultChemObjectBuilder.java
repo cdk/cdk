@@ -99,31 +99,31 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new AtomType(identifier, elementSymbol);
 	}
 
-	public org.openscience.cdk.interfaces.BioPolymer newBioPolymer(){
+	public org.openscience.cdk.interfaces.IBioPolymer newBioPolymer(){
 		return new BioPolymer();
 	}
 
-	public org.openscience.cdk.interfaces.Bond newBond() {
+	public org.openscience.cdk.interfaces.IBond newBond() {
 		return new Bond();
 	}
 	
-	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
+	public org.openscience.cdk.interfaces.IBond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
 		return new Bond(atom1, atom2);
 	}
 	
-	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order) {
+	public org.openscience.cdk.interfaces.IBond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order) {
 		return new Bond(atom1, atom2, order);
 	}
 	
-	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order, int stereo) {
+	public org.openscience.cdk.interfaces.IBond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order, int stereo) {
 		return new Bond(atom1, atom2, order, stereo);
 	}
 	
-	public org.openscience.cdk.interfaces.ChemFile newChemFile() {
+	public org.openscience.cdk.interfaces.IChemFile newChemFile() {
 		return new ChemFile();
 	}
 
-	public org.openscience.cdk.interfaces.ChemModel newChemModel() {
+	public org.openscience.cdk.interfaces.IChemModel newChemModel() {
 		return new ChemModel();
 	}
 	
@@ -135,27 +135,27 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new ChemSequence();   
 	}
 	
-    public org.openscience.cdk.interfaces.Crystal newCrystal() {
+    public org.openscience.cdk.interfaces.ICrystal newCrystal() {
     	return new Crystal();
     }
     
-    public org.openscience.cdk.interfaces.Crystal newCrystal(org.openscience.cdk.interfaces.IAtomContainer container) {
+    public org.openscience.cdk.interfaces.ICrystal newCrystal(org.openscience.cdk.interfaces.IAtomContainer container) {
     	return new Crystal(container);
     }
     
-    public org.openscience.cdk.interfaces.ElectronContainer newElectronContainer() {
+    public org.openscience.cdk.interfaces.IElectronContainer newElectronContainer() {
     	return new ElectronContainer();
     }
     
-    public org.openscience.cdk.interfaces.Element newElement() {
+    public org.openscience.cdk.interfaces.IElement newElement() {
     	return new Element();
     }
 
-    public org.openscience.cdk.interfaces.Element newElement(String symbol) {
+    public org.openscience.cdk.interfaces.IElement newElement(String symbol) {
     	return new Element(symbol);
     }
 
-    public org.openscience.cdk.interfaces.Element newElement(String symbol, int atomicNumber) {
+    public org.openscience.cdk.interfaces.IElement newElement(String symbol, int atomicNumber) {
     	return new Element(symbol, atomicNumber);
     }
 

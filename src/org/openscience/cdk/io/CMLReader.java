@@ -35,7 +35,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -176,8 +176,8 @@ public class CMLReader extends DefaultChemObjectReader {
      * @return the content in a ChemFile object
      */
     public IChemObject read(IChemObject object) throws CDKException {
-      if (object instanceof ChemFile) {
-        return readChemFile((ChemFile)object);
+      if (object instanceof IChemFile) {
+        return readChemFile((IChemFile)object);
       } else {
         throw new CDKException("Only supported is reading of ChemFile objects.");
       }
@@ -185,7 +185,7 @@ public class CMLReader extends DefaultChemObjectReader {
 
     // private functions
 
-    private ChemFile readChemFile(ChemFile file) throws CDKException {
+    private IChemFile readChemFile(IChemFile file) throws CDKException {
         logger.debug("Started parsing from input...");
         ChemFileCDO cdo = new ChemFileCDO(file);
         cdo.setAromaticOrder(aromaticOrder);
@@ -238,7 +238,7 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
 	public boolean accepts(IChemObject object) {
-		return (object instanceof ChemFile);
+		return (object instanceof IChemFile);
 	}
 
 	/**

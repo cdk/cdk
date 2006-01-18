@@ -149,7 +149,7 @@ public class InsertFromSmiles extends JFrame
                 // ok, get relevent bits from active model
                 JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
                 Renderer2DModel renderModel = jcpModel.getRendererModel();
-                org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
+                org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();
                 org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
                 if (moleculeSet == null) {
                     moleculeSet = new SetOfMolecules();

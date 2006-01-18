@@ -68,7 +68,7 @@ public class BondStretching {
 	 */
 	public void setMMFF94BondStretchingParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
 
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
 		bondsNumber = bonds.length;
 		//logger.debug("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[bondsNumber][];

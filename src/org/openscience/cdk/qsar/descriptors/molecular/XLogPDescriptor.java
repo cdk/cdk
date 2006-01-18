@@ -29,7 +29,7 @@ import java.util.Vector;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -824,7 +824,7 @@ public class XLogPDescriptor implements IDescriptor {
 		if (checkAminoAcid>1){
 //			 alpha amino acid
 			QueryAtomContainer aminoAcid=QueryAtomContainerCreator.createBasicQueryContainer(sp.parseSmiles("NCC(=O)O"));
-			Bond [] bonds=aminoAcid.getBonds();
+			IBond [] bonds=aminoAcid.getBonds();
 			IAtom[] bondAtoms=null;
 			for (int i=0;i<bonds.length;i++){
 				bondAtoms=bonds[i].getAtoms();
@@ -981,7 +981,7 @@ public class XLogPDescriptor implements IDescriptor {
 	private int getAtomTypeXCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
 		int nocounter = 0;
-		Bond bond=null;
+		IBond bond=null;
 		for (int i = 0; i < neighbours.length; i++) {
 			if ((neighbours[i].getSymbol().equals("N") || neighbours[i].getSymbol().equals("O")) && !((Boolean)neighbours[i].getProperty("IS_IN_AROMATIC_RING")).booleanValue()) {
 				//if (ac.getMaximumBondOrder(neighbours[i]) == 1.0) {
@@ -1064,7 +1064,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 */
 	private int getDoubleBondedCarbonsCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
-		Bond bond = null;
+		IBond bond = null;
 		int cdbcounter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("C")) {
@@ -1087,7 +1087,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 */
 	private int getDoubleBondedOxygenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
-		Bond bond = null;
+		IBond bond = null;
 		int odbcounter = 0;
 		boolean chargeFlag=false;
 		if (atom.getFormalCharge()>=1){
@@ -1119,7 +1119,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 */
 	private int getDoubleBondedSulfurCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
-		Bond bond = null;
+		IBond bond = null;
 		int sdbcounter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("S")) {
@@ -1147,7 +1147,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 */
 	private int getDoubleBondedNitrogenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
-		Bond bond = null;
+		IBond bond = null;
 		int ndbcounter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("N")) {
@@ -1194,7 +1194,7 @@ public class XLogPDescriptor implements IDescriptor {
 	private int getPiSystemsCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
 		int picounter = 0;
-		org.openscience.cdk.interfaces.Bond[] bonds=null;
+		org.openscience.cdk.interfaces.IBond[] bonds=null;
 		for (int i = 0; i < neighbours.length; i++) {
 			bonds = ac.getConnectedBonds(neighbours[i]);
 			for (int j = 0; j < bonds.length; j++) {
@@ -1250,7 +1250,7 @@ public class XLogPDescriptor implements IDescriptor {
 	private boolean getPresenceOfNitro(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
 		org.openscience.cdk.interfaces.IAtom[] second = null;
-		Bond bond = null;
+		IBond bond = null;
 		//int counter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("N")) {
@@ -1278,7 +1278,7 @@ public class XLogPDescriptor implements IDescriptor {
 	private boolean getPresenceOfSulfat(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
 		org.openscience.cdk.interfaces.IAtom[] second = null;
-		Bond bond = null;
+		IBond bond = null;
 		//int counter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("S") && getOxygenCount(ac,neighbours[i])>=2 && ac.getBondCount(neighbours[i])==4){
@@ -1298,7 +1298,7 @@ public class XLogPDescriptor implements IDescriptor {
 	private int getPresenceOfCarbonil(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
 		org.openscience.cdk.interfaces.IAtom[] second = null;
-		Bond bond = null;
+		IBond bond = null;
 		int counter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("C")) {

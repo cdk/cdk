@@ -30,7 +30,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -129,7 +129,7 @@ public class InductivePartialCharges {
 	public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws Exception {
 		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 		double[] paulingElectronegativities = new double[atoms.length];
-		Element element = null;
+		IElement element = null;
 		String symbol = null;
 		int atomicNumber = 0;
 		try {

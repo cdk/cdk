@@ -33,7 +33,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -102,8 +102,8 @@ public class AllRingsFinderTest extends CDKTestCase
 				Ring ring = (Ring)ringSet.get(i);
 				for (int j = 0; j < ring.getElectronContainerCount(); j++) 
 				{
-					org.openscience.cdk.interfaces.ElectronContainer ec = ring.getElectronContainerAt(j);
-					if (ec instanceof org.openscience.cdk.interfaces.Bond)
+					org.openscience.cdk.interfaces.IElectronContainer ec = ring.getElectronContainerAt(j);
+					if (ec instanceof org.openscience.cdk.interfaces.IBond)
 					{
 						org.openscience.cdk.interfaces.IAtom atom1 = ((Bond)ec).getAtomAt(0);
 						org.openscience.cdk.interfaces.IAtom atom2 = ((Bond)ec).getAtomAt(1);
@@ -129,9 +129,9 @@ public class AllRingsFinderTest extends CDKTestCase
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
 		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
-			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
-		    org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
 		    //System.out.println("Constructed Molecule");
 		    //System.out.println("Starting AllRingsFinder");
@@ -161,9 +161,9 @@ public class AllRingsFinderTest extends CDKTestCase
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
 		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
-			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
-		    org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
 		    if (standAlone) System.out.println("Constructed Molecule");
 		    if (standAlone) System.out.println("Starting AllRingsFinder");

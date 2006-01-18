@@ -33,8 +33,8 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -63,7 +63,7 @@ public class ReactionManipulator {
         }
     }
     
-    public static void removeElectronContainer(Reaction reaction, ElectronContainer electrons) {
+    public static void removeElectronContainer(Reaction reaction, IElectronContainer electrons) {
         Molecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             Molecule mol = reactants[i];
@@ -170,7 +170,7 @@ public class ReactionManipulator {
         return SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getProducts(), atom);
     }
 
-    public static IAtomContainer getRelevantAtomContainer(Reaction reaction, Bond bond) {
+    public static IAtomContainer getRelevantAtomContainer(Reaction reaction, IBond bond) {
         IAtomContainer result = SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getReactants(), bond);
         if (result != null) {
             return result;

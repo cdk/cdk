@@ -34,8 +34,8 @@ import java.io.StringReader;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
@@ -153,7 +153,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	 */
 	//TODO Update comment with appropriate information to comply Constructor's documentation. 
 	public boolean accepts(IChemObject object) {
-		if (object instanceof ChemFile) {
+		if (object instanceof IChemFile) {
 			return true;
 		} else {
 			return false;
@@ -176,9 +176,9 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.ChemObjectReader#read(org.openscience.cdk.ChemObject)
 	 */
 	public IChemObject read(IChemObject object) throws CDKException {
-		if (object instanceof ChemFile) {
+		if (object instanceof IChemFile) {
 			try {
-				return (IChemObject) readChemFile((ChemFile)object);
+				return (IChemObject) readChemFile((IChemFile)object);
 			} catch (IOException e) {
 				return null;
 			}
@@ -198,9 +198,9 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.GamessReader#input
 	 */
 	//TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)? 
-	private ChemFile readChemFile(ChemFile file) throws IOException {
+	private IChemFile readChemFile(IChemFile file) throws IOException {
 		ChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
-		ChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
+		IChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
 		SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
 		
 		model.setSetOfMolecules(moleculeSet); //TODO Answer the question : Should I do this?

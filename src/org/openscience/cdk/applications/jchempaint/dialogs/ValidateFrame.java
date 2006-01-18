@@ -151,7 +151,7 @@ public class ValidateFrame extends JFrame  {
             report = JChemPaintEditorPanel.getValidatorEngine().validateChemModel((ChemModel)object);
         } else if (object instanceof Atom) {
             report = JChemPaintEditorPanel.getValidatorEngine().validateAtom((Atom)object);
-        } else if (object instanceof org.openscience.cdk.interfaces.Bond) {
+        } else if (object instanceof org.openscience.cdk.interfaces.IBond) {
             report = JChemPaintEditorPanel.getValidatorEngine().validateBond((Bond)object);
         } else if (object instanceof Reaction) {
             report = JChemPaintEditorPanel.getValidatorEngine().validateReaction((Reaction)object);
@@ -201,7 +201,7 @@ public class ValidateFrame extends JFrame  {
             if (object instanceof Atom) {
                 node.setUserObject(new AtomErrorNode(error, (Atom)object));
                 ProblemMarker.markWithError((Atom)object);
-            } else if (object instanceof org.openscience.cdk.interfaces.Bond) {
+            } else if (object instanceof org.openscience.cdk.interfaces.IBond) {
                 node.setUserObject(new BondErrorNode(error, (Bond)object));
             } else {
                 node.setUserObject(new ValidatorErrorNode(error));

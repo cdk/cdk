@@ -50,7 +50,7 @@ public interface RingSet extends List {
 	 * @param   bond  The bond to be checked
 	 * @return   A vector of all rings that this bond is part of  
 	 */
-	public Vector getRings(Bond bond);
+	public Vector getRings(IBond bond);
 	
 	/**
 	 * Returns a vector of all rings that this atom is part of.

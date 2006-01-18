@@ -41,7 +41,7 @@ package org.openscience.cdk;
  *
  * @see org.openscience.cdk.config.IsotopeFactory
  */
-public class Element extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.Element
+public class Element extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IElement
 {
 
     /**

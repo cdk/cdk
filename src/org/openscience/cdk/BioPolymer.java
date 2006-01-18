@@ -44,7 +44,7 @@ import java.util.Hashtable;
  * @cdk.keyword polymer
  * @cdk.keyword biopolymer
  */
-public class BioPolymer extends Polymer implements java.io.Serializable, org.openscience.cdk.interfaces.BioPolymer
+public class BioPolymer extends Polymer implements java.io.Serializable, org.openscience.cdk.interfaces.IBioPolymer
 {
 
 	/**

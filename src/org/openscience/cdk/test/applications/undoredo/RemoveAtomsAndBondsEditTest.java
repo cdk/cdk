@@ -68,7 +68,7 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();
 		org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-		org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
 		for (int i = 0; i < atoms.length; i++) {
 			undoCont.addAtom(atoms[i]);
 		}

@@ -31,7 +31,7 @@ package org.openscience.cdk.controller;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -59,7 +59,7 @@ public class Controller2D extends SimpleController2D
 	 *@param  r2dm       Description of the Parameter
 	 *@param  c2dm       Description of the Parameter
 	 */
-	public Controller2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm)
+	public Controller2D(IChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm)
 	{
 		super(r2dm, c2dm);
 		this.chemModel = chemModel;
@@ -70,7 +70,7 @@ public class Controller2D extends SimpleController2D
 	 *
 	 *@param  chemModel  The new chemModel value
 	 */
-	public void setChemModel(ChemModel chemModel)
+	public void setChemModel(IChemModel chemModel)
 	{
 		this.chemModel = chemModel;
 	}
@@ -81,18 +81,18 @@ public class Controller2D extends SimpleController2D
 	 *@param  chemModel  Description of the Parameter
 	 *@param  r2dm       Description of the Parameter
 	 */
-	public Controller2D(ChemModel chemModel, Renderer2DModel r2dm)
+	public Controller2D(IChemModel chemModel, Renderer2DModel r2dm)
 	{
 		super(r2dm, new Controller2DModel());
 		this.chemModel = chemModel;
 	}
 
-	IAtomContainer getRelevantAtomContainer(ChemModel chemModel, IAtom atom)
+	IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IAtom atom)
 	{
 		return ChemModelManipulator.getRelevantAtomContainer(chemModel, atom);
 	}
 
-	IAtomContainer getAllInOneContainer(ChemModel chemModel)
+	IAtomContainer getAllInOneContainer(IChemModel chemModel)
 	{
 		return ChemModelManipulator.getAllInOneContainer(chemModel);	
 	}
@@ -125,7 +125,7 @@ public class Controller2D extends SimpleController2D
 		return null;
 	}
 	
-	Reaction getRelevantReaction(ChemModel chemModel, IAtom atom)
+	Reaction getRelevantReaction(IChemModel chemModel, IAtom atom)
 	{
 		return ChemModelManipulator.getRelevantReaction(chemModel, atom);
 	}

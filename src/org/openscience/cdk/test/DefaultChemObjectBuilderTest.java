@@ -37,15 +37,15 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.BioPolymer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
-import org.openscience.cdk.interfaces.ElectronContainer;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.Molecule;
@@ -189,7 +189,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof BioPolymer);
+		assertTrue(object instanceof IBioPolymer);
 	}
 	
 	public void testNewBond() {
@@ -197,7 +197,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Bond);
+		assertTrue(object instanceof IBond);
 	}
 	
 	public void testNewBond_IAtom_IAtom() {
@@ -208,7 +208,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Bond);
+		assertTrue(object instanceof IBond);
 	}
 	
 	public void testNewBond_IAtom_IAtom_double() {
@@ -220,7 +220,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Bond);
+		assertTrue(object instanceof IBond);
 	}
 	
 	public void testNewBond_IAtom_IAtom_double_int() {
@@ -232,7 +232,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Bond);
+		assertTrue(object instanceof IBond);
 	}
 	
 	public void testNewChemFile() {
@@ -240,7 +240,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ChemFile);
+		assertTrue(object instanceof IChemFile);
 	}
 	
 	public void testNewChemModel() {
@@ -248,7 +248,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ChemModel);
+		assertTrue(object instanceof IChemModel);
 	}
 
 	public void testNewChemObject() {
@@ -270,7 +270,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Crystal);
+		assertTrue(object instanceof ICrystal);
 	}
 	
 	public void testNewCrystal_IAtomContainer() {
@@ -280,7 +280,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Crystal);
+		assertTrue(object instanceof ICrystal);
 	}
 	
 	public void testNewElectronContainer() {
@@ -288,7 +288,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ElectronContainer);
+		assertTrue(object instanceof IElectronContainer);
 	}
 
 	public void testNewElement() {
@@ -296,7 +296,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Element);
+		assertTrue(object instanceof IElement);
 	}
 	
 	public void testNewElement_String() {
@@ -304,7 +304,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Element);
+		assertTrue(object instanceof IElement);
 	}
 	
 	public void testNewElement_String_int() {
@@ -312,7 +312,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Element);
+		assertTrue(object instanceof IElement);
 	}
 
 	public void testNewIsotope_int_String_double_double() {

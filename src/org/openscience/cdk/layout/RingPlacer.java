@@ -261,9 +261,9 @@ public class RingPlacer
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.Bond) break;
+            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.IBond) break;
         }
-        org.openscience.cdk.interfaces.Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
+        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -324,9 +324,9 @@ public class RingPlacer
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
 		 */ 
-		org.openscience.cdk.interfaces.Bond[] bonds = ring.getConnectedBonds(startAtom);
+		org.openscience.cdk.interfaces.IBond[] bonds = ring.getConnectedBonds(startAtom);
 		
-		org.openscience.cdk.interfaces.Bond currentBond = bonds[0];
+		org.openscience.cdk.interfaces.IBond currentBond = bonds[0];
 		
 		Vector atomsToDraw = new Vector();
 		/* 
@@ -453,9 +453,9 @@ public class RingPlacer
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.Bond) break;
+            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.IBond) break;
         }
-        org.openscience.cdk.interfaces.Bond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
+        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{

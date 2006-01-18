@@ -39,7 +39,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 
 /**
@@ -774,7 +774,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  branchPoints  the two possible placement points for unplaced atom (up and down) 
 	 *@return               int value of branch point position
 	 */
-	public int makeStereocenter(Point3d atomA, Bond ax, Point3d atomB, Point3d atomC, Point3d[] branchPoints) {
+	public int makeStereocenter(Point3d atomA, IBond ax, Point3d atomB, Point3d atomC, Point3d[] branchPoints) {
 		
 		Vector3d b = new Vector3d((atomB.x - atomA.x), (atomB.y - atomA.y), (atomB.z - atomA.z));
 		Vector3d c = new Vector3d((atomC.x - atomA.x), (atomC.y - atomA.y), (atomC.z - atomA.z));
@@ -855,7 +855,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 */
 	public IAtomContainer getPlacedAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
 
-		Bond[] bonds = ac.getConnectedBonds(atom);
+		IBond[] bonds = ac.getConnectedBonds(atom);
 		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {

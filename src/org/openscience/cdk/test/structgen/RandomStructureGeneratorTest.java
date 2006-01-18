@@ -103,7 +103,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 					}
 					//System.out.println(s);
 					s = "Bonds: ";
-					org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
+					org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
 					for (int g = 0; g < bonds.length; g++)
 					{
 						s += bonds[g].getOrder() + " ";

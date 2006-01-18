@@ -720,7 +720,7 @@ public class MoleculeFactory {
 		MDLReader mr = null;
 		ChemFile chemFile = null;
 		org.openscience.cdk.interfaces.ChemSequence chemSequence = null;
-		org.openscience.cdk.interfaces.ChemModel chemModel = null;
+		org.openscience.cdk.interfaces.IChemModel chemModel = null;
 		org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = null;
 		org.openscience.cdk.interfaces.Molecule molecule = null;
 		try

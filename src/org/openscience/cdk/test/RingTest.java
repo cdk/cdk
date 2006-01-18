@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
@@ -103,9 +103,9 @@ public class RingTest extends CDKTestCase {
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
         IAtom c3 = builder.newAtom("C");
-        Bond b1 = builder.newBond(c1, c2, 1.0);
-        Bond b2 = builder.newBond(c3, c2, 1.0);
-        Bond b3 = builder.newBond(c1, c3, 1.0);
+        IBond b1 = builder.newBond(c1, c2, 1.0);
+        IBond b2 = builder.newBond(c3, c2, 1.0);
+        IBond b3 = builder.newBond(c1, c3, 1.0);
         ring.addAtom(c1);
         ring.addAtom(c2);
         ring.addAtom(c3);

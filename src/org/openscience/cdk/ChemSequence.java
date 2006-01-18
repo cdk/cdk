@@ -53,7 +53,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
 	/**
 	 *  Array of ChemModels.
 	 */
-	protected org.openscience.cdk.interfaces.ChemModel[] chemModels;
+	protected org.openscience.cdk.interfaces.IChemModel[] chemModels;
 	
 	/**
 	 *  Number of ChemModels contained by this container.
@@ -86,7 +86,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
      *
      * @see            #getChemModel
 	 */
-	public void addChemModel(org.openscience.cdk.interfaces.ChemModel chemModel)
+	public void addChemModel(org.openscience.cdk.interfaces.IChemModel chemModel)
 	{
 		if (chemModelCount + 1 >= chemModels.length)
 		{
@@ -107,8 +107,8 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
      *
      * @see       #addChemModel
      */
-     public org.openscience.cdk.interfaces.ChemModel[] getChemModels() {
-    	 org.openscience.cdk.interfaces.ChemModel[] returnModels = new ChemModel[getChemModelCount()];
+     public org.openscience.cdk.interfaces.IChemModel[] getChemModels() {
+    	 org.openscience.cdk.interfaces.IChemModel[] returnModels = new ChemModel[getChemModelCount()];
          System.arraycopy(this.chemModels, 0, returnModels, 0, returnModels.length);
          return returnModels;
      }
@@ -124,7 +124,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
      *
      * @see            #addChemModel
 	 */
-	public org.openscience.cdk.interfaces.ChemModel getChemModel(int number)
+	public org.openscience.cdk.interfaces.IChemModel getChemModel(int number)
 	{
 		return chemModels[number];
 	}
@@ -155,11 +155,11 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
 	public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("ChemSequence(#M=");
-        org.openscience.cdk.interfaces.ChemModel[] models = getChemModels();
+        org.openscience.cdk.interfaces.IChemModel[] models = getChemModels();
         buffer.append(models.length);
         buffer.append(", ");
         for (int i=0; i<models.length; i++) {
-        	org.openscience.cdk.interfaces.ChemModel model = models[i];
+        	org.openscience.cdk.interfaces.IChemModel model = models[i];
             buffer.append(model.toString());
         }
         buffer.append(")");

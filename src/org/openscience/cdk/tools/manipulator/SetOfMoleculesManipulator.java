@@ -32,8 +32,8 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 
 /**
@@ -47,7 +47,7 @@ public class SetOfMoleculesManipulator {
         SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(set, atom);
     }
     
-    public static void removeElectronContainer(SetOfMolecules set, ElectronContainer electrons) {
+    public static void removeElectronContainer(SetOfMolecules set, IElectronContainer electrons) {
         SetOfAtomContainersManipulator.removeElectronContainer(set, electrons);
     }
     
@@ -101,7 +101,7 @@ public class SetOfMoleculesManipulator {
         return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, atom);
     }
 
-    public static IAtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, Bond bond) {
+    public static IAtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, IBond bond) {
         return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, bond);
     }
 

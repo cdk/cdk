@@ -47,7 +47,7 @@ import javax.swing.JRadioButton;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
@@ -68,7 +68,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class CreateCoordinatesForFileDialog extends JInternalFrame
 {
 
-	private ChemModel chemModel;
+	private IChemModel chemModel;
 	private JRadioButton generate2DButton;
 	private JRadioButton from3DButton;
 	private LoggingTool logger = null;
@@ -79,7 +79,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 	 *
 	 *@param  model  Description of the Parameter
 	 */
-	public CreateCoordinatesForFileDialog(ChemModel model)
+	public CreateCoordinatesForFileDialog(IChemModel model)
 	{
 		super("Coordinate Creation", true, true, true, true);
 

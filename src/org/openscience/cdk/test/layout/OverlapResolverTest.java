@@ -32,7 +32,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.layout.OverlapResolver;
@@ -106,9 +106,9 @@ public class OverlapResolverTest extends CDKTestCase
 			String filename = "data/cml/overlaptest.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
-			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
-			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
+			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
 			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			
 			OverlapResolver or = new OverlapResolver();
@@ -141,9 +141,9 @@ public class OverlapResolverTest extends CDKTestCase
 			String filename = "data/cml/overlaptest2.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
-			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
-			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
+			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
 			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
@@ -169,9 +169,9 @@ public class OverlapResolverTest extends CDKTestCase
 			String filename = "data/cml/overlaptest3.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
-			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
-			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
+			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
 			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			double score = new OverlapResolver().getBondOverlapScore(atomContainer, new Vector());
@@ -198,9 +198,9 @@ public class OverlapResolverTest extends CDKTestCase
 			String filename = "data/cml/overlaptest.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(new InputStreamReader(ins));
-			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
-			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
+			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
 			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			OverlapResolver or = new OverlapResolver(); 

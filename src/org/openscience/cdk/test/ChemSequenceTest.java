@@ -102,7 +102,7 @@ public class ChemSequenceTest extends CDKTestCase {
         cs.addChemModel(new ChemModel());
 
         assertEquals(3, cs.getChemModelCount());
-        org.openscience.cdk.interfaces.ChemModel[] models = cs.getChemModels();
+        org.openscience.cdk.interfaces.IChemModel[] models = cs.getChemModels();
         assertEquals(3, models.length);
         assertNotNull(models[0]);
         assertNotNull(models[1]);

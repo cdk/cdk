@@ -33,8 +33,8 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
@@ -55,7 +55,7 @@ public class SetOfReactionsManipulator {
         }
     }
     
-    public static void removeElectronContainer(SetOfReactions set, ElectronContainer electrons) {
+    public static void removeElectronContainer(SetOfReactions set, IElectronContainer electrons) {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
@@ -115,7 +115,7 @@ public class SetOfReactionsManipulator {
         return null;
     }
 
-    public static Reaction getRelevantReaction(SetOfReactions set, Bond bond) {
+    public static Reaction getRelevantReaction(SetOfReactions set, IBond bond) {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
@@ -139,7 +139,7 @@ public class SetOfReactionsManipulator {
         return null;
     }
 
-    public static IAtomContainer getRelevantAtomContainer(SetOfReactions set, Bond bond) {
+    public static IAtomContainer getRelevantAtomContainer(SetOfReactions set, IBond bond) {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];

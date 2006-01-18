@@ -47,12 +47,12 @@ import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -164,7 +164,7 @@ public class FileConvertor {
                     return false;
                 }
 
-                ChemFile content = (ChemFile)cor.read(builder.newChemFile());
+                IChemFile content = (IChemFile)cor.read(builder.newChemFile());
                 if (content == null) {
                     return false;
                 }
@@ -559,7 +559,7 @@ public class FileConvertor {
     * and we want to output as much information as possible, use
     * the generalized mechanism below.
     */
-    private void write(ChemFile chemFile, String outputFilename) throws IOException { // NOPMD
+    private void write(IChemFile chemFile, String outputFilename) throws IOException { // NOPMD
         if (cow.accepts(chemFile.getClass())) {
             // Can write ChemFile, do so
             try {
@@ -588,7 +588,7 @@ public class FileConvertor {
             cow.write(sequence);
         } catch (CDKException exception) {
             int count = sequence.getChemModelCount();
-            boolean needMoreFiles = (cow.accepts(ChemModel.class)) && (count > 1);
+            boolean needMoreFiles = (cow.accepts(IChemModel.class)) && (count > 1);
             logger.info("Cannot write ChemSequence, recursing into ChemModel's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
@@ -602,12 +602,12 @@ public class FileConvertor {
         }
     }
 
-    private void write(ChemModel cm, String outputFilename) throws IOException {  // NOPMD
+    private void write(IChemModel cm, String outputFilename) throws IOException {  // NOPMD
         try {
             cow.write(cm);
         } catch (CDKException exception) {
             logger.info("Cannot write ChemModel, trying Crystal.");
-            Crystal crystal = cm.getCrystal();
+            ICrystal crystal = cm.getCrystal();
             if (crystal != null) {
                 write(crystal, outputFilename);
             }
@@ -618,7 +618,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(Crystal c, String outputFilename) throws IOException {  // NOPMD
+    private void write(ICrystal c, String outputFilename) throws IOException {  // NOPMD
         try {
             cow.write(c);
         } catch (CDKException exception) {

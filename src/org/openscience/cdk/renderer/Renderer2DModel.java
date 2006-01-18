@@ -39,7 +39,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.renderer.color.AtomColorer;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
@@ -83,7 +83,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private IAtom highlightedAtom = null;
 	
-	private Bond highlightedBond = null;
+	private IBond highlightedBond = null;
 	
     /** 
      * The color hash is used to color substructures.
@@ -571,7 +571,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @return the Bond currently highlighted    
 	 */
-	public Bond getHighlightedBond()
+	public IBond getHighlightedBond()
 	{
 		return this.highlightedBond;
 	}
@@ -582,7 +582,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @param   highlightedBond  The Bond to be currently highlighted
 	 */
-	public void setHighlightedBond(Bond highlightedBond)
+	public void setHighlightedBond(IBond highlightedBond)
 	{
 		if ((this.highlightedBond == null) &&
             (highlightedBond == null)) {
@@ -792,7 +792,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		{
 			getColorHash().put(selectedPart.getAtomAt(i), getHighlightColor());
 		}
-        Bond[] bonds = selectedPart.getBonds();
+        IBond[] bonds = selectedPart.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			getColorHash().put(bonds[i], getHighlightColor());
 		}		

@@ -24,7 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 
 /**
@@ -39,7 +39,7 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBon
         super(atom1, atom2, order);
     }
     
-	public boolean matches(Bond bond) {
+	public boolean matches(IBond bond) {
         if (this.getOrder() == bond.getOrder()) {
             // bond orders match
             return true;

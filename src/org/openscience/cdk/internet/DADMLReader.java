@@ -277,7 +277,7 @@ public class DADMLReader {
             logger.debug("#sequences: ", chemFile.getChemSequenceCount());
             org.openscience.cdk.interfaces.ChemSequence chemSequence = chemFile.getChemSequence(0);
             logger.debug("#models in sequence: ", chemSequence.getChemModelCount());
-            org.openscience.cdk.interfaces.ChemModel chemModel = chemSequence.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
             org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             logger.debug("#mols in model: ", moleculeSet.getMoleculeCount());
             molecule = moleculeSet.getMolecule(0);

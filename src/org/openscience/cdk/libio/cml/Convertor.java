@@ -44,12 +44,12 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
@@ -143,10 +143,10 @@ public class Convertor {
     	}
     }
 
-    public CMLCml cdkChemFileToCMLList(ChemFile file) {
+    public CMLCml cdkChemFileToCMLList(IChemFile file) {
     	return cdkChemFileToCMLList(file, true);
     }
-    private CMLCml cdkChemFileToCMLList(ChemFile file, boolean setIDs) {
+    private CMLCml cdkChemFileToCMLList(IChemFile file, boolean setIDs) {
     	CMLCml cmlList = new CMLCml();
     	cmlList.setDictRef("cdk:document");
     	
@@ -176,7 +176,7 @@ public class Convertor {
     	}
     	
     	if (sequence.getChemModelCount() > 0) {
-    		ChemModel[] models = sequence.getChemModels();
+    		IChemModel[] models = sequence.getChemModels();
     		for (int i=0; i<models.length; i++) {
     			cmlList.appendChild(cdkChemModelToCMLList(models[i]));
     		}
@@ -185,10 +185,10 @@ public class Convertor {
     	return cmlList;
     }
     
-    public CMLList cdkChemModelToCMLList(ChemModel model) {
+    public CMLList cdkChemModelToCMLList(IChemModel model) {
     	return cdkChemModelToCMLList(model, true);
     }
-    private CMLList cdkChemModelToCMLList(ChemModel model, boolean setIDs) {
+    private CMLList cdkChemModelToCMLList(IChemModel model, boolean setIDs) {
     	CMLList cmlList = new CMLList();
     	cmlList.setDictRef("cdk:model");
     	
@@ -277,10 +277,10 @@ public class Convertor {
     	return cmlReaction;
     }
     
-    public CMLMolecule cdkCrystalToCMLMolecule(Crystal crystal) {
+    public CMLMolecule cdkCrystalToCMLMolecule(ICrystal crystal) {
     	return cdkCrystalToCMLMolecule(crystal, true);
     }
-    private CMLMolecule cdkCrystalToCMLMolecule(Crystal crystal, boolean setIDs) {
+    private CMLMolecule cdkCrystalToCMLMolecule(ICrystal crystal, boolean setIDs) {
     	CMLMolecule molecule = cdkAtomContainerToCMLMolecule(crystal, false);
 		CMLCrystal cmlCrystal = new CMLCrystal();
 
@@ -444,7 +444,7 @@ public class Convertor {
         return cmlAtom;
 	}
 	
-	public CMLBond cdkBondToCMLBond(Bond cdkBond) {
+	public CMLBond cdkBondToCMLBond(IBond cdkBond) {
 		CMLBond cmlBond = new CMLBond();
 		this.checkPrefix(cmlBond);
 		if (cdkBond.getID() == null || cdkBond.getID().length() == 0) {

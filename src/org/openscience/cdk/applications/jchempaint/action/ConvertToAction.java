@@ -60,7 +60,7 @@ public class ConvertToAction extends JCPAction
 		logger.debug("Converting to: ", type);
 		IChemObject object = getSource(event);
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
+		org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
 		if (object != null)
 		{
 			if (object instanceof Atom)

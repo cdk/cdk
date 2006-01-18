@@ -40,7 +40,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
@@ -102,7 +102,7 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  model     Description of the Parameter
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintChemModel(ChemModel model, Graphics2D graphics)
+	public void paintChemModel(IChemModel model, Graphics2D graphics)
 	{
 		customizeRendering(graphics);
 		tooltiparea = null;

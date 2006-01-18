@@ -43,13 +43,13 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
@@ -77,7 +77,7 @@ public class PMPReader extends DefaultChemObjectReader {
 
     /* Keep a copy of the PMP model */
     private SetOfMolecules som;
-    private ChemModel modelModel;
+    private IChemModel modelModel;
     private Molecule molecule;
     private IChemObject chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
@@ -134,11 +134,11 @@ public class PMPReader extends DefaultChemObjectReader {
      *
      * @param object class must be of type ChemFile
      *
-     * @see ChemFile
+     * @see IChemFile
      */
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemFile) {
-            return (IChemObject)readChemFile((ChemFile)object);
+        if (object instanceof IChemFile) {
+            return (IChemObject)readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -155,10 +155,10 @@ public class PMPReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private ChemFile readChemFile(ChemFile chemFile) {
+    private IChemFile readChemFile(IChemFile chemFile) {
         ChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
-        ChemModel chemModel = chemFile.getBuilder().newChemModel();
-        Crystal crystal = chemFile.getBuilder().newCrystal();
+        IChemModel chemModel = chemFile.getBuilder().newChemModel();
+        ICrystal crystal = chemFile.getBuilder().newCrystal();
 
         try {
             String line = input.readLine();
@@ -207,9 +207,9 @@ public class PMPReader extends DefaultChemObjectReader {
                             if (chemObject instanceof IAtom) {
                                 atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
                                 molecule.addAtom((IAtom)chemObject);
-                            } else if (chemObject instanceof org.openscience.cdk.interfaces.Bond) {
+                            } else if (chemObject instanceof org.openscience.cdk.interfaces.IBond) {
                                 bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
-                                molecule.addBond((Bond)chemObject);
+                                molecule.addBond((IBond)chemObject);
                             } else {
                                 logger.error("chemObject is not initialized or of bad class type");
                             }
@@ -335,17 +335,17 @@ public class PMPReader extends DefaultChemObjectReader {
                 // already added, which seems the case in the PMP files
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
                 org.openscience.cdk.interfaces.IAtom a = molecule.getAtomAt(realatomid);
-                ((Bond)chemObject).setAtomAt(a, 0);
+                ((IBond)chemObject).setAtomAt(a, 0);
             } else if ("Atom2".equals(command)) {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
                 org.openscience.cdk.interfaces.IAtom a = molecule.getAtomAt(realatomid);
-                ((Bond)chemObject).setAtomAt(a, 1);
+                ((IBond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);
-                ((Bond)chemObject).setOrder(order);
+                ((IBond)chemObject).setOrder(order);
             } else if ("Id".equals(command)) {
             } else if ("Label".equals(command)) {
             } else if ("3DGridOrigin".equals(command)) {

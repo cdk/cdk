@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -126,13 +126,13 @@ public class RingSetTest extends CDKTestCase {
         IAtom sharedAtom2 = builder.newAtom("C");
         IAtom ring2Atom1 = builder.newAtom("C");
         IAtom ring2Atom2 = builder.newAtom("C");
-        Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
-        Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
-        Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
-        Bond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
-        Bond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
-        Bond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
-        Bond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
+        IBond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
+        IBond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
 
         Ring ring1 = builder.newRing();
         ring1.addAtom(ring1Atom1);
@@ -173,13 +173,13 @@ public class RingSetTest extends CDKTestCase {
         IAtom sharedAtom2 = builder.newAtom("C");
         IAtom ring2Atom1 = builder.newAtom("C");
         IAtom ring2Atom2 = builder.newAtom("C");
-        Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
-        Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
-        Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
-        Bond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
-        Bond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
-        Bond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
-        Bond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
+        IBond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
+        IBond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
 
         Ring ring1 = builder.newRing();
         ring1.addAtom(ring1Atom1);
@@ -221,13 +221,13 @@ public class RingSetTest extends CDKTestCase {
         IAtom ring2Atom1 = builder.newAtom("C");
         IAtom ring2Atom2 = builder.newAtom("C");
         IAtom ring2Atom3 = builder.newAtom("C");
-        Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
-        Bond ring1Bond2 = builder.newBond(ring1Atom2, ring1Atom3);
-        Bond ring1Bond3 = builder.newBond(ring1Atom3, ring1Atom1);
+        IBond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = builder.newBond(ring1Atom2, ring1Atom3);
+        IBond ring1Bond3 = builder.newBond(ring1Atom3, ring1Atom1);
         
-        Bond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
-        Bond ring2Bond2 = builder.newBond(ring2Atom2, ring2Atom3);
-        Bond ring2Bond3 = builder.newBond(ring2Atom3, ring2Atom1);
+        IBond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = builder.newBond(ring2Atom2, ring2Atom3);
+        IBond ring2Bond3 = builder.newBond(ring2Atom3, ring2Atom1);
 
         Ring ring1 = builder.newRing();
         ring1.addAtom(ring1Atom1);
@@ -262,13 +262,13 @@ public class RingSetTest extends CDKTestCase {
         IAtom sharedAtom2 = builder.newAtom("C");
         IAtom ring2Atom1 = builder.newAtom("C");
         IAtom ring2Atom2 = builder.newAtom("C");
-        Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
-        Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
-        Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
-        Bond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
-        Bond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
-        Bond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
-        Bond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
+        IBond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
+        IBond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
 
         Ring ring1 = builder.newRing();
         ring1.addAtom(ring1Atom1);
@@ -309,13 +309,13 @@ public class RingSetTest extends CDKTestCase {
         IAtom sharedAtom2 = builder.newAtom("C");
         IAtom ring2Atom1 = builder.newAtom("C");
         IAtom ring2Atom2 = builder.newAtom("C");
-        Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
-        Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
-        Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
-        Bond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
-        Bond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
-        Bond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
-        Bond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
+        IBond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
+        IBond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
+        IBond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
+        IBond sharedBond = builder.newBond(sharedAtom1, sharedAtom2);
+        IBond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
+        IBond ring2Bond2 = builder.newBond(sharedAtom1, ring2Atom1);
+        IBond ring2Bond3 = builder.newBond(sharedAtom2, ring2Atom2);
 
         Ring ring1 = builder.newRing();
         ring1.addAtom(ring1Atom1);

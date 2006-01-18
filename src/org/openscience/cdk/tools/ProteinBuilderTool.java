@@ -148,7 +148,7 @@ public class ProteinBuilderTool {
         for (int i=0; i<atoms.length; i++) {
             protein.addAtom(atoms[i], aaToAdd, strand);
         }
-        org.openscience.cdk.interfaces.Bond[] bonds = aaToAdd.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = aaToAdd.getBonds();
         for (int i=0; i<bonds.length; i++) {
             protein.addBond(bonds[i]);
         }

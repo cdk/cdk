@@ -30,7 +30,7 @@ package org.openscience.cdk.aromaticity;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Ring;
 
@@ -63,7 +63,7 @@ public class AromaticityCalculator
 		
 		IAtom[] ringAtoms = ring.getAtoms();
 		int eCount = 0;
-		Bond[] conectedBonds;
+		IBond[] conectedBonds;
 		int numDoubleBond = 0;
 		boolean allConnectedBondsSingle;
 		
@@ -75,7 +75,7 @@ public class AromaticityCalculator
 			conectedBonds = atomContainer.getConnectedBonds(atom);
 			for (int j = 0; j < conectedBonds.length; j++)
 			{
-				Bond bond = conectedBonds[j];
+				IBond bond = conectedBonds[j];
 				if (bond.getOrder() == 2 && ring.contains(bond))
 				{
 					numDoubleBond++;

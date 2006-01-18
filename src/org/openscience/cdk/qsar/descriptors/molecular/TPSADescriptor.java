@@ -219,7 +219,7 @@ public class TPSADescriptor implements IDescriptor {
 		String profile = "";
 		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 		org.openscience.cdk.interfaces.IAtom[] connectedAtomsFirst = null;
-		org.openscience.cdk.interfaces.Bond[] connectedBondsfirst = null;
+		org.openscience.cdk.interfaces.IBond[] connectedBondsfirst = null;
 		Vector profiles = new Vector();
 		double maxOrder = 0;
 		double orderSum = 0;

@@ -37,11 +37,11 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -117,8 +117,8 @@ public class VASPReader extends DefaultChemObjectReader {
     }
 
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemFile) {
-            ChemFile cf = (ChemFile)object;
+        if (object instanceof IChemFile) {
+            IChemFile cf = (IChemFile)object;
             try {
                 cf = readChemFile(cf);
             } catch (IOException exception) {
@@ -134,15 +134,15 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
     
-    private ChemFile readChemFile(ChemFile file) throws CDKException, IOException {
+    private IChemFile readChemFile(IChemFile file) throws CDKException, IOException {
         ChemSequence seq = readChemSequence(file.getBuilder().newChemSequence());
         file.addChemSequence(seq);
         return file;
     }
     
     private ChemSequence readChemSequence(ChemSequence sequence) throws CDKException, IOException {
-        ChemModel chemModel = sequence.getBuilder().newChemModel();
-        Crystal crystal = null;
+        IChemModel chemModel = sequence.getBuilder().newChemModel();
+        ICrystal crystal = null;
         
         // Get the info line (first token of the first line)
         inputBuffer.mark(255);

@@ -41,7 +41,7 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -641,7 +641,7 @@ public class AtomPlacer
 				atomNr = ac.getAtomNumber(atom);
 				logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
 
-				Bond[] bonds = ac.getConnectedBonds(atom);
+				IBond[] bonds = ac.getConnectedBonds(atom);
 				for (int g = 0; g < bonds.length; g++)
 				{
 					nextAtom = bonds[g].getConnectedAtom(atom);
@@ -874,7 +874,7 @@ public class AtomPlacer
 	public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule)
 	{
 		int sum = 0;
-		Bond[] bonds = molecule.getConnectedBonds(atom);
+		IBond[] bonds = molecule.getConnectedBonds(atom);
 		for (int g = 0; g < bonds.length; g++)
 		{
 			if (bonds[g].getOrder() == 3) sum += 10;

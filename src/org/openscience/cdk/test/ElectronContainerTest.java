@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
@@ -56,13 +56,13 @@ public class ElectronContainerTest extends CDKTestCase {
     }
     
     public void testElectronContainer() {
-        ElectronContainer ec = builder.newElectronContainer();
+        IElectronContainer ec = builder.newElectronContainer();
         assertNotNull(ec);
         assertEquals(0, ec.getElectronCount());
     }
     
     public void testSetElectronCount_int() {
-        ElectronContainer ec = builder.newElectronContainer();
+        IElectronContainer ec = builder.newElectronContainer();
         ec.setElectronCount(3);
         assertEquals(3, ec.getElectronCount());
     }
@@ -71,12 +71,12 @@ public class ElectronContainerTest extends CDKTestCase {
     }
 
     public void testClone() {
-        ElectronContainer ec = builder.newElectronContainer();
+        IElectronContainer ec = builder.newElectronContainer();
         ec.setElectronCount(2);
         Object clone = ec.clone();
         assertNotNull(clone);
-        assertTrue(clone instanceof ElectronContainer);
-        assertEquals(ec.getElectronCount(), ((ElectronContainer)clone).getElectronCount());
+        assertTrue(clone instanceof IElectronContainer);
+        assertEquals(ec.getElectronCount(), ((IElectronContainer)clone).getElectronCount());
     }
     
 }

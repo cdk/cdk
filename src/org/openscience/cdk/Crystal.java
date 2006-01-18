@@ -37,7 +37,7 @@ import javax.vecmath.Vector3d;
  *
  * @cdk.keyword crystal
  */
-public class Crystal extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Crystal
+public class Crystal extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.ICrystal
 {
 
     /**

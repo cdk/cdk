@@ -34,7 +34,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.tools.LoggingTool;
@@ -248,7 +248,7 @@ public class IsotopeFactory
 	 *@param  symbol  The element symbol for the requested element
 	 *@return         The configured element
 	 */
-	public Element getElement(String symbol)
+	public IElement getElement(String symbol)
 	{
 		Isotope isotope = getMajorIsotope(symbol);
 		return isotope;
@@ -261,7 +261,7 @@ public class IsotopeFactory
 	 *@param  atomicNumber  The elements atomic number
 	 *@return               The Element
 	 */
-	public Element getElement(int atomicNumber)
+	public IElement getElement(int atomicNumber)
 	{
 		Isotope isotope = getMajorIsotope(atomicNumber);
 		return isotope;

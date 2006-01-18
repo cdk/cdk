@@ -27,14 +27,14 @@ package org.openscience.cdk.validate;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
-import org.openscience.cdk.interfaces.ElectronContainer;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
@@ -69,15 +69,15 @@ public class AbstractValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateBond(Bond subject) {
+    public ValidationReport validateBond(IBond subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateChemFile(ChemFile subject) {
+    public ValidationReport validateChemFile(IChemFile subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateChemModel(ChemModel subject) {
+    public ValidationReport validateChemModel(IChemModel subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
@@ -85,15 +85,15 @@ public class AbstractValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateCrystal(Crystal subject) {
+    public ValidationReport validateCrystal(ICrystal subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateElectronContainer(ElectronContainer subject) {
+    public ValidationReport validateElectronContainer(IElectronContainer subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateElement(Element subject) {
+    public ValidationReport validateElement(IElement subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }

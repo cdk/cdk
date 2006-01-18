@@ -86,7 +86,7 @@ public class SDFReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.ChemSequence sequence = fileContents.getChemSequence(0);
             assertNotNull(sequence);
             assertEquals(9, sequence.getChemModelCount());
-            org.openscience.cdk.interfaces.ChemModel model = sequence.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
             assertNotNull(model);
             
             org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();

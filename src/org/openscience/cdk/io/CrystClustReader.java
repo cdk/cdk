@@ -33,11 +33,11 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -87,18 +87,18 @@ public class CrystClustReader extends DefaultChemObjectReader {
     }
 
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemFile) {
-            ChemFile cf = readChemFile((ChemFile)object);
+        if (object instanceof IChemFile) {
+            IChemFile cf = readChemFile((IChemFile)object);
             return cf;
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }
     }
 
-    private ChemFile readChemFile(ChemFile file) throws CDKException {
+    private IChemFile readChemFile(IChemFile file) throws CDKException {
         ChemSequence seq = file.getBuilder().newChemSequence();
-        ChemModel model = file.getBuilder().newChemModel();
-        Crystal crystal = null;
+        IChemModel model = file.getBuilder().newChemModel();
+        ICrystal crystal = null;
         
         int lineNumber = 0;
         Vector3d a, b, c;

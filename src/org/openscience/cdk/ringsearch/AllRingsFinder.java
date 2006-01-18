@@ -34,7 +34,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -301,7 +301,7 @@ public class AllRingsFinder
 	{
 		Path path = null;
 		Ring ring = null;
-		Bond bond = null;
+		IBond bond = null;
 		for (int f = 0; f < pathes.size(); f++)
 		{
 			path = (Path) pathes.elementAt(f);
@@ -317,7 +317,7 @@ public class AllRingsFinder
 				{
 					ring.addAtom((IAtom) path.elementAt(g));
 				}
-				Bond[] bonds = ac.getBonds();
+				IBond[] bonds = ac.getBonds();
 				for (int g = 0; g < bonds.length; g++)
 				{
 					bond = bonds[g];
@@ -341,9 +341,9 @@ public class AllRingsFinder
 	 */
 	private void initPathGraph(IAtomContainer ac, Vector pathes)
 	{
-		Bond bond = null;
+		IBond bond = null;
 		Path path = null;
-		Bond[] bonds = ac.getBonds();
+		IBond[] bonds = ac.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];

@@ -41,12 +41,12 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -333,7 +333,7 @@ public class MFAnalyser {
 	 * @exception  java.io.IOException     Description of the Exception
 	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
-	public double getNaturalMass(Element element) throws java.io.IOException, ClassNotFoundException {
+	public double getNaturalMass(IElement element) throws java.io.IOException, ClassNotFoundException {
 		Isotope[] isotopes = IsotopeFactory.getInstance(getAtomContainer().getBuilder()).getIsotopes(element.getSymbol());
 		double summedAbundances = 0;
 		double summedWeightedAbundances = 0;
@@ -345,7 +345,7 @@ public class MFAnalyser {
 	}
 
 
-	public double getCanonicalMass(Element element){
+	public double getCanonicalMass(IElement element){
 		return Double.parseDouble((String)massMap.get(element.getAtomicNumber()+""));
 	}
 	
@@ -367,7 +367,7 @@ public class MFAnalyser {
 		IAtomContainer ac = getAtomContainer();
 		Isotope h = si.getMajorIsotope("H");
 		for (int f = 0; f < ac.getAtomCount(); f++) {
-			Element i = si.getElement(ac.getAtomAt(f).getSymbol());
+			IElement i = si.getElement(ac.getAtomAt(f).getSymbol());
 			if (i != null) {
 				mass += getCanonicalMass(i);
 			} else {
@@ -397,7 +397,7 @@ public class MFAnalyser {
 		IAtomContainer ac = getAtomContainer();
 		Isotope h = si.getMajorIsotope("H");
 		for (int f = 0; f < ac.getAtomCount(); f++) {
-			Element i = si.getElement(ac.getAtomAt(f).getSymbol());
+			IElement i = si.getElement(ac.getAtomAt(f).getSymbol());
 			if (i != null) {
 				mass += getNaturalMass(i);
 			} else {
@@ -490,7 +490,7 @@ public class MFAnalyser {
 				i < count;
 				i++) {
 			// Check bond.
-			final Bond bond = ac.getBondAt(i);
+			final IBond bond = ac.getBondAt(i);
 			IAtom[] atoms = bond.getAtoms();
 			boolean remove_bond = false;
 			final int length = atoms.length;
@@ -507,7 +507,7 @@ public class MFAnalyser {
 			if (!remove_bond) {
 				// if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
 
-				Bond clone = (Bond) ac.getBondAt(i).clone();
+				IBond clone = (IBond) ac.getBondAt(i).clone();
 				clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
 				mol.addBond(clone);
 			}

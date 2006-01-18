@@ -42,10 +42,10 @@ public class Torsions {
 	double[] v3 = null;
 	double[] phi = null;
 	
-	org.openscience.cdk.interfaces.Bond[] bond = null;
+	org.openscience.cdk.interfaces.IBond[] bond = null;
 	IAtom[] atomInBond = null;
-	org.openscience.cdk.interfaces.Bond[] bondConnectedBefore = null;
-	org.openscience.cdk.interfaces.Bond[] bondConnectedAfter = null;
+	org.openscience.cdk.interfaces.IBond[] bondConnectedBefore = null;
+	org.openscience.cdk.interfaces.IBond[] bondConnectedAfter = null;
 
 	ForceFieldTools ffTools = new ForceFieldTools();
 	private LoggingTool logger;

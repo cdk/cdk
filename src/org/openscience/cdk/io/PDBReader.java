@@ -40,10 +40,10 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.BioPolymer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemSequence;
@@ -135,8 +135,8 @@ public class PDBReader extends DefaultChemObjectReader {
 	 *
 	 */
 	public IChemObject read(IChemObject oObj) throws CDKException {
-		if (oObj instanceof ChemFile) {
-			return (IChemObject)readChemFile((ChemFile)oObj);
+		if (oObj instanceof IChemFile) {
+			return (IChemObject)readChemFile((IChemFile)oObj);
 		} else {
 			throw new CDKException("Only supported is reading of ChemFile objects.");
 		}
@@ -154,17 +154,17 @@ public class PDBReader extends DefaultChemObjectReader {
 	 *
 	 * @return The ChemFile that was read from the PDB file.
 	 */
-	private ChemFile readChemFile(ChemFile oFile) 	{
+	private IChemFile readChemFile(IChemFile oFile) 	{
 		// initialize all containers
 		ChemSequence oSeq = oFile.getBuilder().newChemSequence();
-		ChemModel oModel = oFile.getBuilder().newChemModel();
+		IChemModel oModel = oFile.getBuilder().newChemModel();
 		SetOfMolecules oSet = oFile.getBuilder().newSetOfMolecules();
 		
 		// some variables needed
 		StringBuffer cLine;
 		String cCol;
 		PDBAtom oAtom;
-		BioPolymer oBP = oFile.getBuilder().newBioPolymer();
+		IBioPolymer oBP = oFile.getBuilder().newBioPolymer();
 		StringBuffer cResidue;
 		String oObj;
 		org.openscience.cdk.interfaces.Monomer oMonomer;
@@ -363,7 +363,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * 
 	 * @param pol The Biopolymer to work on
 	 */
-	public boolean createBonds(BioPolymer pol){
+	public boolean createBonds(IBioPolymer pol){
 		HashMap AAs = AminoAcids.getHashMapByThreeLetterCode();
 		int[][] AABondInfo = AminoAcids.aaBondInfo();
 		Hashtable strands = pol.getStrands();
@@ -402,13 +402,13 @@ public class PDBReader extends DefaultChemObjectReader {
 				// If nothing's wrong, add bonds
 				int bondID = Integer.parseInt((String)monomer.getProperty(AminoAcids.ID));
 				for (int l = 0; l < Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_BONDS)); l++) {
-					Bond bond = pol.getBuilder().newBond(strand.getAtomAt(AABondInfo[bondID + l][1] + atoms), strand.getAtomAt(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
+					IBond bond = pol.getBuilder().newBond(strand.getAtomAt(AABondInfo[bondID + l][1] + atoms), strand.getAtomAt(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
 					pol.addBond(bond);
 				}
 				
 				// If not first residue, connect residues
 				if (atomsInLastResidue != 0)	{
-					Bond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
+					IBond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
 					pol.addBond(bond);
 				}
 				
@@ -420,7 +420,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				// atoms == mol.getAtomCount()...
 				if(strand.getAtomCount() < atoms && ((PDBAtom)strand.getAtomAt(atoms)).getOxt())	{
 //				if(strand.getAtomCount() < atoms && ((String)strand.getAtomAt(atoms).getProperty("oxt")).equals("1"))	{
-					Bond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
+					IBond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
 					pol.addBond(bond);
 				}
 			}

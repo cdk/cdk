@@ -82,7 +82,7 @@ public class AddHydrogenAction extends JCPAction
 		{
 			// now add hydrogens
 			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-			org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
+			org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
             
 			IChemObject object = getSource(event);
 			if (object != null)
@@ -125,7 +125,7 @@ public class AddHydrogenAction extends JCPAction
 	 *
 	 *@param  model  The feature to be added to the HydrogenToAllAtoms attribute
 	 */
-	private void addHydrogenToAllAtoms(org.openscience.cdk.interfaces.ChemModel model)
+	private void addHydrogenToAllAtoms(org.openscience.cdk.interfaces.IChemModel model)
 	{
 		SetOfMolecules som = model.getSetOfMolecules();
 		org.openscience.cdk.interfaces.SetOfReactions sor = model.getSetOfReactions();

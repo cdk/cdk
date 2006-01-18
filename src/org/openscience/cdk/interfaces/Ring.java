@@ -52,7 +52,7 @@ public interface Ring extends IAtomContainer {
 	 * @param   atom  A atom from the bond above to assign a search direction
 	 * @return  The next bond in the order given by the above assignment   
 	 */
-	public Bond getNextBond(Bond bond, IAtom atom);
+	public IBond getNextBond(IBond bond, IAtom atom);
 	
 	/**
 	 * Returns the sum of all bond orders in the ring.

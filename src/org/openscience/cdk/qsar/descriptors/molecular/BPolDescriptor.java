@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -118,9 +118,9 @@ public class BPolDescriptor implements IDescriptor {
 		double difference = 0;
 		try {
 			ifac = IsotopeFactory.getInstance(container.getBuilder());			
-			Element element0 = null;
-			Element element1 = null;
-			org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
+			IElement element0 = null;
+			IElement element1 = null;
+			org.openscience.cdk.interfaces.IBond[] bonds = container.getBonds();
 			IAtom[] atoms = null;
 			String symbol0 = null;
 			String symbol1 = null;

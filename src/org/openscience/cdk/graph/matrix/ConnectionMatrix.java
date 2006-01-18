@@ -24,8 +24,8 @@
 package org.openscience.cdk.graph.matrix;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
 
 /**
  * Calculator for a connection matrix representation of this AtomContainer. An
@@ -50,16 +50,16 @@ public class ConnectionMatrix implements GraphMatrix {
 	 * @return           A connection matrix representating this AtomContainer
 	 */
 	public static double[][] getMatrix(IAtomContainer container) {
-		ElectronContainer electronContainer = null;
+		IElectronContainer electronContainer = null;
 		int indexAtom1;
 		int indexAtom2;
 		double[][] conMat = new double[container.getAtomCount()][container.getAtomCount()];
 		for (int f = 0; f < container.getElectronContainerCount(); f++)
 		{
 			electronContainer = container.getElectronContainerAt(f);
-			if (electronContainer instanceof org.openscience.cdk.interfaces.Bond)
+			if (electronContainer instanceof org.openscience.cdk.interfaces.IBond)
 			{
-				Bond bond = (Bond) electronContainer;
+				IBond bond = (IBond) electronContainer;
 				indexAtom1 = container.getAtomNumber(bond.getAtomAt(0));
 				indexAtom2 = container.getAtomNumber(bond.getAtomAt(1));
 				conMat[indexAtom1][indexAtom2] = bond.getOrder();

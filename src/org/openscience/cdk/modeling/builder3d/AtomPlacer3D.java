@@ -283,7 +283,7 @@ public class AtomPlacer3D {
 	 *@return                The doubleBondConfiguration2D value
 	 *@exception  Exception  Description of the Exception
 	 */
-	private int getDoubleBondConfiguration2D(org.openscience.cdk.interfaces.Bond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
+	private int getDoubleBondConfiguration2D(org.openscience.cdk.interfaces.IBond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
 		if (bond.getOrder()<1.5 || bond.getOrder()>2){
 			return 0;
 		}
@@ -355,7 +355,7 @@ public class AtomPlacer3D {
 	 * author:    steinbeck,cho
 	 */
 	public IAtom getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(IAtomContainer molecule) {
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			IAtom[] atoms = bonds[i].getAtoms();
 			if (atoms[0].getFlag(CDKConstants.ISPLACED) & !(atoms[1].getFlag(CDKConstants.ISPLACED))) {
@@ -379,7 +379,7 @@ public class AtomPlacer3D {
 	 * author: steinbeck,cho
 	 */
 	public IAtom getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(IAtomContainer molecule) {
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			IAtom[] atoms = bonds[i].getAtoms();
 			if (atoms[0].getFlag(CDKConstants.ISPLACED) & !(atoms[1].getFlag(CDKConstants.ISPLACED))) {
@@ -402,7 +402,7 @@ public class AtomPlacer3D {
 	 * @return    The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
 	 */
 	public IAtom getNextPlacedHeavyAtomWithUnplacedRingNeighbour(IAtomContainer molecule) {
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
 			IAtom[] atoms = bonds[i].getAtoms();
 			if (atoms[0].getFlag(CDKConstants.ISPLACED) & !(atoms[1].getFlag(CDKConstants.ISPLACED))) {
@@ -448,7 +448,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtom getUnplacedRingHeavyAtom(IAtomContainer molecule, IAtom atom) {
 
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);
@@ -478,7 +478,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtom getUnplacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
 
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);
@@ -498,7 +498,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
 
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);
@@ -518,7 +518,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtom getPlacedAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
 
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atomA);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atomA);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atomA);
@@ -537,7 +537,7 @@ public class AtomPlacer3D {
 	 * @return        The placedHeavyAtom value
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atomA);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atomA);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atomA);
@@ -557,7 +557,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtomContainer getPlacedHeavyAtoms(IAtomContainer molecule, IAtom atom) {
 
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
 		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
@@ -578,7 +578,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtomContainer getUnplacedAtoms(IAtomContainer molecule, IAtom atom) {
 
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
 		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {

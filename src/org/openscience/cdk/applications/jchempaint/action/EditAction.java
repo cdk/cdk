@@ -72,7 +72,7 @@ public class EditAction extends JCPAction {
 
 		JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
 		Renderer2DModel renderModel = jcpModel.getRendererModel();
-		org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
+		org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();
 		if (type.equals("cut")) {
 			org.openscience.cdk.interfaces.IAtom atomInRange = null;
 			IChemObject object = getSource(event);
@@ -87,7 +87,7 @@ public class EditAction extends JCPAction {
 				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atomInRange);
 			}
 			else {
-				org.openscience.cdk.interfaces.Bond bond = renderModel.getHighlightedBond();
+				org.openscience.cdk.interfaces.IBond bond = renderModel.getHighlightedBond();
 				if (bond != null) {
 					ChemModelManipulator.removeElectronContainer(chemModel, bond);
 				}
@@ -116,7 +116,7 @@ public class EditAction extends JCPAction {
 			IChemObject object = getSource(event);
 			if (object instanceof Atom) {
 				renderModel.setSelectedPart(ChemModelManipulator.getRelevantAtomContainer(jcpModel.getChemModel(),(Atom)object));
-			} else if (object instanceof org.openscience.cdk.interfaces.Bond) {
+			} else if (object instanceof org.openscience.cdk.interfaces.IBond) {
 				renderModel.setSelectedPart(ChemModelManipulator.getRelevantAtomContainer(jcpModel.getChemModel(),(Bond)object));
 			} else {
 				logger.warn("selectMolecule not defined for the calling object ", object);
@@ -131,7 +131,7 @@ public class EditAction extends JCPAction {
 				renderModel.setSelectedPart(container);
 				jcpModel.fireChange();
 			}
-			else if (object instanceof org.openscience.cdk.interfaces.Bond) {
+			else if (object instanceof org.openscience.cdk.interfaces.IBond) {
 				IAtomContainer container = new org.openscience.cdk.AtomContainer();
 				container.addBond((Bond) object);
 				renderModel.setSelectedPart(container);

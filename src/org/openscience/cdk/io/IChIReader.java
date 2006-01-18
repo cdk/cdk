@@ -34,7 +34,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -161,7 +161,7 @@ public class IChIReader extends DefaultChemObjectReader {
      * @return the content in a ChemFile object
      */
     public IChemObject read(IChemObject object) throws CDKException {
-      if (object instanceof ChemFile) {
+      if (object instanceof IChemFile) {
         return (IChemObject)readChemFile();
       } else {
         throw new CDKException("Only supported is reading of ChemFile objects.");
@@ -175,8 +175,8 @@ public class IChIReader extends DefaultChemObjectReader {
      *
      * @return ChemFile with the content read from the input
      */
-    private ChemFile readChemFile() throws CDKException {
-        ChemFile cf = null;
+    private IChemFile readChemFile() throws CDKException {
+        IChemFile cf = null;
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

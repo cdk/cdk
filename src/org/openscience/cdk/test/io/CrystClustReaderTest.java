@@ -74,10 +74,10 @@ public class CrystClustReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(2, seq.getChemModelCount());
-            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
+            org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
             assertNotNull(crystal);
             assertEquals(42, crystal.getAtomCount());
             assertEquals(1, crystal.getZ());

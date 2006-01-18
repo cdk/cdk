@@ -73,7 +73,7 @@ public class SaveAction extends SaveAsAction
       new SaveAsAction(jcpPanel,false).actionPerformed(event);
     }else{
       try{
-    	  org.openscience.cdk.interfaces.ChemModel model=jcpPanel.getJChemPaintModel().getChemModel();
+    	  org.openscience.cdk.interfaces.IChemModel model=jcpPanel.getJChemPaintModel().getChemModel();
 	File outFile=jcpPanel.isAlreadyAFile();
 	type = JCPFileFilter.getExtension(outFile);
 	if (type.equals(JCPSaveFileFilter.mol))

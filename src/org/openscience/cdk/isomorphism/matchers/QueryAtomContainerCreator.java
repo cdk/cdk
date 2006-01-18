@@ -26,7 +26,7 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
@@ -50,7 +50,7 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolQueryAtom(atoms[i]));
         }
-        Bond[] bonds = container.getBonds();
+        IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
@@ -81,7 +81,7 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(atoms[i]));
         }
-        Bond[] bonds = container.getBonds();
+        IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
@@ -119,7 +119,7 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        Bond[] bonds = container.getBonds();
+        IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));

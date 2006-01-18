@@ -48,7 +48,7 @@ public class BondEditor extends ChemObjectEditor {
     }
     
     public void setChemObject(ChemObject object) {
-        if (object instanceof org.openscience.cdk.interfaces.Bond) {
+        if (object instanceof org.openscience.cdk.interfaces.IBond) {
             source = object;
             // update table contents
             Bond bond = (Bond)source;

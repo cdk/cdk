@@ -62,8 +62,8 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
@@ -102,7 +102,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	protected JButton moveButton=null;
 	
 	IAtomContainer atomContainer;
-	protected ChemModel chemModel;
+	protected IChemModel chemModel;
 	
 	Renderer2DModel r2dm;
 	Controller2DModel c2dm;
@@ -334,7 +334,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		r2dm.setPointerVectorStart(null);
 		r2dm.setPointerVectorEnd(null);
 		IAtom atomInRange = getAtomInRange(mouseX, mouseY);
-		Bond bondInRange = getBondInRange(mouseX, mouseY);
+		IBond bondInRange = getBondInRange(mouseX, mouseY);
 		if (atomInRange != null)
 		{
 			startX = (int) atomInRange.getX2d();
@@ -602,10 +602,10 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				IAtom atomInRange;
 				IAtom newAtom1 = null;
 				IAtom newAtom2 = null;
-				Bond newBond = null;
+				IBond newBond = null;
 				int startX = r2dm.getPointerVectorStart().x;
 				int startY = r2dm.getPointerVectorStart().y;
-				Bond bondInRange = r2dm.getHighlightedBond();
+				IBond bondInRange = r2dm.getHighlightedBond();
 				//atomInRange = r2dm.getHighlightedAtom();
 				//Bond bondInRange = getBondInRange(mouseX, mouseY);
 				/*
@@ -618,7 +618,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				atomInRange = getAtomInRange(mouseX, mouseY);
 				if (bondInRange != null)
 				{
-					Bond formerBond = (Bond) bondInRange.clone();
+					IBond formerBond = (IBond) bondInRange.clone();
 					if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
             // increase Bond order
             double order = bondInRange.getOrder();
@@ -840,7 +840,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
 				String type = null;
 				IAtom highlightedAtom = r2dm.getHighlightedAtom();
-				Bond highlightedBond = r2dm.getHighlightedBond();
+				IBond highlightedBond = r2dm.getHighlightedBond();
 				if (highlightedAtom != null)
 				{
 					logger.info("User asks to delete an Atom");
@@ -939,7 +939,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 					{
 						// make newRing a benzene ring
-						Bond[] bonds = newRing.getBonds();
+						IBond[] bonds = newRing.getBonds();
 						bonds[0].setOrder(2.0);
 						bonds[2].setOrder(2.0);
 						bonds[4].setOrder(2.0);
@@ -965,7 +965,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 					{
 						// make newRing a benzene ring
-						Bond[] bonds = newRing.getBonds();
+						IBond[] bonds = newRing.getBonds();
 						bonds[0].setOrder(2.0);
 						bonds[2].setOrder(2.0);
 						bonds[4].setOrder(2.0);
@@ -1050,8 +1050,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 						{
 							// make newRing a benzene ring
-							Bond existingBond = atomCon.getBond(firstAtom, secondAtom);
-							Bond[] bonds = newRing.getBonds();
+							IBond existingBond = atomCon.getBond(firstAtom, secondAtom);
+							IBond[] bonds = newRing.getBonds();
 
 							if (existingBond.getOrder() == 1.0)
 							{
@@ -1162,9 +1162,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						container.addAtom((IAtom) chemObj);
 						logger.debug("selected one atom in lasso mode");
 						r2dm.setSelectedPart(container);
-					} else if (chemObj instanceof org.openscience.cdk.interfaces.Bond)
+					} else if (chemObj instanceof org.openscience.cdk.interfaces.IBond)
 					{
-						Bond bond = (Bond) chemObj;
+						IBond bond = (IBond) chemObj;
 						container.addBond(bond);
 						logger.debug("selected one bond in lasso mode");
 						org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
@@ -1210,7 +1210,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 							som.getAtomContainer(contains1).add(som.getAtomContainer(contains2));
 							som.removeAtomContainer(contains2);
 						}
-						Bond[] bondson2=som.getAtomContainer(contains1).getConnectedBonds(atom2);
+						IBond[] bondson2=som.getAtomContainer(contains1).getConnectedBonds(atom2);
 						for(int i=0;i<bondson2.length;i++){
 							if(bondson2[i].getAtomAt(0)==atom2)
 								bondson2[i].setAtomAt(atom1,0);
@@ -1267,7 +1267,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		{
 			atoms[i].setFlag(CDKConstants.ISAROMATIC, true);
 		}
-		Bond[] bonds = ring.getBonds();
+		IBond[] bonds = ring.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
 			bonds[i].setFlag(CDKConstants.ISAROMATIC, true);
@@ -1513,12 +1513,12 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *@param  Y  The y world coordinate of the point
 	 *@return    An Atom if it is in a certain range of the given point
 	 */
-	private Bond getBondInRange(int X, int Y)
+	private IBond getBondInRange(int X, int Y)
 	{
         double highlightRadius = r2dm.getHighlightRadius();
 		IAtomContainer atomCon = getAllInOneContainer(chemModel);
         if (atomCon.getBondCount() != 0) {
-            Bond closestBond = GeometryTools.getClosestBond(X, Y, atomCon);
+            IBond closestBond = GeometryTools.getClosestBond(X, Y, atomCon);
     		if (closestBond == null)
     		{
     			return null;
@@ -1548,7 +1548,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	{
 		IAtomContainer highlighted = new org.openscience.cdk.AtomContainer();
 		IAtom highlightedAtom = r2dm.getHighlightedAtom();
-		Bond highlightedBond = r2dm.getHighlightedBond();
+		IBond highlightedBond = r2dm.getHighlightedBond();
 		if (highlightedAtom != null)
 		{
 			highlighted.addAtom(highlightedAtom);
@@ -1587,7 +1587,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		{
 			ringAtoms[i] = new org.openscience.cdk.Atom(symbol);
 		}
-		Bond[] bonds = sharedAtoms.getBonds();
+		IBond[] bonds = sharedAtoms.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
 			newRing.addBond(bonds[i]);
@@ -1639,7 +1639,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 IAtomContainer getContainedAtoms(Polygon polygon)
 	{
 		IAtom currentAtom;
-		Bond currentBond;
+		IBond currentBond;
 		IAtomContainer selectedPart = new org.openscience.cdk.AtomContainer();
 		IAtomContainer atomCon = getAllInOneContainer(chemModel);
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
@@ -1651,7 +1651,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				selectedPart.addAtom(currentAtom);
 			}
 		}
-		Bond[] bonds = atomCon.getBonds();
+		IBond[] bonds = atomCon.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
 			currentBond = bonds[i];
@@ -1751,9 +1751,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		{
 			r2dm.setHighlightedAtom((IAtom) objectInRange);
 			r2dm.setHighlightedBond(null);
-		} else if (objectInRange instanceof org.openscience.cdk.interfaces.Bond)
+		} else if (objectInRange instanceof org.openscience.cdk.interfaces.IBond)
 		{
-			r2dm.setHighlightedBond((Bond) objectInRange);
+			r2dm.setHighlightedBond((IBond) objectInRange);
 			r2dm.setHighlightedAtom(null);
 		} else
 		{
@@ -1883,7 +1883,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				r2dm.setSelectedPart(selected);
 			} else
 			{
-				Bond bondInRange = getBondInRange(mouseX, mouseY);
+				IBond bondInRange = getBondInRange(mouseX, mouseY);
 				// because only atoms are dragged, select the atoms
 				// in the bond, instead of the bond itself
 				if (bondInRange != null)
@@ -1907,7 +1907,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *
 	 * @param  atom  The Atom to be centered
 	 */
-	 void centerAtom(IAtom atom, ChemModel chemModel)
+	 void centerAtom(IAtom atom, IChemModel chemModel)
 	{
 		 double smallestx=Integer.MAX_VALUE;
 		 double largestx=Integer.MIN_VALUE;
@@ -1953,12 +1953,12 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 	}
 	
-	IAtomContainer getRelevantAtomContainer(ChemModel chemModel, org.openscience.cdk.interfaces.IAtom atom)
+	IAtomContainer getRelevantAtomContainer(IChemModel chemModel, org.openscience.cdk.interfaces.IAtom atom)
 	{
 		return atomContainer;
 	}
 	
-	IAtomContainer getAllInOneContainer(ChemModel chemModel)
+	IAtomContainer getAllInOneContainer(IChemModel chemModel)
 	{
 		return atomContainer;
 	}
@@ -2007,7 +2007,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 	}
 	
-	abstract Reaction getRelevantReaction(ChemModel model, IAtom atom);
+	abstract Reaction getRelevantReaction(IChemModel model, IAtom atom);
 
 	public IAtomContainer getAtomContainer() {
 		return atomContainer;
@@ -2017,11 +2017,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		this.atomContainer = atomContainer;
 	}
 
-	public ChemModel getChemModel() {
+	public IChemModel getChemModel() {
 		return chemModel;
 	}
 
-	public void setChemModel(ChemModel chemModel) {
+	public void setChemModel(IChemModel chemModel) {
 		this.chemModel = chemModel;
 	}
 }

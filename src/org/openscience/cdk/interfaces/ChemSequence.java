@@ -41,7 +41,7 @@ public interface ChemSequence extends IChemObject {
 	 * @param  chemModel The chemModel to be added to this container
      * @see              #getChemModel
 	 */
-	public void addChemModel(ChemModel chemModel);
+	public void addChemModel(IChemModel chemModel);
 
     /**
      * Returns an array of ChemModels of length matching the number of ChemModels 
@@ -50,7 +50,7 @@ public interface ChemSequence extends IChemObject {
      * @return    The array of ChemModels in this container
      * @see       #addChemModel
      */
-     public ChemModel[] getChemModels();
+     public IChemModel[] getChemModels();
 
 	/**
 	 * Returns the ChemModel at position <code>number</code> in the
@@ -60,7 +60,7 @@ public interface ChemSequence extends IChemObject {
 	 * @return         The ChemModel at position <code>number</code>.
      * @see            #addChemModel
 	 */
-	public ChemModel getChemModel(int number);
+	public IChemModel getChemModel(int number);
 	
 	/**
 	 * Returns the number of ChemModels in this Container.

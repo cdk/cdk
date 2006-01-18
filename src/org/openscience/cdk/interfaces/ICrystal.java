@@ -37,7 +37,7 @@ import javax.vecmath.Vector3d;
  *
  * @cdk.keyword crystal
  */
-public interface Crystal extends IAtomContainer {
+public interface ICrystal extends IAtomContainer {
 	
     /**
      * Adds the atoms in the AtomContainer as cell content. Symmetry related 

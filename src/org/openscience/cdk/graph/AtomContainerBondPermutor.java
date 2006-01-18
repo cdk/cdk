@@ -61,7 +61,7 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor
 	
 	public void initObjectArray()
 	{
-		org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
 		objects = new Object[atomContainer.getBondCount()];
 		for (int f = 0; f < N; f++)
 		{

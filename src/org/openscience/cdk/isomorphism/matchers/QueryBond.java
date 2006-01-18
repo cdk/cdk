@@ -23,14 +23,14 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @cdk.module interfaces
  */
 public interface QueryBond {
 
-	public boolean matches(Bond bond);
+	public boolean matches(IBond bond);
     
 }
 

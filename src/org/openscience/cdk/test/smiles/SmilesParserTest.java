@@ -30,7 +30,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -270,7 +270,7 @@ public class SmilesParserTest extends CDKTestCase {
         {
             String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
             Molecule molecule = sp.parseSmiles(smiles);
-            Bond[] bonds = molecule.getBonds();
+            IBond[] bonds = molecule.getBonds();
             for (int i=0; i<bonds.length; i++) {
                 assertTrue(bonds[i].getFlag(CDKConstants.ISAROMATIC));
             }
@@ -860,7 +860,7 @@ public class SmilesParserTest extends CDKTestCase {
 			// it's a bit hard to detect three double bonds in the phenyl ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
+			org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
 			for (int i = 0; i < bonds.length; i++)
 			{
 				totalBondOrder += bonds[i].getOrder();
@@ -899,7 +899,7 @@ public class SmilesParserTest extends CDKTestCase {
 			// it's a bit hard to detect two double bonds in the pyrrole ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
+			org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
 			for (int i = 0; i < bonds.length; i++)
 			{
 				totalBondOrder += bonds[i].getOrder();
@@ -1247,7 +1247,7 @@ public class SmilesParserTest extends CDKTestCase {
 			// it's a bit hard to detect two double bonds in the pyrrole ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			org.openscience.cdk.interfaces.Bond[] bonds = mol.getBonds();
+			org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
 			for (int i = 0; i < bonds.length; i++)
 			{
 				totalBondOrder += bonds[i].getOrder();

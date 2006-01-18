@@ -153,7 +153,7 @@ public class PathTools {
      *         target atom was found during this function call
      */
     public static boolean depthFirstTargetSearch(IAtomContainer molecule, IAtom root, IAtom target, IAtomContainer path) throws NoSuchAtomException {
-        Bond[] bonds = molecule.getConnectedBonds(root);
+        IBond[] bonds = molecule.getConnectedBonds(root);
         IAtom nextAtom;
         root.setFlag(CDKConstants.VISITED, true);
         for (int f = 0; f < bonds.length; f++) {
@@ -251,17 +251,17 @@ public class PathTools {
             molecule.addAtom(atom);
             // first copy LonePair's and SingleElectron's of this Atom as they need
             // to be copied too
-            ElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
+            IElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
             //System.out.println("found #ec's: " + eContainers.length);
             for (int i = 0; i < eContainers.length; i++) {
-                if (!(eContainers[i] instanceof Bond)) {
+                if (!(eContainers[i] instanceof IBond)) {
                     // ok, no bond, thus LonePair or SingleElectron
                     // System.out.println("adding non bond " + eContainers[i]);
                     molecule.addElectronContainer(eContainers[i]);
                 }
             }
             // now look at bonds
-            org.openscience.cdk.interfaces.Bond[] bonds = ac.getConnectedBonds(atom);
+            org.openscience.cdk.interfaces.IBond[] bonds = ac.getConnectedBonds(atom);
             for (int g = 0; g < bonds.length; g++) {
                 if (!bonds[g].getFlag(CDKConstants.VISITED)) {
                     molecule.addBond(bonds[g]);
@@ -311,7 +311,7 @@ public class PathTools {
         Vector newSphere = new Vector();
         for (int f = 0; f < sphere.size(); f++) {
             atom = (IAtom) sphere.elementAt(f);
-            Bond[] bonds = ac.getConnectedBonds(atom);
+            IBond[] bonds = ac.getConnectedBonds(atom);
             for (int g = 0; g < bonds.length; g++) {
                 if (!bonds[g].getFlag(CDKConstants.VISITED)) {
                     bonds[g].setFlag(CDKConstants.VISITED, true);

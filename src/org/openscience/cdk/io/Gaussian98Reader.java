@@ -39,8 +39,8 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
@@ -152,7 +152,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 */
 	public boolean accepts(IChemObject object)
 	{
-		if (object instanceof ChemFile)
+		if (object instanceof IChemFile)
 		{
 			return true;
 		} else
@@ -172,9 +172,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	{
 		customizeJob();
 
-		if (object instanceof ChemFile)
+		if (object instanceof IChemFile)
 		{
-			ChemFile file = (ChemFile)object;
+			IChemFile file = (IChemFile)object;
 			try
 			{
 				file = readChemFile(file);
@@ -213,10 +213,10 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@exception  IOException   if an I/O error occurs
 	 *@exception  CDKException  Description of the Exception
 	 */
-	private ChemFile readChemFile(ChemFile chemFile) throws CDKException, IOException
+	private IChemFile readChemFile(IChemFile chemFile) throws CDKException, IOException
 	{
 		ChemSequence sequence = chemFile.getBuilder().newChemSequence();
-		ChemModel model = null;
+		IChemModel model = null;
 		String line = input.readLine();
 		String levelOfTheory = "";
 		String description = "";
@@ -317,7 +317,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@exception  IOException   if an I/O error occurs
 	 *@exception  CDKException  Description of the Exception
 	 */
-	private void readCoordinates(ChemModel model) throws CDKException, IOException
+	private void readCoordinates(IChemModel model) throws CDKException, IOException
 	{
 		SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
 		Molecule molecule = model.getBuilder().newMolecule();
@@ -408,7 +408,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@exception  CDKException  Description of the Exception
 	 *@exception  IOException   Description of the Exception
 	 */
-	private void readPartialCharges(ChemModel model) throws CDKException, IOException
+	private void readPartialCharges(IChemModel model) throws CDKException, IOException
 	{
 		logger.info("Reading partial atomic charges");
 		org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = model.getSetOfMolecules();
@@ -456,7 +456,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@param  model            Description of the Parameter
 	 *@exception  IOException  if an I/O error occurs
 	 */
-	private void readFrequencies(ChemModel model) throws IOException
+	private void readFrequencies(IChemModel model) throws IOException
 	{
 		/*
 		 *  FIXME: this is yet to be ported
@@ -526,7 +526,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@param  labelLine         Description of the Parameter
 	 *@exception  CDKException  Description of the Exception
 	 */
-	private void readNMRData(ChemModel model, String labelLine) throws CDKException
+	private void readNMRData(IChemModel model, String labelLine) throws CDKException
 	{
 		IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
 		// Determine label for properties

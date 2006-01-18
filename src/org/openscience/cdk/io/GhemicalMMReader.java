@@ -35,7 +35,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -76,7 +76,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     }
 
     public boolean accepts(IChemObject object) {
-        if (object instanceof ChemModel) {
+        if (object instanceof IChemModel) {
             return true;
         } else {
             return false;
@@ -99,14 +99,14 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     }
     
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemModel) {
-            return (IChemObject) readChemModel((ChemModel)object);
+        if (object instanceof IChemModel) {
+            return (IChemObject) readChemModel((IChemModel)object);
         } else {
             throw new CDKException("Only supported is ChemModel.");
         }
     }
     
-    private ChemModel readChemModel(ChemModel model) throws CDKException {
+    private IChemModel readChemModel(IChemModel model) throws CDKException {
         int[] atoms = new int[1];
         double[] atomxs = new double[1];
         double[] atomys = new double[1];

@@ -25,7 +25,7 @@ package org.openscience.cdk.charges;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 
@@ -105,7 +105,7 @@ public class GasteigerMarsiliPartialCharges {
 		double alpha = 1.0;
 		double q;
 		double deoc;
-		Bond[] bonds = null;
+		IBond[] bonds = null;
 		IAtom[] atoms = null;
 		int atom1 = 0;
 		int atom2 = 0;

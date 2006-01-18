@@ -36,8 +36,8 @@ import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemSequence;
@@ -112,16 +112,16 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof Reaction) {
              return (IChemObject) readReaction(object.getBuilder());
-         } else if (object instanceof ChemModel) {
-             ChemModel model = object.getBuilder().newChemModel();
+         } else if (object instanceof IChemModel) {
+             IChemModel model = object.getBuilder().newChemModel();
              SetOfReactions reactionSet = object.getBuilder().newSetOfReactions();
              reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setSetOfReactions(reactionSet);
              return model;
-         } else if (object instanceof ChemFile) {
-             ChemFile chemFile = object.getBuilder().newChemFile();
+         } else if (object instanceof IChemFile) {
+             IChemFile chemFile = object.getBuilder().newChemFile();
              ChemSequence sequence = object.getBuilder().newChemSequence();
-             sequence.addChemModel((ChemModel)read(object.getBuilder().newChemModel()));
+             sequence.addChemModel((IChemModel)read(object.getBuilder().newChemModel()));
              chemFile.addChemSequence(sequence);
              return chemFile;
          } else {
@@ -134,9 +134,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      public boolean accepts(IChemObject object) {
          if (object instanceof Reaction) {
              return true;
-         } else if (object instanceof ChemModel) {
+         } else if (object instanceof IChemModel) {
              return true;
-         } else if (object instanceof ChemFile) {
+         } else if (object instanceof IChemFile) {
              return true;
          }
          return false;

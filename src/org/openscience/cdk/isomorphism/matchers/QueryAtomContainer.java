@@ -25,7 +25,7 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @cdk.module extra
@@ -51,7 +51,7 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
         }
     }
 
-    public void addBond(Bond bond) {
+    public void addBond(IBond bond) {
         if (bond instanceof QueryBond) {
             super.addBond(bond);
         } else {

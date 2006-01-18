@@ -37,7 +37,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.RingSet;
 
@@ -230,8 +230,8 @@ public class OverlapResolver
 	{
 		overlappingBonds.removeAllElements();
 		double overlapScore = 0;
-		Bond bond1 = null;
-		Bond bond2 = null;
+		IBond bond1 = null;
+		IBond bond2 = null;
 		double overlapCutoff = bondLength / 2;
 		for (int f = 0; f < ac.getBondCount(); f++)
 		{
@@ -262,7 +262,7 @@ public class OverlapResolver
 	 *@param  bond2  Description of the Parameter
 	 *@return        Description of the Return Value
 	 */
-	public boolean areIntersected(Bond bond1, Bond bond2)
+	public boolean areIntersected(IBond bond1, IBond bond2)
 	{
 		double x1 = 0, x2 = 0, x3 = 0, x4 = 0;
 		double y1 = 0, y2 = 0, y3 = 0, y4 = 0;

@@ -30,11 +30,11 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SingleElectron;
@@ -78,7 +78,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		super.setAtoms(atoms);
 	}
 
-	public void setElectronContainers(ElectronContainer[] electronContainers) {
+	public void setElectronContainers(IElectronContainer[] electronContainers) {
 		logger.debug("Setting electron containers: ", electronContainers.length);
 		super.setElectronContainers(electronContainers);
 	}
@@ -93,12 +93,12 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		return super.getAtomAt(number);
 	}
 
-	public Bond getBondAt(int number) {
+	public IBond getBondAt(int number) {
 		logger.debug("Getting bond at: ", number);
 		return super.getBondAt(number);
 	}
 
-	public void setElectronContainerAt(int number, ElectronContainer electronContainer) {
+	public void setElectronContainerAt(int number, IElectronContainer electronContainer) {
 		logger.debug("Setting electron container at: pos=" + number, " electron container=" +electronContainer);
 		super.setElectronContainerAt(number, electronContainer);
 	}
@@ -123,12 +123,12 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		return super.atoms();
 	}
 
-	public ElectronContainer[] getElectronContainers() {
+	public IElectronContainer[] getElectronContainers() {
 		logger.debug("Getting electron containers: ", super.getElectronContainers().length);
 		return super.getElectronContainers();
 	}
 
-	public Bond[] getBonds() {
+	public IBond[] getBonds() {
 		logger.debug("Getting bonds: ", super.getBonds().length);
 		return super.getBonds();
 	}
@@ -163,17 +163,17 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		return super.getBondNumber(atom1, atom2);
 	}
 
-	public int getBondNumber(Bond bond) {
+	public int getBondNumber(IBond bond) {
 		logger.debug("Getting bond numger: ", bond);
 		return super.getBondNumber(bond);
 	}
 
-	public ElectronContainer getElectronContainerAt(int number) {
+	public IElectronContainer getElectronContainerAt(int number) {
 		logger.debug("Getting electron container at: ", number);
 		return super.getElectronContainerAt(number);
 	}
 
-	public Bond getBond(IAtom atom1, IAtom atom2) {
+	public IBond getBond(IAtom atom1, IAtom atom2) {
 		logger.debug("Getting bond for atoms: atom1=" + atom1, " atom2=" + atom2);
 		return super.getBond(atom1, atom2);
 	}
@@ -188,7 +188,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		return super.getConnectedAtomsVector(atom);
 	}
 
-	public Bond[] getConnectedBonds(IAtom atom) {
+	public IBond[] getConnectedBonds(IAtom atom) {
 		logger.debug("Getting connected bonds for atom: ", atom);
 		return super.getConnectedBonds(atom);
 	}
@@ -198,7 +198,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		return super.getConnectedBondsVector(atom);
 	}
 
-	public ElectronContainer[] getConnectedElectronContainers(IAtom atom) {
+	public IElectronContainer[] getConnectedElectronContainers(IAtom atom) {
 		logger.debug("Getting connected electron containers for atom: ", atom);
 		return super.getConnectedElectronContainers(atom);
 	}
@@ -283,12 +283,12 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		super.addAtom(atom);
 	}
 
-	public void addBond(Bond bond) {
+	public void addBond(IBond bond) {
 		logger.debug("Adding bond: ", bond);
 		super.addBond(bond);
 	}
 
-	public void addElectronContainer(ElectronContainer electronContainer) {
+	public void addElectronContainer(IElectronContainer electronContainer) {
 		logger.debug("Adding electron container: ", electronContainer);
 		super.addElectronContainer(electronContainer);
 		
@@ -299,17 +299,17 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		super.remove(atomContainer);
 	}
 
-	public ElectronContainer removeElectronContainer(int position) {
+	public IElectronContainer removeElectronContainer(int position) {
 		logger.debug("Removing electronContainer: ", position);
 		return super.removeElectronContainer(position);
 	}
 
-	public ElectronContainer removeElectronContainer(ElectronContainer electronContainer) {
+	public IElectronContainer removeElectronContainer(IElectronContainer electronContainer) {
 		logger.debug("Removing electron container: ", electronContainer);
 		return super.removeElectronContainer(electronContainer);
 	}
 
-	public Bond removeBond(IAtom atom1, IAtom atom2) {
+	public IBond removeBond(IAtom atom1, IAtom atom2) {
 		logger.debug("Removing bond: atom1=" + atom1 + " atom2=" + atom2);
 		return super.removeBond(atom1, atom2);
 	}
@@ -359,7 +359,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		super.addLonePair(atomID);
 	}
 
-	public boolean contains(ElectronContainer electronContainer) {
+	public boolean contains(IElectronContainer electronContainer) {
 		logger.debug("Contains electron container: ", electronContainer);
 		return super.contains(electronContainer);
 	}

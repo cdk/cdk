@@ -31,7 +31,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Undo/Redo Edit class for the AdjustBondOrdesAction, containing the methods
@@ -61,7 +61,7 @@ public class AdjustBondOrdersEdit extends AbstractUndoableEdit {
 		Set keys = changedBondOrders.keySet();
 		Iterator it = keys.iterator();
 		while (it.hasNext()) {
-			Bond bond = (Bond) it.next();
+			IBond bond = (IBond) it.next();
 			double[] bondOrders = (double[]) changedBondOrders.get(bond);
 			bond.setOrder(bondOrders[0]);
 		}
@@ -76,7 +76,7 @@ public class AdjustBondOrdersEdit extends AbstractUndoableEdit {
 		Set keys = changedBondOrders.keySet();
 		Iterator it = keys.iterator();
 		while (it.hasNext()) {
-			Bond bond = (Bond) it.next();
+			IBond bond = (IBond) it.next();
 			double[] bondOrders = (double[]) changedBondOrders.get(bond);
 			bond.setOrder(bondOrders[1]);
 		}

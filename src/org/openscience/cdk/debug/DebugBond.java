@@ -29,7 +29,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugBond extends org.openscience.cdk.Bond
-    implements Bond {
+    implements IBond {
 
 	LoggingTool logger = new LoggingTool(DebugBond.class);
 	
@@ -237,7 +237,7 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return super.compare(object);
 	}
 
-	public boolean isConnectedTo(Bond bond) {
+	public boolean isConnectedTo(IBond bond) {
 		logger.debug("Is connected to bond: ", bond);
 		return super.isConnectedTo(bond);
 	}

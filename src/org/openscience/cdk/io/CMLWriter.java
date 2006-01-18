@@ -42,12 +42,12 @@ import nu.xom.Element;
 import nu.xom.Serializer;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -174,11 +174,11 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof SetOfReactions) {
         } else if (object instanceof SetOfMolecules) {
         } else if (object instanceof ChemSequence) {
-        } else if (object instanceof ChemModel) {
-        } else if (object instanceof ChemFile) {
-        } else if (object instanceof Crystal) {
+        } else if (object instanceof IChemModel) {
+        } else if (object instanceof IChemFile) {
+        } else if (object instanceof ICrystal) {
         } else if (object instanceof IAtom) {
-        } else if (object instanceof Bond) {
+        } else if (object instanceof IBond) {
         } else {
         	throw new CDKException("Cannot write this unsupported IChemObject: " + object.getClass().getName());
         }
@@ -194,12 +194,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
         Element root = null;
         if (object instanceof Molecule) {
         	root = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
-        } else if (object instanceof Crystal) {
-        	root = convertor.cdkCrystalToCMLMolecule((Crystal)object);
+        } else if (object instanceof ICrystal) {
+        	root = convertor.cdkCrystalToCMLMolecule((ICrystal)object);
         } else if (object instanceof IAtom) {
         	root = convertor.cdkAtomToCMLAtom((IAtom)object);
-        } else if (object instanceof Bond) {
-        	root = convertor.cdkBondToCMLBond((Bond)object);
+        } else if (object instanceof IBond) {
+        	root = convertor.cdkBondToCMLBond((IBond)object);
         } else if (object instanceof Reaction) {
         	root = convertor.cdkReactionToCMLReaction((Reaction)object);
         } else if (object instanceof SetOfReactions) {
@@ -208,10 +208,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	root = convertor.cdkSetOfMoleculesToCMLList((SetOfMolecules)object);
         } else if (object instanceof ChemSequence) {
         	root = convertor.cdkChemSequenceToCMLList((ChemSequence)object);
-        } else if (object instanceof ChemModel) {
-        	root = convertor.cdkChemModelToCMLList((ChemModel)object);
-        } else if (object instanceof ChemFile) {
-        	root = convertor.cdkChemFileToCMLList((ChemFile)object);
+        } else if (object instanceof IChemModel) {
+        	root = convertor.cdkChemModelToCMLList((IChemModel)object);
+        } else if (object instanceof IChemFile) {
+        	root = convertor.cdkChemFileToCMLList((IChemFile)object);
         }
         Document doc = new Document(root);
         

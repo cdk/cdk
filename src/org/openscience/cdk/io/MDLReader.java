@@ -136,10 +136,10 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *@exception  CDKException
 	 */
 	public IChemObject read(IChemObject object) throws CDKException {
-		if (object instanceof ChemFile) {
-			return readChemFile((ChemFile)object);
-        } else if (object instanceof ChemModel) {
-            return readChemModel((ChemModel)object);
+		if (object instanceof IChemFile) {
+			return readChemFile((IChemFile)object);
+        } else if (object instanceof IChemModel) {
+            return readChemModel((IChemModel)object);
 		} else if (object instanceof Molecule) {
 			return readMolecule((Molecule)object);
 		} else {
@@ -147,7 +147,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		}
 	}
 
-    private ChemModel readChemModel(ChemModel chemModel) throws CDKException {
+    private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
     	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
         if (setOfMolecules == null) {
             setOfMolecules = chemModel.getBuilder().newSetOfMolecules();
@@ -165,10 +165,10 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *
 	 * @return    The ChemFile that was read from the MDL file.
 	 */
-    private ChemFile readChemFile(ChemFile chemFile) throws CDKException {
+    private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
         ChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
         
-        ChemModel chemModel = chemFile.getBuilder().newChemModel();
+        IChemModel chemModel = chemFile.getBuilder().newChemModel();
 		SetOfMolecules setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
 		Molecule m = readMolecule(chemFile.getBuilder().newMolecule());
 		if (m != null) {
@@ -285,7 +285,7 @@ public class MDLReader extends DefaultChemObjectReader {
         double totalZ = 0.0;
         int[][] conMat = new int[0][0];
         String help;
-        Bond bond;
+        IBond bond;
         IAtom atom;
         String line = "";
         

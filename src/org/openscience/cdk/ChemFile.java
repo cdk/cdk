@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  *@cdk.module    data
  */
 public class ChemFile extends ChemObject implements java.io.Serializable
-		, org.openscience.cdk.interfaces.ChemFile, ChemObjectListener
+		, org.openscience.cdk.interfaces.IChemFile, ChemObjectListener
 {
 
 	/**

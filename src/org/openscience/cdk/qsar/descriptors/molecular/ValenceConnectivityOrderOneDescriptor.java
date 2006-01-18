@@ -28,7 +28,7 @@ import java.util.Hashtable;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -130,10 +130,10 @@ public class ValenceConnectivityOrderOneDescriptor implements IDescriptor {
 		double chi1v = 0;
 		IAtom[] atoms = null;
 		IAtom[] neighatoms = null;
-		Element element = null;
+		IElement element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
-		org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
 		for (int b = 0; b < bonds.length; b++) {
 			atoms = bonds[b].getAtoms();
 			if ((!atoms[0].getSymbol().equals("H")) && (!atoms[1].getSymbol().equals("H"))) {

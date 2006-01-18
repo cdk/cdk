@@ -37,7 +37,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -101,7 +101,7 @@ public class TemplateHandler
 				CMLReader structureReader = new CMLReader(
                     this.getClass().getClassLoader().getResourceAsStream(line)
                 );
-                ChemFile file = (ChemFile)structureReader.read(new org.openscience.cdk.ChemFile());
+                IChemFile file = (IChemFile)structureReader.read(new org.openscience.cdk.ChemFile());
 				templates.addElement(file.getBuilder().newMolecule(
                     ChemFileManipulator.getAllInOneContainer(file)
                 ));

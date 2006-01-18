@@ -105,7 +105,7 @@ public class PDBReaderTest extends TestCase {
             oSeq.setProperty(new String("test.chemsequence"), new String("test.chemsequence")); 
             assertEquals(new String("test.chemsequence"), oSeq.getProperty("test.chemsequence"));
 
-            org.openscience.cdk.interfaces.ChemModel oModel = oSeq.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel oModel = oSeq.getChemModel(0);
             assertNotNull(oModel);
             assertEquals(1, oModel.getSetOfMolecules().getMoleculeCount());
 
@@ -179,7 +179,7 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(seq);
       assertEquals(1, seq.getChemModelCount());
       
-      org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+      org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
       assertNotNull(model);
       assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 
@@ -204,7 +204,7 @@ public class PDBReaderTest extends TestCase {
       assertEquals(1.0, atom.getOccupancy(), 0.001);
       assertEquals(6.84, atom.getTempFactor(), 0.001);
       
-      org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(93);
+      org.openscience.cdk.interfaces.IBond bond = mol.getBondAt(93);
       assertNotNull(bond);
       assertEquals("Test failed. Bond order not the same.", 2.0, bond.getOrder(), 0.001);
       org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();

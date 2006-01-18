@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.module interfaces
  */
-public interface ChemModel extends IChemObject {
+public interface IChemModel extends IChemObject {
 
 	/**
 	 * Returns the SetOfMolecules of this ChemModel.
@@ -70,7 +70,7 @@ public interface ChemModel extends IChemObject {
      * @return The crystal in this model
      * @see      #setCrystal
      */
-    public Crystal getCrystal();
+    public ICrystal getCrystal();
 
     /**
      * Sets the Crystal contained in this ChemModel.
@@ -78,7 +78,7 @@ public interface ChemModel extends IChemObject {
      * @param   crystal  the Crystal to store in this model
      * @see      #getCrystal
      */
-    public void setCrystal(Crystal crystal);
+    public void setCrystal(ICrystal crystal);
 
     /**
      * Gets the SetOfReactions contained in this ChemModel.

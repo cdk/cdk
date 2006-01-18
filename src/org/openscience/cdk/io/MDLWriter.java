@@ -49,7 +49,7 @@ import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -181,8 +181,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	public void write(IChemObject object) throws CDKException {
 		if (object instanceof SetOfMolecules) {
 			writeSetOfMolecules((SetOfMolecules)object);
-		} else if (object instanceof ChemFile) {
-			writeChemFile((ChemFile)object);
+		} else if (object instanceof IChemFile) {
+			writeChemFile((IChemFile)object);
 		} else if (object instanceof Molecule) {
 			try{
 				boolean[] isVisible=new boolean[((Molecule)object).getAtomCount()];
@@ -225,7 +225,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		}
 	}
 	
-	private void writeChemFile(ChemFile file) {
+	private void writeChemFile(IChemFile file) {
 		IAtomContainer[] molecules = ChemFileManipulator.getAllAtomContainers(file);
 		for (int i=0; i<molecules.length; i++) {
 			try {
@@ -349,10 +349,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
         for (int g = 0; g < bonds.length; g++) {
           if(upToWhichAtom==molecule.getAtomCount() || (isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[0])] && isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[1])])){
-        	  org.openscience.cdk.interfaces.Bond bond = bonds[g];
+        	  org.openscience.cdk.interfaces.IBond bond = bonds[g];
             if (bond.getAtoms().length != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {

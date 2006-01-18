@@ -35,8 +35,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
@@ -111,15 +111,15 @@ public class SMILESReader extends DefaultChemObjectReader {
      *
      * @param object class must be of type ChemFile
      *
-     * @see ChemFile
+     * @see IChemFile
      */
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof SetOfMolecules) {
             return (IChemObject)readSetOfMolecules((SetOfMolecules)object);
-        } else if (object instanceof ChemFile) {
-            ChemFile file = (ChemFile)object;
+        } else if (object instanceof IChemFile) {
+            IChemFile file = (IChemFile)object;
             ChemSequence sequence = file.getBuilder().newChemSequence();
-            ChemModel chemModel = file.getBuilder().newChemModel();
+            IChemModel chemModel = file.getBuilder().newChemModel();
             chemModel.setSetOfMolecules(readSetOfMolecules(
             	file.getBuilder().newSetOfMolecules()
             ));

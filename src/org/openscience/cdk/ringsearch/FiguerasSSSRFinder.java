@@ -31,7 +31,7 @@ package org.openscience.cdk.ringsearch;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
@@ -68,7 +68,7 @@ public class FiguerasSSSRFinder {
 	 */
 	public  RingSet findSSSR(Molecule mol)
 	{
-		Bond brokenBond = null;
+		IBond brokenBond = null;
 		RingSet sssr = new RingSet();
 		Molecule molecule = new Molecule();
 		molecule.add(mol);
@@ -291,7 +291,7 @@ public class FiguerasSSSRFinder {
 		ring.setAtoms(atoms);
 		// add the bonds in mol to the new ring
 		try {
-			Bond b;
+			IBond b;
 			for (int i = 0; i < atomCount - 1; i++) {
 				b = mol.getBond(atoms[i], atoms[i + 1]);
 				if (b != null) {
@@ -322,7 +322,7 @@ public class FiguerasSSSRFinder {
 	 * @param   molecule  The molecule containing the atom
 	 */
 	 private void trim(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
-        Bond[] bonds = molecule.getConnectedBonds(atom);
+        IBond[] bonds = molecule.getConnectedBonds(atom);
 	 	for (int i = 0; i < bonds.length; i++) {
             molecule.removeElectronContainer(bonds[i]);
 	 	}
@@ -397,7 +397,7 @@ public class FiguerasSSSRFinder {
 	 */
 	private void breakBond(Atom atom, Molecule molecule)
 	{
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
 			if (bonds[i].contains(atom))
@@ -418,15 +418,15 @@ public class FiguerasSSSRFinder {
 	 * @param   ring  
 	 * @param   mol  
 	 */
-	private Bond checkEdges(Ring ring, Molecule molecule)
+	private IBond checkEdges(Ring ring, Molecule molecule)
 	{
 		Ring r1, r2;
 		RingSet ringSet = new RingSet();
-		org.openscience.cdk.interfaces.Bond bond;
+		org.openscience.cdk.interfaces.IBond bond;
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
 		logger.debug("Molecule: " + molecule);
-		org.openscience.cdk.interfaces.Bond[] bonds = ring.getBonds();
+		org.openscience.cdk.interfaces.IBond[] bonds = ring.getBonds();
 		for (int i = 0; i < bonds.length; i++)
 		{
 			bond = bonds[i];
@@ -452,7 +452,7 @@ public class FiguerasSSSRFinder {
 				minMax = i;
 			}
 		}
-		return (Bond)ring.getElectronContainerAt(minMax);
+		return (IBond)ring.getElectronContainerAt(minMax);
 	}
 	
 	

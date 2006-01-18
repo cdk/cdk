@@ -37,8 +37,8 @@ import java.io.StringReader;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -123,8 +123,8 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      * @return the content in a ChemFile object
      */
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemFile) {
-            return (IChemObject)readChemFile((ChemFile)object);
+        if (object instanceof IChemFile) {
+            return (IChemObject)readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -137,7 +137,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      *
      * @return ChemFile with the content read from the input
      */
-    private ChemFile readChemFile(ChemFile cf) throws CDKException {
+    private IChemFile readChemFile(IChemFile cf) throws CDKException {
         // have to do stuff here
         try {
             String line = input.readLine();
@@ -162,7 +162,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     
                     SetOfMolecules moleculeSet = cf.getBuilder().newSetOfMolecules();
                     moleculeSet.addMolecule(cf.getBuilder().newMolecule(parsedContent));
-                    ChemModel model = cf.getBuilder().newChemModel();
+                    IChemModel model = cf.getBuilder().newChemModel();
                     model.setSetOfMolecules(moleculeSet);
                     ChemSequence sequence = cf.getBuilder().newChemSequence();
                     sequence.addChemModel(model);

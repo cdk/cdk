@@ -110,12 +110,12 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	 * @param   atom  A atom from the bond above to assign a search direction
 	 * @return  The next bond in the order given by the above assignment   
 	 */
-	public org.openscience.cdk.interfaces.Bond getNextBond(org.openscience.cdk.interfaces.Bond bond, org.openscience.cdk.interfaces.IAtom atom)
+	public org.openscience.cdk.interfaces.IBond getNextBond(org.openscience.cdk.interfaces.IBond bond, org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Bond tempBond;
 		for (int f = 0; f < getElectronContainerCount(); f++) {
-			org.openscience.cdk.interfaces.ElectronContainer electronContainer = getElectronContainerAt(f);
-            if (electronContainer instanceof org.openscience.cdk.interfaces.Bond) {
+			org.openscience.cdk.interfaces.IElectronContainer electronContainer = getElectronContainerAt(f);
+            if (electronContainer instanceof org.openscience.cdk.interfaces.IBond) {
                 tempBond = (Bond)electronContainer;
                 if (tempBond.contains(atom) && bond != tempBond) {
                     return tempBond;
@@ -135,8 +135,8 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 		int orderSum = 0;
 		Bond tempBond;
 		for (int i = 0; i < getElectronContainerCount(); i++) {
-			org.openscience.cdk.interfaces.ElectronContainer electronContainer = getElectronContainerAt(i);
-            if (electronContainer instanceof org.openscience.cdk.interfaces.Bond) {
+			org.openscience.cdk.interfaces.IElectronContainer electronContainer = getElectronContainerAt(i);
+            if (electronContainer instanceof org.openscience.cdk.interfaces.IBond) {
                 tempBond = (Bond)electronContainer;
                 orderSum += tempBond.getOrder();
             }

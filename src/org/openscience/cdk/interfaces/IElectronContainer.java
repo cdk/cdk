@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.keyword electron
  */
-public interface ElectronContainer extends IChemObject {
+public interface IElectronContainer extends IChemObject {
 
 	/**
 	 * Returns the number of electrons in this electron container.

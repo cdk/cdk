@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfReactions;
@@ -62,7 +62,7 @@ public class CreateReactionAction extends JCPAction
 
 		logger.debug("CreateReaction action");
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		ChemModel model = jcpmodel.getChemModel();
+		IChemModel model = jcpmodel.getChemModel();
 		SetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
 		{

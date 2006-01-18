@@ -29,8 +29,8 @@ import javax.swing.undo.CannotUndoException;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 
-	private ChemModel chemModel;
+	private IChemModel chemModel;
 
 	private IAtomContainer undoRedoContainer;
 
@@ -54,7 +54,7 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 * @param chemModel
 	 * @param undoRedoContainer
 	 */
-	public AddAtomsAndBondsEdit(ChemModel chemModel,
+	public AddAtomsAndBondsEdit(IChemModel chemModel,
 			IAtomContainer undoRedoContainer, String type) {
 		this.chemModel = chemModel;
 		this.undoRedoContainer = undoRedoContainer;
@@ -69,7 +69,7 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 */
 	public void redo() throws CannotRedoException {
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
-			Bond bond = undoRedoContainer.getBondAt(i);
+			IBond bond = undoRedoContainer.getBondAt(i);
 			container.addBond(bond);
 		}
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
@@ -89,7 +89,7 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 */
 	public void undo() throws CannotUndoException {
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
-			Bond bond = undoRedoContainer.getBondAt(i);
+			IBond bond = undoRedoContainer.getBondAt(i);
 			container.removeElectronContainer(bond);
 		}
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {

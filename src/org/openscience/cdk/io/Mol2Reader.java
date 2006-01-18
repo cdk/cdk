@@ -40,8 +40,8 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
@@ -112,10 +112,10 @@ public class Mol2Reader extends DefaultChemObjectReader {
      * @exception     CDKException
      */
      public IChemObject read(IChemObject object) throws CDKException {
-         if (object instanceof ChemFile) {
-             ChemFile file = (ChemFile)object;
+         if (object instanceof IChemFile) {
+             IChemFile file = (IChemFile)object;
              ChemSequence sequence = file.getBuilder().newChemSequence();
-             ChemModel model = file.getBuilder().newChemModel();
+             IChemModel model = file.getBuilder().newChemModel();
              SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
@@ -124,8 +124,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
              sequence.addChemModel(model);
              file.addChemSequence(sequence);
              return file;
-         } else if (object instanceof ChemModel) {
-             ChemModel model = (ChemModel)object;
+         } else if (object instanceof IChemModel) {
+             IChemModel model = (IChemModel)object;
              SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
@@ -140,8 +140,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
      }
      
      public boolean accepts(IChemObject object) {
-         if (object instanceof ChemFile) {
-         } else if (object instanceof ChemModel) {
+         if (object instanceof IChemFile) {
+         } else if (object instanceof IChemModel) {
              return true;
          }
          return false;

@@ -32,7 +32,7 @@ import java.io.File;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.libio.openbabel.OpenBabelConvert;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -76,7 +76,7 @@ public class OpenBabelConvertTest extends CDKTestCase {
         	OpenBabelConvert convertOB = new OpenBabelConvert(PATH);
         	convertOB.setInputFileToConvert(new File(filenameInput),"mol",null);
         	convertOB.convertTo(new File(filenameOuput),"cml","-h");
-        	ChemFile chemFile = convertOB.getChemFile();
+        	IChemFile chemFile = convertOB.getChemFile();
             convertOB.resest();
         	
 //        	 test the resulting ChemFile content

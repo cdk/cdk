@@ -37,8 +37,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.Molecule;
@@ -107,8 +107,8 @@ public class HINReader extends DefaultChemObjectReader {
      * @see org.openscience.cdk.ChemFile
      */
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ChemFile) {
-            return (IChemObject)readChemFile((ChemFile)object);
+        if (object instanceof IChemFile) {
+            return (IChemObject)readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -136,9 +136,9 @@ public class HINReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private ChemFile readChemFile(ChemFile file) {
+    private IChemFile readChemFile(IChemFile file) {
         ChemSequence chemSequence = file.getBuilder().newChemSequence();
-        ChemModel chemModel = file.getBuilder().newChemModel();
+        IChemModel chemModel = file.getBuilder().newChemModel();
         SetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
         String info;
 

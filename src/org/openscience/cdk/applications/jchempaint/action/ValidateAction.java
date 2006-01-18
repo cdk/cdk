@@ -70,7 +70,7 @@ public class ValidateAction extends JCPAction
 				// called from main menu
 				JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 
-				org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
+				org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
 				if (model != null)
 				{
 					runValidate(model);
@@ -138,7 +138,7 @@ public class ValidateAction extends JCPAction
 	private void clearValidate()
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		org.openscience.cdk.interfaces.ChemModel model = jcpmodel.getChemModel();
+		org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
 		org.openscience.cdk.interfaces.IAtom[] atoms = ChemModelManipulator.getAllInOneContainer(model).getAtoms();
 		logger.info("Clearing errors on atoms: " + atoms.length);
 		for (int i = 0; i < atoms.length; i++)

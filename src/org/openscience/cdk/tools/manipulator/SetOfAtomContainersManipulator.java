@@ -34,8 +34,8 @@ import java.util.Vector;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 
@@ -64,7 +64,7 @@ public class SetOfAtomContainersManipulator {
         }
     }
     
-    public static void removeElectronContainer(SetOfAtomContainers set, ElectronContainer electrons) {
+    public static void removeElectronContainer(SetOfAtomContainers set, IElectronContainer electrons) {
         IAtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
             IAtomContainer container = acs[i];
@@ -170,7 +170,7 @@ public class SetOfAtomContainersManipulator {
         return null;
     }
 
-    public static IAtomContainer getRelevantAtomContainer(SetOfAtomContainers containerSet, Bond bond) {
+    public static IAtomContainer getRelevantAtomContainer(SetOfAtomContainers containerSet, IBond bond) {
         IAtomContainer[] containers = containerSet.getAtomContainers();
         for (int i=0; i<containers.length; i++) {
             if (containers[i].contains(bond)) {

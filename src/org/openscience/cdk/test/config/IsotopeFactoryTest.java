@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -94,13 +94,13 @@ public class IsotopeFactoryTest extends CDKTestCase
     
     public void testGetElement_String() throws Exception {
 		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-        Element element = elfac.getElement("Br");
+        IElement element = elfac.getElement("Br");
 		assertEquals(35, element.getAtomicNumber());
 	}    
 
     public void testGetElement_int() throws Exception {
 		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-        Element element = elfac.getElement(6);
+        IElement element = elfac.getElement(6);
 		assertEquals("C", element.getSymbol());
 	}    
 

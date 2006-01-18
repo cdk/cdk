@@ -39,9 +39,9 @@ import org.openscience.cdk.tools.GridGenerator;
 import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.BioPolymer;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -73,7 +73,7 @@ public class ProteinPocketFinder {
 	double linkageRadius = 1;
 	double atomCheckRadius = 0;// variable to reduce the atom radius search
 	// points
-	BioPolymer protein = null;
+	IBioPolymer protein = null;
 	String vanDerWaalsFile="org/openscience/cdk/config/data/pdb_atomtypes.xml";
 	double[][][] grid = null;
 	GridGenerator gridGenerator = new GridGenerator();
@@ -129,10 +129,10 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * @param BioPolymer	protein
+	 * @param IBioPolymer	protein
 	 * @param double[][][]	grid
 	 */
-	public ProteinPocketFinder(BioPolymer protein, double[][][] grid) {
+	public ProteinPocketFinder(IBioPolymer protein, double[][][] grid) {
 		this.protein = protein;
 		this.grid = grid;
 		gridGenerator.setGrid(grid);
@@ -150,13 +150,13 @@ public class ProteinPocketFinder {
 			FileReader fileReader = new FileReader(biopolymerFile);
 			ChemObjectReader reader = new ReaderFactory()
 					.createReader(fileReader);
-			ChemFile chemFile = (ChemFile) reader
+			IChemFile chemFile = (IChemFile) reader
 					.read((IChemObject) new org.openscience.cdk.ChemFile());
 			// Get molecule from ChemFile
 			ChemSequence chemSequence = chemFile.getChemSequence(0);
-			ChemModel chemModel = chemSequence.getChemModel(0);
+			IChemModel chemModel = chemSequence.getChemModel(0);
 			SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
-			protein = (BioPolymer) setOfMolecules.getMolecule(0);
+			protein = (IBioPolymer) setOfMolecules.getMolecule(0);
 		} catch (Exception exc) {
 			System.out.println("Could not read BioPolymer from file>"
 					+ biopolymerFile + " due to: " + exc.getMessage());
@@ -1091,15 +1091,15 @@ public class ProteinPocketFinder {
 	/**
 	 * @return BioPolymer	Returns the protein.
 	 */
-	public BioPolymer getProtein() {
+	public IBioPolymer getProtein() {
 		return protein;
 	}
 
 	
 	/**
-	 * @param BioPolymer protein The protein to set.
+	 * @param IBioPolymer protein The protein to set.
 	 */
-	public void setProtein(BioPolymer protein) {
+	public void setProtein(IBioPolymer protein) {
 		this.protein = protein;
 	}
 

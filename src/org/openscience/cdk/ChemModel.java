@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  *
  * @cdk.module data
  */
-public class ChemModel extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ChemModel, ChemObjectListener
+public class ChemModel extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemModel, ChemObjectListener
 {
 
 	/**
@@ -65,7 +65,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
     /**
 	 *  A Crystal.
 	 */
-     protected org.openscience.cdk.interfaces.Crystal crystal = null;
+     protected org.openscience.cdk.interfaces.ICrystal crystal = null;
 
 	/**
 	 *  Constructs an new ChemModel with a null setOfMolecules.
@@ -133,7 +133,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setCrystal
      */
-    public org.openscience.cdk.interfaces.Crystal getCrystal() {
+    public org.openscience.cdk.interfaces.ICrystal getCrystal() {
         return this.crystal;
     }
 
@@ -144,7 +144,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #getCrystal
      */
-    public void setCrystal(org.openscience.cdk.interfaces.Crystal crystal) {
+    public void setCrystal(org.openscience.cdk.interfaces.ICrystal crystal) {
         this.crystal = crystal;
 	this.crystal.addListener(this);
 	notifyChanged();

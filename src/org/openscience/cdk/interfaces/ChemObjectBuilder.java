@@ -121,12 +121,12 @@ public interface ChemObjectBuilder {
 	/**
 	 * Contructs a new Polymer to store the Strands.
 	 */	
-	public BioPolymer newBioPolymer();
+	public IBioPolymer newBioPolymer();
 	
 	/**
 	 * Constructs an empty bond.
 	 */
-	public Bond newBond();
+	public IBond newBond();
 	
 	/**
 	 * Constructs a bond with a single bond order..
@@ -134,7 +134,7 @@ public interface ChemObjectBuilder {
 	 * @param  atom1  the first Atom in the bond
 	 * @param  atom2  the second Atom in the bond
 	 */
-	public Bond newBond(IAtom atom1, IAtom atom2);
+	public IBond newBond(IAtom atom1, IAtom atom2);
 	
 	/**
 	 * Constructs a bond with a given order.
@@ -143,7 +143,7 @@ public interface ChemObjectBuilder {
 	 * @param  atom2  the second Atom in the bond
 	 * @param  order  the bond order
 	 */
-	public Bond newBond(IAtom atom1, IAtom atom2, double order);
+	public IBond newBond(IAtom atom1, IAtom atom2, double order);
 	
 	/**
 	 * Constructs a bond with a given order and stereo orientation from an array
@@ -154,17 +154,17 @@ public interface ChemObjectBuilder {
 	 * @param  order   the bond order
 	 * @param  stereo  a descriptor the stereochemical orientation of this bond
 	 */
-	public Bond newBond(IAtom atom1, IAtom atom2, double order, int stereo);
+	public IBond newBond(IAtom atom1, IAtom atom2, double order, int stereo);
 
 	/**
 	 * Constructs an empty ChemFile.
 	 */
-	public ChemFile newChemFile();
+	public IChemFile newChemFile();
 	
 	/**
 	 * Constructs an new ChemModel with a null setOfMolecules.
 	 */
-	public ChemModel newChemModel();
+	public IChemModel newChemModel();
 	
 	/**
 	 * Constructs an new IChemObject with a null setOfMolecules.
@@ -179,7 +179,7 @@ public interface ChemObjectBuilder {
     /**
      * Constructs a new crystal with zero length cell axis.
      */
-    public Crystal newCrystal();
+    public ICrystal newCrystal();
     
     /**
      * Constructs a new crystal with zero length cell axis
@@ -187,17 +187,17 @@ public interface ChemObjectBuilder {
      *
      * @param container  the AtomContainer providing the atoms and bonds
      */
-    public Crystal newCrystal(IAtomContainer container);
+    public ICrystal newCrystal(IAtomContainer container);
 
     /**
      * Constructs an empty ElectronContainer.
      */
-    public ElectronContainer newElectronContainer();
+    public IElectronContainer newElectronContainer();
 
     /**
      * Constructs an empty Element.
      */
-    public Element newElement();
+    public IElement newElement();
 
     /**
      * Constructs an Element with a given 
@@ -205,7 +205,7 @@ public interface ChemObjectBuilder {
      *
      * @param   symbol The element symbol that this element should have.  
      */
-    public Element newElement(String symbol);
+    public IElement newElement(String symbol);
 
     /**
      * Constructs an Element with a given element symbol, 
@@ -214,7 +214,7 @@ public interface ChemObjectBuilder {
      * @param   symbol  The element symbol of this element.
      * @param   atomicNumber  The atomicNumber of this element.
      */
-    public Element newElement(String symbol, int atomicNumber);
+    public IElement newElement(String symbol, int atomicNumber);
 
 	/**
 	 * Constructor for the Isotope object.

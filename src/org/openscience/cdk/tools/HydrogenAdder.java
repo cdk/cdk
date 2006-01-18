@@ -33,7 +33,7 @@ import java.util.HashMap;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -267,7 +267,7 @@ public class HydrogenAdder {
             IAtom hydrogen = container.getBuilder().newAtom("H");
             IsotopeFactory.getInstance(container.getBuilder()).configure(hydrogen, isotope);
             totalContainer.addAtom(hydrogen);
-            Bond newBond = container.getBuilder().newBond((IAtom)atom, hydrogen, 1.0);
+            IBond newBond = container.getBuilder().newBond((IAtom)atom, hydrogen, 1.0);
             totalContainer.addBond(newBond);
             changedAtomsAndBonds.addAtom(hydrogen);
             changedAtomsAndBonds.addBond(newBond);

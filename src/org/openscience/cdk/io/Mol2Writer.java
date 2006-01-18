@@ -32,7 +32,7 @@ import java.io.Writer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -205,7 +205,7 @@ NO_CHARGES
 
             // write bond block
             writer.write("@<TRIPOS>BOND\n");
-            Bond[] bonds = mol.getBonds();
+            IBond[] bonds = mol.getBonds();
             for (int i=0; i<bonds.length; i++) {
                 writer.write(i + " " +
                              mol.getAtomNumber(bonds[i].getAtomAt(0)) + " " +

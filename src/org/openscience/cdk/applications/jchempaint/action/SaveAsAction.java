@@ -49,7 +49,7 @@ import org.openscience.cdk.applications.jchempaint.io.JCPFileFilterInterface;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
 import org.openscience.cdk.io.ChemObjectWriter;
@@ -155,7 +155,7 @@ public class SaveAsAction extends JCPAction
 				}
 				if(ready==0){
 					
-					ChemModel model = (ChemModel) jcpm.getChemModel();
+					IChemModel model = (IChemModel) jcpm.getChemModel();
 					if (object == null)
 					{
 						// called from main menu
@@ -236,7 +236,7 @@ public class SaveAsAction extends JCPAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	protected void saveAsMol(ChemModel model, File outFile) throws Exception
+	protected void saveAsMol(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in a MDL molfile file...");
         String fileName = outFile.toString();
@@ -300,7 +300,7 @@ public class SaveAsAction extends JCPAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	protected void saveAsSMILES(ChemModel model, File outFile) throws Exception
+	protected void saveAsSMILES(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in SMILES format...");
         String fileName = outFile.toString();
@@ -325,7 +325,7 @@ public class SaveAsAction extends JCPAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	protected void saveAsCDKSourceCode(ChemModel model, File outFile) throws Exception
+	protected void saveAsCDKSourceCode(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents as a CDK source code file...");
         String fileName = outFile.toString();
@@ -355,7 +355,7 @@ public class SaveAsAction extends JCPAction
 	 *@param  outFile        Description of the Parameter
 	 *@exception  Exception  Description of the Exception
 	 */
-	protected void saveAsSVG(ChemModel model, File outFile) throws Exception
+	protected void saveAsSVG(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents as a SVG file...");
 		cow = new SVGWriter(new FileWriter(outFile));

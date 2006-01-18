@@ -32,7 +32,7 @@ import java.util.Hashtable;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Ring;
 
 /**
@@ -92,13 +92,13 @@ public class DeAromatizationTool {
 	}
 	
 	private static boolean deAromatizePyrolle(Ring ring) {
-		Bond[] bonds = ring.getBonds();
+		IBond[] bonds = ring.getBonds();
 		IAtom[] atoms = ring.getAtoms();
 		if (bonds.length != 5) return false;
 		for (int i = 0; i<atoms.length; i++) {
 			if(atoms[i].getSymbol().equals("N")){
 				int done=0;
-				Bond bond=null;
+				IBond bond=null;
 				IAtom atom=atoms[i];
 				int count=0;
 				while(done!=2){
@@ -119,8 +119,8 @@ public class DeAromatizationTool {
 		return true;
 	}
 	
-	private static Bond getNextBond(IAtom atom, Bond bond, Ring ring){
-		Bond[] bonds=ring.getConnectedBonds(atom);
+	private static IBond getNextBond(IAtom atom, IBond bond, Ring ring){
+		IBond[] bonds=ring.getConnectedBonds(atom);
 		for(int i=0;i<bonds.length;i++)
 			if(bonds[i]!=bond)
 				return bonds[i];
@@ -128,7 +128,7 @@ public class DeAromatizationTool {
 	}
 	
 	private static boolean deAromatizeBenzene(Ring ring) {
-		Bond[] bonds = ring.getBonds();
+		IBond[] bonds = ring.getBonds();
 		if (bonds.length != 6) return false;
 		for (int i = 0; i<bonds.length; i++) {
 			if (i%2 == 0) {

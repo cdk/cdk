@@ -131,7 +131,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		    MDLReader reader = new MDLReader(new InputStreamReader(ins));
 		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		    org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
-		    org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
 		    double bondLength = GeometryTools.getBondLengthAverage(mol);
 		    HydrogenAdder ha = new HydrogenAdder();

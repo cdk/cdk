@@ -457,7 +457,7 @@ public abstract class JChemPaintPanel
 		}
 		this.jchemPaintModel = model;
 		jchemPaintModel.addChangeListener(this);
-		org.openscience.cdk.interfaces.ChemModel chemModel = model.getChemModel();
+		org.openscience.cdk.interfaces.IChemModel chemModel = model.getChemModel();
 		scaleAndCenterMolecule(chemModel);
 		drawingPanel.setJChemPaintModel(model);
 	}
@@ -591,7 +591,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  chemFile  Description of the Parameter
 	 */
-	public void processChemFile(org.openscience.cdk.interfaces.ChemFile chemFile) {
+	public void processChemFile(org.openscience.cdk.interfaces.IChemFile chemFile) {
 		logger.info("Information read from file:");
 
 		int chemSequenceCount = chemFile.getChemSequenceCount();
@@ -604,7 +604,7 @@ public abstract class JChemPaintPanel
 			logger.info("  # model in seq(" + i + "): ", chemModelCount);
 
 			for (int j = 0; j < chemModelCount; j++) {
-				org.openscience.cdk.interfaces.ChemModel chemModel = chemSequence.getChemModel(j);
+				org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(j);
 				processChemModel(chemModel);
 			}
 		}
@@ -616,11 +616,11 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
-	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.ChemModel chemModel) {
+	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.IChemModel chemModel) {
     scaleAndCenterMolecule(chemModel, null);
   }
 
-	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.ChemModel chemModel, Dimension dim) {
+	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.IChemModel chemModel, Dimension dim) {
 		IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
 		scaleAndCenterMolecule(ac,dim);
 	}
@@ -680,7 +680,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  chemModel  Description of the Parameter
 	 */
-	public void processChemModel(org.openscience.cdk.interfaces.ChemModel chemModel) {
+	public void processChemModel(org.openscience.cdk.interfaces.IChemModel chemModel) {
 		// check for bonds
 		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
 			String error = "Model does not have bonds. Cannot depict contents.";
@@ -759,7 +759,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  chemFile  Description of the Parameter
 	 */
-	public void showChemFile(org.openscience.cdk.interfaces.ChemFile chemFile) {
+	public void showChemFile(org.openscience.cdk.interfaces.IChemFile chemFile) {
 		logger.info("Information read from file:");
 
 		int chemSequenceCount = chemFile.getChemSequenceCount();
@@ -772,7 +772,7 @@ public abstract class JChemPaintPanel
 			logger.info("  # model in seq(" + i + "): " + chemModelCount);
 
 			for (int j = 0; j < chemModelCount; j++) {
-				org.openscience.cdk.interfaces.ChemModel chemModel = chemSequence.getChemModel(j);
+				org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(j);
 				showChemModel(chemModel);
 			}
 		}
@@ -784,7 +784,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  chemModel  Description of the Parameter
 	 */
-	public void showChemModel(org.openscience.cdk.interfaces.ChemModel chemModel) {
+	public void showChemModel(org.openscience.cdk.interfaces.IChemModel chemModel) {
 		// check for bonds
 		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
 			String error = "Model does not have bonds. Cannot depict contents.";
@@ -831,7 +831,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@return    The chemModel value
 	 */
-	public org.openscience.cdk.interfaces.ChemModel getChemModel() {
+	public org.openscience.cdk.interfaces.IChemModel getChemModel() {
 		return jchemPaintModel.getChemModel();
 	}
 
@@ -842,7 +842,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@return    The chemFile value
 	 */
-	public org.openscience.cdk.interfaces.ChemFile getChemFile() {
+	public org.openscience.cdk.interfaces.IChemFile getChemFile() {
 		ChemFile file = new ChemFile();
 		ChemSequence sequence = new ChemSequence();
 		sequence.addChemModel(getChemModel());

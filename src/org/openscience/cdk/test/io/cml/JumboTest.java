@@ -33,7 +33,7 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -78,7 +78,7 @@ public class JumboTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             CMLReader reader = new CMLReader(new InputStreamReader(ins));
-            ChemFile chemFile = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
             // test the resulting ChemFile content
             assertNotNull(chemFile);
@@ -86,7 +86,7 @@ public class JumboTest extends CDKTestCase {
             org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
@@ -114,7 +114,7 @@ public class JumboTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             CMLReader reader = new CMLReader(new InputStreamReader(ins));
-            ChemFile chemFile = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
             // test the resulting ChemFile content
             assertNotNull(chemFile);
@@ -122,7 +122,7 @@ public class JumboTest extends CDKTestCase {
             org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
@@ -150,7 +150,7 @@ public class JumboTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             CMLReader reader = new CMLReader(new InputStreamReader(ins));
-            ChemFile chemFile = (ChemFile)reader.read(new org.openscience.cdk.ChemFile());
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
             // test the resulting ChemFile content
             assertNotNull(chemFile);
@@ -158,7 +158,7 @@ public class JumboTest extends CDKTestCase {
             org.openscience.cdk.interfaces.ChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.ChemModel model = seq.getChemModel(0);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 

@@ -28,7 +28,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -184,7 +184,7 @@ public class BasicValidator extends AbstractValidator {
             // check wether atom is really an element
             try {
                 IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(atom.getBuilder());
-                Element element = isotopeFactory.getElement(atom.getSymbol());
+                IElement element = isotopeFactory.getElement(atom.getSymbol());
                 if (element == null) {
                     isElementOrPseudo.setDetails(
                         "Element " + atom.getSymbol() + " does not exist."

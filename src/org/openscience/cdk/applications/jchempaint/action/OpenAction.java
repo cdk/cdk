@@ -39,7 +39,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.interfaces.ChemFile;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
@@ -57,7 +57,7 @@ import org.openscience.cdk.io.MDLReader;
  */
 public class OpenAction extends JCPAction {
 
-	private ChemFile chemFile;
+	private IChemFile chemFile;
 	private FileFilter currentFilter = null;
 	private FileFilter currentOpenFileFilter = null;
 	private FileFilter currentSaveFileFilter = null;
@@ -149,10 +149,10 @@ public class OpenAction extends JCPAction {
 			ChemModel chemModel = null;
 			if(cor instanceof CMLReader)
 				((CMLReader)cor).setAromaticOrder(1);
-			if (cor.accepts(ChemFile.class)) {
+			if (cor.accepts(IChemFile.class)) {
 				// try to read a ChemFile
 				try {
-					chemFile = (ChemFile) cor.read((IChemObject) new org.openscience.cdk.ChemFile());
+					chemFile = (IChemFile) cor.read((IChemObject) new org.openscience.cdk.ChemFile());
 					if (chemFile != null) {
 												
 						jcpPanel.processChemFile(chemFile);

@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
@@ -82,9 +82,9 @@ public class MoleculeTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        Bond b1 = builder.newBond(c1, c2,1);
-        Bond b2 = builder.newBond(c1, o, 2);
-        Bond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2,1);
+        IBond b2 = builder.newBond(c1, o, 2);
+        IBond b3 = builder.newBond(c1, c3,1);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);

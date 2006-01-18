@@ -36,8 +36,8 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.Molecule;
 
@@ -63,10 +63,10 @@ public class AtomContainerManipulator {
 	    return false;
         } else {
             container.setAtomAt(container.getAtomNumber(atom), newAtom);
-            ElectronContainer[] electronContainers = container.getElectronContainers();
+            IElectronContainer[] electronContainers = container.getElectronContainers();
             for (int i=0; i<electronContainers.length; i++) {
-                if (electronContainers[i] instanceof Bond) {
-                    Bond bond = (Bond)electronContainers[i];
+                if (electronContainers[i] instanceof IBond) {
+                    IBond bond = (IBond)electronContainers[i];
                     if (bond.contains(atom)) {
                         for (int j=0; j<bond.getAtomCount(); j++) {
                             if (atom.equals(bond.getAtomAt(j))) {
@@ -128,9 +128,9 @@ public class AtomContainerManipulator {
                 IAtom atom = atoms[i];
                 if (atom.getID() != null) idList.addElement(atom.getID());
             }
-            Bond[] bonds = mol.getBonds();
+            IBond[] bonds = mol.getBonds();
             for (int i=0; i<bonds.length; i++) {
-                Bond bond = bonds[i];
+                IBond bond = bonds[i];
                 if (bond.getID() != null) idList.addElement(bond.getID());
             }
         }
@@ -180,7 +180,7 @@ public class AtomContainerManipulator {
                 i++)
         {
             // Check bond.
-            final Bond bond = atomContainer.getBondAt(i);
+            final IBond bond = atomContainer.getBondAt(i);
             IAtom[] atoms = bond.getAtoms();
             boolean removedBond = false;
             final int length = atoms.length;
@@ -199,7 +199,7 @@ public class AtomContainerManipulator {
             if (!removedBond)
                 // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
             {
-                Bond clone = (Bond) atomContainer.getBondAt(i).clone();
+                IBond clone = (IBond) atomContainer.getBondAt(i).clone();
                 clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
                 mol.addBond(clone);
             }

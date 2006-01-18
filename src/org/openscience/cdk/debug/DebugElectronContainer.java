@@ -28,7 +28,7 @@ import java.util.Hashtable;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugElectronContainer extends org.openscience.cdk.ElectronContainer 
-    implements ElectronContainer{
+    implements IElectronContainer{
 
 	LoggingTool logger = new LoggingTool(DebugElectronContainer.class);
 	

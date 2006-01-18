@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.Hashtable;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Element;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -125,7 +125,7 @@ public class ValenceCarbonConnectivityOrderZeroDescriptor implements IDescriptor
 		double chi0vC = 0;
 		org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
 		org.openscience.cdk.interfaces.IAtom[] neighatoms = null;
-		Element element = null;
+		IElement element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
                 for (int i = 0; i < atoms.length; i++) {

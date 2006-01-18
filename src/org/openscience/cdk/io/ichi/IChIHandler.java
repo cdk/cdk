@@ -351,7 +351,7 @@ public class IChIHandler extends DefaultHandler {
         org.openscience.cdk.interfaces.IAtom sourceAtom = tautomer.getAtomAt(source-1);
         org.openscience.cdk.interfaces.IAtom targetAtom = tautomer.getAtomAt(target-1);
         
-        org.openscience.cdk.interfaces.Bond bond = tautomer.getBond(sourceAtom, targetAtom);
+        org.openscience.cdk.interfaces.IBond bond = tautomer.getBond(sourceAtom, targetAtom);
         bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
         return;
     }

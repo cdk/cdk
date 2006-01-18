@@ -118,7 +118,7 @@ public class BondCountDescriptor implements IDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer container) {
         int bondCount = 0;
-        org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
             if (container.getBondAt(i).getOrder() == order) {
                 bondCount += 1;

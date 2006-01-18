@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -97,7 +97,7 @@ public class INChIContentProcessorTool {
                      IAtomContainer container, int source){
         logger.debug("Parsing bond data: ", bondsEncoding);
 
-        Bond bondToAdd = null;
+        IBond bondToAdd = null;
         /* Fixme: treatment of branching is too limited! */
         String remainder = bondsEncoding;
         while (remainder.length() > 0) {

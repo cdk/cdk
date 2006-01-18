@@ -24,7 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
@@ -40,7 +40,7 @@ public class AromaticQueryBond extends SMARTSBond {
         super(atom1, atom2, order);
     }
     
-	public boolean matches(Bond bond) {
+	public boolean matches(IBond bond) {
         if (bond.getFlag(CDKConstants.ISAROMATIC)) {
             return true;
         }

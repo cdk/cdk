@@ -32,11 +32,11 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -109,9 +109,9 @@ public class IDCreator {
                 atoms[i].setID("a" + atomCount);
             }
         }
-        Bond[] bonds = container.getBonds();
+        IBond[] bonds = container.getBonds();
         for (int i=0; i<bonds.length; i++) {
-        	Bond bond = bonds[i];
+        	IBond bond = bonds[i];
             if (bond.getID() == null) {
                 bondCount++;
                 while (tabuList.contains("b" + bondCount)) bondCount++;
@@ -178,7 +178,7 @@ public class IDCreator {
         }
     }
     
-    public void createIDs(ChemFile file) {
+    public void createIDs(IChemFile file) {
     	ChemSequence[] sequences = file.getChemSequences();
     	for (int i=0; i<sequences.length; i++) {
     		createIDs(sequences[i]);
@@ -186,14 +186,14 @@ public class IDCreator {
     }
     
     public void createIDs(ChemSequence sequence) {
-    	ChemModel[] models = sequence.getChemModels();
+    	IChemModel[] models = sequence.getChemModels();
     	for (int i=0; i<models.length; i++) {
     		createIDs(models[i]);
     	}
     }
     
-    public void createIDs(ChemModel model) {
-    	Crystal crystal = model.getCrystal();
+    public void createIDs(IChemModel model) {
+    	ICrystal crystal = model.getCrystal();
     	if (crystal != null) createIDs(crystal);
     	SetOfMolecules moleculeSet = model.getSetOfMolecules();
     	if (moleculeSet != null) createIDs(moleculeSet);
@@ -201,7 +201,7 @@ public class IDCreator {
     	if (reactionSet != null) createIDs(reactionSet);
     }
     
-    public void createIDs(Crystal crystal) {
+    public void createIDs(ICrystal crystal) {
     	createIDs((IAtomContainer)crystal);
     }
 }

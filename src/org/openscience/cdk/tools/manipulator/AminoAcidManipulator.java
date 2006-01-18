@@ -30,7 +30,7 @@ package org.openscience.cdk.tools.manipulator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -54,7 +54,7 @@ public class AminoAcidManipulator {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
 		
-		Bond[] bonds = acid.getConnectedBonds(acid.getCTerminus());
+		IBond[] bonds = acid.getConnectedBonds(acid.getCTerminus());
 		// ok, look for the oxygen which is singly bonded
 		for (int i=0; i<bonds.length; i++) {
 			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {

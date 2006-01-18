@@ -31,14 +31,14 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
@@ -56,13 +56,13 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */ 
-public class ChemFileCDO implements ChemFile, CDOInterface {
+public class ChemFileCDO implements IChemFile, CDOInterface {
 
-	private ChemFile currentChemFile;
+	private IChemFile currentChemFile;
 	
     private IAtomContainer currentMolecule;
     private SetOfMolecules currentSetOfMolecules;
-    private ChemModel currentChemModel;
+    private IChemModel currentChemModel;
     private ChemSequence currentChemSequence;
     private SetOfReactions currentSetOfReactions;
     private Reaction currentReaction;
@@ -88,7 +88,7 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
     /**
      * Basic contructor
      */
-    public ChemFileCDO(ChemFile file) {
+    public ChemFileCDO(IChemFile file) {
       logger = new LoggingTool(this);
       currentChemFile = file;
       currentChemSequence = file.getBuilder().newChemSequence();
@@ -209,9 +209,9 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
                 logger.debug("Adding molecule to set");
                 currentSetOfMolecules.addMolecule((Molecule)currentMolecule);
                 logger.debug("#mols in set: " + currentSetOfMolecules.getMoleculeCount());
-            } else if (currentMolecule instanceof Crystal) {
+            } else if (currentMolecule instanceof ICrystal) {
                 logger.debug("Adding crystal to chemModel");
-                currentChemModel.setCrystal((Crystal)currentMolecule);
+                currentChemModel.setCrystal((ICrystal)currentMolecule);
                 currentChemSequence.addChemModel(currentChemModel);
             }
         } else if (objectType.equals("SetOfMolecules")) {
@@ -233,7 +233,7 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
             } else {
             	org.openscience.cdk.interfaces.IAtom a1 = currentMolecule.getAtomAt(bond_a1);
             	org.openscience.cdk.interfaces.IAtom a2 = currentMolecule.getAtomAt(bond_a2);
-                Bond b = currentChemFile.getBuilder().newBond(a1, a2, bond_order);
+                IBond b = currentChemFile.getBuilder().newBond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {
                     b.setStereo(bond_stereo);
@@ -247,8 +247,8 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
             }
         } else if (objectType.equals("a-axis")) {
           // set these variables
-          if (currentMolecule instanceof Crystal) {
-              Crystal current = (Crystal)currentMolecule;
+          if (currentMolecule instanceof ICrystal) {
+              ICrystal current = (ICrystal)currentMolecule;
               current.setA(new Vector3d(crystal_axis_x,
                                         crystal_axis_y,
                                         crystal_axis_z));
@@ -256,8 +256,8 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
               logger.warn("Current object is not a crystal");
           }
         } else if (objectType.equals("b-axis")) {
-          if (currentMolecule instanceof Crystal) {
-              Crystal current = (Crystal)currentMolecule;
+          if (currentMolecule instanceof ICrystal) {
+              ICrystal current = (ICrystal)currentMolecule;
               current.setB(new Vector3d(crystal_axis_x,
                                         crystal_axis_y,
                                         crystal_axis_z));
@@ -265,8 +265,8 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
               logger.warn("Current object is not a crystal");
           }
         } else if (objectType.equals("c-axis")) {
-          if (currentMolecule instanceof Crystal) {
-              Crystal current = (Crystal)currentMolecule;
+          if (currentMolecule instanceof ICrystal) {
+              ICrystal current = (ICrystal)currentMolecule;
               current.setC(new Vector3d(crystal_axis_x,
                                         crystal_axis_y,
                                         crystal_axis_z));
@@ -424,8 +424,8 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
           }
       } else if (objectType.equals("Crystal")) {
           // set these variables
-          if (currentMolecule instanceof Crystal) {
-              Crystal current = (Crystal)currentMolecule;
+          if (currentMolecule instanceof ICrystal) {
+              ICrystal current = (ICrystal)currentMolecule;
               if (propertyType.equals("spacegroup")) {
                   logger.debug("Setting crystal spacegroup to: " + propertyValue);
                   current.setSpaceGroup(propertyValue);
@@ -445,7 +445,7 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
                  objectType.equals("b-axis") ||
                  objectType.equals("c-axis")) {
           // set these variables
-          if (currentMolecule instanceof Crystal) {
+          if (currentMolecule instanceof ICrystal) {
               logger.debug("Setting axis (" + objectType + "): " + propertyValue);
               if (propertyType.equals("x")) {
                   crystal_axis_x = Double.parseDouble(propertyValue);

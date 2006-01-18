@@ -32,7 +32,7 @@ package org.openscience.cdk.graph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -137,7 +137,7 @@ public class SpanningTree {
 		for (int i = 0; i < V; i++) {
 			(atomContainer.getAtomAt(i)).setProperty("ST_ATOMNO", Integer.toString(i+1));
 		}
-		Bond bond;
+		IBond bond;
 		int v1,v2;
 		bondsInTree = new boolean[E];
 		
@@ -199,7 +199,7 @@ public class SpanningTree {
 		PathTools.depthFirstTargetSearch(spt,a1,a2,path);		
 		return path;
 	}
-	private Ring getRing(IAtomContainer spt, Bond bond) throws NoSuchAtomException {
+	private Ring getRing(IAtomContainer spt, IBond bond) throws NoSuchAtomException {
 		Ring ring = spt.getBuilder().newRing();
 		PathTools.resetFlags(spt);
 		ring.addAtom(bond.getAtomAt(0));		

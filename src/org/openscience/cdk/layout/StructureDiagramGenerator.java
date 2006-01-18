@@ -37,7 +37,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Ring;
@@ -449,7 +449,7 @@ public class StructureDiagramGenerator
 	private void layoutRingSet(Vector2d firstBondVector, RingSet rs)
 	{
 		IAtomContainer sharedAtoms;
-		Bond bond;
+		IBond bond;
 		Vector2d ringCenterVector;
 		Point2d ringCenter;
 		int thisRing;
@@ -462,7 +462,7 @@ public class StructureDiagramGenerator
 		int i = 0;
 		for (i = 0; i < ring.getElectronContainerCount(); i++)
 		{
-			if (ring.getElectronContainerAt(i) instanceof org.openscience.cdk.interfaces.Bond)
+			if (ring.getElectronContainerAt(i) instanceof org.openscience.cdk.interfaces.IBond)
 			{
 				break;
 			}
@@ -472,7 +472,7 @@ public class StructureDiagramGenerator
 		 */
 		if (!ring.getFlag(CDKConstants.ISPLACED))
 		{
-			sharedAtoms = placeFirstBond((Bond) ring.getElectronContainerAt(i), firstBondVector);
+			sharedAtoms = placeFirstBond((IBond) ring.getElectronContainerAt(i), firstBondVector);
 			/*
 			 *  Call the method which lays out the new ring.
 			 */
@@ -601,7 +601,7 @@ public class StructureDiagramGenerator
 		Point2d newPoint2 = null;
 		RingSet nextRingSystem = null;
 		IAtomContainer ringSystem = null;
-		org.openscience.cdk.interfaces.Bond nextRingAttachmentBond = null;
+		org.openscience.cdk.interfaces.IBond nextRingAttachmentBond = null;
 		double angle;
 		double angle1;
 		double angle2;
@@ -674,7 +674,7 @@ public class StructureDiagramGenerator
 	private IAtomContainer getUnplacedAtoms(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		IAtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
 		org.openscience.cdk.interfaces.IAtom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
@@ -699,7 +699,7 @@ public class StructureDiagramGenerator
 	private IAtomContainer getPlacedAtoms(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getConnectedBonds(atom);
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
 		org.openscience.cdk.interfaces.IAtom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
@@ -720,13 +720,13 @@ public class StructureDiagramGenerator
 	 */
 	private org.openscience.cdk.interfaces.IAtom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
-		Bond bond = null;
+		IBond bond = null;
 		for (int f = 0; f < molecule.getElectronContainerCount(); f++)
 		{
-			org.openscience.cdk.interfaces.ElectronContainer ec = molecule.getElectronContainerAt(f);
-			if (ec instanceof org.openscience.cdk.interfaces.Bond)
+			org.openscience.cdk.interfaces.IElectronContainer ec = molecule.getElectronContainerAt(f);
+			if (ec instanceof org.openscience.cdk.interfaces.IBond)
 			{
-				bond = (Bond) ec;
+				bond = (IBond) ec;
 				if (bond.getAtomAt(1).getFlag(CDKConstants.ISPLACED) &&
 						!bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED))
 				{
@@ -749,10 +749,10 @@ public class StructureDiagramGenerator
 	 *
 	 *@return    the next bond with an unplaced ring atom
 	 */
-	private org.openscience.cdk.interfaces.Bond getNextBondWithUnplacedRingAtom()
+	private org.openscience.cdk.interfaces.IBond getNextBondWithUnplacedRingAtom()
 	{
-		org.openscience.cdk.interfaces.Bond bond = null;
-		org.openscience.cdk.interfaces.Bond[] bonds = molecule.getBonds();
+		org.openscience.cdk.interfaces.IBond bond = null;
+		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
@@ -783,7 +783,7 @@ public class StructureDiagramGenerator
 	 *@param  bond        Description of the Parameter
 	 *@return             Description of the Return Value
 	 */
-	private IAtomContainer placeFirstBond(Bond bond, Vector2d bondVector)
+	private IAtomContainer placeFirstBond(IBond bond, Vector2d bondVector)
 	{
 		IAtomContainer sharedAtoms = null;
 		try
@@ -900,7 +900,7 @@ public class StructureDiagramGenerator
 	 *@param  bond  the bond to be search for the unplaced ring atom
 	 *@return       the unplaced ring atom in this bond
 	 */
-	private org.openscience.cdk.interfaces.IAtom getRingAtom(org.openscience.cdk.interfaces.Bond bond)
+	private org.openscience.cdk.interfaces.IAtom getRingAtom(org.openscience.cdk.interfaces.IBond bond)
 	{
 		if (bond.getAtomAt(0).getFlag(CDKConstants.ISINRING) &&
 				!bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED))

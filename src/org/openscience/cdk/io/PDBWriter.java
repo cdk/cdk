@@ -36,11 +36,11 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ChemFile;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
@@ -98,15 +98,15 @@ public class PDBWriter extends DefaultChemObjectWriter {
     public void write(IChemObject object) throws CDKException {
         if (object instanceof Molecule){
             writeMolecule((Molecule)object);
-        } else if (object instanceof Crystal){
-            writeCrystal((Crystal)object);
-        } else if (object instanceof ChemFile){
-            ChemFile chemFile = (ChemFile)object;
+        } else if (object instanceof ICrystal){
+            writeCrystal((ICrystal)object);
+        } else if (object instanceof IChemFile){
+            IChemFile chemFile = (IChemFile)object;
             ChemSequence sequence = chemFile.getChemSequence(0);
             if (sequence != null) {
-            	ChemModel model = sequence.getChemModel(0);
+            	IChemModel model = sequence.getChemModel(0);
                 if (model != null) {
-                	Crystal crystal = model.getCrystal();
+                	ICrystal crystal = model.getCrystal();
                     if (crystal != null) {
                         write(crystal);
                     } else {
@@ -170,7 +170,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
        }
    }
    
-   public void writeCrystal(Crystal crystal) throws CDKException {
+   public void writeCrystal(ICrystal crystal) throws CDKException {
        try {
            writer.write("HEADER created with CDK fileconvertot\n");
            Vector3d a = crystal.getA();

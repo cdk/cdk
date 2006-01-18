@@ -207,7 +207,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 			Ring ring = null;
 			Vector ringsWithThisBond = null;
 			// SET ISINRING FLAGS FOR BONDS
-			org.openscience.cdk.interfaces.Bond[] bondsInContainer = ac.getBonds();		
+			org.openscience.cdk.interfaces.IBond[] bondsInContainer = ac.getBonds();		
 			for (int z = 0; z < bondsInContainer.length; z++) {
 				ringsWithThisBond = rs.getRings(bondsInContainer[z]);
 				if (ringsWithThisBond.size() > 0) {
@@ -246,12 +246,12 @@ public class RDFProtonDescriptor implements IDescriptor {
 			ArrayList bondsInCycloex = new ArrayList(); // list for bonds in cycloexane-like rings
 			
 			// 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
-			org.openscience.cdk.interfaces.Bond secondBond = null; // (remember that first bond is proton bond)
-			org.openscience.cdk.interfaces.Bond thirdBond = null; //
-			org.openscience.cdk.interfaces.Bond fourthBond = null; //
-			org.openscience.cdk.interfaces.Bond fifthBond = null; //
-			org.openscience.cdk.interfaces.Bond sixthBond = null; //
-			org.openscience.cdk.interfaces.Bond seventhBond = null; //
+			org.openscience.cdk.interfaces.IBond secondBond = null; // (remember that first bond is proton bond)
+			org.openscience.cdk.interfaces.IBond thirdBond = null; //
+			org.openscience.cdk.interfaces.IBond fourthBond = null; //
+			org.openscience.cdk.interfaces.IBond fifthBond = null; //
+			org.openscience.cdk.interfaces.IBond sixthBond = null; //
+			org.openscience.cdk.interfaces.IBond seventhBond = null; //
 			
 			// definition of some variables used in the main FOR loop for detection of interesting atoms and bonds:
 			boolean theBondIsInA6MemberedRing = false; // this is like a flag for bonds which are in cycloexane-like rings (rings with more than 4 at.)
@@ -456,10 +456,10 @@ public class RDFProtonDescriptor implements IDescriptor {
 				step = (limitSup - limitInf)/7;
 				position = 0;
 				partial = 0;
-				org.openscience.cdk.interfaces.Bond theDoubleBond = null;
+				org.openscience.cdk.interfaces.IBond theDoubleBond = null;
 				smooth = -1.15;
 				int goodPosition = 0;
-				org.openscience.cdk.interfaces.Bond goodBond = null;
+				org.openscience.cdk.interfaces.IBond goodBond = null;
 				ArrayList gDr_function = new ArrayList(7);
 				for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
 					sum = 0;
@@ -509,7 +509,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 				IAtom[] atomsInSingleBond = null;				
 				distance = 0;
 				position = 0;
-				org.openscience.cdk.interfaces.Bond theSingleBond = null;
+				org.openscience.cdk.interfaces.IBond theSingleBond = null;
 				limitInf = 0;
 				limitSup = Math.PI / 2;
 				step = (limitSup - limitInf)/7;
@@ -559,7 +559,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 			
 			if(bondsInCycloex.size() > 0) {
 				IAtom[] atomsInCycloexBond = null;
-				org.openscience.cdk.interfaces.Bond theInCycloexBond = null;
+				org.openscience.cdk.interfaces.IBond theInCycloexBond = null;
 				distance = 0;
 				limitInf = 0;
 				limitSup = Math.PI;
@@ -627,7 +627,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 	// 3) it belongs to an amide group
 	
 	
-	private boolean getIfBondIsNotRotatable(Molecule mol, org.openscience.cdk.interfaces.Bond bond, IAtomContainer detected) {
+	private boolean getIfBondIsNotRotatable(Molecule mol, org.openscience.cdk.interfaces.IBond bond, IAtomContainer detected) {
 		boolean isBondNotRotatable = false;
 		int counter = 0;
 		IAtom[] atoms = bond.getAtoms();
@@ -654,7 +654,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 	private boolean getIfACarbonIsDoubleBondedToAnOxygen(Molecule mol, IAtom carbonAtom) {
 		boolean isDoubleBondedToOxygen = false;
 		IAtom[] neighToCarbon = mol.getConnectedAtoms(carbonAtom);
-		org.openscience.cdk.interfaces.Bond tmpBond = null;
+		org.openscience.cdk.interfaces.IBond tmpBond = null;
 		int counter = 0;
 		for(int nei = 0; nei < neighToCarbon.length; nei++) {
 			if(neighToCarbon[nei].getSymbol().equals("O")) {
@@ -709,13 +709,13 @@ public class RDFProtonDescriptor implements IDescriptor {
 	
 	// given a double bond 
 	// this method returns a bond bonded to this double bond
-	private int getNearestBondtoAGivenAtom(Molecule mol, IAtom atom, org.openscience.cdk.interfaces.Bond bond) {
+	private int getNearestBondtoAGivenAtom(Molecule mol, IAtom atom, org.openscience.cdk.interfaces.IBond bond) {
 		int nearestBond = 0;
 		double[] values = new double[4];
 		double distance = 0;
 		double distance_tmp = 0;
 		IAtom[] atomsInBond = bond.getAtoms();
-		org.openscience.cdk.interfaces.Bond[] bondsAtLeft = mol.getConnectedBonds(atomsInBond[0]);
+		org.openscience.cdk.interfaces.IBond[] bondsAtLeft = mol.getConnectedBonds(atomsInBond[0]);
 		int partial = 0;
 		for(int i=0; i<bondsAtLeft.length;i++) {
 			values = calculateDistanceBetweenAtomAndBond(mol, atom, bondsAtLeft[i]);
@@ -741,7 +741,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 	
 	// method which calculated distance btw an atom and the middle point of a bond
 	// and returns distance and coordinates of middle point
-	private double[] calculateDistanceBetweenAtomAndBond(Molecule mol, IAtom proton, org.openscience.cdk.interfaces.Bond theBond) {
+	private double[] calculateDistanceBetweenAtomAndBond(Molecule mol, IAtom proton, org.openscience.cdk.interfaces.IBond theBond) {
 		Point3d middlePoint = theBond.get3DCenter();
 		Point3d protonPoint = proton.getPoint3d();
 		double[] values = new double[4];

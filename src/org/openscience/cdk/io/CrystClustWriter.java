@@ -36,7 +36,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemSequence;
-import org.openscience.cdk.interfaces.Crystal;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -103,8 +103,8 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(IChemObject object) throws UnsupportedChemObjectException {
-        if (object instanceof Crystal) {
-            write((Crystal)object);
+        if (object instanceof ICrystal) {
+            write((ICrystal)object);
         }   else if (object instanceof ChemSequence) {
             write((ChemSequence)object);
         } else {
@@ -149,7 +149,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      *
      * @param crystal the Crystal to serialize
      */
-    private void write(Crystal crystal) {
+    private void write(ICrystal crystal) {
 
         String sg = crystal.getSpaceGroup();
         if ("P 2_1 2_1 2_1".equals(sg)) {

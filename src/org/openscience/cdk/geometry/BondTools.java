@@ -38,7 +38,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * A set of static utility classes for geometric calculations on Bonds.
@@ -54,7 +54,7 @@ public class BondTools {
    * @param  bond       The bond.
    * @return            true=is a potential configuration, false=is not.
    */
-  public static boolean isValidDoubleBondConfiguration(IAtomContainer container, Bond bond) {
+  public static boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond) {
     org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
     IAtom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
     IAtom from = null;
@@ -277,7 +277,7 @@ public class BondTools {
 		{
 			return (0);
 		}
-		Bond[] bonds = container.getConnectedBonds(a);
+		IBond[] bonds = container.getConnectedBonds(a);
 		int normal = 0;
 		int up = 0;
 		int down = 0;
@@ -343,7 +343,7 @@ public class BondTools {
 		{
 			return (0);
 		}
-		Bond[] bonds = container.getConnectedBonds(a);
+		IBond[] bonds = container.getConnectedBonds(a);
 		int normal = 0;
 		int up = 0;
 		int down = 0;
@@ -387,7 +387,7 @@ public class BondTools {
 		{
 			return (false);
 		}
-		Bond[] bonds = container.getConnectedBonds(a);
+		IBond[] bonds = container.getConnectedBonds(a);
 		int stereo = 0;
 		for (int i = 0; i < bonds.length; i++)
 		{
@@ -499,7 +499,7 @@ public class BondTools {
 		{
 			return (false);
 		}
-		Bond[] bonds = container.getConnectedBonds(a);
+		IBond[] bonds = container.getConnectedBonds(a);
 		int normal = 0;
 		int up = 0;
 		int down = 0;

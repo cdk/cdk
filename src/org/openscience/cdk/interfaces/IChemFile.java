@@ -31,7 +31,7 @@ package org.openscience.cdk.interfaces;
  * @author     egonw
  * @cdk.module interfaces
  */
-public interface ChemFile extends IChemObject {
+public interface IChemFile extends IChemObject {
 
 	/**
 	 * Adds an ChemSequence to this container.

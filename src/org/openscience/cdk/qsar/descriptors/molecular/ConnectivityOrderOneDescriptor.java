@@ -104,7 +104,7 @@ public class ConnectivityOrderOneDescriptor implements IDescriptor {
         double val0 = 0;
         double val1 = 0;
         int atomDegree = 0;
-        org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
+        org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
         IAtom[] atoms = null;
         for (int b = 0; b < bonds.length; b++) {
             atoms = bonds[b].getAtoms();

@@ -42,7 +42,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
@@ -399,13 +399,13 @@ public class UniversalIsomorphismTester {
   public static IAtomContainer project(List rMapList, IAtomContainer g, int id) {
     IAtomContainer ac = g.getBuilder().newAtomContainer();
 
-    Bond[] bondList = g.getBonds();
+    IBond[] bondList = g.getBonds();
 
     Hashtable table = new Hashtable();
     IAtom a1 = null;
     IAtom a2 = null;
     IAtom a = null;
-    Bond bond = null;
+    IBond bond = null;
 
     for (Iterator i = rMapList.iterator(); i.hasNext(); ) {
       RMap rMap = (RMap) i.next();
@@ -432,7 +432,7 @@ public class UniversalIsomorphismTester {
         ac.addAtom(a2);
         table.put(a, a2);
       }
-      Bond newBond = g.getBuilder().newBond(a1, a2, bond.getOrder());
+      IBond newBond = g.getBuilder().newBond(a1, a2, bond.getOrder());
       newBond.setFlag(
         CDKConstants.ISAROMATIC,
         bond.getFlag(CDKConstants.ISAROMATIC)
@@ -522,21 +522,21 @@ public class UniversalIsomorphismTester {
   public static List makeAtomsMapOfBondsMap(List l, IAtomContainer g1, IAtomContainer g2) {
     if(l==null)
       return(l);
-    Bond[] bonds1 = g1.getBonds();
-    Bond[] bonds2 = g2.getBonds();
+    IBond[] bonds1 = g1.getBonds();
+    IBond[] bonds2 = g2.getBonds();
     List result = new Vector();
     for (int i = 0; i < l.size(); i++) {
-    	Bond bond1 = bonds1[((RMap) l.get(i)).getId1()];
-    	Bond bond2 = bonds2[((RMap) l.get(i)).getId2()];
+    	IBond bond1 = bonds1[((RMap) l.get(i)).getId1()];
+    	IBond bond2 = bonds2[((RMap) l.get(i)).getId2()];
       IAtom[] atom1 = bond1.getAtoms();
       IAtom[] atom2 = bond2.getAtoms();
       for (int j = 0; j < 2; j++) {
-    	  Bond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
+    	  IBond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
         for (int k = 0; k < bondsConnectedToAtom1j.length; k++) {
           if (bondsConnectedToAtom1j[k] != bond1) {
-        	  Bond testBond = bondsConnectedToAtom1j[k];
+        	  IBond testBond = bondsConnectedToAtom1j[k];
             for (int m = 0; m < l.size(); m++) {
-            	Bond testBond2 = null;
+            	IBond testBond2 = null;
               if (((RMap) l.get(m)).getId1() == g1.getBondNumber(testBond)) {
                 testBond2 = bonds2[((RMap) l.get(m)).getId2()];
                 for (int n = 0; n < 2; n++) {
@@ -583,8 +583,8 @@ public class UniversalIsomorphismTester {
   private static void nodeConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2)  throws CDKException{
     // resets the target graph.
     gr.clear();
-    Bond[] bondsA1 = ac1.getBonds();
-    Bond[] bondsA2 = ac2.getBonds();
+    IBond[] bondsA1 = ac1.getBonds();
+    IBond[] bondsA2 = ac2.getBonds();
     int k = 0;
 
     // compares each bond of G1 to each bond of G2
@@ -592,12 +592,12 @@ public class UniversalIsomorphismTester {
       for (int j = 0; j < bondsA2.length; j++) {
           if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
         	  throw new CDKException("Timeout exceeded in getOverlaps");
-          Bond bondA2 = bondsA2[j];
+          IBond bondA2 = bondsA2[j];
           if (bondA2 instanceof QueryBond) {
               QueryBond queryBond = (QueryBond)bondA2;
               QueryAtom atom1 = (QueryAtom)(bondA2.getAtomAt(0));
               QueryAtom atom2 = (QueryAtom)(bondA2.getAtomAt(1));
-              Bond bond = bondsA1[i];
+              IBond bond = bondsA1[i];
               if (queryBond.matches(bond)) {
                   // ok, bonds match
                   if (atom1.matches(bond.getAtomAt(0)) && atom2.matches(bond.getAtomAt(1)) ||
@@ -660,13 +660,13 @@ public class UniversalIsomorphismTester {
       x.getForbidden().set(i);
     }
 
-    Bond a1 = null;
-    Bond a2 = null;
-    Bond b1 = null;
-    Bond b2 = null;
+    IBond a1 = null;
+    IBond a2 = null;
+    IBond b1 = null;
+    IBond b2 = null;
 
-    Bond[] bondsA1 = ac1.getBonds();
-    Bond[] bondsA2 = ac2.getBonds();
+    IBond[] bondsA1 = ac1.getBonds();
+    IBond[] bondsA2 = ac2.getBonds();
 
     gr.setFirstGraphSize(ac1.getBondCount());
     gr.setSecondGraphSize(ac2.getBondCount());
@@ -719,7 +719,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static boolean hasCommonAtom(Bond a, Bond b) {
+  private static boolean hasCommonAtom(IBond a, IBond b) {
       
     if (a.contains(b.getAtomAt(0))) {
       return true;
@@ -738,7 +738,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static String getCommonSymbol(Bond a, Bond b) {
+  private static String getCommonSymbol(IBond a, IBond b) {
     String symbol = "";
     
     if (a.contains(b.getAtomAt(0))) {
@@ -758,7 +758,7 @@ public class UniversalIsomorphismTester {
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
-  private static boolean queryAdjacency(Bond a1, Bond b1, Bond a2, Bond b2) {
+  private static boolean queryAdjacency(IBond a1, IBond b1, IBond a2, IBond b2) {
       
 	  IAtom atom1 = null;
 	  IAtom atom2 = null;

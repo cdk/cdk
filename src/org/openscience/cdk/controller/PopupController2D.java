@@ -35,7 +35,7 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
@@ -54,13 +54,13 @@ public class PopupController2D extends Controller2D {
 
 	private static Hashtable popupMenus = null;
 
-	public PopupController2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm, Vector lastAction, JButton moveButton) {
+	public PopupController2D(IChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm, Vector lastAction, JButton moveButton) {
 		this(chemModel,r2dm,c2dm);
 		this.lastAction=lastAction;
 		this.moveButton=moveButton;
 	}
 	
-	public PopupController2D(ChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm) {
+	public PopupController2D(IChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm) {
         super(chemModel, r2dm, c2dm);
 		logger = new LoggingTool(this);
 
@@ -69,7 +69,7 @@ public class PopupController2D extends Controller2D {
 		}
 	}
 
-	public PopupController2D(ChemModel chemModel, Renderer2DModel r2dm) {
+	public PopupController2D(IChemModel chemModel, Renderer2DModel r2dm) {
 		super(chemModel, r2dm);
 	}
 

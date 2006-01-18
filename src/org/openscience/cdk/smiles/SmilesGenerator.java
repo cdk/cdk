@@ -40,7 +40,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
@@ -137,7 +137,7 @@ public class SmilesGenerator
 	 *@param  bond       The bond.
 	 *@return            true=is a potential configuration, false=is not.
 	 */
-	public boolean isValidDoubleBondConfiguration(IAtomContainer container, Bond bond)
+	public boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond)
 	{
 		org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
 		org.openscience.cdk.interfaces.IAtom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
@@ -392,7 +392,7 @@ public class SmilesGenerator
 				{
 					if (!BondTools.isStereo(molecule, allrings.getAtomAt(k)) && hasWedges(molecule, allrings.getAtomAt(k)) != null)
 					{
-						Bond bond = molecule.getBond(allrings.getAtomAt(k), hasWedges(molecule, allrings.getAtomAt(k)));
+						IBond bond = molecule.getBond(allrings.getAtomAt(k), hasWedges(molecule, allrings.getAtomAt(k)));
 						if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
 						{
 							allrings.getAtomAt(k).setProperty(RING_CONFIG, UP);
@@ -681,10 +681,10 @@ public class SmilesGenerator
 	 */
 	private boolean isChiralCenter(IAtom atom, IAtomContainer container)
 	{
-		Bond[] bonds = container.getConnectedBonds(atom);
+		IBond[] bonds = container.getConnectedBonds(atom);
 		for (int i = 0; i < bonds.length; i++)
 		{
-			Bond bond = bonds[i];
+			IBond bond = bonds[i];
 			int stereo = bond.getStereo();
 			if (stereo == CDKConstants.STEREO_BOND_DOWN ||
 					stereo == CDKConstants.STEREO_BOND_UP)
@@ -1707,7 +1707,7 @@ public class SmilesGenerator
 		while (it.hasNext())
 		{
 			Integer integer = (Integer) it.next();
-			Bond b = container.getBond((IAtom) it2.next(), a);
+			IBond b = container.getBond((IAtom) it2.next(), a);
 			int type = (int) b.getOrder();
 			if (type == 2 && !b.getFlag(CDKConstants.ISAROMATIC))
 			{

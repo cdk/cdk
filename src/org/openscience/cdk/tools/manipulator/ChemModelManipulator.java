@@ -32,10 +32,10 @@ import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Bond;
-import org.openscience.cdk.interfaces.ChemModel;
-import org.openscience.cdk.interfaces.Crystal;
-import org.openscience.cdk.interfaces.ElectronContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -57,8 +57,8 @@ import org.openscience.cdk.interfaces.SetOfReactions;
  */
 public class ChemModelManipulator {
     
-    public static void removeAtomAndConnectedElectronContainers(ChemModel chemModel, IAtom atom) {
-        Crystal crystal = chemModel.getCrystal();
+    public static void removeAtomAndConnectedElectronContainers(IChemModel chemModel, IAtom atom) {
+        ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             if (crystal.contains(atom)) {
                 crystal.removeAtomAndConnectedElectronContainers(atom);
@@ -75,8 +75,8 @@ public class ChemModelManipulator {
         }
     }
     
-    public static void removeElectronContainer(ChemModel chemModel, ElectronContainer electrons) {
-        Crystal crystal = chemModel.getCrystal();
+    public static void removeElectronContainer(IChemModel chemModel, IElectronContainer electrons) {
+        ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             if (crystal.contains(electrons)) {
                 crystal.removeElectronContainer(electrons);
@@ -99,9 +99,9 @@ public class ChemModelManipulator {
      *
      * @return  The AtomContainer with all the Molecules of this container
      */
-    public static IAtomContainer getAllInOneContainer(ChemModel chemModel) {
+    public static IAtomContainer getAllInOneContainer(IChemModel chemModel) {
         IAtomContainer container = chemModel.getBuilder().newAtomContainer();
-        Crystal crystal = chemModel.getCrystal();
+        ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             container.add(crystal);
         }
@@ -116,7 +116,7 @@ public class ChemModelManipulator {
         return container;
     }
 
-    public static IAtomContainer createNewMolecule(ChemModel chemModel) {
+    public static IAtomContainer createNewMolecule(IChemModel chemModel) {
         // Add a new molecule either the set of molecules
         Molecule molecule = chemModel.getBuilder().newMolecule();
         if (chemModel.getSetOfMolecules() != null) {
@@ -130,8 +130,8 @@ public class ChemModelManipulator {
         return molecule;
     }
 
-    public static ChemModel newChemModel(IAtomContainer molecule) {
-        ChemModel model = molecule.getBuilder().newChemModel();
+    public static IChemModel newChemModel(IAtomContainer molecule) {
+        IChemModel model = molecule.getBuilder().newChemModel();
         SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
         moleculeSet.addAtomContainer(molecule);
         model.setSetOfMolecules(moleculeSet);
@@ -142,7 +142,7 @@ public class ChemModelManipulator {
      * This badly named methods tries to determine which AtomContainer in the
      * ChemModel is best suited to contain added Atom's and Bond's.
      */
-    public static IAtomContainer getRelevantAtomContainer(ChemModel chemModel, IAtom atom) {
+    public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IAtom atom) {
         IAtomContainer result = null;
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
@@ -159,7 +159,7 @@ public class ChemModelManipulator {
         return null;
     }
 
-    public static IAtomContainer getRelevantAtomContainer(ChemModel chemModel, Bond bond) {
+    public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IBond bond) {
         IAtomContainer result = null;
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
@@ -176,7 +176,7 @@ public class ChemModelManipulator {
         return null;
     }
     
-    public static Reaction getRelevantReaction(ChemModel chemModel, IAtom atom) {
+    public static Reaction getRelevantReaction(IChemModel chemModel, IAtom atom) {
         Reaction reaction = null;
         if (chemModel.getSetOfReactions() != null) {
             SetOfReactions reactionSet = chemModel.getSetOfReactions();
@@ -188,7 +188,7 @@ public class ChemModelManipulator {
     /**
      * Returns all the AtomContainer's of a ChemModel.
      */
-    public static IAtomContainer[] getAllAtomContainers(ChemModel chemModel) {
+    public static IAtomContainer[] getAllAtomContainers(IChemModel chemModel) {
         SetOfMolecules moleculeSet = chemModel.getBuilder().newSetOfMolecules();
         if (chemModel.getSetOfMolecules() != null) {
             moleculeSet.add(chemModel.getSetOfMolecules());
@@ -203,7 +203,7 @@ public class ChemModelManipulator {
         return SetOfMoleculesManipulator.getAllAtomContainers(moleculeSet);
     }
 
-    public static void setAtomProperties(ChemModel chemModel, Object propKey, Object propVal) {
+    public static void setAtomProperties(IChemModel chemModel, Object propKey, Object propVal) {
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMoleculesManipulator.setAtomProperties(
                 chemModel.getSetOfMolecules(), propKey, propVal
@@ -221,10 +221,10 @@ public class ChemModelManipulator {
         }
     }
     
-	public static List getAllChemObjects(ChemModel chemModel) {
+	public static List getAllChemObjects(IChemModel chemModel) {
 		ArrayList list = new ArrayList();
         list.add(chemModel);
-        Crystal crystal = chemModel.getCrystal();
+        ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             list.add(crystal);
         }

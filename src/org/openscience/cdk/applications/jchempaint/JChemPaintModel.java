@@ -36,7 +36,7 @@ import javax.swing.event.EventListenerList;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -66,7 +66,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	private boolean isModified = false;
 
 	/**  The Model that contains the actual chemistry */
-	private ChemModel model;
+	private IChemModel model;
 
 	/**
 	 *  The model for the renderer (which atoms are highlighted, etc...), taken
@@ -86,7 +86,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	 *
 	 * @param  chemModel
 	 */
-	public JChemPaintModel(ChemModel chemModel) {
+	public JChemPaintModel(IChemModel chemModel) {
 		Object modelTitle = chemModel.getProperty(CDKConstants.TITLE);
 		if (modelTitle == null) {
 			title = JCPLocalizationHandler.getInstance().getString("Untitled-") +
@@ -223,7 +223,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 		}
 		else if (position == 1) {
 			// depict bruto formula
-			IAtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((org.openscience.cdk.interfaces.ChemModel)model);
+			IAtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((org.openscience.cdk.interfaces.IChemModel)model);
 			String formula = new MFAnalyser(wholeModel).getHTMLMolecularFormulaWithCharge();
 			status = "<html>" + formula + "</html>";
 		}
@@ -332,7 +332,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 		this.author = author;
 	}
 
-	public void setChemModel(ChemModel chemModel) {
+	public void setChemModel(IChemModel chemModel) {
 		this.model = chemModel;
 		fireChange();
 	}
@@ -342,7 +342,7 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 	 *
 	 * @return the current ChemModel
 	 */
-	public ChemModel getChemModel() {
+	public IChemModel getChemModel() {
 		return model;
 	}
 

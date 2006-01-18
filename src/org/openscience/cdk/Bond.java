@@ -41,7 +41,7 @@ import javax.vecmath.Point3d;
  * @cdk.keyword    atom
  * @cdk.keyword    electron
  */
-public class Bond extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Bond
+public class Bond extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IBond
 {
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -355,7 +355,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 */
 	public boolean compare(Object object)
 	{
-		if (object instanceof org.openscience.cdk.interfaces.Bond)
+		if (object instanceof org.openscience.cdk.interfaces.IBond)
 		{
 			Bond bond = (Bond) object;
 			for (int i = 0; i < atoms.length; i++)
@@ -383,7 +383,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 * @param  bond  The bond which is checked to be connect with this one
 	 * @return       True, if the bonds share an atom, otherwise false
 	 */
-	public boolean isConnectedTo(org.openscience.cdk.interfaces.Bond bond)
+	public boolean isConnectedTo(org.openscience.cdk.interfaces.IBond bond)
 	{
 		for (int f = 0; f < getAtomCount(); f++)
 		{

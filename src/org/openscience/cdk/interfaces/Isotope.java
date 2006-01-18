@@ -32,7 +32,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.created 2005-08-24
  * @cdk.keyword isotope
  */
-public interface Isotope extends Element {
+public interface Isotope extends IElement {
 
 	/**
 	 * Sets the NaturalAbundance attribute of the Isotope object.

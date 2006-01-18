@@ -56,7 +56,7 @@ public class CDKDictionaryReferences {
     public static void makeReferencesExplicit(org.openscience.cdk.interfaces.IChemObject object) {
         if (object instanceof Atom) {
             makeReferencesExplicitForAtom((Atom)object);
-        } else if (object instanceof org.openscience.cdk.interfaces.Bond) {
+        } else if (object instanceof org.openscience.cdk.interfaces.IBond) {
             makeReferencesExplicitForBond((Bond)object);
         } else if (object instanceof ChemModel) {
             makeReferencesExplicitForChemModel((ChemModel)object);
@@ -80,17 +80,17 @@ public class CDKDictionaryReferences {
         makeReferencesExplicitForElement((Element)atom);
     }
     
-    private static void makeReferencesExplicitForBond(org.openscience.cdk.interfaces.Bond bond) {
+    private static void makeReferencesExplicitForBond(org.openscience.cdk.interfaces.IBond bond) {
         int selfCounter = 0;
         bond.setProperty(prefix + ":self:" + selfCounter++, "chemical:covalentBond");
         bond.setProperty(prefix + ":field:order", "chemical:bondOrder");
     }
 
-    private static void makeReferencesExplicitForChemModel(org.openscience.cdk.interfaces.ChemModel model) { // NOPMD
+    private static void makeReferencesExplicitForChemModel(org.openscience.cdk.interfaces.IChemModel model) { // NOPMD
         // nothing to do
     }
 
-    private static void makeReferencesExplicitForElement(org.openscience.cdk.interfaces.Element element) {
+    private static void makeReferencesExplicitForElement(org.openscience.cdk.interfaces.IElement element) {
         int selfCounter = 0;
         element.setProperty(prefix + ":field:symbol", "chemical:atomSymbol");
         element.setProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
