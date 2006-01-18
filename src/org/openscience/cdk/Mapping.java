@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IChemObject;
+
 /**
  * A Mapping is an relation between two ChemObjects in a non-chemical
  * entity. It is not a Bond, nor a Association, merely a relation.
@@ -49,7 +51,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 	 */
 	private static final long serialVersionUID = -6541915644492043503L;
 
-	private org.openscience.cdk.interfaces.IChemObject[] relation;
+	private IChemObject[] relation;
     
     /**
      * Constructs an unconnected lone pair.
@@ -57,7 +59,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * @param objectOne The first IChemObject of the mapping
      * @param objectTwo The second IChemObject of the mapping
      */
-    public Mapping(org.openscience.cdk.interfaces.IChemObject objectOne, org.openscience.cdk.interfaces.IChemObject objectTwo) {
+    public Mapping(IChemObject objectOne, IChemObject objectTwo) {
         relation = new ChemObject[2];
         relation[0] = objectOne;
         relation[1] = objectTwo;
