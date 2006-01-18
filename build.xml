@@ -155,6 +155,7 @@
             <condition property="sunJavaDocInLib">
               <or>
                 <available file="${java.home}/lib/tools.jar" />
+                <available file="${java.home}/../lib/tools.jar" />
               </or>
             </condition>
             <condition property="sunJavaDoc">
