@@ -245,6 +245,9 @@
                   <fileset dir="${java.home}/lib">
                     <include name="tools.jar" if="sunJavaDocInLib"/>
                   </fileset>
+                  <fileset dir="${java.home}/../lib">
+                    <include name="tools.jar" if="sunJavaDocInLib"/>
+                  </fileset>
                 </classpath>
             </javac>
         </target>
@@ -387,7 +390,7 @@
             <copy todir="${build.src}">
                 <fileset dir="${src}">
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                    <!-- excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/ -->
                     <excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                     <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
@@ -415,7 +418,7 @@
                 </classpath>
             
                 <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
-                <excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/>
+                <!-- excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/ -->
             	<excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
                 <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
@@ -428,7 +431,7 @@
                 <fileset dir="${build}">
                     <includesfile name="${src}/${module}.classes" />
                     <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
-                    <excludesfile name="${src}/java1.4.classes" unless="isJava14"/>
+                    <!-- excludesfile name="${src}/java1.4.classes" unless="isJava14"/ -->
                 	<excludesfile name="${src}/java1.5.classes" unless="isJava15"/>
                     <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
                </fileset>
