@@ -337,7 +337,7 @@ public class ReactionTest extends CDKTestCase {
         assertNotNull(mappings);
         assertEquals(1, mappings.length);
         assertEquals(mapping, mappings[0]);*/
-        assert(true);
+    	assertTrue(true);
     }
     
     public void testGetMappings() {

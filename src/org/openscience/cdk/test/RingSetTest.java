@@ -346,6 +346,6 @@ public class RingSetTest extends CDKTestCase {
     public void testClone() {
         // Added to make the Coverage tool happy
         // The method is apparently not part of the interface yet
-        assert(true);
+    	assertTrue(true);
     }
 }
