@@ -92,7 +92,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
- * @cdk.require      java1.4
+ * @cdk.require      java1.4+
  * @cdk.keyword      command line util
  * @cdk.keyword      file format
  * @cdk.builddepends commons-cli-1.0.jar
