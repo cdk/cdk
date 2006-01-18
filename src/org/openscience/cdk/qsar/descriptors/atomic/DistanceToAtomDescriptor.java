@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -128,10 +128,10 @@ public class DistanceToAtomDescriptor implements IDescriptor {
      *@exception  CDKException  Description of the Exception
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         double distanceToAtom = 0;
-        org.openscience.cdk.interfaces.Atom target = container.getAtomAt(targetPosition);
-        org.openscience.cdk.interfaces.Atom focus = container.getAtomAt(focusPosition);
+        org.openscience.cdk.interfaces.IAtom target = container.getAtomAt(targetPosition);
+        org.openscience.cdk.interfaces.IAtom focus = container.getAtomAt(focusPosition);
 
                 if (target.getPoint3d() == null || focus.getPoint3d() == null) {
                     throw new CDKException("Target or focus atom must have 3D coordinates.");
@@ -142,7 +142,7 @@ public class DistanceToAtomDescriptor implements IDescriptor {
     }
 
     // generic method for calculation of distance btw 2 atoms
-    private double calculateDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
+    private double calculateDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
         double distance = 0;
         Point3d firstPoint = atom1.getPoint3d();
         Point3d secondPoint = atom2.getPoint3d();

@@ -69,7 +69,7 @@ public class VASPReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.Crystal crystal = model.getCrystal();
             assertNotNull(crystal);
             assertEquals(16, crystal.getAtomCount());
-            org.openscience.cdk.interfaces.Atom atom = crystal.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = crystal.getAtomAt(0);
             assertNotNull(atom);
             assertNotNull(atom.getFractionalPoint3d());
         } catch (Exception exception) {

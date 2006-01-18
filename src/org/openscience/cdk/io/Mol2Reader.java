@@ -37,8 +37,8 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -211,12 +211,12 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         String yStr = tokenizer.nextToken();
                         String zStr = tokenizer.nextToken();
                         String atomTypeStr = tokenizer.nextToken();
-                        AtomType atomType = atFactory.getAtomType(atomTypeStr);
+                        IAtomType atomType = atFactory.getAtomType(atomTypeStr);
                         if (atomType == null) {
                             atomType = atFactory.getAtomType("X");
                             logger.error("Could not find specified atom type: ", atomTypeStr);
                         }
-                        Atom atom = molecule.getBuilder().newAtom("X");
+                        IAtom atom = molecule.getBuilder().newAtom("X");
                         atom.setID(nameStr);
                         atom.setAtomTypeName(atomTypeStr);
                         atFactory.configure(atom);

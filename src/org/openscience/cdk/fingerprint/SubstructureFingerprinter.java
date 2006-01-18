@@ -29,7 +29,7 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.BitSet;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 
@@ -56,11 +56,11 @@ public class SubstructureFingerprinter implements IFingerprinter {
 	/**
 	 * Calculates the substructure fingerprint for the given AtomContainer.
 	 */
-	public BitSet getFingerprint(AtomContainer ac) throws Exception {
+	public BitSet getFingerprint(IAtomContainer ac) throws Exception {
 		int bitsetLength = substructureSet.getAtomContainerCount();
 		BitSet fingerPrint = new BitSet();
 		
-		AtomContainer substructure = null;
+		IAtomContainer substructure = null;
 		for (int i=0; i<bitsetLength; i++) {
 			substructure = substructureSet.getAtomContainer(i);
 			if (UniversalIsomorphismTester.isSubgraph(ac, substructure)) 

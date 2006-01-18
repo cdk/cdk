@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matcher any Atom.
@@ -35,7 +35,7 @@ public class AnyAtom extends SMARTSAtom {
     public AnyAtom() {
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         return true; // :)
     };
 

@@ -57,7 +57,7 @@ public class Polarizability {
 	 *@param  atom  atom for which the factor should become known
 	 *@return       The polarizabilitiyFactorForAtom value
 	 */
-	public double getPolarizabilitiyFactorForAtom(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
+	public double getPolarizabilitiyFactorForAtom(AtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		AtomContainer acH = new org.openscience.cdk.AtomContainer(ac);
 		try {
 			HydrogenAdder hAdder = new HydrogenAdder();
@@ -97,7 +97,7 @@ public class Polarizability {
 	 *@param  influenceSphereCutOff  cut off for spheres whoch should taken into account for calculation
 	 *@return                        polarizabilitiy
 	 */
-	public double calculateGHEffectiveAtomPolarizability(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom, int influenceSphereCutOff) {
+	public double calculateGHEffectiveAtomPolarizability(AtomContainer ac, org.openscience.cdk.interfaces.IAtom atom, int influenceSphereCutOff) {
 		double polarizabilitiy = 0;
 		Molecule acH = new Molecule(ac);
 		Vector startAtom = new Vector(1);
@@ -134,7 +134,7 @@ public class Polarizability {
 	public double calculateBondPolarizability(AtomContainer ac, Bond bond) {
 		double polarizabilitiy = 0;
 		Molecule acH = new Molecule(ac);
-		org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
 		try {
 			HydrogenAdder hAdder = new HydrogenAdder();
 			hAdder.addExplicitHydrogensToSatisfyValency(acH);
@@ -155,7 +155,7 @@ public class Polarizability {
 	 *@param  atom  Atom
 	 *@return       double polarizabilitiyFactor
 	 */
-	private double getKJPolarizabilityFactor(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
+	private double getKJPolarizabilityFactor(AtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		double polarizabilitiyFactor = 0;
 		String AtomSymbol = "";
 		AtomSymbol = atom.getSymbol();
@@ -221,9 +221,9 @@ public class Polarizability {
 	 *@param  atom  Description of the Parameter
 	 *@return       The numberOfHydrogen value
 	 */
-	private int getNumberOfHydrogen(AtomContainer ac, org.openscience.cdk.interfaces.Atom atom) {
+	private int getNumberOfHydrogen(AtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.Bond[] bonds = ac.getConnectedBonds(atom);
-		org.openscience.cdk.interfaces.Atom connectedAtom = null;
+		org.openscience.cdk.interfaces.IAtom connectedAtom = null;
 		int hCounter = 0;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);

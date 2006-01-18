@@ -33,7 +33,7 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.MMFF94AtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -72,7 +72,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
 	    
     }
     
-    public void testFindMatchingAtomType_AtomContainer_Atom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
     	//System.out.println("**** START ATOMTYPE TEST ******");
@@ -96,7 +96,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         att.assignAtomTypePropertiesToAtom(mol);
         for (int i=0;i<mol.getAtomCount();i++){
         	logger.debug("atomNr:" + mol.getAtomAt(i).toString());
-        	AtomType matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
+        	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
         	assertNotNull(matched);
         	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
         }

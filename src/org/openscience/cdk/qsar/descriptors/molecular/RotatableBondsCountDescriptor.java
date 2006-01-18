@@ -26,8 +26,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -125,7 +125,7 @@ public class RotatableBondsCountDescriptor implements IDescriptor {
 	 *@return                   number of rotatable bonds
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
 		int rotatableBondsCount = 0;
 		org.openscience.cdk.interfaces.Bond[] bonds = ac.getBonds();
 		int degree0 = 0;
@@ -142,7 +142,7 @@ public class RotatableBondsCountDescriptor implements IDescriptor {
 		}
 		for (int i = 0; i < bonds.length; i++) {
 
-			Atom[] atoms = ac.getBondAt(i).getAtoms();
+			IAtom[] atoms = ac.getBondAt(i).getAtoms();
 			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				if ((ac.getMaximumBondOrder(atoms[0]) < 3.0) && (ac.getMaximumBondOrder(atoms[1]) < 3.0)) {
 					if (bonds[i].getFlag(CDKConstants.ISINRING) == false) {

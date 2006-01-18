@@ -55,7 +55,7 @@ public class AssociationTest extends CDKTestCase {
         assertEquals(0, association.getAtomCount());
     }
     
-    public void testAssociation_Atom_Atom() {
+    public void testAssociation_IAtom_IAtom() {
         Association association = new Association(new Atom("C"), new Atom("C"));
         assertEquals(0, association.getElectronCount());
         assertEquals(2, association.getAtomCount());

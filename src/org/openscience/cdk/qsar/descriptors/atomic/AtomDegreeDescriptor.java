@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -123,15 +123,15 @@ public class AtomDegreeDescriptor implements IDescriptor {
     /**
      *  This method calculates the number of not-H substituents of an atom.
      *
-     *@param  container     The {@link AtomContainer} for which this descriptor is to be calculated for
+     *@param  container     The {@link IAtomContainer} for which this descriptor is to be calculated for
      *@return   The number of bonds on the shortest path between two atoms
      *@throws  CDKException  NOT CLEAR
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         int atomDegree = 0;
-        org.openscience.cdk.interfaces.Atom target = container.getAtomAt(targetPosition);
-        org.openscience.cdk.interfaces.Atom[] neighboors = container.getConnectedAtoms(target);
+        org.openscience.cdk.interfaces.IAtom target = container.getAtomAt(targetPosition);
+        org.openscience.cdk.interfaces.IAtom[] neighboors = container.getConnectedAtoms(target);
         for (int i =0; i< neighboors.length;i++) {
             if(!neighboors[i].getSymbol().equals("H")) atomDegree+=1;
         }

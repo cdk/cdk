@@ -29,8 +29,8 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -57,8 +57,8 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     public void testBreadthFirstTargetSearch() {
-        org.openscience.cdk.interfaces.Atom atom1 = molecule.getAtomAt(0);
-        org.openscience.cdk.interfaces.Atom atom2 = molecule.getAtomAt(8);
+        org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtomAt(0);
+        org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtomAt(8);
         Vector sphere = new Vector();
         sphere.addElement(atom1);
         int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
@@ -68,8 +68,8 @@ public class PathToolsTest extends CDKTestCase {
 
 
     public void testGetPath() {
-        AtomContainer atomContainer = null;
-        Atom start = null;
+        IAtomContainer atomContainer = null;
+        IAtom start = null;
         List paths = null;
         SmilesParser sp = new SmilesParser();
         try {
@@ -91,10 +91,10 @@ public class PathToolsTest extends CDKTestCase {
     public void testGetAllPaths1() {
         SmilesParser sp = new SmilesParser();
         try {
-            AtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
+            IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
 
-            Atom start = atomContainer.getAtomAt(0);
-            Atom end = atomContainer.getAtomAt(2);
+            IAtom start = atomContainer.getAtomAt(0);
+            IAtom end = atomContainer.getAtomAt(2);
             List paths = PathTools.getAllPaths(atomContainer, start, end);
 
             Assert.assertEquals(3, paths.size());
@@ -122,7 +122,7 @@ public class PathToolsTest extends CDKTestCase {
     public void testGetNumberOfVertices() {
         SmilesParser sp = new SmilesParser();
         try {
-            AtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
+            IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
             Assert.assertEquals(11, PathTools.getVertexCountAtDistance(atomContainer, 1));
             Assert.assertEquals(14, PathTools.getVertexCountAtDistance(atomContainer, 2));
         } catch (InvalidSmilesException e) {

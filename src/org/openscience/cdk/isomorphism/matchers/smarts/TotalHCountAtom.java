@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matcher checks the formal charge of the Atom.
@@ -39,7 +39,7 @@ public class TotalHCountAtom extends SMARTSAtom {
         this.hCount = hCount;
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         int hCount = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalHCount")).intValue();
         return (hCount == this.hCount);
     };

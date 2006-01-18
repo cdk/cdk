@@ -23,7 +23,7 @@ package org.openscience.cdk.geometry.surface;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Creates a list of atoms neighboring each atom in the molecule.
@@ -40,10 +40,10 @@ import org.openscience.cdk.interfaces.Atom;
 class NeighborList {
     HashMap boxes;
     double box_size;
-    Atom[] atoms;
+    IAtom[] atoms;
 
 
-    public NeighborList(Atom[] atoms, double radius) {
+    public NeighborList(IAtom[] atoms, double radius) {
         this.atoms = atoms;
         this.boxes = new HashMap();
         this.box_size = 2 * radius;
@@ -60,7 +60,7 @@ class NeighborList {
         }
     }
 
-    private String getKeyString(Atom atom) {
+    private String getKeyString(IAtom atom) {
         double x = atom.getX3d();
         double y = atom.getY3d();
         double z = atom.getZ3d();
@@ -76,7 +76,7 @@ class NeighborList {
             Integer.toString(k3) + " " ;
         return(key);
     }
-    private int[] getKeyArray(Atom atom) {
+    private int[] getKeyArray(IAtom atom) {
         double x = atom.getX3d();
         double y = atom.getY3d();
         double z = atom.getZ3d();
@@ -98,7 +98,7 @@ class NeighborList {
     public int[] getNeighbors(int ii) {
         double max_dist_2 = this.box_size*this.box_size;
 
-        Atom ai = this.atoms[ii];
+        IAtom ai = this.atoms[ii];
         int[] key = getKeyArray(ai);
         ArrayList nlist = new ArrayList();
 
@@ -119,7 +119,7 @@ class NeighborList {
                         for (int l = 0; l < nbrs.size(); l++) {
                             int i2 = ((Integer)nbrs.get(l)).intValue();
                             if (i2 != ii) {
-                                Atom aj = atoms[i2];
+                                IAtom aj = atoms[i2];
                                 double x12 = aj.getX3d() - ai.getX3d();
                                 double y12 = aj.getY3d() - ai.getY3d();
                                 double z12 = aj.getZ3d() - ai.getZ3d();

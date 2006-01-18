@@ -83,7 +83,7 @@ public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
             Object object = atomTypes.elementAt(f);
             if (object == null) {
                 System.out.println("Expecting an object but found null!");
-                if (!(object instanceof org.openscience.cdk.interfaces.AtomType)) {
+                if (!(object instanceof org.openscience.cdk.interfaces.IAtomType)) {
                     System.out.println("Expecting cdk.AtomType class, but got: " + object.getClass().getName());
                 }
             }

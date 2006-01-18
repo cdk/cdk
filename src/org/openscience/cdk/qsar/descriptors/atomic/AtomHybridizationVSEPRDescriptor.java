@@ -24,8 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -89,7 +89,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class AtomHybridizationVSEPRDescriptor implements IDescriptor {
 
 	private int targetPosition = 0;
-	org.openscience.cdk.interfaces.Atom atom = null;
+	org.openscience.cdk.interfaces.IAtom atom = null;
 	private LoggingTool logger;
   private static AtomTypeFactory atomATF=null;
 	
@@ -152,11 +152,11 @@ public class AtomHybridizationVSEPRDescriptor implements IDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 
-	public DescriptorValue calculate(AtomContainer container) throws CDKException
+	public DescriptorValue calculate(IAtomContainer container) throws CDKException
 	{
 		atom = container.getAtomAt(targetPosition);
 		
-		AtomType atomType = findMatchingAtomType(container, atom);
+		IAtomType atomType = findMatchingAtomType(container, atom);
 		
 		double bondOrderSum = container.getBondOrderSum(atom);
 		int charge = atom.getFormalCharge();
@@ -197,7 +197,7 @@ public class AtomHybridizationVSEPRDescriptor implements IDescriptor {
 
 
 	
-	private AtomType findMatchingAtomType(AtomContainer container, org.openscience.cdk.interfaces.Atom atom) throws CDKException 
+	private IAtomType findMatchingAtomType(IAtomContainer container, org.openscience.cdk.interfaces.IAtom atom) throws CDKException 
 	{
 		try {
       if(atomATF==null)
@@ -205,7 +205,7 @@ public class AtomHybridizationVSEPRDescriptor implements IDescriptor {
             container.getBuilder());
 
 			// take atomtype for the given element...
-			AtomType atomType = atomATF.getAtomType(atom.getSymbol());
+			IAtomType atomType = atomATF.getAtomType(atom.getSymbol());
 			return atomType;
 			
 		} catch (Exception ex1) 

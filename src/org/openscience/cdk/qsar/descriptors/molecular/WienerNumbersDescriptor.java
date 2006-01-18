@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -126,11 +126,11 @@ public class WienerNumbersDescriptor implements IDescriptor {
     /**
      * Calculate the Wiener numbers.
      *
-     *@param  atomContainer   The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  atomContainer   The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   wiener numbers as array of 2 doubles
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
         wienerNumbers = new DoubleArrayResult(2);
         double wienerPathNumber = 0; //wienerPath
         double wienerPolarityNumber = 0; //wienerPol

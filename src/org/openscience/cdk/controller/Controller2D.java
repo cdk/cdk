@@ -29,8 +29,8 @@
  */
 package org.openscience.cdk.controller;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfReactions;
@@ -87,12 +87,12 @@ public class Controller2D extends SimpleController2D
 		this.chemModel = chemModel;
 	}
 
-	AtomContainer getRelevantAtomContainer(ChemModel chemModel, Atom atom)
+	IAtomContainer getRelevantAtomContainer(ChemModel chemModel, IAtom atom)
 	{
 		return ChemModelManipulator.getRelevantAtomContainer(chemModel, atom);
 	}
 
-	AtomContainer getAllInOneContainer(ChemModel chemModel)
+	IAtomContainer getAllInOneContainer(ChemModel chemModel)
 	{
 		return ChemModelManipulator.getAllInOneContainer(chemModel);	
 	}
@@ -112,7 +112,7 @@ public class Controller2D extends SimpleController2D
 			Reaction[] reactions = reactionSet.getReactions();
 			for (int i = 0; i < reactions.length; i++)
 			{
-				AtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reactions[i]);
+				IAtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reactions[i]);
 				double[] minmax = GeometryTools.getMinMax(atomContainer);
 				if ((X <= minmax[2]) && (X >= minmax[0]) &&
 						(Y <= minmax[3]) && (Y >= minmax[1]))
@@ -125,7 +125,7 @@ public class Controller2D extends SimpleController2D
 		return null;
 	}
 	
-	Reaction getRelevantReaction(ChemModel chemModel, Atom atom)
+	Reaction getRelevantReaction(ChemModel chemModel, IAtom atom)
 	{
 		return ChemModelManipulator.getRelevantReaction(chemModel, atom);
 	}

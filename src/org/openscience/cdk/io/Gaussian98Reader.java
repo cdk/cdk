@@ -36,8 +36,8 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -387,7 +387,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
                         } catch (Exception exception) {
                             throw new CDKException("Could not determine element symbol!", exception);
                         }
-			Atom atom = model.getBuilder().newAtom(symbol);
+			IAtom atom = model.getBuilder().newAtom(symbol);
 			atom.setPoint3d(new Point3d(x, y, z));
 			molecule.addAtom(atom);
 		}
@@ -443,7 +443,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 				{
 					throw new CDKException("Error while reading charge: expected double.");
 				}
-				org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(atomCounter - 1);
+				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(atomCounter - 1);
 				atom.setCharge(charge);
 			}
 		}
@@ -528,7 +528,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 */
 	private void readNMRData(ChemModel model, String labelLine) throws CDKException
 	{
-		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
+		IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
 		// Determine label for properties
 		String label;
 		if (labelLine.indexOf("Diamagnetic") >= 0)

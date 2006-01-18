@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -128,7 +128,7 @@ public class AtomCountDescriptor implements IDescriptor {
 
 
     /**
-     *  This method calculate the number of atoms of a given type in an {@link AtomContainer}.
+     *  This method calculate the number of atoms of a given type in an {@link IAtomContainer}.
      *
      *@param  container  The atom container for which this descriptor is to be calculated
      *@return            Number of atoms of a certain type is returned.
@@ -137,12 +137,12 @@ public class AtomCountDescriptor implements IDescriptor {
 
     // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
     // this could be useful for other descriptors like polar surface area...
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         int atomCount = 0;
 
         if (container == null) throw new CDKException("The supplied AtomContainer was NULL");
 
-        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
 
         if (atoms == null) throw new CDKException("There were no atoms in the supplied AtomContainer");
 

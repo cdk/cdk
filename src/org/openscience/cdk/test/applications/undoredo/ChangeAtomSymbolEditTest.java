@@ -80,7 +80,7 @@ public class ChangeAtomSymbolEditTest extends CDKTestCase {
 		HashMap atomSymbolMap = new HashMap();
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
 			String formerSymbol = atom.getSymbol();
 			String[] symbols = new String[2];
 			symbols[0] = formerSymbol;

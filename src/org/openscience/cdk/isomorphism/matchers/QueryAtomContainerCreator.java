@@ -24,8 +24,8 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
@@ -44,9 +44,9 @@ public class QueryAtomContainerCreator {
      *@param  container  The AtomContainer that stands as model
      *@return            The new QueryAtomContainer created from container.
      */
-    public static QueryAtomContainer createBasicQueryContainer(AtomContainer container) {
+    public static QueryAtomContainer createBasicQueryContainer(IAtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        Atom[] atoms = container.getAtoms();
+        IAtom[] atoms = container.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolQueryAtom(atoms[i]));
         }
@@ -75,9 +75,9 @@ public class QueryAtomContainerCreator {
      *@param  container  The AtomContainer that stands as model
      *@return            The new QueryAtomContainer created from container.
      */
-    public static QueryAtomContainer createSymbolAndChargeQueryContainer(AtomContainer container) {
+    public static QueryAtomContainer createSymbolAndChargeQueryContainer(IAtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        Atom[] atoms = container.getAtoms();
+        IAtom[] atoms = container.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(atoms[i]));
         }
@@ -107,9 +107,9 @@ public class QueryAtomContainerCreator {
      *@param  aromaticity  True = use aromaticity flags to create AtomaticAtoms and AromaticQueryBonds
      *@return              The new QueryAtomContainer created from container
      */
-    public static QueryAtomContainer createAnyAtomContainer(AtomContainer container, boolean aromaticity) {
+    public static QueryAtomContainer createAnyAtomContainer(IAtomContainer container, boolean aromaticity) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        Atom[] atoms = container.getAtoms();
+        IAtom[] atoms = container.getAtoms();
 
         for (int i = 0; i < atoms.length; i++) {
             if (aromaticity && atoms[i].getFlag(CDKConstants.ISAROMATIC)) {

@@ -31,7 +31,7 @@ package org.openscience.cdk.tools;
 import java.util.Hashtable;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Ring;
 
@@ -93,13 +93,13 @@ public class DeAromatizationTool {
 	
 	private static boolean deAromatizePyrolle(Ring ring) {
 		Bond[] bonds = ring.getBonds();
-		Atom[] atoms = ring.getAtoms();
+		IAtom[] atoms = ring.getAtoms();
 		if (bonds.length != 5) return false;
 		for (int i = 0; i<atoms.length; i++) {
 			if(atoms[i].getSymbol().equals("N")){
 				int done=0;
 				Bond bond=null;
-				Atom atom=atoms[i];
+				IAtom atom=atoms[i];
 				int count=0;
 				while(done!=2){
 					bond=getNextBond(atom,bond,ring);
@@ -119,7 +119,7 @@ public class DeAromatizationTool {
 		return true;
 	}
 	
-	private static Bond getNextBond(Atom atom, Bond bond, Ring ring){
+	private static Bond getNextBond(IAtom atom, Bond bond, Ring ring){
 		Bond[] bonds=ring.getConnectedBonds(atom);
 		for(int i=0;i<bonds.length;i++)
 			if(bonds[i]!=bond)

@@ -28,8 +28,8 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Ring;
@@ -77,8 +77,8 @@ public class RingTest extends CDKTestCase {
         assertEquals(0, ring.getBondCount());
     }
 
-    public void testRing_AtomContainer() {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+    public void testRing_IAtomContainer() {
+        IAtomContainer container = new org.openscience.cdk.AtomContainer();
         container.addAtom(builder.newAtom("C"));
         container.addAtom(builder.newAtom("C"));
         
@@ -98,11 +98,11 @@ public class RingTest extends CDKTestCase {
         assertEquals(5, r.getRingSize());
     }
     
-    public void testGetNextBond_Bond_Atom() {
+    public void testGetNextBond_Bond_IAtom() {
         Ring ring = builder.newRing();
-        Atom c1 = builder.newAtom("C");
-        Atom c2 = builder.newAtom("C");
-        Atom c3 = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom c3 = builder.newAtom("C");
         Bond b1 = builder.newBond(c1, c2, 1.0);
         Bond b2 = builder.newBond(c3, c2, 1.0);
         Bond b3 = builder.newBond(c1, c3, 1.0);

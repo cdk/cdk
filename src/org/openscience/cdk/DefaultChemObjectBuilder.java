@@ -53,49 +53,49 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new AminoAcid();
 	}
 	
-	public org.openscience.cdk.interfaces.Atom newAtom() {
+	public org.openscience.cdk.interfaces.IAtom newAtom() {
 		return new Atom();
 	}
 	
-    public org.openscience.cdk.interfaces.Atom newAtom(String elementSymbol) {
+    public org.openscience.cdk.interfaces.IAtom newAtom(String elementSymbol) {
     	return new Atom(elementSymbol);
     }
     
-    public org.openscience.cdk.interfaces.Atom newAtom(String elementSymbol, javax.vecmath.Point2d point2d) {
+    public org.openscience.cdk.interfaces.IAtom newAtom(String elementSymbol, javax.vecmath.Point2d point2d) {
     	return new Atom(elementSymbol, point2d);
     }
 
-    public org.openscience.cdk.interfaces.Atom newAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
+    public org.openscience.cdk.interfaces.IAtom newAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
     	return new Atom(elementSymbol, point3d);
     }
 		
-	public org.openscience.cdk.interfaces.AtomContainer newAtomContainer() {
+	public org.openscience.cdk.interfaces.IAtomContainer newAtomContainer() {
 		return new AtomContainer();
 	}
     
-	public org.openscience.cdk.interfaces.AtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
+	public org.openscience.cdk.interfaces.IAtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
 		return new AtomContainer(atomCount, electronContainerCount);
 	}
     
-	public org.openscience.cdk.interfaces.AtomContainer newAtomContainer(org.openscience.cdk.interfaces.AtomContainer container) {
+	public org.openscience.cdk.interfaces.IAtomContainer newAtomContainer(org.openscience.cdk.interfaces.IAtomContainer container) {
 		return new AtomContainer(container);
 	}
 	
-    public org.openscience.cdk.interfaces.AtomParity newAtomParity(
-    		org.openscience.cdk.interfaces.Atom centralAtom, 
-    		org.openscience.cdk.interfaces.Atom first, 
-    		org.openscience.cdk.interfaces.Atom second, 
-    		org.openscience.cdk.interfaces.Atom third, 
-    		org.openscience.cdk.interfaces.Atom fourth,
+    public org.openscience.cdk.interfaces.IAtomParity newAtomParity(
+    		org.openscience.cdk.interfaces.IAtom centralAtom, 
+    		org.openscience.cdk.interfaces.IAtom first, 
+    		org.openscience.cdk.interfaces.IAtom second, 
+    		org.openscience.cdk.interfaces.IAtom third, 
+    		org.openscience.cdk.interfaces.IAtom fourth,
             int parity) {
     	return new AtomParity(centralAtom, first, second, third, fourth, parity);
     }
 
-	public org.openscience.cdk.interfaces.AtomType newAtomType(String elementSymbol) {
+	public org.openscience.cdk.interfaces.IAtomType newAtomType(String elementSymbol) {
 		return new AtomType(elementSymbol);
 	}
 
-	public org.openscience.cdk.interfaces.AtomType newAtomType(String identifier, String elementSymbol) {
+	public org.openscience.cdk.interfaces.IAtomType newAtomType(String identifier, String elementSymbol) {
 		return new AtomType(identifier, elementSymbol);
 	}
 
@@ -107,15 +107,15 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new Bond();
 	}
 	
-	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
+	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
 		return new Bond(atom1, atom2);
 	}
 	
-	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order) {
+	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order) {
 		return new Bond(atom1, atom2, order);
 	}
 	
-	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order, int stereo) {
+	public org.openscience.cdk.interfaces.Bond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order, int stereo) {
 		return new Bond(atom1, atom2, order, stereo);
 	}
 	
@@ -139,7 +139,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
     	return new Crystal();
     }
     
-    public org.openscience.cdk.interfaces.Crystal newCrystal(org.openscience.cdk.interfaces.AtomContainer container) {
+    public org.openscience.cdk.interfaces.Crystal newCrystal(org.openscience.cdk.interfaces.IAtomContainer container) {
     	return new Crystal(container);
     }
     
@@ -181,7 +181,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
     	return new LonePair();
     }
 
-    public org.openscience.cdk.interfaces.LonePair newLonePair(org.openscience.cdk.interfaces.Atom atom) {
+    public org.openscience.cdk.interfaces.LonePair newLonePair(org.openscience.cdk.interfaces.IAtom atom) {
     	return new LonePair(atom);
     }
 
@@ -193,7 +193,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new Molecule(atomCount, electronContainerCount);
 	}
 
-	public org.openscience.cdk.interfaces.Molecule newMolecule(org.openscience.cdk.interfaces.AtomContainer container) {
+	public org.openscience.cdk.interfaces.Molecule newMolecule(org.openscience.cdk.interfaces.IAtomContainer container) {
 		return new Molecule(container);
 	}
 
@@ -213,7 +213,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new Ring();
 	}
 	
-	public org.openscience.cdk.interfaces.Ring newRing(org.openscience.cdk.interfaces.AtomContainer container) {
+	public org.openscience.cdk.interfaces.Ring newRing(org.openscience.cdk.interfaces.IAtomContainer container) {
 		return new Ring(container);
 	}
 	
@@ -245,7 +245,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
     	return new SingleElectron();
     }
     
-    public org.openscience.cdk.interfaces.SingleElectron newSingleElectron(org.openscience.cdk.interfaces.Atom atom) {
+    public org.openscience.cdk.interfaces.SingleElectron newSingleElectron(org.openscience.cdk.interfaces.IAtom atom) {
     	return new SingleElectron(atom);   
     }
 
@@ -261,7 +261,7 @@ public class DefaultChemObjectBuilder implements ChemObjectBuilder {
 		return new PseudoAtom(label);
 	}
 
-	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(org.openscience.cdk.interfaces.Atom atom) {
+	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(org.openscience.cdk.interfaces.IAtom atom) {
 		return new PseudoAtom(atom);
 	}
 

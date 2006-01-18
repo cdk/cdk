@@ -98,8 +98,8 @@ public class IsomorphismTester implements java.io.Serializable
 	 */
 	public boolean isIsomorphic(Molecule mol2) {
 		boolean found;
-		org.openscience.cdk.interfaces.Atom atom1 = null;
-		org.openscience.cdk.interfaces.Atom atom2 = null;
+		org.openscience.cdk.interfaces.IAtom atom1 = null;
+		org.openscience.cdk.interfaces.IAtom atom2 = null;
 		setCompareTable(mol2);
 		for (int f = 0; f < sortedBaseTable.length; f++)
 		{

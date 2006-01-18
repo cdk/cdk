@@ -62,7 +62,7 @@ public class ChangeIsotopeEditTest extends CDKTestCase {
 			edit.redo();
 		}
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
 			assertTrue(atom.getMassNumber() == ((int[]) isotopesMap.get(atom))[1]);
 		}
 	}
@@ -86,7 +86,7 @@ public class ChangeIsotopeEditTest extends CDKTestCase {
 			edit.undo();
 		}
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
 			assertTrue(atom.getMassNumber() == ((int[]) isotopesMap.get(atom))[0]);
 		}
 	}
@@ -102,7 +102,7 @@ public class ChangeIsotopeEditTest extends CDKTestCase {
 		mol = MoleculeFactory.makeAlphaPinene();
 		HashMap isotopesMap = new HashMap();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
 			Isotope isotope = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(
 					atom.getSymbol());
 			int isotopeNumber = isotope.getMassNumber();

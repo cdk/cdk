@@ -28,7 +28,7 @@ import java.util.Hashtable;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module data-debug
  */
-public class DebugAtom extends org.openscience.cdk.Atom implements Atom {
+public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 
 	LoggingTool logger = new LoggingTool(DebugAtom.class);
 	

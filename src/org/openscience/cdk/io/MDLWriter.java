@@ -48,7 +48,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
@@ -226,7 +226,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	}
 	
 	private void writeChemFile(ChemFile file) {
-		AtomContainer[] molecules = ChemFileManipulator.getAllAtomContainers(file);
+		IAtomContainer[] molecules = ChemFileManipulator.getAllAtomContainers(file);
 		for (int i=0; i<molecules.length; i++) {
 			try {
 				boolean[] isVisible=new boolean[molecules[i].getAtomCount()];
@@ -318,10 +318,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.write(line);
 
         // write Atom block
-        org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
           if(isVisible[f]){
-        	  org.openscience.cdk.interfaces.Atom atom = atoms[f];
+        	  org.openscience.cdk.interfaces.IAtom atom = atoms[f];
             line = "";
             if (atom.getPoint3d() != null) {
                 line += formatMDLFloat((float) atom.getX3d());
@@ -392,7 +392,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
         // write formal atomic charges
         for (int i = 0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.Atom atom = atoms[i];
+        	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
             int charge = atom.getFormalCharge();
             if (charge != 0) {
                 writer.write("M  CHG  1 ");
@@ -405,7 +405,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         
         // write formal isotope information
         for (int i = 0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.Atom atom = atoms[i];
+        	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
             if (!(atom instanceof PseudoAtom)) {
                 int atomicMass = atom.getMassNumber();
                 int majorMass = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();

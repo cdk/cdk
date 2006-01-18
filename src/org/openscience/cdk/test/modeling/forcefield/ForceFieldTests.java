@@ -275,7 +275,7 @@ public class ForceFieldTests extends CDKTestCase {
 		SmilesParser sp = new SmilesParser();
 		ac = sp.parseSmiles("CC");
 		hAdder.addExplicitHydrogensToSatisfyValency((Molecule) ac);
-		org.openscience.cdk.interfaces.Atom a = new Atom();
+		org.openscience.cdk.interfaces.IAtom a = new Atom();
 		a = ac.getAtomAt(0);
 		Point3d atomCoordinate0 = new Point3d(1, 0, 0);
 		a.setPoint3d(atomCoordinate0);

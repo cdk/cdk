@@ -46,7 +46,7 @@ public interface Bond extends ElectronContainer {
 	 * @return    An array of atoms participating in this bond
 	 * @see       #setAtoms
 	 */
-	public Atom[] getAtoms();
+	public IAtom[] getAtoms();
 
 	/**
 	 * Sets the array of atoms making up this bond.
@@ -54,7 +54,7 @@ public interface Bond extends ElectronContainer {
 	 * @param  atoms  An array of atoms that forms this bond
 	 * @see           #getAtoms
 	 */
-	public void setAtoms(Atom[] atoms);
+	public void setAtoms(IAtom[] atoms);
 
 	/**
 	 * Returns the number of Atoms in this Bond.
@@ -70,7 +70,7 @@ public interface Bond extends ElectronContainer {
 	 * @return           The atom at the specified position
 	 * @see              #setAtomAt
 	 */
-	public Atom getAtomAt(int position);
+	public IAtom getAtomAt(int position);
 
 
 	/**
@@ -79,7 +79,7 @@ public interface Bond extends ElectronContainer {
 	 * @param  atom  The atom the bond partner is searched of
 	 * @return       the connected atom or null
 	 */
-	public Atom getConnectedAtom(Atom atom);
+	public IAtom getConnectedAtom(IAtom atom);
 
 	/**
 	 * Returns true if the given atom participates in this bond.
@@ -87,7 +87,7 @@ public interface Bond extends ElectronContainer {
 	 * @param  atom  The atom to be tested if it participates in this bond
 	 * @return       true if the atom participates in this bond
 	 */
-	public boolean contains(Atom atom);
+	public boolean contains(IAtom atom);
 
 	/**
 	 * Sets an Atom in this bond.
@@ -96,7 +96,7 @@ public interface Bond extends ElectronContainer {
 	 * @param  position  The position in this bond where the atom is to be inserted
 	 * @see              #getAtomAt
 	 */
-	public void setAtomAt(Atom atom, int position);
+	public void setAtomAt(IAtom atom, int position);
 
 	/**
 	 * Returns the bond order of this bond.

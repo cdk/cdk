@@ -72,7 +72,7 @@ public class StretchBendInteractions {
 
 		ab.setMMFF94AngleBendingParameters(molecule, parameterSet, angleBendingFlag);
 
-		org.openscience.cdk.interfaces.Atom[] atomConnected = null;
+		org.openscience.cdk.interfaces.IAtom[] atomConnected = null;
 
 		Vector stretchBendInteractionsData = null;
 		Vector bondData = null;

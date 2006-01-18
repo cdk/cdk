@@ -45,8 +45,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -170,14 +170,14 @@ public class FileConvertor {
                 }
 
                 // apply modifications
-                AtomContainer[] containers = (AtomContainer[])ChemFileManipulator.getAllAtomContainers(content);
+                IAtomContainer[] containers = (IAtomContainer[])ChemFileManipulator.getAllAtomContainers(content);
                 AtomTypeFactory factory = AtomTypeFactory.getInstance(
                     "org/openscience/cdk/config/data/jmol_atomtypes.txt",
                     content.getBuilder()
                 );
                 for (int i=0; i<containers.length; i++) {
-                	AtomContainer container = containers[i];
-                	Atom[] atoms = container.getAtoms();
+                	IAtomContainer container = containers[i];
+                	IAtom[] atoms = container.getAtoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
                         for (int j=0; j<atoms.length; j++) {
                             if (!(atoms[j] instanceof PseudoAtom)) {

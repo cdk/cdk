@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.undo.UndoableEdit;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
@@ -60,12 +60,12 @@ public class ChangeAtomSymbolAction extends JCPAction
 		if (jcpm != null)
 		{
 			Controller2DModel c2dm = jcpm.getControllerModel();
-			Atom atomInRange = null;
+			IAtom atomInRange = null;
 			IChemObject object = getSource(event);
 			logger.debug("Source of call: ", object);
-			if (object instanceof Atom)
+			if (object instanceof IAtom)
 			{
-				atomInRange = (Atom) object;
+				atomInRange = (IAtom) object;
 			} else
 			{
 				atomInRange = jcpm.getRendererModel().getHighlightedAtom();

@@ -36,7 +36,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -250,7 +250,7 @@ public class VASPReader extends DefaultChemObjectReader {
                 } catch (Exception exception) {
                     throw new CDKException("Could not determine element symbol!", exception);
                 }
-                Atom atom = sequence.getBuilder().newAtom(symbol);
+                IAtom atom = sequence.getBuilder().newAtom(symbol);
                 atom.setAtomicNumber(atomType[i]);
                 // convert fractional to cartesian
                 double[] frac = new double[3];

@@ -27,9 +27,9 @@ package org.openscience.cdk.validate;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -87,7 +87,7 @@ public class ValidatorEngine implements ValidatorInterface {
         }
     }
     
-    public ValidationReport validateAtom(org.openscience.cdk.interfaces.Atom subject) {
+    public ValidationReport validateAtom(org.openscience.cdk.interfaces.IAtom subject) {
         logger.info("Validating org.openscience.cdk.Atom");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -101,7 +101,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into hierarchy
         return report;
     }
-    public ValidationReport validateAtomContainer(AtomContainer subject) {
+    public ValidationReport validateAtomContainer(IAtomContainer subject) {
         logger.info("Validating org.openscience.cdk.AtomContainer");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -113,7 +113,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        Atom[] atoms = subject.getAtoms();
+        IAtom[] atoms = subject.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             report.addReport(validateAtom(atoms[i]));
         }
@@ -123,7 +123,7 @@ public class ValidatorEngine implements ValidatorInterface {
         }
         return report;
     }
-    public ValidationReport validateAtomType(AtomType subject) {
+    public ValidationReport validateAtomType(IAtomType subject) {
         logger.info("Validating org.openscience.cdk.AtomType");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -149,7 +149,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateElectronContainer(subject));
         // traverse into hierarchy
-        org.openscience.cdk.interfaces.Atom[] atoms = subject.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = subject.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             report.addReport(validateAtom(atoms[i]));
         }

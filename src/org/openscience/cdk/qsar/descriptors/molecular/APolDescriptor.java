@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -124,20 +124,20 @@ public class APolDescriptor implements IDescriptor {
 
 
     /**
-     * Calculate the sum of atomic polarizabilities in an {@link AtomContainer}.
+     * Calculate the sum of atomic polarizabilities in an {@link IAtomContainer}.
      *
-     *@param  container  The {@link AtomContainer} for which the descriptor is to be calculated
+     *@param  container  The {@link IAtomContainer} for which the descriptor is to be calculated
      *@return            The sum of atomic polarizabilities
      *@throws CDKException if there is an error in getting element symbols from the
      * {@link IsotopeFactory}
      */
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         double apol = 0;
         int atomicNumber = 0;
         try {
             ifac = IsotopeFactory.getInstance(container.getBuilder());			
             Element element = null;
-            org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+            org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
             String symbol = null;
             for (int i = 0; i < atoms.length; i++) {
                 symbol = container.getAtomAt(i).getSymbol();

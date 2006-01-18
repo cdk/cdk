@@ -28,7 +28,7 @@ import java.util.Hashtable;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
@@ -50,15 +50,15 @@ public class DebugBond extends org.openscience.cdk.Bond
 		super();
 	}
 	
-	public DebugBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
+	public DebugBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
 		super(atom1, atom2);
 	}
 	
-	public DebugBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order) {
+	public DebugBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order) {
 		super(atom1, atom2, order);
 	}
 	
-	public DebugBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order, int stereo) {
+	public DebugBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order, int stereo) {
 		super(atom1, atom2, order, stereo);
 	}
 
@@ -167,12 +167,12 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public Atom[] getAtoms() {
+	public IAtom[] getAtoms() {
 		logger.debug("Getting atoms: ", super.getAtoms().length);
 		return super.getAtoms();
 	}
 
-	public void setAtoms(Atom[] atoms) {
+	public void setAtoms(IAtom[] atoms) {
 		logger.debug("Setting atoms: ", atoms.length);
 		super.setAtoms(atoms);
 	}
@@ -182,22 +182,22 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return super.getAtomCount();
 	}
 
-	public Atom getAtomAt(int position) {
+	public IAtom getAtomAt(int position) {
 		logger.debug("Getting atom at position: ", position);
 		return super.getAtomAt(position);
 	}
 
-	public Atom getConnectedAtom(Atom atom) {
+	public IAtom getConnectedAtom(IAtom atom) {
 		logger.debug("Getting connected atom to atom: ", atom);
 		return super.getConnectedAtom(atom);
 	}
 
-	public boolean contains(Atom atom) {
+	public boolean contains(IAtom atom) {
 		logger.debug("Contains atom: ", atom);
 		return super.contains(atom);
 	}
 
-	public void setAtomAt(Atom atom, int position) {
+	public void setAtomAt(IAtom atom, int position) {
 		logger.debug("Setting atom at position: ", atom);
 		super.setAtomAt(atom, position);
 	}

@@ -51,7 +51,7 @@ public class MoleculeBuilder
 {
     /** The molecule which is worked upon throughout the class and returned at the end */
     private Molecule currentMolecule = new Molecule();
-    private org.openscience.cdk.interfaces.Atom endOfChain;
+    private org.openscience.cdk.interfaces.IAtom endOfChain;
         
     /**
      * Builds the main chain which may act as a foundation for futher working groups.
@@ -258,7 +258,7 @@ public class MoleculeBuilder
             }
             
             //Stuff which applied no matter where the N atom is:
-            org.openscience.cdk.interfaces.Atom nitrogenAtom = currentMolecule.getLastAtom();
+            org.openscience.cdk.interfaces.IAtom nitrogenAtom = currentMolecule.getLastAtom();
             nitrogenAtom.setFormalCharge(+1);
             addAtom("O", nitrogenAtom, 1.0, 0);
             currentMolecule.getLastAtom().setFormalCharge(-1);
@@ -456,7 +456,7 @@ public class MoleculeBuilder
      * @param bondOrder The order of the bond to use to join the two atoms.
      * @param hydrogenCount The number of hydrogen atoms connected to this atom.
      */
-    private void addAtom(String newAtomType, org.openscience.cdk.interfaces.Atom otherConnectingAtom, double bondOrder, int hydrogenCount)
+    private void addAtom(String newAtomType, org.openscience.cdk.interfaces.IAtom otherConnectingAtom, double bondOrder, int hydrogenCount)
     {
         //Create the new atom and bond.
         Atom newAtom = new Atom(newAtomType);
@@ -486,7 +486,7 @@ public class MoleculeBuilder
                 Token locationToken = (Token) locationsIterator.next();
                 
                 int joinLocation = Integer.parseInt(locationToken.image) - 1;
-                org.openscience.cdk.interfaces.Atom connectingAtom;
+                org.openscience.cdk.interfaces.IAtom connectingAtom;
                 
                 //If join location wasn't specified we must be dealing with the "hack" which makes
                 //mainchains a substituent if a real substituent has already been parsed and interpreted as a main chain

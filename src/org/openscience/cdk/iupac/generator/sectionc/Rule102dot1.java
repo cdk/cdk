@@ -45,7 +45,7 @@ public class Rule102dot1 extends NamingRule {
         IUPACNamePart inp = null;
         if (m instanceof Fragment) {
             if (m.getAtomCount() == 1) {
-            	org.openscience.cdk.interfaces.Atom atom = m.getAtomAt(0);
+            	org.openscience.cdk.interfaces.IAtom atom = m.getAtomAt(0);
                 String symbol = atom.getSymbol();
                 m.setProperty(COMPLETED_FLAG, "yes");
                 atom.setProperty(ATOM_NAMED_FLAG, "yes");

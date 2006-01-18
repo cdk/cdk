@@ -33,7 +33,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
@@ -161,7 +161,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *@return                Description of the Return Value
 	 *@exception  Exception  Description of the Exception
 	 */
-	public AtomContainer generateCoordinates(Molecule m) throws Exception
+	public IAtomContainer generateCoordinates(Molecule m) throws Exception
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		sdg.setMolecule(m);
@@ -210,7 +210,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		 org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 		      org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
-		      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+		      IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 	
 			molecule = new Molecule(atomContainer);
 		}
@@ -239,7 +239,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		 ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		 org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 		      org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
-		      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+		      IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 	
 			molecule = new Molecule(atomContainer);
 		}
@@ -282,7 +282,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testAlphaPinene() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeAlphaPinene();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -295,7 +295,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testBiphenyl() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeBiphenyl();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -308,7 +308,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void test4x3CondensedRings() throws Exception
 	{
 		Molecule m = MoleculeFactory.make4x3CondensedRings();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -321,7 +321,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testPhenylEthylBenzene() throws Exception
 	{
 		Molecule m = MoleculeFactory.makePhenylEthylBenzene();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -334,7 +334,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testSpiroRings() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeSpiroRings();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 		if (standAlone)MoleculeViewer2D.display(new Molecule(ac), false);
 	}
@@ -348,7 +348,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testMethylDecaline() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeMethylDecaline();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -361,7 +361,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testBranchedAliphatic() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeBranchedAliphatic();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -374,7 +374,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testDiamantane() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeDiamantane();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -387,7 +387,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testEthylCyclohexane() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeEthylCyclohexane();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -400,7 +400,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public void testBicycloRings() throws Exception
 	{
 		Molecule m = MoleculeFactory.makeBicycloRings();
-		AtomContainer ac = generateCoordinates(m);
+		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -438,7 +438,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("c1ccccc1");
-		AtomContainer ac = generateCoordinates(mol);
+		IAtomContainer ac = generateCoordinates(mol);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
@@ -452,7 +452,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C"));
-		AtomContainer ac = generateCoordinates(mol);
+		IAtomContainer ac = generateCoordinates(mol);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 	
@@ -467,7 +467,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
 		try{
-			AtomContainer ac = generateCoordinates(mol);
+			IAtomContainer ac = generateCoordinates(mol);
             assertTrue(GeometryTools.has2DCoordinates(ac));
 		}
 		catch(Exception exc)

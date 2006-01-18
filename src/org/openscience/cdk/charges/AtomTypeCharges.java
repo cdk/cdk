@@ -27,7 +27,7 @@ package org.openscience.cdk.charges;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 
@@ -67,7 +67,7 @@ public class AtomTypeCharges {
 	 *@return                AtomContainer with set charges
 	 *@exception  Exception  Description of the Exception
 	 */
-	public AtomContainer setCharges(AtomContainer atomContainer) throws Exception {
+	public IAtomContainer setCharges(IAtomContainer atomContainer) throws Exception {
 		
 		atomContainer = setInitialCharges(atomContainer);
 		return atomContainer;
@@ -93,7 +93,7 @@ public class AtomTypeCharges {
 	 *@return                   AtomContainer with (new) partial charges
 	 *@exception  CDKException  Description of the Exception
 	 */
-	private AtomContainer setInitialCharges(AtomContainer ac) throws CDKException {
+	private IAtomContainer setInitialCharges(IAtomContainer ac) throws CDKException {
 		Matcher matOC = null;
 		Matcher matOP = null;
 		Matcher matOS = null;

@@ -193,7 +193,7 @@ public class BioPolymerTest extends CDKTestCase {
 		assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
 	}
     
-	public void testAddAtom_Atom() {
+	public void testAddAtom_IAtom() {
 		BioPolymer oBioPolymer = new BioPolymer();
 		
 		Atom oAtom1 = new Atom("C1");
@@ -204,7 +204,7 @@ public class BioPolymerTest extends CDKTestCase {
 		assertEquals(2, oBioPolymer.getAtomCount());
 	}
     
-	public void testAddAtom_Atom_Strand() {
+	public void testAddAtom_IAtom_Strand() {
 		BioPolymer oBioPolymer = new BioPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -222,7 +222,7 @@ public class BioPolymerTest extends CDKTestCase {
 		assertEquals(3, oBioPolymer.getAtomCount());
 	}
 	
-	public void testAddAtom_Atom_Monomer_Strand()	{
+	public void testAddAtom_IAtom_Monomer_Strand()	{
 		BioPolymer oBioPolymer = new BioPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");

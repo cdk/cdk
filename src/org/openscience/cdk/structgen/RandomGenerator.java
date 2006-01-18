@@ -135,7 +135,7 @@ public class RandomGenerator
 		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
 		double b11 = 0, lowerborder = 0, upperborder = 0;
 
-		org.openscience.cdk.interfaces.Atom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
+		org.openscience.cdk.interfaces.IAtom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
 		org.openscience.cdk.interfaces.Bond b1 = null, b2 = null, b3 = null, b4 = null;
 		int[] choices = new int[3];
 		int choiceCounter  = 0;

@@ -31,8 +31,8 @@ package org.openscience.cdk.tools;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Molecule;
@@ -143,10 +143,10 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public AtomContainer addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
+    public IAtomContainer addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
 	    logger.debug("Start of addHydrogensToSatisfyValency");
-        AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(molecule);
+        IAtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(molecule);
 	logger.debug("End of addHydrogensToSatisfyValency");
     return changedAtomsAndBonds;
     }
@@ -165,16 +165,16 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public AtomContainer addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
+    public IAtomContainer addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
     	logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
       Molecule[] molecules = moleculeSet.getMolecules();
-      AtomContainer changedAtomsAndBonds = molecule.getBuilder().newAtomContainer();
-      AtomContainer intermediateContainer= null;
+      IAtomContainer changedAtomsAndBonds = molecule.getBuilder().newAtomContainer();
+      IAtomContainer intermediateContainer= null;
       for (int k = 0; k < molecules.length; k++) {
     	  Molecule molPart = molecules[k];
-        Atom[] atoms = molPart.getAtoms();
+        IAtom[] atoms = molPart.getAtoms();
          for (int i = 0; i < atoms.length; i++) {
             intermediateContainer = addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
             changedAtomsAndBonds.add(intermediateContainer);
@@ -204,11 +204,11 @@ public class HydrogenAdder {
      *
      * @deprecated
      */
-    public AtomContainer addHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
+    public IAtomContainer addHydrogensToSatisfyValency(IAtomContainer container, IAtom atom, IAtomContainer totalContainer) 
         throws IOException, ClassNotFoundException, CDKException
     {
 	logger.debug("Start of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
-    AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, totalContainer);
+    IAtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, totalContainer);
 	logger.debug("End of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     return changedAtomsAndBonds;
     }
@@ -230,7 +230,7 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, AtomContainer totalContainer) 
+    public IAtomContainer addExplicitHydrogensToSatisfyValency(IAtomContainer container, IAtom atom, IAtomContainer totalContainer) 
         throws IOException, ClassNotFoundException, CDKException
     {
         // set number of implicit hydrogens to zero
@@ -238,7 +238,7 @@ public class HydrogenAdder {
 	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
         int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
   logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
-        AtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
+        IAtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
 	logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     return changedAtomsAndBonds;
     }
@@ -255,19 +255,19 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public AtomContainer addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom, int count, AtomContainer totalContainer) 
+    public IAtomContainer addExplicitHydrogensToSatisfyValency(IAtomContainer container, IAtom atom, int count, IAtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
     {
         boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
         
         Isotope isotope = IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
         atom.setHydrogenCount(0);
-        AtomContainer changedAtomsAndBonds = container.getBuilder().newAtomContainer();
+        IAtomContainer changedAtomsAndBonds = container.getBuilder().newAtomContainer();
         for (int i = 1; i <= count; i++) {
-            Atom hydrogen = container.getBuilder().newAtom("H");
+            IAtom hydrogen = container.getBuilder().newAtom("H");
             IsotopeFactory.getInstance(container.getBuilder()).configure(hydrogen, isotope);
             totalContainer.addAtom(hydrogen);
-            Bond newBond = container.getBuilder().newBond((Atom)atom, hydrogen, 1.0);
+            Bond newBond = container.getBuilder().newBond((IAtom)atom, hydrogen, 1.0);
             totalContainer.addBond(newBond);
             changedAtomsAndBonds.addAtom(hydrogen);
             changedAtomsAndBonds.addBond(newBond);
@@ -283,13 +283,13 @@ public class HydrogenAdder {
      *@cdk.keyword          hydrogen, adding
      *@cdk.keyword          implicit hydrogen
      */
-    public HashMap addImplicitHydrogensToSatisfyValency(AtomContainer container) throws CDKException {
+    public HashMap addImplicitHydrogensToSatisfyValency(IAtomContainer container) throws CDKException {
       SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
       Molecule[] molecules = moleculeSet.getMolecules();
       HashMap hydrogenAtomMap = new HashMap();
       for (int k = 0; k < molecules.length; k++) {
     	Molecule molPart = molecules[k];
-        Atom[] atoms = molPart.getAtoms();
+        IAtom[] atoms = molPart.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
             int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);
             hydrogenAtomMap.put(atoms[f], hydrogens);
@@ -307,7 +307,7 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          implicit hydrogen
      */
-    public int[] addImplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom) throws CDKException
+    public int[] addImplicitHydrogensToSatisfyValency(IAtomContainer container, IAtom atom) throws CDKException
     {
         int formerHydrogens = atom.getHydrogenCount();
         int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);

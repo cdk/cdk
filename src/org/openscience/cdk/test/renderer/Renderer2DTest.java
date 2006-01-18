@@ -102,7 +102,7 @@ public class Renderer2DTest extends JPanel
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		renderer.paintMolecule((org.openscience.cdk.interfaces.AtomContainer)molecule, (Graphics2D)g, false);
+		renderer.paintMolecule((org.openscience.cdk.interfaces.IAtomContainer)molecule, (Graphics2D)g, false);
 	}
 
 	/**

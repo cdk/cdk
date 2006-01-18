@@ -31,8 +31,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -49,10 +49,10 @@ public class RingSetManipulator {
 	 *
 	 * @return an AtomContainer with all atoms and bonds from the RingSet
 	 */
-	public static AtomContainer getAllInOneContainer(RingSet ringSet) {
+	public static IAtomContainer getAllInOneContainer(RingSet ringSet) {
 		// FIXME: make RingSet a subclass of IChemObject (see bug #) and clean up
 		// the code in the next line
-		AtomContainer container = ((Ring)ringSet.get(0)).getBuilder().newAtomContainer();
+		IAtomContainer container = ((Ring)ringSet.get(0)).getBuilder().newAtomContainer();
 		for (int i = 0; i < ringSet.size(); i++) {
 			container.add((Ring)ringSet.get(i));
 		}
@@ -99,7 +99,7 @@ public class RingSetManipulator {
 	{
 		int[] neighbors = new int[ringSet.size()];
 		Ring ring1, ring2;
-		Atom atom1, atom2;
+		IAtom atom1, atom2;
 		int mostComplex = 0, mostComplexPosition = 0;
 		/* for all rings in this RingSet */
 		for (int i = 0; i < ringSet.size(); i++)
@@ -152,7 +152,7 @@ public class RingSetManipulator {
 	   * @param atom2 The second atom
 	   * @return ???boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
 	   */
-	  public static boolean isSameRing(RingSet ringSet, Atom atom1, Atom atom2)
+	  public static boolean isSameRing(RingSet ringSet, IAtom atom1, IAtom atom2)
 	  {
 	    Iterator iterator = ringSet.iterator();
 	    while(iterator.hasNext())

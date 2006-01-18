@@ -81,7 +81,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.AtomContainer ac = acSet.getAtomContainer(0);
+        org.openscience.cdk.interfaces.IAtomContainer ac = acSet.getAtomContainer(0);
         assertEquals(4, ac.getAtomCount());
         assertEquals(3, ac.getBondCount());
         
@@ -113,7 +113,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.AtomContainer ac = acSet.getAtomContainer(0);
+        org.openscience.cdk.interfaces.IAtomContainer ac = acSet.getAtomContainer(0);
         assertEquals(10, ac.getAtomCount());
         assertEquals(11, ac.getBondCount());
         
@@ -145,7 +145,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.AtomContainer ac = acSet.getAtomContainer(0);
+        org.openscience.cdk.interfaces.IAtomContainer ac = acSet.getAtomContainer(0);
         assertEquals(6, ac.getAtomCount());
         assertEquals(6, ac.getBondCount());
         
@@ -178,7 +178,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.AtomContainer ac1 = acSet.getAtomContainer(0);
+        org.openscience.cdk.interfaces.IAtomContainer ac1 = acSet.getAtomContainer(0);
         assertEquals(4, ac1.getAtomCount());
         assertEquals(3, ac1.getBondCount());
         
@@ -190,7 +190,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac1.getBondAt(i)));
         }
         
-        org.openscience.cdk.interfaces.AtomContainer ac2 = acSet.getAtomContainer(1);
+        org.openscience.cdk.interfaces.IAtomContainer ac2 = acSet.getAtomContainer(1);
         assertEquals(4, ac2.getAtomCount());
         assertEquals(3, ac2.getBondCount());
         
@@ -223,7 +223,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.AtomContainer ac1 = acSet.getAtomContainer(0);
+        org.openscience.cdk.interfaces.IAtomContainer ac1 = acSet.getAtomContainer(0);
         assertEquals(9, ac1.getAtomCount());
         assertEquals(8, ac1.getBondCount());
         
@@ -257,7 +257,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.AtomContainer ac1 = acSet.getAtomContainer(0);
+        org.openscience.cdk.interfaces.IAtomContainer ac1 = acSet.getAtomContainer(0);
         assertEquals(4, ac1.getAtomCount());
         assertEquals(3, ac1.getBondCount());
         
@@ -269,7 +269,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac1.getBondAt(i)));
         }
         
-        org.openscience.cdk.interfaces.AtomContainer ac2 = acSet.getAtomContainer(0);
+        org.openscience.cdk.interfaces.IAtomContainer ac2 = acSet.getAtomContainer(0);
         assertEquals(4, ac2.getAtomCount());
         assertEquals(3, ac2.getBondCount());
         

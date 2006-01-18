@@ -75,7 +75,7 @@ public class EquivalentClassesDeterministicGeneratorTest extends CDKTestCase
 		   hydrogen count configurator
 		 */
 		double bondCount = 0;
-		org.openscience.cdk.interfaces.Atom atom;
+		org.openscience.cdk.interfaces.IAtom atom;
 		 for (int f = 0; f < mol.getAtomCount(); f++)
 		{
 			atom = mol.getAtomAt(f);

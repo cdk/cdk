@@ -34,8 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.LonePair;
@@ -57,7 +57,7 @@ import org.openscience.cdk.interfaces.Molecule;
  */
 public class AtomContainerManipulator {
 
-    public static boolean replaceAtomByAtom(AtomContainer container, Atom atom, Atom newAtom) {
+    public static boolean replaceAtomByAtom(IAtomContainer container, IAtom atom, IAtom newAtom) {
         if (!container.contains(atom)) {
             // it should complain
 	    return false;
@@ -89,7 +89,7 @@ public class AtomContainerManipulator {
     /**
      * @return The summed charges of all atoms in this AtomContainer.
      */
-    public static double getTotalCharge(AtomContainer atomContainer) {
+    public static double getTotalCharge(IAtomContainer atomContainer) {
         double charge = 0.0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             charge += atomContainer.getAtomAt(i).getCharge();
@@ -100,7 +100,7 @@ public class AtomContainerManipulator {
     /**
      * @return The summed formal charges of all atoms in this AtomContainer.
      */
-    public static int getTotalFormalCharge(AtomContainer atomContainer) {
+    public static int getTotalFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             charge += atomContainer.getAtomAt(i).getFormalCharge();
@@ -111,7 +111,7 @@ public class AtomContainerManipulator {
     /**
      * @return The summed implicit hydrogens of all atoms in this AtomContainer.
      */
-    public static int getTotalHydrogenCount(AtomContainer atomContainer) {
+    public static int getTotalHydrogenCount(IAtomContainer atomContainer) {
         int hCount = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             hCount += atomContainer.getAtomAt(i).getHydrogenCount();
@@ -119,13 +119,13 @@ public class AtomContainerManipulator {
         return hCount;
     }
 
-    public static Vector getAllIDs(AtomContainer mol) {
+    public static Vector getAllIDs(IAtomContainer mol) {
         Vector idList = new Vector();
         if (mol != null) {
             if (mol.getID() != null) idList.addElement(mol.getID());
-            Atom[] atoms = mol.getAtoms();
+            IAtom[] atoms = mol.getAtoms();
             for (int i=0; i<atoms.length; i++) {
-                Atom atom = atoms[i];
+                IAtom atom = atoms[i];
                 if (atom.getID() != null) idList.addElement(atom.getID());
             }
             Bond[] bonds = mol.getBonds();
@@ -146,7 +146,7 @@ public class AtomContainerManipulator {
      * @return              The molecule without Hs.
      * @cdk.keyword         hydrogen, removal
      */
-    public static AtomContainer removeHydrogens(AtomContainer atomContainer)
+    public static IAtomContainer removeHydrogens(IAtomContainer atomContainer)
     {
         Map map = new HashMap();        // maps original atoms to clones.
         List remove = new ArrayList();  // lists removed Hs.
@@ -159,10 +159,10 @@ public class AtomContainerManipulator {
                 i++)
         {
             // Clone/remove this atom?
-            Atom atom = atomContainer.getAtomAt(i);
+            IAtom atom = atomContainer.getAtomAt(i);
             if (!atom.getSymbol().equals("H"))
             {
-                Atom clonedAtom = (Atom) atom.clone();
+                IAtom clonedAtom = (IAtom) atom.clone();
                 clonedAtom.setHydrogenCount(0);
                 mol.addAtom(clonedAtom);
                 map.put(atom, clonedAtom);
@@ -181,7 +181,7 @@ public class AtomContainerManipulator {
         {
             // Check bond.
             final Bond bond = atomContainer.getBondAt(i);
-            Atom[] atoms = bond.getAtoms();
+            IAtom[] atoms = bond.getAtoms();
             boolean removedBond = false;
             final int length = atoms.length;
             for (int k = 0;
@@ -200,7 +200,7 @@ public class AtomContainerManipulator {
                 // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
             {
                 Bond clone = (Bond) atomContainer.getBondAt(i).clone();
-                clone.setAtoms(new Atom[]{(Atom) map.get(atoms[0]), (Atom) map.get(atoms[1])});
+                clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
                 mol.addBond(clone);
             }
         }
@@ -210,10 +210,10 @@ public class AtomContainerManipulator {
                 i.hasNext();)
         {
             // Process neighbours.
-            for (Iterator n = atomContainer.getConnectedAtomsVector((Atom) i.next()).iterator();
+            for (Iterator n = atomContainer.getConnectedAtomsVector((IAtom) i.next()).iterator();
                     n.hasNext();)
             {
-                final Atom neighb = (Atom) map.get(n.next());
+                final IAtom neighb = (IAtom) map.get(n.next());
                 neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
             }
         }
@@ -226,11 +226,11 @@ public class AtomContainerManipulator {
     /**
      * Sets a property on all <code>Atom</code>s in the given container.
      */
-    public static void setAtomProperties(AtomContainer container, Object propKey, Object propVal) {
+    public static void setAtomProperties(IAtomContainer container, Object propKey, Object propVal) {
         if (container != null) {
-            Atom[] atoms = container.getAtoms();
+            IAtom[] atoms = container.getAtoms();
             for (int i=0; i<atoms.length; i++) {
-                Atom atom = atoms[i];
+                IAtom atom = atoms[i];
                 atom.setProperty(propKey, propVal);
             }
         }
@@ -245,7 +245,7 @@ public class AtomContainerManipulator {
 	 *  unregister with this AtomContainer in order to improve 
 	 *  performance of this class.
 	 */
-	public static void unregisterElectronContainerListeners(AtomContainer container)
+	public static void unregisterElectronContainerListeners(IAtomContainer container)
 	{
 		for (int f = 0; f < container.getElectronContainerCount(); f++)
 		{
@@ -262,7 +262,7 @@ public class AtomContainerManipulator {
 	 *  unregister with this AtomContainer in order to improve 
 	 *  performance of this class.
 	 */
-	public static void unregisterAtomListeners(AtomContainer container)
+	public static void unregisterAtomListeners(IAtomContainer container)
 	{
 		for (int f = 0; f < container.getAtomCount(); f++)
 		{

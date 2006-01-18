@@ -27,7 +27,7 @@ package org.openscience.cdk.renderer.color;
 import java.awt.Color;
 import java.util.HashMap;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.
@@ -136,7 +136,7 @@ public class CPKAtomColors implements AtomColorer, java.io.Serializable
      * @param a the atom.
      * @return A color for the atom.
      */
-    public Color getAtomColor(Atom a)
+    public Color getAtomColor(IAtom a)
     {
         return getAtomColor(a, DEEP_PINK);
     }
@@ -149,7 +149,7 @@ public class CPKAtomColors implements AtomColorer, java.io.Serializable
      * @return A color for the atom.  The default colour is used if none is
      *         found for the atom.
      */
-    public Color getAtomColor(Atom a, Color defaultColor)
+    public Color getAtomColor(IAtom a, Color defaultColor)
     {
         Color c = defaultColor;
         Integer number = new Integer(a.getAtomicNumber());

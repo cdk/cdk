@@ -29,7 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test
  */
 public class AtomContainerManipulatorTest extends CDKTestCase {
-    AtomContainer ac;
+    IAtomContainer ac;
 
     public AtomContainerManipulatorTest(String name)
     {
@@ -51,7 +51,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     public void setUp()
     {
-        ac = (AtomContainer) MoleculeFactory.makeAlphaPinene();
+        ac = (IAtomContainer) MoleculeFactory.makeAlphaPinene();
     }
 
     public static Test suite() 
@@ -83,7 +83,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Molecule mol=MoleculeFactory.makeAlphaPinene();
         mol.setFlag(5,true);
         new HydrogenAdder().addHydrogensToSatisfyValency(mol);
-        AtomContainer ac=AtomContainerManipulator.removeHydrogens((AtomContainer)mol);
+        IAtomContainer ac=AtomContainerManipulator.removeHydrogens((IAtomContainer)mol);
         assertEquals(10, ac.getAtomCount());
         assertTrue(ac.getFlag(5));
     }
@@ -99,7 +99,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     {
         SmilesParser parser = new SmilesParser();
         Molecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
-        AtomContainer ac = AtomContainerManipulator.removeHydrogens((AtomContainer)mol);
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens((IAtomContainer)mol);
 
         // Should be two disconnected Bs with H-count == 4
         assertEquals("incorrect atom count", 2, ac.getAtomCount());

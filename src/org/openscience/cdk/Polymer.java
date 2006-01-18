@@ -73,7 +73,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 * @param oAtom  The atom to add
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom) {
+	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom) {
 		super.addAtom(oAtom);
 		/* notifyChanged() is called by addAtom in
 		 AtomContainer */
@@ -87,7 +87,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 * @param oMonomer  The monomer the atom belongs to
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer) {
+	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);

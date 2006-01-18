@@ -48,7 +48,7 @@ public interface Polymer extends Molecule {
 	 *
 	 * @param oAtom  The atom to add
 	 */
-	public void addAtom(Atom oAtom);
+	public void addAtom(IAtom oAtom);
 	
 	/**
 	 * Adds the atom oAtom to a specified Monomer.
@@ -56,7 +56,7 @@ public interface Polymer extends Molecule {
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The monomer the atom belongs to
 	 */
-	public void addAtom(Atom oAtom, Monomer oMonomer);
+	public void addAtom(IAtom oAtom, Monomer oMonomer);
 	
 	/**
 	 * Return the number of monomers present in the Polymer.

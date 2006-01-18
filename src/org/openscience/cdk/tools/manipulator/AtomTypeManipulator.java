@@ -29,8 +29,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 
 
 /**
@@ -49,7 +49,7 @@ public class AtomTypeManipulator {
 	 * @param  atom  Atom to configure
 	 * @param  atomType    AtomType
 	 */
-	public static void configure(Atom atom, AtomType atomType) {
+	public static void configure(IAtom atom, IAtomType atomType) {
 		atom.setAtomTypeName(atomType.getAtomTypeName());
         atom.setMaxBondOrder(atomType.getMaxBondOrder());
         atom.setBondOrderSum(atomType.getBondOrderSum());

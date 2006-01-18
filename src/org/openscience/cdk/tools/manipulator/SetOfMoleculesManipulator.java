@@ -30,8 +30,8 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.SetOfMolecules;
  */
 public class SetOfMoleculesManipulator {
     
-    public static void removeAtomAndConnectedElectronContainers(SetOfMolecules set, Atom atom) {
+    public static void removeAtomAndConnectedElectronContainers(SetOfMolecules set, IAtom atom) {
         SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(set, atom);
     }
     
@@ -57,14 +57,14 @@ public class SetOfMoleculesManipulator {
      *
      * @return  The AtomContainer with all the Molecules of this container
      */
-    public static AtomContainer getAllInOneContainer(SetOfMolecules set) {
+    public static IAtomContainer getAllInOneContainer(SetOfMolecules set) {
         return SetOfAtomContainersManipulator.getAllInOneContainer(set);
     }
     
     /**
      * Returns all the AtomContainer's of a SetOfMolecules.
      */
-    public static AtomContainer[] getAllAtomContainers(SetOfMolecules set) {
+    public static IAtomContainer[] getAllAtomContainers(SetOfMolecules set) {
 		return SetOfAtomContainersManipulator.getAllAtomContainers(set);
     }
     
@@ -97,11 +97,11 @@ public class SetOfMoleculesManipulator {
         SetOfAtomContainersManipulator.setAtomProperties(set, propKey, propVal);
     }
 
-    public static AtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, Atom atom) {
+    public static IAtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, IAtom atom) {
         return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, atom);
     }
 
-    public static AtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, Bond bond) {
+    public static IAtomContainer getRelevantAtomContainer(SetOfMolecules moleculeSet, Bond bond) {
         return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, bond);
     }
 

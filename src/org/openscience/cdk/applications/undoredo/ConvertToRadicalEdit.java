@@ -27,7 +27,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ElectronContainer;
 
 /**
@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.ElectronContainer;
  */
 public class ConvertToRadicalEdit extends AbstractUndoableEdit {
 
-	private AtomContainer container;
+	private IAtomContainer container;
 
 	private ElectronContainer electronContainer;
 
@@ -49,7 +49,7 @@ public class ConvertToRadicalEdit extends AbstractUndoableEdit {
 	 * @param electronContainer -
 	 *            AtomContainer containing the SingleElectron
 	 */
-	public ConvertToRadicalEdit(AtomContainer relevantContainer,
+	public ConvertToRadicalEdit(IAtomContainer relevantContainer,
 			ElectronContainer electronContainer) {
 		this.container = relevantContainer;
 		this.electronContainer = electronContainer;

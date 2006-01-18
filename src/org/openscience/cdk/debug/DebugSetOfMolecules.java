@@ -25,7 +25,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -140,12 +140,12 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public void addAtomContainer(AtomContainer atomContainer) {
+	public void addAtomContainer(IAtomContainer atomContainer) {
 		logger.debug("Adding atom container: ", atomContainer);
 		super.addAtomContainer(atomContainer);
 	}
 
-	public void removeAtomContainer(AtomContainer atomContainer) {
+	public void removeAtomContainer(IAtomContainer atomContainer) {
 		logger.debug("Removing atom container: ", atomContainer);
 		super.removeAtomContainer(atomContainer);
 	}
@@ -160,7 +160,7 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		super.removeAtomContainer(pos);
 	}
 
-	public boolean setMultiplier(AtomContainer container, double multiplier) {
+	public boolean setMultiplier(IAtomContainer container, double multiplier) {
 		logger.debug("Setting multiplier for atomcontainer: ", container, ""+multiplier);
 		return super.setMultiplier(container, multiplier);
 	}
@@ -180,7 +180,7 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		return super.setMultipliers(newMultipliers);
 	}
 
-	public void addAtomContainer(AtomContainer atomContainer, double multiplier) {
+	public void addAtomContainer(IAtomContainer atomContainer, double multiplier) {
 		logger.debug("Adding atom container with multiplier: ", ""+multiplier, atomContainer);
 		super.addAtomContainer(atomContainer, multiplier);
 	}
@@ -190,12 +190,12 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		super.add(atomContainerSet);
 	}
 
-	public AtomContainer[] getAtomContainers() {
+	public IAtomContainer[] getAtomContainers() {
 		logger.debug("Getting atom container array: ", super.getAtomContainers().length);
 		return super.getAtomContainers();
 	}
 
-	public AtomContainer getAtomContainer(int number) {
+	public IAtomContainer getAtomContainer(int number) {
 		logger.debug("Getting atom container at: ", number);
 		return super.getAtomContainer(number);
 	}
@@ -205,7 +205,7 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		return super.getMultiplier(number);
 	}
 
-	public double getMultiplier(AtomContainer container) {
+	public double getMultiplier(IAtomContainer container) {
 		logger.debug("Getting multiplier for atom container: ", container);
 		return super.getMultiplier(container);
 	}

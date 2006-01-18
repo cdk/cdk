@@ -47,7 +47,7 @@ public class ForceFieldTools {
 		GVector coords3d_0 = new GVector(3 * (molecule.getAtomCount()));
 		//logger.debug("coords3d_0 = " + coords3d_0);
 
-		org.openscience.cdk.interfaces.Atom thisAtom = new Atom();
+		org.openscience.cdk.interfaces.IAtom thisAtom = new Atom();
 		int j = 0;
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -80,7 +80,7 @@ public class ForceFieldTools {
 		//logger.debug("Atoms number = " + molecule.getAtomCount());
 		Vector point3dCoordinates = new Vector();
 
-		org.openscience.cdk.interfaces.Atom thisAtom = new Atom();
+		org.openscience.cdk.interfaces.IAtom thisAtom = new Atom();
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			thisAtom = molecule.getAtomAt(i);

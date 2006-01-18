@@ -28,8 +28,8 @@ import java.io.IOException;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -158,7 +158,7 @@ public class InductiveAtomicSoftnessDescriptor implements IDescriptor {
 	 *@return                   a double with polarizability of the heavy atom
 	 *@exception  CDKException  if any atom in the supplied AtomContainer has no 3D coordinates
 	 */
-        public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+        public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
 		if (factory == null)
             try {
                 factory = AtomTypeFactory.getInstance(
@@ -170,8 +170,8 @@ public class InductiveAtomicSoftnessDescriptor implements IDescriptor {
             }
 
 
-        	org.openscience.cdk.interfaces.Atom[] allAtoms = null;
-            org.openscience.cdk.interfaces.Atom target = null;
+        	org.openscience.cdk.interfaces.IAtom[] allAtoms = null;
+            org.openscience.cdk.interfaces.IAtom target = null;
             double atomicSoftness = 0;
             double radiusTarget = 0;
             target = ac.getAtomAt(atomPosition);
@@ -180,7 +180,7 @@ public class InductiveAtomicSoftnessDescriptor implements IDescriptor {
             double partial = 0;
             double radius = 0;
             String symbol = null;
-            AtomType type = null;
+            IAtomType type = null;
             try {
                 symbol = ac.getAtomAt(atomPosition).getSymbol();
                 type = factory.getAtomType(symbol);
@@ -227,7 +227,7 @@ public class InductiveAtomicSoftnessDescriptor implements IDescriptor {
 	 *@param  atom2  Description of the Parameter
 	 *@return        Description of the Return Value
 	 */
-	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
+	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
 		double distance = 0;
 		double tmp = 0;
 		Point3d firstPoint = atom1.getPoint3d();

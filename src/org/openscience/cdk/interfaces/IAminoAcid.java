@@ -44,9 +44,9 @@ public interface IAminoAcid extends Monomer {
      *
      * @return The Atom that is the N-terminus
      *
-     * @see    #addNTerminus(Atom)
+     * @see    #addNTerminus(IAtom)
      */
-    public Atom getNTerminus();
+    public IAtom getNTerminus();
 
     /**
      * Add an Atom and makes it the N-terminus atom.
@@ -55,16 +55,16 @@ public interface IAminoAcid extends Monomer {
      *
      * @see    #getNTerminus
      */
-    public void addNTerminus(Atom atom);
+    public void addNTerminus(IAtom atom);
     
     /**
      * Retrieves the C-terminus atom.
      *
      * @return The Atom that is the C-terminus
      *
-     * @see    #addCTerminus(Atom)
+     * @see    #addCTerminus(IAtom)
      */
-    public Atom getCTerminus();
+    public IAtom getCTerminus();
 
     /**
      * Add an Atom and makes it the C-terminus atom.
@@ -73,6 +73,6 @@ public interface IAminoAcid extends Monomer {
      *
      * @see    #getCTerminus
      */
-    public void addCTerminus(Atom atom);
+    public void addCTerminus(IAtom atom);
 
 }

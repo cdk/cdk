@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  * @author     steinbeck
  * @cdk.created    2000-10-02
  */
-public interface AtomContainer extends IChemObject, ChemObjectListener {
+public interface IAtomContainer extends IChemObject, ChemObjectListener {
 
     /**
      * Adds an AtomParity to this container. If a parity is already given for the
@@ -53,7 +53,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
      * @param parity The new AtomParity for this container
      * @see   #getAtomParity
      */
-    public void addAtomParity(AtomParity parity);
+    public void addAtomParity(IAtomParity parity);
 
     /**
      * Returns the atom parity for the given Atom. If no parity is associated
@@ -64,7 +64,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
      *         not have an associated AtomParity
      * @see    #addAtomParity
      */
-    public AtomParity getAtomParity(Atom atom);
+    public IAtomParity getAtomParity(IAtom atom);
     
 	/**
 	 * Sets the array of atoms of this AtomContainer.
@@ -72,7 +72,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 * @param  atoms  The array of atoms to be assigned to this AtomContainer
 	 * @see           #getAtoms
 	 */
-	public void setAtoms(Atom[] atoms);
+	public void setAtoms(IAtom[] atoms);
 	
 	/**
 	 * Sets the array of electronContainers of this AtomContainer.
@@ -90,7 +90,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 * @param  atom    The atom to be stored at position <code>number</code>
 	 * @see            #getAtomAt
 	 */
-	public void setAtomAt(int number, Atom atom);
+	public void setAtomAt(int number, IAtom atom);
 
 	/**
 	 * Get the atom at position <code>number</code> in [0,..].
@@ -99,7 +99,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 * @return         The atomAt value
 	 * @see            #setAtomAt
 	 */
-	public Atom getAtomAt(int number);
+	public IAtom getAtomAt(int number);
 
 	/**
 	 *  Get the bond at position <code>number</code> in [0,..].
@@ -147,7 +147,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@return    The array of atoms of this AtomContainer
 	 *@see       #setAtoms
 	 */
-	public Atom[] getAtoms();
+	public IAtom[] getAtoms();
 
 
 	/**
@@ -195,7 +195,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@see          #getElectronContainers
 	 *@see          #getBonds
 	 */
-	public LonePair[] getLonePairs(Atom atom);
+	public LonePair[] getLonePairs(IAtom atom);
 
 
 	/**
@@ -203,7 +203,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@return    The atom at position 0 .
 	 */
-	public Atom getFirstAtom();
+	public IAtom getFirstAtom();
 
 
 	/**
@@ -211,7 +211,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@return    The atom at the last position
 	 */
-	public Atom getLastAtom();
+	public IAtom getLastAtom();
 
 
 	/**
@@ -221,7 +221,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom to be sought
 	 *@return       The Position of the atom in the atoms array in [0,..].
 	 */
-	public int getAtomNumber(Atom atom);
+	public int getAtomNumber(IAtom atom);
 
 
 	/**
@@ -233,7 +233,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@return        The Position of the bond between a1 and a2 in the
 	 *               electronContainers array.
 	 */
-	public int getBondNumber(Atom atom1, Atom atom2);
+	public int getBondNumber(IAtom atom1, IAtom atom2);
 
 
 	/**
@@ -264,7 +264,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 * @param  atom2  The second atom
 	 * @return        The bond that connectes the two atoms
 	 */
-	public Bond getBond(Atom atom1, Atom atom2);
+	public Bond getBond(IAtom atom1, IAtom atom2);
 
 
 	/**
@@ -274,7 +274,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@return       The array of <code>Atom</code>s with the size of connected
 	 *      atoms
 	 */
-	public Atom[] getConnectedAtoms(Atom atom);
+	public IAtom[] getConnectedAtoms(IAtom atom);
 
 
 	/**
@@ -283,7 +283,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom the bond partners are searched of.
 	 *@return       The vector with the size of connected atoms
 	 */
-	public Vector getConnectedAtomsVector(Atom atom);
+	public Vector getConnectedAtomsVector(IAtom atom);
 
 
 	/**
@@ -292,7 +292,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public Bond[] getConnectedBonds(Atom atom);
+	public Bond[] getConnectedBonds(IAtom atom);
   
 	/**
 	 *  Returns a Vector of all Bonds connected to the given atom.
@@ -300,7 +300,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The vector with the size of connected atoms
 	 */
-  public Vector getConnectedBondsVector(Atom atom);
+  public Vector getConnectedBondsVector(IAtom atom);
 
 
 	/**
@@ -309,7 +309,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom the connected electronContainers are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public ElectronContainer[] getConnectedElectronContainers(Atom atom);
+	public ElectronContainer[] getConnectedElectronContainers(IAtom atom);
 
 
 	/**
@@ -361,7 +361,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom
 	 *@return       The number of Bonds for this atom
 	 */
-	public int getBondCount(Atom atom);
+	public int getBondCount(IAtom atom);
 
 
 	/**
@@ -370,7 +370,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom
 	 *@return       The number of LonePairs for this atom
 	 */
-	public int getLonePairCount(Atom atom);
+	public int getLonePairCount(IAtom atom);
 	
 	/**
 	 *  Returns an array of all SingleElectron connected to the given atom.
@@ -378,21 +378,21 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public SingleElectron[] getSingleElectron(Atom atom);
+	public SingleElectron[] getSingleElectron(IAtom atom);
 	/**
 	 *  Returns the sum of the SingleElectron for a given Atom.
 	 *
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public int getSingleElectronSum(Atom atom);
+	public int getSingleElectronSum(IAtom atom);
 	/**
 	 * Returns the sum of the bond orders for a given Atom.
 	 *
 	 * @param  atom  The atom
 	 * @return       The number of bondorders for this atom
 	 */
-	public double getBondOrderSum(Atom atom);
+	public double getBondOrderSum(IAtom atom);
 
     /**
 	 * Returns the maximum bond order that this atom currently has in the context
@@ -401,7 +401,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 * @param  atom  The atom
 	 * @return       The maximum bond order that this atom currently has
 	 */
-	public double getMaximumBondOrder(Atom atom);
+	public double getMaximumBondOrder(IAtom atom);
 
 
 	/**
@@ -411,7 +411,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  The atom
 	 *@return       The minimim bond order that this atom currently has
 	 */
-	public double getMinimumBondOrder(Atom atom);
+	public double getMinimumBondOrder(IAtom atom);
 
 
 
@@ -426,7 +426,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *                    AtomContainer and another given one
 	 */
 
-	public AtomContainer getIntersection(AtomContainer container);
+	public IAtomContainer getIntersection(IAtomContainer container);
 	
 	/**
 	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
@@ -434,7 +434,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@param  atomContainer  AtomContainer with the new ElectronContainers
 	 */
-	public void addElectronContainers(AtomContainer atomContainer);
+	public void addElectronContainers(IAtomContainer atomContainer);
 
 
 	/**
@@ -443,7 +443,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@param  atomContainer  The atomcontainer to be added
 	 */
-	public void add(AtomContainer atomContainer);
+	public void add(IAtomContainer atomContainer);
 
 
 	/**
@@ -451,7 +451,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@param  atom  The atom to be added to this container
 	 */
-	public void addAtom(Atom atom);
+	public void addAtom(IAtom atom);
 
 
 	/**
@@ -476,7 +476,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@param  atomContainer  The atomcontainer to be removed
 	 */
-	public void remove(AtomContainer atomContainer);
+	public void remove(IAtomContainer atomContainer);
 
 
 	/**
@@ -504,7 +504,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 * @param  atom2  The second atom
 	 * @return        The bond that connectes the two atoms
 	 */
-	public Bond removeBond(Atom atom1, Atom atom2);
+	public Bond removeBond(IAtom atom1, IAtom atom2);
 
 
 
@@ -524,7 +524,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@param  atom  The atom to be removed
 	 */
-	public void removeAtomAndConnectedElectronContainers(Atom atom);
+	public void removeAtomAndConnectedElectronContainers(IAtom atom);
 
 
 	/**
@@ -534,7 +534,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *
 	 *@param  atom  The atom to be removed
 	 */
-	public void removeAtom(Atom atom);
+	public void removeAtom(IAtom atom);
 
 
 	/**
@@ -597,7 +597,7 @@ public interface AtomContainer extends IChemObject, ChemObjectListener {
 	 *@param  atom  the atom this AtomContainer is searched for
 	 *@return       True, if the AtomContainer contains the given atom object
 	 */
-	public boolean contains(Atom atom);
+	public boolean contains(IAtom atom);
 
 }
 

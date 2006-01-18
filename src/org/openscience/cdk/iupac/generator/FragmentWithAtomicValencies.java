@@ -26,7 +26,7 @@ package org.openscience.cdk.iupac.generator;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Fragment;
 
 /**
@@ -61,7 +61,7 @@ public class FragmentWithAtomicValencies extends Fragment {
      *
      *  @param ac   AtomContainer with atoms and bonds to add
      */
-    public FragmentWithAtomicValencies(AtomContainer ac) {
+    public FragmentWithAtomicValencies(IAtomContainer ac) {
         this();
         this.add(ac);
     }
@@ -70,7 +70,7 @@ public class FragmentWithAtomicValencies extends Fragment {
      * Add a valency to this Fragment. The valencies are localized
      * on the atoms.
      */
-    public void addValencyAtAtom(org.openscience.cdk.interfaces.Atom a) throws Exception {
+    public void addValencyAtAtom(org.openscience.cdk.interfaces.IAtom a) throws Exception {
 //        System.out.println("test");
         int atomNumber = super.getAtomNumber(a);
 //        System.out.println("test");

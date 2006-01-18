@@ -38,7 +38,7 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -173,7 +173,7 @@ public class XYZReader extends DefaultChemObjectReader {
                             if (fields == 8) 
                                 charge = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            Atom atom = file.getBuilder().newAtom(atomtype, new Point3d(x,y,z));
+                            IAtom atom = file.getBuilder().newAtom(atomtype, new Point3d(x,y,z));
                             atom.setCharge(charge);
                             m.addAtom(atom);
                         }

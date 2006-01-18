@@ -26,7 +26,7 @@ package org.openscience.cdk.charges;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 /**
@@ -67,7 +67,7 @@ public class MMFF94PartialCharges {
 	 *@return                AtomContainer with MMFF94 partial charges as atom properties
 	 *@exception  Exception  Possible Exceptions
 	 */
-	public AtomContainer assignMMFF94PartialCharges(AtomContainer ac) throws Exception {
+	public IAtomContainer assignMMFF94PartialCharges(IAtomContainer ac) throws Exception {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
 		ffc.assignAtomTyps((Molecule)ac);
@@ -81,12 +81,12 @@ public class MMFF94PartialCharges {
 		double theta = 0;
 		double sumOfFormalCharges = 0;
 		double sumOfBondIncrements = 0;
-		org.openscience.cdk.interfaces.Atom thisAtom = null;
-		org.openscience.cdk.interfaces.Atom[] neighboors = null;
+		org.openscience.cdk.interfaces.IAtom thisAtom = null;
+		org.openscience.cdk.interfaces.IAtom[] neighboors = null;
 		Vector data = null;
 		Vector bondData = null;
 		Vector dataNeigh = null;
-		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 		for(int i= 0; i < atoms.length; i++) {
 			//System.out.println("ATOM "+i+ " " +atoms[i].getSymbol());
 			thisAtom = atoms[i];

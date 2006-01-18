@@ -83,7 +83,7 @@ public class CrystClustReaderTest extends CDKTestCase {
             assertEquals(1, crystal.getZ());
             
             // test reading of partial charges
-            org.openscience.cdk.interfaces.Atom atom = crystal.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = crystal.getAtomAt(0);
             assertNotNull(atom);
             assertEquals("O", atom.getSymbol());
             assertEquals(-0.68264902, atom.getCharge(), 0.00000001);

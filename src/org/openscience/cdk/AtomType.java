@@ -41,7 +41,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword     atom, type
  */
-public class AtomType extends Isotope implements java.io.Serializable, org.openscience.cdk.interfaces.AtomType
+public class AtomType extends Isotope implements java.io.Serializable, org.openscience.cdk.interfaces.IAtomType
 {
 
 	/**
@@ -279,7 +279,7 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
      * @return        Return true, if the atomtypes are equal
      */
     public boolean compare(Object object) {
-        if (!(object instanceof org.openscience.cdk.interfaces.AtomType)) {
+        if (!(object instanceof org.openscience.cdk.interfaces.IAtomType)) {
             return false;
         }
         if (!super.compare(object)) {

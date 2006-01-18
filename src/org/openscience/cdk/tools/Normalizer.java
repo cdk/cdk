@@ -31,7 +31,7 @@ package org.openscience.cdk.tools;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -66,7 +66,7 @@ public class Normalizer {
    * @return                             Did a replacement take place?
    * @exception  InvalidSmilesException  doc contains an invalid smiles.
    */
-  public static boolean normalize(AtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
+  public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
     NodeList nl = doc.getElementsByTagName("replace-set");
     SmilesParser sp = new SmilesParser();
     boolean change=false;
@@ -78,14 +78,14 @@ public class Normalizer {
       if (replacementstring.indexOf("\n") > -1 || replacementstring.length() < 1) {
         replacementstring = replacement.item(0).getFirstChild().getNextSibling().getNodeValue();
       }
-      AtomContainer replacementStructure = sp.parseSmiles(replacementstring);
+      IAtomContainer replacementStructure = sp.parseSmiles(replacementstring);
       for (int k = 0; k < replaces.getLength(); k++) {
         Element replace = (Element) replaces.item(k);
         String replacestring = replace.getFirstChild().getNodeValue();
         if (replacestring.indexOf("\n") > -1 || replacestring.length() < 1) {
           replacestring = replace.getFirstChild().getNextSibling().getNodeValue();
         }
-        AtomContainer replaceStructure = sp.parseSmiles(replacestring);
+        IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
         List l = null;
         while ((l = UniversalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
           List l2 = UniversalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
@@ -100,8 +100,8 @@ public class Normalizer {
           Iterator atomit = l2.iterator();
           while (atomit.hasNext()) {
             RMap rmap = (RMap) atomit.next();
-            org.openscience.cdk.interfaces.Atom acatom = ac.getAtomAt(rmap.getId1());
-            org.openscience.cdk.interfaces.Atom replaceatom = replacementStructure.getAtomAt(rmap.getId2());
+            org.openscience.cdk.interfaces.IAtom acatom = ac.getAtomAt(rmap.getId1());
+            org.openscience.cdk.interfaces.IAtom replaceatom = replacementStructure.getAtomAt(rmap.getId2());
             acatom.setFormalCharge(replaceatom.getFormalCharge());
             change=true;
           }

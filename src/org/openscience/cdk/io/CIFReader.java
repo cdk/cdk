@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -332,7 +332,7 @@ public class CIFReader extends DefaultChemObjectReader {
                 }
                 int colIndex = 0;
                 // process one row
-                Atom atom = crystal.getBuilder().newAtom("C");
+                IAtom atom = crystal.getBuilder().newAtom("C");
                 Point3d frac = new Point3d();
                 Point3d real = new Point3d();
                 boolean hasFractional = false;

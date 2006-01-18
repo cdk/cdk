@@ -26,8 +26,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -119,7 +119,7 @@ public class ValenceConnectivityOrderOneDescriptor implements IDescriptor {
 	 *@return                   Atomic valence connectivity index (order 1)
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
 		int valence = 0;
 		int atomicNumber = 0;
 		int hcount = 0;
@@ -128,8 +128,8 @@ public class ValenceConnectivityOrderOneDescriptor implements IDescriptor {
 		double val1 = 0;
 		ArrayList chiAtom = new ArrayList(2);
 		double chi1v = 0;
-		Atom[] atoms = null;
-		Atom[] neighatoms = null;
+		IAtom[] atoms = null;
+		IAtom[] neighatoms = null;
 		Element element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;

@@ -36,8 +36,8 @@ import java.util.Vector;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 
 /**
@@ -54,10 +54,10 @@ public class BondTools {
    * @param  bond       The bond.
    * @return            true=is a potential configuration, false=is not.
    */
-  public static boolean isValidDoubleBondConfiguration(AtomContainer container, Bond bond) {
-    org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
-    Atom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
-    Atom from = null;
+  public static boolean isValidDoubleBondConfiguration(IAtomContainer container, Bond bond) {
+    org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
+    IAtom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
+    IAtom from = null;
     for (int i = 0; i < connectedAtoms.length; i++) {
       if (connectedAtoms[i] != atoms[1]) {
         from = connectedAtoms[i];
@@ -87,7 +87,7 @@ public class BondTools {
    * @return                   true=trans, false=cis.
    * @exception  CDKException  The atoms are not in a double bond configuration (no double bond in the middle, same atoms on one side)
    */
-  public static boolean isCisTrans(Atom firstOuterAtom, Atom firstInnerAtom, Atom secondInnerAtom, Atom secondOuterAtom, AtomContainer ac) throws CDKException {
+  public static boolean isCisTrans(IAtom firstOuterAtom, IAtom firstInnerAtom, IAtom secondInnerAtom, IAtom secondOuterAtom, IAtomContainer ac) throws CDKException {
     if (!isValidDoubleBondConfiguration(ac, ac.getBond(firstInnerAtom, secondInnerAtom))) {
       throw new CDKException("There is no valid double bond configuration between your inner atoms!");
     }
@@ -110,7 +110,7 @@ public class BondTools {
    * @param  viewTo    The atom to which to look
    * @return           true=is left, false = is not
    */
-  public static boolean isLeft(Atom whereIs, Atom viewFrom, Atom viewTo) {
+  public static boolean isLeft(IAtom whereIs, IAtom viewFrom, IAtom viewTo) {
     double angle = giveAngleBothMethods(viewFrom, viewTo, whereIs, false);
     if (angle < 0) {
       return (false);
@@ -131,7 +131,7 @@ public class BondTools {
    * @cdk.keyword                 join-the-dots
    * @cdk.keyword                 bond creation
    */
-  public static boolean closeEnoughToBond(Atom atom1, Atom atom2, double distanceFudgeFactor) {
+  public static boolean closeEnoughToBond(IAtom atom1, IAtom atom2, double distanceFudgeFactor) {
 
     if (atom1 != atom2) {
       double distanceBetweenAtoms = atom1.getPoint3d().distance(atom2.getPoint3d());
@@ -156,7 +156,7 @@ public class BondTools {
    * @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
    * @return       The angle in rad.
    */
-  public static double giveAngleBothMethods(org.openscience.cdk.interfaces.Atom from, org.openscience.cdk.interfaces.Atom to1, org.openscience.cdk.interfaces.Atom to2, boolean bool) {
+  public static double giveAngleBothMethods(org.openscience.cdk.interfaces.IAtom from, org.openscience.cdk.interfaces.IAtom to1, org.openscience.cdk.interfaces.IAtom to2, boolean bool) {
     double[] A = new double[2];
     from.getPoint2d().get(A);
     double[] B = new double[2];
@@ -191,7 +191,7 @@ public class BondTools {
    *      actually the possibility of a double bond configuration)
    * @return                          false=is not end of configuration, true=is
    */
-  private static boolean isEndOfDoubleBond(AtomContainer container, org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom parent, boolean[] doubleBondConfiguration) {
+  private static boolean isEndOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration) {
     if (container.getBondNumber(atom, parent) == -1 || doubleBondConfiguration.length <= container.getBondNumber(atom, parent) || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
       return false;
     }
@@ -199,9 +199,9 @@ public class BondTools {
     int lengthParent = container.getConnectedAtoms(parent).length + parent.getHydrogenCount();
     if (container.getBond(atom, parent) != null) {
       if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N")))) {
-        Atom[] atoms = container.getConnectedAtoms(atom);
-        Atom one = null;
-        Atom two = null;
+        IAtom[] atoms = container.getConnectedAtoms(atom);
+        IAtom one = null;
+        IAtom two = null;
         for (int i = 0; i < atoms.length; i++) {
           if (atoms[i] != parent && one == null) {
             one = atoms[i];
@@ -232,16 +232,16 @@ public class BondTools {
    *      actually the possibility of a double bond configuration)
    * @return                          false=is not start of configuration, true=is
    */
-  private static boolean isStartOfDoubleBond(AtomContainer container, org.openscience.cdk.interfaces.Atom a, org.openscience.cdk.interfaces.Atom parent, boolean[] doubleBondConfiguration) {
+  private static boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration) {
     int lengthAtom = container.getConnectedAtoms(a).length + a.getHydrogenCount();
     if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N"))) {
       return (false);
     }
-    Atom[] atoms = container.getConnectedAtoms(a);
-    Atom one = null;
-    Atom two = null;
+    IAtom[] atoms = container.getConnectedAtoms(a);
+    IAtom one = null;
+    IAtom two = null;
     boolean doubleBond = false;
-    Atom nextAtom = null;
+    IAtom nextAtom = null;
     for (int i = 0; i < atoms.length; i++) {
       if (atoms[i] != parent && container.getBond(atoms[i], a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atoms[i], a, doubleBondConfiguration)) {
         doubleBond = true;
@@ -270,9 +270,9 @@ public class BondTools {
 	 *@return            0=is not tetrahedral;>1 is a certain depiction of
 	 *      tetrahedrality (evaluated in parse chain)
 	 */
-	public static int isTetrahedral(AtomContainer container, Atom a, boolean strict)
+	public static int isTetrahedral(IAtomContainer container, IAtom a, boolean strict)
 	{
-		Atom[] atoms = container.getConnectedAtoms(a);
+		IAtom[] atoms = container.getConnectedAtoms(a);
 		if (atoms.length != 4)
 		{
 			return (0);
@@ -336,9 +336,9 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is square planar, false=is not
 	 */
-	public static int isTrigonalBipyramidalOrOctahedral(AtomContainer container, Atom a)
+	public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom a)
 	{
-		Atom[] atoms = container.getConnectedAtoms(a);
+		IAtom[] atoms = container.getConnectedAtoms(a);
 		if (atoms.length < 5 || atoms.length > 6)
 		{
 			return (0);
@@ -380,9 +380,9 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is a stereo atom, false=is not
 	 */
-	public static boolean isStereo(AtomContainer container, Atom a)
+	public static boolean isStereo(IAtomContainer container, IAtom a)
 	{
-		Atom[] atoms = container.getConnectedAtoms(a);
+		IAtom[] atoms = container.getConnectedAtoms(a);
 		if (atoms.length < 4 || atoms.length > 6)
 		{
 			return (false);
@@ -492,9 +492,9 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is square planar, false=is not
 	 */
-	public static boolean isSquarePlanar(AtomContainer container, Atom a)
+	public static boolean isSquarePlanar(IAtomContainer container, IAtom a)
 	{
-		Atom[] atoms = container.getConnectedAtoms(a);
+		IAtom[] atoms = container.getConnectedAtoms(a);
 		if (atoms.length != 4)
 		{
 			return (false);
@@ -535,17 +535,17 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=are opposite, false=are not
 	 */
-	public static boolean stereosAreOpposite(AtomContainer container, Atom a)
+	public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
 	{
 		Vector atoms = container.getConnectedAtomsVector(a);
 		TreeMap hm = new TreeMap();
 		for (int i = 1; i < atoms.size(); i++)
 		{
-			hm.put(new Double(giveAngle(a, (Atom) atoms.get(0), ((Atom) atoms.get(i)))), new Integer(i));
+			hm.put(new Double(giveAngle(a, (IAtom) atoms.get(0), ((IAtom) atoms.get(i)))), new Integer(i));
 		}
 		Object[] ohere = hm.values().toArray();
-		int stereoOne = container.getBond(a, (Atom) atoms.get(0)).getStereo();
-		int stereoOpposite = container.getBond(a, (Atom) atoms.get((((Integer) ohere[1])).intValue())).getStereo();
+		int stereoOne = container.getBond(a, (IAtom) atoms.get(0)).getStereo();
+		int stereoOpposite = container.getBond(a, (IAtom) atoms.get((((Integer) ohere[1])).intValue())).getStereo();
 		if (stereoOpposite == stereoOne)
 		{
 			return true;
@@ -564,7 +564,7 @@ public class BondTools {
 	 *@param  to2   second direction to look in
 	 *@return       The angle in rad from 0 to 2*PI
 	 */
-	public static double giveAngle(Atom from, Atom to1, Atom to2)
+	public static double giveAngle(IAtom from, IAtom to1, IAtom to2)
 	{
 		return (giveAngleBothMethods(from, to1, to2, true));
 	}
@@ -578,19 +578,19 @@ public class BondTools {
 	 *@param  to2   second direction to look in
 	 *@return       The angle in rad from -PI to PI
 	 */
-	public static double giveAngleFromMiddle(Atom from, Atom to1, Atom to2)
+	public static double giveAngleFromMiddle(IAtom from, IAtom to1, IAtom to2)
 	{
 		return (giveAngleBothMethods(from, to1, to2, false));
 	}
 	
-	public static void  makeUpDownBonds(AtomContainer container){
+	public static void  makeUpDownBonds(IAtomContainer container){
 	    for (int i = 0; i < container.getAtomCount(); i++) {
-	        Atom a = container.getAtomAt(i);
+	        IAtom a = container.getAtomAt(i);
 	        if (container.getConnectedAtoms(a).length == 4) {
 	          int up = 0;
 	          int down = 0;
 	          int hs = 0;
-	          Atom h = null;
+	          IAtom h = null;
 	          for (int k = 0; k < 4; k++) {
 	            if (container.getBond(a, container.getConnectedAtoms(a)[k]).getStereo() == CDKConstants.STEREO_BOND_UP) {
 	              up++;

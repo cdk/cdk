@@ -25,8 +25,8 @@ import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -56,7 +56,7 @@ public class NumericalSurface {
     private LoggingTool logger;
     double solvent_radius = 1.4;
     int tesslevel = 4;
-    Atom[] atoms;
+    IAtom[] atoms;
     ArrayList[] surf_points;
     double[] areas;
     double[] volumes;
@@ -64,22 +64,22 @@ public class NumericalSurface {
     /**
      * Constructor to initialize the surface calculation with default values.
      *
-     * @param atomContainer The {@link AtomContainer} for which the surface is to be calculated
+     * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      */
-    public NumericalSurface(AtomContainer atomContainer) {
+    public NumericalSurface(IAtomContainer atomContainer) {
         this.atoms = atomContainer.getAtoms();
         logger = new LoggingTool(this);
     }
     /**
      * Constructor to initialize the surface calculation with user specified values.
      *
-     * @param atomContainer The {@link AtomContainer} for which the surface is to be calculated
+     * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      * @param solvent_radius The radius of a solvent molecule that is used to extend
      * the radius of each atom. Setting to 0 gives the Van der Waals surface
      * @param tesslevel The number of levels that the subdivision algorithm for tessllation
      * should use
      */
-    public NumericalSurface(AtomContainer atomContainer, double solvent_radius, int tesslevel) {
+    public NumericalSurface(IAtomContainer atomContainer, double solvent_radius, int tesslevel) {
         this.solvent_radius = solvent_radius;
         this.atoms = atomContainer.getAtoms();
         this.tesslevel = tesslevel;
@@ -224,7 +224,7 @@ public class NumericalSurface {
     }
 
 
-    private void translatePoints(int atmIdx, Point3d[][] points, int point_density, Atom atom, Point3d cp) {
+    private void translatePoints(int atmIdx, Point3d[][] points, int point_density, IAtom atom, Point3d cp) {
         double total_radius = atom.getVanderwaalsRadius() + solvent_radius;
 
         double area = 4 * Math.PI * (total_radius*total_radius) * points.length / point_density;
@@ -253,7 +253,7 @@ public class NumericalSurface {
         this.surf_points[atmIdx] =  tmp;
     }
 
-    private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, Atom atom, int point_density, Tessellate tess) {
+    private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, int point_density, Tessellate tess) {
 
         double total_radius = atom.getVanderwaalsRadius() + solvent_radius;
         double total_radius2 = total_radius*total_radius;

@@ -37,8 +37,8 @@ import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 
@@ -96,11 +96,11 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@cdk.keyword           coordinate calculation
 	 *@cdk.keyword           3D model
 	 */
-	public void add3DCoordinatesForSinglyBondedLigands(AtomContainer atomContainer) throws Exception {
-		AtomContainer noCoords = new org.openscience.cdk.AtomContainer();
-		AtomContainer withCoords = new org.openscience.cdk.AtomContainer();
-		Atom refAtom = null;
-		Atom atomC = null;
+	public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws Exception {
+		IAtomContainer noCoords = new org.openscience.cdk.AtomContainer();
+		IAtomContainer withCoords = new org.openscience.cdk.AtomContainer();
+		IAtom refAtom = null;
+		IAtom atomC = null;
 		int nwanted = 0;
 		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
 			refAtom = atomContainer.getAtomAt(i);
@@ -120,7 +120,7 @@ public class AtomTetrahedralLigandPlacer3D {
 				Point3d[] newPoints = get3DCoordinatesForLigands(refAtom,
 						noCoords, withCoords, atomC, nwanted, DEFAULT_BOND_LENGTH_H, -1);
 				for (int j = 0; j < noCoords.getAtomCount(); j++) {
-					Atom ligand = noCoords.getAtomAt(j);
+					IAtom ligand = noCoords.getAtomAt(j);
 					Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
 					ligand.setPoint3d(newPoint);
 					ligand.setFlag(CDKConstants.ISPLACED, true);
@@ -143,7 +143,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return                new coords for atom 2
 	 *@exception  Exception  Description of the Exception
 	 */
-	public Point3d rescaleBondLength(Atom atom1, Atom atom2, Point3d point2) throws Exception {
+	public Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) throws Exception {
 		Point3d point1 = atom1.getPoint3d();
 		double d1 = atom1.getCovalentRadius();
 		double d2 = atom2.getCovalentRadius();
@@ -202,8 +202,8 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@cdk.keyword           coordinate generation
 	 */
 
-	public Point3d[] get3DCoordinatesForLigands(Atom refAtom,
-			AtomContainer noCoords, AtomContainer withCoords, Atom atomC, int nwanted, double length, double angle) throws Exception {
+	public Point3d[] get3DCoordinatesForLigands(IAtom refAtom,
+			IAtomContainer noCoords, IAtomContainer withCoords, IAtom atomC, int nwanted, double length, double angle) throws Exception {
 		Point3d newPoints[] = new Point3d[1];
 
 		if (noCoords.getAtomCount() == 0 && withCoords.getAtomCount() == 0) {
@@ -257,7 +257,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  angle       Description of the Parameter
 	 *@return             Description of the Return Value
 	 */
-	public Point3d get3DCoordinatesForSPLigands(Atom refAtom, AtomContainer withCoords, double length, double angle) {
+	public Point3d get3DCoordinatesForSPLigands(IAtom refAtom, IAtomContainer withCoords, double length, double angle) {
 		//System.out.println(" SP Ligands start "+refAtom.getPoint3d()+" "+(withCoords.getAtomAt(0)).getPoint3d());
 		Vector3d ca = new Vector3d(refAtom.getPoint3d());
 		ca.sub((withCoords.getAtomAt(0)).getPoint3d());
@@ -281,7 +281,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  angle              Description of the Parameter
 	 *@return                    coordinates as Points3d []
 	 */
-	public Point3d[] get3DCoordinatesForSP2Ligands(Atom refAtom, AtomContainer noCoords, AtomContainer withCoords, Atom atomC, double length, double angle) {
+	public Point3d[] get3DCoordinatesForSP2Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords, IAtom atomC, double length, double angle) {
 		//System.out.println(" SP2 Ligands start");
 		Point3d newPoints[] = new Point3d[1];
 		if (angle < 0) {
@@ -316,7 +316,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  atomC              Description of the Parameter
 	 *@return                    Description of the Return Value
 	 */
-	public Point3d[] get3DCoordinatesForSP3Ligands(Atom refAtom, AtomContainer noCoords, AtomContainer withCoords, Atom atomC, int nwanted, double length, double angle) {
+	public Point3d[] get3DCoordinatesForSP3Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords, IAtom atomC, int nwanted, double length, double angle) {
 		//System.out.print("SP3 Ligands start ");
 		Point3d newPoints[] = new Point3d[0];
 		Point3d aPoint = refAtom.getPoint3d();
@@ -853,11 +853,11 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return       all connected and placed atoms to the central atom
 	 *      ((AtomContainer)
 	 */
-	public AtomContainer getPlacedAtomsInAtomContainer(Atom atom, AtomContainer ac) {
+	public IAtomContainer getPlacedAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
 
 		Bond[] bonds = ac.getConnectedBonds(atom);
-		AtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
-		Atom connectedAtom = null;
+		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
+		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.length; i++) {
 			connectedAtom = bonds[i].getConnectedAtom(atom);
 			if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
@@ -876,9 +876,9 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  ac    Description of the Parameter
 	 *@return       The unsetAtomsInAtomContainer value
 	 */
-	public AtomContainer getUnsetAtomsInAtomContainer(Atom atom, AtomContainer ac) {
-		Atom[] atoms = ac.getConnectedAtoms(atom);
-		AtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
+	public IAtomContainer getUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
+		IAtom[] atoms = ac.getConnectedAtoms(atom);
+		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < atoms.length; i++) {
 			if (!atoms[i].getFlag(CDKConstants.ISPLACED)){//&& atoms[i].getPoint3d() == null) {
 				connectedAtoms.addAtom(atoms[i]);
@@ -895,8 +895,8 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  ac    Description of the Parameter
 	 *@return       Description of the Return Value
 	 */
-	public boolean hasUnsetNeighbour(Atom atom, AtomContainer ac) {
-		Atom[] atoms = ac.getConnectedAtoms(atom);
+	public boolean hasUnsetNeighbour(IAtom atom, IAtomContainer ac) {
+		IAtom[] atoms = ac.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++) {
 			if (!atoms[i].getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
 				return true;
@@ -915,9 +915,9 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  ac     molecule
 	 *@return        returns a connected atom (Atom)
 	 */
-	public Atom getPlacedHeavyAtomInAtomContainer(Atom atomA, Atom atomB, AtomContainer ac) {
-		Atom[] atoms = ac.getConnectedAtoms(atomA);
-		Atom atom=null;
+	public IAtom getPlacedHeavyAtomInAtomContainer(IAtom atomA, IAtom atomB, IAtomContainer ac) {
+		IAtom[] atoms = ac.getConnectedAtoms(atomA);
+		IAtom atom=null;
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i].getFlag(CDKConstants.ISPLACED) && !atoms[i].getSymbol().equals("H")
 					 && atoms[i] != atomB) {

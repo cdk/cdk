@@ -35,7 +35,7 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -197,7 +197,7 @@ public class HINReader extends DefaultChemObjectReader {
                     double z = Double.parseDouble(toks[9]);
                     int nbond = Integer.parseInt(toks[10]);
 
-                    Atom atom = file.getBuilder().newAtom(sym, new Point3d(x,y,z));
+                    IAtom atom = file.getBuilder().newAtom(sym, new Point3d(x,y,z));
                     atom.setCharge(charge);
 
                     for (int j = 11; j < (11+nbond*2); j += 2) {

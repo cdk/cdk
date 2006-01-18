@@ -37,7 +37,7 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -137,7 +137,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	private BitSet getFingerprint(AtomContainer ac, int size) throws Exception {
+	private BitSet getFingerprint(IAtomContainer ac, int size) throws Exception {
 		String path = null;
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
@@ -166,7 +166,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getFingerprint(AtomContainer ac) throws Exception {
+	public BitSet getFingerprint(IAtomContainer ac) throws Exception {
 		return getFingerprint(ac,size);
 	}
 
@@ -177,7 +177,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getExtendedFingerprint(AtomContainer ac) throws Exception {
+	public BitSet getExtendedFingerprint(IAtomContainer ac) throws Exception {
 		return getExtendedFingerprint(ac,null);
 	}
 		
@@ -188,7 +188,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     rs         A SSSR of ac (if not calculated, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getExtendedFingerprint(AtomContainer ac, RingSet rs) throws Exception {
+	public BitSet getExtendedFingerprint(IAtomContainer ac, RingSet rs) throws Exception {
 		BitSet bs= getFingerprint(ac, size-25);
 		MFAnalyser mfa=new MFAnalyser(ac);
 		float weight=mfa.getCanonicalMass();
@@ -256,7 +256,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  ac           The AtomContainer which is to be searched.
 	 *@param  searchDepth  Description of the Parameter
 	 */
-	static void findPathes(AtomContainer ac, int searchDepth)
+	static void findPathes(IAtomContainer ac, int searchDepth)
 	{
 		pathes = new Hashtable();
 		Vector currentPath = new Vector();
@@ -282,7 +282,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  currentDepth  The current depth in this recursive search
 	 *@param  searchDepth   Description of the Parameter
 	 */
-	static void depthFirstSearch(AtomContainer ac, org.openscience.cdk.interfaces.Atom root, Vector currentPath, int currentDepth, int searchDepth)
+	static void depthFirstSearch(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom root, Vector currentPath, int currentDepth, int searchDepth)
 	{
 		org.openscience.cdk.interfaces.Bond[] bonds = ac.getConnectedBonds(root);
 
@@ -293,7 +293,7 @@ public class Fingerprinter implements IFingerprinter {
 		 *  }
 		 *  catch(Exception exc){}
 		 */
-		org.openscience.cdk.interfaces.Atom nextAtom = null;
+		org.openscience.cdk.interfaces.IAtom nextAtom = null;
 
 		/*
 		 *  try

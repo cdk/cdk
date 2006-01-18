@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -49,9 +49,9 @@ import org.openscience.cdk.interfaces.SetOfReactions;
  */ 
 public interface ValidatorInterface {
 
-    public ValidationReport validateAtom(Atom subject);
-    public ValidationReport validateAtomContainer(AtomContainer subject);
-    public ValidationReport validateAtomType(AtomType subject);
+    public ValidationReport validateAtom(IAtom subject);
+    public ValidationReport validateAtomContainer(IAtomContainer subject);
+    public ValidationReport validateAtomType(IAtomType subject);
     public ValidationReport validateBond(Bond subject);
     public ValidationReport validateChemFile(ChemFile subject);
     public ValidationReport validateChemModel(ChemModel subject);

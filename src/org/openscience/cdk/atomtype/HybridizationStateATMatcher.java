@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk.atomtype;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -57,7 +57,7 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
     String symbol = null;
     String atName = null;
     private AtomTypeFactory factory = null;
-    private AtomType[] type = null;
+    private IAtomType[] type = null;
 
 
     /**
@@ -76,11 +76,11 @@ public class HybridizationStateATMatcher implements AtomTypeMatcher {
      * @exception CDKException Description of the Exception
      * @return                 the matching AtomType
      */
-    public AtomType findMatchingAtomType(AtomContainer atomContainer, Atom atom) throws CDKException {
+    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
 
         symbol = atom.getSymbol();
         //Hs are included?
-        Atom[] neighboors = atomContainer.getConnectedAtoms(atom);
+        IAtom[] neighboors = atomContainer.getConnectedAtoms(atom);
         charge = atom.getFormalCharge();
         neighboorsCount = neighboors.length;
         bondOrderSum = atomContainer.getBondOrderSum(atom);

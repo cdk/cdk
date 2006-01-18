@@ -25,7 +25,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -47,21 +47,21 @@ public class DebugLonePair extends org.openscience.cdk.LonePair
     	super();
     }
 
-    public DebugLonePair(Atom atom) {
+    public DebugLonePair(IAtom atom) {
     	super(atom);
     }
     
-	public Atom getAtom() {
+	public IAtom getAtom() {
 		logger.debug("Getting atom: ", super.getAtom());
 		return super.getAtom();
 	}
 
-	public void setAtom(Atom atom) {
+	public void setAtom(IAtom atom) {
 		logger.debug("Setting atom: ", atom);
 		super.setAtom(atom);
 	}
 
-	public boolean contains(Atom atom) {
+	public boolean contains(IAtom atom) {
 		logger.debug("Contains atom: ", atom);
 		return super.contains(atom);
 	}

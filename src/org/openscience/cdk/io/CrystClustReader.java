@@ -32,7 +32,7 @@ import java.io.Reader;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -190,7 +190,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         cart.z = Double.parseDouble(line); // z
-                        Atom atom = file.getBuilder().newAtom(symbol);
+                        IAtom atom = file.getBuilder().newAtom(symbol);
                         atom.setCharge(charge);
                         // convert cartesian coords to fractional
                         Point3d frac = CrystalGeometryTools.cartesianToFractional(a, b, c, cart);

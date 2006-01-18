@@ -27,7 +27,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Fragment;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -123,9 +123,9 @@ public class IUPACNameGenerator {
      * @param moleculeToName Must be a Molecule or a Fragment which needs to be
      *                       named, an attempt to name any other AtomContainer will fail.
      */
-    public void generateName(AtomContainer moleculeToName) {       
+    public void generateName(IAtomContainer moleculeToName) {       
         //Must use a clone to avoid deleting the user's atoms.
-        AtomContainer m = (AtomContainer) moleculeToName.clone();
+        IAtomContainer m = (IAtomContainer) moleculeToName.clone();
         
         if (!(m instanceof Fragment || m instanceof Molecule)) {
             return;
@@ -182,17 +182,17 @@ public class IUPACNameGenerator {
         return;
     }
 
-    private Enumeration deleteAtomsAndPartitionIntoFragments(AtomContainer ac) {
+    private Enumeration deleteAtomsAndPartitionIntoFragments(IAtomContainer ac) {
         Vector frags = new Vector();
 
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
-        	org.openscience.cdk.interfaces.Atom a = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom a = ac.getAtomAt(i);
             if (a.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
                 a.setProperty(Rule.ATOM_HAS_VALENCY, "no");
                 // loop over connected atoms
-                org.openscience.cdk.interfaces.Atom[] connectedAtoms = ac.getConnectedAtoms(a);
+                org.openscience.cdk.interfaces.IAtom[] connectedAtoms = ac.getConnectedAtoms(a);
                 for (int j = 0; j < connectedAtoms.length; j++) {
-                	org.openscience.cdk.interfaces.Atom b = connectedAtoms[j];
+                	org.openscience.cdk.interfaces.IAtom b = connectedAtoms[j];
                     if (b.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
                         b.setProperty(Rule.ATOM_HAS_VALENCY, "no");
                     } else {
@@ -213,7 +213,7 @@ public class IUPACNameGenerator {
                 FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies(molecules[j]);
                 for (int i=0; i < fwav.getAtomCount(); i++) {
                     try {
-                    	org.openscience.cdk.interfaces.Atom a = fwav.getAtomAt(i);
+                    	org.openscience.cdk.interfaces.IAtom a = fwav.getAtomAt(i);
                         String prop = (String)a.getProperty(Rule.ATOM_HAS_VALENCY);
                         if (prop != null && prop.equals("yes")) {
                             fwav.addValencyAtAtom(a);
@@ -232,7 +232,7 @@ public class IUPACNameGenerator {
         return frags.elements();
     }
 
-    private IUPACNamePart applyFirstApplicableRule(AtomContainer m) {
+    private IUPACNamePart applyFirstApplicableRule(IAtomContainer m) {
         IUPACNamePart name = null;
 
         // Try all rules
@@ -263,9 +263,9 @@ public class IUPACNameGenerator {
         return name;
     }
 
-    private void deleteNamedAtoms(AtomContainer ac) {
+    private void deleteNamedAtoms(IAtomContainer ac) {
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
-        	org.openscience.cdk.interfaces.Atom a = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom a = ac.getAtomAt(i);
             if (a.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
                 logger.info("Deleting atom: " + a.getSymbol());
                 ac.removeAtomAndConnectedElectronContainers(ac.getAtomAt(i));
@@ -273,7 +273,7 @@ public class IUPACNameGenerator {
         }
     }
 
-    private void markAtomsAsUnnamed(AtomContainer ac) {
+    private void markAtomsAsUnnamed(IAtomContainer ac) {
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
             ac.getAtomAt(i).setProperty(Rule.ATOM_NAMED_FLAG, "no");
         }

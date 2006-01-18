@@ -30,8 +30,8 @@ package org.openscience.cdk.tools;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -91,7 +91,7 @@ public class IDCreator {
      *
      * @see #createIDs(SetOfAtomContainers)
      */
-    public void createIDs(AtomContainer container) {
+    public void createIDs(IAtomContainer container) {
         if (tabuList == null) tabuList = AtomContainerManipulator.getAllIDs(container);
         
         if (container.getID() == null) {
@@ -100,9 +100,9 @@ public class IDCreator {
             container.setID("m" + moleculeCount);
         }
         
-        Atom[] atoms = container.getAtoms();
+        IAtom[] atoms = container.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-        	Atom atom = atoms[i];
+        	IAtom atom = atoms[i];
             if (atom.getID() == null) {
                 atomCount++;
                 while (tabuList.contains("a" + atomCount)) atomCount++;
@@ -139,9 +139,9 @@ public class IDCreator {
             containerSet.setID("molSet" + moleculeCount);
         }
 
-        AtomContainer[] containers = containerSet.getAtomContainers();
+        IAtomContainer[] containers = containerSet.getAtomContainers();
         for (int i=0; i<containers.length; i++) {
-        	AtomContainer container = containers[i];
+        	IAtomContainer container = containers[i];
             if (container.getID() == null) {
                 createIDs(container);
             }
@@ -161,11 +161,11 @@ public class IDCreator {
             reaction.setID("r" + reactionCount);
         }
 
-        AtomContainer[] reactants = reaction.getReactants().getAtomContainers();
+        IAtomContainer[] reactants = reaction.getReactants().getAtomContainers();
         for (int i=0; i<reactants.length; i++) {
             createIDs(reactants[i]);
         }
-        AtomContainer[] products = reaction.getProducts().getAtomContainers();
+        IAtomContainer[] products = reaction.getProducts().getAtomContainers();
         for (int i=0; i<products.length; i++) {
             createIDs(products[i]);
         }
@@ -202,6 +202,6 @@ public class IDCreator {
     }
     
     public void createIDs(Crystal crystal) {
-    	createIDs((AtomContainer)crystal);
+    	createIDs((IAtomContainer)crystal);
     }
 }

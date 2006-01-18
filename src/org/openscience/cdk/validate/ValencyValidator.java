@@ -52,7 +52,7 @@ public class ValencyValidator extends AbstractValidator {
     
     public ValidationReport validateMolecule(Molecule subject) {
         ValidationReport report = new ValidationReport();
-        org.openscience.cdk.interfaces.Atom[] atoms = subject.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = subject.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             if (!(atoms[i] instanceof PseudoAtom)) {
                 report.addReport(validateAtomValency(atoms[i], subject));
@@ -63,7 +63,7 @@ public class ValencyValidator extends AbstractValidator {
     
     // the Molecule tests
 
-    private static ValidationReport validateAtomValency(org.openscience.cdk.interfaces.Atom atom, Molecule molecule) {
+    private static ValidationReport validateAtomValency(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkValency = new ValidationTest(atom,
             "The atom has an unfulfilled valency."

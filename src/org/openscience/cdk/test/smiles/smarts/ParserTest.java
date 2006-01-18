@@ -61,7 +61,7 @@ public class ParserTest extends CDKTestCase {
         try {
             QueryAtomContainer container = SMARTSParser.parse("*");
             assertEquals(1, container.getAtomCount());
-            org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(0);
             assertTrue(atom instanceof SMARTSAtom);
         } catch (CDKException exception) {
             fail(exception.getMessage());
@@ -72,7 +72,7 @@ public class ParserTest extends CDKTestCase {
         try {
             QueryAtomContainer container = SMARTSParser.parse("A");
             assertEquals(1, container.getAtomCount());
-            org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(0);
             assertTrue(atom instanceof SMARTSAtom);
         } catch (CDKException exception) {
             fail(exception.getMessage());
@@ -83,7 +83,7 @@ public class ParserTest extends CDKTestCase {
         try {
             QueryAtomContainer container = SMARTSParser.parse("a");
             assertEquals(1, container.getAtomCount());
-            org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(0);
             assertTrue(atom instanceof SMARTSAtom);
         } catch (CDKException exception) {
             fail(exception.getMessage());
@@ -94,7 +94,7 @@ public class ParserTest extends CDKTestCase {
         try {
             QueryAtomContainer container = SMARTSParser.parse("[D2]");
             assertEquals(1, container.getAtomCount());
-            org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(0);
             assertTrue(atom instanceof SMARTSAtom);
         } catch (CDKException exception) {
             fail(exception.getMessage());
@@ -105,7 +105,7 @@ public class ParserTest extends CDKTestCase {
         try {
             QueryAtomContainer container = SMARTSParser.parse("[h3]");
             assertEquals(1, container.getAtomCount());
-            org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(0);
             assertTrue(atom instanceof SMARTSAtom);
         } catch (CDKException exception) {
             fail(exception.getMessage());
@@ -116,7 +116,7 @@ public class ParserTest extends CDKTestCase {
         try {
             QueryAtomContainer container = SMARTSParser.parse("[H2]");
             assertEquals(1, container.getAtomCount());
-            org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(0);
             assertTrue(atom instanceof SMARTSAtom);
         } catch (CDKException exception) {
             fail(exception.getMessage());

@@ -35,8 +35,8 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.RingSet;
@@ -71,7 +71,7 @@ public class OverlapResolver
 	 * @param  ac    The atomcontainer in which the atom or bond overlap exists
 	 * @param  sssr  A ring set for this atom container if one exists, otherwhise null
 	 */
-	public double resolveOverlap(AtomContainer ac, RingSet sssr)
+	public double resolveOverlap(IAtomContainer ac, RingSet sssr)
 	{
 		Vector overlappingAtoms = new Vector();
 		Vector overlappingBonds = new Vector();
@@ -95,10 +95,10 @@ public class OverlapResolver
 	 *@param  overlappingAtoms  Description of the Parameter
 	 *@param  overlappingBonds  Description of the Parameter
 	 */
-	public double displace(AtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
+	public double displace(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
 	{
 		OverlapPair op = null;
-		Atom a1 = null, a2 = null;
+		IAtom a1 = null, a2 = null;
 		Vector2d v1 = null, v2 = null;
 		int steps = 0;
 		int p = 0;
@@ -118,8 +118,8 @@ public class OverlapResolver
 			* positions of both and translate one of the atoms by 
 			* one tenth of a bond length
 			*/
-			a1 = (Atom)op.chemObject1;
-			a2 = (Atom)op.chemObject2;
+			a1 = (IAtom)op.chemObject1;
+			a2 = (IAtom)op.chemObject2;
 			v1 = new Vector2d(a1.getPoint2d());
 			v2 = new Vector2d(a2.getPoint2d());
 			v2.sub(v1);
@@ -168,7 +168,7 @@ public class OverlapResolver
 	 *@param  overlappingBonds  Description of the Parameter
 	 *@return                   The overlapScore value
 	 */
-	public double getOverlapScore(AtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
+	public double getOverlapScore(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds)
 	{
 		double overlapScore = 0;
 		overlapScore = getAtomOverlapScore(ac, overlappingAtoms);
@@ -186,11 +186,11 @@ public class OverlapResolver
 	 *@param  overlappingAtoms  Description of the Parameter
 	 *@return                   The overlapScore value
 	 */
-	public double getAtomOverlapScore(AtomContainer ac, Vector overlappingAtoms)
+	public double getAtomOverlapScore(IAtomContainer ac, Vector overlappingAtoms)
 	{
 		overlappingAtoms.removeAllElements();
-		Atom atom1 = null;
-		Atom atom2 = null;
+		IAtom atom1 = null;
+		IAtom atom2 = null;
 		Point2d p1 = null;
 		Point2d p2 = null;
 		double distance = 0;
@@ -226,7 +226,7 @@ public class OverlapResolver
 	 *@param  overlappingBonds  Description of the Parameter
 	 *@return                   The overlapScore value
 	 */
-	public double getBondOverlapScore(AtomContainer ac, Vector overlappingBonds)
+	public double getBondOverlapScore(IAtomContainer ac, Vector overlappingBonds)
 	{
 		overlappingBonds.removeAllElements();
 		double overlapScore = 0;

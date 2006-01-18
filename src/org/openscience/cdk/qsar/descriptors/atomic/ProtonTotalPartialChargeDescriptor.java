@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -123,7 +123,7 @@ public class ProtonTotalPartialChargeDescriptor implements IDescriptor {
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         int counter = 1;
         Molecule mol = new Molecule(ac);
         try {
@@ -134,8 +134,8 @@ public class ProtonTotalPartialChargeDescriptor implements IDescriptor {
         } catch (Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }
-        org.openscience.cdk.interfaces.Atom target = mol.getAtomAt(atomPosition);
-        org.openscience.cdk.interfaces.Atom[] neighboors = mol.getConnectedAtoms(target);
+        org.openscience.cdk.interfaces.IAtom target = mol.getAtomAt(atomPosition);
+        org.openscience.cdk.interfaces.IAtom[] neighboors = mol.getConnectedAtoms(target);
         DoubleArrayResult protonPartialCharge = new DoubleArrayResult(neighboors.length + 1);
         protonPartialCharge.add( target.getCharge() );
         for (int i = 0; i < neighboors.length; i++) {

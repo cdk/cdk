@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -105,12 +105,12 @@ public class KappaShapeIndicesDescriptor implements IDescriptor {
      *@return                   kier1, kier2 and kier3 are returned as arrayList of doubles
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
 
-        org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
-        org.openscience.cdk.interfaces.Atom[] firstAtomNeighboors = null;
-        org.openscience.cdk.interfaces.Atom[] secondAtomNeighboors = null;
-        org.openscience.cdk.interfaces.Atom[] thirdAtomNeighboors = null;
+        org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] firstAtomNeighboors = null;
+        org.openscience.cdk.interfaces.IAtom[] secondAtomNeighboors = null;
+        org.openscience.cdk.interfaces.IAtom[] thirdAtomNeighboors = null;
         DoubleArrayResult kierValues = new DoubleArrayResult(3);
         double bond1 = 0;
         double bond2 = 0;

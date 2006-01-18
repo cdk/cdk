@@ -36,7 +36,7 @@ import java.awt.Graphics2D;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2D;
@@ -96,7 +96,7 @@ public class AppletCanvas extends Canvas
 	public void paint(Graphics g)
 	{
 		renderer.getRenderer2DModel().setBackgroundDimension(getSize());
-		AtomContainer container = null;
+		IAtomContainer container = null;
 		if (model != null)
 		{
 			container = ChemModelManipulator.getAllInOneContainer(model.getChemModel());

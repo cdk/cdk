@@ -23,7 +23,7 @@ package org.openscience.cdk.geometry.alignment;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 
@@ -98,7 +98,7 @@ public class KabschAlignment {
     private Point3d cm1, cm2;
     private double[] atwt1, atwt2;
     
-    private Point3d[] getPoint3dArray(org.openscience.cdk.interfaces.Atom[] a) {
+    private Point3d[] getPoint3dArray(org.openscience.cdk.interfaces.IAtom[] a) {
         Point3d[] p = new Point3d[ a.length ];
         for (int i = 0; i < a.length; i++) {
             p[i] = new Point3d( a[i].getPoint3d() );
@@ -106,7 +106,7 @@ public class KabschAlignment {
         return(p);
     }
 
-    private double[] getAtomicMasses(org.openscience.cdk.interfaces.Atom[] a) {
+    private double[] getAtomicMasses(org.openscience.cdk.interfaces.IAtom[] a) {
         double[] am = new double[a.length];
         IsotopeFactory factory = null;
         try {
@@ -217,12 +217,12 @@ public class KabschAlignment {
      * The algorithm allows for atom weighting and the default is 1.0 for all
      * atoms.
      *
-     * @param ac1 An {@link AtomContainer}
-     * @param ac2 An {@link AtomContainer}. This AtomContainer will have its coordinates rotated
+     * @param ac1 An {@link IAtomContainer}
+     * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
      *            so that the RMDS is minimzed to the coordinates of the first one
      * @throws CDKException if the number of atom's are not the same in the two AtomContainer's
      */            
-    public KabschAlignment(AtomContainer ac1, AtomContainer ac2) throws CDKException {
+    public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2) throws CDKException {
         if (ac1.getAtomCount() != ac2.getAtomCount()) {
             throw new CDKException("The AtomContainer's being aligned must have the same number of atoms");
         }
@@ -239,14 +239,14 @@ public class KabschAlignment {
     /**
      * Sets up variables for the alignment algorithm.
      *
-     * @param ac1 An {@link AtomContainer}
-     * @param ac2 An {@link AtomContainer}. This AtomContainer will have its coordinates rotated
+     * @param ac1 An {@link IAtomContainer}
+     * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
      *            so that the RMDS is minimzed to the coordinates of the first one
      * @param wts A vector atom weights.           
      * @throws CDKException if the number of atom's are not the same in the two AtomContainer's or
      *                         length of the weight vector is not the same as number of atoms.
      */            
-    public KabschAlignment(AtomContainer ac1, AtomContainer ac2, double[] wts) throws CDKException {
+    public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2, double[] wts) throws CDKException {
         if (ac1.getAtomCount() != ac2.getAtomCount()) {
             throw new CDKException("The AtomContainer's being aligned must have the same number of atoms");
         }
@@ -455,7 +455,7 @@ public class KabschAlignment {
     }
 
     /**
-     * Rotates the {@link AtomContainer} coordinates by the rotation matrix.
+     * Rotates the {@link IAtomContainer} coordinates by the rotation matrix.
      *
      * In general if you align a subset of atoms in a AtomContainer
      * this function can be applied to the whole AtomContainer to rotate all
@@ -465,9 +465,9 @@ public class KabschAlignment {
      * Note that the AtomContainer coordinates also get translated such that the
      * center of mass of the original fragment used to calculate the alignment is at the origin.
      *
-     * @param ac The {@link AtomContainer} whose coordinates are to be rotated
+     * @param ac The {@link IAtomContainer} whose coordinates are to be rotated
      */
-    public void rotateAtomContainer(AtomContainer ac)  {
+    public void rotateAtomContainer(IAtomContainer ac)  {
         Point3d[] p = getPoint3dArray( ac.getAtoms() );
         for (int i = 0; i < ac.getAtomCount(); i++) {
             // translate the the origin we have calculated

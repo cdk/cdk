@@ -22,7 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -111,8 +111,8 @@ public class PetitjeanShapeIndexDescriptor implements IDescriptor {
      * @return A DoubleArrayResult value representing the Petitjean shape indices
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
-        AtomContainer local = AtomContainerManipulator.removeHydrogens(container);
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+        IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
 
         int tradius = PathTools.getMolecularGraphRadius(local);
         int tdiameter = PathTools.getMolecularGraphDiameter(local);

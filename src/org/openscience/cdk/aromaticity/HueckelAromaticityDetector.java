@@ -29,7 +29,7 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.Ring;
@@ -69,7 +69,7 @@ public class HueckelAromaticityDetector
 	 *@exception  CDKException 	Thrown if something goes wrong or in
 	 * 				case of a AllRingsFinder timeout 
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer) throws CDKException
+	public static boolean detectAromaticity(IAtomContainer atomContainer) throws CDKException
 	{
 		return (detectAromaticity(atomContainer, true));
 	}
@@ -84,7 +84,7 @@ public class HueckelAromaticityDetector
 	 *@return                       True if molecule has aromatic features
 	 *@exception  org.openscience.cdk.exception.CDKException  
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet) throws org.openscience.cdk.exception.CDKException
+	public static boolean detectAromaticity(IAtomContainer atomContainer, RingSet ringSet) throws org.openscience.cdk.exception.CDKException
 	{
 		return (detectAromaticity(atomContainer, ringSet, true));
 	}
@@ -102,7 +102,7 @@ public class HueckelAromaticityDetector
 	 *@exception CDKException  	Thrown in case of errors or an 
 	 *				AllRingsFinder timeout
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.CDKException
+	public static boolean detectAromaticity(IAtomContainer atomContainer, boolean removeAromatictyFlags) throws org.openscience.cdk.exception.CDKException
 	{
 		return detectAromaticity(atomContainer, removeAromatictyFlags, null);
 	}
@@ -123,7 +123,7 @@ public class HueckelAromaticityDetector
 	 *@exception CDKException  	Thrown in case of errors or an 
 	 *				AllRingsFinder timeout
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, boolean removeAromatictyFlags, AllRingsFinder arf) throws org.openscience.cdk.exception.CDKException
+	public static boolean detectAromaticity(IAtomContainer atomContainer, boolean removeAromatictyFlags, AllRingsFinder arf) throws org.openscience.cdk.exception.CDKException
 	{
 		logger.debug("Entered Aromaticity Detection");
 		logger.debug("Starting AllRingsFinder");
@@ -155,7 +155,7 @@ public class HueckelAromaticityDetector
 	 *@return                         True, if molecules contains an
 	 *				  aromatic feature
 	 */
-	public static boolean detectAromaticity(AtomContainer atomContainer, RingSet ringSet, boolean removeAromaticityFlags)
+	public static boolean detectAromaticity(IAtomContainer atomContainer, RingSet ringSet, boolean removeAromaticityFlags)
 	{
 		boolean foundSomething = false;
 		if (removeAromaticityFlags)

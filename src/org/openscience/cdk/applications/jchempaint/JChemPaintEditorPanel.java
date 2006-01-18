@@ -59,7 +59,7 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.renderer.Renderer2D;
@@ -236,7 +236,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	void setupIfModelNotEmpty()
 	{
-		org.openscience.cdk.interfaces.AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jchemPaintModel.getChemModel());
+		org.openscience.cdk.interfaces.IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(jchemPaintModel.getChemModel());
 
 		Renderer2DModel rendererModel = jchemPaintModel.getRendererModel();
 		if (ac.getAtomCount() != 0)
@@ -520,7 +520,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             Renderer2D r2d = new Renderer2D(jchemPaintModel.getRendererModel());
             r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
             ChemModel model = (ChemModel) jchemPaintModel.getChemModel().clone();
-            AtomContainer ac = SetOfMoleculesManipulator.getAllInOneContainer(model.getSetOfMolecules());
+            IAtomContainer ac = SetOfMoleculesManipulator.getAllInOneContainer(model.getSetOfMolecules());
             Dimension dim = GeometryTools.get2DDimension(ac);
             GeometryTools.translateAllPositive(ac);
             snapImage = createImage((int)dim.getWidth()+20, (int)dim.getHeight()+20);
@@ -609,7 +609,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
 			for (int i = 1; i <= reactions.length; i++)
 			{
-				org.openscience.cdk.interfaces.AtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);
+				org.openscience.cdk.interfaces.IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);
 				GeometryTools.center(ac, baseDim);
 				GeometryTools.translate2D(ac, 0, baseDim.height * (reactions.length - i));
 			}

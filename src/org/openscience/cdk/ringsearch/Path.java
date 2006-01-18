@@ -30,8 +30,8 @@ package org.openscience.cdk.ringsearch;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
 * Implementation of a Path as needed by {@cdk.cite HAN96}.
@@ -61,7 +61,7 @@ public class Path extends Vector
 	 * @param  atom1  first atom in the new path
 	 * @param  atom2  second atom in the new path
 	 */
-	public Path(Atom atom1, Atom atom2)
+	public Path(IAtom atom1, IAtom atom2)
 	{
 		super();
 		add(atom1);
@@ -78,7 +78,7 @@ public class Path extends Vector
 	 * @param  atom   The atom which is the joint point
 	 * @return        The newly formed longer path
 	 */
-	public static Path join(Path path1, Path path2, Atom atom)
+	public static Path join(Path path1, Path path2, IAtom atom)
 	{
 		Path newPath = new Path();
 		Path tempPath = new Path();
@@ -99,14 +99,14 @@ public class Path extends Vector
 	
 	public int getIntersectionSize(Path other)
 	{
-		Atom a1, a2;
+		IAtom a1, a2;
 		int iSize = 0;
 		for (int i = 0; i < size(); i++)
 		{
-			a1 = (Atom)elementAt(i);
+			a1 = (IAtom)elementAt(i);
 			for (int j = 0; j < other.size(); j++)
 			{
-				a2 = (Atom)other.elementAt(j);
+				a2 = (IAtom)other.elementAt(j);
 				if (a1 == a2) iSize++;
 			}
 		}
@@ -126,14 +126,14 @@ public class Path extends Vector
 		}
 	}
 	
-	public String toString(AtomContainer ac)
+	public String toString(IAtomContainer ac)
 	{
 		String s = "Path of length " + size() + ": ";
 		try
 		{
 			for (int f = 0; f < size(); f++)
 			{
-				s += ac.getAtomNumber((Atom)elementAt(f)) + " ";
+				s += ac.getAtomNumber((IAtom)elementAt(f)) + " ";
 			}
 		}
 		catch(Exception exc)

@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.iupac.generator.sectiona;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.iupac.generator.IUPACNamePart;
@@ -52,7 +52,7 @@ public class Rule2dot1 extends NamingRule {
         return numberingRule;
     }
 
-    public IUPACNamePart apply(AtomContainer m) {
+    public IUPACNamePart apply(IAtomContainer m) {
         IUPACNamePart inp = null;
         /* structure may not have valencies */
         if (m instanceof Molecule) {
@@ -95,11 +95,11 @@ public class Rule2dot1 extends NamingRule {
             AtomPlacer ap = new AtomPlacer();
             // determine longest C-C chain
             try {
-                AtomContainer copy = new org.openscience.cdk.AtomContainer();
+                IAtomContainer copy = new org.openscience.cdk.AtomContainer();
 //                System.err.println(" m: " + m);
                 copy.add(m);
 //                System.err.println("cp: " + copy);
-                AtomContainer longestChain = ap.getInitialLongestChain(
+                IAtomContainer longestChain = ap.getInitialLongestChain(
                     new Molecule(deleteNonCarbonAtoms(copy))
                 );
 //                System.err.println("AC: " + longestChain);
@@ -123,12 +123,12 @@ public class Rule2dot1 extends NamingRule {
         return inp;
     };
 
-    private AtomContainer deleteNonCarbonAtoms(AtomContainer ac) throws Exception {
-        AtomContainer result = (AtomContainer)ac.clone();
+    private IAtomContainer deleteNonCarbonAtoms(IAtomContainer ac) throws Exception {
+        IAtomContainer result = (IAtomContainer)ac.clone();
 //        System.out.println("Deleting non carbon atoms...");
-        org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
         for (int i=0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.Atom atom = atoms[i];
+        	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
             if (!"C".equals(atom.getSymbol())) {
 //                System.out.println("  deleting: " + atom.getSymbol());
                 ac.removeAtomAndConnectedElectronContainers(atom);

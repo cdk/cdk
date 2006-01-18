@@ -120,7 +120,7 @@ public class PDBReaderTest extends TestCase {
             oMol.setProperty(new String("test.molecule"), new String("test.molecule")); 
             assertEquals(new String("test.molecule"), oMol.getProperty("test.molecule"));
 
-            org.openscience.cdk.interfaces.Atom nAtom = oMol.getFirstAtom();
+            org.openscience.cdk.interfaces.IAtom nAtom = oMol.getFirstAtom();
             assertNotNull(nAtom);
             assertTrue(nAtom instanceof PDBAtom);
             PDBAtom oAtom = (PDBAtom)nAtom;
@@ -192,7 +192,7 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(mol.getMonomer("ILEA7", "A"));
       assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
       
-      org.openscience.cdk.interfaces.Atom nAtom = mol.getAtomAt(94);
+      org.openscience.cdk.interfaces.IAtom nAtom = mol.getAtomAt(94);
       assertNotNull(nAtom);
       assertTrue(nAtom instanceof PDBAtom);
       PDBAtom atom = (PDBAtom)nAtom;
@@ -207,7 +207,7 @@ public class PDBReaderTest extends TestCase {
       org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(93);
       assertNotNull(bond);
       assertEquals("Test failed. Bond order not the same.", 2.0, bond.getOrder(), 0.001);
-      org.openscience.cdk.interfaces.Atom[] atoms = bond.getAtoms();
+      org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
       assertEquals("C", atoms[0].getSymbol());
       assertEquals("O", atoms[1].getSymbol());
       assertEquals(true, bond.getProperties().isEmpty());

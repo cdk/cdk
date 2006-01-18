@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -131,11 +131,11 @@ public class BondsToAtomDescriptor implements IDescriptor {
      *@exception  CDKException  Description of the Exception
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         mygraph = MoleculeGraphs.getMoleculeGraph((Molecule)container);
         int bondsToAtom = 0;
-        org.openscience.cdk.interfaces.Atom target = container.getAtomAt(targetPosition);
-        org.openscience.cdk.interfaces.Atom focus = container.getAtomAt(focusPosition);
+        org.openscience.cdk.interfaces.IAtom target = container.getAtomAt(targetPosition);
+        org.openscience.cdk.interfaces.IAtom focus = container.getAtomAt(focusPosition);
         startVertex = target;
         endVertex = focus;
         org._3pq.jgrapht.Edge edg = null;

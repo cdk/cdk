@@ -35,7 +35,7 @@ import javax.swing.JFrame;
 
 import nu.xom.Element;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
@@ -79,8 +79,8 @@ public class ShowChemObjectDumpAction extends JCPAction
 			Element cmlDOM = new CMLCml();
 			if (object instanceof Molecule) {
 				cmlDOM = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
-			} else if (object instanceof Atom) {
-				cmlDOM = convertor.cdkAtomToCMLAtom((Atom)object);
+			} else if (object instanceof IAtom) {
+				cmlDOM = convertor.cdkAtomToCMLAtom((IAtom)object);
 			} else if (object instanceof Bond) {
 				cmlDOM = convertor.cdkBondToCMLBond((Bond)object);
 			}

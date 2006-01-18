@@ -37,14 +37,14 @@ public interface SetOfAtomContainers extends IChemObject {
 	 *
 	 * @param  atomContainer  The atomContainer to be added to this container
 	 */
-	public void addAtomContainer(AtomContainer atomContainer);
+	public void addAtomContainer(IAtomContainer atomContainer);
 
 	/**
 	 * Removes an AtomContainer from this container.
 	 *
 	 * @param  atomContainer  The atomContainer to be removed from this container
 	 */
-	public void removeAtomContainer(AtomContainer atomContainer);
+	public void removeAtomContainer(IAtomContainer atomContainer);
 
 	/**
 	 * Removes all AtomContainer from this container.
@@ -64,9 +64,9 @@ public interface SetOfAtomContainers extends IChemObject {
 	 * @param  container   The AtomContainer for which the multiplier is set
 	 * @param  multiplier  The new multiplier for the AtomContatiner
 	 * @return             true if multiplier has been set
-	 * @see                #getMultiplier(AtomContainer)
+	 * @see                #getMultiplier(IAtomContainer)
 	 */
-	public boolean setMultiplier(AtomContainer container, double multiplier);
+	public boolean setMultiplier(IAtomContainer container, double multiplier);
 	
 	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
@@ -104,7 +104,7 @@ public interface SetOfAtomContainers extends IChemObject {
 	 * @param  atomContainer  The atomContainer to be added to this container
 	 * @param  multiplier     The multiplier of this atomContainer
 	 */
-	public void addAtomContainer(AtomContainer atomContainer, double multiplier);
+	public void addAtomContainer(IAtomContainer atomContainer, double multiplier);
 
 	/**
 	 * Adds all atomContainers in the SetOfAtomContainers to this container.
@@ -118,7 +118,7 @@ public interface SetOfAtomContainers extends IChemObject {
 	 *
 	 * @return    The array of AtomContainers of this container
 	 */
-	public AtomContainer[] getAtomContainers();
+	public IAtomContainer[] getAtomContainers();
 
 	/**
 	 * Returns the AtomContainer at position <code>number</code> in the
@@ -127,7 +127,7 @@ public interface SetOfAtomContainers extends IChemObject {
 	 * @param  number  The position of the AtomContainer to be returned.
 	 * @return         The AtomContainer at position <code>number</code> .
 	 */
-	public AtomContainer getAtomContainer(int number);
+	public IAtomContainer getAtomContainer(int number);
 
 	/**
 	 * Returns the multiplier for the AtomContainer at position <code>number</code> in the
@@ -144,9 +144,9 @@ public interface SetOfAtomContainers extends IChemObject {
 	 *
 	 * @param  container  The AtomContainer for which the multiplier is given
 	 * @return            -1, if the given molecule is not a container in this set
-	 * @see               #setMultiplier(AtomContainer, double)
+	 * @see               #setMultiplier(IAtomContainer, double)
 	 */
-	public double getMultiplier(AtomContainer container);
+	public double getMultiplier(IAtomContainer container);
 
 	/**
 	 * Returns the number of AtomContainers in this Container.

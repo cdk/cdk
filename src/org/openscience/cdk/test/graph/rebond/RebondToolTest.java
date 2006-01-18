@@ -65,7 +65,7 @@ public class RebondToolTest extends CDKTestCase {
       // configure atoms
       AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
           methane.getBuilder());
-      org.openscience.cdk.interfaces.Atom[] atoms = methane.getAtoms();
+      org.openscience.cdk.interfaces.IAtom[] atoms = methane.getAtoms();
       for (int i=0; i<atoms.length; i++) {
         factory.configure(atoms[i]);
       }

@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -67,7 +67,7 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IDescriptor {
 
     private int atomPosition = 0;
     private boolean checkAromaticity = false;
-  private AtomContainer acold=null;
+  private IAtomContainer acold=null;
   private SetOfAtomContainers acSet=null;
 
 
@@ -136,21 +136,21 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IDescriptor {
      *@return                   true if the proton is bonded to a conjugated system
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
             boolean isProtonInPiSystem = false;
             int counter = 0;
             Molecule mol = new Molecule(ac);
             if (checkAromaticity) {
                 HueckelAromaticityDetector.detectAromaticity(mol);
         }
-            org.openscience.cdk.interfaces.Atom target = ac.getAtomAt(atomPosition);
+            org.openscience.cdk.interfaces.IAtom target = ac.getAtomAt(atomPosition);
             if(target.getSymbol().equals("H")) {
         if(acold!=ac){
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
         }
-                org.openscience.cdk.interfaces.AtomContainer[] detected = acSet.getAtomContainers();
-                org.openscience.cdk.interfaces.Atom[] neighboors = mol.getConnectedAtoms(target);
+                org.openscience.cdk.interfaces.IAtomContainer[] detected = acSet.getAtomContainers();
+                org.openscience.cdk.interfaces.IAtom[] neighboors = mol.getConnectedAtoms(target);
                 for (int i = 0; i < neighboors.length; i++) {
                     for(int d = 0; d < detected.length; d++) {
                         if ((detected[d]!= null) && (detected[d].contains(neighboors[i]))) {

@@ -26,8 +26,8 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.IOException;
 
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -138,12 +138,12 @@ public class VdWRadiusDescriptor implements IDescriptor {
     /**
      *  This method calculate the Van der Waals radius of an atom.
      *
-     *@param  container         The {@link AtomContainer} for which the descriptor is to be calculated
+     *@param  container         The {@link IAtomContainer} for which the descriptor is to be calculated
      *@return                   The Van der Waals radius of the atom
      *@exception  CDKException  if an error occurs during atom typing
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         if (factory == null) 
             try {
                 factory = AtomTypeFactory.getInstance(
@@ -157,7 +157,7 @@ public class VdWRadiusDescriptor implements IDescriptor {
         double vdwradius = 0;
         try {
             String symbol = container.getAtomAt(atomPosition).getSymbol();
-            AtomType type = factory.getAtomType(symbol);
+            IAtomType type = factory.getAtomType(symbol);
             vdwradius = type.getVanderwaalsRadius();
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vdwradius));
         } catch (Exception ex1) {

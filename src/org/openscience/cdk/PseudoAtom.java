@@ -85,7 +85,7 @@ public class PseudoAtom extends Atom
      *
      * @param   atom  Atom from which the PseudoAtom is constructed
      */
-    public PseudoAtom(org.openscience.cdk.interfaces.Atom atom) {
+    public PseudoAtom(org.openscience.cdk.interfaces.IAtom atom) {
         super("R");
         super.fractionalPoint3d = atom.getFractionalPoint3d();
         super.point3d = atom.getPoint3d();

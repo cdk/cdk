@@ -30,7 +30,7 @@
 package org.openscience.cdk.fingerprint;
 
 import java.util.BitSet;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  *  Interface for fingerprint calculators.
@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.AtomContainer;
  */
 public interface IFingerprinter {
 
-	public BitSet getFingerprint(AtomContainer ac) throws Exception;
+	public BitSet getFingerprint(IAtomContainer ac) throws Exception;
 
 }
 

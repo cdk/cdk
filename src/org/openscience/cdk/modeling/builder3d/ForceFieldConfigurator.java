@@ -36,9 +36,9 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.PseudoAtom;
@@ -238,10 +238,10 @@ public class ForceFieldConfigurator {
 	 * @return                              The atomType 
 	 * @exception  NoSuchAtomTypeException  atomType is not known
 	 */
-	private AtomType getAtomType(String ID) throws NoSuchAtomTypeException {
-		AtomType at = null;
+	private IAtomType getAtomType(String ID) throws NoSuchAtomTypeException {
+		IAtomType at = null;
     		for (int i = 0; i < atomTypes.size(); i++) {
-			at = (AtomType) atomTypes.get(i);
+			at = (IAtomType) atomTypes.get(i);
 			if (at.getAtomTypeName().equals(ID)) {
 				return at;
 			}
@@ -257,7 +257,7 @@ public class ForceFieldConfigurator {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public RingSet assignAtomTyps(Molecule molecule) throws Exception {
-		org.openscience.cdk.interfaces.Atom atom = null;
+		org.openscience.cdk.interfaces.IAtom atom = null;
 		String hoseCode = "";
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		int NumberOfRingAtoms = 0;
@@ -311,7 +311,7 @@ public class ForceFieldConfigurator {
 	 *@param  ac  AtomContainer
 	 *@return     true/false
 	 */
-	private boolean isHeteroRingSystem(AtomContainer ac) {
+	private boolean isHeteroRingSystem(IAtomContainer ac) {
 		if (ac != null) {
 			for (int i = 0; i < ac.getAtomCount(); i++) {
 				if (!(ac.getAtomAt(i).getSymbol()).equals("H") && !(ac.getAtomAt(i).getSymbol()).equals("C")) {
@@ -330,8 +330,8 @@ public class ForceFieldConfigurator {
 	 * @param  ID    the atom type id
 	 * @return       the assigned atom
 	 */
-	private org.openscience.cdk.interfaces.Atom setAtom(org.openscience.cdk.interfaces.Atom atom, String ID) throws Exception {
-		AtomType at = null;
+	private org.openscience.cdk.interfaces.IAtom setAtom(org.openscience.cdk.interfaces.IAtom atom, String ID) throws Exception {
+		IAtomType at = null;
 		String key = "";
 		Vector data = null;
 		Double value = null;
@@ -365,7 +365,7 @@ public class ForceFieldConfigurator {
 		return atom;
 	}
 	
-	public org.openscience.cdk.interfaces.Atom configureAtom(org.openscience.cdk.interfaces.Atom atom, String hoseCode, boolean _boolean) throws Exception {
+	public org.openscience.cdk.interfaces.IAtom configureAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode, boolean _boolean) throws Exception {
 		if (ffName.equals("mm2")){
 			return configureMM2BasedAtom(atom, hoseCode,_boolean);
 		}else if (ffName.equals("mmff94")){
@@ -382,7 +382,7 @@ public class ForceFieldConfigurator {
 	 * @return                   atom
 	 * @exception  CDKException  Description of the Exception
 	 */
-	public org.openscience.cdk.interfaces.Atom configureMM2BasedAtom(org.openscience.cdk.interfaces.Atom atom, String hoseCode,boolean hetRing) throws Exception {
+	public org.openscience.cdk.interfaces.IAtom configureMM2BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode,boolean hetRing) throws Exception {
 		//System.out.println("CONFIGURE MM2 ATOM");
 		Vector atomTypePattern = null;
 		MM2BasedAtomTypePattern atp = new MM2BasedAtomTypePattern();
@@ -391,7 +391,7 @@ public class ForceFieldConfigurator {
 		Double d_tmp = null;
 		Pattern p = null;
 		String ID = "";
-		Atom configAtom = null;
+		IAtom configAtom = null;
 		boolean atomTypeFlag = false;
 		
 		if (atom instanceof PseudoAtom) {
@@ -542,7 +542,7 @@ public class ForceFieldConfigurator {
 	 * @return                   atom
 	 * @exception  CDKException  Description of the Exception
 	 */
-	public org.openscience.cdk.interfaces.Atom configureMMFF94BasedAtom(org.openscience.cdk.interfaces.Atom atom, String hoseCode, boolean isInHetRing) throws Exception {
+	public org.openscience.cdk.interfaces.IAtom configureMMFF94BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode, boolean isInHetRing) throws Exception {
 		//System.out.println("****** Configure MMFF94 AtomType ******");
 		Vector atomTypePattern = null;
 		MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();

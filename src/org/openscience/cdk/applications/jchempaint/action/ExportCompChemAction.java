@@ -33,7 +33,7 @@ import java.io.FileWriter;
 
 import javax.swing.JFileChooser;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.io.JCPCompChemInputSaveFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
@@ -71,7 +71,7 @@ public class ExportCompChemAction extends SaveAction {
                     if (cow != null) {
                         cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
                     }
-                    AtomContainer ac = ChemModelManipulator.getAllInOneContainer(jcpPanel.getJChemPaintModel().getChemModel());
+                    IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(jcpPanel.getJChemPaintModel().getChemModel());
                     if (ac != null) {
                         cow.write(new Molecule(ac));
                     } else {

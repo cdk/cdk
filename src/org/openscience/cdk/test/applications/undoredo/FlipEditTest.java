@@ -66,7 +66,7 @@ public class FlipEditTest extends ChangeCoordsEditTest {
 		StructureDiagramGenerator generator = new StructureDiagramGenerator(mol);
 		generator.generateCoordinates();
 		Point2d center = GeometryTools.get2DCenter(mol);
-		org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
 			Point2d atom = atoms[i].getPoint2d();
 			Point2d oldCoord = new Point2d(atom.x, atom.y);

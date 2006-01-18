@@ -51,7 +51,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
     protected final int electronCount = 2;
 
     /** The atom with which this lone pair is associated. */
-    protected org.openscience.cdk.interfaces.Atom atom;
+    protected org.openscience.cdk.interfaces.IAtom atom;
 
     /**
      * Constructs an unconnected lone pair.
@@ -66,7 +66,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      *
      * @param atom  Atom to which this lone pair is connected
      */
-    public LonePair(org.openscience.cdk.interfaces.Atom atom) {
+    public LonePair(org.openscience.cdk.interfaces.IAtom atom) {
         this.atom = atom;
     }
 
@@ -86,7 +86,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      *
      * @see    #setAtom
 	 */
-	public org.openscience.cdk.interfaces.Atom getAtom() {
+	public org.openscience.cdk.interfaces.IAtom getAtom() {
 		return this.atom;
 	}
 
@@ -97,7 +97,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      *
      * @see    #getAtom
 	 */
-	public void setAtom(org.openscience.cdk.interfaces.Atom atom) {
+	public void setAtom(org.openscience.cdk.interfaces.IAtom atom) {
 		this.atom = atom;
 		notifyChanged();
 	}
@@ -108,7 +108,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this lone pair is associated with the atom
      */
-    public boolean contains(org.openscience.cdk.interfaces.Atom atom)     {
+    public boolean contains(org.openscience.cdk.interfaces.IAtom atom)     {
         return (this.atom == atom) ? true : false;
     }
 
@@ -127,7 +127,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
 		}
         // clone the Atom
         if (atom != null) {
-		    clone.atom = (org.openscience.cdk.interfaces.Atom)((org.openscience.cdk.interfaces.Atom)atom).clone(); 
+		    clone.atom = (org.openscience.cdk.interfaces.IAtom)((org.openscience.cdk.interfaces.IAtom)atom).clone(); 
         }
 		return clone;
 	}

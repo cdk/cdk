@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Enumeration;
 
 import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.CMLReader;
@@ -114,12 +114,12 @@ public class AminoAcids {
         );
         try {
         	list = (ChemFile)reader.read(list);
-        	AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(list);
+        	IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(list);
         	for (int i=0; i<containers.length; i++) {
         		logger.debug("Adding AA: ", containers[i]);
         		// convert into an AminoAcid
         		AminoAcid aminoAcid = new AminoAcid();
-        		org.openscience.cdk.interfaces.Atom[] atoms = containers[i].getAtoms();
+        		org.openscience.cdk.interfaces.IAtom[] atoms = containers[i].getAtoms();
         		Enumeration props = containers[i].getProperties().keys();
         		while (props.hasMoreElements()) {
         			Object next = props.nextElement();
@@ -141,7 +141,7 @@ public class AminoAcids {
         			}
         		}
         		for (int atomCount=0; atomCount<atoms.length; atomCount++) {
-        			org.openscience.cdk.interfaces.Atom atom = atoms[atomCount];
+        			org.openscience.cdk.interfaces.IAtom atom = atoms[atomCount];
         			String dictRef = (String)atom.getProperty("org.openscience.cdk.dict");
         			if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
         				aminoAcid.addNTerminus(atom);

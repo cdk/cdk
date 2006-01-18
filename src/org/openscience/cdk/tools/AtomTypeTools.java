@@ -92,7 +92,7 @@ public class AtomTypeTools {
 			org.openscience.cdk.Atom atom2 = (org.openscience.cdk.Atom)molecule.getAtomAt(i);
 			//Atom aromatic is set by HueckelAromaticityDetector
 			//Atom in ring?
-			if (ringSetMolecule.contains((org.openscience.cdk.interfaces.Atom)atom2)) {
+			if (ringSetMolecule.contains((org.openscience.cdk.interfaces.IAtom)atom2)) {
 				ringSetA = ringSetMolecule.getRings(atom2);
 				RingSetManipulator.sort(ringSetA);
 				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);

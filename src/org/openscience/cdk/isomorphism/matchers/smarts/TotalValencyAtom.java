@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matcher checks the total valency of the Atom.
@@ -39,7 +39,7 @@ public class TotalValencyAtom extends SMARTSAtom {
         this.valency = valency;
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         int valency = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalValency")).intValue();
         return (valency == this.valency);
     };

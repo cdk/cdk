@@ -32,8 +32,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.ChemSequence;
@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.ChemSequence;
  * Class with convenience methods that provide methods from
  * methods from ChemObjects within the ChemFile.
  *
- * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(Atom)
+ * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  *
  * @cdk.module standard
  */
@@ -54,8 +54,8 @@ public class ChemFileManipulator {
      *
      * @return  The AtomContainer with all the Molecules of this container
      */
-    public static AtomContainer getAllInOneContainer(ChemFile file) {
-        AtomContainer container = file.getBuilder().newAtomContainer();
+    public static IAtomContainer getAllInOneContainer(ChemFile file) {
+        IAtomContainer container = file.getBuilder().newAtomContainer();
         for (int i=0; i<file.getChemSequenceCount(); i++) {
             ChemSequence sequence = file.getChemSequence(i);
             container.add(ChemSequenceManipulator.getAllInOneContainer(sequence));
@@ -82,21 +82,21 @@ public class ChemFileManipulator {
     /**
      * Returns all the AtomContainer's of a ChemFile.
      */
-    public static AtomContainer[] getAllAtomContainers(ChemFile file) {
+    public static IAtomContainer[] getAllAtomContainers(ChemFile file) {
         ChemSequence[] sequences = file.getChemSequences();
         int acCount = 0;
         Vector acArrays = new Vector();
         for (int i=0; i<sequences.length; i++) {
-            AtomContainer[] sequenceContainers = ChemSequenceManipulator.
+            IAtomContainer[] sequenceContainers = ChemSequenceManipulator.
                 getAllAtomContainers(sequences[i]);
             acArrays.addElement(sequenceContainers);
             acCount += sequenceContainers.length;
         }
-        AtomContainer[] containers = new AtomContainer[acCount];
+        IAtomContainer[] containers = new IAtomContainer[acCount];
         int arrayOffset = 0;
         for (Enumeration acArraysElements = acArrays.elements(); 
              acArraysElements.hasMoreElements(); ) {
-            AtomContainer[] modelContainers = (AtomContainer[])acArraysElements.nextElement();
+            IAtomContainer[] modelContainers = (IAtomContainer[])acArraysElements.nextElement();
             System.arraycopy(modelContainers, 0,
                              containers, arrayOffset,
                              modelContainers.length);

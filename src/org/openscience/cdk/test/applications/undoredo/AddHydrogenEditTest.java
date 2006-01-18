@@ -2,7 +2,7 @@ package org.openscience.cdk.test.applications.undoredo;
 
 import java.util.HashMap;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
@@ -31,7 +31,7 @@ public class AddHydrogenEditTest extends TestCase {
 
 	private HashMap hydrogenAtomMap;
 
-	private AtomContainer changedAtomsAndBonds;
+	private IAtomContainer changedAtomsAndBonds;
 
 	public AddHydrogenEditTest() {
 		hydrogenAdder = new HydrogenAdder(
@@ -59,11 +59,11 @@ public class AddHydrogenEditTest extends TestCase {
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, changedAtomsAndBonds);
 		edit.undo();
 		edit.redo();
-		AtomContainer container = ChemModelManipulator
+		IAtomContainer container = ChemModelManipulator
 				.getAllInOneContainer(model);
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(i);
-			org.openscience.cdk.interfaces.Atom atom2 = changedAtomsAndBonds.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom2 = changedAtomsAndBonds.getAtomAt(i);
 			assertTrue(atom.getHydrogenCount() == atom2.getHydrogenCount());
 		}
 	}
@@ -83,7 +83,7 @@ public class AddHydrogenEditTest extends TestCase {
 		edit.undo();
 		edit.redo();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(i);
 			int[] hydrogens = (int[]) hydrogenAtomMap.get(atom);
 			assertTrue(atom.getHydrogenCount() == hydrogens[1]);
 		}
@@ -101,11 +101,11 @@ public class AddHydrogenEditTest extends TestCase {
 		model.setSetOfMolecules(som);
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, changedAtomsAndBonds);
 		edit.undo();
-		AtomContainer container = ChemModelManipulator
+		IAtomContainer container = ChemModelManipulator
 				.getAllInOneContainer(model);
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = container.getAtomAt(i);
-			org.openscience.cdk.interfaces.Atom atom2 = changedAtomsAndBonds.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = container.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom2 = changedAtomsAndBonds.getAtomAt(i);
 			assertTrue(atom.getHydrogenCount() == atom2.getHydrogenCount());
 		}
 	}
@@ -123,7 +123,7 @@ public class AddHydrogenEditTest extends TestCase {
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, hydrogenAtomMap);
 		edit.undo();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(i);
 			int[] hydrogens = (int[]) hydrogenAtomMap.get(atom);
 			assertTrue(atom.getHydrogenCount() == hydrogens[0]);
 		}

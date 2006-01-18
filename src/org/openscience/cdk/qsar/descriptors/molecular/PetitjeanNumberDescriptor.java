@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
@@ -100,7 +100,7 @@ public class PetitjeanNumberDescriptor implements IDescriptor {
      *@return                   petitjean number
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
         double petitjeanNumber = 0; //weinerPath
         double diameter = 0;
         double partialDiameter = 0;

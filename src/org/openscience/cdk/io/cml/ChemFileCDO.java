@@ -29,8 +29,8 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -60,13 +60,13 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
 
 	private ChemFile currentChemFile;
 	
-    private AtomContainer currentMolecule;
+    private IAtomContainer currentMolecule;
     private SetOfMolecules currentSetOfMolecules;
     private ChemModel currentChemModel;
     private ChemSequence currentChemSequence;
     private SetOfReactions currentSetOfReactions;
     private Reaction currentReaction;
-    private Atom currentAtom;
+    private IAtom currentAtom;
     private Hashtable atomEnumeration;
 
     private int numberOfAtoms = 0;
@@ -231,8 +231,8 @@ public class ChemFileCDO implements ChemFile, CDOInterface {
                 logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
                              " and " + bond_a2);
             } else {
-            	org.openscience.cdk.interfaces.Atom a1 = currentMolecule.getAtomAt(bond_a1);
-            	org.openscience.cdk.interfaces.Atom a2 = currentMolecule.getAtomAt(bond_a2);
+            	org.openscience.cdk.interfaces.IAtom a1 = currentMolecule.getAtomAt(bond_a1);
+            	org.openscience.cdk.interfaces.IAtom a2 = currentMolecule.getAtomAt(bond_a2);
                 Bond b = currentChemFile.getBuilder().newBond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {

@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -57,15 +57,15 @@ public class AbstractValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateAtom(Atom subject) {
+    public ValidationReport validateAtom(IAtom subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateAtomContainer(AtomContainer subject) {
+    public ValidationReport validateAtomContainer(IAtomContainer subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateAtomType(AtomType subject) {
+    public ValidationReport validateAtomType(IAtomType subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }

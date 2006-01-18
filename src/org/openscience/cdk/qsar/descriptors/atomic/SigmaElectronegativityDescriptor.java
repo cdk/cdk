@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -61,7 +61,7 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
 
     private int atomPosition = 0;
   private GasteigerMarsiliPartialCharges peoe = null;
-  private AtomContainer oldac=null;
+  private IAtomContainer oldac=null;
   private double[] gasteigerFactors = null;
 
 
@@ -128,7 +128,7 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
      *@return                   return the sigma electronegativity
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         double sigmaElectronegativity = 0;
         Molecule mol = new Molecule(ac);
         try {

@@ -75,7 +75,7 @@ public class AngleBending {
 	 */
 	public void setMMFF94AngleBendingParameters(AtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag ) throws Exception {
 
-		org.openscience.cdk.interfaces.Atom[] atomConnected = null;
+		org.openscience.cdk.interfaces.IAtom[] atomConnected = null;
 		angleBending=angleBendingFlag;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(i));

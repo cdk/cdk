@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -110,8 +110,8 @@ public class EccentricConnectivityIndexDescriptor implements IDescriptor {
      *@return            An IntegerResult value representing the eccentric connectivity index
      */
 
-    public DescriptorValue calculate(AtomContainer container) {
-        AtomContainer local = AtomContainerManipulator.removeHydrogens(container);
+    public DescriptorValue calculate(IAtomContainer container) {
+        IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
 
         int natom = local.getAtomCount();
         int[][] admat = AdjacencyMatrix.getMatrix(local);

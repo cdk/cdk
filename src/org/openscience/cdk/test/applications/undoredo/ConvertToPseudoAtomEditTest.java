@@ -71,7 +71,7 @@ public class ConvertToPseudoAtomEditTest extends CDKTestCase {
 	private void createPseudoAtomMolecule() {
 		mol = MoleculeFactory.makeAlphaPinene();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
 			PseudoAtom pseudoAtom = new PseudoAtom(atom);
 			AtomContainerManipulator.replaceAtomByAtom(mol, atom, pseudoAtom);
 		}

@@ -34,7 +34,7 @@ import javax.vecmath.Vector3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.Molecule;
@@ -67,7 +67,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtomAt(0);
         assertEquals("a1", atom.getID());
     }
 
@@ -79,7 +79,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtomAt(0);
         assertEquals("a1", atom.getID());
     }
     
@@ -90,7 +90,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(3, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(1);
+        IAtom atom = mol.getAtomAt(1);
         assertEquals("a2", atom.getID());
     }
 
@@ -102,7 +102,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtomAt(0);
         assertEquals("C", atom.getSymbol());
     }
     
@@ -113,7 +113,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtomAt(0);
         assertEquals("C", atom.getSymbol());
     }
     
@@ -124,7 +124,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtomAt(0);
         assertEquals("C", atom.getSymbol());
     }
     
@@ -135,7 +135,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtomAt(0);
         assertNull(atom.getPoint3d());
         assertNotNull(atom.getPoint2d());
         assertEquals(84, (int)atom.getX2d());
@@ -149,7 +149,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        Atom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtomAt(0);
         assertNull(atom.getPoint3d());
         assertNotNull(atom.getPoint2d());
         assertTrue(2.0833 == atom.getX2d());
@@ -166,8 +166,8 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(2, bond.getAtomCount());
-        Atom atom1 = bond.getAtomAt(0);
-        Atom atom2 = bond.getAtomAt(1);
+        IAtom atom1 = bond.getAtomAt(0);
+        IAtom atom2 = bond.getAtomAt(1);
         assertEquals("a1", atom1.getID());
         assertEquals("a2", atom2.getID());
     }
@@ -182,8 +182,8 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(2, bond.getAtomCount());
-        Atom atom1 = bond.getAtomAt(0);
-        Atom atom2 = bond.getAtomAt(1);
+        IAtom atom1 = bond.getAtomAt(0);
+        IAtom atom2 = bond.getAtomAt(1);
         assertEquals("a1", atom1.getID());
         assertEquals("a2", atom2.getID());
     }
@@ -198,8 +198,8 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(2, bond.getAtomCount());
-        Atom atom1 = bond.getAtomAt(0);
-        Atom atom2 = bond.getAtomAt(1);
+        IAtom atom1 = bond.getAtomAt(0);
+        IAtom atom2 = bond.getAtomAt(1);
         assertEquals("a1", atom1.getID());
         assertEquals("a2", atom2.getID());
     }
@@ -214,8 +214,8 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertEquals(2, mol.getBondCount());
         org.openscience.cdk.interfaces.Bond bond = mol.getBondAt(0);
         assertEquals(2, bond.getAtomCount());
-        Atom atom1 = bond.getAtomAt(0);
-        Atom atom2 = bond.getAtomAt(1);
+        IAtom atom1 = bond.getAtomAt(0);
+        IAtom atom2 = bond.getAtomAt(1);
         assertEquals("a1", atom1.getID());
         assertEquals("a2", atom2.getID());
         assertEquals("b2", mol.getBondAt(1).getID());
@@ -319,9 +319,9 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(3, mol.getAtomCount());
-        Atom atom1 = mol.getAtomAt(0);
-        Atom atom2 = mol.getAtomAt(1);
-        Atom atom3 = mol.getAtomAt(2);
+        IAtom atom1 = mol.getAtomAt(0);
+        IAtom atom2 = mol.getAtomAt(1);
+        IAtom atom3 = mol.getAtomAt(2);
         
         assertNotNull(atom1.getPoint2d());
         assertNull   (atom2.getPoint2d());
@@ -336,9 +336,9 @@ public class CMLFragmentsTest extends CDKTestCase {
         Molecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(3, mol.getAtomCount());
-        Atom atom1 = mol.getAtomAt(0);
-        Atom atom2 = mol.getAtomAt(1);
-        Atom atom3 = mol.getAtomAt(2);
+        IAtom atom1 = mol.getAtomAt(0);
+        IAtom atom2 = mol.getAtomAt(1);
+        IAtom atom3 = mol.getAtomAt(2);
         
         assertNotNull(atom1.getPoint3d());
         assertNull   (atom2.getPoint3d());

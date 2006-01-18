@@ -25,7 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -109,19 +109,19 @@ public class AminoAcidCountDescriptor implements IDescriptor {
 
 
     /**
-     * Determine the number of amino acids groups the supplied {@link AtomContainer}.
+     * Determine the number of amino acids groups the supplied {@link IAtomContainer}.
      *
-     * @param  ac           The {@link AtomContainer} for which this descriptor is to be calculated
+     * @param  ac           The {@link IAtomContainer} for which this descriptor is to be calculated
      * @return              the number of aromatic atoms of this AtomContainer
      * @throws CDKException if there is a problem in atomaticity detection
      *
      * @see #setParameters
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         int resultLength = substructureSet.getAtomContainerCount();
         IntegerArrayResult results = new IntegerArrayResult(resultLength);
 
-        AtomContainer substructure;
+        IAtomContainer substructure;
         for (int i=0; i<resultLength; i++) {
             substructure = substructureSet.getAtomContainer(i);
             List maps = UniversalIsomorphismTester.getSubgraphMaps(ac, substructure);

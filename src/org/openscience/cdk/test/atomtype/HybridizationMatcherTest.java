@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationMatcher;
@@ -55,7 +55,7 @@ public class HybridizationMatcherTest extends CDKTestCase {
         assertNotNull(matcher);
     }
     
-    public void testFindMatchingAtomType_AtomContainer_Atom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         SmilesParser sp = new SmilesParser();
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
@@ -64,7 +64,7 @@ public class HybridizationMatcherTest extends CDKTestCase {
         mol.addAtom(atom);
 
         HybridizationMatcher atm = new HybridizationMatcher();
-        AtomType matched = atm.findMatchingAtomType(mol, atom);
+        IAtomType matched = atm.findMatchingAtomType(mol, atom);
         assertNotNull(matched);
         
         assertEquals(thisHybridization, matched.getHybridization());

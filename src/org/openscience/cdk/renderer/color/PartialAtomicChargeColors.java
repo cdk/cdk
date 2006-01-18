@@ -26,7 +26,7 @@ package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Class defining the color which with atoms are colored.
@@ -41,11 +41,11 @@ import org.openscience.cdk.interfaces.Atom;
  */
 public class PartialAtomicChargeColors implements AtomColorer {
 
-    public Color getAtomColor(Atom atom) {
+    public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, Color.white);
     }
     
-    public Color getAtomColor(Atom atom, Color defaultColor) {
+    public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         double charge = atom.getCharge();
         if (charge > 0.0) {

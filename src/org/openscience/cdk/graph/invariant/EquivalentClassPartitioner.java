@@ -102,7 +102,7 @@ public class EquivalentClassPartitioner
 	 */
 	public double[] prepareNode(AtomContainer atomContainer)
 	{
-		org.openscience.cdk.interfaces.Atom[] atoms=atomContainer.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms=atomContainer.getAtoms();
 		 double nodeSequence[]=new double[atoms.length];
 		 for(int i=0;i<atoms.length;i++)
 		 {

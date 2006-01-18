@@ -30,7 +30,7 @@ package org.openscience.cdk.geometry;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Crystal;
 
 /**
@@ -237,8 +237,8 @@ public class CrystalGeometryTools {
 	 *
 	 * @return  boolean indication that 3D coordinates are available 
 	 */
-    public static boolean hasCrystalCoordinates(AtomContainer container) {
-    	org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+    public static boolean hasCrystalCoordinates(IAtomContainer container) {
+    	org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
         for (int i=0; i < atoms.length; i++) {
             if (atoms[i].getFractionalPoint3d() == null) {
                 return false;
@@ -251,7 +251,7 @@ public class CrystalGeometryTools {
      * Creates cartesian coordinates for all Atoms in the Crystal.
 	 */
     public static void fractionalToCartesian(Crystal crystal) {
-    	org.openscience.cdk.interfaces.Atom[] atoms = crystal.getAtoms();
+    	org.openscience.cdk.interfaces.IAtom[] atoms = crystal.getAtoms();
         Vector3d aAxis = crystal.getA();
         Vector3d bAxis = crystal.getB();
         Vector3d cAxis = crystal.getC();

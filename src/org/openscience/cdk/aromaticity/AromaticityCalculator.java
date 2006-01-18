@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Ring;
@@ -58,10 +58,10 @@ public class AromaticityCalculator
 	 * @param  atomContainer  the AtomContainer the ring is in
 	 * @return           true if the ring is aromatic false otherwise.
 	 */
-	protected static boolean isAromatic(Ring ring, AtomContainer atomContainer)
+	protected static boolean isAromatic(Ring ring, IAtomContainer atomContainer)
 	{
 		
-		Atom[] ringAtoms = ring.getAtoms();
+		IAtom[] ringAtoms = ring.getAtoms();
 		int eCount = 0;
 		Bond[] conectedBonds;
 		int numDoubleBond = 0;
@@ -69,7 +69,7 @@ public class AromaticityCalculator
 		
 		for (int i = 0; i < ringAtoms.length; i++)
 		{
-			Atom atom = ringAtoms[i];
+			IAtom atom = ringAtoms[i];
 			numDoubleBond = 0;
 			allConnectedBondsSingle = true;
 			conectedBonds = atomContainer.getConnectedBonds(atom);

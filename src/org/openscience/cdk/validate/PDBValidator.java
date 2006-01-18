@@ -29,7 +29,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.EnzymeResidueLocator;
@@ -85,8 +85,8 @@ public class PDBValidator extends AbstractValidator {
             
             // ok, now make a hash with all residueLocator in the PDB file
             Vector residues = new Vector();
-            AtomContainer allPDBAtoms = ChemFileManipulator.getAllInOneContainer(file);
-            org.openscience.cdk.interfaces.Atom[] atoms = allPDBAtoms.getAtoms();
+            IAtomContainer allPDBAtoms = ChemFileManipulator.getAllInOneContainer(file);
+            org.openscience.cdk.interfaces.IAtom[] atoms = allPDBAtoms.getAtoms();
             logger.info("Found in PDB file, #atoms: " + atoms.length);
             for (int i=0; i< atoms.length; i++) {
                 String resName = (String)atoms[i].getProperty("pdb.resName");
@@ -99,11 +99,11 @@ public class PDBValidator extends AbstractValidator {
             }
             
             // now see if the model undergoing validation has bad locators
-            AtomContainer allAtoms = ChemModelManipulator.getAllInOneContainer(subject);
-            org.openscience.cdk.interfaces.Atom[] validateAtoms = allAtoms.getAtoms();
+            IAtomContainer allAtoms = ChemModelManipulator.getAllInOneContainer(subject);
+            org.openscience.cdk.interfaces.IAtom[] validateAtoms = allAtoms.getAtoms();
             for (int i=0; i<validateAtoms.length; i++) {
                 // only testing PseudoAtom's
-            	org.openscience.cdk.interfaces.Atom validateAtom = validateAtoms[i];
+            	org.openscience.cdk.interfaces.IAtom validateAtom = validateAtoms[i];
                 if (validateAtom instanceof EnzymeResidueLocator) {
                     ValidationTest badResidueLocator = new ValidationTest(validateAtom,
                         "ResidueLocator does not exist in PDB entry."

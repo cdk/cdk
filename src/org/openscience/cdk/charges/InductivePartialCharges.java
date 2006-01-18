@@ -28,8 +28,8 @@ import java.io.IOException;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -81,14 +81,14 @@ public class InductivePartialCharges {
 	 *@return                AtomContainer
 	 *@exception  Exception  Description of the Exception
 	 */
-	public AtomContainer assignInductivePartialCharges(AtomContainer ac) throws Exception {
+	public IAtomContainer assignInductivePartialCharges(IAtomContainer ac) throws Exception {
         if (factory == null) {
             factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
                 ac.getBuilder());
         }
 
 		int stepsLimit = 9;
-		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 		double[] pChInch = new double[atoms.length * (stepsLimit + 1)];
 		double[] ElEn = new double[atoms.length * (stepsLimit + 1)];
 		double[] pCh = new double[atoms.length * (stepsLimit + 1)];
@@ -126,8 +126,8 @@ public class InductivePartialCharges {
 	 *@return                The pauling electronegativities
 	 *@exception  Exception  Description of the Exception
 	 */
-	public double[] getPaulingElectronegativities(AtomContainer ac, boolean modified) throws Exception {
-		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
+	public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws Exception {
+		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 		double[] paulingElectronegativities = new double[atoms.length];
 		Element element = null;
 		String symbol = null;
@@ -196,9 +196,9 @@ public class InductivePartialCharges {
 	 // this method returns the result of the core of the equation of atomic softness
 	 // that can be used for qsar descriptors and during the iterative calculation
 	 // of effective electronegativity
-	public double getAtomicSoftnessCore(AtomContainer ac, int atomPosition) throws CDKException {
-		org.openscience.cdk.interfaces.Atom[] allAtoms = null;
-		org.openscience.cdk.interfaces.Atom target = null;
+	public double getAtomicSoftnessCore(IAtomContainer ac, int atomPosition) throws CDKException {
+		org.openscience.cdk.interfaces.IAtom[] allAtoms = null;
+		org.openscience.cdk.interfaces.IAtom target = null;
 		double core = 0;
 		double radiusTarget = 0;
 		target = ac.getAtomAt(atomPosition);
@@ -206,7 +206,7 @@ public class InductivePartialCharges {
 		double partial = 0;
 		double radius = 0;
 		String symbol = null;
-		AtomType type = null;
+		IAtomType type = null;
 		try {
 			symbol = ac.getAtomAt(atomPosition).getSymbol();
 			type = factory.getAtomType(symbol);
@@ -260,9 +260,9 @@ public class InductivePartialCharges {
 	 *@return                   The atomic charge increment fot the target atom
 	 *@exception  CDKException  Description of the Exception
 	 */
-	private double getAtomicChargeIncrement(AtomContainer ac, int atomPosition, double[] ElEn, int as) throws CDKException {
-		org.openscience.cdk.interfaces.Atom[] allAtoms = null;
-		org.openscience.cdk.interfaces.Atom target = null;
+	private double getAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int as) throws CDKException {
+		org.openscience.cdk.interfaces.IAtom[] allAtoms = null;
+		org.openscience.cdk.interfaces.IAtom target = null;
 		double incrementedCharge = 0;
 		double radiusTarget = 0;
 		target = ac.getAtomAt(atomPosition);
@@ -271,7 +271,7 @@ public class InductivePartialCharges {
 		double tmp = 0;
 		double radius = 0;
 		String symbol = null;
-		AtomType type = null;
+		IAtomType type = null;
 		try {
 			symbol = target.getSymbol();
 			type = factory.getAtomType(symbol);
@@ -369,7 +369,7 @@ public class InductivePartialCharges {
 	 *@param  atom2  second atom
 	 *@return        squared distance between the 2 atoms
 	 */
-	private double calculateSquaredDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2) {
+	private double calculateSquaredDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
 		double distance = 0;
 		double tmp = 0;
 		Point3d firstPoint = atom1.getPoint3d();

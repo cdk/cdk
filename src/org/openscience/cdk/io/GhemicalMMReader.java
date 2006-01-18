@@ -33,8 +33,8 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -218,10 +218,10 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                 } else if ("!End".equals(command)) {
                     logger.info("Found end of file");
                     // Store atoms
-                    AtomContainer container = new org.openscience.cdk.AtomContainer();
+                    IAtomContainer container = new org.openscience.cdk.AtomContainer();
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
-                            Atom atom = model.getBuilder().newAtom(IsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));
+                            IAtom atom = model.getBuilder().newAtom(IsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));
                             atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);

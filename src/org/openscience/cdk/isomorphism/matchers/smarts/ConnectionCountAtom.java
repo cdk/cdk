@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matcher checks the total valency of the Atom.
@@ -39,7 +39,7 @@ public class ConnectionCountAtom extends SMARTSAtom {
         this.count = count;
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         int count = ((Integer)atom.getProperty("org.openscience.cdk.Atom.connectionCount")).intValue();
         return (count == this.count);
     };

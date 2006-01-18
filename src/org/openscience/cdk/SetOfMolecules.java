@@ -104,7 +104,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      */
     public org.openscience.cdk.interfaces.Molecule[] getMolecules() {
         Molecule[] result = new Molecule[super.getAtomContainerCount()];
-        org.openscience.cdk.interfaces.AtomContainer[] containers = super.getAtomContainers();
+        org.openscience.cdk.interfaces.IAtomContainer[] containers = super.getAtomContainers();
         for (int i=0; i<containers.length; i++) {
             result[i] = (Molecule)containers[i];
         }

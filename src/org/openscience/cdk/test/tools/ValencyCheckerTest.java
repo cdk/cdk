@@ -294,9 +294,9 @@ public class ValencyCheckerTest extends CDKTestCase
         }
         assertEquals(9.0, totalBondOrder, 0.0001);
         // test for each atom, total bond order is 3.0
-        org.openscience.cdk.interfaces.Atom[] atoms = benzene.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = benzene.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-        	org.openscience.cdk.interfaces.Atom carbon = atoms[i];
+        	org.openscience.cdk.interfaces.IAtom carbon = atoms[i];
             totalBondOrder = 0.0;
             bonds = benzene.getConnectedBonds(carbon);
             assertEquals(2, bonds.length); // two explicit neighbours

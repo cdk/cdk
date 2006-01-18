@@ -45,7 +45,7 @@ public interface RDFWeightFunction {
      * @param atom  First atom.
      * @param atom2 Second atom.
      */
-    public double calculate(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom atom2);
+    public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2);
     
 }
 

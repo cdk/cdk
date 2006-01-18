@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.CDKConstants;
 
@@ -50,7 +50,7 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBon
         return false;
     };
 
-    public void setAtoms(Atom[] atoms) {
+    public void setAtoms(IAtom[] atoms) {
         if (atoms.length > 0 && atoms[0] instanceof QueryAtom) {
             super.setAtoms(atoms);
         } else {
@@ -58,7 +58,7 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBon
         }
 	}
     
-	public void setAtomAt(Atom atom, int position) {
+	public void setAtomAt(IAtom atom, int position) {
         if (atom instanceof QueryAtom) {
             super.setAtomAt(atom, position);
         } else {

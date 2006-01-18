@@ -35,8 +35,8 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -210,7 +210,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      * @exception IOException  if an I/O error occurs
      */
     private void readCoordinates(ChemModel model) throws CDKException, IOException {
-        AtomContainer container = new org.openscience.cdk.AtomContainer();
+        IAtomContainer container = new org.openscience.cdk.AtomContainer();
         String line = input.readLine();
         line = input.readLine();
         line = input.readLine();
@@ -266,7 +266,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             } catch (Exception exception) {
                 throw new CDKException("Could not determine element symbol!", exception);
             }
-            Atom atom = model.getBuilder().newAtom(symbol);
+            IAtom atom = model.getBuilder().newAtom(symbol);
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }
@@ -305,7 +305,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 } else {
                     throw new CDKException("Error while reading charge: expected double.");
                 }
-                org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(atomCounter-1);
+                org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(atomCounter-1);
                 atom.setCharge(charge);
             }
         }

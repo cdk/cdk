@@ -41,7 +41,7 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -177,7 +177,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof ChemModel) {
         } else if (object instanceof ChemFile) {
         } else if (object instanceof Crystal) {
-        } else if (object instanceof Atom) {
+        } else if (object instanceof IAtom) {
         } else if (object instanceof Bond) {
         } else {
         	throw new CDKException("Cannot write this unsupported IChemObject: " + object.getClass().getName());
@@ -196,8 +196,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	root = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
         } else if (object instanceof Crystal) {
         	root = convertor.cdkCrystalToCMLMolecule((Crystal)object);
-        } else if (object instanceof Atom) {
-        	root = convertor.cdkAtomToCMLAtom((Atom)object);
+        } else if (object instanceof IAtom) {
+        	root = convertor.cdkAtomToCMLAtom((IAtom)object);
         } else if (object instanceof Bond) {
         	root = convertor.cdkBondToCMLBond((Bond)object);
         } else if (object instanceof Reaction) {

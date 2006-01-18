@@ -51,7 +51,7 @@ public interface BioPolymer extends Polymer {
 	 *
 	 * @param oAtom  The atom to add
 	 */
-	public void addAtom(Atom oAtom);
+	public void addAtom(IAtom oAtom);
 	
 	/**
 	 * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
@@ -60,7 +60,7 @@ public interface BioPolymer extends Polymer {
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The strand the atom belongs to
 	 */
-	public void addAtom(Atom oAtom, Strand oStrand);
+	public void addAtom(IAtom oAtom, Strand oStrand);
 	
 	/**
 	 * Adds the atom to a specified Strand and a specified Monomer.
@@ -69,7 +69,7 @@ public interface BioPolymer extends Polymer {
 	 * @param oMonomer
 	 * @param oStrand
 	 */
-	public void addAtom(Atom oAtom, Monomer oMonomer, Strand oStrand);
+	public void addAtom(IAtom oAtom, Monomer oMonomer, Strand oStrand);
 	
 	/**
 	 * Return the number of monomers present in BioPolymer.

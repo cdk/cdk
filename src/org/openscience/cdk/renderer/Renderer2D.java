@@ -38,8 +38,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.Reaction;
@@ -151,7 +151,7 @@ public class Renderer2D extends SimpleRenderer2D
 		logger.debug("painting set of molecules");
 		Molecule[] molecules = null;
 		if(split){
-			org.openscience.cdk.interfaces.AtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
+			org.openscience.cdk.interfaces.IAtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
 			try
 			{
 				molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();
@@ -173,7 +173,7 @@ public class Renderer2D extends SimpleRenderer2D
 		if(r2dm.getMerge()!=null){
 			Iterator it=r2dm.getMerge().keySet().iterator();
 			while(it.hasNext()){
-				Atom atom1=(Atom)it.next();
+				IAtom atom1=(IAtom)it.next();
 				int[] coords = { (int)atom1.getPoint2d().x,(int)atom1.getPoint2d().y};
 				int[] screenCoords = getScreenCoordinates(coords);
 				graphics.setColor(Color.MAGENTA);
@@ -192,14 +192,14 @@ public class Renderer2D extends SimpleRenderer2D
 	 */
 	public void paintReaction(Reaction reaction, Graphics2D graphics) {
 		// calculate some boundaries
-		AtomContainer reactantContainer = new org.openscience.cdk.AtomContainer();
+		IAtomContainer reactantContainer = new org.openscience.cdk.AtomContainer();
 		Molecule[] reactants = reaction.getReactants().getMolecules();
 		for (int i = 0; i < reactants.length; i++)
 		{
 			reactantContainer.add(reactants[i]);
 		}
 		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
-		AtomContainer productContainer = new org.openscience.cdk.AtomContainer();
+		IAtomContainer productContainer = new org.openscience.cdk.AtomContainer();
 		Molecule[] products = reaction.getProducts().getMolecules();
 		for (int i = 0; i < products.length; i++)
 		{
@@ -208,7 +208,7 @@ public class Renderer2D extends SimpleRenderer2D
 		double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
 	
 		// paint atom atom mappings
-		Atom highlighted = r2dm.getHighlightedAtom();
+		IAtom highlighted = r2dm.getHighlightedAtom();
 		if (r2dm.getShowAtomAtomMapping() && highlighted != null && 
 		    reaction instanceof org.openscience.cdk.Reaction)
 		{
@@ -220,15 +220,15 @@ public class Renderer2D extends SimpleRenderer2D
 				ChemObject[] objects = mappings[i].getRelatedChemObjects();
 				// only draw mapping when one of the mapped atoms
 				// is highlighted
-				if (objects[0] instanceof Atom && objects[1] instanceof Atom)
+				if (objects[0] instanceof IAtom && objects[1] instanceof IAtom)
 				{
 					logger.debug("    atom1: ", objects[0]);
 					logger.debug("    atom1: ", objects[1]);
 					logger.debug("    highlighted: ", highlighted);
 					if (highlighted == objects[0] || highlighted == objects[1])
 					{
-						Atom atom1 = (Atom) objects[0];
-						Atom atom2 = (Atom) objects[1];
+						IAtom atom1 = (IAtom) objects[0];
+						IAtom atom2 = (IAtom) objects[1];
 						int[] ints = new int[4];
 						ints[0] = (int) (atom1.getPoint2d().x);
 						ints[1] = (int) (atom1.getPoint2d().y);

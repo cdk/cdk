@@ -129,7 +129,7 @@ public class HuLuIndexTool
 	public static double[] getAtomWeights(AtomContainer atomContainer) throws org.openscience.cdk.exception.NoSuchAtomException
 	{
 		boolean debug = false;
-		org.openscience.cdk.interfaces.Atom atom,headAtom,endAtom;
+		org.openscience.cdk.interfaces.IAtom atom,headAtom,endAtom;
 		org.openscience.cdk.interfaces.Bond bond;
 		int headAtomPosition,endAtomPosition;
 

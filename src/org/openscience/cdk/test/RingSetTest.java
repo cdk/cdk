@@ -28,7 +28,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Ring;
@@ -117,15 +117,15 @@ public class RingSetTest extends CDKTestCase {
         assertNotSame(ring, clone.elementAt(0));
     } */
     
-    public void testContains_Atom() {
+    public void testContains_IAtom() {
         RingSet ringset = builder.newRingSet();
 
-        Atom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
-        Atom ring1Atom2 = builder.newAtom("C");
-        Atom sharedAtom1 = builder.newAtom("C");
-        Atom sharedAtom2 = builder.newAtom("C");
-        Atom ring2Atom1 = builder.newAtom("C");
-        Atom ring2Atom2 = builder.newAtom("C");
+        IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
+        IAtom ring1Atom2 = builder.newAtom("C");
+        IAtom sharedAtom1 = builder.newAtom("C");
+        IAtom sharedAtom2 = builder.newAtom("C");
+        IAtom ring2Atom1 = builder.newAtom("C");
+        IAtom ring2Atom2 = builder.newAtom("C");
         Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
         Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
         Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
@@ -167,12 +167,12 @@ public class RingSetTest extends CDKTestCase {
     public void testGetRings_Bond() {
         RingSet ringset = builder.newRingSet();
 
-        Atom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
-        Atom ring1Atom2 = builder.newAtom("C");
-        Atom sharedAtom1 = builder.newAtom("C");
-        Atom sharedAtom2 = builder.newAtom("C");
-        Atom ring2Atom1 = builder.newAtom("C");
-        Atom ring2Atom2 = builder.newAtom("C");
+        IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
+        IAtom ring1Atom2 = builder.newAtom("C");
+        IAtom sharedAtom1 = builder.newAtom("C");
+        IAtom sharedAtom2 = builder.newAtom("C");
+        IAtom ring2Atom1 = builder.newAtom("C");
+        IAtom ring2Atom2 = builder.newAtom("C");
         Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
         Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
         Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
@@ -212,15 +212,15 @@ public class RingSetTest extends CDKTestCase {
         assertEquals(1, ringset.getRings(ring2Bond3).size());
     }
 
-    public void testIsSameRing_Atom_Atom() {
+    public void testIsSameRing_IAtom_IAtom() {
         RingSet ringset = builder.newRingSet();
 
-        Atom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
-        Atom ring1Atom2 = builder.newAtom("C");
-        Atom ring1Atom3 = builder.newAtom("C");
-        Atom ring2Atom1 = builder.newAtom("C");
-        Atom ring2Atom2 = builder.newAtom("C");
-        Atom ring2Atom3 = builder.newAtom("C");
+        IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
+        IAtom ring1Atom2 = builder.newAtom("C");
+        IAtom ring1Atom3 = builder.newAtom("C");
+        IAtom ring2Atom1 = builder.newAtom("C");
+        IAtom ring2Atom2 = builder.newAtom("C");
+        IAtom ring2Atom3 = builder.newAtom("C");
         Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
         Bond ring1Bond2 = builder.newBond(ring1Atom2, ring1Atom3);
         Bond ring1Bond3 = builder.newBond(ring1Atom3, ring1Atom1);
@@ -253,15 +253,15 @@ public class RingSetTest extends CDKTestCase {
     }
     
     
-    public void testGetRings_Atom() {
+    public void testGetRings_IAtom() {
         RingSet ringset = builder.newRingSet();
 
-        Atom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
-        Atom ring1Atom2 = builder.newAtom("C");
-        Atom sharedAtom1 = builder.newAtom("C");
-        Atom sharedAtom2 = builder.newAtom("C");
-        Atom ring2Atom1 = builder.newAtom("C");
-        Atom ring2Atom2 = builder.newAtom("C");
+        IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
+        IAtom ring1Atom2 = builder.newAtom("C");
+        IAtom sharedAtom1 = builder.newAtom("C");
+        IAtom sharedAtom2 = builder.newAtom("C");
+        IAtom ring2Atom1 = builder.newAtom("C");
+        IAtom ring2Atom2 = builder.newAtom("C");
         Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
         Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
         Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);
@@ -303,12 +303,12 @@ public class RingSetTest extends CDKTestCase {
     public void testGetConnectedRings_Ring() {
         RingSet ringset = builder.newRingSet();
 
-        Atom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
-        Atom ring1Atom2 = builder.newAtom("C");
-        Atom sharedAtom1 = builder.newAtom("C");
-        Atom sharedAtom2 = builder.newAtom("C");
-        Atom ring2Atom1 = builder.newAtom("C");
-        Atom ring2Atom2 = builder.newAtom("C");
+        IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
+        IAtom ring1Atom2 = builder.newAtom("C");
+        IAtom sharedAtom1 = builder.newAtom("C");
+        IAtom sharedAtom2 = builder.newAtom("C");
+        IAtom ring2Atom1 = builder.newAtom("C");
+        IAtom ring2Atom2 = builder.newAtom("C");
         Bond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
         Bond ring1Bond2 = builder.newBond(sharedAtom1, ring1Atom1);
         Bond ring1Bond3 = builder.newBond(sharedAtom2, ring1Atom2);

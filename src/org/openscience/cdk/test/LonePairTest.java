@@ -28,7 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.LonePair;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
@@ -61,23 +61,23 @@ public class LonePairTest extends CDKTestCase {
         assertEquals(2, lp.getElectronCount());
     }
     
-    public void testLonePair_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testLonePair_IAtom() {
+        IAtom atom = builder.newAtom("N");
         LonePair lp = builder.newLonePair(atom);
         assertEquals(2, lp.getElectronCount());
         assertEquals(atom, lp.getAtom());
         assertTrue(lp.contains(atom));
     }
     
-    public void testSetAtom_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testSetAtom_IAtom() {
+        IAtom atom = builder.newAtom("N");
         LonePair lp = builder.newLonePair();
         lp.setAtom(atom);
         assertEquals(atom, lp.getAtom());
     }
     
     public void testGetAtom() {
-        Atom atom = builder.newAtom("N");
+        IAtom atom = builder.newAtom("N");
         LonePair lp = builder.newLonePair();
         assertNull(lp.getAtom());
         lp.setAtom(atom);
@@ -92,8 +92,8 @@ public class LonePairTest extends CDKTestCase {
         assertEquals(2, lp.getElectronCount());
     }
     
-    public void testContains_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testContains_IAtom() {
+        IAtom atom = builder.newAtom("N");
         LonePair lp = builder.newLonePair();
         lp.setAtom(atom);
         assertTrue(lp.contains(atom));
@@ -105,8 +105,8 @@ public class LonePairTest extends CDKTestCase {
         assertTrue(clone instanceof LonePair);
     }
     
-    public void testClone_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testClone_IAtom() {
+        IAtom atom = builder.newAtom("N");
         LonePair lp = builder.newLonePair();
         lp.setAtom(atom);
         

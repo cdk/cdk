@@ -38,7 +38,7 @@ import java.util.Hashtable;
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  */
-public interface Strand extends AtomContainer {
+public interface Strand extends IAtomContainer {
 
 	/**
 	 * Retrieve the strand name.
@@ -74,7 +74,7 @@ public interface Strand extends AtomContainer {
 	 *
 	 * @param oAtom  The atom to add
 	 */
-	public void addAtom(Atom oAtom);
+	public void addAtom(IAtom oAtom);
 	
 	/**
 	 * Adds the atom oAtom to a specific Monomer.
@@ -82,7 +82,7 @@ public interface Strand extends AtomContainer {
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The monomer the atom belongs to
 	 */
-	public void addAtom(Atom oAtom, Monomer oMonomer);
+	public void addAtom(IAtom oAtom, Monomer oMonomer);
 	
 	/**
 	 * Return the number of monomers present in the Strand.

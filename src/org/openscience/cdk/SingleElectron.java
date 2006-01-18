@@ -57,14 +57,14 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
     protected final int electronCount = 1;
 
     /** The atom with which this single electron is associated. */
-    protected org.openscience.cdk.interfaces.Atom atom;
+    protected org.openscience.cdk.interfaces.IAtom atom;
 
     /**
      * Constructs an single electron orbital on an Atom.
      *
      * @param atom The atom to which the single electron belongs.
      */
-    public SingleElectron(org.openscience.cdk.interfaces.Atom atom) {
+    public SingleElectron(org.openscience.cdk.interfaces.IAtom atom) {
         this.atom = atom;
     }
 
@@ -90,7 +90,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      *
      * @see    #setAtom
 	 */
-	public org.openscience.cdk.interfaces.Atom getAtom() {
+	public org.openscience.cdk.interfaces.IAtom getAtom() {
 		return (Atom)this.atom;
 	}
 
@@ -101,7 +101,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      *
      * @see    #getAtom
 	 */
-	public void setAtom(org.openscience.cdk.interfaces.Atom atom) {
+	public void setAtom(org.openscience.cdk.interfaces.IAtom atom) {
 		this.atom = atom;
 		notifyChanged();
 	}
@@ -112,7 +112,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this SingleElectron is associated with the atom
      */
-    public boolean contains(org.openscience.cdk.interfaces.Atom atom)     {
+    public boolean contains(org.openscience.cdk.interfaces.IAtom atom)     {
         return (this.atom == atom) ? true : false;
     }
 

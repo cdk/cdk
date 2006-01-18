@@ -64,14 +64,14 @@ public class IsotopeFactoryTest extends CDKTestCase
 		assertTrue(isofac.getSize() > 0);
     }
 	
-	public void testConfigure_Atom() throws Exception {
+	public void testConfigure_IAtom() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Atom atom = new Atom("H");
         isofac.configure(atom);
         assertEquals(1, atom.getAtomicNumber());
     }
 	
-	public void testConfigure_Atom_Isotope() throws Exception {
+	public void testConfigure_IAtom_Isotope() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Atom atom = new Atom("H");
         Isotope isotope = new org.openscience.cdk.Isotope("H", 2);
@@ -121,7 +121,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 		assertTrue(isofac.isElement("C"));
 	}
     
-    public void testConfigureAtoms_AtomContainer() throws Exception {
+    public void testConfigureAtoms_IAtomContainer() throws Exception {
         AtomContainer container = new org.openscience.cdk.AtomContainer();
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("H"));
@@ -131,7 +131,7 @@ public class IsotopeFactoryTest extends CDKTestCase
         container.addAtom(new Atom("Cl"));
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         isofac.configureAtoms(container);
-        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             assertTrue(0 < atoms[i].getAtomicNumber());
         }

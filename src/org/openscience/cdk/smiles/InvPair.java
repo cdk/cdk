@@ -27,7 +27,7 @@
  *  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.math.Primes;
 
 /**
@@ -44,14 +44,14 @@ public class InvPair implements java.io.Serializable{
 
   private long curr = 0;
 
-  private Atom atom;
+  private IAtom atom;
 
   private int prime;
 
   public InvPair() {
   }
 
-  public InvPair(long c, Atom a){
+  public InvPair(long c, IAtom a){
     curr = c;
     atom = a;
     a.setProperty(INVARIANCE_PAIR, this);
@@ -87,11 +87,11 @@ public class InvPair implements java.io.Serializable{
     last = newLast;
   }
 
-  public void setAtom(Atom newAtom) {
+  public void setAtom(IAtom newAtom) {
     atom = newAtom;
   }
 
-  public Atom getAtom() {
+  public IAtom getAtom() {
     return atom;
   }
 

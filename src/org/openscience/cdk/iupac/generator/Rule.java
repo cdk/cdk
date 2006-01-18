@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.iupac.generator;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  *  This interface defines the API for the implementation of
@@ -44,14 +44,14 @@ public interface Rule {
      * 
      * @return null if this rule was not applicable
      */
-    public IUPACNamePart apply(AtomContainer ac);
+    public IUPACNamePart apply(IAtomContainer ac);
 
     public String localize(String s);
 
     /**
      * Flag that must be set by a Rule's apply() method.
      *
-     * @see #apply(AtomContainer)
+     * @see #apply(IAtomContainer)
      */
     public final static String NONE_APPLICABLE =
       "org.openscience.cdk.iupac.generator.NONE_APPLICABLE";

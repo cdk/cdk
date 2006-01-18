@@ -27,7 +27,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Undo/Redo Edit class for the ChangeIsotopeAction, containing the methods for
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.Atom;
  */
 public class ChangeIsotopeEdit extends AbstractUndoableEdit {
 
-	private Atom atom;
+	private IAtom atom;
 
 	private int formerIsotopeNumber;
 
@@ -52,7 +52,7 @@ public class ChangeIsotopeEdit extends AbstractUndoableEdit {
 	 * @param isotopeNumber
 	 *            The new mass number
 	 */
-	public ChangeIsotopeEdit(Atom atom, int formerIsotopeNumber,
+	public ChangeIsotopeEdit(IAtom atom, int formerIsotopeNumber,
 			int isotopeNumber) {
 		this.atom = atom;
 		this.formerIsotopeNumber = formerIsotopeNumber;

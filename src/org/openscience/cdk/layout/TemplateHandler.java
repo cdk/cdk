@@ -35,7 +35,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.Molecule;
@@ -128,8 +128,8 @@ public class TemplateHandler
 	
 	public Molecule removeMolecule(Molecule molecule)  throws CDKException
 	{
-		AtomContainer ac1 = molecule.getBuilder().newAtomContainer(molecule);
-		AtomContainer ac2 = null;
+		IAtomContainer ac1 = molecule.getBuilder().newAtomContainer(molecule);
+		IAtomContainer ac2 = null;
 		Molecule mol2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
@@ -157,8 +157,8 @@ public class TemplateHandler
 		boolean mapped = false;
 		Molecule template = null;
 		RMap map = null;
-		org.openscience.cdk.interfaces.Atom atom1 = null;
-		org.openscience.cdk.interfaces.Atom atom2 = null;
+		org.openscience.cdk.interfaces.IAtom atom1 = null;
+		org.openscience.cdk.interfaces.IAtom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
 			template = (Molecule) templates.elementAt(f);
@@ -204,9 +204,9 @@ public class TemplateHandler
 	 *@param  position  Description of the Parameter
 	 *@return           The templateAt value
 	 */
-	public AtomContainer getTemplateAt(int position)
+	public IAtomContainer getTemplateAt(int position)
 	{
-		return (AtomContainer) templates.elementAt(position);
+		return (IAtomContainer) templates.elementAt(position);
 	}
 	
 

@@ -91,7 +91,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @param oMonomer  The strand the atom belongs to
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Strand oStrand) {
+	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.Strand oStrand) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);
@@ -115,7 +115,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @param oMonomer
 	 * @param oStrand
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer, org.openscience.cdk.interfaces.Strand oStrand)	{
+	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer, org.openscience.cdk.interfaces.Strand oStrand)	{
 		
 		if(!contains(oAtom))	{
 			// Add atom to AtomContainer

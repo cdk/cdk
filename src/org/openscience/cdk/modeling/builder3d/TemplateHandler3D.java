@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
@@ -145,19 +145,19 @@ public class TemplateHandler3D{
 	 *@param  ringSystems AtomContainer from the ring systems
 	 *@param  NumberOfRingAtoms double
 	 */
-	public void mapTemplates(AtomContainer ringSystems, double NumberOfRingAtoms) throws Exception{
+	public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws Exception{
 		//System.out.println("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
 		int mapped = 0;
-		AtomContainer template=null;
+		IAtomContainer template=null;
 		QueryAtomContainer queryRingSystem=QueryAtomContainerCreator.createAnyAtomContainer(ringSystems,false);
 		QueryAtomContainer query=null;
 		BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(queryRingSystem);
 		RMap map = null;
-		org.openscience.cdk.interfaces.Atom atom1 = null;
-		org.openscience.cdk.interfaces.Atom atom2 = null;
+		org.openscience.cdk.interfaces.IAtom atom1 = null;
+		org.openscience.cdk.interfaces.IAtom atom2 = null;
 		boolean flagMaxSubstructure=false;
 		for (int i = 0; i < fingerprintData.size(); i++){
-			template=(AtomContainer)templates.getMolecule(i);
+			template=(IAtomContainer)templates.getMolecule(i);
 			if (template.getAtomCount()!=ringSystems.getAtomCount()){
 					continue;
 			}
@@ -211,9 +211,9 @@ public class TemplateHandler3D{
 	 *@param  position  Description of the Parameter
 	 *@return           The templateAt value
 	 */
-	public AtomContainer getTemplateAt(int position)
+	public IAtomContainer getTemplateAt(int position)
 	{
-		return (AtomContainer) templates.getMolecule(position);
+		return (IAtomContainer) templates.getMolecule(position);
 	}
 }
 

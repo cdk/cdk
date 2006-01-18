@@ -31,8 +31,8 @@ import java.io.OptionalDataException;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
@@ -284,12 +284,12 @@ public class AtomTypeFactory {
 	 * @return                              The AtomType for this id
 	 * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
 	 */
-	public AtomType getAtomType(String identifier) throws NoSuchAtomTypeException
+	public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException
 	{
-		AtomType atomType = null;
+		IAtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
-			atomType = (AtomType) atomTypes.elementAt(f);
+			atomType = (IAtomType) atomTypes.elementAt(f);
 			if (atomType.getAtomTypeName().equals(identifier)) {
 				return atomType;
 			}
@@ -306,21 +306,21 @@ public class AtomTypeFactory {
 	 * @return         An array of atomtypes that matches the given element symbol
 	 *                 and atomtype class
 	 */
-	public AtomType[] getAtomTypes(String symbol)
+	public IAtomType[] getAtomTypes(String symbol)
 	{
         logger.debug("Request for atomtype for symbol ", symbol);
         Vector atomList = new Vector();
-        AtomType atomType = null;
+        IAtomType atomType = null;
         for (int f = 0; f < atomTypes.size(); f++)
         {
-            atomType = (AtomType) atomTypes.elementAt(f);
+            atomType = (IAtomType) atomTypes.elementAt(f);
             // logger.debug("  does symbol match for: ", atomType);
             if (atomType.getSymbol().equals(symbol)) {
                 // logger.debug("Atom type found for symbol: ", atomType);
-                atomList.addElement((AtomType)atomType.clone());
+                atomList.addElement((IAtomType)atomType.clone());
             }
         }
-        AtomType[] atomTypes = new AtomType[atomList.size()];
+        IAtomType[] atomTypes = new IAtomType[atomList.size()];
         atomList.copyInto(atomTypes);
         if (atomTypes.length > 0)
             logger.debug("Atomtype for symbol ", symbol, " has this number of types: " + atomTypes.length);
@@ -335,17 +335,17 @@ public class AtomTypeFactory {
 	 *
 	 * @return    The allAtomTypes value
 	 */
-	public AtomType[] getAllAtomTypes()
+	public IAtomType[] getAllAtomTypes()
 	{
 		logger.debug("Returning list of size: ", getSize());
 		Vector atomtypeList = new Vector();
-		AtomType atomType = null;
+		IAtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
-			atomType = (AtomType) atomTypes.elementAt(f);
-			atomtypeList.addElement((AtomType) atomType.clone());
+			atomType = (IAtomType) atomTypes.elementAt(f);
+			atomtypeList.addElement((IAtomType) atomType.clone());
 		}
-		AtomType[] atomTypes = new AtomType[atomtypeList.size()];
+		IAtomType[] atomTypes = new IAtomType[atomtypeList.size()];
 		atomtypeList.copyInto(atomTypes);
 		return atomTypes;
 	}
@@ -359,17 +359,17 @@ public class AtomTypeFactory {
 	 * @param  atom  The atom to be configured
 	 * @return       The configured atom
 	 */
-    public Atom configure(Atom atom) throws CDKException {
+    public IAtom configure(IAtom atom) throws CDKException {
         if (atom instanceof PseudoAtom) {
             // do not try to configure PseudoAtom's
             return atom;
         }
         try {
-            AtomType atomType = null;
+            IAtomType atomType = null;
             String atomTypeName = atom.getAtomTypeName();
             if (atomTypeName == null || atomTypeName.length() == 0) {
                 logger.debug("Using atom symbol because atom type name is empty...");
-                AtomType[] types = getAtomTypes(atom.getSymbol());
+                IAtomType[] types = getAtomTypes(atom.getSymbol());
                 if (types.length > 0) {
                     logger.warn("Taking first atom type, but other may exist");
                     atomType = types[0];

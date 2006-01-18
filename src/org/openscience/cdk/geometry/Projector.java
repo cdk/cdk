@@ -27,8 +27,8 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Tool to make projections from 3D to 2D
@@ -37,9 +37,9 @@ import org.openscience.cdk.interfaces.AtomContainer;
  */
 public class Projector  {
   
-  public static void project2D(AtomContainer container) {
+  public static void project2D(IAtomContainer container) {
     for (int i = 0; i < container.getAtomCount(); i++) {
-      Atom atom = container.getAtomAt(i);
+      IAtom atom = container.getAtomAt(i);
       if (atom.getPoint3d() != null) {
         atom.setX2d(atom.getX3d());
         atom.setY2d(atom.getY3d());

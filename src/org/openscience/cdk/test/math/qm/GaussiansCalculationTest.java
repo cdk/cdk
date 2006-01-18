@@ -32,7 +32,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.CMLReader;
@@ -81,8 +81,8 @@ public class GaussiansCalculationTest
 
       org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
       org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
-      AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
-      org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
+      IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+      org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
 
 			GaussiansBasis basis = new SimpleBasisSet(atoms);
         

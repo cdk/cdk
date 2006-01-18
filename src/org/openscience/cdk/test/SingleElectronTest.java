@@ -27,7 +27,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.SingleElectron;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
@@ -61,8 +61,8 @@ public class SingleElectronTest extends CDKTestCase {
         assertEquals(1, radical.getElectronCount());
     }
     
-    public void testSingleElectron_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testSingleElectron_IAtom() {
+        IAtom atom = builder.newAtom("N");
         SingleElectron radical = builder.newSingleElectron(atom);
         assertEquals(1, radical.getElectronCount());
         assertEquals(atom, radical.getAtom());
@@ -74,14 +74,14 @@ public class SingleElectronTest extends CDKTestCase {
         assertEquals(1, radical.getElectronCount());
     }
 
-    public void testContains_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testContains_IAtom() {
+        IAtom atom = builder.newAtom("N");
         SingleElectron radical = builder.newSingleElectron(atom);
         assertTrue(radical.contains(atom));
     }
     
-    public void testSetAtom_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testSetAtom_IAtom() {
+        IAtom atom = builder.newAtom("N");
         SingleElectron radical = builder.newSingleElectron();
         assertNull(radical.getAtom());
         radical.setAtom(atom);
@@ -89,7 +89,7 @@ public class SingleElectronTest extends CDKTestCase {
     }
 
     public void testGetAtom() {
-        Atom atom = builder.newAtom("N");
+        IAtom atom = builder.newAtom("N");
         SingleElectron radical = builder.newSingleElectron(atom);
         assertEquals(atom, radical.getAtom());
     }
@@ -101,8 +101,8 @@ public class SingleElectronTest extends CDKTestCase {
         assertTrue(clone instanceof SingleElectron);
     }
     
-    public void testClone_Atom() {
-        Atom atom = builder.newAtom("N");
+    public void testClone_IAtom() {
+        IAtom atom = builder.newAtom("N");
         SingleElectron radical = builder.newSingleElectron();
         radical.setAtom(atom);
         

@@ -34,7 +34,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.controller.Controller2DModel;
@@ -223,14 +223,14 @@ public class JChemPaintModel implements java.io.Serializable, CDKChangeListener 
 		}
 		else if (position == 1) {
 			// depict bruto formula
-			AtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((org.openscience.cdk.interfaces.ChemModel)model);
+			IAtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((org.openscience.cdk.interfaces.ChemModel)model);
 			String formula = new MFAnalyser(wholeModel).getHTMLMolecularFormulaWithCharge();
 			status = "<html>" + formula + "</html>";
 		}
 		else if (position == 2) {
 			// depict brutto formula of the selected molecule or part of molecule
 			if (rendererModel.getSelectedPart() != null) {
-				AtomContainer selectedPart = rendererModel.getSelectedPart();
+				IAtomContainer selectedPart = rendererModel.getSelectedPart();
 				String formula = new MFAnalyser(selectedPart).getHTMLMolecularFormulaWithCharge();
 				status = "<html>" + formula + "</html>";
 			}

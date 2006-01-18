@@ -35,8 +35,8 @@ import java.util.Vector;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.RingSet;
@@ -213,7 +213,7 @@ public class ModelBuilder3D {
 		if (ringSetMolecule.size() > 0) {
 			ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
 			largestRingSet = getLargestRingSet(ringSystems);
-			NumberOfRingAtoms = (double) ((AtomContainer) RingSetManipulator.getAllInOneContainer(largestRingSet)).getAtomCount();
+			NumberOfRingAtoms = (double) ((IAtomContainer) RingSetManipulator.getAllInOneContainer(largestRingSet)).getAtomCount();
 			templateHandler.mapTemplates(RingSetManipulator.getAllInOneContainer(largestRingSet), NumberOfRingAtoms);
 			if (!checkAllRingAtomsHasCoordinates(RingSetManipulator.getAllInOneContainer(largestRingSet))) {
 				throw new IOException("RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout.Sorry");
@@ -224,7 +224,7 @@ public class ModelBuilder3D {
 			largestRingSet = null;
 		} else {
 			//System.out.println("****** Start of handling aliphatic molecule ******");
-			AtomContainer ac = null;
+			IAtomContainer ac = null;
 
 			try {
 				ac = atomPlacer.getInitialLongestChain(molecule);
@@ -258,7 +258,7 @@ public class ModelBuilder3D {
 	 *@param  atom         Description of the Parameter
 	 *@return              The ringSetOfAtom value
 	 */
-	public RingSet getRingSetOfAtom(Vector ringSystems, Atom atom) {
+	public RingSet getRingSetOfAtom(Vector ringSystems, IAtom atom) {
 		RingSet ringSetOfAtom = null;
 		for (int i = 0; i < ringSystems.size(); i++) {
 			if (((RingSet) ringSystems.get(i)).contains(atom)) {
@@ -277,18 +277,18 @@ public class ModelBuilder3D {
 	 */
 	public void layoutMolecule(Vector ringSetMolecule) throws Exception {
 		//System.out.println("****** LAYOUT MOLECULE MAIN *******");
-		AtomContainer ac = null;
+		IAtomContainer ac = null;
 		int safetyCounter = 0;
-		Atom atom = null;
+		IAtom atom = null;
 		//Place rest Chains/Atoms
 		do {
 			safetyCounter++;
 			atom = ap3d.getNextPlacedHeavyAtomWithUnplacedRingNeighbour(molecule);
 			if (atom != null) {
 				//System.out.println("layout RingSystem...");
-				Atom unplacedAtom = ap3d.getUnplacedRingHeavyAtom(molecule, atom);
+				IAtom unplacedAtom = ap3d.getUnplacedRingHeavyAtom(molecule, atom);
 				RingSet ringSetA = getRingSetOfAtom(ringSetMolecule, unplacedAtom);
-				templateHandler.mapTemplates(RingSetManipulator.getAllInOneContainer(ringSetA), (double) ((AtomContainer) RingSetManipulator.getAllInOneContainer(ringSetA)).getAtomCount());
+				templateHandler.mapTemplates(RingSetManipulator.getAllInOneContainer(ringSetA), (double) ((IAtomContainer) RingSetManipulator.getAllInOneContainer(ringSetA)).getAtomCount());
 
 				if (checkAllRingAtomsHasCoordinates(RingSetManipulator.getAllInOneContainer(ringSetA))) {
 				} else {
@@ -330,15 +330,15 @@ public class ModelBuilder3D {
 	 *@param  centerPlacedMolecule  the geometric center of the already placed molecule
 	 *@param  atomB                 placed neighbour atom of  placedRingAtom
 	 */
-	private void layoutRingSystem(Point3d originalCoord, Atom placedRingAtom, RingSet ringSet, Point3d centerPlacedMolecule, Atom atomB) {
+	private void layoutRingSystem(Point3d originalCoord, IAtom placedRingAtom, RingSet ringSet, Point3d centerPlacedMolecule, IAtom atomB) {
 		//System.out.print("****** Layout ring System ******");System.out.println(">around atom:"+molecule.getAtomNumber(placedRingAtom));
-		AtomContainer ac = RingSetManipulator.getAllInOneContainer(ringSet);
+		IAtomContainer ac = RingSetManipulator.getAllInOneContainer(ringSet);
 		Point3d newCoord = placedRingAtom.getPoint3d();
 		Vector3d axis = new Vector3d(atomB.getX3d() - newCoord.x, atomB.getY3d() - newCoord.y, atomB.getZ3d() - newCoord.z);
 		translateStructure(originalCoord, newCoord, ac);
 		//Rotate Ringsystem to farthest possible point
 		Vector3d startAtomVector = new Vector3d(newCoord.x - atomB.getX3d(), newCoord.y - atomB.getY3d(), newCoord.z - atomB.getZ3d());
-		Atom farthestAtom = ap3d.getFarthestAtom(placedRingAtom.getPoint3d(), ac);
+		IAtom farthestAtom = ap3d.getFarthestAtom(placedRingAtom.getPoint3d(), ac);
 		Vector3d farthestAtomVector = new Vector3d(farthestAtom.getX3d() - newCoord.x, farthestAtom.getY3d() - newCoord.y, farthestAtom.getZ3d() - newCoord.z);
 		Vector3d n1 = new Vector3d();
 		n1.cross(axis, farthestAtomVector);
@@ -407,12 +407,12 @@ public class ModelBuilder3D {
 	 *@param  atomNeighbours  placed atomNeighbours of atomA
 	 *@exception  Exception   Description of the Exception
 	 */
-	public void setBranchAtom(Atom unplacedAtom, Atom atomA, AtomContainer atomNeighbours) throws Exception {
+	public void setBranchAtom(IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours) throws Exception {
 		//System.out.println("****** SET Branch Atom ****** >"+molecule.getAtomNumber(unplacedAtom));
-		AtomContainer noCoords = new org.openscience.cdk.AtomContainer();
+		IAtomContainer noCoords = new org.openscience.cdk.AtomContainer();
 		noCoords.addAtom(unplacedAtom);
 		Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
-		Atom atomB = atomNeighbours.getAtomAt(0);
+		IAtom atomB = atomNeighbours.getAtomAt(0);
 		double length = ap3d.getBondLengthValue(atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName());
 		double angle = (ap3d.getAngleValue(atomB.getAtomTypeName(), atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName())) * Math.PI / 180;
 		/*
@@ -421,7 +421,7 @@ public class ModelBuilder3D {
 		 *  +" FormalNeighbour:"+atomA.getFormalNeighbourCount()+" HYB:"+atomA.getFlag(CDKConstants.HYBRIDIZATION_SP2)
 		 *  +" #Neigbhours:"+atomNeighbours.getAtomCount());
 		 */
-		Atom atomC = ap3d.getPlacedHeavyAtom(molecule, atomB, atomA);
+		IAtom atomC = ap3d.getPlacedHeavyAtom(molecule, atomB, atomA);
 
 		Point3d[] branchPoints = atlp3d.get3DCoordinatesForLigands(atomA, noCoords, atomNeighbours, atomC
 				, (atomA.getFormalNeighbourCount() - atomNeighbours.getAtomCount())
@@ -463,11 +463,11 @@ public class ModelBuilder3D {
 	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system 
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void searchAndPlaceBranches(AtomContainer chain) throws Exception {
+	public void searchAndPlaceBranches(IAtomContainer chain) throws Exception {
 		//System.out.println("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
-		Atom[] atoms = null;
-		AtomContainer branchAtoms = new org.openscience.cdk.AtomContainer();
-		AtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
+		IAtom[] atoms = null;
+		IAtomContainer branchAtoms = new org.openscience.cdk.AtomContainer();
+		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < chain.getAtomCount(); i++) {
 			atoms = molecule.getConnectedAtoms(chain.getAtomAt(i));
 			for (int j = 0; j < atoms.length; j++) {
@@ -504,11 +504,11 @@ public class ModelBuilder3D {
 	 *@param  startAtoms     AtomContainer of possible start atoms for a chain
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void placeLinearChains3D(AtomContainer startAtoms) throws Exception {
+	public void placeLinearChains3D(IAtomContainer startAtoms) throws Exception {
 		//System.out.println("****** PLACE LINEAR CHAINS ******");
-		Atom dihPlacedAtom = null;
-		Atom thirdPlacedAtom = null;
-		AtomContainer longestUnplacedChain = new org.openscience.cdk.AtomContainer();
+		IAtom dihPlacedAtom = null;
+		IAtom thirdPlacedAtom = null;
+		IAtomContainer longestUnplacedChain = new org.openscience.cdk.AtomContainer();
 		if (startAtoms.getAtomCount() == 0) {
 			//no branch points ->linear chain
 			//System.out.println("------ LINEAR CHAIN - FINISH ------");
@@ -550,7 +550,7 @@ public class ModelBuilder3D {
 	 *@param  newCoord       new coordinates from branch placement
 	 *@param  ac             AtomContainer contains atoms of ring system 
 	 */
-	public void translateStructure(Point3d originalCoord, Point3d newCoord, AtomContainer ac) {
+	public void translateStructure(Point3d originalCoord, Point3d newCoord, IAtomContainer ac) {
 		Point3d transVector = new Point3d(originalCoord);
 		transVector.x = transVector.x - newCoord.x;
 		transVector.y = transVector.y - newCoord.y;
@@ -575,7 +575,7 @@ public class ModelBuilder3D {
 	private RingSet getLargestRingSet(Vector ringSystems) {
 		RingSet largestRingSet = null;
 		int atomNumber = 0;
-		AtomContainer container = null;
+		IAtomContainer container = null;
 		for (int i = 0; i < ringSystems.size(); i++) {
 			container = RingSetManipulator.getAllInOneContainer((RingSet) ringSystems.get(i));
 			if (atomNumber < container.getAtomCount()) {
@@ -593,7 +593,7 @@ public class ModelBuilder3D {
 	 *@param  ac  AtomContainer
 	 *@return     boolean
 	 */
-	private boolean checkAllRingAtomsHasCoordinates(AtomContainer ac) {
+	private boolean checkAllRingAtomsHasCoordinates(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			if (ac.getAtomAt(i).getPoint3d() != null && ac.getAtomAt(i).getFlag(CDKConstants.ISINRING)) {
 			} else if (!ac.getAtomAt(i).getFlag(CDKConstants.ISINRING)) {
@@ -610,7 +610,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  ac  The new atomsToPlace value
 	 */
-	private void setAtomsToPlace(AtomContainer ac) {
+	private void setAtomsToPlace(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
 		}

@@ -25,7 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -264,7 +264,7 @@ public class WHIMDescriptor implements IDescriptor {
      *@return            An ArrayList containing the descriptors in the order described above. 
      *@throws CDKException if the principal components decomposition fails
      */
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         double sum = 0.0;
         Molecule ac = new Molecule(container);
 

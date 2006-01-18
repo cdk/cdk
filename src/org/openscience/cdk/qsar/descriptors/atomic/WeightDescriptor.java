@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -127,16 +127,16 @@ public class WeightDescriptor implements IDescriptor {
 
 
     /**
-     * Calculate the weight of specified element type in the supplied {@link AtomContainer}.
+     * Calculate the weight of specified element type in the supplied {@link IAtomContainer}.
      *
      * @param  container The AtomContainer for which this descriptor is to be calculated. If 'H'
      * is specified as the element symbol make sure that the AtomContainer has hydrogens.
      *@return The total weight of atoms of the specified element type
      */
 
-    public DescriptorValue calculate(AtomContainer container) {
+    public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
-        org.openscience.cdk.interfaces.Atom[] atoms = container.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
         if (elementName.equals("*")) {
             try {
                 for (int i = 0; i < atoms.length; i++) {

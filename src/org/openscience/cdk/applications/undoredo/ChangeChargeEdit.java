@@ -27,7 +27,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Undo/Redo Edit class for the ChangeCharge actions in AbstarctController2D,
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.Atom;
  */
 public class ChangeChargeEdit extends AbstractUndoableEdit {
 
-	private Atom atom;
+	private IAtom atom;
 
 	private int formerCharge;
 
@@ -52,7 +52,7 @@ public class ChangeChargeEdit extends AbstractUndoableEdit {
 	 * @param newCharge
 	 *            The new charge of this atom
 	 */
-	public ChangeChargeEdit(Atom atomInRange, int formerCharge,
+	public ChangeChargeEdit(IAtom atomInRange, int formerCharge,
 			int newCharge) {
 		this.atom = atomInRange;
 		this.formerCharge = formerCharge;

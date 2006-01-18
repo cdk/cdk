@@ -35,7 +35,7 @@ import javax.vecmath.Point3d;
  * @cdk.created 2005-08-24
  * @cdk.keyword atom
  */
-public interface Atom extends AtomType {
+public interface IAtom extends IAtomType {
     
 	/**
 	 * Sets the partial charge of this atom.

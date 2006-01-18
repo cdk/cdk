@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -94,7 +94,7 @@ public class VAdjMaDescriptor implements IDescriptor {
 	 *@return                   VAdjMa
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
 		MFAnalyser formula = new MFAnalyser(atomContainer);
 		int magnitude = formula.getHeavyAtoms().size();
 		double vadjMa = 0;

@@ -6,7 +6,7 @@ import java.util.Vector;
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.LoggingTool;
@@ -72,7 +72,7 @@ public class BondStretching {
 		bondsNumber = bonds.length;
 		//logger.debug("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[bondsNumber][];
-		Atom[] atomsInBond = null;
+		IAtom[] atomsInBond = null;
 
 		Vector bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();

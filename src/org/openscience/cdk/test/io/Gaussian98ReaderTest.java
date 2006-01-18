@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.io.Gaussian98Reader;
@@ -51,7 +51,7 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 	
 	public void testNMRReading()
 	{
-		AtomContainer atomContainer = null;
+		IAtomContainer atomContainer = null;
 		boolean foundOneShieldingEntry = false;
 		Double shielding = null;
 		Object object = null;
@@ -62,7 +62,7 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 			BufferedReader inputReader = new BufferedReader(new InputStreamReader(ins));
 			Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
 			ChemFile chemFile = (ChemFile)g98Reader.read(new ChemFile());
-			AtomContainer[] atomContainers = ChemFileManipulator.getAllAtomContainers(chemFile);
+			IAtomContainer[] atomContainers = ChemFileManipulator.getAllAtomContainers(chemFile);
 			assertNotNull(atomContainers);
 			assertTrue(atomContainers.length == 54);
 			//System.out.println("Found " + atomContainers.length + " atomContainers");

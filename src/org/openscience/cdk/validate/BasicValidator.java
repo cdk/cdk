@@ -75,7 +75,7 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest emptyMolecule = new ValidationTest(subject,
             "Molecule does not contain any atom"
         );
-        org.openscience.cdk.interfaces.Atom[] atoms = subject.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = subject.getAtoms();
         if (atoms.length == 0) {
             report.addError(emptyMolecule);
         } else {
@@ -229,13 +229,13 @@ public class BasicValidator extends AbstractValidator {
                 bond.getBuilder()
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
-                org.openscience.cdk.interfaces.Atom atom = bond.getAtomAt(i);
+                org.openscience.cdk.interfaces.IAtom atom = bond.getAtomAt(i);
                 if (atom instanceof PseudoAtom) {
                     // ok, all is fine; we don't know the properties of pseudo atoms
                     break;
                 }
-                org.openscience.cdk.interfaces.AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
-                org.openscience.cdk.interfaces.AtomType failedOn = null;
+                org.openscience.cdk.interfaces.IAtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+                org.openscience.cdk.interfaces.IAtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
                     if (bond.getOrder() <= atomTypes[j].getMaxBondOrder()) {
@@ -301,7 +301,7 @@ public class BasicValidator extends AbstractValidator {
     
     // the Molecule tests
 
-    private ValidationReport validateBondOrderSum(org.openscience.cdk.interfaces.Atom atom, Molecule molecule) {
+    private ValidationReport validateBondOrderSum(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkBondSum = new ValidationTest(atom,
             "The atom's total bond order is too high."
@@ -312,7 +312,7 @@ public class BasicValidator extends AbstractValidator {
                 atom.getBuilder()
             );
             int bos = (int)molecule.getBondOrderSum(atom);
-            org.openscience.cdk.interfaces.AtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+            org.openscience.cdk.interfaces.IAtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
             if (atomTypes.length == 0) {
                 checkBondSum.setDetails(
                     "Cannot validate bond order sum for atom not in valency atom type list: " +
@@ -320,10 +320,10 @@ public class BasicValidator extends AbstractValidator {
                 );
                 report.addWarning(checkBondSum);
             } else {
-                org.openscience.cdk.interfaces.AtomType failedOn = null;
+                org.openscience.cdk.interfaces.IAtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
-                    org.openscience.cdk.interfaces.AtomType type = atomTypes[j];
+                    org.openscience.cdk.interfaces.IAtomType type = atomTypes[j];
                     if (atom.getFormalCharge() == type.getFormalCharge()) {
                         foundMatchingAtomType = true;
                         if (bos == type.getBondOrderSum()) {
@@ -375,12 +375,12 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest chargeConservation = new ValidationTest(reaction,
             "Total formal charge is not preserved during the reaction"
         );
-        org.openscience.cdk.interfaces.Atom[] atoms1 = reactants.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms1 = reactants.getAtoms();
         int totalCharge1 = 0;
         for (int i=0;i<atoms1.length; i++) {
             totalCharge1 =+ atoms1[i].getFormalCharge();
         }
-        org.openscience.cdk.interfaces.Atom[] atoms2 = products.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms2 = products.getAtoms();
         int totalCharge2 = 0;
         for (int i=0;i<atoms2.length; i++) {
             totalCharge2 =+ atoms2[i].getFormalCharge();

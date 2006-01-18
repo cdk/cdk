@@ -31,7 +31,7 @@ import java.util.Vector;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.CMLReader;
@@ -109,7 +109,7 @@ public class OverlapResolverTest extends CDKTestCase
 			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
-			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			
 			OverlapResolver or = new OverlapResolver();
 			double score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
@@ -144,7 +144,7 @@ public class OverlapResolverTest extends CDKTestCase
 			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
-			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
 			assertTrue(score == 0.0);
@@ -172,7 +172,7 @@ public class OverlapResolverTest extends CDKTestCase
 			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
-			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			double score = new OverlapResolver().getBondOverlapScore(atomContainer, new Vector());
 			assertTrue(score > 0);
@@ -201,7 +201,7 @@ public class OverlapResolverTest extends CDKTestCase
 			ChemFile chemFile = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.ChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.ChemModel[] chemModels = chemSequence[0].getChemModels();
-			AtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
 			//MoleculeViewer2D.display(new Molecule(atomContainer), false);
 			OverlapResolver or = new OverlapResolver(); 
 			overlapScore = or.resolveOverlap(atomContainer, null);
@@ -227,7 +227,7 @@ public class OverlapResolverTest extends CDKTestCase
 		logger.debug("Test case with atom clash");
 		try
 		{
-			AtomContainer atomContainer = new SmilesParser().parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
+			IAtomContainer atomContainer = new SmilesParser().parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
 			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 			sdg.setMolecule(new Molecule(atomContainer));
 			sdg.generateCoordinates();

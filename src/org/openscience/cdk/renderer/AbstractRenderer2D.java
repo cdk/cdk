@@ -44,8 +44,8 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.ChemObject;
@@ -215,9 +215,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  atomCon   Description of the Parameter
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintAtoms(AtomContainer atomCon, Graphics2D graphics)
+	public void paintAtoms(IAtomContainer atomCon, Graphics2D graphics)
 	{
-		Atom[] atoms = atomCon.getAtoms();
+		IAtom[] atoms = atomCon.getAtoms();
 		for (int i = 0; i < atoms.length; i++)
 		{
 			paintAtom(atomCon, atoms[i], graphics);
@@ -232,7 +232,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  atom       Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintAtom(AtomContainer container, Atom atom, Graphics2D graphics)
+	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
 		logger.debug("Painting atom ");
 		Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
@@ -317,7 +317,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  color     The color of the atom to be drawn
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintColouredAtomBackground(org.openscience.cdk.interfaces.Atom atom, Color color, Graphics2D graphics)
+	public void paintColouredAtomBackground(org.openscience.cdk.interfaces.IAtom atom, Color color, Graphics2D graphics)
 	{
 		int atomRadius = r2dm.getAtomRadius();
 		graphics.setColor(color);
@@ -354,7 +354,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *      container
 	 *@param  isRadical   Description of the Parameter
 	 */
-	public void paintAtomSymbol(Atom atom, Color backColor, Graphics2D graphics,
+	public void paintAtomSymbol(IAtom atom, Color backColor, Graphics2D graphics,
 			int alignment, int atomNumber, boolean isRadical)
 	{
 		if (atom.getPoint2d() == null)
@@ -827,7 +827,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  atomCon   Description of the Parameter
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintBonds(AtomContainer atomCon, RingSet ringSet, Graphics2D graphics)
+	public void paintBonds(IAtomContainer atomCon, RingSet ringSet, Graphics2D graphics)
 	{
 		Color bondColor;
 		Ring ring;
@@ -895,7 +895,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public boolean ringIsAromatic(Ring ring)
 	{
 		boolean isAromatic = true;
-		Atom[] atoms = ring.getAtoms();
+		IAtom[] atoms = ring.getAtoms();
 		for (int i = 0; i < atoms.length; i++)
 		{
 			if (!atoms[i].getFlag(CDKConstants.ISAROMATIC))
@@ -1396,7 +1396,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  graphics    The current graphics object.
 	 *@param  atomNumber  Description of the Parameter
 	 */
-	public void paintToolTip(org.openscience.cdk.interfaces.Atom atom, Graphics2D graphics, int atomNumber)
+	public void paintToolTip(org.openscience.cdk.interfaces.IAtom atom, Graphics2D graphics, int atomNumber)
 	{
 		tooltiparea = new int[4];
 		String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());

@@ -31,7 +31,7 @@ import java.io.Writer;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Molecule;
@@ -169,7 +169,7 @@ NO_CHARGES
 
             // write atom block
             writer.write("@<TRIPOS>ATOM\n");
-            Atom[] atoms = mol.getAtoms();
+            IAtom[] atoms = mol.getAtoms();
             for (int i=0; i<atoms.length; i++) {
                 writer.write(i + " " +
                              atoms[i].getID() + " ");

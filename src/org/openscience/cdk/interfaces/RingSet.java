@@ -58,7 +58,7 @@ public interface RingSet extends List {
 	 * @param   atom  The atom to be checked
 	 * @return   A vector of all rings that this bond is part of  
 	 */
-	public RingSet getRings(Atom atom);
+	public RingSet getRings(IAtom atom);
 	
 	/**
 	 * Returns all the rings in the RingSet that share
@@ -83,6 +83,6 @@ public interface RingSet extends List {
      * @param  atom Atom to check
 	 * @return      true, if the ringset contains the atom
 	 */
-	public boolean contains(Atom atom);
+	public boolean contains(IAtom atom);
 	
 }

@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -129,17 +129,17 @@ public class AromaticBondsCountDescriptor implements IDescriptor {
 
 
     /**
-     * Calculate the count of aromatic atoms in the supplied {@link AtomContainer}.
+     * Calculate the count of aromatic atoms in the supplied {@link IAtomContainer}.
      * 
      *  The method take a boolean checkAromaticity: if the boolean is true, it means that
      *  aromaticity has to be checked.
      *
-     *@param  ac  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  ac  The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   the number of aromatic atoms of this AtomContainer
      *@throws CDKException if there is a problem in atomaticity detection
      *@see #setParameters
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         int aromaticBondsCount = 0;
         if (checkAromaticity) {
             RingSet rs = (new AllRingsFinder()).findAllRings(ac);

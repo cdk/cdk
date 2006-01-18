@@ -56,7 +56,7 @@ public class Rule2dot2 extends NumberingRule {
                 // ok, molecule looks like a carbon chain
                 // thus, now find the two chain end atoms
                 for (int i=0; i < m.getAtomCount(); i++) {
-                	org.openscience.cdk.interfaces.Atom ai = m.getAtomAt(i);
+                	org.openscience.cdk.interfaces.IAtom ai = m.getAtomAt(i);
                     // is atom first or last?
                 }
             }
@@ -67,7 +67,7 @@ public class Rule2dot2 extends NumberingRule {
     private AtomContainer deleteNonCarbonAtoms(AtomContainer ac) throws NoSuchAtomException {
         AtomContainer result = (AtomContainer)ac.clone();
         for (int i=0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.Atom atom = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom atom = ac.getAtomAt(i);
             if (!"C".equals(atom.getSymbol())) {
                 ac.removeAtomAndConnectedElectronContainers(atom);
             }

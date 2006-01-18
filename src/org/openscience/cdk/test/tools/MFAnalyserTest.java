@@ -29,7 +29,7 @@ import java.util.Hashtable;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -61,7 +61,7 @@ public class MFAnalyserTest extends CDKTestCase {
 
 	public void testAnalyseMF()	{
 		MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
-		AtomContainer ac = mfa.getAtomContainer();
+		IAtomContainer ac = mfa.getAtomContainer();
 		MFAnalyser mfa2 = new MFAnalyser(ac);
 		String mf = mfa2.getMolecularFormula();
 		assertEquals("C10H16", mf);
@@ -69,7 +69,7 @@ public class MFAnalyserTest extends CDKTestCase {
 	
     public void testGetAtomContainer() {
         MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
-        AtomContainer ac = mfa.getAtomContainer();
+        IAtomContainer ac = mfa.getAtomContainer();
         assertEquals(26, ac.getAtomCount());        
     }
     
@@ -117,7 +117,7 @@ public class MFAnalyserTest extends CDKTestCase {
     {
         SmilesParser parser = new SmilesParser();
         Molecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
-        AtomContainer ac = new MFAnalyser(mol).removeHydrogensPreserveMultiplyBonded();
+        IAtomContainer ac = new MFAnalyser(mol).removeHydrogensPreserveMultiplyBonded();
 
         // Should be two connected Bs with H-count == 2 and two explicit Hs.
         assertEquals("incorrect atom count", 4, ac.getAtomCount());
@@ -129,14 +129,14 @@ public class MFAnalyserTest extends CDKTestCase {
                 i < ac.getAtomCount();
                 i++)
         {
-            final org.openscience.cdk.interfaces.Atom atom = ac.getAtomAt(i);
+            final org.openscience.cdk.interfaces.IAtom atom = ac.getAtomAt(i);
             String sym = atom.getSymbol();
             if (sym.equals("B"))
             {
                 // Each B has two explicit and two implicit H.
                 b++;
                 assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
-                org.openscience.cdk.interfaces.Atom[] nbs = ac.getConnectedAtoms(atom);
+                org.openscience.cdk.interfaces.IAtom[] nbs = ac.getConnectedAtoms(atom);
                 assertEquals("incorrect connected count", 2, nbs.length);
                 assertEquals("incorrect bond", "H", nbs[0].getSymbol());
                 assertEquals("incorrect bond", "H", nbs[1].getSymbol());
@@ -179,7 +179,7 @@ public class MFAnalyserTest extends CDKTestCase {
     }
     
     public void testGetHTMLMolecularFormulaWithCharge() {
-    	org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(0);
+    	org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(0);
         MFAnalyser mfa = new MFAnalyser(molecule);
 	assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
 	atom.setFormalCharge(atom.getFormalCharge() + 1);

@@ -26,7 +26,7 @@ package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Gives a short table of atom colors for 2D display.
@@ -44,11 +44,11 @@ public class CDK2DAtomColors implements AtomColorer, java.io.Serializable {
 
     private final Color DEFAULT        = Color.black;
     
-    public Color getAtomColor(Atom a) {
+    public Color getAtomColor(IAtom a) {
         return getAtomColor(a, DEFAULT);
     }
     
-    public Color getAtomColor(Atom a, Color defaultColor) {
+    public Color getAtomColor(IAtom a, Color defaultColor) {
         Color c = defaultColor;
         int atomnumber = a.getAtomicNumber();
         if (atomnumber != 0) {

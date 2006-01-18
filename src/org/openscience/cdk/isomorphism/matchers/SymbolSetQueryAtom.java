@@ -26,7 +26,7 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.HashSet;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  *  A QueryAtom that matches all symbols in this container. You may add symbols
@@ -55,7 +55,7 @@ public class SymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implement
      *@param  atom  The atom to be matched by this QueryAtom
      *@return       true if Atom matched
      */
-    public boolean matches(Atom atom) {
+    public boolean matches(IAtom atom) {
         return symbols.contains(atom.getSymbol());
     }
 

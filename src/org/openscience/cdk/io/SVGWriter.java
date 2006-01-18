@@ -42,7 +42,7 @@ import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.SVGFormat;
@@ -140,8 +140,8 @@ public class SVGWriter extends DefaultChemObjectWriter {
      * @param   object  IChemObject of which the data is outputted.
      */
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof AtomContainer) {
-            writeAtomContainer((AtomContainer)object);
+        if (object instanceof IAtomContainer) {
+            writeAtomContainer((IAtomContainer)object);
         } else {
             throw new CDKException("Only supported is writing of AtomContainer objects.");
         }
@@ -152,7 +152,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
      *
      * @param   molecule  Molecule of which the data is outputed.
      */
-    public void writeAtomContainer(AtomContainer molecule) {
+    public void writeAtomContainer(IAtomContainer molecule) {
         DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
         Document document = domImpl.createDocument(null, "svg", null);
         SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(document);
@@ -162,7 +162,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
         // paintPanel.paint((Graphics)svgGenerator);
         // let's try to do without the SVGPaintPanel
         Renderer2D r2d = new Renderer2D();
-        AtomContainer container = (AtomContainer)molecule.clone();
+        IAtomContainer container = (IAtomContainer)molecule.clone();
         GeometryTools.translateAllPositive(container);
         GeometryTools.center(container, new Dimension(600,400));
         r2d.paintMolecule(container, (Graphics2D)svgGenerator,false);

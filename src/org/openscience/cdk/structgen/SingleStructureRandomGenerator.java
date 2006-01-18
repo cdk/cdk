@@ -106,8 +106,8 @@ public class SingleStructureRandomGenerator
 		double order;
 		double max, cmax1, cmax2;
 		int iteration = 0;
-		org.openscience.cdk.interfaces.Atom partner;
-		org.openscience.cdk.interfaces.Atom atom;
+		org.openscience.cdk.interfaces.IAtom partner;
+		org.openscience.cdk.interfaces.IAtom atom;
 		do
 		{
 			iteration++;
@@ -152,9 +152,9 @@ public class SingleStructureRandomGenerator
 	 *
 	 * @return                The AnotherUnsaturatedNode value
 	 */
-	private org.openscience.cdk.interfaces.Atom getAnotherUnsaturatedNode(org.openscience.cdk.interfaces.Atom exclusionAtom) throws CDKException
+	private org.openscience.cdk.interfaces.IAtom getAnotherUnsaturatedNode(org.openscience.cdk.interfaces.IAtom exclusionAtom) throws CDKException
 	{
-		org.openscience.cdk.interfaces.Atom atom;
+		org.openscience.cdk.interfaces.IAtom atom;
 		int next = random.nextInt(atomContainer.getAtomCount());
 
 		for (int f = next; f < atomContainer.getAtomCount(); f++)

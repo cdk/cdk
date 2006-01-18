@@ -113,7 +113,7 @@ public class ElementTest extends CDKTestCase {
         assertEquals("C", clone.getSymbol());
     }
     
-    public void testClone_AtomicNumber() {
+    public void testClone_IAtomicNumber() {
         Element elem = builder.newElement("C", 6);
         Element clone = (Element)elem.clone();
         

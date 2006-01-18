@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -91,14 +91,14 @@ public interface IDescriptor {
      * Optionally, parameters may be set which can affect the nature of the
      * calculation.
      *
-     * @param container An {@link AtomContainer} for which this descriptor should be
+     * @param container An {@link IAtomContainer} for which this descriptor should be
      * calculated
      * @return An object of {@link DescriptorValue} that contain the calculated value 
      * as well as specification details
      * @throws CDKException if an error occurs during calculation. See documentation for
      * individual descriptors
      */
-    public DescriptorValue calculate(AtomContainer container) throws CDKException;
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException;
     
 }
 

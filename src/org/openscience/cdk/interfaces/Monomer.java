@@ -38,7 +38,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.keyword monomer
  */
-public interface Monomer extends AtomContainer {
+public interface Monomer extends IAtomContainer {
 
 	/**
 	 * Retrieve the monomer name.

@@ -48,7 +48,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilterInterface;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
@@ -337,7 +337,7 @@ public class SaveAsAction extends JCPAction
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
-		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
+		IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
 		if (ac != null)
 		{
 			cow.write(new Molecule(ac));
@@ -363,7 +363,7 @@ public class SaveAsAction extends JCPAction
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
-		AtomContainer ac = (AtomContainer) ChemModelManipulator.getAllInOneContainer(model);
+		IAtomContainer ac = (IAtomContainer) ChemModelManipulator.getAllInOneContainer(model);
 		if (ac != null)
 		{
 			cow.write((org.openscience.cdk.AtomContainer) ac.clone());

@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -134,7 +134,7 @@ public class GravitationalIndexDescriptor implements IDescriptor {
      *@return            An ArrayList containing 9 elements in the order described above
      */
 
-    public DescriptorValue calculate(AtomContainer container) {
+    public DescriptorValue calculate(IAtomContainer container) {
         IsotopeFactory factory = null;
         double mass1 = 0;
         double mass2 = 0;

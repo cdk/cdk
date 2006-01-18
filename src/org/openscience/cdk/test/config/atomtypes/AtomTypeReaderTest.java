@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -160,8 +160,8 @@ public class AtomTypeReaderTest extends CDKTestCase {
         
         Object object = types.elementAt(0);
         assertNotNull(object);
-        assertTrue(object instanceof AtomType);
-        AtomType atomType = (AtomType)object;
+        assertTrue(object instanceof IAtomType);
+        IAtomType atomType = (IAtomType)object;
         
         assertEquals("[CSP]-[0-4][-]?+;", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
         assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));

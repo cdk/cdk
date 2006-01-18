@@ -42,8 +42,8 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -310,10 +310,10 @@ public class Convertor {
 		return cdkAtomContainerToCMLMolecule(structure, true);
 	}
 	
-	public CMLMolecule cdkAtomContainerToCMLMolecule(AtomContainer structure) {
+	public CMLMolecule cdkAtomContainerToCMLMolecule(IAtomContainer structure) {
 		return cdkAtomContainerToCMLMolecule(structure, true);
 	}
-	private CMLMolecule cdkAtomContainerToCMLMolecule(AtomContainer structure, boolean setIDs) {
+	private CMLMolecule cdkAtomContainerToCMLMolecule(IAtomContainer structure, boolean setIDs) {
 		CMLMolecule cmlMolecule = new CMLMolecule();
 
     	if (useCMLIDs && setIDs) {
@@ -326,7 +326,7 @@ public class Convertor {
 			cmlMolecule.setTitle((String)structure.getProperty(CDKConstants.TITLE));
 		}
  		for (int i= 0; i<structure.getAtomCount(); i++) {
- 			Atom cdkAtom = structure.getAtomAt(i);
+ 			IAtom cdkAtom = structure.getAtomAt(i);
 			CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
 			if (structure.getSingleElectronSum(cdkAtom) > 0) {
 				cmlAtom.setSpinMultiplicity(structure.getSingleElectronSum(cdkAtom)+1);
@@ -374,7 +374,7 @@ public class Convertor {
         return false;
     }
 	
-	 private boolean addAtomID(Atom cdkAtom, CMLAtom cmlAtom) {
+	 private boolean addAtomID(IAtom cdkAtom, CMLAtom cmlAtom) {
 	        if(cdkAtom.getID()!=null && !cdkAtom.getID().equals("")) { 
 	        	cmlAtom.setId(cdkAtom.getID());
 	        }
@@ -384,7 +384,7 @@ public class Convertor {
 	        return true;
 	    }
 
-	public CMLAtom cdkAtomToCMLAtom(Atom cdkAtom) {
+	public CMLAtom cdkAtomToCMLAtom(IAtom cdkAtom) {
 		CMLAtom cmlAtom = new CMLAtom();
 		this.checkPrefix(cmlAtom);
 		addAtomID(cdkAtom, cmlAtom);
@@ -453,7 +453,7 @@ public class Convertor {
         	cmlBond.setId(cdkBond.getID());
         }
 		
-		org.openscience.cdk.interfaces.Atom[] atoms = cdkBond.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = cdkBond.getAtoms();
 		String[] atomRefArray = new String[atoms.length];
 		for (int i = 0; i < atoms.length; i++) {
 			String atomID = atoms[i].getID();
@@ -539,7 +539,7 @@ public class Convertor {
         }
     }
 
-	private void mapFractionalCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
+	private void mapFractionalCoordsToCML(CMLAtom cmlAtom, IAtom cdkAtom) {
 		if (cdkAtom.getFractionalPoint3d() != null) {
 			cmlAtom.setXFract(cdkAtom.getFractionalPoint3d().x);
 			cmlAtom.setYFract(cdkAtom.getFractionalPoint3d().y);
@@ -547,7 +547,7 @@ public class Convertor {
 		}
 	}
 
-	private void map3DCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
+	private void map3DCoordsToCML(CMLAtom cmlAtom, IAtom cdkAtom) {
 		if (cdkAtom.getPoint3d() != null) {
 			cmlAtom.setX3(cdkAtom.getPoint3d().x);
 			cmlAtom.setY3(cdkAtom.getPoint3d().y);
@@ -555,7 +555,7 @@ public class Convertor {
 		}
 	}
 
-	private void map2DCoordsToCML(CMLAtom cmlAtom, Atom cdkAtom) {
+	private void map2DCoordsToCML(CMLAtom cmlAtom, IAtom cdkAtom) {
 		if (cdkAtom.getPoint2d() != null) {
 			cmlAtom.setX2(cdkAtom.getPoint2d().x);
 			cmlAtom.setY2(cdkAtom.getPoint2d().y);

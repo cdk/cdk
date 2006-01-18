@@ -201,9 +201,9 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         
         // then come all the atoms. 
         // Loop through the atoms and write them out:
-        org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.Atom a = atoms[i];
+        	org.openscience.cdk.interfaces.IAtom a = atoms[i];
             String st = a.getSymbol();
             
             // export Eucledian coordinates (indicated by the 0)

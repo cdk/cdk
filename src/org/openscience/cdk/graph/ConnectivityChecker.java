@@ -27,10 +27,10 @@ package org.openscience.cdk.graph;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ElectronContainer;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 
@@ -62,10 +62,10 @@ public class ConnectivityChecker
 	 * @param   atomContainer  The AtomContainer to be check for connectedness
 	 * @return                 true if the AtomContainer is connected   
 	 */
-	public static boolean isConnected(AtomContainer atomContainer)
+	public static boolean isConnected(IAtomContainer atomContainer)
 	{
-		AtomContainer ac = atomContainer.getBuilder().newAtomContainer();
-		Atom atom = null;
+		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+		IAtom atom = null;
 		Bond bond = null;
 		Molecule molecule = atomContainer.getBuilder().newMolecule();
 		Vector sphere = new Vector();
@@ -103,9 +103,9 @@ public class ConnectivityChecker
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
-	public static SetOfMolecules partitionIntoMolecules(AtomContainer atomContainer) {
-		AtomContainer ac = atomContainer.getBuilder().newAtomContainer();
-		Atom atom = null;
+	public static SetOfMolecules partitionIntoMolecules(IAtomContainer atomContainer) {
+		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+		IAtom atom = null;
 		ElectronContainer eContainer = null;
 		Molecule molecule = null;
 		SetOfMolecules molecules = atomContainer.getBuilder().newSetOfMolecules();

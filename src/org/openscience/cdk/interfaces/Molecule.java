@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  * @author      egonw
  * @cdk.created 2005-08-25
  */
-public interface Molecule extends AtomContainer {
+public interface Molecule extends IAtomContainer {
 
 }
 

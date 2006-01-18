@@ -48,7 +48,7 @@ public class AtomParityTest extends CDKTestCase {
         return new TestSuite(AtomParityTest.class);
     }
     
-    public void testAtomParity_Atom_Atom_Atom_Atom_Atom_int() {
+    public void testAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
         Atom carbon = new Atom("C");
         carbon.setID("central");
         Atom carbon1 = new Atom("C");
@@ -93,7 +93,7 @@ public class AtomParityTest extends CDKTestCase {
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
-        org.openscience.cdk.interfaces.Atom[] neighbors = parity.getSurroundingAtoms();
+        org.openscience.cdk.interfaces.IAtom[] neighbors = parity.getSurroundingAtoms();
         assertEquals(4, neighbors.length);
         assertEquals(carbon1, neighbors[0]);
         assertEquals(carbon2, neighbors[1]);
@@ -170,8 +170,8 @@ public class AtomParityTest extends CDKTestCase {
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
 
 		AtomParity clone = (AtomParity)parity.clone();
-		org.openscience.cdk.interfaces.Atom[] atoms = parity.getSurroundingAtoms();
-		org.openscience.cdk.interfaces.Atom[] atomsClone = clone.getSurroundingAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = parity.getSurroundingAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atomsClone = clone.getSurroundingAtoms();
         assertEquals(atoms.length, atomsClone.length);
 		for (int f = 0; f < atoms.length; f++) {
 			for (int g = 0; g < atomsClone.length; g++) {
@@ -182,7 +182,7 @@ public class AtomParityTest extends CDKTestCase {
 		}        
     }
     
-    public void testClone_Atom() {
+    public void testClone_IAtom() {
         Atom carbon = new Atom("C");
         carbon.setID("central");
         Atom carbon1 = new Atom("C");

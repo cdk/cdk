@@ -28,7 +28,7 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -220,19 +220,19 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		Molecule methanol = new org.openscience.cdk.Molecule();
 		ChemObjectBuilder builder = methanol.getBuilder();
 		
-		Atom carbon1 = builder.newAtom("C");
+		IAtom carbon1 = builder.newAtom("C");
 		carbon1.setID("carbon1");
 		methanol.addAtom(carbon1);
 		for (int i=0; i<3; i++) {
-			Atom hydrogen = builder.newAtom("H");
+			IAtom hydrogen = builder.newAtom("H");
 			methanol.addAtom(hydrogen);
 			methanol.addBond(builder.newBond(carbon1, hydrogen, 1.0));
 		}
-		Atom oxygen1 = builder.newAtom("O");
+		IAtom oxygen1 = builder.newAtom("O");
 		oxygen1.setID("oxygen1");
 		methanol.addAtom(oxygen1);
 		methanol.addBond(builder.newBond(carbon1, oxygen1, 1.0));
-		Atom hydrogen = builder.newAtom("H");
+		IAtom hydrogen = builder.newAtom("H");
 		methanol.addAtom(hydrogen);
 		methanol.addBond(builder.newBond(hydrogen, oxygen1, 1.0));
 		

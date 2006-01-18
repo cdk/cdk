@@ -35,7 +35,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -111,7 +111,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                         write(crystal);
                     } else {
                         writeMolecule(model.getBuilder().newMolecule(
-                            (AtomContainer)ChemModelManipulator.getAllInOneContainer(model)
+                            (IAtomContainer)ChemModelManipulator.getAllInOneContainer(model)
                         ));
                     }
                 }
@@ -145,13 +145,13 @@ public class PDBWriter extends DefaultChemObjectWriter {
            
            // Loop through the atoms and write them out:
            StringBuffer buffer = new StringBuffer();
-           org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
+           org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
            for (int i = 0; i < atoms.length; i++) {
                buffer.setLength(0);
                buffer.append(hetatmRecordName);
                buffer.append(serialFormat.sprintf(atomNumber));
                buffer.append(' ');
-               org.openscience.cdk.interfaces.Atom atom = atoms[i];
+               org.openscience.cdk.interfaces.IAtom atom = atoms[i];
                buffer.append(atomNameFormat.sprintf(atom.getSymbol()));
                buffer.append(" MOL          ");
                Point3d position = atom.getPoint3d();
@@ -187,9 +187,9 @@ public class PDBWriter extends DefaultChemObjectWriter {
                                                    + angleFormat.sprintf(ucParams[5]) + "\n");
                                                    
            // before saving the atoms, we need to create cartesian coordinates
-           org.openscience.cdk.interfaces.Atom[] atoms = crystal.getAtoms();
+           org.openscience.cdk.interfaces.IAtom[] atoms = crystal.getAtoms();
             for (int i=0; i<atoms.length; i++) {
-            	org.openscience.cdk.interfaces.Atom atom = atoms[i];
+            	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
                 Point3d frac = new Point3d();
                 frac.x = atom.getFractX3d();
                 frac.y = atom.getFractY3d();

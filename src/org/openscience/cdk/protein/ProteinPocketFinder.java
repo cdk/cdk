@@ -38,7 +38,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.tools.GridGenerator;
 import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.BioPolymer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -171,7 +171,7 @@ public class ProteinPocketFinder {
 	 * @return double[] stores min,max,min,max,min,max
 	 */
 	public double[] findGridBoundaries() {
-		Atom[] atoms = protein.getAtoms();
+		IAtom[] atoms = protein.getAtoms();
 		double[] minMax = new double[6];
 		minMax[0] = atoms[0].getPoint3d().x;
 		minMax[1] = atoms[0].getPoint3d().x;
@@ -227,7 +227,7 @@ public class ProteinPocketFinder {
 		this.grid = gridGenerator.initializeGrid(this.grid, 0);
 		// 2. Step Grid points inaccessible to solvent are assigend a value of -1
 		// set grid points around (r_atom+r_solv) to -1
-		Atom[] atoms = protein.getAtoms();
+		IAtom[] atoms = protein.getAtoms();
 		Point3d gridPoint = null;
 		int checkGridPoints = 0;
 		double vdWRadius = 0;
@@ -894,7 +894,7 @@ public class ProteinPocketFinder {
 	 */
 	public void assignVdWRadiiToProtein() {
 		AtomTypeFactory atf = null;
-		Atom[] atoms = protein.getAtoms();
+		IAtom[] atoms = protein.getAtoms();
 		try {
 			atf = AtomTypeFactory.getInstance(
                 vanDerWaalsFile, atoms[0].getBuilder()

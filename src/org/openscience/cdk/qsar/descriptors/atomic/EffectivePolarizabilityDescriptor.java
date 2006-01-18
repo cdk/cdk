@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
@@ -123,10 +123,10 @@ public class EffectivePolarizabilityDescriptor implements IDescriptor {
      *@return                   a double with polarizability of the heavy atom
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
 
-        org.openscience.cdk.interfaces.Atom target = mol.getAtomAt(atomPosition);
+        org.openscience.cdk.interfaces.IAtom target = mol.getAtomAt(atomPosition);
         double effectivePolarizability = 0;
         effectivePolarizability = pol.calculateGHEffectiveAtomPolarizability(mol, target, 1000);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(effectivePolarizability));

@@ -30,7 +30,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.config.IsotopeFactory;
 
 /**
@@ -42,7 +42,7 @@ import org.openscience.cdk.config.IsotopeFactory;
  */
 public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 
-	private Atom atom;
+	private IAtom atom;
 
 	private String formerSymbol;
 
@@ -56,7 +56,7 @@ public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 	 * @param symbol
 	 *            The atom symbol past change
 	 */
-	public ChangeAtomSymbolEdit(Atom atomInRange, String formerSymbol,
+	public ChangeAtomSymbolEdit(IAtom atomInRange, String formerSymbol,
 			String symbol) {
 		this.atom = atomInRange;
 		this.formerSymbol = formerSymbol;

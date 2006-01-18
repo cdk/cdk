@@ -26,7 +26,7 @@ package org.openscience.cdk.test.ringsearch;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -90,7 +90,7 @@ public class RingPartitionerTest extends CDKTestCase
 		SSSRFinder sssrf = new SSSRFinder(molecule);
 
 		RingSet ringSet = sssrf.findSSSR();
-		AtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
+		IAtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
         assertEquals(7, ac.getAtomCount());
         assertEquals(8, ac.getBondCount());
 	}

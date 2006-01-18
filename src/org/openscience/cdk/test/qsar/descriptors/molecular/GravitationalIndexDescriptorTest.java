@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptor;
@@ -55,8 +55,8 @@ public class GravitationalIndexDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
-        AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        AtomContainer ac = c[0];
+        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = c[0];
 
         IDescriptor descriptor = new GravitationalIndexDescriptor();
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();

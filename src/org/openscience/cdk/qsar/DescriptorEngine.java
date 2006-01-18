@@ -30,7 +30,7 @@ import nu.xom.Elements;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.File;
@@ -125,7 +125,7 @@ public class DescriptorEngine {
      * @param molecule The molecule for which we want to calculate descriptors
      * @throws CDKException if an error occured during descriptor calculation
      */
-    public void process(AtomContainer molecule) throws CDKException {
+    public void process(IAtomContainer molecule) throws CDKException {
 
         for (int i = 0; i < descriptors.size(); i++) {
             IDescriptor descriptor = (IDescriptor) descriptors.get(i);

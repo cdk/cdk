@@ -30,8 +30,8 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.Crystal;
@@ -53,11 +53,11 @@ import org.openscience.cdk.interfaces.SetOfReactions;
  *
  * @cdk.module standard
  *
- * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(Atom)
+ * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  */
 public class ChemModelManipulator {
     
-    public static void removeAtomAndConnectedElectronContainers(ChemModel chemModel, Atom atom) {
+    public static void removeAtomAndConnectedElectronContainers(ChemModel chemModel, IAtom atom) {
         Crystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             if (crystal.contains(atom)) {
@@ -99,8 +99,8 @@ public class ChemModelManipulator {
      *
      * @return  The AtomContainer with all the Molecules of this container
      */
-    public static AtomContainer getAllInOneContainer(ChemModel chemModel) {
-        AtomContainer container = chemModel.getBuilder().newAtomContainer();
+    public static IAtomContainer getAllInOneContainer(ChemModel chemModel) {
+        IAtomContainer container = chemModel.getBuilder().newAtomContainer();
         Crystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             container.add(crystal);
@@ -116,7 +116,7 @@ public class ChemModelManipulator {
         return container;
     }
 
-    public static AtomContainer createNewMolecule(ChemModel chemModel) {
+    public static IAtomContainer createNewMolecule(ChemModel chemModel) {
         // Add a new molecule either the set of molecules
         Molecule molecule = chemModel.getBuilder().newMolecule();
         if (chemModel.getSetOfMolecules() != null) {
@@ -130,7 +130,7 @@ public class ChemModelManipulator {
         return molecule;
     }
 
-    public static ChemModel newChemModel(AtomContainer molecule) {
+    public static ChemModel newChemModel(IAtomContainer molecule) {
         ChemModel model = molecule.getBuilder().newChemModel();
         SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
         moleculeSet.addAtomContainer(molecule);
@@ -142,8 +142,8 @@ public class ChemModelManipulator {
      * This badly named methods tries to determine which AtomContainer in the
      * ChemModel is best suited to contain added Atom's and Bond's.
      */
-    public static AtomContainer getRelevantAtomContainer(ChemModel chemModel, Atom atom) {
-        AtomContainer result = null;
+    public static IAtomContainer getRelevantAtomContainer(ChemModel chemModel, IAtom atom) {
+        IAtomContainer result = null;
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             result = SetOfMoleculesManipulator.getRelevantAtomContainer(moleculeSet, atom);
@@ -159,8 +159,8 @@ public class ChemModelManipulator {
         return null;
     }
 
-    public static AtomContainer getRelevantAtomContainer(ChemModel chemModel, Bond bond) {
-        AtomContainer result = null;
+    public static IAtomContainer getRelevantAtomContainer(ChemModel chemModel, Bond bond) {
+        IAtomContainer result = null;
         if (chemModel.getSetOfMolecules() != null) {
             SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             result = SetOfMoleculesManipulator.getRelevantAtomContainer(moleculeSet, bond);
@@ -176,7 +176,7 @@ public class ChemModelManipulator {
         return null;
     }
     
-    public static Reaction getRelevantReaction(ChemModel chemModel, Atom atom) {
+    public static Reaction getRelevantReaction(ChemModel chemModel, IAtom atom) {
         Reaction reaction = null;
         if (chemModel.getSetOfReactions() != null) {
             SetOfReactions reactionSet = chemModel.getSetOfReactions();
@@ -188,7 +188,7 @@ public class ChemModelManipulator {
     /**
      * Returns all the AtomContainer's of a ChemModel.
      */
-    public static AtomContainer[] getAllAtomContainers(ChemModel chemModel) {
+    public static IAtomContainer[] getAllAtomContainers(ChemModel chemModel) {
         SetOfMolecules moleculeSet = chemModel.getBuilder().newSetOfMolecules();
         if (chemModel.getSetOfMolecules() != null) {
             moleculeSet.add(chemModel.getSetOfMolecules());

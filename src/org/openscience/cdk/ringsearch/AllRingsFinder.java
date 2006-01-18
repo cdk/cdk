@@ -32,8 +32,8 @@ package org.openscience.cdk.ringsearch;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -69,7 +69,7 @@ public class AllRingsFinder
 	 *  used for storing the original atomContainer for
 	 *  reference purposes (printing)
 	 */
-	AtomContainer originalAc = null;
+	IAtomContainer originalAc = null;
 	Vector newPathes = new Vector();
 	Vector potentialRings = new Vector();
 	Vector removePathes = new Vector();
@@ -82,10 +82,10 @@ public class AllRingsFinder
 	 *@return                   A RingSet with all rings in the AtomContainer
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	public RingSet findAllRings(AtomContainer atomContainer) throws CDKException
+	public RingSet findAllRings(IAtomContainer atomContainer) throws CDKException
 	{
 		startTime = System.currentTimeMillis();
-		SpanningTree spanningTree = new SpanningTree((AtomContainer) atomContainer.clone());
+		SpanningTree spanningTree = new SpanningTree((IAtomContainer) atomContainer.clone());
 		spanningTree.identifyBonds();
 		if (spanningTree.getBondsCyclicCount() < 37)
 		{
@@ -103,7 +103,7 @@ public class AllRingsFinder
 	 *@return                   a RingSet containing the rings in molecule
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	public RingSet findAllRings(AtomContainer atomContainer, boolean useSSSR) throws CDKException
+	public RingSet findAllRings(IAtomContainer atomContainer, boolean useSSSR) throws CDKException
 	{
 		if (startTime == 0)
 		{
@@ -111,7 +111,7 @@ public class AllRingsFinder
 		}
 		Vector pathes = new Vector();
 		RingSet ringSet = atomContainer.getBuilder().newRingSet();
-		AtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		originalAc = atomContainer;
 		ac.add(atomContainer);
 		if (debug)
@@ -131,7 +131,7 @@ public class AllRingsFinder
 
 			for (int r = 0; r < ringSets.size(); r++)
 			{
-				AtomContainer tempAC
+				IAtomContainer tempAC
 						 = RingPartitioner.convertToAtomContainer((RingSet) ringSets.get(r));
 
 				doSearch(tempAC, pathes, ringSet);
@@ -153,9 +153,9 @@ public class AllRingsFinder
 	 *@param  ringSet           A ringset to be extended while we search
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	private void doSearch(AtomContainer ac, Vector pathes, RingSet ringSet) throws CDKException
+	private void doSearch(IAtomContainer ac, Vector pathes, RingSet ringSet) throws CDKException
 	{
-		Atom atom = null;
+		IAtom atom = null;
 		/*
 		 *  First we convert the molecular graph into a a path graph by
 		 *  creating a set of two membered pathes from all the bonds in the molecule
@@ -191,16 +191,16 @@ public class AllRingsFinder
 	 *@param  ac                The AtomContainer to work with
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	private void removeAliphatic(AtomContainer ac) throws CDKException
+	private void removeAliphatic(IAtomContainer ac) throws CDKException
 	{
 		boolean removedSomething;
-		Atom atom = null;
+		IAtom atom = null;
 		do
 		{
 			removedSomething = false;
 			for (Enumeration e = ac.atoms(); e.hasMoreElements(); )
 			{
-				atom = (Atom) e.nextElement();
+				atom = (IAtom) e.nextElement();
 				if (ac.getBondCount(atom) == 1)
 				{
 					ac.removeAtomAndConnectedElectronContainers(atom);
@@ -222,7 +222,7 @@ public class AllRingsFinder
 	 *@param  rings             The ringset to be extended
 	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
 	 */
-	private void remove(Atom atom, AtomContainer ac, Vector pathes, RingSet rings) throws CDKException
+	private void remove(IAtom atom, IAtomContainer ac, Vector pathes, RingSet rings) throws CDKException
 	{
 		Path path1 = null;
 		Path path2 = null;
@@ -297,7 +297,7 @@ public class AllRingsFinder
 	 *@param  ringSet  The ringset to add the detected rings to
 	 *@param  ac       The AtomContainer with the original structure
 	 */
-	private void detectRings(Vector pathes, RingSet ringSet, AtomContainer ac)
+	private void detectRings(Vector pathes, RingSet ringSet, IAtomContainer ac)
 	{
 		Path path = null;
 		Ring ring = null;
@@ -315,7 +315,7 @@ public class AllRingsFinder
 				ring = ac.getBuilder().newRing();
 				for (int g = 0; g < path.size(); g++)
 				{
-					ring.addAtom((Atom) path.elementAt(g));
+					ring.addAtom((IAtom) path.elementAt(g));
 				}
 				Bond[] bonds = ac.getBonds();
 				for (int g = 0; g < bonds.length; g++)
@@ -339,7 +339,7 @@ public class AllRingsFinder
 	 *@param  ac      The AtomContainer with the original structure
 	 *@param  pathes  The pathes to initialize
 	 */
-	private void initPathGraph(AtomContainer ac, Vector pathes)
+	private void initPathGraph(IAtomContainer ac, Vector pathes)
 	{
 		Bond bond = null;
 		Path path = null;
@@ -364,13 +364,13 @@ public class AllRingsFinder
 	 *@param  ac  The AtomContainer to search
 	 *@return     The selected Atom
 	 */
-	private Atom selectAtom(AtomContainer ac)
+	private IAtom selectAtom(IAtomContainer ac)
 	{
 		int minDegree = 999;
 		// :-)
 		int degree = minDegree;
-		Atom minAtom = null;
-		Atom atom = null;
+		IAtom minAtom = null;
+		IAtom atom = null;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtomAt(f);

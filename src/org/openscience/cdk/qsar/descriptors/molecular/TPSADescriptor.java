@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.HashMap;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -208,7 +208,7 @@ public class TPSADescriptor implements IDescriptor {
 	 *@return                   A double containing the topological surface area
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
 		
 		RingSet rs = (new AllRingsFinder()).findAllRings(ac);
 		if (checkAromaticity) {
@@ -217,8 +217,8 @@ public class TPSADescriptor implements IDescriptor {
 		org.openscience.cdk.interfaces.RingSet rsAtom = null;
 		Ring ring = null;
 		String profile = "";
-		org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
-		org.openscience.cdk.interfaces.Atom[] connectedAtomsFirst = null;
+		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] connectedAtomsFirst = null;
 		org.openscience.cdk.interfaces.Bond[] connectedBondsfirst = null;
 		Vector profiles = new Vector();
 		double maxOrder = 0;

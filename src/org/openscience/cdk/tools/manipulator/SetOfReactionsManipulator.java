@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ElectronContainer;
 import org.openscience.cdk.interfaces.Reaction;
@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.SetOfReactions;
  */
 public class SetOfReactionsManipulator {
     
-    public static void removeAtomAndConnectedElectronContainers(SetOfReactions set, Atom atom) {
+    public static void removeAtomAndConnectedElectronContainers(SetOfReactions set, IAtom atom) {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
@@ -64,8 +64,8 @@ public class SetOfReactionsManipulator {
         }
     }
     
-    public static AtomContainer getAllInOneContainer(SetOfReactions set) {
-        AtomContainer container = set.getBuilder().newAtomContainer();
+    public static IAtomContainer getAllInOneContainer(SetOfReactions set) {
+        IAtomContainer container = set.getBuilder().newAtomContainer();
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
@@ -97,17 +97,17 @@ public class SetOfReactionsManipulator {
     /**
      * Returns all the AtomContainer's of a Reaction.
      */
-    public static AtomContainer[] getAllAtomContainers(SetOfReactions set) {
+    public static IAtomContainer[] getAllAtomContainers(SetOfReactions set) {
 		return SetOfMoleculesManipulator.getAllAtomContainers(
             getAllMolecules(set)
         );
     }
     
-    public static Reaction getRelevantReaction(SetOfReactions set, Atom atom) {
+    public static Reaction getRelevantReaction(SetOfReactions set, IAtom atom) {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
-            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
+            IAtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
             if (container != null) { // a match!
                 return reaction;
             }
@@ -119,7 +119,7 @@ public class SetOfReactionsManipulator {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
-            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, bond);
+            IAtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, bond);
             if (container != null) { // a match!
                 return reaction;
             }
@@ -127,11 +127,11 @@ public class SetOfReactionsManipulator {
         return null;
     }
 
-    public static AtomContainer getRelevantAtomContainer(SetOfReactions set, Atom atom) {
+    public static IAtomContainer getRelevantAtomContainer(SetOfReactions set, IAtom atom) {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
-            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
+            IAtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, atom);
             if (container != null) { // a match!
                 return container;
             }
@@ -139,11 +139,11 @@ public class SetOfReactionsManipulator {
         return null;
     }
 
-    public static AtomContainer getRelevantAtomContainer(SetOfReactions set, Bond bond) {
+    public static IAtomContainer getRelevantAtomContainer(SetOfReactions set, Bond bond) {
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];
-            AtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, bond);
+            IAtomContainer container = ReactionManipulator.getRelevantAtomContainer(reaction, bond);
             if (container != null) { // a match!
                 return container;
             }

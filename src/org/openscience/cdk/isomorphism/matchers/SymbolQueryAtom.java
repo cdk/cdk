@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module extra
@@ -32,11 +32,11 @@ public class SymbolQueryAtom extends org.openscience.cdk.Atom implements QueryAt
     
     public SymbolQueryAtom() {}
     
-    public SymbolQueryAtom(Atom atom) {
+    public SymbolQueryAtom(IAtom atom) {
         super(atom.getSymbol());
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         return this.getSymbol().equals(atom.getSymbol());
     };
 

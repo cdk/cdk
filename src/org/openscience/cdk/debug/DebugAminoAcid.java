@@ -28,9 +28,9 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomParity;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
@@ -52,17 +52,17 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 
 	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
-	public void addAtomParity(AtomParity parity) {
+	public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);
 		super.addAtomParity(parity);
 	}
 
-	public AtomParity getAtomParity(Atom atom) {
+	public IAtomParity getAtomParity(IAtom atom) {
 		logger.debug("Getting atom parity: ", atom);
 		return super.getAtomParity(atom);
 	}
 
-	public void setAtoms(Atom[] atoms) {
+	public void setAtoms(IAtom[] atoms) {
 		logger.debug("Setting atoms: ", atoms.length);
 		super.setAtoms(atoms);
 	}
@@ -72,12 +72,12 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		super.setElectronContainers(electronContainers);
 	}
 
-	public void setAtomAt(int number, Atom atom) {
+	public void setAtomAt(int number, IAtom atom) {
 		logger.debug("Setting atom at: pos=" + number, " atom=" + atom);
 		super.setAtomAt(number, atom);
 	}
 
-	public Atom getAtomAt(int number) {
+	public IAtom getAtomAt(int number) {
 		logger.debug("Getting atom at: ", number);
 		return super.getAtomAt(number);
 	}
@@ -102,7 +102,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		super.setAtomCount(atomCount);
 	}
 
-	public Atom[] getAtoms() {
+	public IAtom[] getAtoms() {
 		logger.debug("Getting atoms: ", super.getAtoms().length);
 		return super.getAtoms();
 	}
@@ -127,27 +127,27 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		return super.getLonePairs();
 	}
 
-	public LonePair[] getLonePairs(Atom atom) {
+	public LonePair[] getLonePairs(IAtom atom) {
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs(atom).length);
 		return super.getLonePairs(atom);
 	}
 
-	public Atom getFirstAtom() {
+	public IAtom getFirstAtom() {
 		logger.debug("Getting first atom: ", super.getFirstAtom());
 		return super.getFirstAtom();
 	}
 
-	public Atom getLastAtom() {
+	public IAtom getLastAtom() {
 		logger.debug("Getting last atom: ", super.getLastAtom());
 		return super.getLastAtom();
 	}
 
-	public int getAtomNumber(Atom atom) {
+	public int getAtomNumber(IAtom atom) {
 		logger.debug("Getting atom number: ", atom);
 		return super.getAtomNumber(atom);
 	}
 
-	public int getBondNumber(Atom atom1, Atom atom2) {
+	public int getBondNumber(IAtom atom1, IAtom atom2) {
 		logger.debug("Getting bond number: atom1=" + atom1, " atom2=" + atom2);
 		return super.getBondNumber(atom1, atom2);
 	}
@@ -162,32 +162,32 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		return super.getElectronContainerAt(number);
 	}
 
-	public Bond getBond(Atom atom1, Atom atom2) {
+	public Bond getBond(IAtom atom1, IAtom atom2) {
 		logger.debug("Getting bond for atoms: atom1=" + atom1, " atom2=" + atom2);
 		return super.getBond(atom1, atom2);
 	}
 
-	public Atom[] getConnectedAtoms(Atom atom) {
+	public IAtom[] getConnectedAtoms(IAtom atom) {
 		logger.debug("Getting connected atoms for atom: ", atom);
 		return super.getConnectedAtoms(atom);
 	}
 
-	public Vector getConnectedAtomsVector(Atom atom) {
+	public Vector getConnectedAtomsVector(IAtom atom) {
 		logger.debug("Getting connecting atoms vector for atom: ", atom);
 		return super.getConnectedAtomsVector(atom);
 	}
 
-	public Bond[] getConnectedBonds(Atom atom) {
+	public Bond[] getConnectedBonds(IAtom atom) {
 		logger.debug("Getting connected bonds for atom: ", atom);
 		return super.getConnectedBonds(atom);
 	}
 
-	public Vector getConnectedBondsVector(Atom atom) {
+	public Vector getConnectedBondsVector(IAtom atom) {
 		logger.debug("Getting connected bonds vector for atom: ", atom);
 		return super.getConnectedBondsVector(atom);
 	}
 
-	public ElectronContainer[] getConnectedElectronContainers(Atom atom) {
+	public ElectronContainer[] getConnectedElectronContainers(IAtom atom) {
 		logger.debug("Getting connected electron containers for atom: ", atom);
 		return super.getConnectedElectronContainers(atom);
 	}
@@ -217,57 +217,57 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		return super.getBondCount();
 	}
 
-	public int getBondCount(Atom atom) {
+	public int getBondCount(IAtom atom) {
 		logger.debug("Getting bond count for atom: ", atom);
 		return super.getBondCount(atom);
 	}
 
-	public int getLonePairCount(Atom atom) {
+	public int getLonePairCount(IAtom atom) {
 		logger.debug("Getting lone pair count for atom: ", atom);
 		return super.getLonePairCount(atom);
 	}
 
-	public SingleElectron[] getSingleElectron(Atom atom) {
+	public SingleElectron[] getSingleElectron(IAtom atom) {
 		logger.debug("Getting single electrons for atom: ", atom);
 		return super.getSingleElectron(atom);
 	}
 
-	public int getSingleElectronSum(Atom atom) {
+	public int getSingleElectronSum(IAtom atom) {
 		logger.debug("Getting single electron sum for atom: ", atom);
 		return super.getSingleElectronSum(atom);
 	}
 
-	public double getBondOrderSum(Atom atom) {
+	public double getBondOrderSum(IAtom atom) {
 		logger.debug("Getting bond order sum for atom: ", atom);
 		return super.getBondOrderSum(atom);
 	}
 
-	public double getMaximumBondOrder(Atom atom) {
+	public double getMaximumBondOrder(IAtom atom) {
 		logger.debug("Getting maximum bond order for atom: ", atom);
 		return super.getMaximumBondOrder(atom);
 	}
 
-	public double getMinimumBondOrder(Atom atom) {
+	public double getMinimumBondOrder(IAtom atom) {
 		logger.debug("Getting minimum bond order for atom: ", atom);
 		return super.getMinimumBondOrder(atom);
 	}
 
-	public AtomContainer getIntersection(AtomContainer container) {
+	public IAtomContainer getIntersection(IAtomContainer container) {
 		logger.debug("Getting intersection with: ", container);
 		return super.getIntersection(container);
 	}
 
-	public void addElectronContainers(AtomContainer atomContainer) {
+	public void addElectronContainers(IAtomContainer atomContainer) {
 		logger.debug("Adding electron containers from atom container: ", atomContainer);
 		super.addElectronContainers(atomContainer);
 	}
 
-	public void add(AtomContainer atomContainer) {
+	public void add(IAtomContainer atomContainer) {
 		logger.debug("Adding atom container: ", atomContainer);
 		super.add(atomContainer);
 	}
 
-	public void addAtom(Atom atom) {
+	public void addAtom(IAtom atom) {
 		logger.debug("Adding atom: ", atom);
 		super.addAtom(atom);
 	}
@@ -283,7 +283,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		
 	}
 
-	public void remove(AtomContainer atomContainer) {
+	public void remove(IAtomContainer atomContainer) {
 		logger.debug("Removing atom container: ", atomContainer);
 		super.remove(atomContainer);
 	}
@@ -298,7 +298,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		return super.removeElectronContainer(electronContainer);
 	}
 
-	public Bond removeBond(Atom atom1, Atom atom2) {
+	public Bond removeBond(IAtom atom1, IAtom atom2) {
 		logger.debug("Removing bond: atom1=" + atom1 + " atom2=" + atom2);
 		return super.removeBond(atom1, atom2);
 	}
@@ -308,12 +308,12 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		super.removeAtom(position);
 	}
 
-	public void removeAtomAndConnectedElectronContainers(Atom atom) {
+	public void removeAtomAndConnectedElectronContainers(IAtom atom) {
 		logger.debug("Removing atom and connected electron containers: ", atom);
 		super.removeAtomAndConnectedElectronContainers(atom);		
 	}
 
-	public void removeAtom(Atom atom) {
+	public void removeAtom(IAtom atom) {
 		logger.debug("Removing atom: ", atom);
 		super.removeAtom(atom);
 	}
@@ -353,7 +353,7 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		return super.contains(electronContainer);
 	}
 
-	public boolean contains(Atom atom) {
+	public boolean contains(IAtom atom) {
 		logger.debug("Contains atom: ", atom);
 		return super.contains(atom);
 	}
@@ -478,22 +478,22 @@ public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
 		super.stateChanged(event);
 	}
 
-	public Atom getNTerminus() {
+	public IAtom getNTerminus() {
 		logger.debug("Getting N-terminus: ", super.getNTerminus());
 		return super.getNTerminus();
 	}
 
-	public void addNTerminus(Atom atom) {
+	public void addNTerminus(IAtom atom) {
 		logger.debug("Adding N-terminus: ", atom);
 		super.addNTerminus(atom);
 	}
 
-	public Atom getCTerminus() {
+	public IAtom getCTerminus() {
 		logger.debug("Getting C-terminus: ", super.getCTerminus());
 		return super.getCTerminus();
 	}
 
-	public void addCTerminus(Atom atom) {
+	public void addCTerminus(IAtom atom) {
 		logger.debug("Adding C-terminus: ", atom);
 		super.addCTerminus(atom);
 	}

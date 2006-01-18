@@ -28,7 +28,7 @@ import java.util.Hashtable;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -50,7 +50,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		super();
 	}
 	
-	public DebugPseudoAtom(Atom atom) {
+	public DebugPseudoAtom(IAtom atom) {
 		super(atom);
 	}
 

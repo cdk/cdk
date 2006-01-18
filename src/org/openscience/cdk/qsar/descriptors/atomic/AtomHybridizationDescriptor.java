@@ -24,8 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -62,8 +62,8 @@ public class AtomHybridizationDescriptor implements IDescriptor {
 	private int targetPosition = 0;
 	AtomTypeManipulator atman = null;
 	HybridizationStateATMatcher atm = null;
-	org.openscience.cdk.interfaces.Atom atom = null;
-	AtomType matched = null;
+	org.openscience.cdk.interfaces.IAtom atom = null;
+	IAtomType matched = null;
 	
 	/**
 	 *  Constructor for the AtomHybridizationDescriptor object
@@ -122,7 +122,7 @@ public class AtomHybridizationDescriptor implements IDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 
-	public DescriptorValue calculate(AtomContainer container) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer container) throws CDKException {
 		atom = container.getAtomAt(targetPosition);
 		
 		atm = new HybridizationStateATMatcher();

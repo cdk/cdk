@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 
 /**
@@ -35,7 +35,7 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
     public QueryAtomContainer() {
     };
     
-    public void add(AtomContainer container) {
+    public void add(IAtomContainer container) {
         if (container instanceof QueryAtomContainer) {
             super.add(container);
         } else {
@@ -43,7 +43,7 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
         }
     }
     
-    public void addAtom(Atom atom) {
+    public void addAtom(IAtom atom) {
         if (atom instanceof QueryAtom) {
             super.addAtom(atom);
         } else {

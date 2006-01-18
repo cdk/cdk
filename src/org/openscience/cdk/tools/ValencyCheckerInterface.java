@@ -28,8 +28,8 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -41,9 +41,9 @@ import org.openscience.cdk.exception.CDKException;
  */
 public interface ValencyCheckerInterface {
 
-	public boolean isSaturated(AtomContainer ac) throws CDKException;
-	public boolean isSaturated(Atom atom, AtomContainer container) throws CDKException;
-	public int calculateNumberOfImplicitHydrogens(Atom atom, AtomContainer container) throws CDKException;
+	public boolean isSaturated(IAtomContainer ac) throws CDKException;
+	public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException;
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException;
 
 }
 

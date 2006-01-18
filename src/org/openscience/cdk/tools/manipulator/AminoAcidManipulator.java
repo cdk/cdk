@@ -29,7 +29,7 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.exception.CDKException;
 
@@ -58,7 +58,7 @@ public class AminoAcidManipulator {
 		// ok, look for the oxygen which is singly bonded
 		for (int i=0; i<bonds.length; i++) {
 			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				Atom[] atoms = bonds[i].getAtoms();
+				IAtom[] atoms = bonds[i].getAtoms();
 				for (int j=0; j<atoms.length; j++) {
 					if (atoms[j].getSymbol().equals("O")) {
 						// yes, we found a singly bonded oxygen!

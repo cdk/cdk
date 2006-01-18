@@ -106,8 +106,8 @@ public class CleanupAction extends JCPAction
                     Molecule molecule = mols[i];
                      Molecule cleanedMol = relayoutMolecule(mols[i]);
 					newsom.addMolecule(cleanedMol);
-                    org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
-					org.openscience.cdk.interfaces.Atom[] newAtoms = cleanedMol.getAtoms();
+                    org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
+					org.openscience.cdk.interfaces.IAtom[] newAtoms = cleanedMol.getAtoms();
                     for (int j=0; j<atoms.length; j++) {
                         Point2d oldCoord = atoms[j].getPoint2d();
                         Point2d newCoord = newAtoms[j].getPoint2d();

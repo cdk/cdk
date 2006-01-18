@@ -26,8 +26,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -98,21 +98,21 @@ public class ConnectivityOrderOneDescriptor implements IDescriptor {
      *@return                   Atomic connectivity index (order 1)
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
         ArrayList degrees = new ArrayList(2);
         double chi1 = 0;
         double val0 = 0;
         double val1 = 0;
         int atomDegree = 0;
         org.openscience.cdk.interfaces.Bond[] bonds = atomContainer.getBonds();
-        Atom[] atoms = null;
+        IAtom[] atoms = null;
         for (int b = 0; b < bonds.length; b++) {
             atoms = bonds[b].getAtoms();
             if ((!atoms[0].getSymbol().equals("H")) || (!atoms[1].getSymbol().equals("H"))) {
                 degrees.clear();
                 for (int a = 0; a < atoms.length; a++) {
                     atomDegree = 0;
-                    Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[a]);
+                    IAtom[] neighboors = atomContainer.getConnectedAtoms(atoms[a]);
                     for (int n = 0; n < neighboors.length; n++) {
                         if (!neighboors[n].getSymbol().equals("H")) {
                             atomDegree += 1;

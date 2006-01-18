@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -116,7 +116,7 @@ public class BondCountDescriptor implements IDescriptor {
      *@param  container  AtomContainer
      *@return            The number of bonds of a certain type.
      */
-    public DescriptorValue calculate(AtomContainer container) {
+    public DescriptorValue calculate(IAtomContainer container) {
         int bondCount = 0;
         org.openscience.cdk.interfaces.Bond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {

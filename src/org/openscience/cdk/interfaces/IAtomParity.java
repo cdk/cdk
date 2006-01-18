@@ -38,14 +38,14 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public interface AtomParity extends Cloneable {
+public interface IAtomParity extends Cloneable {
     
     /**
      * Returns the atom for which this parity is defined.
      *
      * @return The atom for which this parity is defined
      */
-    public Atom getAtom();
+    public IAtom getAtom();
     
     /**
      * Returns the four atoms that define the stereochemistry for
@@ -54,7 +54,7 @@ public interface AtomParity extends Cloneable {
      * @return The four atoms that define the stereochemistry for
      *         this parity
      */
-    public Atom[] getSurroundingAtoms();
+    public IAtom[] getSurroundingAtoms();
     
     /**
      * Returns the parity value.

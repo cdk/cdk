@@ -32,7 +32,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Undo/Redo Edit superclass for all edit classes for coordinate changing
@@ -62,7 +62,7 @@ public class ChangeCoordsEdit extends AbstractUndoableEdit {
         Set keys = atomCoordsMap.keySet();
         Iterator it = keys.iterator();
         while (it.hasNext()) {
-            Atom atom = (Atom) it.next();
+            IAtom atom = (IAtom) it.next();
             Point2d[] coords = (Point2d[]) atomCoordsMap.get(atom);
             atom.setPoint2d(coords[0]);
         }
@@ -80,7 +80,7 @@ public class ChangeCoordsEdit extends AbstractUndoableEdit {
         Set keys = atomCoordsMap.keySet();
         Iterator it = keys.iterator();
         while (it.hasNext()) {
-            Atom atom = (Atom) it.next();
+            IAtom atom = (IAtom) it.next();
             Point2d[] coords = (Point2d[]) atomCoordsMap.get(atom);
             atom.setPoint2d(coords[1]);
         }

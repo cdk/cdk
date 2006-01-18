@@ -28,7 +28,7 @@ package org.openscience.cdk.test.atomtype;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
@@ -63,15 +63,15 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
 	    
     }
     
-    public void testFindMatchingAtomType_AtomContainer_Atom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         SmilesParser sp = new SmilesParser();
 	Molecule mol = sp.parseSmiles("C#CCC=O");
 	HydrogenAdder hAdder = new HydrogenAdder();
 	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-	org.openscience.cdk.interfaces.Atom atom = mol.getAtomAt(0);
+	org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(0);
 	
 	HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
-	AtomType matched = atm.findMatchingAtomType(mol, atom);
+	IAtomType matched = atm.findMatchingAtomType(mol, atom);
 	
 	AtomTypeManipulator.configure(atom, matched);
 	

@@ -21,8 +21,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -126,8 +126,8 @@ public class WeightedPathDescriptor implements IDescriptor {
      * @return A DoubleArrayResult value representing the weighted path values
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
-        AtomContainer local = AtomContainerManipulator.removeHydrogens(container);
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+        IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
         int natom = local.getAtomCount();
         DoubleArrayResult retval = new DoubleArrayResult();
 
@@ -135,9 +135,9 @@ public class WeightedPathDescriptor implements IDescriptor {
 
         // unique paths
         for (int i = 0; i < natom - 1; i++) {
-            Atom a = local.getAtomAt(i);
+            IAtom a = local.getAtomAt(i);
             for (int j = i + 1; j < natom; j++) {
-                Atom b = local.getAtomAt(j);
+                IAtom b = local.getAtomAt(j);
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
         }
@@ -155,11 +155,11 @@ public class WeightedPathDescriptor implements IDescriptor {
         pathList.clear();
         int count = 0;
         for (int i = 0; i < natom; i++) {
-            Atom a = local.getAtomAt(i);
+            IAtom a = local.getAtomAt(i);
             if (a.getSymbol().equalsIgnoreCase("C")) continue;
             count++;
             for (int j = 0; j < natom; j++) {
-                Atom b = local.getAtomAt(j);
+                IAtom b = local.getAtomAt(j);
                 if (a.equals(b)) continue;
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
@@ -175,11 +175,11 @@ public class WeightedPathDescriptor implements IDescriptor {
         pathList.clear();
         count = 0;
         for (int i = 0; i < natom; i++) {
-            Atom a = local.getAtomAt(i);
+            IAtom a = local.getAtomAt(i);
             if (!a.getSymbol().equalsIgnoreCase("O")) continue;
             count++;
             for (int j = 0; j < natom; j++) {
-                Atom b = local.getAtomAt(j);
+                IAtom b = local.getAtomAt(j);
                 if (a.equals(b)) continue;
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
@@ -195,11 +195,11 @@ public class WeightedPathDescriptor implements IDescriptor {
         pathList.clear();
         count = 0;
         for (int i = 0; i < natom; i++) {
-            Atom a = local.getAtomAt(i);
+            IAtom a = local.getAtomAt(i);
             if (!a.getSymbol().equalsIgnoreCase("N")) continue;
             count++;
             for (int j = 0; j < natom; j++) {
-                Atom b = local.getAtomAt(j);
+                IAtom b = local.getAtomAt(j);
                 if (a.equals(b)) continue;
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
@@ -215,14 +215,14 @@ public class WeightedPathDescriptor implements IDescriptor {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
     }
 
-    double[] getPathWeights(List pathList, AtomContainer atomContainer) {
+    double[] getPathWeights(List pathList, IAtomContainer atomContainer) {
         double[] pathWts = new double[pathList.size()];
         for (int i = 0; i < pathList.size(); i++) {
             List p = (List) pathList.get(i);
             pathWts[i] = 1.0;
             for (int j = 0; j < p.size() - 1; j++) {
-                Atom a = (Atom) p.get(j);
-                Atom b = (Atom) p.get(j + 1);
+                IAtom a = (IAtom) p.get(j);
+                IAtom b = (IAtom) p.get(j + 1);
                 int n1 = atomContainer.getConnectedAtomsVector(a).size();
                 int n2 = atomContainer.getConnectedAtomsVector(b).size();
                 pathWts[i] /= Math.sqrt(n1 * n2);

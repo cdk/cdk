@@ -59,7 +59,7 @@ public class EquivalentClassesDeterministicGenerator
 	private void initGraph()
 	{
 		AtomContainer ac = null;
-		org.openscience.cdk.interfaces.Atom atom = null;
+		org.openscience.cdk.interfaces.IAtom atom = null;
 		Graph graph = (Graph)graphs.elementAt(0);
 		for (int f = 0; f < baseAtomContainer.getAtomCount(); f++)
 		{

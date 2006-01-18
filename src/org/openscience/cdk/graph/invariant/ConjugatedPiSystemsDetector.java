@@ -72,17 +72,17 @@ public class ConjugatedPiSystemsDetector {
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
-    public static SetOfAtomContainers detect(org.openscience.cdk.interfaces.AtomContainer ac) {
+    public static SetOfAtomContainers detect(org.openscience.cdk.interfaces.IAtomContainer ac) {
 
         SetOfAtomContainers piSystemSet = new SetOfAtomContainers();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.Atom atom = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom atom = ac.getAtomAt(i);
             atom.setFlag(CDKConstants.VISITED, false);
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.Atom firstAtom = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom firstAtom = ac.getAtomAt(i);
             // if this atom was already visited in a previous DFS, continue
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
@@ -140,7 +140,7 @@ public class ConjugatedPiSystemsDetector {
      *@param  currentAtom  The Atom to check
      *@return              -1 if isolated, 0 if conjugated, 1 if cumulative db
      */
-    private static int checkAtom(org.openscience.cdk.interfaces.AtomContainer ac, org.openscience.cdk.interfaces.Atom currentAtom) {
+    private static int checkAtom(org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom currentAtom) {
         int check = -1;
         Vector atoms = ac.getConnectedAtomsVector(currentAtom);
         Vector bonds = ac.getConnectedBondsVector(currentAtom);

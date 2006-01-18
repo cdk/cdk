@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -163,7 +163,7 @@ public class PeriodicTablePositionDescriptor implements IDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 
-	public DescriptorValue calculate(AtomContainer container) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer container) throws CDKException {
 		int period = 0;
 		String symbol = container.getAtomAt(targetPosition).getSymbol();
 		period = ((Integer)periodicTable.get(symbol)).intValue();

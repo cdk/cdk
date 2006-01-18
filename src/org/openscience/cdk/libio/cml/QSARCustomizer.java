@@ -34,8 +34,8 @@ import java.util.Hashtable;
 import nu.xom.Attribute;
 import nu.xom.Element;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -69,11 +69,11 @@ public class QSARCustomizer implements Customizer {
     private final static String QSARMETA_NAMESPACE = "qsarmeta";
     private final static String QSARMETA_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata";
 
-    public void customize(Atom atom, Object nodeToAdd) throws Exception {
+    public void customize(IAtom atom, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
     
-    public void customize(AtomContainer molecule, Object nodeToAdd) throws Exception {
+    public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
     	if (!(nodeToAdd instanceof Element))
     		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
     	

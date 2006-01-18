@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.iupac.generator;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  *  This interface defines the API for the implementation of
@@ -53,7 +53,7 @@ public class NumberingRule implements Rule {
         return "Dummy Rule";
     };
 
-    public IUPACNamePart apply(AtomContainer ac) {
+    public IUPACNamePart apply(IAtomContainer ac) {
         return null;
     };
 

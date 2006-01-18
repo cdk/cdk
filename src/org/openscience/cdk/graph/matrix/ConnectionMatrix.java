@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.graph.matrix;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ElectronContainer;
 
@@ -49,7 +49,7 @@ public class ConnectionMatrix implements GraphMatrix {
      * @param  container The AtomContainer for which the matrix is calculated
 	 * @return           A connection matrix representating this AtomContainer
 	 */
-	public static double[][] getMatrix(AtomContainer container) {
+	public static double[][] getMatrix(IAtomContainer container) {
 		ElectronContainer electronContainer = null;
 		int indexAtom1;
 		int indexAtom2;

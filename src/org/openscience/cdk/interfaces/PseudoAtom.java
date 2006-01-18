@@ -36,9 +36,9 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.module interfaces
  *
- * @see  Atom
+ * @see  IAtom
  */
-public interface PseudoAtom extends Atom {
+public interface PseudoAtom extends IAtom {
 
     /**
      * Returns the label of this PseudoAtom.

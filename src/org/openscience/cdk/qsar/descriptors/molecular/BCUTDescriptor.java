@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -180,8 +180,8 @@ public class BCUTDescriptor implements IDescriptor {
 
     static private class BurdenMatrix {
         
-        static double[][] evalMatrix(AtomContainer ac, double[] vsd) {
-            AtomContainer local = AtomContainerManipulator.removeHydrogens(ac);
+        static double[][] evalMatrix(IAtomContainer ac, double[] vsd) {
+            IAtomContainer local = AtomContainerManipulator.removeHydrogens(ac);
 
             int natom = local.getAtomCount();
             double[][] m = new double[natom][natom];
@@ -229,7 +229,7 @@ public class BCUTDescriptor implements IDescriptor {
      *@throws CDKException if the wrong number of eigenvalues are requested (negative or more than the number
      * of heavy atoms)
      */
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         int j = 0;
         Molecule ac = new Molecule(container);
 

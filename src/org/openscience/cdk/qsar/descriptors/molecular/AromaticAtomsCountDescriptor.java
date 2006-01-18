@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -128,25 +128,25 @@ public class AromaticAtomsCountDescriptor implements IDescriptor {
 
 
     /**
-     * Calculate the count of aromatic atoms in the supplied {@link AtomContainer}.
+     * Calculate the count of aromatic atoms in the supplied {@link IAtomContainer}.
      * 
      *  The method require one parameter:
      *  if checkAromaticity is true, the method check the aromaticity,
      *  if false, means that the aromaticity has already been checked
      *
      *
-     *@param  ac  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  ac  The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   the number of aromatic atoms of this AtomContainer
      *@throws CDKException if there is a problem in atomaticity detection
      *@see #setParameters
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         int aromaticAtomsCount = 0;
         if (checkAromaticity) {
             RingSet rs = (new AllRingsFinder()).findAllRings(ac);
             HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
         }
-        org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             if (ac.getAtomAt(i).getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticAtomsCount += 1;

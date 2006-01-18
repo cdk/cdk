@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -95,12 +95,12 @@ public class ConnectivityOrderZeroDescriptor implements IDescriptor {
      *@return                   Atomic connectivity index (order 0)
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
         double chi0 = 0;
-        org.openscience.cdk.interfaces.Atom[] atoms = atomContainer.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             int atomDegree = 0;
-            org.openscience.cdk.interfaces.Atom[] neighboors = atomContainer.getConnectedAtoms(atoms[i]);
+            org.openscience.cdk.interfaces.IAtom[] neighboors = atomContainer.getConnectedAtoms(atoms[i]);
             for (int a = 0; a < neighboors.length; a++) {
                 if (!neighboors[a].getSymbol().equals("H")) {
                     atomDegree += 1;

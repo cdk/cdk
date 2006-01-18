@@ -21,7 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -132,7 +132,7 @@ public class MomentOfInertiaDescriptor implements IDescriptor {
      *@throws CDKException if the supplied AtomContainer does not contain 3D coordinates
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         IsotopeFactory factory = null;
         try {
             factory = IsotopeFactory.getInstance(container.getBuilder());
@@ -156,7 +156,7 @@ public class MomentOfInertiaDescriptor implements IDescriptor {
         double ysq;
         double zsq;
         for (int i = 0; i < container.getAtomCount(); i++) {
-            org.openscience.cdk.interfaces.Atom currentAtom = container.getAtomAt(i);
+            org.openscience.cdk.interfaces.IAtom currentAtom = container.getAtomAt(i);
             if (currentAtom.getPoint3d() == null) {
                 throw new CDKException("Atom "+i+" did not have any 3D coordinates. These are required");
             }

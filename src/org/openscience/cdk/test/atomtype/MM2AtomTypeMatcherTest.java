@@ -34,7 +34,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.atomtype.MM2AtomTypeMatcher;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.tools.manipulator.*;
@@ -69,7 +69,7 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
 	    assertNotNull(matcher);
     }
     
-    public void testFindMatchingAtomType_AtomContainer_Atom() {
+    public void testFindMatchingAtomType_IAtomContainer_IAtom() {
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
     	logger.debug("**** START MM2 ATOMTYPE TEST ******");
@@ -100,7 +100,7 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
 		}
         for (int i=0;i<mol.getAtomCount();i++){
         	logger.debug("atomNr:"+i);
-        	AtomType matched = null;
+        	IAtomType matched = null;
         	try {
         		matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
         		logger.debug("Found AtomType: ", matched);

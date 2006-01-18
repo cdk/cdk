@@ -7,7 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
@@ -44,13 +44,13 @@ public class KabschAlignmentTest extends CDKTestCase {
     }
     
     public void testAlign() throws ClassNotFoundException, CDKException, java.lang.Exception{
-        AtomContainer ac;
+        IAtomContainer ac;
         String filename = "data/hin/gravindex.hin";
         File input = new File(filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
-        AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
         ac = c[0];
 
         KabschAlignment ka = new KabschAlignment(ac,ac);

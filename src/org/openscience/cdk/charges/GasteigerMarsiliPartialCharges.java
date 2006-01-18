@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.charges;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 
 /**
@@ -96,7 +96,7 @@ public class GasteigerMarsiliPartialCharges {
 	 *@return                AtomContainer with partial charges
 	 *@exception  Exception  Possible Exceptions
 	 */
-	public AtomContainer assignGasteigerMarsiliPartialCharges(AtomContainer ac, boolean setCharge) throws Exception {
+	public IAtomContainer assignGasteigerMarsiliPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 		if (setCharge) {
 			atomTypeCharges.setCharges(ac);
 		}
@@ -106,7 +106,7 @@ public class GasteigerMarsiliPartialCharges {
 		double q;
 		double deoc;
 		Bond[] bonds = null;
-		Atom[] atoms = null;
+		IAtom[] atoms = null;
 		int atom1 = 0;
 		int atom2 = 0;
 		for (int i = 0; i < MX_ITERATIONS; i++) {
@@ -165,7 +165,7 @@ public class GasteigerMarsiliPartialCharges {
 	 *@param  ac  AtomContainer
 	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
-	public double[] assignGasteigerMarsiliFactors(AtomContainer ac) {
+	public double[] assignGasteigerMarsiliFactors(IAtomContainer ac) {
 		//a,b,c,denom,chi,q
 		double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE+1))];
 		String AtomSymbol = "";

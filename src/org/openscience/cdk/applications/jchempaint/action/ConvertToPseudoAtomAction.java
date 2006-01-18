@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -54,7 +54,7 @@ public class ConvertToPseudoAtomAction extends JCPAction {
         if (object != null) {
             if (object instanceof Atom) {
                 Atom atom = (Atom)object;
-                AtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
+                IAtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
                 PseudoAtom pseudo = new PseudoAtom(atom);
                 pseudo.setLabel(type);
                 AtomContainerManipulator.replaceAtomByAtom(relevantContainer, 

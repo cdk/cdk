@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -338,7 +338,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                     logger.info("Adding atom: " + atype + ", " + frac[0]
                                                         + ", " + frac[1]
                                                         + ", " + frac[2]);
-                    Atom atom = crystal.getBuilder().newAtom(atype);
+                    IAtom atom = crystal.getBuilder().newAtom(atype);
                     atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                     crystal.addAtom(atom);
                     logger.debug("Atom added: ", atom);

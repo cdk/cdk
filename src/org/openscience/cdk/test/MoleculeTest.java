@@ -29,8 +29,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
@@ -72,12 +72,12 @@ public class MoleculeTest extends CDKTestCase {
         assertEquals(0, m.getElectronContainers().length);
     }
 
-    public void testMolecule_AtomContainer() {
-        AtomContainer acetone = new org.openscience.cdk.AtomContainer();
-        Atom c1 = builder.newAtom("C");
-        Atom c2 = builder.newAtom("C");
-        Atom o = builder.newAtom("O");
-        Atom c3 = builder.newAtom("C");
+    public void testMolecule_IAtomContainer() {
+        IAtomContainer acetone = new org.openscience.cdk.AtomContainer();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c3 = builder.newAtom("C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);

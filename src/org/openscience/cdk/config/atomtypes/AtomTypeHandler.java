@@ -26,7 +26,7 @@ package org.openscience.cdk.config.atomtypes;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
@@ -61,7 +61,7 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
     private String currentChars;
     private Vector atomTypes;
     private int scalarType;
-    private AtomType atomType;
+    private IAtomType atomType;
 
     private static ChemObjectBuilder builder;
 

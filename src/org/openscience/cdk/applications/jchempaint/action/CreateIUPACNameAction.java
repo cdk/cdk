@@ -32,7 +32,7 @@ import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.iupac.generator.IUPACName;
@@ -55,7 +55,7 @@ public class CreateIUPACNameAction extends JCPAction {
         Locale locale = new Locale("en", "US");
         IUPACNameGenerator generator = new IUPACNameGenerator(locale);
         ChemModel model = (ChemModel)jcpPanel.getJChemPaintModel().getChemModel();
-        AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
+        IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
         Molecule molecule = new Molecule(container);
         generator.generateName(molecule);
         IUPACName name = (IUPACName)generator.getName();

@@ -33,7 +33,7 @@ import java.io.StringReader;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -315,7 +315,7 @@ public class GamessReader extends DefaultChemObjectReader {
 					throw new IOException("Error reading coordinates");
 				}
 			}
-			Atom atom = molecule.getBuilder().newAtom(atomicSymbol, new Point3d(coordinates[0],coordinates[1],coordinates[2]));
+			IAtom atom = molecule.getBuilder().newAtom(atomicSymbol, new Point3d(coordinates[0],coordinates[1],coordinates[2]));
 			molecule.addAtom(atom);
 		}
 		return molecule;

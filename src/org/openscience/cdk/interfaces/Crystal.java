@@ -37,19 +37,19 @@ import javax.vecmath.Vector3d;
  *
  * @cdk.keyword crystal
  */
-public interface Crystal extends AtomContainer {
+public interface Crystal extends IAtomContainer {
 	
     /**
      * Adds the atoms in the AtomContainer as cell content. Symmetry related 
      * atoms should not be added unless P1 space group is used.
      */
-    public void add(AtomContainer container);
+    public void add(IAtomContainer container);
 
     /**
      * Adds the atom to the crystal. Symmetry related atoms should
      * not be added unless P1 space group is used.
      */
-    public void addAtom(Atom atom);
+    public void addAtom(IAtom atom);
 
     /**
      * Sets the A unit cell axes in carthesian coordinates in a 

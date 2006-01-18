@@ -34,8 +34,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org._3pq.jgrapht.UndirectedGraph;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -64,13 +64,13 @@ import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 
 public class SSSRFinder {
 
-	private org.openscience.cdk.interfaces.AtomContainer atomContainer;
+	private org.openscience.cdk.interfaces.IAtomContainer atomContainer;
 	private CycleBasis cycleBasis;
 	
 	/**
 	 * Constructs a SSSRFinder.
 	 *
-	 * @deprecated Replaced by {@link #SSSRFinder(AtomContainer)}
+	 * @deprecated Replaced by {@link #SSSRFinder(IAtomContainer)}
 	 */
 	public SSSRFinder() {
 	}
@@ -80,7 +80,7 @@ public class SSSRFinder {
 	 *
 	 * @param   ac the molecule to be searched for rings 
 	 */
-	public SSSRFinder(org.openscience.cdk.interfaces.AtomContainer ac) {
+	public SSSRFinder(org.openscience.cdk.interfaces.IAtomContainer ac) {
 		this.atomContainer = ac;
 	}
 	
@@ -186,7 +186,7 @@ public class SSSRFinder {
 	 * @param   ac the molecule to be searched for rings 
 	 * @return      a RingSet containing the SSSR
 	 */
-	static public RingSet findSSSR(AtomContainer ac)
+	static public RingSet findSSSR(IAtomContainer ac)
 	{
 		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(ac);
 		
@@ -204,7 +204,7 @@ public class SSSRFinder {
 		return cycleBasis;
 	}
 	
-	private static RingSet toRingSet(org.openscience.cdk.interfaces.AtomContainer ac, Collection cycles) {
+	private static RingSet toRingSet(org.openscience.cdk.interfaces.IAtomContainer ac, Collection cycles) {
 		
 		RingSet ringSet = ac.getBuilder().newRingSet();
 
@@ -217,10 +217,10 @@ public class SSSRFinder {
 			
 			List vertices = cycle.vertexList();
 			
-			Atom[] atoms = new Atom[vertices.size()];
-			atoms[0] = (Atom) vertices.get(0);
+			IAtom[] atoms = new IAtom[vertices.size()];
+			atoms[0] = (IAtom) vertices.get(0);
 			for (int i = 1; i < vertices.size(); i++) {
-				atoms[i] = (Atom) vertices.get(i);
+				atoms[i] = (IAtom) vertices.get(i);
 				ring.addElectronContainer(ac.getBond(atoms[i-1], atoms[i]));
 			}
 			ring.addElectronContainer(ac.getBond(atoms[vertices.size() - 1], atoms[0]));

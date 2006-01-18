@@ -30,7 +30,7 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.PseudoAtom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
@@ -145,8 +145,8 @@ public class PseudoAtomTest extends CDKTestCase {
         assertEquals(0, atom.getStereoParity());
     }
 
-    public void testPseudoAtom_Atom() {
-        Atom atom = builder.newAtom("C");
+    public void testPseudoAtom_IAtom() {
+        IAtom atom = builder.newAtom("C");
         Point3d fract = new Point3d(0.5, 0.5, 0.5);
         Point3d threeD = new Point3d(0.5, 0.5, 0.5);
         Point2d twoD = new Point2d(0.5, 0.5);
@@ -164,7 +164,7 @@ public class PseudoAtomTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Atom atom = builder.newPseudoAtom("R");
+        IAtom atom = builder.newPseudoAtom("R");
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');

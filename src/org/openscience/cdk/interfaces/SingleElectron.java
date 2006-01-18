@@ -48,7 +48,7 @@ public interface SingleElectron extends ElectronContainer {
      * @return the associated Atom.
      * @see    #setAtom
 	 */
-	public Atom getAtom();
+	public IAtom getAtom();
 
 	/**
 	 * Sets the associated Atom.
@@ -56,7 +56,7 @@ public interface SingleElectron extends ElectronContainer {
 	 * @param atom the Atom this SingleElectron will be associated with
      * @see    #getAtom
 	 */
-	public void setAtom(Atom atom);
+	public void setAtom(IAtom atom);
 
     /**
      * Returns true if the given atom participates in this SingleElectron.
@@ -64,7 +64,7 @@ public interface SingleElectron extends ElectronContainer {
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this SingleElectron is associated with the atom
      */
-    public boolean contains(Atom atom);
+    public boolean contains(IAtom atom);
 
 }
 

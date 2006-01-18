@@ -39,14 +39,14 @@ public interface ChemObjectBuilder {
     /**
      * Constructs an completely unset Atom.
      */
-	public Atom newAtom();
+	public IAtom newAtom();
 	
     /**
      * Constructs an Atom from a String containing an element symbol.
      *
      * @param   elementSymbol  The String describing the element for the Atom
      */
-    public Atom newAtom(String elementSymbol);
+    public IAtom newAtom(String elementSymbol);
     
     /**
      * Constructs an Atom from an Element and a Point2d.
@@ -54,7 +54,7 @@ public interface ChemObjectBuilder {
      * @param   elementSymbol   The Element
      * @param   point2d         The Point
      */
-    public Atom newAtom(String elementSymbol, javax.vecmath.Point2d point2d);
+    public IAtom newAtom(String elementSymbol, javax.vecmath.Point2d point2d);
 
     /**
      * Constructs an Atom from an Element and a Point3d.
@@ -62,12 +62,12 @@ public interface ChemObjectBuilder {
      * @param   elementSymbol   The symbol of the atom
      * @param   point3d         The 3D coordinates of the atom
      */
-    public Atom newAtom(String elementSymbol, javax.vecmath.Point3d point3d);
+    public IAtom newAtom(String elementSymbol, javax.vecmath.Point3d point3d);
 
 	/**
 	 *  Constructs an empty AtomContainer.
 	 */
-	public AtomContainer newAtomContainer();
+	public IAtomContainer newAtomContainer();
     
 	/**
 	 * Constructs an empty AtomContainer that will contain a certain number of
@@ -78,7 +78,7 @@ public interface ChemObjectBuilder {
 	 * @param  electronContainerCount  Number of electronContainers to be in this
 	 *                                 container
 	 */
-	public AtomContainer newAtomContainer(int atomCount, int electronContainerCount);
+	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount);
     
 	/**
 	 * Constructs an AtomContainer with a copy of the atoms and electronContainers
@@ -87,7 +87,7 @@ public interface ChemObjectBuilder {
 	 *
 	 * @param  container  An AtomContainer to copy the atoms and electronContainers from
 	 */
-	public AtomContainer newAtomContainer(AtomContainer container);
+	public IAtomContainer newAtomContainer(IAtomContainer container);
 
     /**
      * Constructs an AtomParity.
@@ -99,8 +99,8 @@ public interface ChemObjectBuilder {
      * @param fourth      Fourth Atom of four that define the stereochemistry
      * @param parity      +1 or -1, defining the parity
      */
-    public AtomParity newAtomParity(Atom centralAtom, 
-        Atom first, Atom second, Atom third, Atom fourth,
+    public IAtomParity newAtomParity(IAtom centralAtom, 
+        IAtom first, IAtom second, IAtom third, IAtom fourth,
         int parity);
 
     /**
@@ -108,7 +108,7 @@ public interface ChemObjectBuilder {
      *
      * @param elementSymbol  Symbol of the atom
 	 */
-	public AtomType newAtomType(String elementSymbol);
+	public IAtomType newAtomType(String elementSymbol);
 
 	/**
 	 * Constructor for the AtomType object.
@@ -116,7 +116,7 @@ public interface ChemObjectBuilder {
 	 * @param  identifier     An id for this atom type, like C3 for sp3 carbon
 	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
 	 */
-	public AtomType newAtomType(String identifier, String elementSymbol);
+	public IAtomType newAtomType(String identifier, String elementSymbol);
 	
 	/**
 	 * Contructs a new Polymer to store the Strands.
@@ -134,7 +134,7 @@ public interface ChemObjectBuilder {
 	 * @param  atom1  the first Atom in the bond
 	 * @param  atom2  the second Atom in the bond
 	 */
-	public Bond newBond(Atom atom1, Atom atom2);
+	public Bond newBond(IAtom atom1, IAtom atom2);
 	
 	/**
 	 * Constructs a bond with a given order.
@@ -143,7 +143,7 @@ public interface ChemObjectBuilder {
 	 * @param  atom2  the second Atom in the bond
 	 * @param  order  the bond order
 	 */
-	public Bond newBond(Atom atom1, Atom atom2, double order);
+	public Bond newBond(IAtom atom1, IAtom atom2, double order);
 	
 	/**
 	 * Constructs a bond with a given order and stereo orientation from an array
@@ -154,7 +154,7 @@ public interface ChemObjectBuilder {
 	 * @param  order   the bond order
 	 * @param  stereo  a descriptor the stereochemical orientation of this bond
 	 */
-	public Bond newBond(Atom atom1, Atom atom2, double order, int stereo);
+	public Bond newBond(IAtom atom1, IAtom atom2, double order, int stereo);
 
 	/**
 	 * Constructs an empty ChemFile.
@@ -187,7 +187,7 @@ public interface ChemObjectBuilder {
      *
      * @param container  the AtomContainer providing the atoms and bonds
      */
-    public Crystal newCrystal(AtomContainer container);
+    public Crystal newCrystal(IAtomContainer container);
 
     /**
      * Constructs an empty ElectronContainer.
@@ -264,7 +264,7 @@ public interface ChemObjectBuilder {
      *
      * @param atom  Atom to which this lone pair is connected
      */
-    public LonePair newLonePair(Atom atom);
+    public LonePair newLonePair(IAtom atom);
 	
 	/**
 	 * Creates an Molecule without Atoms and Bonds.
@@ -286,7 +286,7 @@ public interface ChemObjectBuilder {
 	 *
 	 * @param   container  An Molecule to copy the atoms and bonds from
 	 */
-	public Molecule newMolecule(AtomContainer container);
+	public Molecule newMolecule(IAtomContainer container);
 	
 	/**
 	 * Contructs a new Monomer.
@@ -311,7 +311,7 @@ public interface ChemObjectBuilder {
 	/**
 	 * Constructs a ring from an AtomContainer.
 	 */
-	public Ring newRing(AtomContainer container);
+	public Ring newRing(IAtomContainer container);
 	
 	/**
 	 * Constructs a ring that will have a certain number of atoms of the given elements.
@@ -359,7 +359,7 @@ public interface ChemObjectBuilder {
      *
      * @param atom The atom to which the single electron belongs.
      */
-    public SingleElectron newSingleElectron(Atom atom);   
+    public SingleElectron newSingleElectron(IAtom atom);   
 
 	/**
 	 * Contructs a new Strand.
@@ -383,7 +383,7 @@ public interface ChemObjectBuilder {
      *
      * @param   atom  Atom from which the PseudoAtom is constructed
      */
-    public PseudoAtom newPseudoAtom(Atom atom);
+    public PseudoAtom newPseudoAtom(IAtom atom);
 
     /**
      * Constructs an PseudoAtom from a label and a Point3d.

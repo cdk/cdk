@@ -73,7 +73,7 @@ public class FingerPrinter {
                     ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
                     if (reader.accepts(Molecule.class)) {
                         ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
-                        org.openscience.cdk.interfaces.AtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
+                        org.openscience.cdk.interfaces.IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);
                         if (containers.length > 0) {
                             for (int j = 0; j < containers.length; j++) {
                                 String print = fingerprinter.getFingerprint(containers[j]).toString();

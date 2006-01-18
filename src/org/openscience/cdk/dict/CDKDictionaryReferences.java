@@ -73,7 +73,7 @@ public class CDKDictionaryReferences {
         }
     }
     
-    private static void makeReferencesExplicitForAtom(org.openscience.cdk.interfaces.Atom atom) {
+    private static void makeReferencesExplicitForAtom(org.openscience.cdk.interfaces.IAtom atom) {
         int selfCounter = 0;
         atom.setProperty(prefix + ":self:" + selfCounter++, "chemical:atom");
         

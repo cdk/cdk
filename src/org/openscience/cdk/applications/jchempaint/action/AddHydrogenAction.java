@@ -34,7 +34,7 @@ import java.util.HashMap;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -59,7 +59,7 @@ public class AddHydrogenAction extends JCPAction
 {
 
 	private HydrogenAdder hydrogenAdder = null;
-    private AtomContainer changedAtomsAndBonds = null;
+    private IAtomContainer changedAtomsAndBonds = null;
     private HashMap hydrogenAtomMap = null;
 
 
@@ -179,7 +179,7 @@ public class AddHydrogenAction extends JCPAction
 					} else if (type.equals("allimplicit"))
 					{
 						// remove explicit hydrogen if necessary
-						org.openscience.cdk.interfaces.Atom[] atoms = molecule.getAtoms();
+						org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
 						for (int j = 0; j < atoms.length; j++)
 						{
 							logger.debug("Checking atom: ", j);
@@ -213,7 +213,7 @@ public class AddHydrogenAction extends JCPAction
 	 *@param  container  The feature to be added to the HydrogenToOneAtom attribute
 	 *@param  atom       The feature to be added to the HydrogenToOneAtom attribute
 	 */
-	private void addHydrogenToOneAtom(AtomContainer container, Atom atom)
+	private void addHydrogenToOneAtom(IAtomContainer container, Atom atom)
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();

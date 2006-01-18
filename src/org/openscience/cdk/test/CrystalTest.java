@@ -29,8 +29,8 @@ import javax.vecmath.Vector3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Crystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -64,12 +64,12 @@ public class CrystalTest extends CDKTestCase {
         assertEquals(0, crystal.getBondCount());
     }
     
-    public void testCrystal_AtomContainer() {
-        AtomContainer acetone = builder.newAtomContainer();
-        Atom c1 = builder.newAtom("C");
-        Atom c2 = builder.newAtom("C");
-        Atom o = builder.newAtom("O");
-        Atom c3 = builder.newAtom("C");
+    public void testCrystal_IAtomContainer() {
+        IAtomContainer acetone = builder.newAtomContainer();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c3 = builder.newAtom("C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
@@ -87,12 +87,12 @@ public class CrystalTest extends CDKTestCase {
         assertEquals(3, crystal.getBondCount());
     }
     
-    public void testAdd_AtomContainer() {
-        AtomContainer acetone = builder.newAtomContainer();
-        Atom c1 = builder.newAtom("C");
-        Atom c2 = builder.newAtom("C");
-        Atom o = builder.newAtom("O");
-        Atom c3 = builder.newAtom("C");
+    public void testAdd_IAtomContainer() {
+        IAtomContainer acetone = builder.newAtomContainer();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c3 = builder.newAtom("C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
@@ -110,8 +110,8 @@ public class CrystalTest extends CDKTestCase {
         assertEquals(3, crystal.getBondCount());
     }
     
-    public void testAddAtom_Atom() {
-        Atom c1 = builder.newAtom("C");
+    public void testAddAtom_IAtom() {
+        IAtom c1 = builder.newAtom("C");
         Crystal crystal = builder.newCrystal();
         crystal.addAtom(c1);
         assertEquals(1, crystal.getAtomCount());

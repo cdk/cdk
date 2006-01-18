@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Reaction;
@@ -74,7 +74,7 @@ public class EditAction extends JCPAction {
 		Renderer2DModel renderModel = jcpModel.getRendererModel();
 		org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
 		if (type.equals("cut")) {
-			org.openscience.cdk.interfaces.Atom atomInRange = null;
+			org.openscience.cdk.interfaces.IAtom atomInRange = null;
 			IChemObject object = getSource(event);
 			logger.debug("Source of call: ", object);
 			if (object instanceof Atom) {
@@ -100,7 +100,7 @@ public class EditAction extends JCPAction {
 				JOptionPane.showMessageDialog(jcpPanel, "No selection made. Please select some atoms first!", "Error warning", JOptionPane.WARNING_MESSAGE);
 			}
 			else {
-				org.openscience.cdk.interfaces.Atom[] selected = renderModel.getSelectedPart().getAtoms();
+				org.openscience.cdk.interfaces.IAtom[] selected = renderModel.getSelectedPart().getAtoms();
 				logger.debug("Found # atoms to delete: ", selected.length);
 				for (int i = 0; i < selected.length; i++) {
 					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, selected[i]);
@@ -126,13 +126,13 @@ public class EditAction extends JCPAction {
 			// FIXME: implement for others than Reaction, Atom, Bond
 			IChemObject object = getSource(event);
 			if (object instanceof Atom) {
-				AtomContainer container = new org.openscience.cdk.AtomContainer();
+				IAtomContainer container = new org.openscience.cdk.AtomContainer();
 				container.addAtom((Atom) object);
 				renderModel.setSelectedPart(container);
 				jcpModel.fireChange();
 			}
 			else if (object instanceof org.openscience.cdk.interfaces.Bond) {
-				AtomContainer container = new org.openscience.cdk.AtomContainer();
+				IAtomContainer container = new org.openscience.cdk.AtomContainer();
 				container.addBond((Bond) object);
 				renderModel.setSelectedPart(container);
 				jcpModel.fireChange();

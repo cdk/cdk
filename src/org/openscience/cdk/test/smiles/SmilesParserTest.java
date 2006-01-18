@@ -867,7 +867,7 @@ public class SmilesParserTest extends CDKTestCase {
 			}
 			assertEquals(9.0, totalBondOrder, 0.001);
 			// I can also check wether all carbons have exact two neighbors
-			org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
+			org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
 			for (int i = 0; i < atoms.length; i++)
 			{
 				assertEquals(2, mol.getConnectedAtoms(atoms[i]).length);
@@ -907,7 +907,7 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(8.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded
-			org.openscience.cdk.interfaces.Atom nitrogen = mol.getAtomAt(1);
+			org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtomAt(1);
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;
@@ -936,7 +936,7 @@ public class SmilesParserTest extends CDKTestCase {
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(5, mol.getAtomCount());
 			// each atom should have 1 implicit hydrogen, and two neighbors
-			org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
+			org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
 			for (int i = 0; i < atoms.length; i++)
 			{
 				assertEquals(1, atoms[i].getHydrogenCount());
@@ -1255,7 +1255,7 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(9.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded
-			org.openscience.cdk.interfaces.Atom nitrogen = mol.getAtomAt(3);
+			org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtomAt(3);
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;

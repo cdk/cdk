@@ -74,7 +74,7 @@ import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
 import org.openscience.cdk.applications.plugin.CDKEditBus;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
@@ -621,7 +621,7 @@ public abstract class JChemPaintPanel
   }
 
 	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.ChemModel chemModel, Dimension dim) {
-		AtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
+		IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
 		scaleAndCenterMolecule(ac,dim);
 	}
 	
@@ -630,11 +630,11 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
-	public void scaleAndCenterMolecule(AtomContainer ac, Dimension dim){
+	public void scaleAndCenterMolecule(IAtomContainer ac, Dimension dim){
     	((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
-	    org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
+	    org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
 	    GeometryTools.scaleMolecule(ac, scaleFactor);
 	    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();

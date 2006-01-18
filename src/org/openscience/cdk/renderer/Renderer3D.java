@@ -99,10 +99,10 @@ public class Renderer3D extends JPanel implements Runnable {
 
     public void paintAtoms(AtomContainer atomCon, Graphics g) {
         // loop over all atoms in the model
-    	org.openscience.cdk.interfaces.Atom[] atoms = atomCon.getAtoms();
+    	org.openscience.cdk.interfaces.IAtom[] atoms = atomCon.getAtoms();
         for (int i=0; i<atoms.length; i++) {
             logger.debug("Paint atom " + i);
-            org.openscience.cdk.interfaces.Atom atom = atoms[i];
+            org.openscience.cdk.interfaces.IAtom atom = atoms[i];
             logger.debug(atom.toString());
             // the size of the circle
             // FIXME: this should be determined by Renderer3DModel !

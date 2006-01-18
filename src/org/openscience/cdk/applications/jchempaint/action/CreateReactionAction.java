@@ -33,8 +33,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.Reaction;
@@ -68,10 +68,10 @@ public class CreateReactionAction extends JCPAction
 		{
 			reactionSet = model.getBuilder().newSetOfReactions();
 		}
-		AtomContainer container = null;
-		if (object instanceof Atom)
+		IAtomContainer container = null;
+		if (object instanceof IAtom)
 		{
-			container = ChemModelManipulator.getRelevantAtomContainer(model, (Atom) object);
+			container = ChemModelManipulator.getRelevantAtomContainer(model, (IAtom) object);
 		} else
 		{
 			logger.error("Cannot add to reaction object of type: " + object.getClass().getName());
@@ -81,9 +81,9 @@ public class CreateReactionAction extends JCPAction
 			logger.error("Cannot find container to add object to!");
 		} else
 		{
-			AtomContainer newContainer = (AtomContainer) container.clone();
+			IAtomContainer newContainer = (IAtomContainer) container.clone();
 			// delete atoms in current model
-			Atom[] atoms = container.getAtoms();
+			IAtom[] atoms = container.getAtoms();
 			for (int i = 0; i < atoms.length; i++)
 			{
 				ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, atoms[i]);

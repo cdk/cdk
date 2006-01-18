@@ -38,7 +38,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -433,7 +433,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
     
     private void markEnzymeResidueLocatorAtoms(Reaction currentReaction) {
-    	org.openscience.cdk.interfaces.Atom[] atoms = ReactionManipulator.getAllInOneContainer(currentReaction).getAtoms();
+    	org.openscience.cdk.interfaces.IAtom[] atoms = ReactionManipulator.getAllInOneContainer(currentReaction).getAtoms();
         for (int i=0; i<atoms.length; i++) {
             if (atoms[i] instanceof EnzymeResidueLocator) {
                 // skip atom
@@ -445,7 +445,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                 if (residueLocatorMatcher.matches()) {
                     logger.debug("Found residueLocator: ", pseudo.getLabel());
                     // replace atom with enzymeResidueLocator
-                    AtomContainer container = ReactionManipulator.getRelevantAtomContainer(
+                    IAtomContainer container = ReactionManipulator.getRelevantAtomContainer(
                         currentReaction, pseudo
                     );
                     logger.debug("Replacing the pseudo atom with a ezymeResidueLocator atom");
@@ -510,7 +510,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                 residueLocator.matcher(field);
             if (residueLocatorMatcher.matches()) {
                 logger.debug("Found residueLocator: ", field);
-                org.openscience.cdk.interfaces.Atom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
+                org.openscience.cdk.interfaces.IAtom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
                 boolean found = false;
                 logger.debug("Searching for given residueLocator through #atom: ", atoms.length);
                 logger.debug("Taken from reaction ", reaction.getID());

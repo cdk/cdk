@@ -31,7 +31,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
@@ -119,7 +119,7 @@ public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
                             "Malformed Number");
                         }
                         
-                        AtomType atomType = builder.newAtomType(name, rootType);
+                        IAtomType atomType = builder.newAtomType(name, rootType);
                         atomType.setAtomicNumber(atomicNumber);
                         atomType.setExactMass(mass);
                         atomType.setVanderwaalsRadius(vdwaals);

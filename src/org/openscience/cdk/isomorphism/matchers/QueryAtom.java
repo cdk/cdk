@@ -23,14 +23,14 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module interfaces
  */
-public interface QueryAtom extends Atom {
+public interface QueryAtom extends IAtom {
     
-	public boolean matches(Atom atom);
+	public boolean matches(IAtom atom);
     
 }
 

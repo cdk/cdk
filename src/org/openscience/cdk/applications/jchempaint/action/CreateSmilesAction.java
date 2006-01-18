@@ -36,7 +36,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -87,7 +87,7 @@ public class CreateSmilesAction extends JCPAction
 		{
 			ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
             SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
-			AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
+			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 			Molecule molecule = new Molecule(container);
 			Molecule moleculewithh=(Molecule)molecule.clone();
 			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);

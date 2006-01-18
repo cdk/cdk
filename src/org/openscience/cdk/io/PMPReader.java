@@ -41,8 +41,8 @@ import java.util.regex.Pattern;
 
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
@@ -204,9 +204,9 @@ public class PMPReader extends DefaultChemObjectReader {
                                 }
                                 line = input.readLine();
                             }
-                            if (chemObject instanceof Atom) {
+                            if (chemObject instanceof IAtom) {
                                 atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
-                                molecule.addAtom((Atom)chemObject);
+                                molecule.addAtom((IAtom)chemObject);
                             } else if (chemObject instanceof org.openscience.cdk.interfaces.Bond) {
                                 bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
                                 molecule.addBond((Bond)chemObject);
@@ -225,17 +225,17 @@ public class PMPReader extends DefaultChemObjectReader {
                         if (line.startsWith("%%Start Frame")) {
                             chemModel = chemFile.getBuilder().newChemModel();
                             crystal = chemFile.getBuilder().newCrystal();
-                            AtomContainer atomC = ChemModelManipulator.getAllInOneContainer(modelModel);
+                            IAtomContainer atomC = ChemModelManipulator.getAllInOneContainer(modelModel);
                             while (input.ready() && line != null && !(line.startsWith("%%End Frame"))) {
                                 // process frame data
                                 if (line.startsWith("%%Atom Coords")) {
                                     // add atomC as atoms to crystal
-                                    crystal.add((AtomContainer)atomC.clone());
+                                    crystal.add((IAtomContainer)atomC.clone());
                                     int expatoms = atomC.getAtomCount();
                                     // exception
                                     for (int i=0; i < expatoms; i++) {
                                         line = input.readLine();
-                                        org.openscience.cdk.interfaces.Atom a = crystal.getAtomAt(i);
+                                        org.openscience.cdk.interfaces.IAtom a = crystal.getAtomAt(i);
                                         StringTokenizer st = new StringTokenizer(line, " ");
                                         a.setX3d(Double.parseDouble(st.nextToken()));
                                         a.setY3d(Double.parseDouble(st.nextToken()));
@@ -307,15 +307,15 @@ public class PMPReader extends DefaultChemObjectReader {
                 if (atomTypeMatcher.matches()) {
                     int atomicnum = Integer.parseInt(atomTypeMatcher.group(1));
                     String type = atomTypeMatcher.group(2);
-                    ((Atom)chemObject).setAtomicNumber(atomicnum);
-                    ((Atom)chemObject).setSymbol(type);
+                    ((IAtom)chemObject).setAtomicNumber(atomicnum);
+                    ((IAtom)chemObject).setSymbol(type);
                 } else {
                     logger.error("Incorrectly formated field value: " + field + ".");
                 }
             } else if ("Charge".equals(command)) {
                 try {
                     double charge = Double.parseDouble(field);
-                    ((Atom)chemObject).setCharge(charge);
+                    ((IAtom)chemObject).setCharge(charge);
                 } catch (NumberFormatException e) {
                     logger.error("Incorrectly formated float field: " + field + ".");
                 }
@@ -334,14 +334,14 @@ public class PMPReader extends DefaultChemObjectReader {
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                org.openscience.cdk.interfaces.Atom a = molecule.getAtomAt(realatomid);
+                org.openscience.cdk.interfaces.IAtom a = molecule.getAtomAt(realatomid);
                 ((Bond)chemObject).setAtomAt(a, 0);
             } else if ("Atom2".equals(command)) {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                org.openscience.cdk.interfaces.Atom a = molecule.getAtomAt(realatomid);
+                org.openscience.cdk.interfaces.IAtom a = molecule.getAtomAt(realatomid);
                 ((Bond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);

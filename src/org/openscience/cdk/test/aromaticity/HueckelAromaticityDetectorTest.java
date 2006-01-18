@@ -317,7 +317,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 
 			Molecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
 			assertTrue(HueckelAromaticityDetector.detectAromaticity(mol));
-			org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
+			org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
             assertEquals(7, atoms.length);
 			for (int f = 0; f < atoms.length; f++) {
 				assertTrue(atoms[f].getFlag(CDKConstants.ISAROMATIC));
@@ -337,7 +337,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 
 			Molecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
 			assertFalse(HueckelAromaticityDetector.detectAromaticity(mol));
-			org.openscience.cdk.interfaces.Atom[] atoms = mol.getAtoms();
+			org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
             assertEquals(testResults.length, atoms.length);
 			for (int f = 0; f < atoms.length; f++) {
 				assertTrue(atoms[f].getFlag(CDKConstants.ISAROMATIC) == testResults[f]);

@@ -27,7 +27,7 @@ package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Interface to a class for coloring atoms.
@@ -39,11 +39,11 @@ public interface AtomColorer {
     /**
      * Returns the color for a certain atom type.
      */
-    public Color getAtomColor(Atom atom);
+    public Color getAtomColor(IAtom atom);
 
     /**
      * Returns the color for a certain atom type, and uses the
      * given default color if it fails to identify the atom type.
      */
-    public Color getAtomColor(Atom atom, Color defaultColor);
+    public Color getAtomColor(IAtom atom, Color defaultColor);
 }

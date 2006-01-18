@@ -71,7 +71,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     public void testRDFCalculator_double_double_double_double_RDFWeightFunction() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
             new RDFWeightFunction() {
-                public double calculate(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom atom2) {
+                public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
                     return 1.0;
                 }
             }
@@ -104,7 +104,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     public void testCalculate_RDFWeightFunction() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
             new RDFWeightFunction() {
-                public double calculate(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom atom2) {
+                public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
                     return 1.0;
                 }
             }
@@ -131,7 +131,7 @@ public class RDFCalculatorTest extends CDKTestCase {
     public void testCalculate_RDFWeightFunction2() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
             new RDFWeightFunction() {
-                public double calculate(org.openscience.cdk.interfaces.Atom atom, org.openscience.cdk.interfaces.Atom atom2) {
+                public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
                     return atom.getCharge()*atom2.getCharge();
                 }
             }

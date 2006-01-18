@@ -66,7 +66,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	/**
 	 *  A list of atoms participating in this bond.
 	 */
-	protected org.openscience.cdk.interfaces.Atom[] atoms;
+	protected org.openscience.cdk.interfaces.IAtom[] atoms;
 
 	/**
 	 *  A descriptor the stereochemical orientation of this bond.
@@ -91,7 +91,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atom1  the first Atom in the bond
 	 *@param  atom2  the second Atom in the bond
 	 */
-	public Bond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2)
+	public Bond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2)
 	{
 		this(atom1, atom2, 1.0, CDKConstants.STEREO_BOND_NONE);
 	}
@@ -104,7 +104,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atom2  the second Atom in the bond
 	 *@param  order  the bond order
 	 */
-	public Bond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order)
+	public Bond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order)
 	{
 		this(atom1, atom2, order, CDKConstants.STEREO_BOND_NONE);
 	}
@@ -119,7 +119,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  order   the bond order
 	 *@param  stereo  a descriptor the stereochemical orientation of this bond
 	 */
-	public Bond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2, double order, int stereo)
+	public Bond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order, int stereo)
 	{
 		atoms = new Atom[2];
 		atoms[0] = atom1;
@@ -135,9 +135,9 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@return    An array of atoms participating in this bond
 	 *@see       #setAtoms
 	 */
-	public org.openscience.cdk.interfaces.Atom[] getAtoms()
+	public org.openscience.cdk.interfaces.IAtom[] getAtoms()
 	{
-		org.openscience.cdk.interfaces.Atom[] returnAtoms = new org.openscience.cdk.interfaces.Atom[getAtomCount()];
+		org.openscience.cdk.interfaces.IAtom[] returnAtoms = new org.openscience.cdk.interfaces.IAtom[getAtomCount()];
 		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
 		return returnAtoms;
 	}
@@ -165,7 +165,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atoms  An array of atoms that forms this bond
 	 *@see           #getAtoms
 	 */
-	public void setAtoms(org.openscience.cdk.interfaces.Atom[] atoms)
+	public void setAtoms(org.openscience.cdk.interfaces.IAtom[] atoms)
 	{
 		this.atoms = atoms;
 		notifyChanged();
@@ -190,9 +190,9 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@return           The atom at the specified position
 	 *@see              #setAtomAt
 	 */
-	public org.openscience.cdk.interfaces.Atom getAtomAt(int position)
+	public org.openscience.cdk.interfaces.IAtom getAtomAt(int position)
 	{
-		return (org.openscience.cdk.interfaces.Atom)atoms[position];
+		return (org.openscience.cdk.interfaces.IAtom)atoms[position];
 	}
 
 
@@ -203,7 +203,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atom  The atom the bond partner is searched of
 	 *@return       the connected atom or null
 	 */
-	public org.openscience.cdk.interfaces.Atom getConnectedAtom(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.IAtom getConnectedAtom(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		if (atoms[0] == atom)
 		{
@@ -222,7 +222,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  atom  The atom to be tested if it participates in this bond
 	 *@return       true if the atom participates in this bond
 	 */
-	public boolean contains(org.openscience.cdk.interfaces.Atom atom)
+	public boolean contains(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		if (atoms[0] == atom)
 		{
@@ -242,7 +242,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 	 *@param  position  The position in this bond where the atom is to be inserted
 	 *@see              #getAtomAt
 	 */
-	public void setAtomAt(org.openscience.cdk.interfaces.Atom atom, int position)
+	public void setAtomAt(org.openscience.cdk.interfaces.IAtom atom, int position)
 	{
 		atoms[position] = atom;
 		notifyChanged();
@@ -434,7 +434,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, org
 		resultString.append(this.hashCode());
 		resultString.append(", #O:").append(getOrder());
 		resultString.append(", #S:").append(getStereo());
-		org.openscience.cdk.interfaces.Atom[] atoms = getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = getAtoms();
 		resultString.append(", #A:").append(atoms.length);
 		for (int i = 0; i < atoms.length; i++)
 		{

@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.EnzymeResidueLocator;
 import org.openscience.cdk.PseudoAtom;
@@ -68,13 +68,13 @@ public class ConvertToAction extends JCPAction
 				if (type.equals("atomToPseudoAtom"))
 				{
 					Atom atom = (Atom) object;
-					AtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
+					IAtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
 					AtomContainerManipulator.replaceAtomByAtom(relevantContainer,
 							atom, new PseudoAtom(atom));
 				} else if (type.equals("atomToEnzymeResidueLocator"))
 				{
 					Atom atom = (Atom) object;
-					AtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
+					IAtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
 					AtomContainerManipulator.replaceAtomByAtom(relevantContainer,
 							atom, new EnzymeResidueLocator(atom));
 				} else

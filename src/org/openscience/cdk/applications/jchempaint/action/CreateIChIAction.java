@@ -39,7 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.invariant.IChIGenerator;
@@ -63,7 +63,7 @@ public class CreateIChIAction extends JCPAction {
         logger.debug("IChI = ", IChI);
         try {
             ChemModel model = (ChemModel)jcpPanel.getJChemPaintModel().getChemModel();
-            AtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
+            IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
             Molecule molecule = new Molecule(container);
             logger.debug("Before runing IChI generater: ");
             IChI = generator.createIChI(molecule);

@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.RingSet;
@@ -138,22 +138,22 @@ public class IsProtonInAromaticSystemDescriptor implements IDescriptor {
 	 *@return                   true if the proton is bonded to an aromatic atom.
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
 		int isProtonInAromaticSystem = 0;
 		Molecule mol = new Molecule(ac);
 		if (checkAromaticity) {
 			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
-		org.openscience.cdk.interfaces.Atom[] neighboor = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
-		org.openscience.cdk.interfaces.Atom target = ac.getAtomAt(atomPosition);
+		org.openscience.cdk.interfaces.IAtom[] neighboor = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
+		org.openscience.cdk.interfaces.IAtom target = ac.getAtomAt(atomPosition);
 		if(target.getSymbol().equals("H")) {
 			//System.out.println("aromatic proton");
 			if(neighboor[0].getFlag(CDKConstants.ISAROMATIC)) {
 				isProtonInAromaticSystem = 1;
 			}
 			else {
-				org.openscience.cdk.interfaces.Atom[] betaAtoms = ac.getConnectedAtoms(neighboor[0]);
+				org.openscience.cdk.interfaces.IAtom[] betaAtoms = ac.getConnectedAtoms(neighboor[0]);
 				for (int i = 0; i < betaAtoms.length; i++) {
 					if(betaAtoms[0].getFlag(CDKConstants.ISAROMATIC)) {
 						isProtonInAromaticSystem = 2;

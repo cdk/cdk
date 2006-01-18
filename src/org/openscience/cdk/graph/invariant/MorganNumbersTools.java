@@ -24,8 +24,8 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Tool for calculating Morgan numbers {@cdk.cite MOR65}.
@@ -44,13 +44,13 @@ public class MorganNumbersTools {
    * @param  atomContainer  The atomContainer to analyse.
    * @return                The morgan numbers value.
    */
-  public static int[] getMorganNumbers(AtomContainer atomContainer) {
+  public static int[] getMorganNumbers(IAtomContainer atomContainer) {
     int[] morganMatrix;
     int[] tempMorganMatrix;
     int N = atomContainer.getAtomCount();
     morganMatrix = new int[N];
     tempMorganMatrix = new int[N];
-    Atom[] atoms = null;
+    IAtom[] atoms = null;
     for (int f = 0; f < N; f++) {
       morganMatrix[f] = atomContainer.getBondCount(f);
       tempMorganMatrix[f] = atomContainer.getBondCount(f);
@@ -76,7 +76,7 @@ public class MorganNumbersTools {
    * @param  atomContainer  The atomContainer to analyse.
    * @return                The morgan numbers value.
    */
-  public static String[] getMorganNumbersWithElementSymbol(AtomContainer atomContainer) {
+  public static String[] getMorganNumbersWithElementSymbol(IAtomContainer atomContainer) {
     int[] morgannumbers = getMorganNumbers(atomContainer);
     String[] morgannumberswithelement = new String[morgannumbers.length];
     for (int i = 0; i < morgannumbers.length; i++) {

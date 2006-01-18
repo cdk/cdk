@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -76,7 +76,7 @@ public class PiContactDetectionDescriptor implements IDescriptor {
     private int secondAtom = 0;
     private boolean checkAromaticity = false;
     SetOfAtomContainers acSet = null;
-  private AtomContainer acold=null;
+  private IAtomContainer acold=null;
 
 
     /**
@@ -147,7 +147,7 @@ public class PiContactDetectionDescriptor implements IDescriptor {
      *@return                   true if the atoms have pi-contact
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
         if (checkAromaticity) {
             HueckelAromaticityDetector.detectAromaticity(mol);
@@ -155,16 +155,16 @@ public class PiContactDetectionDescriptor implements IDescriptor {
         boolean piContact = false;
         int counter = 0;
 
-        org.openscience.cdk.interfaces.Atom first = ac.getAtomAt(firstAtom);
-        org.openscience.cdk.interfaces.Atom second = ac.getAtomAt(secondAtom);
+        org.openscience.cdk.interfaces.IAtom first = ac.getAtomAt(firstAtom);
+        org.openscience.cdk.interfaces.IAtom second = ac.getAtomAt(secondAtom);
         if(acold!=ac){
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
         }
-        org.openscience.cdk.interfaces.AtomContainer[] detected = acSet.getAtomContainers();
+        org.openscience.cdk.interfaces.IAtomContainer[] detected = acSet.getAtomContainers();
 
-        org.openscience.cdk.interfaces.Atom[] neighboorsFirst = mol.getConnectedAtoms(first);
-        org.openscience.cdk.interfaces.Atom[] neighboorsSecond = mol.getConnectedAtoms(second);
+        org.openscience.cdk.interfaces.IAtom[] neighboorsFirst = mol.getConnectedAtoms(first);
+        org.openscience.cdk.interfaces.IAtom[] neighboorsSecond = mol.getConnectedAtoms(second);
 
         for (int i = 0; i < detected.length; i++) {
             if (detected[i].contains(first) && detected[i].contains(second)) {
@@ -191,7 +191,7 @@ public class PiContactDetectionDescriptor implements IDescriptor {
      *@param  ac      AtomContainer
      *@return         The boolean result
      */
-    private boolean isANeighboorsInAnAtomContainer(org.openscience.cdk.interfaces.Atom[] neighs, org.openscience.cdk.interfaces.AtomContainer ac) {
+    private boolean isANeighboorsInAnAtomContainer(org.openscience.cdk.interfaces.IAtom[] neighs, org.openscience.cdk.interfaces.IAtomContainer ac) {
         boolean isIn = false;
         int count = 0;
         for (int i = 0; i < neighs.length; i++) {

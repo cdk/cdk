@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -103,10 +103,10 @@ public class HBondDonorCountDescriptor implements IDescriptor {
      * @return                   number of H bond donors
      * @exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         int hBondDonors = 0;
 
-        org.openscience.cdk.interfaces.Atom[] atoms = ac.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
     atomloop:
     for(int atomIndex = 0; atomIndex < atoms.length; atomIndex++)
@@ -121,7 +121,7 @@ public class HBondDonorCountDescriptor implements IDescriptor {
           continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
         }
         // explicit hydrogens
-        org.openscience.cdk.interfaces.Atom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
+        org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
         for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
         {
           if(neighbours[neighbourIndex].getSymbol().equals("H"))

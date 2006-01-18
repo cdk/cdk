@@ -115,7 +115,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, org.o
 	 * @param oAtom  The atom to add
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom) {
+	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom) {
 		addAtom(oAtom, getMonomer(""));
 	}
 	
@@ -127,7 +127,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, org.o
 	 * @param oMonomer  The monomer the atom belongs to
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer) {
+	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.Monomer oMonomer) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);

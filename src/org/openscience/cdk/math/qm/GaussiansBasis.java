@@ -77,7 +77,7 @@ public class GaussiansBasis implements Basis
    *
    * @param atoms The atom will need to calculate the core potential
    */
-  public GaussiansBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, org.openscience.cdk.interfaces.Atom[] atoms)
+  public GaussiansBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, org.openscience.cdk.interfaces.IAtom[] atoms)
   {
     setBasis(nx, ny, nz, alpha, r, atoms);
   }
@@ -88,7 +88,7 @@ public class GaussiansBasis implements Basis
    *
    * @param atoms The atom will need to calculate the core potential
    */
-  protected void setBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, org.openscience.cdk.interfaces.Atom[] atoms)
+  protected void setBasis(int[] nx, int[] ny, int[] nz, double[] alpha, Vector[] r, org.openscience.cdk.interfaces.IAtom[] atoms)
   {
     int i;
 

@@ -34,7 +34,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.Monomer;
 import org.openscience.cdk.interfaces.Strand;
@@ -77,11 +77,11 @@ public class StrandTest extends TestCase {
 		oMono2.setMonomerName(new String("HOH"));
 		Monomer oMono3 = builder.newMonomer();
 		oMono3.setMonomerName(new String("GLYA16"));
-		Atom oAtom1 = builder.newAtom("C1");
-		Atom oAtom2 = builder.newAtom("C2");
-		Atom oAtom3 = builder.newAtom("C3");
-		Atom oAtom4 = builder.newAtom("C4");
-		Atom oAtom5 = builder.newAtom("C5");
+		IAtom oAtom1 = builder.newAtom("C1");
+		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom4 = builder.newAtom("C4");
+		IAtom oAtom5 = builder.newAtom("C5");
 		
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
@@ -145,23 +145,23 @@ public class StrandTest extends TestCase {
 		assertEquals("DNA", oStrand.getStrandType());
 	}
 	
-	public void testAddAtom_Atom() {
+	public void testAddAtom_IAtom() {
 		Strand oStrand = builder.newStrand();
-		Atom oAtom1 = builder.newAtom("C1");
-		Atom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom1 = builder.newAtom("C1");
+		IAtom oAtom2 = builder.newAtom("C2");
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
 
 		assertEquals(2, oStrand.getAtomCount());
 	}
     
-	public void testAddAtom_Atom_Monomer() {
+	public void testAddAtom_IAtom_Monomer() {
 		Strand oStrand = builder.newStrand();
 		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = builder.newAtom("C1");
-		Atom oAtom2 = builder.newAtom("C2");
-		Atom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom1 = builder.newAtom("C1");
+		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
 		oStrand.addAtom(oAtom3, oMono1);
@@ -176,8 +176,8 @@ public class StrandTest extends TestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom2 = builder.newAtom("C2");
-		Atom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 
@@ -190,8 +190,8 @@ public class StrandTest extends TestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom2 = builder.newAtom("C2");
-		Atom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 
@@ -206,8 +206,8 @@ public class StrandTest extends TestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom2 = builder.newAtom("C2");
-		Atom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 		Hashtable monomers = new Hashtable();
@@ -230,7 +230,7 @@ public class StrandTest extends TestCase {
 		Strand oStrand = builder.newStrand();
 		Monomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = builder.newAtom("C1");
+		IAtom oAtom1 = builder.newAtom("C1");
 		oStrand.addAtom(oAtom1, oMono1);		
 		assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
 		assertEquals(1, oStrand.getAtomCount());
@@ -245,8 +245,8 @@ public class StrandTest extends TestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom2 = builder.newAtom("C2");
-		Atom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 		Hashtable monomers = new Hashtable();
@@ -269,8 +269,8 @@ public class StrandTest extends TestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom2 = builder.newAtom("C2");
-		Atom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 		Hashtable monomers = new Hashtable();

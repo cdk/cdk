@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.atomtype;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -48,5 +48,5 @@ public interface AtomTypeMatcher {
       * @throws           CDKException when something went wrong with going through
       *                   the AtomType's
       */
-    public AtomType findMatchingAtomType(AtomContainer container, Atom atom) throws CDKException;
+    public IAtomType findMatchingAtomType(IAtomContainer container, IAtom atom) throws CDKException;
 }

@@ -35,7 +35,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -237,12 +237,12 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         // now try to map things, if wanted
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
-        AtomContainer reactingSide = new org.openscience.cdk.AtomContainer();
+        IAtomContainer reactingSide = new org.openscience.cdk.AtomContainer();
         Molecule[] molecules = reaction.getReactants().getMolecules();
         for (int i=0; i<molecules.length; i++) {
             reactingSide.add(molecules[i]);
         }
-        AtomContainer producedSide = new org.openscience.cdk.AtomContainer();
+        IAtomContainer producedSide = new org.openscience.cdk.AtomContainer();
         molecules = reaction.getProducts().getMolecules();
         for (int i=0; i<molecules.length; i++) {
             producedSide.add(molecules[i]);
@@ -250,8 +250,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         
         // map the atoms
         int mappingCount = 0;
-        org.openscience.cdk.interfaces.Atom[] reactantAtoms = reactingSide.getAtoms();
-        org.openscience.cdk.interfaces.Atom[] producedAtoms = producedSide.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] reactantAtoms = reactingSide.getAtoms();
+        org.openscience.cdk.interfaces.IAtom[] producedAtoms = producedSide.getAtoms();
         for (int i=0; i<reactantAtoms.length; i++) {
             for (int j=0; j<producedAtoms.length; j++) {
                 if (reactantAtoms[i].getID() != null &&

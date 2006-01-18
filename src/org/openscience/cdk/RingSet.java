@@ -134,7 +134,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public org.openscience.cdk.interfaces.RingSet getRings(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.RingSet getRings(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		RingSet rings = new RingSet();
 		Ring ring;
@@ -161,7 +161,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	{
 		Vector connectedRings = new Vector();
 		Ring tempRing;
-		org.openscience.cdk.interfaces.Atom atom;
+		org.openscience.cdk.interfaces.IAtom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)
 		{
 			atom = ring.getAtomAt(i);
@@ -200,7 +200,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
      * @param  atom Atom to check
 	 * @return      true, if the ringset contains the atom
 	 */
-	public boolean contains(org.openscience.cdk.interfaces.Atom atom)
+	public boolean contains(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		for (int i = 0; i < size(); i++)
 		{

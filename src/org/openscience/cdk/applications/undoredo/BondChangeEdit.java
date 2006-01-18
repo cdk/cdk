@@ -27,8 +27,8 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.Molecule;
@@ -38,13 +38,13 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 public class BondChangeEdit extends AbstractUndoableEdit {
 
-	private AtomContainer container;
+	private IAtomContainer container;
 
 	private Bond newBond;
 
 	private Bond formerBond;
 
-	private Atom[] atoms;
+	private IAtom[] atoms;
 
 	private ChemModel chemModel;
 
@@ -52,7 +52,7 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 		this.chemModel = chemModel;
 		this.formerBond = formerBond;
 		this.newBond = newBond;
-		atoms = (Atom[]) newBond.getAtoms();
+		atoms = (IAtom[]) newBond.getAtoms();
 		if (formerBond != null) {
 			formerBond.setAtoms(atoms);
 		}

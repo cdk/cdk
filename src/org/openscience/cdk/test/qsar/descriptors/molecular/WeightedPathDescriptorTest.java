@@ -27,7 +27,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
@@ -61,7 +61,7 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
         IDescriptor descriptor = new WeightedPathDescriptor();
 
         SmilesParser sp = new SmilesParser();
-        AtomContainer mol = null;
+        IAtomContainer mol = null;
         DescriptorValue value = null;
         DoubleArrayResult result = null;
 
@@ -78,7 +78,7 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read(new org.openscience.cdk.ChemFile());
-        AtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
         mol = c[0];
         mol = AtomContainerManipulator.removeHydrogens(mol);
 

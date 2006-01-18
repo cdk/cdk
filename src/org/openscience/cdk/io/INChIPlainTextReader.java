@@ -36,7 +36,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemFile;
 import org.openscience.cdk.interfaces.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -155,7 +155,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     final String connections = tokenizer.nextToken().substring(1); // 1-2-4-6-5-3-1
                     final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
                     
-                    AtomContainer parsedContent = inchiTool.processFormula(
+                    IAtomContainer parsedContent = inchiTool.processFormula(
                     		cf.getBuilder().newAtomContainer(), formula
                     );
                     inchiTool.processConnections(connections, parsedContent, -1);

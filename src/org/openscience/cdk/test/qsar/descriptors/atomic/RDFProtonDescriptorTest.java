@@ -95,7 +95,7 @@ public class RDFProtonDescriptorTest extends CDKTestCase {
 		mol.addBond(6, 15, 1); // 17
 		mol.addBond(6, 16, 1); // 18
 		
-		org.openscience.cdk.interfaces.Atom target = mol.getAtomAt(16);
+		org.openscience.cdk.interfaces.IAtom target = mol.getAtomAt(16);
 		
 		IntegerArrayResult retval = (IntegerArrayResult)descriptor.calculate(mol).getValue();
 		assertEquals(5, retval.size());

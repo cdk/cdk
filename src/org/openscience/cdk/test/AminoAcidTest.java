@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 
 /**
@@ -64,9 +64,9 @@ public class AminoAcidTest extends CDKTestCase {
         assertNotNull(oAminoAcid);
     }
     
-    public void testAddCTerminus_Atom() {
+    public void testAddCTerminus_IAtom() {
         IAminoAcid m = builder.newAminoAcid();
-        Atom cTerminus = builder.newAtom("C");
+        IAtom cTerminus = builder.newAtom("C");
         m.addCTerminus(cTerminus);
         assertEquals(cTerminus, m.getCTerminus());
     }
@@ -75,9 +75,9 @@ public class AminoAcidTest extends CDKTestCase {
         assertNull(m.getCTerminus());
     }
 
-    public void testAddNTerminus_Atom() {
+    public void testAddNTerminus_IAtom() {
         IAminoAcid m = builder.newAminoAcid();
-        Atom nTerminus = builder.newAtom("N");
+        IAtom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
         assertEquals(nTerminus, m.getNTerminus());
     }
@@ -91,7 +91,7 @@ public class AminoAcidTest extends CDKTestCase {
      */
     public void testToString() {
         IAminoAcid m = builder.newAminoAcid();
-        Atom nTerminus = builder.newAtom("N");
+        IAtom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {

@@ -33,13 +33,13 @@ import javax.swing.JOptionPane;
 import javax.swing.undo.UndoableEdit;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ConvertToRadicalEdit;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -57,7 +57,7 @@ public class ConvertToRadicalAction extends JCPAction {
             if (object instanceof Atom) {
                 Atom atom = (Atom)object;
                 
-                AtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
+                IAtomContainer relevantContainer = ChemModelManipulator.getRelevantAtomContainer(model, atom);
                 double number = controlLonePair(relevantContainer, atom);
                 
                 if(number > 0.0)
@@ -83,7 +83,7 @@ public class ConvertToRadicalAction extends JCPAction {
         }
         jcpmodel.fireChange();
     }
-    private double controlLonePair(AtomContainer container, Atom atom)
+    private double controlLonePair(IAtomContainer container, Atom atom)
     {
     	double nLonePair = 0.0;
     	AtomTypeFactory atomATF = null;
@@ -97,7 +97,7 @@ public class ConvertToRadicalAction extends JCPAction {
 			if(atomATF != null)
 			{
 
-				AtomType atomType = atomATF.getAtomType(atom.getSymbol());
+				IAtomType atomType = atomATF.getAtomType(atom.getSymbol());
 		    	double bondOrderSum = container.getBondOrderSum(atom);
 				int charge = atom.getFormalCharge();
 				int hcount = atom.getHydrogenCount();

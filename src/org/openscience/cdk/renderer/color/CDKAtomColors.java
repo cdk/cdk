@@ -26,7 +26,7 @@ package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Gives a short table of atom colors for 3D display.
@@ -45,11 +45,11 @@ public class CDKAtomColors implements AtomColorer {
 
     private final static Color DEFAULT        = Color.darkGray;
 
-    public Color getAtomColor(Atom atom) {
+    public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
     }
     
-    public Color getAtomColor(Atom atom, Color defaultColor) {
+    public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         int atomnumber = atom.getAtomicNumber();
         switch (atomnumber) {

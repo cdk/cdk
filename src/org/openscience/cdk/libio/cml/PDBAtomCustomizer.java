@@ -34,8 +34,8 @@ import nu.xom.Element;
 import org.xmlcml.cml.element.CMLScalar;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.PDBAtom;
 
 /**
@@ -50,7 +50,7 @@ import org.openscience.cdk.PDBAtom;
  */
 public class PDBAtomCustomizer implements Customizer {
 
-    public void customize(Atom atom, Object nodeToAdd) throws Exception {
+    public void customize(IAtom atom, Object nodeToAdd) throws Exception {
     	if (!(nodeToAdd instanceof Element))
     		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
     	
@@ -145,7 +145,7 @@ public class PDBAtomCustomizer implements Customizer {
         }
     }
 
-    public void customize(AtomContainer molecule, Object nodeToAdd) throws Exception {
+    public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
 }

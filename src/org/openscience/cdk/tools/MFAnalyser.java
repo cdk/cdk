@@ -43,9 +43,9 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -68,7 +68,7 @@ public class MFAnalyser {
 	private final static String H_ELEMENT_SYMBOL = "H";
 
 	private String MF;
-	private AtomContainer atomContainer;
+	private IAtomContainer atomContainer;
 	private int HCount = 0;
 	HashMap massMap=new HashMap();
 
@@ -80,7 +80,7 @@ public class MFAnalyser {
 	 * @param  MF  Description of the Parameter
 	 * @param target TODO
 	 */
-	public MFAnalyser(String MF, AtomContainer target) {
+	public MFAnalyser(String MF, IAtomContainer target) {
 		this.MF = MF;
 		this.atomContainer = analyseMF(MF, target);
 		initMassMap();
@@ -94,7 +94,7 @@ public class MFAnalyser {
 	 *
 	 * @param  ac  Description of the Parameter
 	 */
-	public MFAnalyser(AtomContainer ac) {
+	public MFAnalyser(IAtomContainer ac) {
 		this.atomContainer = ac;
 		this.MF = analyseAtomContainer(ac);
 		initMassMap();
@@ -226,7 +226,7 @@ public class MFAnalyser {
 	 *
 	 * @return    The atomContainer value
 	 */
-	public AtomContainer getAtomContainer() {
+	public IAtomContainer getAtomContainer() {
 		return atomContainer;
 	}
 
@@ -287,9 +287,9 @@ public class MFAnalyser {
 	public float getDBE() throws IOException, ClassNotFoundException{
 		int valencies[]=new int[5];
 		AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", getAtomContainer().getBuilder());
-		AtomContainer ac = getAtomContainer();
+		IAtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++) {
-   		    AtomType[] types = factory.getAtomTypes(ac.getAtomAt(f).getSymbol());
+   		    IAtomType[] types = factory.getAtomTypes(ac.getAtomAt(f).getSymbol());
    		    valencies[(int)types[0].getBondOrderSum()]++;
 		}
 		return  1 + (valencies[4]) + (valencies[3] /2) - (valencies[1] /2);
@@ -310,7 +310,7 @@ public class MFAnalyser {
 		} catch (Exception exception) {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}
-		AtomContainer ac = getAtomContainer();
+		IAtomContainer ac = getAtomContainer();
 		Isotope h = si.getMajorIsotope(H_ELEMENT_SYMBOL);
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			i = si.getMajorIsotope(ac.getAtomAt(f).getSymbol());
@@ -364,7 +364,7 @@ public class MFAnalyser {
 		} catch (Exception exception) {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}
-		AtomContainer ac = getAtomContainer();
+		IAtomContainer ac = getAtomContainer();
 		Isotope h = si.getMajorIsotope("H");
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			Element i = si.getElement(ac.getAtomAt(f).getSymbol());
@@ -394,7 +394,7 @@ public class MFAnalyser {
 		} catch (Exception exception) {
 			System.err.println("Could not instantiate the IsotopeFactory: " + exception.getMessage());
 		}
-		AtomContainer ac = getAtomContainer();
+		IAtomContainer ac = getAtomContainer();
 		Isotope h = si.getMajorIsotope("H");
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			Element i = si.getElement(ac.getAtomAt(f).getSymbol());
@@ -416,8 +416,8 @@ public class MFAnalyser {
 	 * @return         The mol without Hs.
 	 * @cdk.keyword    hydrogen, removal
 	 */
-	public AtomContainer removeHydrogensPreserveMultiplyBonded() {
-		AtomContainer ac = getAtomContainer();
+	public IAtomContainer removeHydrogensPreserveMultiplyBonded() {
+		IAtomContainer ac = getAtomContainer();
 
 		List h = new ArrayList();
 		// H list.
@@ -429,12 +429,12 @@ public class MFAnalyser {
 		for (int i = 0;
 				i < count;
 				i++) {
-			final Atom[] atoms = ac.getBondAt(i).getAtoms();
+			final IAtom[] atoms = ac.getBondAt(i).getAtoms();
 			final int length = atoms.length;
 			for (int k = 0;
 					k < length;
 					k++) {
-				final Atom atom = atoms[k];
+				final IAtom atom = atoms[k];
 				if (atom.getSymbol().equals(H_ELEMENT_SYMBOL)) {
 					(h.contains(atom) ? multi_h : h).add(atom);
 				}
@@ -457,8 +457,8 @@ public class MFAnalyser {
 	 * @return           The mol without Hs.
 	 * @cdk.keyword      hydrogen, removal
 	 */
-	private AtomContainer removeHydrogens(List preserve) {
-		AtomContainer ac = getAtomContainer();
+	private IAtomContainer removeHydrogens(List preserve) {
+		IAtomContainer ac = getAtomContainer();
 
 		Map map = new HashMap();
 		// maps original atoms to clones.
@@ -472,9 +472,9 @@ public class MFAnalyser {
 				i < count;
 				i++) {
 			// Clone/remove this atom?
-			Atom atom = ac.getAtomAt(i);
+			IAtom atom = ac.getAtomAt(i);
 			if (!atom.getSymbol().equals(H_ELEMENT_SYMBOL) || preserve.contains(atom)) {
-				Atom a = (Atom) atom.clone();
+				IAtom a = (IAtom) atom.clone();
 				a.setHydrogenCount(0);
 				mol.addAtom(a);
 				map.put(atom, a);
@@ -491,7 +491,7 @@ public class MFAnalyser {
 				i++) {
 			// Check bond.
 			final Bond bond = ac.getBondAt(i);
-			Atom[] atoms = bond.getAtoms();
+			IAtom[] atoms = bond.getAtoms();
 			boolean remove_bond = false;
 			final int length = atoms.length;
 			for (int k = 0;
@@ -508,7 +508,7 @@ public class MFAnalyser {
 				// if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
 
 				Bond clone = (Bond) ac.getBondAt(i).clone();
-				clone.setAtoms(new Atom[]{(Atom) map.get(atoms[0]), (Atom) map.get(atoms[1])});
+				clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
 				mol.addBond(clone);
 			}
 		}
@@ -517,9 +517,9 @@ public class MFAnalyser {
 		for (Iterator i = remove.iterator();
 				i.hasNext(); ) {
 			// Process neighbours.
-			for (Iterator n = ac.getConnectedAtomsVector((Atom) i.next()).iterator();
+			for (Iterator n = ac.getConnectedAtomsVector((IAtom) i.next()).iterator();
 					n.hasNext(); ) {
-				final Atom neighb = (Atom) map.get(n.next());
+				final IAtom neighb = (IAtom) map.get(n.next());
 				neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
 			}
 		}
@@ -536,7 +536,7 @@ public class MFAnalyser {
 	 */
 	public List getHeavyAtoms() {
 		ArrayList newAc = new ArrayList();
-		AtomContainer ac = getAtomContainer();
+		IAtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			if (!ac.getAtomAt(f).getSymbol().equals(H_ELEMENT_SYMBOL)) {
 				newAc.add(ac.getAtomAt(f));
@@ -553,7 +553,7 @@ public class MFAnalyser {
 	 * @param  ac  AtomContainer in which the Atom's and Bond's will be stored 
 	 * @return     the filled AtomContainer
 	 */
-	private AtomContainer analyseMF(String MF, AtomContainer ac) {
+	private IAtomContainer analyseMF(String MF, IAtomContainer ac) {
 		char ThisChar;
 		/*
 		 *  Buffer for
@@ -617,12 +617,12 @@ public class MFAnalyser {
 	 * @param  ac  Description of the Parameter
 	 * @return     a string containing the molecular formula.
 	 */
-	public String analyseAtomContainer(AtomContainer ac) {
+	public String analyseAtomContainer(IAtomContainer ac) {
 		String symbol;
 		String mf = "";
 		SortedMap symbols = new TreeMap();
 		int HCount = 0;
-		Atom atom = null;
+		IAtom atom = null;
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			atom = ac.getAtomAt(f);
 			symbol = atom.getSymbol();

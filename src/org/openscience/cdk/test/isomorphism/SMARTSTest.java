@@ -32,8 +32,8 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -63,7 +63,7 @@ public class SMARTSTest extends CDKTestCase {
 
 	public void testStrictSMARTS() throws Exception {
 		SmilesParser sp = new SmilesParser();
-        AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+        IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
         SymbolQueryAtom atom1 = new SymbolQueryAtom();
         atom1.setSymbol("N");
@@ -78,7 +78,7 @@ public class SMARTSTest extends CDKTestCase {
 	
 	public void testSMARTS() throws Exception {
 		SmilesParser sp = new SmilesParser();
-        AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+        IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
         AnyAtom atom1 = new AnyAtom();
         SymbolQueryAtom atom2 = new SymbolQueryAtom();
@@ -90,10 +90,10 @@ public class SMARTSTest extends CDKTestCase {
         assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 	
-    private AtomContainer createEthane() {
-        AtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
-        Atom carbon = new org.openscience.cdk.Atom("C");
-        Atom carbon2 = carbon.getBuilder().newAtom("C");
+    private IAtomContainer createEthane() {
+        IAtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
+        IAtom carbon = new org.openscience.cdk.Atom("C");
+        IAtom carbon2 = carbon.getBuilder().newAtom("C");
         carbon.setHydrogenCount(3);
         carbon2.setHydrogenCount(3);
         container.addAtom(carbon);
@@ -103,7 +103,7 @@ public class SMARTSTest extends CDKTestCase {
     }
     
 	public void testImplicitHCountAtom() throws Exception {
-        AtomContainer container = createEthane();
+        IAtomContainer container = createEthane();
 
         QueryAtomContainer query1 = new QueryAtomContainer(); // SMARTS [h3][h3]
         SMARTSAtom atom1 = new ImplicitHCountAtom(3);
@@ -115,7 +115,7 @@ public class SMARTSTest extends CDKTestCase {
     }
 
 	public void testImplicitHCountAtom2() throws Exception {
-        AtomContainer container = createEthane();
+        IAtomContainer container = createEthane();
 
         QueryAtomContainer query1 = new QueryAtomContainer(); // SMARTS [h3][h2]
         SMARTSAtom atom1 = new ImplicitHCountAtom(3);
@@ -134,7 +134,7 @@ public class SMARTSTest extends CDKTestCase {
 			SymbolAndChargeQueryAtom c2 = new
 			SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
 			
-			AtomContainer c = MoleculeFactory.makeAlkane(2);
+			IAtomContainer c = MoleculeFactory.makeAlkane(2);
 			
 			QueryAtomContainer query1 = new QueryAtomContainer();
 			query1.addAtom(c1);

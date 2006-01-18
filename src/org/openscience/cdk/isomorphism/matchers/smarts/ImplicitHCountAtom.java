@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matcher checks the number of implicit hydrogens of the Atom.
@@ -38,7 +38,7 @@ public class ImplicitHCountAtom extends SMARTSAtom {
         this.hCount = hCount;
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         return (atom.getHydrogenCount() == this.hCount);
     };
 

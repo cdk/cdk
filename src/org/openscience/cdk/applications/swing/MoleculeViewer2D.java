@@ -32,7 +32,7 @@ import java.util.EventObject;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.Molecule;
 import org.openscience.cdk.event.CDKChangeListener;
@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 {
-    public AtomContainer atomContainer;
+    public IAtomContainer atomContainer;
     public Renderer2DModel r2dm;
     public Renderer2D renderer;
     public String title = "Molecule Viewer";
@@ -72,7 +72,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
      *
      * @param  r2dm   The settings determining how the molecule is displayed
      */
-    public MoleculeViewer2D(AtomContainer atomContainer, Renderer2DModel r2dm)
+    public MoleculeViewer2D(IAtomContainer atomContainer, Renderer2DModel r2dm)
     {
         logger = new LoggingTool(this);
         this.atomContainer = atomContainer;
@@ -88,7 +88,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
     /**
      *  Constructs a MoleculeViewer with a molecule to display
      */
-    public MoleculeViewer2D(AtomContainer atomContainer)
+    public MoleculeViewer2D(IAtomContainer atomContainer)
     {
         this(atomContainer, new Renderer2DModel());
     }
@@ -132,7 +132,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
      *
      * @param  atomContainer  The AtomContainer to be displayed
      */
-    public void setAtomContainer(AtomContainer atomContainer)
+    public void setAtomContainer(IAtomContainer atomContainer)
     {
         this.atomContainer = atomContainer;
     }
@@ -165,7 +165,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
      *
      * @return    The AtomContainer which is being displayed
      */
-    public AtomContainer getAtomContainer()
+    public IAtomContainer getAtomContainer()
     {
         return this.atomContainer;
     }
@@ -267,7 +267,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
 
     public static void main(String[] args)
     {
-        AtomContainer atomContainer = null;
+        IAtomContainer atomContainer = null;
         try
         {
             FileInputStream fis = new FileInputStream(args[0]);

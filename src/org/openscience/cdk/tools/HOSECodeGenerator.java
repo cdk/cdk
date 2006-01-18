@@ -40,8 +40,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Isotope;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -90,7 +90,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	/**
 	 *  The molecular structure on which we work
 	 */
-	protected AtomContainer atomContainer;
+	protected IAtomContainer atomContainer;
 
 	/**
 	 *  Delimiters used to separate spheres in the output string. Bremser uses the
@@ -116,7 +116,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			
 	boolean debug = false;
 	
-	private AtomContainer acold=null;
+	private IAtomContainer acold=null;
 	private RingSet soar=null;
 
 	/**
@@ -159,7 +159,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
   
   
-  public Vector[] getSpheres(Molecule ac, Atom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
+  public Vector[] getSpheres(Molecule ac, IAtom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
 	{
 		centerCode = "";
 		this.atomContainer = ac;
@@ -206,7 +206,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@return The HOSECode value
 	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
 	 */
-	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
+	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
 	{
 		return getHOSECode(ac,root,noOfSpheres, false);
 	}
@@ -228,7 +228,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@return The HOSECode value
 	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
 	 */
-	public String getHOSECode(AtomContainer ac, Atom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
+	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
 	{
     CanonicalLabeler canLabler = new CanonicalLabeler();
     canLabler.canonLabel(ac);
@@ -260,7 +260,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		return HOSECode.toString();
 	}
 
-	private void createCenterCode(Atom root, AtomContainer ac, boolean ringsize)
+	private void createCenterCode(IAtom root, IAtomContainer ac, boolean ringsize)
 	{
 		int partnerCount = 0;
 		partnerCount = atomContainer.getBondCount(root) + root.getHydrogenCount(); 
@@ -268,7 +268,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 	
 	
-	private String getRingcode(Atom root, AtomContainer ac){
+	private String getRingcode(IAtom root, IAtomContainer ac){
 		if(ac!=acold){
 			soar=new SSSRFinder(ac).findSSSR();
 		}
@@ -288,7 +288,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			return "-"+sb.toString();
 	}
   
-  private String createChargeCode(Atom atom){
+  private String createChargeCode(IAtom atom){
     StringBuffer tempCode=new StringBuffer();
     if (atom != null && atom.getFormalCharge()!=0){
       if(Math.abs(atom.getFormalCharge())==1){
@@ -313,12 +313,12 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@param  root  The atom at which we start the search
 	 *@exception  org.openscience.cdk.exception.CDKException  If something goes wrong.
 	 */
-	private void breadthFirstSearch(Atom root,boolean addTreeNode) throws org.openscience.cdk.exception.CDKException
+	private void breadthFirstSearch(IAtom root,boolean addTreeNode) throws org.openscience.cdk.exception.CDKException
 	{
 		sphere = 0;
 		TreeNode tempNode = null;
-		Atom[] conAtoms = atomContainer.getConnectedAtoms(root);
-		Atom atom;
+		IAtom[] conAtoms = atomContainer.getConnectedAtoms(root);
+		IAtom atom;
 		org.openscience.cdk.interfaces.Bond bond = null;
 		sphereNodes.removeAllElements();
     sphereNodesWithAtoms.removeAllElements();
@@ -371,9 +371,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 		/*
 		 *  From here we start assembling the next sphere
 		 */
-        Atom node = null;
-        Atom toNode = null;
-        Atom[] conAtoms = null;
+        IAtom node = null;
+        IAtom toNode = null;
+        IAtom[] conAtoms = null;
 		TreeNode treeNode = null;
 		nextSphereNodes = new Vector();
 		org.openscience.cdk.interfaces.Bond bond = null;
@@ -515,8 +515,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 *  their now determined order, using commas to
 		 *  separate nodes from different branches
 		 */
-		Atom branch = ((TreeNode) (((TreeNode) sphereNodes.elementAt(0)).source)).atom;
-		Atom nextBranch;
+		IAtom branch = ((TreeNode) (((TreeNode) sphereNodes.elementAt(0)).source)).atom;
+		IAtom nextBranch;
 		StringBuffer tempCode = null;
 		nextBranch = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
@@ -761,7 +761,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	{
 		String symbol;
 		TreeNode source;
-		Atom atom;
+		IAtom atom;
 		double bondType;
 		int degree;
 		long score;
@@ -783,7 +783,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 *@param  score     The score used to rank this node within its sphere.
 		 *@param  degree    Description of the Parameter
 		 */
-		TreeNode(String symbol, TreeNode source, Atom atom, double bondType, int degree, long score)
+		TreeNode(String symbol, TreeNode source, IAtom atom, double bondType, int degree, long score)
 		{
 			this.symbol = symbol;
 			this.source = source;
@@ -796,7 +796,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			childs = new Vector();
 		}
     
-    public Atom getAtom(){
+    public IAtom getAtom(){
       return atom;
     }
 

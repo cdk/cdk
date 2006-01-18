@@ -37,8 +37,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.renderer.color.AtomColorer;
@@ -81,7 +81,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	private int atomRadius = 8;
 	
-	private Atom highlightedAtom = null;
+	private IAtom highlightedAtom = null;
 	
 	private Bond highlightedBond = null;
 	
@@ -100,8 +100,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private Polygon selectRect = null;
 	
-	private AtomContainer selectedPart = null;
-	private AtomContainer clipboardContent = null;
+	private IAtomContainer selectedPart = null;
+	private IAtomContainer clipboardContent = null;
 	
 	private Vector lassoPoints = new Vector();
     
@@ -542,7 +542,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @return the atom currently highlighted    
 	 */
-	public Atom getHighlightedAtom()
+	public IAtom getHighlightedAtom()
 	{
 		return this.highlightedAtom;
 	}
@@ -553,7 +553,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @param   highlightedAtom The atom to be highlighted  
 	 */
-	public void setHighlightedAtom(Atom highlightedAtom)
+	public void setHighlightedAtom(IAtom highlightedAtom)
 	{
 		if ((this.highlightedAtom == null) &&
             (highlightedAtom == null)) {
@@ -612,7 +612,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      * If not, the color from the CDK2DAtomColor is used
      * (if selected). Otherwise, the atom is colored black.
      */
-    public Color getAtomColor(Atom atom, Color defaultColor) {
+    public Color getAtomColor(IAtom atom, Color defaultColor) {
         // logger.debug("Getting atom front color for " + atom.toString());
         Color atomColor = defaultColor;
         if (colorAtomsByType) {
@@ -626,7 +626,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     /**
      * Returns the background color of the given atom.
      */
-    public Color getAtomBackgroundColor(Atom atom) {
+    public Color getAtomBackgroundColor(IAtom atom) {
         // logger.debug("Getting atom back color for " + atom.toString());
         Color atomColor = getBackColor();
         // logger.debug("  BackColor: " + atomColor.toString());
@@ -754,7 +754,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      *
      * @return an atomcontainer with the atoms and bonds on the clipboard.
      */
-    public AtomContainer getClipboardContent() {
+    public IAtomContainer getClipboardContent() {
         return clipboardContent;
     }
 
@@ -765,7 +765,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      *
      * @param content the new content of the clipboard.
      */
-    public void setClipboardContent(AtomContainer content) {
+    public void setClipboardContent(IAtomContainer content) {
         this.clipboardContent = content;
     }
 
@@ -774,7 +774,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @return an atomcontainer with the selected atoms
 	 */
-	public AtomContainer getSelectedPart()
+	public IAtomContainer getSelectedPart()
 	{
 		return this.selectedPart;
 	}
@@ -784,7 +784,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @param   selectedPart  
 	 */
-	public void setSelectedPart(AtomContainer selectedPart)
+	public void setSelectedPart(IAtomContainer selectedPart)
 	{
 		this.selectedPart = selectedPart;
 		getColorHash().clear();
@@ -878,7 +878,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
    * @param  a  The atom.
    * @return    The toolTipText value.
    */
-  public String getToolTipText(Atom a) {
+  public String getToolTipText(IAtom a) {
     if (toolTipTextMap.get(a) != null) {
       return ((String) toolTipTextMap.get(a));
     } else {

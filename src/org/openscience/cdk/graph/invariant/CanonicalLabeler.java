@@ -32,8 +32,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.InvPair;
 
 /**
@@ -67,7 +67,7 @@ public class CanonicalLabeler {
    * the correctness of the AtomContainer. Negative H counts will 
    * cause a NumberFormatException to be thrown.
    */
-  public synchronized void canonLabel(AtomContainer atomContainer) {
+  public synchronized void canonLabel(IAtomContainer atomContainer) {
     if (atomContainer.getAtomCount() == 0)
       return;
     Vector vect = createInvarLabel(atomContainer);
@@ -77,7 +77,7 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step2(Vector v, AtomContainer atoms) {
+  private void step2(Vector v, IAtomContainer atoms) {
     primeProduct(v, atoms);
     step3(v, atoms);
   }
@@ -85,7 +85,7 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step3(Vector v, AtomContainer atoms) {
+  private void step3(Vector v, IAtomContainer atoms) {
     sortVector(v);
     step4(v, atoms);
   }
@@ -93,7 +93,7 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step4(Vector v, AtomContainer atoms) {
+  private void step4(Vector v, IAtomContainer atoms) {
     rankVector(v);
     step5(v, atoms);
   }
@@ -101,7 +101,7 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step5(Vector v, AtomContainer atoms) {
+  private void step5(Vector v, IAtomContainer atoms) {
     if (!isInvPart(v))
       step2(v, atoms);
     else
@@ -111,7 +111,7 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step6(Vector v, AtomContainer atoms) {
+  private void step6(Vector v, IAtomContainer atoms) {
     //On first pass save, partitioning as symmetry classes.
     step7(v, atoms);
   }
@@ -119,7 +119,7 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step7(Vector v, AtomContainer atoms) {
+  private void step7(Vector v, IAtomContainer atoms) {
     if (((InvPair) v.lastElement()).getCurr() < v.size()) {
       breakTies(v);
       step2(v, atoms);
@@ -135,9 +135,9 @@ public class CanonicalLabeler {
    *
    * @return Vector containting the
    */
-  private Vector createInvarLabel(AtomContainer atomContainer) {
-    Atom[]  atoms = atomContainer.getAtoms();
-    Atom a;
+  private Vector createInvarLabel(IAtomContainer atomContainer) {
+    IAtom[]  atoms = atomContainer.getAtoms();
+    IAtom a;
     StringBuffer inv;
     Vector vect = new Vector();
     for(int x = 0; x < atoms.length; x++) {
@@ -162,11 +162,11 @@ public class CanonicalLabeler {
    *
    * @param v the invariance pair vector
    */
-  private void primeProduct(Vector v, AtomContainer atomContainer) {
+  private void primeProduct(Vector v, IAtomContainer atomContainer) {
     Iterator it = v.iterator();
     Iterator n;
     InvPair inv;
-    Atom a;
+    IAtom a;
     long summ;
     while (it.hasNext()) {
       inv = (InvPair) it.next();
@@ -174,7 +174,7 @@ public class CanonicalLabeler {
       n = neighbour.iterator();
       summ = 1;
       while (n.hasNext()) {
-        a = (Atom) n.next();
+        a = (IAtom) n.next();
         int next = ((InvPair)a.getProperty(InvPair.INVARIANCE_PAIR)).getPrime();
         summ = summ * next;
       }

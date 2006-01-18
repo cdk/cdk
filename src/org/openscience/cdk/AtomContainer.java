@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.ChemObjectListener;
  * @author     steinbeck
  * @cdk.created    2000-10-02
  */
-public class AtomContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.AtomContainer , ChemObjectListener {
+public class AtomContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IAtomContainer , ChemObjectListener {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -77,7 +77,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	/**
 	 *  Internal array of atoms.
 	 */
-	protected org.openscience.cdk.interfaces.Atom[] atoms;
+	protected org.openscience.cdk.interfaces.IAtom[] atoms;
 
 	/**
 	 *  Internal array of bond.
@@ -105,11 +105,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 * @param  container  An AtomContainer to copy the atoms and electronContainers from
 	 */
-	public AtomContainer(org.openscience.cdk.interfaces.AtomContainer container)
+	public AtomContainer(org.openscience.cdk.interfaces.IAtomContainer container)
 	{
 		this.atomCount = container.getAtomCount();
 		this.electronContainerCount = container.getElectronContainerCount();
-		atoms = new org.openscience.cdk.interfaces.Atom[this.atomCount];
+		atoms = new org.openscience.cdk.interfaces.IAtom[this.atomCount];
 		electronContainers = new org.openscience.cdk.interfaces.ElectronContainer[this.electronContainerCount];
 		atomParities = new Hashtable((int)(atomCount/2));
 
@@ -137,7 +137,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	{
 		this.atomCount = 0;
 		this.electronContainerCount = 0;
-		atoms = new org.openscience.cdk.interfaces.Atom[atomCount];
+		atoms = new org.openscience.cdk.interfaces.IAtom[atomCount];
 		electronContainers = new org.openscience.cdk.interfaces.ElectronContainer[electronContainerCount];
         atomParities = new Hashtable((int)(atomCount/2));
 	}
@@ -149,7 +149,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
      * @param parity The new AtomParity for this container
      * @see   #getAtomParity
      */
-    public void addAtomParity(org.openscience.cdk.interfaces.AtomParity parity) {
+    public void addAtomParity(org.openscience.cdk.interfaces.IAtomParity parity) {
         atomParities.put(parity.getAtom(), parity);
     }
 
@@ -162,7 +162,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
      *         not have an associated AtomParity
      * @see    #addAtomParity
      */
-    public org.openscience.cdk.interfaces.AtomParity getAtomParity(org.openscience.cdk.interfaces.Atom atom) {
+    public org.openscience.cdk.interfaces.IAtomParity getAtomParity(org.openscience.cdk.interfaces.IAtom atom) {
         return (AtomParity)atomParities.get(atom);
     }
     
@@ -172,7 +172,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atoms  The array of atoms to be assigned to this AtomContainer
 	 *@see           #getAtoms
 	 */
-	public void setAtoms(org.openscience.cdk.interfaces.Atom[] atoms)
+	public void setAtoms(org.openscience.cdk.interfaces.IAtom[] atoms)
 	{
 		this.atoms = atoms;
 		for (int f = 0; f < atoms.length; f++)
@@ -211,7 +211,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom    The atom to be stored at position <code>number</code>
 	 *@see            #getAtomAt
 	 */
-	public void setAtomAt(int number, org.openscience.cdk.interfaces.Atom atom)
+	public void setAtomAt(int number, org.openscience.cdk.interfaces.IAtom atom)
 	{
 		atom.addListener(this);
 		atoms[number] = atom;
@@ -226,7 +226,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return         The atomAt value
 	 *@see            #setAtomAt
 	 */
-	public org.openscience.cdk.interfaces.Atom getAtomAt(int number)
+	public org.openscience.cdk.interfaces.IAtom getAtomAt(int number)
 	{
 		return atoms[number];
 	}
@@ -294,9 +294,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return    The array of atoms of this AtomContainer
 	 *@see       #setAtoms
 	 */
-	public org.openscience.cdk.interfaces.Atom[] getAtoms()
+	public org.openscience.cdk.interfaces.IAtom[] getAtoms()
 	{
-		org.openscience.cdk.interfaces.Atom[] returnAtoms = new org.openscience.cdk.interfaces.Atom[getAtomCount()];
+		org.openscience.cdk.interfaces.IAtom[] returnAtoms = new org.openscience.cdk.interfaces.IAtom[getAtomCount()];
 		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
 		return returnAtoms;
 	}
@@ -385,7 +385,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@see          #getElectronContainers
 	 *@see          #getBonds
 	 */
-	public org.openscience.cdk.interfaces.LonePair[] getLonePairs(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.LonePair[] getLonePairs(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector lps = new Vector();
 		for (int i = 0; i < getElectronContainerCount(); i++)
@@ -408,7 +408,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@return    The atom at position 0 .
 	 */
-	public org.openscience.cdk.interfaces.Atom getFirstAtom()
+	public org.openscience.cdk.interfaces.IAtom getFirstAtom()
 	{
 		return (Atom)atoms[0];
 	}
@@ -419,7 +419,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@return    The atom at the last position
 	 */
-	public org.openscience.cdk.interfaces.Atom getLastAtom()
+	public org.openscience.cdk.interfaces.IAtom getLastAtom()
 	{
 		return (Atom)atoms[getAtomCount() - 1];
 	}
@@ -432,7 +432,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom to be sought
 	 *@return       The Position of the atom in the atoms array in [0,..].
 	 */
-	public int getAtomNumber(org.openscience.cdk.interfaces.Atom atom)
+	public int getAtomNumber(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		for (int f = 0; f < getAtomCount(); f++)
 		{
@@ -454,7 +454,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return        The Position of the bond between a1 and a2 in the
 	 *               electronContainers array.
 	 */
-	public int getBondNumber(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2)
+	public int getBondNumber(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2)
 	{
 		return (getBondNumber(getBond(atom1, atom2)));
 	}
@@ -501,7 +501,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 * @param  atom2  The second atom
 	 * @return        The bond that connectes the two atoms
 	 */
-	public org.openscience.cdk.interfaces.Bond getBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2)
+	public org.openscience.cdk.interfaces.Bond getBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2)
 	{
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
@@ -526,10 +526,10 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@return       The array of <code>Atom</code>s with the size of connected
 	 *      atoms
 	 */
-	public org.openscience.cdk.interfaces.Atom[] getConnectedAtoms(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.IAtom[] getConnectedAtoms(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector atomsVec = getConnectedAtomsVector(atom);
-		org.openscience.cdk.interfaces.Atom[] conAtoms = new org.openscience.cdk.interfaces.Atom[atomsVec.size()];
+		org.openscience.cdk.interfaces.IAtom[] conAtoms = new org.openscience.cdk.interfaces.IAtom[atomsVec.size()];
 		atomsVec.copyInto(conAtoms);
 		return conAtoms;
 	}
@@ -541,7 +541,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom the bond partners are searched of.
 	 *@return       The vector with the size of connected atoms
 	 */
-	public Vector getConnectedAtomsVector(org.openscience.cdk.interfaces.Atom atom)
+	public Vector getConnectedAtomsVector(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector atomsVec = new Vector();
 		ElectronContainer electronContainer;
@@ -563,7 +563,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public org.openscience.cdk.interfaces.Bond[] getConnectedBonds(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.Bond[] getConnectedBonds(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector bondsVec=getConnectedBondsVector(atom);
 		org.openscience.cdk.interfaces.Bond[] conBonds = new org.openscience.cdk.interfaces.Bond[bondsVec.size()];
@@ -577,7 +577,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The vector with the size of connected atoms
 	 */
-  public Vector getConnectedBondsVector(org.openscience.cdk.interfaces.Atom atom)
+  public Vector getConnectedBondsVector(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector bondsVec = new Vector();
 		for (int i = 0; i < electronContainerCount; i++)
@@ -598,7 +598,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom the connected electronContainers are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public org.openscience.cdk.interfaces.ElectronContainer[] getConnectedElectronContainers(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.ElectronContainer[] getConnectedElectronContainers(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector bondsVec = new Vector();
 		for (int i = 0; i < electronContainerCount; i++)
@@ -700,7 +700,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom
 	 *@return       The number of Bonds for this atom
 	 */
-	public int getBondCount(org.openscience.cdk.interfaces.Atom atom)
+	public int getBondCount(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		int count = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
@@ -721,7 +721,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom
 	 *@return       The number of LonePairs for this atom
 	 */
-	public int getLonePairCount(org.openscience.cdk.interfaces.Atom atom)
+	public int getLonePairCount(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		int count = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
@@ -740,7 +740,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public org.openscience.cdk.interfaces.SingleElectron[] getSingleElectron(org.openscience.cdk.interfaces.Atom atom)
+	public org.openscience.cdk.interfaces.SingleElectron[] getSingleElectron(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector lps = new Vector();
 		for (int i = 0; i < getElectronContainerCount(); i++)
@@ -761,7 +761,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public int getSingleElectronSum(org.openscience.cdk.interfaces.Atom atom)
+	public int getSingleElectronSum(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		int count = 0;
 		for (int i = 0; i <  getElectronContainerCount(); i++)
@@ -779,7 +779,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 * @param  atom  The atom
 	 * @return       The number of bondorders for this atom
 	 */
-	public double getBondOrderSum(org.openscience.cdk.interfaces.Atom atom)
+	public double getBondOrderSum(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		double count = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
@@ -800,7 +800,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 * @param  atom  The atom
 	 * @return       The maximum bond order that this atom currently has
 	 */
-	public double getMaximumBondOrder(org.openscience.cdk.interfaces.Atom atom) {
+	public double getMaximumBondOrder(org.openscience.cdk.interfaces.IAtom atom) {
 		double max = 0.0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
@@ -822,7 +822,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom
 	 *@return       The minimim bond order that this atom currently has
 	 */
-	public double getMinimumBondOrder(org.openscience.cdk.interfaces.Atom atom)
+	public double getMinimumBondOrder(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		double min = 6;
 		for (int i = 0; i < getElectronContainerCount(); i++)
@@ -850,9 +850,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *                    AtomContainer and another given one
 	 */
 
-	public org.openscience.cdk.interfaces.AtomContainer getIntersection(org.openscience.cdk.interfaces.AtomContainer container)
+	public org.openscience.cdk.interfaces.IAtomContainer getIntersection(org.openscience.cdk.interfaces.IAtomContainer container)
 	{
-		org.openscience.cdk.interfaces.AtomContainer intersection = getBuilder().newAtomContainer();
+		org.openscience.cdk.interfaces.IAtomContainer intersection = getBuilder().newAtomContainer();
 
 		for (int i = 0; i < getAtomCount(); i++)
 		{
@@ -877,7 +877,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@param  atomContainer  AtomContainer with the new ElectronContainers
 	 */
-	public void addElectronContainers(org.openscience.cdk.interfaces.AtomContainer atomContainer)
+	public void addElectronContainers(org.openscience.cdk.interfaces.IAtomContainer atomContainer)
 	{
 		for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
 		{
@@ -896,7 +896,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@param  atomContainer  The atomcontainer to be added
 	 */
-	public void add(org.openscience.cdk.interfaces.AtomContainer atomContainer)
+	public void add(org.openscience.cdk.interfaces.IAtomContainer atomContainer)
 	{
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -921,7 +921,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@param  atom  The atom to be added to this container
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.Atom atom)
+	public void addAtom(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		if (contains(atom))
 		{
@@ -978,7 +978,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@param  atomContainer  The atomcontainer to be removed
 	 */
-	public void remove(org.openscience.cdk.interfaces.AtomContainer atomContainer)
+	public void remove(org.openscience.cdk.interfaces.IAtomContainer atomContainer)
 	{
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -1041,7 +1041,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 * @param  atom2  The second atom
 	 * @return        The bond that connectes the two atoms
 	 */
-	public org.openscience.cdk.interfaces.Bond removeBond(org.openscience.cdk.interfaces.Atom atom1, org.openscience.cdk.interfaces.Atom atom2)
+	public org.openscience.cdk.interfaces.Bond removeBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2)
 	{
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
@@ -1087,7 +1087,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@param  atom  The atom to be removed
 	 */
-	public void removeAtomAndConnectedElectronContainers(org.openscience.cdk.interfaces.Atom atom)
+	public void removeAtomAndConnectedElectronContainers(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		int position = getAtomNumber(atom);
 		if (position != -1)
@@ -1110,7 +1110,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *
 	 *@param  atom  The atom to be removed
 	 */
-	public void removeAtom(org.openscience.cdk.interfaces.Atom atom)
+	public void removeAtom(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		int position = getAtomNumber(atom);
 		if (position != -1)
@@ -1131,7 +1131,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		for (int f = 0; f < getElectronContainerCount(); f++) {
 			getElectronContainerAt(f).removeListener(this);	
 		}
-		atoms = new org.openscience.cdk.interfaces.Atom[growArraySize];
+		atoms = new org.openscience.cdk.interfaces.IAtom[growArraySize];
 		electronContainers = new org.openscience.cdk.interfaces.ElectronContainer[growArraySize];
 		atomCount = 0;
 		electronContainerCount = 0;
@@ -1251,7 +1251,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  the atom this AtomContainer is searched for
 	 *@return       True, if the AtomContainer contains the given atom object
 	 */
-	public boolean contains(org.openscience.cdk.interfaces.Atom atom)
+	public boolean contains(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		for (int i = 0; i < getAtomCount(); i++)
 		{
@@ -1308,11 +1308,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 * @see       #shallowCopy
 	 */
 	public Object clone() {
-		org.openscience.cdk.interfaces.AtomContainer clone = null;
+		org.openscience.cdk.interfaces.IAtomContainer clone = null;
 		org.openscience.cdk.interfaces.ElectronContainer electronContainer = null;
 		org.openscience.cdk.interfaces.ElectronContainer newEC = null;
-		org.openscience.cdk.interfaces.Atom[] natoms;
-		org.openscience.cdk.interfaces.Atom[] newAtoms;
+		org.openscience.cdk.interfaces.IAtom[] natoms;
+		org.openscience.cdk.interfaces.IAtom[] newAtoms;
 		try {
 			clone = (AtomContainer) super.clone();
 		} catch (Exception e) {
@@ -1332,7 +1332,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 				org.openscience.cdk.interfaces.Bond bond = (org.openscience.cdk.interfaces.Bond) electronContainer;
 				newEC = (org.openscience.cdk.interfaces.ElectronContainer)bond.clone();
 				natoms = bond.getAtoms();
-				newAtoms = new org.openscience.cdk.interfaces.Atom[natoms.length];
+				newAtoms = new org.openscience.cdk.interfaces.IAtom[natoms.length];
 				for (int g = 0; g < natoms.length; g++) {
 					try {
 						newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
@@ -1342,11 +1342,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 				}
 				((org.openscience.cdk.interfaces.Bond) newEC).setAtoms(newAtoms);
 			} else if (electronContainer instanceof org.openscience.cdk.interfaces.LonePair) {
-				org.openscience.cdk.interfaces.Atom atom = ((org.openscience.cdk.interfaces.LonePair) electronContainer).getAtom();
+				org.openscience.cdk.interfaces.IAtom atom = ((org.openscience.cdk.interfaces.LonePair) electronContainer).getAtom();
 				newEC = (org.openscience.cdk.interfaces.LonePair)electronContainer.clone();
 				((org.openscience.cdk.interfaces.LonePair) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
             } else if (electronContainer instanceof org.openscience.cdk.interfaces.SingleElectron) {
-            	org.openscience.cdk.interfaces.Atom atom = ((org.openscience.cdk.interfaces.SingleElectron) electronContainer).getAtom();
+            	org.openscience.cdk.interfaces.IAtom atom = ((org.openscience.cdk.interfaces.SingleElectron) electronContainer).getAtom();
                 newEC = (org.openscience.cdk.interfaces.SingleElectron)electronContainer.clone();
                 ((org.openscience.cdk.interfaces.SingleElectron) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
 			} else {
@@ -1380,7 +1380,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	protected void growAtomArray()
 	{
 		growArraySize = (atoms.length < growArraySize) ? growArraySize : atoms.length;
-		org.openscience.cdk.interfaces.Atom[] newatoms = new org.openscience.cdk.interfaces.Atom[atoms.length + growArraySize];
+		org.openscience.cdk.interfaces.IAtom[] newatoms = new org.openscience.cdk.interfaces.IAtom[atoms.length + growArraySize];
 		System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
 		atoms = newatoms;
 	}

@@ -303,7 +303,7 @@ double[] result = {
 	
 	private void removeHydrogens(AtomContainer ac)
 	{
-		org.openscience.cdk.interfaces.Atom atom = null;
+		org.openscience.cdk.interfaces.IAtom atom = null;
 		int f = ac.getAtomCount() - 1;
 		
 		do{

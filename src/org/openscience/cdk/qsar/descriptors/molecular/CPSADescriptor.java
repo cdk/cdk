@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -186,7 +186,7 @@ public class CPSADescriptor implements IDescriptor {
      @throws CDKException if the charge calculation fails
      */
 
-    public DescriptorValue calculate(AtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         IsotopeFactory factory = null;
         try {
             factory = IsotopeFactory.getInstance(container.getBuilder());

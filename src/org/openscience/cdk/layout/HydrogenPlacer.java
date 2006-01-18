@@ -32,8 +32,8 @@ import java.util.Vector;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -50,10 +50,10 @@ public class HydrogenPlacer {
 	public final static boolean debug = false;
 	public final static boolean debug1 = false;
 	
-	public  void placeHydrogens2D(AtomContainer atomContainer, double bondLength){
+	public  void placeHydrogens2D(IAtomContainer atomContainer, double bondLength){
 	    LoggingTool logger = new LoggingTool(this);
 	    logger.debug("Entering Hydrogen Placement...");
-	    Atom atom = null; 
+	    IAtom atom = null; 
 	    for (int f = 0; f < atomContainer.getAtomCount();f++)
 	    {
 	        atom = atomContainer.getAtomAt(f);
@@ -68,7 +68,7 @@ public class HydrogenPlacer {
 	}
 	
 	
-	public  void placeHydrogens2D(AtomContainer atomContainer, Atom atom)
+	public  void placeHydrogens2D(IAtomContainer atomContainer, IAtom atom)
 	{
 		double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
 		placeHydrogens2D(atomContainer, atom, bondLength);
@@ -76,7 +76,7 @@ public class HydrogenPlacer {
 	
 	}
 	
-	public  void placeHydrogens2D(AtomContainer atomContainer, Atom atom, double bondLength)
+	public  void placeHydrogens2D(IAtomContainer atomContainer, IAtom atom, double bondLength)
 	{
 		LoggingTool logger = new LoggingTool(this);
 		
@@ -86,9 +86,9 @@ public class HydrogenPlacer {
 		atomPlacer.setMolecule(atomContainer);
 		Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
-		Atom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
-		AtomContainer placedAtoms = atomContainer.getBuilder().newAtomContainer();
-		AtomContainer unplacedAtoms = atomContainer.getBuilder().newAtomContainer();
+		IAtom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
+		IAtomContainer placedAtoms = atomContainer.getBuilder().newAtomContainer();
+		IAtomContainer unplacedAtoms = atomContainer.getBuilder().newAtomContainer();
 		
 		for (int f = 0; f < connectedAtoms.length; f++) {
 			if (connectedAtoms[f].getSymbol().equals("H") && connectedAtoms[f].getPoint2d()==null) {

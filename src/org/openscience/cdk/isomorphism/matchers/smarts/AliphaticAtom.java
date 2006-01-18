@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
 
 /**
@@ -37,7 +37,7 @@ public class AliphaticAtom extends SMARTSAtom {
     public AliphaticAtom() {
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         if (!atom.getFlag(CDKConstants.ISAROMATIC)) {
             return true;
         }

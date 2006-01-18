@@ -33,10 +33,10 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
-import org.openscience.cdk.interfaces.AtomParity;
-import org.openscience.cdk.interfaces.AtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.BioPolymer;
 import org.openscience.cdk.interfaces.Bond;
 import org.openscience.cdk.interfaces.ChemFile;
@@ -102,7 +102,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Atom);
+		assertTrue(object instanceof IAtom);
 	}
 	 
 	public void testNewAtom_String() {
@@ -110,7 +110,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Atom);
+		assertTrue(object instanceof IAtom);
 	}
 	
 	public void testNewAtom_String_Point2d() {
@@ -118,7 +118,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Atom);
+		assertTrue(object instanceof IAtom);
 	}
 	
 	public void testNewAtom_String_Point3d() {
@@ -126,7 +126,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Atom);
+		assertTrue(object instanceof IAtom);
 	}
 	
 	public void testNewAtomContainer() {
@@ -134,7 +134,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof AtomContainer);
+		assertTrue(object instanceof IAtomContainer);
 	}
 	
 	public void testNewAtomContainer_int_int() {
@@ -142,18 +142,18 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof AtomContainer);
+		assertTrue(object instanceof IAtomContainer);
 	}
 	
-	public void testNewAtomContainer_AtomContainer() {
+	public void testNewAtomContainer_IAtomContainer() {
 		Object object = rootObject.getBuilder().newAtomContainer(rootObject.getBuilder().newAtomContainer());
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof AtomContainer);
+		assertTrue(object instanceof IAtomContainer);
 	}
 	
-	public void testNewAtomParity_Atom_Atom_Atom_Atom_Atom_int() {
+	public void testNewAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
 		Object object = rootObject.getBuilder().newAtomParity(
 				rootObject.getBuilder().newAtom(),
 				rootObject.getBuilder().newAtom(),
@@ -165,7 +165,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof AtomParity);
+		assertTrue(object instanceof IAtomParity);
 	}
 	
 	public void testNewAtomType_String() {
@@ -173,7 +173,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof AtomType);
+		assertTrue(object instanceof IAtomType);
 	}
 	
 	public void testNewAtomType_String_String() {
@@ -181,7 +181,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof AtomType);
+		assertTrue(object instanceof IAtomType);
 	}
 	
 	public void testNewBioPolymer() {
@@ -200,7 +200,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Bond);
 	}
 	
-	public void testNewBond_Atom_Atom() {
+	public void testNewBond_IAtom_IAtom() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom()
@@ -211,7 +211,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Bond);
 	}
 	
-	public void testNewBond_Atom_Atom_double() {
+	public void testNewBond_IAtom_IAtom_double() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
@@ -223,7 +223,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Bond);
 	}
 	
-	public void testNewBond_Atom_Atom_double_int() {
+	public void testNewBond_IAtom_IAtom_double_int() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
@@ -273,7 +273,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Crystal);
 	}
 	
-	public void testNewCrystal_AtomContainer() {
+	public void testNewCrystal_IAtomContainer() {
 		Object object = rootObject.getBuilder().newCrystal(
 			rootObject.getBuilder().newAtomContainer()
 		);
@@ -359,7 +359,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof LonePair);
 	}	
 
-	public void testNewLonePair_Atom() {
+	public void testNewLonePair_IAtom() {
 		Object object = rootObject.getBuilder().newLonePair(
 			rootObject.getBuilder().newAtom()
 		);
@@ -385,7 +385,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Molecule);
 	}	
 
-	public void testNewMolecule_AtomContainer() {
+	public void testNewMolecule_IAtomContainer() {
 		Object object = rootObject.getBuilder().newMolecule(
 			rootObject.getBuilder().newAtomContainer()
 		);
@@ -419,7 +419,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof PseudoAtom);
 	}	
 
-	public void testNewPseudoAtom_Atom() {
+	public void testNewPseudoAtom_IAtom() {
 		Object object = rootObject.getBuilder().newPseudoAtom(
 			rootObject.getBuilder().newAtom()
 		);
@@ -485,7 +485,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof Ring);
 	}	
 
-	public void testNewRing_AtomContainer() {
+	public void testNewRing_IAtomContainer() {
 		Object object = rootObject.getBuilder().newRing(
 			rootObject.getBuilder().newAtomContainer()
 		);
@@ -536,7 +536,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof SingleElectron);
 	}
 
-	public void testNewSingleElectron_Atom() {
+	public void testNewSingleElectron_IAtom() {
 		Object object = rootObject.getBuilder().newSingleElectron(
 			rootObject.getBuilder().newAtom()
 		);

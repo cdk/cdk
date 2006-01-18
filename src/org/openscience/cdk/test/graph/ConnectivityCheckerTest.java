@@ -100,8 +100,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		}
         assertNotNull(moleculeSet);
 		assertEquals(2, moleculeSet.getMoleculeCount());
-		org.openscience.cdk.interfaces.Atom copy1 = moleculeSet.getMolecule(0).getAtomAt(0);
-		org.openscience.cdk.interfaces.Atom copy2 = moleculeSet.getMolecule(1).getAtomAt(0);
+		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getMolecule(0).getAtomAt(0);
+		org.openscience.cdk.interfaces.IAtom copy2 = moleculeSet.getMolecule(1).getAtomAt(0);
         
         assertEquals(atom1.getID(), copy1.getID());
         assertEquals(atom2.getID(), copy2.getID());

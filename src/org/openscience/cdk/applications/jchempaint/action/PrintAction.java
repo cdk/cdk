@@ -36,7 +36,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Opens a print dialog
@@ -74,7 +74,7 @@ public class PrintAction extends JCPAction implements Printable {
 	 */
 	public int print(Graphics g, PageFormat pageFormat, int pageIndex) {
 		//get eventually selected parts
-		AtomContainer beforePrinting = jcpPanel.getJChemPaintModel().getRendererModel().getSelectedPart();
+		IAtomContainer beforePrinting = jcpPanel.getJChemPaintModel().getRendererModel().getSelectedPart();
 		//disable selection for printing
 		jcpPanel.getJChemPaintModel().getRendererModel().setSelectedPart(new org.openscience.cdk.AtomContainer());
 		if (pageIndex > 0) {

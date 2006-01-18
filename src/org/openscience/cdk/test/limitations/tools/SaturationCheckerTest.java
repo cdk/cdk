@@ -312,7 +312,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     
     public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
 	    Molecule pyrrole = MoleculeFactory.makePyrrole();
-	    org.openscience.cdk.interfaces.Atom n = pyrrole.getAtomAt(1);
+	    org.openscience.cdk.interfaces.IAtom n = pyrrole.getAtomAt(1);
 	    RingSet rs = (new SSSRFinder(pyrrole)).findSSSR();
 	    Ring ring = (Ring) rs.get(0);
 	    for (int j=0 ; j<ring.getBondCount(); j++)

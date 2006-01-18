@@ -33,7 +33,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.ChemObjectListener;
@@ -206,7 +206,7 @@ public class ChemObjectTest extends CDKTestCase {
     public void testClone_Properties2() {
         IChemObject chemObject1 = builder.newChemObject();
         Hashtable props1 = new Hashtable();
-        Atom atom = builder.newAtom("C");
+        IAtom atom = builder.newAtom("C");
         props1.put("atom", atom);
         chemObject1.setProperties(props1);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();

@@ -30,7 +30,7 @@ package org.openscience.cdk.ringsearch;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 
@@ -91,10 +91,10 @@ public class RingPartitioner {
      *@param  ringSet  The RingSet to be converted.
      *@return          The AtomContainer containing the bonds and atoms of the ringSet.
      */
-    public static AtomContainer convertToAtomContainer(RingSet ringSet) {
+    public static IAtomContainer convertToAtomContainer(RingSet ringSet) {
     	Ring ring = (Ring) ringSet.get(0);
     	if (ring == null) return null;
-        AtomContainer ac = ring.getBuilder().newAtomContainer();
+        IAtomContainer ac = ring.getBuilder().newAtomContainer();
         for (int i = 0; i < ringSet.size(); i++) {
             ring = (Ring) ringSet.get(i);
             for (int r = 0; r < ring.getBondCount(); r++) {

@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module extra
@@ -32,12 +32,12 @@ public class SymbolAndChargeQueryAtom extends org.openscience.cdk.Atom implement
     
     public SymbolAndChargeQueryAtom() {}
     
-    public SymbolAndChargeQueryAtom(Atom atom) {
+    public SymbolAndChargeQueryAtom(IAtom atom) {
         super(atom.getSymbol());
         setFormalCharge(atom.getFormalCharge());
     }
     
-    public boolean matches(Atom atom) {
+    public boolean matches(IAtom atom) {
         return this.getSymbol().equals(atom.getSymbol())&&this.getFormalCharge()==atom.getFormalCharge();
     };
 

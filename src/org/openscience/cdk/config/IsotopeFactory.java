@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.Atom;
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ChemObjectBuilder;
 import org.openscience.cdk.interfaces.Element;
 import org.openscience.cdk.interfaces.Isotope;
@@ -285,7 +285,7 @@ public class IsotopeFactory
 	 *@param  atom  The atom to be configured
 	 *@return       The configured atom
 	 */
-	public Atom configure(Atom atom)
+	public IAtom configure(IAtom atom)
 	{
 		Isotope isotope = getMajorIsotope(atom.getSymbol());
 		return configure(atom, isotope);
@@ -300,7 +300,7 @@ public class IsotopeFactory
 	 *@param  isotope  The isotope to read the data from
 	 *@return          The configured atom
 	 */
-	public Atom configure(Atom atom, Isotope isotope)
+	public IAtom configure(IAtom atom, Isotope isotope)
 	{
 		atom.setMassNumber(isotope.getMassNumber());
 		atom.setSymbol(isotope.getSymbol());
@@ -317,7 +317,7 @@ public class IsotopeFactory
 	 *
 	 *@param  container  The AtomContainer to be configured
 	 */
-	public void configureAtoms(AtomContainer container)
+	public void configureAtoms(IAtomContainer container)
 	{
 		for (int f = 0; f < container.getAtomCount(); f++)
 		{

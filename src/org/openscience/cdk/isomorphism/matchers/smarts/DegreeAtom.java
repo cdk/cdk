@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.Atom;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matcher checks the number of connections of the checked Atom
@@ -39,7 +39,7 @@ public class DegreeAtom extends SMARTSAtom {
         this.degree = degree;
     }
     
-	public boolean matches(Atom atom) {
+	public boolean matches(IAtom atom) {
         int atomDegree = ((Integer)atom.getProperty("org.openscience.cdk.Atom.degree")).intValue();
         return (atomDegree == this.degree);
     };

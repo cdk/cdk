@@ -72,7 +72,7 @@ public class FiguerasSSSRFinder {
 		RingSet sssr = new RingSet();
 		Molecule molecule = new Molecule();
 		molecule.add(mol);
-		org.openscience.cdk.interfaces.Atom smallest;
+		org.openscience.cdk.interfaces.IAtom smallest;
 		int smallestDegree, nodesToBreakCounter, degree;
 		Atom[] rememberNodes;
 		Ring ring;
@@ -104,7 +104,7 @@ public class FiguerasSSSRFinder {
 			nodesN2.removeAllElements();
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(f);
+				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(f);
 				degree = molecule.getBondCount(atom);
 				if (degree == 0)
 				{
@@ -202,10 +202,10 @@ public class FiguerasSSSRFinder {
 	 * @param   molecule  The molecule that contains the rootNode
 	 * @return     The smallest Ring rootnode is part of
 	 */
-	private Ring getRing(org.openscience.cdk.interfaces.Atom rootNode, Molecule molecule)
+	private Ring getRing(org.openscience.cdk.interfaces.IAtom rootNode, Molecule molecule)
 	{
-		org.openscience.cdk.interfaces.Atom node, neighbor, mAtom; 
-		org.openscience.cdk.interfaces.Atom[] neighbors, mAtoms;
+		org.openscience.cdk.interfaces.IAtom node, neighbor, mAtom; 
+		org.openscience.cdk.interfaces.IAtom[] neighbors, mAtoms;
 		/** OKatoms is Figueras nomenclature, giving the number of 
 		    atoms in the structure */
 		int OKatoms = molecule.getAtomCount();
@@ -321,7 +321,7 @@ public class FiguerasSSSRFinder {
 	 * @param   atom  The atom to be disconnecred
 	 * @param   molecule  The molecule containing the atom
 	 */
-	 private void trim(org.openscience.cdk.interfaces.Atom atom, Molecule molecule) {
+	 private void trim(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
         Bond[] bonds = molecule.getConnectedBonds(atom);
 	 	for (int i = 0; i < bonds.length; i++) {
             molecule.removeElectronContainer(bonds[i]);
@@ -338,7 +338,7 @@ public class FiguerasSSSRFinder {
 	private void initPath(Molecule molecule)
 	{
 	 	for (int i = 0; i < molecule.getAtomCount(); i++) {
-	 		org.openscience.cdk.interfaces.Atom atom = molecule.getAtomAt(i);
+	 		org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(i);
 			atom.setProperty(PATH, new Vector());
 	 	}		
 	}

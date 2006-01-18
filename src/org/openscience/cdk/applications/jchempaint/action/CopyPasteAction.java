@@ -39,7 +39,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 
-import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
@@ -82,7 +82,7 @@ public class CopyPasteAction extends JCPAction{
 	        JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
 	        Renderer2DModel renderModel = jcpModel.getRendererModel();
 	        if ("copy".equals(type)) {
-	            AtomContainer tocopy = renderModel.getSelectedPart();
+	            IAtomContainer tocopy = renderModel.getSelectedPart();
 	            if (tocopy == null) {
 	            	return;
 	            }
@@ -108,10 +108,10 @@ public class CopyPasteAction extends JCPAction{
 	        			logger.warn("Pastes string is not recognized.");
 	        		}
 	        	}
-    			AtomContainer topaste = null;
+    			IAtomContainer topaste = null;
         		if (reader != null) {
         			if (reader.accepts(Molecule.class)) { 
-        				topaste = (AtomContainer) reader.read(new Molecule());
+        				topaste = (IAtomContainer) reader.read(new Molecule());
         			} else if (reader.accepts(ChemFile.class)) {
         				topaste = ChemFileManipulator.getAllInOneContainer(
         						(ChemFile)reader.read(new ChemFile())
@@ -133,7 +133,7 @@ public class CopyPasteAction extends JCPAction{
         			}
         		}
 	            if (topaste != null) {
-	                topaste = (AtomContainer)topaste.clone();
+	                topaste = (IAtomContainer)topaste.clone();
 	                org.openscience.cdk.interfaces.ChemModel chemModel = jcpModel.getChemModel();
 	                //translate the new structure a bit
 	                GeometryTools.translate2D(topaste, 25, 25); //in pixels
@@ -182,7 +182,7 @@ public class CopyPasteAction extends JCPAction{
       String svg;
       String cml;
 
-      public JcpSelection (AtomContainer tocopy1) throws Exception{
+      public JcpSelection (IAtomContainer tocopy1) throws Exception{
     	  Molecule tocopy=new Molecule(tocopy1);
     	  // MDL mol output
           StringWriter sw = new StringWriter();
