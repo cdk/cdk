@@ -161,7 +161,7 @@
             <condition property="sunJavaDoc">
               <or>
                 <available file="${java.ext.dirs}/tools.jar" />
-                <available file="${java.home}/lib/tools.jar" />
+                <available file="${java.home}/../lib/tools.jar" />
               </or>
             </condition>
             <condition property="gjdocJavaDoc">
