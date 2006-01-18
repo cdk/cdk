@@ -174,7 +174,10 @@ public class DescriptorEngine {
             if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
             if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
                 Element rawElement = (Element) dictEntries[j].getRawContent();
-                assert(rawElement != null);                
+                // assert(rawElement != null);
+                // We're not fully Java 1.5 yet, so commented it out now. If it is
+                // really important to have it, then add @cdk.require java1.5 in the
+                // Class javadoc (and all classes that use this class)
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
 
                 for (int i = 0; i < classifications.size(); i++) {
