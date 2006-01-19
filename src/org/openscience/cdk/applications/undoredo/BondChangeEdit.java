@@ -31,8 +31,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -67,8 +67,8 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	public void redo() throws CannotRedoException {
 		container.removeElectronContainer(formerBond);
 		container.addBond(newBond);
-		Molecule molecule = new org.openscience.cdk.Molecule(container);
-		SetOfMolecules moleculeSet = ConnectivityChecker
+		IMolecule molecule = new org.openscience.cdk.Molecule(container);
+		ISetOfMolecules moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
 	}
@@ -81,8 +81,8 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	public void undo() throws CannotUndoException {
 		container.removeElectronContainer(newBond);
 		container.addBond(formerBond);
-		Molecule molecule = new org.openscience.cdk.Molecule(container);
-		SetOfMolecules moleculeSet = ConnectivityChecker
+		IMolecule molecule = new org.openscience.cdk.Molecule(container);
+		ISetOfMolecules moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
 	}

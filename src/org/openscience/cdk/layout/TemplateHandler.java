@@ -38,7 +38,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
@@ -63,7 +63,7 @@ public class TemplateHandler
 
 	private LoggingTool logger;
 
-	Molecule molecule;
+	IMolecule molecule;
 	RingSet sssr;
 	double bondLength = 1.5;
 
@@ -121,19 +121,19 @@ public class TemplateHandler
 	 *
 	 * @param  molecule  The molecule to be added to the TemplateHandler
 	 */
-	public void addMolecule(Molecule molecule)
+	public void addMolecule(IMolecule molecule)
 	{
 		templates.addElement(molecule);
 	}
 	
-	public Molecule removeMolecule(Molecule molecule)  throws CDKException
+	public IMolecule removeMolecule(IMolecule molecule)  throws CDKException
 	{
 		IAtomContainer ac1 = molecule.getBuilder().newAtomContainer(molecule);
 		IAtomContainer ac2 = null;
-		Molecule mol2 = null;
+		IMolecule mol2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
-			mol2 = (Molecule)templates.elementAt(f);
+			mol2 = (IMolecule)templates.elementAt(f);
 			ac2 = molecule.getBuilder().newAtomContainer(mol2);
 			if (UniversalIsomorphismTester.isIsomorph(ac1, ac2)) {
 				templates.removeElementAt(f);
@@ -152,16 +152,16 @@ public class TemplateHandler
 	 * @param  molecule  The molecule to be check for potential templates
 	 * @return           True if there was a possible mapping
 	 */
-	public boolean mapTemplates(Molecule molecule) throws CDKException {
+	public boolean mapTemplates(IMolecule molecule) throws CDKException {
         logger.debug("Trying to map a molecule...");
 		boolean mapped = false;
-		Molecule template = null;
+		IMolecule template = null;
 		RMap map = null;
 		org.openscience.cdk.interfaces.IAtom atom1 = null;
 		org.openscience.cdk.interfaces.IAtom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
-			template = (Molecule) templates.elementAt(f);
+			template = (IMolecule) templates.elementAt(f);
 			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
 			{
 				List list = UniversalIsomorphismTester.getSubgraphAtomsMap(

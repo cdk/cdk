@@ -35,8 +35,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -143,7 +143,7 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public IAtomContainer addHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
+    public IAtomContainer addHydrogensToSatisfyValency(IMolecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
 	    logger.debug("Start of addHydrogensToSatisfyValency");
         IAtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(molecule);
@@ -165,15 +165,15 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public IAtomContainer addExplicitHydrogensToSatisfyValency(Molecule molecule) throws IOException, ClassNotFoundException, CDKException
+    public IAtomContainer addExplicitHydrogensToSatisfyValency(IMolecule molecule) throws IOException, ClassNotFoundException, CDKException
     {
     	logger.debug("Start of addExplicitHydrogensToSatisfyValency");
-      SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-      Molecule[] molecules = moleculeSet.getMolecules();
+      ISetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+      IMolecule[] molecules = moleculeSet.getMolecules();
       IAtomContainer changedAtomsAndBonds = molecule.getBuilder().newAtomContainer();
       IAtomContainer intermediateContainer= null;
       for (int k = 0; k < molecules.length; k++) {
-    	  Molecule molPart = molecules[k];
+    	  IMolecule molPart = molecules[k];
         IAtom[] atoms = molPart.getAtoms();
          for (int i = 0; i < atoms.length; i++) {
             intermediateContainer = addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
@@ -284,11 +284,11 @@ public class HydrogenAdder {
      *@cdk.keyword          implicit hydrogen
      */
     public HashMap addImplicitHydrogensToSatisfyValency(IAtomContainer container) throws CDKException {
-      SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
-      Molecule[] molecules = moleculeSet.getMolecules();
+      ISetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
+      IMolecule[] molecules = moleculeSet.getMolecules();
       HashMap hydrogenAtomMap = new HashMap();
       for (int k = 0; k < molecules.length; k++) {
-    	Molecule molPart = molecules[k];
+    	IMolecule molPart = molecules[k];
         IAtom[] atoms = molPart.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
             int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);

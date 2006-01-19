@@ -144,10 +144,10 @@ public class XindiceReader {
         return mols;
     }
         
-    private org.openscience.cdk.interfaces.Molecule getMolecule(ChemFile cf) {
+    private org.openscience.cdk.interfaces.IMolecule getMolecule(ChemFile cf) {
     	org.openscience.cdk.interfaces.IChemSequence cs = cf.getChemSequence(0);
         org.openscience.cdk.interfaces.IChemModel cm = cs.getChemModel(0);
-        org.openscience.cdk.interfaces.SetOfMolecules som = cm.getSetOfMolecules();
+        org.openscience.cdk.interfaces.ISetOfMolecules som = cm.getSetOfMolecules();
         return som.getMolecule(0);
     }
 

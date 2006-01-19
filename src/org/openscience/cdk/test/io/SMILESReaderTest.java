@@ -78,7 +78,7 @@ public class SMILESReaderTest extends CDKTestCase {
             SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
             String name = null;
-            org.openscience.cdk.interfaces.Molecule thisMol = null;
+            org.openscience.cdk.interfaces.IMolecule thisMol = null;
 	    
 	    thisMol = som.getMolecule(0);
 	    name = ( (String)thisMol.getProperty("SMIdbNAME") ).toString();
@@ -95,7 +95,7 @@ public class SMILESReaderTest extends CDKTestCase {
         try {
             SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
-            org.openscience.cdk.interfaces.Molecule thisMol = som.getMolecule(1);
+            org.openscience.cdk.interfaces.IMolecule thisMol = som.getMolecule(1);
             assertNull(thisMol.getProperty("SMIdbNAME"));
         } catch (Exception e) {
             e.printStackTrace();

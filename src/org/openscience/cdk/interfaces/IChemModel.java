@@ -38,7 +38,7 @@ public interface IChemModel extends IChemObject {
 	 * @return   The SetOfMolecules of this ChemModel
      * @see      #setSetOfMolecules
 	 */
-	public SetOfMolecules getSetOfMolecules();
+	public ISetOfMolecules getSetOfMolecules();
 
 	/**
 	 * Sets the SetOfMolecules of this ChemModel.
@@ -46,7 +46,7 @@ public interface IChemModel extends IChemObject {
 	 * @param   setOfMolecules  the content of this model
      * @see      #getSetOfMolecules
 	 */
-	public void setSetOfMolecules(SetOfMolecules setOfMolecules);	
+	public void setSetOfMolecules(ISetOfMolecules setOfMolecules);	
 
 	/**
 	 * Returns the RingSet of this ChemModel.

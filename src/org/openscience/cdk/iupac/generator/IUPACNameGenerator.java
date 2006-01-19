@@ -29,8 +29,8 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Fragment;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
@@ -127,7 +127,7 @@ public class IUPACNameGenerator {
         //Must use a clone to avoid deleting the user's atoms.
         IAtomContainer m = (IAtomContainer) moleculeToName.clone();
         
-        if (!(m instanceof Fragment || m instanceof Molecule)) {
+        if (!(m instanceof Fragment || m instanceof IMolecule)) {
             return;
         }
         // set some initial values
@@ -137,7 +137,7 @@ public class IUPACNameGenerator {
         /** First calculate some general statistics that
          *  can speed up the application of rules.
          */
-        Molecule molecule = new org.openscience.cdk.Molecule(m);
+        IMolecule molecule = new org.openscience.cdk.Molecule(m);
         try {
             hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
         } catch (Exception exception) {
@@ -207,8 +207,8 @@ public class IUPACNameGenerator {
         // step 3
         logger.info("Step 3");
         try {
-            SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(ac);
-            Molecule[] molecules = moleculeSet.getMolecules();
+            ISetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(ac);
+            IMolecule[] molecules = moleculeSet.getMolecules();
             for (int j=0; j<molecules.length; j++) {
                 FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies(molecules[j]);
                 for (int i=0; i < fwav.getAtomCount(); i++) {

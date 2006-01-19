@@ -39,9 +39,9 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -193,7 +193,7 @@ public class ValidatorEngine implements ValidatorInterface {
         if (reactionSet != null) {
             report.addReport(validateSetOfReactions(reactionSet));
         }
-        SetOfMolecules moleculeSet = subject.getSetOfMolecules();
+        ISetOfMolecules moleculeSet = subject.getSetOfMolecules();
         if (moleculeSet != null) {
             report.addReport(validateSetOfMolecules(moleculeSet));
         }
@@ -286,7 +286,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into hierarchy
         return report;
     }
-    public ValidationReport validateMolecule(Molecule subject) {
+    public ValidationReport validateMolecule(IMolecule subject) {
         logger.info("Validating org.openscience.cdk.Molecule");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -312,17 +312,17 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        Molecule[] reactants = subject.getReactants().getMolecules();
+        IMolecule[] reactants = subject.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             report.addReport(validateMolecule(reactants[i]));
         }
-        Molecule[] products = subject.getProducts().getMolecules();
+        IMolecule[] products = subject.getProducts().getMolecules();
         for (int i=0; i<products.length; i++) {
             report.addReport(validateMolecule(products[i]));
         }
         return report;
     }
-    public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
+    public ValidationReport validateSetOfMolecules(ISetOfMolecules subject) {
         logger.info("Validating org.openscience.cdk.SetOfMolecules");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -334,7 +334,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        Molecule[] molecules = subject.getMolecules();
+        IMolecule[] molecules = subject.getMolecules();
         for (int i=0; i<molecules.length; i++) {
             report.addReport(validateMolecule(molecules[i]));
         }

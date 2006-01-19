@@ -51,10 +51,10 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
@@ -227,17 +227,17 @@ public class Convertor {
 		return reactionList;
     }
     
-    public CMLList cdkSetOfMoleculesToCMLList(SetOfMolecules moleculeSet) {
+    public CMLList cdkSetOfMoleculesToCMLList(ISetOfMolecules moleculeSet) {
     	return cdkSetOfMoleculesToCMLList(moleculeSet, true);
     }
-    private CMLList cdkSetOfMoleculesToCMLList(SetOfMolecules moleculeSet, boolean setIDs) {
+    private CMLList cdkSetOfMoleculesToCMLList(ISetOfMolecules moleculeSet, boolean setIDs) {
     	CMLList cmlList = new CMLList();
     	
     	if (useCMLIDs && setIDs) {
     		idCreator.createIDs(moleculeSet);
     	}
     	
-    	Molecule[] molecules = moleculeSet.getMolecules(); 
+    	IMolecule[] molecules = moleculeSet.getMolecules(); 
     	for (int i=0; i<molecules.length; i++) {
     		cmlList.appendChild(cdkMoleculeToCMLMolecule(molecules[i], false));
     	}
@@ -256,7 +256,7 @@ public class Convertor {
     	
     	// reactants
     	CMLReactantList cmlReactants = new CMLReactantList();
-    	Molecule[] reactants = reaction.getReactants().getMolecules();
+    	IMolecule[] reactants = reaction.getReactants().getMolecules();
     	for (int i=0; i<reactants.length; i++) {
     		CMLReactant cmlReactant = new CMLReactant();
     		cmlReactant.addMolecule(cdkMoleculeToCMLMolecule(reactants[i], false));
@@ -265,7 +265,7 @@ public class Convertor {
 
     	// products
     	CMLProductList cmlProducts = new CMLProductList();
-    	Molecule[] products = reaction.getProducts().getMolecules();
+    	IMolecule[] products = reaction.getProducts().getMolecules();
     	for (int i=0; i<products.length; i++) {
     		CMLProduct cmlProduct = new CMLProduct();
     		cmlProduct.addMolecule(cdkMoleculeToCMLMolecule(products[i], false));
@@ -303,10 +303,10 @@ public class Convertor {
 		return molecule;
 	}
 	
-	public CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure) {
+	public CMLMolecule cdkMoleculeToCMLMolecule(IMolecule structure) {
 		return cdkMoleculeToCMLMolecule(structure, true);
 	}
-	private CMLMolecule cdkMoleculeToCMLMolecule(Molecule structure, boolean setIDs) {
+	private CMLMolecule cdkMoleculeToCMLMolecule(IMolecule structure, boolean setIDs) {
 		return cdkAtomContainerToCMLMolecule(structure, true);
 	}
 	

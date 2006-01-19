@@ -50,8 +50,8 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
@@ -76,9 +76,9 @@ public class PMPReader extends DefaultChemObjectReader {
     private LoggingTool logger;
 
     /* Keep a copy of the PMP model */
-    private SetOfMolecules som;
+    private ISetOfMolecules som;
     private IChemModel modelModel;
-    private Molecule molecule;
+    private IMolecule molecule;
     private IChemObject chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
     private Hashtable atomids = new Hashtable();

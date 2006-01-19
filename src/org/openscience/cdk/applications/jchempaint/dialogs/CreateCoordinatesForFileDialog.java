@@ -48,7 +48,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
@@ -207,12 +207,12 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 				Projector.project2D(ChemModelManipulator.getAllInOneContainer(chemModel));
 			} else
 			{
-				org.openscience.cdk.interfaces.SetOfMolecules som = chemModel.getSetOfMolecules();
+				org.openscience.cdk.interfaces.ISetOfMolecules som = chemModel.getSetOfMolecules();
 				if (som != null)
 				{
 					logger.debug("no mols in som: ", som.getMoleculeCount());
 					SetOfMolecules newsom = new SetOfMolecules();
-					Molecule[] mols = som.getMolecules();
+					IMolecule[] mols = som.getMolecules();
 					for (int i = 0; i < mols.length; i++)
 					{
 						newsom.addMolecule(relayoutMolecule(mols[i]));
@@ -230,12 +230,12 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 						org.openscience.cdk.interfaces.Reaction reaction = reactions[j];
 						Reaction newReaction = new Reaction();
 						// FIXME, this does not preserve reaction properties!
-						Molecule[] reactants = reaction.getReactants().getMolecules();
+						IMolecule[] reactants = reaction.getReactants().getMolecules();
 						for (int i = 0; i < reactants.length; i++)
 						{
 							newReaction.addReactant(relayoutMolecule(reactants[i]));
 						}
-						Molecule[] products = reaction.getProducts().getMolecules();
+						IMolecule[] products = reaction.getProducts().getMolecules();
 						for (int i = 0; i < products.length; i++)
 						{
 							newReaction.addProduct(relayoutMolecule(products[i]));
@@ -259,9 +259,9 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 		 *@param  molecule  Description of the Parameter
 		 *@return           Description of the Return Value
 		 */
-		private Molecule relayoutMolecule(Molecule molecule)
+		private IMolecule relayoutMolecule(IMolecule molecule)
 		{
-			Molecule cleanedMol = molecule;
+			IMolecule cleanedMol = molecule;
 			if (molecule != null)
 			{
 				if (molecule.getAtomCount() > 2)

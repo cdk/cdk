@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -270,7 +270,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }
-        SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+        ISetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
         moleculeSet.addMolecule(model.getBuilder().newMolecule(container));
         model.setSetOfMolecules(moleculeSet);
     }
@@ -280,8 +280,8 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      */
     private void readPartialCharges(IChemModel model) throws CDKException, IOException {
         logger.info("Reading partial atomic charges");
-        org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = model.getSetOfMolecules();
-        org.openscience.cdk.interfaces.Molecule molecule = moleculeSet.getMolecule(0);
+        org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet = model.getSetOfMolecules();
+        org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
         String line = input.readLine(); // skip first line after "Total atomic charges"
         while (input.ready()) {
             line = input.readLine();

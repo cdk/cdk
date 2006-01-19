@@ -209,7 +209,7 @@ public class ReactionBalancer {
 	 *@param  side  equals 1 for products, -1 for reactants
 	 *@param  hash  The feature to be added to the MoleculeHashs attribute
 	 */
-	protected void addMoleculeHashs(org.openscience.cdk.interfaces.SetOfMolecules som, int side, Hashtable hash) {
+	protected void addMoleculeHashs(org.openscience.cdk.interfaces.ISetOfMolecules som, int side, Hashtable hash) {
 		for (int i = 0; i < som.getAtomContainerCount(); i++) {
 			Hashtable molHash = new MFAnalyser(som.getMolecule(i)).getFormulaHashtable();
 			for (Enumeration e = molHash.keys(); e.hasMoreElements(); ) {
@@ -358,7 +358,7 @@ public class ReactionBalancer {
 	 *@param  elementCount  The number of Molecules to be added
 	 *@param  mol           The Molecule to be added
 	 */
-	public void balanceSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules som, double elementCount, Molecule mol) throws CDKException{
+	public void balanceSetOfMolecules(org.openscience.cdk.interfaces.ISetOfMolecules som, double elementCount, Molecule mol) throws CDKException{
 		int molPosition = getMoleculePosition(som, mol);
 		balanceSetOfMolecules(som, elementCount, mol, molPosition);
 	}
@@ -371,7 +371,7 @@ public class ReactionBalancer {
 	 *@param  mol           The Molecule to be added
 	 *@param  molPosition   The position of Molecule mol in SetOfMolecules som
 	 */
-	public void balanceSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules som, double elementCount, Molecule mol, int molPosition) {
+	public void balanceSetOfMolecules(org.openscience.cdk.interfaces.ISetOfMolecules som, double elementCount, Molecule mol, int molPosition) {
 		
 		if (molPosition == -1) {
 			som.addAtomContainer(mol, elementCount);
@@ -390,7 +390,7 @@ public class ReactionBalancer {
 	 *@param  mol  The Molecule to be checked
 	 *@return      The position in SetOfMolecules if found, -1 otherwise
 	 */
-	public int getMoleculePosition(org.openscience.cdk.interfaces.SetOfMolecules som, Molecule mol) throws CDKException {
+	public int getMoleculePosition(org.openscience.cdk.interfaces.ISetOfMolecules som, Molecule mol) throws CDKException {
 		for (int i = 0; i < som.getAtomContainerCount(); i++) {
 			if (som.getAtomContainer(i).getAtomCount() == mol.getAtomCount()) {
 				if (mol.getBondCount() == 0 || som.getAtomContainer(i).getBondCount() == 0) {

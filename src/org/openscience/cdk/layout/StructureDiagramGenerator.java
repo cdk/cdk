@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -81,7 +81,7 @@ public class StructureDiagramGenerator
 
     private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = new TemplateHandler();
 
-	Molecule molecule;
+	IMolecule molecule;
 	RingSet sssr;
 	double bondLength = 1.5;
 	Vector2d firstBondVector;
@@ -107,7 +107,7 @@ public class StructureDiagramGenerator
 	 *
 	 *@param  molecule  The molecule to be layed out.
 	 */
-	public StructureDiagramGenerator(Molecule molecule)
+	public StructureDiagramGenerator(IMolecule molecule)
 	{
 		this();
 		setMolecule(molecule, false);
@@ -122,12 +122,12 @@ public class StructureDiagramGenerator
 	 *@param  mol    the molecule for which coordinates are to be generated.
 	 *@param  clone  Should the whole process be performed with a cloned copy?
 	 */
-	public void setMolecule(Molecule mol, boolean clone)
+	public void setMolecule(IMolecule mol, boolean clone)
 	{
 		org.openscience.cdk.interfaces.IAtom atom = null;
 		if (clone)
 		{
-			this.molecule = (Molecule) mol.clone();
+			this.molecule = (IMolecule) mol.clone();
 		} else
 		{
 			this.molecule = mol;
@@ -204,7 +204,7 @@ public class StructureDiagramGenerator
 	 *
 	 *@param  molecule  the molecule for which coordinates are to be generated.
 	 */
-	public void setMolecule(Molecule molecule)
+	public void setMolecule(IMolecule molecule)
 	{
 		setMolecule(molecule, true);
 	}
@@ -216,7 +216,7 @@ public class StructureDiagramGenerator
 	 *@return    The molecule with new coordinates (if generateCoordinates() had
 	 *      been called)
 	 */
-	public Molecule getMolecule()
+	public IMolecule getMolecule()
 	{
 		return molecule;
 	}
@@ -241,8 +241,8 @@ public class StructureDiagramGenerator
      */
     public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
         // first make a shallow copy: Atom/Bond references are kept
-        Molecule original = molecule;
-        Molecule shallowCopy = (Molecule)((org.openscience.cdk.Molecule)molecule).shallowCopy();
+        IMolecule original = molecule;
+        IMolecule shallowCopy = (IMolecule)((org.openscience.cdk.Molecule)molecule).shallowCopy();
         // ok, delete H's from 
         org.openscience.cdk.interfaces.IAtom[] atoms = shallowCopy.getAtoms();
         for (int i = 0; i < atoms.length; i++) {

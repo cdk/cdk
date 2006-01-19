@@ -30,7 +30,7 @@ package org.openscience.cdk.fingerprint;
 import java.util.BitSet;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 
 /**
@@ -47,10 +47,10 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
  */
 public class SubstructureFingerprinter implements IFingerprinter {
 
-	private SetOfAtomContainers substructureSet;
+	private ISetOfAtomContainers substructureSet;
 	
-	public SubstructureFingerprinter(SetOfAtomContainers substructureSet) {
-		this.substructureSet = (SetOfAtomContainers)substructureSet.clone();
+	public SubstructureFingerprinter(ISetOfAtomContainers substructureSet) {
+		this.substructureSet = (ISetOfAtomContainers)substructureSet.clone();
 	}
 	
 	/**

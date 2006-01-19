@@ -35,7 +35,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.exception.CDKException;
@@ -988,11 +988,11 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(8, mol.getAtomCount());
 			assertEquals(7, mol.getBondCount());
 
-			SetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
+			ISetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
 			int fragmentCount = fragments.getMoleculeCount();
 			assertEquals(2, fragmentCount);
-			org.openscience.cdk.interfaces.Molecule mol1 = fragments.getMolecule(0);
-			org.openscience.cdk.interfaces.Molecule mol2 = fragments.getMolecule(1);
+			org.openscience.cdk.interfaces.IMolecule mol1 = fragments.getMolecule(0);
+			org.openscience.cdk.interfaces.IMolecule mol2 = fragments.getMolecule(1);
 			// one should have one atom, the other seven atoms
 			// in any order, so just test the difference
 			assertEquals(6, Math.abs(mol1.getAtomCount() - mol2.getAtomCount()));
@@ -1016,10 +1016,10 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(3, mol.getAtomCount());
 			assertEquals(2, mol.getBondCount());
 
-			SetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
+			ISetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
 			int fragmentCount = fragments.getMoleculeCount();
 			assertEquals(1, fragmentCount);
-			org.openscience.cdk.interfaces.Molecule mol1 = fragments.getMolecule(0);
+			org.openscience.cdk.interfaces.IMolecule mol1 = fragments.getMolecule(0);
 			assertEquals(3, mol1.getAtomCount());
 		} catch (Exception e)
 		{

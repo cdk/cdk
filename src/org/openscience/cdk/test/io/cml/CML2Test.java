@@ -77,7 +77,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(4, mol.getAtomCount());
             assertEquals(2, mol.getBondCount());
@@ -115,7 +115,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(4, mol.getAtomCount());
             assertEquals(3, mol.getBondCount());
@@ -153,7 +153,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(38, mol.getAtomCount());
             assertEquals(48, mol.getBondCount());
@@ -185,7 +185,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(38, mol.getAtomCount());
             assertEquals(29, mol.getBondCount());
@@ -217,7 +217,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -249,7 +249,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -281,7 +281,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -313,7 +313,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -345,7 +345,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(27, mol.getAtomCount());
             assertEquals(27, mol.getBondCount());
@@ -377,7 +377,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(14, mol.getBondCount());
@@ -409,7 +409,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
@@ -441,7 +441,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
@@ -473,7 +473,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
@@ -505,7 +505,7 @@ public class CML2Test extends CDKTestCase {
             assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());

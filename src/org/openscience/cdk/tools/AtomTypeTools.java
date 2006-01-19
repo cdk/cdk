@@ -25,7 +25,7 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -70,7 +70,7 @@ public class AtomTypeTools {
 	 *@return                sssrf ringSetofTheMolecule
 	 *@exception  Exception  Description of the Exception
 	 */
-	public RingSet assignAtomTypePropertiesToAtom(Molecule molecule) throws Exception{
+	public RingSet assignAtomTypePropertiesToAtom(IMolecule molecule) throws Exception{
         SmilesGenerator sg = new SmilesGenerator(molecule.getBuilder());
 
 		//System.out.println("assignAtomTypePropertiesToAtom Start ...");

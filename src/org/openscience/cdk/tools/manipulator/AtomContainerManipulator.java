@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -152,7 +152,7 @@ public class AtomContainerManipulator {
         List remove = new ArrayList();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
-        Molecule mol = atomContainer.getBuilder().newMolecule();
+        IMolecule mol = atomContainer.getBuilder().newMolecule();
         int count = atomContainer.getAtomCount();
         for (int i = 0;
                 i < count;

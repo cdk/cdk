@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugMolecule extends org.openscience.cdk.Molecule
-    implements Molecule {
+    implements IMolecule {
 
 	LoggingTool logger = new LoggingTool(DebugMolecule.class);
 

@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugSetOfAtomContainers extends org.openscience.cdk.SetOfAtomContainers
-    implements SetOfAtomContainers {
+    implements ISetOfAtomContainers {
 
 	LoggingTool logger = new LoggingTool(DebugSetOfAtomContainers.class);
 
@@ -184,7 +184,7 @@ public class DebugSetOfAtomContainers extends org.openscience.cdk.SetOfAtomConta
 		super.addAtomContainer(atomContainer, multiplier);
 	}
 
-	public void add(SetOfAtomContainers atomContainerSet) {
+	public void add(ISetOfAtomContainers atomContainerSet) {
 		logger.debug("Adding set of atom containers: ", atomContainerSet);
 		super.add(atomContainerSet);
 	}

@@ -38,8 +38,8 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -58,7 +58,7 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
 	}
 
 	public void testGetFunctionalGroupSubstructureSet() {
-		SetOfAtomContainers set = null;
+		ISetOfAtomContainers set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 

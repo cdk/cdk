@@ -44,7 +44,7 @@ public class MoleculesTable extends JPanel implements CDKChangeListener {
   private JTable table;
 	private String title = "Molecule Viewer";
   
-	public MoleculesTable(org.openscience.cdk.interfaces.SetOfMolecules set) {
+	public MoleculesTable(org.openscience.cdk.interfaces.ISetOfMolecules set) {
     MoleculeContainerModel mcm = new MoleculeContainerModel(set);
     table = new JTable(mcm);
     table.setPreferredScrollableViewportSize(new Dimension(500,300));
@@ -72,12 +72,12 @@ public class MoleculesTable extends JPanel implements CDKChangeListener {
 	
   class MoleculeContainerModel extends AbstractTableModel {
 
-    private org.openscience.cdk.interfaces.SetOfMolecules set;
+    private org.openscience.cdk.interfaces.ISetOfMolecules set;
     
     final String[] columnNames = {"title", "casRN", "beilsteinRN", 
                                   "autonomName"};
     
-    public MoleculeContainerModel(org.openscience.cdk.interfaces.SetOfMolecules set) {
+    public MoleculeContainerModel(org.openscience.cdk.interfaces.ISetOfMolecules set) {
       this.set = set;
     }
     

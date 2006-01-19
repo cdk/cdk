@@ -65,7 +65,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	public void testDetectButadiene()
 	{
         logger.info("Entering testDetectButadiene.");
-        org.openscience.cdk.interfaces.Molecule mol = null;
+        org.openscience.cdk.interfaces.IMolecule mol = null;
 		try
 		{
 			String filename = "data/butadiene.cml";
@@ -97,7 +97,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     public void testDetectNaphtalene()
 	{
         logger.info("Entering testDetectNaphtalene.");
-        org.openscience.cdk.interfaces.Molecule mol = null;
+        org.openscience.cdk.interfaces.IMolecule mol = null;
 		try
 		{
 			String filename = "data/naphtalene.cml";
@@ -129,7 +129,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     public void testDetectToluene()
 	{
         logger.info("Entering testDetectToluene.");
-        org.openscience.cdk.interfaces.Molecule mol = null;
+        org.openscience.cdk.interfaces.IMolecule mol = null;
 		try
 		{
 			String filename = "data/toluene.cml";
@@ -283,8 +283,8 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         
 	}
     
-    private org.openscience.cdk.interfaces.Molecule readCMLMolecule(String filename) {
-    	org.openscience.cdk.interfaces.Molecule mol = null;
+    private org.openscience.cdk.interfaces.IMolecule readCMLMolecule(String filename) {
+    	org.openscience.cdk.interfaces.IMolecule mol = null;
         try {
             logger.debug("Filename: " + filename);
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -298,7 +298,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertEquals(1, sequence.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
-            org.openscience.cdk.interfaces.SetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
             assertNotNull(moleculeSet);
             assertEquals(1, moleculeSet.getMoleculeCount());
             mol = moleculeSet.getMolecule(0);

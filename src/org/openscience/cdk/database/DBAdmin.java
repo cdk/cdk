@@ -345,11 +345,11 @@ public class DBAdmin {
                                  chemSequence.getChemModelCount());
 			     for (int model = 0; model < chemSequence.getChemModelCount(); model++) {
 			    	 org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(model);
-				  org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+				  org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
 				  logger.info("number of molecules in model " + model + ": " +
                                       setOfMolecules.getMoleculeCount());
 	                          for (int i = 0; i < setOfMolecules.getMoleculeCount(); i++) {
-	                        	  org.openscience.cdk.interfaces.Molecule molecule = setOfMolecules.getMolecule(i);
+	                        	  org.openscience.cdk.interfaces.IMolecule molecule = setOfMolecules.getMolecule(i);
 			              dbw.write(molecule);
                                   }
                              }

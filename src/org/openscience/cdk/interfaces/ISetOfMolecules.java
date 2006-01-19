@@ -30,30 +30,30 @@ package org.openscience.cdk.interfaces;
  * @author      egonw
  * @cdk.created 2005-08-25
  */
-public interface SetOfMolecules extends SetOfAtomContainers {
+public interface ISetOfMolecules extends ISetOfAtomContainers {
 
     /**
      *  Adds an molecule to this container.
      *
      * @param  molecule  The molecule to be added to this container 
      */
-    public void addMolecule(Molecule molecule);
+    public void addMolecule(IMolecule molecule);
     
     /**
      *  Adds all molecules in the SetOfMolecules to this container.
      *
      * @param  moleculeSet  The SetOfMolecules 
      */
-    public void add(SetOfMolecules moleculeSet);
+    public void add(ISetOfMolecules moleculeSet);
     
-    public void setMolecules(Molecule[] molecules);
+    public void setMolecules(IMolecule[] molecules);
     
     /**
      *  Returns the array of Molecules of this container.
      *
      * @return    The array of Molecules of this container 
      */
-    public Molecule[] getMolecules();
+    public IMolecule[] getMolecules();
     
     /**
      * Returns the Molecule at position <code>number</code> in the
@@ -62,7 +62,7 @@ public interface SetOfMolecules extends SetOfAtomContainers {
      * @param  number  The position of the Molecule to be returned. 
      * @return         The Molecule at position <code>number</code> . 
      */
-    public Molecule getMolecule(int number);
+    public IMolecule getMolecule(int number);
     
     
     /**

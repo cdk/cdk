@@ -80,10 +80,10 @@ public class MDLReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.Molecule m = som.getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
             assertNotNull(m);
             assertEquals(4, m.getAtomCount());
             assertEquals(2, m.getBondCount());
@@ -294,10 +294,10 @@ public class MDLReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.Molecule m = som.getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
             assertNotNull(m);
             assertEquals(9, m.getAtomCount());
             assertEquals(9, m.getBondCount());

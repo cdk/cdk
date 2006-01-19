@@ -127,12 +127,12 @@ public class JmolTest extends CDKTestCase {
             assertEquals(34, seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = som.getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 25);
             assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -166,7 +166,7 @@ public class JmolTest extends CDKTestCase {
             assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
             assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -196,11 +196,11 @@ public class JmolTest extends CDKTestCase {
             //System.out.println("NO models: " + seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
             assertEquals(1, som.getMoleculeCount());
 
             // test the molecule
-            org.openscience.cdk.interfaces.Molecule mol = som.getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
             assertTrue(GeometryTools.has3DCoordinates(mol));

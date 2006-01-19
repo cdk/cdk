@@ -185,15 +185,15 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
     	return new LonePair(atom);
     }
 
-	public org.openscience.cdk.interfaces.Molecule newMolecule() {
+	public org.openscience.cdk.interfaces.IMolecule newMolecule() {
 		return new Molecule();
 	}
 
-	public org.openscience.cdk.interfaces.Molecule newMolecule(int atomCount, int electronContainerCount) {
+	public org.openscience.cdk.interfaces.IMolecule newMolecule(int atomCount, int electronContainerCount) {
 		return new Molecule(atomCount, electronContainerCount);
 	}
 
-	public org.openscience.cdk.interfaces.Molecule newMolecule(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public org.openscience.cdk.interfaces.IMolecule newMolecule(org.openscience.cdk.interfaces.IAtomContainer container) {
 		return new Molecule(container);
 	}
 
@@ -229,11 +229,11 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new RingSet();
 	}
 
-	public org.openscience.cdk.interfaces.SetOfAtomContainers newSetOfAtomContainers() {
+	public org.openscience.cdk.interfaces.ISetOfAtomContainers newSetOfAtomContainers() {
 		return new SetOfAtomContainers();
 	}
 
-	public org.openscience.cdk.interfaces.SetOfMolecules newSetOfMolecules() {
+	public org.openscience.cdk.interfaces.ISetOfMolecules newSetOfMolecules() {
 		return new SetOfMolecules();
 	}
 

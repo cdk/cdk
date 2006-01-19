@@ -50,7 +50,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  * @cdk.keyword reaction
  * @cdk.keyword molecule
  */
-public class SetOfMolecules extends SetOfAtomContainers implements org.openscience.cdk.interfaces.SetOfMolecules {
+public class SetOfMolecules extends SetOfAtomContainers implements org.openscience.cdk.interfaces.ISetOfMolecules {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -70,7 +70,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      *
      * @param  molecule  The molecule to be added to this container 
      */
-    public void addMolecule(org.openscience.cdk.interfaces.Molecule molecule) {
+    public void addMolecule(org.openscience.cdk.interfaces.IMolecule molecule) {
         super.addAtomContainer(molecule);
 	/* notifyChanged() called in super.addAtomContainer() */
     }
@@ -80,15 +80,15 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      *
      * @param  moleculeSet  The SetOfMolecules 
      */
-    public void add(org.openscience.cdk.interfaces.SetOfMolecules moleculeSet) {
-    	org.openscience.cdk.interfaces.Molecule[] mols = moleculeSet.getMolecules();
+    public void add(org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet) {
+    	org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();
         for (int i=0; i< mols.length; i++) {
             addMolecule(mols[i]);
         }
 	/* notifyChanged() called in super.addAtomContainer() */
     }
     
-    public void setMolecules(org.openscience.cdk.interfaces.Molecule[] molecules)
+    public void setMolecules(org.openscience.cdk.interfaces.IMolecule[] molecules)
     {
 	    if (atomContainerCount > 0) removeAllAtomContainers();
 	    for (int f = 0; f < molecules.length; f++)
@@ -102,7 +102,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      *
      * @return    The array of Molecules of this container 
      */
-    public org.openscience.cdk.interfaces.Molecule[] getMolecules() {
+    public org.openscience.cdk.interfaces.IMolecule[] getMolecules() {
         Molecule[] result = new Molecule[super.getAtomContainerCount()];
         org.openscience.cdk.interfaces.IAtomContainer[] containers = super.getAtomContainers();
         for (int i=0; i<containers.length; i++) {
@@ -120,7 +120,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      * @param  number  The position of the Molecule to be returned. 
      * @return         The Molecule at position <code>number</code> . 
      */
-    public org.openscience.cdk.interfaces.Molecule getMolecule(int number)
+    public org.openscience.cdk.interfaces.IMolecule getMolecule(int number)
     {
         return (Molecule)super.getAtomContainer(number);
     }
@@ -143,7 +143,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
 	 */
 	public Object clone() {
 		SetOfMolecules clone = new SetOfMolecules();
-		org.openscience.cdk.interfaces.Molecule[] result = getMolecules();
+		org.openscience.cdk.interfaces.IMolecule[] result = getMolecules();
 		for (int i = 0; i < result.length; i++) {
 			clone.addMolecule((Molecule) result[i].clone());
 		}

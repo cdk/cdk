@@ -32,7 +32,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -61,12 +61,12 @@ public class MoleculeTest extends CDKTestCase {
     // test constructors
     
     public void testMolecule() {
-        Molecule m = builder.newMolecule();
+        IMolecule m = builder.newMolecule();
         assertTrue(m != null);
     }
 
     public void testMolecule_int_int() {
-        Molecule m = builder.newMolecule(5,5);
+        IMolecule m = builder.newMolecule(5,5);
         assertTrue(m != null);
         assertEquals(0, m.getAtoms().length);
         assertEquals(0, m.getElectronContainers().length);
@@ -89,22 +89,22 @@ public class MoleculeTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        Molecule m = builder.newMolecule(acetone);
+        IMolecule m = builder.newMolecule(acetone);
         assertTrue(m != null);
         assertEquals(4, m.getAtomCount());
         assertEquals(3, m.getBondCount());
     }
 
 	public void testClone() {
-        Molecule molecule = builder.newMolecule();
+        IMolecule molecule = builder.newMolecule();
         Object clone = molecule.clone();
-        assertTrue(clone instanceof Molecule);
+        assertTrue(clone instanceof IMolecule);
 	assertNotSame(molecule, clone);
     }    
 
     /** Test for RFC #9 */
     public void testToString() {
-        Molecule m = builder.newMolecule();
+        IMolecule m = builder.newMolecule();
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');

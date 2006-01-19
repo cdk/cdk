@@ -74,10 +74,10 @@ public class HINReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.Molecule m = som.getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
             assertNotNull(m);
             assertEquals(12, m.getAtomCount());
             // assertEquals(?, m.getBondCount());
@@ -103,10 +103,10 @@ public class HINReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.Molecule m = som.getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
             assertNotNull(m);
             assertEquals(37, m.getAtomCount());
             // assertEquals(?, m.getBondCount());
@@ -132,7 +132,7 @@ public class HINReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(3, som.getMoleculeCount());
         } catch (Exception e) {

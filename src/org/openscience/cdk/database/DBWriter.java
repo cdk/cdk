@@ -35,8 +35,8 @@ import java.sql.PreparedStatement;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.CMLWriter;
@@ -82,10 +82,10 @@ public class DBWriter {
     };
 
 	public void write(IChemObject object) throws CDKException {
-		if (object instanceof Molecule) {
-			writeMolecule((Molecule)object);
-		} else if (object instanceof SetOfMolecules) {
-			writeSetOfMolecules((SetOfMolecules)object);
+		if (object instanceof IMolecule) {
+			writeMolecule((IMolecule)object);
+		} else if (object instanceof ISetOfMolecules) {
+			writeSetOfMolecules((ISetOfMolecules)object);
 		} else {
 		    throw new UnsupportedChemObjectException("Only supported SetOfMolecules and Molecule.");
 		}
@@ -96,7 +96,7 @@ public class DBWriter {
      *
      * @param   mol    The molecule to be stored
      */
-    public void writeMolecule(Molecule mol) throws CDKException {
+    public void writeMolecule(IMolecule mol) throws CDKException {
 		PreparedStatement ps;
 		// The Molecule is turned into a CML string
 		writer = new StringWriter();
@@ -154,7 +154,7 @@ public class DBWriter {
 	 *
 	 * @param  som    The set of molecules to be stored
 	 */
-	private void writeSetOfMolecules(SetOfMolecules som) throws CDKException
+	private void writeSetOfMolecules(ISetOfMolecules som) throws CDKException
 	{
 		for (int i = 0; i < som.getMoleculeCount(); i++)
 		{

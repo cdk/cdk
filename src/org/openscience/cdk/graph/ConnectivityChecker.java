@@ -31,8 +31,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -67,7 +67,7 @@ public class ConnectivityChecker
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
 		IBond bond = null;
-		Molecule molecule = atomContainer.getBuilder().newMolecule();
+		IMolecule molecule = atomContainer.getBuilder().newMolecule();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -103,12 +103,12 @@ public class ConnectivityChecker
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
-	public static SetOfMolecules partitionIntoMolecules(IAtomContainer atomContainer) {
+	public static ISetOfMolecules partitionIntoMolecules(IAtomContainer atomContainer) {
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
 		IElectronContainer eContainer = null;
-		Molecule molecule = null;
-		SetOfMolecules molecules = atomContainer.getBuilder().newSetOfMolecules();
+		IMolecule molecule = null;
+		ISetOfMolecules molecules = atomContainer.getBuilder().newSetOfMolecules();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{

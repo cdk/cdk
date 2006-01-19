@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * @author        hel
  * @cdk.module    data
  */
-public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.SetOfAtomContainers, IChemObjectListener {
+public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ISetOfAtomContainers, IChemObjectListener {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -213,7 +213,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @param  atomContainerSet  The SetOfAtomContainers
 	 */
-	public void add(org.openscience.cdk.interfaces.SetOfAtomContainers atomContainerSet) {
+	public void add(org.openscience.cdk.interfaces.ISetOfAtomContainers atomContainerSet) {
 		org.openscience.cdk.interfaces.IAtomContainer[] mols = atomContainerSet.getAtomContainers();
 		for (int i = 0; i < mols.length; i++) {
 			addAtomContainer(mols[i]);

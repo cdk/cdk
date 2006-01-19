@@ -39,8 +39,8 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
@@ -114,8 +114,8 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @see IChemFile
      */
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof SetOfMolecules) {
-            return (IChemObject)readSetOfMolecules((SetOfMolecules)object);
+        if (object instanceof ISetOfMolecules) {
+            return (IChemObject)readSetOfMolecules((ISetOfMolecules)object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
             IChemSequence sequence = file.getBuilder().newChemSequence();
@@ -139,7 +139,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private SetOfMolecules readSetOfMolecules(SetOfMolecules som) {
+    private ISetOfMolecules readSetOfMolecules(ISetOfMolecules som) {
         try {
             String line = input.readLine().trim();
             while (line != null) {
@@ -157,7 +157,7 @@ public class SMILESReader extends DefaultChemObjectReader {
                 }
                 
                 try {
-                    Molecule molecule = sp.parseSmiles(SMILES);
+                    IMolecule molecule = sp.parseSmiles(SMILES);
                     som.addMolecule(molecule);
                     if (name != null) {
                         molecule.setProperty("SMIdbNAME", name);

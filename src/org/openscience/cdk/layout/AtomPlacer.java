@@ -42,7 +42,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -328,7 +328,7 @@ public class AtomPlacer
 		IAtomContainer withh=(IAtomContainer) ac.clone();
 		if(GeometryTools.has2DCoordinatesNew(ac)==2){
 			try{
-				new HydrogenAdder().addExplicitHydrogensToSatisfyValency((Molecule)withh);
+				new HydrogenAdder().addExplicitHydrogensToSatisfyValency((IMolecule)withh);
 			}catch(Exception ex){
 				logger.debug("Excpetion in hydrogen adding. This could mean that cleanup does not respect E/Z");
 			}
@@ -519,7 +519,7 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.NoSuchAtomException  Description of
 	 *      the Exception
 	 */
-	public IAtomContainer getInitialLongestChain(Molecule molecule) throws org.openscience.cdk.exception.CDKException
+	public IAtomContainer getInitialLongestChain(IMolecule molecule) throws org.openscience.cdk.exception.CDKException
 	{
 		logger.debug("Start of getInitialLongestChain()");
 		double[][] conMat = ConnectionMatrix.getMatrix(molecule);
@@ -576,7 +576,7 @@ public class AtomPlacer
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public IAtomContainer getLongestUnplacedChain(Molecule molecule, IAtom startAtom) throws org.openscience.cdk.exception.CDKException
+	public IAtomContainer getLongestUnplacedChain(IMolecule molecule, IAtom startAtom) throws org.openscience.cdk.exception.CDKException
 	{
 		logger.debug("Start of getLongestUnplacedChain.");
 		//ConnectivityChecker cc = new ConnectivityChecker();

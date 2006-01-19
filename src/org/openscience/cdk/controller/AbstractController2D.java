@@ -66,10 +66,10 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -735,7 +735,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 							try
 							{
-								SetOfMolecules setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
+								ISetOfMolecules setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
 								chemModel.setSetOfMolecules(setOfMolecules);
 								logger.debug("We have " + setOfMolecules.getAtomContainerCount() + " molecules on screen");
 							} catch (Exception exception)
@@ -1192,7 +1192,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 						IAtom atom2=(IAtom)r2dm.getMerge().get(atom1);
 						int contains1=-1;
 						int contains2=-1;
-						SetOfMolecules som=chemModel.getSetOfMolecules();
+						ISetOfMolecules som=chemModel.getSetOfMolecules();
 						for(int i=0;i<som.getAtomContainerCount();i++){
 							if(chemModel.getSetOfMolecules().getAtomContainer(i).contains(atom1))
 								contains1=i;
@@ -1240,7 +1240,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		{
 			for (int i = 0; i < chemModel.getSetOfMolecules().getMoleculeCount(); i++)
 			{
-				Molecule mol = chemModel.getSetOfMolecules().getMolecules()[i];
+				IMolecule mol = chemModel.getSetOfMolecules().getMolecules()[i];
 				for (int k = 0; k < mol.getAtomCount(); k++)
 				{
 					mol.getAtomAt(k).setX2d(mol.getAtomAt(k).getX2d() - shiftX);

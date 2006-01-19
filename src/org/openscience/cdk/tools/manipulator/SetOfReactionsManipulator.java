@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
 
 /**
@@ -74,8 +74,8 @@ public class SetOfReactionsManipulator {
         return container;
     }
     
-    public static SetOfMolecules getAllMolecules(SetOfReactions set) {
-        SetOfMolecules moleculeSet = set.getBuilder().newSetOfMolecules();
+    public static ISetOfMolecules getAllMolecules(SetOfReactions set) {
+        ISetOfMolecules moleculeSet = set.getBuilder().newSetOfMolecules();
         Reaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             Reaction reaction = reactions[i];

@@ -37,8 +37,8 @@ import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -61,12 +61,12 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 
 	public void testFunctionalGroups() {
 		BitSet bitset = null;
-		SetOfAtomContainers set = null;
+		ISetOfAtomContainers set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 			
 			IFingerprinter printer = new SubstructureFingerprinter(set);
-			Molecule pinene = MoleculeFactory.makeAlphaPinene();
+			IMolecule pinene = MoleculeFactory.makeAlphaPinene();
 			bitset = printer.getFingerprint(pinene);
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -83,12 +83,12 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 	
 	public void testFunctionalGroups_matchAll() {
 		BitSet bitset = null;
-		SetOfAtomContainers set = null;
+		ISetOfAtomContainers set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 			
 			IFingerprinter printer = new SubstructureFingerprinter(set);
-			Molecule matchesAll = new SmilesParser().parseSmiles("C(C(=O)O)C(N([H])[H])C(O[H])C(COC)C(C(=O)[H])C(S(=O)(=O)O)C(P(=O)(=O)O)");
+			IMolecule matchesAll = new SmilesParser().parseSmiles("C(C(=O)O)C(N([H])[H])C(O[H])C(COC)C(C(=O)[H])C(S(=O)(=O)O)C(P(=O)(=O)O)");
 			bitset = printer.getFingerprint(matchesAll);
 			System.out.println("BitSet: " + bitset);
 		} catch (Exception exception) {
@@ -104,7 +104,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 	
 	public void testAminoAcids() {
 		BitSet bitset = null;
-		SetOfAtomContainers set = null;
+		ISetOfAtomContainers set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 				
@@ -116,7 +116,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 			// test wether all molecules have an amine and carboxylic acid group
 			for (int i=0; i<aas.length; i++) {
 				AminoAcidManipulator.addAcidicOxygen(aas[i]);
-				Molecule aminoAcid = aas[i].getBuilder().newMolecule(aas[i]);
+				IMolecule aminoAcid = aas[i].getBuilder().newMolecule(aas[i]);
 				HydrogenAdder hAdder = new HydrogenAdder();
 				hAdder.addExplicitHydrogensToSatisfyValency(aminoAcid);
 				

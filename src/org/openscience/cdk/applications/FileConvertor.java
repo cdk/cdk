@@ -53,9 +53,9 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
@@ -611,7 +611,7 @@ public class FileConvertor {
             if (crystal != null) {
                 write(crystal, outputFilename);
             }
-            SetOfMolecules som = cm.getSetOfMolecules();
+            ISetOfMolecules som = cm.getSetOfMolecules();
             if (som != null) {
                 write(som, outputFilename);
             }
@@ -626,14 +626,14 @@ public class FileConvertor {
         }
     }
 
-    private void write(SetOfMolecules som, String outputFilename) throws IOException {
+    private void write(ISetOfMolecules som, String outputFilename) throws IOException {
         try {
 	        if (apply2DCleanup) {
 				logger.info("Creating 2D coordinates");
-				Molecule[] mols = som.getMolecules();
+				IMolecule[] mols = som.getMolecules();
 	           	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 				for (int i=0; i<mols.length; i++) {
-					Molecule molecule = mols[i];
+					IMolecule molecule = mols[i];
 		            try {
 		                sdg.setMolecule(molecule, false); // false -> don't make clone!
 		                sdg.generateCoordinates(new Vector2d(0, 1));
@@ -647,7 +647,7 @@ public class FileConvertor {
             cow.write(som);
         } catch (CDKException exception) {
             int count = som.getMoleculeCount();
-            boolean needMoreFiles = (cow.accepts(SetOfMolecules.class)) && (count > 1);
+            boolean needMoreFiles = (cow.accepts(ISetOfMolecules.class)) && (count > 1);
             logger.info("Cannot write SetOfMolecules, recursing into Molecules's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
@@ -661,7 +661,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(Molecule molecule, String outputFilename) throws IOException {
+    private void write(IMolecule molecule, String outputFilename) throws IOException {
         try {
             cow.write(molecule);
         } catch (CDKException exception) {

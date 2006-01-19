@@ -38,8 +38,8 @@ import java.io.Writer;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -121,10 +121,10 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   object  IChemObject of which the data is outputted.
      */
 	public void write(IChemObject object) throws CDKException {
-		if (object instanceof SetOfMolecules) {
-		    writeSetOfMolecules((SetOfMolecules)object);
-		} else if (object instanceof Molecule) {
-		    writeMolecule((Molecule)object);
+		if (object instanceof ISetOfMolecules) {
+		    writeSetOfMolecules((ISetOfMolecules)object);
+		} else if (object instanceof IMolecule) {
+		    writeMolecule((IMolecule)object);
 		} else {
 		    throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
 		}
@@ -135,9 +135,9 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   som  SetOfMolecules that is written to an OutputStream
 	 */
-	public void  writeSetOfMolecules(SetOfMolecules som)
+	public void  writeSetOfMolecules(ISetOfMolecules som)
 	{
-		Molecule[] molecules = som.getMolecules();
+		IMolecule[] molecules = som.getMolecules();
 		writeMolecule(molecules[0]);
 		for (int i = 1; i <= som.getMoleculeCount() - 1; i++) {
 			try {
@@ -152,7 +152,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      *
      * @param   molecule  Molecule of which the data is outputted.
      */
-    public void writeMolecule(Molecule molecule) {
+    public void writeMolecule(IMolecule molecule) {
         SmilesGenerator sg = new SmilesGenerator(molecule.getBuilder());
         String smiles = "";
         try {

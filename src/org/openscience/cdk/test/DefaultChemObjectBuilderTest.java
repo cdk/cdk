@@ -48,15 +48,15 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.Polymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
-import org.openscience.cdk.interfaces.SetOfAtomContainers;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.Strand;
@@ -374,7 +374,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Molecule);
+		assertTrue(object instanceof IMolecule);
 	}	
 
 	public void testNewMolecule_int_int() {
@@ -382,7 +382,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Molecule);
+		assertTrue(object instanceof IMolecule);
 	}	
 
 	public void testNewMolecule_IAtomContainer() {
@@ -392,7 +392,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Molecule);
+		assertTrue(object instanceof IMolecule);
 	}	
 
 	public void testNewMonomer() {
@@ -509,7 +509,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof SetOfAtomContainers);
+		assertTrue(object instanceof ISetOfAtomContainers);
 	}
 
 	public void testNewSetOfMolecules() {
@@ -517,7 +517,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof SetOfMolecules);
+		assertTrue(object instanceof ISetOfMolecules);
 	}
 
 	public void testNewSetOfReactions() {

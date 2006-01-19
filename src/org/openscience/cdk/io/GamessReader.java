@@ -38,9 +38,9 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.PhysicalConstants;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
@@ -201,7 +201,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	private IChemFile readChemFile(IChemFile file) throws IOException {
 		IChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
 		IChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
-		SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
+		ISetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
 		
 		model.setSetOfMolecules(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?
@@ -259,7 +259,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.GamessReader#input
 	 */
 	//TODO Update method comments with appropriate information.
-	private Molecule readCoordinates(Molecule molecule, boolean coordinatesUnits) throws IOException {
+	private IMolecule readCoordinates(IMolecule molecule, boolean coordinatesUnits) throws IOException {
 		
 		/*
 		 * Coordinates must all be given in angstr???ms.

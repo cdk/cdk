@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -96,8 +96,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
     }
     
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof Molecule){
-            writeMolecule((Molecule)object);
+        if (object instanceof IMolecule){
+            writeMolecule((IMolecule)object);
         } else if (object instanceof ICrystal){
             writeCrystal((ICrystal)object);
         } else if (object instanceof IChemFile){
@@ -126,7 +126,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     *
     * @param molecule the Molecule to write
     */
-   public void writeMolecule(Molecule molecule) throws CDKException {
+   public void writeMolecule(IMolecule molecule) throws CDKException {
        
        try {
            int na = 0;

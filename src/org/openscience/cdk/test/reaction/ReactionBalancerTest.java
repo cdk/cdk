@@ -136,7 +136,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 	public void testBalance_water()  throws CDKException{
 		HydrogenAdder ha = new HydrogenAdder();
 		for (int i = 0; i < reaction3.getReactants().getAtomContainerCount(); i++) {
-			org.openscience.cdk.interfaces.Molecule mol = reaction3.getReactants().getMolecule(i);
+			org.openscience.cdk.interfaces.IMolecule mol = reaction3.getReactants().getMolecule(i);
 			try {
 				ha.addExplicitHydrogensToSatisfyValency(mol);
 			} catch(Exception ex) {
@@ -144,7 +144,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 			}
 		}
 		for (int i = 0; i < reaction3.getProducts().getAtomContainerCount(); i++) {
-			org.openscience.cdk.interfaces.Molecule mol = reaction3.getProducts().getMolecule(i);
+			org.openscience.cdk.interfaces.IMolecule mol = reaction3.getProducts().getMolecule(i);
 			try {
 				ha.addExplicitHydrogensToSatisfyValency(mol);
 			} catch(Exception ex) {

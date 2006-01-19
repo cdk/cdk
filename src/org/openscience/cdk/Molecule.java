@@ -35,7 +35,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword    molecule
  */
-public class Molecule extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Molecule
+public class Molecule extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IMolecule
 {
 
 	/**

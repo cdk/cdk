@@ -42,7 +42,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.exception.CDKException;
@@ -117,7 +117,7 @@ public class WWMMatrixReader {
     }
 
     public ChemObject read(ChemObject object) throws UnsupportedChemObjectException {
-        if (object instanceof Molecule) {
+        if (object instanceof IMolecule) {
             try {
                 return (ChemObject)readMolecule();
             } catch (Exception exc) {
@@ -150,7 +150,7 @@ public class WWMMatrixReader {
 
         wwmm.setCollection(coll);
         wwmm.setQuery(index, query);
-        Molecule m = (Molecule)wwmm.read(new org.openscience.cdk.Molecule());
+        IMolecule m = (IMolecule)wwmm.read(new org.openscience.cdk.Molecule());
         if (!GeometryTools.has2DCoordinates(m)) {
                         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
                         try {
@@ -174,7 +174,7 @@ public class WWMMatrixReader {
      *
      * @returns null if the index is not recognized.
      */
-    private Molecule readMolecule() throws Exception {
+    private IMolecule readMolecule() throws Exception {
         String xpath = "";
         if (index.equals("ichi")) {
             xpath = URLEncoder.encode("//molecule[./identifier/basic='" + query + "']", UTF8);
@@ -234,13 +234,13 @@ public class WWMMatrixReader {
         CMLReader reader = new CMLReader(in);
         ChemFile cf = (ChemFile)reader.read((ChemObject)new ChemFile());
         logger.debug("#sequences: " + cf.getChemSequenceCount());
-        Molecule m = null;
+        IMolecule m = null;
         if (cf.getChemSequenceCount() > 0) {
         	org.openscience.cdk.interfaces.IChemSequence chemSequence = cf.getChemSequence(0);
             logger.debug("#models in sequence: " + chemSequence.getChemModelCount());
             if (chemSequence.getChemModelCount() > 0) {
             	org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
-                org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+                org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
                 logger.debug("#mols in model: " + setOfMolecules.getMoleculeCount());
                 if (setOfMolecules.getMoleculeCount() > 0) {
                     m = setOfMolecules.getMolecule(0);

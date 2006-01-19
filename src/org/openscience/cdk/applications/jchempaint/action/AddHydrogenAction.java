@@ -37,7 +37,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.controller.Controller2DModel;
@@ -127,7 +127,7 @@ public class AddHydrogenAction extends JCPAction
 	 */
 	private void addHydrogenToAllAtoms(org.openscience.cdk.interfaces.IChemModel model)
 	{
-		SetOfMolecules som = model.getSetOfMolecules();
+		ISetOfMolecules som = model.getSetOfMolecules();
 		org.openscience.cdk.interfaces.SetOfReactions sor = model.getSetOfReactions();
 		if (som != null)
 		{
@@ -148,16 +148,16 @@ public class AddHydrogenAction extends JCPAction
 	 *
 	 *@param  som  The feature to be added to the HydrogenToAllMolecules attribute
 	 */
-	private void addHydrogenToAllMolecules(SetOfMolecules som)
+	private void addHydrogenToAllMolecules(ISetOfMolecules som)
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();
         try
 		{
-        	org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
+        	org.openscience.cdk.interfaces.IMolecule[] mols = som.getMolecules();
 			for (int i = 0; i < mols.length; i++)
 			{
-				org.openscience.cdk.interfaces.Molecule molecule = mols[i];
+				org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
 				if (molecule != null)
 				{
 					if (type.equals("implicit"))

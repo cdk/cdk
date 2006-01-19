@@ -36,7 +36,7 @@ import java.io.Writer;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.tools.IDCreator;
@@ -112,9 +112,9 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
+        if (object instanceof IMolecule) {
             try {
-                writeMolecule((Molecule)object);
+                writeMolecule((IMolecule)object);
             } catch (Exception ex) {
                 logger.error(ex.getMessage());
                 logger.debug(ex);
@@ -124,7 +124,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         }
     }
     
-    public void writeMolecule(Molecule molecule) throws Exception {
+    public void writeMolecule(IMolecule molecule) throws Exception {
         writer.write("{\n");
         writer.write("  Molecule mol = new Molecule();\n");
         IDCreator idCreator = new IDCreator();

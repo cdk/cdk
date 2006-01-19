@@ -40,7 +40,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.io.MDLRXNWriter;
 import org.openscience.cdk.test.CDKTestCase;
@@ -73,13 +73,13 @@ public class MDLRXNWriterTest extends CDKTestCase {
 
     public void testRoundtrip() {
         Reaction reaction = builder.newReaction();
-        Molecule hydroxide = builder.newMolecule();
+        IMolecule hydroxide = builder.newMolecule();
         hydroxide.addAtom(builder.newAtom("O"));
         reaction.addReactant(hydroxide);
-        Molecule proton = builder.newMolecule();
+        IMolecule proton = builder.newMolecule();
         proton.addAtom(builder.newAtom("H"));
         reaction.addReactant(proton);
-        Molecule water = builder.newMolecule();
+        IMolecule water = builder.newMolecule();
         water.addAtom(builder.newAtom("O"));
         reaction.addProduct(water);
         

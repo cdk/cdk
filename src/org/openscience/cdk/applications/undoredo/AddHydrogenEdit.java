@@ -35,8 +35,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -149,8 +149,8 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 				IBond bond = changedAtomsAndBonds.getBondAt(i);
 				container.addBond(bond);
 			}
-			Molecule molecule = container.getBuilder().newMolecule(container);
-			SetOfMolecules moleculeSet = ConnectivityChecker
+			IMolecule molecule = container.getBuilder().newMolecule(container);
+			ISetOfMolecules moleculeSet = ConnectivityChecker
 					.partitionIntoMolecules(molecule);
 			model.setSetOfMolecules(moleculeSet);
 		}

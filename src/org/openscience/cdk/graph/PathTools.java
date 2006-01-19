@@ -193,7 +193,7 @@ public class PathTools {
      * @param molecule A molecule into which all the atoms and bonds are stored
      *                 that are found during search
      */
-    public static void breadthFirstSearch(IAtomContainer ac, Vector sphere, Molecule molecule) {
+    public static void breadthFirstSearch(IAtomContainer ac, Vector sphere, IMolecule molecule) {
         // System.out.println("Staring partitioning with this ac: " + ac);
         breadthFirstSearch(ac, sphere, molecule, -1);
     }
@@ -209,7 +209,7 @@ public class PathTools {
      * @return the average bond length
      */
     public static IAtom[] findClosestByBond(IAtomContainer ac, IAtom a, int max) {
-        Molecule mol = ac.getBuilder().newMolecule();
+        IMolecule mol = ac.getBuilder().newMolecule();
         Vector v = new Vector();
         v.add(a);
         breadthFirstSearch(ac, v, mol, max);
@@ -240,7 +240,7 @@ public class PathTools {
      * @param molecule A molecule into which all the atoms and bonds are stored
      *                 that are found during search
      */
-    public static void breadthFirstSearch(IAtomContainer ac, Vector sphere, Molecule molecule, int max) {
+    public static void breadthFirstSearch(IAtomContainer ac, Vector sphere, IMolecule molecule, int max) {
         IAtom atom;
         IAtom nextAtom;
         Vector newSphere = new Vector();

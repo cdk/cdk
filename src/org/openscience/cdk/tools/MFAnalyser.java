@@ -42,7 +42,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -466,7 +466,7 @@ public class MFAnalyser {
 		// lists removed Hs.
 
 		// Clone atoms except those to be removed.
-		Molecule mol = ac.getBuilder().newMolecule();
+		IMolecule mol = ac.getBuilder().newMolecule();
 		int count = ac.getAtomCount();
 		for (int i = 0;
 				i < count;
@@ -745,7 +745,7 @@ public class MFAnalyser {
 	 * @param  elements  Description of the Parameter
 	 * @return           The element formula as a string
 	 */
-	public static String generateElementFormula(Molecule mol, String[] elements) {
+	public static String generateElementFormula(IMolecule mol, String[] elements) {
 		int num = elements.length;
 		StringBuffer formula = new StringBuffer();
 		int[] elementCount = new int[num];

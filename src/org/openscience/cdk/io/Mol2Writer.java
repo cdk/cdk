@@ -34,7 +34,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
@@ -97,9 +97,9 @@ public class Mol2Writer extends DefaultChemObjectWriter {
     }
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
+        if (object instanceof IMolecule) {
             try {
-                writeMolecule((Molecule)object);
+                writeMolecule((IMolecule)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing Mol2 file: " + ex.getMessage(), ex);
             }
@@ -113,7 +113,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
      *
      * @param mol the Molecule to write
      */
-    public void writeMolecule(Molecule mol) throws IOException {
+    public void writeMolecule(IMolecule mol) throws IOException {
 
         String st = "";
         boolean writecharge = true;

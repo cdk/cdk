@@ -29,9 +29,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfAtomContainers;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
-    implements SetOfMolecules {
+    implements ISetOfMolecules {
 
 	LoggingTool logger = new LoggingTool(DebugSetOfMolecules.class);
 
@@ -185,7 +185,7 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		super.addAtomContainer(atomContainer, multiplier);
 	}
 
-	public void add(SetOfAtomContainers atomContainerSet) {
+	public void add(ISetOfAtomContainers atomContainerSet) {
 		logger.debug("Adding set of atom containers: ", atomContainerSet);
 		super.add(atomContainerSet);
 	}
@@ -215,27 +215,27 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		return super.getAtomContainerCount();
 	}
 
-	public void addMolecule(Molecule molecule) {
+	public void addMolecule(IMolecule molecule) {
 		logger.debug("Adding molecule: ", molecule);
 		super.addMolecule(molecule);
 	}
 
-	public void add(SetOfMolecules moleculeSet) {
+	public void add(ISetOfMolecules moleculeSet) {
 		logger.debug("Adding set of molecules: ", moleculeSet);
 		super.add(moleculeSet);
 	}
 
-	public void setMolecules(Molecule[] molecules) {
+	public void setMolecules(IMolecule[] molecules) {
 		logger.debug("Setting molecule array: ", molecules.length);
 		super.setMolecules(molecules);
 	}
 
-	public Molecule[] getMolecules() {
+	public IMolecule[] getMolecules() {
 		logger.debug("Getting molecule array: ", super.getMolecules().length);
 		return super.getMolecules();
 	}
 
-	public Molecule getMolecule(int number) {
+	public IMolecule getMolecule(int number) {
 		logger.debug("Getting molecule at: ", number);
 		return super.getMolecule(number);
 	}

@@ -193,10 +193,10 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   som  The SetOfMolecules that is written to an OutputStream 
 	 */
-	private void writeSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules som) throws IOException, CDKException {
+	private void writeSetOfMolecules(org.openscience.cdk.interfaces.ISetOfMolecules som) throws IOException, CDKException {
         
         for (int i = 0; i < som.getMoleculeCount(); i++) {
-        	org.openscience.cdk.interfaces.Molecule mol = som.getMolecule(i);
+        	org.openscience.cdk.interfaces.IMolecule mol = som.getMolecule(i);
             for (int j = 0; j < som.getMultiplier(i); j++) {
                 StringWriter sw = new StringWriter();
                 writer.write("$MOL\n");

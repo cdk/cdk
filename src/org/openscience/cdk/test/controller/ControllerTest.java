@@ -47,8 +47,8 @@ public class ControllerTest
 	ChemFile chemFile;
 	org.openscience.cdk.interfaces.IChemSequence chemSequence;
 	org.openscience.cdk.interfaces.IChemModel chemModel;
-	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules;
-	org.openscience.cdk.interfaces.Molecule molecule;
+	org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules;
+	org.openscience.cdk.interfaces.IMolecule molecule;
 	PopupController2D inputAdapter;
 	
 	public ControllerTest()
@@ -264,7 +264,7 @@ public class ControllerTest
 	
 
 	
-	org.openscience.cdk.interfaces.Molecule loadMolecule(String inFile)
+	org.openscience.cdk.interfaces.IMolecule loadMolecule(String inFile)
 	{
 		try
 		{

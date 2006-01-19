@@ -34,7 +34,7 @@ import javax.swing.JPanel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.event.CDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
@@ -186,19 +186,19 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
     }
 
 
-    public static void display(Molecule molecule, boolean generateCoordinates)
+    public static void display(IMolecule molecule, boolean generateCoordinates)
     {
         display(molecule, generateCoordinates, false);
     }
 
-    public static void display(Molecule molecule, boolean generateCoordinates, boolean drawNumbers)
+    public static void display(IMolecule molecule, boolean generateCoordinates, boolean drawNumbers)
     {
 	 display(molecule, generateCoordinates, drawNumbers, JFrame.DISPOSE_ON_CLOSE);
     
     }
 
 
-    public static void display(Molecule molecule, boolean generateCoordinates, boolean drawNumbers, int closeOperation)
+    public static void display(IMolecule molecule, boolean generateCoordinates, boolean drawNumbers, int closeOperation)
     {	
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         MoleculeViewer2D moleculeViewer = new MoleculeViewer2D();
@@ -207,7 +207,7 @@ public class MoleculeViewer2D extends JPanel implements CDKChangeListener
         {
             if (generateCoordinates)
             {
-                sdg.setMolecule((Molecule)molecule.clone());
+                sdg.setMolecule((IMolecule)molecule.clone());
                 sdg.generateCoordinates();
                 molecule = sdg.getMolecule();
             }

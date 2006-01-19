@@ -39,10 +39,10 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.CDOInterface;
@@ -61,7 +61,7 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
 	private IChemFile currentChemFile;
 	
     private IAtomContainer currentMolecule;
-    private SetOfMolecules currentSetOfMolecules;
+    private ISetOfMolecules currentSetOfMolecules;
     private IChemModel currentChemModel;
     private IChemSequence currentChemSequence;
     private SetOfReactions currentSetOfReactions;
@@ -205,9 +205,9 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
     public void endObject(String objectType) {
         logger.debug("END: " + objectType);
         if (objectType.equals("Molecule")) {
-            if (currentMolecule instanceof Molecule) {
+            if (currentMolecule instanceof IMolecule) {
                 logger.debug("Adding molecule to set");
-                currentSetOfMolecules.addMolecule((Molecule)currentMolecule);
+                currentSetOfMolecules.addMolecule((IMolecule)currentMolecule);
                 logger.debug("#mols in set: " + currentSetOfMolecules.getMoleculeCount());
             } else if (currentMolecule instanceof ICrystal) {
                 logger.debug("Adding crystal to chemModel");
@@ -281,9 +281,9 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
           logger.debug("Adding reaction to SOR");
           currentSetOfReactions.addReaction(currentReaction);
       } else if (objectType.equals("Reactant")) {
-          currentReaction.addReactant((Molecule)currentMolecule);
+          currentReaction.addReactant((IMolecule)currentMolecule);
       } else if (objectType.equals("Product")) {
-          currentReaction.addProduct((Molecule)currentMolecule);
+          currentReaction.addProduct((IMolecule)currentMolecule);
       } else if (objectType.equals("Crystal")) {
           logger.debug("Crystal: " + currentMolecule);
       }

@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
@@ -160,7 +160,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     );
                     inchiTool.processConnections(connections, parsedContent, -1);
                     
-                    SetOfMolecules moleculeSet = cf.getBuilder().newSetOfMolecules();
+                    ISetOfMolecules moleculeSet = cf.getBuilder().newSetOfMolecules();
                     moleculeSet.addMolecule(cf.getBuilder().newMolecule(parsedContent));
                     IChemModel model = cf.getBuilder().newChemModel();
                     model.setSetOfMolecules(moleculeSet);

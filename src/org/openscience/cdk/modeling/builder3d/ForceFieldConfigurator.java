@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
@@ -256,7 +256,7 @@ public class ForceFieldConfigurator {
 	 *@return                sssrf set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public RingSet assignAtomTyps(Molecule molecule) throws Exception {
+	public RingSet assignAtomTyps(IMolecule molecule) throws Exception {
 		org.openscience.cdk.interfaces.IAtom atom = null;
 		String hoseCode = "";
 		HOSECodeGenerator hcg = new HOSECodeGenerator();

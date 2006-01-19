@@ -42,11 +42,11 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.RingSet;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -192,7 +192,7 @@ public class SmilesGenerator
 	 *@return           Description of the Returned Value
 	 *@see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
 	 */
-	public synchronized String createSMILES(Molecule molecule)
+	public synchronized String createSMILES(IMolecule molecule)
 	{
 		try
 		{
@@ -215,7 +215,7 @@ public class SmilesGenerator
 	public synchronized String createSMILES(Reaction reaction) throws CDKException
 	{
 		StringBuffer reactionSMILES = new StringBuffer();
-		Molecule[] reactants = reaction.getReactants().getMolecules();
+		IMolecule[] reactants = reaction.getReactants().getMolecules();
 		for (int i = 0; i < reactants.length; i++)
 		{
 			reactionSMILES.append(createSMILES(reactants[i]));
@@ -225,7 +225,7 @@ public class SmilesGenerator
 			}
 		}
 		reactionSMILES.append('>');
-		Molecule[] agents = reaction.getAgents().getMolecules();
+		IMolecule[] agents = reaction.getAgents().getMolecules();
 		for (int i = 0; i < agents.length; i++)
 		{
 			reactionSMILES.append(createSMILES(agents[i]));
@@ -235,7 +235,7 @@ public class SmilesGenerator
 			}
 		}
 		reactionSMILES.append('>');
-		Molecule[] products = reaction.getProducts().getMolecules();
+		IMolecule[] products = reaction.getProducts().getMolecules();
 		for (int i = 0; i < products.length; i++)
 		{
 			reactionSMILES.append(createSMILES(products[i]));
@@ -272,7 +272,7 @@ public class SmilesGenerator
 	 *      coordinates are needed for creating the chiral smiles.
 	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
 	 */
-	public synchronized String createChiralSMILES(Molecule molecule, boolean[] doubleBondConfiguration) throws CDKException
+	public synchronized String createChiralSMILES(IMolecule molecule, boolean[] doubleBondConfiguration) throws CDKException
 	{
 		return (createSMILES(molecule, true, doubleBondConfiguration));
 	}
@@ -299,16 +299,16 @@ public class SmilesGenerator
 	 *      exception).
 	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
 	 */
-	public synchronized String createSMILES(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
+	public synchronized String createSMILES(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
-		SetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+		ISetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
 		if (moleculeSet.getMoleculeCount() > 1)
 		{
 			StringBuffer fullSMILES = new StringBuffer();
-			Molecule[] molecules = moleculeSet.getMolecules();
+			IMolecule[] molecules = moleculeSet.getMolecules();
 			for (int i = 0; i < molecules.length; i++)
 			{
-				Molecule molPart = molecules[i];
+				IMolecule molPart = molecules[i];
 				fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, chiral, doubleBondConfiguration));
 				if (i < (molecules.length - 1))
 				{
@@ -344,7 +344,7 @@ public class SmilesGenerator
 	 *      exception).
 	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
 	 */
-	public synchronized String createSMILESWithoutCheckForMultipleMolecules(Molecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
+	public synchronized String createSMILESWithoutCheckForMultipleMolecules(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
 		if (molecule.getAtomCount() == 0)
 		{

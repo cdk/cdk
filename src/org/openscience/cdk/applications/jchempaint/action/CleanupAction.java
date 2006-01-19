@@ -42,7 +42,7 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.CleanUpEdit;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -94,17 +94,17 @@ public class CleanupAction extends JCPAction
 			logger.debug("getting ChemModel");
 			org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
 			logger.debug("got ChemModel");
-			org.openscience.cdk.interfaces.SetOfMolecules som = model.getSetOfMolecules();
+			org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
 			if (som != null)
 			{
                 
 				logger.debug("no mols in som: ", som.getMoleculeCount());
 				SetOfMolecules newsom = new SetOfMolecules();
-				Molecule[] mols = som.getMolecules();
+				IMolecule[] mols = som.getMolecules();
 				for (int i = 0; i < mols.length; i++)
 				{
-                    Molecule molecule = mols[i];
-                     Molecule cleanedMol = relayoutMolecule(mols[i]);
+                    IMolecule molecule = mols[i];
+                     IMolecule cleanedMol = relayoutMolecule(mols[i]);
 					newsom.addMolecule(cleanedMol);
                     org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
 					org.openscience.cdk.interfaces.IAtom[] newAtoms = cleanedMol.getAtoms();
@@ -135,12 +135,12 @@ public class CleanupAction extends JCPAction
 					org.openscience.cdk.interfaces.Reaction reaction = reactions[j];
 					Reaction newReaction = new Reaction();
 					// FIXME, this does not preserve reaction properties!
-					Molecule[] reactants = reaction.getReactants().getMolecules();
+					IMolecule[] reactants = reaction.getReactants().getMolecules();
 					for (int i = 0; i < reactants.length; i++)
 					{
 						newReaction.addReactant(relayoutMolecule(reactants[i]));
 					}
-					Molecule[] products = reaction.getProducts().getMolecules();
+					IMolecule[] products = reaction.getProducts().getMolecules();
 					for (int i = 0; i < products.length; i++)
 					{
 						newReaction.addProduct(relayoutMolecule(products[i]));
@@ -164,10 +164,10 @@ public class CleanupAction extends JCPAction
 	 *@param  molecule  Description of the Parameter
 	 *@return           Description of the Return Value
 	 */
-	private Molecule relayoutMolecule(Molecule molecule)
+	private IMolecule relayoutMolecule(IMolecule molecule)
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		Molecule cleanedMol = molecule;
+		IMolecule cleanedMol = molecule;
        if (molecule != null)
 		{
 			if (molecule.getAtomCount() > 2)

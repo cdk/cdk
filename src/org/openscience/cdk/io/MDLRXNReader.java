@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.Mapping;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.SetOfReactions;
 import org.openscience.cdk.exception.CDKException;
@@ -191,7 +191,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
-                Molecule reactant = (Molecule)reader.read(
+                IMolecule reactant = (IMolecule)reader.read(
                   new org.openscience.cdk.Molecule());
                   
                 // add reactant
@@ -220,7 +220,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
-                Molecule product = (Molecule)reader.read(
+                IMolecule product = (IMolecule)reader.read(
                   new org.openscience.cdk.Molecule());
                   
                 // add reactant
@@ -238,7 +238,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
         IAtomContainer reactingSide = new org.openscience.cdk.AtomContainer();
-        Molecule[] molecules = reaction.getReactants().getMolecules();
+        IMolecule[] molecules = reaction.getReactants().getMolecules();
         for (int i=0; i<molecules.length; i++) {
             reactingSide.add(molecules[i]);
         }

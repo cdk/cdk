@@ -38,7 +38,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -80,7 +80,7 @@ public class ModelBuilder3D {
 	private TemplateHandler3D templateHandler = null;
 	boolean useTemplates = true;
 	private Hashtable parameterSet = null;
-	private Molecule molecule;
+	private IMolecule molecule;
 	private AtomPlacer atomPlacer = new AtomPlacer();
 	private AtomPlacer3D ap3d = new AtomPlacer3D();
 	private AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
@@ -103,7 +103,7 @@ public class ModelBuilder3D {
 	 *@param  templateHandler  templateHandler Object
 	 *@param  ffname           name of force field
 	 */
-	public ModelBuilder3D(Molecule molecule, TemplateHandler3D templateHandler, String ffname)  throws CDKException{
+	public ModelBuilder3D(IMolecule molecule, TemplateHandler3D templateHandler, String ffname)  throws CDKException{
 		setMolecule(molecule, false);
 		setTemplateHandler(templateHandler);
 		setForceField(ffname);
@@ -116,7 +116,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  molecule  The molecule to be layed out.
 	 */
-	public ModelBuilder3D(Molecule molecule) {
+	public ModelBuilder3D(IMolecule molecule) {
 		setMolecule(molecule, false);
     setForceField(null);
 	}
@@ -147,10 +147,10 @@ public class ModelBuilder3D {
 	 *@param  mol    Molecule
 	 *@param  clone  boolean
 	 */
-	public void setMolecule(Molecule mol, boolean clone) {
+	public void setMolecule(IMolecule mol, boolean clone) {
 
 		if (clone) {
-			this.molecule = (Molecule) mol.clone();
+			this.molecule = (IMolecule) mol.clone();
 		} else {
 			this.molecule = mol;
 		}
@@ -682,7 +682,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  molecule  The new molecule value
 	 */
-	public void setMolecule(Molecule molecule) {
+	public void setMolecule(IMolecule molecule) {
 		setMolecule(molecule, true);
 	}
 
@@ -692,7 +692,7 @@ public class ModelBuilder3D {
 	 *
 	 *@return    The molecule value
 	 */
-	public Molecule getMolecule() {
+	public IMolecule getMolecule() {
 		return this.molecule;
 	}
 }

@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -95,7 +95,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 		try{
 			SmilesParser sp = new SmilesParser();
-			Molecule mol = sp.parseSmiles("CF");
+			IMolecule mol = sp.parseSmiles("CF");
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			//mb3d.setTemplateHandler();
 			mb3d.setForceField("mm2");
@@ -142,7 +142,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		String smile="CccccC";
 		try{
 			SmilesParser sp = new SmilesParser();
-			Molecule mol = sp.parseSmiles(smile);
+			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			//mb3d.setTemplateHandler();
 			mb3d.setForceField("mm2");
@@ -172,7 +172,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     String smile="c1ccccc1C=0";
 		try {
 			SmilesParser sp = new SmilesParser();
-			Molecule mol = sp.parseSmiles(smile);
+			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			mb3d.setTemplateHandler();
 			mb3d.setMolecule(mol,false);
@@ -195,7 +195,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     String smile="C1CCCCCCC1CC";
 		try {
 			SmilesParser sp = new SmilesParser();
-			Molecule mol = sp.parseSmiles(smile);
+			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			mb3d.setTemplateHandler();
 			mb3d.setMolecule(mol,false);
@@ -217,7 +217,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     public void testModelBuilder3D_keepChemObjectIDs(){
 		ModelBuilder3D mb3d = new ModelBuilder3D();
 		
-		Molecule methanol = new org.openscience.cdk.Molecule();
+		IMolecule methanol = new org.openscience.cdk.Molecule();
 		IChemObjectBuilder builder = methanol.getBuilder();
 		
 		IAtom carbon1 = builder.newAtom("C");

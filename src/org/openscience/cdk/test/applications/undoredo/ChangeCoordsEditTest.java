@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.applications.undoredo.ChangeCoordsEdit;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -17,7 +17,7 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class ChangeCoordsEditTest extends CDKTestCase {
 
-	private Molecule mol;
+	private IMolecule mol;
 
 	private HashMap atomCoordsMap;
 
@@ -25,7 +25,7 @@ public class ChangeCoordsEditTest extends CDKTestCase {
 	 * @param map
 	 * @param mol
 	 */
-	public ChangeCoordsEditTest(HashMap map, Molecule mol) {
+	public ChangeCoordsEditTest(HashMap map, IMolecule mol) {
 		this.mol = mol;
 		this.atomCoordsMap = map;
 	}

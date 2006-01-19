@@ -35,8 +35,8 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -102,17 +102,17 @@ public class HINWriter extends DefaultChemObjectWriter {
     }
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
+        if (object instanceof IMolecule) {
             try {
-                SetOfMolecules som = object.getBuilder().newSetOfMolecules();
-                som.addMolecule((Molecule)object);
+                ISetOfMolecules som = object.getBuilder().newSetOfMolecules();
+                som.addMolecule((IMolecule)object);
                 writeMolecule(som);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
             }
-        } else if (object instanceof SetOfMolecules) {
+        } else if (object instanceof ISetOfMolecules) {
             try {
-                writeMolecule((SetOfMolecules)object);
+                writeMolecule((ISetOfMolecules)object);
             } catch (IOException ex) {
                 //
             }
@@ -127,7 +127,7 @@ public class HINWriter extends DefaultChemObjectWriter {
      * as well
      * @param mol the Molecule to write
      */
-    private void writeMolecule(SetOfMolecules som) throws IOException {
+    private void writeMolecule(ISetOfMolecules som) throws IOException {
 
         int na = 0;
         String info = "";
@@ -137,7 +137,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
         for (int molnum = 0; molnum < som.getMoleculeCount(); molnum++) {
 
-        	org.openscience.cdk.interfaces.Molecule mol = som.getMolecule(molnum);
+        	org.openscience.cdk.interfaces.IMolecule mol = som.getMolecule(molnum);
 
             try {
 

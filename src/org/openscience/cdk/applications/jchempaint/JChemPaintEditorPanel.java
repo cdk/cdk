@@ -61,7 +61,7 @@ import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
@@ -567,7 +567,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	{
 		Dimension newDim = new Dimension(baseDim);
 		// a bit ugly, but assume moleculeSet *or* reactionSet
-		SetOfMolecules moleculeSet = model.getSetOfMolecules();
+		ISetOfMolecules moleculeSet = model.getSetOfMolecules();
 		if (moleculeSet != null)
 		{
 			newDim.height = newDim.height * (moleculeSet.getMoleculeCount());
@@ -592,10 +592,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	private void layoutInTable(Dimension baseDim, IChemModel model)
 	{
 		// a bit ugly, but assume moleculeSet *or* reactionSet
-		SetOfMolecules moleculeSet = model.getSetOfMolecules();
+		ISetOfMolecules moleculeSet = model.getSetOfMolecules();
 		if (moleculeSet != null)
 		{
-			org.openscience.cdk.interfaces.Molecule[] mols = moleculeSet.getMolecules();
+			org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();
 			for (int i = 0; i < mols.length; i++)
 			{
 				GeometryTools.center(mols[i], baseDim);

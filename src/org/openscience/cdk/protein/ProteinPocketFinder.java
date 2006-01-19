@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.ChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 
@@ -155,7 +155,7 @@ public class ProteinPocketFinder {
 			// Get molecule from ChemFile
 			IChemSequence chemSequence = chemFile.getChemSequence(0);
 			IChemModel chemModel = chemSequence.getChemModel(0);
-			SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+			ISetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
 			protein = (IBioPolymer) setOfMolecules.getMolecule(0);
 		} catch (Exception exc) {
 			System.out.println("Could not read BioPolymer from file>"

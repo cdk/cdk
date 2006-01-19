@@ -8,7 +8,7 @@ import javax.vecmath.Vector2d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -20,7 +20,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  */
 public class CleanUpEditTest extends ChangeCoordsEditTest {
 
-	private static Molecule mol = MoleculeFactory.makeAlphaPinene();
+	private static IMolecule mol = MoleculeFactory.makeAlphaPinene();
 
 	private static StructureDiagramGenerator diagramGenerator = new StructureDiagramGenerator();
 
@@ -85,9 +85,9 @@ public class CleanUpEditTest extends ChangeCoordsEditTest {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Molecule relayoutMolecule(Molecule molecule)
+	private static IMolecule relayoutMolecule(IMolecule molecule)
 			throws Exception {
-		Molecule cleanedMol = molecule;
+		IMolecule cleanedMol = molecule;
 		if (molecule != null) {
 			if (molecule.getAtomCount() > 2) {
 				diagramGenerator.setMolecule(molecule);

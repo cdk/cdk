@@ -138,7 +138,7 @@ public class RSSHandler extends DefaultHandler {
                             // also extract INChI
                             if (model.getSetOfMolecules() != null) {
                                 if (model.getSetOfMolecules().getMoleculeCount() > 0) {
-                                	org.openscience.cdk.interfaces.Molecule molecule = model.getSetOfMolecules().getMolecule(0);
+                                	org.openscience.cdk.interfaces.IMolecule molecule = model.getSetOfMolecules().getMolecule(0);
                                     String inchi = (String)molecule.getProperty("iupac.nist.chemical.identifier");
                                     if (inchi != null) 
                                         model.setProperty(ChemicalRSSReader.RSS_ITEM_INCHI, inchi);

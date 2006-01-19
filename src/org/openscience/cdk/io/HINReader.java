@@ -41,8 +41,8 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.HINFormat;
@@ -139,7 +139,7 @@ public class HINReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) {
         IChemSequence chemSequence = file.getBuilder().newChemSequence();
         IChemModel chemModel = file.getBuilder().newChemModel();
-        SetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
+        ISetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
         String info;
 
         StringTokenizer tokenizer;
@@ -167,7 +167,7 @@ public class HINReader extends DefaultChemObjectReader {
                     info = getMolName(line);
                     line = input.readLine();
                 }
-                Molecule m = file.getBuilder().newMolecule();
+                IMolecule m = file.getBuilder().newMolecule();
                 m.setProperty(CDKConstants.TITLE ,info);
 
                 // Each elemnt of cons is an ArrayList of length 3 which stores

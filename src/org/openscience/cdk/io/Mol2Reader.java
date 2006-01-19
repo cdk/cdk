@@ -44,8 +44,8 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
@@ -116,7 +116,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
              IChemFile file = (IChemFile)object;
              IChemSequence sequence = file.getBuilder().newChemSequence();
              IChemModel model = file.getBuilder().newChemModel();
-             SetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
+             ISetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
              ));
@@ -126,7 +126,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
              return file;
          } else if (object instanceof IChemModel) {
              IChemModel model = (IChemModel)object;
-             SetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+             ISetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
              ));
@@ -153,7 +153,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
      *
      * @return  The Reaction that was read from the MDL file.
      */
-    private Molecule readMolecule(Molecule molecule) throws CDKException {
+    private IMolecule readMolecule(IMolecule molecule) throws CDKException {
         AtomTypeFactory atFactory = null;
         try {
             atFactory = AtomTypeFactory.getInstance(

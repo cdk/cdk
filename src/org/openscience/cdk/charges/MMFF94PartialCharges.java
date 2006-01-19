@@ -27,7 +27,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 /**
  *  The calculation of the MMFF94 partial charges.
@@ -70,7 +70,7 @@ public class MMFF94PartialCharges {
 	public IAtomContainer assignMMFF94PartialCharges(IAtomContainer ac) throws Exception {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
-		ffc.assignAtomTyps((Molecule)ac);
+		ffc.assignAtomTyps((IMolecule)ac);
 		Hashtable parameterSet = ffc.getParameterSet();
 		// for this calculation,
 		// we need some values stored in the vector "data" in the

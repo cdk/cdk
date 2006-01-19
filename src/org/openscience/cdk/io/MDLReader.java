@@ -140,19 +140,19 @@ public class MDLReader extends DefaultChemObjectReader {
 			return readChemFile((IChemFile)object);
         } else if (object instanceof IChemModel) {
             return readChemModel((IChemModel)object);
-		} else if (object instanceof Molecule) {
-			return readMolecule((Molecule)object);
+		} else if (object instanceof IMolecule) {
+			return readMolecule((IMolecule)object);
 		} else {
 			throw new CDKException("Only supported are ChemFile and Molecule.");
 		}
 	}
 
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
-    	org.openscience.cdk.interfaces.SetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+    	org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
         if (setOfMolecules == null) {
             setOfMolecules = chemModel.getBuilder().newSetOfMolecules();
         }
-        Molecule m = readMolecule(chemModel.getBuilder().newMolecule());
+        IMolecule m = readMolecule(chemModel.getBuilder().newMolecule());
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
@@ -169,8 +169,8 @@ public class MDLReader extends DefaultChemObjectReader {
         IChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
         
         IChemModel chemModel = chemFile.getBuilder().newChemModel();
-		SetOfMolecules setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
-		Molecule m = readMolecule(chemFile.getBuilder().newMolecule());
+		ISetOfMolecules setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
+		IMolecule m = readMolecule(chemFile.getBuilder().newMolecule());
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
@@ -270,7 +270,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
-	private Molecule readMolecule(Molecule molecule) throws CDKException {
+	private IMolecule readMolecule(IMolecule molecule) throws CDKException {
         logger.debug("Reading new molecule");
         int linecount = 0;
         int atoms = 0;

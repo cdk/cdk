@@ -269,7 +269,7 @@ public interface IChemObjectBuilder {
 	/**
 	 * Creates an Molecule without Atoms and Bonds.
 	 */
-	public Molecule newMolecule();
+	public IMolecule newMolecule();
 
 	/**
 	 * Constructor for the Molecule object. The parameters define the
@@ -278,7 +278,7 @@ public interface IChemObjectBuilder {
 	 * @param  atomCount               init capacity of Atom array
 	 * @param  electronContainerCount  init capacity of Bond array
 	 */
-	public Molecule newMolecule(int atomCount, int electronContainerCount);
+	public IMolecule newMolecule(int atomCount, int electronContainerCount);
 
 	/**
 	 * Constructs a Molecule with
@@ -286,7 +286,7 @@ public interface IChemObjectBuilder {
 	 *
 	 * @param   container  An Molecule to copy the atoms and bonds from
 	 */
-	public Molecule newMolecule(IAtomContainer container);
+	public IMolecule newMolecule(IAtomContainer container);
 	
 	/**
 	 * Contructs a new Monomer.
@@ -337,12 +337,12 @@ public interface IChemObjectBuilder {
 	/**  
 	 * Constructs an empty SetOfAtomContainers.
 	 */
-	public SetOfAtomContainers newSetOfAtomContainers();
+	public ISetOfAtomContainers newSetOfAtomContainers();
 	
 	/**  
 	 * Constructs an empty SetOfMolecules.
 	 */
-	public SetOfMolecules newSetOfMolecules();
+	public ISetOfMolecules newSetOfMolecules();
 	
 	/**
 	 * Constructs an empty SetOfReactions.

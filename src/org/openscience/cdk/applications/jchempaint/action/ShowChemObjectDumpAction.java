@@ -38,7 +38,7 @@ import nu.xom.Element;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.xmlcml.cml.element.CMLCml;
@@ -77,8 +77,8 @@ public class ShowChemObjectDumpAction extends JCPAction
 		Convertor convertor = new Convertor(false, null);
 		try {
 			Element cmlDOM = new CMLCml();
-			if (object instanceof Molecule) {
-				cmlDOM = convertor.cdkMoleculeToCMLMolecule((Molecule)object);
+			if (object instanceof IMolecule) {
+				cmlDOM = convertor.cdkMoleculeToCMLMolecule((IMolecule)object);
 			} else if (object instanceof IAtom) {
 				cmlDOM = convertor.cdkAtomToCMLAtom((IAtom)object);
 			} else if (object instanceof IBond) {

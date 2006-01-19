@@ -36,10 +36,10 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -134,9 +134,9 @@ public class SmilesParser
 		Reaction reaction = new Reaction();
 
 		// add reactants
-		Molecule reactantContainer = parseSmiles(reactantSmiles);
-		SetOfMolecules reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
-		Molecule[] reactants = reactantSet.getMolecules();
+		IMolecule reactantContainer = parseSmiles(reactantSmiles);
+		ISetOfMolecules reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
+		IMolecule[] reactants = reactantSet.getMolecules();
 		for (int i = 0; i < reactants.length; i++)
 		{
 			reaction.addReactant(reactants[i]);
@@ -145,9 +145,9 @@ public class SmilesParser
 		// add reactants
 		if (agentSmiles.length() > 0)
 		{
-			Molecule agentContainer = parseSmiles(agentSmiles);
-			SetOfMolecules agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
-			Molecule[] agents = agentSet.getMolecules();
+			IMolecule agentContainer = parseSmiles(agentSmiles);
+			ISetOfMolecules agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
+			IMolecule[] agents = agentSet.getMolecules();
 			for (int i = 0; i < agents.length; i++)
 			{
 				reaction.addAgent(agents[i]);
@@ -155,9 +155,9 @@ public class SmilesParser
 		}
 
 		// add products
-		Molecule productContainer = parseSmiles(productSmiles);
-		SetOfMolecules productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
-		Molecule[] products = productSet.getMolecules();
+		IMolecule productContainer = parseSmiles(productSmiles);
+		ISetOfMolecules productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
+		IMolecule[] products = productSet.getMolecules();
 		for (int i = 0; i < products.length; i++)
 		{
 			reaction.addProduct(products[i]);
@@ -418,7 +418,7 @@ public class SmilesParser
 		}
 
 		// conceive aromatic perception
-		Molecule[] moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule).getMolecules();
+		IMolecule[] moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule).getMolecules();
 		logger.debug("#mols ", moleculeSet.length);
 		for (int i = 0; i < moleculeSet.length; i++)
 		{

@@ -51,7 +51,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -66,8 +66,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * <ul>
  * <li>if {@link #write(IChemObject)} is called with a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules}
  * as an argument a SD files is written</li>
- * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(Molecule) this one} or
- * {@link #writeMolecule(Molecule, boolean[]) that one}) is called the first time, a mol file is written</li>
+ * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(IMolecule) this one} or
+ * {@link #writeMolecule(IMolecule, boolean[]) that one}) is called the first time, a mol file is written</li>
  * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
  * </ul><BR>
  * Thus, to write several molecules to a single SD file you can either use {@link #write(IChemObject)} and pass
@@ -183,13 +183,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
 			writeSetOfMolecules((SetOfMolecules)object);
 		} else if (object instanceof IChemFile) {
 			writeChemFile((IChemFile)object);
-		} else if (object instanceof Molecule) {
+		} else if (object instanceof IMolecule) {
 			try{
-				boolean[] isVisible=new boolean[((Molecule)object).getAtomCount()];
+				boolean[] isVisible=new boolean[((IMolecule)object).getAtomCount()];
 				for(int i=0;i<isVisible.length;i++){
 					isVisible[i]=true;
 				}
-				writeMolecule((Molecule)object,isVisible);
+				writeMolecule((IMolecule)object,isVisible);
 			}
 			catch (Exception ex) {
 				logger.error(ex.getMessage());
@@ -208,7 +208,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 */
 	private void writeSetOfMolecules(SetOfMolecules som)
 	{
-		Molecule[] molecules = som.getMolecules();
+		IMolecule[] molecules = som.getMolecules();
 		for (int i = 0; i < som.getMoleculeCount(); i++)
 		{
 			try
@@ -245,7 +245,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   molecule  Molecule that is written to an OutputStream 
 	 */
-    public void writeMolecule(Molecule molecule) throws Exception {
+    public void writeMolecule(IMolecule molecule) throws Exception {
         boolean[] isVisible=new boolean[molecule.getAtomCount()];
         for(int i=0;i<isVisible.length;i++){
           isVisible[i]=true;
@@ -259,7 +259,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 * @param   molecule  Molecule that is written to an OutputStream
    * @param   isVisible Should a certain atom be written to mdl?
 	 */
-    public void writeMolecule(Molecule molecule, boolean[] isVisible) throws Exception {
+    public void writeMolecule(IMolecule molecule, boolean[] isVisible) throws Exception {
         String line = "";
         // taking care of the $$$$ signs:
         // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule

@@ -36,9 +36,9 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
 
 /**
@@ -101,7 +101,7 @@ public class AbstractValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateMolecule(Molecule subject) {
+    public ValidationReport validateMolecule(IMolecule subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
@@ -109,7 +109,7 @@ public class AbstractValidator implements ValidatorInterface {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateSetOfMolecules(SetOfMolecules subject) {
+    public ValidationReport validateSetOfMolecules(ISetOfMolecules subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }

@@ -30,8 +30,8 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SetOfMolecules;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
@@ -58,7 +58,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testGetMoleculeCount() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -67,7 +67,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testGetMolecule_int() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -77,7 +77,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testAddMolecule_Molecule() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -94,23 +94,23 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testAdd_SetOfMolecules() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
 
-        SetOfMolecules som2 = builder.newSetOfMolecules();
+        ISetOfMolecules som2 = builder.newSetOfMolecules();
         som2.add(som);
         
         assertEquals(5, som2.getMoleculeCount());
     }
     
     public void testSetMolecules_arrayMolecule() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         
-        Molecule[] set = new Molecule[5];
+        IMolecule[] set = new IMolecule[5];
         set[0] = builder.newMolecule();
         set[1] = builder.newMolecule();
         set[2] = builder.newMolecule();
@@ -125,7 +125,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     public void testGrowMoleculeArray() {
         // this test assumes that the growSize = 5 !
         // if not, there is need for the array to grow
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -135,20 +135,20 @@ public class SetOfMoleculesTest extends CDKTestCase {
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
 
-        org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
+        org.openscience.cdk.interfaces.IMolecule[] mols = som.getMolecules();
         assertEquals(7, mols.length);
     }
     
     public void testSetOfMolecules() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         assertNotNull(som);
         assertEquals(0, som.getMoleculeCount());
     }
     
     public void testGetMolecules() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         
-        org.openscience.cdk.interfaces.Molecule[] mols = som.getMolecules();
+        org.openscience.cdk.interfaces.IMolecule[] mols = som.getMolecules();
         assertEquals(0, mols.length);
         
         som.addMolecule(builder.newMolecule());
@@ -163,7 +163,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
 
     public void testToString() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         String description = som.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
@@ -172,15 +172,15 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
 
     public void testClone() {
-        SetOfMolecules som = builder.newSetOfMolecules();
+        ISetOfMolecules som = builder.newSetOfMolecules();
         Object clone = som.clone();
-        assertTrue(clone instanceof SetOfMolecules);
+        assertTrue(clone instanceof ISetOfMolecules);
 	assertNotSame(som, clone);
     }   
     
     public void testStateChanged_ChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        SetOfMolecules chemObject = builder.newSetOfMolecules();
+        ISetOfMolecules chemObject = builder.newSetOfMolecules();
         chemObject.addListener(listener);
         
         chemObject.addMolecule(builder.newMolecule());

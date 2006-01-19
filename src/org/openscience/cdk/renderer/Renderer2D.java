@@ -41,7 +41,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
@@ -147,9 +147,9 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  graphics     Description of the Parameter
 	 *@param  split        If true the setOfMolecule will be united and then splitted again in single molecules before painted. Typically not needed a performance killler
 	 */
-	public void paintSetOfMolecules(org.openscience.cdk.interfaces.SetOfMolecules moleculeSet, Graphics2D graphics, boolean split) {
+	public void paintSetOfMolecules(org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet, Graphics2D graphics, boolean split) {
 		logger.debug("painting set of molecules");
-		Molecule[] molecules = null;
+		IMolecule[] molecules = null;
 		if(split){
 			org.openscience.cdk.interfaces.IAtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
 			try
@@ -193,14 +193,14 @@ public class Renderer2D extends SimpleRenderer2D
 	public void paintReaction(Reaction reaction, Graphics2D graphics) {
 		// calculate some boundaries
 		IAtomContainer reactantContainer = new org.openscience.cdk.AtomContainer();
-		Molecule[] reactants = reaction.getReactants().getMolecules();
+		IMolecule[] reactants = reaction.getReactants().getMolecules();
 		for (int i = 0; i < reactants.length; i++)
 		{
 			reactantContainer.add(reactants[i]);
 		}
 		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
 		IAtomContainer productContainer = new org.openscience.cdk.AtomContainer();
-		Molecule[] products = reaction.getProducts().getMolecules();
+		IMolecule[] products = reaction.getProducts().getMolecules();
 		for (int i = 0; i < products.length; i++)
 		{
 			productContainer.add(products[i]);

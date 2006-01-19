@@ -26,7 +26,7 @@ package org.openscience.cdk.isomorphism;
 
 import java.util.Arrays;
 
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 
@@ -55,8 +55,8 @@ public class IsomorphismTester implements java.io.Serializable
 	int[] sortedBaseTable;
 	int[] compareTable;
 	int[] sortedCompareTable;
-	Molecule base = null;
-	Molecule compare = null;
+	IMolecule base = null;
+	IMolecule compare = null;
 
 
 	/**
@@ -68,7 +68,7 @@ public class IsomorphismTester implements java.io.Serializable
 	/**
 	 *  Constructor for the IsomorphismTester object
 	 */
-	public IsomorphismTester(Molecule mol) throws NoSuchAtomException
+	public IsomorphismTester(IMolecule mol) throws NoSuchAtomException
 	{
 		setBaseTable(mol);
 	}
@@ -82,7 +82,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 * @param  mol2                     A second molecule to check against the first
 	 * @return                          True, if the two molecules are isomorphic
 	 */
-	public boolean isIsomorphic(Molecule mol1, Molecule mol2) {
+	public boolean isIsomorphic(IMolecule mol1, IMolecule mol2) {
 		setBaseTable(mol1);
 		return isIsomorphic(mol2);
 	}
@@ -96,7 +96,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 * @return                          True, if the two molecules are isomorphic 
 	 * @exception  NoSuchAtomException  A problem with the structures
 	 */
-	public boolean isIsomorphic(Molecule mol2) {
+	public boolean isIsomorphic(IMolecule mol2) {
 		boolean found;
 		org.openscience.cdk.interfaces.IAtom atom1 = null;
 		org.openscience.cdk.interfaces.IAtom atom2 = null;
@@ -157,7 +157,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 *
 	 * @param  mol                      The new BaseTable value
 	 */
-	private void setBaseTable(Molecule mol) {
+	private void setBaseTable(IMolecule mol) {
 		this.base = mol;
 		this.baseTable = MorganNumbersTools.getMorganNumbers(base);
 		sortedBaseTable = new int[baseTable.length];
@@ -171,7 +171,7 @@ public class IsomorphismTester implements java.io.Serializable
 	 *
 	 * @param  mol                      The new CompareTable value
 	 */
-	private void setCompareTable(Molecule mol) {
+	private void setCompareTable(IMolecule mol) {
 		this.compare = mol;
 		this.compareTable = MorganNumbersTools.getMorganNumbers(compare);
 		sortedCompareTable = new int[compareTable.length];

@@ -115,7 +115,7 @@ public class CDKDictionaryReferences {
         isotope.setProperty(prefix + ":self:" + selfCounter++, "chemical:isotope");
     }
 
-    private static void makeReferencesExplicitForMolecule(org.openscience.cdk.interfaces.Molecule molecule) {
+    private static void makeReferencesExplicitForMolecule(org.openscience.cdk.interfaces.IMolecule molecule) {
         int selfCounter = 0;
         molecule.setProperty(prefix + ":self:" + selfCounter++, "chemical:molecularEntity");
         /* remark: this is not strictly true... the Compendium includes the
