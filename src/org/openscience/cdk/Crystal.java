@@ -25,6 +25,8 @@ package org.openscience.cdk;
 
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 /**
  * Class representing a molecular crystal.
  * The crystal is described with molecules in fractional
@@ -98,7 +100,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
      * Adds the atom to the crystal. Symmetry related atoms should
      * not be added unless P1 space group is used.
      */
-    public void addAtom(Atom atom) {
+    public void addAtom(IAtom atom) {
         super.addAtom(atom);
     }
 

@@ -31,6 +31,8 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 
 /**
  * A BioPolymer is a subclass of a Polymer which is supposed to store
@@ -76,7 +78,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @param oAtom  The atom to add
 	 *
 	 */
-	public void addAtom(Atom oAtom) {
+	public void addAtom(IAtom oAtom) {
 //		addAtom(oAtom, getStrand(""));
 		super.addAtom(oAtom);
 		/* notifyChanged() is called by addAtom in
