@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *@see           InverseSymbolSetQueryAtom
  *@cdk.module    extra
  */
-public class SymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implements QueryAtom {
+public class SymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implements IQueryAtom {
 
     private HashSet symbols = new HashSet();
 

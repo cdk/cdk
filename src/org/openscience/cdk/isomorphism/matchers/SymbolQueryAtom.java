@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * @cdk.module extra
  */
-public class SymbolQueryAtom extends org.openscience.cdk.Atom implements QueryAtom {
+public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryAtom {
     
     public SymbolQueryAtom() {}
     

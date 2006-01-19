@@ -30,12 +30,12 @@ import org.openscience.cdk.CDKConstants;
 /**
  * @cdk.module extra
  */
-public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBond {
+public class OrderQueryBond extends org.openscience.cdk.Bond implements IQueryBond {
 
     public OrderQueryBond() {
     }
 
-    public OrderQueryBond(QueryAtom atom1, QueryAtom atom2, double order) {
+    public OrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
         super(atom1, atom2, order);
     }
     
@@ -51,7 +51,7 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBon
     };
 
     public void setAtoms(IAtom[] atoms) {
-        if (atoms.length > 0 && atoms[0] instanceof QueryAtom) {
+        if (atoms.length > 0 && atoms[0] instanceof IQueryAtom) {
             super.setAtoms(atoms);
         } else {
             throw new IllegalArgumentException("Array is not of type QueryAtom[]");
@@ -59,7 +59,7 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements QueryBon
 	}
     
 	public void setAtomAt(IAtom atom, int position) {
-        if (atom instanceof QueryAtom) {
+        if (atom instanceof IQueryAtom) {
             super.setAtomAt(atom, position);
         } else {
             throw new IllegalArgumentException("Atom is not of type QueryAtom");

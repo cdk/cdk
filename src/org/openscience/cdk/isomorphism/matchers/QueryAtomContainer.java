@@ -44,7 +44,7 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
     }
     
     public void addAtom(IAtom atom) {
-        if (atom instanceof QueryAtom) {
+        if (atom instanceof IQueryAtom) {
             super.addAtom(atom);
         } else {
             throw new IllegalArgumentException("Atom is not of type QueryAtom");
@@ -52,7 +52,7 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
     }
 
     public void addBond(IBond bond) {
-        if (bond instanceof QueryBond) {
+        if (bond instanceof IQueryBond) {
             super.addBond(bond);
         } else {
             throw new IllegalArgumentException("Bond is not of type QueryBond");

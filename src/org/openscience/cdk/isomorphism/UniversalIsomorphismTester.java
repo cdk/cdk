@@ -43,8 +43,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
-import org.openscience.cdk.isomorphism.matchers.QueryBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
@@ -335,8 +335,8 @@ public class UniversalIsomorphismTester {
 		  List arrayList = new ArrayList();
 		  IAtom atom = g2.getAtomAt(0);
 		  
-		  if (atom instanceof QueryAtom) {
-			  QueryAtom qAtom = (QueryAtom)atom;
+		  if (atom instanceof IQueryAtom) {
+			  IQueryAtom qAtom = (IQueryAtom)atom;
 			  for (int i=0; i<g1.getAtomCount(); i++){
 				  if(qAtom.matches(g1.getAtomAt(i)))
 					  arrayList.add(new RMap(i,0));
@@ -355,8 +355,8 @@ public class UniversalIsomorphismTester {
 		  IAtom atom = g1.getAtomAt(0);
 		  for (int i=0; i<g2.getAtomCount(); i++) {
 		      IAtom atom2 = g2.getAtomAt(i);
-		      if (atom2 instanceof QueryAtom) {
-		    	  QueryAtom qAtom = (QueryAtom)atom2;
+		      if (atom2 instanceof IQueryAtom) {
+		    	  IQueryAtom qAtom = (IQueryAtom)atom2;
 		    	  if (qAtom.matches(atom))
 		    		  arrayList.add(new RMap(0,i));
 		      } else {
@@ -593,10 +593,10 @@ public class UniversalIsomorphismTester {
           if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
         	  throw new CDKException("Timeout exceeded in getOverlaps");
           IBond bondA2 = bondsA2[j];
-          if (bondA2 instanceof QueryBond) {
-              QueryBond queryBond = (QueryBond)bondA2;
-              QueryAtom atom1 = (QueryAtom)(bondA2.getAtomAt(0));
-              QueryAtom atom2 = (QueryAtom)(bondA2.getAtomAt(1));
+          if (bondA2 instanceof IQueryBond) {
+              IQueryBond queryBond = (IQueryBond)bondA2;
+              IQueryAtom atom1 = (IQueryAtom)(bondA2.getAtomAt(0));
+              IQueryAtom atom2 = (IQueryAtom)(bondA2.getAtomAt(1));
               IBond bond = bondsA1[i];
               if (queryBond.matches(bond)) {
                   // ok, bonds match
@@ -687,7 +687,7 @@ public class UniversalIsomorphismTester {
         b1 = bondsA1[((RNode) gr.getGraph().get(j)).getRMap().getId1()];
         b2 = bondsA2[((RNode) gr.getGraph().get(j)).getRMap().getId2()];
 
-        if (a1 instanceof QueryBond) {
+        if (a1 instanceof IQueryBond) {
             if (a1.equals(b1) || a2.equals(b2) ||
                 !queryAdjacency(a1, b1, a2, b2)) {
                 x.getForbidden().set(j);
@@ -776,7 +776,7 @@ public class UniversalIsomorphismTester {
       }
       
       if (atom1 != null && atom2 != null){
-          return ((QueryAtom)atom2).matches(atom1);
+          return ((IQueryAtom)atom2).matches(atom1);
       } else if (atom1 == null && atom2 == null) {
 	      return true;
       } else {

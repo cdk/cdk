@@ -24,19 +24,19 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
-import org.openscience.cdk.isomorphism.matchers.QueryBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
  * This is just a simple proof of concept, and far from a functional SMARTSAtom.
  *
  * @cdk.module extra
  */
-public class SMARTSBond extends org.openscience.cdk.Bond implements QueryBond {
+public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {
     
     public SMARTSBond() {}
     
-    public SMARTSBond(QueryAtom atom1, QueryAtom atom2, double order) {
+    public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
         super(atom1, atom2, order);
     }
 

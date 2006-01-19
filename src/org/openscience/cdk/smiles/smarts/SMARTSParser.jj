@@ -36,9 +36,9 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.IsotopeFactory;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AliphaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
@@ -82,7 +82,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class SMARTSParser {
     
-    private QueryAtom previousAtom = null;
+    private IQueryAtom previousAtom = null;
     private SMARTSBond currentBond = null;
     private QueryAtomContainer container = null;
     
@@ -133,7 +133,7 @@ void AddAromaticAtom() {
 }
 
 JAVACODE
-void AddCurrentBond(QueryAtom atom, QueryAtom atom2) {
+void AddCurrentBond(IQueryAtom atom, IQueryAtom atom2) {
     if (currentBond == null) {
         // add default bond
         currentBond = new AnyOrderQueryBond();

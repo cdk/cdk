@@ -24,14 +24,14 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
  * This is just a simple proof of concept, and far from a functional SMARTSAtom.
  *
  * @cdk.module extra
  */
-public abstract class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements QueryAtom {
+public abstract class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements IQueryAtom {
     
     public SMARTSAtom() {}
     

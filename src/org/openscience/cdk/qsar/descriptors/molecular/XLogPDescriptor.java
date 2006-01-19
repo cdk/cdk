@@ -37,7 +37,7 @@ import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
@@ -830,7 +830,7 @@ public class XLogPDescriptor implements IDescriptor {
 				bondAtoms=bonds[i].getAtoms();
 				if ((bondAtoms[0].getSymbol().equals("C") && bondAtoms[1].getSymbol().equals("N")) || (bondAtoms[0].getSymbol().equals("N") && bondAtoms[1].getSymbol().equals("C"))&& bonds[i].getOrder()==1){
 					aminoAcid.removeBond(bondAtoms[0],bondAtoms[1]);
-					aminoAcid.addBond(new AnyOrderQueryBond((QueryAtom)bondAtoms[0],(QueryAtom)bondAtoms[1],1));
+					aminoAcid.addBond(new AnyOrderQueryBond((IQueryAtom)bondAtoms[0],(IQueryAtom)bondAtoms[1],1));
 					break;
 				}
 			}

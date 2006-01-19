@@ -24,7 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
  * @cdk.module extra
@@ -34,7 +34,7 @@ public class OrderQueryBond extends SMARTSBond {
     public OrderQueryBond() {
     }
 
-    public OrderQueryBond(QueryAtom atom1, QueryAtom atom2, double order) {
+    public OrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
         super(atom1, atom2, order);
     }
     
