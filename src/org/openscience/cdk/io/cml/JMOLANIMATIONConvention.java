@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 
@@ -46,18 +46,18 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     private String frame_energy;
     private LoggingTool logger;
 
-    public JMOLANIMATIONConvention(CDOInterface cdo) {
+    public JMOLANIMATIONConvention(IChemicalDocumentObject cdo) {
         super(cdo);
         logger = new LoggingTool(this);
         current = UNKNOWN;
     }
 
-    public JMOLANIMATIONConvention(ModuleInterface conv) {
+    public JMOLANIMATIONConvention(ICMLModule conv) {
         super(conv);
         logger = new LoggingTool(this);
     }
 
-    public CDOInterface returnCDO() {
+    public IChemicalDocumentObject returnCDO() {
         return this.cdo;
     }
 

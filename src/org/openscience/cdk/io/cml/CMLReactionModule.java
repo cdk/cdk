@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.xml.sax.Attributes;
 
 /**
@@ -38,16 +38,16 @@ import org.xml.sax.Attributes;
  */
 public class CMLReactionModule extends CMLCoreModule {
 
-    public CMLReactionModule(CDOInterface cdo) {
+    public CMLReactionModule(IChemicalDocumentObject cdo) {
         super(cdo);
     }
 
-    public CMLReactionModule(ModuleInterface conv) {
+    public CMLReactionModule(ICMLModule conv) {
         super(conv);
         logger.debug("New CML-Reaction Module!");
     }
 
-    public CDOInterface returnCDO() {
+    public IChemicalDocumentObject returnCDO() {
         return this.cdo;
     }
 

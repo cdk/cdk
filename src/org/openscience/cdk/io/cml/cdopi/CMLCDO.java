@@ -36,7 +36,7 @@ package org.openscience.cdk.io.cml.cdopi;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public class CMLCDO implements CDOInterface {
+public class CMLCDO implements IChemicalDocumentObject {
 
   /**
    * Called just before XML parsing is started.

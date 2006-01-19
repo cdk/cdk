@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */ 
-public class ChemFileCDO implements IChemFile, CDOInterface {
+public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
 
 	private IChemFile currentChemFile;
 	

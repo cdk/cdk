@@ -31,7 +31,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
 */ 
-public class EventChemFileCDO implements CDOInterface {
+public class EventChemFileCDO implements IChemicalDocumentObject {
     
     private AtomContainer currentMolecule;
     private Atom currentAtom;

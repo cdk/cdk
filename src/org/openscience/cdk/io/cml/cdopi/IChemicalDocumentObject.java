@@ -33,7 +33,7 @@ package org.openscience.cdk.io.cml.cdopi;
  *
  * @cdk.module io
  */
-public interface CDOInterface {
+public interface IChemicalDocumentObject {
 
   /**
    * Called just before XML parsing is started.

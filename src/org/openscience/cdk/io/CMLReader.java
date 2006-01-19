@@ -43,7 +43,7 @@ import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.cml.ChemFileCDO;
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -196,7 +196,7 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.warn("Cannot deactivate validation.");
             return cdo;
         }
-        parser.setContentHandler(new CMLHandler((CDOInterface)cdo));
+        parser.setContentHandler(new CMLHandler((IChemicalDocumentObject)cdo));
         parser.setEntityResolver(new CMLResolver());
         parser.setErrorHandler(new CMLErrorHandler());
         try {

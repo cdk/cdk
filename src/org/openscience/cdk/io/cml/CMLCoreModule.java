@@ -35,7 +35,7 @@ import java.util.Vector;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 
@@ -49,11 +49,11 @@ import org.xml.sax.Attributes;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public class CMLCoreModule implements ModuleInterface {
+public class CMLCoreModule implements ICMLModule {
 
     protected org.openscience.cdk.tools.LoggingTool logger;
     protected final String SYSTEMID = "CML-1999-05-15";
-    protected CDOInterface cdo;
+    protected IChemicalDocumentObject cdo;
     
     protected int atomCounter;
     protected Vector elsym;
@@ -100,16 +100,16 @@ public class CMLCoreModule implements ModuleInterface {
     private Vector3d cAxis;
     boolean cartesianAxesSet = false;
     
-    public CMLCoreModule(CDOInterface cdo) {
+    public CMLCoreModule(IChemicalDocumentObject cdo) {
         logger = new LoggingTool(this);
         this.cdo = cdo;
     }
     
-    public CMLCoreModule(ModuleInterface conv) {
+    public CMLCoreModule(ICMLModule conv) {
         inherit(conv);
     }
 
-    public void inherit(ModuleInterface convention) {
+    public void inherit(ICMLModule convention) {
         if (convention instanceof CMLCoreModule) {
             CMLCoreModule conv = (CMLCoreModule)convention;
             this.logger = conv.logger;
@@ -149,8 +149,8 @@ public class CMLCoreModule implements ModuleInterface {
         }
     }
 
-    public CDOInterface returnCDO() {
-        return (CDOInterface)this.cdo;
+    public IChemicalDocumentObject returnCDO() {
+        return (IChemicalDocumentObject)this.cdo;
     }
     
     /**

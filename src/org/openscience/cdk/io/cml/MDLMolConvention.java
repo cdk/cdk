@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.xml.sax.Attributes;
 
 /**
@@ -40,15 +40,15 @@ import org.xml.sax.Attributes;
  */
 public class MDLMolConvention extends CMLCoreModule {
 
-    public MDLMolConvention(CDOInterface cdo) {
+    public MDLMolConvention(IChemicalDocumentObject cdo) {
         super(cdo);
     }
 
-    public MDLMolConvention(ModuleInterface conv) {
+    public MDLMolConvention(ICMLModule conv) {
         super(conv);
     }
 
-    public CDOInterface returnCDO() {
+    public IChemicalDocumentObject returnCDO() {
         return this.cdo;
     }
 

@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.io.cml;
 
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.xml.sax.Attributes;
 
 /**
  * This interface describes the procedures classes must implement to be plugable
@@ -37,6 +39,16 @@ package org.openscience.cdk.io.cml;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public interface ConventionInterface extends ModuleInterface {
+public interface ICMLModule{
 
+  void startDocument();
+  void endDocument();
+  void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts);
+  void endElement(CMLStack xpath, String uri, String local, String raw);
+  void characterData(CMLStack xpath, char ch[], int start, int length);
+  
+  IChemicalDocumentObject returnCDO();
+
+  void inherit(ICMLModule conv);
+  
 }

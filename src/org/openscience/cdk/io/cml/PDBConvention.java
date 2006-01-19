@@ -30,7 +30,7 @@ package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.xml.sax.Attributes;
 
 /**
@@ -65,15 +65,15 @@ public class PDBConvention extends CMLCoreModule {
     private boolean isBond;
     private String connect_root;
 
-    public PDBConvention(CDOInterface cdo) {
+    public PDBConvention(IChemicalDocumentObject cdo) {
         super(cdo);
     }
     
-    public PDBConvention(ModuleInterface conv) {
+    public PDBConvention(ICMLModule conv) {
         super(conv);
     }
 
-    public CDOInterface returnCDO() {
+    public IChemicalDocumentObject returnCDO() {
         return this.cdo;
     }
     

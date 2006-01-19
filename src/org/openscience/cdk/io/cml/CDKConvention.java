@@ -30,7 +30,7 @@ package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.xml.sax.Attributes;
 
 /**
@@ -44,15 +44,15 @@ public class CDKConvention extends CMLCoreModule {
 
     private boolean isBond;
 
-    public CDKConvention(CDOInterface cdo) {
+    public CDKConvention(IChemicalDocumentObject cdo) {
         super(cdo);
     }
 
-    public CDKConvention(ModuleInterface conv) {
+    public CDKConvention(ICMLModule conv) {
         super(conv);
     }
     
-    public CDOInterface returnCDO() {
+    public IChemicalDocumentObject returnCDO() {
         return this.cdo;
     }
 

@@ -28,8 +28,6 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
-import org.xml.sax.Attributes;
 
 /**
  * This interface describes the procedures classes must implement to be plugable
@@ -39,16 +37,6 @@ import org.xml.sax.Attributes;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public interface ModuleInterface{
+public interface ICMLConvention extends ICMLModule {
 
-  void startDocument();
-  void endDocument();
-  void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts);
-  void endElement(CMLStack xpath, String uri, String local, String raw);
-  void characterData(CMLStack xpath, char ch[], int start, int length);
-  
-  CDOInterface returnCDO();
-
-  void inherit(ModuleInterface conv);
-  
 }

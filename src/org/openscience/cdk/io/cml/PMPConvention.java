@@ -30,7 +30,7 @@ package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.xml.sax.Attributes;
 
 /***
@@ -45,16 +45,16 @@ import org.xml.sax.Attributes;
  */
 public class PMPConvention extends CMLCoreModule {
 
-    public PMPConvention(CDOInterface cdo) {
+    public PMPConvention(IChemicalDocumentObject cdo) {
         super(cdo);
     }
 
-    public PMPConvention(ModuleInterface conv) {
+    public PMPConvention(ICMLModule conv) {
         super(conv);
         logger.debug("New PMP Convention!");
     }
 
-    public CDOInterface returnCDO() {
+    public IChemicalDocumentObject returnCDO() {
         return this.cdo;
     }
 

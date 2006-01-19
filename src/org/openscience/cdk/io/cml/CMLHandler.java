@@ -26,7 +26,7 @@ package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.io.cml.cdopi.CDOInterface;
+import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -45,7 +45,7 @@ import org.xml.sax.helpers.DefaultHandler;
  **/
 public class CMLHandler extends DefaultHandler {
     
-    private ModuleInterface conv;
+    private ICMLModule conv;
     private LoggingTool logger;
     private boolean debug = true;
     
@@ -62,7 +62,7 @@ public class CMLHandler extends DefaultHandler {
      *
      * @param cdo The Chemical Document Object in which data is stored
      **/
-    public CMLHandler(CDOInterface cdo) {
+    public CMLHandler(IChemicalDocumentObject cdo) {
         logger = new LoggingTool(this);
         conv = new CMLCoreModule(cdo);
         userConventions = new Hashtable();
@@ -70,7 +70,7 @@ public class CMLHandler extends DefaultHandler {
         conventionStack = new CMLStack();
     }
 
-    public void registerConvention(String convention, ModuleInterface conv) {
+    public void registerConvention(String convention, ICMLModule conv) {
       userConventions.put(convention, conv);
     }
 
@@ -100,7 +100,7 @@ public class CMLHandler extends DefaultHandler {
         conventionStack.pop();
     }
 
-    public CDOInterface returnCDO() {
+    public IChemicalDocumentObject returnCDO() {
         return conv.returnCDO();
     }
 
@@ -150,7 +150,7 @@ public class CMLHandler extends DefaultHandler {
                         conv = new JMOLANIMATIONConvention(conv);
                     } else if (userConventions.containsKey(convName)) {
                             //unknown convention. userConvention?
-                            ConventionInterface newconv = (ConventionInterface)userConventions.get(convName);
+                            ICMLConvention newconv = (ICMLConvention)userConventions.get(convName);
                             newconv.inherit(conv);
                             conv = newconv;
                     } else {
