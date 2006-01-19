@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.keyword    atom, type
  */
-public class TXTBasedAtomTypeConfigurator implements AtomTypeConfigurator {
+public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
     private InputStream ins = null;

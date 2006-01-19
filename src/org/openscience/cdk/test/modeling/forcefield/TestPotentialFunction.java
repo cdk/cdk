@@ -3,7 +3,7 @@ package org.openscience.cdk.test.modeling.forcefield;
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.modeling.forcefield.PotentialFunction;
+import org.openscience.cdk.modeling.forcefield.IPotentialFunction;
 
 /**
  * Potential function for testing forcefield classes.
@@ -12,7 +12,7 @@ import org.openscience.cdk.modeling.forcefield.PotentialFunction;
  *
  * @cdk.module test
  */
-public class TestPotentialFunction implements PotentialFunction {
+public class TestPotentialFunction implements IPotentialFunction {
 	String energyFunctionShape = " f(X,Y) = X2 + 2 Y2 ";
 	String gradientShape = " g = ( 2x , 4y )";
 	double energy = 0;

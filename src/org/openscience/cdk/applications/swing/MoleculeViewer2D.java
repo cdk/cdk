@@ -35,7 +35,7 @@ import javax.swing.JPanel;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     steinbeck
  * @cdk.created    2002-05-30
  */
-public class MoleculeViewer2D extends JPanel implements CDKChangeListener
+public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
 {
     public IAtomContainer atomContainer;
     public Renderer2DModel r2dm;

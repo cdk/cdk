@@ -40,7 +40,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 
@@ -829,7 +829,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 * @param   listener  The listener added to the list 
 	 */
 
-	public void addCDKChangeListener(CDKChangeListener listener)
+	public void addCDKChangeListener(ICDKChangeListener listener)
 	{
 		if (listeners == null)
 		{
@@ -847,7 +847,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @param   listener  The listener removed from the list 
 	 */
-	public void removeCDKChangeListener(CDKChangeListener listener)
+	public void removeCDKChangeListener(ICDKChangeListener listener)
 	{
 		listeners.remove(listener);
 	}
@@ -867,7 +867,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		
 		for (int i = 0; i < listeners.size(); i++)
 		{
-			((CDKChangeListener)listeners.get(i)).stateChanged(event);
+			((ICDKChangeListener)listeners.get(i)).stateChanged(event);
 		}
 	}
   

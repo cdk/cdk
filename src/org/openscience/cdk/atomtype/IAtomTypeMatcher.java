@@ -36,7 +36,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.created 2004-12-02
  * @cdk.module  core
  */
-public interface AtomTypeMatcher {
+public interface IAtomTypeMatcher {
 
      /**
       * Method that assigns an atom type to a given atom belonging to an atom 

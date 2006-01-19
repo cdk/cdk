@@ -40,7 +40,7 @@ import javax.swing.JFileChooser;
  * @author  Egon Willighagen
  * @cdk.created 2003-07-18
  */
-public class JCPCompChemInputSaveFileFilter extends javax.swing.filechooser.FileFilter implements JCPFileFilterInterface {
+public class JCPCompChemInputSaveFileFilter extends javax.swing.filechooser.FileFilter implements IJCPFileFilter {
 
     // only those extensions are given here that are *not* on JCPFileFilter
     public final static String gin = "gin";

@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2005-18-07
  * @cdk.module     experimental
  */
-public class MM2AtomTypeMatcher implements AtomTypeMatcher {
+public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
 	private LoggingTool logger;
 

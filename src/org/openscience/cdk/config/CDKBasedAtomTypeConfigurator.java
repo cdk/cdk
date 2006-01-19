@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.module core
  */
-public class CDKBasedAtomTypeConfigurator implements AtomTypeConfigurator {
+public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
     private InputStream ins = null;

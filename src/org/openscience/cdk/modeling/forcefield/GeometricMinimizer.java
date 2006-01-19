@@ -191,7 +191,7 @@ public class GeometricMinimizer {
 	 *
 	 * @param  forceField		The potential function to be used
 	 */
-    public void steepestDescentsMinimization(GVector initialCoordinates, PotentialFunction forceField) {
+    public void steepestDescentsMinimization(GVector initialCoordinates, IPotentialFunction forceField) {
 		
 		initializeMinimizationParameters(initialCoordinates);
 		fxk = forceField.energyFunction(initialCoordinates);
@@ -312,7 +312,7 @@ public class GeometricMinimizer {
 	 *
 	 * @param  forceField		The potential function to be used
 	 */
-	public void conjugateGradientMinimization(GVector initialCoordinates, PotentialFunction forceField) {
+	public void conjugateGradientMinimization(GVector initialCoordinates, IPotentialFunction forceField) {
 		logger.debug("");
 		logger.debug("FORCEFIELDTESTS ConjugatedGradientTest");
 		
@@ -421,7 +421,7 @@ public class GeometricMinimizer {
 	 *
 	 * @param  forceField		The potential function to be used
 	 */
-	public void newtonRaphsonMinimization(GVector initialCoordinates, PotentialFunction forceField) {
+	public void newtonRaphsonMinimization(GVector initialCoordinates, IPotentialFunction forceField) {
 		
 		initializeMinimizationParameters(initialCoordinates);
 

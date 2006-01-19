@@ -39,7 +39,7 @@ import javax.swing.JFileChooser;
  * @author  Egon Willighagen
  * @cdk.created 2003-04-01
  */
-public class JCPExportFileFilter extends javax.swing.filechooser.FileFilter implements JCPFileFilterInterface {
+public class JCPExportFileFilter extends javax.swing.filechooser.FileFilter implements IJCPFileFilter {
 
     // only those extensions are given here that are *not* on JCPFileFilter
     public final static String bmp = "bmp";

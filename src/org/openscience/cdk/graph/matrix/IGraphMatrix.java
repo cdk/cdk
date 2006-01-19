@@ -32,7 +32,7 @@ package org.openscience.cdk.graph.matrix;
  * @author      egonw
  * @cdk.created 2004-07-04
  */
-public interface GraphMatrix {
+public interface IGraphMatrix {
 
 }
 

@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.module core
  */
-public interface AtomTypeConfigurator {
+public interface IAtomTypeConfigurator {
 
     /**
      * Sets the file containing the config data.

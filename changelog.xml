@@ -4,6 +4,10 @@
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
 
   <release id="cvs">
+   <apiChange contributor="egonw" implements="1345841">
+     All interfaces do now start with a capital 'I', conform the Eclipse style
+     of interface naming.
+   </apiChange>
    <addition contributor="egonw">
      Added a substructure based Fingerprinter.
    </addition>

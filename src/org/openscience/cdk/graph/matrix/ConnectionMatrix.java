@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * @author      steinbeck
  * @cdk.created 2004-07-04
  */
-public class ConnectionMatrix implements GraphMatrix {
+public class ConnectionMatrix implements IGraphMatrix {
 
 	/**
 	 * Returns the connection matrix representation of this AtomContainer.

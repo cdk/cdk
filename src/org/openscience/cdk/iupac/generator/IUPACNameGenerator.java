@@ -131,8 +131,8 @@ public class IUPACNameGenerator {
             return;
         }
         // set some initial values
-        m.setProperty(Rule.COMPLETED_FLAG, "no");
-        m.setProperty(Rule.NONE_APPLICABLE, "no");
+        m.setProperty(IRule.COMPLETED_FLAG, "no");
+        m.setProperty(IRule.NONE_APPLICABLE, "no");
 
         /** First calculate some general statistics that
          *  can speed up the application of rules.
@@ -145,12 +145,12 @@ public class IUPACNameGenerator {
         };
         MFAnalyser mfa = new MFAnalyser(molecule);
         logger.info("Naming struct with MF: " + mfa.getMolecularFormula());
-        m.setProperty(Rule.ELEMENT_COUNT, new Integer(mfa.getElementCount()));
-        m.setProperty(Rule.CARBON_COUNT, new Integer(mfa.getAtomCount("C")));
-        m.setProperty(Rule.HYDROGEN_COUNT, new Integer(mfa.getAtomCount("H")));
-        m.setProperty(Rule.CHLORO_COUNT, new Integer(mfa.getAtomCount("Cl")));
-        m.setProperty(Rule.BROMO_COUNT, new Integer(mfa.getAtomCount("Br")));
-        m.setProperty(Rule.FLUORO_COUNT, new Integer(mfa.getAtomCount("F")));
+        m.setProperty(IRule.ELEMENT_COUNT, new Integer(mfa.getElementCount()));
+        m.setProperty(IRule.CARBON_COUNT, new Integer(mfa.getAtomCount("C")));
+        m.setProperty(IRule.HYDROGEN_COUNT, new Integer(mfa.getAtomCount("H")));
+        m.setProperty(IRule.CHLORO_COUNT, new Integer(mfa.getAtomCount("Cl")));
+        m.setProperty(IRule.BROMO_COUNT, new Integer(mfa.getAtomCount("Br")));
+        m.setProperty(IRule.FLUORO_COUNT, new Integer(mfa.getAtomCount("F")));
 
         // step 0
         logger.info("Step 0");
@@ -162,8 +162,8 @@ public class IUPACNameGenerator {
             logger.debug("Adding first name part");
             name.addFront(inp);
             logger.info("current name:\n" + name.toString());
-            if (m.getProperty(Rule.COMPLETED_FLAG).equals("no") &&
-                m.getProperty(Rule.NONE_APPLICABLE).equals("no")) {
+            if (m.getProperty(IRule.COMPLETED_FLAG).equals("no") &&
+                m.getProperty(IRule.NONE_APPLICABLE).equals("no")) {
                 logger.debug("Molecule has not been named completely.");
                 // step 2: delete all named atoms
                 logger.info("Step 2");
@@ -187,17 +187,17 @@ public class IUPACNameGenerator {
 
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
         	org.openscience.cdk.interfaces.IAtom a = ac.getAtomAt(i);
-            if (a.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
-                a.setProperty(Rule.ATOM_HAS_VALENCY, "no");
+            if (a.getProperty(IRule.ATOM_NAMED_FLAG).equals("yes")) {
+                a.setProperty(IRule.ATOM_HAS_VALENCY, "no");
                 // loop over connected atoms
                 org.openscience.cdk.interfaces.IAtom[] connectedAtoms = ac.getConnectedAtoms(a);
                 for (int j = 0; j < connectedAtoms.length; j++) {
                 	org.openscience.cdk.interfaces.IAtom b = connectedAtoms[j];
-                    if (b.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
-                        b.setProperty(Rule.ATOM_HAS_VALENCY, "no");
+                    if (b.getProperty(IRule.ATOM_NAMED_FLAG).equals("yes")) {
+                        b.setProperty(IRule.ATOM_HAS_VALENCY, "no");
                     } else {
-                        b.setProperty(Rule.ATOM_HAS_VALENCY, "yes");
-                        a.setProperty(Rule.ATOM_HAS_VALENCY, "yes");
+                        b.setProperty(IRule.ATOM_HAS_VALENCY, "yes");
+                        a.setProperty(IRule.ATOM_HAS_VALENCY, "yes");
                     }
                 }
             }
@@ -214,7 +214,7 @@ public class IUPACNameGenerator {
                 for (int i=0; i < fwav.getAtomCount(); i++) {
                     try {
                     	org.openscience.cdk.interfaces.IAtom a = fwav.getAtomAt(i);
-                        String prop = (String)a.getProperty(Rule.ATOM_HAS_VALENCY);
+                        String prop = (String)a.getProperty(IRule.ATOM_HAS_VALENCY);
                         if (prop != null && prop.equals("yes")) {
                             fwav.addValencyAtAtom(a);
                         }
@@ -237,7 +237,7 @@ public class IUPACNameGenerator {
 
         // Try all rules
         Enumeration rulenum = rules.elements();
-        m.setProperty(Rule.COMPLETED_FLAG, "no");
+        m.setProperty(IRule.COMPLETED_FLAG, "no");
         boolean done = false;
         while (rulenum.hasMoreElements() && !done) {
             Object o = (Object)rulenum.nextElement();
@@ -266,7 +266,7 @@ public class IUPACNameGenerator {
     private void deleteNamedAtoms(IAtomContainer ac) {
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
         	org.openscience.cdk.interfaces.IAtom a = ac.getAtomAt(i);
-            if (a.getProperty(Rule.ATOM_NAMED_FLAG).equals("yes")) {
+            if (a.getProperty(IRule.ATOM_NAMED_FLAG).equals("yes")) {
                 logger.info("Deleting atom: " + a.getSymbol());
                 ac.removeAtomAndConnectedElectronContainers(ac.getAtomAt(i));
             }
@@ -275,7 +275,7 @@ public class IUPACNameGenerator {
 
     private void markAtomsAsUnnamed(IAtomContainer ac) {
         for (int i = ac.getAtomCount()-1; i >= 0; i--) {
-            ac.getAtomAt(i).setProperty(Rule.ATOM_NAMED_FLAG, "no");
+            ac.getAtomAt(i).setProperty(IRule.ATOM_NAMED_FLAG, "no");
         }
     }
 

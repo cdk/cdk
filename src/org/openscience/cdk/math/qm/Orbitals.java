@@ -42,13 +42,13 @@ public class Orbitals
   private int count_basis;
   private int count_orbitals;
   private Matrix C;
-  private Basis basis;
+  private IBasis basis;
   private int count_electrons = 1;
 
   /**
    * Constructs orbitals with a specified base set
    */
-  public Orbitals(Basis basis)
+  public Orbitals(IBasis basis)
   { 
     this.basis = basis;
     count_orbitals = count_basis = basis.getSize();
@@ -64,7 +64,7 @@ public class Orbitals
   /**
    * Constructs orbitals with a specified base set and a coefficient matrix
    */
-  public Orbitals(Basis basis, Matrix C)
+  public Orbitals(IBasis basis, Matrix C)
   {
     this.basis = basis;
     count_basis = basis.getSize();
@@ -136,7 +136,7 @@ public class Orbitals
   /**
    * Returns the basis set of this orbitals
    */
-  public Basis getBasis()
+  public IBasis getBasis()
   {
     return basis;
   }

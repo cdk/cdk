@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2004-12-02
  * @cdk.module     core
  */
-public class HybridizationStateATMatcher implements AtomTypeMatcher {
+public class HybridizationStateATMatcher implements IAtomTypeMatcher {
 
     private LoggingTool logger;
     double charge = 0;

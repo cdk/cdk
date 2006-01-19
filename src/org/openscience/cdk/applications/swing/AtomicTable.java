@@ -33,13 +33,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 
 /**
  * @cdk.module  applications
  * @cdk.require swing
  */
-public class AtomicTable extends JPanel implements CDKChangeListener {
+public class AtomicTable extends JPanel implements ICDKChangeListener {
   private JTable table;
 	private String title = "Molecule Viewer";
   

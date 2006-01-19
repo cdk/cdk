@@ -45,7 +45,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
-import org.openscience.cdk.applications.jchempaint.io.JCPFileFilterInterface;
+import org.openscience.cdk.applications.jchempaint.io.IJCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -146,7 +146,7 @@ public class SaveAsAction extends JCPAction
 			currentFilter = chooser.getFileFilter();
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 			{
-				type = ((JCPFileFilterInterface) currentFilter).getType();
+				type = ((IJCPFileFilter) currentFilter).getType();
 				File outFile = chooser.getSelectedFile();
 				if(outFile.exists()){
 					ready=JOptionPane.showConfirmDialog((Component)null,"File "+outFile.getName()+" already exists. Do you want to overwrite it?","File already exists",JOptionPane.YES_NO_OPTION);

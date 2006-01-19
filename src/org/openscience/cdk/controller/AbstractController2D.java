@@ -57,7 +57,7 @@ import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
 import org.openscience.cdk.applications.undoredo.ChangeChargeEdit;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -1703,7 +1703,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *@param  listener  The listener added to the list
 	 */
 
-	public void addCDKChangeListener(CDKChangeListener listener)
+	public void addCDKChangeListener(ICDKChangeListener listener)
 	{
 		listeners.add(listener);
 	}
@@ -1714,7 +1714,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *
 	 *@param  listener  The listener removed from the list
 	 */
-	public void removeCDKChangeListener(CDKChangeListener listener)
+	public void removeCDKChangeListener(ICDKChangeListener listener)
 	{
 		listeners.remove(listener);
 	}
@@ -1729,7 +1729,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		EventObject event = new EventObject(this);
 		for (int i = 0; i < listeners.size(); i++)
 		{
-			((CDKChangeListener) listeners.get(i)).stateChanged(event);
+			((ICDKChangeListener) listeners.get(i)).stateChanged(event);
 		}
 	}
 

@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author Egon Willighagen
  */
-public class NamingRule implements Rule {
+public class NamingRule implements IRule {
 
     private IUPACNameLocalizer localizer;
 

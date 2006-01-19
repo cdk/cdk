@@ -31,7 +31,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer3D;
 import org.openscience.cdk.renderer.Renderer3DModel;
@@ -42,7 +42,7 @@ import org.openscience.cdk.renderer.Renderer3DModel;
  * @cdk.module java3d
  * @cdk.require swing
  */
-public class MoleculeViewer3D extends JPanel implements CDKChangeListener {
+public class MoleculeViewer3D extends JPanel implements ICDKChangeListener {
     private org.openscience.cdk.tools.LoggingTool logger;
 
 	public AtomContainer atomContainer;

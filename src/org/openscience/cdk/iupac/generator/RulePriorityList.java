@@ -53,7 +53,7 @@ public class RulePriorityList {
         return new RulePriorityList(l);
     }
 
-    public double getPriority(Rule r) {
+    public double getPriority(IRule r) {
         return 1.0;
     }
 }

@@ -34,7 +34,7 @@ package org.openscience.cdk.applications.jchempaint.io;
  * @cdk.module jchempaint
  * @author     steinbeck
  */
-public interface JCPFileFilterInterface
+public interface IJCPFileFilter
 {
 
 	/**

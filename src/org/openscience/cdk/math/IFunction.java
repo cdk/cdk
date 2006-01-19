@@ -1,9 +1,10 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* Function.java
  * 
- * Copyright (C) 2005  The Chemistry Development Kit (CDK) project
+ * Autor: Stephan Michels 
+ * EMail: stephan@vern.chem.tu-berlin.de
+ * Datum: 2.7.2001
+ * 
+ * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,30 +25,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- */
-package org.openscience.cdk.geometry;
+ *  */
 
+package org.openscience.cdk.math;
+ 
 /**
- * Weight function used in the <code>RDFCalculator</code>.
- *
- * @cdk.module  extra
- *
- * @author      Egon Willighagen
- * @cdk.created 2005-01-14
- *
- * @see         org.openscience.cdk.geometry.RDFCalculator
+ * A class, which has a function value should implement this interface
  */
-public interface RDFWeightFunction {
+public interface IFunction  
+{
+  /**
+   * Return the function value at (x,y,z)
+   */
+  public double getValue(double x, double y, double z);
 
-    /**
-     * Calculates the wieght for the interaction between the two atoms.
-     *
-     * @param atom  First atom.
-     * @param atom2 Second atom.
-     */
-    public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2);
-    
+  /**
+   * Return the function value
+   *
+   * The rows of the matrix x are the Parameters like x,y,z
+   * and the columns are the values which must calculated.
+   */
+  public Vector getValues(Matrix x);
 }
-
-
-

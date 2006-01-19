@@ -15,7 +15,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class LineSearch {
 
-	PotentialFunction pf = null;
+	IPotentialFunction pf = null;
 	GVector direction = null;	// Fix value
 	GVector x = null;		// Fix value
 	GVector directionStep = null;
@@ -467,7 +467,7 @@ public class LineSearch {
 	 *@param  searchDirection     Search direction
 	 *@param  forceFieldFunction  Potential energy function
 	 */
-	public void setLineStep(GVector kPoint, GVector searchDirection, PotentialFunction forceFieldFunction) {
+	public void setLineStep(GVector kPoint, GVector searchDirection, IPotentialFunction forceFieldFunction) {
 		//logger.debug("");
 		//logger.debug("Start the line search: ");
 		

@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.controller.Controller2DModel;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @cdk.created       2003-02-17
  * @cdk.module    jchempaint
  */
-public class JChemPaintModel implements java.io.Serializable, CDKChangeListener {
+public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener {
 
 	/**  Description of the Field */
 	protected transient EventListenerList changeListeners = new EventListenerList();

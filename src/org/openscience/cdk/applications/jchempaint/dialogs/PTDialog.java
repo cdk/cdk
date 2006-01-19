@@ -29,7 +29,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -43,7 +43,7 @@ public class PTDialog extends JFrame {
     private static LoggingTool logger = null;
     private PeriodicTablePanel ptp;
     
-    public PTDialog(CDKChangeListener listener) {
+    public PTDialog(ICDKChangeListener listener) {
         super("Choose an element");
         logger = new LoggingTool(this);
         doInit();

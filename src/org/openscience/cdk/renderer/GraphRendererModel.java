@@ -30,7 +30,7 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Color;
 
-import org.openscience.cdk.math.Function;
+import org.openscience.cdk.math.IFunction;
 
 /**
  * This class handles a set of function for the GraphRenderer
@@ -188,7 +188,7 @@ public class GraphRendererModel
   /**
    * Add a function to the set of functions
    */
-  public void addFunction(Function function)
+  public void addFunction(IFunction function)
   {
     if ((function!=null) && (!functions.contains(function)))
     {
@@ -200,7 +200,7 @@ public class GraphRendererModel
   /**
    * Add a function to the set of functions
    */
-  public void addFunction(Function function, Color color)
+  public void addFunction(IFunction function, Color color)
   {
     if ((function!=null) && (!functions.contains(function)))
     {
@@ -222,9 +222,9 @@ public class GraphRendererModel
   /**
    * Get a function from this set
    */
-  public Function getFunction(int index)
+  public IFunction getFunction(int index)
   {
-    return (Function) functions.elementAt(index);
+    return (IFunction) functions.elementAt(index);
   }
 
   /**

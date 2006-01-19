@@ -17,7 +17,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.module     builder3d
  *
  */
-public class MMFF94EnergyFunction implements PotentialFunction {
+public class MMFF94EnergyFunction implements IPotentialFunction {
 	String energyFunctionShape = " MMFF94 energy ";
 	double energy = 0;
 	GVector energyGradient = null;

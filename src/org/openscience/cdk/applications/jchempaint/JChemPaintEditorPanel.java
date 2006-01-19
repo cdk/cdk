@@ -56,7 +56,7 @@ import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 import org.openscience.cdk.applications.plugin.CDKPluginManager;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -84,7 +84,7 @@ import org.openscience.cdk.validate.ValidatorEngine;
  *@see           JChemPaintViewerOnlyPanel
  */
 public class JChemPaintEditorPanel extends JChemPaintPanel
-		 implements ChangeListener, CDKChangeListener
+		 implements ChangeListener, ICDKChangeListener
 {
 
 	static String JCP_MODEL_CHANGED = "1";

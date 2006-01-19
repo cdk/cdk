@@ -48,7 +48,7 @@ import org.openscience.cdk.math.Vector;
  *
  * @cdk.keyword Gaussian basis set
  */ 
-public class GaussiansBasis implements Basis
+public class GaussiansBasis implements IBasis
 {
   private int count; // number of the basis functions
   private int[] nx; // [base]

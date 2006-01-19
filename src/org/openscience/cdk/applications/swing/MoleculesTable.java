@@ -34,13 +34,13 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 
 /**
  * @cdk.module applications
  * @cdk.require swing
  */
-public class MoleculesTable extends JPanel implements CDKChangeListener {
+public class MoleculesTable extends JPanel implements ICDKChangeListener {
   private JTable table;
 	private String title = "Molecule Viewer";
   

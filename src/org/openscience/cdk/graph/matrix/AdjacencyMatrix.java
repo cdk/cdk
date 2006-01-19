@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * @cdk.created 2004-07-04
  * @cdk.dictref blue-obelisk:calculateAdjecencyMatrix
  */
-public class AdjacencyMatrix implements GraphMatrix {
+public class AdjacencyMatrix implements IGraphMatrix {
 
 	/**
 	 * Returns the adjacency matrix for the given AtomContainer.

@@ -40,7 +40,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.controller.Controller2DModel;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 
 
 /**
@@ -182,7 +182,7 @@ public class ChemAction extends JCPAction
 	}
 
 
-	class PTDialogChangeListener implements CDKChangeListener
+	class PTDialogChangeListener implements ICDKChangeListener
 	{
 
 		Controller2DModel model;

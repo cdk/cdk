@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk.math.qm;
 
-import org.openscience.cdk.math.Function;
+import org.openscience.cdk.math.IFunction;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
 
@@ -39,17 +39,17 @@ import org.openscience.cdk.math.Vector;
  * @author    Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created   2001-07-02
  */
-public class FourierGridBasis implements Basis
+public class FourierGridBasis implements IBasis
 {
   private int N;
   private double minx;
   private double maxx;
   private double dx;
-  private Function potential;
+  private IFunction potential;
   private double Tl;
   private int N2;
 
-  public FourierGridBasis(int N, double minx, double maxx, Function potential)
+  public FourierGridBasis(int N, double minx, double maxx, IFunction potential)
   {
     this.N = N;
     this.minx = minx;

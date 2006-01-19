@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     steinbeck
  * @cdk.created    2001-08-29
  * @cdk.keyword    atom, type
- * @see        AtomTypeConfigurator
+ * @see        IAtomTypeConfigurator
  */
 public class AtomTypeFactory {
 
@@ -228,14 +228,14 @@ public class AtomTypeFactory {
         readConfiguration(ins, format, builder);
     }
     
-    private AtomTypeConfigurator constructConfigurator(String format) {
+    private IAtomTypeConfigurator constructConfigurator(String format) {
         try {
             if (format.equals(TXT_EXTENSION)) {
-                return (AtomTypeConfigurator) this.getClass().getClassLoader().
+                return (IAtomTypeConfigurator) this.getClass().getClassLoader().
                     loadClass("org.openscience.cdk.config.TXTBasedAtomTypeConfigurator").
                     newInstance();
             } else if (format.equals(XML_EXTENSION)) {
-                return (AtomTypeConfigurator) this.getClass().getClassLoader().
+                return (IAtomTypeConfigurator) this.getClass().getClassLoader().
                  loadClass("org.openscience.cdk.config.CDKBasedAtomTypeConfigurator").
                  newInstance();
             }
@@ -247,7 +247,7 @@ public class AtomTypeFactory {
     }
     
     private void readConfiguration(InputStream ins, String format, IChemObjectBuilder builder) {
-    	AtomTypeConfigurator atc = constructConfigurator(format);
+    	IAtomTypeConfigurator atc = constructConfigurator(format);
 		if (atc != null) {
 			atc.setInputStream(ins);
 			try

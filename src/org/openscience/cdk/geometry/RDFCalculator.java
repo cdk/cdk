@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword radial distribution function
  * @cdk.keyword RDF
  *
- * @see         org.openscience.cdk.geometry.RDFWeightFunction
+ * @see         org.openscience.cdk.geometry.IRDFWeightFunction
  */
 public class RDFCalculator {
 
@@ -70,7 +70,7 @@ public class RDFCalculator {
     private double resolution;
     private double peakWidth;
     
-    private RDFWeightFunction weightFunction;
+    private IRDFWeightFunction weightFunction;
     
     /**
      * Constructs a RDF calculator that calculates a unweighted, digitized
@@ -98,7 +98,7 @@ public class RDFCalculator {
      *                       calculated
      */
     public RDFCalculator(double startCutoff, double cutoff, double resolution, 
-                         double peakWidth, RDFWeightFunction weightFunction) {
+                         double peakWidth, IRDFWeightFunction weightFunction) {
         logger = new LoggingTool(this);
         
          this.startCutoff = startCutoff;

@@ -39,7 +39,7 @@ import java.text.DecimalFormat;
 
 import javax.swing.JComponent;
 
-import org.openscience.cdk.math.Function;
+import org.openscience.cdk.math.IFunction;
 import org.openscience.cdk.renderer.GraphRendererModel;
  
 /**
@@ -135,7 +135,7 @@ public class GraphRenderer extends JComponent
 
     double stepx = (xmax-xmin)/width;
 
-    Function function;
+    IFunction function;
     Color color;
 
     g.setColor(getBackground());

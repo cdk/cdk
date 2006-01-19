@@ -35,7 +35,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import org.openscience.cdk.applications.swing.GraphRenderer;
-import org.openscience.cdk.math.Function;
+import org.openscience.cdk.math.IFunction;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
 import org.openscience.cdk.renderer.GraphRendererModel;
@@ -74,7 +74,7 @@ public class GraphRendererTest
     frame.setVisible(true);
   }
 
-  private class GaussFunction implements Function
+  private class GaussFunction implements IFunction
   {
     public double getValue(double x, double y, double z)
     {

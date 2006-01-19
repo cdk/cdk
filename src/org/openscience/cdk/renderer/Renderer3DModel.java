@@ -32,7 +32,7 @@ import java.util.EventObject;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.event.CDKChangeListener;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.color.CDKAtomColors;
 
@@ -55,7 +55,7 @@ public class Renderer3DModel {
      * @param   listener  The listener added to the list
      */
 
-    public void addCDKChangeListener(CDKChangeListener listener) {
+    public void addCDKChangeListener(ICDKChangeListener listener) {
         listeners.add(listener);
     }
 
@@ -65,7 +65,7 @@ public class Renderer3DModel {
      *
      * @param   listener  The listener removed from the list
      */
-    public void removeCDKChangeListener(CDKChangeListener listener) {
+    public void removeCDKChangeListener(ICDKChangeListener listener) {
         listeners.remove(listener);
     }
 
@@ -77,7 +77,7 @@ public class Renderer3DModel {
     public void fireChange() {
         EventObject event = new EventObject(this);
         for (int i = 0; i < listeners.size(); i++) {
-            ((CDKChangeListener)listeners.get(i)).stateChanged(event);
+            ((ICDKChangeListener)listeners.get(i)).stateChanged(event);
         }
     }
 

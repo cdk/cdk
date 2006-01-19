@@ -99,7 +99,7 @@ public class OneElectronJob
     } while (changed);
   }
 
-  private Matrix calculateS(Basis basis)
+  private Matrix calculateS(IBasis basis)
   {
     int size = basis.getSize();
     Matrix S = new Matrix(size,size);
@@ -116,7 +116,7 @@ public class OneElectronJob
    *
    * T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
    */
-  private Matrix calculateT(Basis basis)
+  private Matrix calculateT(IBasis basis)
   {
     int size = basis.getSize();
     Matrix J = new Matrix(size,size);
@@ -134,7 +134,7 @@ public class OneElectronJob
    *
    * V_i,j = <chi_i | 1/r | chi_j>
    */
-  private Matrix calculateV(Basis basis)
+  private Matrix calculateV(IBasis basis)
   {
     int size = basis.getSize();
     Matrix V = new Matrix(size,size);
@@ -153,7 +153,7 @@ public class OneElectronJob
     Matrix C,S,T,V,HAO,H,D,J,K,F,U;
     double[][][][] I;
     double energy;
-    Basis basis = orbitals.getBasis();
+    IBasis basis = orbitals.getBasis();
 
     int count_electrons = orbitals.getCountElectrons();
 

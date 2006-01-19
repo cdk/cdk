@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author Egon Willighagen
  */
-public class NumberingRule implements Rule {
+public class NumberingRule implements IRule {
 
     public final static String ATOMNUMBER =
       "org.openscience.cdk.iupac.generator.ATOM_NUMBER";

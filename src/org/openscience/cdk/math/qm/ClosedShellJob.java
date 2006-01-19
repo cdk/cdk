@@ -92,7 +92,7 @@ public class ClosedShellJob
     } while (changed);
   }
 
-  private Matrix calculateS(Basis basis)
+  private Matrix calculateS(IBasis basis)
   {
     int size = basis.getSize();
     Matrix S = new Matrix(size,size);
@@ -109,7 +109,7 @@ public class ClosedShellJob
    *
    * T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
    */
-  private Matrix calculateT(Basis basis)
+  private Matrix calculateT(IBasis basis)
   {
     int size = basis.getSize();
     Matrix J = new Matrix(size,size);
@@ -127,7 +127,7 @@ public class ClosedShellJob
    *
    * V_i,j = <chi_i | 1/r | chi_j>
    */
-  private Matrix calculateV(Basis basis)
+  private Matrix calculateV(IBasis basis)
   {
     int size = basis.getSize();
     Matrix V = new Matrix(size,size);
@@ -142,7 +142,7 @@ public class ClosedShellJob
   /**
    * Calculates thes values for the 2 electron interactions
    */
-  private double[][][][] calculateI(Basis basis)
+  private double[][][][] calculateI(IBasis basis)
   {
     int i,j,k,l;
     int p = 0;
@@ -172,7 +172,7 @@ public class ClosedShellJob
   /**
    * Calculates the density matrix
    */
-  private Matrix calculateD(Basis basis, Matrix C, int count_electrons)
+  private Matrix calculateD(IBasis basis, Matrix C, int count_electrons)
   {
     int i,j,k;
     int size = basis.getSize();
@@ -198,7 +198,7 @@ public class ClosedShellJob
     return D;
   }
 
-  private Matrix calculateJ(Basis basis, double[][][][] I, Matrix D)
+  private Matrix calculateJ(IBasis basis, double[][][][] I, Matrix D)
   { 
     int i,j,k,l;
     int size = basis.getSize();
@@ -231,7 +231,7 @@ public class ClosedShellJob
     return J;
   }
 
-  private Matrix calculateK(Basis basis, double[][][][] I, Matrix D)
+  private Matrix calculateK(IBasis basis, double[][][][] I, Matrix D)
   { 
     int i,j,k,l;
     int size = basis.getSize();
@@ -280,7 +280,7 @@ public class ClosedShellJob
     Matrix C,S,T,V,HAO,H,D,J,K,F,U;
     double[][][][] I;
     double energy;
-    Basis basis = orbitals.getBasis();
+    IBasis basis = orbitals.getBasis();
 
     int count_electrons = orbitals.getCountElectrons();
 

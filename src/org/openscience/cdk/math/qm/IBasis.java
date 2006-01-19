@@ -37,7 +37,7 @@ import org.openscience.cdk.math.Vector;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-07-02
  */ 
-public interface Basis {
+public interface IBasis {
   /**
    * Gets the number of base vectors
    */

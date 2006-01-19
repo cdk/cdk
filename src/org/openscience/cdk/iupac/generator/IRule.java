@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author Egon Willighagen
  */
-public interface Rule {
+public interface IRule {
 
     /** Returns the name of this rule.
      */

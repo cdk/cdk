@@ -36,7 +36,7 @@ package org.openscience.cdk.iupac.generator;
 public class IUPACNamePart {
 
     private String name;
-    private Rule rule;
+    private IRule rule;
 
     /**
      *  Constructor for a IUPAC name part.
@@ -44,7 +44,7 @@ public class IUPACNamePart {
      * @param    name       Current name part.
      * @param    rule       Rule that generated this name part.
      */
-    public IUPACNamePart(String name, Rule rule) {
+    public IUPACNamePart(String name, IRule rule) {
         this.rule = rule;
         this.name = name;
     }
@@ -62,7 +62,7 @@ public class IUPACNamePart {
     /**
      *  Returns the applied Rule's.
      */
-    public Rule getRule() {
+    public IRule getRule() {
         return rule;
     }
 

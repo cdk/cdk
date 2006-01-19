@@ -1,8 +1,9 @@
-/* CDKChangeListener.java
+/* $RCSfile$
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
- * $RCSfile$    $Author$    $Date$    $Revision$
- * 
- * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2005  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -23,25 +24,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
  */
-package org.openscience.cdk.event;
+package org.openscience.cdk.geometry;
 
-import java.util.EventListener;
-import java.util.EventObject;
- 
 /**
- * A ChangeListener for the CDK, to be independent from the Swing package.
+ * Weight function used in the <code>RDFCalculator</code>.
  *
- * @cdk.module standard
- */ 
-public interface CDKChangeListener extends EventListener
-{
-	/**
-	 * Invoked when the target of the listener has changed its state.
-	 *
-	 * @param   event  The EventObject
-	 */
-    void stateChanged(EventObject event);
+ * @cdk.module  extra
+ *
+ * @author      Egon Willighagen
+ * @cdk.created 2005-01-14
+ *
+ * @see         org.openscience.cdk.geometry.RDFCalculator
+ */
+public interface IRDFWeightFunction {
+
+    /**
+     * Calculates the wieght for the interaction between the two atoms.
+     *
+     * @param atom  First atom.
+     * @param atom2 Second atom.
+     */
+    public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2);
+    
 }
+
+
 

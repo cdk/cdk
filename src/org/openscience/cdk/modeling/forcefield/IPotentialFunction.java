@@ -12,7 +12,7 @@ import javax.vecmath.GVector;
  * 
  */
 
-public interface PotentialFunction {
+public interface IPotentialFunction {
 	String energyFunctionShape = "";
 	double energy = 0;			//Energy function in a 3xN point
 	GVector energyGradient = null;		//Gradient of the energy function in a 3xN point.
