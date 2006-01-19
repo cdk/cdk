@@ -29,7 +29,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -130,7 +130,7 @@ public class RotatableBondsCountDescriptor implements IDescriptor {
 		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
 		int degree0 = 0;
 		int degree1 = 0;
-		RingSet ringSet = null;
+		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
 		ringSet = arf.findAllRings(ac);
 		Vector ringsWithThisBond = null;

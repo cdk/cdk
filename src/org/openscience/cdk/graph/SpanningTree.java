@@ -33,8 +33,8 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.NoSuchAtomException;
 
 
@@ -199,23 +199,23 @@ public class SpanningTree {
 		PathTools.depthFirstTargetSearch(spt,a1,a2,path);		
 		return path;
 	}
-	private Ring getRing(IAtomContainer spt, IBond bond) throws NoSuchAtomException {
-		Ring ring = spt.getBuilder().newRing();
+	private IRing getRing(IAtomContainer spt, IBond bond) throws NoSuchAtomException {
+		IRing ring = spt.getBuilder().newRing();
 		PathTools.resetFlags(spt);
 		ring.addAtom(bond.getAtomAt(0));		
 		PathTools.depthFirstTargetSearch(spt,bond.getAtomAt(0),bond.getAtomAt(1),ring);		
 		ring.addBond(bond);
 		return ring;
 	}
-	private void getBondsInRing(IAtomContainer mol, Ring ring, int[] bonds) {
+	private void getBondsInRing(IAtomContainer mol, IRing ring, int[] bonds) {
 		for (int i=0; i < ring.getBondCount(); i++ ) {
 			int m = mol.getBondNumber(ring.getBondAt(i));
 			bonds[m] = 1;
 		}
 	}
 	
-	public RingSet getBasicRings() throws NoSuchAtomException {
-		RingSet ringset = molecule.getBuilder().newRingSet();
+	public IRingSet getBasicRings() throws NoSuchAtomException {
+		IRingSet ringset = molecule.getBuilder().newRingSet();
 		IAtomContainer spt = getSpanningTree();
 		for (int i = 0; i < E; i++) if (!bondsInTree[i])  
 			ringset.add(getRing(spt,molecule.getBondAt(i)));
@@ -224,7 +224,7 @@ public class SpanningTree {
 	}
 	public void identifyBonds()  throws NoSuchAtomException {
 		IAtomContainer spt = getSpanningTree();
-		Ring ring;
+		IRing ring;
 		int nBasicRings = 0;
 		for (int i = 0; i < E; i++) if (!bondsInTree[i]) {  
 			ring = getRing(spt,molecule.getBondAt(i));
@@ -253,14 +253,14 @@ public class SpanningTree {
 		}
 	
 	}
-	public RingSet getAllRings() throws NoSuchAtomException {
-		RingSet ringset = getBasicRings();
-		Ring newring = null;
+	public IRingSet getAllRings() throws NoSuchAtomException {
+		IRingSet ringset = getBasicRings();
+		IRing newring = null;
 		//System.out.println("Rings "+ringset.size());
 		
 		int nBasicRings = ringset.size();
 		for (int i = 0; i < nBasicRings; i++) 
-			getBondsInRing(molecule,(Ring) ringset.get(i), cb[i]);
+			getBondsInRing(molecule,(IRing) ringset.get(i), cb[i]);
 		
 		
 		
@@ -282,16 +282,16 @@ public class SpanningTree {
 		for (int i = 0; i < ac.getAtomCount(); i++)
 			System.out.print(ac.getAtomAt(i).getProperty("ST_ATOMNO").toString() + ",");
 	}
-	private Ring combineRings(RingSet ringset, int i, int j) {
+	private IRing combineRings(IRingSet ringset, int i, int j) {
 		int c = 0;
 		for (int b= 0; b < cb[i].length; b++) {
 			c = cb[i][b] + cb[j][b];
 			if (c > 1) break;  //at least one common bond
 		}
 		if (c < 2) return null;
-		Ring ring = molecule.getBuilder().newRing();
-		Ring ring1 = (Ring) ringset.get(i);
-		Ring ring2 = (Ring) ringset.get(j);
+		IRing ring = molecule.getBuilder().newRing();
+		IRing ring1 = (IRing) ringset.get(i);
+		IRing ring2 = (IRing) ringset.get(j);
 		for (int b= 0; b < cb[i].length; b++) {
 			c = cb[i][b] + cb[j][b];
 			if ((c == 1) && (cb[i][b] == 1)) ring.addBond(molecule.getBondAt(b));

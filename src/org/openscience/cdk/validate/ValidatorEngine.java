@@ -40,9 +40,9 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -189,7 +189,7 @@ public class ValidatorEngine implements ValidatorInterface {
         if (crystal != null) {
             report.addReport(validateCrystal(crystal));
         }
-        SetOfReactions reactionSet = subject.getSetOfReactions();
+        ISetOfReactions reactionSet = subject.getSetOfReactions();
         if (reactionSet != null) {
             report.addReport(validateSetOfReactions(reactionSet));
         }
@@ -300,7 +300,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into hierarchy
         return report;
     }
-    public ValidationReport validateReaction(Reaction subject) {
+    public ValidationReport validateReaction(IReaction subject) {
         logger.info("Validating org.openscience.cdk.Reaction");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -340,7 +340,7 @@ public class ValidatorEngine implements ValidatorInterface {
         }
         return report;
     }
-    public ValidationReport validateSetOfReactions(SetOfReactions subject) {
+    public ValidationReport validateSetOfReactions(ISetOfReactions subject) {
         logger.info("Validating org.openscience.cdk.SetOfReactions");
         ValidationReport report = new ValidationReport();
         // apply validators
@@ -352,7 +352,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        Reaction[] reactions = subject.getReactions();
+        IReaction[] reactions = subject.getReactions();
         for (int i=0; i<reactions.length; i++) {
             report.addReport(validateReaction(reactions[i]));
         }

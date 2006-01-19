@@ -53,9 +53,9 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
@@ -209,17 +209,17 @@ public class Convertor {
     	return cmlList;
     }
     
-    public CMLReactionList cdkSetOfReactionsToCMLReactionList(SetOfReactions reactionSet) {
+    public CMLReactionList cdkSetOfReactionsToCMLReactionList(ISetOfReactions reactionSet) {
     	return cdkSetOfReactionsToCMLReactionList(reactionSet, true);
     }
-    private CMLReactionList cdkSetOfReactionsToCMLReactionList(SetOfReactions reactionSet, boolean setIDs) {
+    private CMLReactionList cdkSetOfReactionsToCMLReactionList(ISetOfReactions reactionSet, boolean setIDs) {
     	CMLReactionList reactionList = new CMLReactionList();
     	
     	if (useCMLIDs && setIDs) {
     		idCreator.createIDs(reactionSet);
     	}
     	
-    	Reaction[] reactions = reactionSet.getReactions();
+    	IReaction[] reactions = reactionSet.getReactions();
     	for (int i=0; i<reactions.length; i++) {
     		reactionList.appendChild(cdkReactionToCMLReaction(reactions[i], false));
     	}
@@ -244,10 +244,10 @@ public class Convertor {
     	return cmlList;
     }
     
-    public CMLReaction cdkReactionToCMLReaction(Reaction reaction) {
+    public CMLReaction cdkReactionToCMLReaction(IReaction reaction) {
     	return cdkReactionToCMLReaction(reaction, true);
     }
-    private CMLReaction cdkReactionToCMLReaction(Reaction reaction, boolean setIDs) {
+    private CMLReaction cdkReactionToCMLReaction(IReaction reaction, boolean setIDs) {
     	CMLReaction cmlReaction = new CMLReaction();
     	
     	if (useCMLIDs && setIDs) {

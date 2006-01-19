@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -59,19 +59,19 @@ public class RingTest extends CDKTestCase {
     }
     
     public void testRing_int_String() {
-        Ring r = builder.newRing(5, "C");
+        IRing r = builder.newRing(5, "C");
         assertEquals(5, r.getAtomCount());
         assertEquals(5, r.getBondCount());
     }
     
     public void testRing_int() {
-        Ring r = builder.newRing(5); // This does not create a ring!
+        IRing r = builder.newRing(5); // This does not create a ring!
         assertEquals(0, r.getAtomCount());
         assertEquals(0, r.getBondCount());
     }
     
     public void testRing() {
-        Ring ring = builder.newRing();
+        IRing ring = builder.newRing();
         assertNotNull(ring);
         assertEquals(0, ring.getAtomCount());
         assertEquals(0, ring.getBondCount());
@@ -82,24 +82,24 @@ public class RingTest extends CDKTestCase {
         container.addAtom(builder.newAtom("C"));
         container.addAtom(builder.newAtom("C"));
         
-        Ring ring = builder.newRing(container);
+        IRing ring = builder.newRing(container);
         assertNotNull(ring);
         assertEquals(2, ring.getAtomCount());
         assertEquals(0, ring.getBondCount());
     }
 
     public void testGetOrderSum() {
-        Ring r = builder.newRing(5, "C");
+        IRing r = builder.newRing(5, "C");
         assertEquals(5, r.getOrderSum());
     }
     
     public void testGetRingSize() {
-        Ring r = builder.newRing(5, "C");
+        IRing r = builder.newRing(5, "C");
         assertEquals(5, r.getRingSize());
     }
     
     public void testGetNextBond_IBond_IAtom() {
-        Ring ring = builder.newRing();
+        IRing ring = builder.newRing();
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
         IAtom c3 = builder.newAtom("C");
@@ -122,7 +122,7 @@ public class RingTest extends CDKTestCase {
     }
     
     public void testToString() {
-        Ring ring = builder.newRing(5, "C");
+        IRing ring = builder.newRing(5, "C");
         String description = ring.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');

@@ -42,8 +42,8 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -256,13 +256,13 @@ public class ForceFieldConfigurator {
 	 *@return                sssrf set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public RingSet assignAtomTyps(IMolecule molecule) throws Exception {
+	public IRingSet assignAtomTyps(IMolecule molecule) throws Exception {
 		org.openscience.cdk.interfaces.IAtom atom = null;
 		String hoseCode = "";
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		int NumberOfRingAtoms = 0;
-		RingSet ringSetA = null;
-		RingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
+		IRingSet ringSetA = null;
+		IRingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		boolean isInHeteroRing = false;
 		try {
 			HueckelAromaticityDetector.detectAromaticity(molecule);
@@ -278,7 +278,7 @@ public class ForceFieldConfigurator {
 				atom.setFlag(CDKConstants.ISALIPHATIC, false);
 				ringSetA = ringSetMolecule.getRings(atom);
 				RingSetManipulator.sort(ringSetA);
-				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);
+				IRing sring = (IRing) ringSetA.get(ringSetA.size()-1);
 				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
 				isInHeteroRing = isHeteroRingSystem(RingSetManipulator.getAllInOneContainer(ringSetA));
 			} else {

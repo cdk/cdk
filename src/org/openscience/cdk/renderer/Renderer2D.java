@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
@@ -131,8 +131,8 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  reactionSet  Description of the Parameter
 	 *@param  graphics     Description of the Parameter
 	 */
-	public void paintSetOfReactions(org.openscience.cdk.interfaces.SetOfReactions reactionSet, Graphics2D graphics) {
-		Reaction[] reactions = reactionSet.getReactions();
+	public void paintSetOfReactions(org.openscience.cdk.interfaces.ISetOfReactions reactionSet, Graphics2D graphics) {
+		IReaction[] reactions = reactionSet.getReactions();
 		for (int i = 0; i < reactions.length; i++)
 		{
 			paintReaction(reactions[i], graphics);
@@ -190,7 +190,7 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  reaction  Description of the Parameter
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintReaction(Reaction reaction, Graphics2D graphics) {
+	public void paintReaction(IReaction reaction, Graphics2D graphics) {
 		// calculate some boundaries
 		IAtomContainer reactantContainer = new org.openscience.cdk.AtomContainer();
 		IMolecule[] reactants = reaction.getReactants().getMolecules();

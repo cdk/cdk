@@ -38,8 +38,8 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -188,7 +188,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     rs         A SSSR of ac (if not calculated, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getExtendedFingerprint(IAtomContainer ac, RingSet rs) throws Exception {
+	public BitSet getExtendedFingerprint(IAtomContainer ac, IRingSet rs) throws Exception {
 		BitSet bs= getFingerprint(ac, size-25);
 		MFAnalyser mfa=new MFAnalyser(ac);
 		float weight=mfa.getCanonicalMass();
@@ -205,7 +205,7 @@ public class Fingerprinter implements IFingerprinter {
 		}
 		for(int i=0;i<rs.size();i++){
 			for(int k=3;k<11;k++){
-				if(((Ring)rs.get(i)).getAtomCount()==k){
+				if(((IRing)rs.get(i)).getAtomCount()==k){
 					bs.set(size-8+k-3);
 					break;					
 				}					

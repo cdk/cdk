@@ -38,8 +38,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.geometry.GeometryTools;
 
 /**
@@ -81,7 +81,7 @@ public class RingPlacer
 	 * @param   ringCenterVector  A vector pointing the the center of the new ring
 	 * @param   bondLength  The standard bondlength
 	 */
-	public void placeRing(Ring ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
+	public void placeRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
 		int sharedAtomCount = sharedAtoms.getAtomCount();
 		logger.debug("placeRing -> sharedAtomCount: " + sharedAtomCount);
@@ -107,12 +107,12 @@ public class RingPlacer
 	 * @param   rs The RingSystem for which the substituents are to be laid out 
 	 * @return  A list of atoms that where laid out   
 	 */
-	public IAtomContainer placeRingSubstituents(RingSet rs, double bondLength)
+	public IAtomContainer placeRingSubstituents(IRingSet rs, double bondLength)
 	{
 		logger.debug("RingPlacer.placeRingSubstituents() start");
-		Ring ring = null;
+		IRing ring = null;
 		IAtom atom = null;
-		org.openscience.cdk.interfaces.RingSet rings = null;
+		org.openscience.cdk.interfaces.IRingSet rings = null;
 		IAtomContainer unplacedPartners = new org.openscience.cdk.AtomContainer();;
 		IAtomContainer sharedAtoms = new org.openscience.cdk.AtomContainer();
 		IAtomContainer primaryAtoms = new org.openscience.cdk.AtomContainer();
@@ -120,7 +120,7 @@ public class RingPlacer
 		Point2d centerOfRingGravity = null;
 		for (int j = 0; j < rs.size(); j++)
 		{
-			ring = (Ring)rs.get(j); /* Get the j-th Ring in RingSet rs */
+			ring = (IRing)rs.get(j); /* Get the j-th Ring in RingSet rs */
 			for (int k = 0; k < ring.getAtomCount(); k++)
 			{
 				unplacedPartners.removeAllElements();
@@ -164,7 +164,7 @@ public class RingPlacer
 	 * @param   ringCenterVector  A vector pointing the the center of the new ring
 	 * @param   bondLength  The standard bondlength
 	 */
-	private  void placeBridgedRing(Ring ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
+	private  void placeBridgedRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
 	{
 		double radius = getNativeRingRadius(ring, bondLength);
 		Point2d ringCenter = new Point2d(sharedAtomsCenter);
@@ -300,7 +300,7 @@ public class RingPlacer
 	 * @param   ringCenterVector  A vector pointing the the center of the new ring
 	 * @param   bondLength  The standard bondlength
 	 */
-	public void placeSpiroRing(Ring ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
+	public void placeSpiroRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength)
 	{
 
 		logger.debug("placeSpiroRing");
@@ -357,7 +357,7 @@ public class RingPlacer
 	 * @param   ringCenterVector  A vector pointing the the center of the new ring
 	 * @param   bondLength  The standard bondlength
 	 */
-	public  void placeFusedRing(Ring ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
+	public  void placeFusedRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength )
 	{
 		logger.debug("RingPlacer.placeFusedRing() start");
 		Point2d ringCenter = new Point2d(sharedAtomsCenter);
@@ -486,11 +486,11 @@ public class RingPlacer
 	 * @return  True if coordinates have been assigned to all atoms in all rings.    
 	 */
 
-	public  boolean allPlaced(RingSet rs)
+	public  boolean allPlaced(IRingSet rs)
 	{
 		for (int i = 0; i < rs.size(); i++)
 		{
-			if (!((Ring)rs.get(i)).getFlag(CDKConstants.ISPLACED)) 
+			if (!((IRing)rs.get(i)).getFlag(CDKConstants.ISPLACED)) 
 			{
 				return false;
 			}
@@ -504,13 +504,13 @@ public class RingPlacer
 	 *
 	 * @param   rs  The ringset to be checked
 	 */
-	public void checkAndMarkPlaced(RingSet rs)
+	public void checkAndMarkPlaced(IRingSet rs)
 	{
-		Ring ring = null;
+		IRing ring = null;
 		boolean allPlaced = true;
 		for (int i = 0; i < rs.size(); i++)
 		{
-			ring = (Ring)rs.get(i);
+			ring = (IRing)rs.get(i);
 			allPlaced = true;
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
@@ -557,7 +557,7 @@ public class RingPlacer
 	 * @param   ringAtoms  An AtomContainer to store the ring bonding partners
 	 * @param   nonRingAtoms  An AtomContainer to store the non-ring bonding partners
 	 */
-	public void partitionNonRingPartners(IAtom atom, Ring ring, IAtomContainer ringAtoms, IAtomContainer nonRingAtoms)
+	public void partitionNonRingPartners(IAtom atom, IRing ring, IAtomContainer ringAtoms, IAtomContainer nonRingAtoms)
 	{
 		IAtom[] atoms = molecule.getConnectedAtoms(atom);
 		for (int i = 0; i < atoms.length; i++)
@@ -583,7 +583,7 @@ public class RingPlacer
 	 * @param   bondLength  The bond length for each bond in the ring
 	 * @return  The radius of the ring.   
 	 */
-	public  double getNativeRingRadius(Ring ring, double bondLength)
+	public  double getNativeRingRadius(IRing ring, double bondLength)
 	{
 		int size = ring.getAtomCount();
 		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
@@ -601,7 +601,7 @@ public class RingPlacer
 	 * @param   ring  The ring for which the center is to be calculated
 	 * @return  A Vector2d pointing to the new ringcenter   
 	 */
-	Vector2d getRingCenterOfFirstRing(Ring ring, Vector2d bondVector, double bondLength)
+	Vector2d getRingCenterOfFirstRing(IRing ring, Vector2d bondVector, double bondLength)
 	{
 		int size = ring.getAtomCount();
 		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
@@ -620,10 +620,10 @@ public class RingPlacer
 	 * @param   rs  The RingSet to be searched for rings connected to Ring
 	 * @param   ring  The Ring for which all connected rings in RingSet are to be layed out. 
 	 */
-	void placeConnectedRings(RingSet rs, Ring ring, int handleType, double bondLength)
+	void placeConnectedRings(IRingSet rs, IRing ring, int handleType, double bondLength)
 	{
 		Vector connectedRings = rs.getConnectedRings(ring);
-		Ring connectedRing;
+		IRing connectedRing;
 		IAtomContainer sharedAtoms;
 		int sac;
 		Point2d oldRingCenter, newRingCenter, sharedAtomsCenter, tempPoint;
@@ -633,7 +633,7 @@ public class RingPlacer
 //		logger.debug(rs.reportRingList(molecule)); 
 		for (int i = 0; i < connectedRings.size(); i++)
 		{
-			connectedRing = (Ring)connectedRings.elementAt(i);
+			connectedRing = (IRing)connectedRings.elementAt(i);
 			if (!connectedRing.getFlag(CDKConstants.ISPLACED))
 			{
 //				logger.debug(ring.toString(molecule));

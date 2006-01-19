@@ -201,31 +201,31 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Monomer();
 	}
 	
-	public org.openscience.cdk.interfaces.Polymer newPolymer() {
+	public org.openscience.cdk.interfaces.IPolymer newPolymer() {
 		return new Polymer();
 	}
 
-    public org.openscience.cdk.interfaces.Reaction newReaction() {
+    public org.openscience.cdk.interfaces.IReaction newReaction() {
     	return new Reaction();	
     }
 	
-	public org.openscience.cdk.interfaces.Ring newRing() {
+	public org.openscience.cdk.interfaces.IRing newRing() {
 		return new Ring();
 	}
 	
-	public org.openscience.cdk.interfaces.Ring newRing(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public org.openscience.cdk.interfaces.IRing newRing(org.openscience.cdk.interfaces.IAtomContainer container) {
 		return new Ring(container);
 	}
 	
-	public org.openscience.cdk.interfaces.Ring newRing(int ringSize, String elementSymbol) {
+	public org.openscience.cdk.interfaces.IRing newRing(int ringSize, String elementSymbol) {
 		return new Ring(ringSize, elementSymbol);
 	}
 	
-	public org.openscience.cdk.interfaces.Ring newRing(int ringSize) {
+	public org.openscience.cdk.interfaces.IRing newRing(int ringSize) {
 		return new Ring(ringSize);
 	}
 
-	public org.openscience.cdk.interfaces.RingSet newRingSet() {
+	public org.openscience.cdk.interfaces.IRingSet newRingSet() {
 		return new RingSet();
 	}
 
@@ -237,7 +237,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new SetOfMolecules();
 	}
 
-	public org.openscience.cdk.interfaces.SetOfReactions newSetOfReactions() {
+	public org.openscience.cdk.interfaces.ISetOfReactions newSetOfReactions() {
 		return new SetOfReactions();
 	}
 	
@@ -249,7 +249,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
     	return new SingleElectron(atom);   
     }
 
-	public org.openscience.cdk.interfaces.Strand newStrand() {
+	public org.openscience.cdk.interfaces.IStrand newStrand() {
 		return new Strand();
 	}
 

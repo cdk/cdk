@@ -39,9 +39,9 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.Polymer;
+import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.Strand;
+import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -486,12 +486,12 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		super.removeMonomer(name);
 	}
 
-	public void addAtom(IAtom oAtom, Strand oStrand) {
+	public void addAtom(IAtom oAtom, IStrand oStrand) {
 		logger.debug("Adding stoms to strand: ", oAtom, oStrand);
 		super.addAtom(oAtom, oStrand);
 	}
 
-	public void addAtom(IAtom oAtom, IMonomer oMonomer, Strand oStrand) {
+	public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
 		logger.debug("Adding stoms to strand/monomer: ", oAtom, oMonomer, oStrand);
 		super.addAtom(oAtom, oMonomer, oStrand);
 	}
@@ -506,7 +506,7 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		return super.getStrandCount();
 	}
 
-	public Strand getStrand(String cName) {
+	public IStrand getStrand(String cName) {
 		logger.debug("Getting strand by name: ", cName);
 		return super.getStrand(cName);
 	}

@@ -219,15 +219,15 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 					}
 					chemModel.setSetOfMolecules(newsom);
 				}
-				org.openscience.cdk.interfaces.SetOfReactions reactionSet = chemModel.getSetOfReactions();
+				org.openscience.cdk.interfaces.ISetOfReactions reactionSet = chemModel.getSetOfReactions();
 				if (reactionSet != null)
 				{
 					SetOfReactions newSet = new SetOfReactions();
 					// FIXME, this does not preserve reactionset properties!
-					org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
+					org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
 					for (int j = 0; j < reactions.length; j++)
 					{
-						org.openscience.cdk.interfaces.Reaction reaction = reactions[j];
+						org.openscience.cdk.interfaces.IReaction reaction = reactions[j];
 						Reaction newReaction = new Reaction();
 						// FIXME, this does not preserve reaction properties!
 						IMolecule[] reactants = reaction.getReactants().getMolecules();

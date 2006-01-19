@@ -33,7 +33,7 @@ import java.util.Hashtable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.IRing;
 
 /**
  * Methods that takes a ring of which all bonds are aromatic, and assigns single
@@ -56,7 +56,7 @@ public class DeAromatizationTool {
 	 * @param ring Ring to dearomatize
 	 * @return  False if it could not convert the aromatic ring bond into single and double bonds
 	 */
-	public static boolean deAromatize(Ring ring) {
+	public static boolean deAromatize(IRing ring) {
 		boolean allaromatic=true;
 		for(int i=0;i<ring.getBondCount();i++){
 			if(!ring.getBondAt(i).getFlag(CDKConstants.ISAROMATIC))
@@ -87,11 +87,11 @@ public class DeAromatizationTool {
 		return result;
 	}
 	
-	private static boolean deAromatizePyridine(Ring ring) {
+	private static boolean deAromatizePyridine(IRing ring) {
 		return deAromatizeBenzene(ring); // same task to do
 	}
 	
-	private static boolean deAromatizePyrolle(Ring ring) {
+	private static boolean deAromatizePyrolle(IRing ring) {
 		IBond[] bonds = ring.getBonds();
 		IAtom[] atoms = ring.getAtoms();
 		if (bonds.length != 5) return false;
@@ -119,7 +119,7 @@ public class DeAromatizationTool {
 		return true;
 	}
 	
-	private static IBond getNextBond(IAtom atom, IBond bond, Ring ring){
+	private static IBond getNextBond(IAtom atom, IBond bond, IRing ring){
 		IBond[] bonds=ring.getConnectedBonds(atom);
 		for(int i=0;i<bonds.length;i++)
 			if(bonds[i]!=bond)
@@ -127,7 +127,7 @@ public class DeAromatizationTool {
 		return null;
 	}
 	
-	private static boolean deAromatizeBenzene(Ring ring) {
+	private static boolean deAromatizeBenzene(IRing ring) {
 		IBond[] bonds = ring.getBonds();
 		if (bonds.length != 6) return false;
 		for (int i = 0; i<bonds.length; i++) {

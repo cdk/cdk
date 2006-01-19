@@ -37,9 +37,9 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 
 /**
  * Interface that Validators need to implement to be used in validation.
@@ -62,8 +62,8 @@ public interface ValidatorInterface {
     public ValidationReport validateElement(IElement subject);
     public ValidationReport validateIsotope(IIsotope subject);
     public ValidationReport validateMolecule(IMolecule subject);
-    public ValidationReport validateReaction(Reaction subject);
+    public ValidationReport validateReaction(IReaction subject);
     public ValidationReport validateSetOfMolecules(ISetOfMolecules subject);
-    public ValidationReport validateSetOfReactions(SetOfReactions subject);
+    public ValidationReport validateSetOfReactions(ISetOfReactions subject);
     
 }

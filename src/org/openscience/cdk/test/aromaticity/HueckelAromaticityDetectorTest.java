@@ -34,7 +34,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.MDLReader;
@@ -101,10 +101,10 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			SmilesParser sp = new SmilesParser();
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
-			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			
-			RingSet ringset = (new SSSRFinder(mol)).findSSSR();
+			IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
 			HueckelAromaticityDetector.setRingFlags(ringset);
 			
 			int numberOfAromaticRings = 0;
@@ -131,10 +131,10 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			SmilesParser sp = new SmilesParser();
 
 			Molecule mol = sp.parseSmiles("c1ccncc1");
-			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			
-			RingSet ringset = (new SSSRFinder(mol)).findSSSR();
+			IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
 			HueckelAromaticityDetector.setRingFlags(ringset);
 			
 			int numberOfAromaticRings = 0;
@@ -275,7 +275,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			SmilesParser sp = new SmilesParser();
 
 			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
-			RingSet rs = (new AllRingsFinder()).findAllRings(mol);
+			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			//System.out.println("rs.size(): " + rs.size());
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			Iterator iter = rs.iterator();

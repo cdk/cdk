@@ -34,7 +34,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword    ring
  */
-public class Ring extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Ring
+public class Ring extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IRing
 {
 
 	/**

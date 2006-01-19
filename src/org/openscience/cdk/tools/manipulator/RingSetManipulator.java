@@ -34,8 +34,8 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * @cdk.module standard
@@ -49,12 +49,12 @@ public class RingSetManipulator {
 	 *
 	 * @return an AtomContainer with all atoms and bonds from the RingSet
 	 */
-	public static IAtomContainer getAllInOneContainer(RingSet ringSet) {
+	public static IAtomContainer getAllInOneContainer(IRingSet ringSet) {
 		// FIXME: make RingSet a subclass of IChemObject (see bug #) and clean up
 		// the code in the next line
-		IAtomContainer container = ((Ring)ringSet.get(0)).getBuilder().newAtomContainer();
+		IAtomContainer container = ((IRing)ringSet.get(0)).getBuilder().newAtomContainer();
 		for (int i = 0; i < ringSet.size(); i++) {
-			container.add((Ring)ringSet.get(i));
+			container.add((IRing)ringSet.get(i));
 		}
 		return container;
 	}
@@ -63,7 +63,7 @@ public class RingSetManipulator {
      * Sorts the rings in the set by size. The largest ring comes
      * first.
      */
-	public static void sort(RingSet ringSet) {
+	public static void sort(IRingSet ringSet) {
 		Collections.sort(ringSet, new RingSizeComparator(RingSizeComparator.LARGE_FIRST));	
 	}
 
@@ -74,16 +74,16 @@ public class RingSetManipulator {
 	 * @param   bond  A bond which must be contained by the heaviest ring 
 	 * @return  The ring with the higest number of double bonds connected to a given bond
 	 */
-	public static Ring getHeaviestRing(RingSet ringSet, IBond bond)
+	public static IRing getHeaviestRing(IRingSet ringSet, IBond bond)
 	{
 		Vector rings = ringSet.getRings(bond);
-		Ring ring = null;
+		IRing ring = null;
 		int maxOrderSum = 0;
 		for (int i = 0; i < rings.size(); i++)
 		{
-			if (maxOrderSum < ((Ring)rings.elementAt(i)).getOrderSum()) 
+			if (maxOrderSum < ((IRing)rings.elementAt(i)).getOrderSum()) 
 			{
-				ring = (Ring)rings.elementAt(i);
+				ring = (IRing)rings.elementAt(i);
 				maxOrderSum = ring.getOrderSum();
 			} 
 		}
@@ -95,17 +95,17 @@ public class RingSetManipulator {
 	 *
 	 * @return the ring with the highest numbers of other rings attached to it.    
 	 */
-	public static Ring getMostComplexRing(RingSet ringSet)
+	public static IRing getMostComplexRing(IRingSet ringSet)
 	{
 		int[] neighbors = new int[ringSet.size()];
-		Ring ring1, ring2;
+		IRing ring1, ring2;
 		IAtom atom1, atom2;
 		int mostComplex = 0, mostComplexPosition = 0;
 		/* for all rings in this RingSet */
 		for (int i = 0; i < ringSet.size(); i++)
 		{
 			/* Take each ring */
-			ring1 = (Ring)ringSet.get(i);
+			ring1 = (IRing)ringSet.get(i);
 			/* look at each Atom in this ring whether it is part of any other ring */
 			for (int j = 0; j < ring1.getAtomCount(); j++)
 			{
@@ -113,7 +113,7 @@ public class RingSetManipulator {
 				/* Look at each of the other rings in the ringset */
 				for (int k = i + 1; k < ringSet.size(); k++)
 				{
-					ring2 = (Ring)ringSet.get(k);
+					ring2 = (IRing)ringSet.get(k);
 					if (ring1 != ring2)
 					{
 						for (int l = 0; l < ring2.getAtomCount(); l++)
@@ -138,7 +138,7 @@ public class RingSetManipulator {
 				mostComplexPosition = i;
 			}
 		}
-		return (Ring) ringSet.get(mostComplexPosition);
+		return (IRing) ringSet.get(mostComplexPosition);
 	}
 
 	  /**
@@ -152,12 +152,12 @@ public class RingSetManipulator {
 	   * @param atom2 The second atom
 	   * @return ???boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
 	   */
-	  public static boolean isSameRing(RingSet ringSet, IAtom atom1, IAtom atom2)
+	  public static boolean isSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
 	  {
 	    Iterator iterator = ringSet.iterator();
 	    while(iterator.hasNext())
 	    {
-	      Ring ring = (Ring) iterator.next();
+	      IRing ring = (IRing) iterator.next();
 	      if(ring.contains(atom1))
 	        if(ring.contains(atom2))
 	          return true;

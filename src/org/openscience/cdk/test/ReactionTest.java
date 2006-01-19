@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -60,29 +60,29 @@ public class ReactionTest extends CDKTestCase {
 	}
 
     public void testReaction() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         assertNotNull(reaction);
         assertEquals(0, reaction.getReactantCount());
         assertEquals(0, reaction.getProductCount());
-        assertEquals(Reaction.FORWARD, reaction.getDirection());
+        assertEquals(IReaction.FORWARD, reaction.getDirection());
     }
     
     public void testGetReactantCount() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         assertEquals(0, reaction.getReactantCount());
 	reaction.addReactant(builder.newMolecule());
         assertEquals(1, reaction.getReactantCount());
     }
     
     public void testGetProductCount() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         assertEquals(0, reaction.getProductCount());
 	reaction.addProduct(builder.newMolecule());
         assertEquals(1, reaction.getProductCount());
     }
     
     public void testAddReactant_Molecule() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
@@ -100,7 +100,7 @@ public class ReactionTest extends CDKTestCase {
     }
 
     public void testSetReactants_SetOfMolecules() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
@@ -115,7 +115,7 @@ public class ReactionTest extends CDKTestCase {
     }
 
     public void testAddReactant_Molecule_double() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         IMolecule sulfate = builder.newMolecule();
         reaction.addReactant(proton, 2);
@@ -125,7 +125,7 @@ public class ReactionTest extends CDKTestCase {
     }
     
     public void testAddProduct_Molecule() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
@@ -143,7 +143,7 @@ public class ReactionTest extends CDKTestCase {
     }
 
     public void testSetProducts_SetOfMolecules() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
@@ -158,7 +158,7 @@ public class ReactionTest extends CDKTestCase {
     }
 
     public void testAddProduct_Molecule_double() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         IMolecule sulfate = builder.newMolecule();
         reaction.addProduct(proton, 2.0);
@@ -168,14 +168,14 @@ public class ReactionTest extends CDKTestCase {
     }
     
     public void testAddAgent_Molecule() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         reaction.addAgent(proton);
         assertEquals(1, reaction.getAgents().getMoleculeCount());
     }
 
     public void testGetReactantCoefficient_Molecule() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         reaction.addReactant(proton, 2.0);
         assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
@@ -184,7 +184,7 @@ public class ReactionTest extends CDKTestCase {
     }
 
     public void testGetProductCoefficient_Molecule() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         reaction.addProduct(proton, 2.0);
         assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
@@ -193,7 +193,7 @@ public class ReactionTest extends CDKTestCase {
     }
     
 	public void testSetReactantCoefficient_Molecule_double() {
-		Reaction reaction = builder.newReaction();
+		IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
 		reaction.addReactant(proton, 2.0);
 		reaction.setReactantCoefficient(proton, 3.0);
@@ -201,7 +201,7 @@ public class ReactionTest extends CDKTestCase {
 	}
 	
 	public void testSetProductCoefficient_Molecule_double() {
-		Reaction reaction = builder.newReaction();
+		IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
 		reaction.addProduct(proton, 2.0);
 		reaction.setProductCoefficient(proton, 1.0);
@@ -209,7 +209,7 @@ public class ReactionTest extends CDKTestCase {
 	}
 	
 	public void testGetReactantCoefficients() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
 		IMolecule ed1 = builder.newMolecule();
 		IMolecule ed2 = builder.newMolecule();
 		reaction.addReactant(ed1, 2);
@@ -221,7 +221,7 @@ public class ReactionTest extends CDKTestCase {
     }
 	
 	public void testGetProductCoefficients() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
 		IMolecule pr1 = builder.newMolecule();
 		IMolecule pr2 = builder.newMolecule();
 		reaction.addProduct(pr1, 1);
@@ -233,7 +233,7 @@ public class ReactionTest extends CDKTestCase {
     }
 	
 	public void testSetReactantCoefficients_arraydouble() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
 		IMolecule ed1 = builder.newMolecule();
 		IMolecule ed2 = builder.newMolecule();
 		reaction.addReactant(ed1, 2);
@@ -248,7 +248,7 @@ public class ReactionTest extends CDKTestCase {
     }
 	
 	public void testSetProductCoefficients_arraydouble() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
 		IMolecule pr1 = builder.newMolecule();
 		reaction.addProduct(pr1, 1);
 		double[] pc = { 2.0 };
@@ -260,7 +260,7 @@ public class ReactionTest extends CDKTestCase {
     }
 	
     public void testGetReactants() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
@@ -271,7 +271,7 @@ public class ReactionTest extends CDKTestCase {
     }
 	
     public void testGetProducts() {    
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
@@ -282,29 +282,29 @@ public class ReactionTest extends CDKTestCase {
     }
     
     public void testGetAgents() {    
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule water = builder.newMolecule();
         reaction.addAgent(water);
         assertEquals(1, reaction.getAgents().getMoleculeCount());
     }
     
     public void testSetDirection_int() {
-        Reaction reaction = builder.newReaction();
-        int direction = Reaction.BIDIRECTIONAL;
+        IReaction reaction = builder.newReaction();
+        int direction = IReaction.BIDIRECTIONAL;
         reaction.setDirection(direction);
         assertEquals(direction, reaction.getDirection());
     }
 
     public void testGetDirection() {
-        Reaction reaction = builder.newReaction();
-        assertEquals(Reaction.FORWARD, reaction.getDirection());
+        IReaction reaction = builder.newReaction();
+        assertEquals(IReaction.FORWARD, reaction.getDirection());
     }
 
     /**
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         String description = reaction.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
@@ -313,10 +313,10 @@ public class ReactionTest extends CDKTestCase {
     }
     
     public void testClone() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         Object clone = reaction.clone();
         assertNotNull(clone);
-        assertTrue(clone instanceof Reaction);
+        assertTrue(clone instanceof IReaction);
     }
 
     public void testClone_Mapping() {

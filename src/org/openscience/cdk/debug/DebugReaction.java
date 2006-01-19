@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugReaction extends org.openscience.cdk.Reaction
-    implements Reaction {
+    implements IReaction {
 
 	LoggingTool logger = new LoggingTool(DebugReaction.class);
 

@@ -37,8 +37,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 
@@ -63,7 +63,7 @@ public class CreateReactionAction extends JCPAction
 		logger.debug("CreateReaction action");
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		IChemModel model = jcpmodel.getChemModel();
-		SetOfReactions reactionSet = model.getSetOfReactions();
+		ISetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
 		{
 			reactionSet = model.getBuilder().newSetOfReactions();
@@ -91,7 +91,7 @@ public class CreateReactionAction extends JCPAction
 			logger.debug("Deleted atom from old container...");
 
 			// add reaction
-			Reaction reaction = model.getBuilder().newReaction();
+			IReaction reaction = model.getBuilder().newReaction();
 			reaction.setID("reaction-" + System.currentTimeMillis());
 			logger.debug("type: ", type);
 			if ("addReactantToNew".equals(type))
@@ -186,11 +186,11 @@ public class CreateReactionAction extends JCPAction
 	 *@param  reactionSet  Description of the Parameter
 	 *@return              The reactionIDs value
 	 */
-	private Object[] getReactionIDs(SetOfReactions reactionSet)
+	private Object[] getReactionIDs(ISetOfReactions reactionSet)
 	{
 		if (reactionSet != null)
 		{
-			org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
+			org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
 			String[] ids = new String[reactions.length];
 			for (int i = 0; i < reactions.length; i++)
 			{
@@ -211,9 +211,9 @@ public class CreateReactionAction extends JCPAction
 	 *@param  id           Description of the Parameter
 	 *@return              The reaction value
 	 */
-	private org.openscience.cdk.interfaces.Reaction getReaction(org.openscience.cdk.interfaces.SetOfReactions reactionSet, String id)
+	private org.openscience.cdk.interfaces.IReaction getReaction(org.openscience.cdk.interfaces.ISetOfReactions reactionSet, String id)
 	{
-		org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
+		org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
 		for (int i = 0; i < reactions.length; i++)
 		{
 			if (reactions[i].getID().equals(id))

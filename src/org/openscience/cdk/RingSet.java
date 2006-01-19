@@ -35,7 +35,7 @@ import java.util.Vector;
  *
  * @cdk.keyword     ring, set of
  */
-public class RingSet extends Vector implements java.io.Serializable, org.openscience.cdk.interfaces.RingSet
+public class RingSet extends Vector implements java.io.Serializable, org.openscience.cdk.interfaces.IRingSet
 {
 
     /**
@@ -69,7 +69,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @param   newRing  The ring to be tested if it is already stored here
 	 * @return     true if it is already stored
 	 */
-	public boolean ringAlreadyInSet(org.openscience.cdk.interfaces.Ring newRing)
+	public boolean ringAlreadyInSet(org.openscience.cdk.interfaces.IRing newRing)
 	{
 		Ring ring;
 		org.openscience.cdk.interfaces.IBond[] bonds;
@@ -134,7 +134,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public org.openscience.cdk.interfaces.RingSet getRings(org.openscience.cdk.interfaces.IAtom atom)
+	public org.openscience.cdk.interfaces.IRingSet getRings(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		RingSet rings = new RingSet();
 		Ring ring;
@@ -157,7 +157,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
 
-	public Vector getConnectedRings(org.openscience.cdk.interfaces.Ring ring)
+	public Vector getConnectedRings(org.openscience.cdk.interfaces.IRing ring)
 	{
 		Vector connectedRings = new Vector();
 		Ring tempRing;
@@ -182,7 +182,7 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 *
 	 * @param   ringSet  the ring set to be united with this one.
 	 */
-	public void add(org.openscience.cdk.interfaces.RingSet ringSet)
+	public void add(org.openscience.cdk.interfaces.IRingSet ringSet)
 	{
 		for (int f = 0; f < ringSet.size(); f++)
 		{

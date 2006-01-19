@@ -37,10 +37,10 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
@@ -152,7 +152,7 @@ public class IDCreator {
      * Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
      * accordingly, when no ID is given.
      */
-    public void createIDs(Reaction reaction) {
+    public void createIDs(IReaction reaction) {
         if (tabuList == null) tabuList = ReactionManipulator.getAllIDs(reaction);
         
         if (reaction.getID() == null) {
@@ -171,8 +171,8 @@ public class IDCreator {
         }
     }
     
-    public void createIDs(SetOfReactions reactionSet) {
-    	Reaction[] reactions = reactionSet.getReactions();
+    public void createIDs(ISetOfReactions reactionSet) {
+    	IReaction[] reactions = reactionSet.getReactions();
         for (int i=0; i<reactions.length; i++) {
             createIDs(reactions[i]);
         }
@@ -197,7 +197,7 @@ public class IDCreator {
     	if (crystal != null) createIDs(crystal);
     	ISetOfMolecules moleculeSet = model.getSetOfMolecules();
     	if (moleculeSet != null) createIDs(moleculeSet);
-    	SetOfReactions reactionSet = model.getSetOfReactions();
+    	ISetOfReactions reactionSet = model.getSetOfReactions();
     	if (reactionSet != null) createIDs(reactionSet);
     }
     

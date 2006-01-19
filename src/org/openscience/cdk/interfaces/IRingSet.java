@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @cdk.keyword ring, set of
  */
-public interface RingSet extends List {
+public interface IRingSet extends List {
 
 	/**
 	 * Checks - and returns 'true' - if a certain ring is already
@@ -42,7 +42,7 @@ public interface RingSet extends List {
 	 * @param   newRing  The ring to be tested if it is already stored here
 	 * @return     true if it is already stored
 	 */
-	public boolean ringAlreadyInSet(Ring newRing);	
+	public boolean ringAlreadyInSet(IRing newRing);	
 	
 	/**
 	 * Returns a vector of all rings that this bond is part of.
@@ -58,7 +58,7 @@ public interface RingSet extends List {
 	 * @param   atom  The atom to be checked
 	 * @return   A vector of all rings that this bond is part of  
 	 */
-	public RingSet getRings(IAtom atom);
+	public IRingSet getRings(IAtom atom);
 	
 	/**
 	 * Returns all the rings in the RingSet that share
@@ -67,14 +67,14 @@ public interface RingSet extends List {
 	 * @param   ring  A ring with which all return rings must share one or more atoms
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
-	public Vector getConnectedRings(Ring ring);
+	public Vector getConnectedRings(IRing ring);
 	
 	/**
 	 * Adds all rings of another RingSet if they are not allready part of this ring set.
 	 *
 	 * @param   ringSet  the ring set to be united with this one.
 	 */
-	public void add(RingSet ringSet);
+	public void add(IRingSet ringSet);
 
 	/**
 	 * True, if at least one of the rings in the ringset cotains

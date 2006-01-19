@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2001-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,34 +24,60 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
 package org.openscience.cdk.interfaces;
 
 import java.util.Collection;
+import java.util.Hashtable;
 
 /**
- * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
+ * A Strand is an AtomContainer which stores additional strand specific
+ * informations for a group of Atoms.
  *
  * @cdk.module  interfaces
- *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
- * @cdk.created 2001-08-06
- * @cdk.keyword polymer
  */
-public interface Polymer extends IMolecule {
+public interface IStrand extends IAtomContainer {
+
+	/**
+	 * Retrieve the strand name.
+	 *
+	 * @return The name of the Strand object
+	 */
+	public String getStrandName();
 	
 	/**
-	 * Adds the atom oAtom without specifying a Monomer. Therefore the
-	 * atom to this AtomContainer, but not to a certain Monomer (intended
-	 * e.g. for HETATMs).
+	 * Retrieve the strand type.
+	 *
+	 * @return The type of the Strand object
+	 */
+	public String getStrandType();
+	
+	/**
+	 * Set the name of the Strand object.
+	 *
+	 * @param cStrandName  The new name for this strand
+	 */
+	public void setStrandName(String cStrandName);
+	
+	/**
+	 * Set the type of the Strand object.
+	 *
+	 * @param cStrandType  The new type for this strand
+	 */
+	public void setStrandType(String cStrandType);
+	
+	/**
+	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
+	 * atom gets added to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
 	 *
 	 * @param oAtom  The atom to add
 	 */
 	public void addAtom(IAtom oAtom);
 	
 	/**
-	 * Adds the atom oAtom to a specified Monomer.
+	 * Adds the atom oAtom to a specific Monomer.
 	 *
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The monomer the atom belongs to
@@ -59,7 +85,7 @@ public interface Polymer extends IMolecule {
 	public void addAtom(IAtom oAtom, IMonomer oMonomer);
 	
 	/**
-	 * Return the number of monomers present in the Polymer.
+	 * Return the number of monomers present in the Strand.
 	 *
 	 * @return number of monomers
 	 */
@@ -87,5 +113,11 @@ public interface Polymer extends IMolecule {
 	 * @param name
 	 */
 	public void removeMonomer(String name);
-
+	
+	/**
+	 * Returns the monomers in this strand. 
+	 * 
+	 * @return hashtable containing the monomers in the strand.
+	 */
+	public Hashtable getMonomers();
 }

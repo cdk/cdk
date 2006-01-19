@@ -37,8 +37,8 @@ import java.io.StringReader;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
@@ -225,9 +225,9 @@ public class CMLReader extends DefaultChemObjectReader {
             throw new CDKException(error, saxe);
         }
         if(aromaticOrder==1){
-			RingSet rs=new AllRingsFinder().findAllRings(file.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0));
+			IRingSet rs=new AllRingsFinder().findAllRings(file.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0));
 			for(int i=0;i<rs.size();i++){
-				DeAromatizationTool.deAromatize((Ring)rs.get(i));  
+				DeAromatizationTool.deAromatize((IRing)rs.get(i));  
 	        }
         }
         return cdo;

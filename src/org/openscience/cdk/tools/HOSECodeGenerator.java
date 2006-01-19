@@ -43,8 +43,8 @@ import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
@@ -117,7 +117,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	boolean debug = false;
 	
 	private IAtomContainer acold=null;
-	private RingSet soar=null;
+	private IRingSet soar=null;
 
 	/**
 	 *  The rank order for the given element symbols
@@ -275,8 +275,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 		boolean[] bool=new boolean[1000];
 		StringBuffer sb=new StringBuffer();
 		for(int i=0;i<soar.getRings(root).size();i++){
-			if(((Ring)soar.getRings(root).get(i)).getAtomCount()<bool.length)
-				bool[((Ring)soar.getRings(root).get(i)).getAtomCount()]=true;
+			if(((IRing)soar.getRings(root).get(i)).getAtomCount()<bool.length)
+				bool[((IRing)soar.getRings(root).get(i)).getAtomCount()]=true;
 		}
 		for(int i=0;i<bool.length;i++){
 			if(bool[i])

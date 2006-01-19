@@ -54,7 +54,7 @@ public interface IChemModel extends IChemObject {
 	 * @return the ringset of this model
      * @see      #setRingSet
 	 */
-	public RingSet getRingSet();
+	public IRingSet getRingSet();
 
 	/**
 	 * Sets the RingSet of this ChemModel.
@@ -62,7 +62,7 @@ public interface IChemModel extends IChemObject {
 	 * @param   ringSet         the content of this model
      * @see      #getRingSet
 	 */
-	public void setRingSet(RingSet ringSet);
+	public void setRingSet(IRingSet ringSet);
 
     /**
      * Gets the Crystal contained in this ChemModel.
@@ -86,7 +86,7 @@ public interface IChemModel extends IChemObject {
      * @return The SetOfReactions in this model
      * @see      #setSetOfReactions
      */
-    public SetOfReactions getSetOfReactions();
+    public ISetOfReactions getSetOfReactions();
 
     /**
      * Sets the SetOfReactions contained in this ChemModel.
@@ -94,7 +94,7 @@ public interface IChemModel extends IChemObject {
      * @param sor the SetOfReactions to store in this model
      * @see       #getSetOfReactions
      */
-    public void setSetOfReactions(SetOfReactions sor);
+    public void setSetOfReactions(ISetOfReactions sor);
     
 }
 

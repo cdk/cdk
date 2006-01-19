@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * Helper class for Structure Diagram Generation. Resolves atom or bond
@@ -71,7 +71,7 @@ public class OverlapResolver
 	 * @param  ac    The atomcontainer in which the atom or bond overlap exists
 	 * @param  sssr  A ring set for this atom container if one exists, otherwhise null
 	 */
-	public double resolveOverlap(IAtomContainer ac, RingSet sssr)
+	public double resolveOverlap(IAtomContainer ac, IRingSet sssr)
 	{
 		Vector overlappingAtoms = new Vector();
 		Vector overlappingBonds = new Vector();

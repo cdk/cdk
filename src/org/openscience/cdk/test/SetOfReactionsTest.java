@@ -28,8 +28,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -56,18 +56,18 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testSetOfReactions() {
-        SetOfReactions reactionSet = builder.newSetOfReactions();
+        ISetOfReactions reactionSet = builder.newSetOfReactions();
         assertNotNull(reactionSet);
     }
     
 	public void testClone() {
-        SetOfReactions reactionSet = builder.newSetOfReactions();
+        ISetOfReactions reactionSet = builder.newSetOfReactions();
         Object clone = reactionSet.clone();
-        assertTrue(clone instanceof SetOfReactions);
+        assertTrue(clone instanceof ISetOfReactions);
     }    
         
     public void testGetReactionCount() {
-		SetOfReactions reactionSet = builder.newSetOfReactions();
+		ISetOfReactions reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -76,20 +76,20 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testRemoveAllReactions(){
-  		SetOfReactions reactionSet = builder.newSetOfReactions();
+  		ISetOfReactions reactionSet = builder.newSetOfReactions();
    		reactionSet.addReaction(builder.newReaction());
    		reactionSet.removeAllReactions();
    		assertEquals(0,reactionSet.getReactions().length);
     }
 
     public void testGetReactions() {
-		SetOfReactions reactionSet = builder.newSetOfReactions();
+		ISetOfReactions reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
         
-		org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
+		org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
         assertNotNull(reactions);
         assertEquals(4, reactions.length);
         for (int i=0; i<reactions.length; i++) {
@@ -98,7 +98,7 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testGetReaction_int() {
-		SetOfReactions reactionSet = builder.newSetOfReactions();
+		ISetOfReactions reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -110,10 +110,10 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testAddReaction_Reaction() {
-		SetOfReactions reactionSet = builder.newSetOfReactions();
+		ISetOfReactions reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
-        Reaction third = builder.newReaction();
+        IReaction third = builder.newReaction();
 		reactionSet.addReaction(third); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
         
@@ -122,13 +122,13 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testClone_Reaction() {
-		SetOfReactions reactionSet = builder.newSetOfReactions();
+		ISetOfReactions reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
 
-		SetOfReactions clone = (SetOfReactions)reactionSet.clone();
+		ISetOfReactions clone = (ISetOfReactions)reactionSet.clone();
 		assertEquals(reactionSet.getReactionCount(), clone.getReactionCount());
 		for (int f = 0; f < reactionSet.getReactionCount(); f++) {
 			for (int g = 0; g < clone.getReactionCount(); g++) {
@@ -143,7 +143,7 @@ public class SetOfReactionsTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        SetOfReactions reactionSet = builder.newSetOfReactions();
+        ISetOfReactions reactionSet = builder.newSetOfReactions();
         String description = reactionSet.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');

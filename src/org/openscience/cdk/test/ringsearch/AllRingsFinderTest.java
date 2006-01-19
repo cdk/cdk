@@ -36,7 +36,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -68,7 +68,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	
 	public void testAllRingsFinder()
 	{
-		RingSet ringSet = null;
+		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
 		if (standAlone) arf.debug = true;
 		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
@@ -89,7 +89,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	// Bug #746067
 	public void testBondsWithinRing()
 	{
-		RingSet ringSet = null;
+		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
 		if (standAlone) arf.debug = true;
 		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
@@ -121,7 +121,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	
     public void testBigMoleculeWithIsolatedRings()
     {
-        RingSet ringSet = null;
+        IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
 		if (standAlone) arf.debug = true;
         
@@ -167,7 +167,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		    org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
 		    if (standAlone) System.out.println("Constructed Molecule");
 		    if (standAlone) System.out.println("Starting AllRingsFinder");
-		    RingSet ringSet = new AllRingsFinder().findAllRings(mol);
+		    IRingSet ringSet = new AllRingsFinder().findAllRings(mol);
 		    if (standAlone) System.out.println("Finished AllRingsFinder");
 		    if (standAlone) System.out.println("Found " + ringSet.size() + " rings.");
 	

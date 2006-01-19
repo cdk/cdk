@@ -43,7 +43,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword reaction
  * @cdk.bug     1095690
  */
-public interface Reaction extends IChemObject {
+public interface IReaction extends IChemObject {
 
 	/** Reaction of which the equilibrium is not set. */
     public static final int UNKNOWN_DIRECTION = 0;

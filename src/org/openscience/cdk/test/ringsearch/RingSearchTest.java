@@ -31,8 +31,8 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -93,7 +93,7 @@ public class RingSearchTest extends CDKTestCase
 	public void testAlphaPinene()
 	{
 		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
-		RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		assertEquals(2, ringSet.size());
 	}
 
@@ -107,7 +107,7 @@ public class RingSearchTest extends CDKTestCase
 	{
 		SmilesParser sp = new SmilesParser();
 		IMolecule molecule = sp.parseSmiles("c1ccccc1");
-		RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		assertEquals(1, ringSet.size());
 	}
 
@@ -121,7 +121,7 @@ public class RingSearchTest extends CDKTestCase
 	{
 		SmilesParser sp = new SmilesParser();
 		IMolecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
-		RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		assertEquals(2, ringSet.size());
 	}
 
@@ -129,7 +129,7 @@ public class RingSearchTest extends CDKTestCase
 	{
 		SmilesParser sp = new SmilesParser();
 		IMolecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
-		RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		assertEquals(4, ringSet.size());
 	}
 
@@ -139,7 +139,7 @@ public class RingSearchTest extends CDKTestCase
 	public void testProblem1()
 	{
 		IMolecule molecule = null;
-		Ring ring = null;
+		IRing ring = null;
 		try
 		{
 			String filename = "data/mdl/figueras-test-sep3D.mol";
@@ -148,12 +148,12 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-            RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+            IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 			assertEquals(3, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
 			{
-				ring = (Ring) ringSet.get(f);
+				ring = (IRing) ringSet.get(f);
 				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
@@ -170,7 +170,7 @@ public class RingSearchTest extends CDKTestCase
 	public void testProblem2()
 	{
 		IMolecule molecule = null;
-		Ring ring = null;
+		IRing ring = null;
 		try
 		{
 			String filename = "data/mdl/figueras-test-buried.mol";
@@ -179,12 +179,12 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-            RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+            IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 			assertEquals(10, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
 			{
-				ring = (Ring) ringSet.get(f);
+				ring = (IRing) ringSet.get(f);
 				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
@@ -201,7 +201,7 @@ public class RingSearchTest extends CDKTestCase
 	public void testProblem3()
 	{
 		IMolecule molecule = null;
-		Ring ring = null;
+		IRing ring = null;
 		try
 		{
 			String filename = "data/mdl/figueras-test-inring.mol";
@@ -210,12 +210,12 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-            RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+            IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 			assertEquals(5, ringSet.size());
 			for (int f = 0; f < ringSet.size(); f++)
 			{
-				ring = (Ring) ringSet.get(f);
+				ring = (IRing) ringSet.get(f);
 				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
@@ -234,7 +234,7 @@ public class RingSearchTest extends CDKTestCase
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
-            RingSet ringSet = new SSSRFinder(molecule).findSSSR();
+            IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -270,7 +270,7 @@ public class RingSearchTest extends CDKTestCase
 	  * @param molecule  A molecule to determine an atom number for each ring atom
       * @return          string representation of this ring
 	  */
-	public String toString(Ring ring, IMolecule molecule)
+	public String toString(IRing ring, IMolecule molecule)
 	{
 		String str = "";
 		for (int f = 0; f < ring.getAtomCount(); f++)

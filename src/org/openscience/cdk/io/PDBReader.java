@@ -50,7 +50,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.Strand;
+import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.ChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
@@ -170,7 +170,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		org.openscience.cdk.interfaces.IMonomer oMonomer;
 		String cRead;
 		char chain = 'A';	// To ensure stringent name giving of monomers
-		org.openscience.cdk.interfaces.Strand oStrand;
+		org.openscience.cdk.interfaces.IStrand oStrand;
 		
 		// do the reading of the Input		
 		try {
@@ -370,7 +370,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		Enumeration strandKeys = strands.keys();
 		
 		while(strandKeys.hasMoreElements())	{
-			Strand strand = (Strand)strands.get(strandKeys.nextElement());
+			IStrand strand = (IStrand)strands.get(strandKeys.nextElement());
 			int atoms = 0;
 			int atomsInLastResidue = 0;
 			int atomsInPresentResidue = 0;

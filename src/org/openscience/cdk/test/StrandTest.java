@@ -37,7 +37,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.Strand;
+import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * TODO To change the template for this generated type comment go to
@@ -67,7 +67,7 @@ public class StrandTest extends TestCase {
 	}
 
 	public void testStrand() {
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		assertNotNull(oStrand);
 		assertEquals(oStrand.getMonomerCount(), 0);
 
@@ -113,14 +113,14 @@ public class StrandTest extends TestCase {
 	}
 	
 	public void testGetStrandName()	{
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandName("A");
 		
 		assertEquals("A", oStrand.getStrandName());
 	}
 	
 	public void testGetStrandType()	{
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandType("DNA");
 		
 		assertEquals("DNA", oStrand.getStrandType());
@@ -132,21 +132,21 @@ public class StrandTest extends TestCase {
 	 */
 	
 	public void testSetStrandName_String()	{
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandName("A");
 		
 		assertEquals("A", oStrand.getStrandName());
 	}
 	
 	public void testSetStrandType_String()	{
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandType("DNA");
 		
 		assertEquals("DNA", oStrand.getStrandType());
 	}
 	
 	public void testAddAtom_IAtom() {
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		IAtom oAtom1 = builder.newAtom("C1");
 		IAtom oAtom2 = builder.newAtom("C2");
 		oStrand.addAtom(oAtom1);
@@ -156,7 +156,7 @@ public class StrandTest extends TestCase {
 	}
     
 	public void testAddAtom_IAtom_Monomer() {
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = builder.newAtom("C1");
@@ -171,7 +171,7 @@ public class StrandTest extends TestCase {
 	}
 	
 	public void testGetMonomerCount() {
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = builder.newMonomer();
@@ -185,7 +185,7 @@ public class StrandTest extends TestCase {
 	}
 	 
 	public void testGetMonomer_String() {
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = builder.newMonomer();
@@ -201,7 +201,7 @@ public class StrandTest extends TestCase {
 	}
 	
 	public void testGetMonomerNames() {
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = builder.newMonomer();
@@ -227,7 +227,7 @@ public class StrandTest extends TestCase {
 	}
 	
 	public void testRemoveMonomer_String()	{
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = builder.newAtom("C1");
@@ -240,7 +240,7 @@ public class StrandTest extends TestCase {
 	}
 	
 	public void testGetMonomers()	{
-		Strand oStrand = builder.newStrand();
+		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = builder.newMonomer();
@@ -264,7 +264,7 @@ public class StrandTest extends TestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Strand oStrand = builder.newStrand();
+        IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = builder.newMonomer();

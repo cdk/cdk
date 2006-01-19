@@ -42,7 +42,7 @@ import java.util.Hashtable;
  * @cdk.keyword polymer
  * @cdk.keyword biopolymer
  */
-public interface IBioPolymer extends Polymer {
+public interface IBioPolymer extends IPolymer {
 
 	/**
 	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
@@ -60,7 +60,7 @@ public interface IBioPolymer extends Polymer {
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The strand the atom belongs to
 	 */
-	public void addAtom(IAtom oAtom, Strand oStrand);
+	public void addAtom(IAtom oAtom, IStrand oStrand);
 	
 	/**
 	 * Adds the atom to a specified Strand and a specified Monomer.
@@ -69,7 +69,7 @@ public interface IBioPolymer extends Polymer {
 	 * @param oMonomer
 	 * @param oStrand
 	 */
-	public void addAtom(IAtom oAtom, IMonomer oMonomer, Strand oStrand);
+	public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 	
 	/**
 	 * Return the number of monomers present in BioPolymer.
@@ -110,7 +110,7 @@ public interface IBioPolymer extends Polymer {
 	 * @param cName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for
 	 */
-	public Strand getStrand(String cName);
+	public IStrand getStrand(String cName);
 	
 	/**
 	 * Returns a collection of the names of all <code>Strand</code>s in this

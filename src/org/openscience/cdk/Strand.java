@@ -38,7 +38,7 @@ import java.util.Hashtable;
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  */
-public class Strand extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Strand
+public class Strand extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IStrand
 {
 	/**
      * Determines if a de-serialized object is compatible with this class.

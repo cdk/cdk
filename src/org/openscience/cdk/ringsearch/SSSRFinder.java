@@ -36,8 +36,8 @@ import java.util.List;
 import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
@@ -90,7 +90,7 @@ public class SSSRFinder {
 	 *
 	 * @return      a RingSet containing the SSSR   
 	 */
-	public RingSet findSSSR() {
+	public IRingSet findSSSR() {
 		if (atomContainer==null) {
 			return null;
 		}
@@ -106,7 +106,7 @@ public class SSSRFinder {
 	 *
 	 * @return      a RingSet containing the Essential Rings
 	 */
-	public RingSet findEssentialRings() {
+	public IRingSet findEssentialRings() {
 		if (atomContainer==null) {
 			return null;
 		}
@@ -122,7 +122,7 @@ public class SSSRFinder {
 	 *
 	 * @return      a RingSet containing the Relevant Rings
 	 */
-	public RingSet findRelevantRings() {
+	public IRingSet findRelevantRings() {
 		if (atomContainer==null) {
 			return null;
 		}
@@ -186,7 +186,7 @@ public class SSSRFinder {
 	 * @param   ac the molecule to be searched for rings 
 	 * @return      a RingSet containing the SSSR
 	 */
-	static public RingSet findSSSR(IAtomContainer ac)
+	static public IRingSet findSSSR(IAtomContainer ac)
 	{
 		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(ac);
 		
@@ -204,16 +204,16 @@ public class SSSRFinder {
 		return cycleBasis;
 	}
 	
-	private static RingSet toRingSet(org.openscience.cdk.interfaces.IAtomContainer ac, Collection cycles) {
+	private static IRingSet toRingSet(org.openscience.cdk.interfaces.IAtomContainer ac, Collection cycles) {
 		
-		RingSet ringSet = ac.getBuilder().newRingSet();
+		IRingSet ringSet = ac.getBuilder().newRingSet();
 
 		Iterator cycleIterator = cycles.iterator();
 		
 		while (cycleIterator.hasNext()) {
 			SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
 			
-			Ring ring = ac.getBuilder().newRing();
+			IRing ring = ac.getBuilder().newRing();
 			
 			List vertices = cycle.vertexList();
 			

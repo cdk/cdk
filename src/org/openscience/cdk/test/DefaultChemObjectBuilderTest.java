@@ -50,16 +50,16 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.Polymer;
+import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.Strand;
+import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * Checks the functionality of the Crystal.
@@ -408,7 +408,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Polymer);
+		assertTrue(object instanceof IPolymer);
 	}	
 
 	public void testNewPseudoAtom() {
@@ -458,7 +458,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Reaction);
+		assertTrue(object instanceof IReaction);
 	}
 
 	public void testNewRing() {
@@ -466,7 +466,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Ring);
+		assertTrue(object instanceof IRing);
 	}	
 
 	public void testNewRing_int() {
@@ -474,7 +474,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Ring);
+		assertTrue(object instanceof IRing);
 	}	
 
 	public void testNewRing_int_String() {
@@ -482,7 +482,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Ring);
+		assertTrue(object instanceof IRing);
 	}	
 
 	public void testNewRing_IAtomContainer() {
@@ -492,7 +492,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Ring);
+		assertTrue(object instanceof IRing);
 	}	
 
 	public void testNewRingSet() {
@@ -501,7 +501,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
         // FIXME: apparently RingSet does not extend IChemObject !
 		// assertTrue(object instanceof org.openscience.cdk.interfaces.IChemObject);
 
-		assertTrue(object instanceof RingSet);
+		assertTrue(object instanceof IRingSet);
 	}
 
 	public void testNewSetOfAtomContainers() {
@@ -525,7 +525,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof SetOfReactions);
+		assertTrue(object instanceof ISetOfReactions);
 	}
 
 	public void testNewSingleElectron() {
@@ -551,7 +551,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Strand);
+		assertTrue(object instanceof IStrand);
 	}
 
 }

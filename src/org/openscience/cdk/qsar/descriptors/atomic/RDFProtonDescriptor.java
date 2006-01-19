@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
@@ -80,7 +80,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 	private int atomPosition = 0;
 	private boolean checkAromaticity = false;
   private IAtomContainer acold=null;
-  private RingSet rs = null;
+  private IRingSet rs = null;
   private SetOfAtomContainers acSet=null;
   
 	/**
@@ -175,7 +175,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 	 *@return                   an arrayList with 5 position (GHR, GHRtopol, GDR, GSR, G3R)
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtomContainer ac, RingSet precalculatedringset) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer ac, IRingSet precalculatedringset) throws CDKException {
 		IAtom target = ac.getAtomAt(atomPosition);
 		
 		IntegerArrayResult rdfProtonCalculatedValues = new IntegerArrayResult(5);
@@ -215,7 +215,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 				}
 			}
 			// SET ISINRING FLAGS FOR ATOMS
-			org.openscience.cdk.interfaces.RingSet ringsWithThisAtom = null;
+			org.openscience.cdk.interfaces.IRingSet ringsWithThisAtom = null;
 			IAtom[] atomsInContainer = ac.getAtoms();
 			
 			for (int w = 0; w < atomsInContainer.length; w++) {

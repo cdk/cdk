@@ -32,8 +32,8 @@ package org.openscience.cdk.controller;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -104,12 +104,12 @@ public class Controller2D extends SimpleController2D
 	 *@param  Y  The y world coordinate of the point
 	 *@return    A Reaction if it is in a certain range of the given point
 	 */
-	Reaction getReactionInRange(int X, int Y) {
-		SetOfReactions reactionSet = chemModel.getSetOfReactions();
+	IReaction getReactionInRange(int X, int Y) {
+		ISetOfReactions reactionSet = chemModel.getSetOfReactions();
 		if (reactionSet != null)
 		{
 			// process reaction by reaction
-			Reaction[] reactions = reactionSet.getReactions();
+			IReaction[] reactions = reactionSet.getReactions();
 			for (int i = 0; i < reactions.length; i++)
 			{
 				IAtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reactions[i]);
@@ -125,7 +125,7 @@ public class Controller2D extends SimpleController2D
 		return null;
 	}
 	
-	Reaction getRelevantReaction(IChemModel chemModel, IAtom atom)
+	IReaction getRelevantReaction(IChemModel chemModel, IAtom atom)
 	{
 		return ChemModelManipulator.getRelevantReaction(chemModel, atom);
 	}

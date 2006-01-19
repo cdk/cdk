@@ -38,7 +38,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLRXNReader;
@@ -72,7 +72,7 @@ public class MDLRXNWriterTest extends CDKTestCase {
     }
 
     public void testRoundtrip() {
-        Reaction reaction = builder.newReaction();
+        IReaction reaction = builder.newReaction();
         IMolecule hydroxide = builder.newMolecule();
         hydroxide.addAtom(builder.newAtom("O"));
         reaction.addReactant(hydroxide);
@@ -100,10 +100,10 @@ public class MDLRXNWriterTest extends CDKTestCase {
         assertTrue(file.length() > 0);
         
         // now deserialize the MDL RXN output
-        Reaction reaction2 = builder.newReaction();
+        IReaction reaction2 = builder.newReaction();
         try {
         	MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        	reaction2 = (Reaction)reader.read(reaction2);
+        	reaction2 = (IReaction)reader.read(reaction2);
             reader.close();
         } catch (Exception ex) {
             logger.error("Error while reading an MDL file");

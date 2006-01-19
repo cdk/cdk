@@ -55,12 +55,12 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
 	/**
 	 *  A SetOfReactions.
 	 */
-	protected org.openscience.cdk.interfaces.SetOfReactions setOfReactions = null;
+	protected org.openscience.cdk.interfaces.ISetOfReactions setOfReactions = null;
 
 	/**
 	 *  A RingSet.
 	 */
-	protected org.openscience.cdk.interfaces.RingSet ringSet = null;
+	protected org.openscience.cdk.interfaces.IRingSet ringSet = null;
 	
     /**
 	 *  A Crystal.
@@ -108,7 +108,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setRingSet
 	 */
-	public org.openscience.cdk.interfaces.RingSet getRingSet() {
+	public org.openscience.cdk.interfaces.IRingSet getRingSet() {
 		return this.ringSet;
 	}
 
@@ -120,7 +120,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #getRingSet
 	 */
-	public void setRingSet(org.openscience.cdk.interfaces.RingSet ringSet)
+	public void setRingSet(org.openscience.cdk.interfaces.IRingSet ringSet)
 	{
 		this.ringSet = ringSet;
 		notifyChanged();
@@ -157,7 +157,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setSetOfReactions
      */
-    public org.openscience.cdk.interfaces.SetOfReactions getSetOfReactions() {
+    public org.openscience.cdk.interfaces.ISetOfReactions getSetOfReactions() {
         return this.setOfReactions;
     }
 
@@ -168,7 +168,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see       #getSetOfReactions
      */
-    public void setSetOfReactions(org.openscience.cdk.interfaces.SetOfReactions sor) {
+    public void setSetOfReactions(org.openscience.cdk.interfaces.ISetOfReactions sor) {
         this.setOfReactions = sor;
 	this.setOfReactions.addListener(this);
 	notifyChanged();
@@ -220,7 +220,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
             clone.setOfMolecules = null;
         }
         if (setOfReactions != null) {
-            clone.setOfReactions = (org.openscience.cdk.interfaces.SetOfReactions)((SetOfReactions)setOfReactions).clone();
+            clone.setOfReactions = (org.openscience.cdk.interfaces.ISetOfReactions)((SetOfReactions)setOfReactions).clone();
         } else {
             clone.setOfReactions = null;
         }

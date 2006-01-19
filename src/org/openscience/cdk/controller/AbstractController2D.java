@@ -67,8 +67,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.layout.RingPlacer;
@@ -902,7 +902,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			if (c2dm.getDrawMode() == Controller2DModel.RING || c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 			{
 				IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
-				Ring newRing = null;
+				IRing newRing = null;
 				Point2d sharedAtomsCenter;
 				Vector2d ringCenterVector;
 				double bondLength;
@@ -1260,7 +1260,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *
 	 *@param  ring  The ring to be made aromatic
 	 */
-	private void makeRingAromatic(Ring ring)
+	private void makeRingAromatic(IRing ring)
 	{
 		IAtom[] atoms = ring.getAtoms();
 		for (int i = 0; i < atoms.length; i++)
@@ -1536,7 +1536,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		return null;
 	}
 
-	abstract Reaction getReactionInRange(int X, int Y);
+	abstract IReaction getReactionInRange(int X, int Y);
 
 	/**
 	 *  Returns an AtomContainer that contains the atom or the the bond with its
@@ -1575,9 +1575,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *@param  symbol       The element symbol the new atoms will have
 	 *@return              The constructed Ring
 	 */
-	 Ring createAttachRing(IAtomContainer sharedAtoms, int ringSize, String symbol)
+	 IRing createAttachRing(IAtomContainer sharedAtoms, int ringSize, String symbol)
 	{
-		Ring newRing = new org.openscience.cdk.Ring(ringSize);
+		IRing newRing = new org.openscience.cdk.Ring(ringSize);
 		IAtom[] ringAtoms = new org.openscience.cdk.Atom[ringSize];
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
@@ -1983,8 +1983,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					logger.debug("  between ", mappedFromAtom);
 					logger.debug("  and ", mappedToAtom);
 					// ok, now figure out if they are in one reaction
-					Reaction reaction1 = ChemModelManipulator.getRelevantReaction(chemModel, mappedFromAtom);
-					Reaction reaction2 = ChemModelManipulator.getRelevantReaction(chemModel, mappedToAtom);
+					IReaction reaction1 = ChemModelManipulator.getRelevantReaction(chemModel, mappedFromAtom);
+					IReaction reaction2 = ChemModelManipulator.getRelevantReaction(chemModel, mappedToAtom);
 					if (reaction1 != null && reaction2 != null && reaction1 == reaction2)
 					{
 						logger.debug("Adding mapping to reaction: ", reaction1.getID());
@@ -2007,7 +2007,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 	}
 	
-	abstract Reaction getRelevantReaction(IChemModel model, IAtom atom);
+	abstract IReaction getRelevantReaction(IChemModel model, IAtom atom);
 
 	public IAtomContainer getAtomContainer() {
 		return atomContainer;

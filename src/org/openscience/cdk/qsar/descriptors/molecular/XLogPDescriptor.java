@@ -31,8 +31,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -192,8 +192,8 @@ public class XLogPDescriptor implements IDescriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-		RingSet rs = (new AllRingsFinder()).findAllRings(ac);
-		RingSet atomRingSet=null;
+		IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
+		IRingSet atomRingSet=null;
 		HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 		double xlogP = 0;
 		SmilesParser sp = new SmilesParser();
@@ -221,15 +221,15 @@ public class XLogPDescriptor implements IDescriptor {
 				}
 				for (int j=0;j<atomRingSet.size();j++){
 					if (j==0){
-						atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(((Ring)atomRingSet.get(j)).getRingSize()));
+						atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(((IRing)atomRingSet.get(j)).getRingSize()));
 					}
 					
-					if (((Ring)atomRingSet.get(j)).contains(atoms[i])){
-						if (((Ring)atomRingSet.get(j)).getRingSize()>=6 && atoms[i].getFlag(CDKConstants.ISAROMATIC)){
+					if (((IRing)atomRingSet.get(j)).contains(atoms[i])){
+						if (((IRing)atomRingSet.get(j)).getRingSize()>=6 && atoms[i].getFlag(CDKConstants.ISAROMATIC)){
 							atoms[i].setProperty("IS_IN_AROMATIC_RING", new Boolean(true));
 						}
-						if (((Ring)atomRingSet.get(j)).getRingSize()<((Integer)atoms[i].getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue()){
-							atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(((Ring)atomRingSet.get(j)).getRingSize()));
+						if (((IRing)atomRingSet.get(j)).getRingSize()<((Integer)atoms[i].getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue()){
+							atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(((IRing)atomRingSet.get(j)).getRingSize()));
 						}
 					}
 				}
@@ -919,7 +919,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 *@param  atom  Description of the Parameter
 	 *@return       The hydrogenCount value
 	 */
-	private boolean checkRingLink(org.openscience.cdk.interfaces.RingSet ringSet, org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+	private boolean checkRingLink(org.openscience.cdk.interfaces.IRingSet ringSet, org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
 		if (ringSet.contains(atom)){
 			return true;

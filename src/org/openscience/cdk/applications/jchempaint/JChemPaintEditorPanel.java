@@ -573,7 +573,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			newDim.height = newDim.height * (moleculeSet.getMoleculeCount());
 			return newDim;
 		}
-		org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
+		org.openscience.cdk.interfaces.ISetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet != null)
 		{
 			newDim.height = newDim.height * (reactionSet.getReactionCount());
@@ -603,10 +603,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			}
 			return;
 		}
-		org.openscience.cdk.interfaces.SetOfReactions reactionSet = model.getSetOfReactions();
+		org.openscience.cdk.interfaces.ISetOfReactions reactionSet = model.getSetOfReactions();
 		if (reactionSet != null)
 		{
-			org.openscience.cdk.interfaces.Reaction[] reactions = reactionSet.getReactions();
+			org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
 			for (int i = 1; i <= reactions.length; i++)
 			{
 				org.openscience.cdk.interfaces.IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);

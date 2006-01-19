@@ -319,7 +319,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         return roundTrippedMol;
     }
     
-    private org.openscience.cdk.interfaces.Reaction roundTripReaction(Reaction reaction) {
+    private org.openscience.cdk.interfaces.IReaction roundTripReaction(Reaction reaction) {
         String cmlString = "<!-- failed -->";
         try {
             Element cmlDOM = convertor.cdkReactionToCMLReaction(reaction);
@@ -331,7 +331,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             fail(message);
         }
         
-        org.openscience.cdk.interfaces.Reaction roundTrippedReaction = null;
+        org.openscience.cdk.interfaces.IReaction roundTrippedReaction = null;
         try {
             logger.debug("CML string: ", cmlString);
             CMLReader reader = new CMLReader(new StringReader(cmlString));
@@ -344,7 +344,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             assertEquals(1, sequence.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
-            org.openscience.cdk.interfaces.SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            org.openscience.cdk.interfaces.ISetOfReactions reactionSet = chemModel.getSetOfReactions();
             assertNotNull(reactionSet);
             assertEquals(1, reactionSet.getReactionCount());
             roundTrippedReaction = reactionSet.getReaction(0);
@@ -395,7 +395,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         reactant.addAtom(atom);
         reaction.addReactant(reactant);
         
-        org.openscience.cdk.interfaces.Reaction roundTrippedReaction = roundTripReaction(reaction);
+        org.openscience.cdk.interfaces.IReaction roundTrippedReaction = roundTripReaction(reaction);
         
         assertNotNull(roundTrippedReaction);
         org.openscience.cdk.interfaces.ISetOfMolecules reactants = roundTrippedReaction.getReactants();

@@ -44,8 +44,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.Reaction;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -99,7 +99,7 @@ public class SmilesGenerator
 	/**
 	* RingSet that holds all rings of the molecule
 	*/
-	private RingSet rings = null; 
+	private IRingSet rings = null; 
 	
 	/**
 	 *  The canonical labler
@@ -174,7 +174,7 @@ public class SmilesGenerator
 	 * @param  rings  RingSet that holds ALL rings of the molecule
 	 * @return        reference to the SmilesGenerator object this method was called for
 	 */
-	public SmilesGenerator setRings(RingSet rings)
+	public SmilesGenerator setRings(IRingSet rings)
 	{
 	  this.rings = rings;
 	  return this;
@@ -212,7 +212,7 @@ public class SmilesGenerator
 	 *@return                   Description of the Return Value
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public synchronized String createSMILES(Reaction reaction) throws CDKException
+	public synchronized String createSMILES(IReaction reaction) throws CDKException
 	{
 		StringBuffer reactionSMILES = new StringBuffer();
 		IMolecule[] reactants = reaction.getReactants().getMolecules();
@@ -387,7 +387,7 @@ public class SmilesGenerator
 			for (int i = 0; i < v.size(); i++)
 			{
 				int counter = 0;
-				IAtomContainer allrings = RingSetManipulator.getAllInOneContainer((RingSet) v.get(i));
+				IAtomContainer allrings = RingSetManipulator.getAllInOneContainer((IRingSet) v.get(i));
 				for (int k = 0; k < allrings.getAtomCount(); k++)
 				{
 					if (!BondTools.isStereo(molecule, allrings.getAtomAt(k)) && hasWedges(molecule, allrings.getAtomAt(k)) != null)

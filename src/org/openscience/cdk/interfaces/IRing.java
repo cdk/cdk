@@ -34,7 +34,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.keyword ring
  */
-public interface Ring extends IAtomContainer {
+public interface IRing extends IAtomContainer {
 
 	/**
 	 * Returns the number of atoms/bonds in this ring.

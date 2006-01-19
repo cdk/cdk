@@ -36,8 +36,8 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.Polymer;
-import org.openscience.cdk.interfaces.Strand;
+import org.openscience.cdk.interfaces.IPolymer;
+import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -69,13 +69,13 @@ public class PolymerTest extends TestCase {
 	}
 
 	public void testPolymer() {
-		Polymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = builder.newPolymer();
 		assertNotNull(oPolymer);
 		assertEquals(oPolymer.getMonomerCount(), 0);
 	}
 	
 	public void testAddAtom_IAtom() {
-		Polymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = builder.newPolymer();
 		
 		IAtom oAtom1 = builder.newAtom("C1");
 		IAtom oAtom2 = builder.newAtom("C2");
@@ -87,7 +87,7 @@ public class PolymerTest extends TestCase {
 	}
     
 	public void testAddAtom_IAtom_Monomer() {
-		Polymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = builder.newPolymer();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = null;
@@ -113,7 +113,7 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testGetMonomerCount() {
-		Polymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = builder.newPolymer();
 		assertEquals(0, oPolymer.getMonomerCount());
 		
 		IMonomer oMono1 = builder.newMonomer();
@@ -132,7 +132,7 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testGetMonomer_String() {
-		Polymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = builder.newPolymer();
 		
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -151,7 +151,7 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testGetMonomerNames() {
-		Polymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = builder.newPolymer();
 		assertEquals(0, oPolymer.getMonomerNames().size());
 		
 		IMonomer oMono1 = builder.newMonomer();
@@ -176,7 +176,7 @@ public class PolymerTest extends TestCase {
 	}
 	
 	public void testRemoveMonomer_String()	{
-		Polymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = builder.newPolymer();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = builder.newAtom("C1");
@@ -193,7 +193,7 @@ public class PolymerTest extends TestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Strand oStrand = builder.newStrand();
+        IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = builder.newMonomer();

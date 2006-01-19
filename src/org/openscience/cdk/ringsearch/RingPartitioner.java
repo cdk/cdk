@@ -31,8 +31,8 @@ package org.openscience.cdk.ringsearch;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  *  Partitions a RingSet into RingSets of connected rings. Rings which share an
@@ -59,19 +59,19 @@ public class RingPartitioner {
      *@param  ringSet  The RingSet to be partitioned
      *@return          A Vector of connected RingSets
      */
-    public static Vector partitionRings(RingSet ringSet) {
+    public static Vector partitionRings(IRingSet ringSet) {
         Vector ringSets = new Vector();
         if (ringSet.size() == 0) return ringSets;
-        RingSet tempRingSet = null;
-        Ring ring = (Ring)ringSet.get(0);
+        IRingSet tempRingSet = null;
+        IRing ring = (IRing)ringSet.get(0);
         if (ring == null) return ringSets;
-        RingSet rs = ring.getBuilder().newRingSet();
+        IRingSet rs = ring.getBuilder().newRingSet();
         for (int f = 0; f < ringSet.size(); f++) {
             rs.add(ringSet.get(f));
         }
         do {
-            ring = (Ring) rs.get(0);
-            RingSet newRs = ring.getBuilder().newRingSet();
+            ring = (IRing) rs.get(0);
+            IRingSet newRs = ring.getBuilder().newRingSet();
             newRs.add(ring);
             tempRingSet = walkRingSystem(rs, ring, newRs);
             if (debug) {
@@ -91,12 +91,12 @@ public class RingPartitioner {
      *@param  ringSet  The RingSet to be converted.
      *@return          The AtomContainer containing the bonds and atoms of the ringSet.
      */
-    public static IAtomContainer convertToAtomContainer(RingSet ringSet) {
-    	Ring ring = (Ring) ringSet.get(0);
+    public static IAtomContainer convertToAtomContainer(IRingSet ringSet) {
+    	IRing ring = (IRing) ringSet.get(0);
     	if (ring == null) return null;
         IAtomContainer ac = ring.getBuilder().newAtomContainer();
         for (int i = 0; i < ringSet.size(); i++) {
-            ring = (Ring) ringSet.get(i);
+            ring = (IRing) ringSet.get(i);
             for (int r = 0; r < ring.getBondCount(); r++) {
             	org.openscience.cdk.interfaces.IBond bond = ring.getBondAt(r);
                 if (!ac.contains(bond)) {
@@ -122,15 +122,15 @@ public class RingPartitioner {
      *@param  newRs  The RingSet containing all Rings connected to ring
      *@return        newRs The RingSet containing all Rings connected to ring
      */
-    private static RingSet walkRingSystem(RingSet rs, Ring ring, RingSet newRs) {
-        Ring tempRing;
+    private static IRingSet walkRingSystem(IRingSet rs, IRing ring, IRingSet newRs) {
+        IRing tempRing;
         Vector tempRings = rs.getConnectedRings(ring);
         if (debug) {
             System.out.println("walkRingSystem -> tempRings.size(): " + tempRings.size());
         }
         rs.remove(ring);
         for (int f = 0; f < tempRings.size(); f++) {
-            tempRing = (Ring) tempRings.elementAt(f);
+            tempRing = (IRing) tempRings.elementAt(f);
             if (!newRs.contains(tempRing)) {
                 newRs.add(tempRing);
                 newRs.add(walkRingSystem(rs, tempRing, newRs));

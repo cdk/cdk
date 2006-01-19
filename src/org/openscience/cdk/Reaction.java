@@ -43,7 +43,7 @@ package org.openscience.cdk;
  * @cdk.keyword reaction
  * @cdk.bug     1095690
  */
-public class Reaction extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.Reaction {
+public class Reaction extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IReaction {
 
     /**
      * Determines if a de-serialized object is compatible with this class.

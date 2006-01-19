@@ -27,7 +27,7 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.interfaces.Ring;
+import org.openscience.cdk.interfaces.IRing;
 
 /**
  * @cdk.module standard
@@ -53,8 +53,8 @@ public class RingSizeComparator implements java.util.Comparator {
     
     public int compare(Object object1, Object object2) throws ClassCastException
     {
-        int size1 = ((Ring)object1).getAtomCount();
-        int size2 = ((Ring)object2).getAtomCount();
+        int size1 = ((IRing)object1).getAtomCount();
+        int size2 = ((IRing)object2).getAtomCount();
         if (size1 == size2) return 0;
         if (size2 > size1 && sortOrder == SMALL_FIRST) {
             return 1;

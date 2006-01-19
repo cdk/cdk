@@ -31,7 +31,7 @@ package org.openscience.cdk.controller;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
@@ -62,11 +62,11 @@ public class SimpleController2D extends AbstractController2D
 		super(r2dm, c2dm);
 	}
 	
-	Reaction getReactionInRange(int X, int Y) {
+	IReaction getReactionInRange(int X, int Y) {
 		return null;
 	}
 	
-	Reaction getRelevantReaction(IChemModel chemModel, IAtom atom)
+	IReaction getRelevantReaction(IChemModel chemModel, IAtom atom)
 	{
 		return null;
 	}

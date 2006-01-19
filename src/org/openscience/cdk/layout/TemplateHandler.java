@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -64,7 +64,7 @@ public class TemplateHandler
 	private LoggingTool logger;
 
 	IMolecule molecule;
-	RingSet sssr;
+	IRingSet sssr;
 	double bondLength = 1.5;
 
 	Vector templates = null;

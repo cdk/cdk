@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -89,7 +89,7 @@ public class RingPartitionerTest extends CDKTestCase
 		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
 		SSSRFinder sssrf = new SSSRFinder(molecule);
 
-		RingSet ringSet = sssrf.findSSSR();
+		IRingSet ringSet = sssrf.findSSSR();
 		IAtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
         assertEquals(7, ac.getAtomCount());
         assertEquals(8, ac.getBondCount());

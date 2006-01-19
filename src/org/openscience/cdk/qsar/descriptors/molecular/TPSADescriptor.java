@@ -29,7 +29,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -210,11 +210,11 @@ public class TPSADescriptor implements IDescriptor {
 	 */
 	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
 		
-		RingSet rs = (new AllRingsFinder()).findAllRings(ac);
+		IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
 		if (checkAromaticity) {
 			HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 		}
-		org.openscience.cdk.interfaces.RingSet rsAtom = null;
+		org.openscience.cdk.interfaces.IRingSet rsAtom = null;
 		Ring ring = null;
 		String profile = "";
 		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();

@@ -30,7 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -313,7 +313,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
 	    Molecule pyrrole = MoleculeFactory.makePyrrole();
 	    org.openscience.cdk.interfaces.IAtom n = pyrrole.getAtomAt(1);
-	    RingSet rs = (new SSSRFinder(pyrrole)).findSSSR();
+	    IRingSet rs = (new SSSRFinder(pyrrole)).findSSSR();
 	    Ring ring = (Ring) rs.get(0);
 	    for (int j=0 ; j<ring.getBondCount(); j++)
 	    {

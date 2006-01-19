@@ -296,22 +296,22 @@ public interface IChemObjectBuilder {
 	/**
 	 * Contructs a new Polymer to store the Monomers.
 	 */	
-	public Polymer newPolymer();
+	public IPolymer newPolymer();
 
     /**
      * Constructs an empty, forward reaction.
      */
-    public Reaction newReaction();
+    public IReaction newReaction();
     
 	/**
 	 * Constructs an empty ring.
 	 */
-	public Ring newRing();
+	public IRing newRing();
 	
 	/**
 	 * Constructs a ring from an AtomContainer.
 	 */
-	public Ring newRing(IAtomContainer container);
+	public IRing newRing(IAtomContainer container);
 	
 	/**
 	 * Constructs a ring that will have a certain number of atoms of the given elements.
@@ -319,7 +319,7 @@ public interface IChemObjectBuilder {
 	 * @param   ringSize   The number of atoms and bonds the ring will have
 	 * @param   elementSymbol   The element of the atoms the ring will have
 	 */
-	public Ring newRing(int ringSize, String elementSymbol);
+	public IRing newRing(int ringSize, String elementSymbol);
 	
 		
 	/**
@@ -327,12 +327,12 @@ public interface IChemObjectBuilder {
 	 *
 	 * @param   ringSize  The size (number of atoms) the ring will have
 	 */
-	public Ring newRing(int ringSize);
+	public IRing newRing(int ringSize);
 		
 	/**
 	 * Constructs an empty RingSet.
 	 */
-	public RingSet newRingSet();
+	public IRingSet newRingSet();
 	
 	/**  
 	 * Constructs an empty SetOfAtomContainers.
@@ -347,7 +347,7 @@ public interface IChemObjectBuilder {
 	/**
 	 * Constructs an empty SetOfReactions.
 	 */
-	public SetOfReactions newSetOfReactions();
+	public ISetOfReactions newSetOfReactions();
 	
     /**
      * Constructs an single electron orbital with an associated Atom.
@@ -364,7 +364,7 @@ public interface IChemObjectBuilder {
 	/**
 	 * Contructs a new Strand.
 	 */	
-	public Strand newStrand();
+	public IStrand newStrand();
 
     /**
      * Constructs an empty PseudoAtom.

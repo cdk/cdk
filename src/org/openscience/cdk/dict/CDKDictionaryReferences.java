@@ -122,7 +122,7 @@ public class CDKDictionaryReferences {
                    ion pair, which normally would not considered a CDK molecule */
     }
 
-    private static void makeReferencesExplicitForReaction(org.openscience.cdk.interfaces.Reaction reaction) {
+    private static void makeReferencesExplicitForReaction(org.openscience.cdk.interfaces.IReaction reaction) {
         int selfCounter = 0;
         reaction.setProperty(prefix + ":self:" + selfCounter++, "reaction:reactionStep");
     }

@@ -37,9 +37,9 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.SetOfReactions;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 
 /**
  * Class with convenience methods that provide methods from
@@ -69,7 +69,7 @@ public class ChemModelManipulator {
         if (moleculeSet != null) {
             SetOfMoleculesManipulator.removeAtomAndConnectedElectronContainers(moleculeSet, atom);
         }
-        SetOfReactions reactionSet = chemModel.getSetOfReactions();
+        ISetOfReactions reactionSet = chemModel.getSetOfReactions();
         if (reactionSet != null) {
             SetOfReactionsManipulator.removeAtomAndConnectedElectronContainers(reactionSet, atom);
         }
@@ -87,7 +87,7 @@ public class ChemModelManipulator {
         if (moleculeSet != null) {
             SetOfMoleculesManipulator.removeElectronContainer(moleculeSet, electrons);
         }
-        SetOfReactions reactionSet = chemModel.getSetOfReactions();
+        ISetOfReactions reactionSet = chemModel.getSetOfReactions();
         if (reactionSet != null) {
             SetOfReactionsManipulator.removeElectronContainer(reactionSet, electrons);
         }
@@ -109,7 +109,7 @@ public class ChemModelManipulator {
         if (moleculeSet != null) {
             container.add(SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet));
         }
-        SetOfReactions reactionSet = chemModel.getSetOfReactions();
+        ISetOfReactions reactionSet = chemModel.getSetOfReactions();
         if (reactionSet != null) {
             container.add(SetOfReactionsManipulator.getAllInOneContainer(reactionSet));
         }
@@ -152,7 +152,7 @@ public class ChemModelManipulator {
             }
         }
         if (chemModel.getSetOfReactions() != null) {
-            SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            ISetOfReactions reactionSet = chemModel.getSetOfReactions();
             return SetOfReactionsManipulator.getRelevantAtomContainer(reactionSet, atom);
         }
         // This should never happen.
@@ -169,17 +169,17 @@ public class ChemModelManipulator {
             }
         }
         if (chemModel.getSetOfReactions() != null) {
-            SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            ISetOfReactions reactionSet = chemModel.getSetOfReactions();
             return SetOfReactionsManipulator.getRelevantAtomContainer(reactionSet, bond);
         }
         // This should never happen.
         return null;
     }
     
-    public static Reaction getRelevantReaction(IChemModel chemModel, IAtom atom) {
-        Reaction reaction = null;
+    public static IReaction getRelevantReaction(IChemModel chemModel, IAtom atom) {
+        IReaction reaction = null;
         if (chemModel.getSetOfReactions() != null) {
-            SetOfReactions reactionSet = chemModel.getSetOfReactions();
+            ISetOfReactions reactionSet = chemModel.getSetOfReactions();
             reaction = SetOfReactionsManipulator.getRelevantReaction(reactionSet, atom);
         }
         return reaction;
@@ -232,7 +232,7 @@ public class ChemModelManipulator {
         if (moleculeSet != null) {
             list.addAll(SetOfMoleculesManipulator.getAllChemObjects(moleculeSet));
         }
-        SetOfReactions reactionSet = chemModel.getSetOfReactions();
+        ISetOfReactions reactionSet = chemModel.getSetOfReactions();
         if (reactionSet != null) {
             list.addAll(SetOfReactionsManipulator.getAllChemObjects(reactionSet));
         }

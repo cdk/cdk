@@ -44,7 +44,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -300,11 +300,11 @@ public class GeometryTools {
 	 *@param  ringSet  Description of the Parameter
 	 *@return          the geometric center of the rings in this ringset
 	 */
-	public static Point2d get2DCenter(RingSet ringSet) {
+	public static Point2d get2DCenter(IRingSet ringSet) {
 		double centerX = 0;
 		double centerY = 0;
 		for (int i = 0; i < ringSet.size(); i++) {
-			Point2d centerPoint = GeometryTools.get2DCenter((org.openscience.cdk.interfaces.Ring)ringSet.get(i));
+			Point2d centerPoint = GeometryTools.get2DCenter((org.openscience.cdk.interfaces.IRing)ringSet.get(i));
 			centerX += centerPoint.x;
 			centerY += centerPoint.y;
 		}

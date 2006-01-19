@@ -31,14 +31,14 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.keyword reaction
  */
-public interface SetOfReactions extends IChemObject {
+public interface ISetOfReactions extends IChemObject {
 
 	/**
 	 * Adds an reaction to this container.
 	 *
 	 * @param  reaction  The reaction to be added to this container 
 	 */
-	public void addReaction(Reaction reaction);
+	public void addReaction(IReaction reaction);
     
     /**
 	 * Returns the Reaction at position <code>number</code> in the
@@ -47,14 +47,14 @@ public interface SetOfReactions extends IChemObject {
 	 * @param  number  The position of the Reaction to be returned
 	 * @return         The Reaction at position <code>number</code>
 	 */
-    public Reaction getReaction(int number);
+    public IReaction getReaction(int number);
 
 	/**
 	 * Returns the array of Reactions of this container.
 	 *
 	 * @return    The array of Reactions of this container 
 	 */
-	public Reaction[] getReactions();
+	public IReaction[] getReactions();
 	
 	/**
 	 * Returns the number of Reactions in this Container.

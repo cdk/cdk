@@ -40,8 +40,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -82,7 +82,7 @@ public class StructureDiagramGenerator
     private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = new TemplateHandler();
 
 	IMolecule molecule;
-	RingSet sssr;
+	IRingSet sssr;
 	double bondLength = 1.5;
 	Vector2d firstBondVector;
 	RingPlacer ringPlacer = new RingPlacer();
@@ -355,26 +355,26 @@ public class StructureDiagramGenerator
 			 *  Do the layout for the first connected ring system ...
 			 */
 			int largest = 0;
-			int largestSize = ((RingSet) ringSystems.elementAt(0)).size();
+			int largestSize = ((IRingSet) ringSystems.elementAt(0)).size();
 			logger.debug("We have " + ringSystems.size() + " ring system(s).");
 			for (int f = 0; f < ringSystems.size(); f++)
 			{
-				logger.debug("RingSet " + f + " has size " + ((RingSet) ringSystems.elementAt(f)).size());
-				if (((RingSet) ringSystems.elementAt(f)).size() > largestSize)
+				logger.debug("RingSet " + f + " has size " + ((IRingSet) ringSystems.elementAt(f)).size());
+				if (((IRingSet) ringSystems.elementAt(f)).size() > largestSize)
 				{
-					largestSize = ((RingSet) ringSystems.elementAt(f)).size();
+					largestSize = ((IRingSet) ringSystems.elementAt(f)).size();
 					largest = f;
 				}
 			}
 			logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
 			logger.debug("Size of Largest RingSystem: " + largestSize);
 
-			layoutRingSet(firstBondVector, (RingSet) ringSystems.elementAt(largest));
+			layoutRingSet(firstBondVector, (IRingSet) ringSystems.elementAt(largest));
 			logger.debug("First RingSet placed");
 			/*
 			 *  and to the placement of all the directly connected atoms of this ringsystem
 			 */
-			ringPlacer.placeRingSubstituents((RingSet) ringSystems.elementAt(largest), bondLength);
+			ringPlacer.placeRingSubstituents((IRingSet) ringSystems.elementAt(largest), bondLength);
 
 		} else
 		{
@@ -446,14 +446,14 @@ public class StructureDiagramGenerator
 	 *@param  rs               The connected RingSet for which the layout is to be
 	 *      done
 	 */
-	private void layoutRingSet(Vector2d firstBondVector, RingSet rs)
+	private void layoutRingSet(Vector2d firstBondVector, IRingSet rs)
 	{
 		IAtomContainer sharedAtoms;
 		IBond bond;
 		Vector2d ringCenterVector;
 		Point2d ringCenter;
 		int thisRing;
-		Ring ring = RingSetManipulator.getMostComplexRing(rs);
+		IRing ring = RingSetManipulator.getMostComplexRing(rs);
 		/*
 		 *  Get the most complex ring in this RingSet
 		 */
@@ -500,7 +500,7 @@ public class StructureDiagramGenerator
 			{
 				thisRing = 0;
 			}
-			ring = (Ring) rs.get(thisRing);
+			ring = (IRing) rs.get(thisRing);
 		} while (!allPlaced(rs));
 		logger.debug("End of layoutRingSet");
 	}
@@ -599,7 +599,7 @@ public class StructureDiagramGenerator
 		Point2d newPoint1 = null;
 		Point2d oldPoint2 = null;
 		Point2d newPoint2 = null;
-		RingSet nextRingSystem = null;
+		IRingSet nextRingSystem = null;
 		IAtomContainer ringSystem = null;
 		org.openscience.cdk.interfaces.IBond nextRingAttachmentBond = null;
 		double angle;
@@ -846,11 +846,11 @@ public class StructureDiagramGenerator
 	 *
 	 *@param  rs  The RingSet to be initialized
 	 */
-	private void markNotPlaced(RingSet rs)
+	private void markNotPlaced(IRingSet rs)
 	{
 		for (int f = 0; f < rs.size(); f++)
 		{
-			((Ring) rs.get(f)).setFlag(CDKConstants.ISPLACED, false);
+			((IRing) rs.get(f)).setFlag(CDKConstants.ISPLACED, false);
 		}
 	}
 
@@ -865,7 +865,7 @@ public class StructureDiagramGenerator
 	{
 		for (int f = 0; f < rings.size(); f++)
 		{
-			if (!((Ring) rings.get(f)).getFlag(CDKConstants.ISPLACED))
+			if (!((IRing) rings.get(f)).getFlag(CDKConstants.ISPLACED))
 			{
 				logger.debug("allPlaced->Ring " + f + " not placed");
 				return false;
@@ -882,10 +882,10 @@ public class StructureDiagramGenerator
 	 */
 	private void markRingAtoms(List rings)
 	{
-		Ring ring = null;
+		IRing ring = null;
 		for (int i = 0; i < rings.size(); i++)
 		{
-			ring = (Ring) rings.get(i);
+			ring = (IRing) rings.get(i);
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
 				ring.getAtomAt(j).setFlag(CDKConstants.ISINRING, true);
@@ -923,12 +923,12 @@ public class StructureDiagramGenerator
 	 *@param  ringAtom     The ring atom to be search in the ring system.
 	 *@return              the ring system of which the given atom is part of
 	 */
-	private RingSet getRingSystemOfAtom(Vector ringSystems, org.openscience.cdk.interfaces.IAtom ringAtom)
+	private IRingSet getRingSystemOfAtom(Vector ringSystems, org.openscience.cdk.interfaces.IAtom ringAtom)
 	{
-		RingSet ringSet = null;
+		IRingSet ringSet = null;
 		for (int f = 0; f < ringSystems.size(); f++)
 		{
-			ringSet = (RingSet) ringSystems.elementAt(f);
+			ringSet = (IRingSet) ringSystems.elementAt(f);
 			if (ringSet.contains(ringAtom))
 			{
 				return ringSet;
@@ -943,7 +943,7 @@ public class StructureDiagramGenerator
 	 */
 	private void resetUnplacedRings()
 	{
-		Ring ring = null;
+		IRing ring = null;
 		if (sssr == null)
 		{
 			return;
@@ -951,7 +951,7 @@ public class StructureDiagramGenerator
 		int unplacedCounter = 0;
 		for (int f = 0; f < sssr.size(); f++)
 		{
-			ring = (Ring) sssr.get(f);
+			ring = (IRing) sssr.get(f);
 			if (!ring.getFlag(CDKConstants.ISPLACED))
 			{
 				logger.debug("Ring with " + ring.getAtomCount() + " atoms is not placed.");

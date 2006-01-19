@@ -26,8 +26,8 @@ package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.Ring;
-import org.openscience.cdk.interfaces.RingSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKChemicalRingConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -70,14 +70,14 @@ public class AtomTypeTools {
 	 *@return                sssrf ringSetofTheMolecule
 	 *@exception  Exception  Description of the Exception
 	 */
-	public RingSet assignAtomTypePropertiesToAtom(IMolecule molecule) throws Exception{
+	public IRingSet assignAtomTypePropertiesToAtom(IMolecule molecule) throws Exception{
         SmilesGenerator sg = new SmilesGenerator(molecule.getBuilder());
 
 		//System.out.println("assignAtomTypePropertiesToAtom Start ...");
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		String hoseCode = "";
-		org.openscience.cdk.interfaces.RingSet ringSetA = null;
-		RingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
+		org.openscience.cdk.interfaces.IRingSet ringSetA = null;
+		IRingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		logger.debug(ringSetMolecule);
 		
 		try {
@@ -95,7 +95,7 @@ public class AtomTypeTools {
 			if (ringSetMolecule.contains((org.openscience.cdk.interfaces.IAtom)atom2)) {
 				ringSetA = ringSetMolecule.getRings(atom2);
 				RingSetManipulator.sort(ringSetA);
-				Ring sring = (Ring) ringSetA.get(ringSetA.size()-1);
+				IRing sring = (IRing) ringSetA.get(ringSetA.size()-1);
 				atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(sring.getRingSize()));
 				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(ringSystemClassifier(
 						sring, sg.createSMILES(atom2.getBuilder().newMolecule(sring)))
@@ -129,7 +129,7 @@ public class AtomTypeTools {
 	 *@param  smile  smile of the ring system
 	 *@return     chemicalRingConstant
 	 */
-	private int ringSystemClassifier(Ring ring, String smile) {
+	private int ringSystemClassifier(IRing ring, String smile) {
 		
 		logger.debug("Comparing ring systems: SMILES=", smile);
 		

@@ -40,7 +40,7 @@ import java.util.Hashtable;
  * @cdk.created 2001-08-06
  * @cdk.keyword polymer
  */
-public class Polymer extends Molecule implements java.io.Serializable, org.openscience.cdk.interfaces.Polymer
+public class Polymer extends Molecule implements java.io.Serializable, org.openscience.cdk.interfaces.IPolymer
 { 
 	/**
      * Determines if a de-serialized object is compatible with this class.
