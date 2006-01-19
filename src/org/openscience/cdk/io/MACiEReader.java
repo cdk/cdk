@@ -51,7 +51,7 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MACiEFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -138,7 +138,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MACiEFormat();
     }
 
@@ -358,7 +358,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     if (file.exists()) {
                         logger.info("Reading overall reaction from: ", filename);
                         FileReader reader = new FileReader(file);
-                        ChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
+                        IChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
                         currentReaction = (Reaction)rxnReader.read(new Reaction());
                         currentReaction.setID(datum);
                         currentReaction.setProperty(CDKConstants.TITLE, "Overall Reaction");
@@ -395,7 +395,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     if (file.exists()) {
                         logger.info("Reading reaction step from: ", filename);
                         FileReader reader = new FileReader(file);
-                        ChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
+                        IChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
                         currentReaction = (Reaction)rxnReader.read(new Reaction());
                         currentReaction.setID(datum);
                         currentReaction.setProperty(CDKConstants.TITLE, "Step " + fieldNumber);

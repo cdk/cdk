@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class ChemtoolFormat implements ChemFormatMatcher {
+public class ChemtoolFormat implements IChemFormatMatcher {
 
     public ChemtoolFormat() {}
     

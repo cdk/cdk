@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChIReader;
 import org.openscience.cdk.io.MDLReader;
 
@@ -86,7 +86,7 @@ public class OpenAction extends JCPAction {
 
 		int returnVal = chooser.showOpenDialog(jcpPanel);
 		String type = null;
-		ChemObjectReader cor = null;
+		IChemObjectReader cor = null;
 
 		currentFilter = chooser.getFileFilter();
 

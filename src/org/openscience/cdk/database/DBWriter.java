@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 
 /**
  *  Writer that is used to store molecules in JDBC databases.
@@ -60,8 +60,8 @@ public class DBWriter {
 		this.con = con;
 	}
 
-    public ChemFormat getFormat() {
-        return new ChemFormat() {
+    public IChemFormat getFormat() {
+        return new IChemFormat() {
             public String getFormatName() {
                 return "JDBC database";
             }

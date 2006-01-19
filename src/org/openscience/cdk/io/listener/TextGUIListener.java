@@ -49,7 +49,7 @@ import org.openscience.cdk.io.setting.OptionIOSetting;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class TextGUIListener implements ReaderListener, WriterListener {
+public class TextGUIListener implements IReaderListener, IWriterListener {
 
     private BufferedReader in;
     private PrintWriter out;

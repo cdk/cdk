@@ -27,8 +27,8 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ReaderEvent;
-import org.openscience.cdk.io.listener.ChemObjectIOListener;
-import org.openscience.cdk.io.listener.ReaderListener;
+import org.openscience.cdk.io.listener.IChemObjectIOListener;
+import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
 /**
@@ -37,7 +37,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @cdk.module io
  */
-public abstract class DefaultEventChemObjectReader implements EventChemObjectReader {
+public abstract class DefaultEventChemObjectReader implements IEventChemObjectReader {
 
     /**
      * An event to be sent to listeners when a frame is read.
@@ -49,11 +49,11 @@ public abstract class DefaultEventChemObjectReader implements EventChemObjectRea
      */
     private Vector listenerList = new Vector();
 
-    public void addChemObjectIOListener(ChemObjectIOListener listener) {
+    public void addChemObjectIOListener(IChemObjectIOListener listener) {
         listenerList.addElement(listener);
     }
 
-    public void removeChemObjectIOListener(ChemObjectIOListener listener) {
+    public void removeChemObjectIOListener(IChemObjectIOListener listener) {
         listenerList.removeElement(listener);
     }
 
@@ -79,7 +79,7 @@ public abstract class DefaultEventChemObjectReader implements EventChemObjectRea
      */
     protected void fireFrameRead() {
         for (int i = 0; i < listenerList.size(); ++i) {
-            ReaderListener listener = (ReaderListener) listenerList.elementAt(i);
+            IReaderListener listener = (IReaderListener) listenerList.elementAt(i);
             
             // Lazily create the event:
             if (frameReadEvent == null) {
@@ -91,7 +91,7 @@ public abstract class DefaultEventChemObjectReader implements EventChemObjectRea
 
     protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            ChemObjectIOListener listener = (ChemObjectIOListener) listenerList.elementAt(i);
+            IChemObjectIOListener listener = (IChemObjectIOListener) listenerList.elementAt(i);
             listener.processIOSettingQuestion(setting);
         }
     }

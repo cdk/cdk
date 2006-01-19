@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class ChemDrawFormat implements ChemFormatMatcher {
+public class ChemDrawFormat implements IChemFormatMatcher {
 
     public ChemDrawFormat() {}
     

@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class SVGFormat implements ChemFormatMatcher {
+public class SVGFormat implements IChemFormatMatcher {
 
     public SVGFormat() {}
     

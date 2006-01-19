@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class Gaussian94Format implements ChemFormatMatcher {
+public class Gaussian94Format implements IChemFormatMatcher {
 
     public Gaussian94Format() {}
 

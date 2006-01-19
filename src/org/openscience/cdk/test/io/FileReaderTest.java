@@ -35,7 +35,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.Projector;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.tools.LoggingTool;
@@ -51,7 +51,7 @@ public class FileReaderTest {
       logger = new LoggingTool(this);
 
       try {
-        ChemObjectReader reader;
+        IChemObjectReader reader;
         logger.info("Loading: ", inFile);
         if (inFile.endsWith(".xyz")) {
   	      reader = new XYZReader(new FileReader(inFile));

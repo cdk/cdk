@@ -47,7 +47,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
@@ -96,7 +96,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MDLV3000Format();
     }
 

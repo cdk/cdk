@@ -38,7 +38,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.PDBAtom;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 
 import com.baysmith.io.FileUtilities;
@@ -88,7 +88,7 @@ public class PDBReaderTest extends TestCase {
         String filename = "data/pdb/coffeine.pdb";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
-            ChemObjectReader oReader = new PDBReader(new InputStreamReader(ins));
+            IChemObjectReader oReader = new PDBReader(new InputStreamReader(ins));
             assertNotNull(oReader);
 
             ChemFile oChemFile = (ChemFile)oReader.read(new ChemFile());
@@ -168,7 +168,7 @@ public class PDBReaderTest extends TestCase {
     InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
     try {
-      ChemObjectReader reader = new PDBReader(new InputStreamReader(ins));
+      IChemObjectReader reader = new PDBReader(new InputStreamReader(ins));
       assertNotNull(reader);
 
       ChemFile chemFile = (ChemFile) reader.read(new ChemFile());

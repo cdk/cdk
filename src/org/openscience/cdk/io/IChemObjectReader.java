@@ -52,7 +52,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public interface ChemObjectReader extends ChemObjectIO {
+public interface IChemObjectReader extends IChemObjectIO {
 
     /**
      * Reads an IChemObject of type "object" from input. The constructor

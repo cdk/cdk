@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class TurboMoleFormat implements ChemFormatMatcher {
+public class TurboMoleFormat implements IChemFormatMatcher {
 
     public TurboMoleFormat() {}
     

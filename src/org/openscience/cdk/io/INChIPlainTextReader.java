@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
 
@@ -94,7 +94,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new INChIPlainTextFormat();
     }
     

@@ -41,7 +41,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
@@ -89,7 +89,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new ShelXFormat();
     }
     

@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class PMPFormat implements ChemFormatMatcher {
+public class PMPFormat implements IChemFormatMatcher {
 
     public PMPFormat() {}
     

@@ -25,7 +25,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -53,7 +53,7 @@ public class EccentricConnectivityIndexDescriptorTest extends CDKTestCase {
     public void testEccentricConnectivityIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        ChemObjectReader reader = new ReaderFactory().createReader(ins);
+        IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = c[0];

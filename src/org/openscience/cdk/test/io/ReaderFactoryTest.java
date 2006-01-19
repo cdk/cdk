@@ -38,13 +38,13 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
 import org.openscience.cdk.io.formats.Aces2Format;
 import org.openscience.cdk.io.formats.CMLFormat;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.Gaussian92Format;
 import org.openscience.cdk.io.formats.Gaussian94Format;
@@ -155,12 +155,12 @@ public class ReaderFactoryTest extends CDKTestCase {
         expectReader("data/pdb/coffeine.pdb", new PDBFormat());
     }
     
-    private void expectFormat(String filename, ChemFormat expectedFormat) {
+    private void expectFormat(String filename, IChemFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             fail("Cannot find file: " + filename);
         }
-        ChemFormat format = null;
+        IChemFormat format = null;
         try {
             format = factory.guessFormat(ins);
         } catch (Exception exception) {
@@ -171,18 +171,18 @@ public class ReaderFactoryTest extends CDKTestCase {
         assertNotNull(format);
         assertEquals(expectedFormat.getFormatName(), format.getFormatName());
     }
-    private void expectReader(String filename, ChemFormat expectedFormat) {
+    private void expectReader(String filename, IChemFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             fail("Cannot find file: " + filename);
         }
         try {
-            ChemFormat format = factory.guessFormat(ins);
+            IChemFormat format = factory.guessFormat(ins);
             assertNotNull(format);
             assertEquals(expectedFormat.getFormatName(), format.getFormatName());
             // ok, if format ok, try instantiating a reader
             ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            ChemObjectReader reader = factory.createReader(ins);
+            IChemObjectReader reader = factory.createReader(ins);
             assertNotNull(reader);
             // now try reading something from it
             ChemObject[] objects = { 

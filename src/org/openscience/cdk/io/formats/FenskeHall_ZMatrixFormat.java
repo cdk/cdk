@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class FenskeHall_ZMatrixFormat implements ChemFormatMatcher {
+public class FenskeHall_ZMatrixFormat implements IChemFormatMatcher {
 
     public FenskeHall_ZMatrixFormat() {}
     

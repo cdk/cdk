@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -99,7 +99,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
         this(new InputStreamReader(input));
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new Gaussian98Format();
     }
 

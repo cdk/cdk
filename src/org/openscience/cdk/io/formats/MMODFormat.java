@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class MMODFormat implements ChemFormatMatcher {
+public class MMODFormat implements IChemFormatMatcher {
 
     public MMODFormat() {}
     

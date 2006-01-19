@@ -52,7 +52,7 @@ import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
@@ -106,7 +106,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		this(new StringReader(""));
 	}
 	
-	public ChemFormat getFormat() {
+	public IChemFormat getFormat() {
 		return new PDBFormat();
 	}
 	

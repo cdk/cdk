@@ -31,8 +31,8 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.io.formats.ChemFormat;
-import org.openscience.cdk.io.listener.ChemObjectIOListener;
+import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
 /**
@@ -49,12 +49,12 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public interface ChemObjectIO {
+public interface IChemObjectIO {
 
     /**
      * Returns the ChemFormat class for this IO class.
      */
-    public ChemFormat getFormat();
+    public IChemFormat getFormat();
 
     /**
      * Returns whether the given IChemObject can be read or not.
@@ -83,14 +83,14 @@ public interface ChemObjectIO {
      *
      * @param listener the reader listener to add.
      */
-    public void addChemObjectIOListener(ChemObjectIOListener listener);
+    public void addChemObjectIOListener(IChemObjectIOListener listener);
 
     /**
      * Removes a ChemObjectIOListener from this ChemObjectReader.
      *
      * @param listener the reader listener to remove.
      */
-    public void removeChemObjectIOListener(ChemObjectIOListener listener);
+    public void removeChemObjectIOListener(IChemObjectIOListener listener);
     
 }
 

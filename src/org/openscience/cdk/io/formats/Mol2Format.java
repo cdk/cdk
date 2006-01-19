@@ -29,7 +29,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class Mol2Format implements ChemFormatMatcher {
+public class Mol2Format implements IChemFormatMatcher {
 
     public Mol2Format() {}
     

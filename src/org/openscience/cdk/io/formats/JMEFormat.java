@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class JMEFormat implements ChemFormatMatcher {
+public class JMEFormat implements IChemFormatMatcher {
 
     public JMEFormat() {}
     

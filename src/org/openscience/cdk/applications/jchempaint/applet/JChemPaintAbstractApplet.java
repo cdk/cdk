@@ -43,7 +43,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
@@ -191,7 +191,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		if (fileURL != null) {
 			try {
 				InputStreamReader isReader = new InputStreamReader(fileURL.openStream());
-				ChemObjectReader reader = new ReaderFactory().createReader(isReader);
+				IChemObjectReader reader = new ReaderFactory().createReader(isReader);
 				ChemModel chemModel = (ChemModel) reader.read(new ChemModel());
         int count=0;
         for(int i=0;i<chemModel.getSetOfMolecules().getMolecules().length;i++){

@@ -29,7 +29,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class AlchemyFormat implements ChemFormatMatcher {
+public class AlchemyFormat implements IChemFormatMatcher {
 
     public AlchemyFormat() {}
     

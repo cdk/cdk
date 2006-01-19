@@ -30,7 +30,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -70,7 +70,7 @@ public class FingerPrinter {
             try {
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
-                    ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
+                    IChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
                     if (reader.accepts(Molecule.class)) {
                         ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
                         org.openscience.cdk.interfaces.IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(content);

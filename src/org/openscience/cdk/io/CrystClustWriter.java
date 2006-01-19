@@ -37,7 +37,7 @@ import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -80,7 +80,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new CrystClustFormat();
     }
     

@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class PCModelFormat implements ChemFormatMatcher {
+public class PCModelFormat implements IChemFormatMatcher {
 
     public PCModelFormat() {}
     

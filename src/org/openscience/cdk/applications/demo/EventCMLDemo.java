@@ -36,7 +36,7 @@ import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.iterator.event.EventCMLReader;
-import org.openscience.cdk.io.listener.ReaderListener;
+import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -71,7 +71,7 @@ public class EventCMLDemo {
         try {
             File file = new File(ifilename);
             if (file.isFile()) {
-                ReaderListener listener = new CMLMolReadListener();
+                IReaderListener listener = new CMLMolReadListener();
                 cor = new EventCMLReader(
                     new FileReader(file), listener
                 );
@@ -152,7 +152,7 @@ public class EventCMLDemo {
         return filesToConvert;
     }
 
-    class CMLMolReadListener implements ReaderListener {
+    class CMLMolReadListener implements IReaderListener {
         
         final int LIMIT = 50;
         

@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class MDLRXNFormat implements ChemFormatMatcher {
+public class MDLRXNFormat implements IChemFormatMatcher {
 
     public MDLRXNFormat() {}
     

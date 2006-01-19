@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class YasaraFormat implements ChemFormatMatcher {
+public class YasaraFormat implements IChemFormatMatcher {
 
     public YasaraFormat() {}
     

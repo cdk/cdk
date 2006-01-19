@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class ABINITFormat implements ChemFormatMatcher {
+public class ABINITFormat implements IChemFormatMatcher {
 
     public ABINITFormat() {}
     

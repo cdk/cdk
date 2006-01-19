@@ -34,7 +34,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @author Egon Willighagen
  */
-public interface ChemObjectIOListener extends EventListener {
+public interface IChemObjectIOListener extends EventListener {
 
   /**
    * Prompted when the IO filter needs information to process the

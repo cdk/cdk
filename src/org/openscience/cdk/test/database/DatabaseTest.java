@@ -41,7 +41,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.database.DBReader;
 import org.openscience.cdk.database.DBWriter;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
@@ -201,7 +201,7 @@ public class DatabaseTest {
           drt.read();
         } else if (writemode) {
           System.out.println("Storing molecules in database...");
-          ChemObjectReader reader;
+          IChemObjectReader reader;
           Enumeration filestoread = files.elements();
           while (filestoread.hasMoreElements()) {
             String inFile = (String)filestoread.nextElement();

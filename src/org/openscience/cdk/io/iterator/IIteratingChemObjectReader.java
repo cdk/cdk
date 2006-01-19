@@ -3,7 +3,7 @@
  * $Date$  
  * $Revision$
  *
- * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2005  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,31 +24,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-package org.openscience.cdk.io.formats;
+package org.openscience.cdk.io.iterator;
+
+import java.util.Iterator;
+
+import org.openscience.cdk.io.IChemObjectIO;
 
 /**
- * This interface is used for classes that are able to match a certain 
- * chemical file format. For example: Chemical Markup Language, PDB etc.
+ * Interface for an iterating molecule reader. It allows to iterate over all molecules
+ * in specific file format (e.g. SDF), without reading them into memory first. Suitable
+ * for very large files, with thousands of molecules.
  *
  * @cdk.module io
  *
- * @author      Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.created 2004-10-25
- **/
-public interface ChemFormatMatcher extends ChemFormat {
-
-    /**
-     * Method that checks wether the given line is part of the format
-     * read by this reader.
-     *
-     * @param lineNumber  number of the line
-     * @param line        line in the file being checked
-     *
-     * @return true if the line is of a file format read by this reader
-     */
-    public boolean matches(int lineNumber, String line);
+ * @see org.openscience.cdk.io.IChemObjectIO
+ *
+ * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.created 2003-10-19
+ */
+public interface IIteratingChemObjectReader extends IChemObjectIO, Iterator {
 
 }
 

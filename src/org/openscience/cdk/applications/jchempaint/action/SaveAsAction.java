@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
-import org.openscience.cdk.io.ChemObjectWriter;
+import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.SMILESWriter;
 import org.openscience.cdk.io.SVGWriter;
@@ -71,7 +71,7 @@ public class SaveAsAction extends JCPAction
 	/**
 	 *  Description of the Field
 	 */
-	protected ChemObjectWriter cow;
+	protected IChemObjectWriter cow;
   protected static String type = null;
 	private FileFilter currentFilter = null;
 
@@ -277,9 +277,9 @@ public class SaveAsAction extends JCPAction
         Class cmlWriterClass = this.getClass().getClassLoader().
         	loadClass("org.opscience.cdk.io.CMLWriter");
         if (cmlWriterClass != null) {
-        	cow = (ChemObjectWriter)cmlWriterClass.newInstance();
+        	cow = (IChemObjectWriter)cmlWriterClass.newInstance();
         	Constructor constructor = cow.getClass().getConstructor(new Class[]{Writer.class});
-        	cow = (ChemObjectWriter)constructor.newInstance(new Object[]{sw});
+        	cow = (IChemObjectWriter)constructor.newInstance(new Object[]{sw});
         } else {
         	// provide a fail save for JChemPaint builds for Java 1.4
         	cow = new MDLWriter(sw);

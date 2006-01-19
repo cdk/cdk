@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class ShelXFormat implements ChemFormatMatcher {
+public class ShelXFormat implements IChemFormatMatcher {
 
     public ShelXFormat() {}
     

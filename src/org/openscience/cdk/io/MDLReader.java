@@ -44,7 +44,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -97,7 +97,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		this(new InputStreamReader(in));
 	}
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MDLFormat();
     }
 

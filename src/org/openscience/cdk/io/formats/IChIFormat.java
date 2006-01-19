@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class IChIFormat implements ChemFormatMatcher {
+public class IChIFormat implements IChemFormatMatcher {
 
     public IChIFormat() {}
     

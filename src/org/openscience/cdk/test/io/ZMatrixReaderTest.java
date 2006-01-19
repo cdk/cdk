@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.graph.rebond.RebondTool;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ZMatrixReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -64,7 +64,7 @@ public class ZMatrixReaderTest extends CDKTestCase {
     // Do we have a ZMatrix test file??
     public void xtestFile() {
         try {        
-            ChemObjectReader reader;
+            IChemObjectReader reader;
             System.out.println("Loading: " + inFile);
             reader = new ZMatrixReader(new FileReader(inFile));
             System.out.println("Expecting ZMatrix format...");

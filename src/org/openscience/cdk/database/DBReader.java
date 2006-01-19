@@ -41,7 +41,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 
 /**
  * Reader that can read from a relational database that can be
@@ -61,8 +61,8 @@ public class DBReader {
 		this.con = con;
 	}
 
-    public ChemFormat getFormat() {
-        return new ChemFormat() {
+    public IChemFormat getFormat() {
+        return new IChemFormat() {
             public String getFormatName() {
                 return "JDBC database";
             }

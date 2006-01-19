@@ -60,9 +60,9 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
-import org.openscience.cdk.io.ChemObjectIO;
-import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.io.ChemObjectWriter;
+import org.openscience.cdk.io.IChemObjectIO;
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.HINWriter;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.PDBWriter;
@@ -108,9 +108,9 @@ public class FileConvertor {
     private LoggingTool logger;
 
     private IChemObjectBuilder builder;
-    private ChemObjectReader cor;
+    private IChemObjectReader cor;
     private String oformat;
-    private ChemObjectWriter cow;
+    private IChemObjectWriter cow;
 
     private TextGUIListener settingListener;
     private PropertiesListener propsListener;
@@ -275,9 +275,9 @@ public class FileConvertor {
 
     // PRIVATE INTERNAL STUFF
 
-    private ChemObjectReader getChemObjectReader(File file) throws IOException {
+    private IChemObjectReader getChemObjectReader(File file) throws IOException {
         Reader fileReader = new FileReader(file);
-        ChemObjectReader reader = new ReaderFactory().createReader(fileReader);
+        IChemObjectReader reader = new ReaderFactory().createReader(fileReader);
         if (reader != null) {
             if (settingListener != null) {
                 reader.addChemObjectIOListener(settingListener);
@@ -289,8 +289,8 @@ public class FileConvertor {
         return reader;
     }
 
-    private ChemObjectWriter getChemObjectWriter(String format, Writer fileWriter) {
-        ChemObjectWriter writer = null;
+    private IChemObjectWriter getChemObjectWriter(String format, Writer fileWriter) {
+        IChemObjectWriter writer = null;
         try {
             if (format.equalsIgnoreCase("MOL")) {
                 writer = new MDLWriter(fileWriter);
@@ -322,10 +322,10 @@ public class FileConvertor {
             } else if (format.equalsIgnoreCase("CML")) {
             	Class cmlWriterClass = this.getClass().getClassLoader().loadClass("org.opscience.cdk.io.CMLWriter");
             	if (cmlWriterClass != null) {
-                    writer = (ChemObjectWriter)cmlWriterClass.newInstance();
+                    writer = (IChemObjectWriter)cmlWriterClass.newInstance();
             	}
             	Constructor constructor = writer.getClass().getConstructor(new Class[]{Writer.class});
-            	writer = (ChemObjectWriter)constructor.newInstance(new Object[]{fileWriter});
+            	writer = (IChemObjectWriter)constructor.newInstance(new Object[]{fileWriter});
             } else {
                 logger.debug(format + " -> null");
             }
@@ -517,8 +517,8 @@ public class FileConvertor {
             Object readerOrWriter = this.getClass().getClassLoader().
                 loadClass(className).newInstance();
             IOSetting[] settings = new IOSetting[0];
-            if (readerOrWriter instanceof ChemObjectIO) {
-                ChemObjectIO ioClass = (ChemObjectIO)readerOrWriter;
+            if (readerOrWriter instanceof IChemObjectIO) {
+                IChemObjectIO ioClass = (IChemObjectIO)readerOrWriter;
                 settings = ioClass.getIOSettings();
             } else {
                 String message = "This class is not a CDK ChemObjectIO class";

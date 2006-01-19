@@ -49,7 +49,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class PropertiesListener implements ReaderListener, WriterListener {
+public class PropertiesListener implements IReaderListener, IWriterListener {
 
     private Properties props;
     private PrintWriter out;

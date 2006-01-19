@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class Chem3D_Cartesian_2Format implements ChemFormatMatcher {
+public class Chem3D_Cartesian_2Format implements IChemFormatMatcher {
 
     public Chem3D_Cartesian_2Format() {}
     

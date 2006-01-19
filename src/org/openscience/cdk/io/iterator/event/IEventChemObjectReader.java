@@ -28,7 +28,7 @@
 package org.openscience.cdk.io.iterator.event;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.io.ChemObjectIO;
+import org.openscience.cdk.io.IChemObjectIO;
 
 /**
  * Interface for an iterating molecule reader. It allows to iterate over all molecules
@@ -37,12 +37,12 @@ import org.openscience.cdk.io.ChemObjectIO;
  *
  * @cdk.module io
  *
- * @see org.openscience.cdk.io.ChemObjectIO
+ * @see org.openscience.cdk.io.IChemObjectIO
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2005-01-25
  */
-public interface EventChemObjectReader extends ChemObjectIO {
+public interface IEventChemObjectReader extends IChemObjectIO {
     
     public AtomContainer getAtomContainer();
 

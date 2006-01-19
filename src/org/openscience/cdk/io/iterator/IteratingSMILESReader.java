@@ -35,7 +35,7 @@ import java.io.Reader;
 import java.util.NoSuchElementException;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
@@ -91,7 +91,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         this(new InputStreamReader(in));
     }
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new SMILESFormat();
     }
 

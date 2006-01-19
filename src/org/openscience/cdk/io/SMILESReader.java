@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
@@ -89,7 +89,7 @@ public class SMILESReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new SMILESFormat();
     }
     

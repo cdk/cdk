@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class SpartanFormat implements ChemFormatMatcher {
+public class SpartanFormat implements IChemFormatMatcher {
 
     public SpartanFormat() {}
     

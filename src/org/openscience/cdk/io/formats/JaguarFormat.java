@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class JaguarFormat implements ChemFormatMatcher {
+public class JaguarFormat implements IChemFormatMatcher {
 
     public JaguarFormat() {}
 

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class MOPAC7Format implements ChemFormatMatcher {
+public class MOPAC7Format implements IChemFormatMatcher {
 
     public MOPAC7Format() {}
 

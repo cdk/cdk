@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -129,7 +129,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MDLFormat();
     }
     

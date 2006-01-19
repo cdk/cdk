@@ -46,7 +46,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * @cdk.created 2003-07-18
  * @cdk.require swing
  */
-public class SwingGUIListener implements ReaderListener, WriterListener {
+public class SwingGUIListener implements IReaderListener, IWriterListener {
 
     private Component frame = null;
     private int level = 0;

@@ -23,14 +23,25 @@
  */
 package org.openscience.cdk.io.listener;
 
+import org.openscience.cdk.io.ReaderEvent;
 
 /**
- * Allows monitoring of progress of writing activities.
+ * Allows monitoring of progress of file reader activities.
  *
  * @cdk.module io
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Bradley A. Smith <bradley@baysmith.com>
  */
-public interface WriterListener extends ChemObjectIOListener {
+public interface IReaderListener extends IChemObjectIOListener {
+
+  /**
+   * Indicates that a new frame has been read.
+   *
+   * @param event information about the event.
+   */
+  public void frameRead(ReaderEvent event);
   
 }
+
+
+

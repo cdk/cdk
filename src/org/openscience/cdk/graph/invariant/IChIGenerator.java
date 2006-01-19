@@ -38,7 +38,7 @@ import java.util.Random;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.ChemObjectWriter;
+import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -76,7 +76,7 @@ public class IChIGenerator {
         String IChIString = "";
         //Save the molecule into mol file
         logger.debug("Creating IChI in cdk");
-        ChemObjectWriter cow;
+        IChemObjectWriter cow;
         FileOutputStream fos;
         // FIX: Use some TMPDIR instead of user home dir
         File curdir = new File(System.getProperty("user.dir"));

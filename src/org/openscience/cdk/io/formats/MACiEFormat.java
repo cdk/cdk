@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class MACiEFormat implements ChemFormatMatcher {
+public class MACiEFormat implements IChemFormatMatcher {
 
     public MACiEFormat() {}
     

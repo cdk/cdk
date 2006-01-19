@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class Aces2Format implements ChemFormatMatcher {
+public class Aces2Format implements IChemFormatMatcher {
 
     public Aces2Format() {}
 

@@ -49,7 +49,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 
 /**
@@ -88,8 +88,8 @@ public class WWMMatrixReader {
         this.server = server;
     }
 
-    public ChemFormat getFormat() {
-        return new ChemFormat() {
+    public IChemFormat getFormat() {
+        return new IChemFormat() {
             public String getFormatName() {
                 return "World Wide Molecular Matrix";
             }

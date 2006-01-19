@@ -29,7 +29,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class PDBFormat implements ChemFormatMatcher {
+public class PDBFormat implements IChemFormatMatcher {
 
     public PDBFormat() {}
     

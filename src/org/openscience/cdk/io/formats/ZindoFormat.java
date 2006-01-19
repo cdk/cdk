@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class ZindoFormat implements ChemFormatMatcher {
+public class ZindoFormat implements IChemFormatMatcher {
 
     public ZindoFormat() {}
     

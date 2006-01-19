@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class ADFFormat implements ChemFormatMatcher {
+public class ADFFormat implements IChemFormatMatcher {
 
     public ADFFormat() {}
 

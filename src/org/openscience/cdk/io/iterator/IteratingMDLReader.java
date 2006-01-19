@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -90,7 +90,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         this(new InputStreamReader(in));
     }
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MDLFormat();
     }
 

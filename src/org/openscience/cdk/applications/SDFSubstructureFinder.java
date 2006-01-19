@@ -28,7 +28,7 @@ import java.io.FileReader;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -70,7 +70,7 @@ public class SDFSubstructureFinder {
        try {
 	    File input = new File(ifilename);
 	    if (!input.isDirectory()) {
-		ChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
+		IChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
 		if (reader.accepts(Molecule.class)) {
 		   substructure = (Molecule)reader.read(new Molecule());
 		}

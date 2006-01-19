@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class TinkerMM2Format implements ChemFormatMatcher {
+public class TinkerMM2Format implements IChemFormatMatcher {
 
     public TinkerMM2Format() {}
     

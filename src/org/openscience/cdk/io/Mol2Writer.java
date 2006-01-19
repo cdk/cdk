@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -73,7 +73,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(output));
     }
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new Mol2Format();
     }
     

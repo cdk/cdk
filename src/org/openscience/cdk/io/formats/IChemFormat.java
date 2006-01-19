@@ -1,12 +1,12 @@
-/* $RCSfile$ 
- * $Author$ 
- * $Date$
+/* $RCSfile$
+ * $Author$
+ * $Date$  
  * $Revision$
- * 
+ *
  * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -15,57 +15,45 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
-package org.openscience.cdk.io;
-
-import java.io.OutputStream;
-import java.io.Writer;
-
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IChemObject;
+ */
+package org.openscience.cdk.io.formats;
 
 /**
- * This class is the interface that all IO writers should implement.
- * Programs need only care about this interface for any kind of IO.
- *
- * <p>Currently, database IO and file IO is supported. Internet IO is
- * expected.
+ * This class is the interface that all ChemFormatMatcher's should implement.
  *
  * @cdk.module io
  *
- * @version  $Date$
- */
-public interface ChemObjectWriter extends ChemObjectIO {
+ * @author      Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.created 2004-10-25
+ **/
+public interface IChemFormat {
 
     /**
-     * Writes the content of "object" to output
-     *
-     * @param  object    the object of which the content is outputed
-     *
-     * @exception CDKException is thrown if the output
-     *            does not support the data in the object
+     * Returns a one-lined format name of the format.
      */
-    public void write(IChemObject object) throws CDKException;
+    public String getFormatName();
+
+    /**
+     * Returns the class name of the CDK Reader for this format.
+     *
+     * @return null if no CDK Reader is available.
+     */
+    public String getReaderClassName();
     
     /**
-     * Sets the Writer from which this ChemObjectWriter should write
-     * the contents.
+     * Returns the class name of the CDK Writer for this format.
+     *
+     * @return null if no CDK Writer is available.
      */
-    public void setWriter(Writer writer) throws CDKException;
-
-    /**
-     * Sets the OutputStream from which this ChemObjectWriter should write
-     * the contents.
-     */
-    public void setWriter(OutputStream writer) throws CDKException;
-
+    public String getWriterClassName();
 }
+

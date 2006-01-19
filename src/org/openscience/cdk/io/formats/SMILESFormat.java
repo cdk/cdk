@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class SMILESFormat implements ChemFormatMatcher {
+public class SMILESFormat implements IChemFormatMatcher {
 
     public SMILESFormat() {}
     

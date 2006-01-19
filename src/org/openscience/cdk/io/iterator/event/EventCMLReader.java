@@ -37,8 +37,8 @@ import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.formats.CMLFormat;
-import org.openscience.cdk.io.formats.ChemFormat;
-import org.openscience.cdk.io.listener.ReaderListener;
+import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -74,14 +74,14 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
      * @param input    Reader type input
      * @param listener ReaderListener that listens to newMolecule events. 
      */
-    public EventCMLReader(Reader input, ReaderListener listener) {
+    public EventCMLReader(Reader input, IReaderListener listener) {
         this.init();
         this.input = input;
         this.cdo = new EventChemFileCDO(this);
         this.addChemObjectIOListener(listener);
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new CMLFormat();
     }
 

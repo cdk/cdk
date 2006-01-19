@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class DOCK5Format implements ChemFormatMatcher {
+public class DOCK5Format implements IChemFormatMatcher {
 
     public DOCK5Format() {}
     

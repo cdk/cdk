@@ -29,7 +29,7 @@ import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -71,7 +71,7 @@ public class File2Text {
                 ReaderFactory factory = new ReaderFactory();
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
-                    ChemObjectReader reader = factory.createReader(new FileReader(input));
+                    IChemObjectReader reader = factory.createReader(new FileReader(input));
                     if (reader != null) {
                     	System.out.println("=== " + ifilename + " ===");
                         System.out.print(toText(reader));
@@ -89,7 +89,7 @@ public class File2Text {
         }
     }
     
-    public static String toText(ChemObjectReader reader) throws Exception {
+    public static String toText(IChemObjectReader reader) throws Exception {
     	StringBuffer buffer = new StringBuffer();
     	ChemFile file = (ChemFile)reader.read(new ChemFile());
     	Iterator iter = ChemFileManipulator.getAllChemObjects(file).iterator();

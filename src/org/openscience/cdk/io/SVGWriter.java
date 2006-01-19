@@ -44,7 +44,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.SVGFormat;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.tools.LoggingTool;
@@ -101,7 +101,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new SVGFormat();
     }
     

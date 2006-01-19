@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class POVRayFormat implements ChemFormatMatcher {
+public class POVRayFormat implements IChemFormatMatcher {
 
     public POVRayFormat() {}
     

@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.chemrss.RSSHandler;
 import org.openscience.cdk.io.formats.CMLRSSFormat;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -108,7 +108,7 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new CMLRSSFormat();
     }
     

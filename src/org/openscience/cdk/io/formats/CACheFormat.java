@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class CACheFormat implements ChemFormatMatcher {
+public class CACheFormat implements IChemFormatMatcher {
 
     public CACheFormat() {}
 

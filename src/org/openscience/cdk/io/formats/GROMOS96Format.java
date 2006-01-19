@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class GROMOS96Format implements ChemFormatMatcher {
+public class GROMOS96Format implements IChemFormatMatcher {
 
     public GROMOS96Format() {}
     

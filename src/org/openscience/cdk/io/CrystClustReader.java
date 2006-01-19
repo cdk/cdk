@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.math.FortranFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -70,7 +70,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new CrystClustFormat();
     }
     

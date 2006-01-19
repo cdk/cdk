@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLRXNFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -83,7 +83,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MDLRXNFormat();
     }
 

@@ -26,7 +26,7 @@ package org.openscience.cdk.io;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.io.listener.ChemObjectIOListener;
+import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
 /**
@@ -35,18 +35,18 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @cdk.module io
  */
-public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
+public abstract class DefaultChemObjectWriter implements IChemObjectWriter {
 
     /**
      * Holder of reader event listeners.
      */
     private Vector listenerList = new Vector();
 
-    public void addChemObjectIOListener(ChemObjectIOListener listener) {
+    public void addChemObjectIOListener(IChemObjectIOListener listener) {
         listenerList.addElement(listener);
     }
 
-    public void removeChemObjectIOListener(ChemObjectIOListener listener) {
+    public void removeChemObjectIOListener(IChemObjectIOListener listener) {
         listenerList.removeElement(listener);
     }
 
@@ -63,7 +63,7 @@ public abstract class DefaultChemObjectWriter implements ChemObjectWriter {
     
     protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            ChemObjectIOListener listener = (ChemObjectIOListener) listenerList.elementAt(i);
+            IChemObjectIOListener listener = (IChemObjectIOListener) listenerList.elementAt(i);
             listener.processIOSettingQuestion(setting);
         }
     }

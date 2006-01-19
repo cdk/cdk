@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 
 /**
@@ -148,7 +148,7 @@ public class ProteinPocketFinder {
 		try {
 			// Read PDB file
 			FileReader fileReader = new FileReader(biopolymerFile);
-			ChemObjectReader reader = new ReaderFactory()
+			IChemObjectReader reader = new ReaderFactory()
 					.createReader(fileReader);
 			IChemFile chemFile = (IChemFile) reader
 					.read((IChemObject) new org.openscience.cdk.ChemFile());

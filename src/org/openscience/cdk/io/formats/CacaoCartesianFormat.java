@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class CacaoCartesianFormat implements ChemFormatMatcher {
+public class CacaoCartesianFormat implements IChemFormatMatcher {
 
     public CacaoCartesianFormat() {}
     

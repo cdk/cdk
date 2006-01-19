@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class XYZFormat implements ChemFormatMatcher {
+public class XYZFormat implements IChemFormatMatcher {
 
     public XYZFormat() {}
     

@@ -37,7 +37,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -73,8 +73,8 @@ public class XindiceReader {
         this.collection = collection;
     }
 
-    public ChemFormat getFormat() {
-        return new ChemFormat() {
+    public IChemFormat getFormat() {
+        return new IChemFormat() {
             public String getFormatName() {
                 return "Xindice database";
             }

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class DaltonFormat implements ChemFormatMatcher {
+public class DaltonFormat implements IChemFormatMatcher {
 
     public DaltonFormat() {}
 

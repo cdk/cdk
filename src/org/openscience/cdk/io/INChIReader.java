@@ -37,7 +37,7 @@ import java.io.StringReader;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.inchi.INChIHandler;
 import org.openscience.cdk.tools.LoggingTool;
@@ -89,7 +89,7 @@ public class INChIReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new INChIFormat();
     }
     

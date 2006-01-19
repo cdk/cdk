@@ -46,8 +46,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.io.ChemObjectReader;
-import org.openscience.cdk.io.ChemObjectWriter;
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
@@ -92,7 +92,7 @@ public class CopyPasteAction extends JCPAction{
 	        } else if ("paste".equals(type)) {
 	        	Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
 	        	Transferable transfer = sysClip.getContents( null );
-	        	ChemObjectReader reader = null;
+	        	IChemObjectReader reader = null;
 	        	// if a MIME type is given ...
 	        	if (transfer!=null && (transfer.isDataFlavorSupported (molFlavor))) {
 	        		String mol = (String) transfer.getTransferData (molFlavor);
@@ -192,7 +192,7 @@ public class CopyPasteAction extends JCPAction{
     	  smiles = sg.createSMILES(tocopy);
     	  // SVG output
     	  sw=new StringWriter();
-    	  ChemObjectWriter cow = new SVGWriter(sw);
+    	  IChemObjectWriter cow = new SVGWriter(sw);
     	  cow.write(tocopy);
     	  cow.close();
     	  svg=sw.toString();
@@ -206,9 +206,9 @@ public class CopyPasteAction extends JCPAction{
     		  logger.debug(exception);
     	  }
     	  if (cmlWriterClass != null) {
-    		  cow = (ChemObjectWriter)cmlWriterClass.newInstance();
+    		  cow = (IChemObjectWriter)cmlWriterClass.newInstance();
     		  Constructor constructor = cow.getClass().getConstructor(new Class[]{Writer.class});
-    		  cow = (ChemObjectWriter)constructor.newInstance(new Object[]{sw});
+    		  cow = (IChemObjectWriter)constructor.newInstance(new Object[]{sw});
     		  cow.write(tocopy);
     		  cow.close();
     	  }

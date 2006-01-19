@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class CRK2DFormat implements ChemFormatMatcher {
+public class CRK2DFormat implements IChemFormatMatcher {
 
     public CRK2DFormat() {}
     

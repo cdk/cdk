@@ -35,8 +35,8 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
-import org.openscience.cdk.io.formats.ChemFormat;
-import org.openscience.cdk.io.formats.ChemFormatMatcher;
+import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -87,7 +87,7 @@ public class ReaderFactory {
     /**
      * Registers a format for detection.
      */
-    public void registerFormat(ChemFormatMatcher format) {
+    public void registerFormat(IChemFormatMatcher format) {
         formats.addElement(format);
     }
     
@@ -109,7 +109,7 @@ public class ReaderFactory {
                     String formatName = reader.readLine();
                     formatCount++;
                     try {
-                        ChemFormatMatcher format = (ChemFormatMatcher)this.getClass().getClassLoader().
+                        IChemFormatMatcher format = (IChemFormatMatcher)this.getClass().getClassLoader().
                             loadClass(formatName).newInstance();
                         formats.addElement(format);
                         logger.info("Loaded IO format: " + format.getClass().getName());
@@ -146,7 +146,7 @@ public class ReaderFactory {
      *
      * @see #guessFormat(InputStream)
      */
-    public ChemFormat guessFormat(BufferedReader input) throws IOException {
+    public IChemFormat guessFormat(BufferedReader input) throws IOException {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");
         }
@@ -169,7 +169,7 @@ public class ReaderFactory {
         while ((line = buffer.readLine()) != null) {
             logger.debug(lineNumber + ": ", line);
             for (int i=0; i<formats.size(); i++) {
-                ChemFormatMatcher cfMatcher = (ChemFormatMatcher)formats.elementAt(i);
+                IChemFormatMatcher cfMatcher = (IChemFormatMatcher)formats.elementAt(i);
                 if (cfMatcher.matches(lineNumber, line)) {
                     logger.info("Detected format: ", cfMatcher.getFormatName());
                     return cfMatcher;
@@ -204,7 +204,7 @@ public class ReaderFactory {
         return null;
     }
     
-    public ChemFormat guessFormat(InputStream input) throws IOException {
+    public IChemFormat guessFormat(InputStream input) throws IOException {
         BufferedInputStream bistream = new BufferedInputStream(input, 8192);
         InputStream istreamToRead = bistream; // if gzip test fails, then take default
         bistream.mark(5);
@@ -234,7 +234,7 @@ public class ReaderFactory {
      *
      * @see #createReader(Reader)
      */
-    public ChemObjectReader createReader(InputStream input) throws IOException {
+    public IChemObjectReader createReader(InputStream input) throws IOException {
         BufferedInputStream bistream = new BufferedInputStream(input, 8192);
         InputStream istreamToRead = bistream; // if gzip test fails, then take default
         bistream.mark(5);
@@ -263,17 +263,17 @@ public class ReaderFactory {
      *
      * @see #createReader(InputStream)
      */
-    public ChemObjectReader createReader(Reader input) throws IOException {
+    public IChemObjectReader createReader(Reader input) throws IOException {
         if (!(input instanceof BufferedReader)) {
             input = new BufferedReader(input);
         }
-        ChemFormat chemFormat = guessFormat((BufferedReader)input);
+        IChemFormat chemFormat = guessFormat((BufferedReader)input);
         if (chemFormat != null) {
             String readerClassName = chemFormat.getReaderClassName();
             if (readerClassName != null) {
                 try {
                     // make a new instance of this class
-                    ChemObjectReader coReader = (ChemObjectReader)this.getClass().getClassLoader().
+                    IChemObjectReader coReader = (IChemObjectReader)this.getClass().getClassLoader().
                         loadClass(readerClassName).newInstance();
                     coReader.setReader(input);
                     return coReader;

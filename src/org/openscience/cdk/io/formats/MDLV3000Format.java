@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class MDLV3000Format implements ChemFormatMatcher {
+public class MDLV3000Format implements IChemFormatMatcher {
 
     public MDLV3000Format() {}
     

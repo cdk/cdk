@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class MPQCFormat implements ChemFormatMatcher {
+public class MPQCFormat implements IChemFormatMatcher {
 
     public MPQCFormat() {}
     

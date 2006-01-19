@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class ZMatrixFormat implements ChemFormatMatcher {
+public class ZMatrixFormat implements IChemFormatMatcher {
 
     public ZMatrixFormat() {}
     

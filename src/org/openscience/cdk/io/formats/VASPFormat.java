@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class VASPFormat implements ChemFormatMatcher {
+public class VASPFormat implements IChemFormatMatcher {
 
     public VASPFormat() {}
     

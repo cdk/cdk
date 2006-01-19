@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.math.qm.ClosedShellJob;
@@ -62,7 +62,7 @@ public class GaussiansCalculationTest
 	public GaussiansCalculationTest(String inFile)
   { 
     try {
-      ChemObjectReader reader;
+      IChemObjectReader reader;
       System.out.println("Loading: " + inFile);
       if (inFile.endsWith(".xyz"))
       { 

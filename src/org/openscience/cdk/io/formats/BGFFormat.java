@@ -29,7 +29,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class BGFFormat implements ChemFormatMatcher {
+public class BGFFormat implements IChemFormatMatcher {
 
     public BGFFormat() {}
     

@@ -29,7 +29,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class GhemicalMMFormat implements ChemFormatMatcher {
+public class GhemicalMMFormat implements IChemFormatMatcher {
 
     public GhemicalMMFormat() {}
     

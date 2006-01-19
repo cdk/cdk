@@ -75,7 +75,7 @@ import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForF
 import org.openscience.cdk.applications.plugin.CDKEditBus;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.ChemObjectReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -491,7 +491,7 @@ public abstract class JChemPaintPanel
 	 *@param  file  Description of the Parameter
 	 */
 	public void showChemFile(Reader file) {
-		ChemObjectReader cor = null;
+		IChemObjectReader cor = null;
 
 		/*
 		 *  Have the ReaderFactory determine the file format
@@ -744,9 +744,9 @@ public abstract class JChemPaintPanel
 	 *@return                  The chemObjectReader value
 	 *@exception  IOException  Description of the Exception
 	 */
-	public ChemObjectReader getChemObjectReader(Reader reader) throws IOException {
+	public IChemObjectReader getChemObjectReader(Reader reader) throws IOException {
 		ReaderFactory factory = new ReaderFactory();
-		ChemObjectReader coReader = factory.createReader(reader);
+		IChemObjectReader coReader = factory.createReader(reader);
 		if (coReader != null) {
 			coReader.addChemObjectIOListener(new SwingGUIListener(this, 4));
 		}

@@ -41,7 +41,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -101,7 +101,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MDLFormat();
     }
     

@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class DMol3Format implements ChemFormatMatcher {
+public class DMol3Format implements IChemFormatMatcher {
 
     public DMol3Format() {}
     

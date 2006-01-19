@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
 
 
@@ -160,7 +160,7 @@ public class GamessReader extends DefaultChemObjectReader {
 		}
 	}
 	
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new GamessFormat();
     }
     
