@@ -40,7 +40,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.result.DescriptorResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
@@ -86,7 +86,7 @@ public class QSARCustomizer implements Customizer {
             if (key instanceof DescriptorSpecification) {
                 DescriptorSpecification specs = (DescriptorSpecification)key;
                 DescriptorValue value = (DescriptorValue)props.get(key);
-                DescriptorResult result = value.getValue();
+                IDescriptorResult result = value.getValue();
                 if (propList == null) {
                     propList = new CMLPropertyList();
                 }
@@ -146,7 +146,7 @@ public class QSARCustomizer implements Customizer {
         }
     }
 
-    private Element createScalar(DescriptorResult value) {
+    private Element createScalar(IDescriptorResult value) {
         Element scalar = null;
         if (value instanceof DoubleResult) {
             scalar = new CMLScalar();

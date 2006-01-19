@@ -29,7 +29,7 @@ package org.openscience.cdk.qsar.result;
  *
  * @cdk.module standard
  */
-public interface DescriptorResult {
+public interface IDescriptorResult {
 
 }
 

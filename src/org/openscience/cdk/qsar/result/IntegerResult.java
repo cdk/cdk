@@ -28,7 +28,7 @@ package org.openscience.cdk.qsar.result;
  *
  * @cdk.module standard
  */
-public class IntegerResult implements DescriptorResult {
+public class IntegerResult implements IDescriptorResult {
     
     private int value;
     

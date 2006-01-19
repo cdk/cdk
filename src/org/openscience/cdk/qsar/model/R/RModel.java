@@ -29,7 +29,7 @@ import java.io.StringWriter;
 
 import org.omegahat.R.Java.REvaluator;
 import org.omegahat.R.Java.ROmegahatInterpreter;
-import org.openscience.cdk.qsar.model.Model;
+import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.require r-project
  * @cdk.module qsar
  */
-public abstract class RModel implements Model {
+public abstract class RModel implements IModel {
 
     private String modelName = null;
 

@@ -32,7 +32,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor;
 import org.openscience.cdk.qsar.IDescriptor;
-import org.openscience.cdk.qsar.result.DescriptorResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -57,7 +57,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         IDescriptor descriptor = new AminoAcidCountDescriptor();
         
         BioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
-        DescriptorResult result = descriptor.calculate(protein).getValue();
+        IDescriptorResult result = descriptor.calculate(protein).getValue();
         assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult)result;
         for (int i=0; i<iaResult.size(); i++) {
@@ -70,7 +70,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         IDescriptor descriptor = new AminoAcidCountDescriptor();
         
         BioPolymer protein = ProteinBuilderTool.createProtein("FF");
-        DescriptorResult result = descriptor.calculate(protein).getValue();
+        IDescriptorResult result = descriptor.calculate(protein).getValue();
         assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult)result;
         assertEquals(2, iaResult.get(8));
@@ -81,7 +81,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         IDescriptor descriptor = new AminoAcidCountDescriptor();
         
         BioPolymer protein = ProteinBuilderTool.createProtein("TT");
-        DescriptorResult result = descriptor.calculate(protein).getValue();
+        IDescriptorResult result = descriptor.calculate(protein).getValue();
         assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult)result;
         assertEquals(2, iaResult.get(8));

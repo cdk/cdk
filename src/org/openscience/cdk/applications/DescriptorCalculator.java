@@ -146,7 +146,7 @@ public class DescriptorCalculator {
                 continue;
             }
                 
-            DescriptorResult result = value.getValue();
+            IDescriptorResult result = value.getValue();
             if (result instanceof DoubleResult) {
                 stringWriter.write(((DoubleResult)result).doubleValue()+" ");
                 if (firstTime) headerLine = headerLine + title + " ";

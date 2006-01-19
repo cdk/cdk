@@ -24,7 +24,7 @@
 package org.openscience.cdk.qsar;
 
 
-import org.openscience.cdk.qsar.result.DescriptorResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  * Class that is used to store descriptor values as IChemObject properties.
@@ -36,12 +36,12 @@ public class DescriptorValue {
     private DescriptorSpecification specification;
     private String[] parameterNames;
     private Object[] parameterSettings;
-    private DescriptorResult value;
+    private IDescriptorResult value;
     
     public DescriptorValue(DescriptorSpecification specification,
                            String[] parameterNames,
                            Object[] parameterSettings,
-                           DescriptorResult value) {
+                           IDescriptorResult value) {
         this.specification = specification;
         this.parameterNames = parameterNames;
         this.parameterSettings = parameterSettings;
@@ -60,7 +60,7 @@ public class DescriptorValue {
         return this.parameterNames;
     };
     
-    public DescriptorResult getValue() {
+    public IDescriptorResult getValue() {
         return this.value;
     }
     

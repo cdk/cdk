@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @cdk.module standard
  */
-public class IntegerArrayResult implements DescriptorResult {
+public class IntegerArrayResult implements IDescriptorResult {
     
     private List array;
     

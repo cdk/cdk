@@ -28,7 +28,7 @@ package org.openscience.cdk.qsar.result;
  *
  * @cdk.module standard
  */
-public class BooleanResult implements DescriptorResult {
+public class BooleanResult implements IDescriptorResult {
     
     private boolean value;
     
