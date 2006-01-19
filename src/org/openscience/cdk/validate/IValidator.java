@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
  * @author   Egon Willighagen
  * @cdk.created  2003-03-28
  */ 
-public interface ValidatorInterface {
+public interface IValidator {
 
     public ValidationReport validateAtom(IAtom subject);
     public ValidationReport validateAtomContainer(IAtomContainer subject);

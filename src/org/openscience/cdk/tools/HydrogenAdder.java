@@ -86,7 +86,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 public class HydrogenAdder {
 
     private LoggingTool logger;
-    private ValencyCheckerInterface valencyChecker;
+    private IValencyChecker valencyChecker;
 
     /**
      * Creates a tool to add missing hydrogens using the SaturationChecker class.
@@ -100,7 +100,7 @@ public class HydrogenAdder {
     /**
      * Creates a tool to add missing hydrogens using a ValencyCheckerInterface.
      * 
-     * @see org.openscience.cdk.tools.ValencyCheckerInterface
+     * @see org.openscience.cdk.tools.IValencyChecker
      */
     public HydrogenAdder(String valencyCheckerInterfaceClassName) {
         logger = new LoggingTool(this);
@@ -122,9 +122,9 @@ public class HydrogenAdder {
     /**
      * Creates a tool to add missing hydrogens using a ValencyCheckerInterface.
      * 
-     * @see org.openscience.cdk.tools.ValencyCheckerInterface
+     * @see org.openscience.cdk.tools.IValencyChecker
      */
-    public HydrogenAdder(ValencyCheckerInterface valencyChecker) {
+    public HydrogenAdder(IValencyChecker valencyChecker) {
         logger = new LoggingTool(this);
         this.valencyChecker = valencyChecker;
     }

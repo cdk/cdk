@@ -48,7 +48,7 @@ import org.openscience.cdk.PDBAtom;
  * @cdk.set       libio-cml-customizers
  * @cdk.require   java1.5
  */
-public class PDBAtomCustomizer implements Customizer {
+public class PDBAtomCustomizer implements ICMLCustomizer {
 
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
     	if (!(nodeToAdd instanceof Element))

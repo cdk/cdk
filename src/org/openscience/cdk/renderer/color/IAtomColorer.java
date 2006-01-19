@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module standard
  */
-public interface AtomColorer {
+public interface IAtomColorer {
 
     /**
      * Returns the color for a certain atom type.

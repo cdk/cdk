@@ -72,7 +72,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
-import org.openscience.cdk.applications.plugin.CDKEditBus;
+import org.openscience.cdk.applications.plugin.ICDKEditBus;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
@@ -91,7 +91,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public abstract class JChemPaintPanel
 		 extends JPanel
-		 implements ChangeListener, CDKEditBus {
+		 implements ChangeListener, ICDKEditBus {
 
 	//Static variables hold information if the application is embedded and keep track of instances of JCPPanel
 	boolean isEmbedded = false;

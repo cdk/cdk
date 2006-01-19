@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author   Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created  2003-08-22
  */ 
-public class ValidatorEngine implements ValidatorInterface {
+public class ValidatorEngine implements IValidator {
     
     private Hashtable validators;
     private LoggingTool logger;
@@ -67,7 +67,7 @@ public class ValidatorEngine implements ValidatorInterface {
         logger = new LoggingTool(this);
     }
     
-    public void addValidator(ValidatorInterface validator) {
+    public void addValidator(IValidator validator) {
         logger.info("Registering validator: " + validator.getClass().getName());
         String validatorName = validator.getClass().getName();
         if (validators.containsKey(validatorName)) {
@@ -77,7 +77,7 @@ public class ValidatorEngine implements ValidatorInterface {
         }
     }
     
-    public void removeValidator(ValidatorInterface validator) {
+    public void removeValidator(IValidator validator) {
         logger.info("Removing validator: " + validator.getClass().getName());
         String validatorName = validator.getClass().getName();
         if (!validators.containsKey(validatorName)) {
@@ -93,7 +93,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateAtom(subject));
         }
         // traverse into super class
@@ -107,7 +107,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateAtomContainer(subject));
         }
         // traverse into super class
@@ -129,7 +129,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateAtomType(subject));
         }
         // traverse into super class
@@ -143,7 +143,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateBond(subject));
         }
         // traverse into super class
@@ -161,7 +161,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateChemFile(subject));
         }
         // traverse into super class
@@ -179,7 +179,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateChemModel(subject));
         }
         // traverse into super class
@@ -205,7 +205,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateChemObject(subject));
         }
         // traverse into super class
@@ -218,7 +218,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateChemSequence(subject));
         }
         // traverse into super class
@@ -236,7 +236,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateCrystal(subject));
         }
         // traverse into super class
@@ -250,7 +250,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateElectronContainer(subject));
         }
         // traverse into super class
@@ -264,7 +264,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateElement(subject));
         }
         // traverse into super class
@@ -278,7 +278,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateIsotope(subject));
         }
         // traverse into super class
@@ -292,7 +292,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateMolecule(subject));
         }
         // traverse into super class
@@ -306,7 +306,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateReaction(subject));
         }
         // traverse into super class
@@ -328,7 +328,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateSetOfMolecules(subject));
         }
         // traverse into super class
@@ -346,7 +346,7 @@ public class ValidatorEngine implements ValidatorInterface {
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
-            ValidatorInterface test = (ValidatorInterface)tests.nextElement();
+            IValidator test = (IValidator)tests.nextElement();
             report.addReport(test.validateSetOfReactions(subject));
         }
         // traverse into super class

@@ -33,7 +33,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.event.CDKChangeListener;
-import org.openscience.cdk.renderer.color.AtomColorer;
+import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.color.CDKAtomColors;
 
 
@@ -45,7 +45,7 @@ import org.openscience.cdk.renderer.color.CDKAtomColors;
 public class Renderer3DModel {
 
     private Color backColor = Color.white;
-    private AtomColorer atomColorer = new CDKAtomColors();
+    private IAtomColorer atomColorer = new CDKAtomColors();
 
     private Vector listeners = new Vector();
 
@@ -115,7 +115,7 @@ public class Renderer3DModel {
      *
      * @return  The AtomColorer.
      */
-    public AtomColorer getAtomColorer()
+    public IAtomColorer getAtomColorer()
     {
         return atomColorer;
     }
@@ -125,7 +125,7 @@ public class Renderer3DModel {
      *
      * @param ac  the new colorer.
      */
-    public void setAtomColorer(final AtomColorer ac)
+    public void setAtomColorer(final IAtomColorer ac)
     {
         atomColorer = ac;
     }

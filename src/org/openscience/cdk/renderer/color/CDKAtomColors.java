@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module standard
  */
-public class CDKAtomColors implements AtomColorer {
+public class CDKAtomColors implements IAtomColorer {
 
     private final static Color HYDROGEN       = Color.white;
     private final static Color CARBON         = Color.black;

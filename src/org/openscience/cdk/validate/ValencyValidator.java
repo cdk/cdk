@@ -28,7 +28,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyChecker;
-import org.openscience.cdk.tools.ValencyCheckerInterface;
+import org.openscience.cdk.tools.IValencyChecker;
 
 /**
  * Validator which tests a the valencies of atoms using the
@@ -69,7 +69,7 @@ public class ValencyValidator extends AbstractValidator {
             "The atom has an unfulfilled valency."
         );
         try {
-            ValencyCheckerInterface saturationChecker = new ValencyChecker();
+            IValencyChecker saturationChecker = new ValencyChecker();
             if (!saturationChecker.isSaturated(atom, molecule)) {
                 checkValency.setDetails("Atom " + atom.getSymbol() + " fails");
                 report.addError(checkValency);

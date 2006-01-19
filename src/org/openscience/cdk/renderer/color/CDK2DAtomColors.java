@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module render
  */
-public class CDK2DAtomColors implements AtomColorer, java.io.Serializable {
+public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
     private final Color HYDROGEN       = Color.black;
     private final Color CARBON         = Color.black;

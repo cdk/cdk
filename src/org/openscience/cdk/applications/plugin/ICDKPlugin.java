@@ -45,11 +45,11 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  *
  * @version $Revision$
  *
- * @see org.openscience.cdk.applications.plugin.CDKEditBus
+ * @see org.openscience.cdk.applications.plugin.ICDKEditBus
  * @see org.openscience.cdk.applications.plugin.CDKPluginManager
  * @cdk.require swing
  */
-public interface CDKPluginInterface {
+public interface ICDKPlugin {
 
     /**
      * Should return the name of the plugin.
@@ -94,7 +94,7 @@ public interface CDKPluginInterface {
     /**
      * Sets the interface to the application.
      */
-    public void setEditBus(CDKEditBus editBus);
+    public void setEditBus(ICDKEditBus editBus);
 
     /**
      * Sets the directory where the plugin's preferences can be found.

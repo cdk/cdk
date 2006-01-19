@@ -62,7 +62,7 @@ import org.xmlcml.cml.element.CMLScalar;
  * @cdk.set       libio-cml-customizers
  * @cdk.require   java1.5
  */
-public class QSARCustomizer implements Customizer {
+public class QSARCustomizer implements ICMLCustomizer {
 
     private final static String QSARDICT_NAMESPACE = "qsardict";
     private final static String QSARDICT_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors";

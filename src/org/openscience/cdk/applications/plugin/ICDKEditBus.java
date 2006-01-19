@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemModel;
  *
  * @version $Revision$
  */
-public interface CDKEditBus {
+public interface ICDKEditBus {
 
     /**
      * Should return the version of the implemented CDKEditBus API.

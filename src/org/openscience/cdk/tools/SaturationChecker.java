@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.keyword    saturation
  * @cdk.keyword    atom, valency
  */
-public class SaturationChecker implements ValencyCheckerInterface {
+public class SaturationChecker implements IValencyChecker {
 
 	AtomTypeFactory structgenATF;
 

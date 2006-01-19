@@ -122,7 +122,7 @@ public class Convertor {
     				String customizerName = reader.readLine();
     				customizerCount++;
     				try {
-    					Customizer customizer = (Customizer)this.getClass().getClassLoader().
+    					ICMLCustomizer customizer = (ICMLCustomizer)this.getClass().getClassLoader().
     					loadClass(customizerName).newInstance();
     					customizers.add(customizer);
     					logger.info("Loaded Customizer: ", customizer.getClass().getName());
@@ -345,7 +345,7 @@ public class Convertor {
 
         Iterator elements = customizers.iterator();
         while (elements.hasNext()) {
-        	Customizer customizer = (Customizer)elements.next();
+        	ICMLCustomizer customizer = (ICMLCustomizer)elements.next();
         	try {
         		customizer.customize(structure, cmlMolecule);
         	} catch (Exception exception) {
@@ -432,7 +432,7 @@ public class Convertor {
 		
 		Iterator elements = customizers.iterator();
         while (elements.hasNext()) {
-            Customizer customizer = (Customizer)elements.next();
+            ICMLCustomizer customizer = (ICMLCustomizer)elements.next();
             try {
                 customizer.customize(cdkAtom, cmlAtom);
             } catch (Exception exception) {

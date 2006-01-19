@@ -61,7 +61,7 @@ public class CDKPluginManager {
     private Hashtable cdkPlugins;
     
     private String pluginConfigDirName;
-    private CDKEditBus editBus;
+    private ICDKEditBus editBus;
     
     /**
      * Instantiate a CDKPluginManager.
@@ -70,14 +70,14 @@ public class CDKPluginManager {
      * @param pluginConfigDirName directory where the plugin config files can be found
      * @param editBus             object implementing the CDKEditBus interface
      *
-     * @see   org.openscience.cdk.applications.plugin.CDKEditBus
+     * @see   org.openscience.cdk.applications.plugin.ICDKEditBus
      */
     public CDKPluginManager(String pluginDirName, String pluginConfigDirName,
-                            CDKEditBus editBus) {
+                            ICDKEditBus editBus) {
         this(pluginConfigDirName, editBus);
         loadPlugins(pluginDirName);
     }
-    public CDKPluginManager(String pluginConfigDirName, CDKEditBus editBus) {
+    public CDKPluginManager(String pluginConfigDirName, ICDKEditBus editBus) {
         this.logger = new LoggingTool(this);
         this.editBus = editBus;
         this.pluginConfigDirName = pluginConfigDirName;
@@ -91,7 +91,7 @@ public class CDKPluginManager {
         JMenu menu = new JMenu("Plugins");
         Enumeration pluginsEnum = cdkPlugins.elements();
         while (pluginsEnum.hasMoreElements()) {
-            CDKPluginInterface plugin = (CDKPluginInterface)pluginsEnum.nextElement();
+            ICDKPlugin plugin = (ICDKPlugin)pluginsEnum.nextElement();
             JMenu pluginMenu = new JMenu(plugin.getName());
             
             // add default items
@@ -156,8 +156,8 @@ public class CDKPluginManager {
         try {
             Class c = classLoader.loadClass(className);
             Object plugin = c.newInstance();
-            if (plugin instanceof CDKPluginInterface) {
-                CDKPluginInterface cdkPlugin = (CDKPluginInterface)plugin;
+            if (plugin instanceof ICDKPlugin) {
+                ICDKPlugin cdkPlugin = (ICDKPlugin)plugin;
                 if (APIVersionTester.isSmaller("1.4", cdkPlugin.getAPIVersion())) {
                     // ignore old plugins
                     logger.warn("Will not load plugins with old API: ", className);
@@ -166,7 +166,7 @@ public class CDKPluginManager {
                     boolean loadPlugin = false;
                     if (cdkPlugins.containsKey(className)) {
                         // deal with already loaded plugins
-                        CDKPluginInterface alreadyLoadedPlugin = (CDKPluginInterface)cdkPlugins.get(className);
+                        ICDKPlugin alreadyLoadedPlugin = (ICDKPlugin)cdkPlugins.get(className);
                         /* ok, here's the deal: the plugin with the latest version stays */
                         if (Double.parseDouble(alreadyLoadedPlugin.getPluginVersion()) <=
                             Double.parseDouble(cdkPlugin.getPluginVersion())) {
@@ -217,7 +217,7 @@ public class CDKPluginManager {
         Enumeration plugins = getPlugins();
         if (plugins.hasMoreElements()) {
             while (plugins.hasMoreElements()) {
-                CDKPluginInterface plugin = (CDKPluginInterface)plugins.nextElement();
+                ICDKPlugin plugin = (ICDKPlugin)plugins.nextElement();
                 plugin.stop();
             }
         }
@@ -284,7 +284,7 @@ public class CDKPluginManager {
         Enumeration plugins = getPlugins();
         if (plugins.hasMoreElements()) {
             while (plugins.hasMoreElements()) {
-                CDKPluginInterface plugin = (CDKPluginInterface)plugins.nextElement();
+                ICDKPlugin plugin = (ICDKPlugin)plugins.nextElement();
                 if (APIVersionTester.isBiggerOrEqual("1.6", plugin.getAPIVersion())) {
                     try {
                         plugin.stateChanged(sourceEvent);
@@ -307,9 +307,9 @@ public class CDKPluginManager {
      */
     class PluginDialogAction extends AbstractAction {
         
-        private CDKPluginInterface plugin;
+        private ICDKPlugin plugin;
         
-        public PluginDialogAction(CDKPluginInterface plugin) {
+        public PluginDialogAction(ICDKPlugin plugin) {
             super("PluginDialog");
             this.plugin = plugin;
         }

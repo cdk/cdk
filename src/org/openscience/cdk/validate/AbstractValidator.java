@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
  * @cdk.created  2004-03-27
  * @cdk.require java1.4+
  */ 
-public class AbstractValidator implements ValidatorInterface {
+public class AbstractValidator implements IValidator {
 
     public ValidationReport validateChemObject(IChemObject subject) {
         ValidationReport report = new ValidationReport();

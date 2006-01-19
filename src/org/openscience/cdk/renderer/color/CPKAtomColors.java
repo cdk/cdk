@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module  render
  * @cdk.keyword atom coloring, CPK
  */
-public class CPKAtomColors implements AtomColorer, java.io.Serializable
+public class CPKAtomColors implements IAtomColorer, java.io.Serializable
 {
     ////////////
     // CONSTANTS

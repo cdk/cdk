@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module standard
  * @cdk.keyword atom coloring, partial charges
  */
-public class PartialAtomicChargeColors implements AtomColorer {
+public class PartialAtomicChargeColors implements IAtomColorer {
 
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, Color.white);

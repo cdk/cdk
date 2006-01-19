@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2005  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,24 +26,41 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-package org.openscience.cdk.tools;
+package org.openscience.cdk.libio.cml;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.exception.CDKException;
 
 /**
- * A common interface for SaturationChecker and ValencyChecker. Mainly created
- * to be able to have HydrogenAdder use both.
+ * Interface for classes that allow the Convertor to be customized for certain
+ * features. The idea here is that the CDK build and runtime dependencies for
+ * the Convertor are lowered. For example, QSAR descriptor support and PDBAtom
+ * support can be written as <code>Customizer</code>s.
  *
- * @author     Egon Willighagen
- * @cdk.created    2004-01-08
+ * @author        egonw
+ * @cdk.created   2005-05-04
+ * @cdk.module    data
+ * 
+ * @cdk.depends   xom-1.0.jar
  */
-public interface ValencyCheckerInterface {
+public interface ICMLCustomizer {
 
-	public boolean isSaturated(IAtomContainer ac) throws CDKException;
-	public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException;
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException;
-
+	/**
+	 * Customized the nodeToAdd for the given Atom.
+	 * 
+	 * @param atom       Atom to base the customization on 
+	 * @param nodeToAdd  XOM Element to customize
+	 * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
+	 */
+    public void customize(IAtom atom, Object nodeToAdd) throws Exception;
+    
+    /**
+     * Customized the nodeToAdd for the given Molecule.
+     * 
+     * @param molecule   Molecule to base the customization on 
+     * @param nodeToAdd  XOM Element to customize
+     * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
+     */
+    public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception;
 }
 

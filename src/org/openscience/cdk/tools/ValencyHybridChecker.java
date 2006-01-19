@@ -56,7 +56,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.keyword  atom, valency
  */
-public class ValencyHybridChecker implements ValencyCheckerInterface {
+public class ValencyHybridChecker implements IValencyChecker {
 
 	private String atomTypeList = null;
 	protected AtomTypeFactory structgenATF;

@@ -32,7 +32,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.ValencyCheckerInterface;
+import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
 public class ValencyHybridCheckerTest extends CDKTestCase
 {
 
-	ValencyCheckerInterface satcheck = null;
+	IValencyChecker satcheck = null;
 
 	public ValencyHybridCheckerTest(String name){
 		super(name);
