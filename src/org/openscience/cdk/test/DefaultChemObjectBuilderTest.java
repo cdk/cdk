@@ -47,18 +47,18 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.LonePair;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.Monomer;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.Polymer;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.interfaces.SetOfAtomContainers;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
-import org.openscience.cdk.interfaces.SingleElectron;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.Strand;
 
 /**
@@ -356,7 +356,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof LonePair);
+		assertTrue(object instanceof ILonePair);
 	}	
 
 	public void testNewLonePair_IAtom() {
@@ -366,7 +366,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof LonePair);
+		assertTrue(object instanceof ILonePair);
 	}	
 
 	public void testNewMolecule() {
@@ -400,7 +400,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof Monomer);
+		assertTrue(object instanceof IMonomer);
 	}	
 
 	public void testNewPolymer() {
@@ -416,7 +416,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof PseudoAtom);
+		assertTrue(object instanceof IPseudoAtom);
 	}	
 
 	public void testNewPseudoAtom_IAtom() {
@@ -426,7 +426,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof PseudoAtom);
+		assertTrue(object instanceof IPseudoAtom);
 	}	
 
 	public void testNewPseudoAtom_String() {
@@ -434,7 +434,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof PseudoAtom);
+		assertTrue(object instanceof IPseudoAtom);
 	}	
 
 	public void testNewPseudoAtom_String_Point2d() {
@@ -442,7 +442,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof PseudoAtom);
+		assertTrue(object instanceof IPseudoAtom);
 	}	
 
 	public void testNewPseudoAtom_String_Point3d() {
@@ -450,7 +450,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof PseudoAtom);
+		assertTrue(object instanceof IPseudoAtom);
 	}	
 
 	public void testNewReaction() {
@@ -533,7 +533,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof SingleElectron);
+		assertTrue(object instanceof ISingleElectron);
 	}
 
 	public void testNewSingleElectron_IAtom() {
@@ -543,7 +543,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof SingleElectron);
+		assertTrue(object instanceof ISingleElectron);
 	}
 	
 	public void testNewStrand() {

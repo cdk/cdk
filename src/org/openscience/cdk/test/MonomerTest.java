@@ -31,7 +31,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Monomer;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -63,12 +63,12 @@ public class MonomerTest extends CDKTestCase {
 	}
 
 	public void testMonomer() {
-		Monomer oMonomer = builder.newMonomer();
+		IMonomer oMonomer = builder.newMonomer();
         assertTrue(oMonomer != null);
 	}
 	
 	public void testSetMonomerName_String() {
-        Monomer m = builder.newMonomer();
+        IMonomer m = builder.newMonomer();
         m.setMonomerName(new String("TRP279"));
         assertEquals(new String("TRP279"), m.getMonomerName());
 	}
@@ -77,7 +77,7 @@ public class MonomerTest extends CDKTestCase {
     }
     
     public void testSetMonomerType_String() {
-        Monomer oMonomer = builder.newMonomer();
+        IMonomer oMonomer = builder.newMonomer();
         oMonomer.setMonomerType(new String("TRP"));
         assertEquals(new String("TRP"), oMonomer.getMonomerType());
     }
@@ -89,7 +89,7 @@ public class MonomerTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        Monomer oMonomer = builder.newMonomer();
+        IMonomer oMonomer = builder.newMonomer();
         oMonomer.setMonomerType(new String("TRP"));
         String description = oMonomer.toString();
         for (int i=0; i< description.length(); i++) {
@@ -99,9 +99,9 @@ public class MonomerTest extends CDKTestCase {
     }
 
     public void testClone() {
-        Monomer oMonomer = builder.newMonomer();
+        IMonomer oMonomer = builder.newMonomer();
         Object clone = oMonomer.clone();
-        assertTrue(clone instanceof Monomer);
+        assertTrue(clone instanceof IMonomer);
         assertNotSame(oMonomer, clone);
     }
 }

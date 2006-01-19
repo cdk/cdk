@@ -40,7 +40,7 @@ package org.openscience.cdk;
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired
  */
-public class SingleElectron extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.SingleElectron
+public class SingleElectron extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.ISingleElectron
 {
 
     /**

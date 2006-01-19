@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2005  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,51 +24,41 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ *
+ */
 package org.openscience.cdk.interfaces;
 
 /**
- * A Monomer is an AtomContainer which stores additional monomer specific 
- * informations for a group of Atoms.
+ * Represents the idea of a non-chemical atom-like entity, like Me,
+ * R, X, Phe, His, etc.
  *
- * @cdk.module  interfaces
+ * <p>This should be replaced by the mechanism explained in RFC #8.
  *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
- * @cdk.created 2001-08-06 
+ * @cdk.module interfaces
  *
- * @cdk.keyword monomer
+ * @see  IAtom
  */
-public interface Monomer extends IAtomContainer {
+public interface IPseudoAtom extends IAtom {
 
-	/**
-	 * Retrieve the monomer name.
-	 *
-	 * @return The name of the Monomer object
-     * @see    #setMonomerName
-	 */
-	public String getMonomerName();
+    /**
+     * Returns the label of this PseudoAtom.
+     *
+     * @return The label for this PseudoAtom
+     * @see    #setLabel
+     */
+    public String getLabel();
 
-	/**
-	 * Retrieve the monomer type.
-	 *
-	 * @return The type of the Monomer object
-     * @see    #setMonomerType
-	 */
-	public String getMonomerType();
-	
-	/**
-	 * Set the name of the Monomer object.
-	 *
-	 * @param cMonomerName  The new name for this monomer
-     * @see    #getMonomerName
-	 */
-	public void setMonomerName(String cMonomerName);
-	
-	/**
-	 * Set the type of the Monomer object.
-	 *
-	 * @param cMonomerType  The new type for this monomer
-     * @see    #getMonomerType
-	 */
-	public void setMonomerType(String cMonomerType);
+    /**
+     * Sets the label of this PseudoAtom.
+     *
+     * @param label The new label for this PseudoAtom
+     * @see   #getLabel
+     */
+    public void setLabel(String label);
+
 }
+
+
+
+
+

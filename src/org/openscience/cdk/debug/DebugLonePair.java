@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.LonePair;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugLonePair extends org.openscience.cdk.LonePair
-    implements LonePair {
+    implements ILonePair {
 
 	LoggingTool logger = new LoggingTool(DebugLonePair.class);
 

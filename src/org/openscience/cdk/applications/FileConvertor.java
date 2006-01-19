@@ -54,7 +54,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -180,7 +180,7 @@ public class FileConvertor {
                 	IAtom[] atoms = container.getAtoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
                         for (int j=0; j<atoms.length; j++) {
-                            if (!(atoms[j] instanceof PseudoAtom)) {
+                            if (!(atoms[j] instanceof IPseudoAtom)) {
                                 try {
                                     factory.configure(atoms[j]);
                                 } catch (CDKException exception) {

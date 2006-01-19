@@ -36,9 +36,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.LonePair;
-import org.openscience.cdk.interfaces.Monomer;
-import org.openscience.cdk.interfaces.SingleElectron;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.Strand;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -123,12 +123,12 @@ public class DebugStrand extends org.openscience.cdk.Strand
 		return super.getBonds();
 	}
 
-	public LonePair[] getLonePairs() {
+	public ILonePair[] getLonePairs() {
 		logger.debug("Getting lone pairs: ", super.getLonePairs().length);
 		return super.getLonePairs();
 	}
 
-	public LonePair[] getLonePairs(IAtom atom) {
+	public ILonePair[] getLonePairs(IAtom atom) {
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs(atom).length);
 		return super.getLonePairs(atom);
 	}
@@ -228,7 +228,7 @@ public class DebugStrand extends org.openscience.cdk.Strand
 		return super.getLonePairCount(atom);
 	}
 
-	public SingleElectron[] getSingleElectron(IAtom atom) {
+	public ISingleElectron[] getSingleElectron(IAtom atom) {
 		logger.debug("Getting single electrons for atom: ", atom);
 		return super.getSingleElectron(atom);
 	}
@@ -474,7 +474,7 @@ public class DebugStrand extends org.openscience.cdk.Strand
 		super.setStrandType(cStrandType);
 	}
 
-	public void addAtom(IAtom oAtom, Monomer oMonomer) {
+	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
 		logger.debug("Adding atom to monomer: ", oAtom, oMonomer);
 		super.addAtom(oAtom, oMonomer);
 	}
@@ -484,7 +484,7 @@ public class DebugStrand extends org.openscience.cdk.Strand
 		return super.getMonomerCount();
 	}
 
-	public Monomer getMonomer(String cName) {
+	public IMonomer getMonomer(String cName) {
 		logger.debug("Getting monomer for String: ", cName);
 		return super.getMonomer(cName);
 	}

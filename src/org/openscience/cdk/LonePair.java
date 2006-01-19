@@ -34,7 +34,7 @@ package org.openscience.cdk;
  * @cdk.keyword lone-pair
  * @cdk.keyword bond
  */
-public class LonePair extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.LonePair
+public class LonePair extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.ILonePair
 {
 
     /**

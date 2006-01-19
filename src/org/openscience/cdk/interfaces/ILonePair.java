@@ -34,7 +34,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword lone-pair
  * @cdk.keyword bond
  */
-public interface LonePair extends IElectronContainer {
+public interface ILonePair extends IElectronContainer {
 
     /**
      * Returns the number of electrons in a LonePair.

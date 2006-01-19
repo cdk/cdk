@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom 
-    implements PseudoAtom {
+    implements IPseudoAtom {
 
 	LoggingTool logger = new LoggingTool(DebugPseudoAtom.class);
 	

@@ -37,10 +37,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.LonePair;
-import org.openscience.cdk.interfaces.Monomer;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.Polymer;
-import org.openscience.cdk.interfaces.SingleElectron;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.Strand;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -125,12 +125,12 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		return super.getBonds();
 	}
 
-	public LonePair[] getLonePairs() {
+	public ILonePair[] getLonePairs() {
 		logger.debug("Getting lone pairs: ", super.getLonePairs().length);
 		return super.getLonePairs();
 	}
 
-	public LonePair[] getLonePairs(IAtom atom) {
+	public ILonePair[] getLonePairs(IAtom atom) {
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs().length);
 		return super.getLonePairs();
 	}
@@ -230,7 +230,7 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		return super.getLonePairCount(atom);
 	}
 
-	public SingleElectron[] getSingleElectron(IAtom atom) {
+	public ISingleElectron[] getSingleElectron(IAtom atom) {
 		logger.debug("Getting single electrons for atom: ", atom);
 		return super.getSingleElectron(atom);
 	}
@@ -461,7 +461,7 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		super.stateChanged(event);
 	}
 
-	public void addAtom(IAtom oAtom, Monomer oMonomer) {
+	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
 		logger.debug("Adding atom to monomer: ", oAtom, oMonomer);
 		super.addAtom(oAtom, oMonomer);
 	}
@@ -471,7 +471,7 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		return super.getMonomerCount();
 	}
 
-	public Monomer getMonomer(String cName) {
+	public IMonomer getMonomer(String cName) {
 		logger.debug("Getting monomer for String: ", cName);
 		return super.getMonomer(cName);
 	}
@@ -491,12 +491,12 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		super.addAtom(oAtom, oStrand);
 	}
 
-	public void addAtom(IAtom oAtom, Monomer oMonomer, Strand oStrand) {
+	public void addAtom(IAtom oAtom, IMonomer oMonomer, Strand oStrand) {
 		logger.debug("Adding stoms to strand/monomer: ", oAtom, oMonomer, oStrand);
 		super.addAtom(oAtom, oMonomer, oStrand);
 	}
 
-	public Monomer getMonomer(String monName, String strandName) {
+	public IMonomer getMonomer(String monName, String strandName) {
 		logger.debug("Getting monomer from strand: ", monName, strandName);
 		return super.getMonomer(monName, strandName);
 	}

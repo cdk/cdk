@@ -359,17 +359,17 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@see       #getElectronContainers
 	 *@see       #getBonds
 	 */
-	public org.openscience.cdk.interfaces.LonePair[] getLonePairs()
+	public org.openscience.cdk.interfaces.ILonePair[] getLonePairs()
 	{
 		int count = getLonePairCount();
-		org.openscience.cdk.interfaces.LonePair[] result = new org.openscience.cdk.interfaces.LonePair[count];
+		org.openscience.cdk.interfaces.ILonePair[] result = new org.openscience.cdk.interfaces.ILonePair[count];
 		int counter = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			org.openscience.cdk.interfaces.IElectronContainer electronContainer = getElectronContainerAt(i);
-			if (electronContainer instanceof org.openscience.cdk.interfaces.LonePair)
+			if (electronContainer instanceof org.openscience.cdk.interfaces.ILonePair)
 			{
-				result[counter] = (org.openscience.cdk.interfaces.LonePair) electronContainer;
+				result[counter] = (org.openscience.cdk.interfaces.ILonePair) electronContainer;
 				counter++;
 			}
 		}
@@ -385,19 +385,19 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@see          #getElectronContainers
 	 *@see          #getBonds
 	 */
-	public org.openscience.cdk.interfaces.LonePair[] getLonePairs(org.openscience.cdk.interfaces.IAtom atom)
+	public org.openscience.cdk.interfaces.ILonePair[] getLonePairs(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector lps = new Vector();
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			org.openscience.cdk.interfaces.IElectronContainer electronContainer = getElectronContainerAt(i);
-			if ((electronContainer instanceof org.openscience.cdk.interfaces.LonePair) && 
-			    (((org.openscience.cdk.interfaces.LonePair) electronContainer).contains(atom)))
+			if ((electronContainer instanceof org.openscience.cdk.interfaces.ILonePair) && 
+			    (((org.openscience.cdk.interfaces.ILonePair) electronContainer).contains(atom)))
 			{
 				lps.add(electronContainer);
 			}
 		}
-		org.openscience.cdk.interfaces.LonePair[] result = new org.openscience.cdk.interfaces.LonePair[lps.size()];
+		org.openscience.cdk.interfaces.ILonePair[] result = new org.openscience.cdk.interfaces.ILonePair[lps.size()];
 		lps.copyInto(result);
 		return result;
 	}
@@ -606,11 +606,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 			if (electronContainers[i] instanceof org.openscience.cdk.interfaces.IBond &&
 					((org.openscience.cdk.interfaces.IBond) electronContainers[i]).contains(atom)) {
 				bondsVec.addElement(electronContainers[i]);
-			} else if (electronContainers[i] instanceof org.openscience.cdk.interfaces.LonePair &&
-                    ((org.openscience.cdk.interfaces.LonePair) electronContainers[i]).contains((Atom)atom)) {
+			} else if (electronContainers[i] instanceof org.openscience.cdk.interfaces.ILonePair &&
+                    ((org.openscience.cdk.interfaces.ILonePair) electronContainers[i]).contains((Atom)atom)) {
 				bondsVec.addElement(electronContainers[i]);
-			} else if (electronContainers[i] instanceof org.openscience.cdk.interfaces.SingleElectron &&
-					((org.openscience.cdk.interfaces.SingleElectron) electronContainers[i]).contains((Atom)atom)) {
+			} else if (electronContainers[i] instanceof org.openscience.cdk.interfaces.ISingleElectron &&
+					((org.openscience.cdk.interfaces.ISingleElectron) electronContainers[i]).contains((Atom)atom)) {
 				bondsVec.addElement(electronContainers[i]);
 			}
 		}
@@ -666,7 +666,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		int count = 0;
 		for (int i = 0; i < electronContainerCount; i++)
 		{
-			if (electronContainers[i] instanceof org.openscience.cdk.interfaces.LonePair)
+			if (electronContainers[i] instanceof org.openscience.cdk.interfaces.ILonePair)
 			{
 				count++;
 			}
@@ -726,8 +726,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 		int count = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			if (electronContainers[i] instanceof org.openscience.cdk.interfaces.LonePair &&
-					((org.openscience.cdk.interfaces.LonePair) electronContainers[i]).contains((Atom)atom))
+			if (electronContainers[i] instanceof org.openscience.cdk.interfaces.ILonePair &&
+					((org.openscience.cdk.interfaces.ILonePair) electronContainers[i]).contains((Atom)atom))
 			{
 				count++;
 			}
@@ -740,18 +740,18 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public org.openscience.cdk.interfaces.SingleElectron[] getSingleElectron(org.openscience.cdk.interfaces.IAtom atom)
+	public org.openscience.cdk.interfaces.ISingleElectron[] getSingleElectron(org.openscience.cdk.interfaces.IAtom atom)
 	{
 		Vector lps = new Vector();
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			if ((electronContainers[i] instanceof org.openscience.cdk.interfaces.SingleElectron) && 
-				(((org.openscience.cdk.interfaces.SingleElectron) electronContainers[i]).contains((Atom)atom)))
+			if ((electronContainers[i] instanceof org.openscience.cdk.interfaces.ISingleElectron) && 
+				(((org.openscience.cdk.interfaces.ISingleElectron) electronContainers[i]).contains((Atom)atom)))
 			{
 				lps.add(electronContainers[i]);
 			}
 		}
-		org.openscience.cdk.interfaces.SingleElectron[] result = new org.openscience.cdk.interfaces.SingleElectron[lps.size()];
+		org.openscience.cdk.interfaces.ISingleElectron[] result = new org.openscience.cdk.interfaces.ISingleElectron[lps.size()];
 		lps.copyInto(result);
 		return result;
 	}
@@ -765,8 +765,8 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 	{
 		int count = 0;
 		for (int i = 0; i <  getElectronContainerCount(); i++)
-		{if ((electronContainers[i] instanceof org.openscience.cdk.interfaces.SingleElectron) && 
-			 (((org.openscience.cdk.interfaces.SingleElectron) electronContainers[i]).contains((Atom)atom)))
+		{if ((electronContainers[i] instanceof org.openscience.cdk.interfaces.ISingleElectron) && 
+			 (((org.openscience.cdk.interfaces.ISingleElectron) electronContainers[i]).contains((Atom)atom)))
 			{
 				count++;
 			}
@@ -1341,14 +1341,14 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, o
 					}
 				}
 				((org.openscience.cdk.interfaces.IBond) newEC).setAtoms(newAtoms);
-			} else if (electronContainer instanceof org.openscience.cdk.interfaces.LonePair) {
-				org.openscience.cdk.interfaces.IAtom atom = ((org.openscience.cdk.interfaces.LonePair) electronContainer).getAtom();
-				newEC = (org.openscience.cdk.interfaces.LonePair)electronContainer.clone();
-				((org.openscience.cdk.interfaces.LonePair) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
-            } else if (electronContainer instanceof org.openscience.cdk.interfaces.SingleElectron) {
-            	org.openscience.cdk.interfaces.IAtom atom = ((org.openscience.cdk.interfaces.SingleElectron) electronContainer).getAtom();
-                newEC = (org.openscience.cdk.interfaces.SingleElectron)electronContainer.clone();
-                ((org.openscience.cdk.interfaces.SingleElectron) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
+			} else if (electronContainer instanceof org.openscience.cdk.interfaces.ILonePair) {
+				org.openscience.cdk.interfaces.IAtom atom = ((org.openscience.cdk.interfaces.ILonePair) electronContainer).getAtom();
+				newEC = (org.openscience.cdk.interfaces.ILonePair)electronContainer.clone();
+				((org.openscience.cdk.interfaces.ILonePair) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
+            } else if (electronContainer instanceof org.openscience.cdk.interfaces.ISingleElectron) {
+            	org.openscience.cdk.interfaces.IAtom atom = ((org.openscience.cdk.interfaces.ISingleElectron) electronContainer).getAtom();
+                newEC = (org.openscience.cdk.interfaces.ISingleElectron)electronContainer.clone();
+                ((org.openscience.cdk.interfaces.ISingleElectron) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
 			} else {
 				//System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
 				newEC = (org.openscience.cdk.interfaces.IElectronContainer) electronContainer.clone();

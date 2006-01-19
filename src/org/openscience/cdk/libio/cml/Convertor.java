@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
@@ -390,8 +390,8 @@ public class Convertor {
 		addAtomID(cdkAtom, cmlAtom);
 		addDictRef(cdkAtom, cmlAtom);
 		cmlAtom.setElementType(cdkAtom.getSymbol());
-		if (cdkAtom instanceof PseudoAtom) {
-			 String label = ((PseudoAtom)cdkAtom).getLabel();
+		if (cdkAtom instanceof IPseudoAtom) {
+			 String label = ((IPseudoAtom)cdkAtom).getLabel();
 	         if (label != null) cmlAtom.setTitle(label);
 	         cmlAtom.setElementType("Du");
 		}
@@ -402,7 +402,7 @@ public class Convertor {
 		cmlAtom.setHydrogenCount(cdkAtom.getHydrogenCount());
 		
 		int massNumber = cdkAtom.getMassNumber();
-		if (!(cdkAtom instanceof PseudoAtom)) {
+		if (!(cdkAtom instanceof IPseudoAtom)) {
 			try {
 				IIsotope majorIsotope = IsotopeFactory.getInstance(cdkAtom.getBuilder()).getMajorIsotope(cdkAtom.getSymbol());
 				

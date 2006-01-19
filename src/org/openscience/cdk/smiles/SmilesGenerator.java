@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.interfaces.SetOfMolecules;
@@ -1583,7 +1583,7 @@ public class SmilesGenerator
 			buffer.append('/');
 		}
 
-		if (a instanceof PseudoAtom)
+		if (a instanceof IPseudoAtom)
 		{
 			buffer.append("[*]");
 		} else

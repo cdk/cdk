@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Reaction;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.SetOfReactions;
@@ -334,14 +334,14 @@ public class ChemFileCDO implements IChemFile, CDOInterface {
         }
       } else if (objectType.equals("PseudoAtom")) {
         if (propertyType.equals("label")) {
-            if (!(currentAtom instanceof PseudoAtom)) {
+            if (!(currentAtom instanceof IPseudoAtom)) {
                 currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
             }
-            ((PseudoAtom)currentAtom).setLabel(propertyValue);
+            ((IPseudoAtom)currentAtom).setLabel(propertyValue);
         }
       } else if (objectType.equals("Atom")) {
         if (propertyType.equals("type")) {
-            if (propertyValue.equals("R") && !(currentAtom instanceof PseudoAtom)) {
+            if (propertyValue.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
                 currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
             }
             currentAtom.setSymbol(propertyValue);

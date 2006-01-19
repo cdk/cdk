@@ -34,7 +34,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -360,7 +360,7 @@ public class AtomTypeFactory {
 	 * @return       The configured atom
 	 */
     public IAtom configure(IAtom atom) throws CDKException {
-        if (atom instanceof PseudoAtom) {
+        if (atom instanceof IPseudoAtom) {
             // do not try to configure PseudoAtom's
             return atom;
         }

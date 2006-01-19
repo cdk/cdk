@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.LonePair;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.Molecule;
 
 /**
@@ -74,8 +74,8 @@ public class AtomContainerManipulator {
                             }
                         }
                     }
-                } else if (electronContainers[i] instanceof LonePair) {
-                    LonePair lonePair = (LonePair)electronContainers[i];
+                } else if (electronContainers[i] instanceof ILonePair) {
+                    ILonePair lonePair = (ILonePair)electronContainers[i];
                     if (atom.equals(lonePair.getAtom())) {
                         lonePair.setAtom(newAtom);
                     }

@@ -69,7 +69,7 @@ public interface IBioPolymer extends Polymer {
 	 * @param oMonomer
 	 * @param oStrand
 	 */
-	public void addAtom(IAtom oAtom, Monomer oMonomer, Strand oStrand);
+	public void addAtom(IAtom oAtom, IMonomer oMonomer, Strand oStrand);
 	
 	/**
 	 * Return the number of monomers present in BioPolymer.
@@ -87,7 +87,7 @@ public interface IBioPolymer extends Polymer {
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public Monomer getMonomer(String monName, String strandName);
+	public IMonomer getMonomer(String monName, String strandName);
 		
 	/**
 	 * Returns a collection of the names of all <code>Monomer</code>s in this

@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.Monomer;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.interfaces.SetOfMolecules;
 import org.openscience.cdk.interfaces.Strand;
@@ -167,7 +167,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		IBioPolymer oBP = oFile.getBuilder().newBioPolymer();
 		StringBuffer cResidue;
 		String oObj;
-		org.openscience.cdk.interfaces.Monomer oMonomer;
+		org.openscience.cdk.interfaces.IMonomer oMonomer;
 		String cRead;
 		char chain = 'A';	// To ensure stringent name giving of monomers
 		org.openscience.cdk.interfaces.Strand oStrand;
@@ -383,7 +383,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				if(!AAs.containsKey(anAtom.getResName()))	{
 					return false;
 				}
-				Monomer monomer = (Monomer)AAs.get(anAtom.getResName());
+				IMonomer monomer = (IMonomer)AAs.get(anAtom.getResName());
 		
 				atomsInPresentResidue = Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_ATOMS));
 				

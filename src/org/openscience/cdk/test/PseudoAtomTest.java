@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -57,7 +57,7 @@ public class PseudoAtomTest extends CDKTestCase {
     }
 
     public void testPseudoAtom() {
-        PseudoAtom a = builder.newPseudoAtom();
+        IPseudoAtom a = builder.newPseudoAtom();
         assertEquals("R", a.getSymbol());
         assertNull(a.getPoint3d());
         assertNull(a.getPoint2d());
@@ -66,7 +66,7 @@ public class PseudoAtomTest extends CDKTestCase {
     
     public void testPseudoAtom_String() {
         String label = "Arg255";
-        PseudoAtom a = builder.newPseudoAtom(label);
+        IPseudoAtom a = builder.newPseudoAtom(label);
         assertEquals("R", a.getSymbol());
         assertEquals(label, a.getLabel());
         assertNull(a.getPoint3d());
@@ -77,7 +77,7 @@ public class PseudoAtomTest extends CDKTestCase {
     public void testPseudoAtom_String_Point2d() {
         Point2d point = new Point2d(1.0, 2.0);
         String label = "Arg255";
-        PseudoAtom a = builder.newPseudoAtom(label, point);
+        IPseudoAtom a = builder.newPseudoAtom(label, point);
         assertEquals("R", a.getSymbol());
         assertEquals(label, a.getLabel());
         assertEquals(point, a.getPoint2d());
@@ -88,7 +88,7 @@ public class PseudoAtomTest extends CDKTestCase {
     public void testPseudoAtom_String_Point3d() {
         Point3d point = new Point3d(1.0, 2.0, 3.0);
         String label = "Arg255";
-        PseudoAtom a = builder.newPseudoAtom(label, point);
+        IPseudoAtom a = builder.newPseudoAtom(label, point);
         assertEquals("R", a.getSymbol());
         assertEquals(label, a.getLabel());
         assertEquals(point, a.getPoint3d());
@@ -98,49 +98,49 @@ public class PseudoAtomTest extends CDKTestCase {
 
     public void testGetLabel() {
         String label = "Arg255";
-        PseudoAtom a = builder.newPseudoAtom(label);
+        IPseudoAtom a = builder.newPseudoAtom(label);
         assertEquals(label, a.getLabel());
     }
 
     public void testSetLabel_String() {
         String label = "Arg255";
-        PseudoAtom atom = builder.newPseudoAtom(label);
+        IPseudoAtom atom = builder.newPseudoAtom(label);
         String label2 = "His66";
         atom.setLabel(label2);
         assertEquals(label2, atom.getLabel());
     }
 
     public void testGetFormalCharge() {
-        PseudoAtom atom = builder.newPseudoAtom("Whatever");
+        IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         assertEquals(0, atom.getFormalCharge());
     }
 
     public void testSetFormalCharge_int() {
-        PseudoAtom atom = builder.newPseudoAtom("Whatever");
+        IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setFormalCharge(+5);
         assertEquals(0, atom.getFormalCharge());
     }
 
     public void testSetHydrogenCount_int() {
-        PseudoAtom atom = builder.newPseudoAtom("Whatever");
+        IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setHydrogenCount(+5);
         assertEquals(0, atom.getHydrogenCount());
     }
 
     public void testSetCharge_double() {
-        PseudoAtom atom = builder.newPseudoAtom("Whatever");
+        IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setCharge(0.78);
         assertEquals(0.0, atom.getCharge(), 0.001);
     }
 
     public void testSetExactMass_double() {
-        PseudoAtom atom = builder.newPseudoAtom("Whatever");
+        IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setExactMass(12.001);
         assertEquals(0.0, atom.getExactMass(), 0.001);
     }
 
     public void testSetStereoParity_int() {
-        PseudoAtom atom = builder.newPseudoAtom("Whatever");
+        IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setStereoParity(-1);
         assertEquals(0, atom.getStereoParity());
     }
@@ -154,7 +154,7 @@ public class PseudoAtomTest extends CDKTestCase {
         atom.setPoint3d(threeD);
         atom.setPoint2d(twoD);
         
-        PseudoAtom a = builder.newPseudoAtom(atom);
+        IPseudoAtom a = builder.newPseudoAtom(atom);
         assertEquals(fract, a.getFractionalPoint3d());
         assertEquals(threeD, a.getPoint3d());
         assertEquals(twoD, a.getPoint2d());

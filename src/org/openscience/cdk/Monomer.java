@@ -40,7 +40,7 @@ package org.openscience.cdk;
  * @cdk.keyword    monomer
  *
  */
-public class Monomer extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.Monomer
+public class Monomer extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IMonomer
 {
 
     /**

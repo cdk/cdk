@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.Monomer;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.Polymer;
 import org.openscience.cdk.interfaces.Strand;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -88,9 +88,9 @@ public class PolymerTest extends TestCase {
     
 	public void testAddAtom_IAtom_Monomer() {
 		Polymer oPolymer = builder.newPolymer();
-		Monomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = null;
+		IMonomer oMono2 = null;
 		IAtom oAtom1 = builder.newAtom("C1");
 		IAtom oAtom2 = builder.newAtom("C2");
 		IAtom oAtom3 = builder.newAtom("C3");
@@ -116,9 +116,9 @@ public class PolymerTest extends TestCase {
 		Polymer oPolymer = builder.newPolymer();
 		assertEquals(0, oPolymer.getMonomerCount());
 		
-		Monomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
 		IAtom oAtom1 = builder.newAtom("C1");
 		IAtom oAtom2 = builder.newAtom("C2");
@@ -134,9 +134,9 @@ public class PolymerTest extends TestCase {
 	public void testGetMonomer_String() {
 		Polymer oPolymer = builder.newPolymer();
 		
-		Monomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
 		IAtom oAtom1 = builder.newAtom("C1");
 		IAtom oAtom2 = builder.newAtom("C2");
@@ -154,9 +154,9 @@ public class PolymerTest extends TestCase {
 		Polymer oPolymer = builder.newPolymer();
 		assertEquals(0, oPolymer.getMonomerNames().size());
 		
-		Monomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
 		IAtom oAtom1 = builder.newAtom("C1");
 		IAtom oAtom2 = builder.newAtom("C2");
@@ -165,7 +165,7 @@ public class PolymerTest extends TestCase {
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
 		Hashtable monomers = new Hashtable();
-		Monomer oMon = builder.newMonomer();
+		IMonomer oMon = builder.newMonomer();
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
 
@@ -177,7 +177,7 @@ public class PolymerTest extends TestCase {
 	
 	public void testRemoveMonomer_String()	{
 		Polymer oPolymer = builder.newPolymer();
-		Monomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = builder.newAtom("C1");
 		oPolymer.addAtom(oAtom1, oMono1);
@@ -194,9 +194,9 @@ public class PolymerTest extends TestCase {
      */
     public void testToString() {
         Strand oStrand = builder.newStrand();
-		Monomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Monomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = builder.newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
 		IAtom oAtom2 = builder.newAtom("C2");
 		IAtom oAtom3 = builder.newAtom("C3");

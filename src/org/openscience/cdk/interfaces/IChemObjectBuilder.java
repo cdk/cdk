@@ -257,14 +257,14 @@ public interface IChemObjectBuilder {
     /**
      * Constructs an unconnected lone pair.
      */
-    public LonePair newLonePair();
+    public ILonePair newLonePair();
 
     /**
      * Constructs an lone pair on an Atom.
      *
      * @param atom  Atom to which this lone pair is connected
      */
-    public LonePair newLonePair(IAtom atom);
+    public ILonePair newLonePair(IAtom atom);
 	
 	/**
 	 * Creates an Molecule without Atoms and Bonds.
@@ -291,7 +291,7 @@ public interface IChemObjectBuilder {
 	/**
 	 * Contructs a new Monomer.
 	 */	
-	public Monomer newMonomer ();
+	public IMonomer newMonomer ();
 	
 	/**
 	 * Contructs a new Polymer to store the Monomers.
@@ -352,14 +352,14 @@ public interface IChemObjectBuilder {
     /**
      * Constructs an single electron orbital with an associated Atom.
      */
-    public SingleElectron newSingleElectron();
+    public ISingleElectron newSingleElectron();
     
     /**
      * Constructs an single electron orbital on an Atom.
      *
      * @param atom The atom to which the single electron belongs.
      */
-    public SingleElectron newSingleElectron(IAtom atom);   
+    public ISingleElectron newSingleElectron(IAtom atom);   
 
 	/**
 	 * Contructs a new Strand.
@@ -369,21 +369,21 @@ public interface IChemObjectBuilder {
     /**
      * Constructs an empty PseudoAtom.
      */
-    public PseudoAtom newPseudoAtom();
+    public IPseudoAtom newPseudoAtom();
     
     /**
      * Constructs an PseudoAtom from a label.
      *
      * @param   label  The String describing the PseudoAtom
      */
-    public PseudoAtom newPseudoAtom(String label);
+    public IPseudoAtom newPseudoAtom(String label);
 
     /**
      * Constructs an PseudoAtom from an existing Atom object.
      *
      * @param   atom  Atom from which the PseudoAtom is constructed
      */
-    public PseudoAtom newPseudoAtom(IAtom atom);
+    public IPseudoAtom newPseudoAtom(IAtom atom);
 
     /**
      * Constructs an PseudoAtom from a label and a Point3d.
@@ -391,7 +391,7 @@ public interface IChemObjectBuilder {
      * @param   label   The String describing the PseudoAtom
      * @param   point3d The 3D coordinates of the atom
      */
-    public PseudoAtom newPseudoAtom(String label, javax.vecmath.Point3d point3d);
+    public IPseudoAtom newPseudoAtom(String label, javax.vecmath.Point3d point3d);
 
     /**
      * Constructs an PseudoAtom from a label and a Point2d.
@@ -399,7 +399,7 @@ public interface IChemObjectBuilder {
      * @param   label   The String describing the PseudoAtom
      * @param   point2d The 2D coordinates of the atom
      */
-    public PseudoAtom newPseudoAtom(String label, javax.vecmath.Point2d point2d);
+    public IPseudoAtom newPseudoAtom(String label, javax.vecmath.Point2d point2d);
 		
 }
 

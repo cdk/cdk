@@ -184,7 +184,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@see       #getElectronContainers
 	 *@see       #getBonds
 	 */
-	public LonePair[] getLonePairs();
+	public ILonePair[] getLonePairs();
 
 
 	/**
@@ -195,7 +195,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@see          #getElectronContainers
 	 *@see          #getBonds
 	 */
-	public LonePair[] getLonePairs(IAtom atom);
+	public ILonePair[] getLonePairs(IAtom atom);
 
 
 	/**
@@ -378,7 +378,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public SingleElectron[] getSingleElectron(IAtom atom);
+	public ISingleElectron[] getSingleElectron(IAtom atom);
 	/**
 	 *  Returns the sum of the SingleElectron for a given Atom.
 	 *

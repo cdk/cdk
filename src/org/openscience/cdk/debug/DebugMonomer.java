@@ -35,9 +35,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.LonePair;
-import org.openscience.cdk.interfaces.Monomer;
-import org.openscience.cdk.interfaces.SingleElectron;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugMonomer extends org.openscience.cdk.Monomer
-    implements Monomer {
+    implements IMonomer {
 
 	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
@@ -121,12 +121,12 @@ public class DebugMonomer extends org.openscience.cdk.Monomer
 		return super.getBonds();
 	}
 
-	public LonePair[] getLonePairs() {
+	public ILonePair[] getLonePairs() {
 		logger.debug("Getting lone pairs: ", super.getLonePairs().length);
 		return super.getLonePairs();
 	}
 
-	public LonePair[] getLonePairs(IAtom atom) {
+	public ILonePair[] getLonePairs(IAtom atom) {
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs(atom).length);
 		return super.getLonePairs(atom);
 	}
@@ -226,7 +226,7 @@ public class DebugMonomer extends org.openscience.cdk.Monomer
 		return super.getLonePairCount(atom);
 	}
 
-	public SingleElectron[] getSingleElectron(IAtom atom) {
+	public ISingleElectron[] getSingleElectron(IAtom atom) {
 		logger.debug("Getting single electrons for atom: ", atom);
 		return super.getSingleElectron(atom);
 	}

@@ -56,7 +56,7 @@ public interface Polymer extends Molecule {
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The monomer the atom belongs to
 	 */
-	public void addAtom(IAtom oAtom, Monomer oMonomer);
+	public void addAtom(IAtom oAtom, IMonomer oMonomer);
 	
 	/**
 	 * Return the number of monomers present in the Polymer.
@@ -71,7 +71,7 @@ public interface Polymer extends Molecule {
 	 * @param cName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for
 	 */
-	public Monomer getMonomer(String cName);
+	public IMonomer getMonomer(String cName);
 	
 	/**
 	 * Returns a collection of the names of all <code>Monomer</code>s in this

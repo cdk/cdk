@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 
@@ -89,7 +89,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
      * It returns true if the atom is an PseudoAtom and when the element is not in the list.
      */
 	public boolean isSaturated(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtomContainer container) throws CDKException {
-        if (atom instanceof PseudoAtom) {
+        if (atom instanceof IPseudoAtom) {
             logger.debug("don't figure it out... it simply does not lack H's");
             return true;
         }
@@ -194,7 +194,7 @@ public class ValencyChecker implements ValencyCheckerInterface {
         throws CDKException {
 
         int missingHydrogen = 0;
-        if (atom instanceof PseudoAtom) {
+        if (atom instanceof IPseudoAtom) {
             logger.debug("don't figure it out... it simply does not lack H's");
             return 0;
         }

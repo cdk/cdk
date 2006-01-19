@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -635,7 +635,7 @@ public class SaturationChecker implements ValencyCheckerInterface {
 	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.IAtom atom, double bondOrderSum, org.openscience.cdk.interfaces.IBond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
         throws CDKException {
         int missingHydrogen = 0;
-        if (atom instanceof PseudoAtom) {
+        if (atom instanceof IPseudoAtom) {
             // don't figure it out... it simply does not lack H's
         } else if (atom.getAtomicNumber() == 1 || atom.getSymbol().equals("H")) {
             missingHydrogen = (int) (1 - bondOrderSum - atom.getFormalCharge());

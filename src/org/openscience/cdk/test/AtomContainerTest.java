@@ -40,9 +40,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.LonePair;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.SingleElectron;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
@@ -192,8 +192,8 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(1, acetone.getConnectedElectronContainers(c3).length);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
 
@@ -229,8 +229,8 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(1, acetone.getConnectedBonds(c3).length);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
 
@@ -265,8 +265,8 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(1, acetone.getConnectedBondsVector(c3).size());
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
 
@@ -301,8 +301,8 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(0, acetone.getLonePairs(c3).length);
 
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
 
@@ -334,8 +334,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -366,8 +366,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -708,8 +708,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -980,7 +980,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        LonePair firstLP = builder.newLonePair(o);
+        ILonePair firstLP = builder.newLonePair(o);
         acetone.addElectronContainer(firstLP);
         acetone.addElectronContainer(builder.newLonePair(o));
         IBond b1 = builder.newBond(c1, c2,1);
@@ -1114,7 +1114,7 @@ public class AtomContainerTest extends CDKTestCase {
         IBond b1 = builder.newBond(c, o, 2.0);
         acetone.addElectronContainer(b1);
         acetone.addElectronContainer(builder.newLonePair(o));
-        SingleElectron single = builder.newSingleElectron(c);
+        ISingleElectron single = builder.newSingleElectron(c);
         acetone.addElectronContainer(single);
 
         assertEquals(1, acetone.getSingleElectron(c).length);
@@ -1228,8 +1228,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1257,8 +1257,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1282,8 +1282,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1486,8 +1486,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1512,8 +1512,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1541,8 +1541,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1570,8 +1570,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1599,8 +1599,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         // add lone pairs on oxygen
-        LonePair lp1 = builder.newLonePair(o);
-        LonePair lp2 = builder.newLonePair(o);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
         acetone.addElectronContainer(lp1);
         acetone.addElectronContainer(lp2);
         
@@ -1683,9 +1683,9 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(o);
         IBond b1 = builder.newBond(c, o, 2.0);
         acetone.addElectronContainer(b1);
-        SingleElectron single1 = builder.newSingleElectron(c);
-        SingleElectron single2 = builder.newSingleElectron(c);
-        SingleElectron single3 = builder.newSingleElectron(o);
+        ISingleElectron single1 = builder.newSingleElectron(c);
+        ISingleElectron single2 = builder.newSingleElectron(c);
+        ISingleElectron single3 = builder.newSingleElectron(o);
         acetone.addElectronContainer(single1);
         acetone.addElectronContainer(single2);
         acetone.addElectronContainer(single3);

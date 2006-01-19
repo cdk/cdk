@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,41 +24,51 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- */
+ *  */
 package org.openscience.cdk.interfaces;
 
 /**
- * Represents the idea of a non-chemical atom-like entity, like Me,
- * R, X, Phe, His, etc.
+ * A Monomer is an AtomContainer which stores additional monomer specific 
+ * informations for a group of Atoms.
  *
- * <p>This should be replaced by the mechanism explained in RFC #8.
+ * @cdk.module  interfaces
  *
- * @cdk.module interfaces
+ * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @cdk.created 2001-08-06 
  *
- * @see  IAtom
+ * @cdk.keyword monomer
  */
-public interface PseudoAtom extends IAtom {
+public interface IMonomer extends IAtomContainer {
 
-    /**
-     * Returns the label of this PseudoAtom.
-     *
-     * @return The label for this PseudoAtom
-     * @see    #setLabel
-     */
-    public String getLabel();
+	/**
+	 * Retrieve the monomer name.
+	 *
+	 * @return The name of the Monomer object
+     * @see    #setMonomerName
+	 */
+	public String getMonomerName();
 
-    /**
-     * Sets the label of this PseudoAtom.
-     *
-     * @param label The new label for this PseudoAtom
-     * @see   #getLabel
-     */
-    public void setLabel(String label);
-
+	/**
+	 * Retrieve the monomer type.
+	 *
+	 * @return The type of the Monomer object
+     * @see    #setMonomerType
+	 */
+	public String getMonomerType();
+	
+	/**
+	 * Set the name of the Monomer object.
+	 *
+	 * @param cMonomerName  The new name for this monomer
+     * @see    #getMonomerName
+	 */
+	public void setMonomerName(String cMonomerName);
+	
+	/**
+	 * Set the type of the Monomer object.
+	 *
+	 * @param cMonomerType  The new type for this monomer
+     * @see    #getMonomerType
+	 */
+	public void setMonomerType(String cMonomerType);
 }
-
-
-
-
-

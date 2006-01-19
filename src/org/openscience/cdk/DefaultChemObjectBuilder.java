@@ -177,11 +177,11 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Isotope(elementSymbol, massNumber);
 	}
 
-    public org.openscience.cdk.interfaces.LonePair newLonePair() {
+    public org.openscience.cdk.interfaces.ILonePair newLonePair() {
     	return new LonePair();
     }
 
-    public org.openscience.cdk.interfaces.LonePair newLonePair(org.openscience.cdk.interfaces.IAtom atom) {
+    public org.openscience.cdk.interfaces.ILonePair newLonePair(org.openscience.cdk.interfaces.IAtom atom) {
     	return new LonePair(atom);
     }
 
@@ -197,7 +197,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Molecule(container);
 	}
 
-	public org.openscience.cdk.interfaces.Monomer newMonomer () {
+	public org.openscience.cdk.interfaces.IMonomer newMonomer () {
 		return new Monomer();
 	}
 	
@@ -241,11 +241,11 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new SetOfReactions();
 	}
 	
-    public org.openscience.cdk.interfaces.SingleElectron newSingleElectron() {
+    public org.openscience.cdk.interfaces.ISingleElectron newSingleElectron() {
     	return new SingleElectron();
     }
     
-    public org.openscience.cdk.interfaces.SingleElectron newSingleElectron(org.openscience.cdk.interfaces.IAtom atom) {
+    public org.openscience.cdk.interfaces.ISingleElectron newSingleElectron(org.openscience.cdk.interfaces.IAtom atom) {
     	return new SingleElectron(atom);   
     }
 
@@ -253,23 +253,23 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Strand();
 	}
 
-	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom() {
+	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom() {
 		return new PseudoAtom();
 	}
 
-	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label) {
+	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(String label) {
 		return new PseudoAtom(label);
 	}
 
-	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(org.openscience.cdk.interfaces.IAtom atom) {
+	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(org.openscience.cdk.interfaces.IAtom atom) {
 		return new PseudoAtom(atom);
 	}
 
-	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label, Point3d point3d) {
+	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(String label, Point3d point3d) {
 		return new PseudoAtom(label, point3d);
 	}
 
-	public org.openscience.cdk.interfaces.PseudoAtom newPseudoAtom(String label, Point2d point2d) {
+	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
 		return new PseudoAtom(label, point2d);
 	}
 }

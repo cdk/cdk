@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.SingleElectron;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module data-debug
  */
 public class DebugSingleElectron extends org.openscience.cdk.SingleElectron
-    implements SingleElectron{
+    implements ISingleElectron{
 
 	LoggingTool logger = new LoggingTool(DebugSingleElectron.class);
 	

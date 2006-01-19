@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.Molecule;
-import org.openscience.cdk.interfaces.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.Ring;
 import org.openscience.cdk.interfaces.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -394,7 +394,7 @@ public class ForceFieldConfigurator {
 		IAtom configAtom = null;
 		boolean atomTypeFlag = false;
 		
-		if (atom instanceof PseudoAtom) {
+		if (atom instanceof IPseudoAtom) {
 			return atom;
 		}
 		
@@ -566,7 +566,7 @@ public class ForceFieldConfigurator {
 				"CU+2","MG+2","Du"
 		};
 		
-		if (atom instanceof PseudoAtom) {
+		if (atom instanceof IPseudoAtom) {
 			return atom;
 		}
 		

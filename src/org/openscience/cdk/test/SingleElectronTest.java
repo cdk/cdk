@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.SingleElectron;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -56,33 +56,33 @@ public class SingleElectronTest extends CDKTestCase {
     }
     
     public void testSingleElectron() {
-        SingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = builder.newSingleElectron();
         assertTrue(radical.getAtom() == null);
         assertEquals(1, radical.getElectronCount());
     }
     
     public void testSingleElectron_IAtom() {
         IAtom atom = builder.newAtom("N");
-        SingleElectron radical = builder.newSingleElectron(atom);
+        ISingleElectron radical = builder.newSingleElectron(atom);
         assertEquals(1, radical.getElectronCount());
         assertEquals(atom, radical.getAtom());
         assertTrue(radical.contains(atom));
     }
 
     public void testGetElectronCount() {
-        SingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = builder.newSingleElectron();
         assertEquals(1, radical.getElectronCount());
     }
 
     public void testContains_IAtom() {
         IAtom atom = builder.newAtom("N");
-        SingleElectron radical = builder.newSingleElectron(atom);
+        ISingleElectron radical = builder.newSingleElectron(atom);
         assertTrue(radical.contains(atom));
     }
     
     public void testSetAtom_IAtom() {
         IAtom atom = builder.newAtom("N");
-        SingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = builder.newSingleElectron();
         assertNull(radical.getAtom());
         radical.setAtom(atom);
         assertEquals(atom, radical.getAtom());
@@ -90,30 +90,30 @@ public class SingleElectronTest extends CDKTestCase {
 
     public void testGetAtom() {
         IAtom atom = builder.newAtom("N");
-        SingleElectron radical = builder.newSingleElectron(atom);
+        ISingleElectron radical = builder.newSingleElectron(atom);
         assertEquals(atom, radical.getAtom());
     }
     
     public void testClone() {
-        SingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = builder.newSingleElectron();
         Object clone = radical.clone();
         assertNotNull(clone);
-        assertTrue(clone instanceof SingleElectron);
+        assertTrue(clone instanceof ISingleElectron);
     }
     
     public void testClone_IAtom() {
         IAtom atom = builder.newAtom("N");
-        SingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = builder.newSingleElectron();
         radical.setAtom(atom);
         
         // test cloning of atom
-        SingleElectron clone = (SingleElectron)radical.clone();
+        ISingleElectron clone = (ISingleElectron)radical.clone();
         assertNotSame(atom, clone.getAtom());
     }
     
     /** Test for RFC #9 */
     public void testToString() {
-        SingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = builder.newSingleElectron();
         String description = radical.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
