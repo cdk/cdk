@@ -204,7 +204,7 @@ public class BioPolymerTest extends CDKTestCase {
 		assertEquals(2, oBioPolymer.getAtomCount());
 	}
     
-	public void testAddAtom_IAtom_Strand() {
+	public void testAddAtom_IAtom_IStrand() {
 		BioPolymer oBioPolymer = new BioPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -222,7 +222,7 @@ public class BioPolymerTest extends CDKTestCase {
 		assertEquals(3, oBioPolymer.getAtomCount());
 	}
 	
-	public void testAddAtom_IAtom_Monomer_Strand()	{
+	public void testAddAtom_IAtom_IMonomer_IStrand()	{
 		BioPolymer oBioPolymer = new BioPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");

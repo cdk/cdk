@@ -119,7 +119,7 @@ public class ChemSequenceTest extends CDKTestCase {
         }
     }
     
-    public void testStateChanged_ChemObjectChangeEvent() {
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         ChemSequence chemObject = new ChemSequence();
         chemObject.addListener(listener);

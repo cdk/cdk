@@ -72,7 +72,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
         assertEquals(3, som.getAtomContainerCount());
     }
     
-    public void testAdd_SetOfAtomContainers() {
+    public void testAdd_ISetOfAtomContainers() {
         ISetOfAtomContainers som = builder.newSetOfAtomContainers();
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
@@ -227,7 +227,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
 	assertNotSame(containerSet, clone);
     } 
 
-    public void testStateChanged_ChemObjectChangeEvent() {
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         ISetOfAtomContainers chemObject = builder.newSetOfAtomContainers();
         chemObject.addListener(listener);

@@ -232,7 +232,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertEquals(0, chemObject2.getListenerCount());
     }
     
-    public void testAddListener_ChemObjectListener() {
+    public void testAddListener_IChemObjectListener() {
         IChemObject chemObject1 = builder.newChemObject();
         assertEquals(0, chemObject1.getListenerCount());
         DummyChemObjectListener listener = new DummyChemObjectListener();
@@ -240,7 +240,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertEquals(1, chemObject1.getListenerCount());
     }
     
-    public void testRemoveListener_ChemObjectListener() {
+    public void testRemoveListener_IChemObjectListener() {
         IChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
@@ -267,7 +267,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertTrue(clone instanceof IChemObject);
     }
 
-    public void testStateChanged_ChemObjectChangeEvent() {
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
@@ -295,7 +295,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertTrue(listener.changed);
     }
     
-    public void testNotifyChanged_ChemObjectChangeEvent() {
+    public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);

@@ -57,7 +57,7 @@ public class ChemFileTest extends CDKTestCase {
         assertNotNull(cs);
     }
 
-    public void testAddChemSequence_ChemSequence() {
+    public void testAddChemSequence_IChemSequence() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
@@ -115,7 +115,7 @@ public class ChemFileTest extends CDKTestCase {
         }
     }
 
-    public void testStateChanged_ChemObjectChangeEvent() {
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         ChemFile chemObject = new ChemFile();
         chemObject.addListener(listener);

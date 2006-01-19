@@ -86,7 +86,7 @@ public class PolymerTest extends TestCase {
 		assertEquals(0, oPolymer.getMonomerCount());
 	}
     
-	public void testAddAtom_IAtom_Monomer() {
+	public void testAddAtom_IAtom_IMonomer() {
 		IPolymer oPolymer = builder.newPolymer();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));

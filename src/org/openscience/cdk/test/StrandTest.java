@@ -155,7 +155,7 @@ public class StrandTest extends TestCase {
 		assertEquals(2, oStrand.getAtomCount());
 	}
     
-	public void testAddAtom_IAtom_Monomer() {
+	public void testAddAtom_IAtom_IMonomer() {
 		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));

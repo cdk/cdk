@@ -47,7 +47,7 @@ public class AtomEnumerationTest extends CDKTestCase {
 
     public void setUp() {}
     
-    public void testAtomEnumeration_IAtomContainer() {
+    public void testAtomEnumeration_AtomContainer() {
         testHasMoreElements();
     }
     

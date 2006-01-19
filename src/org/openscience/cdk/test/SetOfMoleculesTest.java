@@ -76,7 +76,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
         assertNull(som.getMolecule(3)); // fourth molecule must not exist
     }
     
-    public void testAddMolecule_Molecule() {
+    public void testAddMolecule_IMolecule() {
         ISetOfMolecules som = builder.newSetOfMolecules();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -93,7 +93,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
         assertEquals(7, som.getMoleculeCount());        
     }
     
-    public void testAdd_SetOfMolecules() {
+    public void testAdd_ISetOfMolecules() {
         ISetOfMolecules som = builder.newSetOfMolecules();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -107,7 +107,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
         assertEquals(5, som2.getMoleculeCount());
     }
     
-    public void testSetMolecules_arrayMolecule() {
+    public void testSetMolecules_arrayIMolecule() {
         ISetOfMolecules som = builder.newSetOfMolecules();
         
         IMolecule[] set = new IMolecule[5];
@@ -178,7 +178,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
 	assertNotSame(som, clone);
     }   
     
-    public void testStateChanged_ChemObjectChangeEvent() {
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         ISetOfMolecules chemObject = builder.newSetOfMolecules();
         chemObject.addListener(listener);

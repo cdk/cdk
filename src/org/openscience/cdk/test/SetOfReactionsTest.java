@@ -109,7 +109,7 @@ public class SetOfReactionsTest extends CDKTestCase {
         }
     }
     
-    public void testAddReaction_Reaction() {
+    public void testAddReaction_IReaction() {
 		ISetOfReactions reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2

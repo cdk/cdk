@@ -61,9 +61,10 @@ public class RingSetTest extends CDKTestCase {
     
     public void testRingSet() {
         IRingSet rs = builder.newRingSet();
+        assertNotNull(rs);
     }
     
-    public void testRingAlreadyInSet_Ring() {
+    public void testRingAlreadyInSet_IRing() {
         IRing r1 = builder.newRing(5, "C");
         IRing r2 = builder.newRing(3, "C");
         
@@ -80,7 +81,7 @@ public class RingSetTest extends CDKTestCase {
         assertTrue(rs.ringAlreadyInSet(r2));
     }
     
-    public void testAdd_RingSet() {
+    public void testAdd_IRingSet() {
         IRing r1 = builder.newRing(5, "C");
         IRing r2 = builder.newRing(3, "C");
         
@@ -300,7 +301,7 @@ public class RingSetTest extends CDKTestCase {
         assertEquals(1, ringset.getRings(ring2Atom2).size());
     }
     
-    public void testGetConnectedRings_Ring() {
+    public void testGetConnectedRings_IRing() {
         IRingSet ringset = builder.newRingSet();
 
         IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule

@@ -133,7 +133,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(2.0, b.getAtomCount(), 0.001);
     }
     
-    public void testSetAtoms_arrayAtom() {
+    public void testSetAtoms_arrayIAtom() {
         IAtom[] atomsToAdd = new IAtom[2];
         atomsToAdd[0] = builder.newAtom("C");
         atomsToAdd[1] = builder.newAtom("O");

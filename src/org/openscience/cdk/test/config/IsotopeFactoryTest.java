@@ -71,7 +71,7 @@ public class IsotopeFactoryTest extends CDKTestCase
         assertEquals(1, atom.getAtomicNumber());
     }
 	
-	public void testConfigure_IAtom_Isotope() throws Exception {
+	public void testConfigure_IAtom_IIsotope() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Atom atom = new Atom("H");
         IIsotope isotope = new org.openscience.cdk.Isotope("H", 2);
