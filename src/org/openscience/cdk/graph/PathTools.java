@@ -421,6 +421,75 @@ public class PathTools {
         return n / 2;
     }
 
+    /**
+     * Returns a list of atoms in the shortest path between two atoms.
+     *
+     * This method uses the Djikstra algorithm to find all the atoms in the shortest
+     * path between the two specified atoms. The start and end atoms are also included
+     * in the path returned
+     *
+     * @param atomContainer The molecule to search in
+     * @param start The starting atom
+     * @param end The ending atom
+     * @return A <code>List</code> containing the atoms in the shortest path between <code>start</code> and
+     * <code>end</code> inclusive
+     */
+    public static List getShortestPath(IAtomContainer atomContainer, IAtom start, IAtom end) {
+        int natom = atomContainer.getAtomCount();
+        int endNumber = atomContainer.getAtomNumber(end);
+        int startNumber = atomContainer.getAtomNumber(start);
+        int[] d = new int[natom];
+        int[] previous = new int[natom];
+        for (int i = 0; i < natom; i++) {
+            d[i] = 99999999;
+            previous[i] = -1;
+        }
+        d[atomContainer.getAtomNumber(start)] = 0;
+
+        ArrayList S = new ArrayList();
+        ArrayList Q = new ArrayList();
+        for (int i = 0; i < natom; i++) Q.add(new Integer(i));
+
+        while (true) {
+            if (Q.size() == 0) break;
+
+            // extract min
+            int u = 999999;
+            int index = 0;
+            for (int i = 0; i < Q.size(); i++) {
+                int tmp = ((Integer)Q.get(i)).intValue();
+                if (d[tmp] < u) {
+                    u = d[tmp];
+                    index = i;
+                }
+            }
+            Q.remove(index);
+            S.add(atomContainer.getAtomAt(u));
+            if (u == endNumber) break;
+
+            // relaxation
+            IAtom[] connected = atomContainer.getConnectedAtoms( atomContainer.getAtomAt(u) );
+            for (int i = 0; i < connected.length; i++) {
+                int anum = atomContainer.getAtomNumber(connected[i]);
+                if (d[anum] > d[u] + 1) { // all edges have equals weights
+                    d[anum] = d[u] + 1;
+                    previous[anum] = u;
+                }
+            }
+        }
+
+        ArrayList tmp = new ArrayList();
+        int u = endNumber;
+        while (true) {
+            tmp.add(0, atomContainer.getAtomAt(u));
+            u = previous[u];
+            if (u == startNumber){
+                tmp.add(0, atomContainer.getAtomAt(u));
+                break;
+            }
+        }
+        return tmp;
+    }
 
     private static List allPaths;
 

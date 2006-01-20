@@ -66,6 +66,38 @@ public class PathToolsTest extends CDKTestCase {
         assertEquals(3, length);
     }
 
+    public void testGetShortestPath() {
+        IAtomContainer atomContainer = null;
+        IAtom start = null;
+        IAtom end = null;
+        List path = null;
+        SmilesParser sp = new SmilesParser();
+        try {
+            atomContainer = sp.parseSmiles("CCCC");
+            start = atomContainer.getAtomAt(0);
+            end = atomContainer.getAtomAt(3);
+            path = PathTools.getShortestPath(atomContainer, start, end);
+            Assert.assertEquals(4, path.size());
+
+            atomContainer = sp.parseSmiles("CC(N)CC");
+            start = atomContainer.getAtomAt(0);
+            end = atomContainer.getAtomAt(2);
+            path = PathTools.getShortestPath(atomContainer, start, end);
+            Assert.assertEquals(3, path.size());
+
+            atomContainer = sp.parseSmiles("C1C(N)CC1");
+            start = atomContainer.getAtomAt(0);
+            end = atomContainer.getAtomAt(2);
+            path = PathTools.getShortestPath(atomContainer, start, end);
+            Assert.assertEquals(3, path.size());
+            
+            
+        } catch (InvalidSmilesException e) {
+            e.printStackTrace();
+        }
+    }
+
+        
 
     public void testGetPath() {
         IAtomContainer atomContainer = null;
