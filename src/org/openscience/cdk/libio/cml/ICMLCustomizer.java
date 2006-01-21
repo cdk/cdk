@@ -39,9 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author        egonw
  * @cdk.created   2005-05-04
- * @cdk.module    data
- * 
- * @cdk.depends   xom-1.0.jar
+ * @cdk.module    standard
  */
 public interface ICMLCustomizer {
 
