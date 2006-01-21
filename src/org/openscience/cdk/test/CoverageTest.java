@@ -167,7 +167,6 @@ abstract public class CoverageTest extends CDKTestCase {
     
     private Class loadClass(String className) {
         Class loadedClass = null;
-        System.out.println("Loading class: " + className);
         try {
             loadedClass = classLoader.loadClass(className);
         } catch (ClassNotFoundException exception) {
