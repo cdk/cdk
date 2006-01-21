@@ -167,11 +167,12 @@ abstract public class CoverageTest extends CDKTestCase {
     
     private Class loadClass(String className) {
         Class loadedClass = null;
+        System.out.println("Loading class: " + className);
         try {
             loadedClass = classLoader.loadClass(className);
         } catch (ClassNotFoundException exception) {
-            fail("Could not find class: " + exception.getMessage());
             exception.printStackTrace();
+            fail("Could not find class: " + exception.getMessage());
         } catch (NoSuchMethodError error) {
             fail("No such method in class: " + error.getMessage());
         }

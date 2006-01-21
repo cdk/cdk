@@ -68,14 +68,14 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	 */
 	public Ring(int ringSize, String elementSymbol) {
 		this(ringSize);
-		Atom[] atoms = new Atom[ringSize];
+		super.atomCount = ringSize;
+		super.electronContainerCount = ringSize;
 		atoms[0] = new Atom(elementSymbol);
 		for (int i = 1; i < ringSize; i++) {
 			atoms[i] = new Atom(elementSymbol);
-			addElectronContainer(new Bond(atoms[i - 1], atoms[i], 1));
+			super.electronContainers[i-1] = new Bond(atoms[i - 1], atoms[i], 1);
 		}
-		addElectronContainer(new Bond(atoms[ringSize - 1], atoms[0], 1));
-		setAtoms(atoms);
+		super.electronContainers[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
 	}
 	
 		

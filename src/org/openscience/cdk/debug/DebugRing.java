@@ -27,6 +27,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
@@ -56,7 +58,15 @@ public class DebugRing extends org.openscience.cdk.Ring
 	}
     
 	public DebugRing(int ringSize, String elementSymbol) {
-		super(ringSize, elementSymbol);
+		this(ringSize);
+		super.atomCount = ringSize;
+		super.electronContainerCount = ringSize;
+		atoms[0] = new DebugAtom(elementSymbol);
+		for (int i = 1; i < ringSize; i++) {
+			atoms[i] = new DebugAtom(elementSymbol);
+			super.electronContainers[i-1] = new Bond(atoms[i - 1], atoms[i], 1);
+		}
+		super.electronContainers[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
 	}
 	
 	public DebugRing(int ringSize) {
