@@ -29,6 +29,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -42,11 +44,15 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  */
 public class ChemFileTest extends CDKTestCase {
 
+	protected IChemObjectBuilder builder;
+	
     public ChemFileTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(ChemFileTest.class);

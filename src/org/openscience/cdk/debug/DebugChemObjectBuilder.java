@@ -93,7 +93,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
     		org.openscience.cdk.interfaces.IAtom third, 
     		org.openscience.cdk.interfaces.IAtom fourth,
             int parity) {
-    	return new AtomParity(centralAtom, first, second, third, fourth, parity);
+    	return new DebugAtomParity(centralAtom, first, second, third, fourth, parity);
     }
 
 	public org.openscience.cdk.interfaces.IAtomType newAtomType(String elementSymbol) {
@@ -125,11 +125,11 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 	}
 	
 	public org.openscience.cdk.interfaces.IChemFile newChemFile() {
-		return new ChemFile();
+		return new DebugChemFile();
 	}
 
 	public org.openscience.cdk.interfaces.IChemModel newChemModel() {
-		return new ChemModel();
+		return new DebugChemModel();
 	}
 	
 	public org.openscience.cdk.interfaces.IChemObject newChemObject() {
@@ -137,7 +137,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 	}
 	
 	public org.openscience.cdk.interfaces.IChemSequence newChemSequence() {
-		return new ChemSequence();   
+		return new DebugChemSequence();   
 	}
 	
     public org.openscience.cdk.interfaces.ICrystal newCrystal() {
@@ -215,23 +215,23 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
     }
 	
 	public org.openscience.cdk.interfaces.IRing newRing() {
-		return new Ring();
+		return new DebugRing();
 	}
 	
 	public org.openscience.cdk.interfaces.IRing newRing(org.openscience.cdk.interfaces.IAtomContainer container) {
-		return new Ring(container);
+		return new DebugRing(container);
 	}
 	
 	public org.openscience.cdk.interfaces.IRing newRing(int ringSize, String elementSymbol) {
-		return new Ring(ringSize, elementSymbol);
+		return new DebugRing(ringSize, elementSymbol);
 	}
 	
 	public org.openscience.cdk.interfaces.IRing newRing(int ringSize) {
-		return new Ring(ringSize);
+		return new DebugRing(ringSize);
 	}
 
 	public org.openscience.cdk.interfaces.IRingSet newRingSet() {
-		return new RingSet();
+		return new DebugRingSet();
 	}
 
 	public org.openscience.cdk.interfaces.ISetOfAtomContainers newSetOfAtomContainers() {
@@ -243,7 +243,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public org.openscience.cdk.interfaces.ISetOfReactions newSetOfReactions() {
-		return new SetOfReactions();
+		return new DebugSetOfReactions();
 	}
 	
     public org.openscience.cdk.interfaces.ISingleElectron newSingleElectron() {

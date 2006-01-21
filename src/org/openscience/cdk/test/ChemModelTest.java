@@ -29,8 +29,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.Crystal;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
@@ -45,11 +47,15 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  */
 public class ChemModelTest extends CDKTestCase {
 
+	protected IChemObjectBuilder builder;
+	
     public ChemModelTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(ChemModelTest.class);

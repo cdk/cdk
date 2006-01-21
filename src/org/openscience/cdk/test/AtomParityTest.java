@@ -28,6 +28,9 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomParity;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Checks the functionality of the AtomParity class.
@@ -38,26 +41,30 @@ import org.openscience.cdk.AtomParity;
  */
 public class AtomParityTest extends CDKTestCase {
 
+	protected IChemObjectBuilder builder;
+	
     public AtomParityTest(String name) {
         super(name);
     }
 
-    public void setUp() {}
+    public void setUp() {
+    	builder = DefaultChemObjectBuilder.getInstance();
+    }
 
     public static Test suite() {
         return new TestSuite(AtomParityTest.class);
     }
     
     public void testAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -65,15 +72,15 @@ public class AtomParityTest extends CDKTestCase {
     }
     
     public void testGetAtom() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -81,15 +88,15 @@ public class AtomParityTest extends CDKTestCase {
     }
     
     public void testGetSurroundingAtoms() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -102,15 +109,15 @@ public class AtomParityTest extends CDKTestCase {
     }
     
     public void testGetParity() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -119,15 +126,15 @@ public class AtomParityTest extends CDKTestCase {
     
     /** Test for RFC #9 */
     public void testToString() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -139,15 +146,15 @@ public class AtomParityTest extends CDKTestCase {
     }
 
 	public void testClone() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -156,15 +163,15 @@ public class AtomParityTest extends CDKTestCase {
     }    
         
     public void testClone_SurroundingAtoms() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
@@ -183,15 +190,15 @@ public class AtomParityTest extends CDKTestCase {
     }
     
     public void testClone_IAtom() {
-        Atom carbon = new Atom("C");
+        IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
-        Atom carbon1 = new Atom("C");
+        IAtom carbon1 = builder.newAtom("C");
         carbon1.setID("c1");
-        Atom carbon2 = new Atom("C");
+        IAtom carbon2 = builder.newAtom("C");
         carbon2.setID("c2");
-        Atom carbon3 = new Atom("C");
+        IAtom carbon3 = builder.newAtom("C");
         carbon3.setID("c3");
-        Atom carbon4 = new Atom("C");
+        IAtom carbon4 = builder.newAtom("C");
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
