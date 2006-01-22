@@ -59,7 +59,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 		super(atomCount, electronContainerCount);
 	}
 
-	public DebugMolecule(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public DebugMolecule(IAtomContainer container) {
 		super(container);
 	}
 
