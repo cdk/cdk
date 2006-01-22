@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAtomType;
+
 /**
  *  The base class for atom types. Atom types are typically used to describe the
  *  behaviour of an atom of a particular element in different environment like 
@@ -41,7 +43,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword     atom, type
  */
-public class AtomType extends Isotope implements java.io.Serializable, org.openscience.cdk.interfaces.IAtomType
+public class AtomType extends Isotope implements java.io.Serializable, IAtomType
 {
 
 	/**
@@ -279,7 +281,7 @@ public class AtomType extends Isotope implements java.io.Serializable, org.opens
      * @return        Return true, if the atomtypes are equal
      */
     public boolean compare(Object object) {
-        if (!(object instanceof org.openscience.cdk.interfaces.IAtomType)) {
+        if (!(object instanceof IAtomType)) {
             return false;
         }
         if (!super.compare(object)) {

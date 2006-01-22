@@ -24,8 +24,13 @@
 
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 
 /** 
  * An object containig multiple SetOfMolecules and 
@@ -34,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @cdk.module data
  */
-public class ChemModel extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemModel, IChemObjectListener
+public class ChemModel extends ChemObject implements java.io.Serializable, IChemModel, IChemObjectListener
 {
 
 	/**
@@ -50,22 +55,22 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
 	/**
 	 *  A SetOfMolecules.
 	 */
-	protected org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules = null;
+	protected ISetOfMolecules setOfMolecules = null;
 
 	/**
 	 *  A SetOfReactions.
 	 */
-	protected org.openscience.cdk.interfaces.ISetOfReactions setOfReactions = null;
+	protected ISetOfReactions setOfReactions = null;
 
 	/**
 	 *  A RingSet.
 	 */
-	protected org.openscience.cdk.interfaces.IRingSet ringSet = null;
+	protected IRingSet ringSet = null;
 	
     /**
 	 *  A Crystal.
 	 */
-     protected org.openscience.cdk.interfaces.ICrystal crystal = null;
+     protected ICrystal crystal = null;
 
 	/**
 	 *  Constructs an new ChemModel with a null setOfMolecules.
@@ -79,7 +84,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setSetOfMolecules
 	 */
-	public org.openscience.cdk.interfaces.ISetOfMolecules getSetOfMolecules()
+	public ISetOfMolecules getSetOfMolecules()
 	{
 		return (SetOfMolecules)this.setOfMolecules;
 	}
@@ -92,7 +97,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #getSetOfMolecules
 	 */
-	public void setSetOfMolecules(org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules)
+	public void setSetOfMolecules(ISetOfMolecules setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
 		this.setOfMolecules.addListener(this);
@@ -108,7 +113,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setRingSet
 	 */
-	public org.openscience.cdk.interfaces.IRingSet getRingSet() {
+	public IRingSet getRingSet() {
 		return this.ringSet;
 	}
 
@@ -120,7 +125,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #getRingSet
 	 */
-	public void setRingSet(org.openscience.cdk.interfaces.IRingSet ringSet)
+	public void setRingSet(IRingSet ringSet)
 	{
 		this.ringSet = ringSet;
 		notifyChanged();
@@ -133,7 +138,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setCrystal
      */
-    public org.openscience.cdk.interfaces.ICrystal getCrystal() {
+    public ICrystal getCrystal() {
         return this.crystal;
     }
 
@@ -144,7 +149,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #getCrystal
      */
-    public void setCrystal(org.openscience.cdk.interfaces.ICrystal crystal) {
+    public void setCrystal(ICrystal crystal) {
         this.crystal = crystal;
 	this.crystal.addListener(this);
 	notifyChanged();
@@ -157,7 +162,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see      #setSetOfReactions
      */
-    public org.openscience.cdk.interfaces.ISetOfReactions getSetOfReactions() {
+    public ISetOfReactions getSetOfReactions() {
         return this.setOfReactions;
     }
 
@@ -168,7 +173,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
      *
      * @see       #getSetOfReactions
      */
-    public void setSetOfReactions(org.openscience.cdk.interfaces.ISetOfReactions sor) {
+    public void setSetOfReactions(ISetOfReactions sor) {
         this.setOfReactions = sor;
 	this.setOfReactions.addListener(this);
 	notifyChanged();
@@ -220,7 +225,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, org.o
             clone.setOfMolecules = null;
         }
         if (setOfReactions != null) {
-            clone.setOfReactions = (org.openscience.cdk.interfaces.ISetOfReactions)((SetOfReactions)setOfReactions).clone();
+            clone.setOfReactions = (ISetOfReactions)((SetOfReactions)setOfReactions).clone();
         } else {
             clone.setOfReactions = null;
         }

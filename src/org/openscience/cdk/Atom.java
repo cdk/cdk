@@ -31,6 +31,8 @@ package org.openscience.cdk;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 /**
  * Represents the idea of an chemical atom.
  *
@@ -58,7 +60,7 @@ import javax.vecmath.Point3d;
  *
  * @see  org.openscience.cdk.config.IsotopeFactory#getInstance(ChemObjectBuilder)
  */
-public class Atom extends AtomType implements java.io.Serializable, org.openscience.cdk.interfaces.IAtom  {
+public class Atom extends AtomType implements java.io.Serializable, IAtom  {
     
 	/* Let's keep this exact specification
 	 * of what kind of point2d we're talking of here,
@@ -563,7 +565,7 @@ public class Atom extends AtomType implements java.io.Serializable, org.openscie
          */
         public boolean compare(Object object)
         {
-          if (!(object instanceof org.openscience.cdk.interfaces.IAtom)) {
+          if (!(object instanceof IAtom)) {
               return false;
           }
           if (!super.compare(object)) {

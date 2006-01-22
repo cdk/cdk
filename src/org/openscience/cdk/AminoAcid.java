@@ -27,6 +27,9 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IAtom;
+
 /**
  * A AminoAcid is Monomer which stores additional amino acid specific 
  * informations, like the N-terminus atom.
@@ -37,7 +40,7 @@ package org.openscience.cdk;
  * @cdk.created 2005-08-11
  * @cdk.keyword amino acid
  */
-public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces.IAminoAcid, java.io.Serializable
+public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializable
 {
 
     /**
@@ -51,9 +54,9 @@ public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces
 	private static final long serialVersionUID = -5032283549467862509L;
 	
 	/** The atom that constitutes the N-terminus. */
-    private org.openscience.cdk.interfaces.IAtom nTerminus;
+    private IAtom nTerminus;
     /** The atom that constitutes the C-terminus. */
-    private org.openscience.cdk.interfaces.IAtom cTerminus;
+    private IAtom cTerminus;
 
     /**
      * Contructs a new AminoAcid.
@@ -69,7 +72,7 @@ public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces
      *
      * @see    #addNTerminus(Atom)
      */
-    public org.openscience.cdk.interfaces.IAtom getNTerminus() {
+    public IAtom getNTerminus() {
         return nTerminus;
     }
 
@@ -80,7 +83,7 @@ public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces
      *
      * @see    #getNTerminus
      */
-    public void addNTerminus(org.openscience.cdk.interfaces.IAtom atom) {
+    public void addNTerminus(IAtom atom) {
         super.addAtom(atom);
         nTerminus = atom;
     }
@@ -93,7 +96,7 @@ public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces
      *
      * @see    #addNTerminus
      */
-    private void setNTerminus(org.openscience.cdk.interfaces.IAtom atom) {
+    private void setNTerminus(IAtom atom) {
         nTerminus = atom;
     }
 
@@ -104,7 +107,7 @@ public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces
      *
      * @see    #addCTerminus(Atom)
      */
-    public org.openscience.cdk.interfaces.IAtom getCTerminus() {
+    public IAtom getCTerminus() {
         return cTerminus;
     }
 
@@ -115,7 +118,7 @@ public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces
      *
      * @see    #getCTerminus
      */
-    public void addCTerminus(org.openscience.cdk.interfaces.IAtom atom) {
+    public void addCTerminus(IAtom atom) {
         super.addAtom(atom);
         setCTerminus(atom);
     }
@@ -128,7 +131,7 @@ public class AminoAcid extends Monomer implements org.openscience.cdk.interfaces
      *
      * @see    #addCTerminus
      */
-    private void setCTerminus(org.openscience.cdk.interfaces.IAtom atom) {
+    private void setCTerminus(IAtom atom) {
         cTerminus = atom;
     }
 

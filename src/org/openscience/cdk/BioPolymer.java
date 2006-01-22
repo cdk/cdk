@@ -32,7 +32,9 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.openscience.cdk.interfaces.IAtom;
-
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * A BioPolymer is a subclass of a Polymer which is supposed to store
@@ -46,7 +48,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.keyword polymer
  * @cdk.keyword biopolymer
  */
-public class BioPolymer extends Polymer implements java.io.Serializable, org.openscience.cdk.interfaces.IBioPolymer
+public class BioPolymer extends Polymer implements java.io.Serializable, IBioPolymer
 {
 
 	/**
@@ -93,7 +95,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @param oMonomer  The strand the atom belongs to
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.IStrand oStrand) {
+	public void addAtom(IAtom oAtom, IStrand oStrand) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);
@@ -117,7 +119,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @param oMonomer
 	 * @param oStrand
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.IMonomer oMonomer, org.openscience.cdk.interfaces.IStrand oStrand)	{
+	public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand)	{
 		
 		if(!contains(oAtom))	{
 			// Add atom to AtomContainer
@@ -166,7 +168,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public org.openscience.cdk.interfaces.IMonomer getMonomer(String monName, String strandName) {
+	public IMonomer getMonomer(String monName, String strandName) {
 	    Strand strand = (Strand)strands.get(strandName); 
 	    
 	    if(strand != null)	{
@@ -231,7 +233,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, org.ope
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public org.openscience.cdk.interfaces.IStrand getStrand(String cName) {
+	public IStrand getStrand(String cName) {
 		return (Strand)strands.get(cName);
 	}
 	

@@ -28,6 +28,9 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomParity;
+
 /**
  * Represents the concept of an atom parity identifying the stereochemistry
  * around an atom, given four neighbouring atoms.
@@ -38,7 +41,7 @@ package org.openscience.cdk;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public class AtomParity extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IAtomParity  {
+public class AtomParity extends ChemObject implements java.io.Serializable, IAtomParity  {
     
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -50,8 +53,8 @@ public class AtomParity extends ChemObject implements java.io.Serializable, org.
 	 */
 	private static final long serialVersionUID = -2031408037315976637L;
 
-	private org.openscience.cdk.interfaces.IAtom centralAtom;
-    private org.openscience.cdk.interfaces.IAtom[] neighbors;
+	private IAtom centralAtom;
+    private IAtom[] neighbors;
     private int parity;
     
     /**
@@ -65,11 +68,11 @@ public class AtomParity extends ChemObject implements java.io.Serializable, org.
      * @param parity      +1 or -1, defining the parity
      */
     public AtomParity(
-    		org.openscience.cdk.interfaces.IAtom centralAtom, 
-    		org.openscience.cdk.interfaces.IAtom first, 
-    		org.openscience.cdk.interfaces.IAtom second, 
-    		org.openscience.cdk.interfaces.IAtom third, 
-    		org.openscience.cdk.interfaces.IAtom fourth,
+    		IAtom centralAtom, 
+    		IAtom first, 
+    		IAtom second, 
+    		IAtom third, 
+    		IAtom fourth,
     		int parity) {
         this.centralAtom = centralAtom;
         this.neighbors = new Atom[4];
@@ -85,7 +88,7 @@ public class AtomParity extends ChemObject implements java.io.Serializable, org.
      *
      * @return The atom for which this parity is defined
      */
-    public org.openscience.cdk.interfaces.IAtom getAtom() { 
+    public IAtom getAtom() { 
         return centralAtom;
     }
     
@@ -96,7 +99,7 @@ public class AtomParity extends ChemObject implements java.io.Serializable, org.
      * @return The four atoms that define the stereochemistry for
      *         this parity
      */
-    public org.openscience.cdk.interfaces.IAtom[] getSurroundingAtoms() {
+    public IAtom[] getSurroundingAtoms() {
         return neighbors;
     }
     

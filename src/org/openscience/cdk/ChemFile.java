@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
  *  A Object containing a number of ChemSequences. This is supposed to be the
@@ -35,8 +37,8 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *@author        steinbeck
  *@cdk.module    data
  */
-public class ChemFile extends ChemObject implements java.io.Serializable
-		, org.openscience.cdk.interfaces.IChemFile, IChemObjectListener
+public class ChemFile extends ChemObject implements java.io.Serializable,
+		IChemFile, IChemObjectListener
 {
 
 	/**
@@ -52,7 +54,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	/**
 	 *  Array of ChemSquences.
 	 */
-	protected org.openscience.cdk.interfaces.IChemSequence[] chemSequences;
+	protected IChemSequence[] chemSequences;
 
 	/**
 	 *  Number of ChemSequences contained by this container.
@@ -82,7 +84,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	 *@param  chemSequence  The chemSequence to be added to this container
 	 *@see                  #getChemSequences
 	 */
-	public void addChemSequence(org.openscience.cdk.interfaces.IChemSequence chemSequence)
+	public void addChemSequence(IChemSequence chemSequence)
 	{
 		chemSequence.addListener(this);
 		if (chemSequenceCount + 1 >= chemSequences.length)
@@ -102,7 +104,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	 *@return    The array of ChemSequences of this container
 	 *@see       #addChemSequence
 	 */
-	public org.openscience.cdk.interfaces.IChemSequence[] getChemSequences()
+	public IChemSequence[] getChemSequences()
 	{
 		ChemSequence[] returnChemSequences = new ChemSequence[getChemSequenceCount()];
 		System.arraycopy(this.chemSequences, 0, returnChemSequences,
@@ -118,7 +120,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	 *@return         The ChemSequence at position <code>number</code>.
 	 *@see            #addChemSequence
 	 */
-	public org.openscience.cdk.interfaces.IChemSequence getChemSequence(int number)
+	public IChemSequence getChemSequence(int number)
 	{
 		return (ChemSequence)chemSequences[number];
 	}
@@ -132,7 +134,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	protected void growChemSequenceArray()
 	{
 		growArraySize = chemSequences.length;
-		org.openscience.cdk.interfaces.IChemSequence[] newchemSequences = new ChemSequence[chemSequences.length + growArraySize];
+		IChemSequence[] newchemSequences = new ChemSequence[chemSequences.length + growArraySize];
 		System.arraycopy(chemSequences, 0, newchemSequences, 0, chemSequences.length);
 		chemSequences = newchemSequences;
 	}
@@ -159,12 +161,12 @@ public class ChemFile extends ChemObject implements java.io.Serializable
 	{
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("ChemFile(#S=");
-		org.openscience.cdk.interfaces.IChemSequence[] seqs = getChemSequences();
+		IChemSequence[] seqs = getChemSequences();
 		buffer.append(seqs.length);
 		buffer.append(", ");
 		for (int i = 0; i < seqs.length; i++)
 		{
-			org.openscience.cdk.interfaces.IChemSequence sequence = seqs[i];
+			IChemSequence sequence = seqs[i];
 			buffer.append(sequence.toString());
 		}
 		buffer.append(")");
