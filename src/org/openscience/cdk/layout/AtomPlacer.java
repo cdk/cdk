@@ -359,6 +359,8 @@ public class AtomPlacer
 					logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
 				}
 				bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),trans);
+			} else {
+				bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),true);
 			}
 		}
 	}
