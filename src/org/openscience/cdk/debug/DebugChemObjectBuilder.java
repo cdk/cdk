@@ -26,14 +26,35 @@ package org.openscience.cdk.debug;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.AtomParity;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPolymer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * A helper class to instantiate a IChemObject for the debug implementation.
@@ -54,227 +75,227 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 		return instance;
 	}
 	
-	public org.openscience.cdk.interfaces.IAminoAcid newAminoAcid() {
+	public IAminoAcid newAminoAcid() {
 		return new DebugAminoAcid();
 	}
 	
-	public org.openscience.cdk.interfaces.IAtom newAtom() {
+	public IAtom newAtom() {
 		return new DebugAtom();
 	}
 	
-    public org.openscience.cdk.interfaces.IAtom newAtom(String elementSymbol) {
+    public IAtom newAtom(String elementSymbol) {
     	return new DebugAtom(elementSymbol);
     }
     
-    public org.openscience.cdk.interfaces.IAtom newAtom(String elementSymbol, javax.vecmath.Point2d point2d) {
+    public IAtom newAtom(String elementSymbol, javax.vecmath.Point2d point2d) {
     	return new DebugAtom(elementSymbol, point2d);
     }
 
-    public org.openscience.cdk.interfaces.IAtom newAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
+    public IAtom newAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
     	return new DebugAtom(elementSymbol, point3d);
     }
 		
-	public org.openscience.cdk.interfaces.IAtomContainer newAtomContainer() {
+	public IAtomContainer newAtomContainer() {
 		return new DebugAtomContainer();
 	}
     
-	public org.openscience.cdk.interfaces.IAtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
+	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
 		return new DebugAtomContainer(atomCount, electronContainerCount);
 	}
     
-	public org.openscience.cdk.interfaces.IAtomContainer newAtomContainer(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public IAtomContainer newAtomContainer(IAtomContainer container) {
 		return new DebugAtomContainer(container);
 	}
 	
-    public org.openscience.cdk.interfaces.IAtomParity newAtomParity(
-    		org.openscience.cdk.interfaces.IAtom centralAtom, 
-    		org.openscience.cdk.interfaces.IAtom first, 
-    		org.openscience.cdk.interfaces.IAtom second, 
-    		org.openscience.cdk.interfaces.IAtom third, 
-    		org.openscience.cdk.interfaces.IAtom fourth,
+    public IAtomParity newAtomParity(
+    		IAtom centralAtom, 
+    		IAtom first, 
+    		IAtom second, 
+    		IAtom third, 
+    		IAtom fourth,
             int parity) {
     	return new DebugAtomParity(centralAtom, first, second, third, fourth, parity);
     }
 
-	public org.openscience.cdk.interfaces.IAtomType newAtomType(String elementSymbol) {
+	public IAtomType newAtomType(String elementSymbol) {
 		return new DebugAtomType(elementSymbol);
 	}
 
-	public org.openscience.cdk.interfaces.IAtomType newAtomType(String identifier, String elementSymbol) {
+	public IAtomType newAtomType(String identifier, String elementSymbol) {
 		return new DebugAtomType(identifier, elementSymbol);
 	}
 
-	public org.openscience.cdk.interfaces.IBioPolymer newBioPolymer(){
+	public IBioPolymer newBioPolymer(){
 		return new DebugBioPolymer();
 	}
 
-	public org.openscience.cdk.interfaces.IBond newBond() {
+	public IBond newBond() {
 		return new DebugBond();
 	}
 	
-	public org.openscience.cdk.interfaces.IBond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
+	public IBond newBond(IAtom atom1, IAtom atom2) {
 		return new DebugBond(atom1, atom2);
 	}
 	
-	public org.openscience.cdk.interfaces.IBond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order) {
+	public IBond newBond(IAtom atom1, IAtom atom2, double order) {
 		return new DebugBond(atom1, atom2, order);
 	}
 	
-	public org.openscience.cdk.interfaces.IBond newBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order, int stereo) {
+	public IBond newBond(IAtom atom1, IAtom atom2, double order, int stereo) {
 		return new DebugBond(atom1, atom2, order, stereo);
 	}
 	
-	public org.openscience.cdk.interfaces.IChemFile newChemFile() {
+	public IChemFile newChemFile() {
 		return new DebugChemFile();
 	}
 
-	public org.openscience.cdk.interfaces.IChemModel newChemModel() {
+	public IChemModel newChemModel() {
 		return new DebugChemModel();
 	}
 	
-	public org.openscience.cdk.interfaces.IChemObject newChemObject() {
+	public IChemObject newChemObject() {
 		return new DebugChemObject();
 	}
 	
-	public org.openscience.cdk.interfaces.IChemSequence newChemSequence() {
+	public IChemSequence newChemSequence() {
 		return new DebugChemSequence();   
 	}
 	
-    public org.openscience.cdk.interfaces.ICrystal newCrystal() {
+    public ICrystal newCrystal() {
     	return new DebugCrystal();
     }
     
-    public org.openscience.cdk.interfaces.ICrystal newCrystal(org.openscience.cdk.interfaces.IAtomContainer container) {
+    public ICrystal newCrystal(IAtomContainer container) {
     	return new DebugCrystal(container);
     }
     
-    public org.openscience.cdk.interfaces.IElectronContainer newElectronContainer() {
+    public IElectronContainer newElectronContainer() {
     	return new DebugElectronContainer();
     }
     
-    public org.openscience.cdk.interfaces.IElement newElement() {
+    public IElement newElement() {
     	return new DebugElement();
     }
 
-    public org.openscience.cdk.interfaces.IElement newElement(String symbol) {
+    public IElement newElement(String symbol) {
     	return new DebugElement(symbol);
     }
 
-    public org.openscience.cdk.interfaces.IElement newElement(String symbol, int atomicNumber) {
+    public IElement newElement(String symbol, int atomicNumber) {
     	return new DebugElement(symbol, atomicNumber);
     }
 
-	public org.openscience.cdk.interfaces.IIsotope newIsotope(String elementSymbol) {
+	public IIsotope newIsotope(String elementSymbol) {
 		return new DebugIsotope(elementSymbol);
 	}
 	
-	public org.openscience.cdk.interfaces.IIsotope newIsotope(int atomicNumber, String elementSymbol, 
+	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			int massNumber, double exactMass, double abundance) {
 		return new DebugIsotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
 	}
 
-	public org.openscience.cdk.interfaces.IIsotope newIsotope(int atomicNumber, String elementSymbol, 
+	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			double exactMass, double abundance) {
 		return new DebugIsotope(atomicNumber, elementSymbol, exactMass, abundance);
 	}
 
-	public org.openscience.cdk.interfaces.IIsotope newIsotope(String elementSymbol, int massNumber) {
+	public IIsotope newIsotope(String elementSymbol, int massNumber) {
 		return new DebugIsotope(elementSymbol, massNumber);
 	}
 
-    public org.openscience.cdk.interfaces.ILonePair newLonePair() {
+    public ILonePair newLonePair() {
     	return new DebugLonePair();
     }
 
-    public org.openscience.cdk.interfaces.ILonePair newLonePair(org.openscience.cdk.interfaces.IAtom atom) {
+    public ILonePair newLonePair(IAtom atom) {
     	return new DebugLonePair(atom);
     }
 
-	public org.openscience.cdk.interfaces.IMolecule newMolecule() {
+	public IMolecule newMolecule() {
 		return new DebugMolecule();
 	}
 
-	public org.openscience.cdk.interfaces.IMolecule newMolecule(int atomCount, int electronContainerCount) {
+	public IMolecule newMolecule(int atomCount, int electronContainerCount) {
 		return new DebugMolecule(atomCount, electronContainerCount);
 	}
 
-	public org.openscience.cdk.interfaces.IMolecule newMolecule(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public IMolecule newMolecule(IAtomContainer container) {
 		return new DebugMolecule(container);
 	}
 
-	public org.openscience.cdk.interfaces.IMonomer newMonomer () {
+	public IMonomer newMonomer () {
 		return new DebugMonomer();
 	}
 	
-	public org.openscience.cdk.interfaces.IPolymer newPolymer() {
+	public IPolymer newPolymer() {
 		return new DebugPolymer();
 	}
 
-    public org.openscience.cdk.interfaces.IReaction newReaction() {
+    public IReaction newReaction() {
     	return new DebugReaction();	
     }
 	
-	public org.openscience.cdk.interfaces.IRing newRing() {
+	public IRing newRing() {
 		return new DebugRing();
 	}
 	
-	public org.openscience.cdk.interfaces.IRing newRing(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public IRing newRing(IAtomContainer container) {
 		return new DebugRing(container);
 	}
 	
-	public org.openscience.cdk.interfaces.IRing newRing(int ringSize, String elementSymbol) {
+	public IRing newRing(int ringSize, String elementSymbol) {
 		return new DebugRing(ringSize, elementSymbol);
 	}
 	
-	public org.openscience.cdk.interfaces.IRing newRing(int ringSize) {
+	public IRing newRing(int ringSize) {
 		return new DebugRing(ringSize);
 	}
 
-	public org.openscience.cdk.interfaces.IRingSet newRingSet() {
+	public IRingSet newRingSet() {
 		return new DebugRingSet();
 	}
 
-	public org.openscience.cdk.interfaces.ISetOfAtomContainers newSetOfAtomContainers() {
+	public ISetOfAtomContainers newSetOfAtomContainers() {
 		return new DebugSetOfAtomContainers();
 	}
 
-	public org.openscience.cdk.interfaces.ISetOfMolecules newSetOfMolecules() {
+	public ISetOfMolecules newSetOfMolecules() {
 		return new DebugSetOfMolecules();
 	}
 
-	public org.openscience.cdk.interfaces.ISetOfReactions newSetOfReactions() {
+	public ISetOfReactions newSetOfReactions() {
 		return new DebugSetOfReactions();
 	}
 	
-    public org.openscience.cdk.interfaces.ISingleElectron newSingleElectron() {
+    public ISingleElectron newSingleElectron() {
     	return new DebugSingleElectron();
     }
     
-    public org.openscience.cdk.interfaces.ISingleElectron newSingleElectron(org.openscience.cdk.interfaces.IAtom atom) {
+    public ISingleElectron newSingleElectron(IAtom atom) {
     	return new DebugSingleElectron(atom);   
     }
 
-	public org.openscience.cdk.interfaces.IStrand newStrand() {
+	public IStrand newStrand() {
 		return new DebugStrand();
 	}
 
-	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom() {
+	public IPseudoAtom newPseudoAtom() {
 		return new DebugPseudoAtom();
 	}
 
-	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(String label) {
+	public IPseudoAtom newPseudoAtom(String label) {
 		return new DebugPseudoAtom(label);
 	}
 
-	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(org.openscience.cdk.interfaces.IAtom atom) {
+	public IPseudoAtom newPseudoAtom(IAtom atom) {
 		return new DebugPseudoAtom(atom);
 	}
 
-	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(String label, Point3d point3d) {
+	public IPseudoAtom newPseudoAtom(String label, Point3d point3d) {
 		return new DebugPseudoAtom(label, point3d);
 	}
 
-	public org.openscience.cdk.interfaces.IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
+	public IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
 		return new DebugPseudoAtom(label, point2d);
 	}
 }
