@@ -218,12 +218,12 @@ public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
 	}
 
 	public int getLonePairCount() {
-		logger.debug("Getting lone pair count");
+		logger.debug("Getting lone pair count: ", super.getLonePairCount());
 		return super.getLonePairCount();
 	}
 
 	public int getBondCount() {
-		logger.debug("Getting bond count");
+		logger.debug("Getting bond count: ", super.getBondCount());
 		return super.getBondCount();
 	}
 

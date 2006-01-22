@@ -140,7 +140,7 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 
 	public ILonePair[] getLonePairs(IAtom atom) {
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs().length);
-		return super.getLonePairs();
+		return super.getLonePairs(atom);
 	}
 
 	public IAtom getFirstAtom() {

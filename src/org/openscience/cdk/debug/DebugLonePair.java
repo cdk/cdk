@@ -45,10 +45,12 @@ public class DebugLonePair extends org.openscience.cdk.LonePair
 
     public DebugLonePair() {
     	super();
+    	logger.debug("Instantiated an empty LonePair");
     }
 
     public DebugLonePair(IAtom atom) {
     	super(atom);
+    	logger.debug("Instantiated LonePair for atom: ", atom);
     }
     
 	public IAtom getAtom() {
