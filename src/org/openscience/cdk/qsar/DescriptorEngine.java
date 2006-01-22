@@ -62,8 +62,9 @@ import java.util.jar.JarFile;
  * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
  *
  * @cdk.created 2004-12-02
- * @cdk.module qsar
+ * @cdk.module  qsar
  * @cdk.depends xom-1.0.jar
+ * 
  * @see DescriptorSpecification
  * @see Dictionary
  * @see org.openscience.cdk.dict.OWLFile
@@ -183,7 +184,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element e = classifications.get(i);
                     Attribute attr = e.getAttribute("resource", rdfNS);
-                    if (attr.getValue().contains("molecularDescriptor") || attr.getValue().contains("atomicDescriptor")) {
+                    if ((attr.getValue().indexOf("molecularDescriptor") != -1) && 
+                        (attr.getValue().indexOf("atomicDescriptor") != -1)) {
                         String[] tmp = attr.getValue().split("#");
                         return tmp[1];
                     }
