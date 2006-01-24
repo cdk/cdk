@@ -184,7 +184,7 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element e = classifications.get(i);
                     Attribute attr = e.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") != -1) && 
+                    if ((attr.getValue().indexOf("molecularDescriptor") != -1) || 
                         (attr.getValue().indexOf("atomicDescriptor") != -1)) {
                         String[] tmp = attr.getValue().split("#");
                         return tmp[1];
@@ -252,8 +252,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element e = classifications.get(i);
                     Attribute attr = e.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") != -1) && 
-                        (attr.getValue().indexOf("atomicDescriptor") != -1)) {
+                    if ((attr.getValue().indexOf("molecularDescriptor") >= 0) || 
+                        (attr.getValue().indexOf("atomicDescriptor") >= 0)) {
                         continue;
                     }
                     String[] tmp = attr.getValue().split("#");

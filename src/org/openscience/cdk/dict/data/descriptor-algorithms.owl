@@ -320,6 +320,7 @@
             Descriptor based on the number of bonds on the shortest path between two atoms.
         </definition>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="bpol">
