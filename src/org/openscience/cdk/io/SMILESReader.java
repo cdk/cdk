@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <pre>
  * COC ethoxy ethane
  * </pre>
- * Thus first the SMILES, and then after the first space on the line a title
+ * Thus first the SMILES, and then after the first space (or tab) on the line a title
  * that is stored as "SMIdbNAME" property in the Molecule.
  *
  * <p>For each line a molecule is generated, and multiple Molecules are
