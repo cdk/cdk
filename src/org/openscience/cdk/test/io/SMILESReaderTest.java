@@ -102,4 +102,19 @@ public class SMILESReaderTest extends CDKTestCase {
             fail("Error in test: " + e.getMessage());
         }
     }
+
+    public void testReadingSmiFile_3() {
+        String filename = "data/smiles/test3.smi";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
+            SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
+            assertEquals(5, som.getMoleculeCount());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Error in test: " + e.getMessage());
+        }
+    }
+    
 }

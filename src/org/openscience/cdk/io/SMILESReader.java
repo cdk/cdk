@@ -144,18 +144,16 @@ public class SMILESReader extends DefaultChemObjectReader {
             String line = input.readLine().trim();
             while (line != null) {
                 logger.debug("Line: ", line);
-                int indexSpace = line.indexOf(" ");
-                String SMILES = line;
+
+                String[] tokens = line.split("[\\s\\t]+",2);
+                if (tokens.length > 2) throw new Exception("Malformed line");
+
+                String SMILES = tokens[0];
                 String name = null;
-                
-                if (indexSpace != -1) {
-                    logger.debug("Space found at index: ", indexSpace);
-                    SMILES = line.substring(0,indexSpace);
-                    name = line.substring(indexSpace+1);
-                    logger.debug("Line contains SMILES and name: ", SMILES,
-                    " + " , name);
-                }
-                
+                if (tokens.length == 2) name = tokens[1];
+
+                logger.debug("Line contains SMILES and name: ", SMILES, " + " , name);
+
                 try {
                     IMolecule molecule = sp.parseSmiles(SMILES);
                     som.addMolecule(molecule);
