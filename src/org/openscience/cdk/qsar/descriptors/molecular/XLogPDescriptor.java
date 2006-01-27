@@ -30,6 +30,7 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -191,10 +192,13 @@ public class XLogPDescriptor implements IDescriptor {
 	 *@return                   XLogP is a double
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-		IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
+
+	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+		IRingSet rs = (IRingSet) (new AllRingsFinder()).findAllRings(ac);
 		IRingSet atomRingSet=null;
-		HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+		if (checkAromaticity) {
+            HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+        }
 		double xlogP = 0;
 		SmilesParser sp = new SmilesParser();
 		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
@@ -209,7 +213,7 @@ public class XLogPDescriptor implements IDescriptor {
 		
 		for (int i = 0; i < atoms.length; i++) {
 			//			Problem fused ring systems
-			atomRingSet=rs.getRings(atoms[i]);
+			atomRingSet= rs.getRings(atoms[i]);
 			atoms[i].setProperty("IS_IN_AROMATIC_RING", new Boolean(false));
 			atoms[i].setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(0));
 			//System.out.print("atomRingSet.size "+atomRingSet.size());
@@ -919,7 +923,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 *@param  atom  Description of the Parameter
 	 *@return       The hydrogenCount value
 	 */
-	private boolean checkRingLink(org.openscience.cdk.interfaces.IRingSet ringSet, org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
+	private boolean checkRingLink(IRingSet ringSet, org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
 		if (ringSet.contains(atom)){
 			return true;
@@ -1400,6 +1404,12 @@ public class XLogPDescriptor implements IDescriptor {
 	 */
 	public Object getParameterType(String name) {
             return new Boolean(true);
+	}
+
+
+	public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
