@@ -30,7 +30,6 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -183,9 +182,8 @@ public class XLogPDescriptor implements IDescriptor {
 	/**
 	 *  Calculates the xlogP for an atom container.
      *
-     *  If checkAromaticity is true, the
-	 *  method check the aromaticity, if false, means that the aromaticity has
-	 *  already been checked. It is necessary to use before the
+     *  If checkAromaticity is true, the method check the aromaticity, if false, means that the aromaticity has
+	 *  already been checked. It is necessary to use before the call of this mehtod the
 	 *  addExplicitHydrogensToSatisfyValency method (HydrogenAdder classe).
 	 *
 	 *@param  ac                AtomContainer
@@ -193,7 +191,7 @@ public class XLogPDescriptor implements IDescriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 
-	public DescriptorValue calculate(AtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
 		IRingSet rs = (IRingSet) (new AllRingsFinder()).findAllRings(ac);
 		IRingSet atomRingSet=null;
 		if (checkAromaticity) {
@@ -1404,12 +1402,6 @@ public class XLogPDescriptor implements IDescriptor {
 	 */
 	public Object getParameterType(String name) {
             return new Boolean(true);
-	}
-
-
-	public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
 
