@@ -32,10 +32,10 @@ import java.io.StringReader;
 
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
-import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MOPAC97Format;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
@@ -74,7 +74,7 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         }
 	}
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new MOPAC97Format();
     }
 
@@ -90,15 +90,15 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public ChemObject read(ChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
-			return readMolecule((Molecule)object);
+	public IChemObject read(IChemObject object) throws CDKException {
+        if (object instanceof IMolecule) {
+			return readMolecule((IMolecule)object);
 		} else {
 			throw new CDKException("Only supported are Molecule.");
 		}
 	}
 
-	private Molecule readMolecule(Molecule molecule) throws CDKException {
+	private IMolecule readMolecule(IMolecule molecule) throws CDKException {
         JmolAdapter adapter = new SmarterJmolAdapter(null);
         // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);

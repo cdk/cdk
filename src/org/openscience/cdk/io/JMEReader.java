@@ -37,10 +37,11 @@ import java.io.StringReader;
 
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
-import org.openscience.cdk.interfaces.ChemObject;
-import org.openscience.cdk.interfaces.Molecule;
+import org.openscience.cdk.interfaces.AtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.ChemFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.JMEFormat;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
@@ -79,10 +80,10 @@ public class JMEReader extends DefaultChemObjectReader {
         }
 	}
 
-    public ChemFormat getFormat() {
+    public IChemFormat getFormat() {
         return new JMEFormat();
     }
-
+    
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -95,9 +96,9 @@ public class JMEReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public ChemObject read(ChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
-			return readMolecule((Molecule)object);
+	public IChemObject read(IChemObject object) throws CDKException {
+        if (object instanceof IMolecule) {
+			return readMolecule((IMolecule)object);
 		} else {
 			throw new CDKException("Only supported are Molecule.");
 		}
@@ -108,11 +109,11 @@ public class JMEReader extends DefaultChemObjectReader {
 	 *
 	 *@return    The Molecule that was read from the MDL file.
 	 */
-	private Molecule readMolecule(Molecule molecule) throws CDKException {
+	private IMolecule readMolecule(IMolecule molecule) throws CDKException {
         JmolAdapter adapter = new SmarterJmolAdapter(null);
         // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);
-        molecule.add(new Convertor().convert(model));
+        molecule.add( new Convertor().convert(model));
 		return molecule; 
 	}
     
@@ -124,5 +125,7 @@ public class JMEReader extends DefaultChemObjectReader {
         IOSetting[] settings = new IOSetting[0];
         return settings;
     }
+
+	
 }
 
