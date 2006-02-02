@@ -419,10 +419,12 @@ public class AllRingsFinder
 	 *  large size or special topology
 	 *
 	 *@param  timeout  The new timeout value
+   * @return a reference to the instance this method was called for
 	 */
-	public void setTimeout(long timeout)
+	public AllRingsFinder setTimeout(long timeout)
 	{
 		this.timeout = timeout;
+    return this;
 	}
 
 
