@@ -41,15 +41,16 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -284,12 +285,14 @@ public class MFAnalyser {
 	 *
 	 * @return    The number of DBEs
 	 */
-	public float getDBE() throws IOException, ClassNotFoundException{
+	public float getDBE() throws IOException, ClassNotFoundException, CDKException{
 		int valencies[]=new int[5];
 		AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", getAtomContainer().getBuilder());
 		IAtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++) {
    		    IAtomType[] types = factory.getAtomTypes(ac.getAtomAt(f).getSymbol());
+   		    if(types.length==0)
+   		    	throw new CDKException("Calculation of double bond equivalents not possible due to problems with element "+ac.getAtomAt(f).getSymbol());
    		    valencies[(int)types[0].getBondOrderSum()]++;
 		}
 		return  1 + (valencies[4]) + (valencies[3] /2) - (valencies[1] /2);
