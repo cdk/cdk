@@ -83,6 +83,15 @@ public class TanimotoTest extends CDKTestCase
 		if (!standAlone) assertEquals(tanimoto, 1.0, 0.001);
 	}
 	
+        public void testTanimoto3() throws java.lang.Exception
+        {
+            double[] f1 = {1,2,3,4,5,6,7};
+            double[] f2 = {1,2,3,4,5,6,7};
+            float tanimoto = Tanimoto.calculate(f1,f2);
+            if (standAlone) System.out.println("Tanimoto: " + tanimoto);
+            if (!standAlone) assertEquals(tanimoto, 1.0, 0.001);
+        }
+
 
 	public static void main(String[] args)
 	{
@@ -91,6 +100,7 @@ public class TanimotoTest extends CDKTestCase
 			tt.standAlone = true;
 			tt.testTanimoto1();
 			tt.testTanimoto2();
+			tt.testTanimoto3();
 		}
 		catch(Exception exc)
 		{

@@ -30,10 +30,13 @@ package org.openscience.cdk.similarity;
 
 
 import java.util.BitSet;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  *  Calculates the Tanimoto coefficient for a given pair of two 
- *  fingerprint bitsets. The Tanimoto coefficient is one way to 
+ *  fingerprint bitsets or real valued feature vectors.
+ *
+ *  The Tanimoto coefficient is one way to 
  *  quantitatively measure the "distance" or similarity of 
  *  two chemical structures. 
  *
@@ -48,6 +51,7 @@ import java.util.BitSet;
  *
  *  <p>The FingerPrinter assumes that hydrogens are explicitely given, if this 
  *  is desired! 
+ *  <p>Note that the continuous Tanimoto coefficient does not lead to a metric space
  *
  *@author         steinbeck
  *@cdk.created    2005-10-19
@@ -57,15 +61,50 @@ import java.util.BitSet;
 public class Tanimoto 
 {
 
-	public static float calculate(BitSet bitset1, BitSet bitset2)
-	{
-		float _bitset1_cardinality = bitset1.cardinality();
-		float _bitset2_cardinality = bitset2.cardinality();
-		BitSet one_and_two = (BitSet)bitset1.clone();
-		one_and_two.and(bitset2);
-		float _common_bit_count = one_and_two.cardinality(); 
-		float _tanimoto_coefficient = _common_bit_count/(_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
-		return _tanimoto_coefficient;
-	}
-	
+    /**
+     * Evaluates Tanimoto coefficient for two bit sets.
+     *
+     * @param bitset1 A bitset (such as a fingerprint) for the first molecule
+     * @param bitset2 A bitset (such as a fingerprint) for the second molecule
+     * @return The Tanimoto coefficient
+     */
+    public static float calculate(BitSet bitset1, BitSet bitset2) throws CDKException
+    {
+        float _bitset1_cardinality = bitset1.cardinality();
+        float _bitset2_cardinality = bitset2.cardinality();
+        if (bitset1.size() != bitset2.size()) {
+            throw new CDKException("Bisets must have the same bit length");
+        }
+        BitSet one_and_two = (BitSet)bitset1.clone();
+        one_and_two.and(bitset2);
+        float _common_bit_count = one_and_two.cardinality(); 
+        float _tanimoto_coefficient = _common_bit_count/(_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
+        return _tanimoto_coefficient;
+    }
+    
+    /**
+     * Evaluates the continuous Tanimoto coefficient for two real valued vectors.
+     *
+     * @param features1 The first feature vector
+     * @param features2 The second feature vector
+     * @return The continuous Tanimoto coefficient
+     */
+    public static float calculate(double[] features1, double[] features2) throws CDKException {
+
+        if (features1.length != features2.length) {
+            throw new CDKException("Features vectors must be of the same length");
+        }
+
+        int n = features1.length;
+        double ab = 0.0;
+        double a2 = 0.0;
+        double b2 = 0.0;
+
+        for (int i = 0; i < n; i++) {
+            ab += features1[i] * features2[i];
+            a2 += features1[i]*features1[i];
+            b2 += features2[i]*features2[i];
+        }
+        return (float)ab/(float)(a2+b2-ab);
+    }
 }
