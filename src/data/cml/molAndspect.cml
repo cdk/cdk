@@ -1,0 +1,220 @@
+<cml xmlns="http://www.xmlcml.org/schema">
+  <molecule title="10(E)-beta-Santalic acid"
+  id="nmrshiftdb10027668">
+    <atomArray>
+      <atom id="a1" elementType="C" x2="7.3082" y2="0.8625"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a2" elementType="C" x2="8.0227" y2="0.45"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a3" elementType="C" x2="8.7372" y2="0.8625"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a4" elementType="C" x2="9.4516" y2="-0.375"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a5" elementType="C" x2="5.3405" y2="2.7156"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a6" elementType="C" x2="5.3275" y2="1.4526"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a7" elementType="C" x2="4.8295" y2="0.8052"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a8" elementType="C" x2="3.7754" y2="0.5466"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a9" elementType="C" x2="3.9889" y2="1.3435"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a10" elementType="C" x2="6.3437" y2="0.7312"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a11" elementType="C" x2="6.7562" y2="0.0168"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a12" elementType="C" x2="5.3663" y2="0.3495"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a13" elementType="C" x2="5.7788" y2="-0.3649"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a14" elementType="C" x2="9.4516" y2="0.45"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a15" elementType="C" x2="10.2485" y2="0.6635"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a16" elementType="O" x2="11.0454" y2="0.45"
+      formalCharge="0" hydrogenCount="0" />
+      <atom id="a17" elementType="O" x2="10.2485" y2="1.4885"
+      formalCharge="0" hydrogenCount="0" />
+    </atomArray>
+    <bondArray>
+      <bond id="b1" atomRefs2="a10 a1" order="S" />
+      <bond id="b2" atomRefs2="a1 a2" order="S" />
+      <bond id="b3" atomRefs2="a3 a14" order="D" />
+      <bond id="b4" atomRefs2="a14 a4" order="S" />
+      <bond id="b5" atomRefs2="a6 a5" order="S" />
+      <bond id="b6" atomRefs2="a12 a7" order="S">
+        <scalar dictRef="mdl:stereo" dataType="xsd:string">
+        W</scalar>
+      </bond>
+      <bond id="b7" atomRefs2="a8 a7" order="S">
+        <scalar dictRef="mdl:stereo" dataType="xsd:string">
+        W</scalar>
+      </bond>
+      <bond id="b8" atomRefs2="a5 a7" order="S">
+        <scalar dictRef="mdl:stereo" dataType="xsd:string">
+        W</scalar>
+      </bond>
+      <bond id="b9" atomRefs2="a12 a10" order="S" />
+      <bond id="b10" atomRefs2="a6 a10" order="S" />
+      <bond id="b11" atomRefs2="a8 a9" order="S" />
+      <bond id="b12" atomRefs2="a9 a6" order="S" />
+      <bond id="b13" atomRefs2="a10 a11" order="S" />
+      <bond id="b14" atomRefs2="a12 a13" order="D" />
+      <bond id="b15" atomRefs2="a14 a15" order="S" />
+      <bond id="b16" atomRefs2="a15 a16" order="S" />
+      <bond id="b17" atomRefs2="a15 a17" order="D" />
+      <bond id="b18" atomRefs2="a2 a3" order="S" />
+    </bondArray>
+  </molecule>
+  <spectrum id="nmrshiftdb30121629"
+  moleculeRef="nmrshiftdb10027668" type="13C">
+    <peakList>
+      <peak xValue="12.0" xUnits="units:ppm" peakShape="sharp"
+      id="p0">
+        <atom id="a4" />
+      </peak>
+      <peak xValue="22.600000381469727" xUnits="units:ppm"
+      peakShape="sharp" id="p1">
+        <atom id="a11" />
+      </peak>
+      <peak xValue="23.700000762939453" xUnits="units:ppm"
+      peakShape="sharp" id="p2">
+        <atom id="a9" />
+      </peak>
+      <peak xValue="24.700000762939453" xUnits="units:ppm"
+      peakShape="sharp" id="p3">
+        <atom id="a2" />
+      </peak>
+      <peak xValue="29.600000381469727" xUnits="units:ppm"
+      peakShape="sharp" id="p4">
+        <atom id="a8" />
+      </peak>
+      <peak xValue="37.099998474121094" xUnits="units:ppm"
+      peakShape="sharp" id="p5">
+        <atom id="a5" />
+      </peak>
+      <peak xValue="39.29999923706055" xUnits="units:ppm"
+      peakShape="sharp" id="p6">
+        <atom id="a1" />
+      </peak>
+      <peak xValue="44.70000076293945" xUnits="units:ppm"
+      peakShape="sharp" id="p7">
+        <atom id="a10" />
+      </peak>
+      <peak xValue="44.70000076293945" xUnits="units:ppm"
+      peakShape="sharp" id="p8">
+        <atom id="a6" />
+      </peak>
+      <peak xValue="46.70000076293945" xUnits="units:ppm"
+      peakShape="sharp" id="p9">
+        <atom id="a7" />
+      </peak>
+      <peak xValue="100.0999984741211" xUnits="units:ppm"
+      peakShape="sharp" id="p10">
+        <atom id="a13" />
+      </peak>
+      <peak xValue="126.4000015258789" xUnits="units:ppm"
+      peakShape="sharp" id="p11">
+        <atom id="a14" />
+      </peak>
+      <peak xValue="145.5" xUnits="units:ppm" peakShape="sharp"
+      id="p12">
+        <atom id="a3" />
+      </peak>
+      <peak xValue="165.6999969482422" xUnits="units:ppm"
+      peakShape="sharp" id="p13">
+        <atom id="a12" />
+      </peak>
+      <peak xValue="172.5" xUnits="units:ppm" peakShape="sharp"
+      id="p14">
+        <atom id="a15" />
+      </peak>
+    </peakList>
+  </spectrum>
+  <spectrum id="nmrshiftdb30121628"
+  moleculeRef="nmrshiftdb10027668" type="1H">
+    <peakList>
+      <peak xValue="1.059999942779541" xUnits="units:ppm"
+      peakShape="sharp" id="p0">
+        <atom id="a23" />
+      </peak>
+      <peak xValue="1.2000000476837158" xUnits="units:ppm"
+      peakShape="sharp" id="p1">
+        <atom id="a30" />
+      </peak>
+      <peak xValue="1.2599999904632568" xUnits="units:ppm"
+      peakShape="sharp" id="p2">
+        <atom id="a34" />
+      </peak>
+      <peak xValue="1.3200000524520874" xUnits="units:ppm"
+      peakShape="sharp" id="p3">
+        <atom id="a19" />
+      </peak>
+      <peak xValue="1.4199999570846558" xUnits="units:ppm"
+      peakShape="sharp" id="p4">
+        <atom id="a33" />
+      </peak>
+      <peak xValue="1.4900000095367432" xUnits="units:ppm"
+      peakShape="sharp" id="p5">
+        <atom id="a18" />
+      </peak>
+      <peak xValue="1.659999966621399" xUnits="units:ppm"
+      peakShape="sharp" id="p6">
+        <atom id="a31" />
+      </peak>
+      <peak xValue="1.6799999475479126" xUnits="units:ppm"
+      peakShape="sharp" id="p7">
+        <atom id="a35" />
+      </peak>
+      <peak xValue="1.690000057220459" xUnits="units:ppm"
+      peakShape="sharp" id="p8">
+        <atom id="a32" />
+      </peak>
+      <peak xValue="1.840000033378601" xUnits="units:ppm"
+      peakShape="sharp" id="p9">
+        <atom id="a36" />
+      </peak>
+      <peak xValue="2.109999895095825" xUnits="units:ppm"
+      peakShape="sharp" id="p10">
+        <atom id="a22" />
+      </peak>
+      <peak xValue="2.180000066757202" xUnits="units:ppm"
+      peakShape="sharp" id="p11">
+        <atom id="a20" />
+      </peak>
+      <peak xValue="2.680000066757202" xUnits="units:ppm"
+      peakShape="sharp" id="p12">
+        <atom id="a27" />
+      </peak>
+      <peak xValue="4.46999979019165" xUnits="units:ppm"
+      peakShape="sharp" id="p13">
+        <atom id="a29" />
+      </peak>
+      <peak xValue="4.760000228881836" xUnits="units:ppm"
+      peakShape="sharp" id="p14">
+        <atom id="a28" />
+      </peak>
+      <peak xValue="6.880000114440918" xUnits="units:ppm"
+      peakShape="sharp" id="p15">
+        <atom id="a26" />
+      </peak>
+      <peak xValue="1.059999942779541" xUnits="units:ppm"
+      peakShape="sharp" id="p16">
+        <atom id="a25" />
+      </peak>
+      <peak xValue="1.059999942779541" xUnits="units:ppm"
+      peakShape="sharp" id="p17">
+        <atom id="a24" />
+      </peak>
+      <peak xValue="1.840000033378601" xUnits="units:ppm"
+      peakShape="sharp" id="p18">
+        <atom id="a38" />
+      </peak>
+      <peak xValue="1.840000033378601" xUnits="units:ppm"
+      peakShape="sharp" id="p19">
+        <atom id="a37" />
+      </peak>
+    </peakList>
+  </spectrum>
+</cml>
