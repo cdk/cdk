@@ -518,4 +518,40 @@ public class CML2Test extends CDKTestCase {
         }
     }
 
+    /**
+     * This test tests wether the CMLReader is able to ignore the CMLSpect part
+     * of a CML file, while extracting the molecule.
+     */
+    public void testCMLSpectMolExtraction() {
+        String filename = "data/cml/molAndspect.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+
+            // test the molecule
+            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(17, mol.getAtomCount());
+            assertEquals(18, mol.getBondCount());
+            assertFalse(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
+    }
+
 }
