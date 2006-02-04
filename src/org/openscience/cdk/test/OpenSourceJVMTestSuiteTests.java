@@ -77,60 +77,60 @@ public class OpenSourceJVMTestSuiteTests {
 
         // Tests for data classes
         suite.addTest(DataClassesTests.suite());
-        suite.addTest(DebugDataClassesTests.suite());
+//         suite.addTest(DebugDataClassesTests.suite());
         
         // Package Test Suites
-        suite.addTest(ConfigTests.suite());
-        suite.addTest(CoreClassesTests.suite());
-        suite.addTest(IOTests.suite());
-        suite.addTest(ToolsTests.suite());
+//         suite.addTest(ConfigTests.suite());
+//         suite.addTest(CoreClassesTests.suite());
+//         suite.addTest(IOTests.suite());
+//         suite.addTest(ToolsTests.suite());
         
         // Individual Tests
         // from cdk.test.aromaticity
-        suite.addTest(HueckelAromaticityDetectorTest.suite());
+//         suite.addTest(HueckelAromaticityDetectorTest.suite());
         // from cdk.test.atomtype
-        suite.addTest(HybridizationStateATMatcherTest.suite());
-        suite.addTest(HybridizationMatcherTest.suite());
-        suite.addTest(MMFF94AtomTypeMatcherTest.suite());
-        suite.addTest(CDKChemicalRingConstantsTest.suite());
-        suite.addTest(MM2AtomTypeMatcherTest.suite());
+//         suite.addTest(HybridizationStateATMatcherTest.suite());
+//         suite.addTest(HybridizationMatcherTest.suite());
+//         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
+//         suite.addTest(CDKChemicalRingConstantsTest.suite());
+//         suite.addTest(MM2AtomTypeMatcherTest.suite());
         // from cdk.test.dict
-        suite.addTest(DictRefTest.suite());
-        suite.addTest(DictDBTest.suite());
+//         suite.addTest(DictRefTest.suite());
+//         suite.addTest(DictDBTest.suite());
         // from cdk.test.charges
-        suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
-        suite.addTest(MMFF94PartialChargesTest.suite());
-        suite.addTest(InductivePartialChargesTest.suite());
+//         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+//         suite.addTest(MMFF94PartialChargesTest.suite());
+//         suite.addTest(InductivePartialChargesTest.suite());
         // from cdk.test.fingerprint
-        suite.addTest(FingerprinterTest.suite());
+//         suite.addTest(FingerprinterTest.suite());
         // from cdk.test.geometry
-        suite.addTest(GeometryToolsTest.suite());
-        suite.addTest(CrystalGeometryToolsTest.suite());
-        suite.addTest(RDFCalculatorTest.suite());
+//         suite.addTest(GeometryToolsTest.suite());
+//         suite.addTest(CrystalGeometryToolsTest.suite());
+//         suite.addTest(RDFCalculatorTest.suite());
         // from cdk.test.geometry.align
-        suite.addTest(KabschAlignmentTest.suite());
+//         suite.addTest(KabschAlignmentTest.suite());
         // from cdk.test.graph
-        suite.addTest(GraphTests.suite());
+//         suite.addTest(GraphTests.suite());
         // from cdk.test.index
-        suite.addTest(CASNumberTest.suite());
+//         suite.addTest(CASNumberTest.suite());
         // from cdk.test.isomorphism
-        suite.addTest(IsomorphismTests.suite());
+//         suite.addTest(IsomorphismTests.suite());
         // from cdk.test.layout
-        suite.addTest(StructureDiagramGeneratorTest.suite());
-        suite.addTest(HydrogenPlacerTest.suite());
-        suite.addTest(OverlapResolverTest.suite());
-        suite.addTest(TemplateHandlerTest.suite());
+//         suite.addTest(StructureDiagramGeneratorTest.suite());
+//         suite.addTest(HydrogenPlacerTest.suite());
+//         suite.addTest(OverlapResolverTest.suite());
+//         suite.addTest(TemplateHandlerTest.suite());
         // from cdk.test.math
-        suite.addTest(MathToolsTest.suite());
+//         suite.addTest(MathToolsTest.suite());
         // from cdk.test.qsar
-        suite.addTest(QSARDescriptorTests.suite());
+//         suite.addTest(QSARDescriptorTests.suite());
         // from cdk.test.reaction
-        suite.addTest(ReactionBalancerTest.suite());
+//         suite.addTest(ReactionBalancerTest.suite());
         // from cdk.test.similarity
-        suite.addTest(TanimotoTest.suite());
+//         suite.addTest(TanimotoTest.suite());
         // from cdk.test.smiles
-        suite.addTest(SmilesGeneratorTest.suite());
-        suite.addTest(SmilesParserTest.suite());
+//         suite.addTest(SmilesGeneratorTest.suite());
+//         suite.addTest(SmilesParserTest.suite());
 
         return suite;
     }
