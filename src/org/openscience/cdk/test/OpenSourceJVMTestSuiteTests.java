@@ -75,62 +75,70 @@ public class OpenSourceJVMTestSuiteTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("The Open Source ChemoInformatics JVM Test Suite");
 
-        // Tests for data classes
-        suite.addTest(DataClassesTests.suite());
-//         suite.addTest(DebugDataClassesTests.suite());
+        String benchmark = System.getProperty("benchmark", "I");
         
-        // Package Test Suites
-//         suite.addTest(ConfigTests.suite());
-//         suite.addTest(CoreClassesTests.suite());
-//         suite.addTest(IOTests.suite());
-//         suite.addTest(ToolsTests.suite());
+        if ("I".equals(benchmark)){
+        	// Bench Mark I tests
+        	suite.addTest(DataClassesTests.suite());
+        } else if ("II".equals(benchmark)){
+        	// Bench Mark II tests
+        	suite.addTest(ConfigTests.suite());
+        	suite.addTest(CoreClassesTests.suite());
+        } else if ("skip".equals(benchmark)){
+        	// Tests for data classes
+        	suite.addTest(DebugDataClassesTests.suite());
         
-        // Individual Tests
-        // from cdk.test.aromaticity
-//         suite.addTest(HueckelAromaticityDetectorTest.suite());
-        // from cdk.test.atomtype
-//         suite.addTest(HybridizationStateATMatcherTest.suite());
-//         suite.addTest(HybridizationMatcherTest.suite());
-//         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
-//         suite.addTest(CDKChemicalRingConstantsTest.suite());
-//         suite.addTest(MM2AtomTypeMatcherTest.suite());
-        // from cdk.test.dict
-//         suite.addTest(DictRefTest.suite());
-//         suite.addTest(DictDBTest.suite());
-        // from cdk.test.charges
-//         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
-//         suite.addTest(MMFF94PartialChargesTest.suite());
-//         suite.addTest(InductivePartialChargesTest.suite());
-        // from cdk.test.fingerprint
-//         suite.addTest(FingerprinterTest.suite());
-        // from cdk.test.geometry
-//         suite.addTest(GeometryToolsTest.suite());
-//         suite.addTest(CrystalGeometryToolsTest.suite());
-//         suite.addTest(RDFCalculatorTest.suite());
-        // from cdk.test.geometry.align
-//         suite.addTest(KabschAlignmentTest.suite());
-        // from cdk.test.graph
-//         suite.addTest(GraphTests.suite());
-        // from cdk.test.index
-//         suite.addTest(CASNumberTest.suite());
-        // from cdk.test.isomorphism
-//         suite.addTest(IsomorphismTests.suite());
-        // from cdk.test.layout
-//         suite.addTest(StructureDiagramGeneratorTest.suite());
-//         suite.addTest(HydrogenPlacerTest.suite());
-//         suite.addTest(OverlapResolverTest.suite());
-//         suite.addTest(TemplateHandlerTest.suite());
-        // from cdk.test.math
-//         suite.addTest(MathToolsTest.suite());
-        // from cdk.test.qsar
-//         suite.addTest(QSARDescriptorTests.suite());
-        // from cdk.test.reaction
-//         suite.addTest(ReactionBalancerTest.suite());
-        // from cdk.test.similarity
-//         suite.addTest(TanimotoTest.suite());
-        // from cdk.test.smiles
-//         suite.addTest(SmilesGeneratorTest.suite());
-//         suite.addTest(SmilesParserTest.suite());
+        	// Package Test Suites
+        	suite.addTest(IOTests.suite());
+        	suite.addTest(ToolsTests.suite());
+        	
+        	// Individual Tests
+        	// from cdk.test.aromaticity
+        	suite.addTest(HueckelAromaticityDetectorTest.suite());
+        	// from cdk.test.atomtype
+        	suite.addTest(HybridizationStateATMatcherTest.suite());
+        	suite.addTest(HybridizationMatcherTest.suite());
+        	suite.addTest(MMFF94AtomTypeMatcherTest.suite());
+        	suite.addTest(CDKChemicalRingConstantsTest.suite());
+        	suite.addTest(MM2AtomTypeMatcherTest.suite());
+        	// from cdk.test.dict
+        	suite.addTest(DictRefTest.suite());
+        	suite.addTest(DictDBTest.suite());
+        	// from cdk.test.charges
+        	suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+        	suite.addTest(MMFF94PartialChargesTest.suite());
+        	suite.addTest(InductivePartialChargesTest.suite());
+        	// from cdk.test.fingerprint
+        	suite.addTest(FingerprinterTest.suite());
+        	// from cdk.test.geometry
+        	suite.addTest(GeometryToolsTest.suite());
+        	suite.addTest(CrystalGeometryToolsTest.suite());
+        	suite.addTest(RDFCalculatorTest.suite());
+        	// from cdk.test.geometry.align
+        	suite.addTest(KabschAlignmentTest.suite());
+        	// from cdk.test.graph
+        	suite.addTest(GraphTests.suite());
+        	// from cdk.test.index
+        	suite.addTest(CASNumberTest.suite());
+        	// from cdk.test.isomorphism
+        	suite.addTest(IsomorphismTests.suite());
+        	// from cdk.test.layout
+        	suite.addTest(StructureDiagramGeneratorTest.suite());
+        	suite.addTest(HydrogenPlacerTest.suite());
+        	suite.addTest(OverlapResolverTest.suite());
+        	suite.addTest(TemplateHandlerTest.suite());
+        	// from cdk.test.math
+        	suite.addTest(MathToolsTest.suite());
+        	// from cdk.test.qsar
+        	suite.addTest(QSARDescriptorTests.suite());
+        	// from cdk.test.reaction
+        	suite.addTest(ReactionBalancerTest.suite());
+        	// from cdk.test.similarity
+        	suite.addTest(TanimotoTest.suite());
+        	// from cdk.test.smiles
+        	suite.addTest(SmilesGeneratorTest.suite());
+        	suite.addTest(SmilesParserTest.suite());
+        }
 
         return suite;
     }
