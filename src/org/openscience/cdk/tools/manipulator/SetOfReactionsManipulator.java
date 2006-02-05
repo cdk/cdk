@@ -51,7 +51,6 @@ public class SetOfReactionsManipulator {
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
             ReactionManipulator.removeAtomAndConnectedElectronContainers(reaction, atom);
-            return;
         }
     }
     
@@ -60,7 +59,6 @@ public class SetOfReactionsManipulator {
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
             ReactionManipulator.removeElectronContainer(reaction, electrons);
-            return;
         }
     }
     
