@@ -1,258 +1,266 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI xmlns:UML="http://schema.omg.org/spec/UML/1.3" verified="false" timestamp="2005-12-06T09:28:51" xmi.version="1.2" >
+<XMI xmlns:UML="http://schema.omg.org/spec/UML/1.3" verified="false" timestamp="2006-02-05T16:29:47" xmi.version="1.2" >
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://uml.sf.net</XMI.exporter>
-   <XMI.exporterVersion>1.5</XMI.exporterVersion>
+   <XMI.exporterVersion>1.5.1</XMI.exporterVersion>
    <XMI.exporterEncoding>UnicodeUTF8</XMI.exporterEncoding>
   </XMI.documentation>
   <XMI.metamodel xmi.name="UML" href="UML.xml" xmi.version="1.3" />
  </XMI.header>
  <XMI.content>
-  <UML:Model isSpecification="false" isLeaf="false" isRoot="false" isAbstract="false" name="UML Model" >
+  <UML:Model isSpecification="false" isLeaf="false" isRoot="false" xmi.id="m1" isAbstract="false" name="UML Model" >
    <UML:Namespace.ownedElement>
-    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" xmi.id="106" isRoot="false" isAbstract="false" name="datatype" />
-    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" xmi.id="253" isRoot="false" isAbstract="false" name="constructor" />
-    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" xmi.id="254" isRoot="false" isAbstract="false" name="friend" />
-    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" xmi.id="255" isRoot="false" isAbstract="false" name="virtual" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="105" isRoot="false" isAbstract="false" name="int" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="107" isRoot="false" isAbstract="false" name="char" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="108" isRoot="false" isAbstract="false" name="bool" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="109" isRoot="false" isAbstract="false" name="float" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="110" isRoot="false" isAbstract="false" name="double" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="111" isRoot="false" isAbstract="false" name="long" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="112" isRoot="false" isAbstract="false" name="short" />
-    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" xmi.id="113" isRoot="false" isAbstract="false" name="string" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="114" isRoot="false" isAbstract="false" name="data" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="116" isRoot="false" isAbstract="false" name="core" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="123" isRoot="false" isAbstract="false" name="standard" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="130" isRoot="false" isAbstract="false" name="interfaces" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="134" isRoot="false" isAbstract="false" name="render" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="138" isRoot="false" isAbstract="false" name="io" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="142" isRoot="false" isAbstract="false" name="extra" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="155" isRoot="false" isAbstract="false" name="swing" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="159" isRoot="false" isAbstract="false" name="qsar" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="163" isRoot="false" isAbstract="false" name="builder3d" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="167" isRoot="false" isAbstract="false" name="io-jmol" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="171" isRoot="false" isAbstract="false" name="experimental" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="175" isRoot="false" isAbstract="false" name="libio-cml" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="179" isRoot="false" isAbstract="false" name="test" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="200" isRoot="false" isAbstract="false" name="pdb" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="201" isRoot="false" isAbstract="false" name="pdb-cml" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" xmi.id="202" isRoot="false" isAbstract="false" name="qsar-cml" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="117" client="114" name="" supplier="116" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="120" client="116" name="" supplier="114" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="124" client="123" name="" supplier="116" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="127" client="116" name="" supplier="114" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="131" client="130" name="" supplier="114" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="135" client="134" name="" supplier="123" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="139" client="138" name="" supplier="123" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="148" client="142" name="" supplier="134" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="151" client="142" name="" supplier="138" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="156" client="155" name="" supplier="142" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="160" client="159" name="" supplier="142" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="164" client="163" name="" supplier="159" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="168" client="167" name="" supplier="138" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="172" client="171" name="" supplier="142" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="176" client="175" name="" supplier="159" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="181" client="179" name="" supplier="155" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="184" client="179" name="" supplier="171" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="187" client="179" name="" supplier="175" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="190" client="179" name="" supplier="163" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="194" client="175" name="" supplier="142" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="197" client="175" name="" supplier="130" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="203" client="200" name="" supplier="138" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="206" client="202" name="" supplier="159" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="210" client="175" name="" supplier="138" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="213" client="175" name="" supplier="130" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="216" client="200" name="" supplier="123" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="219" client="201" name="" supplier="200" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="222" client="201" name="" supplier="130" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="225" client="201" name="" supplier="175" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="229" client="202" name="" supplier="175" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="232" client="202" name="" supplier="159" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="235" client="159" name="" supplier="142" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="238" client="202" name="" supplier="130" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="243" client="114" name="" supplier="130" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="246" client="116" name="" supplier="130" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="249" client="123" name="" supplier="114" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="256" client="134" name="" supplier="123" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="259" client="134" name="" supplier="114" />
-    <UML:Dependency isSpecification="false" visibility="public" xmi.id="262" client="138" name="" supplier="114" />
+    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="106" isRoot="false" isAbstract="false" name="datatype" />
+    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="253" isRoot="false" isAbstract="false" name="constructor" />
+    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="254" isRoot="false" isAbstract="false" name="friend" />
+    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="255" isRoot="false" isAbstract="false" name="virtual" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="105" isRoot="false" isAbstract="false" name="int" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="107" isRoot="false" isAbstract="false" name="char" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="108" isRoot="false" isAbstract="false" name="bool" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="109" isRoot="false" isAbstract="false" name="float" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="110" isRoot="false" isAbstract="false" name="double" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="111" isRoot="false" isAbstract="false" name="long" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="112" isRoot="false" isAbstract="false" name="short" />
+    <UML:DataType stereotype="106" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="113" isRoot="false" isAbstract="false" name="string" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="114" isRoot="false" isAbstract="false" name="data" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="116" isRoot="false" isAbstract="false" name="core" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="123" isRoot="false" isAbstract="false" name="standard" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="130" isRoot="false" isAbstract="false" name="interfaces" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="134" isRoot="false" isAbstract="false" name="render" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="138" isRoot="false" isAbstract="false" name="io" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="142" isRoot="false" isAbstract="false" name="extra" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="155" isRoot="false" isAbstract="false" name="swing" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="159" isRoot="false" isAbstract="false" name="qsar" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="163" isRoot="false" isAbstract="false" name="builder3d" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="167" isRoot="false" isAbstract="false" name="io-jmol" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="171" isRoot="false" isAbstract="false" name="experimental" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="175" isRoot="false" isAbstract="false" name="libio-cml" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="179" isRoot="false" isAbstract="false" name="test" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="200" isRoot="false" isAbstract="false" name="pdb" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="201" isRoot="false" isAbstract="false" name="pdb-cml" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="202" isRoot="false" isAbstract="false" name="qsar-cml" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="117" client="114" name="" supplier="116" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="120" client="116" name="" supplier="114" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="124" client="123" name="" supplier="116" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="127" client="116" name="" supplier="114" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="131" client="130" name="" supplier="114" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="135" client="134" name="" supplier="123" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="139" client="138" name="" supplier="123" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="148" client="142" name="" supplier="134" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="151" client="142" name="" supplier="138" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="156" client="155" name="" supplier="142" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="160" client="159" name="" supplier="142" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="164" client="163" name="" supplier="159" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="168" client="167" name="" supplier="138" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="172" client="171" name="" supplier="142" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="176" client="175" name="" supplier="159" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="181" client="179" name="" supplier="155" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="184" client="179" name="" supplier="171" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="187" client="179" name="" supplier="175" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="190" client="179" name="" supplier="163" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="194" client="175" name="" supplier="142" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="197" client="175" name="" supplier="130" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="203" client="200" name="" supplier="138" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="206" client="202" name="" supplier="159" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="210" client="175" name="" supplier="138" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="213" client="175" name="" supplier="130" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="216" client="200" name="" supplier="123" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="219" client="201" name="" supplier="200" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="222" client="201" name="" supplier="130" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="225" client="201" name="" supplier="175" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="229" client="202" name="" supplier="175" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="232" client="202" name="" supplier="159" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="235" client="159" name="" supplier="142" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="238" client="202" name="" supplier="130" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="243" client="114" name="" supplier="130" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="246" client="116" name="" supplier="130" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="249" client="123" name="" supplier="114" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="256" client="134" name="" supplier="123" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="259" client="134" name="" supplier="114" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="262" client="138" name="" supplier="114" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="266" client="167" name="" supplier="114" />
+    <UML:Dependency isSpecification="false" visibility="public" namespace="m1" xmi.id="269" client="200" name="" supplier="114" />
    </UML:Namespace.ownedElement>
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello" >
-  <docsettings viewid="115" documentation="" uniqueid="264" />
+  <docsettings viewid="115" documentation="" uniqueid="271" />
   <diagrams>
-   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1035" snapy="10" showatts="1" xmi.id="115" documentation="" type="406" showops="1" showpackage="0" name="module dependencies" localid="900000" showstereotype="0" showscope="1" snapcsgrid="0" font="Charter,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="752" >
+   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="990" snapy="10" showatts="1" xmi.id="115" documentation="" type="406" showops="1" showpackage="0" name="module dependencies" localid="900000" showstereotype="0" showscope="1" snapcsgrid="0" font="Charter,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="572" >
     <widgets>
-     <componentwidget usesdiagramfillcolour="1" width="95" usesdiagramusefillcolour="1" x="274" y="163" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="114" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="95" usesdiagramusefillcolour="1" x="273" y="78" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="116" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="130" usesdiagramusefillcolour="1" x="515" y="40" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="123" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="140" usesdiagramusefillcolour="1" x="50" y="114" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="130" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="114" usesdiagramusefillcolour="1" x="653" y="153" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="134" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="75" usesdiagramusefillcolour="1" x="521" y="257" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="138" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <notewidget usesdiagramfillcolour="1" width="403" usesdiagramusefillcolour="0" x="24" y="50" linecolour="none" linewidth="none" fillcolour="none" height="198" usefillcolor="0" isinstance="0" xmi.id="147" text="stable" font="Charter,10,-1,5,50,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="102" usesdiagramusefillcolour="1" x="659" y="257" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="142" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="106" usesdiagramusefillcolour="1" x="818" y="222" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="155" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="94" usesdiagramusefillcolour="1" x="663" y="397" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="159" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="137" usesdiagramusefillcolour="1" x="642" y="502" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="163" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="116" usesdiagramusefillcolour="1" x="329" y="309" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="167" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="167" usesdiagramusefillcolour="1" x="819" y="311" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="171" font="Charter,10,-1,5,75,0,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="90" usesdiagramusefillcolour="1" x="513" y="393" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="200" font="Charter,10,-1,5,75,0,0,0,0,0" />
+     <componentwidget usesdiagramfillcolour="1" width="95" usesdiagramusefillcolour="1" x="274" y="163" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="114" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="95" usesdiagramusefillcolour="1" x="273" y="78" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="116" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="130" usesdiagramusefillcolour="1" x="493" y="79" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="123" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="140" usesdiagramusefillcolour="1" x="50" y="114" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="130" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="114" usesdiagramusefillcolour="1" x="653" y="154" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="134" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="75" usesdiagramusefillcolour="1" x="521" y="257" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="138" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <notewidget usesdiagramfillcolour="1" width="403" usesdiagramusefillcolour="0" x="24" y="50" linewidth="none" fillcolour="none" height="198" usefillcolor="0" isinstance="0" xmi.id="147" text="stable" font="Charter,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="102" usesdiagramusefillcolour="1" x="659" y="257" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="142" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="106" usesdiagramusefillcolour="1" x="818" y="222" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="155" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="94" usesdiagramusefillcolour="1" x="663" y="397" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="159" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="137" usesdiagramusefillcolour="1" x="642" y="502" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="163" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="116" usesdiagramusefillcolour="1" x="331" y="393" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="167" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="167" usesdiagramusefillcolour="1" x="819" y="311" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="171" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="90" usesdiagramusefillcolour="1" x="498" y="391" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="200" font="Charter,10,-1,5,75,0,0,0,0,0" linecolor="none" />
     </widgets>
     <messages/>
     <associations>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="116" widgetaid="123" xmi.id="124" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="116" widgetaid="123" xmi.id="124" linecolor="none" >
       <linepath>
-       <startpoint startx="515" starty="73" />
+       <startpoint startx="493" starty="112" />
        <endpoint endx="368" endy="111" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linecolour="none" linewidth="none" widgetbid="123" widgetaid="138" xmi.id="139" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="123" widgetaid="138" xmi.id="139" linecolor="none" >
       <linepath>
        <startpoint startx="558" starty="257" />
-       <endpoint endx="558" endy="106" />
+       <endpoint endx="558" endy="145" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="134" widgetaid="142" xmi.id="148" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="134" widgetaid="142" xmi.id="148" linecolor="none" >
       <linepath>
        <startpoint startx="710" starty="257" />
-       <endpoint endx="710" endy="219" />
+       <endpoint endx="710" endy="220" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="138" widgetaid="142" xmi.id="151" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="138" widgetaid="142" xmi.id="151" linecolor="none" >
       <linepath>
        <startpoint startx="659" starty="290" />
        <endpoint endx="596" endy="290" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linecolour="none" linewidth="none" widgetbid="142" widgetaid="155" xmi.id="156" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linewidth="none" widgetbid="142" widgetaid="155" xmi.id="156" linecolor="none" >
       <linepath>
        <startpoint startx="818" starty="255" />
        <endpoint endx="761" endy="279" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="142" widgetaid="159" xmi.id="160" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="142" widgetaid="159" xmi.id="160" linecolor="none" >
       <linepath>
        <startpoint startx="710" starty="397" />
        <endpoint endx="710" endy="323" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="159" widgetaid="163" xmi.id="164" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="159" widgetaid="163" xmi.id="164" linecolor="none" >
       <linepath>
        <startpoint startx="710" starty="502" />
        <endpoint endx="710" endy="463" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linecolour="none" linewidth="none" widgetbid="138" widgetaid="167" xmi.id="168" >
+     <assocwidget totalcounta="3" indexa="2" totalcountb="2" indexb="1" linewidth="none" widgetbid="138" widgetaid="167" xmi.id="168" linecolor="none" >
       <linepath>
-       <startpoint startx="445" starty="342" />
-       <endpoint endx="521" endy="301" />
+       <startpoint startx="408" starty="393" />
+       <endpoint endx="521" endy="290" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linecolour="none" linewidth="none" widgetbid="142" widgetaid="171" xmi.id="172" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linewidth="none" widgetbid="142" widgetaid="171" xmi.id="172" linecolor="none" >
       <linepath>
-       <startpoint startx="817" starty="345" />
+       <startpoint startx="819" starty="344" />
        <endpoint endx="761" endy="301" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="138" widgetaid="200" xmi.id="203" >
+     <assocwidget totalcounta="3" indexa="2" totalcountb="2" indexb="1" linewidth="none" widgetbid="138" widgetaid="200" xmi.id="203" linecolor="none" >
       <linepath>
-       <startpoint startx="558" starty="393" />
+       <startpoint startx="558" starty="391" />
        <endpoint endx="558" endy="323" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linecolour="none" linewidth="none" widgetbid="130" widgetaid="114" xmi.id="243" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linewidth="none" widgetbid="130" widgetaid="114" xmi.id="243" linecolor="none" >
       <linepath>
        <startpoint startx="274" starty="196" />
        <endpoint endx="190" endy="158" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linecolour="none" linewidth="none" widgetbid="130" widgetaid="116" xmi.id="246" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linewidth="none" widgetbid="130" widgetaid="116" xmi.id="246" linecolor="none" >
       <linepath>
        <startpoint startx="273" starty="111" />
        <endpoint endx="190" endy="136" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linecolour="none" linewidth="none" widgetbid="123" widgetaid="134" xmi.id="256" >
+     <assocwidget totalcounta="3" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="123" widgetaid="134" xmi.id="256" linecolor="none" >
       <linepath>
-       <startpoint startx="710" starty="153" />
-       <endpoint endx="601" endy="106" />
+       <startpoint startx="653" starty="176" />
+       <endpoint endx="623" endy="112" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linecolour="none" linewidth="none" widgetbid="114" widgetaid="134" xmi.id="259" >
+     <assocwidget totalcounta="3" indexa="2" totalcountb="2" indexb="1" linewidth="none" widgetbid="114" widgetaid="134" xmi.id="259" linecolor="none" >
       <linepath>
-       <startpoint startx="653" starty="186" />
-       <endpoint endx="369" endy="185" />
+       <startpoint startx="653" starty="198" />
+       <endpoint endx="369" endy="196" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="3" indexa="1" totalcountb="3" indexb="2" linecolour="none" linewidth="none" widgetbid="114" widgetaid="138" xmi.id="262" >
+     <assocwidget totalcounta="3" indexa="1" totalcountb="3" indexb="1" linewidth="none" widgetbid="114" widgetaid="167" xmi.id="266" linecolor="none" >
       <linepath>
-       <startpoint startx="521" starty="279" />
-       <endpoint endx="369" endy="207" />
+       <startpoint startx="369" starty="393" />
+       <endpoint endx="305" endy="229" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="3" indexa="1" totalcountb="3" indexb="2" linewidth="none" widgetbid="114" widgetaid="200" xmi.id="269" linecolor="none" >
+      <linepath>
+       <startpoint startx="528" starty="391" />
+       <endpoint endx="337" endy="229" />
       </linepath>
      </assocwidget>
     </associations>
    </diagram>
-   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1035" snapy="10" showatts="1" xmi.id="209" documentation="" type="406" showops="1" showpackage="0" name="libio-cml dependencies" localid="900000" showstereotype="0" showscope="1" snapcsgrid="0" font="Charter,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="752" >
+   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="801" snapy="10" showatts="1" xmi.id="209" documentation="" type="406" showops="1" showpackage="0" name="libio-cml dependencies" localid="900000" showstereotype="0" showscope="1" snapcsgrid="0" font="Charter,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="488" >
     <widgets>
-     <componentwidget usesdiagramfillcolour="1" width="129" usesdiagramusefillcolour="1" x="365" y="102" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="175" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="75" usesdiagramusefillcolour="1" x="383" y="19" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="138" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="140" usesdiagramusefillcolour="1" x="190" y="102" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="130" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="90" usesdiagramusefillcolour="1" x="173" y="325" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="200" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="124" usesdiagramusefillcolour="1" x="385" y="326" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="201" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="130" usesdiagramusefillcolour="1" x="31" y="325" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="123" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="102" usesdiagramusefillcolour="1" x="31" y="226" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="142" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="94" usesdiagramusefillcolour="1" x="172" y="226" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="159" font="Charter,10,-1,5,75,1,0,0,0,0" />
-     <componentwidget usesdiagramfillcolour="1" width="128" usesdiagramusefillcolour="1" x="321" y="226" linecolour="none" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="202" font="Charter,10,-1,5,75,1,0,0,0,0" />
+     <componentwidget usesdiagramfillcolour="1" width="129" usesdiagramusefillcolour="1" x="365" y="102" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="175" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="75" usesdiagramusefillcolour="1" x="383" y="19" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="138" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="140" usesdiagramusefillcolour="1" x="190" y="102" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="130" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="90" usesdiagramusefillcolour="1" x="173" y="325" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="200" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="124" usesdiagramusefillcolour="1" x="385" y="326" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="201" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="130" usesdiagramusefillcolour="1" x="31" y="325" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="123" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="102" usesdiagramusefillcolour="1" x="31" y="226" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="142" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="94" usesdiagramusefillcolour="1" x="172" y="226" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="159" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
+     <componentwidget usesdiagramfillcolour="1" width="128" usesdiagramusefillcolour="1" x="321" y="226" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="202" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
     </widgets>
     <messages/>
     <associations>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="138" widgetaid="175" xmi.id="210" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="138" widgetaid="175" xmi.id="210" linecolor="none" >
       <linepath>
        <startpoint startx="429" starty="102" />
        <endpoint endx="420" endy="85" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="130" widgetaid="175" xmi.id="213" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="130" widgetaid="175" xmi.id="213" linecolor="none" >
       <linepath>
        <startpoint startx="365" starty="135" />
        <endpoint endx="330" endy="135" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="123" widgetaid="200" xmi.id="216" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="123" widgetaid="200" xmi.id="216" linecolor="none" >
       <linepath>
        <startpoint startx="173" starty="358" />
        <endpoint endx="161" endy="358" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="200" widgetaid="201" xmi.id="219" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="200" widgetaid="201" xmi.id="219" linecolor="none" >
       <linepath>
        <startpoint startx="385" starty="359" />
        <endpoint endx="263" endy="358" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linecolour="none" linewidth="none" widgetbid="175" widgetaid="201" xmi.id="225" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" linewidth="none" widgetbid="175" widgetaid="201" xmi.id="225" linecolor="none" >
       <linepath>
        <startpoint startx="447" starty="326" />
        <endpoint endx="451" endy="168" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linecolour="none" linewidth="none" widgetbid="175" widgetaid="202" xmi.id="229" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" linewidth="none" widgetbid="175" widgetaid="202" xmi.id="229" linecolor="none" >
       <linepath>
        <startpoint startx="385" starty="226" />
        <endpoint endx="408" endy="168" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="159" widgetaid="202" xmi.id="232" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="159" widgetaid="202" xmi.id="232" linecolor="none" >
       <linepath>
        <startpoint startx="321" starty="259" />
        <endpoint endx="266" endy="259" />
       </linepath>
      </assocwidget>
-     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linecolour="none" linewidth="none" widgetbid="142" widgetaid="159" xmi.id="235" >
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="142" widgetaid="159" xmi.id="235" linecolor="none" >
       <linepath>
        <startpoint startx="172" starty="259" />
        <endpoint endx="133" endy="259" />
@@ -300,7 +308,7 @@
    </listitem>
   </listview>
   <codegeneration>
-   <codegenerator language="Cpp" />
+   <codegenerator language="C++" />
   </codegeneration>
  </XMI.extensions>
 </XMI>
