@@ -24,6 +24,7 @@
 package org.openscience.cdk.applications;
 
 import org.apache.commons.cli.*;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.CMLWriter;
@@ -218,7 +219,8 @@ public class DescriptorCalculator {
                 }
             } else {
                 IteratingMDLReader reader = new IteratingMDLReader(
-                    new FileReader(new File(toProcess))
+                    new FileReader(new File(toProcess)),
+                    DefaultChemObjectBuilder.getInstance()
                 );
                 while (reader.hasNext()) {
                     Molecule molecule = (Molecule)reader.next();

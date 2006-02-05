@@ -34,6 +34,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.iterator.event.EventCMLReader;
 import org.openscience.cdk.io.listener.IReaderListener;
@@ -73,7 +75,8 @@ public class EventCMLDemo {
             if (file.isFile()) {
                 IReaderListener listener = new CMLMolReadListener();
                 cor = new EventCMLReader(
-                    new FileReader(file), listener
+                    new FileReader(file), listener,
+                    DefaultChemObjectBuilder.getInstance()
                 );
                 if (cor == null) {
                     logger.warn("The format of the input file is not recognized or not supported.");
@@ -170,7 +173,7 @@ public class EventCMLDemo {
         public void frameRead(ReaderEvent event) {
             System.out.print(".");
             counter++;
-            AtomContainer mol = ((EventCMLReader)event.getSource()).getAtomContainer();
+            IAtomContainer mol = ((EventCMLReader)event.getSource()).getAtomContainer();
             atomCount += mol.getAtomCount();
             if (counter == LIMIT) {
                 System.out.println(" " + atomCount + " atoms processed");

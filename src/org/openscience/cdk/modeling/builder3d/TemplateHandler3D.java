@@ -38,6 +38,7 @@ import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfMolecules;
@@ -88,7 +89,7 @@ public class TemplateHandler3D{
 		try{	
 			ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz");
 			fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
-			imdl=new IteratingMDLReader(fin);
+			imdl=new IteratingMDLReader(fin, DefaultChemObjectBuilder.getInstance());
 		}catch (Exception exc1){
 			throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
 		}
