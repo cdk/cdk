@@ -211,7 +211,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      * @exception IOException  if an I/O error occurs
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
-        IAtomContainer container = new org.openscience.cdk.AtomContainer();
+        IAtomContainer container = model.getBuilder().newAtomContainer();
         String line = input.readLine();
         line = input.readLine();
         line = input.readLine();

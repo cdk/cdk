@@ -38,7 +38,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -136,9 +136,9 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      */
 	public void write(IChemObject object) throws CDKException
 	{
-		if (object instanceof Reaction)
+		if (object instanceof IReaction)
 		{
-		    writeReaction((Reaction)object);
+		    writeReaction((IReaction)object);
 		}
 		else
 		{
@@ -151,7 +151,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   reaction  A Reaction that is written to an OutputStream 
 	 */
-	private void writeReaction(Reaction reaction) throws CDKException
+	private void writeReaction(IReaction reaction) throws CDKException
 	{
 		int reactantCount = reaction.getReactantCount();
         int productCount = reaction.getProductCount();

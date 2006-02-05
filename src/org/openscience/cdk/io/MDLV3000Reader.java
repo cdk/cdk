@@ -38,14 +38,14 @@ import java.util.regex.Pattern;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -114,18 +114,18 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
-            return readMolecule();
+        if (object instanceof IMolecule) {
+            return readMolecule(object.getBuilder());
         }
         return null;
     }
     
-    public Molecule readMolecule() throws CDKException {
-        return new Molecule(readConnectionTable());
+    public IMolecule readMolecule(IChemObjectBuilder builder) throws CDKException {
+        return builder.newMolecule(readConnectionTable(builder));
     }
     
-    public AtomContainer readConnectionTable() throws CDKException {
-        AtomContainer readData = new org.openscience.cdk.AtomContainer();
+    public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
+        IAtomContainer readData = builder.newAtomContainer();
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             String command = readCommand();
@@ -153,7 +153,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      *
      * <p>IMPORTANT: it does not support the atom list and its negation!
      */
-    public void readAtomBlock(AtomContainer readData) throws CDKException {
+    public void readAtomBlock(IAtomContainer readData) throws CDKException {
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             String command = readCommand();
@@ -163,7 +163,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             } else {
                 logger.debug("Parsing atom from: " + command);
                 StringTokenizer tokenizer = new StringTokenizer(command);
-                Atom atom = new Atom("C");
+                IAtom atom = readData.getBuilder().newAtom("C");
                 // parse the index
                 try {
                     String indexString = tokenizer.nextToken();
@@ -183,7 +183,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     throw new CDKException("Could not determine if element exists!", exception);
                 }
                 if (isPseudoAtom(element)) {
-                    atom = new PseudoAtom(atom);
+                    atom = readData.getBuilder().newPseudoAtom(atom);
                 } else if (isElement) {
                     atom.setSymbol(element);
                 } else {
@@ -249,7 +249,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Reads the bond atoms, order and stereo configuration.
      */
-    public void readBondBlock(AtomContainer readData) throws CDKException {
+    public void readBondBlock(IAtomContainer readData) throws CDKException {
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             String command = readCommand();
@@ -258,7 +258,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             } else {
                 logger.debug("Parsing bond from: " + command);
                 StringTokenizer tokenizer = new StringTokenizer(command);
-                Bond bond = new Bond();
+                IBond bond = readData.getBuilder().newBond();
                 // parse the index
                 try {
                     String indexString = tokenizer.nextToken();
@@ -350,7 +350,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Reads labels.
      */
-    public void readSGroup(AtomContainer readData) throws CDKException {
+    public void readSGroup(IAtomContainer readData) throws CDKException {
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             String command = readCommand();
@@ -401,10 +401,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         }
                         if (atomID != -1 && label.length() > 0) {
                         	IAtom atom = readData.getAtomAt(atomID-1);
-                            if (!(atom instanceof PseudoAtom)) {
-                                atom = new PseudoAtom(atom);
+                            if (!(atom instanceof IPseudoAtom)) {
+                                atom = readData.getBuilder().newPseudoAtom(atom);
                             }
-                            ((PseudoAtom)atom).setLabel(label);
+                            ((IPseudoAtom)atom).setLabel(label);
                             readData.setAtomAt(atomID-1, atom);
                         }
                     }
@@ -512,7 +512,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
     
     public boolean accepts(IChemObject object) {
-        if (object instanceof Molecule) {
+        if (object instanceof IMolecule) {
             return true;
         }
         return false;

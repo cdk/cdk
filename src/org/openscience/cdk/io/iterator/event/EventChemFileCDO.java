@@ -25,11 +25,11 @@ package org.openscience.cdk.io.iterator.event;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
@@ -47,8 +47,9 @@ import org.openscience.cdk.tools.LoggingTool;
 */ 
 public class EventChemFileCDO implements IChemicalDocumentObject {
     
-    private AtomContainer currentMolecule;
-    private Atom currentAtom;
+	private IChemObjectBuilder builder;
+    private IAtomContainer currentMolecule;
+    private IAtom currentAtom;
     
     private Hashtable atomEnumeration;
     
@@ -68,9 +69,11 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
     * Constructs an iterating-abled CDO. After reading one molecule it
     * fires a frameRead event.
     */
-    public EventChemFileCDO(DefaultEventChemObjectReader eventReader) {
+    public EventChemFileCDO(DefaultEventChemObjectReader eventReader,
+    		                IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         this.eventReader = eventReader;
+        this.builder = builder;
         clearData();
     }
     
@@ -80,7 +83,7 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
         currentAtom = null;
     }
     
-    public AtomContainer getAtomContainer() {
+    public IAtomContainer getAtomContainer() {
         return currentMolecule;
     }
     
@@ -116,10 +119,10 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
     public void startObject(String objectType) {
         logger.debug("START:" + objectType);
         if (objectType.equals("Molecule")) {
-            currentMolecule = new org.openscience.cdk.AtomContainer();
+            currentMolecule = builder.newAtomContainer();
             atomEnumeration = new Hashtable();
         } else if (objectType.equals("Atom")) {
-            currentAtom = new Atom("H");
+            currentAtom = builder.newAtom("H");
             logger.debug("Atom # " + numberOfAtoms);
             numberOfAtoms++;
         } else if (objectType.equals("Bond")) {
@@ -148,7 +151,7 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
             } else {
             	IAtom a1 = currentMolecule.getAtomAt(bond_a1);
             	IAtom a2 = currentMolecule.getAtomAt(bond_a2);
-                Bond b = new Bond(a1, a2, bond_order);
+                IBond b = builder.newBond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {
                     b.setStereo(bond_stereo);
@@ -192,15 +195,15 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
             }
         } else if (objectType.equals("PseudoAtom")) {
             if (propertyType.equals("label")) {
-                if (!(currentAtom instanceof PseudoAtom)) {
-                    currentAtom = new PseudoAtom(currentAtom);
+                if (!(currentAtom instanceof IPseudoAtom)) {
+                    currentAtom = builder.newPseudoAtom(currentAtom);
                 }
-                ((PseudoAtom)currentAtom).setLabel(propertyValue);
+                ((IPseudoAtom)currentAtom).setLabel(propertyValue);
             }
         } else if (objectType.equals("Atom")) {
             if (propertyType.equals("type")) {
-                if (propertyValue.equals("R") && !(currentAtom instanceof PseudoAtom)) {
-                    currentAtom = new PseudoAtom(currentAtom);
+                if (propertyValue.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
+                    currentAtom = builder.newPseudoAtom(currentAtom);
                 }
                 currentAtom.setSymbol(propertyValue);
             } else if (propertyType.equals("x2")) {

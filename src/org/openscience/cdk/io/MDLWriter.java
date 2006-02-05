@@ -44,8 +44,8 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -181,8 +181,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
      * @see org.openscience.cdk.ChemFile
      */
 	public void write(IChemObject object) throws CDKException {
-		if (object instanceof SetOfMolecules) {
-			writeSetOfMolecules((SetOfMolecules)object);
+		if (object instanceof ISetOfMolecules) {
+			writeSetOfMolecules((ISetOfMolecules)object);
 		} else if (object instanceof IChemFile) {
 			writeChemFile((IChemFile)object);
 		} else if (object instanceof IMolecule) {
@@ -208,7 +208,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   molecules  Array of Molecules that is written to an OutputStream 
 	 */
-	private void writeSetOfMolecules(SetOfMolecules som)
+	private void writeSetOfMolecules(ISetOfMolecules som)
 	{
 		IMolecule[] molecules = som.getMolecules();
 		for (int i = 0; i < som.getMoleculeCount(); i++)
@@ -340,8 +340,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 line += formatMDLFloat((float)0.0);
                 line += formatMDLFloat((float)0.0) + " ";
             }
-            if(molecule.getAtomAt(f) instanceof PseudoAtom)
-		    line += formatMDLString(((PseudoAtom) molecule.getAtomAt(f)).getLabel(), 3);
+            if(molecule.getAtomAt(f) instanceof IPseudoAtom)
+		    line += formatMDLString(((IPseudoAtom) molecule.getAtomAt(f)).getLabel(), 3);
 	    else
 		    line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3); 
             line += " 0  0  0  0  0  0  0  0  0  0  0  0";
@@ -408,7 +408,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // write formal isotope information
         for (int i = 0; i < atoms.length; i++) {
         	IAtom atom = atoms[i];
-            if (!(atom instanceof PseudoAtom)) {
+            if (!(atom instanceof IPseudoAtom)) {
                 int atomicMass = atom.getMassNumber();
                 int majorMass = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();
                 if (atomicMass != 0 && atomicMass != majorMass) {

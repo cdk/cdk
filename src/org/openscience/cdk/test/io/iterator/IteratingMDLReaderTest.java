@@ -34,6 +34,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -64,7 +65,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins);
+            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
             
             int molCount = 0;
             while (reader.hasNext()) {
@@ -86,7 +87,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins);
+            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
 
             int molCount = 0;
             assertTrue(reader.hasNext());
@@ -105,7 +106,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins);
+            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
 
             int molCount = 0;
             assertTrue(reader.hasNext());
@@ -126,7 +127,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins);
+            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
             
             int molCount = 0;
             while (reader.hasNext()) {
@@ -148,7 +149,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins);
+            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
             
             int molCount = 0;
             while (reader.hasNext()) {
@@ -171,7 +172,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(new InputStreamReader(ins));
+            IteratingMDLReader reader = new IteratingMDLReader(new InputStreamReader(ins), DefaultChemObjectBuilder.getInstance());
             
             int molCount = 0;
             assertFalse(reader.hasNext());

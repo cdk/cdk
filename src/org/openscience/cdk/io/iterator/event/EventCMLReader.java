@@ -31,8 +31,9 @@ package org.openscience.cdk.io.iterator.event;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
@@ -74,10 +75,11 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
      * @param input    Reader type input
      * @param listener ReaderListener that listens to newMolecule events. 
      */
-    public EventCMLReader(Reader input, IReaderListener listener) {
+    public EventCMLReader(Reader input, IReaderListener listener,
+    		              IChemObjectBuilder builder) {
         this.init();
         this.input = input;
-        this.cdo = new EventChemFileCDO(this);
+        this.cdo = new EventChemFileCDO(this, builder);
         this.addChemObjectIOListener(listener);
     }
     
@@ -85,7 +87,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         return new CMLFormat();
     }
 
-    public AtomContainer getAtomContainer() {
+    public IAtomContainer getAtomContainer() {
         return cdo.getAtomContainer();
     }
     

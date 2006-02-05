@@ -33,19 +33,18 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.GaussianInputFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.IntegerIOSetting;
 import org.openscience.cdk.io.setting.OptionIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * File writer thats generates input files for Gaussian calculation
@@ -60,7 +59,6 @@ import org.openscience.cdk.tools.LoggingTool;
 public class GaussianInputWriter extends DefaultChemObjectWriter {
   
     static BufferedWriter writer;
-    private LoggingTool logger;
     
     IOSetting method;
     IOSetting basis;
@@ -76,7 +74,6 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     * Gaussian QM job.
     */
     public GaussianInputWriter(Writer out) {
-    	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;
@@ -117,9 +114,9 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
     
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof Molecule) {
+        if (object instanceof IMolecule) {
             try {
-                writeMolecule((Molecule)object);
+                writeMolecule((IMolecule)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing Gaussian input file: " + ex.getMessage(), ex);
             }
@@ -127,15 +124,11 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             throw new CDKException("GaussianInputWriter only supports output of Molecule classes.");
         }
     }
-
-    public IChemObject highestSupportedChemObject() {
-        return new Molecule();
-    }
     
     /**
      * Writes a molecule for input for Gaussian.
      */
-    public void writeMolecule(Molecule mol) throws IOException {
+    public void writeMolecule(IMolecule mol) throws IOException {
         
         customizeJob();
         

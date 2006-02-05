@@ -26,10 +26,9 @@ package org.openscience.cdk.io.chemrss;
 
 import java.io.StringReader;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
@@ -51,7 +50,7 @@ public class RSSHandler extends DefaultHandler {
     
     private LoggingTool logger;
     
-    private ChemSequence channelSequence;
+    private IChemSequence channelSequence;
     
     private String cmlString;
     private String cData;
@@ -67,12 +66,14 @@ public class RSSHandler extends DefaultHandler {
     
     /**
      * Constructor for the RSSHandler.
+     * @param builder TODO
      */
-    public RSSHandler() {
+    public RSSHandler(IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
+        channelSequence = builder.newChemSequence();
     }
 
-    public ChemSequence getChemSequence() {
+    public IChemSequence getChemSequence() {
         return channelSequence;
     }
 
@@ -97,7 +98,7 @@ public class RSSHandler extends DefaultHandler {
     }
 
     public void startDocument() {
-        channelSequence = new ChemSequence();
+        channelSequence = channelSequence.getBuilder().newChemSequence();
         cmlString = "";
         whiteSpace = null;
         readdedNamespace = false;
@@ -130,7 +131,7 @@ public class RSSHandler extends DefaultHandler {
                     logger.debug("Parsing CML String: ", cmlString);
                     CMLReader cmlReader = new CMLReader(reader);
                     try {
-                        ChemFile file = (ChemFile)cmlReader.read(new ChemFile());
+                        IChemFile file = (IChemFile)cmlReader.read(channelSequence.getBuilder().newChemFile());
                         if (file.getChemSequenceCount() > 0) {
                         	IChemSequence sequence = file.getChemSequence(0);
                             if (sequence.getChemModelCount() > 0) {
@@ -162,7 +163,7 @@ public class RSSHandler extends DefaultHandler {
                 }
                 if (model == null) {
                     logger.warn("Read empty model");
-                    model = new ChemModel();
+                    model = channelSequence.getBuilder().newChemModel();
                 }
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_TITLE, objectTitle);
                 model.setProperty(ChemicalRSSReader.RSS_ITEM_DATE, objectDate);

@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -173,7 +174,7 @@ public class MACiEReader extends DefaultChemObjectReader {
              } else if (object instanceof ChemModel) {
                  return readReactions(true);
              } else if (object instanceof ChemFile) {
-                 ChemFile chemFile = new ChemFile();
+                 IChemFile chemFile = object.getBuilder().newChemFile();
                  chemFile.addChemSequence((ChemSequence)readReactions(false));
                  return chemFile;
              }

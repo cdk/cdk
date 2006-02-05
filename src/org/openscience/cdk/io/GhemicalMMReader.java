@@ -218,7 +218,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                 } else if ("!End".equals(command)) {
                     logger.info("Found end of file");
                     // Store atoms
-                    IAtomContainer container = new org.openscience.cdk.AtomContainer();
+                    IAtomContainer container = model.getBuilder().newAtomContainer();
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
                             IAtom atom = model.getBuilder().newAtom(IsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));

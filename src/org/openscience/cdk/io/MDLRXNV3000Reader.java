@@ -31,11 +31,12 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLRXNV3000Format;
@@ -92,12 +93,12 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     public IChemObject read(IChemObject object) throws CDKException {
-         if (object instanceof Reaction) {
-             return (IChemObject) readReaction();
-         } else if (object instanceof ChemModel) {
-             ChemModel model = new ChemModel();
-             SetOfReactions reactionSet = new SetOfReactions();
-             reactionSet.addReaction(readReaction());
+         if (object instanceof IReaction) {
+             return readReaction(object.getBuilder());
+         } else if (object instanceof IChemModel) {
+             IChemModel model = object.getBuilder().newChemModel();
+             ISetOfReactions reactionSet = object.getBuilder().newSetOfReactions();
+             reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setSetOfReactions(reactionSet);
              return model;
          } else {
@@ -141,8 +142,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         return line;
     }
     
-    private Reaction readReaction() throws CDKException {
-        Reaction reaction = new Reaction();
+    private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
+        IReaction reaction = builder.newReaction();
         readLine(); // first line should be $RXN
         readLine(); // second line
         readLine(); // third line
@@ -191,8 +192,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 // read MDL molfile content
                 MDLV3000Reader reader = new MDLV3000Reader(
                   new StringReader(molFile.toString()));
-                Molecule reactant = (Molecule)reader.read(
-                  new Molecule());
+                IMolecule reactant = (IMolecule)reader.read(
+                  builder.newMolecule());
                   
                 // add reactant
                 reaction.addReactant(reactant);
@@ -224,8 +225,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 // read MDL molfile content
                 MDLV3000Reader reader = new MDLV3000Reader(
                   new StringReader(molFile.toString()));
-                Molecule product = (Molecule)reader.read(
-                  new Molecule());
+                IMolecule product = (IMolecule)reader.read(
+                  builder.newMolecule());
                   
                 // add product
                 reaction.addProduct(product);
@@ -252,9 +253,9 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     public boolean accepts(IChemObject object) {
-        if (object instanceof Reaction) {
+        if (object instanceof IReaction) {
             return true;
-        } else if (object instanceof ChemModel) {
+        } else if (object instanceof IChemModel) {
             return true;
         }
         return false;
@@ -267,9 +268,6 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     private void initIOSettings() {
     }
     
-    private void customizeJob() {
-    }
-
     public IOSetting[] getIOSettings() {
         return new IOSetting[0];
     }

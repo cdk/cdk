@@ -40,7 +40,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -336,7 +335,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     atom = IsotopeFactory.getInstance(molecule.getBuilder()).configure(molecule.getBuilder().newAtom(element));
                 } else {
                     logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
-                    atom = new PseudoAtom(element);
+                    atom = molecule.getBuilder().newPseudoAtom(element);
                 }
 
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later
@@ -345,7 +344,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 // parse further fields
                 String massDiffString = line.substring(34,36).trim();
                 logger.debug("Mass difference: ", massDiffString);
-                if (!(atom instanceof PseudoAtom)) {
+                if (!(atom instanceof IPseudoAtom)) {
                     try {
                         int massDiff = Integer.parseInt(massDiffString);
                         if (massDiff != 0) {
@@ -525,7 +524,7 @@ public class MDLReader extends DefaultChemObjectReader {
                         
                         // convert Atom into a PseudoAtom
                         IAtom prevAtom = molecule.getAtomAt(atomNumber - 1);
-                        PseudoAtom pseudoAtom = new PseudoAtom(atomName);
+                        IPseudoAtom pseudoAtom = molecule.getBuilder().newPseudoAtom(atomName);
                         if (prevAtom.getPoint2d() != null) {
                             pseudoAtom.setPoint2d(prevAtom.getPoint2d());
                         }

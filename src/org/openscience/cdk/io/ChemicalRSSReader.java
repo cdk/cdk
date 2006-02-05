@@ -192,7 +192,7 @@ public class ChemicalRSSReader extends DefaultChemObjectReader {
             logger.warn("Cannot deactivate validation.");
             return null;
         }
-        RSSHandler handler = new RSSHandler();
+        RSSHandler handler = new RSSHandler(null);
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));

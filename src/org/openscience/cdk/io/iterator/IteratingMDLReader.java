@@ -35,7 +35,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
@@ -66,14 +67,15 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
-    private Molecule nextMolecule;
+    private IChemObjectBuilder builder;
+    private IMolecule nextMolecule;
     
     /**
      * Contructs a new IteratingMDLReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
      */
-    public IteratingMDLReader(Reader in) {
+    public IteratingMDLReader(Reader in, IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
         nextMolecule = null;
@@ -86,8 +88,8 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
      *
      * @param  in  The InputStream to read from
      */
-    public IteratingMDLReader(InputStream in) {
-        this(new InputStreamReader(in));
+    public IteratingMDLReader(InputStream in, IChemObjectBuilder builder) {
+        this(new InputStreamReader(in), builder);
     }
 
     public IChemFormat getFormat() {
@@ -117,7 +119,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                     buffer.append("\n");
                     logger.debug("MDL file part read: ", buffer);
                     MDLReader reader = new MDLReader(new StringReader(buffer.toString()));
-                    nextMolecule = (Molecule)reader.read(new Molecule());
+                    nextMolecule = (IMolecule)reader.read(builder.newMolecule());
                     if (nextMolecule.getAtomCount() > 0) {
                         hasNext = true;
                     } else {
@@ -141,7 +143,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         return hasNext;
     }
 
-    private void readDataBlockInto(Molecule m) throws IOException {
+    private void readDataBlockInto(IMolecule m) throws IOException {
         String fieldName = null;
         while (currentLine != null && !(currentLine.trim().equals("$$$$"))) {
             logger.debug("looking for data header: ", currentLine);

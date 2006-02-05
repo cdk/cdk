@@ -42,9 +42,9 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.Mapping;
+// import org.openscience.cdk.Mapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -111,7 +111,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      * @exception  CDKException
      */
      public IChemObject read(IChemObject object) throws CDKException {
-         if (object instanceof Reaction) {
+         if (object instanceof IReaction) {
              return (IChemObject) readReaction(object.getBuilder());
          } else if (object instanceof IChemModel) {
              IChemModel model = object.getBuilder().newChemModel();
@@ -133,7 +133,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      }
      
      public boolean accepts(IChemObject object) {
-         if (object instanceof Reaction) {
+         if (object instanceof IReaction) {
              return true;
          } else if (object instanceof IChemModel) {
              return true;
@@ -149,8 +149,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      *
      * @return  The Reaction that was read from the MDL file.
      */
-    private Reaction readReaction(IChemObjectBuilder builder) throws CDKException {
-        Reaction reaction = (Reaction)builder.newReaction();
+    private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
+        IReaction reaction = builder.newReaction();
         try {
             input.readLine(); // first line should be $RXN
             input.readLine(); // second line
@@ -193,7 +193,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
                 IMolecule reactant = (IMolecule)reader.read(
-                  new org.openscience.cdk.Molecule());
+                  builder.newMolecule()
+                );
                   
                 // add reactant
                 reaction.addReactant(reactant);
@@ -222,7 +223,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
                 IMolecule product = (IMolecule)reader.read(
-                  new org.openscience.cdk.Molecule());
+                  builder.newMolecule());
                   
                 // add reactant
                 reaction.addProduct(product);
@@ -238,34 +239,34 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         // now try to map things, if wanted
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
-        IAtomContainer reactingSide = new org.openscience.cdk.AtomContainer();
+        IAtomContainer reactingSide = builder.newAtomContainer();
         IMolecule[] molecules = reaction.getReactants().getMolecules();
         for (int i=0; i<molecules.length; i++) {
             reactingSide.add(molecules[i]);
         }
-        IAtomContainer producedSide = new org.openscience.cdk.AtomContainer();
+        IAtomContainer producedSide = builder.newAtomContainer();
         molecules = reaction.getProducts().getMolecules();
         for (int i=0; i<molecules.length; i++) {
             producedSide.add(molecules[i]);
         }
         
         // map the atoms
-        int mappingCount = 0;
-        IAtom[] reactantAtoms = reactingSide.getAtoms();
-        IAtom[] producedAtoms = producedSide.getAtoms();
-        for (int i=0; i<reactantAtoms.length; i++) {
-            for (int j=0; j<producedAtoms.length; j++) {
-                if (reactantAtoms[i].getID() != null &&
-                    reactantAtoms[i].getID().equals(producedAtoms[j].getID())) {
-                    reaction.addMapping(
-                        new Mapping(reactantAtoms[i], producedAtoms[j])
-                    );
-                    mappingCount++;
-                    break;
-                }
-            }
-        }
-        logger.info("Mapped atom pairs: " + mappingCount);
+//        int mappingCount = 0;
+//        IAtom[] reactantAtoms = reactingSide.getAtoms();
+//        IAtom[] producedAtoms = producedSide.getAtoms();
+//        for (int i=0; i<reactantAtoms.length; i++) {
+//            for (int j=0; j<producedAtoms.length; j++) {
+//                if (reactantAtoms[i].getID() != null &&
+//                    reactantAtoms[i].getID().equals(producedAtoms[j].getID())) {
+//                    reaction.addMapping(
+//                        new Mapping(reactantAtoms[i], producedAtoms[j])
+//                    );
+//                    mappingCount++;
+//                    break;
+//                }
+//            }
+//        }
+//        logger.info("Mapped atom pairs: " + mappingCount);
         
         return reaction;
     }
