@@ -231,8 +231,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
                 logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
                              " and " + bond_a2);
             } else {
-            	org.openscience.cdk.interfaces.IAtom a1 = currentMolecule.getAtomAt(bond_a1);
-            	org.openscience.cdk.interfaces.IAtom a2 = currentMolecule.getAtomAt(bond_a2);
+            	IAtom a1 = currentMolecule.getAtomAt(bond_a1);
+            	IAtom a2 = currentMolecule.getAtomAt(bond_a2);
                 IBond b = currentChemFile.getBuilder().newBond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {
@@ -485,15 +485,15 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       return objects;
     }
 
-	public void addChemSequence(org.openscience.cdk.interfaces.IChemSequence chemSequence) {
+	public void addChemSequence(IChemSequence chemSequence) {
 		currentChemFile.addChemSequence(chemSequence);
 	}
 
-	public org.openscience.cdk.interfaces.IChemSequence[] getChemSequences() {
+	public IChemSequence[] getChemSequences() {
 		return currentChemFile.getChemSequences();
 	}
 
-	public org.openscience.cdk.interfaces.IChemSequence getChemSequence(int number) {
+	public IChemSequence getChemSequence(int number) {
 		return currentChemFile.getChemSequence(number);
 	}
 

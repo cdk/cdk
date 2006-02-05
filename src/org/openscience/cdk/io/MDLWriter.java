@@ -48,7 +48,9 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -318,10 +320,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.write(line);
 
         // write Atom block
-        org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
+        IAtom[] atoms = molecule.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
           if(isVisible[f]){
-        	  org.openscience.cdk.interfaces.IAtom atom = atoms[f];
+        	  IAtom atom = atoms[f];
             line = "";
             if (atom.getPoint3d() != null) {
                 line += formatMDLFloat((float) atom.getX3d());
@@ -349,10 +351,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
+        IBond[] bonds = molecule.getBonds();
         for (int g = 0; g < bonds.length; g++) {
           if(upToWhichAtom==molecule.getAtomCount() || (isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[0])] && isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[1])])){
-        	  org.openscience.cdk.interfaces.IBond bond = bonds[g];
+        	  IBond bond = bonds[g];
             if (bond.getAtoms().length != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
@@ -392,7 +394,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 
         // write formal atomic charges
         for (int i = 0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
+        	IAtom atom = atoms[i];
             int charge = atom.getFormalCharge();
             if (charge != 0) {
                 writer.write("M  CHG  1 ");
@@ -405,7 +407,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         
         // write formal isotope information
         for (int i = 0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
+        	IAtom atom = atoms[i];
             if (!(atom instanceof PseudoAtom)) {
                 int atomicMass = atom.getMassNumber();
                 int majorMass = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();

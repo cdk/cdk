@@ -30,6 +30,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
@@ -145,8 +146,8 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
                 logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
                 " and " + bond_a2);
             } else {
-            	org.openscience.cdk.interfaces.IAtom a1 = currentMolecule.getAtomAt(bond_a1);
-            	org.openscience.cdk.interfaces.IAtom a2 = currentMolecule.getAtomAt(bond_a2);
+            	IAtom a1 = currentMolecule.getAtomAt(bond_a1);
+            	IAtom a2 = currentMolecule.getAtomAt(bond_a2);
                 Bond b = new Bond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {

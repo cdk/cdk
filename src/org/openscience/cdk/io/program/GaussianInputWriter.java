@@ -35,6 +35,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -201,9 +202,9 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         
         // then come all the atoms. 
         // Loop through the atoms and write them out:
-        org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
+        IAtom[] atoms = mol.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.IAtom a = atoms[i];
+        	IAtom a = atoms[i];
             String st = a.getSymbol();
             
             // export Eucledian coordinates (indicated by the 0)

@@ -42,6 +42,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
@@ -287,7 +288,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 try {
                     String indexAtom1String = tokenizer.nextToken();
                     int indexAtom1 = Integer.parseInt(indexAtom1String);
-                    org.openscience.cdk.interfaces.IAtom atom1 = readData.getAtomAt(indexAtom1 -1);
+                    IAtom atom1 = readData.getAtomAt(indexAtom1 -1);
                     bond.setAtomAt(atom1, 0);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 1 in bond";
@@ -299,7 +300,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 try {
                     String indexAtom2String = tokenizer.nextToken();
                     int indexAtom2 = Integer.parseInt(indexAtom2String);
-                    org.openscience.cdk.interfaces.IAtom atom2 = readData.getAtomAt(indexAtom2 -1);
+                    IAtom atom2 = readData.getAtomAt(indexAtom2 -1);
                     bond.setAtomAt(atom2, 1);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 2 in bond";
@@ -399,7 +400,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             throw new CDKException(error, exception);
                         }
                         if (atomID != -1 && label.length() > 0) {
-                        	org.openscience.cdk.interfaces.IAtom atom = readData.getAtomAt(atomID-1);
+                        	IAtom atom = readData.getAtomAt(atomID-1);
                             if (!(atom instanceof PseudoAtom)) {
                                 atom = new PseudoAtom(atom);
                             }

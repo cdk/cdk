@@ -29,6 +29,9 @@ import java.io.StringReader;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.ChemicalRSSReader;
 import org.openscience.cdk.tools.LoggingTool;
@@ -121,7 +124,7 @@ public class RSSHandler extends DefaultHandler {
         } else if (uri.equals("http://purl.org/rss/1.0/")) {
             // Deal with RSS 1.0 elements
             if (local.equals("item")) {
-            	org.openscience.cdk.interfaces.IChemModel model = null;
+            	IChemModel model = null;
                 if (cmlString.length() > 0) {
                     StringReader reader = new StringReader(cmlString);
                     logger.debug("Parsing CML String: ", cmlString);
@@ -129,7 +132,7 @@ public class RSSHandler extends DefaultHandler {
                     try {
                         ChemFile file = (ChemFile)cmlReader.read(new ChemFile());
                         if (file.getChemSequenceCount() > 0) {
-                        	org.openscience.cdk.interfaces.IChemSequence sequence = file.getChemSequence(0);
+                        	IChemSequence sequence = file.getChemSequence(0);
                             if (sequence.getChemModelCount() > 0) {
                                 model = sequence.getChemModel(0);
                             } else {
@@ -138,7 +141,7 @@ public class RSSHandler extends DefaultHandler {
                             // also extract INChI
                             if (model.getSetOfMolecules() != null) {
                                 if (model.getSetOfMolecules().getMoleculeCount() > 0) {
-                                	org.openscience.cdk.interfaces.IMolecule molecule = model.getSetOfMolecules().getMolecule(0);
+                                	IMolecule molecule = model.getSetOfMolecules().getMolecule(0);
                                     String inchi = (String)molecule.getProperty("iupac.nist.chemical.identifier");
                                     if (inchi != null) 
                                         model.setProperty(ChemicalRSSReader.RSS_ITEM_INCHI, inchi);

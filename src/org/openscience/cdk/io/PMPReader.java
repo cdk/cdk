@@ -207,7 +207,7 @@ public class PMPReader extends DefaultChemObjectReader {
                             if (chemObject instanceof IAtom) {
                                 atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
                                 molecule.addAtom((IAtom)chemObject);
-                            } else if (chemObject instanceof org.openscience.cdk.interfaces.IBond) {
+                            } else if (chemObject instanceof IBond) {
                                 bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
                                 molecule.addBond((IBond)chemObject);
                             } else {
@@ -235,7 +235,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                     // exception
                                     for (int i=0; i < expatoms; i++) {
                                         line = input.readLine();
-                                        org.openscience.cdk.interfaces.IAtom a = crystal.getAtomAt(i);
+                                        IAtom a = crystal.getAtomAt(i);
                                         StringTokenizer st = new StringTokenizer(line, " ");
                                         a.setX3d(Double.parseDouble(st.nextToken()));
                                         a.setY3d(Double.parseDouble(st.nextToken()));
@@ -334,14 +334,14 @@ public class PMPReader extends DefaultChemObjectReader {
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                org.openscience.cdk.interfaces.IAtom a = molecule.getAtomAt(realatomid);
+                IAtom a = molecule.getAtomAt(realatomid);
                 ((IBond)chemObject).setAtomAt(a, 0);
             } else if ("Atom2".equals(command)) {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                org.openscience.cdk.interfaces.IAtom a = molecule.getAtomAt(realatomid);
+                IAtom a = molecule.getAtomAt(realatomid);
                 ((IBond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);

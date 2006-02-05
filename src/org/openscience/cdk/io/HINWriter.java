@@ -34,6 +34,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
@@ -137,7 +139,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
         for (int molnum = 0; molnum < som.getMoleculeCount(); molnum++) {
 
-        	org.openscience.cdk.interfaces.IMolecule mol = som.getMolecule(molnum);
+        	IMolecule mol = som.getMolecule(molnum);
 
             try {
 
@@ -150,13 +152,13 @@ public class HINWriter extends DefaultChemObjectWriter {
                 writer.newLine();
 
                 // Loop through the atoms and write them out:
-                org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-                org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
+                IAtom[] atoms = mol.getAtoms();
+                IBond[] bonds = mol.getBonds();
 
                 for (int i = 0; i < natom; i++) {
 
                     String line = "atom ";
-                    org.openscience.cdk.interfaces.IAtom a = atoms[i];
+                    IAtom a = atoms[i];
 
                     sym = a.getSymbol();
                     chrg = a.getCharge();
@@ -171,10 +173,10 @@ public class HINWriter extends DefaultChemObjectWriter {
                     String buf = "";
                     int ncon = 0;
                     for (int j = 0; j < nbond; j++) {
-                    	org.openscience.cdk.interfaces.IBond b = bonds[j];
+                    	IBond b = bonds[j];
                         if (b.contains(a)) {
                             // current atom is in the bond so lets get the connected atom
-                        	org.openscience.cdk.interfaces.IAtom ca = b.getConnectedAtom(a);
+                        	IAtom ca = b.getConnectedAtom(a);
                             double bo = b.getOrder();
                             int serial = -1;
                             String bt = "";

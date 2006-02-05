@@ -26,6 +26,7 @@ package org.openscience.cdk.io.inchi;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
@@ -118,9 +119,9 @@ public class INChIContentProcessorTool {
                     int target = Integer.parseInt(targetStr);
                     logger.debug("Source atom: ", source);
                     logger.debug("Target atom: ", targetStr);
-                    org.openscience.cdk.interfaces.IAtom targetAtom = container.getAtomAt(target-1);
+                    IAtom targetAtom = container.getAtomAt(target-1);
                     if (source != -1) {
-                    	org.openscience.cdk.interfaces.IAtom sourceAtom = container.getAtomAt(source-1);
+                    	IAtom sourceAtom = container.getAtomAt(source-1);
                         bondToAdd = container.getBuilder().newBond(sourceAtom, targetAtom, 1.0);
                         container.addBond(bondToAdd);
                     }

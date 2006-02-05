@@ -35,6 +35,8 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -303,7 +305,7 @@ public class IChIHandler extends DefaultHandler {
                 String targetStr = matcher.group(1);
                 int target = Integer.parseInt(targetStr);
                 logger.debug("Target atom: " + targetStr);
-                org.openscience.cdk.interfaces.IAtom targetAtom = tautomer.getAtomAt(target-1);
+                IAtom targetAtom = tautomer.getAtomAt(target-1);
                 String hStr = matcher.group(2);
                 logger.debug(" hStr: " + hStr);
                 String hCountStr = matcher.group(3);
@@ -315,7 +317,7 @@ public class IChIHandler extends DefaultHandler {
                     targetAtom.setHydrogenCount(hCount);
                 }
                 if (source != -1) {
-                	org.openscience.cdk.interfaces.IAtom sourceAtom = tautomer.getAtomAt(source-1);
+                	IAtom sourceAtom = tautomer.getAtomAt(source-1);
                     bondToAdd = new Bond(sourceAtom, targetAtom, 1.0);
                     tautomer.addBond(bondToAdd);
                 }
@@ -348,10 +350,10 @@ public class IChIHandler extends DefaultHandler {
         }
         int target = Integer.parseInt(st.nextToken());
         // should better check if atom exists!
-        org.openscience.cdk.interfaces.IAtom sourceAtom = tautomer.getAtomAt(source-1);
-        org.openscience.cdk.interfaces.IAtom targetAtom = tautomer.getAtomAt(target-1);
+        IAtom sourceAtom = tautomer.getAtomAt(source-1);
+        IAtom targetAtom = tautomer.getAtomAt(target-1);
         
-        org.openscience.cdk.interfaces.IBond bond = tautomer.getBond(sourceAtom, targetAtom);
+        IBond bond = tautomer.getBond(sourceAtom, targetAtom);
         bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
         return;
     }

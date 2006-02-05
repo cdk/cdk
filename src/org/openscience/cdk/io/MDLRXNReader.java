@@ -35,6 +35,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -250,8 +251,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         
         // map the atoms
         int mappingCount = 0;
-        org.openscience.cdk.interfaces.IAtom[] reactantAtoms = reactingSide.getAtoms();
-        org.openscience.cdk.interfaces.IAtom[] producedAtoms = producedSide.getAtoms();
+        IAtom[] reactantAtoms = reactingSide.getAtoms();
+        IAtom[] producedAtoms = producedSide.getAtoms();
         for (int i=0; i<reactantAtoms.length; i++) {
             for (int j=0; j<producedAtoms.length; j++) {
                 if (reactantAtoms[i].getID() != null &&

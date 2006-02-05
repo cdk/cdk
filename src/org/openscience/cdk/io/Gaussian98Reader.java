@@ -411,8 +411,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	private void readPartialCharges(IChemModel model) throws CDKException, IOException
 	{
 		logger.info("Reading partial atomic charges");
-		org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet = model.getSetOfMolecules();
-		org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
+		ISetOfMolecules moleculeSet = model.getSetOfMolecules();
+		IMolecule molecule = moleculeSet.getMolecule(0);
 		String line = input.readLine();
 		// skip first line after "Total atomic charges"
 		while (input.ready())
@@ -443,7 +443,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 				{
 					throw new CDKException("Error while reading charge: expected double.");
 				}
-				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(atomCounter - 1);
+				IAtom atom = molecule.getAtomAt(atomCounter - 1);
 				atom.setCharge(charge);
 			}
 		}

@@ -34,6 +34,7 @@ import java.io.Writer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -133,10 +134,10 @@ public class XYZWriter extends DefaultChemObjectWriter {
             writer.newLine();
             
             // Loop through the atoms and write them out:
-            org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
+            IAtom[] atoms = mol.getAtoms();
             for (int i = 0; i < atoms.length; i++) {
                 
-            	org.openscience.cdk.interfaces.IAtom a = atoms[i];
+            	IAtom a = atoms[i];
                 st = a.getSymbol();
                 
                 Point3d p3 = a.getPoint3d();

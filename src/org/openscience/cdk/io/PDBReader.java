@@ -167,10 +167,10 @@ public class PDBReader extends DefaultChemObjectReader {
 		IBioPolymer oBP = oFile.getBuilder().newBioPolymer();
 		StringBuffer cResidue;
 		String oObj;
-		org.openscience.cdk.interfaces.IMonomer oMonomer;
+		IMonomer oMonomer;
 		String cRead;
 		char chain = 'A';	// To ensure stringent name giving of monomers
-		org.openscience.cdk.interfaces.IStrand oStrand;
+		IStrand oStrand;
 		
 		// do the reading of the Input		
 		try {

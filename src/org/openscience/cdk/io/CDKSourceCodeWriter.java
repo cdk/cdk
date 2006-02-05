@@ -35,6 +35,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
@@ -129,27 +131,27 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         writer.write("  Molecule mol = new Molecule();\n");
         IDCreator idCreator = new IDCreator();
         idCreator.createIDs(molecule);
-        org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
+        IAtom[] atoms = molecule.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
+        	IAtom atom = atoms[i];
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");\n");
         }
-        org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
+        IBond[] bonds = molecule.getBonds();
         for (int i=0; i<bonds.length; i++) {
-        	org.openscience.cdk.interfaces.IBond bond = bonds[i];
+        	IBond bond = bonds[i];
             writeBond(bond);
             writer.write("  mol.addBond(" + bond.getID() + ");\n");
         }
         writer.write("}\n");
     }
 
-    public void writeAtom(org.openscience.cdk.interfaces.IAtom atom) throws Exception {
+    public void writeAtom(IAtom atom) throws Exception {
         writer.write("  Atom " + atom.getID() + " = new Atom(\"" + atom.getSymbol() +
                      "\");\n");
     }
     
-    public void writeBond(org.openscience.cdk.interfaces.IBond bond) throws Exception {
+    public void writeBond(IBond bond) throws Exception {
         writer.write("  Bond " + bond.getID() + " = new Bond(" + 
                      bond.getAtomAt(0).getID() + ", " +
                      bond.getAtomAt(1).getID() + ", " +

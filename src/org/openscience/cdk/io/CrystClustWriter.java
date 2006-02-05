@@ -34,6 +34,7 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
@@ -179,7 +180,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         // output atoms
         for (int i = 0; i < noatoms; i++) {
             // output atom sumbol
-        	org.openscience.cdk.interfaces.IAtom atom = crystal.getAtomAt(i);
+        	IAtom atom = crystal.getAtomAt(i);
             write(atom.getSymbol());
             write(":");
             // output atom charge
