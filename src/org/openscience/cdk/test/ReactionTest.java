@@ -319,8 +319,11 @@ public class ReactionTest extends CDKTestCase {
         assertTrue(clone instanceof IReaction);
     }
 
+    /**
+     * @cdk.bug 1095690
+     */
     public void testClone_Mapping() {
-        fail("Affected by bug #1095690");
+        if (runKnownBugs()) fail("Affected by bug #1095690");
     }
     
     public void testAddMapping_Mapping() {
