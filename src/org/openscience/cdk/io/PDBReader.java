@@ -98,7 +98,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	 *
 	 */
 	public PDBReader(Reader oIn) {
-		logger = new org.openscience.cdk.tools.LoggingTool(this.getClass().getName());
+		logger = new LoggingTool(this.getClass());
 		_oInput = new BufferedReader(oIn);
 	}
 	
@@ -176,8 +176,9 @@ public class PDBReader extends DefaultChemObjectReader {
 		try {
 			do {
 				cRead = _oInput.readLine();
-				logger.debug(cRead);
-				if (cRead != null) {
+				logger.debug("Read line: ", cRead);
+				if (cRead != null) {	
+					
 					cLine = new StringBuffer(cRead);
 					// make sure the record name is 6 characters long
 					while (cLine.length() < 6) {
