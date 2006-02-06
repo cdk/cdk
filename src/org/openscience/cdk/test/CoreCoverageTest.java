@@ -44,6 +44,7 @@ public class CoreCoverageTest extends CoverageTest {
         try {
             super.loadClassList(CLASS_LIST);
         } catch (Exception exception) {
+        	exception.printStackTrace();
             fail("Could not load classes to test: " + exception.getMessage());
         }
     }
