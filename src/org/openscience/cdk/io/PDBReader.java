@@ -334,7 +334,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						t.add("" + cLine);
 					}
 				}
-			} while (_oInput.ready());
+			} while (_oInput.ready() && (cRead != null));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
