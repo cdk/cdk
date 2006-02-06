@@ -73,8 +73,9 @@ abstract public class CoverageTest extends CDKTestCase {
         while (reader.ready()) {
             // load them one by one
             String rawClassName = reader.readLine();
-            // a work around for a bug in Classpath 0.20:
+            // start workaround: for a bug in Classpath 0.20:
             if (rawClassName == null) break;
+            // end workaround. See http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26108
             rawClassName = rawClassName.substring(20);
             String className = convertSlash2Dot(
                 rawClassName.substring(0, rawClassName.indexOf('.'))
