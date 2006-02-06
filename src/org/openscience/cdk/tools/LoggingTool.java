@@ -240,7 +240,7 @@ public class LoggingTool {
             if (object instanceof Throwable) {
                 debugThrowable((Throwable)object);
             } else {
-                debugString("" + object.toString());
+                debugString("" + object);
             }
         }
     }
