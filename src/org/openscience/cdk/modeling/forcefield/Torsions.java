@@ -7,6 +7,7 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.LoggingTool;
@@ -42,13 +43,16 @@ public class Torsions {
 	double[] v3 = null;
 	double[] phi = null;
 	
-	org.openscience.cdk.interfaces.IBond[] bond = null;
+	IBond[] bond = null;
 	IAtom[] atomInBond = null;
-	org.openscience.cdk.interfaces.IBond[] bondConnectedBefore = null;
-	org.openscience.cdk.interfaces.IBond[] bondConnectedAfter = null;
+	IBond[] bondConnectedBefore = null;
+	IBond[] bondConnectedAfter = null;
 
 	ForceFieldTools ffTools = new ForceFieldTools();
 	private LoggingTool logger;
+
+	GVector moleculeCurrentCoordinates = null;
+	boolean[] changeAtomCoordinates = null;
 
 
 	/**
@@ -98,7 +102,7 @@ public class Torsions {
 
 		Vector torsionsData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initilize(parameterSet);
+		pc.initialize(parameterSet);
 		
 		v1 = new double[torsionNumber];
 		v2 = new double[torsionNumber];
@@ -154,6 +158,18 @@ public class Torsions {
 			}
 		}
 
+		phi = new double[torsionNumber];
+
+		this.moleculeCurrentCoordinates = new GVector(3 * molecule.getAtomCount());
+		for (int i=0; i<moleculeCurrentCoordinates.getSize(); i++) {
+			this.moleculeCurrentCoordinates.setElement(i,1E10);
+		} 
+
+		this.changeAtomCoordinates = new boolean[molecule.getAtomCount()];
+		for (int i=0; i < molecule.getAtomCount(); i++) {
+			this.changeAtomCoordinates[i] = false;
+		}
+
 	}
 
 
@@ -163,14 +179,26 @@ public class Torsions {
 	 *@param  coords3d  Current molecule coordinates.
 	 */
 	public void setPhi(GVector coords3d) {
+		this.moleculeCurrentCoordinates.sub(coords3d);
+		for (int i = 0; i < this.moleculeCurrentCoordinates.getSize(); i++) {
+			//System.out.println("this.moleculeCurrentCoordinates.getElement(i) = " + this.moleculeCurrentCoordinates.getElement(i));
+			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 1E-2) {
+				changeAtomCoordinates[i/3] = true;
+				//System.out.println("changeAtomCoordinates[" + i/3 + "] = " + changeAtomCoordinates[i/3]);
+				i = i + (2 - i % 3);
+			}
+		}
 
-		phi = new double[torsionNumber];
-		
 		for (int m = 0; m < torsionNumber; m++) {
+			if ((changeAtomCoordinates[torsionAtomPosition[m][0]] == true) | 
+					(changeAtomCoordinates[torsionAtomPosition[m][1]] == true) | 
+					(changeAtomCoordinates[torsionAtomPosition[m][2]] == true) |
+					(changeAtomCoordinates[torsionAtomPosition[m][3]] == true))		{
 			
-			phi[m] = ffTools.torsionAngleFrom3xNCoordinates(coords3d, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
-						torsionAtomPosition[m][2], torsionAtomPosition[m][3]);
-			//logger.debug("phi[" + m + "] : " + phi[m]);	
+				phi[m] = ffTools.torsionAngleFrom3xNCoordinates(coords3d, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
+							torsionAtomPosition[m][2], torsionAtomPosition[m][3]);
+				//logger.debug("phi[" + m + "] : " + phi[m]);
+			}
 		}
 	}
 

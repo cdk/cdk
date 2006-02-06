@@ -49,6 +49,7 @@ public class ForceField extends GeometricMinimizer{
         }
 	
 	public void minimize( ) throws Exception{
+		long start, stop;
 		if (!ConnectivityChecker.isConnected(molecule)) {
 			throw new Exception("CDKError: Molecule is NOT connected,could not layout.");
 		}
@@ -64,13 +65,20 @@ public class ForceField extends GeometricMinimizer{
 		
 		//logger.debug("PotentialFunction set:"+potentialFunction+"MoleculeCoords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
 		//logger.debug(moleculeCoords.toString());
-		
-		if (sdm_flag)steepestDescentsMinimization(moleculeCoords,mmff94PF);
+		start = System.currentTimeMillis();
+		//System.out.println("Starting minmization at " + start);
+		if (sdm_flag) steepestDescentsMinimization(moleculeCoords,mmff94PF);
 
 		if (cgm_flag)conjugateGradientMinimization(moleculeCoords, mmff94PF);
 		//conjugateGradientMinimization(moleculeCoords, tpf);
-	
+		stop = System.currentTimeMillis();
+		//System.out.println("Finished minmization at " + stop);
+		if ((stop - start)/1000 < 60) {
+			//System.out.println("Time for minimization: " + (stop - start)/1000 + " sec");
+		} else {
+			//System.out.println("Time for minimization: " + (stop - start)/60000 + " min");
 
+		}
 		//logger.debug("Minimization READY");
 		//ffTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule); 
 	}

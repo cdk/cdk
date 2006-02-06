@@ -42,30 +42,6 @@ public class LineSearch {
 	}
 
 
-	public double f(double lambda) {
-		//logger.debug("lambda= " + lambda);
-		xlambda = new GVector(x);
-		//logger.debug("xlambda = " + xlambda);
-		directionStep = direction;
-		//logger.debug("directionStep = " + directionStep);
-		xlambda.scaleAdd(lambda, directionStep, xlambda);
-		//logger.debug("xlambda = " + xlambda);
-		double fx = pf.energyFunction(xlambda);
-		//logger.debug("fx = " + fx);
-		return fx;
-	}
-	
-	
-	public double sign(double a, double b) {
-		double c = a;
-		if (b >= 0) {
-			if (a >= 0) {} 
-			else { c = -1 * c; }
-		} else if (a >= 0) { c= -1 * c; } 
-		return c;
-	}
-
-
 	/**
 	 *  Bracketing the minimum: The bracketing phase determines the range of points on the line to be searched.
 	 *  Look for 3 points along the line where the energy of the middle point is lower than the energy of the two outer points.
@@ -451,6 +427,201 @@ public class LineSearch {
 
 	
 	/**
+	 *  Given a function f and its derivative function df, and given a bracketing triplet of abscissas lambdaa, 
+	 *  lambdab, lambdac (such that lambdab is between lambdaa and lambdac, and f(lambdab) is less than both 
+	 *  f(lambdaa) and f(lambdac)), this routine isolates the minimum to a fractional precision of about 
+	 *  t01=0.00001 using a modification of Brent`s method that uses derivatives.
+	 */
+	public void dbrentsMethod() {
+		//logger.debug(" ");
+		//logger.debug("brentsMethod");
+		int itmax = 100;	//maximum allowed number of iterations
+		double CGold = 0.3819660;	//golden ratio
+		double zeps = 0.0000000000000001;	//small number that protects against trying to achieve fractional accuracy for a minimum that happens to be exactly zero.
+							//zeps = numeric_limits<DP>::epsilon()*1.0e-3
+		double a,b,d = 0;
+		double etemp, fu, fv, fw, fx;
+		double p,q,r,tol1,tol2,u,v,w,x,xm;
+		double e = 0;	// This will be the distance moved on the step before last.
+		a = lambdaa;
+		b = lambdac;		// a and b  must be in ascending order.
+		x=w=v=lambdab;
+		fw=fv=fx=fxb;
+		u=lambdab; fu=fxb; // included later
+		
+		for (int iter=0; iter < itmax; iter++) {	// Main method loop
+			logger.debug("iter = " + iter);
+			//logger.debug("a (bracket the minimum) = " + a);
+			//logger.debug("b (bracket the minimum) = " + b);
+			//logger.debug("x (least function value found) = " + x + " ; f(x) = " + fx);
+			//logger.debug("w (second least function value) = " + w + " ; f(w) = " + fw);
+			//logger.debug("v (previous value of w) = " + v + " ; f(v) = " + fv);
+			//logger.debug("u (most recently evaluation) = " + u + " ; f(u) = " + fu);
+
+			xm = 0.5 * (a + b);
+			//logger.debug("xm = " + xm);
+			
+			tol1= tol * Math.abs(x) + zeps;
+			tol2 = 2.0 * tol1;
+			//logger.debug("tol = " + tol + " ; tol1 = " + tol1 + " ; tol2 = " + tol2);
+			//logger.debug("Math.abs(x-xm) = " + Math.abs(x-xm));
+			//logger.debug("tol2-0.5*(b-a) = " + (tol2-0.5*(b-a)));
+			//logger.debug("if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) ; " + (Math.abs(x-xm) <= (tol2-0.5*(b-a))));
+			if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {	// Test for done hear
+				break;
+			} else {
+				//logger.debug("if (Math.abs(e) > tol1) ; " + (Math.abs(e) > tol1));
+				if (Math.abs(e) > tol1) {		// Construct a trial parabolic fit.
+					//logger.debug("Construct a trial parabolic fit.");
+					r = (x-w) * (fx-fv);
+					//logger.debug("r = " + r);
+					q = (x-v) * (fx-fw);
+					//logger.debug("q = " + q);
+					p = (x - v) * q - (x - w) * r;
+					//logger.debug("p = " + p);
+					q = 2.0 * (q - r);
+					if (q > 0.0) {
+						p = -p;
+					}
+					q = Math.abs(q);
+					etemp = e;
+					e = d;
+					//logger.debug("if (Math.abs(p) >= Math.abs(0.5 * q * etemp) | p <= q * (a - x) | p >= q * (b-x)) ; " + (Math.abs(p) >= Math.abs(0.5 * q * etemp) | p <= q * (a - x) | p >= q * (b-x)));
+					//logger.debug("The above conditions determine the acceptability of the parabolic fit.");
+					if (Math.abs(p) >= Math.abs(0.5 * q * etemp) | p <= q * (a - x) | p >= q * (b-x)) {
+						// The above conditions determine the acceptability of the parabolic fit.
+						logger.debug("Parabolic fit");
+						if (x >= xm) {
+							e = a-x;
+						}
+						else {
+							e = b-x;
+						}
+						d = CGold * e;
+					} else {	// Here we take the golden section step into the larger of the two segments.
+						logger.debug("golden section");
+						d = p/q;	// Take the parabolic step
+						u = x + d;
+						if (u-a < tol2 | b-u < tol2) {
+							d = sign(tol1,xm-x);
+						}
+					}
+				} else {
+					if (x >= xm) {
+						//logger.debug("Prepare e, x >= xm");
+						e = a-x;	
+						//logger.debug("e = " + e);
+					} else {
+						//logger.debug("Prepare e, x < xm");
+						e = b-x;
+						//logger.debug("e = " + e);
+					}
+					d = CGold * e;
+					//logger.debug("d = " + d);
+				}
+				if (Math.abs(d) >= tol1) {
+					u = x + d;
+					//logger.debug("u = x + d = " + u);
+				} else {
+					u = x + sign(tol1,d);
+					//logger.debug("u = x + sign(tol1,d) = " + u);
+				}
+				fu = f(u);	// This is the one function evaluation per iteration
+				//logger.debug("Function evaluation: f(u) = " + fu);
+				if (fu <= fx) {		// Now decide what to do with our function evaluation.
+					if (u >= x) {
+						a=x;
+					} else {
+						b=x;
+					}
+					v = w; w = x; x = u;	// Housekeeping follows
+					fv = fw; fw = fx; fx = fu;
+				} else {
+					if (u<x) {
+						a=u;
+					} else {
+						b=u;
+					}
+					if (fu <= fw | w==x) {
+						v=w;
+						w=u;
+						fv=fw;
+						fw=fu;
+					} else if (fu <= fv | v == x | v == w) {
+						v=u;
+						fv=fu;
+					}
+				}		
+			}	// Done with housekeeping. Back for another iteration.
+			if (iter == itmax-1) {
+				logger.debug("Too many iterations in brent");
+			}
+		}
+
+		lineSearchLambda = x;
+		fxLS = fx;
+
+		
+		//Parabolic interpolation - that was working before
+		 		/*GVector xI = new GVector(kPoint.getSize());
+				double fxI = 0;
+				double fMinimumMinus1 = fxa;
+				double fMinimum = fxb;
+				
+				do {
+					parabolicInterpolation();
+					xI.set(kPoint);
+					directionStep.set(searchDirection);
+					directionStep.scale(parabolMinimumLambda);
+					xI.add(directionStep);
+					
+					fxI = forceFieldFunction.energyFunction(xI);
+					//logger.debug("fxI = " + fxI);
+					
+					// Take new 3 points : If fxI > fxb new interval is (lambdaa, lambdab, parabolMinimumLambda), otherwise new interval is (lambdab, parabolMinimumLambda, lambdac)
+					if (parabolMinimumLambda > lambdaa & parabolMinimumLambda < lambdac) {
+						if (parabolMinimumLambda < lambdab) {
+							if (fxI < fxb) {//aIb
+								lambdac = lambdab;			fxc = fxb;
+								lambdab = parabolMinimumLambda;		fxb = fxI;
+							} else {//Ibc
+								lambdaa = parabolMinimumLambda;		fxa = fxI;
+							}
+						} else if (fxI < fxb) {//bIc
+							lambdaa = lambdab;			fxa = fxb;
+							lambdab = parabolMinimumLambda;		fxb = fxI;
+						}else {//abI
+							lambdac = parabolMinimumLambda;		fxc = fxI;
+						}
+						fMinimumMinus1 = fMinimum;
+						fMinimum = fxb;
+					}
+				} while (Math.abs(fMinimum - fMinimumMinus1) > 0.001);
+				*/	
+					/*if (fxI > fxb) {
+						lambdac = parabolMinimumLambda; fxc = fxI;
+					} else {
+						if (parabolMinimumLambda < lambdab) {
+							fxc = fxb; lambdac = lambdab;
+							fxb = fxI; lambdab = parabolMinimumLambda;
+						} else {
+							fxa = fxb; lambdaa = lambdab;
+							fxb = fxI; lambdab = parabolMinimumLambda;
+						}
+					}*/
+		/*lineSearchLambda = x;
+		fxLS = fx;
+		*/
+	}
+	
+	
+	public boolean wolfeConditions(double lambda) {
+		boolean wolfeConditions = false;
+		return wolfeConditions;
+	}
+
+	
+	/**
 	 *  Gets the stepSize attribute of the LineSearch object
 	 *
 	 *@return    The stepSize value
@@ -483,6 +654,9 @@ public class LineSearch {
 		
 		if (lambdaa < lambdab & lambdab < lambdac & fxb < fxa & fxb < fxc) {
 			brentsMethod();
+			if (wolfeConditions(lineSearchLambda)) {}
+			else {//System.out.println("The Wolfe Conditions are not satisfy");
+			}
 		} else {
 			lineSearchLambda = 0;
 			//logger.debug("(lambdaa < lambdab & lambdab < lambdac & fxb < fxa & fxb < fxc) false");
@@ -494,6 +668,30 @@ public class LineSearch {
 			logger.debug("fxc = " + fxc);*/
 		}
 	}
+
+	public double f(double lambda) {
+		//logger.debug("lambda= " + lambda);
+		xlambda = new GVector(x);
+		//logger.debug("xlambda = " + xlambda);
+		directionStep = direction;
+		//logger.debug("directionStep = " + directionStep);
+		xlambda.scaleAdd(lambda, directionStep, xlambda);
+		//logger.debug("xlambda = " + xlambda);
+		double fx = pf.energyFunction(xlambda);
+		//logger.debug("fx = " + fx);
+		return fx;
+	}
+	
+	
+	public double sign(double a, double b) {
+		double c = a;
+		if (b >= 0) {
+			if (a >= 0) {} 
+			else { c = -1 * c; }
+		} else if (a >= 0) { c= -1 * c; } 
+		return c;
+	}
+
 
 }
 

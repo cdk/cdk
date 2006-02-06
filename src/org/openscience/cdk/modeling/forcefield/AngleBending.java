@@ -9,6 +9,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -46,11 +47,16 @@ public class AngleBending {
 	double[] k3 = null;
 	double[] k4 = null;
 	double cb = -0.007;
+	double[] currentCoordinates_v = null;
+	double[] currentCoordinates_deltav = null;
 	double[] v = null;
 	double[] deltav = null;
 	
 	boolean angleBending;
 	
+	GVector moleculeCurrentCoordinates = null;
+	boolean[] changeAtomCoordinates = null;
+
 	ForceFieldTools ffTools = new ForceFieldTools();
 	private LoggingTool logger;
 
@@ -65,6 +71,7 @@ public class AngleBending {
 	public void setAngleBendingFlag(boolean flag){
 		angleBending=flag;
 	}
+	
 	/**
 	 *  Set MMFF94 reference angle v0IJK and the constants k2, k3, k4 for each
 	 *  i-j-k angle in the molecule.
@@ -75,7 +82,7 @@ public class AngleBending {
 	 */
 	public void setMMFF94AngleBendingParameters(AtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag ) throws Exception {
 
-		org.openscience.cdk.interfaces.IAtom[] atomConnected = null;
+		IAtom[] atomConnected = null;
 		angleBending=angleBendingFlag;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(i));
@@ -91,7 +98,7 @@ public class AngleBending {
 
 		Vector angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initilize(parameterSet);
+		pc.initialize(parameterSet);
 		
 		v0 = new double[angleNumber];
 		k2 = new double[angleNumber];
@@ -106,9 +113,7 @@ public class AngleBending {
 			if (atomConnected.length > 1) {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {
-						angleData = pc.getAngleData(atomConnected[j].getAtomTypeName(), 
-								                    molecule.getAtomAt(i).getAtomTypeName(), 
-								                    atomConnected[k].getAtomTypeName());
+						angleData = pc.getAngleData(atomConnected[j].getAtomTypeName(), molecule.getAtomAt(i).getAtomTypeName(), atomConnected[k].getAtomTypeName());
 						//logger.debug("angleData : " + angleData);
 						l += 1;
 						v0[l] = ((Double) angleData.get(0)).doubleValue();
@@ -130,8 +135,19 @@ public class AngleBending {
 				}
 			}
 		}
+
 		v = new double[angleNumber];
 		deltav = new double[angleNumber];
+
+		this.moleculeCurrentCoordinates = new GVector(3 * molecule.getAtomCount());
+		for (int i=0; i<moleculeCurrentCoordinates.getSize(); i++) {
+			this.moleculeCurrentCoordinates.setElement(i,1E10);
+		} 
+
+		this.changeAtomCoordinates = new boolean[molecule.getAtomCount()];
+		for (int i=0; i < molecule.getAtomCount(); i++) {
+			this.changeAtomCoordinates[i] = false;
+		}
 
 	}
 
@@ -142,22 +158,43 @@ public class AngleBending {
 	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void setDeltav(GVector coord3d) {
-		
-		//logger.debug("deltav.length = " + deltav.length);
-		for (int i = 0; i < angleNumber; i++) {
-			v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
-			//logger.debug("v[" + i + "] = " + v[i]);
-			//logger.debug("v0[" + i + "] = " + v0[i]);
-			deltav[i] = v[i] - v0[i];
-			if (deltav[i] > 0 & angleBending) {
-				deltav[i]= (-1) * deltav[i]; 
-			}else if (deltav[i] < 0 & !angleBending){
-				deltav[i]= (-1) * deltav[i]; 
+		this.moleculeCurrentCoordinates.sub(coord3d);
+		for (int i = 0; i < this.moleculeCurrentCoordinates.getSize(); i++) {
+			//System.out.println("this.moleculeCurrentCoordinates.getElement(i) = " + this.moleculeCurrentCoordinates.getElement(i));
+			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 1E-2) {
+				changeAtomCoordinates[i/3] = true;
+				//System.out.println("changeAtomCoordinates[" + i/3 + "] = " + changeAtomCoordinates[i/3]);
+				i = i + (2 - i % 3);
 			}
-			/*if (Math.abs(deltav[i]) < 0.05) {
-				logger.debug("deltav[" + i + "]= " + deltav[i]);
-			}*/
 		}
+		//logger.debug("currentCoordinates_deltav.length = " + currentCoordinates_deltav.length);
+
+		for (int i = 0; i < angleNumber; i++) {
+			if ((changeAtomCoordinates[angleAtomPosition[i][0]] == true) | 
+				(changeAtomCoordinates[angleAtomPosition[i][1]] == true) | 
+				(changeAtomCoordinates[angleAtomPosition[i][2]] == true))		{
+				
+				v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+				//System.out.println("currentCoordinates_v[" + i + "] = " + currentCoordinates_v[i]);
+				//logger.debug("v0[" + i + "] = " + v0[i]);
+				deltav[i] = v[i] - v0[i];
+				if (deltav[i] > 0 & angleBending) {
+					deltav[i]= (-1) * deltav[i]; 
+				}else if (deltav[i] < 0 & !angleBending){
+					deltav[i]= (-1) * deltav[i]; 
+				}
+				/*if (Math.abs(currentCoordinates_deltav[i]) < 0.05) {
+				 logger.debug("currentCoordinates_deltav[" + i + "]= " + currentCoordinates_deltav[i]);
+				 }*/
+			}
+			else {
+				//System.out.println("v[" + i + "] remain the same");
+			}
+		}
+		moleculeCurrentCoordinates.set(coord3d);
+		/*for (int i=0; i<moleculeCurrentCoordinates.getSize(); i++) {
+		System.out.println("moleculeCurrentCoordinates.getElement(" + i + " ) = " + this.moleculeCurrentCoordinates.getElement(i));
+		}*/
 	}
 
 
@@ -179,13 +216,13 @@ public class AngleBending {
 	 */
 	public double functionMMFF94SumEA(GVector coord3d) {
 		//this.angleBending=true;
-		setDeltav(coord3d);
+		this.setDeltav(coord3d);
 		mmff94SumEA = 0;
 		for (int i = 0; i < angleNumber; i++) {
 			//logger.debug("k2[" + i + "]= " + k2[i]);
 			//logger.debug("k3[" + i + "]= " + k3[i]);
-			//logger.debug("deltav[" + i + "]= " + deltav[i]);
-			//logger.debug("For Angle " + i + " : " + k2[i] * Math.pow(deltav[i],2) + k3[i] * Math.pow(deltav[i],3));
+			//logger.debug("currentCoordinates_deltav[" + i + "]= " + currentCoordinates_deltav[i]);
+			//logger.debug("For Angle " + i + " : " + k2[i] * Math.pow(currentCoordinates_deltav[i],2) + k3[i] * Math.pow(currentCoordinates_deltav[i],3));
 
 			mmff94SumEA = mmff94SumEA + k2[i] * Math.pow(deltav[i],2) 
 						+ k3[i] * Math.pow(deltav[i],3);
@@ -316,7 +353,9 @@ public class AngleBending {
 		double sigma = Math.pow(0.000000000000001,0.33);
 		GVector xplusSigma = new GVector(coord3d.getSize());
 		GVector xminusSigma = new GVector(coord3d.getSize());
-		
+		/*boolean[] sigmaChange = new boolean[coord3d.getSize()];
+		for (int i=1; i < sigmaChange.length; i++) {sigmaChange[i] = false;}
+		*/
 		double[] deltavInXplusSigma = null;
 		double[] deltavInXminusSigma = null;
 		for (int m = 0; m < angleBendingOrder2ndErrorApproximateGradient.length; m++) {
@@ -357,6 +396,10 @@ public class AngleBending {
 	 */
 	public void setGradientMMFF94SumEA(GVector coord3d) {
 		gradientMMFF94SumEA = new GVector(coord3d.getSize());
+
+/*		boolean[] sigmaChange = new boolean[coord3d.getSize()];
+		for (int i=1; i < sigmaChange.length; i++) {sigmaChange[i] = false;}
+*/
 		setDeltav(coord3d);
 		setAngleBendingFirstDerivative(coord3d);
 		
@@ -398,6 +441,8 @@ public class AngleBending {
 		double sigma = Math.pow(0.000000000000001,0.33);
 		GVector xplusSigma = new GVector(coord3d.getSize());
 		GVector xminusSigma = new GVector(coord3d.getSize());
+		boolean[] sigmaChange = new boolean[coord3d.getSize()];
+		for (int i=1; i < sigmaChange.length; i++) {sigmaChange[i] = false;}
 		
 		for (int m = 0; m < order2ndErrorApproximateGradientMMFF94SumEA.getSize(); m++) {
 			xplusSigma.set(coord3d);
@@ -435,6 +480,8 @@ public class AngleBending {
 		GVector xminusSigma = new GVector(coord3d.getSize());
 		GVector xplus2Sigma = new GVector(coord3d.getSize());
 		GVector xminus2Sigma = new GVector(coord3d.getSize());
+		boolean[] sigmaChange = new boolean[coord3d.getSize()];
+		for (int i=1; i < sigmaChange.length; i++) {sigmaChange[i] = false;}
 		
 		for (int m=0; m < order5thErrorApproximateGradientMMFF94SumEA.getSize(); m++) {
 			xplusSigma.set(coord3d);
@@ -445,7 +492,8 @@ public class AngleBending {
 			xplus2Sigma.setElement(m,coord3d.getElement(m) + 2 * sigma);
 			xminus2Sigma.set(coord3d);
 			xminus2Sigma.setElement(m,coord3d.getElement(m) - 2 * sigma);
-			order5thErrorApproximateGradientMMFF94SumEA.setElement(m, (8 * (functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) - (functionMMFF94SumEA(xplus2Sigma) - functionMMFF94SumEA(xminus2Sigma))) / (12 * sigma));
+			order5thErrorApproximateGradientMMFF94SumEA.setElement(m, (8 * (functionMMFF94SumEA(xplusSigma) - functionMMFF94SumEA(xminusSigma)) 
+					- (functionMMFF94SumEA(xplus2Sigma) - functionMMFF94SumEA(xminus2Sigma))) / (12 * sigma));
 		}
 			
 		//logger.debug("order5thErrorApproximateGradientMMFF94SumEA : " + order5thErrorApproximateGradientMMFF94SumEA);
@@ -938,6 +986,10 @@ public class AngleBending {
 
 		double[] forHessian = new double[coord3d.getSize() * coord3d.getSize()];
 		
+		/*boolean[] sigmaChange = new boolean[coord3d.getSize()];
+		for (int i=1; i < sigmaChange.length; i++) {sigmaChange[i] = false;}
+		*/
+		
 		setDeltav(coord3d);
 		setAngleBendingSecondDerivative(coord3d);
 		
@@ -956,6 +1008,7 @@ public class AngleBending {
 				forHessian[forHessianIndex] = sumHessianEA;
 			}
 		}
+		
 		/*for (int n = 0; n < forHessian.length; n++) {
 			logger.debug(forHessian[n] + ", ");
 			if (n % 6 == 5) {

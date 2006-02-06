@@ -37,19 +37,18 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 	ElectrostaticInteractions ei = new ElectrostaticInteractions();
 	int count = 0;
 
-
 	/**
 	 *  Constructor for the MMFF94EnergyFunction object
 	 *
 	 */
 	public MMFF94EnergyFunction(AtomContainer molecule, Hashtable mmff94Tables) throws Exception {
-		//logger.debug(molecule.getAtomCount() + " "+mmff94Tables.size());
 		bs.setMMFF94BondStretchingParameters(molecule, mmff94Tables);
 		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables,true);
 		sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables,false);
 		t.setMMFF94TorsionsParameters(molecule, mmff94Tables);
 		vdwi.setMMFF94VanDerWaalsParameters(molecule, mmff94Tables);        
-		ei.setMMFF94ElectrostaticParameters(molecule, mmff94Tables);        
+		ei.setMMFF94ElectrostaticParameters(molecule, mmff94Tables);
+		
 		logger = new LoggingTool(this);
 	}
 
@@ -61,11 +60,12 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 	 *@return        MMFF94 energy function value.
 	 */
 	public double energyFunction(GVector coords3d) {
+
 		vdwi.setFunctionMMFF94SumEvdW(coords3d);
 		sbi.setFunctionMMFF94SumEBA(coords3d);
 		
 		energy = bs.functionMMFF94SumEB(coords3d)
-			+ ab.functionMMFF94SumEA(coords3d) 
+			+ ab.functionMMFF94SumEA(coords3d)
 			+ sbi.getFunctionMMFF94SumEBA()
 			+ t.functionMMFF94SumET(coords3d)
 			+ vdwi.getFunctionMMFF94SumEvdW()
@@ -73,17 +73,20 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 			;
 		
 		count += 1;
-		if (count == 0 | count % 20 == 0) {
-			logger.debug("count = " + count);
-			logger.debug("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
-			logger.debug("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
-			logger.debug("sbi.functionMMFF94SumEBA(coords3d) = " + sbi.getFunctionMMFF94SumEBA());
-			logger.debug("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
-			logger.debug("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.getFunctionMMFF94SumEvdW());
-			logger.debug("ei.functionMMFF94SumEQ(coords3d) = " + ei.functionMMFF94SumEQ(coords3d));
-			logger.debug("energy = " + energy);
+/*		if (count == 1 | count % 50 == 0) {
+			System.out.println("count = " + count);
+			System.out.println("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
+			System.out.println("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
+			System.out.println("sbi.functionMMFF94SumEBA(coords3d)) = " + sbi.getFunctionMMFF94SumEBA());
+			System.out.println("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
+			System.out.println("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.getFunctionMMFF94SumEvdW());
+			System.out.println("ei.functionMMFF94SumEQ(coords3d) = " + ei.functionMMFF94SumEQ(coords3d));
+			System.out.println("energy = " + energy);
 		}
-		return energy;
+		
+		moleculeCurrentCoordinates.set(coord3d);
+		
+*/		return energy;
 	}
 
 

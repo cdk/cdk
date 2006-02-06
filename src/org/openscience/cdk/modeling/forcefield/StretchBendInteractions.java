@@ -77,7 +77,7 @@ public class StretchBendInteractions {
 		Vector stretchBendInteractionsData = null;
 		Vector bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initilize(parameterSet);
+		pc.initialize(parameterSet);
 
 		bondijAtomPosition = new int[ab.angleNumber][];
 		bondkjAtomPosition = new int[ab.angleNumber][];
@@ -92,10 +92,7 @@ public class StretchBendInteractions {
 			if (atomConnected.length > 1) {
 				for (int i = 0; i < atomConnected.length; i++) {
 					for (int k = i + 1; k < atomConnected.length; k++) {
-						stretchBendInteractionsData = pc.getBondAngleInteractionData(
-							atomConnected[i].getAtomTypeName(), 
-							molecule.getAtomAt(j).getAtomTypeName(), atomConnected[k].getAtomTypeName()
-						);
+						stretchBendInteractionsData = pc.getBondAngleInteractionData(atomConnected[i].getAtomTypeName(), molecule.getAtomAt(j).getAtomTypeName(), atomConnected[k].getAtomTypeName());
 						//logger.debug("stretchBendInteractionsData : " + stretchBendInteractionsData);
 						l += 1;
 						kbaIJK[l] = ((Double) stretchBendInteractionsData.get(0)).doubleValue();
@@ -174,15 +171,16 @@ public class StretchBendInteractions {
 			ab.setDeltav(coords3d);
 			mmff94SumEBA = 0;
 			for (int j = 0; j < ab.angleNumber; j++) {
-				//logger.debug("kbaIJK[" + j + "] = " + kbaIJK[j]);
-				//logger.debug("kbaKJI[" + j + "] = " + kbaKJI[j]);
-				//logger.debug("deltarij[" + j + "] = " + deltarij[j]);
-				//logger.debug("deltarkj[" + j + "] = " + deltarkj[j]);
-				//logger.debug("ab.deltav[" + j + "] = " + ab.deltav[j]);
+				//System.out.println("kbaIJK[" + j + "] = " + kbaIJK[j]);
+				//System.out.println("kbaKJI[" + j + "] = " + kbaKJI[j]);
+				//System.out.println("deltarij[" + j + "] = " + deltarij[j]);
+				//System.out.println("deltarkj[" + j + "] = " + deltarkj[j]);
+				//System.out.println("ab.deltav[" + j + "] = " + ab.deltav[j]);
 				mmff94SumEBA = mmff94SumEBA + 2.51210 * (kbaIJK[j] * deltarij[j] + kbaKJI[j] * deltarkj[j]) * ab.deltav[j];
-				//logger.debug("mmff94SumEBA = " + mmff94SumEBA);
+				//System.out.println("mmff94SumEBA = " + mmff94SumEBA);
 			}
-			//logger.debug("mmff94SumEBA = " + mmff94SumEBA);
+			//mmff94SumEBA = Math.abs(mmff94SumEBA);
+			//System.out.println("mmff94SumEBA = " + mmff94SumEBA);
 			currentCoordinates.set(coords3d);
 		}
 	}
@@ -230,7 +228,7 @@ public class StretchBendInteractions {
 			gradientMMFF94SumEBA.setElement(i, sumGradientEBA);
 			gradientCurrentCoordinates.set(coords3d);
 		}
-		//logger.debug("gradientMMFF94SumEBA = " + gradientMMFF94SumEBA);
+		//System.out.println("gradientMMFF94SumEBA = " + gradientMMFF94SumEBA);
 	}
 
 

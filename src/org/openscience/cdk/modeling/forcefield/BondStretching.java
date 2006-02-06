@@ -7,6 +7,7 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.LoggingTool;
@@ -68,15 +69,16 @@ public class BondStretching {
 	 */
 	public void setMMFF94BondStretchingParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
 
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
+		//System.out.println("molecule.getAtomAt(0).getAtomTypeName() = " + molecule.getAtomAt(0).getAtomTypeName());
+		IBond[] bonds = molecule.getBonds();
 		bondsNumber = bonds.length;
-		//logger.debug("bondsNumber = " + bondsNumber);
+		//System.out.println("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[bondsNumber][];
 		IAtom[] atomsInBond = null;
 
 		Vector bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initilize(parameterSet);
+		pc.initialize(parameterSet);
 
 		r0 = new double[molecule.getBondCount()];
 		k2 = new double[molecule.getBondCount()];
@@ -84,18 +86,21 @@ public class BondStretching {
 		k4 = new double[molecule.getBondCount()];
 
 		for (int i = 0; i < bondsNumber; i++) {
-
+			//System.out.println("bonds[" + i + "]= " + bonds[i].toString());
 			atomsInBond = bonds[i].getAtoms();
 			bondAtomPosition[i] = new int[atomsInBond.length];
 			
 			for (int j = 0; j < atomsInBond.length; j++) {
 				bondAtomPosition[i][j] = molecule.getAtomNumber(atomsInBond[j]);
+				//System.out.println("atomsInBond[j] = " + atomsInBond[j].toString());
+				//System.out.println("atomsInBond[j].getAtomTypeName() = " + atomsInBond[j].getAtomTypeName());
+				//System.out.println("bondAtomPosition[i][j] = " + bondAtomPosition[i][j]);
 			}
 			
-			//logger.debug("atomsInBond " + i + " : " + atomsInBond);
-			bondData = pc.getBondData(atomsInBond[0].getAtomTypeName(), 
-					                  atomsInBond[1].getAtomTypeName());
-			//logger.debug("bondData : " + bondData);
+			//System.out.println("atomsInBond[0].getAtomTypeName() = " + atomsInBond[0].getAtomTypeName());
+			//System.out.println("atomsInBond[1].getAtomTypeName() = " + atomsInBond[1].getAtomTypeName());
+			bondData = pc.getBondData(atomsInBond[0].getAtomTypeName(), atomsInBond[1].getAtomTypeName());
+			//System.out.println("bondData : " + bondData);
 			r0[i] = ((Double) bondData.get(0)).doubleValue();
 			k2[i] = ((Double) bondData.get(1)).doubleValue();
 			k3[i] = ((Double) bondData.get(2)).doubleValue();

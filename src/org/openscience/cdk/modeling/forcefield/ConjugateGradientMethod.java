@@ -65,12 +65,11 @@ public class ConjugateGradientMethod {
 	 * @param  gk  Gradient at coordinates Xk
 	 * @param  iterNumber  Iteration number
 	*/
-	public void setvk(GVector gk, int iterNumber) {	//To reprogram in a better way.
+	public void setvk(GVector gk, int iterNumber, boolean derivativeSmallEnough) {	//To reprogram in a better way.
 
 		if (iterNumber != 1) {
 		//logger.debug("gk.angle(gkminus1) = " + gk.angle(gkminus1));
-			//if (gk.angle(gkminus1) > 1) {
-			//if (iterNumber % 25 != 0) {	//Could be a parameter to input for the user
+			if (derivativeSmallEnough) {
 				vkminus1.set(vk);
 				setPolankRibiere_uk(gkminus1,gk);
 				vkminus1.scale(uk_PolankRibiere);
@@ -80,14 +79,14 @@ public class ConjugateGradientMethod {
 				//vk.normalize();
 				gkminus1.set(gk);
 				//logger.debug("vector vk : " + vk);
-			/*} else {
+			} else {
 				vk.set(gk);
 				vk.normalize();
 				vk.scale(-1);
 				//logger.debug("vectorvk : " + vk);
 				
 				gkminus1.set(gk);
-			}*/
+			}
 		} else {
 			vk = new GVector(gk);
 			vkminus1 = new GVector(gk.getSize());

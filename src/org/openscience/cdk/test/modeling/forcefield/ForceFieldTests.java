@@ -31,8 +31,11 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.AtomTools;
@@ -46,10 +49,17 @@ import org.openscience.cdk.modeling.forcefield.SmoothingFunctions;
 import org.openscience.cdk.modeling.forcefield.StretchBendInteractions;
 import org.openscience.cdk.modeling.forcefield.Torsions;
 import org.openscience.cdk.modeling.forcefield.VanDerWaalsInteractions;
+import org.openscience.cdk.modeling.forcefield.ForceField;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+
+import org.openscience.cdk.tools.manipulator.*;
+import org.openscience.cdk.io.*;
+
+import java.io.*;
+
 
 
 /**
@@ -99,14 +109,14 @@ public class ForceFieldTests extends CDKTestCase {
 	 *  A unit test for JUnit (Steepest Descents Method minimization)
 	 */
 	public void testSteepestDescentsMinimization() {
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with Steepest Descents Minimization");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Steepest Descents Minimization");
 
 		gm.setConvergenceParametersForSDM(100, 0.00001);
 		gm.steepestDescentsMinimization(molecule3Coordinates, tpf);
 
 		for (int i = 0; i < molecule3Coordinates.getSize(); i++) {
-			assertEquals(testResult3C[i], gm.getSteepestDescentsMinimum().getElement(i), 0.00001);
+			assertEquals(testResult3C[i], gm.getSteepestDescentsMinimum().getElement(i), 0.0001);
 		}
 	}
 
@@ -138,8 +148,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *  A unit test for JUnit (Conjugate Gradient Method minimization)
 	 */
 	public void testConjugateGradientMinimization() {
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with Conjugate Gradient Minimization");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Conjugate Gradient Minimization");
 
 		gm.setConvergenceParametersForCGM(100, 0.00001);
 		gm.conjugateGradientMinimization(molecule3Coordinates, tpf);
@@ -153,16 +163,14 @@ public class ForceFieldTests extends CDKTestCase {
     	/**
 	 *  A unit test for JUnit (MMFF94EnergyFunction minimization with Conjugate Gradient Method)
 	 */
-	public void testMMFF94EnergyFunctionMinimizationWithConjugateGradientMethod()  throws Exception {
-    	if (!this.runSlowTests()) fail("Slow tests turned of");
-    	
+	/*public void testMMFF94EnergyFunctionMinimizationWithConjugateGradientMethod()  throws Exception {
 		double[] testResult = {-0.07595612546512087,-0.2802911393253983,0.07600307966977722,0.39068800204256576,
 			-1.059191412353933,-1.1279995182727496,-0.8886677181682512,-0.8100194941301619,0.5795261081533215,
 			0.7455735487932257,-0.14810094365682494,0.7847092409972136,-0.43744626781215895,0.7059121981158619,
 			-0.2262853680234533,0.752138588967976,-2.0454101668080065,-0.8257161752480399,-0.43083068038259337,
 			-1.1913450770810514,-1.836724982022171,1.2034283588944206,-0.5294834493958368,-1.6314983633569509};
 	
-		logger.debug("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Conjugate Gradient Method");
+		System.out.println("\n\nFORCEFIELDTESTS: MMFF94EnergyFunction minimization with Conjugate Gradient Method");
 		
 		createTestMoleculeAndSetMMFF94Parameters();
 
@@ -178,56 +186,17 @@ public class ForceFieldTests extends CDKTestCase {
 		/*for (int i = 0; i < acCoordinates.getSize(); i++) {
 			assertEquals(testResult[i], gm.getConjugateGradientMinimum().getElement(i), 0.1);
 		}*/
-	}
+	//}
 
-
-    	/**
-	 *  A unit test for JUnit (It compare minimization of MMFF94EnergyFunction with SDM And CGM)
-	 */
-/*	public void testMMFF94EnergyFunctionCompareMinimizationWithSDMAndCGM()  throws Exception {
-		logger.debug("\n\nFORCEFIELDTESTS: Compare minimization of MMFF94EnergyFunction with SDM And CGM");
-		
-		createTestMoleculeAndSetMMFF94Parameters();
-
-		logger.debug("Molecule created:"+ac.getAtomCount()+" Size Table:"+mmff94Tables.size());
-		MMFF94EnergyFunction mmff94EF = new MMFF94EnergyFunction(ac,mmff94Tables);
-		logger.debug("EnergyFunction is set");
-		
-		gm.setConvergenceParametersForSDM(20, 0.0001);
-		logger.debug("SDM Parameters are set");
-		gm.steepestDescentsMinimization(acCoordinates, mmff94EF);
-		GVector steepestDescentsMinimum = new GVector(gm.getSteepestDescentsMinimum());
-		
-		gm.setConvergenceParametersForCGM(20, 0.0001);
-		logger.debug("CGM Parameters are set");
-		gm.conjugateGradientMinimization(acCoordinates, mmff94EF);
-		GVector conjugateGradientMinimum = new GVector(gm.getConjugateGradientMinimum());
-
-		logger.debug("steepestDescentsMinimum = " + steepestDescentsMinimum);
-		logger.debug("conjugateGradientMinimum = " + conjugateGradientMinimum);
-
-		double RMSD = 0;
-		double d = 0;
-		int atomNumbers = steepestDescentsMinimum.getSize() / 3;
-		logger.debug("atomNumbers = " + atomNumbers);
-		for (int i = 0; i < atomNumbers; i++) {
-			d = ffTools.distanceBetweenTwoAtomFromTwo3xNCoordinates(steepestDescentsMinimum, conjugateGradientMinimum, i, i);
-			RMSD = RMSD + Math.pow(d, 2);
-		}
-		RMSD = RMSD / conjugateGradientMinimum.getSize();
-		RMSD = Math.sqrt(RMSD);
-		System.out.print("RMSD (SDM, CGM) = " + RMSD);
-	}
-*/
 
 	/**
 	 *  A unit test for JUnit (Newton-Raphson Method minimization)
 	 */
 	public void testNewtonRaphsonMinimization() {
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with Newton-Raphson Minimization");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Newton-Raphson Minimization");
 
-		gm.setConvergenceParametersForNRM(1000, 0.000000000000001);
+		gm.setConvergenceParametersForNRM(1000, 0.00001);
 		gm.newtonRaphsonMinimization(molecule3Coordinates, tpf);
 
 		for (int i = 0; i < molecule3Coordinates.getSize(); i++) {
@@ -275,7 +244,7 @@ public class ForceFieldTests extends CDKTestCase {
 		SmilesParser sp = new SmilesParser();
 		ac = sp.parseSmiles("CC");
 		hAdder.addExplicitHydrogensToSatisfyValency((Molecule) ac);
-		org.openscience.cdk.interfaces.IAtom a = new Atom();
+		IAtom a = new Atom();
 		a = ac.getAtomAt(0);
 		Point3d atomCoordinate0 = new Point3d(1, 0, 0);
 		a.setPoint3d(atomCoordinate0);
@@ -286,7 +255,6 @@ public class ForceFieldTests extends CDKTestCase {
 		ac.setAtomAt(1, a);
 		AtomTools.add3DCoordinates1(ac);
 
-		ForceFieldTools ffTools = new ForceFieldTools();
 		acCoordinates.setSize(ac.getAtomCount() * 3);
 		//acCoordinates.set(ffTools.getCoordinates3xNVector(ac));
 		double[] m = new double[ac.getAtomCount() * 3];
@@ -331,8 +299,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testBondStretching() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with Bond Stretching");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Bond Stretching");
 
 		double testResult_SumEB = 164.37972112718;
 		double[] testResult_gradientSumEB = {-5.455159324048518,-6.483014473192981,62.37549096020401,205.23205964792473,
@@ -434,8 +402,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testAngleBending() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with Angle Bending");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Angle Bending");
 
 		double testResult_SumEA = 5187817.002469799;
 		double[] testResult_gradientSumEA = {4568.596414777739,27508.49758516811,-142367.70349663895,7166.3094395713815,
@@ -575,8 +543,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testStretchBendInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with StretchBendInteraction");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with StretchBendInteraction");
 
 		double testResult_SumEBA = 241.0516463157123;
 		double[] testResult_gradientSumEBA = {-424.4366745401653,-424.4366745401653,-424.4366745401653,
@@ -664,8 +632,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testTorsions() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with Torsions");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with Torsions");
 
 		double testResult_MMFF94SumET = 11.369615843222473;
 		double[] testResult_gradientSumET = {-2.9021441715059266,0.365841131968672,-1.3798123458839529,1.9172157299433363,
@@ -702,8 +670,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testVanDerWaalsInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with VanDerWaalsInteraction");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with VanDerWaalsInteraction");
 
 		double testResult_MMFF94SumEvdW = 19.781709492460102;
 		double testResult_CCGSumEvdWSK = 19.781709492460102;
@@ -752,8 +720,8 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testElectrostaticInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS with ElectrostaticInteraction");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS with ElectrostaticInteraction");
 
 		double testResult_MMFF94SumEQ = 19.781709492460102;
 		double[] testResult_gradientSumEQ = {-825.8720446886186, -825.8720446886186, -825.8720446886186,
@@ -781,6 +749,243 @@ public class ForceFieldTests extends CDKTestCase {
 		}*/
 
 		//logger.debug("HessianMMFF94SumEQ = " + ei.HessianMMFF94SumEQ(acCoordinates));
+	}
+	
+	
+	/**
+	 *  A unit test for JUnit (Ethan test)
+	 *
+	 *@exception  ClassNotFoundException  Description of the Exception
+	 *@exception  CDKException            Description of the Exception
+	 *@exception  java.lang.Exception     Description of the Exception
+	 */
+	public void testEthaneMoleculeMinimization() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTEST with Ethane molecule minimization");
+		
+		Molecule molecule = null;
+
+		try {
+
+			FileReader fileReader = new FileReader("src/data/Ethan-TestFF.mol");
+			MDLReader mdlReader = new MDLReader(fileReader);
+        	molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
+        	mdlReader.close();
+        	//System.out.println("molecule: " +  molecule);
+ 
+        } catch (Exception exception) {
+            System.out.println("Could not read Molecule from file due to: " + exception.getMessage());
+            System.out.println(exception);
+        }       
+	    
+	    // here goes the FF code
+	    //System.out.println("molecule.getAtomCount() : " + molecule.getAtomCount());
+	    //System.out.println("molecule.getBondCount() : " + molecule.getBondCount());
+	    if (molecule.getAtomCount() == 12 & molecule.getBondCount() == 11) {
+	       	molecule.getAtomAt(3).setCharge(1);
+	       	molecule.getAtomAt(8).setCharge(1);
+	    }
+	    //logger.debug("Molecule: ", molecule);
+
+		ForceField forceField = new ForceField();
+        forceField.setUsedGMMethods(false, true, false);
+        forceField.setConvergenceParametersForSDM(15, 0.000000001);
+        forceField.setConvergenceParametersForCGM(100000, 0.000001);
+        forceField.setPotentialFunction("mmff94");
+
+     	try {
+        	//set partial charges
+        	forceField.setMolecule(molecule, false);
+            forceField.minimize();
+        } catch (Exception exception) {
+        	logger.error("Error while running ForceField minimization: ", exception.getMessage());
+            logger.debug(exception);
+        }
+ 
+        molecule = forceField.getMolecule();
+        //logger.debug("Molecule: ", molecule);
+
+        try {
+        	FileWriter fileWriter = new FileWriter("src/data/Ethan-TestFF-Optimize.mol");
+        	MDLWriter mdlWriter = new MDLWriter(fileWriter);
+    		mdlWriter.write(molecule);
+            mdlWriter.close();
+            
+        } catch (Exception exception) {
+        	System.out.println("Could not write Molecule to MDL file : " + exception.getMessage());
+        	System.out.println(exception);
+        }       
+
+		assertEquals(34.04444743984748, forceField.getMinimumFunctionValueCGM(), 0.00001);
+
+	}
+
+	/**
+	 *  A unit test for JUnit (Ethan test)
+	 *
+	 *@exception  ClassNotFoundException  Description of the Exception
+	 *@exception  CDKException            Description of the Exception
+	 *@exception  java.lang.Exception     Description of the Exception
+	 */
+/*	public void testButaneMoleculeMinimization() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		
+		//System.out.println("");
+		System.out.println("FORCEFIELDTEST with Butane molecule minimization");
+		
+		Molecule molecule = null;
+
+		try {
+
+			FileReader fileReader = new FileReader("src/data/Butan-TestFF.mol");
+			MDLReader mdlReader = new MDLReader(fileReader);
+        	molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
+        	mdlReader.close();
+        	//System.out.println("molecule: " +  molecule);
+ 
+        } catch (Exception exception) {
+            System.out.println("Could not read Molecule from file due to: " + exception.getMessage());
+            System.out.println(exception);
+        }       
+	    
+	    // here goes the FF code
+	    //System.out.println("molecule.getAtomCount() : " + molecule.getAtomCount());
+	    //System.out.println("molecule.getBondCount() : " + molecule.getBondCount());
+	    if (molecule.getAtomCount() == 12 & molecule.getBondCount() == 11) {
+	       	molecule.getAtomAt(3).setCharge(1);
+	       	molecule.getAtomAt(8).setCharge(1);
+	    }
+	    //logger.debug("Molecule: ", molecule);
+
+		ForceField forceField = new ForceField();
+        forceField.setUsedGMMethods(false, true, false);
+        forceField.setConvergenceParametersForSDM(15, 0.000000001);
+        forceField.setConvergenceParametersForCGM(100000, 0.000001);
+        forceField.setPotentialFunction("mmff94");
+
+     	try {
+        	//set partial charges
+        	forceField.setMolecule(molecule, false);
+            forceField.minimize();
+        } catch (Exception exception) {
+        	logger.error("Error while running ForceField minimization: ", exception.getMessage());
+            logger.debug(exception);
+        }
+ 
+        molecule = forceField.getMolecule();
+        //logger.debug("Molecule: ", molecule);
+
+        try {
+        	FileWriter fileWriter = new FileWriter("src/data/Butan-TestFF-Optimize.mol");
+        	MDLWriter mdlWriter = new MDLWriter(fileWriter);
+    		mdlWriter.write(molecule);
+            mdlWriter.close();
+            
+        } catch (Exception exception) {
+        	System.out.println("Could not write Molecule to MDL file : " + exception.getMessage());
+        	System.out.println(exception);
+        }       
+
+		assertEquals(310.50, forceField.getMinimumFunctionValueCGM(), 0.00001);
+
+	}
+*/
+	/**
+	 *  A unit test for JUnit (Heptan test)
+	 *
+	 *@exception  ClassNotFoundException  Description of the Exception
+	 *@exception  CDKException            Description of the Exception
+	 *@exception  java.lang.Exception     Description of the Exception
+	 */
+/*	public void testHeptaneMoleculeMinimization() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		
+		//System.out.println("");
+		System.out.println("FORCEFIELDTEST with Heptane molecule minimization");
+		//String input = "src/data/heptane-modelbuilder";
+		String input = "src/data/Heptan-TestFF";
+		
+		Molecule molecule = null;
+
+		try {
+
+			FileReader fileReader = new FileReader(input + ".mol");
+			MDLReader mdlReader = new MDLReader(fileReader);
+        	molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
+        	mdlReader.close();
+        	//System.out.println("molecule: " +  molecule);
+ 
+        } catch (Exception exception) {
+            System.out.println("Could not read Molecule from file due to: " + exception.getMessage());
+            System.out.println(exception);
+        }       
+	    
+	    // here goes the FF code
+	    //System.out.println("molecule.getAtomCount() : " + molecule.getAtomCount());
+	    //System.out.println("molecule.getBondCount() : " + molecule.getBondCount());
+
+		ForceField forceField = new ForceField();
+        forceField.setUsedGMMethods(false, true, false);
+        forceField.setConvergenceParametersForSDM(15, 0.000000001);
+        forceField.setConvergenceParametersForCGM(100000, 0.000001);
+        forceField.setPotentialFunction("mmff94");
+
+        //System.out.println("Setup completed");
+     	try {
+        	//set partial charges
+        	forceField.setMolecule(molecule, false);
+        	//System.out.println("Molecule assigned to force field");
+            forceField.minimize();
+        } catch (Exception exception) {
+        	logger.error("Error while running ForceField minimization: ", exception.getMessage());
+            logger.debug(exception);
+        }
+ 
+        molecule = forceField.getMolecule();
+        //logger.debug("Molecule: ", molecule);
+
+        try {
+        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
+        	MDLWriter mdlWriter = new MDLWriter(fileWriter);
+    		mdlWriter.write(molecule);
+            mdlWriter.close();
+            
+        } catch (Exception exception) {
+        	System.out.println("Could not write Molecule to MDL file : " + exception.getMessage());
+        	System.out.println(exception);
+        }       
+
+        assertEquals(725.12, forceField.getMinimumFunctionValueCGM(), 0.00001);
+
+	}
+*/
+	
+	public static void main(String[] args)
+	{
+		
+		ForceFieldTests fft = new ForceFieldTests();
+		try {
+			fft.testSteepestDescentsMinimization();
+			fft.testConjugateGradientMinimization();
+			fft.testNewtonRaphsonMinimization();
+			fft.testBondStretching();
+			fft.testAngleBending();
+			fft.testStretchBendInteraction();
+			fft.testTorsions();
+			fft.testVanDerWaalsInteraction();
+			fft.testElectrostaticInteraction();
+			fft.testEthaneMoleculeMinimization();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CDKException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
 	}
 
 }
