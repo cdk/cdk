@@ -51,7 +51,7 @@ public class CDKTestCase extends TestCase {
     }
     
     /**
-     * Determines of slow JUnit tests are to be run. You can set this
+     * Determines if slow JUnit tests are to be run. You can set this
      * from the command line when running Ant: 
      * <pre>
      *   ant -f build.xml -DrunSlowTests=false test-all
@@ -61,6 +61,27 @@ public class CDKTestCase extends TestCase {
      */
     public boolean runSlowTests() {
     	if (System.getProperty("runSlowTests", "true").equals("false")) 
+    		return false;
+    	
+    	// else
+    	return true;
+    }
+
+    /**
+     * Determines if JUnit tests for known and unfixed bugs are to be run.
+     * This is to aid the 'Open Source JVM Test Suite', so that all bugs that
+     * show up in the report are caused by the JVM or the Java library is
+     * uses (mostly a Classpath version).
+     *  
+     * <p>You can set this from the command line when running Ant: 
+     * <pre>
+     *   ant -f build.xml -DrunKnownBugs=false test-all
+     * </pre>
+     * 
+     * @return
+     */
+    public boolean runKnownBugs() {
+    	if (System.getProperty("runKnownBugs", "true").equals("false")) 
     		return false;
     	
     	// else
