@@ -78,6 +78,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     public IteratingMDLReader(Reader in, IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
+        this.builder = builder;
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
