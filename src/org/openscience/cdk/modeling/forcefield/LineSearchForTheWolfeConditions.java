@@ -3,7 +3,13 @@ package org.openscience.cdk.modeling.forcefield;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.tools.LoggingTool;
-
+/**
+ * 
+ *
+ * @author     vlabarta
+ *@cdk.module     builder3d
+ * 
+ */
 public class LineSearchForTheWolfeConditions {
 	
 	//initial values
