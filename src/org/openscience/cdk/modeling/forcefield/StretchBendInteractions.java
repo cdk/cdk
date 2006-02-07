@@ -77,7 +77,7 @@ public class StretchBendInteractions {
 		Vector stretchBendInteractionsData = null;
 		Vector bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initialize(parameterSet);
+		pc.initilize(parameterSet);
 
 		bondijAtomPosition = new int[ab.angleNumber][];
 		bondkjAtomPosition = new int[ab.angleNumber][];

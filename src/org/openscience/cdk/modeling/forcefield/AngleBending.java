@@ -98,7 +98,7 @@ public class AngleBending {
 
 		Vector angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initialize(parameterSet);
+		pc.initilize(parameterSet);
 		
 		v0 = new double[angleNumber];
 		k2 = new double[angleNumber];

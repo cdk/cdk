@@ -102,7 +102,7 @@ public class Torsions {
 
 		Vector torsionsData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initialize(parameterSet);
+		pc.initilize(parameterSet);
 		
 		v1 = new double[torsionNumber];
 		v2 = new double[torsionNumber];
