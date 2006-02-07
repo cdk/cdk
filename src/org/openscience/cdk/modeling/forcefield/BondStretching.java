@@ -78,7 +78,7 @@ public class BondStretching {
 
 		Vector bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
-		pc.initilize(parameterSet);
+		pc.initialize(parameterSet);
 
 		r0 = new double[molecule.getBondCount()];
 		k2 = new double[molecule.getBondCount()];

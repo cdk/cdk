@@ -26,7 +26,7 @@ public class MMFF94ParametersCall {
 	 * 
 	 * @param  parameterSet  Force Field parameter as Hashtable
 	 */
-	public void initilize(Hashtable parameterSet) {
+	public void initialize(Hashtable parameterSet) {
 		pSet = parameterSet;
 	}
 
