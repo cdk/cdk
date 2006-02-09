@@ -25,6 +25,8 @@ import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
+import java.io.IOException;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -345,6 +347,8 @@ public class NumericalSurface {
             for (int i=0; i<atoms.length; i++) {
                 factory.configure(atoms[i]);
             }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         } catch (Exception e) {
             System.out.println(e.toString());
         }
