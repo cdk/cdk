@@ -61,7 +61,7 @@ public class NumericalSurface {
     double[] areas;
     double[] volumes;
 
-    private String vdwFile = "org/openscience/cdk/config/jmol_atomtypes.txt";
+    private String vdwFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
 
     /**
      * Constructor to initialize the surface calculation with default values.
