@@ -57,7 +57,12 @@ public class HueckelAromaticityDetector
 
 	static LoggingTool logger = new LoggingTool(HueckelAromaticityDetector.class);
 	AllRingsFinder ringFinder = null;
+	static IRingSet ringSet=null;
 
+
+	public static IRingSet getRingSet() {
+		return ringSet;
+	}
 
 	/**
 	 *  Retrieves the set of all rings and performs an aromaticity detection based
@@ -132,7 +137,7 @@ public class HueckelAromaticityDetector
 		{
 			arf = new AllRingsFinder();
 		}
-		IRingSet ringSet = arf.findAllRings(atomContainer);
+		ringSet = arf.findAllRings(atomContainer);
 		long after = System.currentTimeMillis();
 		logger.debug("time for finding all rings: " + (after - before) + " milliseconds");
 		logger.debug("Finished AllRingsFinder");
