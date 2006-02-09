@@ -91,7 +91,7 @@ public class LargestPiSystemDescriptor implements IDescriptor{
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://qsar.sourceforge.net/dicts/qsar-descriptors:LargestPiSystem",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#LargestPiSystem",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
