@@ -60,8 +60,8 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Reads the contents of a PDBFile.
  *
- * <p>A description can be found at <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">
- * http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html</a>.
+ * <p>A description can be found at <a href="http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html">
+ * http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html</a>.
  *
  * @cdk.module  pdb
  *
@@ -179,6 +179,10 @@ public class PDBReader extends DefaultChemObjectReader {
 				logger.debug("Read line: ", cRead);
 				if (cRead != null) {	
 					
+					if (cRead.length() < 80) {
+						logger.warn("Line is not of the expected length 80!");
+					}
+					
 					cLine = new StringBuffer(cRead);
 					// make sure the record name is 6 characters long
 					while (cLine.length() < 6) {
@@ -261,8 +265,12 @@ public class PDBReader extends DefaultChemObjectReader {
                         if (comment == null) {
                         	comment = "";
                         }
-                        comment = comment.toString() + cLine.substring(11).trim() + "\n";
-                        oFile.setProperty(CDKConstants.COMMENT, comment);
+                        if (cLine.length()>12) {
+                        	comment = comment.toString() + cLine.substring(11).trim() + "\n";
+                        	oFile.setProperty(CDKConstants.COMMENT, comment);
+                        } else {
+                        	logger.warn("REMARK line found without any comment!");
+                        }
 					} else if (cCol.equals("COMPND")) {						
                         String title = cLine.substring(10).trim();
                         oFile.setProperty(CDKConstants.TITLE, title);
