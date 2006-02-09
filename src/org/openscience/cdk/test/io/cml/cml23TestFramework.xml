@@ -76,4 +76,39 @@
       <scalar dataType="xsd:float" dictRef="cdk:partialCharge">-0.234</scalar>
     </atom>
   </atomArray></molecule>
+
+  <!-- .testQSAROutput() -->
+  <molecule id="m1" xmlns="http://www.xmlcml.org/schema">
+    <atomArray>
+      <atom id="a1" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a2" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a3" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a4" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a5" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a6" elementType="C" formalCharge="0" hydrogenCount="0"/>
+    </atomArray>
+    <bondArray>
+      <bond id="b1" atomRefs2="a1 a2" order="S"/>
+      <bond id="b2" atomRefs2="a2 a3" order="D"/>
+      <bond id="b3" atomRefs2="a3 a4" order="S"/>
+      <bond id="b4" atomRefs2="a4 a5" order="D"/>
+      <bond id="b5" atomRefs2="a5 a6" order="S"/>
+      <bond id="b6" atomRefs2="a6 a1" order="D"/>
+    </bondArray>
+    <propertyList>
+      <property xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/">
+        <metadataList>
+          <metadata dictRef="qsar:specificationReference" content="qsar:weight"/>
+          <metadata dictRef="qsar:implementationTitle" content="org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor"/>
+          <metadata dictRef="qsar:implementationIdentifier" content="$Id$"/>
+          <metadata dictRef="qsar:implementationVendor" content="The Chemistry Development Kit"/>
+          <metadataList title="qsar:descriptorParameters">
+            <metadata title="elementSymbol" content="*"/>
+          </metadataList>
+        </metadataList>
+        <scalar dataType="xsd:double" dictRef="qsar:weight">72.0</scalar>
+      </property>
+    </propertyList>
+  </molecule>
+
 </cml>
