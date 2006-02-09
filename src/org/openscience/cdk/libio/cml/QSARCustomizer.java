@@ -64,10 +64,8 @@ import org.xmlcml.cml.element.CMLScalar;
  */
 public class QSARCustomizer implements ICMLCustomizer {
 
-    private final static String QSARDICT_NAMESPACE = "qsardict";
-    private final static String QSARDICT_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors";
-    private final static String QSARMETA_NAMESPACE = "qsarmeta";
-    private final static String QSARMETA_URI = "http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata";
+    private final static String QSAR_NAMESPACE = "qsar";
+    private final static String QSAR_URI = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
 
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
@@ -93,22 +91,26 @@ public class QSARCustomizer implements ICMLCustomizer {
                 Element property = new CMLProperty();
                 // setup up the metadata list
                 Element metadataList = new CMLMetadataList();
-                metadataList.addNamespaceDeclaration(QSARMETA_NAMESPACE, QSARMETA_URI);
+                metadataList.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
                 String specsRef = specs.getSpecificationReference();
-                if (specsRef.startsWith(QSARDICT_URI)) {
-                    specsRef = QSARDICT_NAMESPACE + ":" + specsRef.substring(QSARDICT_URI.length()+1);
-                    property.addNamespaceDeclaration(QSARDICT_NAMESPACE, QSARDICT_URI);
+                if (specsRef.startsWith(QSAR_URI)) {
+                    specsRef = QSAR_NAMESPACE + ":" + specsRef.substring(QSAR_URI.length()+1);
+                    property.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
                 }
                 CMLMetadata metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationTitle"));
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "specificationReference"));
+                metaData.addAttribute(new Attribute("content", specsRef));
+                metadataList.appendChild(metaData);
+                metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationTitle"));
                 metaData.addAttribute(new Attribute("content", specs.getImplementationTitle()));
                 metadataList.appendChild(metaData);
                 metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationIdentifier"));
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationIdentifier"));
                 metaData.addAttribute(new Attribute("content", specs.getImplementationIdentifier()));
                 metadataList.appendChild(metaData);
                 metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSARMETA_NAMESPACE + ":" + "implementationVendor"));
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationVendor"));
                 metaData.addAttribute(new Attribute("content", specs.getImplementationVendor()));
                 metadataList.appendChild(metaData);
                 // add parameter setting to the metadata list
@@ -116,7 +118,7 @@ public class QSARCustomizer implements ICMLCustomizer {
                 if (params != null && params.length > 0) {
                     String[] paramNames = value.getParameterNames();
                     Element paramSettings = new CMLMetadataList();
-                    paramSettings.addAttribute(new Attribute("title", QSARMETA_NAMESPACE + ":" + "descriptorParameters"));
+                    paramSettings.addAttribute(new Attribute("title", QSAR_NAMESPACE + ":" + "descriptorParameters"));
                     for (int i=0; i<params.length; i++) {
                         Element paramSetting = new CMLMetadata();
                         String paramName = paramNames[i];
