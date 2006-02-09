@@ -242,6 +242,10 @@ public class DescriptorEngine {
         Entry[] dictEntries = dict.getEntries();
 
         String specRef = getSpecRef(identifier);
+        if (specRef == null) {
+        	logger.error("Cannot determine specification for id: ", identifier);
+        	return new String[0];
+        }
         List dictClasses = new ArrayList();
 
         for (int j = 0; j < dictEntries.length; j++) {
@@ -458,13 +462,21 @@ public class DescriptorEngine {
                 IDescriptor descriptor = (IDescriptor) descriptors.get(i);
                 DescriptorSpecification descSpecification = descriptor.getSpecification();
                 String[] tmp = descSpecification.getSpecificationReference().split("#");
-                specRef = tmp[1];
+                if (tmp.length != 2) {
+                	logger.debug("Something fishy with the spec ref: ", descSpecification.getSpecificationReference());
+                } else {
+                	specRef = tmp[1];
+                }
             }
         }
         // if we are here and specRef==null we have a SpecificationReference
         if (specRef == null) {
             String[] tmp = identifier.split("#");
-            specRef = tmp[1];
+            if (tmp.length != 2) {
+            	logger.debug("Something fishy with the identifier: ", identifier);
+            } else {
+            	specRef = tmp[1];
+            }
         }
         return specRef;
     }
