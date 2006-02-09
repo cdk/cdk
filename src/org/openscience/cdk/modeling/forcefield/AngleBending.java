@@ -11,7 +11,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -58,14 +58,14 @@ public class AngleBending {
 	boolean[] changeAtomCoordinates = null;
 
 	ForceFieldTools ffTools = new ForceFieldTools();
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the AngleBending object
 	 */
 	public AngleBending() {
-	        logger = new LoggingTool(this);
+	        //logger = new LoggingTool(this);
 	}
 
 	public void setAngleBendingFlag(boolean flag){
@@ -1015,8 +1015,8 @@ public class AngleBending {
 				logger.debug("");
 			}
 		}*/
-		hessianMMFF94SumEA.setSize(coord3d.getSize(), coord3d.getSize());
-		hessianMMFF94SumEA.set(forHessian); 
+		
+		hessianMMFF94SumEA = new GMatrix(coord3d.getSize(), coord3d.getSize(), forHessian);
 		//logger.debug("hessianMMFF94SumEA : " + hessianMMFF94SumEA);
 		
 		NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
@@ -1069,7 +1069,7 @@ public class AngleBending {
 		
 		order2ndErrorApproximateHessianMMFF94SumEA = new GMatrix(coord3d.getSize(), coord3d.getSize());
 		order2ndErrorApproximateHessianMMFF94SumEA.set(forOrder2ndErrorApproximateHessian);
-		//logger.debug("order2ndErrorApproximateHessianMMFF94SumEA : " + order2ndErrorApproximateHessianMMFF94SumEA);
+		//System.out.println("order2ndErrorApproximateHessianMMFF94SumEA : " + order2ndErrorApproximateHessianMMFF94SumEA);
 	}
 
 
