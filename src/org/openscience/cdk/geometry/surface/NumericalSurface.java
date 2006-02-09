@@ -66,7 +66,7 @@ public class NumericalSurface {
     /**
      * Constructor to initialize the surface calculation with default values.
      *
-     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/jmol_atomtypes.txt</i>
+     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i>
      * of the source distribution. Also uses a tesselation level of 4 and solvent radius of 1.4A.
      *
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
@@ -78,7 +78,7 @@ public class NumericalSurface {
     /**
      * Constructor to initialize the surface calculation with user specified values.
      *
-     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/jmol_atomtypes.txt</i>
+     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i>
      * of the source distribution
      *
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
