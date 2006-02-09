@@ -2,7 +2,7 @@ package org.openscience.cdk.modeling.forcefield;
 
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 /**
  * 
  *
@@ -63,7 +63,7 @@ public class LineSearchForTheWolfeConditions {
 	double d2;
 	double alphaiplus1;
 	
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
 	
 	public LineSearchForTheWolfeConditions(IPotentialFunction pfUser) {
@@ -93,8 +93,8 @@ public class LineSearchForTheWolfeConditions {
 	 * that brackets the desired step lengths. In the later case, the second stage is invoked 
 	 * by calling a function called zoom, which successively decreases the size of the interval 
 	 * until an acceptable step length is identified. 
-     * 
-   	 *@param  alphaMax              Maximum step length
+	 *
+ 	 * @param alphaMax				Maximum step length
 	 */
 	public void lineSearchAlgorithm (double alphaMax) {
 		
@@ -311,20 +311,21 @@ public class LineSearchForTheWolfeConditions {
 	}
 
 	
-	/*
-	* Cubic interpolation in the interval [a,b] known to contain desirable step length 
-	* and given two previous step length estimates in this interval.
-	*
-	*@param 	alphai										
-	*@param 	linearFunctionInAlphai	
-	*@param 	linearFunctionDerivativeInAlphai
-	*@param 	alphaiMinus1
-	*@param 	linearFunctionInAlphaiMinus1	 
-	*@param 	linearFunctionDerivativeInAlphaiMinus1	 
-	*@param 	a
-	*@param 	b
-	*	  
-	*/
+	 /*
+	 * Cubic interpolation in the interval [a,b] known to contain desirable step length 
+	 * and given two previous step length estimates in this interval.
+	 *
+	 *@param 	alphai										Previous step length.									
+	 *@param 	linearFunctionInAlphai						Function value at the previous step length alphai.
+	 *@param 	linearFunctionDerivativeInAlphai			Derivative at the previous step length alphai.
+	 *@param 	alphaiMinus1								Previous step length.
+	 *@param 	linearFunctionInAlphaiMinus1	 			Function value at the previous step length alphaiMinus1.
+	 *@param 	linearFunctionDerivativeInAlphaiMinus1	 	Derivative value at the previous step length alphaiMinus1.
+	 *@param 	a											Inferior value of the interval [a,b].
+	 *@param 	b											Superior value of the interval [a,b].	
+ 	 *	  
+	 * @return												Cubic interpolation in the interval [a,b]
+	 */
 	public double cubicInterpolation(double alphai, double linearFunctionInAlphai, double linearFunctionDerivativeInAlphai, 
 									double alphaiMinus1, double linearFunctionInAlphaiMinus1, double linearFunctionDerivativeInAlphaiMinus1, 
 									double a, double b) {
@@ -375,17 +376,19 @@ public class LineSearchForTheWolfeConditions {
 	}
 	
 
-	/*
-	*	The aim is to find a value of alpha that satisfies the sufficient decrease condition, without being too small.
-	*	The procedures generate a decreasing sequence of values alphai such that each value alphai is not too much 
-	*	smaller than its predecesor alphai-1. The interpolation in the first iteration is quadratic but if the sufficient 
-	*	decrease condition is not satisfied then the interpolation for the other iterations is cubic.
-	*
-	*	alphaLow		 
-	*	linearFunctionInAlphaLow 
-	*	alphaHigh 
-	*	linearFunctionInAlphaHigh 
-	*/
+	 /*
+	 *	The aim is to find a value of alpha that satisfies the sufficient decrease condition, without being too small.
+	 *	The procedures generate a value alphai such that is not too much smaller than its predecesor alphai-1. 
+	 *  The interpolation in the first is quadratic but if the sufficient decrease condition is not satisfied 
+	 *  then the interpolation is cubic.
+ 	 *
+	 * @param alphaLow								Among all step lengths generated so far and satisfying the sufficient decrease condition, the one giving the smallest function value.
+	 * @param linearFunctionInAlphaLow				Energy function value at alphaLow.
+	 * @param linearFunctionDerivativeInAlphaLow	Derivative value at alphaLow.
+	 * @param alphaHigh								AlphaHigh is chosen so that linearFunctionDerivativeInAlphaj * (alphaHigh-alphaLow) < 0
+	 * @param linearFunctionInAlphaHigh				Energy function value at alphaHigh.
+	 * @return										Value of alpha that satisfies the sufficient decrease condition, without being too small.
+	 */
 	public double interpolation(double alphaLow, double linearFunctionInAlphaLow, double linearFunctionDerivativeInAlphaLow, 
 								double alphaHigh, double linearFunctionInAlphaHigh) {
 		
@@ -471,6 +474,11 @@ public class LineSearchForTheWolfeConditions {
 	}
 	
 
+	/**Evaluate the energy function from an alpha value, using the current coordinates and the current direction.
+	 * 
+	 * @param alpha	
+	 * @return			Energy function value.
+	 */
 	public double evaluateEnergyFunction(double alpha) {
 		//logger.debug("alpha= " + alpha);
 		this.xAlpha.set(this.x);
@@ -485,6 +493,12 @@ public class LineSearchForTheWolfeConditions {
 	}
 	
 	
+	/**Evaluate the gradient of the energy function from an alpha value, 
+	 * using the current coordinates and the current direction.
+	 * 
+	 * @param alpha		Alpha value for the one-dimensional problem generate from the current coordinates and the current direction.
+	 * @return				Gradient of the energy function at alpha. 
+	 */
 	public GVector evaluateEnergyFunctionDerivative(double alpha) {
 		//logger.debug("alpha= " + alpha);
 		this.xAlpha.set(this.x);
@@ -500,6 +514,16 @@ public class LineSearchForTheWolfeConditions {
 	}
 
 	
+	/**
+	 *	From the interval [a, b] that bracket the minimum, evaluates the energy function at an intermediate point x 
+	 *  and obtain a new, smaller bracketing interval, either (a,x) or (x,b).	 
+	 *
+	 * @param lambdaMin		a
+	 * @param flambdaMin		Energy function at a.
+	 * @param lambdaMax		b
+	 * @param flambdaMax		Energy function at b.
+	 * @return					An intermediate point x
+	 */
 	public double goldenSectionMethod(double lambdaMin, double flambdaMin, double lambdaMax, double flambdaMax) {
 
 		//System.out.println("Golden Section Search");
@@ -510,10 +534,10 @@ public class LineSearchForTheWolfeConditions {
 		double lambda2 = lambda1 + 0.3819660112 * (lambda4 - lambda1);
 		double lambda3 = lambda1 + 0.6180339887498948482 * (lambda4 - lambda1);
 		
-		double flambda1 = flambdaMin;
+		//double flambda1 = flambdaMin;
 		double flambda2 = evaluateEnergyFunction(lambda2);
 		double flambda3 = evaluateEnergyFunction(lambda3);
-		double flambda4 = flambdaMax;
+		//double flambda4 = flambdaMax;
 		
 		//System.out.println("lambda1 = " + lambda1 + ", flambda1 = " + flambda1);
 		//System.out.println("lambda2 = " + lambda2 + ", flambda2 = " + flambda2);
