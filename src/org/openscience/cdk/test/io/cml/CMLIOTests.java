@@ -45,6 +45,7 @@ public class CMLIOTests {
         // suite.addTest(JmolTest.suite());
         suite.addTest(JChemPaintTest.suite());
         suite.addTest(CMLFragmentsTest.suite());
+        suite.addTest(CML23FragmentsTest.suite()); // schema23 20060209
         suite.addTest(Jumbo46CMLFragmentsTest.suite());
         
         // the following classes require Java 1.5
