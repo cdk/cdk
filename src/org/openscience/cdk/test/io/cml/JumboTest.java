@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the reading CML files using a few test files
@@ -47,11 +48,11 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class JumboTest extends CDKTestCase {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public JumboTest(String name) {
         super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+        logger = new LoggingTool(this);
     }
 
     public static Test suite() {
@@ -65,7 +66,6 @@ public class JumboTest extends CDKTestCase {
     /**
      * Now come the actual tests...
      */
-
 
     /**
      * Special CML characteristics:
@@ -165,10 +165,10 @@ public class JumboTest extends CDKTestCase {
             // test the molecule
             org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
             assertNotNull(mol);
-            assertEquals(mol.getAtomCount(), 11);
-            assertEquals(mol.getBondCount(), 12);
-            assertTrue(!GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertEquals("Incorrect number of atoms", 11, mol.getAtomCount());
+            assertEquals("Incorrect number of bonds", 12, mol.getBondCount());
+            assertTrue("File does not have 3D coordinates", !GeometryTools.has3DCoordinates(mol));
+            assertTrue("File does not have 2D coordinates", !GeometryTools.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }
