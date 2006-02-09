@@ -61,8 +61,13 @@ public class NumericalSurface {
     double[] areas;
     double[] volumes;
 
+    private String vdwFile = "org/openscience/cdk/config/jmol_atomtypes.txt";
+
     /**
      * Constructor to initialize the surface calculation with default values.
+     *
+     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/jmol_atomtypes.txt</i>
+     * of the source distribution. Also uses a tesselation level of 4 and solvent radius of 1.4A.
      *
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      */
@@ -72,6 +77,9 @@ public class NumericalSurface {
     }
     /**
      * Constructor to initialize the surface calculation with user specified values.
+     *
+     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/jmol_atomtypes.txt</i>
+     * of the source distribution
      *
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      * @param solvent_radius The radius of a solvent molecule that is used to extend
@@ -85,6 +93,24 @@ public class NumericalSurface {
         this.tesslevel = tesslevel;
         logger = new LoggingTool(this);
     }
+    
+    /**
+     * Constructor to initialize the surface calculation with user specified values.
+     *
+     * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
+     * @param solvent_radius The radius of a solvent molecule that is used to extend
+     * the radius of each atom. Setting to 0 gives the Van der Waals surface
+     * @param tesslevel The number of levels that the subdivision algorithm for tessllation
+     * @param vdwRadiusFile The path to a file containing Van der Waals radii which is loaded by
+     * and instance of {@link AtomTypeFactory}. 
+     */
+    public NumericalSurface(IAtomContainer atomContainer, double solvent_radius, int tesslevel, String vdwRadiusFile) {
+        this.solvent_radius = solvent_radius;
+        this.atoms = atomContainer.getAtoms();
+        this.tesslevel = tesslevel;
+        this.vdwFile = vdwRadiusFile;
+        logger = new LoggingTool(this);
+    }
 
     /**
      * Evaluate the surface.
@@ -94,7 +120,7 @@ public class NumericalSurface {
      */
     public void calculateSurface() {
 
-        configVDWRadius();
+        configVDWRadius(vdwFile);
         logger.info("Configured atoms");
 
         // get r_f and geometric center
@@ -312,10 +338,10 @@ public class NumericalSurface {
         return(ret);
     }
 
-    private void configVDWRadius() {
+    private void configVDWRadius(String fileName) {
         try {
             AtomTypeFactory factory =
-                AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt", atoms[0].getBuilder());
+                AtomTypeFactory.getInstance(fileName, atoms[0].getBuilder());
             for (int i=0; i<atoms.length; i++) {
                 factory.configure(atoms[i]);
             }
