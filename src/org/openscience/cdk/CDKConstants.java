@@ -225,7 +225,15 @@ public class CDKConstants {
 
     /** The CAS Registry Number. */
     public static final String CASRN = "CasRN";
+    
+    /** A set of all rings computed for this molecule. */
+    public static final String ALL_RINGS = "AllRings";
 
+    /** A smallest set of smallest rings computed for this molecule. */
+    public static final String SMALLEST_RINGS = "SmallestRings";
+
+    
+    
     /****************************************
     * Some predefined property names for    *
     * Atoms                                 *
