@@ -58,6 +58,7 @@ public class HueckelAromaticityDetector
 	static LoggingTool logger = new LoggingTool(HueckelAromaticityDetector.class);
 	AllRingsFinder ringFinder = null;
 	static IRingSet ringSet=null;
+	static long timeout=5000;
 
 
 	public static IRingSet getRingSet() {
@@ -136,6 +137,7 @@ public class HueckelAromaticityDetector
 		if (arf == null)
 		{
 			arf = new AllRingsFinder();
+			arf.setTimeout(timeout);
 		}
 		ringSet = arf.findAllRings(atomContainer);
 		long after = System.currentTimeMillis();
@@ -261,6 +263,10 @@ public class HueckelAromaticityDetector
 	public void setRingFinder(AllRingsFinder ringFinder)
 	{
 		this.ringFinder = ringFinder;
+	}
+
+	public static void setTimeout(long timeout) {
+		HueckelAromaticityDetector.timeout = timeout;
 	}
 
 	/*
