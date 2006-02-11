@@ -33,10 +33,11 @@ import java.awt.event.ActionEvent;
 import org.openscience.cdk.applications.jchempaint.dialogs.JavaHelpDialog;
 
 /**
- * pops up the help
+ * Pops up the help.
  *
- * @cdk.module jchempaint
- * @author     steinbeck
+ * @cdk.module  jchempaint
+ * @author      steinbeck
+ * @cdk.require javahelp
  */
 public class HelpAction extends JCPAction
 {

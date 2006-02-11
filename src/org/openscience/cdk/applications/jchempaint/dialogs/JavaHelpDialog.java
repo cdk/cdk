@@ -43,9 +43,10 @@ import javax.help.HelpSet;
  * <P>This action is unusual inthat it corresponds to more than one menu item
  * (contents, favorites and Search)
  *
- * @cdk.module jchempaint
- * @author     mrojas
- * @cdk.created    05. Juny 2005
+ * @cdk.module  jchempaint
+ * @author      mrojas
+ * @cdk.created 2005-06-05
+ * @cdk.require javahelp
  */
 public class JavaHelpDialog
 {
