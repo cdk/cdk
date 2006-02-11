@@ -34,11 +34,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import org._3pq.jgrapht.UndirectedGraph;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 
@@ -94,7 +95,8 @@ public class SSSRFinder {
 		if (atomContainer==null) {
 			return null;
 		}
-		
+		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
+		atomContainer.setProperty(CDKConstants.SMALLEST_RINGS, ringSet);
 		return toRingSet(atomContainer, cycleBasis().cycles());	  
 
 	}
@@ -110,6 +112,8 @@ public class SSSRFinder {
 		if (atomContainer==null) {
 			return null;
 		}
+		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
+		atomContainer.setProperty(CDKConstants.ESSENTIAL_RINGS, ringSet);
 		
 		return toRingSet(atomContainer, cycleBasis().essentialCycles());	  
 
@@ -127,6 +131,9 @@ public class SSSRFinder {
 			return null;
 		}
 		
+		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
+		atomContainer.setProperty(CDKConstants.RELEVANT_RINGS, ringSet);
+
 		return toRingSet(atomContainer, cycleBasis().relevantCycles().keySet());	  
 
 	}

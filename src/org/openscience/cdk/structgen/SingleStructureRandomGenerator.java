@@ -66,7 +66,7 @@ public class SingleStructureRandomGenerator
 {
 	AtomContainer atomContainer;
 	SaturationChecker satCheck;
-	final static boolean debug = false;
+	final static boolean debug = true;
 	Random random = null;
 
 	/**
@@ -125,15 +125,18 @@ public class SingleStructureRandomGenerator
 						if (partner != null)
 						{
 							cmax1 = satCheck.getCurrentMaxBondOrder(atom, atomContainer);
+				
 							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
 							max = Math.min(cmax1, cmax2);
 							order = Math.min(Math.max(1.0, random.nextInt((int)Math.round(max))), 3.0);
+							if (debug) System.out.println("Forming bond of order " + order);
 							atomContainer.addBond(new Bond(atom, partner, order));
 							bondFormed = true;
 						}
 					}
 				}
 			} while (bondFormed);
+			//System.out.println("Blaeh");
 			if (ConnectivityChecker.isConnected(atomContainer) && satCheck.allSaturated(atomContainer))
 			{
 				structureFound = true;

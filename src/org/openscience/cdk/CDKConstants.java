@@ -232,7 +232,18 @@ public class CDKConstants {
     /** A smallest set of smallest rings computed for this molecule. */
     public static final String SMALLEST_RINGS = "SmallestRings";
 
+    /** The essential rings computed for this molecule. 
+     *  The concept of Essential Rings is defined in 
+     *  SSSRFinder
+     */
+    public static final String ESSENTIAL_RINGS = "EssentialRings";
     
+    /** The relevant rings computed for this molecule. 
+     *  The concept of relevant Rings is defined in 
+     *  SSSRFinder
+     */
+    public static final String RELEVANT_RINGS = "RelevantRings";
+
     
     /****************************************
     * Some predefined property names for    *

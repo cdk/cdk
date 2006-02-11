@@ -31,10 +31,11 @@ package org.openscience.cdk.ringsearch;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -189,6 +190,7 @@ public class FiguerasSSSRFinder {
 		logger.debug("fullSet.size(): " + fullSet.size());				
 		logger.debug("trimSet.size(): " + trimSet.size());		
 		logger.debug("trimCounter: " + trimCounter);
+		molecule.setProperty(CDKConstants.SMALLEST_RINGS, sssr);
 	return sssr;	  
 	}
 

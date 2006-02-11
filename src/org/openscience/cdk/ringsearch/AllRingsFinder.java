@@ -32,13 +32,14 @@ package org.openscience.cdk.ringsearch;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.SpanningTree;
 
 /**
  *  Finds the Set of all Rings. This is an implementation of the algorithm
@@ -141,6 +142,7 @@ public class AllRingsFinder
 		{
 			doSearch(ac, pathes, ringSet);
 		}
+		atomContainer.setProperty(CDKConstants.ALL_RINGS, ringSet);
 		return ringSet;
 	}
 

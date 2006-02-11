@@ -117,7 +117,8 @@ public class UniversalIsomorphismTester {
    * @return     true if the 2 molecule are isomorph
    */
   public static boolean isIsomorph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-    return (getIsomorphMap(g1, g2) != null);
+	  if (g2.getAtomCount() != g1.getAtomCount()) return false;
+	  return (getIsomorphMap(g1, g2) != null);
   }
 
 
@@ -237,7 +238,9 @@ public class UniversalIsomorphismTester {
    * @return     true if g2 a subgraph on g1
    */
   public static boolean isSubgraph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-    return (getSubgraphMap(g1, g2) != null);
+      if (g2.getAtomCount() > g1.getAtomCount()) return false;
+      if (!testSubgraphHeuristics(g1, g2)) return false; 
+	  return (getSubgraphMap(g1, g2) != null);
   }
 
 
@@ -783,6 +786,108 @@ public class UniversalIsomorphismTester {
 	      return false;
       }
       
+  }
+  
+  /**
+   *  Checks some simple heuristics for whether the subgraph query can 
+   *  realistically be a subgraph of the supergraph. If, for example, the 
+   *  number of nitrogen atoms in the query is larger than that of the supergraph
+   *  it cannot be part of it.
+   *
+   * @param  ac1  the supergraph to be checked
+   * @param  ac2  the subgraph to be tested for
+   * @return    true if the subgraph ac2 has a chance to be a subgraph of ac1
+   *            
+   */
+
+  private static boolean testSubgraphHeuristics(IAtomContainer ac1, IAtomContainer ac2)
+  {
+	  int ac1SingleBondCount = 0;
+	  int ac1DoubleBondCount = 0;
+	  int ac1TripleBondCount = 0;
+	  int ac1AromaticBondCount = 0;
+	  int ac2SingleBondCount = 0;
+	  int ac2DoubleBondCount = 0;
+	  int ac2TripleBondCount = 0;
+	  int ac2AromaticBondCount = 0;
+	  int ac1SCount = 0;
+	  int ac1OCount = 0;
+	  int ac1NCount = 0;
+	  int ac1FCount = 0;
+	  int ac1ClCount = 0;
+	  int ac1BrCount = 0;
+	  int ac1ICount = 0;
+	  int ac1CCount = 0;
+	  
+	  int ac2SCount = 0;
+	  int ac2OCount = 0;
+	  int ac2NCount = 0;
+	  int ac2FCount = 0;
+	  int ac2ClCount = 0;
+	  int ac2BrCount = 0;
+	  int ac2ICount = 0;
+	  int ac2CCount = 0;
+	  
+	  IBond bond = null;
+	  IAtom atom = null;
+	  for (int i = 0; i < ac1.getBondCount(); i++)
+	  {
+		  bond = ac1.getBondAt(i);
+		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac1AromaticBondCount ++;
+		  else if (bond.getOrder() == 1) ac1SingleBondCount ++;
+		  else if (bond.getOrder() == 2) ac1DoubleBondCount ++;
+		  else if (bond.getOrder() == 3) ac1TripleBondCount ++;	  
+	  }
+	  for (int i = 0; i < ac2.getBondCount(); i++)
+	  {
+		  bond = ac2.getBondAt(i);
+		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac2AromaticBondCount ++;
+		  else if (bond.getOrder() == 1) ac2SingleBondCount ++;
+		  else if (bond.getOrder() == 2) ac2DoubleBondCount ++;
+		  else if (bond.getOrder() == 3) ac2TripleBondCount ++;	  
+	  }
+	  
+	  if (ac2SingleBondCount > ac1SingleBondCount) return false;
+	  if (ac2AromaticBondCount > ac1AromaticBondCount) return false;
+	  if (ac2DoubleBondCount > ac1DoubleBondCount) return false;
+	  if (ac2TripleBondCount > ac1TripleBondCount) return false;
+	  
+	  for (int i = 0; i < ac1.getAtomCount(); i++)
+	  {
+		  atom = ac1.getAtomAt(i);
+		  if (atom.getSymbol().equals("S")) ac1SCount ++;
+		  else if (atom.getSymbol().equals("N")) ac1NCount ++;
+		  else if (atom.getSymbol().equals("O")) ac1OCount ++;
+		  else if (atom.getSymbol().equals("F")) ac1FCount ++;
+		  else if (atom.getSymbol().equals("Cl")) ac1ClCount ++;
+		  else if (atom.getSymbol().equals("Br")) ac1BrCount ++;
+		  else if (atom.getSymbol().equals("I")) ac1ICount ++;
+		  else if (atom.getSymbol().equals("C")) ac1CCount ++;
+	  }
+	  for (int i = 0; i < ac2.getAtomCount(); i++)
+	  {
+		  atom = ac2.getAtomAt(i);
+		  if (atom.getSymbol().equals("S")) ac2SCount ++;
+		  else if (atom.getSymbol().equals("N")) ac2NCount ++;
+		  else if (atom.getSymbol().equals("O")) ac2OCount ++;
+		  else if (atom.getSymbol().equals("F")) ac2FCount ++;
+		  else if (atom.getSymbol().equals("Cl")) ac2ClCount ++;
+		  else if (atom.getSymbol().equals("Br")) ac2BrCount ++;
+		  else if (atom.getSymbol().equals("I")) ac2ICount ++;
+		  else if (atom.getSymbol().equals("C")) ac2CCount ++;
+	  }
+	  
+	  if (ac1SCount < ac2SCount) return false;
+	  if (ac1NCount < ac2NCount) return false;
+	  if (ac1OCount < ac2OCount) return false;
+	  if (ac1FCount < ac2FCount) return false;
+	  if (ac1ClCount < ac2ClCount) return false;
+	  if (ac1BrCount < ac2BrCount) return false;
+	  if (ac1ICount < ac2ICount) return false;
+	  if (ac1CCount < ac2CCount) return false;
+	  
+	  
+	  return true;
   }
   
 }

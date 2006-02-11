@@ -458,6 +458,54 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	public static Molecule makeSteran()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("C")); // 7
+		mol.addAtom(new Atom("C")); // 8
+		mol.addAtom(new Atom("C")); // 9
+		mol.addAtom(new Atom("C")); // 10
+		mol.addAtom(new Atom("C")); // 11
+		mol.addAtom(new Atom("C")); // 12
+		mol.addAtom(new Atom("C")); // 13
+		mol.addAtom(new Atom("C")); // 14
+		mol.addAtom(new Atom("C")); // 15
+		mol.addAtom(new Atom("C")); // 16
+		
+		
+		mol.addBond(0, 1, 1.0); // 1
+		mol.addBond(1, 2,1.0); // 2
+		mol.addBond(2, 3, 1.0); // 3
+		mol.addBond(3, 4,1.0); // 4
+		mol.addBond(4, 5, 1.0); // 5
+		mol.addBond(5, 6,1.0); // 6
+		mol.addBond(6, 7, 1.0); // 8
+		mol.addBond(7, 8,1.0); // 9
+		mol.addBond(8, 9, 1.0); // 10
+		mol.addBond(9, 0,1.0); // 11		
+		mol.addBond(9, 4, 1.0); // 12
+		mol.addBond(8, 10, 1.0); // 13
+		mol.addBond(10, 11,1.0); // 14
+		mol.addBond(11, 12, 1.0); // 15
+		mol.addBond(12, 13,1.0); // 16
+		mol.addBond(13, 7, 1.0); // 17
+		mol.addBond(13, 14, 1.0); // 18
+		mol.addBond(14, 15, 1.0); // 19
+		mol.addBond(15, 16, 1.0); // 20
+		mol.addBond(16, 12, 1.0); // 21
+		
+		configureAtoms(mol);
+		return mol;
+	}
+
+	
 	public static Molecule makeAzulene()
 	{
 		Molecule mol = new Molecule();
