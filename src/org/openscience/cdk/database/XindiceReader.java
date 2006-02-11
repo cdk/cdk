@@ -53,9 +53,10 @@ import org.xmldb.api.modules.XPathQueryService;
  * 
  * @author Yong Zhang <yz237@cam.ac.uk>
  *
- * @cdk.keyword database, Xindice
+ * @cdk.keyword      database, Xindice
  * @cdk.builddepends xmldb.jar
  * @cdk.builddepends xindice.jar
+ * @cdk.require      xindice
  */
 public class XindiceReader {
 

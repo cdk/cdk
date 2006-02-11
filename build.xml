@@ -457,6 +457,7 @@
                 	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
                 	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
                 	<excludesfile name="${src}/javahelp.javafiles" unless="javahelp.present"/>
+                	<excludesfile name="${src}/xindice.javafiles" unless="xindice.present"/>
 
                     <includesfile name="${src}/${module}.javafiles"/>
                 </fileset>
@@ -488,6 +489,7 @@
             	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
             	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
             	<excludesfile name="${src}/javahelp.javafiles" unless="javahelp.present"/>
+            	<excludesfile name="${src}/xindice.javafiles" unless="xindice.present"/>
             
                 <includesfile name="${src}/${module}.javafiles"/>
             </javac>
@@ -504,6 +506,7 @@
 	                <excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
                 	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
                 	<excludesfile name="${src}/javahelp.javafiles" unless="javahelp.present"/>
+                	<excludesfile name="${src}/xindice.javafiles" unless="xindice.present"/>
                </fileset>
                <fileset dir="${src}">
                     <include name="${module}.javafiles" />
