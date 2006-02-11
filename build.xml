@@ -64,13 +64,23 @@
             <echo message="      build.xml: $Id$" />
             <echo message="  Doclets found: ${docletsAreCompiled}" />
             <echo message="    Junit found: ${junit.present}" />
+            <echo message=" --- required libraries ---" />
+            <echo message="  Vecmath found: ${vecmath.present}" />
+            <echo message="    Log4j found: ${log4j.present}" />
+            <echo message="  JGraphT found: ${jgrapht.present}" />
             <echo message=" --- distributed libraries ---" />
+            <echo message="    Batik found: ${batik.present}" />
             <echo message="   CMLDOM found: ${cmllibs.present}" />
+            <echo message="    DADML found: ${dadml.present}" />
+            <echo message=" GNU JAXP found: ${gnujaxp.present}" />
+            <echo message="      JAI found: ${jai.present}" />
+            <echo message=" JavaHelp found: ${javahelp.present}" />
+            <echo message="  XIndice found: ${xindice.present}"/>
             <echo message=" --- optional libraries ---" />
             <echo message="     Jmol found: ${jmol.present}" />
             <echo message="   JOELib found: ${joelib.present}" />
             <echo message="   Java3D found: ${java3D.present}" />
-            <echo message="R/SJava present: ${rispresent}"/>
+            <echo message="  R/SJava found: ${rispresent}"/>
             <echo message="" />
             <echo message="Compiling:" />
             <echo message="            for: ${build.compiler}" />
@@ -90,29 +100,108 @@
         </target>
         
         <target id="check" name="check" depends="checkPlatforms">
-            <!-- Checks which parts of CDK can be build. -->
+            <!-- Check wether Doclets are compiled and output is generated -->
             <condition property="docletsAreCompiled">
                 <and>
                     <available classname="net.sf.cdk.tools.MakeJavaFilesFilesDoclet" classpath="${doc}/javadoc"/>
                     <available classname="net.sf.cdk.tools.MakeCDKSetFilesDoclet" classpath="${doc}/javadoc"/>
                 </and>
             </condition>
-            <available classname="joelib.molecule.JOEAtom" 
-                classpath="${lib}/libio/joelib.jar" 
-                property="joelib.present"/>
-            <available classname="org.jmol.api.JmolAdapter" 
-                classpath="${lib}/jmolApis.jar" 
-                property="jmol.present"/>
-            <available file="${lib}/jumbo50.jar" 
-                property="cmllibs.present"/>
-            <available classname="javax.media.j3d.Canvas3D"
-                property="java3D.present"/>
-            <available classname="junit.framework.TestCase"
-                classpath="${ant.home}/lib/junit.jar"
-                property="junit.present"/>
+            <uptodate property="dotjavafiles.uptodate"
+                      targetfile="${src}/core.javafiles">
+              <srcfiles dir="${src}" includes="**/*.java" />
+            </uptodate>
+            <condition property="dotjjfiles.uptodate">
+              <and>
+                <uptodate property="NomParserJavafiles.uptodate" 
+                          targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
+                  <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
+                </uptodate>
+                <uptodate property="SMARTSParserJavafiles.uptodate" 
+                          targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
+                  <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
+                </uptodate>
+              </and>
+            </condition>
+            <condition property="doSkipDoclet">
+              <equals arg1="${skipDoclet}" arg2="true"/>
+            </condition>
+
+            <!-- Checks which parts of CDK can be build. -->
+
+            <!-- test for optional jars -->
+            <available property="vecmath.present"
+                       file="${lib}/vecmath1.2-1.14.jar"/>
+            <available property="log4j.present"
+                       file="${lib}/log4j.jar"/>
+            <available property="jgrapht.present"
+                       file="${lib}/jgrapht-0.5.3.jar"/>
+            <available property="gnujaxp.present"
+                       file="${lib}/gnujaxp.jar"/>
+
+            <!-- test for optional jars -->
+            <condition property="batik.present">
+              <and>
+                <available file="${lib}/batik-awt-util.jar"/>
+                <available file="${lib}/batik-dom.jar"/>
+                <available file="${lib}/batik-svggen.jar"/>
+                <available file="${lib}/batik-util.jar"/>
+                <available file="${lib}/batik-xml.jar"/>
+              </and>
+            </condition>
+            <condition property="cmllibs.present">
+              <or>
+                <available file="${lib}/jumbo50.jar"/>
+                <available file="${lib}/jumbo51.jar"/>
+              </or>
+            </condition>
+            <available property="dadml.present"
+                       file="${lib}/dadml.jar"/>
+            <condition property="jai.present">
+              <and>
+                <available file="${lib}/jai_codec.jar"/>
+                <available file="${lib}/jai_core.jar"/>
+              </and>
+            </condition>
+            <available property="java3D.present"
+                       classname="javax.media.j3d.Canvas3D"/>
+            <available property="javahelp.present"
+                       file="${lib}/jh.jar"/>
+            <available property="joelib.present"
+                       classname="joelib.molecule.JOEAtom" 
+                       classpath="${lib}/libio/joelib.jar"/>
+            <available property="jmol.present"
+                       classname="org.jmol.api.JmolAdapter" 
+                       classpath="${lib}/jmolApis.jar"/>
+            <available property="junit.present"
+                       classname="junit.framework.TestCase"
+                       classpath="${ant.home}/lib/junit.jar"/>
+            <condition property="rispresent">
+              <and>
+                <or>
+                  <available file="/usr/bin/R" />
+                  <available file="/usr/local/bin/R"/>
+                </or>
+                <or>
+                  <available file="/usr/lib/R/library/SJava/" />
+                  <available file="/usr/local/lib/R/library/SJava/" />
+                  <available file="/usr/local/lib/R/site-library/SJava/" />
+                </or>
+              </and>
+            </condition>
+            <condition property="xindice.present">
+              <and>
+                <available file="${lib}/xindice.jar"/>
+                <available file="${lib}/xmldb.jar"/>
+              </and>
+            </condition>
+
+            <!-- test Ant version -->
             <condition property="hasAnt16">
                 <contains string="${ant.version}" substring="1.6"/>
             </condition>
+
+            <!-- test Java version -->
             <condition property="isJava13">
                 <contains string="${java.version}" substring="1.3"/>
             </condition>
@@ -131,22 +220,8 @@
             <condition property="isJava15">
                 <contains string="${java.version}" substring="1.5"/>
             </condition>
-            <uptodate property="dotjavafiles.uptodate"
-                targetfile="${src}/core.javafiles">
-                <srcfiles dir="${src}" includes="**/*.java" />
-            </uptodate>
-            <condition property="dotjjfiles.uptodate">
-                <and>
-                    <uptodate property="NomParserJavafiles.uptodate" 
-                        targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
-                        <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
-                    </uptodate>
-                    <uptodate property="SMARTSParserJavafiles.uptodate" 
-                        targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
-                        <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
-                    </uptodate>
-                </and>
-            </condition>
+
+            <!-- testing which JavaDoc is present -->
             <condition property="sunJavaDocInExt">
               <or>
                 <available file="${java.ext.dirs}/tools.jar" />
@@ -167,22 +242,7 @@
             <condition property="gjdocJavaDoc">
               <available file="/usr/share/java/gnu-classpath-tools-gjdoc.jar" />
             </condition>
-            <condition property="rispresent">
-                <and>
-                    <or>
-                        <available file="/usr/bin/R" />
-                        <available file="/usr/local/bin/R"/>
-                    </or>
-                    <or>
-                        <available file="/usr/lib/R/library/SJava/" />
-                        <available file="/usr/local/lib/R/library/SJava/" />
-                        <available file="/usr/local/lib/R/site-library/SJava/" />
-                    </or>
-                </and>
-            </condition>
-            <condition property="doSkipDoclet">
-                <equals arg1="${skipDoclet}" arg2="true"/>
-            </condition>
+
         </target>
 
 
