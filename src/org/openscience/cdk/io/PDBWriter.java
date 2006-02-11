@@ -47,8 +47,7 @@ import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import freeware.PrintfFormat;
+import org.openscience.cdk.tools.FormatStringBuffer;
 
 /**
  * Saves molecules in a rudimentary PDB format.
@@ -140,9 +139,9 @@ public class PDBWriter extends DefaultChemObjectWriter {
            
            String hetatmRecordName = "HETATM";
            String terRecordName = "TER";
-           PrintfFormat serialFormat = new PrintfFormat("%5d");
-           PrintfFormat atomNameFormat = new PrintfFormat("%-4s");
-           PrintfFormat positionFormat = new PrintfFormat("%8.3f");
+           FormatStringBuffer serialFormat = new FormatStringBuffer("%5d");
+           FormatStringBuffer atomNameFormat = new FormatStringBuffer("%-4s");
+           FormatStringBuffer positionFormat = new FormatStringBuffer("%8.3f");
            
            // Loop through the atoms and write them out:
            StringBuffer buffer = new StringBuffer();
@@ -150,15 +149,15 @@ public class PDBWriter extends DefaultChemObjectWriter {
            for (int i = 0; i < atoms.length; i++) {
                buffer.setLength(0);
                buffer.append(hetatmRecordName);
-               buffer.append(serialFormat.sprintf(atomNumber));
+               buffer.append(serialFormat.format(atomNumber));
                buffer.append(' ');
                IAtom atom = atoms[i];
-               buffer.append(atomNameFormat.sprintf(atom.getSymbol()));
+               buffer.append(atomNameFormat.format(atom.getSymbol()));
                buffer.append(" MOL          ");
                Point3d position = atom.getPoint3d();
-               buffer.append(positionFormat.sprintf(position.x));
-               buffer.append(positionFormat.sprintf(position.y));
-               buffer.append(positionFormat.sprintf(position.z));
+               buffer.append(positionFormat.format(position.x));
+               buffer.append(positionFormat.format(position.y));
+               buffer.append(positionFormat.format(position.z));
                
                writer.write(buffer.toString(), 0, buffer.length());
                writer.newLine();
@@ -178,14 +177,14 @@ public class PDBWriter extends DefaultChemObjectWriter {
            Vector3d b = crystal.getB();
            Vector3d c = crystal.getC();
            double[] ucParams = CrystalGeometryTools.cartesianToNotional(a,b,c);
-           PrintfFormat lengthFormat = new PrintfFormat("%4.3f");
-           PrintfFormat angleFormat = new PrintfFormat("%3.3f");
-           writer.write("CRYST1 " + lengthFormat.sprintf(ucParams[0])
-                                                   + lengthFormat.sprintf(ucParams[1])
-                                                   + lengthFormat.sprintf(ucParams[2])
-                                                   + angleFormat.sprintf(ucParams[3])
-                                                   + angleFormat.sprintf(ucParams[4])
-                                                   + angleFormat.sprintf(ucParams[5]) + "\n");
+           FormatStringBuffer lengthFormat = new FormatStringBuffer("%4.3f");
+           FormatStringBuffer angleFormat = new FormatStringBuffer("%3.3f");
+           writer.write("CRYST1 " + lengthFormat.format(ucParams[0])
+                                                   + lengthFormat.format(ucParams[1])
+                                                   + lengthFormat.format(ucParams[2])
+                                                   + angleFormat.format(ucParams[3])
+                                                   + angleFormat.format(ucParams[4])
+                                                   + angleFormat.format(ucParams[5]) + "\n");
                                                    
            // before saving the atoms, we need to create cartesian coordinates
            IAtom[] atoms = crystal.getAtoms();

@@ -44,10 +44,9 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
+import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
-
-import freeware.PrintfFormat;
 
 /**
  * <p>Serializes a SetOfMolecules or a Molecule object to ShelX code.
@@ -139,18 +138,18 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         double alpha = b.angle(c);
         double beta  = a.angle(c);
         double gamma = a.angle(b);
-        PrintfFormat format = new PrintfFormat("%7.5lf");
-        write("CELL " + format.sprintf(1.54184) + "   ");
-        format = new PrintfFormat("%8.5lf");
-        write(format.sprintf(alength) + "  ");
-        write(format.sprintf(blength) + "  ");
-        write(format.sprintf(clength) + " ");
-        format = new PrintfFormat("%8.4lf");
-        write(format.sprintf(alpha) + " ");
-        write(format.sprintf(beta) + " ");
-        write(format.sprintf(gamma) + "\n");
-        format = new PrintfFormat("%1.5lf");
-        write("ZERR " + format.sprintf((double)crystal.getZ()) +
+        FormatStringBuffer format = new FormatStringBuffer("%7.5lf");
+        write("CELL " + format.format(1.54184) + "   ");
+        format = new FormatStringBuffer("%8.5lf");
+        write(format.format(alength) + "  ");
+        write(format.format(blength) + "  ");
+        write(format.format(clength) + " ");
+        format = new FormatStringBuffer("%8.4lf");
+        write(format.format(alpha) + " ");
+        write(format.format(beta) + " ");
+        write(format.format(gamma) + "\n");
+        format = new FormatStringBuffer("%1.5lf");
+        write("ZERR " + format.format((double)crystal.getZ()) +
               "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100\n");
         String spaceGroup = crystal.getSpaceGroup();
         if ("P1".equals(spaceGroup)) {
@@ -175,7 +174,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         write("SFAC  " + elemNames + "\n");
         write("UNIT  " + elemCounts + "\n");
         /* write atoms */
-        format = new PrintfFormat("%7.5lf");
+        format = new FormatStringBuffer("%7.5lf");
         for (int i = 0; i < crystal.getAtomCount(); i++) {
         	IAtom atom = crystal.getAtomAt(i);
             Point3d cartCoord = atom.getPoint3d();
@@ -190,9 +189,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             String elemID = new Integer(asortedElements.indexOf(symbol)+1).toString();
             write(elemID);
             write("    ".substring(elemID.length()));
-            write(format.sprintf(fracCoord.x) + "   ");
-            write(format.sprintf(fracCoord.y) + "   ");
-            write(format.sprintf(fracCoord.z) + "    11.00000    0.05000\n");
+            write(format.format(fracCoord.x) + "   ");
+            write(format.format(fracCoord.y) + "   ");
+            write(format.format(fracCoord.z) + "    11.00000    0.05000\n");
         }
         write("END\n");
     }
