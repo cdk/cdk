@@ -47,8 +47,9 @@ import com.sun.media.jai.codec.JPEGEncodeParam;
 /**
  * Exporting the current model various formats
  *
- * @cdk.module jchempaint
- * @author Egon Willighagen
+ * @cdk.module  jchempaint
+ * @author      Egon Willighagen
+ * @cdk.require jai
  */
 public class ExportAction extends SaveAsAction {
 

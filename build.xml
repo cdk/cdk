@@ -454,6 +454,7 @@
                     <excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                     <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
+                	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
 
                     <includesfile name="${src}/${module}.javafiles"/>
                 </fileset>
