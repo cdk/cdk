@@ -515,7 +515,7 @@ public class FormatStringBuffer {
 
     // ==================================================================== //
 
-//    /*
+    /*
 
     public static void test(String str1, String str2) {
 
@@ -642,6 +642,6 @@ public class FormatStringBuffer {
 
     }
 
-//    */
+    */
 }
 
