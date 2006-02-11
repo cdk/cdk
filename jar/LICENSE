@@ -1,43 +1,32 @@
 This file lists the licenses for the libraries in this directory.
 
-Artistic license <http://www.opensource.org/licenses/artistic-license.php>
-base.jar, cmlAll.jar, pmrlib.jar, stmml.jar
+Apache License (2.0/1.1):
+batik*.jar, log4j.jar, xindice.jar, xmldb.jar
+
+Artistic License :
+jumbo50.jar
+
+GPL :
+biojava-1.4.jar, gnujaxp.jar
 
 LGPL :
 jmolApis.jar, jmolIO.jar, jfontchooser.jar
 
-GPL :
-biojava-1.4.jar
+Public Domain :
+Jama-1.0.1.jar, vecmath1.2-1.14.jar
+
+Sun non-free :
+jh.jar?, jai-*.jar
 
 The licenses of these jars have to be checked:
-stmml.jar
-batik-awt-util.jar
-batik-dom.jar
-batik-svggen.jar
-batik-util.jar
-batik-xml.jar
 baysmith-io.jar
-castor-0.9.5-xml.jar
 dadml.jar
-dbdoclet.jar
-dbdoclet.properties
-gnujaxp.jar
 javacc.jar
 jaxen-core-1.0-fcs.jar
 junit.jar
-log4j-core.jar
-log4j.jar
 mysql-2.0.4.jar
 pmd-1.5.jar
 postgresql7.0-1.2.jar
-printf.jar
 saxpath-1.0-fcs.jar
-vecmath1.2-1.14.jar
-xalan-2.0.1.jar
-xerces-2.5.0.jar
-xerces-2.6.2.jar
-xindice.jar
-xmlApis-2.6.2.jar
-xmldb.jar
 
 
