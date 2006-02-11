@@ -28,9 +28,8 @@ import java.util.Locale;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.iupac.generator.IUPACName;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.LoggingTool;
-
-import freeware.PrintfFormat;
 
 /**
  * This class implements a IUPAC name generator.
@@ -129,14 +128,14 @@ public class IUPACNameGenerator
 			System.out.println("Full (" + name.size() + " parts):");
 			System.out.print(name.toString());
 			int namedAtomCount = atomCount - mol.getAtomCount();
-			PrintfFormat format = new PrintfFormat("%3.1lf");
+			FormatStringBuffer format = new FormatStringBuffer("%3.1lf");
 			/*
 			 *  This is a command line application            *
 			 *  Do not convert these System.out/err.println() *
 			 *  to logger statements
 			 */
 			System.out.println("Ratio named: " +
-					format.sprintf(100.0 * (double) namedAtomCount / (double) atomCount) +
+					format.format(100.0 * (double) namedAtomCount / (double) atomCount) +
 					"% (" + namedAtomCount + "/" + atomCount + ")");
 		}
 	}
