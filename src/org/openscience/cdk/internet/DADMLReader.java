@@ -66,12 +66,13 @@ import org.openscience.dadml.tools.DBDEFInfo;
  * application that makes it possible to define how databases can be accessed
  * via URLs.
  *
- * @author     Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.created    2001-12-18
+ * @author           Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.created      2001-12-18
  *
- * @cdk.keyword    internet
- * @cdk.keyword    database
+ * @cdk.keyword      internet
+ * @cdk.keyword      database
  * @cdk.builddepends dadml.jar
+ * @cdk.require      dadml
  */
 public class DADMLReader {
 

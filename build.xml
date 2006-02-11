@@ -455,6 +455,7 @@
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                     <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
                 	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
+                	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
 
                     <includesfile name="${src}/${module}.javafiles"/>
                 </fileset>
@@ -483,6 +484,8 @@
             	<excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
                 <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                 <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
+            	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
+            	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
             
                 <includesfile name="${src}/${module}.javafiles"/>
             </javac>
@@ -495,6 +498,9 @@
                     <!-- excludesfile name="${src}/java1.4.classes" unless="isJava14"/ -->
                 	<excludesfile name="${src}/java1.5.classes" unless="isJava15"/>
                     <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
+                	<excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
+	                <excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
+                	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
                </fileset>
                <fileset dir="${src}">
                     <include name="${module}.javafiles" />

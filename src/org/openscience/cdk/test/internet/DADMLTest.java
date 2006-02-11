@@ -31,7 +31,8 @@ import org.openscience.cdk.internet.DADMLReader;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module test
+ * @cdk.module  test
+ * @cdk.require dadml
  */
 public class DADMLTest {
 
