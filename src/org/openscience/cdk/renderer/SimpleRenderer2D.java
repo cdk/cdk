@@ -31,7 +31,9 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Graphics2D;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.RingSet;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
@@ -98,6 +100,19 @@ public class SimpleRenderer2D extends AbstractRenderer2D
         logger.debug("inside paintMolecule()");
 		customizeRendering(graphics);
 		RingSet ringSet = new RingSet();
+
+		// draw the molecule name
+		if (atomCon.getProperty(CDKConstants.TITLE) != null) {
+			double[] minmax = GeometryTools.getMinMax(atomCon);
+			int[] ints = new int[4];
+			for (int i=0;i<4;i++) ints[i] = (int)minmax[i];
+			int[] screenCoords = getScreenCoordinates(ints);
+			graphics.drawString(
+			    atomCon.getProperty(CDKConstants.TITLE).toString(), 
+			    (int) screenCoords[0], Math.abs(screenCoords[2]-screenCoords[3])
+			);
+		}
+		
 		org.openscience.cdk.interfaces.IAtomContainer[] molecules = null;
 		if(split){
 			try

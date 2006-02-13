@@ -1496,6 +1496,13 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					Math.pow(closestAtom.getY2d() - Y, 2)) < highlightRadius))
 			{
 				closestAtom = null;
+			} else {
+				// we got a winner!
+				// set the associated AtomContainer, for use by JCP's Molecule Properties action
+				closestAtom.setProperty(
+					SimpleController2D.MATCHING_ATOMCONTAINER,
+					getRelevantAtomContainer(chemModel, closestAtom)
+				);
 			}
 		}
 		return closestAtom;

@@ -1355,7 +1355,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  coords  Description of the Parameter
 	 *@return         The screenCoordinates value
 	 */
-	protected int[] getScreenCoordinates(int[] coords)
+	public int[] getScreenCoordinates(int[] coords)
 	{
         graphicsHeight = (int) r2dm.getBackgroundDimension().getHeight();
 		logger.debug("HEIGHT: " + graphicsHeight);

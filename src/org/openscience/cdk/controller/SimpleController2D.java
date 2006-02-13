@@ -46,6 +46,8 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 public class SimpleController2D extends AbstractController2D
 {
 		
+	public final static String MATCHING_ATOMCONTAINER = "Matching IAtomContainer";
+	 
 	SimpleController2D()
 	{
 		super();
