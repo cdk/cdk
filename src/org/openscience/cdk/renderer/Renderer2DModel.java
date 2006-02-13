@@ -78,6 +78,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     private boolean showAtomAtomMapping = true;
 
     private boolean useAntiAliasing = true;
+    
+    private boolean showReactionBoxes = true;
 
 	private int atomRadius = 8;
 	
@@ -164,6 +166,15 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setUseAntiAliasing(boolean bool) {
         this.useAntiAliasing = bool;
+        fireChange();
+    }
+    
+    public boolean getShowReactionBoxes() {
+        return showReactionBoxes;
+    }
+    
+    public void setShowReactionBoxes(boolean bool) {
+        this.showReactionBoxes = bool;
         fireChange();
     }
     

@@ -191,22 +191,6 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintReaction(IReaction reaction, Graphics2D graphics) {
-		// calculate some boundaries
-		IAtomContainer reactantContainer = new org.openscience.cdk.AtomContainer();
-		IMolecule[] reactants = reaction.getReactants().getMolecules();
-		for (int i = 0; i < reactants.length; i++)
-		{
-			reactantContainer.add(reactants[i]);
-		}
-		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
-		IAtomContainer productContainer = new org.openscience.cdk.AtomContainer();
-		IMolecule[] products = reaction.getProducts().getMolecules();
-		for (int i = 0; i < products.length; i++)
-		{
-			productContainer.add(products[i]);
-		}
-		double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
-	
 		// paint atom atom mappings
 		IAtom highlighted = r2dm.getHighlightedAtom();
 		if (r2dm.getShowAtomAtomMapping() && highlighted != null && 
@@ -258,6 +242,23 @@ public class Renderer2D extends SimpleRenderer2D
 			logger.debug("Not showing atom-atom mapping");
 		}
 	
+		IAtomContainer reactantContainer = new org.openscience.cdk.AtomContainer();
+		IMolecule[] reactants = reaction.getReactants().getMolecules();
+		for (int i = 0; i < reactants.length; i++)
+		{
+			reactantContainer.add(reactants[i]);
+		}
+		IAtomContainer productContainer = new org.openscience.cdk.AtomContainer();
+		IMolecule[] products = reaction.getProducts().getMolecules();
+		for (int i = 0; i < products.length; i++)
+		{
+			productContainer.add(products[i]);
+		}
+
+		// calculate some boundaries
+		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
+		double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
+		
 		// paint box around total
 		int width = 13;
 		double[] minmaxReaction = new double[4];
@@ -269,19 +270,19 @@ public class Renderer2D extends SimpleRenderer2D
 		if (reaction.getProperty(CDKConstants.TITLE) != null)
 		{
 			caption = reaction.getProperty(CDKConstants.TITLE) +
-					" (" + caption + ")";
+			" (" + caption + ")";
 		} else if (caption == null)
 		{
 			caption = "r" + reaction.hashCode();
 		}
-		paintBoundingBox(minmaxReaction, caption, 2 * width, graphics);
+		if (r2dm.getShowReactionBoxes()) paintBoundingBox(minmaxReaction, caption, 2 * width, graphics);
 	
 		// paint reactants content
-		paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
+		if (r2dm.getShowReactionBoxes()) paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
 		paintMolecule(reactantContainer, graphics,false);
 	
 		// paint products content
-		paintBoundingBox(minmaxProducts, "Products", width, graphics);
+		if (r2dm.getShowReactionBoxes()) paintBoundingBox(minmaxProducts, "Products", width, graphics);
 		paintMolecule(productContainer, graphics,false);
 	
 		if (productContainer.getAtomCount() > 0 && reactantContainer.getAtomCount() > 0)
