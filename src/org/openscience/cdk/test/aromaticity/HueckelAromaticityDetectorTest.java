@@ -540,12 +540,13 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 
 	}
   
-  public void testBug1328739() throws Exception{
+  public void testBug1328739() throws Exception {
       String filename = "data/mdl/bug1328739.mol";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
-			Molecule molecule = (Molecule) reader.read((ChemObject) new Molecule());
+      InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+      MDLReader reader = new MDLReader(new InputStreamReader(ins));
+      Molecule molecule = (Molecule) reader.read(new Molecule());
       HueckelAromaticityDetector.detectAromaticity(molecule);
+      assertEquals(15, molecule.getBondCount());
       assertTrue(molecule.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
       assertTrue(molecule.getBondAt(1).getFlag(CDKConstants.ISAROMATIC));
       assertTrue(molecule.getBondAt(2).getFlag(CDKConstants.ISAROMATIC));
