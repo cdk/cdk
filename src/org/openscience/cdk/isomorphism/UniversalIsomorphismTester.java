@@ -79,9 +79,7 @@ import org.openscience.cdk.isomorphism.mcss.RNode;
  *                not the same (3 != 4) and in most case this will be already
  *                screened out by a fingerprint based filtering.
  *                It is possible to add a special treatment for this special query.
- *                Be reminded that this algorithm matches bonds only. Hence an AtomContainer that
- *                contains no bonds is seen as isomorph to any other AtomContainer.
- *                shk3: Single atom cases now work.
+ *                Be reminded that this algorithm matches bonds only.
  *   </font>
  *
  *
@@ -118,6 +116,24 @@ public class UniversalIsomorphismTester {
    */
   public static boolean isIsomorph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
 	  if (g2.getAtomCount() != g1.getAtomCount()) return false;
+      // check single atom case
+      if (g2.getAtomCount() == 1) {
+          IAtom atom = g1.getAtomAt(0);
+          IAtom atom2 = g2.getAtomAt(0);
+		  if (atom instanceof IQueryAtom) {
+			  IQueryAtom qAtom = (IQueryAtom)atom;
+              if(qAtom.matches(g2.getAtomAt(0))) return true;
+              else return false;
+		  } else if (atom2 instanceof IQueryAtom) {
+              IQueryAtom qAtom = (IQueryAtom)atom2;
+              if(qAtom.matches(g1.getAtomAt(0))) return true;
+              else return false;
+          } else {
+			  String atomSymbol = atom.getSymbol();
+              if(g1.getAtomAt(0).getSymbol().equals(atomSymbol)) return true;
+              else return false;
+		  }
+      }
 	  return (getIsomorphMap(g1, g2) != null);
   }
 
@@ -150,8 +166,15 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     the first isomorph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
-  public static List getIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-    return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getIsomorphMap(g1, g2), g1, g2));
+  public static List getIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException {
+      ArrayList list = checkSingleAtomCases(g1, g2);
+      if (list == null) {
+          return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getIsomorphMap(g1, g2), g1, g2));
+      } else if (list.isEmpty()) {
+          return null;
+      } else {
+          return (List)list.get(0);
+      }
   }
 
 
@@ -214,8 +237,13 @@ public class UniversalIsomorphismTester {
    * @param  g2  second AtomContainer
    * @return     all subgraph atom mappings found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
-  public static List getSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-    return (makeAtomsMapsOfBondsMaps(UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2));
+  public static List getSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2) throws CDKException {
+      ArrayList list = checkSingleAtomCases(g1, g2);
+      if (list == null) {
+          return (makeAtomsMapsOfBondsMaps(UniversalIsomorphismTester.getSubgraphMaps(g1, g2), g1, g2));
+      } else {
+          return list;
+      }
   }
   
   /**
@@ -225,8 +253,15 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule
    * @return     the first subgraph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
-  public static List getSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-    return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getSubgraphMap(g1, g2), g1, g2));
+  public static List getSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2) throws CDKException {
+      ArrayList list = checkSingleAtomCases(g1, g2);
+      if (list == null) {
+          return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getSubgraphMap(g1, g2), g1, g2));
+      } else if (list.isEmpty()) {
+          return null;
+      } else {
+          return (List)list.get(0);
+      }
   }
 
 
@@ -239,6 +274,24 @@ public class UniversalIsomorphismTester {
    */
   public static boolean isSubgraph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
       if (g2.getAtomCount() > g1.getAtomCount()) return false;
+      // test for single atom case
+      if (g2.getAtomCount() == 1) {
+          List arrayList = new ArrayList();
+		  IAtom atom = g2.getAtomAt(0);
+		  for (int i=0; i<g1.getAtomCount(); i++) {
+		      IAtom atom2 = g1.getAtomAt(i);
+		      if (atom instanceof IQueryAtom) {
+		    	  IQueryAtom qAtom = (IQueryAtom)atom;
+		    	  if (qAtom.matches(atom2)) return true;
+		      } else if (atom2 instanceof IQueryAtom) {
+                  IQueryAtom qAtom = (IQueryAtom)atom2;
+                  if (qAtom.matches(atom)) return true;
+              } else {
+		    	  if (atom2.getSymbol().equals(atom.getSymbol())) return true;
+		      }
+		  }
+          return false;
+      }
       if (!testSubgraphHeuristics(g1, g2)) return false; 
 	  return (getSubgraphMap(g1, g2) != null);
   }
@@ -256,18 +309,17 @@ public class UniversalIsomorphismTester {
    *             found projected of g1 (list of AtomContainer )
    */
   public static List getOverlaps(IAtomContainer g1, IAtomContainer g2) throws CDKException{
-    start=System.currentTimeMillis();
-    List rMapsList = search(g1, g2, new BitSet(),
-        new BitSet(), true, false);
-
-    // projection on G1
-    ArrayList graphList = projectList(rMapsList, g1, ID1);
-
-    // reduction of set of solution (isomorphism and substructure
-    // with different 'mappings'
-    ArrayList reducedGraphList = getMaximum(graphList);
-
-    return reducedGraphList;
+      start=System.currentTimeMillis();
+      List rMapsList = search(g1, g2, new BitSet(), new BitSet(), true, false);
+      
+      // projection on G1
+      ArrayList graphList = projectList(rMapsList, g1, ID1);
+      
+      // reduction of set of solution (isomorphism and substructure
+      // with different 'mappings'
+      ArrayList reducedGraphList = getMaximum(graphList);
+      
+      return reducedGraphList;
   }
 
 
@@ -328,47 +380,10 @@ public class UniversalIsomorphismTester {
    * @param  findAllStructure  if false stop at the first structure found
    * @param  findAllMap        if true search all the 'mappings' for one same
    *                           structure
-   * @return                   a list of rMapList that represent the search solutions
+   * @return                   a List of Lists of RMap objects that represent the search solutions
    */
   public static List search(IAtomContainer g1, IAtomContainer g2, BitSet c1,
 		  BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
-	  
-	  //Test for single atom cases
-	  if (g2.getAtomCount() == 1) {
-		  List arrayList = new ArrayList();
-		  IAtom atom = g2.getAtomAt(0);
-		  
-		  if (atom instanceof IQueryAtom) {
-			  IQueryAtom qAtom = (IQueryAtom)atom;
-			  for (int i=0; i<g1.getAtomCount(); i++){
-				  if(qAtom.matches(g1.getAtomAt(i)))
-					  arrayList.add(new RMap(i,0));
-			  }
-		  } else {
-			  String atomSymbol = atom.getSymbol();
-			  for(int i=0; i<g1.getAtomCount(); i++){
-				  if(g1.getAtomAt(i).getSymbol().equals(atomSymbol))
-					  arrayList.add(new RMap(i,0));
-			  }
-		  }
-		  return arrayList;
-	  } else if (g1.getAtomCount() == 1) {
-		  List arrayList = new ArrayList();
-		  
-		  IAtom atom = g1.getAtomAt(0);
-		  for (int i=0; i<g2.getAtomCount(); i++) {
-		      IAtom atom2 = g2.getAtomAt(i);
-		      if (atom2 instanceof IQueryAtom) {
-		    	  IQueryAtom qAtom = (IQueryAtom)atom2;
-		    	  if (qAtom.matches(atom))
-		    		  arrayList.add(new RMap(0,i));
-		      } else {
-		    	  if(atom2.getSymbol().equals(atom.getSymbol()))
-					  arrayList.add(new RMap(0,i));
-		      }
-		  }
-		  return arrayList;
-	  }
 	  
 	  // reset result
 	  ArrayList rMapsList = new ArrayList();
@@ -492,6 +507,52 @@ public class UniversalIsomorphismTester {
     return reducedGraphList;
   }
 
+  /**
+   *  Checks for single atom cases before doing subgraph/isomorphism search
+   *
+   * @param  g1  AtomContainer to match on
+   * @param  g2  AtomContainer as query
+   * @return     List of List of RMap objects for the Atoms (not Bonds!), null if no single atom case
+  */
+  public static ArrayList checkSingleAtomCases(IAtomContainer g1, IAtomContainer g2) {
+      
+	  if (g2.getAtomCount() == 1) {
+		  ArrayList arrayList = new ArrayList();
+		  IAtom atom = g2.getAtomAt(0);
+		  if (atom instanceof IQueryAtom) {
+			  IQueryAtom qAtom = (IQueryAtom)atom;
+			  for (int i=0; i<g1.getAtomCount(); i++){
+				  if(qAtom.matches(g1.getAtomAt(i)))
+					  arrayList.add(new RMap(i,0));
+			  }
+		  } else {
+			  String atomSymbol = atom.getSymbol();
+			  for(int i=0; i<g1.getAtomCount(); i++){
+				  if(g1.getAtomAt(i).getSymbol().equals(atomSymbol))
+					  arrayList.add(new RMap(i,0));
+			  }
+		  }
+		  return arrayList;
+	  } else if (g1.getAtomCount() == 1) {
+		  ArrayList arrayList = new ArrayList();
+		  IAtom atom = g1.getAtomAt(0);
+		  for (int i=0; i<g2.getAtomCount(); i++) {
+		      IAtom atom2 = g2.getAtomAt(i);
+		      if (atom2 instanceof IQueryAtom) {
+		    	  IQueryAtom qAtom = (IQueryAtom)atom2;
+		    	  if (qAtom.matches(atom))
+		    		  arrayList.add(new RMap(0,i));
+		      } else {
+		    	  if(atom2.getSymbol().equals(atom.getSymbol()))
+					  arrayList.add(new RMap(0,i));
+		      }
+		  }
+		  return arrayList;
+	  } else {
+          return null;
+      }
+  }
+  
   /**
    *  This makes maps of matching atoms out of a maps of matching bonds as produced by the get(Subgraph|Ismorphism)Maps methods.
    *

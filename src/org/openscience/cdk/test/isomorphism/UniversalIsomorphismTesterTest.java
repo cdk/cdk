@@ -37,6 +37,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -262,6 +263,15 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     	String smiles="C1CCCCCCC1CC";
        	QueryAtomContainer query=QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser().parseSmiles(smiles),true);
     	assertTrue(UniversalIsomorphismTester.isSubgraph(new SmilesParser().parseSmiles(smiles),query));
+    }
+    
+    public void testSingleAtomCases() throws Exception {
+        AtomContainer ac1 = new AtomContainer();
+        ac1.addAtom(new Atom("C"));
+        AtomContainer ac2 = new AtomContainer();
+        ac2.addAtom(new Atom("C"));
+        assertTrue(UniversalIsomorphismTester.isIsomorph(ac1, ac2));
+        assertTrue(UniversalIsomorphismTester.isSubgraph(ac1, ac2));
     }
     
 	public static void main(String[] args)
