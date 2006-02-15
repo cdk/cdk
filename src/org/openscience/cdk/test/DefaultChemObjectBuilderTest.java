@@ -369,6 +369,15 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof ILonePair);
 	}	
 
+    public void testNewMapping_IChemObject_IChemObject() {
+		Object object = rootObject.getBuilder().newMapping(rootObject.getBuilder().newAtom(), 
+                                                           rootObject.getBuilder().newAtom());
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.Mapping);
+
+		assertTrue(object instanceof org.openscience.cdk.interfaces.IMapping);
+	}
+    
 	public void testNewMolecule() {
 		Object object = rootObject.getBuilder().newMolecule();
 		assertNotNull(object);

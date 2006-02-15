@@ -111,6 +111,14 @@ public interface IReaction extends IChemObject {
     public ISetOfMolecules getAgents();
     
     /**
+     * Returns the mappings between the reactant and the product side.
+     *
+     * @return An array of Mapping's.
+     * @see    #addMapping
+     */
+    public org.openscience.cdk.interfaces.IMapping[] getMappings();
+    
+    /**
      * Adds a reactant to this reaction.
      *
      * @param reactant   Molecule added as reactant to this reaction
@@ -242,5 +250,14 @@ public interface IReaction extends IChemObject {
      * @see    #setDirection
      */
     public int getDirection();
+    
+    /**
+     * Adds a mapping between the reactant and product side to this
+     * Reaction.
+     *
+     * @param mapping Mapping to add.
+     * @see   #getMappings
+     */
+    public void addMapping(org.openscience.cdk.interfaces.IMapping mapping);
     
 }

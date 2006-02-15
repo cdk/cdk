@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
-// import org.openscience.cdk.Mapping;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfReactions;
@@ -251,22 +251,22 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         }
         
         // map the atoms
-//        int mappingCount = 0;
-//        IAtom[] reactantAtoms = reactingSide.getAtoms();
-//        IAtom[] producedAtoms = producedSide.getAtoms();
-//        for (int i=0; i<reactantAtoms.length; i++) {
-//            for (int j=0; j<producedAtoms.length; j++) {
-//                if (reactantAtoms[i].getID() != null &&
-//                    reactantAtoms[i].getID().equals(producedAtoms[j].getID())) {
-//                    reaction.addMapping(
-//                        new Mapping(reactantAtoms[i], producedAtoms[j])
-//                    );
-//                    mappingCount++;
-//                    break;
-//                }
-//            }
-//        }
-//        logger.info("Mapped atom pairs: " + mappingCount);
+        int mappingCount = 0;
+        IAtom[] reactantAtoms = reactingSide.getAtoms();
+        IAtom[] producedAtoms = producedSide.getAtoms();
+        for (int i=0; i<reactantAtoms.length; i++) {
+            for (int j=0; j<producedAtoms.length; j++) {
+                if (reactantAtoms[i].getID() != null &&
+                    reactantAtoms[i].getID().equals(producedAtoms[j].getID())) {
+                    reaction.addMapping(
+                        builder.newMapping(reactantAtoms[i], producedAtoms[j])
+                    );
+                    mappingCount++;
+                    break;
+                }
+            }
+        }
+        logger.info("Mapped atom pairs: " + mappingCount);
         
         return reaction;
     }

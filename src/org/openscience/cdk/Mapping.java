@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @author  Egon Willighagen
  * @cdk.created 2003-08-16
  */
-public class Mapping extends ChemObject implements java.io.Serializable, Cloneable {
+public class Mapping extends ChemObject implements java.io.Serializable, Cloneable, org.openscience.cdk.interfaces.IMapping {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -60,7 +60,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * @param objectTwo The second IChemObject of the mapping
      */
     public Mapping(IChemObject objectOne, IChemObject objectTwo) {
-        relation = new ChemObject[2];
+        relation = new IChemObject[2];
         relation[0] = objectOne;
         relation[1] = objectTwo;
     }
@@ -70,12 +70,12 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      *
      * @return An array of two IChemObject's that define the mapping
      */
-    public ChemObject[] getRelatedChemObjects() {
-        return (ChemObject[])relation;
+    public IChemObject[] getRelatedChemObjects() {
+        return (IChemObject[])relation;
     }
 
 	/**
-	 * Clones this <code>Mapoing</code> and the mapped <code>IChemObject</code>s.
+	 * Clones this <code>Mapping</code> and the mapped <code>IChemObject</code>s.
 	 *
 	 * @return  The cloned object
 	 */
@@ -83,10 +83,10 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 		Mapping clone = (Mapping)super.clone();
         // clone the related IChemObject's
         if (relation != null) {
-		    ((Mapping)clone).relation = new ChemObject[relation.length];
+		    ((Mapping)clone).relation = new IChemObject[relation.length];
             for (int f = 0; f < relation.length; f++) {
                 if (relation[f] != null) {
-                    ((Mapping)clone).relation[f] = (ChemObject)relation[f].clone();
+                    ((Mapping)clone).relation[f] = (IChemObject)relation[f].clone();
                 }
             }
         }

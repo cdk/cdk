@@ -27,6 +27,8 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IChemObject;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemObject;
@@ -80,7 +82,7 @@ public class MappingTest extends CDKTestCase {
         Bond ethene = new Bond(new Atom("C"), new Atom("C"), 2.0); // coordinated with metal
 		Mapping mapping = new Mapping(atom1, ethene);
 
-		ChemObject[] map = mapping.getRelatedChemObjects();
+		IChemObject[] map = mapping.getRelatedChemObjects();
         assertNotNull(map[0]);
         assertNotNull(map[1]);
         assertEquals(atom1, map[0]);
@@ -91,8 +93,8 @@ public class MappingTest extends CDKTestCase {
 		Mapping mapping = new Mapping(new Atom(), new Atom());
 
 		Mapping clone = (Mapping)mapping.clone();
-        ChemObject[] map = mapping.getRelatedChemObjects();
-        ChemObject[] mapClone = clone.getRelatedChemObjects();
+        IChemObject[] map = mapping.getRelatedChemObjects();
+        IChemObject[] mapClone = clone.getRelatedChemObjects();
         assertEquals(map.length, mapClone.length);
 		for (int f = 0; f < map.length; f++) {
 			for (int g = 0; g < mapClone.length; g++) {

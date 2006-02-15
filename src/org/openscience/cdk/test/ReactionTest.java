@@ -32,8 +32,8 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Mapping;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -318,32 +318,28 @@ public class ReactionTest extends CDKTestCase {
         assertNotNull(clone);
         assertTrue(clone instanceof IReaction);
     }
-
-    /**
-     * @cdk.bug 1095690
-     */
-    public void testClone_Mapping() {
-        if (runKnownBugs()) fail("Affected by bug #1095690");
-    }
     
-    public void testAddMapping_Mapping() {
-        // Added to make the Coverage tool happy
-        // the method is not part of the interface, and cannot be tested
-
-        /* The old test method:
-        Reaction reaction = builder.newReaction();
-        Mapping mapping = new Mapping(builder.newAtom("C"), builder.newAtom("C"));
-        
+    public void testClone_Mapping() {
+        IReaction reaction = builder.newReaction();
+        IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
-        
-        Mapping[] mappings = reaction.getMappings();
+        IReaction clonedReaction = (IReaction)reaction.clone();
+        IMapping[] mappings = reaction.getMappings();
         assertNotNull(mappings);
         assertEquals(1, mappings.length);
-        assertEquals(mapping, mappings[0]);*/
-    	assertTrue(true);
+    }
+    
+    public void testAddMapping_IMapping() {
+        IReaction reaction = builder.newReaction();
+        IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
+        reaction.addMapping(mapping);
+        IMapping[] mappings = reaction.getMappings();
+        assertNotNull(mappings);
+        assertEquals(1, mappings.length);
+        assertEquals(mapping, mappings[0]);
     }
     
     public void testGetMappings() {
-        testAddMapping_Mapping();
+        testAddMapping_IMapping();
     }
 }

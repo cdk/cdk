@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
@@ -211,6 +212,10 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
     	return new DebugLonePair(atom);
     }
 
+    public IMapping newMapping(IChemObject objectOne, IChemObject objectTwo) {
+		return new DebugMapping(objectOne, objectTwo);
+	}
+    
 	public IMolecule newMolecule() {
 		return new DebugMolecule();
 	}

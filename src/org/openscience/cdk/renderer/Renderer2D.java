@@ -41,6 +41,8 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
@@ -197,11 +199,11 @@ public class Renderer2D extends SimpleRenderer2D
 		    reaction instanceof org.openscience.cdk.Reaction)
 		{
 			logger.debug("Showing atom-atom mapping");
-			Mapping[] mappings = ((org.openscience.cdk.Reaction)reaction).getMappings();
+			IMapping[] mappings = ((org.openscience.cdk.Reaction)reaction).getMappings();
 			logger.debug(" #mappings: ", mappings.length);
 			for (int i = 0; i < mappings.length; i++)
 			{
-				ChemObject[] objects = mappings[i].getRelatedChemObjects();
+				IChemObject[] objects = mappings[i].getRelatedChemObjects();
 				// only draw mapping when one of the mapped atoms
 				// is highlighted
 				if (objects[0] instanceof IAtom && objects[1] instanceof IAtom)

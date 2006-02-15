@@ -63,7 +63,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
         the reaction arrow */
     protected org.openscience.cdk.interfaces.ISetOfMolecules agents;
     
-    protected Mapping[] map;
+    protected org.openscience.cdk.interfaces.IMapping[] map;
     protected int mappingCount;
     
     private int reactionDirection;
@@ -156,7 +156,7 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
      * @return An array of Mapping's.
      * @see    #addMapping
      */
-    public Mapping[] getMappings() {
+    public org.openscience.cdk.interfaces.IMapping[] getMappings() {
         Mapping[] returnMappings = new Mapping[mappingCount];
         System.arraycopy(this.map, 0, returnMappings, 0, returnMappings.length);
         return returnMappings;
@@ -347,11 +347,11 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
      * @param mapping Mapping to add.
      * @see   #getMappings
      */
-    public void addMapping(Mapping mapping) {
+    public void addMapping(org.openscience.cdk.interfaces.IMapping mapping) {
         if (mappingCount + 1 >= map.length) growMappingArray();
         map[mappingCount] = mapping;
         mappingCount++;
-	notifyChanged();
+        notifyChanged();
     }
     
     protected void growMappingArray() {
@@ -389,10 +389,20 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
         clone.reactants = (SetOfMolecules)((SetOfMolecules)reactants).clone();
         clone.agents = (SetOfMolecules)((SetOfMolecules)agents).clone();
         clone.products = (SetOfMolecules)((SetOfMolecules)products).clone();
+        // create a Map of corresponding atoms for molecules (key: original Atom, 
+        // value: clone Atom)
+        java.util.Hashtable aa = new java.util.Hashtable();
+        for (int i = 0; i < ((SetOfMolecules)reactants).getMoleculeCount(); ++i) {
+            Molecule mol = (Molecule)((SetOfMolecules)reactants).getMolecule(i);
+            Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);
+            for (int j = 0; j < mol.getAtomCount(); ++j) aa.put(mol.getAtomAt(j), mol2.getAtomAt(j));
+        }
+        
         // clone the maps
 		clone.map = new Mapping[map.length];
-		for (int f = 0; f < map.length; f++) {
-			clone.map[f] = map[f];
+		for (int f = 0; f < mappingCount; f++) {
+            org.openscience.cdk.interfaces.IChemObject[] rel = map[f].getRelatedChemObjects();
+			clone.map[f] = new Mapping((ChemObject)aa.get(rel[0]), (ChemObject)aa.get(rel[1]));
 		}
 		return clone;
 	}

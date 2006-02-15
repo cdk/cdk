@@ -34,6 +34,8 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IMapping;
+
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.io.MDLRXNReader;
@@ -140,7 +142,7 @@ public class MDLRXNReaderTest extends CDKTestCase {
 			reader2.close();
 			
 			assertNotNull(reaction2);
-            Mapping[] maps = reaction2.getMappings();
+            IMapping[] maps = reaction2.getMappings();
 			assertEquals(2, maps.length);
         } catch (Exception e) {
             e.printStackTrace();

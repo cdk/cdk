@@ -266,6 +266,11 @@ public interface IChemObjectBuilder {
      */
     public ILonePair newLonePair(IAtom atom);
 	
+    /**
+	 * Creates a Mapping.
+	 */
+	public IMapping newMapping(IChemObject objectOne, IChemObject objectTwo);
+    
 	/**
 	 * Creates an Molecule without Atoms and Bonds.
 	 */

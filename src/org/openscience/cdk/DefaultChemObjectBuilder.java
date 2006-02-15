@@ -185,6 +185,11 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
     	return new LonePair(atom);
     }
 
+    public org.openscience.cdk.interfaces.IMapping newMapping(org.openscience.cdk.interfaces.IChemObject objectOne, 
+                                                              org.openscience.cdk.interfaces.IChemObject objectTwo) {
+		return new Mapping(objectOne, objectTwo);
+	}
+    
 	public org.openscience.cdk.interfaces.IMolecule newMolecule() {
 		return new Molecule();
 	}
