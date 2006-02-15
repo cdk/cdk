@@ -1122,14 +1122,15 @@ public class ForceFieldTests extends CDKTestCase {
         	MDLWriter mdlWriter = new MDLWriter(fileWriter);
     		mdlWriter.write(molecule);
             mdlWriter.close();
-            
+            boolean success = (new File("src/data/Ethan-TestFF-Optimize.mol")).delete();
         } catch (Exception exception) {
         	System.out.println("Could not write Molecule to MDL file : " + exception.getMessage());
         	System.out.println(exception);
         }       
-
+        
 		assertEquals(34.04444743984748, forceField.getMinimumFunctionValueCGM(), 0.00001);
 
+        
 	}
 
 	/**
