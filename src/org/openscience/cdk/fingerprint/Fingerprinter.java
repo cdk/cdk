@@ -84,7 +84,7 @@ import org.openscience.cdk.tools.MFAnalyser;
 public class Fingerprinter implements IFingerprinter {
 	
 	private final static int defaultSize = 1024;
-	private final static int defaultSearchDepth = 6;
+	private final static int defaultSearchDepth = 8;
 	
 	private int size;
 	private int searchDepth;
@@ -173,6 +173,8 @@ public class Fingerprinter implements IFingerprinter {
 	
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer, using path and ring metrics
+	 * It contains the informations from getFingerprint() and bits which tell if the structure has 0 rings, 1 or less rings,
+	 * 2 or less rings ... 10 or less rings (referring to smalles set of smallest rings) and bits which tell if there is a ring with 3, 4 ... 10 atoms.
 	 *
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
@@ -183,9 +185,12 @@ public class Fingerprinter implements IFingerprinter {
 		
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer, using path and ring metrics
+	 * It contains the informations from getFingerprint() and bits which tell if the structure has 0 rings, 1 or less rings,
+	 * 2 or less rings ... 10 or less rings and bits which tell if there is a ring with 3, 4 ... 10 atoms.
+	 * The RingSet used is passed via rs parameter. This can be an allRingsSet or a smallesSetOfSmallestRings. If none is given, a sssr is calculated.
 	 *
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
-	 *@param     rs         A SSSR of ac (if not calculated, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
+	 *@param     rs         A RingSet of ac (if not available, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
 	 *@exception Exception  Description of the Exception
 	 */
 	public BitSet getExtendedFingerprint(IAtomContainer ac, IRingSet rs) throws Exception {
