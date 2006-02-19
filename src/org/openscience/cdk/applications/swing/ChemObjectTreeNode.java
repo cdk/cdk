@@ -32,7 +32,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * A node in the ChemObjectTree.
@@ -46,7 +46,7 @@ import org.openscience.cdk.ChemObject;
  */
 public class ChemObjectTreeNode extends DefaultMutableTreeNode {
 
-    public ChemObjectTreeNode(ChemObject object) {
+    public ChemObjectTreeNode(IChemObject object) {
         super();
         this.setUserObject(object);
     }

@@ -38,7 +38,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -86,7 +86,7 @@ public class ChemObjectTree extends JPanel {
     /**
      * Displays the IChemObject in tree format.
      */
-    public void paintChemObject(ChemObject object) {
+    public void paintChemObject(IChemObject object) {
         // make a new tree
         this.removeAll();
         if (object == null) {
@@ -122,7 +122,7 @@ public class ChemObjectTree extends JPanel {
     /**
      * Generate a tree of IChemObject's.
      */
-    private DefaultMutableTreeNode getTree(ChemObject object) {
+    private DefaultMutableTreeNode getTree(IChemObject object) {
         DefaultMutableTreeNode node = new ChemObjectTreeNode(object);
         Class reflectedClass = object.getClass();
         logger.debug("getTree for class: ", reflectedClass);
@@ -139,15 +139,15 @@ public class ChemObjectTree extends JPanel {
                 Object fieldObject = f.get(object);
                 if (fieldObject != null) {
                     logger.debug("Field value: ", fieldObject.getClass().getName());
-                    if (fieldObject instanceof ChemObject) {
+                    if (fieldObject instanceof IChemObject) {
                         // yes, found a IChemObject!
                         logger.debug("Recursing into this object");
-                        node.add(getTree((ChemObject)fieldObject));
-                    } else if (fieldObject instanceof ChemObject[]) {
+                        node.add(getTree((IChemObject)fieldObject));
+                    } else if (fieldObject instanceof IChemObject[]) {
                         // yes, found a Array!
                         logger.debug("Recursing into this Array");
                         // determine what kind of Array
-                        ChemObject[] objects = (ChemObject[])fieldObject;
+                        IChemObject[] objects = (IChemObject[])fieldObject;
                         int count = objects.length;
                         // Because the count above gives the array length and not the number
                         // of not null objects the array, some intelligence must be added
@@ -189,7 +189,7 @@ public class ChemObjectTree extends JPanel {
             // try its super class (as long as it is still a IChemObject
             Class superClass = reflectedClass.getSuperclass();
             try {
-                if (superClass.newInstance() instanceof ChemObject) {
+                if (superClass.newInstance() instanceof IChemObject) {
                     fields = getFields(superClass);
                 }
             } catch (IllegalAccessException event) {
