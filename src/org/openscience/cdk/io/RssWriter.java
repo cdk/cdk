@@ -53,11 +53,18 @@ import org.openscience.cdk.libio.cml.Convertor;
 
 public class RssWriter extends DefaultChemObjectWriter {
     static BufferedWriter writer;
-    private String contactemail="";
     private Map linkmap=new HashMap();
     private Map datemap=new HashMap();
     private Map titlemap=new HashMap();
-    String creator="";
+    private Map creatormap=new HashMap();
+    private Map imagemap=new HashMap();
+    private String creator="";
+    private String title="";
+    private String link="";
+    private String description="";
+    private String publisher="";
+    private String imagelink="";
+    private String about="";
 
     /**
      * Flushes the output and closes this object.
@@ -99,28 +106,28 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    doc.insertChild(pi,0);
 		    Element channelElement = new Element("channel");
 		    Element titleElement = new Element("title");
-		    titleElement.appendChild(new Text("NMRShiftDB"));
+		    titleElement.appendChild(new Text(title));
 		    channelElement.appendChild(titleElement);
 		    Element linkElement = new Element("link");
-		    linkElement.appendChild(new Text("http://www.nmrshiftdb.org/"));
+		    linkElement.appendChild(new Text(link));
 		    channelElement.appendChild(linkElement);
 		    Element descriptionElement = new Element("description");
-		    descriptionElement.appendChild(new Text("NMRShiftDB is an open-source, open-access, open-submission, open-content web database for chemical structures and their nuclear magnetic resonance data"));
+		    descriptionElement.appendChild(new Text(description));
 		    channelElement.appendChild(descriptionElement);
 		    Element publisherElement = new Element("dc:publisher","http://purl.org/dc/elements/1.1/");
-		    publisherElement.appendChild(new Text("NMRShiftDB.org"));
+		    publisherElement.appendChild(new Text(publisher));
 		    channelElement.appendChild(publisherElement);
 		    Element creatorElement = new Element("dc:creator","http://purl.org/dc/elements/1.1/");
-		    creatorElement.appendChild(new Text(contactemail));
+		    creatorElement.appendChild(new Text(creator));
 		    channelElement.appendChild(creatorElement);
 		    Element imageElement = new Element("image");
-		    imageElement.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#","http://www.nmrshiftdb.org/images/nmrshift-logo.gif"));
+		    imageElement.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",imagelink));
 		    channelElement.appendChild(imageElement);
 		    Element itemsElement = new Element("items");
 		    Element seqElement = new Element("rdf:Seq","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		    itemsElement.appendChild(seqElement);
 		    channelElement.appendChild(itemsElement);
-		    channelElement.addAttribute(new Attribute("rdf:about","http://www.w3.org/1999/02/22-rdf-syntax-ns#","http://nmrshiftdb.ice.mpg.de/NmrshiftdbServlet/rss"));
+		    channelElement.addAttribute(new Attribute("rdf:about","http://www.w3.org/1999/02/22-rdf-syntax-ns#",about));
 		    rdfElement.appendChild(channelElement);
 		    String query="select distinct MOLECULE.MOLECULE_ID from MOLECULE, SPECTRUM where SPECTRUM.MOLECULE_ID = MOLECULE.MOLECULE_ID and SPECTRUM.REVIEW_FLAG =\"true\" order by MOLECULE.DATE desc;";
 		    List l=new Vector();
@@ -161,7 +168,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 			      itemElement.appendChild(dateElement);
 		      }
 		      Element creator2Element =new Element("dc:creator","http://purl.org/dc/elements/1.1/");
-		      creator2Element.appendChild(new Text(creator));
+		      creator2Element.appendChild(new Text((String)creatormap.get(co)));
 		      itemElement.appendChild(creator2Element);
 		      Element root=null;
 		      Convertor convertor=new Convertor(true,null);
@@ -196,7 +203,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      Element liElement = new Element("rdf:li","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		      liElement.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",easylink));
 		      Element imageElement2 = new Element("image");
-		      imageElement2.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#","http://www.nmrshiftdb.org/images/nmrshift-logo.gif"));
+		      imageElement2.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",(String)imagemap.get(co)));
 		      seqElement.appendChild(imageElement2);
 		    }
 	      writer.write(rdfElement.toXML());
@@ -247,6 +254,83 @@ public class RssWriter extends DefaultChemObjectWriter {
 	 */
 	public void setTitlemap(Map titlemap) {
 		this.titlemap = titlemap;
+	}
+
+	/**
+	 * @return the creatoremap. If you put a String in this map with one of the objects you want to write as key, it will be added as a creator to this object (no validity check is done)
+	 */
+	public Map getCreatormap() {
+		return creatormap;
+	}
+
+	/**
+	 * @param creatormap the creatormap. If you put a String in this map with one of the objects you want to write as key, it will be added as a creator to this object (no validity check is done)
+	 */
+	public void setCreatormap(Map creatormap) {
+		this.creatormap = creatormap;
+	}
+
+	/**
+	 * @return the imagemap. If you put a String in this map with one of the objects you want to write as key, it will be added as an imagelink to this object (no validity check is done)
+	 */
+	public Map getImagemap() {
+		return imagemap;
+	}
+
+	/**
+	 * @param imagemap the imageemap. If you put a String in this map with one of the objects you want to write as key, it will be added as an imagelink to this object (no validity check is done)
+	 */
+	public void setImagemap(Map imagemap) {
+		this.imagemap = imagemap;
+	}
+
+	/**
+	 * @param about This will be the about for the rss feed
+	 */
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
+	/**
+	 * @param creator This will be the creator for the rss feed
+	 */
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	/**
+	 * @param description This will be the description for the rss feed
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @param imagelinkt This will be the imagelink for the rss feed
+	 */
+	public void setImagelink(String imagelink) {
+		this.imagelink = imagelink;
+	}
+
+	/**
+	 * @param link This will be the link for the rss feed
+	 */
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	/**
+	 * @param publisher This will be the publisher for the rss feed
+	 */
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	/**
+	 * @param title This will be the title for the rss feed
+	 */
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }
