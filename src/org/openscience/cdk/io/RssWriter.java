@@ -206,7 +206,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      imageElement2.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",(String)imagemap.get(co)));
 		      seqElement.appendChild(imageElement2);
 		    }
-	      writer.write(rdfElement.toXML());
+	      writer.write(doc.toXML());
 	      writer.flush();
 		}catch(IOException ex){
 			throw new CDKException(ex.getMessage());
