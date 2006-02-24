@@ -8,6 +8,9 @@
      All interfaces do now start with a capital 'I', conform the Eclipse style
      of interface naming.
    </apiChange>
+   <addition contributor="shk3">
+     Added an RSS writer.
+   </addition>
    <addition contributor="egonw">
      Added a substructure based Fingerprinter.
    </addition>
