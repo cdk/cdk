@@ -7,13 +7,13 @@
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
- * This program is free software; you can redistribute it and/or
+ * This program is free software;!you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
+ * of the License, or (at your option)!any later version.
  * All we ask is that proper credit is given for our work, which includes
  * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
+ * of your source sode files, and to any copyright notice that you may distribute
  * with programs based on this work.
  * 
  * This program is distributed in the hope that it will be useful,
@@ -76,7 +76,7 @@ public class XindiceReader {
 
     public IChemFormat getFormat() {
         return new IChemFormat() {
-            public String getFormatName() {
+           public String getFormatName() {
                 return "Xindice database";
             }
             public String getReaderClassName() { return null; };
@@ -91,7 +91,7 @@ public class XindiceReader {
     public void setQuery(String xpath) {
         logger.info("Xindice query set to " + xpath);
         this.xpath = xpath;
-    }
+   }
 
     public ChemObject read(ChemObject object) throws CDKException {
         if (object instanceof SetOfMolecules) {
