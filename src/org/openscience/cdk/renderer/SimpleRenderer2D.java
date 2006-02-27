@@ -102,7 +102,8 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 		RingSet ringSet = new RingSet();
 
 		// draw the molecule name
-		if (atomCon.getProperty(CDKConstants.TITLE) != null) {
+		if (r2dm.getShowMoleculeTitle() && 
+		    atomCon.getProperty(CDKConstants.TITLE) != null) {
 			double[] minmax = GeometryTools.getMinMax(atomCon);
 			int[] ints = new int[4];
 			for (int i=0;i<4;i++) ints[i] = (int)minmax[i];

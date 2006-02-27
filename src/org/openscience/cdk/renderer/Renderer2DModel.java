@@ -81,6 +81,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     private boolean showReactionBoxes = true;
 
+    private boolean showMoleculeTitle = false;
+
 	private int atomRadius = 8;
 	
 	private IAtom highlightedAtom = null;
@@ -175,6 +177,15 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowReactionBoxes(boolean bool) {
         this.showReactionBoxes = bool;
+        fireChange();
+    }
+    
+    public boolean getShowMoleculeTitle() {
+        return showMoleculeTitle;
+    }
+    
+    public void setShowMoleculeTitle(boolean bool) {
+        this.showMoleculeTitle = bool;
         fireChange();
     }
     
