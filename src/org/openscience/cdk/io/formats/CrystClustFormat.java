@@ -35,6 +35,16 @@ public class CrystClustFormat implements IChemFormatMatcher {
         return "CrystClust";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"crystclust"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CrystClustReader";
     }

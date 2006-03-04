@@ -35,6 +35,16 @@ public class SpartanFormat implements IChemFormatMatcher {
         return "Spartan Quantum Mechanics Program";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return null;
+    }
+    public String[] getNameExtensions() {
+        return new String[0];
+    }
+
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
 

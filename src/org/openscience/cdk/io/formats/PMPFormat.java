@@ -35,6 +35,16 @@ public class PMPFormat implements IChemFormatMatcher {
         return "PolyMorph Predictor (Cerius)";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"pmp"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.PMPReader";
     }

@@ -38,6 +38,17 @@ public class TurboMoleFormat implements IChemFormatMatcher {
     public String getFormatName() {
         return "TurboMole";
     }
+
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return null;
+    }
+    public String[] getNameExtensions() {
+        return new String[0];
+    }
+
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
     public boolean matches(int lineNumber, String line) { return false; }

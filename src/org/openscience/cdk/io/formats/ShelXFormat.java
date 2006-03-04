@@ -35,6 +35,16 @@ public class ShelXFormat implements IChemFormatMatcher {
         return "ShelXL";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"res"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.ShelXReader";
     }

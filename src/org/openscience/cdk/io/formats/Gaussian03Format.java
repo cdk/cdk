@@ -37,6 +37,16 @@ public class Gaussian03Format implements IChemFormatMatcher {
         return "Gaussian 2003";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return null;
+    }
+    public String[] getNameExtensions() {
+        return new String[0];
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.Gaussian03Reader";
     }

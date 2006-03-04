@@ -39,6 +39,16 @@ public class HINFormat implements IChemFormatMatcher {
         return "HyperChem HIN";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"hin"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.HINReader";
     }

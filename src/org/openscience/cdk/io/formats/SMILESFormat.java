@@ -35,6 +35,16 @@ public class SMILESFormat implements IChemFormatMatcher {
         return "SMILES";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"smi"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.SMILESReader";
     }

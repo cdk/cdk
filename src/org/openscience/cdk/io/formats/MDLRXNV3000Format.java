@@ -35,6 +35,16 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
         return "MDL RXN V3000";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return null;
+    }
+    public String[] getNameExtensions() {
+        return new String[0];
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLRXNV3000Reader";
     }

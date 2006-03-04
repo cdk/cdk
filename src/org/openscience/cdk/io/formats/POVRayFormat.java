@@ -38,6 +38,17 @@ public class POVRayFormat implements IChemFormatMatcher {
     public String getFormatName() {
         return "POV Ray";
     }
+
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"pov"};
+    }
+
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
     public boolean matches(int lineNumber, String line) { return false; }

@@ -37,6 +37,16 @@ public class MDLFormat implements IChemFormatMatcher {
         return "MDL Mol/SDF";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"sdf", "sd", "mol"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLReader";
     }

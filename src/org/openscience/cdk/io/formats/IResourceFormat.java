@@ -28,27 +28,35 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * This class is the interface that all ChemFormat's should implement.
+ * This class is the interface that all ResourceFormat's should implement.
  *
  * @cdk.module io
  *
- * @author      Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.created 2004-10-25
+ * @author      Egon Willighagen <egonw@users.sf.net>
+ * @cdk.created 2006-03-04
  **/
-public interface IChemFormat extends IResourceFormat {
+public interface IResourceFormat {
 
     /**
-     * Returns the class name of the CDK Reader for this format.
-     *
-     * @return null if no CDK Reader is available.
+     * Returns a one-lined format name of the format.
      */
-    public String getReaderClassName();
+    public String getFormatName();
 
     /**
-     * Returns the class name of the CDK Writer for this format.
-     *
-     * @return null if no CDK Writer is available.
+     * Returns the preferred resource name extension.
      */
-    public String getWriterClassName();
+    public String getPreferredNameExtension();
+
+    /**
+     * Returns an array of common resource name extensions.
+     */
+    public String[] getNameExtensions();
+
+    /**
+     * Returns the accepted MIME type for this format.
+     *
+     * @return null if no MIME type has been accepted on
+     */
+    public String getMIMEType();
 }
 

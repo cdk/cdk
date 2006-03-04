@@ -35,6 +35,16 @@ public class CDKSourceCodeFormat implements IChemFormat {
         return "CDK Source Code";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"java"};
+    }
+
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.CDKSourceCodeWriter";

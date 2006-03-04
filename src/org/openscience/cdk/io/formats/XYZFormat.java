@@ -35,6 +35,16 @@ public class XYZFormat implements IChemFormatMatcher {
         return "XYZ";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"xyz"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.XYZReader";
     }

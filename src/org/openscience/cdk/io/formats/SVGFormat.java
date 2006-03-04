@@ -35,6 +35,16 @@ public class SVGFormat implements IChemFormatMatcher {
         return "Scalable Vector Graphics";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"svg"};
+    }
+
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
 

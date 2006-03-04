@@ -35,6 +35,16 @@ public class MDLRXNFormat implements IChemFormatMatcher {
         return "MDL RXN";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"rxn"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLRXNReader";
     }

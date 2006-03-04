@@ -37,6 +37,16 @@ public class PDBFormat implements IChemFormatMatcher {
         return "Protein Brookhave Database (PDB)";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"pdb"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.PDBReader";
     }

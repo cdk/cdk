@@ -35,6 +35,16 @@ public class CMLFormat implements IChemFormatMatcher {
         return "Chemical Markup Language";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return getNameExtensions()[0];
+    }
+    public String[] getNameExtensions() {
+        return new String[]{"cml", "xml"};
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CMLReader";
     }

@@ -35,6 +35,16 @@ public class GaussianInputFormat implements IChemFormatMatcher {
         return "Gaussian Input";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return null;
+    }
+    public String[] getNameExtensions() {
+        return new String[0];
+    }
+
     public String getReaderClassName() { return null; }
     public String getWriterClassName() {
       return "org.openscience.cdk.io.program.GaussianInputWriter";

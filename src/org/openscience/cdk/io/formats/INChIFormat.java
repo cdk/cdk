@@ -37,6 +37,16 @@ public class INChIFormat implements IChemFormatMatcher {
         return "IUPAC-NIST Chemical Identifier (XML)";
     }
 
+    public String getMIMEType() {
+        return null;
+    }
+    public String getPreferredNameExtension() {
+        return null;
+    }
+    public String[] getNameExtensions() {
+        return new String[0];
+    }
+
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.INChIReader";
     }
