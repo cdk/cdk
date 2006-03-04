@@ -275,7 +275,9 @@
                         <exclude name="AttachedGroup.java" />
                         <exclude name="MoleculeBuilder.java" />
                     </fileset>
-                    <fileset dir="${doc}/javadoc/net/sf/cdk/tools" includes="*.class" /> 
+                    <fileset dir="${doc}">
+                        <include name="javadoc/net/sf/cdk/tools/*.class" /> 
+                    </fileset>
                 </delete>
 
                 <delete dir="${build}" />
