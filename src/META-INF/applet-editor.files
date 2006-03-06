@@ -164,7 +164,7 @@ org/openscience/cdk/applications/jchempaint/StringHelper.class
 org/openscience/cdk/applications/jchempaint/ToolBarMaker$1.class
 org/openscience/cdk/applications/jchempaint/ToolBarMaker.class
 org/openscience/cdk/applications/plugin/CDKEditBus.class
-org/openscience/cdk/applications/plugin/CDKPluginInterface.class
+org/openscience/cdk/applications/plugin/ICDKPlugin.class
 org/openscience/cdk/applications/plugin/CDKPluginManager.class
 org/openscience/cdk/applications/plugin/PluginClassLoader.class
 org/openscience/cdk/applications/swing/editor/AtomEditor.class
