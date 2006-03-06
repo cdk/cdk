@@ -54,7 +54,7 @@ import java.util.jar.JarFile;
  * <pre>
  * Molecule someMolecule;
  * ...
- * DescriptorEngine descriptoEngine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+ * DescriptorEngine descriptoEngine = new DescriptorEngine(DescriptorEngine.MOLECULAR, null);
  * descriptorEngine.process(someMolecule);
  * </pre>
  * The class allows the user to obtain a List of all the available descriptors in terms of their
@@ -81,20 +81,42 @@ public class DescriptorEngine {
     private List speclist = null;
     private LoggingTool logger;
 
+   /**
+     * Constructor that generates a list of descriptors to calculate.
+     * <p/>
+     * All available descriptors are included in the list of descriptors to
+     * calculate This constructor assumes that system classpath is the one to look at
+     * to find valid jar files.
+     *
+     * @param type Indicates whether molecular or atomic descriptors should be calculated. Possible values
+     * are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
+     */
+    public DescriptorEngine(int type) {
+	this(type, null);
+    }
+
     /**
      * Constructor that generates a list of descriptors to calculate.
      * <p/>
      * All available descriptors are included in the list of descriptors to
      * calculate
+     *
+     * @param type Indicates whether molecular or atomic descriptors should be calculated. Possible values
+     * are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
+     * @pararm jarFileNames A String[] containing the fully qualified names of the jar files
+     * to examine for descriptor classes. In general, this can be set to NULL, in which case
+     * the system classpath is examined for available jar files. This parameter can be set for
+     * situations where the system classpath is not available or is modified such as in an application
+     * container.
      */
-    public DescriptorEngine(int type) {
+    public DescriptorEngine(int type, String[] jarFileNames) {
         logger = new LoggingTool(this);
         switch (type) {
             case ATOMIC:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic");
+                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic", jarFileNames);
                 break;
             case MOLECULAR:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular");
+                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular", jarFileNames);
                 break;
         }
         instantiateDescriptors(classNames);
@@ -105,6 +127,8 @@ public class DescriptorEngine {
         dict = dictDB.getDictionary("descriptor-algorithms");
     }
 
+
+ 
     /**
      * Constructor that generates a list of descriptors to calculate.
      *
@@ -112,7 +136,7 @@ public class DescriptorEngine {
      * @deprecated
      */
     public DescriptorEngine(String[] descriptorClasses) {
-        this(DescriptorEngine.MOLECULAR);
+        this(DescriptorEngine.MOLECULAR, null);
     }
 
     /**
@@ -390,16 +414,27 @@ public class DescriptorEngine {
      * classes corresponding to both atomic and molecular descriptors.
      *
      * @param packageName The name of the package containing the required descriptor
+     * @param jarFileNames A String[] containing the fully qualified names of the jar files
+     * to examine for descriptor classes. In general this can be set to NULL, in which case
+     * the system classpath is examined for available jar files. This parameter can be set for
+     * situations where the system classpath is not available or is modified such as in an application
+     * container.
      * @return A list containing the classes in the specified package
      */
-    private List    getDescriptorClassNameByPackage(String packageName) {
+    public List    getDescriptorClassNameByPackage(String packageName, String[] jarFileNames) {
 
         if (packageName == null || packageName.equals("")) {
             packageName = "org.openscience.cdk.qsar.descriptors";
         }
 
-        String classPath = System.getProperty("java.class.path");
-        String[] jars = classPath.split(File.pathSeparator);
+	String[] jars = null;
+	if (jarFileNames == null) {
+	    String classPath = System.getProperty("java.class.path");
+	    jars = classPath.split(File.pathSeparator);
+	} else {
+	    jars = jarFileNames;
+	}
+
         ArrayList classlist = new ArrayList();
 
         for (int i = 0; i < jars.length; i++) {
