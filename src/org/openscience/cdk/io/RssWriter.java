@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -57,7 +58,6 @@ public class RssWriter extends DefaultChemObjectWriter {
     private Map datemap=new HashMap();
     private Map titlemap=new HashMap();
     private Map creatormap=new HashMap();
-    private Map imagemap=new HashMap();
     private String creator="";
     private String title="";
     private String link="";
@@ -102,16 +102,20 @@ public class RssWriter extends DefaultChemObjectWriter {
 		try{
 		    ProcessingInstruction pi=new ProcessingInstruction("xml-stylesheet", "href=\"http://www.w3.org/2000/08/w3c-synd/style.css\" type=\"text/css\"");
 		    Element rdfElement = new Element("rdf:RDF","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		    rdfElement.addNamespaceDeclaration("","http://purl.org/rss/1.0/");
+		    rdfElement.addNamespaceDeclaration("mn","http://usefulinc.com/rss/manifest/");
+		    rdfElement.addNamespaceDeclaration("dc","http://purl.org/dc/elements/1.1/");
+		    rdfElement.addNamespaceDeclaration("cml","http://www.xml-cml.org/schema/cml2/core/");
 		    Document doc = new Document(rdfElement);
 		    doc.insertChild(pi,0);
-		    Element channelElement = new Element("channel");
-		    Element titleElement = new Element("title");
+		    Element channelElement = new Element("channel","http://purl.org/rss/1.0/");
+		    Element titleElement = new Element("title","http://purl.org/rss/1.0/");
 		    titleElement.appendChild(new Text(title));
 		    channelElement.appendChild(titleElement);
-		    Element linkElement = new Element("link");
+		    Element linkElement = new Element("link","http://purl.org/rss/1.0/");
 		    linkElement.appendChild(new Text(link));
 		    channelElement.appendChild(linkElement);
-		    Element descriptionElement = new Element("description");
+		    Element descriptionElement = new Element("description","http://purl.org/rss/1.0/");
 		    descriptionElement.appendChild(new Text(description));
 		    channelElement.appendChild(descriptionElement);
 		    Element publisherElement = new Element("dc:publisher","http://purl.org/dc/elements/1.1/");
@@ -120,16 +124,15 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    Element creatorElement = new Element("dc:creator","http://purl.org/dc/elements/1.1/");
 		    creatorElement.appendChild(new Text(creator));
 		    channelElement.appendChild(creatorElement);
-		    Element imageElement = new Element("image");
+		    Element imageElement = new Element("image","http://purl.org/rss/1.0/");
 		    imageElement.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",imagelink));
 		    channelElement.appendChild(imageElement);
-		    Element itemsElement = new Element("items");
+		    Element itemsElement = new Element("items","http://purl.org/rss/1.0/");
 		    Element seqElement = new Element("rdf:Seq","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		    itemsElement.appendChild(seqElement);
 		    channelElement.appendChild(itemsElement);
 		    channelElement.addAttribute(new Attribute("rdf:about","http://www.w3.org/1999/02/22-rdf-syntax-ns#",about));
 		    rdfElement.appendChild(channelElement);
-		    String query="select distinct MOLECULE.MOLECULE_ID from MOLECULE, SPECTRUM where SPECTRUM.MOLECULE_ID = MOLECULE.MOLECULE_ID and SPECTRUM.REVIEW_FLAG =\"true\" order by MOLECULE.DATE desc;";
 		    List l=new Vector();
 		    if(object instanceof ISetOfAtomContainers){
 		    	for(int i=0;i<((SetOfAtomContainers)object).getAtomContainerCount();i++){
@@ -140,21 +143,21 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    }        	
 		    for(int i=0;i<l.size();i++){
 		      ChemObject co=(ChemObject)l.get(i);
-		      Element itemElement = new Element("item");
+		      Element itemElement = new Element("item","http://purl.org/rss/1.0/");
 		      String easylink=(String)linkmap.get(co);
 		      if(easylink!=null)
 		    	  itemElement.addAttribute(new Attribute("rdf:about","http://www.w3.org/1999/02/22-rdf-syntax-ns#",easylink));
-		      Element link2Element = new Element("link");
+		      Element link2Element = new Element("link","http://purl.org/rss/1.0/");
 		      link2Element.appendChild(new Text(easylink));
 		      itemElement.appendChild(link2Element);          
 		      String title=(String)co.getProperties().get(CDKConstants.TITLE);
 		      if(titlemap.get(co)!=null){
-			      Element title2Element = new Element("title");
+			      Element title2Element = new Element("title","http://purl.org/rss/1.0/");
 			      title2Element.appendChild(new Text((String)titlemap.get(co)));
 			      itemElement.appendChild(title2Element);
 		      }
 		      if(title!=null){
-		    	  Element description2Element = new Element("description");
+		    	  Element description2Element = new Element("description","http://purl.org/rss/1.0/");
 		    	  description2Element.appendChild(new Text(title));
 		    	  itemElement.appendChild(description2Element);
 		          Element subjectElement = new Element("dc:subject","http://purl.org/dc/elements/1.1/");
@@ -163,8 +166,8 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      }
 		      if(datemap.get(co)!=null){
 			      Element dateElement = new Element("dc:date","http://purl.org/dc/elements/1.1/");
-			      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);
-			      dateElement.appendChild(new Text((String)datemap.get(co)));
+			      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+			      dateElement.appendChild(new Text(formatter.format((Date)datemap.get(co))+"+01:00"));
 			      itemElement.appendChild(dateElement);
 		      }
 		      Element creator2Element =new Element("dc:creator","http://purl.org/dc/elements/1.1/");
@@ -202,8 +205,8 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      rdfElement.appendChild(itemElement);
 		      Element liElement = new Element("rdf:li","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		      liElement.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",easylink));
-		      Element imageElement2 = new Element("image");
-		      imageElement2.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",(String)imagemap.get(co)));
+		      Element imageElement2 = new Element("rdf:li","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		      imageElement2.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",(String)linkmap.get(co)));
 		      seqElement.appendChild(imageElement2);
 		    }
 	      writer.write(doc.toXML());
@@ -215,14 +218,14 @@ public class RssWriter extends DefaultChemObjectWriter {
 	}
 
 	/**
-	 * @return the datemap. If you put a String in this map with one of the objects you want to write as key, it will be added as a date to this object (no validity check is done)
+	 * @return the datemap. If you put a java.util.Date in this map with one of the objects you want to write as key, it will be added as a date to this object (no validity check is done)
 	 */
 	public Map getDatemap() {
 		return datemap;
 	}
 
 	/**
-	 * @param datemap the datemap. If you put a String in this map with one of the objects you want to write as key, it will be added as a datek to this object (no validity check is done)
+	 * @param datemap the datemap. If you put a java.uitl.Date in this map with one of the objects you want to write as key, it will be added as a datek to this object (no validity check is done)
 	 */
 	public void setDatemap(Map datemap) {
 		this.datemap = datemap;
@@ -268,20 +271,6 @@ public class RssWriter extends DefaultChemObjectWriter {
 	 */
 	public void setCreatormap(Map creatormap) {
 		this.creatormap = creatormap;
-	}
-
-	/**
-	 * @return the imagemap. If you put a String in this map with one of the objects you want to write as key, it will be added as an imagelink to this object (no validity check is done)
-	 */
-	public Map getImagemap() {
-		return imagemap;
-	}
-
-	/**
-	 * @param imagemap the imageemap. If you put a String in this map with one of the objects you want to write as key, it will be added as an imagelink to this object (no validity check is done)
-	 */
-	public void setImagemap(Map imagemap) {
-		this.imagemap = imagemap;
 	}
 
 	/**
