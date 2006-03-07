@@ -32,6 +32,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -62,12 +63,13 @@ public class Dictionary {
         DictionaryHandler handler = new DictionaryHandler();
         XMLReader parser = null;
         try {
-            parser = new gnu.xml.aelfred2.XmlReader();
-            logger.debug("Using Aelfred2 XML parser.");
+	    parser = XMLReaderFactory.createXMLReader();
+            logger.debug("Using "+parser);
         } catch (Exception e) {
-            logger.error("Could not instantiate Aelfred2 XML reader!");
+            logger.error("Could not instantiate any JAXP parser!");
             logger.debug(e);
         }
+	
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.debug("Deactivated validation");
