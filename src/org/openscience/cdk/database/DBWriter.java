@@ -66,7 +66,10 @@ public class DBWriter {
                 return "JDBC database";
             }
             public String getReaderClassName() { return null; };
-            public String getWriterClassName() { return null; };
+            public String getWriterClassName() { return null; }
+			public String getPreferredNameExtension() { return null; }
+			public String[] getNameExtensions() { return new String[0]; }
+			public String getMIMEType() { return null; }
         };
     }
     
