@@ -36,7 +36,6 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
@@ -44,6 +43,7 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -81,8 +81,6 @@ public class TemplateHandler3D{
 	public void loadTemplates() throws CDKException{
 		//System.out.println("TEMPLATE START");
 		IteratingMDLReader imdl=null;
-		int [] statistics=new int [13];
-		//int maxRingSize=0;
 		InputStream ins = null;
 		BufferedReader fin =null;
 			
@@ -93,7 +91,6 @@ public class TemplateHandler3D{
 		}catch (Exception exc1){
 			throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
 		}
-		//System.out.println("TEMPLATE addMolecule");
 		Molecule molecule=null;
 		while (imdl.hasNext()){
 			molecule=(Molecule) imdl.next();
@@ -162,11 +159,10 @@ public class TemplateHandler3D{
 			if (template.getAtomCount()!=ringSystems.getAtomCount()){
 					continue;
 			}
-			if (Fingerprinter.isSubset(ringSystemFingerprint,(BitSet)fingerprintData.get(i))){
-				query=QueryAtomContainerCreator.createAnyAtomContainer(template,true);
+      	if (Fingerprinter.isSubset(ringSystemFingerprint,(BitSet)fingerprintData.get(i))){
+      			query=QueryAtomContainerCreator.createAnyAtomContainer(template,true);
 				if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ringSystems,query)){
 					List list = UniversalIsomorphismTester.getSubgraphAtomsMap((org.openscience.cdk.AtomContainer)ringSystems,query);
-					//System.out.println("Found a subgraph mapping of size " + list.size()+" Position:"+i+" RingSize:"+NumberOfRingAtoms);
 					if ((NumberOfRingAtoms)/list.size()==1){
 						flagMaxSubstructure=true;
 					}

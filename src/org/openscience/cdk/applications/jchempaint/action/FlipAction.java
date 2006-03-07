@@ -33,10 +33,10 @@ import java.util.HashMap;
 import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.FlipEdit;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
@@ -54,7 +54,7 @@ public class FlipAction extends JCPAction {
         JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
         Renderer2DModel renderModel = jcpModel.getRendererModel();
         boolean horiz = "horizontal".equals(type);
-        if (horiz || "vertical".equals(type)) {
+        if (renderModel.getSelectedPart()!=null && (horiz || "vertical".equals(type))) {
             IAtomContainer toflip = renderModel.getSelectedPart();
             Point2d center = GeometryTools.get2DCenter(toflip);
             org.openscience.cdk.interfaces.IAtom[] atoms = toflip.getAtoms();

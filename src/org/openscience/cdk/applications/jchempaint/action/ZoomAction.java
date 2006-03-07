@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -56,9 +57,11 @@ public class ZoomAction extends JCPAction
 		if (type.equals("in"))
 		{
 			renderModel.setZoomFactor(renderModel.getZoomFactor() * 1.5);
+			jcpPanel.getScrollPane().getViewport().setViewPosition(new Point((int)(jcpPanel.getScrollPane().getViewport().getViewPosition().x*1.5),(int)(jcpPanel.getScrollPane().getViewport().getViewPosition().y*1.5)));
 		} else if (type.equals("out"))
 		{
 			renderModel.setZoomFactor(renderModel.getZoomFactor() / 1.5);
+			jcpPanel.getScrollPane().getViewport().setViewPosition(new Point((int)(jcpPanel.getScrollPane().getViewport().getViewPosition().x/1.5),(int)(jcpPanel.getScrollPane().getViewport().getViewPosition().y/1.5)));
 		} else if (type.equals("original"))
 		{
 			renderModel.setZoomFactor(1.0);

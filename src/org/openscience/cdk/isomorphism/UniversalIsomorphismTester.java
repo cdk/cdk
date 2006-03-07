@@ -664,7 +664,7 @@ public class UniversalIsomorphismTester {
               IBond bond = bondsA1[i];
               if (queryBond.matches(bond)) {
                   // ok, bonds match
-                  if (atom1.matches(bond.getAtomAt(0)) && atom2.matches(bond.getAtomAt(1)) ||
+            	    if (atom1.matches(bond.getAtomAt(0)) && atom2.matches(bond.getAtomAt(1)) ||
                       atom1.matches(bond.getAtomAt(1)) && atom2.matches(bond.getAtomAt(0))) {
                       // ok, atoms match in either order
                       gr.addNode(new RNode(i,j));

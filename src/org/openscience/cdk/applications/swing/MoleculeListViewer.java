@@ -31,13 +31,18 @@ package org.openscience.cdk.applications.swing;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+
 import javax.swing.JFrame;
+
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  * @cdk.module applications
  *
- * @author     steinbeck
- * @cdk.created    2002-10-29
+ * @author      steinbeck
+ * @cdk.created 2002-10-29
  * @cdk.require swing
  */
 public class MoleculeListViewer extends JFrame
@@ -100,7 +105,45 @@ public class MoleculeListViewer extends JFrame
 		panel.revalidate();
 	}
 
+	/**
+	 *  Adds a molecule in a MoleculeViewer2D to this list viewer
+	 *  Convenience method.
+	 *
+	 *@param  molecule The Molecule object for which a display to add
+	 *@param  generateCoordinates true, if 2D coordinates should be generated automatically
+	 *@param  drawNumbers true, if the molecule should show atom numbers
+	 *@param  title Title string to display
+	 */
 
+    public void addStructure(IMolecule molecule, boolean generateCoordinates, boolean drawNumbers, String title)
+    {	
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        MoleculeViewer2D moleculeViewer = new MoleculeViewer2D();
+
+        try
+        {
+            if (generateCoordinates)
+            {
+                sdg.setMolecule((IMolecule)molecule.clone());
+                sdg.generateCoordinates();
+                molecule = sdg.getMolecule();
+            }
+            moleculeViewer.setAtomContainer(molecule);
+            moleculeViewer.setPreferredSize(new Dimension(300,300));
+            Renderer2DModel r2dm = moleculeViewer.getRenderer2DModel();
+            r2dm.setDrawNumbers(drawNumbers);
+            panel.addStructure(moleculeViewer, title);
+            
+        }
+        catch(Exception exc)
+        {
+            System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+            exc.printStackTrace();
+        }
+    }
+	
+	
+	
 	public void paint(Graphics graphics)
 	{
 		super.paint(graphics);

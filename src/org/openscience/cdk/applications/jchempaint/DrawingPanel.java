@@ -34,6 +34,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -50,6 +51,7 @@ public class DrawingPanel extends JPanel
 {
 	private JChemPaintModel jchemPaintModel;
 	private Renderer2D r2d;
+	private Dimension oldPreferredSize=null;
 	/**
 	 *  Description of the Field
 	 */
@@ -74,6 +76,10 @@ public class DrawingPanel extends JPanel
 		revalidate();
 	}
 	
+	public void updateRingSetInRenderer(){
+		r2d.redoSSSR(jchemPaintModel.getChemModel().getSetOfMolecules().getMolecules());
+	}
+	
 	/**
 	 *  Draws bonds, atoms; takes care of highlighting.
 	 *
@@ -81,7 +87,7 @@ public class DrawingPanel extends JPanel
 	 */
 	public void paint(Graphics g)
 	{
-    this.setBackground(jchemPaintModel.getRendererModel().getBackColor());
+	this.setBackground(jchemPaintModel.getRendererModel().getBackColor());
 		if (jchemPaintModel == null) return;
 		drawingNow = true;
 		super.paint(g);
@@ -93,6 +99,10 @@ public class DrawingPanel extends JPanel
 		}
 		r2d.paintChemModel(jchemPaintModel.getChemModel(), g2d);
 		drawingNow = false;
+		if(!this.getPreferredSize().equals(oldPreferredSize)){
+			oldPreferredSize=this.getPreferredSize();
+			resize(this.getPreferredSize());
+		}
 	}
 
 
@@ -106,6 +116,5 @@ public class DrawingPanel extends JPanel
 		if (jchemPaintModel == null) return new Dimension(794,1123);
 		return jchemPaintModel.getRendererModel().getBackgroundDimension();
 	}
-
 }
 

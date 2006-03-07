@@ -29,11 +29,8 @@
 package org.openscience.cdk.applications.jchempaint.applet;
 
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
-import org.openscience.cdk.applications.swing.JExternalFrame;
 
 /**
  * The
@@ -44,7 +41,6 @@ import org.openscience.cdk.applications.swing.JExternalFrame;
 public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 {
 	JChemPaintEditorPanel jcpep = null;
-	JExternalFrame jexf = null;
   
 	/* (non-Javadoc)
 	 * @see java.applet.Applet#init()
@@ -57,7 +53,7 @@ public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
         );
 		jcpep.setShowStatusBar(false);
 		setTheJcpp(jcpep);
-		prepareExternalFrame();
+		super.init();
 	}
 	
 	/* (non-Javadoc)
@@ -71,31 +67,5 @@ public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 	 */
 	public void stop() {
 		super.stop();
-	}
-
-	/**
-	 * @return Returns the jexf.
-	 */
-	private JExternalFrame getJexf() {
-		if (jexf == null)
-			jexf = new JExternalFrame();
-		return jexf;
-	}
-
-	/**
-	 * sets title for external frame
-	 * adds listener for double clicks in order to open external frame
-	 */
-	private void prepareExternalFrame() { 
-		if (this.getParameter("name") != null)
-			getJexf().setTitle(this.getParameter("name"));
-		getTheJcpp().getDrawingPanel().addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.getButton() == 1 && e.getClickCount() == 2)
-					if (!getJexf().isShowing()) {
-						getJexf().show(getTheJcpp());
-				}	
-			}
-		});
 	}
 }

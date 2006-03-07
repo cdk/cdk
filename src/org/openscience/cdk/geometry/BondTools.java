@@ -33,6 +33,8 @@ package org.openscience.cdk.geometry;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
@@ -156,30 +158,34 @@ public class BondTools {
    * @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
    * @return       The angle in rad.
    */
-  public static double giveAngleBothMethods(org.openscience.cdk.interfaces.IAtom from, org.openscience.cdk.interfaces.IAtom to1, org.openscience.cdk.interfaces.IAtom to2, boolean bool) {
-    double[] A = new double[2];
-    from.getPoint2d().get(A);
-    double[] B = new double[2];
-    to1.getPoint2d().get(B);
-    double[] C = new double[2];
-    to2.getPoint2d().get(C);
-    double angle1 = Math.atan2((B[1] - A[1]), (B[0] - A[0]));
-    double angle2 = Math.atan2((C[1] - A[1]), (C[0] - A[0]));
-    double angle = angle2 - angle1;
-    if (angle2 < 0 && angle1 > 0 && angle2 < -(Math.PI / 2)) {
-      angle = Math.PI + angle2 + Math.PI - angle1;
-    }
-    if (angle2 > 0 && angle1 < 0 && angle1 < -(Math.PI / 2)) {
-      angle = -Math.PI + angle2 - Math.PI - angle1;
-    }
-    if (bool && angle < 0) {
-      return (2 * Math.PI + angle);
-    } else {
-      return (angle);
-    }
+  public static double giveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, boolean bool) {
+	  return giveAngleBothMethods(from.getPoint2d(), to1.getPoint2d(), to2.getPoint2d(),bool);
   }
 
 
+  public static double giveAngleBothMethods(Point2d from, Point2d to1, Point2d to2, boolean bool) {
+	    double[] A = new double[2];
+	    from.get(A);
+	    double[] B = new double[2];
+	    to1.get(B);
+	    double[] C = new double[2];
+	    to2.get(C);
+	    double angle1 = Math.atan2((B[1] - A[1]), (B[0] - A[0]));
+	    double angle2 = Math.atan2((C[1] - A[1]), (C[0] - A[0]));
+	    double angle = angle2 - angle1;
+	    if (angle2 < 0 && angle1 > 0 && angle2 < -(Math.PI / 2)) {
+	      angle = Math.PI + angle2 + Math.PI - angle1;
+	    }
+	    if (angle2 > 0 && angle1 < 0 && angle1 < -(Math.PI / 2)) {
+	      angle = -Math.PI + angle2 - Math.PI - angle1;
+	    }
+	    if (bool && angle < 0) {
+	      return (2 * Math.PI + angle);
+	    } else {
+	      return (angle);
+	    }
+  }
+	  
   /**
    *  Says if an atom is the end of a double bond configuration
    *

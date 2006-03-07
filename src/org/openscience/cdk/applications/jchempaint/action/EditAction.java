@@ -28,8 +28,10 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.Atom;
@@ -38,6 +40,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -111,6 +114,10 @@ public class EditAction extends JCPAction {
 		}
 		else if (type.equals("selectAll")) {
 			renderModel.setSelectedPart(ChemModelManipulator.getAllInOneContainer(jcpModel.getChemModel()));
+			((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
+			jcpPanel.lastAction.set(0,jcpPanel.getMoveButton());
+			jcpPanel.getMoveButton().setBackground(Color.GRAY);
+			jcpModel.getControllerModel().setDrawMode(Controller2DModel.MOVE);
 			jcpModel.fireChange();
 		} else if (type.equals("selectMolecule")) {
 			IChemObject object = getSource(event);

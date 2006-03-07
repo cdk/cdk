@@ -27,6 +27,8 @@ package org.openscience.cdk.applications.jchempaint.applet;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -40,9 +42,11 @@ import javax.swing.JApplet;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
+import org.openscience.cdk.applications.swing.JExternalFrame;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
@@ -60,6 +64,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	private JChemPaintModel theModel = null;
 	private String localeString = null;
 	private PropertyResourceBundle appletProperties = null;
+	JExternalFrame jexf = null;
 
 	private static String appletInfo = "JChemPaint Applet. See http://cdk.sourceforge.net "
 			+ "for more information";
@@ -119,8 +124,12 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	public void initPanelAndModel(JChemPaintPanel jcpp) {
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
-    theModel.setTitle("JCP Applet" /* getNewFrameName() */);
-		theModel.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
+		theModel.setTitle("JCP Applet" /* getNewFrameName() */);
+    	try{
+    		theModel.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
+    	}catch(NullPointerException ex){
+    		//It seems we get an npe here sometimes. the line is not necessary
+    	}
 		// Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 		// String version = self.getImplementationVersion();
 		// model.setSoftware("JChemPaint " + version);
@@ -130,35 +139,35 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		jcpp.registerModel(theModel);
 		if(getParameter("detachable")!=null && getParameter("detachable").equals("true"))
 			jcpp.addFilePopUpMenu();		
-    if(theJcpp.getJChemPaintModel()!=null){
-      jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
-      if(theModel.getChemModel().getSetOfMolecules()!=null){
-        int smallestX=Integer.MAX_VALUE;
-        int largestX=Integer.MIN_VALUE;
-        int smallestY=Integer.MAX_VALUE;
-        int largestY=Integer.MIN_VALUE;
-        for(int i=0;i<theModel.getChemModel().getSetOfMolecules().getMolecules().length;i++){
-          for(int k=0;k<theModel.getChemModel().getSetOfMolecules().getMolecule(i).getAtomCount();k++){
-            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x<smallestX)
-              smallestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x;
-            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x>largestX)
-              largestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x;
-            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y<smallestY)
-              smallestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
-            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y>largestY)
-              largestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
-          }
-        }
-        int x=largestX-smallestX+30;
-        int y=largestY - smallestY+30;
-        if(x<300)
-          x=300;
-        if(y<300)
-          y=300;
-        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
-        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
-      }
-    }
+		if(theJcpp.getJChemPaintModel()!=null){
+			jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
+		if(theModel.getChemModel().getSetOfMolecules()!=null){
+	        int smallestX=Integer.MAX_VALUE;
+	        int largestX=Integer.MIN_VALUE;
+	        int smallestY=Integer.MAX_VALUE;
+	        int largestY=Integer.MIN_VALUE;
+	        for(int i=0;i<theModel.getChemModel().getSetOfMolecules().getMolecules().length;i++){
+	          for(int k=0;k<theModel.getChemModel().getSetOfMolecules().getMolecule(i).getAtomCount();k++){
+	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x<smallestX)
+	              smallestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x;
+	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x>largestX)
+	              largestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x;
+	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y<smallestY)
+	              smallestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
+	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y>largestY)
+	              largestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
+	          }
+	        }
+	        int x=largestX-smallestX+30;
+	        int y=largestY - smallestY+30;
+	        if(x<300)
+	          x=300;
+	        if(y<300)
+	          y=300;
+	        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
+	        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
+	      }
+	    }
 		//embedded means that additional instances can't be created, which is
 		// needed for applet as well
 		jcpp.setEmbedded();
@@ -175,9 +184,9 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		try {
 			URL documentBase = getDocumentBase();
 			String load = getParameter("load");
-			if (load != null)
+      if (load != null)
 				fileURL = new URL(documentBase, load);
-		} catch (Exception exception) {
+    } catch (Exception exception) {
 			System.out.println("Cannot load model: " + exception.toString());
 			exception.printStackTrace();
 		}
@@ -193,6 +202,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 				InputStreamReader isReader = new InputStreamReader(fileURL.openStream());
 				IChemObjectReader reader = new ReaderFactory().createReader(isReader);
 				ChemModel chemModel = (ChemModel) reader.read(new ChemModel());
+        
         int count=0;
         for(int i=0;i<chemModel.getSetOfMolecules().getMolecules().length;i++){
           for(int k=0;k<chemModel.getSetOfMolecules().getMolecules()[i].getAtomCount();k++){
@@ -224,6 +234,10 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
       theJcpp.getJChemPaintModel().getRendererModel().setBackColor(new Color(Integer.parseInt(background)));
     }
 	}
+	
+	public void init(){
+		prepareExternalFrame();
+	}
 
 	public void stop() {
 	}
@@ -252,10 +266,38 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
     mdlwriter.write(all);
     return(sw.toString());
   }
+
+  /**
+   * This method replaces all \n characters with the system line separator. This can be used when setting a mol file in an applet
+   * without knowing which platform the applet is running on.
+   * 
+   * @param mol The mol file to set
+   * @throws Exception
+   */
+  public void setMolFileWithReplace(String mol) throws Exception{
+	StringBuffer newmol=new StringBuffer();
+    int s = 0;
+    int e = 0;
+    while ((e = mol.indexOf("\\n", s)) >= 0) {
+      newmol.append(mol.substring(s, e));
+      newmol.append(System.getProperty("file.separator"));
+      s = e + 1;
+    }
+    newmol.append(mol.substring(s));
+    System.err.println(newmol.toString());
+    theJcpp.showChemFile(new StringReader(newmol.toString()));
+    repaint();
+  }
   
   public void setMolFile(String mol) throws Exception{
     theJcpp.showChemFile(new StringReader(mol));
     repaint();
+  }
+
+  
+  public void clear() throws Exception{
+	  theModel.getChemModel().setSetOfMolecules(new SetOfMolecules());
+	  repaint();
   }
 
   public void selectAtom(int atom){
@@ -263,4 +305,30 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
     theJcpp.getJChemPaintModel().getRendererModel().setHighlightedAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(atom));
     getTheJcpp().repaint();
   }
+
+	/**
+	 * @return Returns the jexf.
+	 */
+	private JExternalFrame getJexf() {
+		if (jexf == null)
+			jexf = new JExternalFrame();
+		return jexf;
+	}
+
+	/**
+	 * sets title for external frame
+	 * adds listener for double clicks in order to open external frame
+	 */
+	private void prepareExternalFrame() { 
+		if (this.getParameter("name") != null)
+			getJexf().setTitle(this.getParameter("name"));
+		getTheJcpp().getDrawingPanel().addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.getButton() == 1 && e.getClickCount() == 2)
+					if (!getJexf().isShowing()) {
+						getJexf().show(getTheJcpp());
+				}	
+			}
+		});
+	}
 }

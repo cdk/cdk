@@ -141,6 +141,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     private boolean compact=false;
     
 	private HashMap merge=new HashMap();
+	
+	private double[] rotateCenter=null;
+	private double rotateRadius=0;
     
     /**
      * @return null if no custom font set
@@ -957,10 +960,21 @@ public HashMap getMerge() {
 	return merge;
 }
 
-/**
- * @param merge The merge to set.
- */
-public void setMerge(HashMap merge) {
-	this.merge = merge;
+
+public double[] getRotateCenter() {
+	return rotateCenter;
+}
+
+public void setRotateCenter(double x, double y) {
+	double[] rotateCenter={x,y};
+	this.rotateCenter = rotateCenter;
+}
+
+public double getRotateRadius() {
+	return rotateRadius;
+}
+
+public void setRotateRadius(double rotateRadius) {
+	this.rotateRadius = rotateRadius;
 }
 }

@@ -163,6 +163,7 @@ public class AddHydrogenAction extends JCPAction
 					if (type.equals("implicit"))
 					{
                         hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+                        controllerModel.setAutoUpdateImplicitHydrogens(true);
 //                        changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
 					} else if (type.equals("explicit"))
 					{
@@ -176,6 +177,7 @@ public class AddHydrogenAction extends JCPAction
                         changedAtomsAndBonds = hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
                         HydrogenPlacer hPlacer = new HydrogenPlacer();
 						hPlacer.placeHydrogens2D(molecule, bondLength);
+						controllerModel.setAutoUpdateImplicitHydrogens(false);
 					} else if (type.equals("allimplicit"))
 					{
 						// remove explicit hydrogen if necessary
@@ -192,6 +194,7 @@ public class AddHydrogenAction extends JCPAction
 						// add implicit hydrogen
                         hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
 //                        changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+                        controllerModel.setAutoUpdateImplicitHydrogens(true);
 					}
 				} else
 				{

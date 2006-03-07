@@ -26,35 +26,23 @@ package org.openscience.cdk.applications.undoredo;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
+import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
-public class BondChangeEdit extends AbstractUndoableEdit {
+public class MoveAtomEdit extends AbstractUndoableEdit {
 
+	private IAtomContainer undoRedoContainer;
 
-	private IBond newBond;
+	private int deltaX;
+	
+	private int deltaY;
 
-	private IBond formerBond;
-
-	private IAtom[] atoms;
-
-	private IChemModel chemModel;
-
-	public BondChangeEdit(IChemModel chemModel, IBond formerBond, IBond newBond) {
-		this.chemModel = chemModel;
-		this.formerBond = formerBond;
-		this.newBond = newBond;
-		atoms = (IAtom[]) newBond.getAtoms();
-		if (formerBond != null) {
-			formerBond.setAtoms(atoms);
-		}
+	public MoveAtomEdit(IAtomContainer undoRedoContainer, int deltaX, int deltaY) {
+		this.undoRedoContainer = undoRedoContainer;
+		this.deltaX=deltaX;
+		this.deltaY=deltaY;
 	}
 
 	/*
@@ -63,13 +51,11 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#redo()
 	 */
 	public void redo() throws CannotRedoException {
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-		container.removeElectronContainer(formerBond);
-		container.addBond(newBond);
-		IMolecule molecule = new org.openscience.cdk.Molecule(container);
-		ISetOfMolecules moleculeSet = ConnectivityChecker
-				.partitionIntoMolecules(molecule);
-		chemModel.setSetOfMolecules(moleculeSet);
+		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
+			IAtom atom=undoRedoContainer.getAtomAt(i);
+			Point2d newPoint = new Point2d(atom.getX2d() + deltaX, atom.getY2d() + deltaY);
+			atom.setPoint2d(newPoint);
+		}
 	}
 
 	/*
@@ -78,14 +64,11 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#undo()
 	 */
 	public void undo() throws CannotUndoException {
-		System.out.println("BondChangeEdit undo");
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-		container.removeElectronContainer(newBond);
-		container.addBond(formerBond);
-		IMolecule molecule = new org.openscience.cdk.Molecule(container);
-		ISetOfMolecules moleculeSet = ConnectivityChecker
-				.partitionIntoMolecules(molecule);
-		chemModel.setSetOfMolecules(moleculeSet);
+		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
+			IAtom atom=undoRedoContainer.getAtomAt(i);
+			Point2d newPoint = new Point2d(atom.getX2d() - deltaX, atom.getY2d() - deltaY);
+			atom.setPoint2d(newPoint);
+		}
 	}
 
 	/*
@@ -106,12 +89,4 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.undo.UndoableEdit#getPresentationName()
-	 */
-	public String getPresentationName() {
-		return "Change Bond";
-	}
 }

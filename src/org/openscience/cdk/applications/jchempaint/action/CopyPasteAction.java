@@ -212,7 +212,7 @@ public class CopyPasteAction extends JCPAction{
     		  cow.write(tocopy);
     		  cow.close();
     	  }
-    	  cml=sw.toString();      
+    	  cml=sw.toString();
       }
     	
       public synchronized DataFlavor [] getTransferDataFlavors () {

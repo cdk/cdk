@@ -112,7 +112,7 @@ public class QueryAtomContainerCreator {
         IAtom[] atoms = container.getAtoms();
 
         for (int i = 0; i < atoms.length; i++) {
-            if (aromaticity && atoms[i].getFlag(CDKConstants.ISAROMATIC)) {
+        	if (aromaticity && atoms[i].getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addAtom(new AromaticAtom());
             } else {
                 queryContainer.addAtom(new AnyAtom());

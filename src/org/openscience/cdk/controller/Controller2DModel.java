@@ -73,7 +73,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	private double bondPointerLength = 20;
 	private double ringPointerLength = 20;
 
-    private boolean autoUpdateImplicitHydrogens = true;
+    private boolean autoUpdateImplicitHydrogens = false;
 	private UndoManager undoManager;
 	private UndoableEditSupport undoSupport;
     

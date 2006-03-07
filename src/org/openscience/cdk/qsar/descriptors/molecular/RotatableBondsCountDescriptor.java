@@ -39,7 +39,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
- *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a>
+ *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a><p>
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">

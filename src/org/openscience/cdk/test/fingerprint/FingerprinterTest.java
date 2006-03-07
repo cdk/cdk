@@ -32,6 +32,7 @@ package org.openscience.cdk.test.fingerprint;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.BitSet;
 
 import junit.framework.Test;
@@ -374,6 +375,12 @@ public class FingerprinterTest extends CDKTestCase
 	public static void main(String[] args)
 	{
 		try{
+			
+			BigInteger bi=new BigInteger("0");
+			bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
+			System.err.println(bi.toString());
+			bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
+			System.err.println(bi.toString());
 			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
 			fpt.standAlone = true;
 			//fpt.testFingerprinter();

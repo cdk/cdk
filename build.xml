@@ -468,7 +468,7 @@
             
             <!-- ok, now that we have a copy, compile this copy -->
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
-                    debug="${debug}" deprecation="${deprecation}">
+                    debug="${debug}" deprecation="${deprecation}" target="1.3" source="1.3">
                 <classpath>
                     <fileset dir="${lib}" >
                         <exclude name="**/*" unless="module.libdepends.present" />
@@ -846,7 +846,7 @@
         <target id="run-test" name="run-test" depends="dist-all" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) as a standalone application with -Dtestclass=&lt;class>.">
                 <echo message="Running test class: testclass=${testclass}"/>
-                <java classname="org.openscience.cdk.test.${testclass}" fork="yes">
+                <java classname="org.openscience.cdk.test.${testclass}" fork="yes" maxmemory="512m">
                     <jvmarg value="-Dcdk.debugging=true"/>
                     <classpath>
                         <fileset dir="${dist}/jar/">

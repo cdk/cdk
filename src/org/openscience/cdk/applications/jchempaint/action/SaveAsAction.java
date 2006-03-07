@@ -144,6 +144,8 @@ public class SaveAsAction extends JCPAction
 			
 			IChemObject object = getSource(event);
 			currentFilter = chooser.getFileFilter();
+			if(returnVal==JFileChooser.CANCEL_OPTION)
+				ready=0;
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 			{
 				type = ((IJCPFileFilter) currentFilter).getType();

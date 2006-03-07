@@ -237,7 +237,6 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {
                     b.setStereo(bond_stereo);
-                    System.err.println(bond_stereo+" stereo");
                 }
                 if (bond_order == CDKConstants.BONDORDER_AROMATIC) {
                     b.setFlag(CDKConstants.ISAROMATIC, true);

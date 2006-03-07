@@ -2,7 +2,7 @@
  * $Author$
  * $Date$
  * $Revision$
- *
+ * 
  * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -102,7 +102,7 @@ public class Renderer2DTest extends JPanel
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		renderer.paintMolecule((org.openscience.cdk.interfaces.IAtomContainer)molecule, (Graphics2D)g, false);
+		renderer.paintMolecule(molecule, (Graphics2D)g,false,true);
 	}
 
 	/**

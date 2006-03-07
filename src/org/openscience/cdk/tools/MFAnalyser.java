@@ -72,6 +72,7 @@ public class MFAnalyser {
 	private IAtomContainer atomContainer;
 	private int HCount = 0;
 	HashMap massMap=new HashMap();
+	private boolean useboth=false;
 
 	/**
 	 * Construct an instance of MFAnalyser, initialized with a molecular
@@ -96,6 +97,19 @@ public class MFAnalyser {
 	 * @param  ac  Description of the Parameter
 	 */
 	public MFAnalyser(IAtomContainer ac) {
+		this(ac,false);
+	}
+	
+	/**
+	 * Construct an instance of MFAnalyser, initialized with a set of Nodes
+	 * The set is analysed and a molecular formular is constructed
+	 *  based on this analysis
+	 *
+	 * @param  ac  Description of the Parameter
+	 * @param  useboth true=implicit and explicit hs will be used, false=explicit used, implicit only if no explicit
+	 */
+	public MFAnalyser(IAtomContainer ac, boolean useboth) {
+		this.useboth=useboth;
 		this.atomContainer = ac;
 		this.MF = analyseAtomContainer(ac);
 		initMassMap();
@@ -639,13 +653,23 @@ public class MFAnalyser {
 			}
 		}
 		mf = addSymbolToFormula(symbols, "C", mf);
-		if (symbols.get(H_ELEMENT_SYMBOL) != null) {
-			mf = addSymbolToFormula(symbols, H_ELEMENT_SYMBOL, mf);
-		} else {
-			if (HCount > 0) {
+		if(useboth){
+			if(symbols.get(H_ELEMENT_SYMBOL)!=null)
+				HCount+=((Integer)symbols.get(H_ELEMENT_SYMBOL)).intValue();
+			if (HCount > 0)
 				mf += H_ELEMENT_SYMBOL;
-				if (HCount > 1) {
-					mf += Integer.toString(HCount);
+			if (HCount > 1) {
+				mf += Integer.toString(HCount);
+			}
+		}else{
+			if (symbols.get(H_ELEMENT_SYMBOL) != null) {
+				mf = addSymbolToFormula(symbols, H_ELEMENT_SYMBOL, mf);
+			} else {
+				if (HCount > 0) {
+					mf += H_ELEMENT_SYMBOL;
+					if (HCount > 1) {
+						mf += Integer.toString(HCount);
+					}
 				}
 			}
 		}
@@ -793,7 +817,7 @@ public class MFAnalyser {
 	 * @see #getHTMLMolecularFormula()
 	 */
 	public String getHTMLMolecularFormulaWithCharge() {
-		String formula = new MFAnalyser(atomContainer).getHTMLMolecularFormula();
+		String formula = new MFAnalyser(atomContainer,useboth).getHTMLMolecularFormula();
 		int charge = AtomContainerManipulator.getTotalFormalCharge(atomContainer);
 		if (charge == 0)
 		{

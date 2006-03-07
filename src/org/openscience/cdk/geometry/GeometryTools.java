@@ -41,11 +41,12 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -516,6 +517,43 @@ public class GeometryTools {
 	}
 
 
+	/**
+	 *  Returns the atom of the given molecule that is closest to the given
+	 *  coordinates.
+	 *
+	 *@param  xPosition  The x coordinate
+	 *@param  yPosition  The y coordinate
+	 *@param  atomCon    The molecule that is searched for the closest atom
+	 *@return            The atom that is closest to the given coordinates
+	 */
+	public static IAtom getClosestAtom(int xPosition, int yPosition, IChemModel model, IAtom ignore) {
+		IAtom closestAtom = null;
+		IAtom currentAtom;
+		double smallestMouseDistance = -1;
+		double mouseDistance;
+		double atomX;
+		double atomY;
+		if(model.getSetOfMolecules()!=null){
+			for(int k=0;k<model.getSetOfMolecules().getAtomContainerCount();k++){
+				IAtomContainer atomCon=model.getSetOfMolecules().getAtomContainer(k);
+				for (int i = 0; i < atomCon.getAtomCount(); i++) {
+					currentAtom = atomCon.getAtomAt(i);
+					if(currentAtom!=ignore){
+						atomX = currentAtom.getX2d();
+						atomY = currentAtom.getY2d();
+						mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
+						if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
+							smallestMouseDistance = mouseDistance;
+							closestAtom = currentAtom;
+						}
+					}
+				}
+			}
+		}
+		return closestAtom;
+	}
+	
+	
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
 	 *  coordinates.

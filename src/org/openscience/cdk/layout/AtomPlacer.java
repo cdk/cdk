@@ -359,7 +359,7 @@ public class AtomPlacer
 					logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
 				}
 				bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),trans);
-			} else {
+			}else{
 				bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),true);
 			}
 		}
@@ -377,6 +377,7 @@ public class AtomPlacer
 	 *@param  previousAtom     The preceding atom for angle calculation
 	 *@param  distanceMeasure  A point from which the next atom is to be farmost
 	 *      away
+	 *@param   trabs           if true E (trans) configurations are built, false makes Z (cis) configurations
 	 *@return                  A vector pointing to the location of the next atom
 	 *      to draw
 	 */

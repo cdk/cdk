@@ -236,12 +236,12 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		logger.debug("Painting atom ");
 		Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
-		if (atom.equals(r2dm.getHighlightedAtom()))
+		if (atom.equals(r2dm.getHighlightedAtom()) || (r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond())) && r2dm.getSelectedPart().contains(atom)) || (r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()==1 && r2dm.getSelectedPart().getAtomAt(0)==atom))
 		{
 			paintColouredAtomBackground(atom, r2dm.getHighlightColor(), graphics);
 		}
 		if(r2dm.getMerge().get(atom)!=null || r2dm.getMerge().values().contains(atom)){
-			paintColouredAtomBackground(atom, Color.MAGENTA, graphics);
+			paintColouredAtomBackground(atom, r2dm.getHighlightColor(),graphics);
 		}
 
 		int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
@@ -302,6 +302,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
       paintAtomSymbol(atom, atomBackColor, graphics, alignment,
 					atom.getProperty("OriginalNumber")!=null ? ((Integer)atom.getProperty("OriginalNumber")).intValue()+1 : container.getAtomNumber(atom) + 1, isRadical);
 		}
+		
 		if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null)
 		{
 			paintToolTip(atom, graphics, container.getAtomNumber(atom) + 1);
@@ -843,7 +844,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			{
 				bondColor = r2dm.getForeColor();
 			}
-			if (currentBond == r2dm.getHighlightedBond())
+			if (currentBond == r2dm.getHighlightedBond() && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(currentBond)))
 			{
 				bondColor = r2dm.getHighlightColor();
 				for (int j = 0; j < currentBond.getAtomCount(); j++)
@@ -1081,7 +1082,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		if (GeometryTools.has2DCoordinates(bond))
 		{
-            paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
+			paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
 		}
 	}
 
@@ -1183,7 +1184,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		graphics.setColor(bondColor);
         int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
 		int[] screenCoords = getScreenCoordinates(newCoords);
-		int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
+    int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
         graphics.fillPolygon(xCoords, yCoords, 4);
 	}

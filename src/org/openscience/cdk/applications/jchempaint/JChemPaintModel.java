@@ -223,15 +223,19 @@ public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener
 		}
 		else if (position == 1) {
 			// depict bruto formula
-			IAtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((org.openscience.cdk.interfaces.IChemModel)model);
-			String formula = new MFAnalyser(wholeModel).getHTMLMolecularFormulaWithCharge();
-			status = "<html>" + formula + "</html>";
+			IAtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((IChemModel)model);
+			String formula = new MFAnalyser(wholeModel,true).getHTMLMolecularFormulaWithCharge();
+			int impliciths=0;
+			for(int i=0;i<wholeModel.getAtomCount();i++){
+				impliciths+=wholeModel.getAtomAt(i).getHydrogenCount();
+			}
+			status = "<html>" + formula + (impliciths==0 ? "" : " (of these "+impliciths+" Hs implicit)")+"</html>";
 		}
 		else if (position == 2) {
 			// depict brutto formula of the selected molecule or part of molecule
 			if (rendererModel.getSelectedPart() != null) {
 				IAtomContainer selectedPart = rendererModel.getSelectedPart();
-				String formula = new MFAnalyser(selectedPart).getHTMLMolecularFormulaWithCharge();
+				String formula = new MFAnalyser(selectedPart,true).getHTMLMolecularFormulaWithCharge();
 				status = "<html>" + formula + "</html>";
 			}
 		}

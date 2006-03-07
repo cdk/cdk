@@ -1,4 +1,4 @@
-/* $RCSfile$    
+/* $RCSfile$ 
  * $Author$    
  * $Date$    
  * $Revision$
@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.test.structgen;
 
+import java.io.IOException;
+import java.io.OptionalDataException;
 import java.util.Vector;
 
 import javax.vecmath.Vector2d;
@@ -33,10 +35,14 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.structgen.RandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * @cdk.module test
@@ -45,16 +51,14 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 {
 	public boolean debug = false;
 	boolean standAlone = false;
-
-	public MoleculeListViewer moleculeListViewer = null;
-    
+	MoleculeListViewer listviewer;
+	
     public RandomStructureGeneratorTest(String name) {
         super(name);
     }
     
     public RandomStructureGeneratorTest() {
         this("RandomStructureGeneratorTest");
-        moleculeListViewer = new MoleculeListViewer();
     }
 
 	public void setStandAlone(boolean standAlone)
@@ -76,11 +80,12 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 		Vector structures = new Vector();	
 		Molecule mol = null;
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+		listviewer = new MoleculeListViewer();
 		//System.out.println(molecule);
 		RandomGenerator rg = new RandomGenerator();
 		rg.setMolecule(molecule);
 	
-		for (int f = 0; f < 1000; f++)
+		for (int f = 0; f < 20; f++)
 		{
 			if (debug) System.out.println("Proposing structure no. " + f);
 			if (debug) System.out.println("Entering rg.proposeStructure()");
@@ -117,17 +122,21 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 	}
 
 
+	/**
+	 * @param structures
+	 * @return
+	 */
 	private boolean everythingOk(Vector structures)
 	{
-		StructureDiagramGenerator sdg = null;
-		MoleculeViewer2D mv = null;
+		StructureDiagramGenerator sdg = null; 
 		Molecule mol = null;
-		for (int f = 0; f < structures.size(); f+=100)
+		if (debug) System.out.println("number of structures in vector: " + structures.size());
+		for (int f = 0; f < structures.size(); f++)
 		{
 			sdg = new StructureDiagramGenerator();
 
 			mol = (Molecule)structures.elementAt(f);
-			sdg.setMolecule((Molecule)mol.clone());
+			sdg.setMolecule(mol);
 
 			try
 			{
@@ -139,12 +148,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 				fail("*** Exit due to an unexpected error during coordinate generation ***");
 			}
             if (standAlone) {
-                mv.setAtomContainer(sdg.getMolecule());
-                mv = new MoleculeViewer2D();
-                //			Renderer2DModel r2dm = new Renderer2DModel();
-                //			r2dm.setDrawNumbers(true);
-                //			mv.setRenderer2DModel(r2dm);
-                moleculeListViewer.addStructure(mv, "RandomGent Result no. " + (f + 1));
+            	 listviewer.addStructure(mol, true, false, "");
             }
 		}
 		return true;

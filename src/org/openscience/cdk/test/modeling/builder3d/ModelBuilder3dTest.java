@@ -2,7 +2,7 @@
  *  $RCSfile$
  *  $Author$
  *  $Date$
- *   *
+ *
  *  Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@list.sourceforge.net
@@ -31,9 +31,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;

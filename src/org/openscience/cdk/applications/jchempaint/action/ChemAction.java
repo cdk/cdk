@@ -72,7 +72,7 @@ public class ChemAction extends JCPAction
 		logger.info("  type  ", type);
 		logger.debug("  source ", e.getSource());
 		jcpm = jcpPanel.getJChemPaintModel();
-    if (jcpm != null)
+		if (jcpm != null)
 		{
 			c2dm = jcpm.getControllerModel();
 			if (type.equals("bond"))

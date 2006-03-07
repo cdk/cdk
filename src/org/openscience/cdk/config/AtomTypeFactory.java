@@ -211,13 +211,7 @@ public class AtomTypeFactory {
 	            	logger.error("no stream and no file");
 	            }
             }
-            
-			if (ins == null)
-			{
-				logger.error("There was a problem getting a stream for ",
-						fileName);
-			}
-		}
+   		}
 
         String format = XML_EXTENSION;
         if (fileName.endsWith(TXT_EXTENSION)) {

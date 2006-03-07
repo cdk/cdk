@@ -27,13 +27,13 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -46,8 +46,6 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 
 	private IAtomContainer undoRedoContainer;
 
-	private IAtomContainer container;
-
 	private String type;
 
 	/**
@@ -58,7 +56,6 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 			IAtomContainer undoRedoContainer, String type) {
 		this.chemModel = chemModel;
 		this.undoRedoContainer = undoRedoContainer;
-		this.container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		this.type = type;
 	}
 
@@ -68,6 +65,7 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#redo()
 	 */
 	public void redo() throws CannotRedoException {
+		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
 			IBond bond = undoRedoContainer.getBondAt(i);
 			container.addBond(bond);
@@ -88,6 +86,8 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#undo()
 	 */
 	public void undo() throws CannotUndoException {
+		System.out.println("AddAtomsAndBondsEdit undo");
+		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
 			IBond bond = undoRedoContainer.getBondAt(i);
 			container.removeElectronContainer(bond);
@@ -100,6 +100,7 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 		ISetOfMolecules moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
+		System.out.println(ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount());
 	}
 
 	/*

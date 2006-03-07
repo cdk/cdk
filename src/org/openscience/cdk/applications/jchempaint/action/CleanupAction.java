@@ -39,6 +39,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.applications.jchempaint.DrawingPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.CleanUpEdit;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -153,6 +154,7 @@ public class CleanupAction extends JCPAction
 			jcpmodel.getRendererModel().setSelectedPart(new AtomContainer());
 			jcpmodel.fireChange();
 			jcpPanel.scaleAndCenterMolecule(jcpmodel.getChemModel());
+			((DrawingPanel)jcpPanel.getDrawingPanel()).updateRingSetInRenderer();
 			jcpPanel.repaint();
 		}
 	}
@@ -174,7 +176,7 @@ public class CleanupAction extends JCPAction
 			{
 				try
 				{
-					Point2d centre = GeometryTools.get2DCentreOfMass(molecule);
+			    	Point2d centre = GeometryTools.get2DCentreOfMass(molecule);
 					diagramGenerator.setMolecule(molecule);
 					diagramGenerator.generateExperimentalCoordinates(new Vector2d(0, 1));
 					cleanedMol = diagramGenerator.getMolecule();
@@ -182,6 +184,7 @@ public class CleanupAction extends JCPAction
 					 *  make the molecule end up somewhere reasonable
 					 *  See constructor of JCPPanel
 					 */
+					Thread.sleep(5000);
 					GeometryTools.translateAllPositive(cleanedMol);
 					double scaleFactor = GeometryTools.getScaleFactor(cleanedMol, jcpmodel.getRendererModel().getBondLength());
 					GeometryTools.scaleMolecule(cleanedMol, scaleFactor);

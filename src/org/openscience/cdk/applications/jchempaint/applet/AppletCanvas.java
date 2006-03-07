@@ -122,7 +122,7 @@ public class AppletCanvas extends Canvas
 			renderer.paintChemModel(model.getChemModel(), (Graphics2D) g);
 		} else
 		{
-			renderer.paintMolecule(container, (Graphics2D) g,false);
+			renderer.paintMolecule(container, (Graphics2D) g,false,true);
 		}
 	}
 

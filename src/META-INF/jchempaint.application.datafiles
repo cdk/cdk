@@ -1,1 +1,3 @@
-org/openscience/cdk/applications/jchempaint/resources/**
+org/openscience/cdk/applications/jchempaint/resources/large-bin/**
+org/openscience/cdk/applications/jchempaint/resources/small-bin/**
+org/openscience/cdk/applications/jchempaint/resources/text/**

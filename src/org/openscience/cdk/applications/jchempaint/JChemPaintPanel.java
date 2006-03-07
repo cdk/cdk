@@ -65,6 +65,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEditSupport;
+
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -73,8 +74,10 @@ import org.openscience.cdk.applications.jchempaint.action.JCPAction;
 import org.openscience.cdk.applications.jchempaint.action.SaveAction;
 import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForFileDialog;
 import org.openscience.cdk.applications.plugin.ICDKEditBus;
+import org.openscience.cdk.applications.undoredo.ClearAllEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
@@ -139,7 +142,8 @@ public abstract class JChemPaintPanel
     private UndoableEditSupport undoSupport;
     String guiString = "stable";
     //we remember the moveButton since this is special
-    public JButton moveButton=null;
+    protected JButton moveButton=null;
+    private JScrollPane scrollPane;
     
 	/**
 	 *  Constructor for the JChemPaintPanel object
@@ -158,13 +162,13 @@ public abstract class JChemPaintPanel
 		drawingPanel = new DrawingPanel();
 		drawingPanel.setOpaque(true);
 		drawingPanel.setBackground(Color.white);
-		JScrollPane scrollPane = new JScrollPane(drawingPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane = new JScrollPane(drawingPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		mainContainer.add(scrollPane, BorderLayout.CENTER);
 
 		add(mainContainer, BorderLayout.CENTER);
-		setSize(new Dimension(600, 400));
-		setPreferredSize(new Dimension(600, 400));
+		setSize(new Dimension(900, 400));
+		setPreferredSize(new Dimension(900, 400));
         instances.add(this);
 	}
 
@@ -574,12 +578,17 @@ public abstract class JChemPaintPanel
 	 *@return    Description of the Return Value
 	 */
 	public int showWarning() {
-		if (jchemPaintModel.isModified() && !getIsOpenedByViewer() && !isEmbedded) {
+		if (jchemPaintModel.isModified() && !getIsOpenedByViewer() && !guiString.equals("applet")) {
 			int answer = JOptionPane.showConfirmDialog(this, jchemPaintModel.getTitle() + " " + JCPLocalizationHandler.getInstance().getString("warning"), JCPLocalizationHandler.getInstance().getString("warningheader"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (answer == JOptionPane.YES_OPTION) {
 				new SaveAction(this, false).actionPerformed(new ActionEvent(this, 12, ""));
 			}
 			return answer;
+		} else if(guiString.equals("applet")){
+			//In case of the applet we do not ask for save but put the clear into the undo stack
+			ClearAllEdit coa=new ClearAllEdit(this.getChemModel(),(ISetOfMolecules)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getSetOfReactions());
+			this.jchemPaintModel.getControllerModel().getUndoSupport().postEdit(coa);
+			return JOptionPane.YES_OPTION;
 		} else {
 			return JOptionPane.YES_OPTION;
 		}
@@ -1157,6 +1166,26 @@ public abstract class JChemPaintPanel
     public void setUndoSupport(UndoableEditSupport undoSupport) {
     	this.jchemPaintModel.getControllerModel().setUndoSupport(undoSupport);
     }
+
+
+	public JButton getMoveButton() {
+		return moveButton;
+	}
+
+
+	public void setMoveButton(JButton moveButton) {
+		this.moveButton = moveButton;
+	}
+
+
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+
+	public void setScrollPane(JScrollPane scrollPane) {
+		this.scrollPane = scrollPane;
+	}
 
 }
 

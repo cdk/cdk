@@ -33,6 +33,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -474,6 +476,15 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		jcpep.registerModel(model);
 		jcpep.setJChemPaintModel(model);
 		frame.setTitle(model.getTitle());
+		//This ensures that the drawingpanel is never smaller than the application
+		frame.addComponentListener(new ComponentAdapter(){
+			public void componentResized(ComponentEvent e) {
+				if(((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().getBackgroundDimension().width<((JFrame)e.getSource()).getWidth()-30)
+					((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().setBackgroundDimension(new Dimension(((JFrame)e.getSource()).getWidth()-30,((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().getBackgroundDimension().height));
+				if(((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().getBackgroundDimension().height<((JFrame)e.getSource()).getHeight()-30)
+					((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().setBackgroundDimension(new Dimension(((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().getBackgroundDimension().width,((JFrame)e.getSource()).getHeight()-30));
+			}
+		});
 		return frame;
 	}
 
@@ -517,6 +528,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		try
 		{
 			logger.info("Making snapshot... ");
+
             Renderer2D r2d = new Renderer2D(jchemPaintModel.getRendererModel());
             r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
             IChemModel model = (IChemModel) jchemPaintModel.getChemModel().clone();
@@ -528,9 +540,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             snapGraphics.setBackground(Color.WHITE);
             snapGraphics.clearRect(0,0,(int)dim.getWidth()+20, (int)dim.getHeight()+20);
             r2d.useScreenSize=false;
-            r2d.paintMolecule(ac, (Graphics2D) snapGraphics,false);
+            r2d.paintMolecule(ac, (Graphics2D) snapGraphics,false,true);
             r2d.useScreenSize=true;
             logger.info("created...");
+
 
 			logger.debug("painting succeeded.");
 		} catch (NullPointerException e)

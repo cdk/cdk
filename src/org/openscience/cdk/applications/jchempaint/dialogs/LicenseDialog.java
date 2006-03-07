@@ -60,28 +60,32 @@ public class LicenseDialog extends JFrame {
 	String version = self.getImplementationVersion();
 
         String s1 = 
-            "JChemPaint "  + version + " is licensed GPL, but " +
+            "JChemPaint "  + version + " is licensed LGPL, but " +
             "the libraries it uses have different licenses.\n" +
             "See 'http://jchempaint.sourceforge.net' for further information " +
             "about the license you accept when using this software.\n\n";
         String s2 =
-            "Copyright (C) 1997-2005  The JChemPaint project\n" +
+            "Copyright (C) 1997-2006  The JChemPaint project\n" +
             "\n" +
             "Contact: jchempaint-devel@lists.sf.net\n" +
             "\n" +
-            "This program is free software; you can redistribute it and/or modify\n" +
-            "it under the terms of the GNU General Public License as published by\n" +
-            "the Free Software Foundation; either version 2 of the License, or\n" +
-            "(at your option) any later version.\n" +
-            "\n" +
-            "This program is distributed in the hope that it will be useful,\n" +
-            "but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
-            "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
-            "GNU General Public License for more details.\n" +
-            "\n" +
-            "You should have received a copy of the GNU General Public License\n" +
-            "along with this program; if not, write to the Free Software\n" +
-            "Foundation,  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.\n";
+ "This program is free software; you can redistribute it and/or\n" +
+ "modify it under the terms of the GNU Lesser General Public License\n" +
+ "as published by the Free Software Foundation; either version 2.1\n" +
+ "of the License, or (at your option) any later version.\n" +
+ "All we ask is that proper credit is given for our work, which includes\n" +
+ "- but is not limited to - adding the above copyright notice to the beginning\n" +
+ "of your source code files, and to any copyright notice that you may distribute\n" +
+ "with programs based on this work.\n\n" +
+
+ "This program is distributed in the hope that it will be useful,\n" +
+ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
+ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
+ "GNU Lesser General Public License for more details.\n\n" +
+
+ "You should have received a copy of the GNU Lesser General Public License\n" +
+ "along with this program; if not, write to the Free Software\n" +
+ "Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.\n";
 
         JLabel label1 = new JLabel();
         getContentPane().setLayout(new BorderLayout());

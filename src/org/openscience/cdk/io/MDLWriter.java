@@ -85,6 +85,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * See {@cdk.cite DAL92}.
  *
  * @cdk.module io
+ * 
  *
  * @cdk.keyword file format, MDL molfile
  */
@@ -153,7 +154,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
     
     /**
      * Here you can set a map which will be used to build sd fields in the file.
-     * The entries will be translated to sd fields like this:br>
+     * The entries will be translated to sd fields like this:<br>
      * &gt; &lt;key&gt;<br>
      * &gt; value<br>
      * empty line<br>

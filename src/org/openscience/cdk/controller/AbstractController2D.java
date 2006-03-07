@@ -33,11 +33,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,12 +56,15 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
-import org.openscience.cdk.applications.undoredo.BondChangeEdit;
+import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
 import org.openscience.cdk.applications.undoredo.ChangeChargeEdit;
+import org.openscience.cdk.applications.undoredo.MergeMoleculesEdit;
+import org.openscience.cdk.applications.undoredo.MoveAtomEdit;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.event.ICDKChangeListener;
+import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -97,11 +104,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private final static int DRAG_MAKING_SQUARE_SELECTION = 4;
 	private final static int DRAG_MAKING_LASSO_SELECTION = 5;
 	private final static int DRAG_DRAWING_PROPOSED_ATOMATOMMAP = 6;
+	private final static int DRAG_ROTATE = 7;
 	
 	protected Vector lastAction=null;
 	protected JButton moveButton=null;
 	
-	IAtomContainer atomContainer;
 	protected IChemModel chemModel;
 	
 	Renderer2DModel r2dm;
@@ -124,6 +131,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	IAtom lastAtomInRange = null;
 	private double shiftX = 0;
 	private double shiftY = 0;
+	double moveoldX;
+	double moveoldY;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -212,6 +221,31 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		int mouseX = mouseCoords[0];
 		int mouseY = mouseCoords[1];
 		highlightNearestChemObject(mouseX, mouseY);
+		//this is the rotate feature
+		if(r2dm.getSelectedPart()!=null && r2dm.getHighlightedAtom()==null && r2dm.getHighlightedBond()==null && c2dm.getDrawMode() == Controller2DModel.LASSO){
+			double xmin=Double.MAX_VALUE;
+			double xmax=Double.MIN_VALUE;
+			double ymin=Double.MAX_VALUE;
+			double ymax=Double.MIN_VALUE;
+			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
+				if(r2dm.getSelectedPart().getAtomAt(i).getPoint2d().x>xmax)
+					xmax=r2dm.getSelectedPart().getAtomAt(i).getPoint2d().x;
+				if(r2dm.getSelectedPart().getAtomAt(i).getPoint2d().y>ymax)
+					ymax=r2dm.getSelectedPart().getAtomAt(i).getPoint2d().y;
+				if(r2dm.getSelectedPart().getAtomAt(i).getPoint2d().x<xmin)
+					xmin=r2dm.getSelectedPart().getAtomAt(i).getPoint2d().x;
+				if(r2dm.getSelectedPart().getAtomAt(i).getPoint2d().y<ymin)
+					ymin=r2dm.getSelectedPart().getAtomAt(i).getPoint2d().y;
+			}
+			if(mouseCoords[0]>xmin && mouseCoords[0]<xmax && mouseCoords[1]>ymin && mouseCoords[1]<ymax){
+				//ok, we want to rotate
+				r2dm.setRotateCenter(xmin+(xmax-xmin)/2,ymin+(ymax-ymin)/2);
+				r2dm.setRotateRadius(Math.min((xmax-xmin)/4,(ymax-ymin)/4));
+			}
+		}else{
+			//no rotation
+			r2dm.setRotateRadius(0);
+		}
 	}
 
 
@@ -296,7 +330,25 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			 *  undo and redo storage that it
 			 *  should not store this change
 			 */
-			isUndoableChange = false;
+            isUndoableChange = false;
+			fireChange();
+		} else if(dragMode==DRAG_ROTATE){
+			double angle=BondTools.giveAngleBothMethods(new Point2d(r2dm.getRotateCenter()[0],r2dm.getRotateCenter()[1]),new Point2d(prevDragCoordX,prevDragCoordY),new Point2d(mouseX, mouseY),true);
+			Polygon polygon=new Polygon();
+			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++) {
+				polygon.addPoint((int)(r2dm.getSelectedPart().getAtomAt(i).getPoint2d().x*1000),(int)(r2dm.getSelectedPart().getAtomAt(i).getPoint2d().y*1000));
+			}
+			polygon.addPoint((int)(r2dm.getSelectedPart().getAtomAt(0).getPoint2d().x*1000),(int)(r2dm.getSelectedPart().getAtomAt(0).getPoint2d().y*1000));
+			AffineTransform at=AffineTransform.getRotateInstance(angle,r2dm.getRotateCenter()[0]*1000,r2dm.getRotateCenter()[1]*1000);
+			Shape transformedpolygon=at.createTransformedShape(polygon);
+			PathIterator pa=transformedpolygon.getPathIterator(null);
+			
+			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++) {
+				pa.next();
+				double[] d=new double[6];
+				pa.currentSegment(d);
+				r2dm.getSelectedPart().getAtomAt(i).setPoint2d(new Point2d(d[0]/1000,d[1]/1000));
+			}
 			fireChange();
 		}
 
@@ -345,7 +397,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
 		}
 		
-		if(r2dm.getSelectedPart()!=null && !(r2dm.getSelectedPart().contains(atomInRange) || r2dm.getSelectedPart().contains(bondInRange))){
+		if(r2dm.getSelectedPart()!=null && !(r2dm.getSelectedPart().contains(atomInRange) || r2dm.getSelectedPart().contains(bondInRange)) && r2dm.getRotateRadius()==0){
 			r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
 		}
 
@@ -369,7 +421,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		} else if (c2dm.getDrawMode() == Controller2DModel.SELECT)
 		{
 			dragMode = DRAG_MAKING_SQUARE_SELECTION;
-		} else if (c2dm.getDrawMode() == Controller2DModel.LASSO)
+		} else if (c2dm.getDrawMode() == Controller2DModel.LASSO && r2dm.getRotateRadius()==0)
 		{
 			if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond()))){
 				if(r2dm.getSelectedPart().getAtomCount()>0)
@@ -385,7 +437,15 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 		{
 			dragMode = DRAG_DRAWING_PROPOSED_RING;
-		}			
+		} else if(r2dm.getRotateRadius()!=0){
+			dragMode = DRAG_ROTATE;
+		}
+		if(dragMode==DRAG_MOVING_SELECTED){
+			if (r2dm.getSelectedPart() != null && r2dm.getSelectedPart().getAtomAt(0) != null) {
+				moveoldX=r2dm.getSelectedPart().getAtomAt(0).getPoint2d().x;
+				moveoldY=r2dm.getSelectedPart().getAtomAt(0).getPoint2d().y;
+			}
+		}
 	}
 
 
@@ -411,184 +471,24 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			int mouseY = mouseCoords[1];
 			if (c2dm.getDrawMode() == Controller2DModel.SYMBOL)
 			{
-
-				IAtom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null)
-				{
-					if (currentCommonElement.get(atomInRange) == null)
-					{
-						currentCommonElement.put(atomInRange, new Integer(1));
-					}
-					int oldCommonElement = ((Integer) currentCommonElement.get(atomInRange)).intValue();
-					String symbol = (String) commonElements.elementAt(oldCommonElement);
-					if (!(atomInRange.getSymbol().equals(symbol)))
-					{
-						// only change symbol if needed
-                        String formerSymbol = atomInRange.getSymbol();
-						atomInRange.setSymbol(symbol);
-						// configure the atom, so that the atomic number matches the symbol
-						try
-						{
-							IsotopeFactory.getInstance(atomInRange.getBuilder()).configure(atomInRange);
-						} catch (Exception exception)
-						{
-							logger.error("Error while configuring atom");
-							logger.debug(exception);
-						}
-						// update atom
-						IAtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
-						updateAtom(container, atomInRange);
-
-						/*
-						 *  PRESERVE THIS. This notifies the
-						 *  the listener responsible for
-						 *  undo and redo storage that it
-						 *  should store this change of an atom symbol
-						 */
-						isUndoableChange = true;
-						/*
-						 *  ---
-						 */
-                        UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
-                        c2dm.getUndoSupport().postEdit(edit);
-						r2dm.fireChange();
-						fireChange();
-					}
-					oldCommonElement++;
-					if (oldCommonElement == commonElements.size())
-					{
-						oldCommonElement = 0;
-					}
-					currentCommonElement.put(atomInRange, new Integer(oldCommonElement));
-				}
+				changeSymbol();
 			}
 			if (c2dm.getDrawMode() == Controller2DModel.ELEMENT)
 			{
-				IAtom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null)
-				{
-					String symbol = c2dm.getDrawElement();
-					if (!(atomInRange.getSymbol().equals(symbol)))
-					{
-						// only change symbol if needed
-						String formerSymbol = atomInRange.getSymbol();
-						atomInRange.setSymbol(symbol);
-						// configure the atom, so that the atomic number matches the symbol
-						try
-						{
-							IsotopeFactory.getInstance(atomInRange.getBuilder()).configure(atomInRange);
-						} catch (Exception exception)
-						{
-							logger.error("Error while configuring atom");
-							logger.debug(exception);
-						}
-						// update atom
-						IAtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
-						updateAtom(container, atomInRange);
-
-						/*
-						 *  PRESERVE THIS. This notifies the
-						 *  the listener responsible for
-						 *  undo and redo storage that it
-						 *  should store this change of an atom symbol
-						 */
-//						isUndoableChange = true;
-						/*
-						 *  ---
-						 */
-						// undoredo support
-            UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
-						c2dm.getUndoSupport().postEdit(edit);
-						r2dm.fireChange();
-						fireChange();
-					}
-				}else{
-					int startX = r2dm.getPointerVectorStart().x;
-					int startY = r2dm.getPointerVectorStart().y;
-					IAtom newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
-					IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
-					atomCon.addAtom(newAtom1);
-					// update atoms
-					updateAtom(atomCon, newAtom1);
-					chemModel.getSetOfMolecules().addAtomContainer(atomCon);
-					//FIXME undoredo
-					r2dm.fireChange();
-					fireChange();
-				}
+				changeElement();
 			}
 
 			if (c2dm.getDrawMode() == Controller2DModel.INCCHARGE)
 			{
-				IAtom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null)
-				{
-					int formerCharge = atomInRange.getFormalCharge();
-					atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
-
-					// update atom
-					IAtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
-					updateAtom(container, atomInRange);
-					//undoredo support
-                    UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
-					c2dm.getUndoSupport().postEdit(edit);
-					r2dm.fireChange();
-					fireChange();
-				}
+				increaseCharge();
 			}
 			if (c2dm.getDrawMode() == Controller2DModel.ENTERELEMENT)
 			{
-				IAtom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null)
-				{
-					String x=JOptionPane.showInputDialog(null,"Enter new element symbol");
-					try{
-						if(Character.isLowerCase(x.toCharArray()[0]))
-							x=Character.toUpperCase(x.charAt(0))+x.substring(1);
-						IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
-						IIsotope iso=ifa.getMajorIsotope(x);
-						String formerSymbol=r2dm.getHighlightedAtom().getSymbol();
-						if(iso!=null)
-							r2dm.getHighlightedAtom().setSymbol(x);
-						// update atom
-						IAtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
-						updateAtom(container, atomInRange);
-
-						/*
-						 *  PRESERVE THIS. This notifies the
-						 *  the listener responsible for
-						 *  undo and redo storage that it
-						 *  should store this change of an atom symbol
-						 */
-//						isUndoableChange = true;
-						/*
-						 *  ---
-						 */
-						// undoredo support
-            UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, x);
-						c2dm.getUndoSupport().postEdit(edit);
-						r2dm.fireChange();
-						fireChange();
-					}catch(Exception ex){
-						logger.debug(ex.getMessage()+" in SELECTELEMENT");
-					}
-				}
+				enterElement();
 			}
 			if (c2dm.getDrawMode() == Controller2DModel.DECCHARGE)
 			{
-				IAtom atomInRange = r2dm.getHighlightedAtom();
-				if (atomInRange != null)
-				{
-					int formerCharge = atomInRange.getFormalCharge();
-					atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
-					// update atom
-					IAtomContainer container = getRelevantAtomContainer(chemModel, atomInRange);
-					updateAtom(container, atomInRange);
-					//undoredo support
-                    UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
-					c2dm.getUndoSupport().postEdit(edit);
-					r2dm.fireChange();
-					fireChange();
-				}
+				decreaseCharge();
 			}
 
 			if (c2dm.getDrawMode() == Controller2DModel.MAPATOMATOM)
@@ -598,231 +498,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
       
 			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DOWN_BOND || c2dm.getDrawMode() == Controller2DModel.UP_BOND)
 			{
-        logger.debug("mouseReleased->drawbond");
-				IAtom atomInRange;
-				IAtom newAtom1 = null;
-				IAtom newAtom2 = null;
-				IBond newBond = null;
-				int startX = r2dm.getPointerVectorStart().x;
-				int startY = r2dm.getPointerVectorStart().y;
-				IBond bondInRange = r2dm.getHighlightedBond();
-				//atomInRange = r2dm.getHighlightedAtom();
-				//Bond bondInRange = getBondInRange(mouseX, mouseY);
-				/*
-				 *  IMPORTANT: I don't use getHighlighteAtom()
-				 *  here because of the special case of
-				 *  only one atom on the screen.
-				 *  In this case, this atom will not detected
-				 *  if the mouse hasn't moved after it's creation
-				 */
-				atomInRange = getAtomInRange(mouseX, mouseY);
-				if (bondInRange != null)
-				{
-					IBond formerBond = (IBond) bondInRange.clone();
-					if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
-            // increase Bond order
-            double order = bondInRange.getOrder();
-            if (order >= CDKConstants.BONDORDER_TRIPLE)
-            {
-              bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
-            } else
-            {
-              bondInRange.setOrder(order + 1.0);
-              // this is tricky as it depends on the fact that the
-              // constants are unidistant, i.e. {1.0, 2.0, 3.0}.
-            }
-            ;
-            // update atoms
-            org.openscience.cdk.interfaces.IAtom[] atoms = bondInRange.getAtoms();
-            IAtomContainer container = getRelevantAtomContainer(chemModel, atoms[0]);
-            updateAtoms(container, atoms);
-          }else if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND){
-            // toggle bond stereo
-            double stereo = bondInRange.getStereo();
-            if (stereo == CDKConstants.STEREO_BOND_DOWN)
-            {
-              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN_INV);
-            } else if (stereo == CDKConstants.STEREO_BOND_DOWN_INV)
-            {
-              bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
-            } else
-            {
-              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
-            }
-          }else{
-            // toggle bond stereo
-            double stereo = bondInRange.getStereo();
-            if (stereo == CDKConstants.STEREO_BOND_UP)
-            {
-              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP_INV);
-            } else if (stereo == CDKConstants.STEREO_BOND_UP_INV)
-            {
-              bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
-            } else
-            {
-              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
-            }
-          }           
-					/*
-					 *  PRESERVE THIS. This notifies the
-					 *  the listener responsible for
-					 *  undo and redo storage that it
-					 *  should store this change of an atom symbol
-					 */
-					isUndoableChange = true;
-					/*
-					 *  ---
-					 */
-					UndoableEdit  edit = new BondChangeEdit(chemModel, formerBond, bondInRange);
-					c2dm.getUndoSupport().postEdit(edit);
-				} else
-				{
-					IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
-					if (atomInRange != null)
-					{
-						logger.debug("We had an atom in range");
-						newAtom1 = atomInRange;
-					} else if (!wasDragged)
-					{
-						// create a new molecule
-						logger.debug("We make a new molecule");
-						newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
-						IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
-						atomCon.addAtom(newAtom1);
-						// update atoms
-						updateAtom(atomCon, newAtom1);
-						undoRedoContainer.add(atomCon);
-					}
-
-					if (wasDragged)
-					{
-						if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
-						{
-							int endX = r2dm.getPointerVectorEnd().x;
-							int endY = r2dm.getPointerVectorEnd().y;
-							atomInRange = getAtomInRange(endX, endY);
-							IAtomContainer atomCon = getAllInOneContainer(chemModel);
-							if (atomInRange != null)
-							{
-								logger.debug("*** atom in range");
-
-								newAtom2 = atomInRange;
-								logger.debug("atomCon.getAtomCount() " + atomCon.getAtomCount());
-							} else
-							{
-								logger.debug("*** new atom");
-								newAtom2 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(endX, endY));
-								atomCon.addAtom(newAtom2);
-								undoRedoContainer.addAtom(newAtom2);
-							}
-							newAtom1 = lastAtomInRange;
-							if (newAtom1 == null)
-							{
-								newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));
-								undoRedoContainer.addAtom(newAtom1);
-							}
-							if (newAtom1 != newAtom2)
-							{
-								newBond = new org.openscience.cdk.Bond(newAtom1, newAtom2, 1);
-                if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
-                  newBond.setStereo(CDKConstants.STEREO_BOND_UP);
-                if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
-                  newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
-                logger.debug(newAtom1 + " - " + newAtom2);
-								atomCon.addBond(newBond);
-								undoRedoContainer.addBond(newBond);
-							}
-
-							try
-							{
-								ISetOfMolecules setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
-								chemModel.setSetOfMolecules(setOfMolecules);
-								logger.debug("We have " + setOfMolecules.getAtomContainerCount() + " molecules on screen");
-							} catch (Exception exception)
-							{
-								logger.warn("Could not partition molecule: ", exception.getMessage());
-								logger.debug(exception);
-								return;
-							}
-
-							// update atoms
-							updateAtom(atomCon, newAtom2);
-
-							/*
-							 *  PRESERVE THIS. This notifies the
-							 *  the listener responsible for
-							 *  undo and redo storage that it
-							 *  should store this change of an atom symbol
-							 */
-							isUndoableChange = true;
-							/*
-							 *  ---
-							 */
-						}
-					} else if (atomInRange != null)
-					{
-						// add a new atom to the current atom in some random
-						// direction
-						IAtomContainer atomCon = getRelevantAtomContainer(chemModel, atomInRange);
-						newAtom2 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), atomInRange.getPoint2d());
-
-						// now create 2D coords for new atom
-						double bondLength = r2dm.getBondLength();
-						IAtom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
-						logger.debug("connectedAtoms.length: " + connectedAtoms.length);
-						IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
-						//placedAtoms.addAtom(atomInRange);
-						for (int i = 0; i < connectedAtoms.length; i++)
-						{
-							placedAtoms.addAtom(connectedAtoms[i]);
-						}
-						IAtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
-						unplacedAtoms.addAtom(newAtom2);
-						AtomPlacer atomPlacer = new AtomPlacer();
-						atomPlacer.setMolecule(new org.openscience.cdk.Molecule(atomCon));
-						Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
-						logger.debug("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
-						logger.debug("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
-						if (placedAtoms.getAtomCount() == 1)
-						{
-							Vector2d bondVector = atomPlacer.getNextBondVector(
-									atomInRange, placedAtoms.getAtomAt(0), 
-									GeometryTools.get2DCenter(new org.openscience.cdk.Molecule(atomCon)),
-									false // FIXME: is this correct? (see SF bug #1367002)
-							);
-							Point2d atomPoint = new Point2d(atomInRange.getPoint2d());
-							bondVector.normalize();
-							bondVector.scale(bondLength);
-							atomPoint.add(bondVector);
-							newAtom2.setPoint2d(atomPoint);
-
-						} else
-						{
-							atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
-									unplacedAtoms, bondLength);
-						}
-
-						// now add the new atom
-						atomCon.addAtom(newAtom2);
-						undoRedoContainer.addAtom(newAtom2);
-						newBond=new org.openscience.cdk.Bond(atomInRange, newAtom2, 1.0);
-						atomCon.addBond(newBond);
-						undoRedoContainer.addBond(newBond);
-						if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
-							newBond.setStereo(CDKConstants.STEREO_BOND_UP);
-						if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
-							newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
-						// update atoms
-						updateAtom(atomCon, atomInRange);
-						updateAtom(atomCon, newAtom2);
-					}
-					UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Bond");
-					c2dm.getUndoSupport().postEdit(edit);
-				}
-				r2dm.fireChange();
-				fireChange();
-				centerAtom(newAtom1,chemModel);
-				centerAtom(newAtom2,chemModel);
+				drawBond(mouseX, mouseY);
 			}
 
 			if (c2dm.getDrawMode() == Controller2DModel.SELECT && wasDragged)
@@ -837,52 +513,762 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 			if (c2dm.getDrawMode() == Controller2DModel.ERASER)
 			{
-				IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
-				String type = null;
-				IAtom highlightedAtom = r2dm.getHighlightedAtom();
-				IBond highlightedBond = r2dm.getHighlightedBond();
-				if (highlightedAtom != null)
+				eraseSelection();
+			}
+
+			if (c2dm.getDrawMode() == Controller2DModel.RING || c2dm.getDrawMode() == Controller2DModel.BENZENERING)
+			{
+				drawRing(mouseX, mouseY);
+			}
+
+			if (c2dm.getDrawMode() == Controller2DModel.LASSO && r2dm.getRotateRadius()==0)
+			{
+				// first deselect all atoms
+				r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
+				// now select new atoms
+				if (wasDragged)
 				{
-					logger.info("User asks to delete an Atom");
-					IAtomContainer container = getAllInOneContainer(chemModel);
-					logger.debug("Atoms before delete: ", container.getAtomCount());
-					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
-					undoRedoContainer.addAtom(highlightedAtom);
-					if (type == null) {
-						type = "Remove Atom";
-					}
-					else {
-						type = "Remove Substructure";
-					}
-					container = getAllInOneContainer(chemModel);
-					logger.debug("Atoms before delete: ", container.getAtomCount());
-					// update atoms
-					IAtom[] atoms = container.getConnectedAtoms(highlightedAtom);
-					if (atoms.length > 0)
-					{
-						IAtomContainer atomCon = getRelevantAtomContainer(chemModel, atoms[0]);
-						updateAtoms(atomCon, atoms);
-					}
-				} else if (highlightedBond != null)
-				{
-					logger.info("User asks to delete a Bond");
-					ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
-					undoRedoContainer.addBond(highlightedBond);
-					if (type == null) {
-						type = "Remove Bond";
-					}
-					else {
-						type = "Remove Substructure";
-					}
-					// update atoms
-					org.openscience.cdk.interfaces.IAtom[] atoms = highlightedBond.getAtoms();
-					IAtomContainer container = getRelevantAtomContainer(chemModel, atoms[0]);
-					updateAtoms(container, atoms);
+					lassoSelection();
+
 				} else
 				{
-					logger.warn("Cannot deleted if nothing is highlighted");
-					return;
+					singleObjectSelected(mouseX, mouseY);
 				}
+				fireChange();
+			}
+
+			if (wasDragged)
+			{
+				prevDragCoordX = 0;
+				prevDragCoordY = 0;
+				wasDragged = false;
+			}
+			if (dragMode==DRAG_MOVING_SELECTED){
+				dragAndDropSelection();
+			}
+			
+			if (c2dm.getDrawMode() == Controller2DModel.MOVE)
+			{
+				if (draggingSelected == false)
+				{					
+					// then it was dragging nearest Bond or Atom
+					r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
+				}
+				if(r2dm.getMerge().size()>0){
+					mergeMolecules();
+				}
+			} 
+			
+			dragMode = DRAG_UNSET;
+			r2dm.setPointerVectorStart(null);
+			r2dm.setPointerVectorEnd(null);
+		}
+		if (shiftX != 0 || shiftY != 0)
+		{
+			shiftMolecule();
+		}
+		shiftX = 0;
+		shiftY = 0;
+	}
+
+
+	private void shiftMolecule() {
+		for (int i = 0; i < chemModel.getSetOfMolecules().getMoleculeCount(); i++)
+		{
+			IMolecule mol = chemModel.getSetOfMolecules().getMolecules()[i];
+			for (int k = 0; k < mol.getAtomCount(); k++)
+			{
+				mol.getAtomAt(k).setX2d(mol.getAtomAt(k).getX2d() - shiftX);
+				mol.getAtomAt(k).setY2d(mol.getAtomAt(k).getY2d() - shiftY);
+			}
+		}
+		r2dm.fireChange();
+		fireChange();
+	}
+
+	private void dragAndDropSelection() {
+		double deltaX=0;
+		double deltaY=0;
+		IAtomContainer undoredoContainer = new org.openscience.cdk.AtomContainer();
+		if(r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()>0){
+			undoredoContainer.add(r2dm.getSelectedPart());
+			deltaX=r2dm.getSelectedPart().getAtomAt(0).getPoint2d().x-moveoldX;
+			deltaY=r2dm.getSelectedPart().getAtomAt(0).getPoint2d().y-moveoldY;
+			
+		}else if(r2dm.getHighlightedAtom()!=null){
+			deltaX=r2dm.getHighlightedAtom().getPoint2d().x-moveoldX;
+			deltaY=r2dm.getHighlightedAtom().getPoint2d().y-moveoldY;
+			undoredoContainer.addAtom(r2dm.getHighlightedAtom());
+		}else if (r2dm.getHighlightedBond()!=null){
+			deltaX=r2dm.getHighlightedBond().getAtomAt(0).getPoint2d().x-moveoldX;
+			deltaY=r2dm.getHighlightedBond().getAtomAt(0).getPoint2d().y-moveoldY;	
+		}
+		UndoableEdit edit = new MoveAtomEdit(undoredoContainer, (int)deltaX, (int)deltaY);
+		c2dm.getUndoSupport().postEdit(edit);
+	}
+
+	private void mergeMolecules() {
+		Iterator it=r2dm.getMerge().keySet().iterator();
+		IBond[] bondson2 = null;
+		IAtom atom2 = null;
+		IAtom atom1 = null;
+		ArrayList undoredoContainer = new ArrayList();
+		while(it.hasNext()){
+			Object[] undoObject = new Object[3];
+			atom1=(IAtom)it.next();
+			atom2=(IAtom)r2dm.getMerge().get(atom1);
+			undoObject[0] = atom1;
+			undoObject[1] = atom2;
+			ISetOfMolecules som=chemModel.getSetOfMolecules();
+			IAtomContainer container1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atom1);
+			IAtomContainer container2 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atom2);
+			if (container1 != container2) {
+				container1.add(container2);
+				som.removeAtomContainer(container2);
+			}
+			bondson2=container1.getConnectedBonds(atom2);
+			undoObject[2] = bondson2;
+			undoredoContainer.add(undoObject);
+			for(int i=0;i<bondson2.length;i++){
+				if(bondson2[i].getAtomAt(0)==atom2)
+					bondson2[i].setAtomAt(atom1,0);
+				if(bondson2[i].getAtomAt(1)==atom2)
+					bondson2[i].setAtomAt(atom1,1);
+				if(bondson2[i].getAtomAt(0)==bondson2[i].getAtomAt(1)){
+					container1.removeElectronContainer(bondson2[i]);
+				}
+			}
+			container1.removeAtom(atom2);
+		}
+		UndoableEdit  edit = new MergeMoleculesEdit(chemModel, undoredoContainer, "Molecules merged");
+		c2dm.getUndoSupport().postEdit(edit);
+		r2dm.getMerge().clear();
+	}
+
+	private void singleObjectSelected(int mouseX, int mouseY) {
+//		 one atom clicked or one bond clicked
+		IChemObject chemObj = getChemObjectInRange(mouseX, mouseY);
+		IAtomContainer container = new org.openscience.cdk.AtomContainer();
+		if (chemObj instanceof IAtom)
+		{
+			container.addAtom((IAtom) chemObj);
+			logger.debug("selected one atom in lasso mode");
+			r2dm.setSelectedPart(container);
+		} else if (chemObj instanceof IBond)
+		{
+			IBond bond = (IBond) chemObj;
+			container.addBond(bond);
+			logger.debug("selected one bond in lasso mode");
+			IAtom[] atoms = bond.getAtoms();
+			for (int i = 0; i < atoms.length; i++)
+			{
+				container.addAtom(atoms[i]);
+			}
+			r2dm.setSelectedPart(container);
+		}
+	}
+
+	private void lassoSelection() {
+		Vector lassoPoints = r2dm.getLassoPoints();
+		r2dm.addLassoPoint(new Point((Point) lassoPoints.elementAt(0)));
+		int number = lassoPoints.size();
+		logger.debug("# lasso points: ", number);
+		int[] screenLassoCoords = new int[number * 2];
+		Point currentPoint;
+		for (int i = 0; i < number; i++)
+		{
+			currentPoint = (Point) lassoPoints.elementAt(i);
+			screenLassoCoords[i * 2] = currentPoint.x;
+			screenLassoCoords[i * 2 + 1] = currentPoint.y;
+			logger.debug("ScreenLasso.x = ", screenLassoCoords[i * 2]);
+			logger.debug("ScreenLasso.y = ", screenLassoCoords[i * 2 + 1]);
+		}
+		/*
+		 *  Convert points to world coordinates as they are
+		 *  in screen coordinates in the vector
+		 */
+		int[] worldCoords = getWorldCoordinates(screenLassoCoords);
+		logger.debug("Returned coords: ", worldCoords.length);
+		logger.debug("       # points: ", number);
+		int[] xPoints = new int[number];
+		int[] yPoints = new int[number];
+		for (int i = 0; i < number; i++)
+		{
+			xPoints[i] = worldCoords[i * 2];
+			yPoints[i] = worldCoords[i * 2 + 1];
+			logger.debug("WorldCoords.x  = ", worldCoords[i * 2]);
+			logger.debug("WorldCoords.y  = ", worldCoords[i * 2 + 1]);
+			logger.debug("Polygon.x = ", xPoints[i]);
+			logger.debug("Polygon.y = ", yPoints[i]);
+		}
+		Polygon polygon = new Polygon(xPoints, yPoints, number);
+		r2dm.setSelectedPart(getContainedAtoms(polygon));
+		r2dm.getLassoPoints().removeAllElements();
+		r2dm.fireChange();
+	}
+
+	private void drawRing(int mouseX, int mouseY) {
+		IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
+		IRing newRing = null;
+		Point2d sharedAtomsCenter;
+		Vector2d ringCenterVector;
+		double bondLength;
+		int pointerMarkX;
+		int pointerMarkY;
+
+		double ringRadius;
+
+		double angle;
+
+		double xDiff;
+
+		double yDiff;
+
+		double distance1 = 0;
+
+		double distance2 = 0;
+		IAtom firstAtom;
+		IAtom secondAtom;
+		IAtom spiroAtom;
+		Point2d conAtomsCenter = null;
+		Point2d newPoint1;
+		Point2d newPoint2;
+
+		RingPlacer ringPlacer = new RingPlacer();
+		int ringSize = c2dm.getRingSize();
+		String symbol = c2dm.getDrawElement();
+		IAtomContainer sharedAtoms = getHighlighted();
+
+		if (sharedAtoms.getAtomCount() == 0)
+		{
+			sharedAtoms = new org.openscience.cdk.AtomContainer();
+			newRing = new org.openscience.cdk.Ring(ringSize, symbol);
+			if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
+			{
+				// make newRing a benzene ring
+				IBond[] bonds = newRing.getBonds();
+				bonds[0].setOrder(2.0);
+				bonds[2].setOrder(2.0);
+				bonds[4].setOrder(2.0);
+				makeRingAromatic(newRing);
+			}
+			bondLength = r2dm.getBondLength();
+			ringRadius = (bondLength / 2) / Math.sin(Math.PI / c2dm.getRingSize());
+			sharedAtomsCenter = new Point2d(mouseX, mouseY - ringRadius);
+			firstAtom = newRing.getAtomAt(0);
+			firstAtom.setPoint2d(sharedAtomsCenter);
+			sharedAtoms.addAtom(firstAtom);
+			ringCenterVector = new Vector2d(new Point2d(mouseX, mouseY));
+			ringCenterVector.sub(sharedAtomsCenter);
+			ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+			IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
+			atomCon.add(newRing);
+			undoRedoContainer.add(newRing);
+		} else if (sharedAtoms.getAtomCount() == 1)
+		{
+			spiroAtom = sharedAtoms.getAtomAt(0);
+			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
+			newRing = createAttachRing(sharedAtoms, ringSize, symbol);
+			if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
+			{
+				// make newRing a benzene ring
+				IBond[] bonds = newRing.getBonds();
+				bonds[0].setOrder(2.0);
+				bonds[2].setOrder(2.0);
+				bonds[4].setOrder(2.0);
+				makeRingAromatic(newRing);
+			}
+			bondLength = r2dm.getBondLength();
+			conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);
+			if (conAtomsCenter.equals(spiroAtom.getPoint2d()))
+			{
+				ringCenterVector = new Vector2d(0, 1);
+			} else
+			{
+				ringCenterVector = new Vector2d(sharedAtomsCenter);
+				ringCenterVector.sub(conAtomsCenter);
+			}
+			ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+			// removes the highlighed atom from the ring to add only the new placed
+			// atoms to the AtomContainer.
+			try
+			{
+				newRing.removeAtom(spiroAtom);
+			} catch (Exception exc)
+			{
+				logger.error("Could not remove atom from ring");
+				logger.debug(exc);
+			}
+			IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, spiroAtom);
+			atomCon.add(newRing);
+			undoRedoContainer.add(newRing);
+		} else if (sharedAtoms.getAtomCount() == 2)
+		{
+			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
+
+			// calculate two points that are perpendicular to the highlighted bond
+			// and have a certain distance from the bondcenter
+			firstAtom = sharedAtoms.getAtomAt(0);
+			secondAtom = sharedAtoms.getAtomAt(1);
+			xDiff = secondAtom.getX2d() - firstAtom.getX2d();
+			yDiff = secondAtom.getY2d() - firstAtom.getY2d();
+			bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+			angle = GeometryTools.getAngle(xDiff, yDiff);
+			newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
+			newPoint2 = new Point2d((Math.cos(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
+
+			if (wasDragged)
+			{
+				// check which one of the two points is nearest to the endpoint of the pointer
+				// vector that was dragged to make the ringCenterVector point into the right direction.
+				pointerMarkX = r2dm.getPointerVectorEnd().x;
+				pointerMarkY = r2dm.getPointerVectorEnd().y;
+				distance1 = -1 * (Math.sqrt(Math.pow(newPoint1.x - pointerMarkX, 2) + Math.pow(newPoint1.y - pointerMarkY, 2)));
+				distance2 = -1 * (Math.sqrt(Math.pow(newPoint2.x - pointerMarkX, 2) + Math.pow(newPoint2.y - pointerMarkY, 2)));
+				r2dm.setPointerVectorStart(null);
+				r2dm.setPointerVectorEnd(null);
+			} else
+			{
+				// check which one of the two points is nearest to the center of the
+				// connected atoms to make the ringCenterVector point into the right direction.
+				conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);
+				distance1 = Math.sqrt(Math.pow(newPoint1.x - conAtomsCenter.x, 2) + Math.pow(newPoint1.y - conAtomsCenter.y, 2));
+				distance2 = Math.sqrt(Math.pow(newPoint2.x - conAtomsCenter.x, 2) + Math.pow(newPoint2.y - conAtomsCenter.y, 2));
+			}
+			ringCenterVector = new Vector2d(sharedAtomsCenter);
+			// no ring is attached if the two ditances are equal
+			if (distance1 == distance2)
+			{
+				logger.warn("don't know where to draw the new Ring");
+			} else
+			{
+				if (distance1 < distance2)
+				{
+					ringCenterVector.sub(newPoint1);
+				} else if (distance2 < distance1)
+				{
+					ringCenterVector.sub(newPoint2);
+				}
+
+				IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, firstAtom);
+
+				// construct a new Ring that contains the highlighted bond an its two atoms
+				newRing = createAttachRing(sharedAtoms, ringSize, symbol);
+				if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
+				{
+					// make newRing a benzene ring
+					IBond existingBond = atomCon.getBond(firstAtom, secondAtom);
+					IBond[] bonds = newRing.getBonds();
+
+					if (existingBond.getOrder() == 1.0)
+					{
+						if (existingBond.getFlag(CDKConstants.ISAROMATIC))
+						{
+							bonds[2].setOrder(2.0);
+							bonds[4].setOrder(2.0);
+						} else
+						{
+							bonds[1].setOrder(2.0);
+							bonds[3].setOrder(2.0);
+							bonds[5].setOrder(2.0);
+						}
+					} else
+					{
+						bonds[2].setOrder(2.0);
+						bonds[4].setOrder(2.0);
+					}
+					makeRingAromatic(newRing);
+				}
+
+				// place the new atoms of the new ring to the right position
+				ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
+
+				// removes the highlighed bond and its atoms from the ring to add only
+				// the new placed atoms to the AtomContainer.
+				try
+				{
+					newRing.remove(sharedAtoms);
+				} catch (Exception exc)
+				{
+					logger.error("Could not remove atom from ring");
+					logger.debug(exc);
+				}
+				atomCon.add(newRing);
+			}
+		}
+		double highlightRadius = r2dm.getHighlightRadius();
+		for (int i = 0; i < newRing.getAtomCount(); i++)
+		{
+			IAtom atom=newRing.getAtomAt(i);
+			centerAtom(atom,chemModel);
+			//We make sure atoms don't overlap
+			//Solution is a bit crude, we would need to find an unoccupied place (and even the bond display should be optimized)
+			IAtom inrange=getAtomInRange((int)atom.getPoint2d().x, (int)atom.getPoint2d().y, atom);
+			if(inrange!=null && Math.sqrt(Math.pow(inrange.getX2d() - atom.getPoint2d().x, 2) + Math.pow(inrange.getY2d() - atom.getPoint2d().y, 2)) < highlightRadius/4){
+				atom.getPoint2d().x-=highlightRadius/4;
+				atom.getPoint2d().y-=highlightRadius/4;
+			}
+		}
+		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtomAt(0)), newRing.getAtoms());
+		undoRedoContainer.add(newRing);
+		UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Ring");
+		c2dm.getUndoSupport().postEdit(edit);
+		r2dm.fireChange();
+		fireChange();
+	}
+
+	private void eraseSelection() {
+		IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
+		String type = null;
+		IAtom highlightedAtom = r2dm.getHighlightedAtom();
+		IBond highlightedBond = r2dm.getHighlightedBond();
+		if (highlightedAtom != null && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(highlightedAtom)))
+		{
+			logger.info("User asks to delete an Atom");
+			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+			logger.debug("Atoms before delete: ", container.getAtomCount());
+			ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
+			undoRedoContainer.addAtom(highlightedAtom);
+			if (type == null) {
+				type = "Remove Atom";
+			}
+			else {
+				type = "Remove Substructure";
+			}
+			container = ChemModelManipulator.getAllInOneContainer(chemModel);
+			logger.debug("Atoms before delete: ", container.getAtomCount());
+			// update atoms
+			IAtom[] atoms = container.getConnectedAtoms(highlightedAtom);
+			if (atoms.length > 0)
+			{
+				IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+				updateAtoms(atomCon, atoms);
+			}
+		} else if (highlightedBond != null && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(highlightedBond)))
+		{
+			logger.info("User asks to delete a Bond");
+			ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
+			undoRedoContainer.addBond(highlightedBond);
+			if (type == null) {
+				type = "Remove Bond";
+			}
+			else {
+				type = "Remove Substructure";
+			}
+			// update atoms
+			IAtom[] atoms = highlightedBond.getAtoms();
+			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+			updateAtoms(container, atoms);
+		} else if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().getAtomCount()>0 || r2dm.getSelectedPart().getBondCount()>0)){
+			logger.info("User asks to delete selected part");
+			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
+				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtomAt(i));
+				undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtomAt(i));
+			}
+			for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
+				ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBondAt(i));
+				undoRedoContainer.addBond(r2dm.getSelectedPart().getBondAt(i));
+			}
+			type = "Remove Substructure";
+			// update atoms
+			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+			IAtom[] atoms = r2dm.getSelectedPart().getAtoms();
+			updateAtoms(container, atoms);
+			
+		}else
+		{
+			logger.warn("Cannot deleted if nothing is highlighted");
+			return;
+		}
+		/*
+		 *  PRESERVE THIS. This notifies the
+		 *  the listener responsible for
+		 *  undo and redo storage that it
+		 *  should store this change of an atom symbol
+		 */
+		isUndoableChange = true;
+		/*
+		 *  ---
+		 */
+		UndoableEdit  edit = new RemoveAtomsAndBondsEdit(chemModel, undoRedoContainer, type);
+		c2dm.getUndoSupport().postEdit(edit);
+		r2dm.fireChange();
+		fireChange();
+	}
+
+	private void drawBond(int mouseX, int mouseY) {
+		logger.debug("mouseReleased->drawbond");
+		IAtom atomInRange;
+		IAtom newAtom1 = null;
+		IAtom newAtom2 = null;
+		IBond newBond = null;
+		int startX = r2dm.getPointerVectorStart().x;
+		int startY = r2dm.getPointerVectorStart().y;
+		IBond bondInRange = r2dm.getHighlightedBond();
+		
+
+		
+		//atomInRange = r2dm.getHighlightedAtom();
+		//Bond bondInRange = getBondInRange(mouseX, mouseY);
+		/*
+		 *  IMPORTANT: I don't use getHighlighteAtom()
+		 *  here because of the special case of
+		 *  only one atom on the screen.
+		 *  In this case, this atom will not detected
+		 *  if the mouse hasn't moved after it's creation
+		 */
+		atomInRange = getAtomInRange(mouseX, mouseY);
+		if (bondInRange != null)
+		{
+//			update atoms
+			IAtom[] atoms = bondInRange.getAtoms();
+			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
+			updateAtoms(container, atoms);
+			HashMap changedBonds = new HashMap();
+			IBond formerBond = (IBond) bondInRange.clone();
+			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
+				// increase Bond order
+				double order = bondInRange.getOrder();
+				if (order >= CDKConstants.BONDORDER_TRIPLE)
+				{
+					bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
+				} else {
+					bondInRange.setOrder(order + 1.0);
+					// this is tricky as it depends on the fact that the
+					// constants are unidistant, i.e. {1.0, 2.0, 3.0}.
+				}
+				;
+				
+				
+			}else if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND){
+	            // toggle bond stereo
+	            double stereo = bondInRange.getStereo();
+	            if (stereo == CDKConstants.STEREO_BOND_DOWN)
+	            {
+	              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN_INV);
+	            } else if (stereo == CDKConstants.STEREO_BOND_DOWN_INV)
+	            {
+	              bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
+	            } else
+	            {
+	              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
+	            }
+			}else{
+	            // toggle bond stereo
+	            double stereo = bondInRange.getStereo();
+	            if (stereo == CDKConstants.STEREO_BOND_UP)
+	            {
+	              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP_INV);
+	            } else if (stereo == CDKConstants.STEREO_BOND_UP_INV)
+	            {
+	              bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
+	            } else
+	            {
+	              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
+	            }
+			}           
+			/*
+			 *  PRESERVE THIS. This notifies the
+			 *  the listener responsible for
+			 *  undo and redo storage that it
+			 *  should store this change of an atom symbol
+			 */
+			if (bondInRange.getOrder() != formerBond.getOrder()) {
+                double[] bondOrders = new double[2];
+                bondOrders[0] = bondInRange.getOrder();
+                bondOrders[1] = formerBond.getOrder();
+                changedBonds.put(bondInRange, bondOrders);
+            }
+			isUndoableChange = true;
+			/*
+			 *  ---
+			 */
+			UndoableEdit  edit = new AdjustBondOrdersEdit(changedBonds);
+			c2dm.getUndoSupport().postEdit(edit);
+		} else
+		{
+			IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
+			if (atomInRange != null)
+			{
+				logger.debug("We had an atom in range");
+				newAtom1 = atomInRange;
+			} else if (!wasDragged)
+			{
+				// create a new molecule
+				logger.debug("We make a new molecule");
+				newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
+				IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
+				atomCon.addAtom(newAtom1);
+				// update atoms
+				updateAtom(atomCon, newAtom1);
+				undoRedoContainer.add(atomCon);
+			}
+
+			if (wasDragged)
+			{
+				if (dragMode == DRAG_DRAWING_PROPOSED_BOND)
+				{
+					int endX = r2dm.getPointerVectorEnd().x;
+					int endY = r2dm.getPointerVectorEnd().y;
+					atomInRange = getAtomInRange(endX, endY);
+					IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
+					if (atomInRange != null)
+					{
+						logger.debug("*** atom in range");
+
+						newAtom2 = atomInRange;
+						logger.debug("atomCon.getAtomCount() " + atomCon.getAtomCount());
+					} else
+					{
+						logger.debug("*** new atom");
+						newAtom2 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(endX, endY));
+						atomCon.addAtom(newAtom2);
+						undoRedoContainer.addAtom(newAtom2);
+					}
+					newAtom1 = lastAtomInRange;
+					if (newAtom1 == null)
+					{
+						newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));
+						undoRedoContainer.addAtom(newAtom1);
+					}
+					if (newAtom1 != newAtom2)
+					{
+						newBond = new org.openscience.cdk.Bond(newAtom1, newAtom2, 1);
+						if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
+							newBond.setStereo(CDKConstants.STEREO_BOND_UP);
+						if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
+							newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
+						logger.debug(newAtom1 + " - " + newAtom2);
+						atomCon.addBond(newBond);
+						undoRedoContainer.addBond(newBond);
+					}
+
+					try
+					{
+						ISetOfMolecules setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
+						chemModel.setSetOfMolecules(setOfMolecules);
+						logger.debug("We have " + setOfMolecules.getAtomContainerCount() + " molecules on screen");
+					} catch (Exception exception)
+					{
+						logger.warn("Could not partition molecule: ", exception.getMessage());
+						logger.debug(exception);
+						return;
+					}
+
+					// update atoms
+					updateAtom(atomCon, newAtom2);
+
+					/*
+					 *  PRESERVE THIS. This notifies the
+					 *  the listener responsible for
+					 *  undo and redo storage that it
+					 *  should store this change of an atom symbol
+					 */
+					isUndoableChange = true;
+					/*
+					 *  ---
+					 */
+				}
+			} else if (atomInRange != null)
+			{
+				// add a new atom to the current atom in some random
+				// direction
+				IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+				newAtom2 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), atomInRange.getPoint2d());
+
+				// now create 2D coords for new atom
+				double bondLength = r2dm.getBondLength();
+				IAtom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
+				logger.debug("connectedAtoms.length: " + connectedAtoms.length);
+				IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
+				//placedAtoms.addAtom(atomInRange);
+				for (int i = 0; i < connectedAtoms.length; i++)
+				{
+					placedAtoms.addAtom(connectedAtoms[i]);
+				}
+				IAtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
+				unplacedAtoms.addAtom(newAtom2);
+				AtomPlacer atomPlacer = new AtomPlacer();
+				atomPlacer.setMolecule(new org.openscience.cdk.Molecule(atomCon));
+				Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
+				logger.debug("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
+				logger.debug("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
+				if (placedAtoms.getAtomCount() == 1)
+				{
+					Vector2d bondVector = atomPlacer.getNextBondVector(
+							atomInRange, placedAtoms.getAtomAt(0), 
+							GeometryTools.get2DCenter(new org.openscience.cdk.Molecule(atomCon)),
+							true // FIXME: is this correct? (see SF bug #1367002)
+					);
+					Point2d atomPoint = new Point2d(atomInRange.getPoint2d());
+					bondVector.normalize();
+					bondVector.scale(bondLength);
+					atomPoint.add(bondVector);
+					newAtom2.setPoint2d(atomPoint);
+
+				} else
+				{
+					atomPlacer.distributePartners(atomInRange, placedAtoms, center2D,
+							unplacedAtoms, bondLength);
+				}
+
+				// now add the new atom
+				atomCon.addAtom(newAtom2);
+				undoRedoContainer.addAtom(newAtom2);
+				newBond=new org.openscience.cdk.Bond(atomInRange, newAtom2, 1.0);
+				atomCon.addBond(newBond);
+				undoRedoContainer.addBond(newBond);
+				if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
+					newBond.setStereo(CDKConstants.STEREO_BOND_UP);
+				if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
+					newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
+				// update atoms
+				updateAtom(atomCon, atomInRange);
+				updateAtom(atomCon, newAtom2);
+			}
+			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Bond");
+			c2dm.getUndoSupport().postEdit(edit);
+		}
+		r2dm.fireChange();
+		fireChange();
+		centerAtom(newAtom1,chemModel);
+		centerAtom(newAtom2,chemModel);
+	}
+
+	private void decreaseCharge() {
+		IAtom atomInRange = r2dm.getHighlightedAtom();
+		if (atomInRange != null)
+		{
+			int formerCharge = atomInRange.getFormalCharge();
+			atomInRange.setFormalCharge(atomInRange.getFormalCharge() - 1);
+			// update atom
+			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+			updateAtom(container, atomInRange);
+			//undoredo support
+            UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
+			c2dm.getUndoSupport().postEdit(edit);
+			r2dm.fireChange();
+			fireChange();
+		}
+	}
+
+	private void enterElement() {
+		IAtom atomInRange = r2dm.getHighlightedAtom();
+		if (atomInRange != null)
+		{
+			String x=JOptionPane.showInputDialog(null,"Enter new element symbol");
+			try{
+				if(Character.isLowerCase(x.toCharArray()[0]))
+					x=Character.toUpperCase(x.charAt(0))+x.substring(1);
+				IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
+				IIsotope iso=ifa.getMajorIsotope(x);
+				String formerSymbol=r2dm.getHighlightedAtom().getSymbol();
+				if(iso!=null)
+					r2dm.getHighlightedAtom().setSymbol(x);
+				// update atom
+				IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+				updateAtom(container, atomInRange);
+				
 				/*
 				 *  PRESERVE THIS. This notifies the
 				 *  the listener responsible for
@@ -893,367 +1279,144 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				/*
 				 *  ---
 				 */
-				UndoableEdit  edit = new RemoveAtomsAndBondsEdit(chemModel, undoRedoContainer, type);
+				// undoredo support
+				UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, x);
 				c2dm.getUndoSupport().postEdit(edit);
 				r2dm.fireChange();
 				fireChange();
+			}catch(Exception ex){
+				logger.debug(ex.getMessage()+" in SELECTELEMENT");
 			}
-
-			if (c2dm.getDrawMode() == Controller2DModel.RING || c2dm.getDrawMode() == Controller2DModel.BENZENERING)
-			{
-				IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
-				IRing newRing = null;
-				Point2d sharedAtomsCenter;
-				Vector2d ringCenterVector;
-				double bondLength;
-				int pointerMarkX;
-				int pointerMarkY;
-
-				double ringRadius;
-
-				double angle;
-
-				double xDiff;
-
-				double yDiff;
-
-				double distance1 = 0;
-
-				double distance2 = 0;
-				IAtom firstAtom;
-				IAtom secondAtom;
-				IAtom spiroAtom;
-				Point2d conAtomsCenter = null;
-				Point2d newPoint1;
-				Point2d newPoint2;
-
-				RingPlacer ringPlacer = new RingPlacer();
-				int ringSize = c2dm.getRingSize();
-				String symbol = c2dm.getDrawElement();
-				IAtomContainer sharedAtoms = getHighlighted();
-
-				if (sharedAtoms.getAtomCount() == 0)
-				{
-					sharedAtoms = new org.openscience.cdk.AtomContainer();
-					newRing = new org.openscience.cdk.Ring(ringSize, symbol);
-					if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
-					{
-						// make newRing a benzene ring
-						IBond[] bonds = newRing.getBonds();
-						bonds[0].setOrder(2.0);
-						bonds[2].setOrder(2.0);
-						bonds[4].setOrder(2.0);
-						makeRingAromatic(newRing);
-					}
-					bondLength = r2dm.getBondLength();
-					ringRadius = (bondLength / 2) / Math.sin(Math.PI / c2dm.getRingSize());
-					sharedAtomsCenter = new Point2d(mouseX, mouseY - ringRadius);
-					firstAtom = newRing.getAtomAt(0);
-					firstAtom.setPoint2d(sharedAtomsCenter);
-					sharedAtoms.addAtom(firstAtom);
-					ringCenterVector = new Vector2d(new Point2d(mouseX, mouseY));
-					ringCenterVector.sub(sharedAtomsCenter);
-					ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
-					IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
-					atomCon.add(newRing);
-					undoRedoContainer.add(newRing);
-				} else if (sharedAtoms.getAtomCount() == 1)
-				{
-					spiroAtom = sharedAtoms.getAtomAt(0);
-					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
-					newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-					if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
-					{
-						// make newRing a benzene ring
-						IBond[] bonds = newRing.getBonds();
-						bonds[0].setOrder(2.0);
-						bonds[2].setOrder(2.0);
-						bonds[4].setOrder(2.0);
-						makeRingAromatic(newRing);
-					}
-					bondLength = r2dm.getBondLength();
-					conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);
-					if (conAtomsCenter.equals(spiroAtom.getPoint2d()))
-					{
-						ringCenterVector = new Vector2d(0, 1);
-					} else
-					{
-						ringCenterVector = new Vector2d(sharedAtomsCenter);
-						ringCenterVector.sub(conAtomsCenter);
-					}
-					ringPlacer.placeSpiroRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
-					// removes the highlighed atom from the ring to add only the new placed
-					// atoms to the AtomContainer.
-					try
-					{
-						newRing.removeAtom(spiroAtom);
-					} catch (Exception exc)
-					{
-						logger.error("Could not remove atom from ring");
-						logger.debug(exc);
-					}
-					IAtomContainer atomCon = getRelevantAtomContainer(chemModel, spiroAtom);
-					atomCon.add(newRing);
-					undoRedoContainer.add(newRing);
-				} else if (sharedAtoms.getAtomCount() == 2)
-				{
-					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
-
-					// calculate two points that are perpendicular to the highlighted bond
-					// and have a certain distance from the bondcenter
-					firstAtom = sharedAtoms.getAtomAt(0);
-					secondAtom = sharedAtoms.getAtomAt(1);
-					xDiff = secondAtom.getX2d() - firstAtom.getX2d();
-					yDiff = secondAtom.getY2d() - firstAtom.getY2d();
-					bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
-					angle = GeometryTools.getAngle(xDiff, yDiff);
-					newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
-					newPoint2 = new Point2d((Math.cos(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
-
-					if (wasDragged)
-					{
-						// check which one of the two points is nearest to the endpoint of the pointer
-						// vector that was dragged to make the ringCenterVector point into the right direction.
-						pointerMarkX = r2dm.getPointerVectorEnd().x;
-						pointerMarkY = r2dm.getPointerVectorEnd().y;
-						distance1 = -1 * (Math.sqrt(Math.pow(newPoint1.x - pointerMarkX, 2) + Math.pow(newPoint1.y - pointerMarkY, 2)));
-						distance2 = -1 * (Math.sqrt(Math.pow(newPoint2.x - pointerMarkX, 2) + Math.pow(newPoint2.y - pointerMarkY, 2)));
-						r2dm.setPointerVectorStart(null);
-						r2dm.setPointerVectorEnd(null);
-					} else
-					{
-						// check which one of the two points is nearest to the center of the
-						// connected atoms to make the ringCenterVector point into the right direction.
-						conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);
-						distance1 = Math.sqrt(Math.pow(newPoint1.x - conAtomsCenter.x, 2) + Math.pow(newPoint1.y - conAtomsCenter.y, 2));
-						distance2 = Math.sqrt(Math.pow(newPoint2.x - conAtomsCenter.x, 2) + Math.pow(newPoint2.y - conAtomsCenter.y, 2));
-					}
-					ringCenterVector = new Vector2d(sharedAtomsCenter);
-					// no ring is attached if the two ditances are equal
-					if (distance1 == distance2)
-					{
-						logger.warn("don't know where to draw the new Ring");
-					} else
-					{
-						if (distance1 < distance2)
-						{
-							ringCenterVector.sub(newPoint1);
-						} else if (distance2 < distance1)
-						{
-							ringCenterVector.sub(newPoint2);
-						}
-
-						IAtomContainer atomCon = getRelevantAtomContainer(chemModel, firstAtom);
-
-						// construct a new Ring that contains the highlighted bond an its two atoms
-						newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-						if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
-						{
-							// make newRing a benzene ring
-							IBond existingBond = atomCon.getBond(firstAtom, secondAtom);
-							IBond[] bonds = newRing.getBonds();
-
-							if (existingBond.getOrder() == 1.0)
-							{
-								if (existingBond.getFlag(CDKConstants.ISAROMATIC))
-								{
-									bonds[2].setOrder(2.0);
-									bonds[4].setOrder(2.0);
-								} else
-								{
-									bonds[1].setOrder(2.0);
-									bonds[3].setOrder(2.0);
-									bonds[5].setOrder(2.0);
-								}
-							} else
-							{
-								bonds[2].setOrder(2.0);
-								bonds[4].setOrder(2.0);
-							}
-							makeRingAromatic(newRing);
-						}
-
-						// place the new atoms of the new ring to the right position
-						ringPlacer.placeFusedRing(newRing, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
-
-						// removes the highlighed bond and its atoms from the ring to add only
-						// the new placed atoms to the AtomContainer.
-						try
-						{
-							newRing.remove(sharedAtoms);
-						} catch (Exception exc)
-						{
-							logger.error("Could not remove atom from ring");
-							logger.debug(exc);
-						}
-						atomCon.add(newRing);
-					}
-				}
-				double highlightRadius = r2dm.getHighlightRadius();
-				for (int i = 0; i < newRing.getAtomCount(); i++)
-				{
-					IAtom atom=newRing.getAtomAt(i);
-					centerAtom(atom,chemModel);
-					//We make sure atoms don't overlap
-					//Solution is a bit crude, we would need to find an unoccupied place (and even the bond display should be optimized)
-					IAtom inrange=getAtomInRange((int)atom.getPoint2d().x, (int)atom.getPoint2d().y, atom);
-					if(inrange!=null && Math.sqrt(Math.pow(inrange.getX2d() - atom.getPoint2d().x, 2) + Math.pow(inrange.getY2d() - atom.getPoint2d().y, 2)) < highlightRadius/4){
-						atom.getPoint2d().x-=highlightRadius/4;
-						atom.getPoint2d().y-=highlightRadius/4;
-					}
-				}
-				undoRedoContainer.add(newRing);
-				UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Benzene");
-				c2dm.getUndoSupport().postEdit(edit);
-				r2dm.fireChange();
-				fireChange();
-			}
-
-			if (c2dm.getDrawMode() == Controller2DModel.LASSO)
-			{
-				// first deselect all atoms
-				r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
-				// now select new atoms
-				if (wasDragged)
-				{
-					Vector lassoPoints = r2dm.getLassoPoints();
-					r2dm.addLassoPoint(new Point((Point) lassoPoints.elementAt(0)));
-					int number = lassoPoints.size();
-					logger.debug("# lasso points: ", number);
-					int[] screenLassoCoords = new int[number * 2];
-					Point currentPoint;
-					for (int i = 0; i < number; i++)
-					{
-						currentPoint = (Point) lassoPoints.elementAt(i);
-						screenLassoCoords[i * 2] = currentPoint.x;
-						screenLassoCoords[i * 2 + 1] = currentPoint.y;
-						logger.debug("ScreenLasso.x = ", screenLassoCoords[i * 2]);
-						logger.debug("ScreenLasso.y = ", screenLassoCoords[i * 2 + 1]);
-					}
-					/*
-					 *  Convert points to world coordinates as they are
-					 *  in screen coordinates in the vector
-					 */
-					int[] worldCoords = getWorldCoordinates(screenLassoCoords);
-					logger.debug("Returned coords: ", worldCoords.length);
-					logger.debug("       # points: ", number);
-					int[] xPoints = new int[number];
-					int[] yPoints = new int[number];
-					for (int i = 0; i < number; i++)
-					{
-						xPoints[i] = worldCoords[i * 2];
-						yPoints[i] = worldCoords[i * 2 + 1];
-						logger.debug("WorldCoords.x  = ", worldCoords[i * 2]);
-						logger.debug("WorldCoords.y  = ", worldCoords[i * 2 + 1]);
-						logger.debug("Polygon.x = ", xPoints[i]);
-						logger.debug("Polygon.y = ", yPoints[i]);
-					}
-					Polygon polygon = new Polygon(xPoints, yPoints, number);
-					r2dm.setSelectedPart(getContainedAtoms(polygon));
-					r2dm.getLassoPoints().removeAllElements();
-					r2dm.fireChange();
-				} else
-				{
-					// one atom clicked or one bond clicked
-					IChemObject chemObj = getChemObjectInRange(mouseX, mouseY);
-					IAtomContainer container = new org.openscience.cdk.AtomContainer();
-					if (chemObj instanceof IAtom)
-					{
-						container.addAtom((IAtom) chemObj);
-						logger.debug("selected one atom in lasso mode");
-						r2dm.setSelectedPart(container);
-					} else if (chemObj instanceof org.openscience.cdk.interfaces.IBond)
-					{
-						IBond bond = (IBond) chemObj;
-						container.addBond(bond);
-						logger.debug("selected one bond in lasso mode");
-						org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
-						for (int i = 0; i < atoms.length; i++)
-						{
-							container.addAtom(atoms[i]);
-						}
-						r2dm.setSelectedPart(container);
-					}
-				}
-				fireChange();
-			}
-
-			if (c2dm.getDrawMode() == Controller2DModel.MOVE)
-			{
-				if (draggingSelected == false)
-				{
-					// then it was dragging nearest Bond or Atom
-					r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
-				}
-				if(r2dm.getMerge().size()>0){
-					Iterator it=r2dm.getMerge().keySet().iterator();
-					while(it.hasNext()){
-						IAtom atom1=(IAtom)it.next();
-						IAtom atom2=(IAtom)r2dm.getMerge().get(atom1);
-						int contains1=-1;
-						int contains2=-1;
-						ISetOfMolecules som=chemModel.getSetOfMolecules();
-						for(int i=0;i<som.getAtomContainerCount();i++){
-							if(chemModel.getSetOfMolecules().getAtomContainer(i).contains(atom1))
-								contains1=i;
-							if(chemModel.getSetOfMolecules().getAtomContainer(i).contains(atom2))
-								contains2=i;
-							if(contains1>-1 && contains2>-1)
-								break;
-						}
-						if(contains1>contains2){
-							int prov=contains1;
-							contains1=contains2;
-							contains2=prov;
-						}
-						if(contains1!=contains2){
-							som.getAtomContainer(contains1).add(som.getAtomContainer(contains2));
-							som.removeAtomContainer(contains2);
-						}
-						IBond[] bondson2=som.getAtomContainer(contains1).getConnectedBonds(atom2);
-						for(int i=0;i<bondson2.length;i++){
-							if(bondson2[i].getAtomAt(0)==atom2)
-								bondson2[i].setAtomAt(atom1,0);
-							if(bondson2[i].getAtomAt(1)==atom2)
-								bondson2[i].setAtomAt(atom1,1);
-							if(bondson2[i].getAtomAt(0)==bondson2[i].getAtomAt(1)){
-								som.getAtomContainer(contains1).removeElectronContainer(bondson2[i]);
-							}
-						}
-						som.getAtomContainer(contains1).removeAtom(atom2);
-					}
-					r2dm.getMerge().clear();
-				}
-			}
-
-			if (wasDragged)
-			{
-				prevDragCoordX = 0;
-				prevDragCoordY = 0;
-				wasDragged = false;
-			}
-			dragMode = DRAG_UNSET;
-			r2dm.setPointerVectorStart(null);
-			r2dm.setPointerVectorEnd(null);
 		}
-		if (shiftX != 0 || shiftY != 0)
+	}
+
+	private void increaseCharge() {
+		IAtom atomInRange = r2dm.getHighlightedAtom();
+		if (atomInRange != null)
 		{
-			for (int i = 0; i < chemModel.getSetOfMolecules().getMoleculeCount(); i++)
-			{
-				IMolecule mol = chemModel.getSetOfMolecules().getMolecules()[i];
-				for (int k = 0; k < mol.getAtomCount(); k++)
-				{
-					mol.getAtomAt(k).setX2d(mol.getAtomAt(k).getX2d() - shiftX);
-					mol.getAtomAt(k).setY2d(mol.getAtomAt(k).getY2d() - shiftY);
-				}
-			}
+			int formerCharge = atomInRange.getFormalCharge();
+			atomInRange.setFormalCharge(atomInRange.getFormalCharge() + 1);
+
+			// update atom
+			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+			updateAtom(container, atomInRange);
+			//undoredo support
+            UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
+			c2dm.getUndoSupport().postEdit(edit);
 			r2dm.fireChange();
 			fireChange();
 		}
-		shiftX = 0;
-		shiftY = 0;
 	}
 
+	private void changeElement() {
+		IAtom atomInRange = r2dm.getHighlightedAtom();
+		if (atomInRange != null)
+		{
+			String symbol = c2dm.getDrawElement();
+			if (!(atomInRange.getSymbol().equals(symbol)))
+			{
+				// only change symbol if needed
+				String formerSymbol = atomInRange.getSymbol();
+				atomInRange.setSymbol(symbol);
+				// configure the atom, so that the atomic number matches the symbol
+				try
+				{
+					IsotopeFactory.getInstance(atomInRange.getBuilder()).configure(atomInRange);
+				} catch (Exception exception)
+				{
+					logger.error("Error while configuring atom");
+					logger.debug(exception);
+				}
+				// update atom
+				IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+				updateAtom(container, atomInRange);
+				
+				/*
+				 *  PRESERVE THIS. This notifies the
+				 *  the listener responsible for
+				 *  undo and redo storage that it
+				 *  should store this change of an atom symbol
+				 */
+//				isUndoableChange = true;
+				/*
+				 *  ---
+				 */
+				// undoredo support
+				UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
+				c2dm.getUndoSupport().postEdit(edit);
+				r2dm.fireChange();
+				fireChange();
+			}
+		}else{
+			int startX = r2dm.getPointerVectorStart().x;
+			int startY = r2dm.getPointerVectorStart().y;
+			IAtom newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
+			IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
+			atomCon.addAtom(newAtom1);
+			// update atoms
+			updateAtom(atomCon, newAtom1);
+			chemModel.getSetOfMolecules().addAtomContainer(atomCon);
+			//FIXME undoredo
+			IAtomContainer undoRedoContainer=new org.openscience.cdk.AtomContainer();
+			undoRedoContainer.addAtom(newAtom1);
+			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Atom");
+			c2dm.getUndoSupport().postEdit(edit);
+			r2dm.fireChange();
+			fireChange();
+		}
+	}
+
+	private void changeSymbol() {
+		IAtom atomInRange = r2dm.getHighlightedAtom();
+		if (atomInRange != null)
+		{
+			if (currentCommonElement.get(atomInRange) == null)
+			{
+				currentCommonElement.put(atomInRange, new Integer(1));
+			}
+			int oldCommonElement = ((Integer) currentCommonElement.get(atomInRange)).intValue();
+			String symbol = (String) commonElements.elementAt(oldCommonElement);
+			if (!(atomInRange.getSymbol().equals(symbol)))
+			{
+				// only change symbol if needed
+                String formerSymbol = atomInRange.getSymbol();
+				atomInRange.setSymbol(symbol);
+				// configure the atom, so that the atomic number matches the symbol
+				try
+				{
+					IsotopeFactory.getInstance(atomInRange.getBuilder()).configure(atomInRange);
+				} catch (Exception exception)
+				{
+					logger.error("Error while configuring atom");
+					logger.debug(exception);
+				}
+				// update atom
+				IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+				updateAtom(container, atomInRange);
+
+				/*
+				 *  PRESERVE THIS. This notifies the
+				 *  the listener responsible for
+				 *  undo and redo storage that it
+				 *  should store this change of an atom symbol
+				 */
+				isUndoableChange = true;
+				/*
+				 *  ---
+				 */
+                UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
+                c2dm.getUndoSupport().postEdit(edit);
+				r2dm.fireChange();
+				fireChange();
+			}
+			oldCommonElement++;
+			if (oldCommonElement == commonElements.size())
+			{
+				oldCommonElement = 0;
+			}
+			currentCommonElement.put(atomInRange, new Integer(oldCommonElement));
+		}
+	}
 
 	/**
 	 *  Makes a ring aromatic
@@ -1406,19 +1569,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 
 	/**
-	 *  No idea what this does
-	 *
-	 *@param  position  Some kind of position
-	 *@return           Don't know what
-	 */
-	private int snapCartesian(int position)
-	{
-		int div = c2dm.getSnapCartesian();
-		return (int) (Math.rint(position / div)) * div;
-	}
-
-
-	/**
 	 *  Gets the chemObjectInRange attribute of the Controller2D object
 	 *
 	 *@param  X  Current mouse x
@@ -1485,10 +1635,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private IAtom getAtomInRange(int X, int Y, IAtom ignore)
 	{
 		double highlightRadius = r2dm.getHighlightRadius();
-		IAtomContainer atomCon = getAllInOneContainer(chemModel);
-		if(ignore!=null)
-			atomCon.removeAtomAndConnectedElectronContainers(ignore);
-		IAtom closestAtom = GeometryTools.getClosestAtom(X, Y, atomCon);
+		IAtom closestAtom = GeometryTools.getClosestAtom(X, Y, chemModel, ignore);
 		if (closestAtom != null)
 		{
 			//logger.debug("getAtomInRange(): An atom is near");
@@ -1501,7 +1648,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				// set the associated AtomContainer, for use by JCP's Molecule Properties action
 				closestAtom.setProperty(
 					SimpleController2D.MATCHING_ATOMCONTAINER,
-					getRelevantAtomContainer(chemModel, closestAtom)
+					ChemModelManipulator.getRelevantAtomContainer(chemModel, closestAtom)
 				);
 			}
 		}
@@ -1523,7 +1670,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private IBond getBondInRange(int X, int Y)
 	{
         double highlightRadius = r2dm.getHighlightRadius();
-		IAtomContainer atomCon = getAllInOneContainer(chemModel);
+		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
         if (atomCon.getBondCount() != 0) {
             IBond closestBond = GeometryTools.getClosestBond(X, Y, atomCon);
     		if (closestBond == null)
@@ -1621,7 +1768,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		IAtom currentAtom;
 		IAtom[] conAtomsArray;
 		IAtomContainer conAtoms = new org.openscience.cdk.AtomContainer();
-		IAtomContainer atomCon = getAllInOneContainer(chemModel);
+		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
 			currentAtom = sharedAtoms.getAtomAt(i);
@@ -1648,7 +1795,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		IAtom currentAtom;
 		IBond currentBond;
 		IAtomContainer selectedPart = new org.openscience.cdk.AtomContainer();
-		IAtomContainer atomCon = getAllInOneContainer(chemModel);
+		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			currentAtom = atomCon.getAtomAt(i);
@@ -1857,10 +2004,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			IAtom[] atoms = container.getAtoms();
 			for (int i = 0; i < atoms.length; i++)
 			{
-				IAtom atom = atoms[i];
-				atom.setX2d(atom.getX2d() + deltaX);
-				atom.setY2d(atom.getY2d() + deltaY);
+				org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atoms[i];
+				atom.setX2d(atom.getX2d() + deltaX,false);
+				atom.setY2d(atom.getY2d() + deltaY,false);
 			}
+			r2dm.getSelectedPart().notifyChanged();
 		}
 	}
 
@@ -1960,15 +2108,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 	}
 	
-	IAtomContainer getRelevantAtomContainer(IChemModel chemModel, org.openscience.cdk.interfaces.IAtom atom)
-	{
-		return atomContainer;
-	}
-	
-	IAtomContainer getAllInOneContainer(IChemModel chemModel)
-	{
-		return atomContainer;
-	}
 
 	void handleMapping(boolean wasDragged, Renderer2DModel r2dm)
 	{
@@ -2016,13 +2155,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	
 	abstract IReaction getRelevantReaction(IChemModel model, IAtom atom);
 
-	public IAtomContainer getAtomContainer() {
-		return atomContainer;
-	}
-
-	public void setAtomContainer(IAtomContainer atomContainer) {
-		this.atomContainer = atomContainer;
-	}
 
 	public IChemModel getChemModel() {
 		return chemModel;

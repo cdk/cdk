@@ -113,6 +113,7 @@ public class JExternalFrame extends JFrame {
 	 * @see java.awt.Window#dispose()
 	 */
 	public void dispose() {
+    try{
 		theParent.remove(getDummyPanel());
 		this.getContentPane().remove(theComponent);
 		theComponent.setSize(embeddedSize);
@@ -120,5 +121,8 @@ public class JExternalFrame extends JFrame {
 		super.dispose();
 		theParent.validate();
 		theParent.repaint();
+    }catch(Exception ex){
+      //FIXME npe in applet here - needs a true fix
+    }
 	}
 }

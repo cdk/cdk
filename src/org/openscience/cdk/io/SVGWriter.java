@@ -165,7 +165,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
         IAtomContainer container = (IAtomContainer)molecule.clone();
         GeometryTools.translateAllPositive(container);
         GeometryTools.center(container, new Dimension(600,400));
-        r2d.paintMolecule(container, (Graphics2D)svgGenerator,false);
+        r2d.paintMolecule(container, (Graphics2D)svgGenerator,false,true);
         
         // save to stream
         boolean useCSS = true;

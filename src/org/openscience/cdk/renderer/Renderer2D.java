@@ -31,6 +31,7 @@ package org.openscience.cdk.renderer;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
@@ -77,6 +78,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  */
 public class Renderer2D extends SimpleRenderer2D
 {
+	
+	int oldbondcount=0;
+	int oldatomcount=0;
 
 	/**
 	 *  Constructs a Renderer2D with a default settings model.
@@ -123,7 +127,23 @@ public class Renderer2D extends SimpleRenderer2D
 		{
 			logger.debug("setOfMolecules is null");
 		}
-	
+		if(r2dm.getRotateRadius()!=0){
+			graphics.setColor(r2dm.getHighlightColor());
+			int radius=(int)getScreenSize((int)r2dm.getRotateRadius());
+			int[] provCoords={(int)r2dm.getRotateCenter()[0],(int)r2dm.getRotateCenter()[1]};
+			int[] screenCoords = this.getScreenCoordinates(provCoords);
+			graphics.drawOval(screenCoords[0]-radius,screenCoords[1]-radius,radius*2,radius*2);
+			graphics.drawLine(screenCoords[0]-radius,screenCoords[1],screenCoords[0]-radius-radius/2,screenCoords[1]-radius/2);
+			graphics.drawLine(screenCoords[0]-radius,screenCoords[1],screenCoords[0]-radius+radius/2,screenCoords[1]-radius/2);
+			graphics.drawLine(screenCoords[0]+radius,screenCoords[1],screenCoords[0]+radius-radius/2,screenCoords[1]+radius/2);
+			graphics.drawLine(screenCoords[0]+radius,screenCoords[1],screenCoords[0]+radius+radius/2,screenCoords[1]+radius/2);
+		}
+		if(r2dm.getSelectRect()!=null){
+			graphics.setColor(r2dm.getHighlightColor());
+			int[] worldCoords={r2dm.getSelectRect().xpoints[0],r2dm.getSelectRect().ypoints[0],r2dm.getSelectRect().xpoints[1],r2dm.getSelectRect().ypoints[1],r2dm.getSelectRect().xpoints[2],r2dm.getSelectRect().ypoints[2],r2dm.getSelectRect().xpoints[3],r2dm.getSelectRect().ypoints[3]};
+			int[] screenCoords = getScreenCoordinates(worldCoords);
+			graphics.drawRect(screenCoords[0]<screenCoords[4] ? screenCoords[0] : screenCoords[4],screenCoords[1]<screenCoords[3] ? screenCoords[1] : screenCoords[3],Math.abs(screenCoords[0]-screenCoords[4]), Math.abs(screenCoords[1]-screenCoords[3]));
+		}
 	}
 
 
@@ -167,10 +187,19 @@ public class Renderer2D extends SimpleRenderer2D
 		}else{
 			molecules=moleculeSet.getMolecules();
 		}
+		int bondcount=0;
+		int atomcount=0;
+		for (int i = 0; i < molecules.length; i++){
+			bondcount+=molecules[i].getBondCount();
+			atomcount+=molecules[i].getAtomCount();
+		}
+		boolean redossr=false;
+		if(bondcount!=oldbondcount || atomcount!=oldatomcount)
+			redossr=true;
 		for (int i = 0; i < molecules.length; i++)
 		{
 			logger.debug("painting molecule " + i);
-			paintMolecule(molecules[i], graphics,false);
+			paintMolecule(molecules[i], graphics,false, redossr);
 		}
 		if(r2dm.getMerge()!=null){
 			Iterator it=r2dm.getMerge().keySet().iterator();
@@ -178,11 +207,13 @@ public class Renderer2D extends SimpleRenderer2D
 				IAtom atom1=(IAtom)it.next();
 				int[] coords = { (int)atom1.getPoint2d().x,(int)atom1.getPoint2d().y};
 				int[] screenCoords = getScreenCoordinates(coords);
-				graphics.setColor(Color.MAGENTA);
+				graphics.setColor(r2dm.getHighlightColor());
 				graphics.drawOval((int)(screenCoords[0]-r2dm.getBondLength()/2),(int)(screenCoords[1]-r2dm.getBondLength()/2),(int)r2dm.getBondLength(),(int)r2dm.getBondLength());
 				
 			}
 		}
+		oldbondcount=bondcount;
+		oldatomcount=atomcount;
 	}
 
 
@@ -281,11 +312,11 @@ public class Renderer2D extends SimpleRenderer2D
 	
 		// paint reactants content
 		if (r2dm.getShowReactionBoxes()) paintBoundingBox(minmaxReactants, "Reactants", width, graphics);
-		paintMolecule(reactantContainer, graphics,false);
+		paintMolecule(reactantContainer, graphics,false,true);
 	
 		// paint products content
 		if (r2dm.getShowReactionBoxes()) paintBoundingBox(minmaxProducts, "Products", width, graphics);
-		paintMolecule(productContainer, graphics,false);
+		paintMolecule(productContainer, graphics,false,true);
 	
 		if (productContainer.getAtomCount() > 0 && reactantContainer.getAtomCount() > 0)
 		{
