@@ -84,6 +84,8 @@ import org.xmlcml.cml.element.CMLScalar;
  */
 public class Convertor {
 
+	public final static String NS_CML = "http://www.xml-cml.org/schema";
+	
 	private LoggingTool logger;
 	
     private final static String CUSTOMIZERS_LIST = "libio-cml-customizers.set";
