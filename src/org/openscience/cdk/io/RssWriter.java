@@ -53,6 +53,11 @@ import org.openscience.cdk.libio.cml.Convertor;
  */
 
 public class RssWriter extends DefaultChemObjectWriter {
+	
+	private final static String NS_RSS10      = "http://purl.org/rss/1.0/";
+	private final static String NS_RDF        = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+	private final static String NS_DCELEMENTS = "http://purl.org/dc/elements/1.1/";
+	
     static BufferedWriter writer;
     private Map linkmap=new HashMap();
     private Map datemap=new HashMap();
@@ -101,37 +106,37 @@ public class RssWriter extends DefaultChemObjectWriter {
 	public void write(IChemObject object) throws CDKException {
 		try{
 		    ProcessingInstruction pi=new ProcessingInstruction("xml-stylesheet", "href=\"http://www.w3.org/2000/08/w3c-synd/style.css\" type=\"text/css\"");
-		    Element rdfElement = new Element("rdf:RDF","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		    rdfElement.addNamespaceDeclaration("","http://purl.org/rss/1.0/");
+		    Element rdfElement = new Element("rdf:RDF",NS_RDF);
+		    rdfElement.addNamespaceDeclaration("",NS_RSS10);
 		    rdfElement.addNamespaceDeclaration("mn","http://usefulinc.com/rss/manifest/");
-		    rdfElement.addNamespaceDeclaration("dc","http://purl.org/dc/elements/1.1/");
-		    rdfElement.addNamespaceDeclaration("cml","http://www.xml-cml.org/schema/cml2/core/");
+		    rdfElement.addNamespaceDeclaration("dc",NS_DCELEMENTS);
+		    rdfElement.addNamespaceDeclaration("cml",Convertor.NS_CML);
 		    Document doc = new Document(rdfElement);
 		    doc.insertChild(pi,0);
-		    Element channelElement = new Element("channel","http://purl.org/rss/1.0/");
-		    Element titleElement = new Element("title","http://purl.org/rss/1.0/");
+		    Element channelElement = new Element("channel",NS_RSS10);
+		    Element titleElement = new Element("title",NS_RSS10);
 		    titleElement.appendChild(new Text(title));
 		    channelElement.appendChild(titleElement);
-		    Element linkElement = new Element("link","http://purl.org/rss/1.0/");
+		    Element linkElement = new Element("link",NS_RSS10);
 		    linkElement.appendChild(new Text(link));
 		    channelElement.appendChild(linkElement);
-		    Element descriptionElement = new Element("description","http://purl.org/rss/1.0/");
+		    Element descriptionElement = new Element("description",NS_RSS10);
 		    descriptionElement.appendChild(new Text(description));
 		    channelElement.appendChild(descriptionElement);
-		    Element publisherElement = new Element("dc:publisher","http://purl.org/dc/elements/1.1/");
+		    Element publisherElement = new Element("dc:publisher",NS_DCELEMENTS);
 		    publisherElement.appendChild(new Text(publisher));
 		    channelElement.appendChild(publisherElement);
-		    Element creatorElement = new Element("dc:creator","http://purl.org/dc/elements/1.1/");
+		    Element creatorElement = new Element("dc:creator",NS_DCELEMENTS);
 		    creatorElement.appendChild(new Text(creator));
 		    channelElement.appendChild(creatorElement);
-		    Element imageElement = new Element("image","http://purl.org/rss/1.0/");
-		    imageElement.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",imagelink));
+		    Element imageElement = new Element("image",NS_RSS10);
+		    imageElement.addAttribute(new Attribute("rdf:resource",NS_RDF,imagelink));
 		    channelElement.appendChild(imageElement);
-		    Element itemsElement = new Element("items","http://purl.org/rss/1.0/");
-		    Element seqElement = new Element("rdf:Seq","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		    Element itemsElement = new Element("items",NS_RSS10);
+		    Element seqElement = new Element("rdf:Seq",NS_RDF);
 		    itemsElement.appendChild(seqElement);
 		    channelElement.appendChild(itemsElement);
-		    channelElement.addAttribute(new Attribute("rdf:about","http://www.w3.org/1999/02/22-rdf-syntax-ns#",about));
+		    channelElement.addAttribute(new Attribute("rdf:about",NS_RDF,about));
 		    rdfElement.appendChild(channelElement);
 		    List l=new Vector();
 		    if(object instanceof ISetOfAtomContainers){
@@ -143,34 +148,34 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    }        	
 		    for(int i=0;i<l.size();i++){
 		      ChemObject co=(ChemObject)l.get(i);
-		      Element itemElement = new Element("item","http://purl.org/rss/1.0/");
+		      Element itemElement = new Element("item",NS_RSS10);
 		      String easylink=(String)linkmap.get(co);
 		      if(easylink!=null)
-		    	  itemElement.addAttribute(new Attribute("rdf:about","http://www.w3.org/1999/02/22-rdf-syntax-ns#",easylink));
-		      Element link2Element = new Element("link","http://purl.org/rss/1.0/");
+		    	  itemElement.addAttribute(new Attribute("rdf:about",NS_RDF,easylink));
+		      Element link2Element = new Element("link",NS_RSS10);
 		      link2Element.appendChild(new Text(easylink));
 		      itemElement.appendChild(link2Element);          
 		      String title=(String)co.getProperties().get(CDKConstants.TITLE);
 		      if(titlemap.get(co)!=null){
-			      Element title2Element = new Element("title","http://purl.org/rss/1.0/");
+			      Element title2Element = new Element("title",NS_RSS10);
 			      title2Element.appendChild(new Text((String)titlemap.get(co)));
 			      itemElement.appendChild(title2Element);
 		      }
 		      if(title!=null){
-		    	  Element description2Element = new Element("description","http://purl.org/rss/1.0/");
+		    	  Element description2Element = new Element("description",NS_RSS10);
 		    	  description2Element.appendChild(new Text(title));
 		    	  itemElement.appendChild(description2Element);
-		          Element subjectElement = new Element("dc:subject","http://purl.org/dc/elements/1.1/");
+		          Element subjectElement = new Element("dc:subject",NS_DCELEMENTS);
 		          subjectElement.appendChild(new Text(title));
 		          itemElement.appendChild(subjectElement);
 		      }
 		      if(datemap.get(co)!=null){
-			      Element dateElement = new Element("dc:date","http://purl.org/dc/elements/1.1/");
+			      Element dateElement = new Element("dc:date",NS_DCELEMENTS);
 			      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 			      dateElement.appendChild(new Text(formatter.format((Date)datemap.get(co))+"+01:00"));
 			      itemElement.appendChild(dateElement);
 		      }
-		      Element creator2Element =new Element("dc:creator","http://purl.org/dc/elements/1.1/");
+		      Element creator2Element =new Element("dc:creator",NS_DCELEMENTS);
 		      creator2Element.appendChild(new Text((String)creatormap.get(co)));
 		      itemElement.appendChild(creator2Element);
 		      Element root=null;
@@ -203,10 +208,10 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      }
 		      itemElement.appendChild(root);
 		      rdfElement.appendChild(itemElement);
-		      Element liElement = new Element("rdf:li","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		      liElement.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",easylink));
-		      Element imageElement2 = new Element("rdf:li","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		      imageElement2.addAttribute(new Attribute("rdf:resource","http://www.w3.org/1999/02/22-rdf-syntax-ns#",(String)linkmap.get(co)));
+		      Element liElement = new Element("rdf:li",NS_RDF);
+		      liElement.addAttribute(new Attribute("rdf:resource",NS_RDF,easylink));
+		      Element imageElement2 = new Element("rdf:li",NS_RDF);
+		      imageElement2.addAttribute(new Attribute("rdf:resource",NS_RDF,(String)linkmap.get(co)));
 		      seqElement.appendChild(imageElement2);
 		    }
 	      writer.write(doc.toXML());
