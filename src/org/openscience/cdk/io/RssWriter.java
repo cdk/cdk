@@ -6,8 +6,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -70,6 +72,8 @@ public class RssWriter extends DefaultChemObjectWriter {
     private String publisher="";
     private String imagelink="";
     private String about="";
+    private String timezone="+01:00";
+    private Map multiMap=new HashMap();
 
     /**
      * Flushes the output and closes this object.
@@ -172,7 +176,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      if(datemap.get(co)!=null){
 			      Element dateElement = new Element("dc:date",NS_DCELEMENTS);
 			      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
-			      dateElement.appendChild(new Text(formatter.format((Date)datemap.get(co))+"+01:00"));
+			      dateElement.appendChild(new Text(formatter.format((Date)datemap.get(co))+timezone));
 			      itemElement.appendChild(dateElement);
 		      }
 		      Element creator2Element =new Element("dc:creator",NS_DCELEMENTS);
@@ -207,6 +211,13 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    	  throw new CDKException("Unsupported chemObject: " + object.getClass().getName());
 		      }
 		      itemElement.appendChild(root);
+		      if(multiMap.get(co)!=null){
+		    	  Collection coll=(Collection)multiMap.get(co);
+		    	  Iterator it=coll.iterator();
+		    	  while(it.hasNext()){
+		    		 itemElement.appendChild((Element)it.next());
+		    	  }
+		      }
 		      rdfElement.appendChild(itemElement);
 		      Element liElement = new Element("rdf:li",NS_RDF);
 		      liElement.addAttribute(new Attribute("rdf:resource",NS_RDF,easylink));
@@ -325,6 +336,27 @@ public class RssWriter extends DefaultChemObjectWriter {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	/**
+	 * @return the multimap. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+	 */
+	public Map getMultiMap() {
+		return multiMap;
+	}
+
+	/**
+	 * @param multiMap. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+	 */
+	public void setMultiMap(Map multiMap) {
+		this.multiMap = multiMap;
+	}
+
+	/**
+	 * @param timezone This will be added to the data as timezone. format according to 23c. Examples "+01:00" "-05:00"
+	 */
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 
 }
