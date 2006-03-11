@@ -2004,9 +2004,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			IAtom[] atoms = container.getAtoms();
 			for (int i = 0; i < atoms.length; i++)
 			{
-				org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atoms[i];
-				atom.setX2d(atom.getX2d() + deltaX,false);
-				atom.setY2d(atom.getY2d() + deltaY,false);
+				IAtom atom = atoms[i];
+				atom.setX2d(atom.getX2d() + deltaX);
+				atom.setY2d(atom.getY2d() + deltaY);
 			}
 			r2dm.getSelectedPart().notifyChanged();
 		}

@@ -464,7 +464,11 @@ public class Atom extends AtomType implements java.io.Serializable, IAtom  {
          * @see     #getX2d
          */
         public void setX2d(double xCoord) {
-        	setX2d(xCoord,true);
+            if (point2d == null) {
+                point2d = new javax.vecmath.Point2d();
+            }
+            point2d.x = xCoord;
+            notifyChanged();
         }
 
 
@@ -478,48 +482,13 @@ public class Atom extends AtomType implements java.io.Serializable, IAtom  {
          * @see     #getY2d
          */
         public void setY2d(double yCoord) {
-        	setY2d(yCoord,true);
-        }
-        
-        /**
-         * Sets the x coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @param   xCoord  the new x coordinate for of the 2D location of this atom
-         * @param   notify  fire a notifyChange on atom
-         *
-         * @see     #getX2d
-         */
-        public void setX2d(double xCoord, boolean notify) {
-            if (point2d == null) {
-                point2d = new javax.vecmath.Point2d();
-            }
-            point2d.x = xCoord;
-            if(notify)
-            	notifyChanged();
-        }
-
-
-        /**
-         * Sets the y coordinate for of the 2D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @param   yCoord  the new y coordinate for of the 2D location of this atom
-         * @param   notify  fire a notifyChange on atom
-         *
-         * @see     #getY2d
-         */
-        public void setY2d(double yCoord, boolean notify) {
             if (point2d == null) {
                 point2d = new javax.vecmath.Point2d();
             }
             point2d.y = yCoord;
-            if(notify)
-            	notifyChanged();
+            notifyChanged();
         }
-
+        
 
         /**
          * Sets the x coordinate for of the 3D location of this atom.
