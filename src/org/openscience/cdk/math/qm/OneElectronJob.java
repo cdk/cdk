@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.math.qm;
 
-import org.openscience.cdk.io.LogWriter;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
+import org.openscience.cdk.tools.LoggingTool;
  
 /** 
  * Calculates the orbitals and orbital energies of electron systems
@@ -44,7 +44,7 @@ public class OneElectronJob
   private Orbitals orbitals;
   private Vector E;
 
-  private LogWriter log = new LogWriter(System.out);
+  private LoggingTool log = new LoggingTool(OneElectronJob.class);
 
   /**
    * Constructs a one electron job
@@ -52,14 +52,6 @@ public class OneElectronJob
   public OneElectronJob(Orbitals orbitals)
   { 
     this.orbitals = orbitals;
-  }
-
-  /**
-   * Returns the log of the calculation
-   */
-  public LogWriter getLog()
-  {
-    return log;
   }
 
   /**
@@ -161,39 +153,38 @@ public class OneElectronJob
 
     S = calculateS(basis);
 
-    log.println("S = \n"+S+"\n");
+    log.debug("S = \n"+S+"\n");
 
-    log.println("C = \n"+C+"\n");
+    log.debug("C = \n"+C+"\n");
 
     C = C.orthonormalize(S);
-    log.println("C' = \n"+C+"\n");
-    log.println("C't * S * C' = \n"+S.similar(C)+"\n");
+    log.debug("C' = \n"+C+"\n");
+    log.debug("C't * S * C' = \n"+S.similar(C)+"\n");
 
     T = calculateT(basis);
-    log.println("T = \n"+T+"\n");
+    log.debug("T = \n"+T+"\n");
 
     V = calculateV(basis);
-    log.println("V = \n"+V+"\n");
+    log.debug("V = \n"+V+"\n");
 
     HAO = T.add(V);
-    log.println("HAO = \n"+HAO+"\n");
+    log.debug("HAO = \n"+HAO+"\n");
  
     H = HAO.similar(C);
-    log.println("H = C't * HAO * C' = \n"+H.similar(C)+"\n");
+    log.debug("H = C't * HAO * C' = \n"+H.similar(C)+"\n");
 
     U = H.diagonalize(50);
     E = H.similar(U).getVectorFromDiagonal();
     C = C.mul(U);
     sort(C,E);
-    log.println("C(neu) = \n"+C+"\n");
-    log.println("E = \n"+E+"\n");
+    log.debug("C(neu) = \n"+C+"\n");
+    log.debug("E = \n"+E+"\n");
 
     for(int j=0; j<E.size; j++)
-      log.println("E("+(j+1)+".Orbital)="+(E.vector[j]*27.211)+" eV");
-    log.println();
+      log.debug("E("+(j+1)+".Orbital)="+(E.vector[j]*27.211)+" eV");
 
     time = System.currentTimeMillis()-time;
-    log.println("Time = "+time+" ms");
+    log.debug("Time = "+time+" ms");
     time = System.currentTimeMillis();
 
     return new Orbitals(basis, C);

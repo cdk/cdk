@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.math.qm;
 
-import org.openscience.cdk.io.LogWriter;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Calculates the orbitals and orbital energies of electron systems
@@ -44,18 +44,13 @@ public class ClosedShellJob
   private Orbitals orbitals;
   private Vector E;
 
-  private LogWriter log = new LogWriter(System.out);
+  private LoggingTool log = new LoggingTool(ClosedShellJob.class);
 
   private int iterations = 0;
 
   public ClosedShellJob(Orbitals orbitals)
   { 
     this.orbitals = orbitals;
-  }
-
-  public LogWriter getLog()
-  {
-    return log;
   }
 
   public Vector getEnergies()
@@ -180,7 +175,7 @@ public class ClosedShellJob
     int occ = count_electrons/2;
     int locc = count_electrons%2;
     Matrix D = new Matrix(size,size);
-    log.println("D:occ="+occ+" locc="+locc);
+    log.debug("D:occ="+occ+" locc="+locc);
 
     if (locc!=0)
       System.out.println("This class work only correct for closed shells");
@@ -288,39 +283,38 @@ public class ClosedShellJob
 
     S = calculateS(basis);
 
-    log.println("S = \n"+S+"\n");
+    log.debug("S = \n"+S+"\n");
 
-    log.println("C = \n"+C+"\n");
+    log.debug("C = \n"+C+"\n");
 
     C = C.orthonormalize(S);
-    log.println("C' = \n"+C+"\n");
-    log.println("C't * S * C' = \n"+S.similar(C)+"\n");
+    log.debug("C' = \n"+C+"\n");
+    log.debug("C't * S * C' = \n"+S.similar(C)+"\n");
 
     T = calculateT(basis);
-    log.println("T = \n"+T+"\n");
+    log.debug("T = \n"+T+"\n");
 
     V = calculateV(basis);
-    log.println("V = \n"+V+"\n");
+    log.debug("V = \n"+V+"\n");
 
     HAO = T.add(V);
-    log.println("HAO = \n"+HAO+"\n");
+    log.debug("HAO = \n"+HAO+"\n");
  
     H = HAO.similar(C);
-    log.println("H = C't * HAO * C' = \n"+H.similar(C)+"\n");
+    log.debug("H = C't * HAO * C' = \n"+H.similar(C)+"\n");
 
     U = H.diagonalize(50);
     E = H.similar(U).getVectorFromDiagonal();
     C = C.mul(U);
     sort(C,E);
-    log.println("C(neu) = \n"+C+"\n");
-    log.println("E = \n"+E+"\n");
+    log.debug("C(neu) = \n"+C+"\n");
+    log.debug("E = \n"+E+"\n");
 
     for(int j=0; j<E.size; j++)
-      log.println("E("+(j+1)+".Orbital)="+(E.vector[j]*27.211)+" eV");
-    log.println();
+      log.debug("E("+(j+1)+".Orbital)="+(E.vector[j]*27.211)+" eV");
 
     time = System.currentTimeMillis()-time;
-    log.println("Time = "+time+" ms");
+    log.debug("Time = "+time+" ms");
     time = System.currentTimeMillis();
 
     if (iterations>0)
@@ -330,50 +324,49 @@ public class ClosedShellJob
 
     for(int i=0; i<iterations; i++)
     {
-      log.println((i+1)+".Durchlauf\n");
+      log.debug((i+1)+".Durchlauf\n");
 
       time = System.currentTimeMillis();
 
-      log.println("C't * S * C' = \n"+S.similar(C)+"\n");
+      log.debug("C't * S * C' = \n"+S.similar(C)+"\n");
 
-      log.println("count of electrons = "+count_electrons+"\n");
+      log.debug("count of electrons = "+count_electrons+"\n");
 
       D = calculateD(basis, C, count_electrons);
-      log.println("D = \n"+D+"\n");
+      log.debug("D = \n"+D+"\n");
 
       //log.println("2*contraction(D*S) = "+(D.mul(S)).contraction()*2+"\n");
-      log.println("2*contraction(D*S) = "+contraction(D,S)*2+"\n");
+      log.debug("2*contraction(D*S) = "+contraction(D,S)*2+"\n");
 
       //J = calculateJ(basis, D);
       J = calculateJ(basis, I, D);
-      log.println("J = \n"+J+"\n");
+      log.debug("J = \n"+J+"\n");
 
       //K = calculateK(basis, D);
       K = calculateK(basis, I, D);
-      log.println("K = \n"+K+"\n");
+      log.debug("K = \n"+K+"\n");
 
       F = HAO.add(J).sub(K);
-      log.println("F = H+J-K = \n"+F+"\n");
+      log.debug("F = H+J-K = \n"+F+"\n");
       
       H = F.similar(C);
-      log.println("H = C't * F * C' = \n"+H+"\n");
+      log.debug("H = C't * F * C' = \n"+H+"\n");
 
       U = H.diagonalize(50);
       E = H.similar(U).getVectorFromDiagonal();
       C = C.mul(U);
       sort(C,E);
-      log.println("C(neu) = \n"+C+"\n");
-      log.println("E = \n"+E+"\n");
+      log.debug("C(neu) = \n"+C+"\n");
+      log.debug("E = \n"+E+"\n");
 
       for(int j=0; j<E.size; j++)
-        log.println("E("+(j+1)+".Orbital)="+(E.vector[j]*27.211)+" eV");
-      log.println();
+        log.debug("E("+(j+1)+".Orbital)="+(E.vector[j]*27.211)+" eV");
 
       energy = contraction(D,HAO.add(F));
-      log.println("Gesamtenergie = "+energy+" ("+energy*27.211+" eV)\n");
+      log.debug("Gesamtenergie = "+energy+" ("+energy*27.211+" eV)\n");
 
       time = System.currentTimeMillis()-time;
-      log.println("Time = "+time+" ms");
+      log.debug("Time = "+time+" ms");
 
       System.gc();
     }
