@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -31,10 +30,11 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -98,6 +98,7 @@ public class BCUTDescriptor implements IDescriptor {
     // to return for each class of BCUT descriptor
     private int nhigh;
     private int nlow;
+    private boolean checkAromaticity = true;
     
     public BCUTDescriptor() {
         // set the default number of BCUT's
@@ -116,22 +117,29 @@ public class BCUTDescriptor implements IDescriptor {
     /**
      *  Sets the parameters attribute of the BCUTDescriptor object.
      *
-     *@param  params            The new parameter values. This descriptor takes 2 parameters: number of highest
+     *@param  params            The new parameter values. This descriptor takes 3 parameters: number of highest
      *                          eigenvalues and number of lowest eigenvalues. If 0 is specified for either (the default)
-     *                          then all calculated eigenvalues are returned.
+     *                          then all calculated eigenvalues are returned. The third parameter checkAromaticity is a boolean.
+     *                          If checkAromaticity is true, the method check the aromaticity, if false, means that the aromaticity has
+	 *  						already been checked.
      *@throws  CDKException  if the parameters are of the wrong type
      *@see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-        // we expect 2 parameters
-        if (params.length != 2) {
-            throw new CDKException("BCUTDescriptor requires 2 parameters");
+        // we expect 3 parameters
+        if (params.length != 3) {
+            throw new CDKException("BCUTDescriptor requires 3 parameters");
         }
         if (!(params[0] instanceof Integer) || !(params[1] instanceof Integer)) {
             throw new CDKException("Parameters must be of type Integer");
+        }else if(!(params[2] instanceof Boolean)) {
+        	throw new CDKException("The third parameter must be of type Boolean");
         }
+        // ok, all should be fine
+               
         this.nhigh = ((Integer)params[0]).intValue();
         this.nlow = ((Integer)params[1]).intValue();
+        this.checkAromaticity = ((Boolean) params[2]).booleanValue();
 
         if (this.nhigh < 0 || this.nlow < 0) {
             throw new CDKException("Number of eigenvalues to return must be positive or 0");
@@ -141,14 +149,15 @@ public class BCUTDescriptor implements IDescriptor {
     /**
      *  Gets the parameters attribute of the BCUTDescriptor object.
      *
-     *@return    Two element array of Integer representing number of highest and lowest eigenvalues
+     *@return    Three element array of Integer and one boolean representing number of highest and lowest eigenvalues and the checkAromaticity flag
      *           to return respectively
      *@see #setParameters
      */
     public Object[] getParameters() {
-        Object params[] = new Object[2];
+        Object params[] = new Object[3];
         params[0] = new Integer(this.nhigh);
         params[1] = new Integer(this.nlow);
+        params[2] = new Boolean(this.checkAromaticity);
         return(params);
     }
     /**
@@ -157,9 +166,10 @@ public class BCUTDescriptor implements IDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[2];
+        String[] params = new String[3];
         params[0] = "nhigh";
         params[1] = "nlow";
+        params[2] = "checkAromaticity";
         return(params);
     }
 
@@ -167,13 +177,14 @@ public class BCUTDescriptor implements IDescriptor {
     /**
      *  Gets the parameterType attribute of the BCUTDescriptor object.
      *
-     *@param  name  Description of the Parameter (can be either 'nhigh' or 'nlow')
+     *@param  name  Description of the Parameter (can be either 'nhigh' or 'nlow' or checkAromaticity)
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
     Object o = null;
         if (name.equals("nhigh")) o = new Integer(1);
         if (name.equals("nlow")) o = new Integer(1);
+        if (name.equals("checkAromaticity")) o = new Integer(1);
         return(o);
     }
 
@@ -242,7 +253,9 @@ public class BCUTDescriptor implements IDescriptor {
         }
 
         // do aromaticity detecttion for calculating polarizability later on
-        HueckelAromaticityDetector.detectAromaticity(ac);
+        if (this.checkAromaticity) {
+        	HueckelAromaticityDetector.detectAromaticity(ac);
+        }
 
         // find number of heavy atoms
         int nheavy = 0;
