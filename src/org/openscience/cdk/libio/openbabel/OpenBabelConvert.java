@@ -23,13 +23,13 @@
  */
 package org.openscience.cdk.libio.openbabel;
 
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.io.CMLReader;
-
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
+
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.io.CMLReader;
 
 /**
  * <p>File writer thats convert input files with OpenBabel.
@@ -100,6 +100,7 @@ public class OpenBabelConvert {
     public static int SYSTEM_WINDOWS = 0;
     public static int SYSTEM_LINUX = 1;
     private static int SYSTEM;
+
     /*PATH of babel*/
     private String PATH = null;
 
@@ -273,7 +274,7 @@ public class OpenBabelConvert {
         String filename = "data/mdl/molecule_IN_MEMORY.cml";
         File file = new File(filename);
         try {
-            FileReader readerFile = new FileReader(file);
+        	FileInputStream readerFile = new FileInputStream(file);
             CMLReader reader = new CMLReader(readerFile);
             chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 
