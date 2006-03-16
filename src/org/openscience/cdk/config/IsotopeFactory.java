@@ -106,7 +106,7 @@ public class IsotopeFactory
             logger.error(errorMessage);
 			throw new IOException(errorMessage);
 		}
-        IsotopeReader reader = new IsotopeReader(new InputStreamReader(ins), builder);
+        IsotopeReader reader = new IsotopeReader(ins, builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
         //isotopes = (Vector) in.readObject();
         isotopes = reader.readIsotopes();

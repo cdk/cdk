@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.test.config.isotopes;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.Vector;
 
@@ -53,14 +54,16 @@ public class IsotopeReaderTest extends CDKTestCase {
 
     public void testIsotopeReader_Reader_IChemObjectBuilder() {
         IsotopeReader reader = new IsotopeReader(
-            new StringReader(""), new ChemObject().getBuilder()
+            new ByteArrayInputStream(new byte[0]), 
+            new ChemObject().getBuilder()
         );
         assertNotNull(reader);
     }
     
     public void testReadIsotopes() {
         IsotopeReader reader = new IsotopeReader(
-            new StringReader(""), new ChemObject().getBuilder()
+        	new ByteArrayInputStream(new byte[0]), 
+        	new ChemObject().getBuilder()
         );
         assertNotNull(reader);
         Vector isotopes = reader.readIsotopes();
@@ -95,7 +98,8 @@ public class IsotopeReaderTest extends CDKTestCase {
             "</list>";
         
         IsotopeReader reader = new IsotopeReader(
-            new StringReader(isotopeData), new ChemObject().getBuilder()
+        	new ByteArrayInputStream(isotopeData.getBytes()), 
+            new ChemObject().getBuilder()
         );
         assertNotNull(reader);
         Vector isotopes = reader.readIsotopes();

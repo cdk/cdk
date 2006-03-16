@@ -28,6 +28,7 @@
 package org.openscience.cdk.config.isotopes;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.util.Vector;
 
@@ -51,7 +52,7 @@ import org.xml.sax.XMLReader;
 public class IsotopeReader {
 
     private XMLReader parser;
-    private Reader input;
+    private InputStream input;
 
     private LoggingTool logger;
     private IChemObjectBuilder builder;
@@ -61,7 +62,7 @@ public class IsotopeReader {
      *
      * @param input Reader with the XML source
      */
-    public IsotopeReader(Reader input, IChemObjectBuilder builder) {
+    public IsotopeReader(InputStream input, IChemObjectBuilder builder) {
         this.init();
         this.input = input;
         this.builder = builder;
