@@ -28,6 +28,7 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -164,7 +165,7 @@ public class Polarizability {
 		} else if (AtomSymbol.equals("C")) {
 			if (ac.getMaximumBondOrder(atom) == 1) {
 				polarizabilitiyFactor = 1.064;
-			} else if (ac.getMaximumBondOrder(atom) == 1.5) {
+			} else if (ac.getMaximumBondOrder(atom) == 1.5 || atom.getFlag(CDKConstants.ISAROMATIC)) {
 				polarizabilitiyFactor = 1.230;
 			} else if (ac.getMaximumBondOrder(atom) == 2) {
 				if (getNumberOfHydrogen(ac, atom) == 0) {
