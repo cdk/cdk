@@ -28,16 +28,21 @@
  */
 package org.openscience.cdk.database;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.tools.LoggingTool;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -63,10 +68,10 @@ public class XindiceReader {
     private String collection;
     private String xpath = null;
     
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private LoggingTool logger;
 
     public XindiceReader(String collection) {
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+        logger = new LoggingTool(this);
         
         while (collection.startsWith("/")) {
             collection = collection.substring(1);
@@ -96,16 +101,15 @@ public class XindiceReader {
         this.xpath = xpath;
    }
 
-    public ChemObject read(ChemObject object) throws CDKException {
-        if (object instanceof SetOfMolecules) {
-            return (ChemObject)readSetOfMolecules();
+    public IChemObject read(IChemObject object) throws CDKException {
+        if (object instanceof ISetOfMolecules) {
+            return readSetOfMolecules((ISetOfMolecules)object);
         } else {
             throw new CDKException("Only supported is SetOfMolecules.");
         }
     }
     
-    private SetOfMolecules readSetOfMolecules() throws CDKException {
-        SetOfMolecules mols = new SetOfMolecules();
+    private ISetOfMolecules readSetOfMolecules(ISetOfMolecules mols) throws CDKException {
         Collection col = null;
         try {
             String driver = "org.apache.xindice.client.xmldb.DatabaseImpl";
@@ -124,9 +128,9 @@ public class XindiceReader {
             while (results.hasMoreResources()) {
                 Resource resource = results.nextResource();
                 String CMLString = (String)resource.getContent();
-                StringReader reader = new StringReader(CMLString);
+                InputStream reader = new ByteArrayInputStream(CMLString.getBytes());
                 CMLReader cmlr = new CMLReader(reader);
-                mols.addMolecule(getMolecule((ChemFile)cmlr.read(new ChemFile())));
+                mols.addMolecule(getMolecule((IChemFile)cmlr.read(mols.getBuilder().newChemFile())));
             }
             logger.info("Retrieved " + mols.getMoleculeCount() + " molecules");
         } catch (XMLDBException eXML) {
@@ -148,10 +152,10 @@ public class XindiceReader {
         return mols;
     }
         
-    private org.openscience.cdk.interfaces.IMolecule getMolecule(ChemFile cf) {
-    	org.openscience.cdk.interfaces.IChemSequence cs = cf.getChemSequence(0);
-        org.openscience.cdk.interfaces.IChemModel cm = cs.getChemModel(0);
-        org.openscience.cdk.interfaces.ISetOfMolecules som = cm.getSetOfMolecules();
+    private IMolecule getMolecule(IChemFile cf) {
+    	IChemSequence cs = cf.getChemSequence(0);
+        IChemModel cm = cs.getChemModel(0);
+        ISetOfMolecules som = cm.getSetOfMolecules();
         return som.getMolecule(0);
     }
 
