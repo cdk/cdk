@@ -81,12 +81,20 @@ public class CMLReader extends DefaultChemObjectReader {
      * FIXME: this can not be used in combination with Aelfred2 yet.
      *
      * @param input Reader type input
+     * 
+     * @deprecated XML reading should not be done with a Reader, but with an
+     *             InputStream instead.
      */
     public CMLReader(Reader input) {
         this.init();
         this.input = input;
     }
     
+    /**
+     * Reads CML from an java.io.InputStream, for example the FileInputStream.
+     *
+     * @param input InputStream type input
+     */
     public CMLReader(InputStream input) {
         this(new InputStreamReader(input));
     }

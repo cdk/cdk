@@ -75,12 +75,19 @@ public class INChIReader extends DefaultChemObjectReader {
      * Construct a INChI reader from a Reader object.
      *
      * @param input the Reader with the content
+     * 
+     * @deprecated XML parsing should use InputStream instead of a Reader.
      */
     public INChIReader(Reader input) {
         this.init();
         this.input = input;
     }
 
+    /**
+     * Construct a INChI reader from a InputStream object.
+     *
+     * @param input the InputStream with the content
+     */
     public INChIReader(InputStream input) {
         this(new InputStreamReader(input));
     }
