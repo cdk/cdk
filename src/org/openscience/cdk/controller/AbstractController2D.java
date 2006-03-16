@@ -1025,7 +1025,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
 			updateAtoms(container, atoms);
 			HashMap changedBonds = new HashMap();
-			IBond formerBond = (IBond) bondInRange.clone();
+			double formerBondOrder = bondInRange.getOrder();
 			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
 				// increase Bond order
 				double order = bondInRange.getOrder();
@@ -1073,10 +1073,10 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			 *  undo and redo storage that it
 			 *  should store this change of an atom symbol
 			 */
-			if (bondInRange.getOrder() != formerBond.getOrder()) {
+			if (bondInRange.getOrder() != formerBondOrder) {
                 double[] bondOrders = new double[2];
                 bondOrders[0] = bondInRange.getOrder();
-                bondOrders[1] = formerBond.getOrder();
+                bondOrders[1] = formerBondOrder;
                 changedBonds.put(bondInRange, bondOrders);
             }
 			isUndoableChange = true;
