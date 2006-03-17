@@ -1646,10 +1646,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			} else {
 				// we got a winner!
 				// set the associated AtomContainer, for use by JCP's Molecule Properties action
-				closestAtom.setProperty(
+                // COMMENTED OUT: causes cloning trouble
+/*				closestAtom.setProperty(
 					SimpleController2D.MATCHING_ATOMCONTAINER,
 					ChemModelManipulator.getRelevantAtomContainer(chemModel, closestAtom)
-				);
+				);*/
 			}
 		}
 		return closestAtom;
