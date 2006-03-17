@@ -84,6 +84,18 @@ public class OpenSourceJVMTestSuiteTests {
         	// Bench Mark II tests
         	suite.addTest(ConfigTests.suite());
         	suite.addTest(CoreClassesTests.suite());
+        } else if ("III".equals(benchmark)){
+        	// Bench Mark III tests
+        	// from cdk.test.math
+        	suite.addTest(MathToolsTest.suite());
+        	// from cdk.test.graph
+        	suite.addTest(GraphTests.suite());
+        	// from cdk.test.geometry
+        	suite.addTest(GeometryToolsTest.suite());
+        	suite.addTest(CrystalGeometryToolsTest.suite());
+        } else if ("IV".equals(benchmark)){
+        	// from cdk.test.isomorphism
+        	suite.addTest(IsomorphismTests.suite());
         } else if ("skip".equals(benchmark)){
         	// Tests for data classes
         	suite.addTest(DebugDataClassesTests.suite());
@@ -111,26 +123,16 @@ public class OpenSourceJVMTestSuiteTests {
         	// from cdk.test.fingerprint
         	suite.addTest(FingerprinterTest.suite());
         	// from cdk.test.geometry
-        	suite.addTest(GeometryToolsTest.suite());
-        	suite.addTest(CrystalGeometryToolsTest.suite());
         	suite.addTest(RDFCalculatorTest.suite());
         	// from cdk.test.geometry.align
         	suite.addTest(KabschAlignmentTest.suite());
-        	// from cdk.test.graph
-        	suite.addTest(GraphTests.suite());
         	// from cdk.test.index
         	suite.addTest(CASNumberTest.suite());
-        	// from cdk.test.isomorphism
-        	suite.addTest(IsomorphismTests.suite());
         	// from cdk.test.layout
         	suite.addTest(StructureDiagramGeneratorTest.suite());
         	suite.addTest(HydrogenPlacerTest.suite());
         	suite.addTest(OverlapResolverTest.suite());
         	suite.addTest(TemplateHandlerTest.suite());
-        	// from cdk.test.math
-        	suite.addTest(MathToolsTest.suite());
-        	// from cdk.test.qsar
-        	suite.addTest(QSARDescriptorTests.suite());
         	// from cdk.test.reaction
         	suite.addTest(ReactionBalancerTest.suite());
         	// from cdk.test.similarity
@@ -138,6 +140,8 @@ public class OpenSourceJVMTestSuiteTests {
         	// from cdk.test.smiles
         	suite.addTest(SmilesGeneratorTest.suite());
         	suite.addTest(SmilesParserTest.suite());
+        	// from cdk.test.qsar
+        	suite.addTest(QSARDescriptorTests.suite());
         }
 
         return suite;
