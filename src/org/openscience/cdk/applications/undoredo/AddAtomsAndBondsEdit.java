@@ -86,7 +86,6 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#undo()
 	 */
 	public void undo() throws CannotUndoException {
-		System.out.println("AddAtomsAndBondsEdit undo");
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
 			IBond bond = undoRedoContainer.getBondAt(i);
@@ -100,7 +99,6 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 		ISetOfMolecules moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
-		System.out.println(ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount());
 	}
 
 	/*
