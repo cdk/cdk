@@ -56,10 +56,11 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 import org.openscience.cdk.applications.plugin.CDKPluginManager;
+import org.openscience.cdk.applications.undoredo.JCPUndoRedoHandler;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
-import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -268,7 +269,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public void registerModel(JChemPaintModel model)
 	{
 		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),model.getControllerModel(), lastAction, this.moveButton);
-    setupPopupMenus(inputAdapter);
+		JCPUndoRedoHandler undoRedoHandler=new JCPUndoRedoHandler();
+		undoRedoHandler.setC2dm(model.getControllerModel());
+		inputAdapter.setUndoRedoHandler(undoRedoHandler);
+		setupPopupMenus(inputAdapter);
 		Renderer2DModel rendererModel = model.getRendererModel();
 		model.getControllerModel().setBondPointerLength(rendererModel.getBondLength());
 		model.getControllerModel().setRingPointerLength(rendererModel.getBondLength());
