@@ -269,8 +269,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public void registerModel(JChemPaintModel model)
 	{
 		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),model.getControllerModel(), lastAction, this.moveButton);
-		JCPUndoRedoHandler undoRedoHandler=new JCPUndoRedoHandler();
-		undoRedoHandler.setC2dm(model.getControllerModel());
+		JCPUndoRedoHandler undoRedoHandler=new JCPUndoRedoHandler(model.getControllerModel());
 		inputAdapter.setUndoRedoHandler(undoRedoHandler);
 		setupPopupMenus(inputAdapter);
 		Renderer2DModel rendererModel = model.getRendererModel();
