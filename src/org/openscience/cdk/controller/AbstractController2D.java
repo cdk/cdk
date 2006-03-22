@@ -59,6 +59,7 @@ import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
 import org.openscience.cdk.applications.undoredo.ChangeChargeEdit;
+import org.openscience.cdk.applications.undoredo.IUndoRedoHandler;
 import org.openscience.cdk.applications.undoredo.MergeMoleculesEdit;
 import org.openscience.cdk.applications.undoredo.MoveAtomEdit;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
@@ -133,6 +134,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private double shiftY = 0;
 	double moveoldX;
 	double moveoldY;
+	private IUndoRedoHandler undoRedoHandler;
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -604,7 +606,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			deltaY=r2dm.getHighlightedBond().getAtomAt(0).getPoint2d().y-moveoldY;	
 		}
 		UndoableEdit edit = new MoveAtomEdit(undoredoContainer, (int)deltaX, (int)deltaY);
-		c2dm.getUndoSupport().postEdit(edit);
+		undoRedoHandler.postEdit(edit);
 	}
 
 	private void mergeMolecules() {
@@ -641,7 +643,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			container1.removeAtom(atom2);
 		}
 		UndoableEdit  edit = new MergeMoleculesEdit(chemModel, undoredoContainer, "Molecules merged");
-		c2dm.getUndoSupport().postEdit(edit);
+		undoRedoHandler.postEdit(edit);
 		r2dm.getMerge().clear();
 	}
 
@@ -912,7 +914,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtomAt(0)), newRing.getAtoms());
 		undoRedoContainer.add(newRing);
 		UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Ring");
-		c2dm.getUndoSupport().postEdit(edit);
+		undoRedoHandler.postEdit(edit);
 		r2dm.fireChange();
 		fireChange();
 	}
@@ -991,7 +993,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		 *  ---
 		 */
 		UndoableEdit  edit = new RemoveAtomsAndBondsEdit(chemModel, undoRedoContainer, type);
-		c2dm.getUndoSupport().postEdit(edit);
+		undoRedoHandler.postEdit(edit);
 		r2dm.fireChange();
 		fireChange();
 	}
@@ -1084,7 +1086,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			 *  ---
 			 */
 			UndoableEdit  edit = new AdjustBondOrdersEdit(changedBonds);
-			c2dm.getUndoSupport().postEdit(edit);
+			undoRedoHandler.postEdit(edit);
 		} else
 		{
 			IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
@@ -1227,7 +1229,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				updateAtom(atomCon, newAtom2);
 			}
 			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Bond");
-			c2dm.getUndoSupport().postEdit(edit);
+			undoRedoHandler.postEdit(edit);
 		}
 		r2dm.fireChange();
 		fireChange();
@@ -1246,7 +1248,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			updateAtom(container, atomInRange);
 			//undoredo support
             UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
-			c2dm.getUndoSupport().postEdit(edit);
+			undoRedoHandler.postEdit(edit);
 			r2dm.fireChange();
 			fireChange();
 		}
@@ -1281,7 +1283,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				 */
 				// undoredo support
 				UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, x);
-				c2dm.getUndoSupport().postEdit(edit);
+				undoRedoHandler.postEdit(edit);
 				r2dm.fireChange();
 				fireChange();
 			}catch(Exception ex){
@@ -1302,7 +1304,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			updateAtom(container, atomInRange);
 			//undoredo support
             UndoableEdit  edit = new ChangeChargeEdit(atomInRange, formerCharge, atomInRange.getFormalCharge());
-			c2dm.getUndoSupport().postEdit(edit);
+			undoRedoHandler.postEdit(edit);
 			r2dm.fireChange();
 			fireChange();
 		}
@@ -1343,7 +1345,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				 */
 				// undoredo support
 				UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
-				c2dm.getUndoSupport().postEdit(edit);
+				undoRedoHandler.postEdit(edit);
 				r2dm.fireChange();
 				fireChange();
 			}
@@ -1360,7 +1362,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			IAtomContainer undoRedoContainer=new org.openscience.cdk.AtomContainer();
 			undoRedoContainer.addAtom(newAtom1);
 			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Atom");
-			c2dm.getUndoSupport().postEdit(edit);
+			undoRedoHandler.postEdit(edit);
 			r2dm.fireChange();
 			fireChange();
 		}
@@ -1405,7 +1407,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				 *  ---
 				 */
                 UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
-                c2dm.getUndoSupport().postEdit(edit);
+                undoRedoHandler.postEdit(edit);
 				r2dm.fireChange();
 				fireChange();
 			}
@@ -2163,6 +2165,10 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 	public void setChemModel(IChemModel chemModel) {
 		this.chemModel = chemModel;
+	}
+
+	public void setUndoRedoHandler(IUndoRedoHandler undoRedoHandler) {
+		this.undoRedoHandler = undoRedoHandler;
 	}
 }
 
