@@ -73,6 +73,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
@@ -930,6 +931,10 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 			logger.debug("Atoms before delete: ", container.getAtomCount());
 			ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
+			IElectronContainer[] eContainer = container.getConnectedElectronContainers(highlightedAtom);
+			for (int i=0; i<eContainer.length; i++) {
+				undoRedoContainer.addBond((IBond) eContainer[i]);
+			}
 			undoRedoContainer.addAtom(highlightedAtom);
 			if (type == null) {
 				type = "Remove Atom";
