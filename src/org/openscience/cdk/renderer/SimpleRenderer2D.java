@@ -32,10 +32,10 @@ package org.openscience.cdk.renderer;
 import java.awt.Graphics2D;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.RingSet;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
@@ -69,7 +69,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 public class SimpleRenderer2D extends AbstractRenderer2D
 {
 
-	RingSet ringSet;
+	IRingSet ringSet;
 	
 	/**
 	 *  Constructs a Renderer2D with a default settings model.
@@ -100,10 +100,11 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	 *@param  split     If true the molecule will be partitioned in single molecules before painted. Typically not needed a performance killler
 	 *@param  redossr   If true a new rind detection is done
 	 */
-	public void paintMolecule(org.openscience.cdk.interfaces.IAtomContainer atomCon, Graphics2D graphics, boolean split, boolean redossr) {
+	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics, boolean split, boolean redossr) {
         logger.debug("inside paintMolecule()");
 		customizeRendering(graphics);
-		RingSet ringSet = new RingSet();
+		setupIsotopeFactory(atomCon);
+		IRingSet ringSet = atomCon.getBuilder().newRingSet();
 
 		// draw the molecule name
 		if (r2dm.getShowMoleculeTitle() && 
@@ -119,8 +120,8 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 		}
 		
 		if(redossr)
-			ringSet = new RingSet();
-		org.openscience.cdk.interfaces.IAtomContainer[] molecules = null;
+			ringSet = atomCon.getBuilder().newRingSet();
+		IAtomContainer[] molecules = null;
 		if(split){
 			try
 			{
@@ -132,7 +133,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 				return;
 			}
 		}else {
-			molecules=new org.openscience.cdk.interfaces.IAtomContainer[1];
+			molecules=new IAtomContainer[1];
 			molecules[0]=atomCon;
 		}
 		if(redossr){
@@ -150,8 +151,8 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	}
 	
 	public void redoSSSR(IAtomContainer[] molecules){
-			if(ringSet==null)
-				ringSet=new RingSet();
+			if(ringSet==null && molecules.length > 0)
+				ringSet= molecules[0].getBuilder().newRingSet();
 			for (int i = 0; i < molecules.length; i++)
 			{
 				SSSRFinder sssrf = new SSSRFinder(molecules[i]);

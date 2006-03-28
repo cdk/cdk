@@ -34,9 +34,9 @@ import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.RingSet;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -83,9 +83,9 @@ public class AlphaRenderer2D extends Renderer2D {
     mask.subtract(new Area(new Rectangle2D.Double(screenCoords[0], screenCoords[1], bounds[0], bounds[1])));
 }
 
-protected RingSet getRingSet(AtomContainer atomCon)
+protected IRingSet getRingSet(IAtomContainer atomCon)
 {
-  RingSet ringSet = new RingSet();
+  IRingSet ringSet = atomCon.getBuilder().newRingSet();
   org.openscience.cdk.interfaces.IMolecule[] molecules = null;
 
   try
@@ -110,7 +110,7 @@ protected RingSet getRingSet(AtomContainer atomCon)
   return ringSet;
 }
 
-public void paintMolecule(AtomContainer atomCon, Graphics2D graphics)
+public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics)
 {
   // make the initial mask cover the entire dimension we are going to paint
   mask =

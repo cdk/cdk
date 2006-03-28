@@ -44,38 +44,38 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.RingSet;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
- *  graphics objects using information from a Renderer2DModel. <p>
+ *  graphics objects using information from a Renderer2DModel.
  *
- *  This renderer uses two coordinate systems. One that is a world coordinates
+ *  <p>This renderer uses two coordinate systems. One that is a world coordinates
  *  system which is generated from the document coordinates. Additionally, the
  *  screen coordinates make up the second system, and are calculated by applying
- *  a zoom factor to the world coordinates. <p>
+ *  a zoom factor to the world coordinates.
  *
- *  The coordinate system used for display has its origin in the left-bottom
+ *  <p>The coordinate system used for display has its origin in the left-bottom
  *  corner, with the x axis to the right, and the y axis towards the top of the
- *  screen. The system is thus right handed. <p>
+ *  screen. The system is thus right handed.
  *
- *  The two main methods are paintMolecule() and paintChemModel(). Others might
- *  not show full rendering, e.g. anti-aliasing. <p>
+ *  <p>The two main methods are paintMolecule() and paintChemModel(). Others might
+ *  not show full rendering, e.g. anti-aliasing.
  *
- *  This modules tries to adhere to guidelines being developed by the IUPAC
+ *  <p>This modules tries to adhere to guidelines being developed by the IUPAC
  *  which results can be found at <a href="http://www.angelfire.com/sc3/iupacstructures/">
  *  http://www.angelfire.com/sc3/iupacstructures/</a> .
  *
@@ -123,18 +123,20 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		this.r2dm = r2dm;
 		logger = new LoggingTool(this);
 
-		try
-		{
-			isotopeFactory = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-		} catch (Exception exception)
-		{
-			logger.error("Error while instantiating IsotopeFactory");
-			logger.warn("Will not be able to display undefault isotopes");
-			logger.debug(exception);
+	}
+	
+	protected void setupIsotopeFactory(IChemObject object) {
+		if (isotopeFactory == null) {
+			try {
+				isotopeFactory = IsotopeFactory.getInstance(object.getBuilder());
+			} catch (Exception exception) {
+				logger.error("Error while instantiating IsotopeFactory");
+				logger.warn("Will not be able to display undefault isotopes");
+				logger.debug(exception);
+			}
 		}
 	}
-
-
+	
 	/**
 	 *  Description of the Method
 	 *
@@ -247,10 +249,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
 		boolean drawSymbol = false;
 		boolean isRadical = (container.getSingleElectronSum(atom) > 0);
-		if (atom instanceof PseudoAtom)
+		if (atom instanceof IPseudoAtom)
 		{
 			drawSymbol = false;
-			paintPseudoAtomLabel((PseudoAtom) atom, atomBackColor, graphics,
+			paintPseudoAtomLabel((IPseudoAtom) atom, atomBackColor, graphics,
 					alignment, isRadical);
 			return;
 		} else if (!atom.getSymbol().equals("C"))
@@ -283,7 +285,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			try
 			{
-				if (atom.getMassNumber() != IsotopeFactory.getInstance(new ChemObject().getBuilder()).
+				if (atom.getMassNumber() != IsotopeFactory.getInstance(container.getBuilder()).
 						getMajorIsotope(atom.getSymbol()).getMassNumber())
 				{
 					drawSymbol = true;
@@ -736,7 +738,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  alignment  Description of the Parameter
 	 *@param  isRadical  Description of the Parameter
 	 */
-	public void paintPseudoAtomLabel(PseudoAtom atom, Color backColor,
+	public void paintPseudoAtomLabel(IPseudoAtom atom, Color backColor,
 			Graphics2D graphics, int alignment, boolean isRadical)
 	{
 		if (atom.getPoint2d() == null)
@@ -828,7 +830,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  atomCon   Description of the Parameter
 	 *@param  graphics  Description of the Parameter
 	 */
-	public void paintBonds(IAtomContainer atomCon, RingSet ringSet, Graphics2D graphics)
+	public void paintBonds(IAtomContainer atomCon, IRingSet ringSet, Graphics2D graphics)
 	{
 		Color bondColor;
 		IRing ring;
