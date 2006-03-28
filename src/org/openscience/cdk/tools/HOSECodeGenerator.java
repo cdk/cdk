@@ -536,7 +536,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 					tempCode.append(bondSymbols[(int) treeNode.bondType]);
 				} else
 				{
-					//throw new CDKException("Unknown bond type");
+					throw new CDKException("Unknown bond type");
 				}
 				if (treeNode.atom != null && !treeNode.atom.getFlag(CDKConstants.VISITED))
 				{
@@ -632,7 +632,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				treeNode.score += bondRankings[(int) treeNode.bondType];
 			} else
 			{
-				//throw new CDKException("Unknown bond type encountered in HOSECodeGenerator");
+				throw new CDKException("Unknown bond type encountered in HOSECodeGenerator");
 			}
 		}
 	}
