@@ -39,12 +39,15 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 
+import javax.swing.undo.UndoableEdit;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectWriter;
@@ -148,6 +151,9 @@ public class CopyPasteAction extends JCPAction{
 	                jcpPanel.scaleAndCenterMolecule((ChemModel)jcpPanel.getChemModel());
 	                //make the pasted structure selected
 	                renderModel.setSelectedPart(topaste);
+	                //handle undo/redo
+	                UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, topaste, "Pasted something");
+	                jcpPanel.getUndoSupport().postEdit(edit);
 	            }
         	}
     	} catch(Exception ex){
