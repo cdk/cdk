@@ -60,17 +60,17 @@ public class BCUTDescriptorTest extends CDKTestCase {
         IAtomContainer ac = c[0];
 
         IDescriptor descriptor = new BCUTDescriptor();
-        Object[] params = new Object[2];
+        Object[] params = new Object[3];
         params[0] = new Integer(2);
         params[1] = new Integer(2);
+        params[2] = new Boolean(true);
         descriptor.setParameters(params);
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
-        /*
-        System.out.println("Num ret = "+retval.size());
+        assertNotNull(retval);
+        /* System.out.println("Num ret = "+retval.size()); */
         for (int i = 0; i < retval.size(); i++) {
-            System.out.println( ((Double)retval.get(i)).doubleValue() );
+            assertTrue(Math.abs(0.0 - ((Double)retval.get(i)).doubleValue()) > 0.0000001);
         }
-        */
 
         /*
         assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
