@@ -52,7 +52,7 @@ public class IsotopeReaderTest extends CDKTestCase {
 		return new TestSuite(IsotopeReaderTest.class);
 	}
 
-    public void testIsotopeReader_Reader_IChemObjectBuilder() {
+    public void testIsotopeReader_InputStream_IChemObjectBuilder() {
         IsotopeReader reader = new IsotopeReader(
             new ByteArrayInputStream(new byte[0]), 
             new ChemObject().getBuilder()
