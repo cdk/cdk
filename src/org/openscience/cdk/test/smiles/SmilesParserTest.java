@@ -1307,6 +1307,20 @@ public class SmilesParserTest extends CDKTestCase {
 	}
 	
 
+	public void testBug1365547(){
+		SmilesParser p = new SmilesParser();
+		try {
+			Molecule mol = p.parseSmiles("c2ccc1[nH]ccc1c2");
+			assertNotNull(mol);
+			assertEquals(9, mol.getAtomCount());
+			assertTrue(mol.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
+	
+	
 	/**
 	 *  The main program for the SmilesParserTest class
 	 *

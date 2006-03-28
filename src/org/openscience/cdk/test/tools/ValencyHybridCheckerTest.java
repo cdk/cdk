@@ -31,6 +31,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.ValencyHybridChecker;
@@ -99,5 +100,10 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 		assertEquals(3, satcheck.calculateNumberOfImplicitHydrogens(c2, m));
 	}
 
+	public void testBug1365547() throws Exception{
+		SmilesParser p = new SmilesParser();
+		Molecule mol = p.parseSmiles("c2ccc1[nH]ccc1c2");
+		new ValencyHybridChecker().saturate(mol);
+	}
 }
 
