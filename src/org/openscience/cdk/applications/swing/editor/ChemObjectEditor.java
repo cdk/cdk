@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.applications.swing.editor;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.swing.FieldTablePanel;
 
 /**
@@ -32,9 +32,9 @@ import org.openscience.cdk.applications.swing.FieldTablePanel;
  */
 public abstract class ChemObjectEditor extends FieldTablePanel {
     
-    protected ChemObject source;
+    protected IChemObject source;
     
-    public void setChemObject(ChemObject object) {
+    public void setChemObject(IChemObject object) {
         source = object;
     }
 	

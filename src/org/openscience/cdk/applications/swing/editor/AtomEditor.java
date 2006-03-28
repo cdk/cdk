@@ -27,8 +27,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * @cdk.module applications
@@ -54,11 +54,11 @@ public class AtomEditor extends ChemObjectEditor {
         addField("Formal Charge", formalChargeField);
     }
     
-    public void setChemObject(ChemObject object) {
-        if (object instanceof Atom) {
+    public void setChemObject(IChemObject object) {
+        if (object instanceof IAtom) {
             source = object;
             // update table contents
-            Atom atom = (Atom)source;
+            IAtom atom = (IAtom)source;
             symbolField.setText(atom.getSymbol());
             hCountField.setValue(new Integer(atom.getHydrogenCount()));
             formalChargeField.setValue(new Integer(atom.getFormalCharge()));
@@ -68,7 +68,7 @@ public class AtomEditor extends ChemObjectEditor {
     }
 	
     public void applyChanges() {
-        Atom atom = (Atom)source;
+        IAtom atom = (IAtom)source;
         atom.setSymbol(symbolField.getText());
         atom.setHydrogenCount(((Integer)hCountField.getValue()).intValue());
         atom.setFormalCharge(((Integer)formalChargeField.getValue()).intValue());

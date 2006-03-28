@@ -26,8 +26,8 @@ package org.openscience.cdk.applications.swing.editor;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * @cdk.module applications
@@ -63,11 +63,11 @@ public class ReactionEditor extends ChemObjectEditor {
         addField("Temperature", tempField);
     }
     
-    public void setChemObject(ChemObject object) {
-        if (object instanceof Reaction) {
+    public void setChemObject(IChemObject object) {
+        if (object instanceof IReaction) {
             source = object;     
             // update table contents
-            Reaction reaction = (Reaction)source;
+            IReaction reaction = (IReaction)source;
             idField.setText(reaction.getID());
             directionField.setSelectedIndex(reaction.getDirection());
             solventField.setText((String)reaction.getProperty(SOLVENT));
@@ -78,7 +78,7 @@ public class ReactionEditor extends ChemObjectEditor {
     }
 	
     public void applyChanges() {
-        Reaction reaction = (Reaction)source;
+        IReaction reaction = (IReaction)source;
         reaction.setID(idField.getText());
         reaction.setDirection(directionField.getSelectedIndex());
         reaction.setProperty(SOLVENT, solventField.getText());

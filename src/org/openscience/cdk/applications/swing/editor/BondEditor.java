@@ -26,8 +26,8 @@ package org.openscience.cdk.applications.swing.editor;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * @cdk.module applications
@@ -47,11 +47,11 @@ public class BondEditor extends ChemObjectEditor {
         addField("Order", orderField);
     }
     
-    public void setChemObject(ChemObject object) {
+    public void setChemObject(IChemObject object) {
         if (object instanceof org.openscience.cdk.interfaces.IBond) {
             source = object;
             // update table contents
-            Bond bond = (Bond)source;
+            IBond bond = (IBond)source;
             orderField.setText("" + bond.getOrder());
         } else {
             throw new IllegalArgumentException("Argument must be an Bond");
@@ -59,7 +59,7 @@ public class BondEditor extends ChemObjectEditor {
     }
 	
     public void applyChanges() {
-        Bond bond = (Bond)source;
+        IBond bond = (IBond)source;
         try {
             double newOrder = Double.parseDouble(orderField.getText());
             bond.setOrder(newOrder);

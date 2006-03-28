@@ -25,8 +25,8 @@ package org.openscience.cdk.applications.swing.editor;
 
 import javax.swing.JTextField;
 
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * @cdk.module applications
@@ -46,18 +46,18 @@ public class PseudoAtomEditor extends ChemObjectEditor {
         addField("Label", labelField);
     }
     
-    public void setChemObject(ChemObject object) {
-        if (object instanceof PseudoAtom) {
+    public void setChemObject(IChemObject object) {
+        if (object instanceof IPseudoAtom) {
             source = object;
             // update table contents
-            labelField.setText(((PseudoAtom)object).getLabel());
+            labelField.setText(((IPseudoAtom)object).getLabel());
         } else {
             throw new IllegalArgumentException("Argument must be an PseudoAtom");
         }
     }
 	
     public void applyChanges() {
-        PseudoAtom atom = (PseudoAtom)source;
+        IPseudoAtom atom = (IPseudoAtom)source;
         atom.setLabel(labelField.getText());
     }
 }

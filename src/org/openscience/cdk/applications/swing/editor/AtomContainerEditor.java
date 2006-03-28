@@ -23,13 +23,10 @@
  */
 package org.openscience.cdk.applications.swing.editor;
 
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -50,7 +47,7 @@ public class AtomContainerEditor extends ChemObjectEditor {
         addField("Title", titleField);
     }
     
-    public void setChemObject(ChemObject object) {
+    public void setChemObject(IChemObject object) {
         if (object instanceof IAtomContainer) {
             source = object;
             // update table contents
