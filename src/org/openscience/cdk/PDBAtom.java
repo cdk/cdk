@@ -45,8 +45,7 @@ public class PDBAtom extends Atom implements java.io.Serializable, Cloneable {
      *
      * This value must only be changed if and only if the new version
      * of this class is imcompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
-     * /serialization/spec/version.doc.html>details</a>.
+     * for <a href="http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html">details</a>.
 	 */
 	private static final long serialVersionUID = 7670650135045832543L;
 
