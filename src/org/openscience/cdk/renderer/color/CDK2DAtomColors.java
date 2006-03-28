@@ -35,14 +35,14 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
-    private final Color HYDROGEN       = Color.black;
-    private final Color CARBON         = Color.black;
-    private final Color NITROGEN       = Color.blue;
-    private final Color OXYGEN         = Color.red;
-    private final Color PHOSPHORUS     = Color.green.darker();
-    private final Color SULPHUR        = Color.yellow.darker();
+    private final static Color HYDROGEN       = Color.black;
+    private final static Color CARBON         = Color.black;
+    private final static Color NITROGEN       = Color.blue;
+    private final static Color OXYGEN         = Color.red;
+    private final static Color PHOSPHORUS     = Color.green.darker();
+    private final static Color SULPHUR        = Color.yellow.darker();
 
-    private final Color DEFAULT        = Color.black;
+    private final static Color DEFAULT        = Color.black;
     
     public Color getAtomColor(IAtom a) {
         return getAtomColor(a, DEFAULT);
