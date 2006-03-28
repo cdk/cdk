@@ -761,7 +761,17 @@
           <bibtex:pages>164-175</bibtex:pages>
       </bibtex:article>
   </bibtex:entry>
-
+  <bibtex:entry id="MURCKO96">
+      <bibtex:article>
+          <bibtex:author>Bemis, G.W. and Murcko, M.A.
+          </bibtex:author>
+          <bibtex:title>The properties of known drugs. 1. Molecular Frameworks  </bibtex:title>
+          <bibtex:journal>Journal of Medicinal Chemistry</bibtex:journal>
+          <bibtex:year>1996</bibtex:year>
+          <bibtex:volume>39</bibtex:volume>
+          <bibtex:pages>2887-2893</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
 
 
 </bibtex:file>
