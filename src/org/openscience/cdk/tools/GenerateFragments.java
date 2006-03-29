@@ -51,7 +51,16 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * Generate fragments
  * - ring fragments (largest ringsystems)
  * - Murcko fragments described by Murcko et al. {@cdk.cite MURCKO96}.
-  
+ *
+ * Due to some problems with SaturationChecker the SMILES generation might be a problem.
+ * When you want to use the get..SmileArray methods please do (that seems to work, refer test 13+14):
+ * 
+ * HydrogenAdder ha= new HydrogenAdder();
+ * ha.addExplicitHydrogensToSatisfyValency(molecule);
+ * GenerateFragments gf=new GenerateFragments();
+ * gf.generateMurckoFragments(molecule,booelan,booelan);
+ * String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+ *
  * @author      chhoppe from EUROSCREEN
  * @cdk.created     2006-3-23
  * @cdk.module experimental
@@ -136,7 +145,8 @@ public class GenerateFragments {
 									murckoFragment=new Molecule();
 									murckoFragment=addFragments(firstRingAtomContainer,murckoFragment);
 									murckoFragment=addFragments(secondRingAtomContainer,murckoFragment);
-									murckoFragment=addFragments(firstRingAtom,firstRingSubstituents.getAtomAt(i),murckoFragment,molecule);
+									murckoFragment=addFragmentBonds(murckoFragment,molecule);
+									
 									this.murckoFragments.add(murckoFragment);
 									//System.out.println("MFragment:"+murckoFragment.getAtomCount()+" CC:"+ConnectivityChecker.isConnected(murckoFragment));
 									//System.out.println(murckoFragment.toString());
@@ -177,19 +187,17 @@ public class GenerateFragments {
 													//add root atom to path
 													if (!path.contains(firstRingSubstituents.getAtomAt(i))){
 														path.addAtom(firstRingSubstituents.getAtomAt(i));
-														int firstAtomNumber=path.getAtomNumber(firstRingSubstituents.getAtomAt(i));
-														path.addBond(firstAtomNumber,0,molecule.getBond(firstRingSubstituents.getAtomAt(i),path.getAtomAt(0)).getOrder());
 													}												
 													//1. add path
 													//2. add rings  
 													//3. connect ring atoms to path
 													murckoFragment=addPathFragments(path,murckoFragment,molecule);
-													linkerFragment=new Molecule(murckoFragment);
 													murckoFragment=addFragments(firstRingAtomContainer,murckoFragment);
 													murckoFragment=addFragments(secondRingAtomContainer,murckoFragment);
-													murckoFragment=addFragments(firstRingAtom,firstRingSubstituents.getAtomAt(i),murckoFragment,molecule);
-													murckoFragment=addFragments(secondRingAtom,secondRingSubstituents.getAtomAt(k),murckoFragment,molecule);
-																																						
+													
+													murckoFragment=addFragmentBonds(murckoFragment,molecule);
+													linkerFragment=new Molecule(murckoFragment);
+																																					
 													this.linkerFragments.add(linkerFragment);
 													this.murckoFragments.add(murckoFragment);
 													//System.out.println("\tADD MURCKOFRAGMENT");
@@ -213,6 +221,7 @@ public class GenerateFragments {
 		}else if (this.ringFragments.size() ==1){
 			murckoFragment=new Molecule();
 			murckoFragment=addFragments(RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(0)),murckoFragment);
+			murckoFragment=addFragmentBonds(murckoFragment,molecule);
 			this.murckoFragments.add(murckoFragment);
 		}
 		
@@ -230,8 +239,6 @@ public class GenerateFragments {
 	private IMolecule addPathFragments(IAtomContainer addAtomContainer,IMolecule targetMolecule, IMolecule mainMolecule){
 		IAtomContainer ringAtomContainer=null;
 		IAtom[] atoms=null;
-		int firstAtomNumber=0;
-		int secondAtomNumber=0;
 		
 		//1. check if linker atom is member of a ring system
 		//2. check if heteroatoms bonded to a non ring linker atom should be included
@@ -255,51 +262,44 @@ public class GenerateFragments {
 					if (this.sidechainHetatoms && !(atoms[j].getSymbol()).equals("C") && !(atoms[j].getSymbol()).equals("H") && !targetMolecule.contains(atoms[j])){
 						//System.out.println("HETATOM TRUE");
 						targetMolecule.addAtom(atoms[j]);
-						firstAtomNumber=targetMolecule.getAtomNumber(addAtomContainer.getAtomAt(i));
-						secondAtomNumber=targetMolecule.getAtomNumber(atoms[j]);
-						targetMolecule.addBond(firstAtomNumber,secondAtomNumber,mainMolecule.getBond(addAtomContainer.getAtomAt(i),atoms[j]).getOrder());
 					}
 					if (this.sidechainHetatoms && mainMolecule.getBond(atoms[j],addAtomContainer.getAtomAt(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
 						targetMolecule.addAtom(atoms[j]);
-						firstAtomNumber=targetMolecule.getAtomNumber(addAtomContainer.getAtomAt(i));
-						secondAtomNumber=targetMolecule.getAtomNumber(atoms[j]);
-						targetMolecule.addBond(firstAtomNumber,secondAtomNumber,mainMolecule.getBond(addAtomContainer.getAtomAt(i),atoms[j]).getOrder());
 					}
 					
 				}
 			}else{
-				targetMolecule.addAtom(addAtomContainer.getAtomAt(i));	
+				if (!targetMolecule.contains(addAtomContainer.getAtomAt(i))){
+					targetMolecule.addAtom(addAtomContainer.getAtomAt(i));
+				}
 			}
 		}
-			
-		for (int i=0;i<addAtomContainer.getBondCount();i++){
-			if (!targetMolecule.contains(addAtomContainer.getBondAt(i))){
-				targetMolecule.addBond(addAtomContainer.getBondAt(i));
-			}
-		}
-		
+
 		return targetMolecule;
 	}
 	
-	
 	/**
-	 * connect ring systems to the path
-	 * @param firstAtom			should be a ring atom
-	 * @param secondAtom		is the first atom in the path
+	 * add bonds to the murcko fragments
 	 * @param targetMolecule	murcko fragment storage
 	 * @param mainMolecule		original molecule
 	 * @return 	IMolecule		murcko fragment
 	 */
-	private IMolecule addFragments(IAtom firstAtom, IAtom secondAtom,IMolecule targetMolecule, IMolecule mainMolecule){
-		//System.out.println("--->connect ring systems to the path");
-		
-		int firstAtomNumber=targetMolecule.getAtomNumber(firstAtom);
-		int secondAtomNumber=targetMolecule.getAtomNumber(secondAtom);
-		
-		targetMolecule.addBond(firstAtomNumber,secondAtomNumber,mainMolecule.getBond(firstAtom,secondAtom).getOrder());
-			
+	private IMolecule addFragmentBonds(IMolecule targetMolecule, IMolecule mainMolecule){
+		int firstAtomNumber=0;
+		int secondAtomNumber=0;
+		for (int i=0;i<targetMolecule.getAtomCount()-1;i++){
+			for (int j = i+1; j < targetMolecule.getAtomCount(); j++) {
+				
+				if (mainMolecule.getBond(targetMolecule.getAtomAt(i),targetMolecule.getAtomAt(j)) !=null){
+					firstAtomNumber=targetMolecule.getAtomNumber(targetMolecule.getAtomAt(i));
+					secondAtomNumber=targetMolecule.getAtomNumber(targetMolecule.getAtomAt(j));
+					targetMolecule.addBond(firstAtomNumber,secondAtomNumber,mainMolecule.getBond(targetMolecule.getAtomAt(i),targetMolecule.getAtomAt(j)).getOrder());
+				}
+			}
+		}
 		return targetMolecule;
 	}
+	
 	
 	
 	/**
@@ -312,10 +312,6 @@ public class GenerateFragments {
 		for (int i=0;i<addAtomContainer.getAtomCount();i++){
 			targetMolecule.addAtom(addAtomContainer.getAtomAt(i));					
 		}
-		for (int i=0;i<addAtomContainer.getBondCount();i++){
-			targetMolecule.addBond(addAtomContainer.getBondAt(i));					
-		}
-		
 		return targetMolecule;
 	}
 	
@@ -334,24 +330,6 @@ public class GenerateFragments {
 		}
 		return true;
 	}
-	
-	/**
-	 * Method checks if a ring atom has substituents (can be an other ring system)
-	 * @param ringAtom		IAtom the ring atom
-	 * @param molecule	 	IMolecule original molecule
-	 * @param ringSystem	IAtomContainer the ring system
-	 * @return
-	 * boolean
-	 */
-//	private boolean hasSubstituent(IAtom ringAtom,IMolecule molecule, IAtomContainer ringSystem){
-//		IAtom[] atoms = molecule.getConnectedAtoms(ringAtom);
-//		for (int i = 0; i<atoms.length;i++){
-//			if (!ringSystem.contains(atoms[i])&& !atoms[i].getSymbol().equals("H")){
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 	
 	/**
 	 * get starting points (IAtom) of possible linkers  
