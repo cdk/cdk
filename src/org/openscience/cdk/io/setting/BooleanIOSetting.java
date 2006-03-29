@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2005  The CDK Development Team
+ * Copyright (C) 2003-2006  The CDK Development Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

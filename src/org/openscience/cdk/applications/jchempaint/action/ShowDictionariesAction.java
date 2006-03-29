@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2003-2005  The JChemPaint project
+ *  Copyright (C) 2003-2006  The JChemPaint project
  *
  *  Contact: jchempaint-devel@lists.sourceforge.net
  *

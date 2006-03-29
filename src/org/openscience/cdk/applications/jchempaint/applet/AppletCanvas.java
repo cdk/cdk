@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002-2005  The Jmol Development Team
+ *  Copyright (C) 2002-2006  The Jmol Development Team
  *
  *  Contact: jmol-developers@lists.sf.net
  *

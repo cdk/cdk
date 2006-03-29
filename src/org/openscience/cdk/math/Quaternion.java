@@ -4,7 +4,7 @@
  * EMail: stephan@vern.chem.tu-berlin.de
  * Datum: 6.7.2001
  * 
- * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
