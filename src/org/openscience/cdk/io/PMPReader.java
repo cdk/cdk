@@ -89,6 +89,8 @@ public class PMPReader extends DefaultChemObjectReader {
     Pattern objCommand;
     Pattern atomTypePattern;
 
+    int lineNumber = 0;
+    
     /*
      * construct a new reader from a Reader type object
      *
@@ -97,6 +99,7 @@ public class PMPReader extends DefaultChemObjectReader {
     public PMPReader(Reader input) {
         this.input = new BufferedReader(input);
         logger = new LoggingTool(this);
+        this.lineNumber = 0;
     
         /* compile patterns */
         objHeader = Pattern.compile(".*\\((\\d+)\\s(\\w+)$");
@@ -145,6 +148,13 @@ public class PMPReader extends DefaultChemObjectReader {
     }
 
     // private procedures
+    
+    private String readLine() throws IOException {
+    	String line = input.readLine();
+    	lineNumber = lineNumber + 1;
+    	logger.debug("LINE (" + lineNumber + "): ", line);
+    	return line;
+    }
 
     /**
      *  Private method that actually parses the input to read a ChemFile
@@ -161,19 +171,19 @@ public class PMPReader extends DefaultChemObjectReader {
         ICrystal crystal = chemFile.getBuilder().newCrystal();
 
         try {
-            String line = input.readLine();
+            String line = readLine();
             while (input.ready() && line != null) {
                 if (line.startsWith("%%Header Start")) {
                     // parse Header section
                     while (input.ready() && line != null && !(line.startsWith("%%Header End"))) {
                         if (line.startsWith("%%Version Number")) {
-                            String version = input.readLine().trim();
+                            String version = readLine().trim();
                             if (!version.equals("3.00")) {
                                 logger.error("The PMPReader only supports PMP files with version 3.00");
                                 return null;
                             }
                         }
-                        line = input.readLine();
+                        line = readLine();
                     }
                 } else if (line.startsWith("%%Model Start")) {
                     // parse Model section
@@ -184,7 +194,7 @@ public class PMPReader extends DefaultChemObjectReader {
                             constructObject(chemFile.getBuilder(), object);
                             int id = Integer.parseInt(objHeaderMatcher.group(1));
                             // System.out.println(object + " id: " + id);
-                            line = input.readLine();
+                            line = readLine();
                             while (input.ready() && line != null && !(line.trim().equals(")"))) {
                                 // parse object command (or new object header)
                                 Matcher objCommandMatcher = objCommand.matcher(line);
@@ -202,7 +212,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                 } else {
                                     logger.warn("Skipping line: " + line);
                                 }
-                                line = input.readLine();
+                                line = readLine();
                             }
                             if (chemObject instanceof IAtom) {
                                 atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
@@ -215,7 +225,7 @@ public class PMPReader extends DefaultChemObjectReader {
                             }
                             // System.out.println(molecule.toString());
                         }
-                        line = input.readLine();
+                        line = readLine();
                     }
                     som.addMolecule(molecule);
                     modelModel.setSetOfMolecules(som);
@@ -234,7 +244,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                     int expatoms = atomC.getAtomCount();
                                     // exception
                                     for (int i=0; i < expatoms; i++) {
-                                        line = input.readLine();
+                                        line = readLine();
                                         IAtom a = crystal.getAtomAt(i);
                                         StringTokenizer st = new StringTokenizer(line, " ");
                                         a.setX3d(Double.parseDouble(st.nextToken()));
@@ -243,21 +253,21 @@ public class PMPReader extends DefaultChemObjectReader {
                                     }
                                 } else if (line.startsWith("%%Lat Vects")) {
                                     StringTokenizer st;
-                                    line = input.readLine();
+                                    line = readLine();
                                     st = new StringTokenizer(line, " ");
                                     crystal.setA(new Vector3d(
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken())
                                     ));
-                                    line = input.readLine();
+                                    line = readLine();
                                     st = new StringTokenizer(line, " ");
                                     crystal.setB(new Vector3d(
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken()),
                                         Double.parseDouble(st.nextToken())
                                     ));
-                                    line = input.readLine();
+                                    line = readLine();
                                     st = new StringTokenizer(line, " ");
                                     crystal.setC(new Vector3d(
                                         Double.parseDouble(st.nextToken()),
@@ -265,7 +275,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                         Double.parseDouble(st.nextToken())
                                     ));
                                 } else if (line.startsWith("%%Space Group")) {
-                                    line = input.readLine().trim();
+                                    line = readLine().trim();
                                     /* standardize space group name.
                                        See Crystal.setSpaceGroup() */
                                     if ("P 21 21 21 (1)".equals(line)) {
@@ -275,19 +285,19 @@ public class PMPReader extends DefaultChemObjectReader {
                                     }
                                 } else {
                                 }
-                                line = input.readLine();
+                                line = readLine();
                             }
                             chemModel.setCrystal(crystal);
                             chemSequence.addChemModel(chemModel);
                         }
-                        line = input.readLine();
+                        line = readLine();
                     }
                     chemFile.addChemSequence(chemSequence);
                 } else {
                     // disregard line
                 }
                 // read next line
-                line = input.readLine();
+                line = readLine();
             }
         } catch (IOException e) {
             // should make some noise now
@@ -340,6 +350,8 @@ public class PMPReader extends DefaultChemObjectReader {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
+                logger.debug("atomids: " + atomids);
+                logger.debug("atomid: " + atomid);
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
                 IAtom a = molecule.getAtomAt(realatomid);
                 ((IBond)chemObject).setAtomAt(a, 1);
