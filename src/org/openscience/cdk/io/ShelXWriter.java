@@ -139,17 +139,14 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         double beta  = a.angle(c);
         double gamma = a.angle(b);
         FormatStringBuffer format = new FormatStringBuffer("%7.5lf");
-        write("CELL " + format.format(1.54184) + "   ");
-        format = new FormatStringBuffer("%8.5lf");
-        write(format.format(alength) + "  ");
-        write(format.format(blength) + "  ");
-        write(format.format(clength) + " ");
-        format = new FormatStringBuffer("%8.4lf");
-        write(format.format(alpha) + " ");
-        write(format.format(beta) + " ");
-        write(format.format(gamma) + "\n");
-        format = new FormatStringBuffer("%1.5lf");
-        write("ZERR " + format.format((double)crystal.getZ()) +
+        write("CELL " + format.reset("%7.5f").format(1.54184).toString() + "   ");
+        write(format.reset("%8.5f").format(alength) + "  ");
+        write(format.reset("%8.5f").format(blength) + "  ");
+        write(format.reset("%8.5f").format(clength) + " ");
+        write(format.reset("%8.4f").format(alpha) + " ");
+        write(format.reset("%8.4f").format(beta) + " ");
+        write(format.reset("%8.4f").format(gamma) + "\n");
+        write("ZERR " + format.reset("%1.5f").format((double)crystal.getZ()) +
               "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100\n");
         String spaceGroup = crystal.getSpaceGroup();
         if ("P1".equals(spaceGroup)) {
@@ -174,7 +171,6 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         write("SFAC  " + elemNames + "\n");
         write("UNIT  " + elemCounts + "\n");
         /* write atoms */
-        format = new FormatStringBuffer("%7.5lf");
         for (int i = 0; i < crystal.getAtomCount(); i++) {
         	IAtom atom = crystal.getAtomAt(i);
             Point3d cartCoord = atom.getPoint3d();
@@ -189,9 +185,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             String elemID = new Integer(asortedElements.indexOf(symbol)+1).toString();
             write(elemID);
             write("    ".substring(elemID.length()));
-            write(format.format(fracCoord.x) + "   ");
-            write(format.format(fracCoord.y) + "   ");
-            write(format.format(fracCoord.z) + "    11.00000    0.05000\n");
+            write(format.reset("%7.5f").format(fracCoord.x) + "   ");
+            write(format.reset("%7.5f").format(fracCoord.y) + "   ");
+            write(format.reset("%7.5f").format(fracCoord.z) + "    11.00000    0.05000\n");
         }
         write("END\n");
     }
