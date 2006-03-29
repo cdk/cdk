@@ -86,7 +86,7 @@ import org.openscience.cdk.test.tools.ToolsTests;
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */

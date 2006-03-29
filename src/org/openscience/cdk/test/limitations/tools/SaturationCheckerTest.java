@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * This class shows some limitations of algorithms in the SaturationChecker
  * class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  * 
  * @author     egonw
  * @cdk.created    2003-11-02

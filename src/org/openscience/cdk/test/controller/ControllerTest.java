@@ -39,7 +39,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ControllerTest
 {

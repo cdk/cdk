@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdk.module  test
+ * @cdk.module  test-extra
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5
  */

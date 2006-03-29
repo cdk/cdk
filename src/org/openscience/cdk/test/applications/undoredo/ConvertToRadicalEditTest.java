@@ -16,7 +16,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * Junit test for the ConvertToRadicalEdit class
  * 
  * @author tohel
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ConvertToRadicalEditTest extends CDKTestCase {
 

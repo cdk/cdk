@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.DeAromatizationTool;
 /**
  * Tests the DeAromatizationTool.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class DeAromatizationToolTest extends CDKTestCase {
 	

@@ -21,7 +21,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * This class defines regression tests that should ensure that the source code
  * of the org.openscience.cdk.geometry.alignment.KabschAlignment is not broken.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author     Rajarshi Guha
  * @cdk.created    2004-12-11

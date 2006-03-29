@@ -43,7 +43,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * in data/cmltest as found in the JChemPaint distribution
  * (http://jchempaint.sf.org/).
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class JChemPaintTest extends CDKTestCase {
 

@@ -34,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the funcitonality of the IsomorphismTester
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class SymbolSetQueryAtomTest extends CDKTestCase
 {

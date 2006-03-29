@@ -66,7 +66,7 @@ import org.openscience.cdk.test.tools.ToolsTests;
  * open source Java Virtual machines, like JamVM, Cacao and Kaffe.
  * These normally use Classpath to provide the Java libraries.
  *
- * @cdk.module  test
+ * @cdk.module  test-extra
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */

@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 /**
  *  Description of the Class
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  *@author     chhoppe
  *@cdk.created    2004-11-04

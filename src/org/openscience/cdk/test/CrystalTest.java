@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Checks the functionality of the Crystal.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class CrystalTest extends CDKTestCase {
 

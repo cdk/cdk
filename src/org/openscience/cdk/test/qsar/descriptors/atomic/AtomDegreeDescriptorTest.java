@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
  
 public class AtomDegreeDescriptorTest extends CDKTestCase {

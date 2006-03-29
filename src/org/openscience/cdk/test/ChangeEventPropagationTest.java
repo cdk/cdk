@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  * Checks the propagation of ChangeEvents through a 
  * nested set of objects.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.ChemFile
  */

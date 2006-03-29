@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.FormatStringBuffer;
 
 /**
  * @author     egonw
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class FormatStringBufferTest extends CDKTestCase {
 

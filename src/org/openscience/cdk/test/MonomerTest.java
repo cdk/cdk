@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * TestCase for the Monomer class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09

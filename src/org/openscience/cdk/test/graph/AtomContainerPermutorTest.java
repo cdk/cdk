@@ -33,7 +33,7 @@ import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class AtomContainerPermutorTest extends CDKTestCase
 {

@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Checks the functionality of the AtomType-MMFF94AtomTypeMatcher.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.atomtype.MMFF94AtomTypeMatcher
  */

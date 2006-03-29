@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @see org.openscience.cdk.SingleElectron
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class SingleElectronTest extends CDKTestCase {
 

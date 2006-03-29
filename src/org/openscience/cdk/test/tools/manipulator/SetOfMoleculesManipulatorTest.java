@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20

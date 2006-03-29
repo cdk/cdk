@@ -41,7 +41,7 @@ import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class FileReaderTest {
 

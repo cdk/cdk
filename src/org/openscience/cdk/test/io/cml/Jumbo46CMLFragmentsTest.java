@@ -45,7 +45,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * Atomic tests for the reading CML documents. All tested CML strings are valid CML 2,
  * as can be determined in cdk/src/org/openscience/cdk/test/io/cml/cmlTestFramework.xml.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

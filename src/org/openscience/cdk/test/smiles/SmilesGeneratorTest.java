@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  *@author         steinbeck
  *@cdk.created    February 9, 2004
- *@cdk.module     test
+ *@cdk.module     test-extra
  */
 public class SmilesGeneratorTest extends CDKTestCase
 {

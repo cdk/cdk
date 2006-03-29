@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Checks the functionality of the AtomParity class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.AtomParity
  */

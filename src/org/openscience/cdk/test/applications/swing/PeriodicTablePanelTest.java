@@ -37,7 +37,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  *@author        Steinbeck
  *@cdk.created       February 10, 2004
- *@cdk.module    test
+ *@cdk.module    test-extra
  */
 public class PeriodicTablePanelTest extends CDKTestCase {
 

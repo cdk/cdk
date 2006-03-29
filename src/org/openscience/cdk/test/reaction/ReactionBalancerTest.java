@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 /**
  * @author      Kai Hartmann
  * @cdk.created 2004-02-20
- * @cdk.module  test
+ * @cdk.module  test-extra
  */
 public class ReactionBalancerTest extends CDKTestCase {
 

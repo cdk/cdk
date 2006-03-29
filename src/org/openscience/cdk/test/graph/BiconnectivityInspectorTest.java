@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * This class tests the BiconnectivityInspector class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */

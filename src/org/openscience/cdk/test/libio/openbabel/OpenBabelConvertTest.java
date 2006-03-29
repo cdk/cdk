@@ -40,10 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the convertor using OpenBabel.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  * 
  * @author     Miguel Rojas <miguelrojasch@uni-koeln.de>
- *
  */
 public class OpenBabelConvertTest extends CDKTestCase {
 

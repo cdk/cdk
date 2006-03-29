@@ -46,7 +46,7 @@ import com.baysmith.io.FileUtilities;
 /**
  * TestCase for the PDBReader class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>

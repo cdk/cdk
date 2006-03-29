@@ -66,7 +66,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * Checks the functionality of the Crystal.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class DefaultChemObjectBuilderTest extends CDKTestCase {
 

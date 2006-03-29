@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * Window - Preferences - Java - Code Style - Code Templates
  *
  * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class StrandTest extends TestCase {
 	

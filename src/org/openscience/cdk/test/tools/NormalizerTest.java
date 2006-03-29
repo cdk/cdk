@@ -39,7 +39,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class NormalizerTest extends CDKTestCase {
 	

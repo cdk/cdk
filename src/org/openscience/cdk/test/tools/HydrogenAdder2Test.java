@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * Tests CDK's hydrogen adding capabilities in terms of
  * example molecules.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author     egonw
  * @cdk.created    2003-06-18

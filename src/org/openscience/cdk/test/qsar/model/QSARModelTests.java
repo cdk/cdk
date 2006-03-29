@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 /**
  * TestSuite that runs all Model tests.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
  
  public class QSARModelTests {

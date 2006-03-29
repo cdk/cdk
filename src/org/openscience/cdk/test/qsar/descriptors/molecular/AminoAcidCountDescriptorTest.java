@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
 /**
  * TestSuite that runs a test for the AtomCountDescriptor.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
  
 public class AminoAcidCountDescriptorTest extends CDKTestCase {

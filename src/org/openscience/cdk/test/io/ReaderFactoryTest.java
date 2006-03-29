@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * in data/cmltest as found in the Jmol distribution
  * (http://jmol.sf.org/).
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ReaderFactoryTest extends CDKTestCase {
 

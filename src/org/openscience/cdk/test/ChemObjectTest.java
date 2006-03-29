@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 /**
  * TestCase for the IChemObject class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09

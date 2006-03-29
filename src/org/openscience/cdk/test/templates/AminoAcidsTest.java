@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import java.util.HashMap;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class AminoAcidsTest extends CDKTestCase {
 

@@ -62,7 +62,7 @@ import java.io.*;
  *  Check forcefield package using some examples.
  *
  *@author         vlabarta
- *@cdk.module     test
+ *@cdk.module     test-extra
  *@cdk.created    2005-01-17
  */
 public class ForceFieldTests extends CDKTestCase {

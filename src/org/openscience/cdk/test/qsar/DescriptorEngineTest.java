@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class    DescriptorEngineTest extends CDKTestCase {
 

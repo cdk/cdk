@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the TXTBasedAtomTypeConfigurator.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase
 {

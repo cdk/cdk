@@ -38,7 +38,7 @@ import java.io.FileReader;
 import java.util.Hashtable;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class Renderer2DTest extends JPanel
 {

@@ -38,7 +38,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the funcitonality of the AtomTypeReader.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class AtomTypeReaderTest extends CDKTestCase {
      

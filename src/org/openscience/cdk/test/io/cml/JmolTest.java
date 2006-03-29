@@ -45,7 +45,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * in data/cmltest as found in the Jmol distribution
  * (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class JmolTest extends CDKTestCase {
 

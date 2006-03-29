@@ -32,7 +32,7 @@ import org.openscience.cdk.test.isomorphism.SMARTSTest;
 /**
  * TestSuite that runs all the sample tests for experimental classes.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ExperimentalClassesTests {
 

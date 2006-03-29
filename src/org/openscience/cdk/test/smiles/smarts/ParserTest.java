@@ -39,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * JUnit test routines for the SMARTS parser.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  * @cdk.require ant1.6
  *
  * @author Egon Willighagen

@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  * TestSuite that runs all Model tests.
  *
  * @author     Rajarshi Guha
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class QSARRModelTests {
     

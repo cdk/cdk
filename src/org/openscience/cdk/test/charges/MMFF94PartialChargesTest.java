@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  *@author        cubic
  *@cdk.created       2004-11-04

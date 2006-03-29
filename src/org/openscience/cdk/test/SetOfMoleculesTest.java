@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 /**
  * Checks the funcitonality of the SetOfMolecules class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.SetOfMolecules
  */

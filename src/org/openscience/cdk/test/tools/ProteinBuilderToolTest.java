@@ -31,7 +31,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ProteinBuilderToolTest extends CDKTestCase {
 

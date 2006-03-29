@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Checks the funcitonality of the Mapping class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.Mapping
  */

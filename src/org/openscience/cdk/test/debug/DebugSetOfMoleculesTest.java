@@ -33,7 +33,7 @@ import org.openscience.cdk.test.SetOfMoleculesTest;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class DebugSetOfMoleculesTest extends SetOfMoleculesTest {
 

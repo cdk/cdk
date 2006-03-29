@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the reading MDL RXN files using one test file.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */

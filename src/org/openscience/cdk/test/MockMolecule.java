@@ -36,7 +36,7 @@ import org.openscience.cdk.Molecule;
  * A molecule which looks like a cube. The center
  * of the cube is located at (0,0,0) and the corners have a length of 2.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author  Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09

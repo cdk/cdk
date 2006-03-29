@@ -17,7 +17,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * A Test case for the gaussian 98 (G98Reader) class.
  * 
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author Christoph Steinbeck
  */

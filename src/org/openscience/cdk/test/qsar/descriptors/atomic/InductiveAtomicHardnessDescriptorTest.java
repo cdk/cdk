@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import javax.vecmath.Point3d;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class InductiveAtomicHardnessDescriptorTest extends CDKTestCase {
 	

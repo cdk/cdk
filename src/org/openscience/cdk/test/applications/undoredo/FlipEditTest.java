@@ -16,7 +16,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * Junit test for the FlipEdit class
  * 
  * @author tohel
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class FlipEditTest extends ChangeCoordsEditTest {
 

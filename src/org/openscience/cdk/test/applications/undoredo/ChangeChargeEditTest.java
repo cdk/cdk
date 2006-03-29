@@ -19,7 +19,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * Junit test for the ChangeChargeEdit class
  * 
  * @author tohel
- * @cdk.module test
+ * @cdk.module test-extra
  * 
  */
 public class ChangeChargeEditTest extends CDKTestCase {

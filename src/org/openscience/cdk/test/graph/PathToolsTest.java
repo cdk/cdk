@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class PathToolsTest extends CDKTestCase {
     private Molecule molecule;

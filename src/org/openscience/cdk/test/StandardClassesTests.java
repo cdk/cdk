@@ -37,7 +37,7 @@ import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
 /**
  * TestSuite that runs all the sample tests
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class StandardClassesTests {
 

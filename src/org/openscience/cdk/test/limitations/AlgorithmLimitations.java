@@ -32,7 +32,7 @@ import org.openscience.cdk.test.limitations.tools.SaturationCheckerTest;
  * TestSuite that runs all JUnit tests that fail bacause of limitations of
  * certain algorithms.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class AlgorithmLimitations {
     

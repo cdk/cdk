@@ -38,7 +38,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  *@author        mfe4
  *@cdk.created       2004-11-04

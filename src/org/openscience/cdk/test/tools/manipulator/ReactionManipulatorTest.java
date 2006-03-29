@@ -35,7 +35,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author     Egon Willighagen
  * @cdk.created    2003-07-23

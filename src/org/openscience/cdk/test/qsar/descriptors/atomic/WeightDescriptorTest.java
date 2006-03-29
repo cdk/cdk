@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs a test for the AtomCountDescriptor.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
  
 public class WeightDescriptorTest extends CDKTestCase {

@@ -32,7 +32,7 @@ import org.openscience.cdk.test.isomorphism.matchers.SymbolSetQueryAtomTest;
  * TestSuite that runs all the sample tests in the
  * org.openscience.cdk.isomorphism package.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class IsomorphismTests {
 

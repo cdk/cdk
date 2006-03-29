@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 /**
  * JUnit test routines for the core parser.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  * @cdk.require ant1.6
  *
  * @author Stephen Tomkinson

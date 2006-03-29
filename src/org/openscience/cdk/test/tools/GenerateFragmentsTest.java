@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class GenerateFragmentsTest extends CDKTestCase{
 	

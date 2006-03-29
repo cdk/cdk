@@ -30,7 +30,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @author Rajarshi Guha
  * @cdk.require r-project
- * @cdk.module test
+ * @cdk.module test-extra
  */
  
 public class SJavaEnvironmentTest extends CDKTestCase {

@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Checks the funcitonality of the AtomType class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.AtomType
  */

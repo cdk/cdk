@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class StandardSubstructureSetsTest extends CDKTestCase {
 	

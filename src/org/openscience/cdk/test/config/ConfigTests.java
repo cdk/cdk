@@ -35,7 +35,7 @@ import org.openscience.cdk.test.config.isotopes.IsotopeReaderTest;
  * TestSuite that runs all the sample tests in the
  * org.openscience.cdk.config package.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ConfigTests {
 

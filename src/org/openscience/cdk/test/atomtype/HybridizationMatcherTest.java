@@ -36,7 +36,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class HybridizationMatcherTest extends CDKTestCase {
 

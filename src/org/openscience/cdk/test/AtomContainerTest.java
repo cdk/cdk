@@ -48,7 +48,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class AtomContainerTest extends CDKTestCase {
 

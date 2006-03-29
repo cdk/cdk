@@ -32,7 +32,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class DrawPolygonTest
 {

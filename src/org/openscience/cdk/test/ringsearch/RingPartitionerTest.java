@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * This class tests the RingPartitioner class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author         kaihartmann
  * @cdk.created    2005-05-24

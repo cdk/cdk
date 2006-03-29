@@ -38,7 +38,7 @@ import javax.vecmath.Point3d;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
  
 public class DistanceToAtomDescriptorTest extends CDKTestCase {

@@ -39,7 +39,7 @@ import java.io.InputStream;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 
 public class WHIMDescriptorTest extends CDKTestCase {

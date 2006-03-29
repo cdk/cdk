@@ -40,7 +40,7 @@ import java.util.ArrayList;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
  
 public class RDFProtonDescriptorTest extends CDKTestCase {

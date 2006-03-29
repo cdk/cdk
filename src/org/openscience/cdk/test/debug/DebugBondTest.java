@@ -33,7 +33,7 @@ import org.openscience.cdk.test.BondTest;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class DebugBondTest extends BondTest {
 

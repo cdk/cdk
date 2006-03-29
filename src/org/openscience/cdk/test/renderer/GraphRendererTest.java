@@ -41,7 +41,7 @@ import org.openscience.cdk.math.Vector;
 import org.openscience.cdk.renderer.GraphRendererModel;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-07-23

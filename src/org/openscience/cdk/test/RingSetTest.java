@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 /**
  * Checks the funcitonality of the RingSet class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.RingSet
  */

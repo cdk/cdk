@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * This application takes a XYZ, CML or MDL mol file, calculates
  * orbitals and outputs them to STDOUT.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-06-09

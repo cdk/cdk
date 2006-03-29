@@ -34,7 +34,7 @@ import org.openscience.cdk.test.io.iterator.IteratingSMILESReaderTest;
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class IOTests {
 

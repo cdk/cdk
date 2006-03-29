@@ -16,7 +16,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * Junit test for the CleanUpEdit class
  * 
  * @author tohel
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class CleanUpEditTest extends ChangeCoordsEditTest {
 

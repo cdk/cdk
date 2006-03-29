@@ -39,7 +39,7 @@ import org.openscience.cdk.structgen.deterministic.GENMDeterministicGenerator;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class GENMDeterministicGeneratorTest extends CDKTestCase
 {

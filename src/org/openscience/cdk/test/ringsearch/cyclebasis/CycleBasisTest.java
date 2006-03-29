@@ -37,7 +37,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * This class tests the CycleBasis class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */

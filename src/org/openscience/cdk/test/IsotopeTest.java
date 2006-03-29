@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 /**
  * Checks the funcitonality of the Isotope class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.Isotope
  */

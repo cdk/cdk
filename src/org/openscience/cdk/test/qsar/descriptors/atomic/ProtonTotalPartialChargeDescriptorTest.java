@@ -35,7 +35,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ProtonTotalPartialChargeDescriptorTest extends CDKTestCase {
 	

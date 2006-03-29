@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class SubstructureFingerprinterTest extends CDKTestCase {
 	

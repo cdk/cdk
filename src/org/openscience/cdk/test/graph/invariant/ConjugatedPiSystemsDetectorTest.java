@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Checks the funcitonality of the ConjugatedPiSystemsCalculator
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {

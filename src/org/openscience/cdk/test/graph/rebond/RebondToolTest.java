@@ -38,7 +38,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the funcitonality of the RebondTool.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class RebondToolTest extends CDKTestCase {
     

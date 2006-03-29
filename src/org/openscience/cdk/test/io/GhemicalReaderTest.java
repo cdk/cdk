@@ -40,7 +40,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.io.GhemicalReader
  */

@@ -49,7 +49,7 @@ import org.openscience.cdk.test.CDKTestCase;
 
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class VicinitySamplerTest extends CDKTestCase
 {

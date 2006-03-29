@@ -34,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ValencyChecker;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  *
  * @author     Egon Willighagen
  * @cdk.created    2004-01-08

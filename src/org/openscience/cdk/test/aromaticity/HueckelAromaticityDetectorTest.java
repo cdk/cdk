@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  *  Description of the Class
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  *@author     steinbeck
  *@cdk.created    2002-10-06

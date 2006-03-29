@@ -34,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  *  Description of the Class
  *
- * @cdk.module test
+ * @cdk.module test-extra
  *
  *@author     chhoppe
  *@cdk.created    2004-11-04

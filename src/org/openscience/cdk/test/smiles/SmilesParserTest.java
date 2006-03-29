@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *@author         steinbeck
- *@cdk.module     test
+ *@cdk.module     test-extra
  *@cdk.created    2003-09-19
  */
 public class SmilesParserTest extends CDKTestCase {

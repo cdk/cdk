@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 /**
  * TestCase for the Reaction class.
  *
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ReactionTest extends CDKTestCase {
 
