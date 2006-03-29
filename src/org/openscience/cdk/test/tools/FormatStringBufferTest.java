@@ -33,6 +33,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.FormatStringBuffer;
 
+/**
+ * @author     egonw
+ * @cdk.module test
+ */
 public class FormatStringBufferTest extends CDKTestCase {
 
 	private FormatStringBuffer fsb;
