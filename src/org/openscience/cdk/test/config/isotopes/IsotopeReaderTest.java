@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.config.isotopes;
 
 import java.io.ByteArrayInputStream;
-import java.io.StringReader;
 import java.util.Vector;
 
 import junit.framework.Test;

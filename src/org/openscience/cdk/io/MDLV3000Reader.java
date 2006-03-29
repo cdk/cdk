@@ -525,9 +525,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private void initIOSettings() {
     }
     
-    private void customizeJob() {
-    }
-
     public IOSetting[] getIOSettings() {
         return new IOSetting[0];
     }

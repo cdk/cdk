@@ -376,22 +376,6 @@ public class FiguerasSSSRFinder {
 	}	
 
 	/**
-	 * merges two vectors into one
-	 *
-	 * @param   vec1  The first vector
-	 * @param   vec2  The second vector
-	 * @return     
-	 */
-	private  Vector merge(Vector vec1, Vector vec2){
-		Vector result = (Vector)vec1.clone();
-		for (int f = 0; f < vec2.size(); f++){
-			result.addElement((Atom)vec2.elementAt(f))	;	
-		}	
-		return result;
-
-	}
-	
-	/**
 	 * Eliminates one bond of this atom from the molecule
 	 *
 	 * @param   atom  The atom one bond is eliminated of

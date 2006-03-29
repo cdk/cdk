@@ -28,8 +28,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.MoleculeTest;
-import org.openscience.cdk.test.MonomerTest;
 import org.openscience.cdk.test.StrandTest;
 
 /**

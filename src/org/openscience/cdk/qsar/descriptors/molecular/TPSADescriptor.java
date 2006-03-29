@@ -26,18 +26,17 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.HashMap;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Calculation of topological polar surface area based on fragment 

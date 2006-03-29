@@ -135,28 +135,16 @@ public class KabschAlignment {
         return( new Point3d(x/totalmass, y/totalmass, z/totalmass) );
     }
         
-    private Point3d getCenterOfGeometry(Point3d[] p) {
-        double x = 0.;
-        double y = 0.;
-        double z = 0.;
-        for (int i = 0; i  < p.length; i++) {
-            x += p[i].x;
-            y += p[i].y;
-            z += p[i].z;
-        }
-        return( new Point3d(x/(double)p.length, y/(double)p.length, z/(double)p.length) );
-    }
-
-    private void dump(double[][] m, int nrow, int ncol, String msg) {
-        System.out.println(msg);
-        for (int i = 0; i < nrow; i++) {
-            for (int j = 0; j < ncol; j++) {
-                System.out.print(m[i][j]+ " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
+//    private void dump(double[][] m, int nrow, int ncol, String msg) {
+//        System.out.println(msg);
+//        for (int i = 0; i < nrow; i++) {
+//            for (int j = 0; j < ncol; j++) {
+//                System.out.print(m[i][j]+ " ");
+//            }
+//            System.out.println();
+//        }
+//        System.out.println();
+//    }
 
 
     /**

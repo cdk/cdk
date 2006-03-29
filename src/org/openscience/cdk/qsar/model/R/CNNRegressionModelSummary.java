@@ -39,16 +39,6 @@ public class CNNRegressionModelSummary {
     double value;
     int[] n;
 
-    private double[][] vectorToMatrix(double[] v, int nrow, int ncol) {
-        double[][] m = new double[nrow][ncol];
-        for (int i = 0; i < ncol; i++) {
-            for (int j = 0; j < nrow; j++) {
-                m[j][i] = v[j + i*nrow];
-            }
-        }
-        return(m);
-    }
-
     /**
      * Constructor for an object that wraps the return value from summary.lm.
      *

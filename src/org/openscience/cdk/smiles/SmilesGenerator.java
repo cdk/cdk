@@ -576,19 +576,19 @@ public class SmilesGenerator
 	 *@return    true if the atom participates in a bond that was broken in the
 	 *      first pass.
 	 */
-	private boolean isRingOpening(IAtom a)
-	{
-		Iterator it = brokenBonds.iterator();
-		while (it.hasNext())
-		{
-			BrokenBond bond = (BrokenBond) it.next();
-			if (bond.getA1().equals(a) || bond.getA2().equals(a))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean isRingOpening(IAtom a)
+//	{
+//		Iterator it = brokenBonds.iterator();
+//		while (it.hasNext())
+//		{
+//			BrokenBond bond = (BrokenBond) it.next();
+//			if (bond.getA1().equals(a) || bond.getA2().equals(a))
+//			{
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 
 	/**
@@ -679,21 +679,21 @@ public class SmilesGenerator
 	 *@param  container  Description of Parameter
 	 *@return            The chiralCenter value
 	 */
-	private boolean isChiralCenter(IAtom atom, IAtomContainer container)
-	{
-		IBond[] bonds = container.getConnectedBonds(atom);
-		for (int i = 0; i < bonds.length; i++)
-		{
-			IBond bond = bonds[i];
-			int stereo = bond.getStereo();
-			if (stereo == CDKConstants.STEREO_BOND_DOWN ||
-					stereo == CDKConstants.STEREO_BOND_UP)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean isChiralCenter(IAtom atom, IAtomContainer container)
+//	{
+//		IBond[] bonds = container.getConnectedBonds(atom);
+//		for (int i = 0; i < bonds.length; i++)
+//		{
+//			IBond bond = bonds[i];
+//			int stereo = bond.getStereo();
+//			if (stereo == CDKConstants.STEREO_BOND_DOWN ||
+//					stereo == CDKConstants.STEREO_BOND_UP)
+//			{
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 
 	/**

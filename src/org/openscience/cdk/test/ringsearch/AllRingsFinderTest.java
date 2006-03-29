@@ -27,20 +27,15 @@ package org.openscience.cdk.test.ringsearch;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.vecmath.Vector2d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -178,29 +173,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		    e.printStackTrace();
 		    fail(e.toString());
 		}
-	}
-	
-	private void display(Molecule molecule)
-	{	
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		Renderer2DModel r2dm = mv.getRenderer2DModel();
-		r2dm.setDrawNumbers(true);
-		
-		try
-		{
-			sdg.setMolecule((Molecule)molecule.clone());
-			sdg.generateCoordinates(new Vector2d(0,1));
-			mv.setAtomContainer(sdg.getMolecule());
-			mv.display();
-		}
-		catch(Exception exc)
-		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
-		}
-	}
-	
+	}	
 	
 	public static void main(String[] args)
 	{

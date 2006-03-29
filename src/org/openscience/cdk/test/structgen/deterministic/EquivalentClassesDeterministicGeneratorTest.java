@@ -23,15 +23,10 @@
  */
 package org.openscience.cdk.test.structgen.deterministic;
 
-import javax.vecmath.Vector2d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.structgen.deterministic.EquivalentClassesDeterministicGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -84,29 +79,6 @@ public class EquivalentClassesDeterministicGeneratorTest extends CDKTestCase
 			if (standAlone) System.out.println("Hydrogen count for atom " + f + ": " + atom.getHydrogenCount());
 		}
 	}
-
-	
-	private void display(Molecule molecule)
-	{	
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		Renderer2DModel r2dm = mv.getRenderer2DModel();
-		r2dm.setDrawNumbers(true);
-		
-		try
-		{
-			sdg.setMolecule((Molecule)molecule.clone());
-			sdg.generateCoordinates(new Vector2d(0,1));
-			mv.setAtomContainer(sdg.getMolecule());
-			mv.display();
-		}
-		catch(Exception exc)
-		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
-		}
-	}
-
 	
 	public static void main(String[] args)
 	{

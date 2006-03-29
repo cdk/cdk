@@ -28,25 +28,23 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -119,17 +117,6 @@ public class ForceFieldConfigurator {
 		return true;
 	}
 
-	
-	private void readFile(File f){
-		if (f.exists()) {
-			try{
-				ins = new FileInputStream(f);
-			}catch (Exception ex1){
-			}
-		} else {
-			System.out.println("IOError: ConfigFile doesent exist");
-		}
-	}
 	/**
 	 *Constructor for the ForceFieldConfigurator object
 	 *

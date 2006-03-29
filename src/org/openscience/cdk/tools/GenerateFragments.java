@@ -39,7 +39,6 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -344,15 +343,15 @@ public class GenerateFragments {
 	 * @return
 	 * boolean
 	 */
-	private boolean hasSubstituent(IAtom ringAtom,IMolecule molecule, IAtomContainer ringSystem){
-		IAtom[] atoms = molecule.getConnectedAtoms(ringAtom);
-		for (int i = 0; i<atoms.length;i++){
-			if (!ringSystem.contains(atoms[i])&& !atoms[i].getSymbol().equals("H")){
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean hasSubstituent(IAtom ringAtom,IMolecule molecule, IAtomContainer ringSystem){
+//		IAtom[] atoms = molecule.getConnectedAtoms(ringAtom);
+//		for (int i = 0; i<atoms.length;i++){
+//			if (!ringSystem.contains(atoms[i])&& !atoms[i].getSymbol().equals("H")){
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	/**
 	 * get starting points (IAtom) of possible linkers  

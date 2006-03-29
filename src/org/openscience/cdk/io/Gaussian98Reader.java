@@ -456,8 +456,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 	 *@param  model            Description of the Parameter
 	 *@exception  IOException  if an I/O error occurs
 	 */
-	private void readFrequencies(IChemModel model) throws IOException
-	{
+//	private void readFrequencies(IChemModel model) throws IOException
+//	{
 		/*
 		 *  FIXME: this is yet to be ported
 		 *  String line;
@@ -516,7 +516,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		 *  line = input.readLine();
 		 *  }
 		 */
-	}
+//	}
 
 
 	/**

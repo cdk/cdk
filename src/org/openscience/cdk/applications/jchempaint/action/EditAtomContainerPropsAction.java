@@ -30,20 +30,12 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ChemObjectPropertyDialog;
 import org.openscience.cdk.applications.swing.editor.AtomContainerEditor;
-import org.openscience.cdk.applications.swing.editor.AtomEditor;
-import org.openscience.cdk.applications.swing.editor.BondEditor;
 import org.openscience.cdk.applications.swing.editor.ChemObjectEditor;
-import org.openscience.cdk.applications.swing.editor.PseudoAtomEditor;
-import org.openscience.cdk.applications.swing.editor.ReactionEditor;
 import org.openscience.cdk.controller.SimpleController2D;
 
 /**

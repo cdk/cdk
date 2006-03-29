@@ -25,18 +25,17 @@ package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**

@@ -25,7 +25,6 @@ package org.openscience.cdk.iupac.generator.sectiona;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.iupac.generator.IUPACNamePart;
 import org.openscience.cdk.iupac.generator.NumberingRule;
 
@@ -64,14 +63,14 @@ public class Rule2dot2 extends NumberingRule {
         return inp;
     };
 
-    private AtomContainer deleteNonCarbonAtoms(AtomContainer ac) throws NoSuchAtomException {
-        AtomContainer result = (AtomContainer)ac.clone();
-        for (int i=0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = ac.getAtomAt(i);
-            if (!"C".equals(atom.getSymbol())) {
-                ac.removeAtomAndConnectedElectronContainers(atom);
-            }
-        }
-        return result;
-    }
+//    private AtomContainer deleteNonCarbonAtoms(AtomContainer ac) throws NoSuchAtomException {
+//        AtomContainer result = (AtomContainer)ac.clone();
+//        for (int i=0; i < ac.getAtomCount(); i++) {
+//        	org.openscience.cdk.interfaces.IAtom atom = ac.getAtomAt(i);
+//            if (!"C".equals(atom.getSymbol())) {
+//                ac.removeAtomAndConnectedElectronContainers(atom);
+//            }
+//        }
+//        return result;
+//    }
 }

@@ -41,7 +41,6 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
-import org._3pq.jgrapht.traverse.ClosestFirstIterator;
 
 /**
  * Iterates over all shortest paths between two vertices in an undirected, unweighted graph.
@@ -175,52 +174,52 @@ public class MinimalPathIterator implements Iterator {
 		
 	}
 	
-	private void createShortestPathWeightedGraph() {
-		shortestPathGraph = new DefaultDirectedGraph();
-		//shortestPathGraph.addAllVertices(g.vertexSet());
-		shortestPathGraph.addVertex(targetVertex);
-
-		// This map gives the distance of a vertex to the target vertex
-		Map distanceMap = new HashMap();
-		distanceMap.put(targetVertex, new Integer(0));
-
-		for (ClosestFirstIterator iter = new ClosestFirstIterator(g, targetVertex); iter.hasNext(); ) {
-			Object vertex = iter.next();
-			shortestPathGraph.addVertex(vertex);
-			
-			Edge treeEdge = iter.getSpanningTreeEdge(vertex);
-			
-			// in the first iteration, vertex is the target vertex; therefore no tree edge exists
-			if (treeEdge != null) {
-				Object parent = treeEdge.oppositeVertex(vertex);
-				int distance = ((Integer)distanceMap.get(parent)).intValue() + 1;
-				distanceMap.put(vertex, new Integer(distance));
-				
-				for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
-					Edge edge = (Edge) edges.next();
-					Object opposite = edge.oppositeVertex(vertex);
-					if (distanceMap.get(opposite) != null) {
-						if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
-							shortestPathGraph.addVertex(opposite);
-							shortestPathGraph.addEdge(vertex, opposite);
-						}
-					}
-				}
-			}
-			if (vertex == sourceVertex) {
-				break;
-			}
-		}
-				
-		Iterator edgeIterator = shortestPathGraph.outgoingEdgesOf(sourceVertex).iterator();
-		
-		edgeIteratorStack = new Stack();
-		edgeIteratorStack.push(edgeIterator);
-
-		vertexStack = new Stack();
-		vertexStack.push(sourceVertex);
-		
-	}
+//	private void createShortestPathWeightedGraph() {
+//		shortestPathGraph = new DefaultDirectedGraph();
+//		//shortestPathGraph.addAllVertices(g.vertexSet());
+//		shortestPathGraph.addVertex(targetVertex);
+//
+//		// This map gives the distance of a vertex to the target vertex
+//		Map distanceMap = new HashMap();
+//		distanceMap.put(targetVertex, new Integer(0));
+//
+//		for (ClosestFirstIterator iter = new ClosestFirstIterator(g, targetVertex); iter.hasNext(); ) {
+//			Object vertex = iter.next();
+//			shortestPathGraph.addVertex(vertex);
+//			
+//			Edge treeEdge = iter.getSpanningTreeEdge(vertex);
+//			
+//			// in the first iteration, vertex is the target vertex; therefore no tree edge exists
+//			if (treeEdge != null) {
+//				Object parent = treeEdge.oppositeVertex(vertex);
+//				int distance = ((Integer)distanceMap.get(parent)).intValue() + 1;
+//				distanceMap.put(vertex, new Integer(distance));
+//				
+//				for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
+//					Edge edge = (Edge) edges.next();
+//					Object opposite = edge.oppositeVertex(vertex);
+//					if (distanceMap.get(opposite) != null) {
+//						if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
+//							shortestPathGraph.addVertex(opposite);
+//							shortestPathGraph.addEdge(vertex, opposite);
+//						}
+//					}
+//				}
+//			}
+//			if (vertex == sourceVertex) {
+//				break;
+//			}
+//		}
+//				
+//		Iterator edgeIterator = shortestPathGraph.outgoingEdgesOf(sourceVertex).iterator();
+//		
+//		edgeIteratorStack = new Stack();
+//		edgeIteratorStack.push(edgeIterator);
+//
+//		vertexStack = new Stack();
+//		vertexStack.push(sourceVertex);
+//		
+//	}
 	
 	public boolean hasNext() {
 		

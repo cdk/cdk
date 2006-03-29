@@ -846,13 +846,13 @@ public class StructureDiagramGenerator
 	 *
 	 *@param  rs  The RingSet to be initialized
 	 */
-	private void markNotPlaced(IRingSet rs)
-	{
-		for (int f = 0; f < rs.size(); f++)
-		{
-			((IRing) rs.get(f)).setFlag(CDKConstants.ISPLACED, false);
-		}
-	}
+//	private void markNotPlaced(IRingSet rs)
+//	{
+//		for (int f = 0; f < rs.size(); f++)
+//		{
+//			((IRing) rs.get(f)).setFlag(CDKConstants.ISPLACED, false);
+//		}
+//	}
 
 
 	/**

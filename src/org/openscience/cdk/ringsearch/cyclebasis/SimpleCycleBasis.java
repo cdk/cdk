@@ -270,18 +270,18 @@ public class SimpleCycleBasis {
 		return result;
 	}
 	
-	private void minimize() {
-		
-		if (isMinimized) 
-			return;
-		
-		if (cycles.size()==0) 
-			return;
-		else 
-			minimize(0);
-		
-		isMinimized = true;
-	}
+//	private void minimize() {
+//		
+//		if (isMinimized) 
+//			return;
+//		
+//		if (cycles.size()==0) 
+//			return;
+//		else 
+//			minimize(0);
+//		
+//		isMinimized = true;
+//	}
 	
 	private void minimize(int startIndex) {
 		

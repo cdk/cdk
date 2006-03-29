@@ -29,16 +29,14 @@ package org.openscience.cdk.test.io.cml;
 
 import java.io.StringReader;
 
-import javax.vecmath.Vector3d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -302,21 +300,21 @@ public class CML23FragmentsTest extends CDKTestCase {
         return mol;
     }
 
-    private org.openscience.cdk.interfaces.ICrystal checkForCrystalFile(IChemFile chemFile) {
-        assertNotNull(chemFile);
-        
-        assertEquals(chemFile.getChemSequenceCount(), 1);
-        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        
-        assertEquals(seq.getChemModelCount(), 1);
-        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
-        
-        org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
-        assertNotNull(crystal);
-        
-        return crystal;
-    }
+//    private ICrystal checkForCrystalFile(IChemFile chemFile) {
+//        assertNotNull(chemFile);
+//        
+//        assertEquals(chemFile.getChemSequenceCount(), 1);
+//        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+//        assertNotNull(seq);
+//        
+//        assertEquals(seq.getChemModelCount(), 1);
+//        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+//        assertNotNull(model);
+//        
+//        org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
+//        assertNotNull(crystal);
+//        
+//        return crystal;
+//    }
 
 }

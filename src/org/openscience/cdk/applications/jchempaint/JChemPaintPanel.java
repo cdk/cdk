@@ -404,15 +404,15 @@ public abstract class JChemPaintPanel
 	/**
 	 *  Description of the Method
 	 */
-	private void setupWorkingDirectory() {
-		try {
-			if (System.getProperty("user.dir") != null) {
-				setCurrentWorkDirectory(new File(System.getProperty("user.dir")));
-			}
-		} catch (Exception exc) {
-			logger.error("Could not read a system property. I might be in a sandbox.");
-		}
-	}
+//	private void setupWorkingDirectory() {
+//		try {
+//			if (System.getProperty("user.dir") != null) {
+//				setCurrentWorkDirectory(new File(System.getProperty("user.dir")));
+//			}
+//		} catch (Exception exc) {
+//			logger.error("Could not read a system property. I might be in a sandbox.");
+//		}
+//	}
 
 
 	/**

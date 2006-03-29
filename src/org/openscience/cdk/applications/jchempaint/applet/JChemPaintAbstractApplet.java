@@ -34,7 +34,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 
 import javax.swing.JApplet;
@@ -83,43 +82,43 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		return paramInfo;
 	}
 
-	private String getValue(String propertyName, String defaultValue) {
-		String stringValue = getParameter(propertyName);
-		if (stringValue != null)
-			return stringValue;
-		if (appletProperties != null) {
-			try {
-				stringValue = appletProperties.getString(propertyName);
-				return stringValue;
-			} catch (MissingResourceException ex) {
-			}
-		}
-		return defaultValue;
-	}
-
-	private int getValue(String propertyName, int defaultValue) {
-		String stringValue = getValue(propertyName, null);
-		if (stringValue != null)
-			try {
-				return Integer.parseInt(stringValue);
-			} catch (NumberFormatException ex) {
-				System.out.println(propertyName + ":" + stringValue
-						+ " is not an integer");
-			}
-		return defaultValue;
-	}
-
-	private double getValue(String propertyName, double defaultValue) {
-		String stringValue = getValue(propertyName, null);
-		if (stringValue != null)
-			try {
-				return (new Double(stringValue)).doubleValue();
-			} catch (NumberFormatException ex) {
-				System.out.println(propertyName + ":" + stringValue
-						+ " is not a floating point number");
-			}
-		return defaultValue;
-	}
+//	private String getValue(String propertyName, String defaultValue) {
+//		String stringValue = getParameter(propertyName);
+//		if (stringValue != null)
+//			return stringValue;
+//		if (appletProperties != null) {
+//			try {
+//				stringValue = appletProperties.getString(propertyName);
+//				return stringValue;
+//			} catch (MissingResourceException ex) {
+//			}
+//		}
+//		return defaultValue;
+//	}
+//
+//	private int getValue(String propertyName, int defaultValue) {
+//		String stringValue = getValue(propertyName, null);
+//		if (stringValue != null)
+//			try {
+//				return Integer.parseInt(stringValue);
+//			} catch (NumberFormatException ex) {
+//				System.out.println(propertyName + ":" + stringValue
+//						+ " is not an integer");
+//			}
+//		return defaultValue;
+//	}
+//
+//	private double getValue(String propertyName, double defaultValue) {
+//		String stringValue = getValue(propertyName, null);
+//		if (stringValue != null)
+//			try {
+//				return (new Double(stringValue)).doubleValue();
+//			} catch (NumberFormatException ex) {
+//				System.out.println(propertyName + ":" + stringValue
+//						+ " is not a floating point number");
+//			}
+//		return defaultValue;
+//	}
 
 	public void initPanelAndModel(JChemPaintPanel jcpp) {
 		getContentPane().removeAll();

@@ -28,8 +28,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.BondTest;
-import org.openscience.cdk.test.ChemFileTest;
 import org.openscience.cdk.test.ChemModelTest;
 
 /**

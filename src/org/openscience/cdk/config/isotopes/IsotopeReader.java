@@ -29,7 +29,6 @@ package org.openscience.cdk.config.isotopes;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IChemObjectBuilder;

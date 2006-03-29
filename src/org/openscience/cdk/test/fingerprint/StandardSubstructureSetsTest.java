@@ -30,18 +30,11 @@
 
 package org.openscience.cdk.test.fingerprint;
 
-import java.util.BitSet;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.StandardSubstructureSets;
-import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**

@@ -28,9 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.ReactionTest;
 import org.openscience.cdk.test.RingSetTest;
-import org.openscience.cdk.test.RingTest;
 
 /**
  * Checks the funcitonality of the AtomContainer.

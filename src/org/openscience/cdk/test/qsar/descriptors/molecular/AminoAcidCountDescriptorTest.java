@@ -26,16 +26,12 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.descriptors.atomic.AtomCountDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor;
 import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
