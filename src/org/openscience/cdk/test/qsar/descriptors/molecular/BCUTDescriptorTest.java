@@ -69,7 +69,7 @@ public class BCUTDescriptorTest extends CDKTestCase {
         assertNotNull(retval);
         /* System.out.println("Num ret = "+retval.size()); */
         for (int i = 0; i < retval.size(); i++) {
-            assertTrue(Math.abs(0.0 - ((Double)retval.get(i)).doubleValue()) > 0.0000001);
+            assertTrue(Math.abs(0.0 - retval.get(i)) > 0.0000001);
         }
 
         /*
