@@ -31,6 +31,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.GenerateFragments;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -60,7 +61,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	        	for (int i =0;i<smiles.length;i++){
 	        		//System.out.println("MF"+i+" :"+smiles[i]);
 	        	}
-	        	assertEquals("c1ccc(cc1)C3C3(c2ccccc2)",smiles[0]);
+	        	assertEquals("c1ccc(cc1)CCc2ccccc2",smiles[0]);
 	        	assertEquals(1,smiles.length);
 	        }catch (Exception e){
 	        	System.out.println("Error in testGenerateMurckoFragments1:");
@@ -81,7 +82,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	for (int i =0;i<smiles.length;i++){
         		//System.out.println("MF"+i+" :"+smiles[i]);
         	}
-        	assertEquals("C1CCC(C1)C4C4(C2Cc3ccccc3(C2))",smiles[0]);
+        	assertEquals("C1CCC(C1)CCC2Cc3ccccc3(C2)",smiles[0]);
         	assertEquals(1,smiles.length);
         }catch (Exception e){
         	System.out.println("Error in testGenerateMurckoFragments2:");
@@ -106,7 +107,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
         			found=true;
         		}        		
         	}
-        	assertEquals(true,true);
+        	assertEquals(true,found);
         	assertEquals(1,smiles.length);
         }catch (Exception e){
         	System.out.println("Error in testGenerateMurckoFragments3:");
@@ -127,7 +128,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	boolean found=false;
         	for (int i =0;i<smiles.length;i++){
         		//System.out.println("MF"+i+" :"+smiles[i]);
-        		if (smiles[i].equals("c1ccc(cc1)CCC2CCC(C2)C4C4(c3ccccc3)")){
+        		if (smiles[i].equals("c1ccc(cc1)CCC3CCC(CCc2ccccc2)C3")){
         			found=true;
         		}
         	}
@@ -163,7 +164,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
-        		//System.out.println("MF"+i+" :"+smiles[i]);
+        		////System.out.println("MF"+i+" :"+smiles[i]);
         	}
         	assertEquals(0,smiles.length);
         }catch (Exception e){
@@ -182,10 +183,10 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=true;
+        	boolean found=false;
         	for (int i =0;i<smiles.length;i++){
         		//System.out.println("MF"+i+" :"+smiles[i]);
-        		if (smiles[i].equals("NC3(C(=O)c1ccccc1)(C3(c2ccccc2") || smiles[i].equals("NC3(Cc1ccccc1)(C3(=O)(c2ccccc2))")){
+        		if (smiles[i].equals("NC3(C(=O)c1ccccc1)(C3(c2ccccc2") || smiles[i].equals("NC(Cc1ccccc1)C(=O)c2ccccc2")){
         			found=true;
         		}
         	}
@@ -265,7 +266,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	}
 	
 	/*public void testGenerateMurckoFragments10() throws ClassNotFoundException, CDKException, java.lang.Exception {
-    	System.out.println("\nMurckoTesting 10");
+    	//System.out.println("\nMurckoTesting 10");
     	SmilesParser sp = new SmilesParser();
         String smile="Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N";//ZINK19
                       
@@ -278,7 +279,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
-        		System.out.println("MF"+i+" :"+smiles[i]);
+        		//System.out.println("MF"+i+" :"+smiles[i]);
         	}
         	//assertEquals("NC3(Cc1ccccc1)(C3(=O)(c2ccccc2))",smiles[0]);
         	//assertEquals(1,smiles.length);
@@ -299,10 +300,10 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=true;
+        	boolean found=false;
         	for (int i =0;i<smiles.length;i++){
         		//System.out.println("MF"+i+" :"+smiles[i]);
-        		if (smiles[i].equals("c1ccc(cc1)C3CCCC4(c2ccccc2)(C34)")){
+        		if (smiles[i].equals("c1ccc(cc1)C2CCCC(C2)c3ccccc3")){
         			found=true;
         		}
         	}
@@ -325,9 +326,9 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=true;
+        	boolean found=false;
         	for (int i =0;i<smiles.length;i++){
-        		if (smiles[i].equals("c1ccc(cc1)C3CC4(c2ccccc2)(C34)")){
+        		if (smiles[i].equals("c1ccc(cc1)C2CC(C2)c3ccccc3")){
         			found=true;
         		}
         		//System.out.println("MF"+i+" :"+smiles[i]);
@@ -339,6 +340,88 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	//e.printStackTrace();
         }
 	}
+	//without add explicit hydrogen thetest fails due to problems with smile generator 
+	public void testGenerateMurckoFragments13() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		//System.out.println("\nMurckoTesting 13");
+		SmilesParser sp = new SmilesParser();
+		String smile="Oc1cc2ccccn2c1C(=O)OCCN3CCCCC3";//MDDR 31 
+                  
+		Molecule mol = sp.parseSmiles(smile); 
+		HydrogenAdder ha= new HydrogenAdder();
+   
+		ha.addExplicitHydrogensToSatisfyValency(mol);
+    
+		GenerateFragments gf=new GenerateFragments();
+		try {
+    	
+			gf.generateMurckoFragments(mol,false,false);
+			String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+			boolean found=false;
+			for (int i =0;i<smiles.length;i++){
+				//System.out.println("MF"+i+" :"+smiles[i]);
+				if (smiles[i].equals("C1CCN(CC1)CCOCc=2cc=c3c=cc=cn=23")){
+        			found=true;
+        		}
+			}
+			assertEquals(true,found);
+			assertEquals(1,smiles.length);
+		}catch (Exception e){
+			System.out.println("Error in testGenerateMurckoFragments6:");
+			e.printStackTrace();
+		}
+	}
 	
+	//same as test 13
+	public void testGenerateMurckoFragments14() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		//System.out.println("\nMurckoTesting 14");
+		SmilesParser sp = new SmilesParser();
+		String smile="C(c1ccc(cc1)c2ccccc2)n3cnc4cccnc34";//MDDR 52 
+                  
+		Molecule mol = sp.parseSmiles(smile); 
+		HydrogenAdder ha= new HydrogenAdder();
+   
+		ha.addExplicitHydrogensToSatisfyValency(mol);
+    
+		GenerateFragments gf=new GenerateFragments();
+		try {
+    	
+			gf.generateMurckoFragments(mol,false,false);
+			String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+			boolean found=false;
+			for (int i =0;i<smiles.length;i++){
+				//System.out.println("MF"+i+" :"+smiles[i]);
+				if (smiles[i].equals("c1ccc(cc1)c2=ccc(c=c2)Cn4cnc3cccnc34")){
+        			found=true;
+        		}
+			}
+			assertEquals(true,found);
+			assertEquals(3,smiles.length);
+		}catch (Exception e){
+			System.out.println("Error in testGenerateMurckoFragments6:");
+			e.printStackTrace();
+		}
+	}
+	//check for spiro ring systems
+	public void testGenerateMurckoFragments15() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    	String filename = "data/mdl/murckoTest9.mol";
+    	//System.out.println("\nMurckoTesting: " + filename);
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	GenerateFragments gf=new GenerateFragments();
+    	try {
+        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	Molecule mol = (Molecule)reader.read(new Molecule());
+        	gf.generateMurckoFragments(mol,true,true);
+        	//System.out.println("Murcko Fragments generated");
+        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+        	for (int i =0;i<smiles.length;i++){
+        		//System.out.println("MF"+i+" :"+smiles[i]);
+        	}
+        	assertEquals("C1CCC2(CC1)(CCCC2)",smiles[0]);
+        	assertEquals(1,smiles.length);
+        }catch (Exception e){
+        	System.out.println("Error in testGenerateMurckoFragments5:");
+        	e.printStackTrace();
+        }
+	}
 }
 	            
