@@ -602,7 +602,6 @@
             <antcall target="compile-module"><param name="module" value="qsar-cml"/></antcall>
     		<antcall target="compile-module"><param name="module" value="qsar-pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
-            <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
         </target>
 
@@ -789,32 +788,52 @@
             <fail message="JUnit is not installed in Ant. Please copy cdk/develjar/junit.jar to ${ant.home}/lib/."/>
         </target>
         
+		<target id="test-module" name="test-module" depends="noJunit, dist-all"
+	                description="Performs a full JUnit test for the CDK." 
+	                if="junit.present">
+
+            <echo message="Testing classes for CDK's ${module} module." />
+            
+            <!-- check for availability for meta info files -->
+            <available file="${metainf}/test-${module}.cdkdepends" property="module.cdkdepends.present"/>
+            <available file="${metainf}/test-${module}.libdepends" property="module.libdepends.present"/>
+			<available file="${metainf}/test-${module}.devellibdepends" property="module.devellibdepends.present"/>        
+			
+            <!-- be somewhat informative -->
+            <echo message="CDK dependencies defined: ${module.cdkdepends.present}"/>
+            <echo message="Library dependencies defined: ${module.libdepends.present}"/>
+			<echo message="Developer Library dependencies defined: ${module.devellibdepends.present}"/>
+
+			<mkdir dir="${reports.tests}"/>
+            <junit printsummary="yes" haltonfailure="no" fork="yes" maxmemory="256m">
+                <classpath>
+                     <fileset dir="${lib}" >
+                         <exclude name="**/*" unless="module.libdepends.present" />
+                         <includesfile name="${metainf}/test-${module}.libdepends" if="module.libdepends.present" />
+                     </fileset>
+                     <fileset dir="${devellib}">
+                         <exclude name="**/*" unless="module.devellibdepends.present" />
+                         <includesfile name="${metainf}/test-${module}.devellibdepends" if="module.devellibdepends.present" />
+                     </fileset>
+                     <fileset dir="${dist}/jar">
+                         <exclude name="**/*" unless="module.cdkdepends.present" />
+                         <includesfile name="${metainf}/test-${module}.cdkdepends" if="module.cdkdepends.present" />
+                         <include name="cdk-test-${module}.jar" />
+                     </fileset>
+                 </classpath>
+              	 <test name="org.openscience.cdk.test.M${module}Tests"
+            	     haltonfailure="no"
+            	     todir="${reports.tests}"
+            	     outfile="result-${module}">
+            	     <formatter type="brief" />
+            	 </test>
+			</junit>
+	    </target>
+			
         <target id="test" name="test" depends="noJunit, dist-all"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
-                <mkdir dir="${reports.tests}"/>
-                <junit printsummary="yes" haltonfailure="no" fork="yes" maxmemory="256m">
-                    <classpath>
-                        <fileset dir="${dist}/jar">
-                                <include name="*.jar" />
-                        </fileset>
-                        <fileset dir="${lib}">
-                                <include name="*.jar" />
-                        </fileset>
-                        <fileset dir="${devellib}">
-                                <include name="*.jar" />
-                        </fileset>
-                        <fileset dir="${lib}/libio">
-                                <include name="*.jar" />
-                        </fileset>
-                    </classpath>
-                    <test name="org.openscience.cdk.test.CDKTests"
-                        haltonfailure="no"
-                        todir="${reports.tests}"
-                        outfile="result">
-                                <formatter type="brief" />
-                        </test>
-                </junit>
+	        	<antcall target="test-module"><param name="module" value="extra"/></antcall>    	            
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
