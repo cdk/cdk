@@ -31,13 +31,16 @@
 package org.openscience.cdk.test.similarity;
 
 import java.util.BitSet;
-import org.openscience.cdk.similarity.Tanimoto;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.similarity.Tanimoto;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -92,15 +95,61 @@ public class TanimotoTest extends CDKTestCase
             if (!standAlone) assertEquals(tanimoto, 1.0, 0.001);
         }
 
+    	public void testR00258() throws java.lang.Exception
+    	{
+    		SmilesParser sp = new SmilesParser();
+    		String smiles1 = "O=C(O)CCC(=O)C(=O)O";
+    		String smiles2 = "O=C(O)C(N)CCC(=O)O";
+    		String smiles3 = "O=C(O)C(N)C";
+    		String smiles4 = "CC(=O)C(=O)O";
+    		Molecule molecule1 = sp.parseSmiles(smiles1);
+    		MoleculeListViewer listviewer = new MoleculeListViewer();
+    		listviewer.addStructure(molecule1, "Smiles-1");
+    		Molecule molecule2 = sp.parseSmiles(smiles2);
+    		listviewer.addStructure(molecule2, "Smiles-2");
+    		Molecule molecule3 = sp.parseSmiles(smiles3);
+    		listviewer.addStructure(molecule3, "Smiles-3");
+    		Molecule molecule4 = sp.parseSmiles(smiles4);
+    		listviewer.addStructure(molecule4, "Smiles-4");
+    		Fingerprinter fingerprinter = new Fingerprinter(1024, 6);
+    		BitSet bs1 = fingerprinter.getFingerprint(molecule1);
+    		BitSet bs2 = fingerprinter.getFingerprint(molecule2);
+    		BitSet bs3 = fingerprinter.getFingerprint(molecule3);
+    		BitSet bs4 = fingerprinter.getFingerprint(molecule4);
+    		float tanimoto1 = Tanimoto.calculate(bs1, bs2);
+    		float tanimoto2 = Tanimoto.calculate(bs1, bs3);
+    		float tanimoto3 = Tanimoto.calculate(bs1, bs4);
+    		float tanimoto4 = Tanimoto.calculate(bs2, bs3);
+    		float tanimoto5 = Tanimoto.calculate(bs2, bs4);
+    		float tanimoto6 = Tanimoto.calculate(bs3, bs4);
+    		//System.out.println("Similarity " + smiles1 + " vs. " + smiles2 + ": " + tanimoto1);
+    		//System.out.println("Similarity " + smiles1 + " vs. " + smiles3 + ": " + tanimoto2);
+    		//System.out.println("Similarity " + smiles1 + " vs. " + smiles4 + ": " + tanimoto3);
+    		//System.out.println("Similarity " + smiles2 + " vs. " + smiles3 + ": " + tanimoto4);
+    		//System.out.println("Similarity " + smiles2 + " vs. " + smiles4 + ": " + tanimoto5);
+    		//System.out.println("Similarity " + smiles3 + " vs. " + smiles4 + ": " + tanimoto6);
+    		System.out.println("Similarity 1 vs. 2: " + tanimoto1);
+    		System.out.println("Similarity 1 vs. 3: " + tanimoto2);
+    		System.out.println("Similarity 1 vs. 4: " + tanimoto3);
+    		System.out.println("Similarity 2 vs. 3: " + tanimoto4);
+    		System.out.println("Similarity 2 vs. 4: " + tanimoto5);
+    		System.out.println("Similarity 3 vs. 4: " + tanimoto6);
+
+    		
+    		
+    	}
+
+        
 
 	public static void main(String[] args)
 	{
 		try{
 			TanimotoTest tt = new TanimotoTest("TanimotoTest");
 			tt.standAlone = true;
-			tt.testTanimoto1();
-			tt.testTanimoto2();
-			tt.testTanimoto3();
+			//tt.testTanimoto1();
+			//tt.testTanimoto2();
+			//tt.testTanimoto3();
+			tt.testR00258();
 		}
 		catch(Exception exc)
 		{
