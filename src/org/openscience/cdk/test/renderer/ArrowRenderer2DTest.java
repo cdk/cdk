@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2005  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -32,54 +32,68 @@ import java.util.Hashtable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.vecmath.Point2d;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.renderer.Arrow;
+import org.openscience.cdk.renderer.ArrowRenderer2D;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test
  */
-public class Renderer2DTest extends JPanel
-{
+public class ArrowRenderer2DTest extends JPanel {
 	MDLReader mr;
-        CMLReader cr;
+
+	CMLReader cr;
+
 	ChemFile chemFile;
+
 	org.openscience.cdk.interfaces.IChemSequence chemSequence;
+
 	org.openscience.cdk.interfaces.IChemModel chemModel;
+
 	org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules;
+
 	org.openscience.cdk.interfaces.IMolecule molecule;
 
 	Renderer2DModel r2dm;
-	Renderer2D renderer;
 
-	public Renderer2DTest(String inFile)
-	{
+	Renderer2D renderer;
+	ArrowRenderer2D arrowRenderer;
+	Arrow[] arrows = new Arrow[1];
+
+	
+	public ArrowRenderer2DTest(String inFile) {
+		int an1 = 2, an2 = 5;
+		Renderer2DModel r2dm;
+		System.out.println("Test");
 		Hashtable ht = null;
 		r2dm = new Renderer2DModel();
 		renderer = new Renderer2D(r2dm);
-        Dimension screenSize = new Dimension(600, 400);
-        setPreferredSize(screenSize);
-        r2dm.setBackgroundDimension(screenSize); // make sure it is synched with the JPanel size
+		arrowRenderer = new ArrowRenderer2D(r2dm);
+		Dimension screenSize = new Dimension(600, 400);
+		setPreferredSize(screenSize);
+		r2dm.setBackgroundDimension(screenSize); // make sure it is synched
+													// with the JPanel size
 		setBackground(r2dm.getBackColor());
 
-
-		try
-		{
-	        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(inFile);
-			//FileInputStream fis = new FileInputStream(inFile);
+		try {
+			InputStream ins = this.getClass().getClassLoader()
+					.getResourceAsStream(inFile);
+			// FileInputStream fis = new FileInputStream(inFile);
 			if (inFile.endsWith(".cml")) {
-			    cr = new CMLReader(ins);
-			    chemFile = (ChemFile)cr.read((ChemObject)new ChemFile());
+				cr = new CMLReader(ins);
+				chemFile = (ChemFile) cr.read((ChemObject) new ChemFile());
 			} else {
-			    mr = new MDLReader(ins);
-			    chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
+				mr = new MDLReader(ins);
+				chemFile = (ChemFile) mr.read((ChemObject) new ChemFile());
 			}
 			ins.close();
 			chemSequence = chemFile.getChemSequence(0);
@@ -87,26 +101,19 @@ public class Renderer2DTest extends JPanel
 			setOfMolecules = chemModel.getSetOfMolecules();
 			molecule = setOfMolecules.getMolecule(0);
 			ht = r2dm.getColorHash();
-            r2dm.setDrawNumbers(true);
-            IAtomContainer selected = new AtomContainer();
-            selected.addAtom(molecule.getAtomAt(2));
-            selected.addAtom(molecule.getAtomAt(3));
-            selected.addAtom(molecule.getAtomAt(4));
-            selected.addAtom(molecule.getAtomAt(5));
-            selected.addAtom(molecule.getAtomAt(6));
-            selected.addAtom(molecule.getAtomAt(7));
-            r2dm.setSelectedPart(selected);
-			ht.put(molecule.getAtomAt(2), Color.red);
-			ht.put(molecule.getAtomAt(4), Color.red);
+			r2dm.setDrawNumbers(true);
+			ht.put(molecule.getAtomAt(an1), Color.red);
+			ht.put(molecule.getAtomAt(an2), Color.red);
 			GeometryTools.translateAllPositive(molecule);
 			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8);
 			GeometryTools.center(molecule, getPreferredSize());
-		
-		}
-		catch(Exception exc)
-		{
+		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
+
+		IAtom a1 = molecule.getAtomAt(an1);
+		IAtom a2 = molecule.getAtomAt(an2);
+		arrows[0] = new Arrow(a1, a2);
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().add(this);
@@ -115,18 +122,19 @@ public class Renderer2DTest extends JPanel
 
 	}
 
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g) {
 		super.paint(g);
-		renderer.paintMolecule(molecule, (Graphics2D)g,false,true);
+		renderer.paintMolecule(molecule, (Graphics2D) g, false, true);
+		arrowRenderer.paintArrows(arrows,(Graphics2D) g);
 	}
 
 	/**
 	 * The main method.
-	 *
-	 * @param   args    The Arguments from the commandline
-	 */	public static void main(String[] args)
-	{
-		new Renderer2DTest("data/mdl/reserpine.mol");
+	 * 
+	 * @param args
+	 *            The Arguments from the commandline
+	 */
+	public static void main(String[] args) {
+		new ArrowRenderer2DTest("data/mdl/reserpine.mol");
 	}
 }
