@@ -185,6 +185,10 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
         frame.setVisible(true);
     }
 
+    public static void display(IMolecule molecule, boolean generateCoordinates, String title)
+    {
+        display(molecule, generateCoordinates, false, JFrame.DISPOSE_ON_CLOSE, title);
+    }
 
     public static void display(IMolecule molecule, boolean generateCoordinates)
     {
@@ -193,12 +197,12 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
 
     public static void display(IMolecule molecule, boolean generateCoordinates, boolean drawNumbers)
     {
-	 display(molecule, generateCoordinates, drawNumbers, JFrame.DISPOSE_ON_CLOSE);
+	 display(molecule, generateCoordinates, drawNumbers, JFrame.DISPOSE_ON_CLOSE, "");
     
     }
 
 
-    public static void display(IMolecule molecule, boolean generateCoordinates, boolean drawNumbers, int closeOperation)
+    public static void display(IMolecule molecule, boolean generateCoordinates, boolean drawNumbers, int closeOperation, String title)
     {	
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         MoleculeViewer2D moleculeViewer = new MoleculeViewer2D();
@@ -216,6 +220,7 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
             moleculeViewer.getFrame().setDefaultCloseOperation(closeOperation);
             Renderer2DModel r2dm = moleculeViewer.getRenderer2DModel();
             r2dm.setDrawNumbers(drawNumbers);
+            moleculeViewer.getFrame().setTitle(title);
             moleculeViewer.getFrame().getContentPane().add(moleculeViewer);
             moleculeViewer.getFrame().pack();
             moleculeViewer.getFrame().setVisible(true);
@@ -229,6 +234,35 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
         }
     }
 
+    public static MoleculeViewer2D getViewer(IMolecule molecule, boolean generateCoordinates, boolean drawNumbers)
+    {	
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        MoleculeViewer2D moleculeViewer = new MoleculeViewer2D();
+
+        try
+        {
+            if (generateCoordinates)
+            {
+                sdg.setMolecule((IMolecule)molecule.clone());
+                sdg.generateCoordinates();
+                molecule = sdg.getMolecule();
+            }
+            moleculeViewer.setAtomContainer(molecule);
+            moleculeViewer.setPreferredSize(new Dimension(600,400));
+            Renderer2DModel r2dm = moleculeViewer.getRenderer2DModel();
+            r2dm.setDrawNumbers(drawNumbers);
+            
+        }
+        catch(Exception exc)
+        {
+            logger.debug(exc);
+            System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+            exc.printStackTrace();
+        }
+        return moleculeViewer;
+    }
+
+    
     /**
      *  Paints the molecule onto the JPanel
      *

@@ -110,6 +110,19 @@ public class MoleculeListViewer extends JFrame
 	 *  Convenience method.
 	 *
 	 *@param  molecule The Molecule object for which a display to add
+	 *@param  title Title string to display
+	 */
+
+	public void addStructure(IMolecule molecule, String title) {
+		panel.addStructure(MoleculeViewer2D.getViewer(molecule, true, false), title);
+		panel.revalidate();
+	}
+
+	/**
+	 *  Adds a molecule in a MoleculeViewer2D to this list viewer
+	 *  Convenience method.
+	 *
+	 *@param  molecule The Molecule object for which a display to add
 	 *@param  generateCoordinates true, if 2D coordinates should be generated automatically
 	 *@param  drawNumbers true, if the molecule should show atom numbers
 	 *@param  title Title string to display
@@ -141,7 +154,6 @@ public class MoleculeListViewer extends JFrame
             exc.printStackTrace();
         }
     }
-	
 	
 	
 	public void paint(Graphics graphics)
