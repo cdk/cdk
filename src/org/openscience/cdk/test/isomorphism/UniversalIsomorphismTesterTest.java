@@ -262,7 +262,17 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     public void testItself() throws Exception{
     	String smiles="C1CCCCCCC1CC";
        	QueryAtomContainer query=QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser().parseSmiles(smiles),true);
-    	assertTrue(UniversalIsomorphismTester.isSubgraph(new SmilesParser().parseSmiles(smiles),query));
+    	AtomContainer ac = new SmilesParser().parseSmiles(smiles);
+       	if (standAlone)
+    	{
+    		System.out.println("AtomCount of query: " + query.getAtomCount());
+    		System.out.println("AtomCount of target: " + ac.getAtomCount());
+    	
+    	}
+
+       	boolean matched =UniversalIsomorphismTester.isSubgraph(ac,query);
+    	if (standAlone) System.out.println("QueryAtomContainer matched: " + matched);
+       	if (!standAlone) assertTrue(matched);
     }
     
     public void testSingleAtomCases() throws Exception {
@@ -279,8 +289,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		try{
 			UniversalIsomorphismTesterTest uitt = new UniversalIsomorphismTesterTest("UniversalIsomorphismTesterTest");
 			uitt.standAlone = true;
-			uitt.test1();
-			uitt.test2();
+			uitt.testItself();
 		}
 		catch(Exception exc)
 		{

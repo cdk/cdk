@@ -751,7 +751,7 @@ public class UniversalIsomorphismTester {
         b1 = bondsA1[((RNode) gr.getGraph().get(j)).getRMap().getId1()];
         b2 = bondsA2[((RNode) gr.getGraph().get(j)).getRMap().getId2()];
 
-        if (a1 instanceof IQueryBond) {
+        if (a2 instanceof IQueryBond) {
             if (a1.equals(b1) || a2.equals(b2) ||
                 !queryAdjacency(a1, b1, a2, b2)) {
                 x.getForbidden().set(j);
