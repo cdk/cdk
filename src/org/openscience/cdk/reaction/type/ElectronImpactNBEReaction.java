@@ -7,6 +7,7 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
@@ -120,6 +121,10 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 
 				reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtomAt(posA)));
 
+				/* mapping */
+				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], reactantCloned.getAtomAt(posA));
+		        reaction.addMapping(mapping);
+				
 				reaction.addProduct(reactantCloned);
 
 

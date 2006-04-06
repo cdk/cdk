@@ -1,11 +1,14 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.Vector;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
@@ -85,6 +88,7 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	 *@exception  CDKException  Description of the Exception
 	 */
 
+	@SuppressWarnings("unchecked")
 	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
 		
 		logger.debug("initiate reaction: ElectronImpactPDBReaction");
@@ -103,6 +107,7 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 		}
 		
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
+		Vector controllerA = new Vector();
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER)){
 				
@@ -129,6 +134,19 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 						reactantCloned.addElectronContainer(
 								new SingleElectron(reactantCloned.getAtomAt(posA1)));
 					}
+					
+					/* mapping */
+					if(!controllerA.contains(bonds[i].getAtoms()[0])){
+						IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtomAt(posA1));
+				        reaction.addMapping(mapping);
+				        controllerA.add(bonds[i].getAtoms()[0]);
+					}
+					if(!controllerA.contains(bonds[i].getAtoms()[1])){
+						IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtomAt(posA2));
+				        reaction.addMapping(mapping);
+				        controllerA.add(bonds[i].getAtoms()[1]);
+					}
+					
 					reaction.addProduct(reactantCloned);
 				}
 				setOfReactions.addReaction(reaction);
