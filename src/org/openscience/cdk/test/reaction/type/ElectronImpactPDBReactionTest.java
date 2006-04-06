@@ -22,7 +22,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs a test for the ElectronImpactPDBReactionTest.
  *
- * @cdk.module test-extra
+ * @cdk.module test-reaction
  */
  
 public class ElectronImpactPDBReactionTest extends CDKTestCase {

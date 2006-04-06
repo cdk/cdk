@@ -22,7 +22,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 /**
  * TestSuite that runs a test for the ElectronImpactNBEReactionTest.
  *
- * @cdk.module test-extra
+ * @cdk.module test-reaction
  */
  
 public class ElectronImpactNBEReactionTest extends CDKTestCase {

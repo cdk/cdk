@@ -7,7 +7,7 @@ import org.openscience.cdk.applications.swing.MoleculeListViewer;
 /**
  * TestSuite that runs all reactions tests.
  *
- * @cdk.module test-extra
+ * @cdk.module test-reaction
  */
 
 public class ReactionTypeTest {
