@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IElement;
 /**
  * Checks the funcitonality of the Element class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-data
  *
  * @see org.openscience.cdk.Element
  */

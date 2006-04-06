@@ -61,12 +61,11 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * Checks the functionality of the Crystal.
  *
- * @cdk.module test-extra
+ * @cdk.module test-data
  */
 public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
@@ -565,11 +564,4 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IStrand);
 	}
 	
-	public void test1456139() throws Exception{
-		SmilesParser p = new SmilesParser();
-		Molecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
-		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newMolecule(mol);		
-		assertNotNull(mol2);
-		assertEquals(22, mol2.getAtomCount());	}
-
 }

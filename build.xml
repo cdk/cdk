@@ -610,6 +610,7 @@
         <antcall target="compile-init"/>
         <antcall target="compile-module"><param name="module" value="test-core"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-standard"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-data"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-reaction"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-osjvmts"/></antcall>
@@ -847,6 +848,7 @@
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
         	<antcall target="test-module"><param name="module" value="core"/></antcall>
+        	<antcall target="test-module"><param name="module" value="data"/></antcall>
         	<antcall target="test-module"><param name="module" value="standard"/></antcall>
 	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall> 

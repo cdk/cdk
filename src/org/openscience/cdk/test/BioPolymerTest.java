@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Checks the functionality of the BioPolymer class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-data
  *
  * @see org.openscience.cdk.BioPolymer
  */

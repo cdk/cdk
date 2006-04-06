@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 /**
  * Checks the funcitonality of the ChemModel class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-data
  *
  * @see org.openscience.cdk.ChemModel
  */

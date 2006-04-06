@@ -1,9 +1,9 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $RCSfile$
+ * $Author: egonw $
+ * $Date: 2006-03-29 23:42:34 +0100 (Wed, 29 Mar 2006) $
+ * $Revision: 5865 $
  * 
- * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,39 +20,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * 
  */
+
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-/**
- * TestSuite that runs all the sample tests.
- *
- * @cdk.module test-data
- */
-public class DataCoverageTest extends CoverageTest {
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.smiles.SmilesParser;
 
-    private final static String CLASS_LIST = "data.javafiles";
-    
-    public DataCoverageTest(String name){
+/**
+ * Checks the functionality of the Crystal.
+ *
+ * @cdk.module test-extra
+ */
+public class VariousTests extends CDKTestCase {
+
+    public VariousTests(String name) {
         super(name);
     }
 
-    public void setUp() {
-        super.setUp();
-        try {
-            super.loadClassList(CLASS_LIST);
-        } catch (Exception exception) {
-            fail("Could not load classes to test: " + exception.getMessage());
-        }
-    }
+	public void test1456139() throws Exception{
+		SmilesParser p = new SmilesParser();
+		Molecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
+		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newMolecule(mol);		
+		assertNotNull(mol2);
+		assertEquals(22, mol2.getAtomCount());
+	}
 
-    public static Test suite() {
-        return new TestSuite(DataCoverageTest.class);
-    }
+	public static Test suite() {
+		return new TestSuite(VariousTests.class);
+	}
 
-    public void testCoverage() {
-        super.runCoverageTest();
-    }
 }

@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * TestCase for the AminoAcid class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-data
  *
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09

@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @see org.openscience.cdk.LonePair
  *
- * @cdk.module test-extra
+ * @cdk.module test-data
  */
 public class LonePairTest extends CDKTestCase {
 

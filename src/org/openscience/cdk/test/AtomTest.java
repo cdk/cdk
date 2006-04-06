@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Checks the functionality of the AtomTypeFactory
  *
- * @cdk.module test-extra
+ * @cdk.module test-data
  */
 public class AtomTest extends CDKTestCase {
 

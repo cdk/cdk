@@ -88,7 +88,6 @@ public class MextraTests {
         TestSuite suite= new TestSuite("All CDK Tests");
 
         // Tests for data classes
-        suite.addTest(DataClassesTests.suite());
         suite.addTest(DebugDataClassesTests.suite());
         
         // Package Test Suites
@@ -170,6 +169,10 @@ public class MextraTests {
         suite.addTest(AddAtomsAndBondsEditTest.suite());
         suite.addTest(RemoveAtomsAndBondsEditTest.suite());
         suite.addTest(ChangeChargeEditTest.suite());
+        
+        // other
+        suite.addTest(VariousTests.suite());
+        
         return suite;
     }
     

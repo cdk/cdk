@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.created 2001-08-09
- * @cdk.module  test-extra
+ * @cdk.module  test-data
  */
 public class PolymerTest extends TestCase {
 
