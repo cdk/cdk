@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the funcitonality of the CDKException class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-core
  *
  * @see org.openscience.cdk.CDKException
  */

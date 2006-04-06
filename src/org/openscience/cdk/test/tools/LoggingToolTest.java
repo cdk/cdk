@@ -30,7 +30,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-core
  */
 public class LoggingToolTest extends CDKTestCase {
 	

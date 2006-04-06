@@ -32,11 +32,10 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-core
  */
 public class HybridizationMatcherTest extends CDKTestCase {
 
@@ -56,7 +55,6 @@ public class HybridizationMatcherTest extends CDKTestCase {
     }
     
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        SmilesParser sp = new SmilesParser();
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         final int thisHybridization = CDKConstants.HYBRIDIZATION_SP1;

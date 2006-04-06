@@ -33,7 +33,7 @@ import org.openscience.cdk.CDKConstants;
  * Included so that CoreCoverageTest won't complain. The class does not have
  * methods, only constants, so there is nothing to test.
  *
- * @cdk.module test-extra
+ * @cdk.module test-core
  *
  * @see org.openscience.cdk.CDKConstants
  */
