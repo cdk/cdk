@@ -46,7 +46,7 @@ import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
- * @cdk.module test
+ * @cdk.module test-extra
  */
 public class ArrowRenderer2DTest extends JPanel {
 	MDLReader mr;
