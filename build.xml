@@ -603,6 +603,7 @@
     		<antcall target="compile-module"><param name="module" value="qsar-pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
+            <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
         </target>
 
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
@@ -631,6 +632,7 @@
                     <includesfile name="${metainf}/io-jmol.libdepends"/>
                     <includesfile name="${metainf}/libio-cml.libdepends"/>
                     <includesfile name="${metainf}/qsar.libdepends"/>
+                    <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/swing.libdepends"/>
@@ -651,6 +653,7 @@
                     <include name="cdk-qsar-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-pdb-cml.jar"/>
+                    <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-swing.jar"/>

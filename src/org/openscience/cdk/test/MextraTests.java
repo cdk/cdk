@@ -72,7 +72,7 @@ import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
 import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
 import org.openscience.cdk.test.qsar.descriptors.QSARDescriptorTests;
 import org.openscience.cdk.test.qsar.model.QSARRModelTests;
-import org.openscience.cdk.test.reaction.ReactionBalancerTest;
+import org.openscience.cdk.test.reaction.type.ReactionTypeTest;
 import org.openscience.cdk.test.ringsearch.AllRingsFinderTest;
 import org.openscience.cdk.test.ringsearch.RingPartitionerTest;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
@@ -159,7 +159,7 @@ public class MextraTests {
         // from cdk.test.qsar
         suite.addTest(QSARDescriptorTests.suite());
         // from cdk.test.reaction
-        suite.addTest(ReactionBalancerTest.suite());
+        suite.addTest(ReactionTypeTest.suite());
         // from cdk.test.ringsearch
         suite.addTest(AllRingsFinderTest.suite());
         suite.addTest(RingSearchTest.suite());

@@ -172,11 +172,15 @@ public class CDKConstants {
 
         public final static int IS_HYDROGENBOND_DONOR = 6;
         public final static int IS_HYDROGENBOND_ACCEPTOR = 7;
-
+        
+        /** Flag is set if a chemobject has reactive center.
+         *  It is used for example in reaction.
+         */
+        public static final int REACTIVE_CENTER = 8;
     /**
      * Maximum flags array index.
      */
-    public final static int MAX_FLAG_INDEX = 7;
+    public final static int MAX_FLAG_INDEX = 8;
 
     /**
      * Flag used for JUnit testing the pointer functionality.

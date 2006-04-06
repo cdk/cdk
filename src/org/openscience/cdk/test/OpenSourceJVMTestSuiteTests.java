@@ -55,7 +55,7 @@ import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.math.MathToolsTest;
 import org.openscience.cdk.test.qsar.descriptors.QSARDescriptorTests;
-import org.openscience.cdk.test.reaction.ReactionBalancerTest;
+import org.openscience.cdk.test.reaction.type.ReactionTypeTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
@@ -133,7 +133,7 @@ public class OpenSourceJVMTestSuiteTests {
         	suite.addTest(OverlapResolverTest.suite());
         	suite.addTest(TemplateHandlerTest.suite());
         	// from cdk.test.reaction
-        	suite.addTest(ReactionBalancerTest.suite());
+        	suite.addTest(ReactionTypeTest.suite());
         	// from cdk.test.similarity
         	suite.addTest(TanimotoTest.suite());
         	// from cdk.test.smiles
