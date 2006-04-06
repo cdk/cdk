@@ -87,8 +87,6 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
-
-	@SuppressWarnings("unchecked")
 	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
 		
 		logger.debug("initiate reaction: ElectronImpactPDBReaction");
