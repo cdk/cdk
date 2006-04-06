@@ -46,6 +46,7 @@ public class ToolsTests {
         suite.addTest(HydrogenAdder3Test.suite());
         suite.addTest(IDCreatorTest.suite());
         suite.addTest(LoggingToolTest.suite());
+        suite.addTest(LonePairElectronCheckerTest.suite());
         suite.addTest(MFAnalyserTest.suite());
         suite.addTest(SaturationCheckerTest.suite());
         suite.addTest(ValencyCheckerTest.suite());
