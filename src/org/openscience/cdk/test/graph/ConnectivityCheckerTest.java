@@ -40,7 +40,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  *  Checks the functionality of the ConnectivityChecker
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  *
  * @author     steinbeck
  * @cdk.created    2001-07-24

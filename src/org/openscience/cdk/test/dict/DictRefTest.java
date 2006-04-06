@@ -34,7 +34,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the DictRef class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  *
  * @see org.openscience.cdk.dict.DictRef
  */

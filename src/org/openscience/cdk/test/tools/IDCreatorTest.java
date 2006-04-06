@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.IDCreator;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class IDCreatorTest extends CDKTestCase {
 	

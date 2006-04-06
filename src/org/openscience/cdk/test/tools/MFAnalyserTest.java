@@ -39,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class MFAnalyserTest extends CDKTestCase {
 	Molecule molecule;

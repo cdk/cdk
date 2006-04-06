@@ -35,7 +35,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the funcitonality of the IsomorphismTester
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class IsomorphismTesterTest extends CDKTestCase
 {

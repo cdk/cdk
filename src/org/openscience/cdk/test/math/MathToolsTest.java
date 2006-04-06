@@ -31,7 +31,7 @@ import org.openscience.cdk.math.MathTools;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class MathToolsTest extends CDKTestCase {
 

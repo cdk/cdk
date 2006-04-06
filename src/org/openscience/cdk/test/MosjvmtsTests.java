@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+ * $Author: egonw $
+ * $Date: 2006-04-06 15:24:58 +0200 (Thu, 06 Apr 2006) $
+ * $Revision: 5889 $
  *
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -40,36 +40,29 @@ import org.openscience.cdk.test.debug.DebugDataClassesTests;
 import org.openscience.cdk.test.dict.DictDBTest;
 import org.openscience.cdk.test.dict.DictRefTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
-import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
-import org.openscience.cdk.test.geometry.GeometryToolsTest;
 import org.openscience.cdk.test.geometry.RDFCalculatorTest;
 import org.openscience.cdk.test.geometry.alignment.KabschAlignmentTest;
-import org.openscience.cdk.test.graph.GraphTests;
 import org.openscience.cdk.test.index.CASNumberTest;
 import org.openscience.cdk.test.io.IOTests;
-import org.openscience.cdk.test.isomorphism.IsomorphismTests;
 import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
-import org.openscience.cdk.test.math.MathToolsTest;
 import org.openscience.cdk.test.qsar.descriptors.QSARDescriptorTests;
-import org.openscience.cdk.test.reaction.type.ReactionTypeTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
-import org.openscience.cdk.test.tools.ToolsTests;
 
 /**
  * This TestSuite is aimed to make a nice test suite for testing
  * open source Java Virtual machines, like JamVM, Cacao and Kaffe.
  * These normally use Classpath to provide the Java libraries.
  *
- * @cdk.module  test-extra
+ * @cdk.module  test-osjvmts
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class OpenSourceJVMTestSuiteTests {
+public class MosjvmtsTests {
     
     public static Test suite() {
         TestSuite suite = new TestSuite("The Open Source ChemoInformatics JVM Test Suite");
@@ -83,24 +76,14 @@ public class OpenSourceJVMTestSuiteTests {
         	// Bench Mark II tests
         	suite.addTest(McoreTests.suite());
         } else if ("III".equals(benchmark)){
-        	// Bench Mark III tests
-        	// from cdk.test.math
-        	suite.addTest(MathToolsTest.suite());
-        	// from cdk.test.graph
-        	suite.addTest(GraphTests.suite());
-        	// from cdk.test.geometry
-        	suite.addTest(GeometryToolsTest.suite());
-        	suite.addTest(CrystalGeometryToolsTest.suite());
-        } else if ("IV".equals(benchmark)){
-        	// from cdk.test.isomorphism
-        	suite.addTest(IsomorphismTests.suite());
+//        	 Bench Mark III tests
+        	suite.addTest(MstandardTests.suite());
         } else if ("skip".equals(benchmark)){
         	// Tests for data classes
         	suite.addTest(DebugDataClassesTests.suite());
         
         	// Package Test Suites
         	suite.addTest(IOTests.suite());
-        	suite.addTest(ToolsTests.suite());
         	
         	// Individual Tests
         	// from cdk.test.aromaticity
@@ -131,8 +114,6 @@ public class OpenSourceJVMTestSuiteTests {
         	suite.addTest(HydrogenPlacerTest.suite());
         	suite.addTest(OverlapResolverTest.suite());
         	suite.addTest(TemplateHandlerTest.suite());
-        	// from cdk.test.reaction
-        	suite.addTest(ReactionTypeTest.suite());
         	// from cdk.test.similarity
         	suite.addTest(TanimotoTest.suite());
         	// from cdk.test.smiles

@@ -37,7 +37,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * This class defines regression tests that should ensure that the source code
  * of the org.openscience.cdk.geometry.GeometryTools is not broken.
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  *
  * @author     Egon Willighagen
  * @cdk.created    2004-01-30

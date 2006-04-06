@@ -41,7 +41,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class AllRingsFinderTest extends CDKTestCase
 {

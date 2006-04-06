@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
  * @author        Kai Hartmann
  * @author        Bart Geurten
  * @cdk.created   2004-02-20
- * @cdk.module    experimental
+ * @cdk.module    reaction
  */
 public class ReactionBalancer {
 

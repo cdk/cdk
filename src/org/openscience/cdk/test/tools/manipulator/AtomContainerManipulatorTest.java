@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class AtomContainerManipulatorTest extends CDKTestCase {
     IAtomContainer ac;

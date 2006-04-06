@@ -35,7 +35,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  *
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
