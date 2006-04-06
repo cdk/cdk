@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdk.module test-extra
+ * @cdk.module test-io
  * @cdk.require java1.5
  */
 public class CML2WriterTest extends CDKTestCase {

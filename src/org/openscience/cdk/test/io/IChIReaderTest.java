@@ -41,7 +41,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestCase for the reading IChI files using one test file.
  *
- * @cdk.module test-extra
+ * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.IChIReader
  * @cdk.require java1.4+

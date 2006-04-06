@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the reading SYBYL mol2 files using a test file.
  *
- * @cdk.module test-extra
+ * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.Mol2Reader
  */

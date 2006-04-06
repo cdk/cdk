@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * TestCase for the reading MDL mol files using one test file.
  * A test case for SDF files is available as separate Class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.test.io.SDFReaderTest

@@ -51,7 +51,6 @@ import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.RDFCalculatorTest;
 import org.openscience.cdk.test.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.test.index.CASNumberTest;
-import org.openscience.cdk.test.io.IOTests;
 import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
@@ -91,7 +90,7 @@ public class MextraTests {
         suite.addTest(DebugDataClassesTests.suite());
         
         // Package Test Suites
-        suite.addTest(IOTests.suite());
+        suite.addTest(MioTests.suite());
         
         // Individual Tests
         // from cdk.test.applications

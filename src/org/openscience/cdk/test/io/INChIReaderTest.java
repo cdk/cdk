@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the reading INChI files using one test file.
  *
- * @cdk.module test-extra
+ * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+

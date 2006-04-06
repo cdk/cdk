@@ -17,3 +17,4 @@ cdk-qsar-pdb.jar
 cdk-test-core.jar
 cdk-test-standard.jar
 cdk-test-extra.jar
+cdk-test-io.jar

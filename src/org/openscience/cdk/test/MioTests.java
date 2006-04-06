@@ -1,7 +1,7 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $RCSfile: $    
+ * $Author: egonw $    
+ * $Date: 2006-03-30 00:42:34 +0200 (Thu, 30 Mar 2006) $    
+ * $Revision: 5865 $
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -21,12 +21,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-
-package org.openscience.cdk.test.io;
+package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.io.CrystClustReaderTest;
+import org.openscience.cdk.test.io.GamessReaderTest;
+import org.openscience.cdk.test.io.Gaussian98ReaderTest;
+import org.openscience.cdk.test.io.GhemicalReaderTest;
+import org.openscience.cdk.test.io.HINReaderTest;
+import org.openscience.cdk.test.io.INChIPlainTextReaderTest;
+import org.openscience.cdk.test.io.INChIReaderTest;
+import org.openscience.cdk.test.io.MDLRXNReaderTest;
+import org.openscience.cdk.test.io.MDLRXNWriterTest;
+import org.openscience.cdk.test.io.MDLReaderTest;
+import org.openscience.cdk.test.io.MDLWriterTest;
+import org.openscience.cdk.test.io.Mol2ReaderTest;
+import org.openscience.cdk.test.io.PDBReaderTest;
+import org.openscience.cdk.test.io.ReaderFactoryTest;
+import org.openscience.cdk.test.io.SDFReaderTest;
+import org.openscience.cdk.test.io.SMILESReaderTest;
+import org.openscience.cdk.test.io.ShelXReaderTest;
 import org.openscience.cdk.test.io.cml.CMLIOTests;
 import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
 import org.openscience.cdk.test.io.iterator.IteratingSMILESReaderTest;
@@ -34,9 +50,9 @@ import org.openscience.cdk.test.io.iterator.IteratingSMILESReaderTest;
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
  *
- * @cdk.module test-extra
+ * @cdk.module test-io
  */
-public class IOTests {
+public class MioTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.io Tests");
@@ -59,7 +75,7 @@ public class IOTests {
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
         suite.addTest(SMILESReaderTest.suite());
-        //suite.addTest(VASPReaderTest.suite());
+        //suite.addTest(VASPReaderTest.suite()); Class is in experimental
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
         suite.addTest(ReaderFactoryTest.suite());
