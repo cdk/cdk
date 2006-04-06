@@ -66,21 +66,21 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
         // smiles source: C#CCC=O
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
-        mol.addBond(1,2,3);
+        mol.addBond(0,1,3);
+        mol.addAtom(new Atom("C"));
+        mol.addBond(1,2,1);
         mol.addAtom(new Atom("C"));
         mol.addBond(2,3,1);
-        mol.addAtom(new Atom("C"));
-        mol.addBond(3,4,1);
         mol.addAtom(new Atom("O"));
-        mol.addBond(4,5,2);
+        mol.addBond(3,4,2);
         mol.addAtom(new Atom("H"));
-        mol.addBond(6,1,1);
+        mol.addBond(5,0,1);
         mol.addAtom(new Atom("H"));
-        mol.addBond(7,3,1);
+        mol.addBond(6,2,1);
+        mol.addAtom(new Atom("H"));
+        mol.addBond(7,2,1);
         mol.addAtom(new Atom("H"));
         mol.addBond(8,3,1);
-        mol.addAtom(new Atom("H"));
-        mol.addBond(9,4,1);
         
         IAtom atom = mol.getAtomAt(0);
         
