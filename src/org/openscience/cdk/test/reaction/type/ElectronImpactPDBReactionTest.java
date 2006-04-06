@@ -68,6 +68,9 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         molecule = setOfReactions.getReaction(0).getProducts().getMolecule(1);
         Assert.assertEquals(1, molecule.getAtomAt(0).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(1)));
+        
+
+        Assert.assertEquals(2,setOfReactions.getReaction(0).getMappings().length);
 		
 	}
 	/**
