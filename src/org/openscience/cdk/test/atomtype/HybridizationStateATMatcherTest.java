@@ -29,11 +29,11 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 /**
  * Checks the functionality of the AtomType-HybridizationStateATMatcher.
  *
- * @cdk.module test-extra
+ * @cdk.module test-core
  *
  * @see org.openscience.cdk.atomtype.HybridizationStateATMatcher
  */
@@ -64,21 +64,30 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
     }
     
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        SmilesParser sp = new SmilesParser();
-	Molecule mol = sp.parseSmiles("C#CCC=O");
-	HydrogenAdder hAdder = new HydrogenAdder();
-	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-	org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(0);
-	
-	HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
-	IAtomType matched = atm.findMatchingAtomType(mol, atom);
-	
-	AtomTypeManipulator.configure(atom, matched);
-	
-	int hybridization = atom.getHybridization();
-	int thisHybridization = CDKConstants.HYBRIDIZATION_SP1;
-	
-	assertEquals(thisHybridization, hybridization);
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addBond(1,2,3);
+        mol.addAtom(new Atom("C"));
+        mol.addBond(2,3,1);
+        mol.addAtom(new Atom("C"));
+        mol.addBond(3,4,1);
+        mol.addAtom(new Atom("O"));
+        mol.addBond(4,5,2);
+        
+        HydrogenAdder hAdder = new HydrogenAdder();
+        hAdder.addExplicitHydrogensToSatisfyValency(mol);
+        org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(0);
+        
+        HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
+        IAtomType matched = atm.findMatchingAtomType(mol, atom);
+        
+        AtomTypeManipulator.configure(atom, matched);
+        
+        int hybridization = atom.getHybridization();
+        int thisHybridization = CDKConstants.HYBRIDIZATION_SP1;
+        
+        assertEquals(thisHybridization, hybridization);
         //assertEquals("C", at.getSymbol());
     }
 }
