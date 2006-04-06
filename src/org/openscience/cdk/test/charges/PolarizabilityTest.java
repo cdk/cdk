@@ -113,4 +113,121 @@ public class PolarizabilityTest extends CDKTestCase {
 			fail(exc.toString());
 		}
 	}
+
+	/**
+	 *  A unit test for JUnit with Ethyl chloride
+	 */
+	public void testcalculateGHEffectiveAtomPolarizability_Ethyl_chloride(){
+		double testResult = 4.62; /* from thesis Wolfgang Hanebeck, TUM*/
+		Polarizability pol=new Polarizability();
+		try{
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles("CCCl");
+			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(2),100);
+			assertEquals(testResult,result,0.01);
+			
+		} catch (Exception exc){
+			if (standAlone)	{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+	/**
+	 *  A unit test for JUnit with Allyl bromide
+	 */
+	public void testcalculateGHEffectiveAtomPolarizability_Allyl_bromide(){
+		double testResult = 6.17; /* from thesis Wolfgang Hanebeck, TUM*/
+		Polarizability pol=new Polarizability();
+		try{
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles("C=CCBr");
+			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(3),100);
+			assertEquals(testResult,result,0.01);
+			
+		} catch (Exception exc){
+			if (standAlone)	{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+	/**
+	 *  A unit test for JUnit with Isopentyl iodide
+	 */
+	public void testcalculateGHEffectiveAtomPolarizability_Isopentyl_iodide(){
+		double testResult = 8.69; /* from thesis Wolfgang Hanebeck, TUM*/
+		Polarizability pol=new Polarizability();
+		try{
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles("C(C)(C)CCI");
+			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(5),100);
+			assertEquals(testResult,result,0.01);
+			
+		} catch (Exception exc){
+			if (standAlone)	{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+	/**
+	 *  A unit test for JUnit with Ethoxy ethane
+	 */
+	public void testcalculateGHEffectiveAtomPolarizability_Ethoxy_ethane(){
+		double testResult = 5.21; /* from thesis Wolfgang Hanebeck, TUM*/
+		Polarizability pol=new Polarizability();
+		try{
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles("CCOCC");
+			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(2),100);
+			assertEquals(testResult,result,0.01);
+			
+		} catch (Exception exc){
+			if (standAlone)	{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+	/**
+	 *  A unit test for JUnit with Ethanolamine
+	 */
+	public void testcalculateGHEffectiveAtomPolarizability_Ethanolamine(){
+		double [] testResult={4.26,3.60}; /* from thesis Wolfgang Hanebeck, TUM*/
+		Polarizability pol=new Polarizability();
+		try{
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles("NCCO");
+			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(3),100);
+			assertEquals(testResult[1],result,0.01);
+			result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(0),100);
+			assertEquals(testResult[0],result,0.01);
+			
+		} catch (Exception exc){
+			if (standAlone)	{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+	/**
+	 *  A unit test for JUnit with Allyl mercaptan
+	 */
+	public void testcalculateGHEffectiveAtomPolarizability_Allyl_mercaptan(){
+		double testResult = 6.25; /* from thesis Wolfgang Hanebeck, TUM*/
+		Polarizability pol=new Polarizability();
+		try{
+			SmilesParser sp = new SmilesParser();
+			Molecule mol = sp.parseSmiles("C=CCS");
+			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(3),100);
+ 			assertEquals(testResult,result,0.01);
+			
+		} catch (Exception exc){
+			if (standAlone)	{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
 }

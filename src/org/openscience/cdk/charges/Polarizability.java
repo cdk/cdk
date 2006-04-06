@@ -161,7 +161,7 @@ public class Polarizability {
 		String AtomSymbol = "";
 		AtomSymbol = atom.getSymbol();
 		if (AtomSymbol.equals("H")) {
-			polarizabilitiyFactor = 0.386;
+			polarizabilitiyFactor = 0.387;
 		} else if (AtomSymbol.equals("C")) {
 			if (ac.getMaximumBondOrder(atom) == 1) {
 				polarizabilitiyFactor = 1.064;
@@ -171,7 +171,7 @@ public class Polarizability {
 				if (getNumberOfHydrogen(ac, atom) == 0) {
 					polarizabilitiyFactor = 1.382;
 				} else {
-					polarizabilitiyFactor = 1.529;
+					polarizabilitiyFactor = 1.37;
 				}
 			} else if (ac.getMaximumBondOrder(atom) >= 3) {
 				polarizabilitiyFactor = 1.279;
@@ -196,20 +196,32 @@ public class Polarizability {
 			} else if (ac.getMaximumBondOrder(atom) == 2) {
 				polarizabilitiyFactor = 0.460;
 			}
-		} else if (AtomSymbol.equals("F")) {
-			polarizabilitiyFactor = 0;
 		} else if (AtomSymbol.equals("P")) {
 			if (ac.getBondCount(atom) == 4 && ac.getMaximumBondOrder(atom) == 2) {
 				polarizabilitiyFactor = 0;
 			}
 		} else if (AtomSymbol.equals("S")) {
-			polarizabilitiyFactor = 0;
-		} else if (AtomSymbol.equals("Cl")) {
-			polarizabilitiyFactor = 0;
+			if (ac.getMaximumBondOrder(atom) == 1) {
+				polarizabilitiyFactor = 3.19;
+			} else if (ac.getMaximumBondOrder(atom) == 1.5 || atom.getFlag(CDKConstants.ISAROMATIC)) {
+				polarizabilitiyFactor = 3.38;
+			} else if (ac.getMaximumBondOrder(atom) == 2) {
+				if (getNumberOfHydrogen(ac, atom) == 0) {
+					polarizabilitiyFactor = 3.51;
+				} else {
+					polarizabilitiyFactor = 3.50;
+				}
+			} else if (ac.getMaximumBondOrder(atom) >= 3) {
+				polarizabilitiyFactor = 3.42;
+			}
+		}else if (AtomSymbol.equals("F")) {
+			polarizabilitiyFactor = 0.296;
+		}else if (AtomSymbol.equals("Cl")) {
+			polarizabilitiyFactor = 2.35;
 		} else if (AtomSymbol.equals("Br")) {
-			polarizabilitiyFactor = 0;
+			polarizabilitiyFactor = 3.5;
 		} else if (AtomSymbol.equals("I")) {
-			polarizabilitiyFactor = 0;
+			polarizabilitiyFactor = 5.79;
 		}
 		return polarizabilitiyFactor;
 	}
