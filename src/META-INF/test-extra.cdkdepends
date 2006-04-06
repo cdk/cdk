@@ -13,4 +13,5 @@ cdk-swing.jar
 cdk-builder3d.jar
 cdk-qsar.jar
 cdk-qsar-pdb.jar
+cdk-test-core.jar
 

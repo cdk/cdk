@@ -82,8 +82,7 @@ public class OpenSourceJVMTestSuiteTests {
         	suite.addTest(DataClassesTests.suite());
         } else if ("II".equals(benchmark)){
         	// Bench Mark II tests
-        	suite.addTest(ConfigTests.suite());
-        	suite.addTest(CoreClassesTests.suite());
+        	suite.addTest(McoreTests.suite());
         } else if ("III".equals(benchmark)){
         	// Bench Mark III tests
         	// from cdk.test.math

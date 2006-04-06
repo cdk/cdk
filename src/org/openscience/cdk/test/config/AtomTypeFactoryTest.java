@@ -40,7 +40,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the funcitonality of the AtomTypeFactory
  *
- * @cdk.module test-extra
+ * @cdk.module test-core
  */
 public class AtomTypeFactoryTest extends CDKTestCase {
 

@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-extra
+ * @cdk.module test-core
  */
 public class CoreCoverageTest extends CoverageTest {
 

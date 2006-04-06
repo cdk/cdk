@@ -86,7 +86,7 @@ import org.openscience.cdk.test.tools.ToolsTests;
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-extra
+ * @cdk.module  test-extra
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
@@ -108,7 +108,6 @@ public class MextraTests {
         
         // Package Test Suites
         suite.addTest(ConfigTests.suite());
-        suite.addTest(CoreClassesTests.suite());
         suite.addTest(IOTests.suite());
         suite.addTest(ToolsTests.suite());
         
