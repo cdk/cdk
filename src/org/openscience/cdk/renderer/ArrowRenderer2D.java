@@ -49,13 +49,13 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * A Renderer class which draws 2D representations of curly arrows as used for
  * representing electron movements in organic chemistry text books.
- * Adapted from http://www.wam.umd.edu/~petersd/Interp2_code.java
+ * Adapted from <a href="http://www.wam.umd.edu/~petersd/Interp2_code.java">http://www.wam.umd.edu/~petersd/Interp2_code.java</a>.
  * 
- * @author steinbeck
- * @cdk.module render
+ * @author      steinbeck
+ * @cdk.module  renderer
  * @cdk.created 2006-03-28
  * @cdk.keyword viewer, 2D-viewer
- * @see org.openscience.cdk.renderer.Renderer2DModel
+ * @see         org.openscience.cdk.renderer.Renderer2DModel
  */
 public class ArrowRenderer2D {
 

@@ -12,7 +12,9 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-
+/**
+ * @cdk.module renderer
+ */
 public class Arrow 
 {
 	IAtom start;
