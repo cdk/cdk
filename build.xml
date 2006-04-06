@@ -605,7 +605,12 @@
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
         </target>
 
-        <target id="dist-large" name="dist-large" depends="dist-all" 
+	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
+        <antcall target="compile-init"/>
+        <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
+	</target>
+
+	<target id="dist-large" name="dist-large" depends="dist-all" 
             description="Builds on big jar file for the CDK, including experimental classes.">
             
             <!-- first unjar the CDK and other jars we need -->
@@ -830,7 +835,7 @@
 			</junit>
 	    </target>
 			
-        <target id="test" name="test" depends="noJunit, dist-all"
+        <target id="test" name="test" depends="noJunit, dist-all, test-dist-all"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
 	        	<antcall target="test-module"><param name="module" value="extra"/></antcall>    	            
