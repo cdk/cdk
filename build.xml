@@ -795,7 +795,7 @@
             <fail message="JUnit is not installed in Ant. Please copy cdk/develjar/junit.jar to ${ant.home}/lib/."/>
         </target>
         
-		<target id="test-module" name="test-module" depends="noJunit, dist-all"
+		<target id="test-module" name="test-module" depends="noJunit"
 	                description="Performs a full JUnit test for the CDK." 
 	                if="junit.present">
 
@@ -840,7 +840,8 @@
         <target id="test" name="test" depends="noJunit, dist-all, test-dist-all"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
-	        	<antcall target="test-module"><param name="module" value="extra"/></antcall>    	            
+        	<antcall target="test-module"><param name="module" value="core"/></antcall>    	            
+        	<antcall target="test-module"><param name="module" value="extra"/></antcall>    	            
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
