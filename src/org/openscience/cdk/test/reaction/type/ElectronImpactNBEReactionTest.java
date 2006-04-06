@@ -54,7 +54,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction();
-        Object[] params = {true};
+        Object[] params = new Object[]{true};
         type.setParameters(params);
         ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
         

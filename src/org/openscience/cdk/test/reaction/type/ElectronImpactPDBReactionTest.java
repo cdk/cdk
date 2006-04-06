@@ -55,7 +55,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
-        Object[] params = {true};
+        Object[] params = new Object[]{true};
         type.setParameters(params);
         ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
         
