@@ -34,13 +34,11 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,7 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Adapted from <a href="http://www.wam.umd.edu/~petersd/Interp2_code.java">http://www.wam.umd.edu/~petersd/Interp2_code.java</a>.
  * 
  * @author      steinbeck
- * @cdk.module  renderer
+ * @cdk.module  render
  * @cdk.created 2006-03-28
  * @cdk.keyword viewer, 2D-viewer
  * @see         org.openscience.cdk.renderer.Renderer2DModel
@@ -122,7 +120,7 @@ public class ArrowRenderer2D {
 		IAtom start = arrow.getStart();
 		IAtom end = arrow.getEnd();
 		Arc2D.Double arc = new Arc2D.Double();
-		IAtomContainer ac = new AtomContainer();
+		IAtomContainer ac = start.getBuilder().newAtomContainer();
 		ac.addAtom(start);
 		ac.addAtom(end);
 		center = GeometryTools.get2DCenter(ac);
