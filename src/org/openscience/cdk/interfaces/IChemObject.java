@@ -61,7 +61,21 @@ public interface IChemObject extends Cloneable {
 	 */
 	public void removeListener(IChemObjectListener col);
 
+	/**
+	 * Set a flag to use or not use notification. By default it should be set
+	 * to true.
+	 * 
+	 * @param bool if true, then notification messages are sent.
+	 */
+	public void setNotification(boolean bool);
 
+	/**
+	 * Returns the flag that indicates wether notification messages are sent around.
+	 * 
+	 * @return true if messages are sent.
+	 */
+	public boolean getNotification();
+	
 	/**
 	 * This should be triggered by an method that changes the content of an object
 	 * to that the registered listeners can react to it.

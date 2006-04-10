@@ -137,4 +137,12 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
 		return DebugChemObjectBuilder.getInstance();
 	}
 
+	public void setNotification(boolean bool) {
+		logger.debug("Setting use notification: ", bool);
+		super.setNotification(bool);
+	}
+
+	public boolean getNotification() {
+		return super.getNotification();
+	}
 }

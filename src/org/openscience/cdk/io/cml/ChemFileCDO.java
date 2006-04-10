@@ -589,5 +589,16 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
 	public void setAromaticOrder(double aromaticOrder) {
 		this.aromaticOrder = aromaticOrder;
 	}
+	
+	private boolean doNotification = true;
+	
+	public void setNotification(boolean bool) {
+		this.doNotification = bool;
+	}
+
+	public boolean getNotification() {
+		return this.doNotification;
+	}
+	
 }
 

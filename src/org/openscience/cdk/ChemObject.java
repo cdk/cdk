@@ -165,7 +165,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 *  to that the registered listeners can react to it.
 	 */
 	public void notifyChanged() {
-        if (getListenerCount() > 0) {
+        if (getNotification() && getListenerCount() > 0) {
             Vector listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
                 ((IChemObjectListener) listeners.elementAt(f)).stateChanged(
@@ -455,6 +455,16 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	
 	public IChemObjectBuilder getBuilder() {
 		return DefaultChemObjectBuilder.getInstance();
+	}
+
+	private boolean doNotification = true;
+	
+	public void setNotification(boolean bool) {
+		this.doNotification = bool;
+	}
+
+	public boolean getNotification() {
+		return this.doNotification;
 	}
 
 }
