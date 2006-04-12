@@ -31,8 +31,9 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.LonePair;
 import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  *@author        kaihartmann
@@ -72,8 +73,8 @@ public class ConjugatedPiSystemsDetector {
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
-    public static SetOfAtomContainers detect(org.openscience.cdk.interfaces.IAtomContainer ac) {
-
+    @SuppressWarnings({"unchecked"})
+	public static SetOfAtomContainers detect(org.openscience.cdk.interfaces.IAtomContainer ac) {
         SetOfAtomContainers piSystemSet = new SetOfAtomContainers();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -82,7 +83,7 @@ public class ConjugatedPiSystemsDetector {
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom firstAtom = ac.getAtomAt(i);
+        	IAtom firstAtom = ac.getAtomAt(i);
             // if this atom was already visited in a previous DFS, continue
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
@@ -91,11 +92,8 @@ public class ConjugatedPiSystemsDetector {
             Stack stack = new Stack();
 
             piSystem.addAtom(firstAtom);
-            stack.push(firstAtom);
-            firstAtom.setFlag(CDKConstants.VISITED, true);
             // Start DFS from firstAtom
             while (!stack.empty()) {
-                boolean addAtom = false;
                 Atom currentAtom = (Atom) stack.pop();
                 Vector atoms = ac.getConnectedAtomsVector(currentAtom);
                 Vector bonds = ac.getConnectedBondsVector(currentAtom);
@@ -140,49 +138,46 @@ public class ConjugatedPiSystemsDetector {
      *@param  currentAtom  The Atom to check
      *@return              -1 if isolated, 0 if conjugated, 1 if cumulative db
      */
-    private static int checkAtom(org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom currentAtom) {
+    private static int checkAtom(IAtomContainer ac, IAtom currentAtom) {
         int check = -1;
         Vector atoms = ac.getConnectedAtomsVector(currentAtom);
         Vector bonds = ac.getConnectedBondsVector(currentAtom);
         if (currentAtom.getFlag(CDKConstants.ISAROMATIC)) {
             check = 0;
-        } else if (currentAtom.getFormalCharge() == 1 && currentAtom.getSymbol().equals("C")) {
+        } else if (currentAtom.getFormalCharge() == 1 /*&& currentAtom.getSymbol().equals("C")*/) {
             check = 0;
         } else if (currentAtom.getFormalCharge() == -1) {
-		//// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
-	    int counterOfPi = 0;
-            for(int n = 0; n < atoms.size(); n++) {
-		Atom atom = (Atom) atoms.get(n);
-		if(ac.getMaximumBondOrder(atom) > 1.0) { counterOfPi ++; }
-	    }
-	    if(counterOfPi > 0) check = 0;
-        }  else { 
-		LonePair lp = new LonePair(currentAtom);
-		int se = ac.getSingleElectronSum(currentAtom);
-		if (se == 1) {
-			check = 0;  //// DETECTION of radicals
-		}
-		else if (lp.getElectronCount() > 0 && currentAtom.getSymbol().equals("N")) {
-			check = 0;  //// DETECTION of AMIDE-LIKE SYSTEMS, with delocalization of nitrogen lone pair
-		}
-		else {
-		    int singleBondCount = 0;
-		    int highOrderBondCount = 0;
-		    for (int j = 0; j < atoms.size(); j++) {
-			Atom atom = (Atom) atoms.get(j);
-			Bond bond = (Bond) bonds.get(j);
-			if (bond == null || bond.getOrder() > 1) {
-			    highOrderBondCount++;
-			} else {
-			    singleBondCount++;
+			//// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
+		    int counterOfPi = 0;
+	            for(int n = 0; n < atoms.size(); n++) {
+					Atom atom = (Atom) atoms.get(n);
+					if(ac.getMaximumBondOrder(atom) > 1.0) { counterOfPi ++; }
+	            }
+		    if(counterOfPi > 0) check = 0;
+        }else { 
+			int se = ac.getSingleElectronSum(currentAtom);
+			if (se == 1) {
+				check = 0;  //// DETECTION of radicals
+			}else if (ac.getLonePairCount(currentAtom) > 0 
+				/*&& (currentAtom.getSymbol().equals("N")*/) {
+				check = 0;  //// DETECTION of  lone pair
+			}else {
+			    int singleBondCount = 0;
+			    int highOrderBondCount = 0;
+			    for (int j = 0; j < atoms.size(); j++) {
+					Bond bond = (Bond) bonds.get(j);
+					if (bond == null || bond.getOrder() > 1) {
+					    highOrderBondCount++;
+					} else {
+					    singleBondCount++;
+					}
+			    }
+			    if (highOrderBondCount == 1) {
+			    	check = 0;
+			    } else if (highOrderBondCount > 1) {
+			    	check = 1;
+			    }
 			}
-		    }
-		    if (highOrderBondCount == 1) {
-			check = 0;
-		    } else if (highOrderBondCount > 1) {
-			check = 1;
-		    }
-		}
         }
         return check;
     }

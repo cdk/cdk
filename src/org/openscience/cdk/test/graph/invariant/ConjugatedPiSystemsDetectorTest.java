@@ -35,6 +35,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -42,9 +43,11 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
  * Checks the funcitonality of the ConjugatedPiSystemsCalculator
@@ -55,7 +58,6 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {
 	
     private LoggingTool logger;
-	private IMolecule mol;
     
 	public ConjugatedPiSystemsDetectorTest(String name)
 	{
@@ -70,7 +72,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	public void testDetectButadiene()
 	{
         logger.info("Entering testDetectButadiene.");
-        org.openscience.cdk.interfaces.IMolecule mol = null;
+        IMolecule mol = null;
 		try
 		{
 			String filename = "data/cml/butadiene.cml";
@@ -86,7 +88,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.IAtomContainer ac = acSet.getAtomContainer(0);
+        IAtomContainer ac = acSet.getAtomContainer(0);
         assertEquals(4, ac.getAtomCount());
         assertEquals(3, ac.getBondCount());
         
@@ -98,11 +100,15 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac.getBondAt(i)));
         }
 	}
-    
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
     public void testDetectNaphtalene()
 	{
         logger.info("Entering testDetectNaphtalene.");
-        org.openscience.cdk.interfaces.IMolecule mol = null;
+        IMolecule mol = null;
 		try
 		{
 			String filename = "data/cml/naphtalene.cml";
@@ -118,7 +124,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.IAtomContainer ac = acSet.getAtomContainer(0);
+        IAtomContainer ac = acSet.getAtomContainer(0);
         assertEquals(10, ac.getAtomCount());
         assertEquals(11, ac.getBondCount());
         
@@ -130,11 +136,15 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac.getBondAt(i)));
         }
 	}
-    
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
     public void testDetectToluene()
 	{
         logger.info("Entering testDetectToluene.");
-        org.openscience.cdk.interfaces.IMolecule mol = null;
+        IMolecule mol = null;
 		try
 		{
 			String filename = "data/cml/toluene.cml";
@@ -150,7 +160,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.IAtomContainer ac = acSet.getAtomContainer(0);
+        IAtomContainer ac = acSet.getAtomContainer(0);
         assertEquals(6, ac.getAtomCount());
         assertEquals(6, ac.getBondCount());
         
@@ -162,10 +172,15 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac.getBondAt(i)));
         }
 	}
-    
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
     public void testNonConnectedPiSystems()
 	{
         logger.info("Entering testNonConnectedPiSystems.");
+        IMolecule mol = null;
 		try
 		{
 			String filename = "data/mdl/nonConnectedPiSystems.mol";
@@ -183,7 +198,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.IAtomContainer ac1 = acSet.getAtomContainer(0);
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
         assertEquals(4, ac1.getAtomCount());
         assertEquals(3, ac1.getBondCount());
         
@@ -195,7 +210,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac1.getBondAt(i)));
         }
         
-        org.openscience.cdk.interfaces.IAtomContainer ac2 = acSet.getAtomContainer(1);
+        IAtomContainer ac2 = acSet.getAtomContainer(1);
         assertEquals(4, ac2.getAtomCount());
         assertEquals(3, ac2.getBondCount());
         
@@ -207,10 +222,15 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac2.getBondAt(i)));
         }
 	}
-    
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
     public void testPiSystemWithCarbokation()
 	{
         logger.info("Entering testPiSystemWithCarbokation.");
+        IMolecule mol = null;
 		try
 		{
 			String filename = "data/mdl/piSystemWithCarbokation.mol";
@@ -229,7 +249,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.IAtomContainer ac1 = acSet.getAtomContainer(0);
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
         assertEquals(9, ac1.getAtomCount());
         assertEquals(8, ac1.getBondCount());
         
@@ -242,10 +262,15 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         }
         
 	}
-    
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
     public void testPiSystemWithCumulativeDB()
 	{
         logger.info("Entering testPiSystemWithCumulativeDB.");
+        IMolecule mol = null;
 		try
 		{
 			String filename = "data/mdl/piSystemCumulative.mol";
@@ -264,7 +289,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
-        org.openscience.cdk.interfaces.IAtomContainer ac1 = acSet.getAtomContainer(0);
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
         assertEquals(4, ac1.getAtomCount());
         assertEquals(3, ac1.getBondCount());
         
@@ -276,7 +301,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertTrue(mol.contains(ac1.getBondAt(i)));
         }
         
-        org.openscience.cdk.interfaces.IAtomContainer ac2 = acSet.getAtomContainer(0);
+        IAtomContainer ac2 = acSet.getAtomContainer(0);
         assertEquals(4, ac2.getAtomCount());
         assertEquals(3, ac2.getBondCount());
         
@@ -289,7 +314,187 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         }
         
 	}
-    
+
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+    public void testAceticAcid()
+	{
+    	IMolecule mol = null;
+		try
+		{
+			mol = (new SmilesParser()).parseSmiles("CC(=O)O");
+            HydrogenAdder adder = new HydrogenAdder();
+            adder.addImplicitHydrogensToSatisfyValency(mol);
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            lpcheck.newSaturate(mol);
+			HueckelAromaticityDetector.detectAromaticity(mol);
+		} catch (Exception exc)
+		{
+			logger.debug(exc);
+            fail("Error.");
+		}
+        
+        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        
+        assertEquals(1, acSet.getAtomContainerCount());
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
+        assertEquals(3, ac1.getAtomCount());
+        assertEquals(2, ac1.getBondCount());
+        
+        for (int i = 0; i < ac1.getAtomCount(); i++) {
+            assertTrue(mol.contains(ac1.getAtomAt(i)));
+        }
+        
+        for (int i = 0; i < ac1.getBondCount(); i++) {
+            assertTrue(mol.contains(ac1.getBondAt(i)));
+        }
+        
+	}
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+    public void testNN_dimethylaniline_cation ()
+	{
+    	IMolecule mol = null;
+		try
+		{
+			String filename = "data/mdl/NN_dimethylaniline.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
+            mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);  
+            for(int i =0;i<mol.getAtomCount();i++)
+				System.out.println(i+", "+mol.getAtomAt(i).getSymbol()+" "+mol.getAtomAt(i).getHydrogenCount());
+            
+//            mol.getAtomAt(6).setFormalCharge(1);
+            HydrogenAdder adder = new HydrogenAdder();
+            adder.addImplicitHydrogensToSatisfyValency(mol);
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            lpcheck.newSaturate(mol);
+			HueckelAromaticityDetector.detectAromaticity(mol);
+		} catch (Exception exc)
+		{
+			logger.debug(exc);
+            fail("Error.");
+		}
+        
+        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        
+        assertEquals(1, acSet.getAtomContainerCount());
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
+        assertEquals(6, ac1.getAtomCount());
+        assertEquals(5, ac1.getBondCount());
+        
+        
+        
+	}
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+    public void test1_fluorobutadienene()
+	{
+    	IMolecule mol = null;
+		try
+		{
+			mol = (new SmilesParser()).parseSmiles("FC=CC=C");
+            HydrogenAdder adder = new HydrogenAdder();
+            adder.addImplicitHydrogensToSatisfyValency(mol);
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            lpcheck.newSaturate(mol);
+			HueckelAromaticityDetector.detectAromaticity(mol);
+		} catch (Exception exc)
+		{
+			logger.debug(exc);
+            fail("Error.");
+		}
+        
+        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        
+        assertEquals(1, acSet.getAtomContainerCount());
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
+        assertEquals(5, ac1.getAtomCount());
+        assertEquals(4, ac1.getBondCount());
+        
+        
+        
+	}
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+    public void testEthyne_difluoro()
+	{
+    	IMolecule mol = null;
+		try
+		{
+			mol = (new SmilesParser()).parseSmiles("FC#CF");
+            HydrogenAdder adder = new HydrogenAdder();
+            adder.addImplicitHydrogensToSatisfyValency(mol);
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            lpcheck.newSaturate(mol);
+			HueckelAromaticityDetector.detectAromaticity(mol);
+		} catch (Exception exc)
+		{
+			logger.debug(exc);
+            fail("Error.");
+		}
+        
+        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        
+        assertEquals(1, acSet.getAtomContainerCount());
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
+        assertEquals(4, ac1.getAtomCount());
+        assertEquals(3, ac1.getBondCount());
+        
+        
+        
+	}
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+    public void test3Aminomethane_cation()
+	{
+    	IMolecule mol = null;
+		try
+		{
+			mol = (new SmilesParser()).parseSmiles("CN(C)C(N(C)C)N(C)C");
+			mol.getAtomAt(3).setFormalCharge(+1);
+            HydrogenAdder adder = new HydrogenAdder();
+            adder.addImplicitHydrogensToSatisfyValency(mol);
+			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            lpcheck.newSaturate(mol);
+			HueckelAromaticityDetector.detectAromaticity(mol);
+		} catch (Exception exc)
+		{
+			logger.debug(exc);
+            fail("Error.");
+		}
+        
+        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        
+        assertEquals(1, acSet.getAtomContainerCount());
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
+        assertEquals(4, ac1.getAtomCount());
+        assertEquals(3, ac1.getBondCount());
+        
+        
+        
+	}
+    /**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
     private IMolecule readCMLMolecule(String filename) {
     	IMolecule mol = null;
         try {
@@ -320,4 +525,5 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         return mol;
     	
     }
+    
 }
