@@ -45,7 +45,6 @@ import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.charges.InductivePartialChargesTest;
 import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
-import org.openscience.cdk.test.debug.DebugDataClassesTests;
 import org.openscience.cdk.test.dict.DictDBTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.RDFCalculatorTest;
