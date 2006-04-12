@@ -1,0 +1,129 @@
+#!/usr/bin/bsh
+
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.alg.*;
+import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.traverse.*;
+import java.io.*;
+import java.util.*;
+
+// get the dependency files
+File depDir = new File("src/META-INF");
+File[] depFiles = depDir.listFiles(
+  new FilenameFilter() {
+    boolean accept(File dir, String name) {
+      if (name.endsWith(".cdkdepends")) { return true; }
+      if (name.endsWith(".libdepends")) { return true; }
+      return false; // otherwise
+    }
+  }
+);
+
+// read the dependency files
+DefaultDirectedGraph graph = new DefaultDirectedGraph();
+Vector libModules = new Vector();
+for (int i=0; i<depFiles.length; i++) {
+  String filename = depFiles[i].getName();
+  String module = filename;
+  boolean isLibDep = false;
+  if (filename.endsWith(".cdkdepends")) 
+    module =  filename.substring(0,filename.indexOf(".cdkdepends"));
+  if (filename.endsWith(".libdepends")) {
+    module =  filename.substring(0,filename.indexOf(".libdepends"));
+    isLibDep = true;
+  }
+  if (!graph.containsVertex(module)) graph.addVertex(module);
+  BufferedReader reader = new BufferedReader(new FileReader(depFiles[i]));
+  String line = reader.readLine();
+  while (line != null) {
+    line = line.trim();
+    if (line.length() > 0) {
+      if (line.startsWith("cdk-")) line = line.substring(4);
+      if (line.endsWith(".jar")) line = line.substring(0,line.indexOf(".jar"));
+      if (!graph.containsVertex(line)) {
+        graph.addVertex(line);
+        if (isLibDep) {
+          libModules.add(line);
+        }
+      }
+      graph.addEdge(module, line);
+      // System.out.println(module + " depends on " + line);
+    }
+    line = reader.readLine();
+  }
+}
+
+// Now remove direct depdencies if they exist as indirect ones too
+DefaultDirectedGraph output = graph.clone();
+Set nodeSet = graph.vertexSet();
+Iterator iter = nodeSet.iterator();
+while (iter.hasNext()) {
+  Object vertex = iter.next();
+  Iterator deps = graph.outgoingEdgesOf(vertex).iterator();
+  while (deps.hasNext()) {
+    Object target = ((Edge)deps.next()).getTarget();
+    // now check if there is a parent that connects to this target
+    boolean longerPathFound = false;
+    Iterator deps2 = graph.outgoingEdgesOf(vertex).iterator();
+    while (deps2.hasNext() && !longerPathFound) {
+      Object target2 = ((Edge)deps2.next()).getTarget();
+      BreadthFirstIterator iter = new BreadthFirstIterator(graph, target2);
+      while (iter.hasNext() && !longerPathFound) {
+        Object depOfTarget = iter.next();
+        if (!depOfTarget.equals(target2)) {
+          if (depOfTarget.equals(target)) {
+            output.removeEdge(vertex, target);
+            longerPathFound = true;
+          }
+        }
+      }
+    }
+  }
+}
+
+class Sanatizer {
+  public static clean(String string) {
+    StringBuffer cleaned = new StringBuffer();
+    for (int i=0; i<string.length(); i++) {
+      if (string.charAt(i) == '-') {
+        cleaned.append('_');
+      } else if (string.charAt(i) == '.') {
+        cleaned.append('_');
+      } else if (string.charAt(i) == '*') {
+        cleaned.append('_');
+      } else {
+        cleaned.append(string.charAt(i));
+      }
+    }
+    return cleaned.toString();
+  }
+}
+
+// Now create the dot file
+System.out.println("digraph D {");
+Iterator iter = output.vertexSet().iterator();
+while (iter.hasNext()) {
+  Object vertex = iter.next();
+  if (libModules.contains(vertex)) {
+    System.out.println("    " + Sanatizer.clean(vertex) + " [shape=box];");
+  } else { // a CDK module
+    if (vertex.startsWith("test")) {
+      System.out.println("    " + Sanatizer.clean(vertex) + 
+        " [style=filled,color=lightblue];");
+    } else if (vertex.startsWith("jchempaint")) {
+      System.out.println("    " + Sanatizer.clean(vertex) + 
+        " [style=filled,color=darkseagreen3];");
+    } else {
+      System.out.println("    " + Sanatizer.clean(vertex) + 
+        " [style=filled,color=gray];");
+    }
+  }
+  
+  Iterator deps = output.outgoingEdgesOf(vertex).iterator();
+  while (deps.hasNext()) {
+    Object target = ((Edge)deps.next()).getTarget();
+    System.out.println("    " + Sanatizer.clean(target) + 
+                       " -> " + Sanatizer.clean(vertex) + ";");
+  }
+}
+System.out.println("}");
