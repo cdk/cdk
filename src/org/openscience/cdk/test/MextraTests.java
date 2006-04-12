@@ -86,12 +86,6 @@ public class MextraTests {
     {
         TestSuite suite= new TestSuite("All CDK Tests");
 
-        // Tests for data classes
-        suite.addTest(DebugDataClassesTests.suite());
-        
-        // Package Test Suites
-        suite.addTest(MioTests.suite());
-        
         // Individual Tests
         // from cdk.test.applications
         // from cdk.test.aromaticity
