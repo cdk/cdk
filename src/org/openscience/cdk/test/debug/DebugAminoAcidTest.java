@@ -28,14 +28,14 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.MonomerTest;
+import org.openscience.cdk.test.AminoAcidTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-extra
  */
-public class DebugAminoAcidTest extends MonomerTest {
+public class DebugAminoAcidTest extends AminoAcidTest {
 
     public DebugAminoAcidTest(String name) {
         super(name);
