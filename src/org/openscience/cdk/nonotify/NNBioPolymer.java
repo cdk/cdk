@@ -31,7 +31,7 @@ import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * @cdk.module  data
+ * @cdk.module  nonotify
  */
 public class NNBioPolymer extends BioPolymer {
 

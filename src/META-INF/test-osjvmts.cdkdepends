@@ -2,7 +2,7 @@ cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
-cdk-data-debug.jar
+cdk-datadebug.jar
 cdk-io.jar
 cdk-experimental.jar
 cdk-extra.jar
@@ -18,3 +18,4 @@ cdk-test-core.jar
 cdk-test-standard.jar
 cdk-test-extra.jar
 cdk-test-io.jar
+cdk-test-datadebug.jar

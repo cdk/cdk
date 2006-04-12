@@ -1,5 +1,6 @@
 cdk-interfaces.jar
 cdk-core.jar
 cdk-data.jar
-cdk-test-core.jar
 cdk-datadebug.jar
+cdk-test-core.jar
+cdk-test-data.jar

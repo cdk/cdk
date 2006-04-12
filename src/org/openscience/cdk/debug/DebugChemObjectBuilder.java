@@ -61,7 +61,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * A helper class to instantiate a IChemObject for the debug implementation.
  *
  * @author        egonw
- * @cdk.module    data-debug
+ * @cdk.module    datadebug
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
