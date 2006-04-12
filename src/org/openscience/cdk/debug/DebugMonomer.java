@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Debugging data class.
  * 
  * @author     egonw
- * @cdk.module data-debug
+ * @cdk.module datadebug
  */
 public class DebugMonomer extends org.openscience.cdk.Monomer
     implements IMonomer {

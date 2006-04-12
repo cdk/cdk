@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Debugging data class.
  * 
  * @author     egonw
- * @cdk.module data-debug
+ * @cdk.module datadebug
  */
 public class DebugRing extends org.openscience.cdk.Ring
     implements IRing {

@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Debugging data class.
  * 
  * @author     egonw
- * @cdk.module data-debug
+ * @cdk.module datadebug
  */
 public class DebugLonePair extends org.openscience.cdk.LonePair
     implements ILonePair {

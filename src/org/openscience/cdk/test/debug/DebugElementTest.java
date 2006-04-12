@@ -33,7 +33,7 @@ import org.openscience.cdk.test.ElementTest;
 /**
  * Checks the funcitonality of DebugElement.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugElementTest extends ElementTest {
 

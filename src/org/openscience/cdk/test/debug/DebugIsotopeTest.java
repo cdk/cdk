@@ -33,7 +33,7 @@ import org.openscience.cdk.test.IsotopeTest;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugIsotopeTest extends IsotopeTest {
 

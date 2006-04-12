@@ -33,7 +33,7 @@ import org.openscience.cdk.test.RingSetTest;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugRingSetTest extends RingSetTest {
 

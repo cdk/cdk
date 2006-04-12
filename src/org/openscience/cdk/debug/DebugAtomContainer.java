@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Debugging data class.
  * 
  * @author     egonw
- * @cdk.module data-debug
+ * @cdk.module datadebug
  */
 public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
     implements IAtomContainer {

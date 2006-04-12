@@ -33,7 +33,7 @@ import org.openscience.cdk.test.ChemFileTest;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugChemFileTest extends ChemFileTest {
 

@@ -33,7 +33,7 @@ import org.openscience.cdk.test.ElectronContainerTest;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugElectronContainerTest extends ElectronContainerTest {
 

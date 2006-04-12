@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Debugging data class.
  * 
  * @author     egonw
- * @cdk.module data-debug
+ * @cdk.module datadebug
  */
 public class DebugBond extends org.openscience.cdk.Bond
     implements IBond {

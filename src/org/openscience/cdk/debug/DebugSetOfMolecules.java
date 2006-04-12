@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Debugging data class.
  * 
  * @author     egonw
- * @cdk.module data-debug
+ * @cdk.module datadebug
  */
 public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
     implements ISetOfMolecules {

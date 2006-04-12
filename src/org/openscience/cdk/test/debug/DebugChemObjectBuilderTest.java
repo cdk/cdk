@@ -35,7 +35,7 @@ import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
 /**
  * Checks the functionality of the Crystal.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugChemObjectBuilderTest extends DefaultChemObjectBuilderTest {
 

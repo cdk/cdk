@@ -33,7 +33,7 @@ import org.openscience.cdk.test.PseudoAtomTest;
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugPseudoAtomTest extends PseudoAtomTest {
 

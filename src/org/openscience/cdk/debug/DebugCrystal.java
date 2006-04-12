@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Debugging data class.
  * 
  * @author     egonw
- * @cdk.module data-debug
+ * @cdk.module datadebug
  */
 public class DebugCrystal extends org.openscience.cdk.Crystal
     implements ICrystal {

@@ -33,7 +33,7 @@ import org.openscience.cdk.test.AminoAcidTest;
 /**
  * Checks the functionality of the AtomContainer.
  *
- * @cdk.module test-extra
+ * @cdk.module test-datadebug
  */
 public class DebugAminoAcidTest extends AminoAcidTest {
 
