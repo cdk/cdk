@@ -9,11 +9,8 @@ cdk-extra.jar
 cdk-libio-cml.jar
 cdk-pdb.jar
 cdk-render.jar
-cdk-swing.jar
 cdk-builder3d.jar
 cdk-reaction.jar
 cdk-qsar.jar
 cdk-qsar-pdb.jar
 cdk-test-core.jar
-cdk-test-data.jar
-cdk-test-io.jar

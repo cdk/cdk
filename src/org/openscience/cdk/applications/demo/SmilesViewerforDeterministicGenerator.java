@@ -50,7 +50,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.module  swing
+ * @cdk.module  applications
  * @cdk.require swing
  */
 public class SmilesViewerforDeterministicGenerator extends JApplet implements ActionListener{

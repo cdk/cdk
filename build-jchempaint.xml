@@ -81,7 +81,7 @@
                 <includesfile name="${metainf}/qsar.libdepends"/>
                 <includesfile name="${metainf}/render.libdepends"/>
                 <includesfile name="${metainf}/standard.libdepends"/>
-                <includesfile name="${metainf}/swing.libdepends"/>
+                <includesfile name="${metainf}/svg.libdepends"/>
                 <includesfile name="${metainf}/jchempaint.libdepends"/>
             </fileset>
         </unjar>
@@ -100,7 +100,7 @@
                 <includesfile name="${metainf}/qsar.libdepends"/>
                 <includesfile name="${metainf}/render.libdepends"/>
                 <includesfile name="${metainf}/standard.libdepends"/>
-                <includesfile name="${metainf}/swing.libdepends"/>
+                <includesfile name="${metainf}/svg.libdepends"/>
                 <includesfile name="${metainf}/jchempaint.libdepends"/>
             </fileset>
 	 </unjar>

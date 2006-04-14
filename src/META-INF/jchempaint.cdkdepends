@@ -8,5 +8,5 @@ cdk-io.jar
 cdk-libio-cml.jar
 cdk-render.jar
 cdk-standard.jar
-cdk-swing.jar
-
+cdk-svg.jar
+cdk-nonotify.jar

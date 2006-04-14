@@ -18,4 +18,5 @@ cdk-test-core.jar
 cdk-test-standard.jar
 cdk-test-extra.jar
 cdk-test-io.jar
+cdk-test-data.jar
 cdk-test-datadebug.jar
