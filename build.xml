@@ -603,8 +603,9 @@
             <antcall target="compile-module"><param name="module" value="qsar-cml"/></antcall>
     		<antcall target="compile-module"><param name="module" value="qsar-pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
-            <antcall target="compile-module"><param name="module" value="applications"/></antcall>
             <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
+            <antcall target="compile-module"><param name="module" value="svg"/></antcall>
+	        <antcall target="compile-module"><param name="module" value="applications"/></antcall>
         </target>
 
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
