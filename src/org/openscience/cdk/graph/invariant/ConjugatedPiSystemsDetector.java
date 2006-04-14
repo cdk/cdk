@@ -73,7 +73,6 @@ public class ConjugatedPiSystemsDetector {
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
-    @SuppressWarnings({"unchecked"})
 	public static SetOfAtomContainers detect(org.openscience.cdk.interfaces.IAtomContainer ac) {
         SetOfAtomContainers piSystemSet = new SetOfAtomContainers();
 
