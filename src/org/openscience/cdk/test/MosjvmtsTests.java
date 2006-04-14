@@ -69,7 +69,8 @@ public class MosjvmtsTests {
         
         if ("I".equals(benchmark)){
         	// Bench Mark I tests
-        	suite.addTest(DataClassesTests.suite());
+        	suite.addTest(MdataTests.suite());
+        	suite.addTest(MdatadebugTests.suite());
         } else if ("II".equals(benchmark)){
         	// Bench Mark II tests
         	suite.addTest(McoreTests.suite());
@@ -77,9 +78,6 @@ public class MosjvmtsTests {
 //        	 Bench Mark III tests
         	suite.addTest(MstandardTests.suite());
         } else if ("skip".equals(benchmark)){
-        	// Tests for data classes
-        	suite.addTest(MdatadebugTests.suite());
-        
         	// Package Test Suites
         	suite.addTest(MioTests.suite());
         	
