@@ -2013,8 +2013,10 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			for (int i = 0; i < atoms.length; i++)
 			{
 				IAtom atom = atoms[i];
+				atom.setNotification(false);
 				atom.setX2d(atom.getX2d() + deltaX);
 				atom.setY2d(atom.getY2d() + deltaY);
+				atom.setNotification(true);
 			}
 			r2dm.getSelectedPart().notifyChanged();
 		}

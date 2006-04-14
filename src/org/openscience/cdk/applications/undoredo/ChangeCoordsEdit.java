@@ -64,7 +64,9 @@ public class ChangeCoordsEdit extends AbstractUndoableEdit {
         while (it.hasNext()) {
             IAtom atom = (IAtom) it.next();
             Point2d[] coords = (Point2d[]) atomCoordsMap.get(atom);
+            atom.setNotification(false);
             atom.setPoint2d(coords[0]);
+            atom.setNotification(true);
         }
         // if (jcpPanel != null) {
         //    jcpPanel.scaleAndCenterMolecule(jcpPanel.getChemModel());

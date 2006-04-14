@@ -43,9 +43,11 @@ import org.openscience.cdk.applications.jchempaint.DrawingPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.CleanUpEdit;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.layout.TemplateHandler;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 
@@ -105,10 +107,10 @@ public class CleanupAction extends JCPAction
 				for (int i = 0; i < mols.length; i++)
 				{
                     IMolecule molecule = mols[i];
-                     IMolecule cleanedMol = relayoutMolecule(mols[i]);
+                    IMolecule cleanedMol = relayoutMolecule(mols[i]);
 					newsom.addMolecule(cleanedMol);
-                    org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
-					org.openscience.cdk.interfaces.IAtom[] newAtoms = cleanedMol.getAtoms();
+                    IAtom[] atoms = molecule.getAtoms();
+					IAtom[] newAtoms = cleanedMol.getAtoms();
                     for (int j=0; j<atoms.length; j++) {
                         Point2d oldCoord = atoms[j].getPoint2d();
                         Point2d newCoord = newAtoms[j].getPoint2d();
@@ -169,22 +171,25 @@ public class CleanupAction extends JCPAction
 	private IMolecule relayoutMolecule(IMolecule molecule)
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		IMolecule cleanedMol = molecule;
+		IMolecule cleanedMol = null;
        if (molecule != null)
 		{
-			if (molecule.getAtomCount() > 2)
-			{
-				try
-				{
+			if (molecule.getAtomCount() > 2) {
+				try {
 			    	Point2d centre = GeometryTools.get2DCentreOfMass(molecule);
-					diagramGenerator.setMolecule(molecule);
+					// since we will copy the coordinates later anyway, let's use
+					// a NonNotifying data class
+					diagramGenerator.setMolecule(
+						NoNotificationChemObjectBuilder.getInstance().
+							newMolecule(molecule)
+					);
 					diagramGenerator.generateExperimentalCoordinates(new Vector2d(0, 1));
 					cleanedMol = diagramGenerator.getMolecule();
                     /*
 					 *  make the molecule end up somewhere reasonable
 					 *  See constructor of JCPPanel
 					 */
-					Thread.sleep(5000);
+					// Thread.sleep(5000);
 					GeometryTools.translateAllPositive(cleanedMol);
 					double scaleFactor = GeometryTools.getScaleFactor(cleanedMol, jcpmodel.getRendererModel().getBondLength());
 					GeometryTools.scaleMolecule(cleanedMol, scaleFactor);
