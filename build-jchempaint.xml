@@ -125,7 +125,7 @@
                 <include name="cdk-qsar.jar"/>
                 <include name="cdk-render.jar"/>
                 <include name="cdk-standard.jar"/>
-                <include name="cdk-swing.jar"/>
+                <include name="cdk-svg.jar"/>
                 <include name="cdk-jchempaint.jar"/>
                 <include name="cdk-jchempaint.application.jar"/>
                 <include name="cdk-jchempaint.applet.jar"/>
