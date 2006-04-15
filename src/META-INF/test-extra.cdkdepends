@@ -12,4 +12,5 @@ cdk-builder3d.jar
 cdk-reaction.jar
 cdk-qsar.jar
 cdk-qsar-pdb.jar
+cdk-applications.jar
 cdk-test-core.jar
