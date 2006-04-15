@@ -82,6 +82,8 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  * </pre>
  *
  * @cdk.keyword    hydrogen, adding
+ * 
+ * @cdk.module     valencycheck
  */
 public class HydrogenAdder {
 

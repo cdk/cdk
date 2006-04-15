@@ -36,8 +36,10 @@ import org.openscience.cdk.exception.CDKException;
  * A common interface for SaturationChecker and ValencyChecker. Mainly created
  * to be able to have HydrogenAdder use both.
  *
- * @author     Egon Willighagen
+ * @author         Egon Willighagen
  * @cdk.created    2004-01-08
+ * 
+ * @cdk.module     valencycheck
  */
 public interface IValencyChecker {
 

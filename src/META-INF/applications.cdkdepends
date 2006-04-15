@@ -1,6 +1,7 @@
 cdk-core.jar
 cdk-data.jar
 cdk-experimental.jar
+cdk-valencycheck.jar
 cdk-extra.jar
 cdk-io.jar
 cdk-interfaces.jar

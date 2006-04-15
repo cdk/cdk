@@ -5,4 +5,5 @@ cdk-interfaces.jar
 cdk-io.jar
 cdk-pdb.jar
 cdk-standard.jar
+cdk-valencycheck.jar
 

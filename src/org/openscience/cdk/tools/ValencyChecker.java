@@ -52,6 +52,8 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.created    2004-01-07
  *
  * @cdk.keyword    atom, valency
+ * 
+ * @cdk.module     valencycheck
  */
 public class ValencyChecker implements IValencyChecker {
 

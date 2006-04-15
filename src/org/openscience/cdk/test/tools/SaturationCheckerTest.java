@@ -35,7 +35,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-valencycheck
  *
  * @author     steinbeck
  * @cdk.created    2003-02-20

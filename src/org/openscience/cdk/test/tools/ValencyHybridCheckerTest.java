@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-valencycheck
  *
  * @author      Egon Willighagen
  * @cdk.created 2004-06-12

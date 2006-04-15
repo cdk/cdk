@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  * Tests CDK's hydrogen adding capabilities in terms of
  * example molecules.
  *
- * @cdk.module test-extra
+ * @cdk.module test-valencycheck
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2004-06-13

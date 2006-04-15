@@ -13,4 +13,5 @@ cdk-reaction.jar
 cdk-qsar.jar
 cdk-qsar-pdb.jar
 cdk-applications.jar
+cdk-valencycheck.jar
 cdk-test-core.jar
