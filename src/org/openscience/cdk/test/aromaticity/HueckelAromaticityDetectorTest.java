@@ -35,7 +35,6 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -580,8 +579,6 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			fail(exc.toString());
 		}
 		
-		if (standAlone) MoleculeViewer2D.display(molecule, true);
-
 	}
 
 	/**
