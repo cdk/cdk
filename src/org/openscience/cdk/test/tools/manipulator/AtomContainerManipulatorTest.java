@@ -29,13 +29,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -60,9 +59,22 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     public void testGetTotalHydrogenCount() throws IOException, ClassNotFoundException, CDKException {
-        Molecule mol = MoleculeFactory.makeAlphaPinene();
-        new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
-        assertEquals(16, AtomContainerManipulator.getTotalHydrogenCount(mol));
+        Molecule mol = new Molecule(); // ethene
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addBond(0,1,2);
+        mol.addBond(0,2,1);
+        mol.addBond(0,3,1);
+        mol.addBond(1,4,1);
+        mol.addBond(1,5,1);
+        assertEquals(6, mol.getAtomCount());
+        assertEquals(5, mol.getBondCount());
+        System.out.println(mol);
+        assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
         
     public void testGetTotalHydrogenCount_ImplicitHydrogens() throws Exception {
@@ -73,18 +85,24 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertEquals(4, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
         
-    public void testGetTotalHydrogenCount_ExplicitHydrogens() throws Exception {
-        SmilesParser parser = new SmilesParser();
-        Molecule mol = parser.parseSmiles("[H]C([H])([H])[H]");
-        assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
-    }
-    
     public void testRemoveHydrogens() throws IOException, ClassNotFoundException, CDKException{
-        Molecule mol=MoleculeFactory.makeAlphaPinene();
+        Molecule mol = new Molecule(); // ethene
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addBond(0,1,2);
+        mol.addBond(0,2,1);
+        mol.addBond(0,3,1);
+        mol.addBond(1,4,2);
+        mol.addBond(1,5,2);
         mol.setFlag(5,true);
-        new HydrogenAdder().addHydrogensToSatisfyValency(mol);
-        IAtomContainer ac=AtomContainerManipulator.removeHydrogens((IAtomContainer)mol);
-        assertEquals(10, ac.getAtomCount());
+        
+        assertEquals(6, mol.getAtomCount());
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
+        assertEquals(2, ac.getAtomCount());
         assertTrue(ac.getFlag(5));
     }
 
