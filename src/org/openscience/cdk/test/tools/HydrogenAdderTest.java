@@ -36,7 +36,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -47,7 +46,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * Tests CDK's hydrogen adding capabilities in terms of
  * example molecules.
  *
- * @cdk.module test-extra
+ * @cdk.module test-valencycheck
  *
  * @author     egonw
  * @cdk.created    2003-06-18
@@ -55,11 +54,9 @@ import org.openscience.cdk.tools.SaturationChecker;
 public class HydrogenAdderTest extends CDKTestCase {
 
     protected HydrogenAdder adder = null;
-    private boolean standalone = false;
 
     public HydrogenAdderTest(String name) {
         super(name);
-        standalone = false;
     }
 
     /**
@@ -158,10 +155,8 @@ public class HydrogenAdderTest extends CDKTestCase {
             fail();
         }	
 
-	assertEquals(7, aminomethane.getAtomCount());
+        assertEquals(7, aminomethane.getAtomCount());
 	
-        if (standalone) MoleculeViewer2D.display(aminomethane, false);
-        // check that previously set coordinates are kept
     }    
 
     public void testAmmonia() {
@@ -441,9 +436,6 @@ public class HydrogenAdderTest extends CDKTestCase {
             fail();	
         }
         MFAnalyser mfa = new MFAnalyser(mol);
-        if (standalone) {
-            MoleculeViewer2D.display(mol, true);
-        }
         assertEquals(6, mfa.getAtomCount("H"));
     }
     
@@ -459,9 +451,6 @@ public class HydrogenAdderTest extends CDKTestCase {
             exc.printStackTrace();
             fail();
         } 
-        if (standalone) {
-            MoleculeViewer2D.display(molecule, true);
-        }
     }
     
     /**
@@ -491,18 +480,5 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(0, oxygen.getHydrogenCount());
     }
 
-    /**
-     * The main program for the HydrogenAdderTest class
-     *
-     * @param  args  The command line arguments
-     */
-    public static void main(String[] args)
-    {
-        HydrogenAdderTest test = new HydrogenAdderTest("HydrogenAdderTest");
-        test.standalone = true;
-        test.setUp();
-	test.testAminomethane();
-    }
-    
 }
 
