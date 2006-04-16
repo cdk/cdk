@@ -3,6 +3,7 @@ cdk-core.jar
 cdk-data.jar
 cdk-extra.jar
 cdk-experimental.jar
+cdk-valencycheck.jar
 cdk-interfaces.jar
 cdk-io.jar
 cdk-libio-cml.jar
