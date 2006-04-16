@@ -218,7 +218,7 @@ double[] result = {
 		{
 			String filename = "data/mdl/BremserPredictionTest.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (Molecule)reader.read((ChemObject)new Molecule());
 			double prediction;
 			BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();

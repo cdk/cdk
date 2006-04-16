@@ -28,7 +28,6 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 
 import junit.framework.Test;
@@ -69,7 +68,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);
@@ -107,7 +106,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -122,7 +121,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             Molecule mol = (Molecule)reader.read(new Molecule());
             assertEquals("a-pinen.mol", mol.getProperty(CDKConstants.TITLE));
         } catch (Exception exception) {
@@ -136,7 +135,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -152,7 +151,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -168,7 +167,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -184,7 +183,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -199,7 +198,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -215,7 +214,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -231,7 +230,7 @@ public class MDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
             assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
@@ -245,7 +244,7 @@ public class MDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/superspiro.mol"; // just a random file
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             Molecule superspiro = new Molecule();
             superspiro.setID("superspiro");
             Molecule result = (Molecule)reader.read(superspiro);

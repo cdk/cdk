@@ -105,7 +105,7 @@ public class OverlapResolverTest extends CDKTestCase
 		{
 			String filename = "data/cml/overlaptest.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			CMLReader reader = new CMLReader(new InputStreamReader(ins));
+			CMLReader reader = new CMLReader(ins);
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.IChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
@@ -140,7 +140,7 @@ public class OverlapResolverTest extends CDKTestCase
 		{
 			String filename = "data/cml/overlaptest2.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			CMLReader reader = new CMLReader(new InputStreamReader(ins));
+			CMLReader reader = new CMLReader(ins);
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.IChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
@@ -168,7 +168,7 @@ public class OverlapResolverTest extends CDKTestCase
 		{
 			String filename = "data/cml/overlaptest3.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			CMLReader reader = new CMLReader(new InputStreamReader(ins));
+			CMLReader reader = new CMLReader(ins);
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.IChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();
@@ -197,7 +197,7 @@ public class OverlapResolverTest extends CDKTestCase
 		{
 			String filename = "data/cml/overlaptest.cml";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			CMLReader reader = new CMLReader(new InputStreamReader(ins));
+			CMLReader reader = new CMLReader(ins);
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 			org.openscience.cdk.interfaces.IChemSequence[] chemSequence = chemFile.getChemSequences();
 			org.openscience.cdk.interfaces.IChemModel[] chemModels = chemSequence[0].getChemModels();

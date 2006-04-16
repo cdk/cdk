@@ -69,7 +69,7 @@ public class INChIPlainTextReaderTest extends CDKTestCase {
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            INChIPlainTextReader reader = new INChIPlainTextReader(new InputStreamReader(ins));
+            INChIPlainTextReader reader = new INChIPlainTextReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);

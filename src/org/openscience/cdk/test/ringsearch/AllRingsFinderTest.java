@@ -123,7 +123,7 @@ public class AllRingsFinderTest extends CDKTestCase
         String filename = "data/cml/isolated_ringsystems.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
-		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
+		    CMLReader reader = new CMLReader(ins);
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
@@ -155,7 +155,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		//String filename = "data/NCI_diversity_978.mol.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
-		    CMLReader reader = new CMLReader(new InputStreamReader(ins));
+		    CMLReader reader = new CMLReader(ins);
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);

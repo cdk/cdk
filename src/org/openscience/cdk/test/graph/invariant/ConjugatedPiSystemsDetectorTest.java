@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.graph.invariant;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -185,7 +184,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/nonConnectedPiSystems.mol";
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
             mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
 			HueckelAromaticityDetector.detectAromaticity(mol);
@@ -235,7 +234,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/piSystemWithCarbokation.mol";
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
             mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);    
         
@@ -275,7 +274,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/piSystemCumulative.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
             mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);    
             
@@ -365,7 +364,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/NN_dimethylaniline.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
             mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);  
             for(int i =0;i<mol.getAtomCount();i++)

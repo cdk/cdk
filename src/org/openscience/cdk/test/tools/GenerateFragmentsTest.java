@@ -53,7 +53,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 	    	GenerateFragments gf=new GenerateFragments();
 	    	try {
-	        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+	        	MDLReader reader = new MDLReader(ins);
 	        	Molecule mol = (Molecule)reader.read(new Molecule());
 	        	gf.generateMurckoFragments(mol,true,true);
 	        	//System.out.println("Murcko Fragments generated");
@@ -74,7 +74,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
@@ -95,7 +95,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
@@ -120,7 +120,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
@@ -158,7 +158,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
@@ -178,7 +178,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
@@ -295,7 +295,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
@@ -321,7 +321,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");
@@ -408,7 +408,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,true,true);
         	//System.out.println("Murcko Fragments generated");

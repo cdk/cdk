@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.Gaussian98Reader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;

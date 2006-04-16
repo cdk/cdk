@@ -63,7 +63,7 @@ public class HINReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            HINReader reader = new HINReader(new InputStreamReader(ins));
+            HINReader reader = new HINReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);
@@ -92,7 +92,7 @@ public class HINReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            HINReader reader = new HINReader(new InputStreamReader(ins));
+            HINReader reader = new HINReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);
@@ -121,7 +121,7 @@ public class HINReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            HINReader reader = new HINReader(new InputStreamReader(ins));
+            HINReader reader = new HINReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);

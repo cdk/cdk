@@ -59,7 +59,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		// Read reaction1
 		String filename1 = "data/mdl/reaction-1.rxn";
 		InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
-		MDLRXNReader reader1 = new MDLRXNReader(new InputStreamReader(ins1));
+		MDLRXNReader reader1 = new MDLRXNReader(ins1);
 		try {
 			this.reaction1 = (Reaction)reader1.read(reaction1);
 		} catch (CDKException ex) {
@@ -69,7 +69,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		// Read reaction3
 		String filename3 = "data/mdl/reaction-3.rxn";
 		InputStream ins3 = this.getClass().getClassLoader().getResourceAsStream(filename3);
-		MDLRXNReader reader3 = new MDLRXNReader(new InputStreamReader(ins3));
+		MDLRXNReader reader3 = new MDLRXNReader(ins3);
 		try {
 			this.reaction3 = (Reaction)reader3.read(reaction3);
 		} catch (CDKException ex) {
@@ -79,7 +79,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		// Read reaction4
 		String filename4 = "data/mdl/reaction-4.rxn";
 		InputStream ins4 = this.getClass().getClassLoader().getResourceAsStream(filename4);
-		MDLRXNReader reader4 = new MDLRXNReader(new InputStreamReader(ins4));
+		MDLRXNReader reader4 = new MDLRXNReader(ins4);
 		try {
 			this.reaction4 = (Reaction)reader4.read(reaction4);
 		} catch (CDKException ex) {

@@ -899,13 +899,13 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/l-ala.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
 			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
 			new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 			filename = "data/mdl/d-ala.mol";
 			ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			reader = new MDLReader(new InputStreamReader(ins));
+			reader = new MDLReader(ins);
 			Molecule mol2 = (Molecule) reader.read(new Molecule());
 			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
 			new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
@@ -929,13 +929,13 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/D-mannose.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
 			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
 			new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 			filename = "data/mdl/D+-glucose.mol";
 			ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			reader = new MDLReader(new InputStreamReader(ins));
+			reader = new MDLReader(ins);
 			Molecule mol2 = (Molecule) reader.read(new Molecule());
 			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
 			new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
@@ -985,7 +985,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/cyclooctan.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
             SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
 			String moleculeSmile = sg.createSMILES(mol1);
@@ -1008,7 +1008,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/cycloocten.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
             SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
 			String moleculeSmile = sg.createSMILES(mol1);
@@ -1031,7 +1031,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/cyclooctadien.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
             SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
 			String moleculeSmile = sg.createSMILES(mol1);
@@ -1054,7 +1054,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/bug1089770-1.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
             SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
 			String moleculeSmile = sg.createSMILES(mol1);
@@ -1078,7 +1078,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/bug1089770-2.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
             SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
 			String moleculeSmile = sg.createSMILES(mol1);

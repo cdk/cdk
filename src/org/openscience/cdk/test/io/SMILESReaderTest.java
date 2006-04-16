@@ -61,7 +61,7 @@ public class SMILESReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
+            SMILESReader reader = new SMILESReader(ins);
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
             assertEquals(8, som.getMoleculeCount());
         } catch (Exception e) {
@@ -75,7 +75,7 @@ public class SMILESReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
+            SMILESReader reader = new SMILESReader(ins);
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
             String name = null;
             org.openscience.cdk.interfaces.IMolecule thisMol = null;
@@ -93,7 +93,7 @@ public class SMILESReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
+            SMILESReader reader = new SMILESReader(ins);
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
             org.openscience.cdk.interfaces.IMolecule thisMol = som.getMolecule(1);
             assertNull(thisMol.getProperty("SMIdbNAME"));
@@ -108,7 +108,7 @@ public class SMILESReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            SMILESReader reader = new SMILESReader(new InputStreamReader(ins));
+            SMILESReader reader = new SMILESReader(ins);
             SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
             assertEquals(5, som.getMoleculeCount());
         } catch (Exception e) {

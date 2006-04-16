@@ -128,7 +128,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
                 String filename = "data/mdl/reserpine.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		try {
-		    MDLReader reader = new MDLReader(new InputStreamReader(ins));
+		    MDLReader reader = new MDLReader(ins);
 		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);

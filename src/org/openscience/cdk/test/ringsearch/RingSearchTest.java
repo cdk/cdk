@@ -24,7 +24,6 @@
 package org.openscience.cdk.test.ringsearch;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -144,7 +143,7 @@ public class RingSearchTest extends CDKTestCase
 		{
 			String filename = "data/mdl/figueras-test-sep3D.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
@@ -175,7 +174,7 @@ public class RingSearchTest extends CDKTestCase
 		{
 			String filename = "data/mdl/figueras-test-buried.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
@@ -206,7 +205,7 @@ public class RingSearchTest extends CDKTestCase
 		{
 			String filename = "data/mdl/figueras-test-inring.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			
@@ -230,7 +229,7 @@ public class RingSearchTest extends CDKTestCase
 		try {
 			String filename = "data/mdl/too.many.rings.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 			if (standAlone) System.out.println("Testing " + filename);
 			

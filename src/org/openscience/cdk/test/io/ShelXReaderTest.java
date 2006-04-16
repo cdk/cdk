@@ -60,7 +60,7 @@ public class ShelXReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            ShelXReader reader = new ShelXReader(new InputStreamReader(ins));
+            ShelXReader reader = new ShelXReader(ins);
             Crystal crystal = (Crystal)reader.read(new Crystal());
             assertNotNull(crystal);
             assertEquals(42, crystal.getAtomCount());

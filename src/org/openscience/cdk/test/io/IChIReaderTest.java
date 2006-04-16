@@ -68,7 +68,7 @@ public class IChIReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IChIReader reader = new IChIReader(new InputStreamReader(ins));
+            IChIReader reader = new IChIReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);
@@ -100,7 +100,7 @@ public class IChIReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IChIReader reader = new IChIReader(new InputStreamReader(ins));
+            IChIReader reader = new IChIReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);

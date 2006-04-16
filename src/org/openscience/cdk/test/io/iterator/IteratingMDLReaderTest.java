@@ -172,7 +172,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            IteratingMDLReader reader = new IteratingMDLReader(new InputStreamReader(ins), DefaultChemObjectBuilder.getInstance());
+            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
             
             int molCount = 0;
             assertFalse(reader.hasNext());

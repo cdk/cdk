@@ -65,7 +65,7 @@ public class MDLRXNReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         try {
-            MDLRXNReader reader1 = new MDLRXNReader(new InputStreamReader(ins1));
+            MDLRXNReader reader1 = new MDLRXNReader(ins1);
             Reaction reaction1 = new Reaction();
 			reaction1 = (Reaction)reader1.read(reaction1);
 			reader1.close();
@@ -114,7 +114,7 @@ public class MDLRXNReaderTest extends CDKTestCase {
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
         try {
-			MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
+			MDLRXNReader reader2 = new MDLRXNReader(ins2);
 			Reaction reaction2 = new Reaction();
 			reaction2 = (Reaction)reader2.read(reaction2);
 			reader2.close();
@@ -134,7 +134,7 @@ public class MDLRXNReaderTest extends CDKTestCase {
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
         try {
-			MDLRXNReader reader2 = new MDLRXNReader(new InputStreamReader(ins2));
+			MDLRXNReader reader2 = new MDLRXNReader(ins2);
 			Reaction reaction2 = new Reaction();
 			reaction2 = (Reaction)reader2.read(reaction2);
 			reader2.close();

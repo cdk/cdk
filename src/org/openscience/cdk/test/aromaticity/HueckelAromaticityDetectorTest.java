@@ -24,7 +24,6 @@
 package org.openscience.cdk.test.aromaticity;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Iterator;
 
 import junit.framework.Test;
@@ -34,8 +33,8 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -401,7 +400,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/porphyrin.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 
 			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
@@ -447,7 +446,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/bug698152.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 
 			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
@@ -495,7 +494,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		{
 			String filename = "data/mdl/bug716259.mol";
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(new InputStreamReader(ins));
+			MDLReader reader = new MDLReader(ins);
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 
 			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
@@ -542,7 +541,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
   public void testBug1328739() throws Exception {
       String filename = "data/mdl/bug1328739.mol";
       InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-      MDLReader reader = new MDLReader(new InputStreamReader(ins));
+      MDLReader reader = new MDLReader(ins);
       Molecule molecule = (Molecule) reader.read(new Molecule());
       HueckelAromaticityDetector.detectAromaticity(molecule);
       assertEquals(15, molecule.getBondCount());

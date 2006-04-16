@@ -85,7 +85,7 @@ public class HOSECodeTest extends CDKTestCase
     try{
         String filename = "data/mdl/2,5-dimethyl-furan.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        MDLReader reader = new MDLReader(ins);
 				Molecule mol1 = (Molecule) reader.read(new Molecule());
         HueckelAromaticityDetector.detectAromaticity(mol1);
         assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtoms()[2], 6),new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtoms()[3], 6));
@@ -106,12 +106,12 @@ public class HOSECodeTest extends CDKTestCase
     try{
         String filename = "data/mdl/isopropylacetate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        MDLReader reader = new MDLReader(ins);
 				Molecule mol1 = (Molecule) reader.read(new Molecule());
         String code1=new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtoms()[0], 6);
         filename="data/mdl/testisopropylacetate.mol";
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader2 = new MDLReader(new InputStreamReader(ins2));
+        MDLReader reader2 = new MDLReader(ins2);
 				Molecule mol2 = (Molecule) reader2.read(new Molecule());
         String code2=new HOSECodeGenerator().getHOSECode(mol2, mol2.getAtoms()[2], 6);
         assertFalse(code1.equals(code2));

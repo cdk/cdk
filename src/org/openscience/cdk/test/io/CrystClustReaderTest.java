@@ -66,7 +66,7 @@ public class CrystClustReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            CrystClustReader reader = new CrystClustReader(new InputStreamReader(ins));
+            CrystClustReader reader = new CrystClustReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);

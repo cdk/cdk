@@ -24,7 +24,6 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.vecmath.Point2d;
 
@@ -444,7 +443,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         try {
             String filename = "data/mdl/saturationcheckertest.mol";
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             molecule = (Molecule)reader.read((ChemObject)new Molecule());
             adder.addHydrogensToSatisfyValency(molecule);
         } catch (Exception exc) {

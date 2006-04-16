@@ -28,13 +28,12 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -66,7 +65,7 @@ public class JChemPaintTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
             // test the resulting ChemFile content
@@ -100,7 +99,7 @@ public class JChemPaintTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            CMLReader reader = new CMLReader(new InputStreamReader(ins));
+            CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
             // test the resulting ChemFile content

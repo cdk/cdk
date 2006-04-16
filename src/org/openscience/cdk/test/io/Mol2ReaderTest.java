@@ -68,7 +68,7 @@ public class Mol2ReaderTest extends CDKTestCase {
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            Mol2Reader reader = new Mol2Reader(new InputStreamReader(ins));
+            Mol2Reader reader = new Mol2Reader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);

@@ -28,7 +28,6 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -58,7 +57,7 @@ public class VASPReaderTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            VASPReader reader = new VASPReader(new InputStreamReader(ins));
+            VASPReader reader = new VASPReader(ins);
             ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
             assertNotNull(chemFile);
             org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);

@@ -149,10 +149,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         
         try {
         	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
-            MDLReader reader = new MDLReader(new InputStreamReader(ins));
+            MDLReader reader = new MDLReader(ins);
             reader.read(mol);
         	ins = this.getClass().getClassLoader().getResourceAsStream(queryfile);
-            reader = new MDLReader(new InputStreamReader(ins));
+            reader = new MDLReader(ins);
             reader.read(temp);
             query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
             
