@@ -1,0 +1,51 @@
+#!/usr/bin/bsh
+
+import java.io.*;
+import java.util.regex.*;
+
+File results = new File("ant.log");
+if (!results.exists()) {
+    System.out.println("Run 'ant -logfile ant.log clean test-all' first.");
+}
+
+BufferedReader reader = new BufferedReader(new FileReader(results));
+String line = reader.readLine();
+String moduleName = "";
+
+Pattern junit = Pattern.compile(".*\\[junit\\].*");
+Pattern module = Pattern.compile(".*test.M(.*)Tests.*");
+Pattern stats = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.]*)\\ssec.*");
+Pattern failed = Pattern.compile(".*FAILED.*");
+
+int testsRun = 0;
+int testsFailed = 0;
+int testsErrors = 0;
+
+while (line != null) {
+  Matcher junitLine = junit.matcher(line);
+  if (junitLine.matches()) {
+    // OK, found junit results
+    Matcher moduleLine = module.matcher(line);
+    Matcher statsLine = stats.matcher(line);
+    if (moduleLine.matches()) {
+      moduleName = moduleLine.group(1);
+      Matcher failedLine = failed.matcher(line);
+      // if (failedLine.matches()) {
+      //   System.out.println(moduleName + " failed");
+      // }
+    } else if (statsLine.matches()) {
+      int run = Integer.parseInt(statsLine.group(1));
+      int failed = Integer.parseInt(statsLine.group(2));
+      int error = Integer.parseInt(statsLine.group(3));
+      System.out.println(moduleName + ": run=" + run +
+        " failed=" + failed + " error=" + error);
+      testsRun += run;
+      testsFailed += failed;
+      testsErrors += error;
+    }
+  }
+  line = reader.readLine();
+}
+
+System.out.println("\ntotal: run=" + testsRun +
+  " failed=" + testsFailed + " error=" + testsErrors);
