@@ -772,36 +772,6 @@
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
 
-        <target id="test-all" name="test-all" depends="test, test-experimental"/>
-        
-        <target id="test-experimental" name="test-experimental" depends="noJunit, dist-all"
-                description="Performs a full JUnit test for the CDK, including experimental classes.">
-                <mkdir dir="${reports.tests}"/>
-                <junit printsummary="yes" haltonfailure="yes" fork="yes">
-                    <classpath>
-                        <fileset dir="${dist}/jar">
-                                <include name="cdk-*.jar" />
-                        </fileset>
-                        <fileset dir="${lib}">
-                                <include name="*.jar" />
-                        </fileset>
-                        <fileset dir="${devellib}">
-                                <include name="*.jar" />
-                        </fileset>
-                        <fileset dir="${lib}/libio">
-                                <include name="*.jar" />
-                        </fileset>
-                    </classpath>
-                    <test name="org.openscience.cdk.test.ExperimentalClassesTests"
-                        haltonfailure="no"
-                        todir="${reports.tests}"
-                        outfile="result.experimental">
-                                <formatter type="brief" />
-                        </test>
-                </junit>
-        </target>
-		
-
         <target id="noJunit" name="noJunit" depends="check" unless="junit.present">
             <fail message="JUnit is not installed in Ant. Please copy cdk/develjar/junit.jar to ${ant.home}/lib/."/>
         </target>
@@ -848,7 +818,7 @@
 			</junit>
 	    </target>
 			
-        <target id="test" name="test" depends="noJunit, dist-all, test-dist-all"
+        <target id="test-all" name="test-all" depends="noJunit, dist-all, test-dist-all"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
         	<antcall target="test-module"><param name="module" value="core"/></antcall>
@@ -860,6 +830,7 @@
 	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
         	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall> 
+        	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

@@ -33,7 +33,7 @@ import org.openscience.cdk.Atom;
 /**
  * Checks the functionality of the Association class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  *
  * @see org.openscience.cdk.Association
  */

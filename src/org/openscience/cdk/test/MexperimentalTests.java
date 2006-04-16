@@ -32,9 +32,9 @@ import org.openscience.cdk.test.isomorphism.SMARTSTest;
 /**
  * TestSuite that runs all the sample tests for experimental classes.
  *
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  */
-public class ExperimentalClassesTests {
+public class MexperimentalTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.experimental Tests");
@@ -42,10 +42,6 @@ public class ExperimentalClassesTests {
         suite.addTest(VASPReaderTest.suite());
         suite.addTest(SMARTSTest.suite());
         
-        ExperimentalClassesTests thisTest = new ExperimentalClassesTests();
-        // from cdk.test.smiles.smarts
-        try {
-        } catch (Exception exception) {} //ok, do without. Probably compiled with Ant < 1.6
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest");
             suite.addTest(new TestSuite(testClass));

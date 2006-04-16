@@ -48,7 +48,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  * @cdk.require java1.4+
  */
 public class SMARTSTest extends CDKTestCase {

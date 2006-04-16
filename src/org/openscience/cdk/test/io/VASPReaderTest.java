@@ -37,7 +37,7 @@ import org.openscience.cdk.io.VASPReader;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  */
 public class VASPReaderTest extends CDKTestCase {
 
