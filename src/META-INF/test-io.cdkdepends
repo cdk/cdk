@@ -5,6 +5,7 @@ cdk-data.jar
 cdk-io.jar
 cdk-experimental.jar
 cdk-extra.jar
+cdk-valencycheck.jar
 cdk-libio-cml.jar
 cdk-pdb.jar
 cdk-qsar.jar
