@@ -26,10 +26,9 @@ package org.openscience.cdk.applications;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.util.Properties;
@@ -45,6 +44,9 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -55,14 +57,11 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
+import org.openscience.cdk.io.HINWriter;
 import org.openscience.cdk.io.IChemObjectIO;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectWriter;
-import org.openscience.cdk.io.HINWriter;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.PDBWriter;
 import org.openscience.cdk.io.ReaderFactory;
@@ -275,7 +274,7 @@ public class FileConvertor {
     // PRIVATE INTERNAL STUFF
 
     private IChemObjectReader getChemObjectReader(File file) throws IOException {
-        Reader fileReader = new FileReader(file);
+        InputStream fileReader = new FileInputStream(file);
         IChemObjectReader reader = new ReaderFactory().createReader(fileReader);
         if (reader != null) {
             if (settingListener != null) {
@@ -558,7 +557,7 @@ public class FileConvertor {
     * and we want to output as much information as possible, use
     * the generalized mechanism below.
     */
-    private void write(IChemFile chemFile, String outputFilename) throws IOException { // NOPMD
+    private void write(IChemFile chemFile, String outputFilename) throws IOException {
         if (cow.accepts(chemFile.getClass())) {
             // Can write ChemFile, do so
             try {
@@ -582,7 +581,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(IChemSequence sequence, String outputFilename) throws IOException {  // NOPMD
+    private void write(IChemSequence sequence, String outputFilename) throws IOException {
         try {
             cow.write(sequence);
         } catch (CDKException exception) {
@@ -601,7 +600,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(IChemModel cm, String outputFilename) throws IOException {  // NOPMD
+    private void write(IChemModel cm, String outputFilename) throws IOException {
         try {
             cow.write(cm);
         } catch (CDKException exception) {
@@ -617,7 +616,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(ICrystal c, String outputFilename) throws IOException {  // NOPMD
+    private void write(ICrystal c, String outputFilename) throws IOException {
         try {
             cow.write(c);
         } catch (CDKException exception) {
