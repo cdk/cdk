@@ -1,5 +1,4 @@
-/*
- *  $RCSfile$
+/*  $RCSfile: $
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -25,7 +24,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.aromaticity;
 
@@ -40,17 +38,18 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- *  The HueckelAromaticityDetector detects the aromaticity based on the Hueckel
- *  4n+2 pi-electrons Rule. This is done by one of the detectAromaticity
- *  methods. They set the aromaticity flags of appropriate Atoms, Bonds and
- *  Rings. After the detection, you can use getFlag(CDKConstants.ISAROMATIC) on
- *  these ChemObjects.
+ * The HueckelAromaticityDetector detects the aromaticity based on the Hueckel
+ * 4n+2 pi-electrons Rule. This is done by one of the detectAromaticity
+ * methods. They set the aromaticity flags of appropriate Atoms, Bonds and
+ * Rings. After the detection, you can use getFlag(CDKConstants.ISAROMATIC) on
+ * these ChemObjects.
  *
- *@author         steinbeck
- *@author         kaihartmann
- *@cdk.created        3. Juni 2005
- *@cdk.module     standard
- *@cdk.created    2001-09-04
+ * @author         steinbeck
+ * @author         kaihartmann
+ * @cdk.module     standard
+ * @cdk.created    2001-09-04
+ * 
+ * @see org.openscience.cdk.CDKConstants
  */
 public class HueckelAromaticityDetector
 {
@@ -66,14 +65,13 @@ public class HueckelAromaticityDetector
 	}
 
 	/**
-	 *  Retrieves the set of all rings and performs an aromaticity detection based
-	 *  on Hueckels 4n + 2 rule.
+	 * Retrieves the set of all rings and performs an aromaticity detection based
+	 * on Hueckels 4n+2 rule.
 	 *
-	 *@param  atomContainer		AtomContainer to detect rings in
-	 *@return                       True if the molecule has aromatic
-	 * 				features
-	 *@exception  CDKException 	Thrown if something goes wrong or in
-	 * 				case of a AllRingsFinder timeout 
+	 * @param  atomContainer		AtomContainer to detect rings in
+	 * @return                      True if the molecule has aromatic features
+	 * @exception  CDKException 	Thrown if something goes wrong or in
+	 *                              case of a AllRingsFinder timeout 
 	 */
 	public static boolean detectAromaticity(IAtomContainer atomContainer) throws CDKException
 	{
@@ -82,13 +80,13 @@ public class HueckelAromaticityDetector
 
 
 	/**
-	 *  Uses precomputed set of ALL rings and performs an aromaticity detection
-	 *  based on Hueckels 4n + 2 rule.
+	 * Uses precomputed set of ALL rings and performs an aromaticity detection
+	 * based on Hueckels 4n+2 rule.
 	 *
-	 *@param  ringSet		set of ALL rings
-	 *@param  atomContainer         The AtomContainer to detect rings in
-	 *@return                       True if molecule has aromatic features
-	 *@exception  org.openscience.cdk.exception.CDKException  
+	 * @param  ringSet		  set of ALL rings
+	 * @param  atomContainer  The AtomContainer to detect rings in
+	 * @return                True if molecule has aromatic features
+	 * @exception             org.openscience.cdk.exception.CDKException  
 	 */
 	public static boolean detectAromaticity(IAtomContainer atomContainer, IRingSet ringSet) throws org.openscience.cdk.exception.CDKException
 	{
