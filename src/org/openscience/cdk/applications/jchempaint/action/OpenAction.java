@@ -30,6 +30,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -39,14 +40,14 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChIReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 
 /**
@@ -57,11 +58,10 @@ import org.openscience.cdk.io.MDLReader;
  */
 public class OpenAction extends JCPAction {
 
+	private static final long serialVersionUID = 1030940425527065876L;
+
 	private IChemFile chemFile;
 	private FileFilter currentFilter = null;
-	private FileFilter currentOpenFileFilter = null;
-	private FileFilter currentSaveFileFilter = null;
-
 
 	/**
 	 *  Opens an empty JChemPaint frame.
@@ -113,7 +113,7 @@ public class OpenAction extends JCPAction {
 			if (cor == null) {
 				// try to determine from user's guess
 				try {
-					FileReader reader = new FileReader(inFile);
+					FileInputStream reader = new FileInputStream(inFile);
 					javax.swing.filechooser.FileFilter ff = chooser.getFileFilter();
 					if (ff instanceof JCPFileFilter) {
 						type = ((JCPFileFilter) ff).getType();
