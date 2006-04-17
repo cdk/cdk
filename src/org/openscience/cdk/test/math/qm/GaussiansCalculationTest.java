@@ -32,9 +32,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
@@ -70,7 +70,7 @@ public class GaussiansCalculationTest
         System.out.println("Expecting XYZ format...");
       } else if (inFile.endsWith(".cml"))
       { 
-        reader = new CMLReader(new FileReader(inFile));
+        reader = new CMLReader(new FileInputStream(inFile));
         System.out.println("Expecting CML format...");
       } else
       { 

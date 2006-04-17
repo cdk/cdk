@@ -46,10 +46,10 @@ public class TableTest {
         IChemObjectReader reader;
         System.out.println("Loading: " + inFile);
         if (inFile.endsWith(".xyz")) {
-  	      reader = new XYZReader(new FileReader(inFile));
+  	      reader = new XYZReader(new FileInputStream(inFile));
           System.out.println("Expecting XYZ format...");
         } else if (inFile.endsWith(".cml")) {
-  	      reader = new CMLReader(new FileReader(inFile));
+  	      reader = new CMLReader(new FileInputStream(inFile));
           System.out.println("Expecting CML format...");
         } else {
           reader = new MDLReader(new FileInputStream(inFile));
