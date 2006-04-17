@@ -81,8 +81,6 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     private double crystal_axis_y;
     private double crystal_axis_z;
     
-    private double aromaticOrder=1.5;
-
     protected LoggingTool logger;
 
     /**
@@ -240,7 +238,6 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
                 }
                 if (bond_order == CDKConstants.BONDORDER_AROMATIC) {
                     b.setFlag(CDKConstants.ISAROMATIC, true);
-                    b.setOrder(aromaticOrder);
                 }
                 currentMolecule.addBond(b);
             }
@@ -572,24 +569,6 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
 		return currentChemFile.getBuilder();
 	}
 
-	/**
-	 * return the aromaticValue value
-	 * 
-	 * @return aromaticValue 
-	 */
-	public double getAromaticOrder() {
-		return aromaticOrder;
-	}
-
-	/**
-	 * Sets the aromaticOrder value. This is the bond order aromatic bonds will get, default 1.5
-	 * 
-	 * @param aromaticOrder
-	 */
-	public void setAromaticOrder(double aromaticOrder) {
-		this.aromaticOrder = aromaticOrder;
-	}
-	
 	private boolean doNotification = true;
 	
 	public void setNotification(boolean bool) {
