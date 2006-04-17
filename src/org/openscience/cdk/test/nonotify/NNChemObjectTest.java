@@ -27,6 +27,9 @@ package org.openscience.cdk.test.nonotify;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.ChemObjectTest;
 
@@ -49,4 +52,62 @@ public class NNChemObjectTest extends ChemObjectTest {
         return new TestSuite(NNChemObjectTest.class);
     }
 
+    // Overwrite default methods: no notifications are expected!
+    
+    public void testNotifyChanged() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemObject chemObject = builder.newChemObject();
+        chemObject.addListener(listener);
+        
+        chemObject.setID("Changed");
+        assertFalse(listener.changed);
+    }
+
+    public void testNotifyChanged_IChemObjectChangeEvent() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemObject chemObject = builder.newChemObject();
+        chemObject.addListener(listener);
+        
+        chemObject.setID("Changed");
+        assertNull(listener.event);
+    }
+
+    public void testStateChanged_IChemObjectChangeEvent() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemObject chemObject = builder.newChemObject();
+        chemObject.addListener(listener);
+        
+        chemObject.setID("Changed");
+        assertFalse(listener.changed);
+        
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.setProperty("Changed", "Again");
+        assertFalse(listener.changed);
+
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.setFlag(3, true);
+        assertFalse(listener.changed);
+    }
+
+    private class ChemObjectListenerImpl implements IChemObjectListener {
+        private boolean changed;
+        private IChemObjectChangeEvent event;
+        
+        private ChemObjectListenerImpl() {
+            changed = false;
+            event = null;
+        }
+        
+        public void stateChanged(IChemObjectChangeEvent e) {
+            changed = true;
+            event = e;
+        }
+        
+        public void reset() {
+            changed = false;
+            event = null;
+        }
+    }
 }
