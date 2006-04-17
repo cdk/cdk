@@ -27,7 +27,7 @@
  *  */
 package org.openscience.cdk.test.io.cml;
 
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -262,7 +262,7 @@ public class CML23FragmentsTest extends CDKTestCase {
     private IChemFile parseCMLString(String cmlString) {
         IChemFile chemFile = null;
         try {
-            CMLReader reader = new CMLReader(new StringReader(cmlString));
+            CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
             chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
         } catch (CDKException exception) {
             fail();

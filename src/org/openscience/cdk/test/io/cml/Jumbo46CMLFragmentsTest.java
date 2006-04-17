@@ -27,6 +27,7 @@
  *  */
 package org.openscience.cdk.test.io.cml;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 
 import javax.vecmath.Vector3d;
@@ -298,7 +299,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
     private IChemFile parseCMLString(String cmlString) {
         IChemFile chemFile = null;
         try {
-            CMLReader reader = new CMLReader(new StringReader(cmlString));
+            CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
             chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
         } catch (CDKException exception) {
             fail();

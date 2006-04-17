@@ -27,6 +27,7 @@
  *  */
 package org.openscience.cdk.test.io.cml;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 
 import javax.vecmath.Point2d;
@@ -294,7 +295,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule roundTrippedMol = null;
         try {
             logger.debug("CML string: " + cmlString);
-            CMLReader reader = new CMLReader(new StringReader(cmlString));
+            CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
             
             IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
             assertNotNull(file);
@@ -334,7 +335,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IReaction roundTrippedReaction = null;
         try {
             logger.debug("CML string: ", cmlString);
-            CMLReader reader = new CMLReader(new StringReader(cmlString));
+            CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
             
             IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
             assertNotNull(file);
