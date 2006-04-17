@@ -27,6 +27,8 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
+import org.apache.log4j.Logger;
+
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:
  * <pre>
@@ -92,7 +94,7 @@ public class LoggingTool {
     private boolean debug = false;
     private boolean tostdout = false;
 
-    private org.apache.log4j.Category log4jLogger;
+    private Logger log4jLogger;
     private LoggingTool logger;
     private String classname;
 
@@ -130,17 +132,7 @@ public class LoggingTool {
         stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
         try {
-            /* Next line is required to not have the compiler trip over the
-             * the catch clause later, which in turn is needed on runtime when
-             * security is checked, which is with the PluginManager, as it
-             * uses the java.net.URLClassLoader. */
-            if (false) throw new ClassNotFoundException(); // NOPMD
-            
-            log4jLogger = (org.apache.log4j.Category)org.apache.log4j.Category
-                                                     .getInstance( classname );
-        } catch (ClassNotFoundException e) {
-            tostdout = true;
-            logger.debug("Log4J class not found!");
+            log4jLogger = Logger.getLogger(classname);
         } catch (NoClassDefFoundError e) {
             tostdout = true;
             logger.debug("Log4J class not found!");
