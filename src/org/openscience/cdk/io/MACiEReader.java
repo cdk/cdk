@@ -38,13 +38,9 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.EnzymeResidueLocator;
 import org.openscience.cdk.PseudoAtom;
@@ -53,6 +49,12 @@ import org.openscience.cdk.SetOfReactions;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MACiEFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -156,6 +158,13 @@ public class MACiEReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (IChemModel.class.isInstance(classObject)) return true;
+		if (IChemSequence.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * Takes an object which subclasses IChemObject, e.g. Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation
@@ -169,11 +178,11 @@ public class MACiEReader extends DefaultChemObjectReader {
          customizeJob();
          
          try {
-             if (object instanceof ChemSequence) {
+             if (object instanceof IChemSequence) {
                  return readReactions(false);
-             } else if (object instanceof ChemModel) {
+             } else if (object instanceof IChemModel) {
                  return readReactions(true);
-             } else if (object instanceof ChemFile) {
+             } else if (object instanceof IChemFile) {
                  IChemFile chemFile = object.getBuilder().newChemFile();
                  chemFile.addChemSequence((ChemSequence)readReactions(false));
                  return chemFile;

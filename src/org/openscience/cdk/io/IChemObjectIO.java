@@ -58,13 +58,6 @@ public interface IChemObjectIO {
 
     /**
      * Returns whether the given IChemObject can be read or not.
-     * 
-     * @deprecated Use accepts(Class) instead.
-     */
-    public boolean accepts(IChemObject object);
-    
-    /**
-     * Returns whether the given IChemObject can be read or not.
      */
     public boolean accepts(Class classObject);
     

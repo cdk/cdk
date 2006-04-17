@@ -153,7 +153,12 @@ public class IChIReader extends DefaultChemObjectReader {
         }
     }
 
-    /**
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
+
+   /**
      * Reads a IChemObject of type object from input.
      * Supported types are: ChemFile.
      *

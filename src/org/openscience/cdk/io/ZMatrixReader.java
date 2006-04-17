@@ -97,6 +97,11 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
+
   /**
    *  Returns a IChemObject of type object bye reading from
    *  the input. 

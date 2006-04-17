@@ -98,6 +98,11 @@ public class HINReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * Reads the content from a HIN input. It can only return a
      * IChemObject of type ChemFile

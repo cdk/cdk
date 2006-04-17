@@ -40,7 +40,10 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
@@ -111,6 +114,11 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     public void close() throws IOException {
     	writer.close();
     }
+
+	public boolean accepts(Class classObject) {
+		if (ICrystal.class.isInstance(classObject)) return true;
+		return false;
+	}
 
     /**
      * Serializes the IChemObject to ShelX and redirects it to the output Writer.

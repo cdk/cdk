@@ -40,7 +40,10 @@ import java.util.Locale;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -126,7 +129,12 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         writer.close();
     }
 
-    /**
+	public boolean accepts(Class classObject) {
+		if (IReaction.class.isInstance(classObject)) return true;
+		return false;
+	}
+
+	/**
      * Writes a IChemObject to the MDL RXN file formated output. 
      * It can only output ChemObjects of type Reaction
      *

@@ -108,6 +108,12 @@ public class ShelXReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (ICrystal.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * Read a ChemFile from input
      *

@@ -49,17 +49,6 @@ public abstract class DefaultChemObjectWriter implements IChemObjectWriter {
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {
         listenerList.removeElement(listener);
     }
-
-    /**
-     * @deprecated
-     */
-    public boolean accepts(IChemObject object) {
-        return accepts(object.getClass());
-    }
-    public boolean accepts(Class objectClass) {
-        // leave it up the write(IChemObject) to decide by default
-        return true;
-    }
     
     protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {

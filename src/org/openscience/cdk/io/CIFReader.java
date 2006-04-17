@@ -113,6 +113,11 @@ public class CIFReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+    public boolean accepts(Class testClass) {
+    	if (IChemFile.class.isInstance(testClass)) return true;
+    	return false;
+    }
+    
     /**
      * Read a ChemFile from input
      *

@@ -105,6 +105,12 @@ public class SMILESReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (ISetOfMolecules.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * reads the content from a XYZ input. It can only return a
      * IChemObject of type ChemFile

@@ -175,7 +175,11 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.error("Could not instantiate any XML parser!");
         }
     }
-    
+
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
 
 	/**
      * Read a IChemObject from input
@@ -236,10 +240,6 @@ public class CMLReader extends DefaultChemObjectReader {
     public void close() throws IOException {
         input.close();
     }
-
-	public boolean accepts(IChemObject object) {
-		return (object instanceof IChemFile);
-	}
 
 }
 

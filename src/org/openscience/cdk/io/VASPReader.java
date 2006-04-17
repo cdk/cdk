@@ -116,6 +116,11 @@ public class VASPReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IChemFile) {
             IChemFile cf = (IChemFile)object;

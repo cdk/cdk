@@ -172,6 +172,11 @@ public class GamessReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
+
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)
 	 * @see org.openscience.cdk.io.ChemObjectReader#read(org.openscience.cdk.ChemObject)
 	 */

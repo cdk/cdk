@@ -103,6 +103,12 @@ public class HINWriter extends DefaultChemObjectWriter {
         writer.close();
     }
 
+	public boolean accepts(Class classObject) {
+		if (IMolecule.class.isInstance(classObject)) return true;
+		if (ISetOfMolecules.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
             try {

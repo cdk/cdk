@@ -38,6 +38,7 @@ import java.io.StringReader;
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -94,6 +95,11 @@ public class JMEReader extends DefaultChemObjectReader {
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
+
+	public boolean accepts(Class classObject) {
+		if (IMolecule.class.isInstance(classObject)) return true;
+		return false;
+	}
 
 	public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {

@@ -114,6 +114,12 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         }
     }
     
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (IChemSequence.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IChemSequence) {
             return readChemSequence((IChemSequence)object);

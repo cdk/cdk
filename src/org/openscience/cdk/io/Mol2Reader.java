@@ -102,6 +102,12 @@ public class Mol2Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (IChemModel.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
      * this from from the Reader. If the specific implementation

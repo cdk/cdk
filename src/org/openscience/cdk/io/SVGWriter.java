@@ -43,7 +43,10 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.SVGFormat;
 import org.openscience.cdk.renderer.Renderer2D;
@@ -133,6 +136,11 @@ public class SVGWriter extends DefaultChemObjectWriter {
         writer.flush();
         writer.close();
     }
+
+	public boolean accepts(Class classObject) {
+		if (IAtomContainer.class.isInstance(classObject)) return true;
+		return false;
+	}
 
     /**
      * Writes the content from object to output.

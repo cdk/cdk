@@ -161,6 +161,19 @@ public class CMLWriter extends DefaultChemObjectWriter {
         output.close();
     }
 
+	public boolean accepts(Class classObject) {
+		if (IReaction.class.isInstance(classObject)) return true;
+		if (ISetOfReactions.class.isInstance(classObject)) return true;
+		if (ISetOfMolecules.class.isInstance(classObject)) return true;
+		if (IChemSequence.class.isInstance(classObject)) return true;
+		if (IChemModel.class.isInstance(classObject)) return true;
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (ICrystal.class.isInstance(classObject)) return true;
+		if (IAtom.class.isInstance(classObject)) return true;
+		if (IBond.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * Serializes the IChemObject to CML and redirects it to the output Writer.
      *
@@ -285,5 +298,5 @@ public class CMLWriter extends DefaultChemObjectWriter {
         settings[5] = indent;
         return settings;
     }
-    
+
 }

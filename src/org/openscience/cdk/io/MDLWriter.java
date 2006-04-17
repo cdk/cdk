@@ -52,7 +52,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
@@ -171,6 +173,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
     public void close() throws IOException {
         writer.close();
     }
+
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (IMolecule.class.isInstance(classObject)) return true;
+		if (ISetOfMolecules.class.isInstance(classObject)) return true;
+		return false;
+	}
 
     /**
      * Writes a IChemObject to the MDL molfile formated output. 

@@ -115,6 +115,11 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      */
     private void init() {}
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * Reads a IChemObject of type object from input.
      * Supported types are: ChemFile.

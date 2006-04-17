@@ -122,6 +122,11 @@ public class PDBReader extends DefaultChemObjectReader {
 		setReader(new InputStreamReader(input));
 	}
 	
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
+	}
+
 	/**
 	 *
 	 * Takes an object which subclasses IChemObject, e.g. Molecule, and will

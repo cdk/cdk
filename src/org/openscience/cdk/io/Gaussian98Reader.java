@@ -143,22 +143,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader
 		initIOSettings();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  object  Description of the Parameter
-	 *@return         Description of the Return Value
-	 */
-	public boolean accepts(IChemObject object)
-	{
-		if (object instanceof IChemFile)
-		{
-			return true;
-		} else
-		{
-			return false;
-		}
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		return false;
 	}
 
 	/**

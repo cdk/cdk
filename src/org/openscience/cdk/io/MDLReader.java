@@ -124,6 +124,13 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
 
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (IChemModel.class.isInstance(classObject)) return true;
+		if (IMolecule.class.isInstance(classObject)) return true;
+		return false;
+	}
+
 	/**
 	 *  Takes an object which subclasses IChemObject, e.g. Molecule, and will read
 	 *  this (from file, database, internet etc). If the specific implementation

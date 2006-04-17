@@ -98,6 +98,12 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     }
     
     
+	public boolean accepts(Class classObject) {
+		if (ICrystal.class.isInstance(classObject)) return true;
+		if (IChemSequence.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     /**
      * Serializes the IChemObject to CrystClust format and redirects it to the output Writer.
      *

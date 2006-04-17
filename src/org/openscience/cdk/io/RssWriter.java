@@ -99,6 +99,10 @@ public class RssWriter extends DefaultChemObjectWriter {
     	setWriter(new OutputStreamWriter(output));
     }
     
+	public boolean accepts(Class classObject) {
+		return true;
+	}
+
     /**
      * Writes a IChemObject to the MDL molfile formated output. 
      *

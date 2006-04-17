@@ -99,7 +99,14 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-    /**
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (IChemModel.class.isInstance(classObject)) return true;
+		if (IReaction.class.isInstance(classObject)) return true;
+		return false;
+	}
+
+   /**
      * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
      * this (from file, database, internet etc). If the specific implementation
      * does not support a specific IChemObject it will throw an Exception.

@@ -41,7 +41,10 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -112,6 +115,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
+
+	public boolean accepts(Class classObject) {
+		if (IMolecule.class.isInstance(classObject)) return true;
+		return false;
+	}
 
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {

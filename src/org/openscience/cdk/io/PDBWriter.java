@@ -95,6 +95,13 @@ public class PDBWriter extends DefaultChemObjectWriter {
     	setWriter(new OutputStreamWriter(output));
     }
     
+	public boolean accepts(Class classObject) {
+		if (IChemFile.class.isInstance(classObject)) return true;
+		if (ICrystal.class.isInstance(classObject)) return true;
+		if (IMolecule.class.isInstance(classObject)) return true;
+		return false;
+	}
+
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule){
             writeMolecule((IMolecule)object);

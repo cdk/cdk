@@ -56,20 +56,6 @@ public abstract class DefaultChemObjectReader implements IChemObjectReader {
         listenerList.removeElement(listener);
     }
 
-    /**
-     * Returns true if the Reader supports reading into a IChemObject of
-     * this type.
-     * 
-     * @deprecated
-     */
-    public boolean accepts(IChemObject object) {
-        return accepts(object.getClass());
-    }
-    public boolean accepts(Class objectClass) {
-        // leave it up the read(IChemObject) to decide by default
-        return true;
-    }
-    
     /* Extra convenience methods */
     
     /**
