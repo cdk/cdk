@@ -26,22 +26,20 @@
 package org.openscience.cdk.atomtype;
 
 /**
- * An interface providing predefined values for a number of
- * constants used for classification of ring systems in the
- * atom typing process (Zero is set to undefined). Classes using these constants should
- * <b>not</b> implement this interface, but use it like:
+ * Constants for specific ring types.
+ * The use of constants in the class is like:
  * <pre>
  *   int IS_IN_HETRING = CDKRingConstants.IS_IN_HETRING;
- *   or as Flag:
+ * </pre>
+ * or as Flag:
+ * </pre>
  *   atom.setFlag(CDKConstants.IS_IN_HETRING, true);
  * </pre>
  *
- * <p>The lazyCreation patch has been applied to this class.
+ * <p>Hetero ring systems must get an even number, carbon ring systems
+ * an uneven number.
  *
- *	Hetero ring systems must get an even number, carbon ring systems
- *	an uneven number.
- *
- * @cdk.module data
+ * @cdk.module  extra
  *
  * @cdk.keyword bond order
  * @cdk.keyword stereochemistry
