@@ -57,12 +57,8 @@ public abstract class DefaultIteratingChemObjectReader implements IIteratingChem
         listenerList.removeElement(listener);
     }
 
-    public boolean accepts(IChemObject object) {
-    	return accepts(object.getClass());
-    }
     public boolean accepts(Class objectClass) {
-        // leave it up the read(IChemObject) to decide by default
-        return true;
+        return false; // it's an iterator, idiot.
     }
     
     /* Extra convenience methods */
