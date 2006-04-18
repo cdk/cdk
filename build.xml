@@ -676,7 +676,7 @@
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-svg.jar"/>
-                    <include name="cdk-valenceycheck.jar"/>
+                    <include name="cdk-valencycheck.jar"/>
                 </fileset>
             </unjar>
 
