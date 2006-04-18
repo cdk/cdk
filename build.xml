@@ -635,39 +635,51 @@
                     <includesfile name="${metainf}/applications.libdepends"/>
                     <includesfile name="${metainf}/builder3d.libdepends"/>
                     <includesfile name="${metainf}/core.libdepends"/>
+                    <includesfile name="${metainf}/datadebug.libdepends"/>
                     <includesfile name="${metainf}/data.libdepends"/>
                     <includesfile name="${metainf}/experimental.libdepends"/>
                     <includesfile name="${metainf}/extra.libdepends"/>
-                    <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/io-jmol.libdepends"/>
+                    <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libio-cml.libdepends"/>
+                    <includesfile name="${metainf}/nonotify.libdepends"/>
+                    <includesfile name="${metainf}/pdb-cml.libdepends"/>
+                    <includesfile name="${metainf}/pdb.libdepends"/>
                     <includesfile name="${metainf}/qsar.libdepends"/>
+                    <includesfile name="${metainf}/qsar-cml.libdepends"/>
+                    <includesfile name="${metainf}/qsar-pdb.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
+                    <includesfile name="${metainf}/svg.libdepends"/>
+                    <includesfile name="${metainf}/valencycheck.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-core.jar"/>
+                    <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
                     <include name="cdk-experimental.jar"/>
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
                     <include name="cdk-io-jmol.jar"/>
-                    <include name="cdk-pdb.jar"/>
                     <include name="cdk-libio-cml.jar"/>
+                    <include name="cdk-nonotify.jar"/>
+                    <include name="cdk-pdb-cml.jar"/>
+                    <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
-                    <include name="cdk-pdb.jar"/>
-                    <include name="cdk-pdb-cml.jar"/>
+                    <include name="cdk-qsar-pdb.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
+                    <include name="cdk-svg.jar"/>
+                    <include name="cdk-valenceycheck.jar"/>
                 </fileset>
             </unjar>
-            
+
             <!-- then zip up things -->
             <jar jarfile="${dist}/jar/cdk-${version}.jar">
                 <manifest>
