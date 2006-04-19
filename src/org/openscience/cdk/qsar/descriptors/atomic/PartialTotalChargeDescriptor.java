@@ -56,9 +56,10 @@ import org.openscience.cdk.qsar.DescriptorValue;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-04-11
- * @cdk.module  qsar
- * @cdk.set     qsar-descriptors
- * @cdk.dictref qsar-descriptors:PartialCharge
+ * @cdk.module  builder3d
+ * @x.module  qsar
+ * @x.set     qsar-descriptors
+ * @x.dictref qsar-descriptors:PartialCharge
  * @see MMFF94PartialCharges
  */
 public class PartialTotalChargeDescriptor implements IDescriptor {
