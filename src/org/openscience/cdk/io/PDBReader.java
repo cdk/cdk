@@ -54,6 +54,8 @@ import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.protein.data.PDBMonomer;
+import org.openscience.cdk.protein.data.PDBStrand;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -228,9 +230,12 @@ public class PDBReader extends DefaultChemObjectReader {
 						// search for an existing monomer or create a new one.
 						oMonomer = oBP.getMonomer(cResidue.toString(), String.valueOf(chain));
 						if (oMonomer == null) {
-							oMonomer = oFile.getBuilder().newMonomer();
-							oMonomer.setMonomerName(cResidue.toString());
-							oMonomer.setMonomerType(oAtom.getResName());
+							PDBMonomer monomer = new PDBMonomer();
+							monomer.setMonomerName(cResidue.toString());
+							monomer.setMonomerType(oAtom.getResName());
+							monomer.setChainID(oAtom.getChainID());
+							monomer.setICode(oAtom.getICode());
+							oMonomer = monomer;
 						}
 						
 						// add the atom
@@ -247,7 +252,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					} else if (cCol.equals("TER   ")) {
 						// start new strand						
 						chain++;
-						oStrand = oFile.getBuilder().newStrand();
+						oStrand = new PDBStrand();
 						oStrand.setStrandName(String.valueOf(chain));
 						logger.debug("Added new STRAND");
 					} else if (cCol.equals("END   ")) {
