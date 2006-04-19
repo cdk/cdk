@@ -27,9 +27,7 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import java.io.File;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -40,8 +38,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
-
-import com.baysmith.io.FileUtilities;
 
 /**
  * TestCase for the PDBReader class.
@@ -66,23 +62,10 @@ public class PDBReaderTest extends TestCase {
 		junit.textui.TestRunner.run(new TestSuite(PDBReaderTest.class));
 	}
 
-  /**
-   * A directory to isolate testing files.
-   */
-  File testDirectory;
-
-  public void setUp() {
-    testDirectory = new File("PDBReaderTest.directory");
-    FileUtilities.deleteAll(testDirectory);
-    assertTrue("Error creating test directory \"" + testDirectory + "\"",
-      testDirectory.mkdir());
-  }
-
-  public void tearDown() {
-    assertTrue("Error removing test directory \"" + testDirectory + "\"",
-      testDirectory.delete());
-    testDirectory = null;
-  }
+    public void testAccepts() {
+    	PDBReader reader = new PDBReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    }
 
 	public void testPDBFileCoffein() {
         String filename = "data/pdb/coffeine.pdb";

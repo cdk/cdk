@@ -33,8 +33,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -57,6 +59,13 @@ public class MDLWriterTest extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(MDLWriterTest.class);
+    }
+
+    public void testAccepts() throws Exception {
+    	MDLWriter reader = new MDLWriter();
+    	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(Molecule.class));
+    	assertTrue(reader.accepts(SetOfMolecules.class));
     }
 
     public void testBug890456() {

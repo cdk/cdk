@@ -28,12 +28,12 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -57,6 +57,12 @@ public class Mol2ReaderTest extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(Mol2ReaderTest.class);
+    }
+
+    public void testAccepts() {
+    	Mol2Reader reader = new Mol2Reader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(ChemModel.class));
     }
 
     /**

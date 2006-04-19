@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -152,17 +151,10 @@ public class GamessReaderTest extends CDKTestCase {
 	 */
 	//TODO Update method comments with appropriate information.
 	public void testAccepts() {
-		Assert.assertNotNull("TEST: The GamessReader object is constructed", this.gamessReaderUnderTest);
+		assertNotNull("TEST: The GamessReader object is constructed", this.gamessReaderUnderTest);
 
-		//The given object is a IChemObject object
-		try {
-			Assert.assertTrue("TEST: GamessReader only accepts ChemFile object.", this.gamessReaderUnderTest.accepts(new ChemObject()));
-			fail("TEST: GamessReader only accepts ChemFile object RULE VIOLATION with IChemObject.");			
-		} catch (AssertionFailedError e) {
-		}	
-
-		//The given object is a ChemFile object
-		Assert.assertTrue("TEST: GamessReader only accepts ChemFile object.", gamessReaderUnderTest.accepts(new ChemFile()));
+		assertFalse("TEST: GamessReader only accepts ChemFile object.", this.gamessReaderUnderTest.accepts(ChemObject.class));
+		assertTrue("TEST: GamessReader only accepts ChemFile object.", gamessReaderUnderTest.accepts(ChemFile.class));
 	}
 
 	/**

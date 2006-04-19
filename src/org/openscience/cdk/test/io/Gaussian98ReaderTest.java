@@ -49,7 +49,12 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 	}
 	
 	
-	public void testNMRReading()
+    public void testAccepts() {
+    	Gaussian98Reader reader = new Gaussian98Reader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    }
+
+    public void testNMRReading()
 	{
 		IAtomContainer atomContainer = null;
 		boolean foundOneShieldingEntry = false;

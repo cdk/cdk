@@ -29,11 +29,12 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.io.MDLRXNReader;
@@ -58,6 +59,13 @@ public class MDLRXNReaderTest extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(MDLRXNReaderTest.class);
+    }
+
+    public void testAccepts() {
+    	MDLRXNReader reader = new MDLRXNReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(ChemModel.class));
+    	assertTrue(reader.accepts(Reaction.class));
     }
 
     public void testReadReactions1() {

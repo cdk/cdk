@@ -64,7 +64,7 @@ public class MDLReaderTest extends CDKTestCase {
         return new TestSuite(MDLReaderTest.class);
     }
 
-    public void testAcceptsChemFile() {
+    public void testAccepts() {
     	MDLReader reader = new MDLReader();
     	assertTrue(reader.accepts(ChemFile.class));
     	assertTrue(reader.accepts(ChemModel.class));

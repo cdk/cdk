@@ -28,7 +28,6 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.vecmath.Vector3d;
 
@@ -61,6 +60,11 @@ public class CrystClustReaderTest extends CDKTestCase {
         return new TestSuite(CrystClustReaderTest.class);
     }
 
+    public void testAccepts() {
+    	CrystClustReader reader = new CrystClustReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    }
+    
     public void testEstrone() {
         String filename = "data/crystclust/estron.crystclust";
         logger.info("Testing: " + filename);

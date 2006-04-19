@@ -28,11 +28,11 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -54,6 +54,12 @@ public class SMILESReaderTest extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(SMILESReaderTest.class);
+    }
+
+    public void testAccepts() {
+    	SMILESReader reader = new SMILESReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(SetOfMolecules.class));
     }
 
     public void testReading() {

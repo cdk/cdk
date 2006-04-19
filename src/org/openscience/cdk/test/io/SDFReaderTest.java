@@ -33,6 +33,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -51,6 +53,13 @@ public class SDFReaderTest extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(SDFReaderTest.class);
+    }
+
+    public void testAccepts() {
+    	MDLReader reader = new MDLReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(ChemModel.class));
+    	assertTrue(reader.accepts(Molecule.class));
     }
 
     public void testSDFFile() {

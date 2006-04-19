@@ -28,11 +28,11 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.ShelXReader;
@@ -53,6 +53,12 @@ public class ShelXReaderTest extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(ShelXReaderTest.class);
+    }
+
+    public void testAccepts() {
+    	ShelXReader reader = new ShelXReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(Crystal.class));
     }
 
     public void testReading() {

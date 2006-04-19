@@ -54,6 +54,11 @@ public class GhemicalReaderTest extends CDKTestCase {
         return new TestSuite(GhemicalReaderTest.class);
     }
 
+    public void testAccepts() {
+    	GhemicalMMReader reader = new GhemicalMMReader();
+    	assertTrue(reader.accepts(ChemModel.class));
+    }
+
     public void testExample() {
         String testfile =
 "!Header mm1gp 100\n" +

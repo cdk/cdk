@@ -30,10 +30,10 @@ import java.io.FileReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.graph.rebond.RebondTool;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ZMatrixReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -45,12 +45,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class ZMatrixReaderTest extends CDKTestCase {
     
     private String inFile;
-    private boolean standAlone;
     
     public ZMatrixReaderTest(String name) {
         super(name);
         inFile = "";
-        standAlone = false;
     }
     
     public void setInFile(String file) {
@@ -59,6 +57,11 @@ public class ZMatrixReaderTest extends CDKTestCase {
     
     public static Test suite() {
         return new TestSuite(ZMatrixReaderTest.class);
+    }
+
+    public void testAccepts() {
+    	ZMatrixReader reader = new ZMatrixReader();
+    	assertTrue(reader.accepts(ChemFile.class));
     }
 
     // Do we have a ZMatrix test file??
@@ -102,7 +105,6 @@ public class ZMatrixReaderTest extends CDKTestCase {
             if (new File(filename).canRead()) {
                 ZMatrixReaderTest test = new ZMatrixReaderTest("Test");
                 test.setInFile(filename);
-                test.standAlone = true;
                 test.xtestFile();
             } else {
                 System.out.println("File " + filename + " does not exist!");

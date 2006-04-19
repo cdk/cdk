@@ -52,6 +52,11 @@ public class VASPReaderTest extends CDKTestCase {
         return new TestSuite(VASPReaderTest.class);
     }
 
+    public void testAccepts() {
+    	VASPReader reader = new VASPReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    }
+
     public void testReading() {
         String filename = "data/LiMoS2_optimisation_ISIF3.vasp";
         logger.info("Testing: " + filename);

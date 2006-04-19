@@ -34,6 +34,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
@@ -65,6 +66,11 @@ public class MDLRXNWriterTest extends CDKTestCase {
     
     public static Test suite() {
         return new TestSuite(MDLRXNWriterTest.class);
+    }
+
+    public void testAccepts() throws Exception {
+    	MDLRXNWriter reader = new MDLRXNWriter();
+    	assertTrue(reader.accepts(Reaction.class));
     }
 
     public void testRoundtrip() {

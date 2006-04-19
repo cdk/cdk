@@ -28,7 +28,6 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -58,6 +57,11 @@ public class INChIReaderTest extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(INChIReaderTest.class);
+    }
+
+    public void testAccepts() {
+    	INChIReader reader = new INChIReader();
+    	assertTrue(reader.accepts(ChemFile.class));
     }
 
     /**
