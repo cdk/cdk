@@ -30,6 +30,9 @@ package org.openscience.cdk;
 import java.util.Collection;
 import java.util.Hashtable;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMonomer;
+
 /**
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
  *
@@ -54,9 +57,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	private Hashtable monomers;	// the list of all the contained Monomers. 
 	
 	/**
-	 *
 	 * Contructs a new Polymer to store the Monomers.
-	 *
 	 */	
 	public Polymer() {
 		super();
@@ -64,29 +65,25 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	}
 	
 	/**
-	 *
 	 * Adds the atom oAtom without specifying a Monomer. Therefore the
 	 * atom to this AtomContainer, but not to a certain Monomer (intended
 	 * e.g. for HETATMs).
 	 *
 	 * @param oAtom  The atom to add
-	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom) {
+	public void addAtom(IAtom oAtom) {
 		super.addAtom(oAtom);
 		/* notifyChanged() is called by addAtom in
 		 AtomContainer */
 	}
 	
 	/**
-	 *
 	 * Adds the atom oAtom to a specified Monomer.
 	 *
 	 * @param oAtom  The atom to add
 	 * @param oMonomer  The monomer the atom belongs to
-	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.IMonomer oMonomer) {
+	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);
@@ -104,25 +101,21 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	}
 	
 	/**
-	 *
 	 * Return the number of monomers present in the Polymer.
 	 *
 	 * @return number of monomers
-	 *
 	 */
 	public int getMonomerCount() {
 		return monomers.size();
 	}
 	
 	/**
-	 *
 	 * Retrieve a Monomer object by specifying its name.
 	 *
 	 * @param cName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for
-	 *
 	 */
-	public org.openscience.cdk.interfaces.IMonomer getMonomer(String cName) {
+	public IMonomer getMonomer(String cName) {
 		return (Monomer)monomers.get(cName);
 	}
 	
