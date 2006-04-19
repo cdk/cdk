@@ -164,7 +164,7 @@ public class Polarizability {
 			polarizabilitiyFactor = 0.387;
 		} else if (AtomSymbol.equals("C")) {
 			if (ac.getMaximumBondOrder(atom) == 1) {
-				polarizabilitiyFactor = 1.064;
+				polarizabilitiyFactor = 1.064;/*1.064*/
 			} else if (ac.getMaximumBondOrder(atom) == 1.5 || atom.getFlag(CDKConstants.ISAROMATIC)) {
 				polarizabilitiyFactor = 1.230;
 			} else if (ac.getMaximumBondOrder(atom) == 2) {
@@ -202,7 +202,7 @@ public class Polarizability {
 			}
 		} else if (AtomSymbol.equals("S")) {
 			if (ac.getMaximumBondOrder(atom) == 1) {
-				polarizabilitiyFactor = 3.19;
+				polarizabilitiyFactor = 3.20;/*3.19*/
 			} else if (ac.getMaximumBondOrder(atom) == 1.5 || atom.getFlag(CDKConstants.ISAROMATIC)) {
 				polarizabilitiyFactor = 3.38;
 			} else if (ac.getMaximumBondOrder(atom) == 2) {
@@ -217,7 +217,7 @@ public class Polarizability {
 		}else if (AtomSymbol.equals("F")) {
 			polarizabilitiyFactor = 0.296;
 		}else if (AtomSymbol.equals("Cl")) {
-			polarizabilitiyFactor = 2.35;
+			polarizabilitiyFactor = 2.343;
 		} else if (AtomSymbol.equals("Br")) {
 			polarizabilitiyFactor = 3.5;
 		} else if (AtomSymbol.equals("I")) {

@@ -185,9 +185,9 @@ public class GasteigerMarsiliPartialCharges {
 					factors[1] = 9.18;
 					factors[2] = 1.88;
 				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) > 1 && ac.getMaximumBondOrder(ac.getAtomAt(i)) < 3) {
-					factors[0] = 8.79;
-					factors[1] = 9.32;
-					factors[2] = 1.51;
+					factors[0] = 8.81;/*8.79*/
+					factors[1] = 9.34;/*9.32*/
+					factors[2] = 1.52;/*1.51*/
 				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) >= 3) {
 					factors[0] = 10.39;
 					factors[1] = 9.45;
@@ -210,43 +210,43 @@ public class GasteigerMarsiliPartialCharges {
 			} else if (AtomSymbol.equals("O")) {
 				if (ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1) {
 					if (ac.getAtomAt(i).getCharge() == -1) {
-						factors[0] = 17.07;
-						factors[1] = 13.79;
-						factors[2] = 0.47;
+						factors[0] = 17.07;/*17.07*/
+						factors[1] = 13.79;/*13.79*/
+						factors[2] = 0.47;/*0.47*/
 					} else {
-						factors[0] = 14.18;
-						factors[1] = 12.92;
-						factors[2] = 1.39;
+						factors[0] = 14.18;/*14.18*/
+						factors[1] = 12.92;/*12.92*/
+						factors[2] = 1.39;/*1.39*/
 					}
 				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) > 1 && ac.getMaximumBondOrder(ac.getAtomAt(i)) < 3) {
 					factors[0] = 17.07;
 					factors[1] = 13.79;
 					factors[2] = 0.47;
 				}
-			} else if (AtomSymbol.equals("F")) {
-				factors[0] = 14.66;
-				factors[1] = 13.85;
-				factors[2] = 2.31;
 			} else if (AtomSymbol.equals("P")) {
 				factors[0] = 8.90;
 				factors[1] = 8.32;
 				factors[2] = 1.58;
 			} else if (AtomSymbol.equals("S") && ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1) {
-				factors[0] = 10.14;
-				factors[1] = 9.13;
-				factors[2] = 1.38;
+				factors[0] = 10.14;/*10.14*/
+				factors[1] = 9.13;/*9.13*/
+				factors[2] = 1.38;/*1.38*/
+			} else if (AtomSymbol.equals("F")) {
+				factors[0] = 14.66;
+				factors[1] = 13.85;
+				factors[2] = 2.31;
 			} else if (AtomSymbol.equals("Cl")) {
-				factors[0] = 11.00;
-				factors[1] = 9.69;
-				factors[2] = 1.35;
+				factors[0] = 12.31;/*11.0*//*12.31*/
+				factors[1] = 10.84;/*9.69*//*10.84*/
+				factors[2] = 1.512;/*1.35*//*1.512*/
 			} else if (AtomSymbol.equals("Br")) {
-				factors[0] = 10.08;
-				factors[1] = 8.47;
-				factors[2] = 1.16;
+				factors[0] = 11.44;/*10.08*//*11.2*/
+				factors[1] = 9.63;/*8.47*//*9.4*/
+				factors[2] = 1.31;/*1.16*//*1.29*/
 			} else if (AtomSymbol.equals("I")) {
-				factors[0] = 9.90;
-				factors[1] = 7.96;
-				factors[2] = 0.96;
+				factors[0] = 9.88;/*9.90*/
+				factors[1] = 7.95;/*7.96*/
+				factors[2] = 0.945;/*0.96*/
 			}
 
 			gasteigerFactors[STEP_SIZE * i + i] = factors[0];
