@@ -40,22 +40,18 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.PDBAtom;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfReactions;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.templates.AminoAcids;
@@ -398,7 +394,6 @@ public class PDBReader extends DefaultChemObjectReader {
 			
 			while (atoms < strand.getAtomCount() - 1) {
 				PDBAtom anAtom = (PDBAtom)strand.getAtomAt(atoms);
-				int residue = 0;
 				
 				// Check that we have bond info about residue/ligand, if not - exit.
 				if(!AAs.containsKey(anAtom.getResName()))	{
