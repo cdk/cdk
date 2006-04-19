@@ -201,7 +201,6 @@ public class PartialTotalChargeDescriptorTest extends CDKTestCase {
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			System.out.println("result: "+result);
 			assertEquals(testResult[i],result,0.06);
 		}
 	}
