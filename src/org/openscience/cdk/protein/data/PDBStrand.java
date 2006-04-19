@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * regular PDB mix of protein or protein complexes, ligands, water molecules
  * and other species.
  *
- * @cdk.module data
+ * @cdk.module  pdb
  *
  * @author      Egon Willighagen
  * @cdk.created 2006-04-19
