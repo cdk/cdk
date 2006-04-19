@@ -41,7 +41,6 @@ import java.util.Vector;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
@@ -54,6 +53,7 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
+import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
 

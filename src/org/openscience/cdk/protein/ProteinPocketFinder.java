@@ -35,8 +35,8 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.GridGenerator;
-import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;

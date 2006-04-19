@@ -26,9 +26,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-package org.openscience.cdk;
+package org.openscience.cdk.protein.data;
 
 import javax.vecmath.Point3d;
+
+import org.openscience.cdk.Atom;
 
 /**
  * Represents the idea of an atom as used in PDB files. It contains extra fields

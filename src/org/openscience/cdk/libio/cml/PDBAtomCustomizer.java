@@ -36,7 +36,7 @@ import org.xmlcml.cml.element.CMLScalar;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.PDBAtom;
+import org.openscience.cdk.protein.data.PDBAtom;
 
 /**
  * Customizer for the libio-cml Convertor to be able to export details for
