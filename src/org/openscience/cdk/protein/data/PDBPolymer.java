@@ -31,9 +31,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.openscience.cdk.Polymer;
+import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * An entry in the PDB database. It is not just a regular protein, but the
@@ -46,7 +47,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @cdk.created 2006-04-19
  * @cdk.keyword polymer
  */
-public class PDBPolymer extends Polymer { 
+public class PDBPolymer extends BioPolymer { 
 
 	private static final long serialVersionUID = 4173552834313952358L;
 
@@ -73,6 +74,19 @@ public class PDBPolymer extends Polymer {
 			sequentialListOfMonomers.add(oMonomer.getMonomerName());
 	}
 
+	/**
+	 * Adds the atom oAtom to a specified Monomer of a specified Strand.
+	 * Additionally, it keeps record of the iCode.
+	 *
+	 * @param oAtom  The atom to add
+	 * @param oMonomer  The monomer the atom belongs to
+	 */
+	public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
+		super.addAtom(oAtom, oMonomer, oStrand);
+		if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
+			sequentialListOfMonomers.add(oMonomer.getMonomerName());
+	}
+	
 	/**
 	 * Returns the monomer names in the order in which they were added.
 	 * 
