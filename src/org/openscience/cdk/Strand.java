@@ -30,6 +30,10 @@ package org.openscience.cdk;
 import java.util.Collection;
 import java.util.Hashtable;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IStrand;
+
 /**
  * A Strand is an AtomContainer which stores additional strand specific
  * informations for a group of Atoms.
@@ -38,7 +42,7 @@ import java.util.Hashtable;
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  */
-public class Strand extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IStrand
+public class Strand extends AtomContainer implements java.io.Serializable, IStrand
 {
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -115,7 +119,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, org.o
 	 * @param oAtom  The atom to add
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom) {
+	public void addAtom(IAtom oAtom) {
 		addAtom(oAtom, getMonomer(""));
 	}
 	
@@ -127,7 +131,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, org.o
 	 * @param oMonomer  The monomer the atom belongs to
 	 *
 	 */
-	public void addAtom(org.openscience.cdk.interfaces.IAtom oAtom, org.openscience.cdk.interfaces.IMonomer oMonomer) {
+	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
 		
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);
@@ -161,7 +165,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, org.o
 	 * @return The Monomer object which was asked for
 	 *
 	 */
-	public org.openscience.cdk.interfaces.IMonomer getMonomer(String cName) {
+	public IMonomer getMonomer(String cName) {
 	    return (Monomer)monomers.get(cName);
 	}
 	
