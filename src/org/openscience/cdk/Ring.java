@@ -55,9 +55,14 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 		super();
 	}
 	
-	public Ring(org.openscience.cdk.interfaces.IAtomContainer ac)
+    /**
+     * Constructs a ring from the atoms in an IAtomContainer object.
+     *
+     * @param atomContainer The IAtomContainer object containing the atoms to form the ring
+     */
+	public Ring(org.openscience.cdk.interfaces.IAtomContainer atomContainer)
 	{
-		super(ac);
+		super(atomContainer);
 	}
 	
 	/**

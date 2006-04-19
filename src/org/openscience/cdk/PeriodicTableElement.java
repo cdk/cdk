@@ -89,7 +89,9 @@ public class PeriodicTableElement extends Element
     
     
 	/**
-	 *  Constructor for the PeriodicTableElement object
+	 *  Constructor for the PeriodicTableElement object.
+	 *
+	 * @param symbol The symbol of the element
 	 */
 	public PeriodicTableElement(String symbol)
 	{
@@ -214,6 +216,7 @@ public class PeriodicTableElement extends Element
 	* @param phase The phase to be assigned to this element
 	*
 	* @see    #getGroup
+	* @see #getPhase
 	*/
 	public void setPhase(String  phase) 
 	{

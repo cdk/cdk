@@ -342,6 +342,7 @@ public class AtomType extends Isotope implements java.io.Serializable, IAtomType
 	 *  Sets the the exact electron valency of the AtomType object.
 	 *
 	 * @param  valency  The new valency value
+	 * @see #getValency
 	 *
 	 */
 	public void setValency(int valency)
@@ -354,6 +355,7 @@ public class AtomType extends Isotope implements java.io.Serializable, IAtomType
 	 *  Gets the the exact electron valency of the AtomType object.
 	 *
 	 * @return The valency value
+	 * @see #setValency
 	 *
 	 */
 	public int getValency()

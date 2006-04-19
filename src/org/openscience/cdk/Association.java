@@ -55,6 +55,8 @@ public class Association extends ElectronContainer implements java.io.Serializab
     /**
      * Constructs an association between two Atom's.
      *
+     * @param atom1 An atom to be associated with another atom
+     * @param atom2 An atom to be associated with another atom
      * @see org.openscience.cdk.Atom
      */
     public Association(Atom atom1, Atom atom2) {

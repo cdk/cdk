@@ -101,6 +101,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
      *  Returns the array of Molecules of this container.
      *
      * @return    The array of Molecules of this container 
+     * @see #setMolecules
      */
     public org.openscience.cdk.interfaces.IMolecule[] getMolecules() {
         Molecule[] result = new Molecule[super.getAtomContainerCount()];
@@ -137,7 +138,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
 	
 	
 	/**
-	 *  Clones this SetOfMolecules and its content
+	 *  Clones this SetOfMolecules and its content.
 	 *
 	 *@return    the cloned object
 	 */

@@ -322,7 +322,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 
 
 	/**
-	 *  Clones this SetOfAtomContainers and its content
+	 *  Clones this SetOfAtomContainers and its content.
 	 *
 	 * @return    the cloned Object
 	 */

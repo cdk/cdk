@@ -182,7 +182,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	}
 
 	/**
-	 * Removes all Reactions from this container
+	 * Removes all Reactions from this container.
 	 */
 	public void removeAllReactions() {
 		for (int pos = this.reactionCount - 1; pos >= 0; pos--)

@@ -132,7 +132,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	/**
 	 * Removes a particular monomer, specified by its name.
 	 * 
-	 * @param name
+	 * @param name The name of the monomer to remove
 	 */
 	public void removeMonomer(String name)	{
 		if (monomers.containsKey(name))	{
