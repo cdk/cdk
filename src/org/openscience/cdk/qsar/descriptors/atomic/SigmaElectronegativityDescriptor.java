@@ -132,7 +132,7 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
         double sigmaElectronegativity = 0;
         Molecule mol = new Molecule(ac);
         try {
-      long starttime=System.currentTimeMillis();
+      @SuppressWarnings("unused") long starttime=System.currentTimeMillis();
       if(oldac!=ac){
         peoe.assignGasteigerMarsiliPartialCharges(mol, true);
         gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
