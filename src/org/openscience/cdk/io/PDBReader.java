@@ -55,7 +55,9 @@ import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
+import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStrand;
+import org.openscience.cdk.protein.data.PDBStructure;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -174,7 +176,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		StringBuffer cLine;
 		String cCol;
 		PDBAtom oAtom;
-		IBioPolymer oBP = oFile.getBuilder().newBioPolymer();
+		PDBPolymer oBP = new PDBPolymer();
 		StringBuffer cResidue;
 		String oObj;
 		IMonomer oMonomer;
@@ -223,7 +225,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						// search for an existing strand or create a new one.
 						oStrand = oBP.getStrand(String.valueOf(chain));
 						if (oStrand == null) {
-							oStrand = oFile.getBuilder().newStrand();
+							oStrand = new PDBStrand();
 							oStrand.setStrandName(String.valueOf(chain));
 						}
 						
@@ -346,13 +348,39 @@ public class PDBReader extends DefaultChemObjectReader {
 					}
 					/*************************************************************/
 					
-					else if (cCol.equals("HELIX ") ||
-							cCol.equals("SHEET ") ||
-							cCol.equals("TURN  ")) {
-						Vector t = (Vector)oModel.getProperty("pdb.structure.records");
-						if (t == null)
-							oModel.setProperty("pdb.structure.records", t = new Vector());
-						t.add("" + cLine);
+					else if (cCol.equals("HELIX ")) {
+//						HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
+//						          1         2         3         4         5         6         7
+//						01234567890123456789012345678901234567890123456789012345678901234567890123456789
+						String pdbLine = cLine.toString();
+						PDBStructure structure = new PDBStructure();
+						structure.setStructureType(PDBStructure.HELIX);
+					    structure.setStartChainID(pdbLine.charAt(19));
+					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(21, 25).trim()));
+					    structure.setStartInsertionCode(pdbLine.charAt(25));
+					    structure.setEndChainID(pdbLine.charAt(31));
+					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(33, 37).trim()));
+					    oBP.addStructure(structure);
+					} else if (cCol.equals("SHEET ")) {
+						String pdbLine = cLine.toString();
+						PDBStructure structure = new PDBStructure();
+						structure.setStructureType(PDBStructure.SHEET);
+					    structure.setStartChainID(pdbLine.charAt(19));
+					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(20, 24).trim()));
+					    structure.setStartInsertionCode(pdbLine.charAt(24));
+					    structure.setEndChainID(pdbLine.charAt(30));
+					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(31, 35).trim()));
+					    oBP.addStructure(structure);
+					} else if (cCol.equals("TURN  ")) {
+						String pdbLine = cLine.toString();
+						PDBStructure structure = new PDBStructure();
+						structure.setStructureType(PDBStructure.TURN);
+					    structure.setStartChainID(pdbLine.charAt(19));
+					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(20, 24).trim()));
+					    structure.setStartInsertionCode(pdbLine.charAt(24));
+					    structure.setEndChainID(pdbLine.charAt(30));
+					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(31, 35).trim()));
+					    oBP.addStructure(structure);
 					}
 				}
 			} while (_oInput.ready() && (cRead != null));

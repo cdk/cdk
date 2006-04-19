@@ -52,6 +52,7 @@ public class PDBPolymer extends BioPolymer {
 	private static final long serialVersionUID = 4173552834313952358L;
 
 	List sequentialListOfMonomers;
+	List secundairyStructures;
 	
 	/**
 	 * Contructs a new Polymer to store the Monomers.
@@ -59,6 +60,16 @@ public class PDBPolymer extends BioPolymer {
 	public PDBPolymer() {
 		super();
 		sequentialListOfMonomers = new ArrayList();
+		secundairyStructures = new ArrayList();
+	}
+	
+	public void addStructure(PDBStructure structure) {
+		secundairyStructures.add(structure);
+	}
+	
+	public Collection getStructures() {
+//		don't return the original
+		return new ArrayList(secundairyStructures);
 	}
 	
 	/**
