@@ -104,6 +104,13 @@
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
     </atom>
   </atomType>
+  <atomType id="N">
+    <atom elementType="N" formalCharge="0">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">5.0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+    </atom>
+  </atomType>
   <atomType id="N.sp2">
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
