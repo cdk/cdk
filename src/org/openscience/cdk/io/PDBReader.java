@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-package org.openscience.cdk.protein.data;
+package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,7 +52,6 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.templates.AminoAcids;

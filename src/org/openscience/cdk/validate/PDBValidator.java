@@ -35,7 +35,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.EnzymeResidueLocator;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.io.MACiEReader;
-import org.openscience.cdk.protein.data.PDBReader;
+import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;

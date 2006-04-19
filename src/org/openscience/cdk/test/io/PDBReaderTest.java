@@ -37,7 +37,7 @@ import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.PDBAtom;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.protein.data.PDBReader;
+import org.openscience.cdk.io.PDBReader;
 
 /**
  * TestCase for the PDBReader class.
