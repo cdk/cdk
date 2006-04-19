@@ -35,6 +35,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.MDLReader;
@@ -63,6 +64,13 @@ public class MDLReaderTest extends CDKTestCase {
         return new TestSuite(MDLReaderTest.class);
     }
 
+    public void testAcceptsChemFile() {
+    	MDLReader reader = new MDLReader();
+    	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(ChemModel.class));
+    	assertTrue(reader.accepts(Molecule.class));
+    }
+    
     public void testBug682233() {
         String filename = "data/mdl/bug682233.mol";
         logger.info("Testing: " + filename);
