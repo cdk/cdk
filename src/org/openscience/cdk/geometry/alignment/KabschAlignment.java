@@ -135,17 +135,6 @@ public class KabschAlignment {
         return( new Point3d(x/totalmass, y/totalmass, z/totalmass) );
     }
         
-//    private void dump(double[][] m, int nrow, int ncol, String msg) {
-//        System.out.println(msg);
-//        for (int i = 0; i < nrow; i++) {
-//            for (int j = 0; j < ncol; j++) {
-//                System.out.print(m[i][j]+ " ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
-//    }
-
 
     /**
      * Sets up variables for the alignment algorithm.
@@ -267,10 +256,6 @@ public class KabschAlignment {
 
         this.cm1 = getCenterOfMass(p1, atwt1);
         this.cm2 = getCenterOfMass(p2, atwt2);
-        /*
-        this.cm1 = getCenterOfGeometry(p1);
-        this.cm2 = getCenterOfGeometry(p2);
-        */
 
         // move the points 
         for (int i = 0; i < this.npoint; i++) {
