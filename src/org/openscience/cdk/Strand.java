@@ -79,6 +79,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 * Retrieve the strand name.
 	 *
 	 * @return The name of the Strand object
+	 * @see #setStrandName
 	 */
 	public String getStrandName() {
 		return strandName;
@@ -88,6 +89,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 * Retrieve the strand type.
 	 *
 	 * @return The type of the Strand object
+	 * @see #setStrandType
 	 */
 	public String getStrandType() {
 		return strandType;
@@ -97,6 +99,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 * Set the name of the Strand object.
 	 *
 	 * @param cStrandName  The new name for this strand
+	 * @see #getStrandName
 	 */
 	public void setStrandName(String cStrandName) {
 		strandName = cStrandName;
@@ -106,6 +109,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 * Set the type of the Strand object.
 	 *
 	 * @param cStrandType  The new type for this strand
+	 * @see #getStrandType
 	 */
 	public void setStrandType(String cStrandType) {
 		strandType = cStrandType;
@@ -196,7 +200,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	/**
 	 * Removes a particular monomer, specified by its name.
 	 * 
-	 * @param name
+	 * @param name The name of the monomer to remove
 	 */
 	public void removeMonomer(String name)	{
 		if (monomers.containsKey(name))	{
@@ -207,7 +211,8 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	}
 	
 	/**
-	 * 
+	 * Returns a hashtable containing the monomers in the strand.
+	 *
 	 * @return hashtable containing the monomers in the strand.
 	 */
 	public Hashtable getMonomers()	{
