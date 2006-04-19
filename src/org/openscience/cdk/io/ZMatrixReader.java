@@ -39,12 +39,17 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -98,7 +103,10 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     }
 
 	public boolean accepts(Class classObject) {
-		if (IChemFile.class.isInstance(classObject)) return true;
+		Class[] interfaces = classObject.getInterfaces();
+		for (int i=0; i<interfaces.length; i++) {
+			if (IChemFile.class.equals(interfaces[i])) return true;
+		}
 		return false;
 	}
 

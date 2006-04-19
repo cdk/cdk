@@ -37,12 +37,17 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -119,8 +124,11 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     }
 
 	public boolean accepts(Class classObject) {
-		if (IMolecule.class.isInstance(classObject)) return true;
-		if (ISetOfMolecules.class.isInstance(classObject)) return true;
+		Class[] interfaces = classObject.getInterfaces();
+		for (int i=0; i<interfaces.length; i++) {
+			if (ISetOfMolecules.class.equals(interfaces[i])) return true;
+			if (IMolecule.class.equals(interfaces[i])) return true;
+		}
 		return false;
 	}
 

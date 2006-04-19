@@ -51,7 +51,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
@@ -132,7 +134,10 @@ public class PMPReader extends DefaultChemObjectReader {
     }
 
 	public boolean accepts(Class classObject) {
-		if (IChemFile.class.isInstance(classObject)) return true;
+		Class[] interfaces = classObject.getInterfaces();
+		for (int i=0; i<interfaces.length; i++) {
+			if (IChemFile.class.equals(interfaces[i])) return true;
+		}
 		return false;
 	}
 

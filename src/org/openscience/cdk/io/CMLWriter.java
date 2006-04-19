@@ -162,15 +162,18 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
 	public boolean accepts(Class classObject) {
-		if (IReaction.class.isInstance(classObject)) return true;
-		if (ISetOfReactions.class.isInstance(classObject)) return true;
-		if (ISetOfMolecules.class.isInstance(classObject)) return true;
-		if (IChemSequence.class.isInstance(classObject)) return true;
-		if (IChemModel.class.isInstance(classObject)) return true;
-		if (IChemFile.class.isInstance(classObject)) return true;
-		if (ICrystal.class.isInstance(classObject)) return true;
-		if (IAtom.class.isInstance(classObject)) return true;
-		if (IBond.class.isInstance(classObject)) return true;
+		Class[] interfaces = classObject.getInterfaces();
+		for (int i=0; i<interfaces.length; i++) {
+			if (IAtom.class.equals(interfaces[i])) return true;
+			if (IBond.class.equals(interfaces[i])) return true;
+			if (ICrystal.class.equals(interfaces[i])) return true;
+			if (IChemModel.class.equals(interfaces[i])) return true;
+			if (IChemFile.class.equals(interfaces[i])) return true;
+			if (IChemSequence.class.equals(interfaces[i])) return true;
+			if (ISetOfMolecules.class.equals(interfaces[i])) return true;
+			if (ISetOfReactions.class.equals(interfaces[i])) return true;
+			if (IReaction.class.equals(interfaces[i])) return true;
+		}
 		return false;
 	}
 

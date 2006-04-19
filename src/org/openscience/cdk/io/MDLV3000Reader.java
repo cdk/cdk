@@ -45,6 +45,10 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -117,7 +121,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
 	public boolean accepts(Class classObject) {
-		if (IMolecule.class.isInstance(classObject)) return true;
+		Class[] interfaces = classObject.getInterfaces();
+		for (int i=0; i<interfaces.length; i++) {
+			if (IMolecule.class.equals(interfaces[i])) return true;
+		}
 		return false;
 	}
 

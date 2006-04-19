@@ -177,7 +177,10 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
 	public boolean accepts(Class classObject) {
-		if (IChemFile.class.isInstance(classObject)) return true;
+		Class[] interfaces = classObject.getInterfaces();
+		for (int i=0; i<interfaces.length; i++) {
+			if (IChemFile.class.equals(interfaces[i])) return true;
+		}
 		return false;
 	}
 

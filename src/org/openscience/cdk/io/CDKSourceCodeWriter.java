@@ -37,6 +37,8 @@ import java.io.Writer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
@@ -114,7 +116,10 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
 
 	public boolean accepts(Class classObject) {
-		if (IMolecule.class.isInstance(classObject)) return true;
+		Class[] interfaces = classObject.getInterfaces();
+		for (int i=0; i<interfaces.length; i++) {
+			if (IMolecule.class.equals(interfaces[i])) return true;
+		}
 		return false;
 	}
 
