@@ -25,14 +25,11 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTotalChargeDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptor;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
