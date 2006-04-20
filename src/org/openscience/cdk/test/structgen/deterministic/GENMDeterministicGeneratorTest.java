@@ -85,68 +85,68 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	}
 
 
-	
-	
-	 /**  
-	  * For SMILES test
-	  */
-	public void testSMILES()
-	{
-		try
-		{	
-			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H12","");
-			Vector smiles=gdg.getSMILES();
-			//for(int i=0;i<smiles.size();i++)
-			//	System.out.println(smiles.get(i));
-			//everythingOk(structures);
-			displaySMILES(smiles);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	
-	private boolean displaySMILES(Vector structures)
-	{
-		SmilesParser sp = new SmilesParser();
-		StructureDiagramGenerator sdg = null;
-		MoleculeViewer2D mv = null;
-		Molecule mol = null;
-		for (int f = 0; f<structures.size(); f++)
-		{
-		//	System.out.println(structures.get(f));
-			try
-			{
-				mol=sp.parseSmiles((String)(structures.get(f)));
-				sdg = new StructureDiagramGenerator();
-
-			//mol = (Molecule)structures.elementAt(f);
-			//System.out.println(mol.getAtomCount());
-			//System.out.println(mol.getBondCount());
-				sdg.setMolecule((Molecule)mol.clone());
-			//sdg.setMolecule(mol);
-			
-				sdg.generateCoordinates(new Vector2d(0,1));
-			}
-			catch(Exception exc)
-			{
-				exc.printStackTrace();
-				fail("*** Exit due to an unexpected error during coordinate generation ***");
-			}
-            if (standAlone) {
-                
-                mv = new MoleculeViewer2D();
-		mv.setAtomContainer(sdg.getMolecule());
-                //			Renderer2DModel r2dm = new Renderer2DModel();
-                //			r2dm.setDrawNumbers(true);
-                //			mv.setRenderer2DModel(r2dm);
-                moleculeListViewer.addStructure(mv, "Structure no. " + (f + 1));
-            }
-		}
-		return true;
-	}
+//	
+//	
+//	 /**  
+//	  * For SMILES test
+//	  */
+//	public void testSMILES()
+//	{
+//		try
+//		{	
+//			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H12","");
+//			Vector smiles=gdg.getSMILES();
+//			//for(int i=0;i<smiles.size();i++)
+//			//	System.out.println(smiles.get(i));
+//			//everythingOk(structures);
+////			displaySMILES(smiles);
+//		}
+//		catch(Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	
+//	private boolean displaySMILES(Vector structures)
+//	{
+//		SmilesParser sp = new SmilesParser();
+//		StructureDiagramGenerator sdg = null;
+//		MoleculeViewer2D mv = null;
+//		Molecule mol = null;
+//		for (int f = 0; f<structures.size(); f++)
+//		{
+//		//	System.out.println(structures.get(f));
+//			try
+//			{
+//				mol=sp.parseSmiles((String)(structures.get(f)));
+//				sdg = new StructureDiagramGenerator();
+//
+//			//mol = (Molecule)structures.elementAt(f);
+//			//System.out.println(mol.getAtomCount());
+//			//System.out.println(mol.getBondCount());
+//				sdg.setMolecule((Molecule)mol.clone());
+//			//sdg.setMolecule(mol);
+//			
+//				sdg.generateCoordinates(new Vector2d(0,1));
+//			}
+//			catch(Exception exc)
+//			{
+//				exc.printStackTrace();
+//				fail("*** Exit due to an unexpected error during coordinate generation ***");
+//			}
+//            if (standAlone) {
+//                
+//                mv = new MoleculeViewer2D();
+//		mv.setAtomContainer(sdg.getMolecule());
+//                //			Renderer2DModel r2dm = new Renderer2DModel();
+//                //			r2dm.setDrawNumbers(true);
+//                //			mv.setRenderer2DModel(r2dm);
+//                moleculeListViewer.addStructure(mv, "Structure no. " + (f + 1));
+//            }
+//		}
+//		return true;
+//	}
 	
 	
 	
@@ -191,8 +191,8 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	{
 		GENMDeterministicGeneratorTest test = new GENMDeterministicGeneratorTest();
 		test.setStandAlone(true);
-		//test.testIt();
-		test.testSMILES();
+		test.testIt();
+		//test.testSMILES();
 	}
 }
 
