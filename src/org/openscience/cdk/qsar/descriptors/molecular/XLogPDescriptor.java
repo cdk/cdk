@@ -27,17 +27,20 @@ import java.util.List;
 import java.util.Vector;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.BFSShortestPath;
+import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
@@ -45,16 +48,13 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import org.openscience.cdk.graph.BFSShortestPath;
-import org.openscience.cdk.graph.MoleculeGraphs;
 
 /**
  * Prediction of logP based on the atom-type method called XLogP. For
@@ -198,7 +198,7 @@ public class XLogPDescriptor implements IDescriptor {
             HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
         }
 		double xlogP = 0;
-		SmilesParser sp = new SmilesParser();
+//		SmilesParser sp = new SmilesParser();
 		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 		String symbol = "";
 		int bondCount = 0;
@@ -825,7 +825,10 @@ public class XLogPDescriptor implements IDescriptor {
 		
 		if (checkAminoAcid>1){
 //			 alpha amino acid
-			QueryAtomContainer aminoAcid=QueryAtomContainerCreator.createBasicQueryContainer(sp.parseSmiles("NCC(=O)O"));
+			QueryAtomContainer aminoAcid = 
+				QueryAtomContainerCreator.createBasicQueryContainer(
+					createAminoAcid(ac.getBuilder())
+   			    );
 			IBond [] bonds=aminoAcid.getBonds();
 			IAtom[] bondAtoms=null;
 			for (int i=0;i<bonds.length;i++){
@@ -857,7 +860,7 @@ public class XLogPDescriptor implements IDescriptor {
 			}
 		}
 		
-		IAtomContainer paba = sp.parseSmiles("CS(=O)(=O)c1ccc(N)cc1");
+		IAtomContainer paba = createPaba(ac.getBuilder());
 		// p-amino sulphonic acid
 		if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, paba)) {
 			xlogP -= 0.501;
@@ -867,7 +870,7 @@ public class XLogPDescriptor implements IDescriptor {
 		
 		// salicylic acid
 		if (salicylFlag){
-			IAtomContainer salicilic = sp.parseSmiles("O=C(O)c1ccccc1O");
+			IAtomContainer salicilic = createSalicylicAcid(ac.getBuilder());
 			if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, salicilic)) {
 				xlogP += 0.554;
 				//System.out.println("XLOGP: salicylic acid	 0.554");
@@ -1402,6 +1405,136 @@ public class XLogPDescriptor implements IDescriptor {
 	 */
 	public Object getParameterType(String name) {
             return new Boolean(true);
+	}
+	
+	private IAtomContainer createPaba(IChemObjectBuilder builder) {
+		// SMILES CS(=O)(=O)c1ccc(N)cc1
+		IAtomContainer container = builder.newAtomContainer();
+		IAtom atom1 = builder.newAtom("C");
+		container.addAtom(atom1);
+		IAtom atom2 = builder.newAtom("S");
+		container.addAtom(atom2);
+		IAtom atom3 = builder.newAtom("O");
+		container.addAtom(atom3);
+		IAtom atom4 = builder.newAtom("O");
+		container.addAtom(atom4);
+		IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom5);
+		IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom6);
+		IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom7);
+		IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom8);
+		IAtom atom9 = builder.newAtom("N");
+		container.addAtom(atom9);
+		IAtom atom10 = builder.newAtom("C"); atom10.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom10);
+		IAtom atom11 = builder.newAtom("C"); atom11.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom11);
+		IBond bond1 = builder.newBond(atom1, atom2, CDKConstants.BONDORDER_SINGLE);
+		container.addBond(bond1);
+		IBond bond2 = builder.newBond(atom2, atom3, CDKConstants.BONDORDER_DOUBLE);
+		container.addBond(bond2);
+		IBond bond3 = builder.newBond(atom2, atom4, CDKConstants.BONDORDER_DOUBLE);
+		container.addBond(bond3);
+		IBond bond4 = builder.newBond(atom2, atom5, CDKConstants.BONDORDER_SINGLE);
+		container.addBond(bond4);
+		IBond bond5 = builder.newBond(atom5, atom6, CDKConstants.BONDORDER_DOUBLE);
+		bond5.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond5);
+		IBond bond6 = builder.newBond(atom6, atom7, CDKConstants.BONDORDER_SINGLE);
+		bond6.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond6);
+		IBond bond7 = builder.newBond(atom7, atom8, CDKConstants.BONDORDER_DOUBLE);
+		bond7.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond7);
+		IBond bond8 = builder.newBond(atom8, atom9, CDKConstants.BONDORDER_SINGLE);
+		container.addBond(bond8);
+		IBond bond9 = builder.newBond(atom8, atom10, CDKConstants.BONDORDER_SINGLE);
+		bond9.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond9);
+		IBond bond10 = builder.newBond(atom10, atom11, CDKConstants.BONDORDER_DOUBLE);
+		bond10.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond10);
+		IBond bond11 = builder.newBond(atom5, atom11, CDKConstants.BONDORDER_SINGLE);
+		bond11.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond11);
+		
+		return container;
+	}
+	
+	private IAtomContainer createAminoAcid(IChemObjectBuilder builder) {
+		// SMILES NCC(=O)O
+		IAtomContainer container = builder.newAtomContainer();
+		IAtom atom1 = builder.newAtom("N");
+		container.addAtom(atom1);
+		IAtom atom2 = builder.newAtom("C");
+		container.addAtom(atom2);
+		IAtom atom3 = builder.newAtom("C"); // carbonyl
+		container.addAtom(atom3);
+		IAtom atom4 = builder.newAtom("O"); // carbonyl
+		container.addAtom(atom4);
+		IAtom atom5 = builder.newAtom("O");
+		container.addAtom(atom5);
+		container.addBond(builder.newBond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+		container.addBond(builder.newBond(atom2, atom3, CDKConstants.BONDORDER_SINGLE));
+		container.addBond(builder.newBond(atom3, atom4, CDKConstants.BONDORDER_DOUBLE));
+		container.addBond(builder.newBond(atom3, atom5, CDKConstants.BONDORDER_SINGLE));
+		return container;
+	}
+	
+	private IAtomContainer createSalicylicAcid(IChemObjectBuilder builder) {
+		// SMILES O=C(O)c1ccccc1O
+		IAtomContainer container = builder.newAtomContainer();
+		IAtom atom1 = builder.newAtom("C");
+		container.addAtom(atom1);
+		IAtom atom2 = builder.newAtom("O");
+		container.addAtom(atom2);
+		IAtom atom3 = builder.newAtom("O");
+		container.addAtom(atom3);
+		IAtom atom4 = builder.newAtom("C"); atom4.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom4);
+		IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom5);
+		IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom6);
+		IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom7);
+		IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom8);
+		IAtom atom9 = builder.newAtom("C"); atom9.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		container.addAtom(atom9);
+		IAtom atom10 = builder.newAtom("O");
+		container.addAtom(atom10);
+		IBond bond1 = builder.newBond(atom1, atom2, CDKConstants.BONDORDER_DOUBLE);
+		container.addBond(bond1);
+		IBond bond2 = builder.newBond(atom1, atom3, CDKConstants.BONDORDER_SINGLE);
+		container.addBond(bond2);
+		IBond bond3 = builder.newBond(atom1, atom4, CDKConstants.BONDORDER_SINGLE);
+		container.addBond(bond3);
+		IBond bond4 = builder.newBond(atom4, atom5, CDKConstants.BONDORDER_DOUBLE);
+		bond4.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond4);
+		IBond bond5 = builder.newBond(atom5, atom6, CDKConstants.BONDORDER_SINGLE);
+		bond5.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond5);
+		IBond bond6 = builder.newBond(atom6, atom7, CDKConstants.BONDORDER_DOUBLE);
+		bond6.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond6);
+		IBond bond7 = builder.newBond(atom7, atom8, CDKConstants.BONDORDER_SINGLE);
+		bond7.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond7);
+		IBond bond8 = builder.newBond(atom8, atom9, CDKConstants.BONDORDER_DOUBLE);
+		bond8.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond8);
+		IBond bond9 = builder.newBond(atom9, atom4, CDKConstants.BONDORDER_SINGLE);
+		bond9.setFlag(CDKConstants.ISAROMATIC, true);
+		container.addBond(bond9);
+		IBond bond10 = builder.newBond(atom9, atom10, CDKConstants.BONDORDER_SINGLE);
+		container.addBond(bond10);
+		
+		return container;
 	}
 }
 

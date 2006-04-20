@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * <p>For parsing each SMILES it still uses the normal SMILESReader.
  *
- * @cdk.module extra
+ * @cdk.module smiles
  *
  * @see org.openscience.cdk.io.SMILESReader
  * 

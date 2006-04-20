@@ -44,6 +44,8 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
  *
  * @cdk.keyword  fingerprint
  * @cdk.keyword  similarity
+ * 
+ * @cdk.module   experimental
  */
 public class SubstructureFingerprinter implements IFingerprinter {
 

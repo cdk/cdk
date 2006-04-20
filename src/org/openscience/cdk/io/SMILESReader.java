@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>For each line a molecule is generated, and multiple Molecules are
  * read as SetOfMolecules.
  *
- * @cdk.module  extra
+ * @cdk.module  smiles
  * @cdk.keyword file format, SMILES
  *
  * @see org.openscience.cdk.io.iterator.IteratingSMILESReader

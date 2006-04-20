@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Writes the SMILES strings to a plain text file.
  *
- * @cdk.module extra
+ * @cdk.module  smiles
  *
  * @cdk.keyword file format
  */

@@ -11,4 +11,4 @@ cdk-qsar.jar
 cdk-render.jar
 cdk-standard.jar
 cdk-svg.jar
-
+cdk-smiles.jar

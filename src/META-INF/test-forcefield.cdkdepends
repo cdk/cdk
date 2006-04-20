@@ -9,4 +9,5 @@ cdk-qsar.jar
 cdk-qsar-pdb.jar
 cdk-valencycheck.jar
 cdk-forcefield.jar
+cdk-smiles.jar
 cdk-test-core.jar

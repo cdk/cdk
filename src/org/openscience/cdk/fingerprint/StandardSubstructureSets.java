@@ -7,6 +7,8 @@ import org.openscience.cdk.smiles.SmilesParser;
  * Default sets of atom containers aimed for use with the substructure
  * 
  * @author egonw
+ * 
+ * @cdk.module experimental
  */
 public class StandardSubstructureSets {
 

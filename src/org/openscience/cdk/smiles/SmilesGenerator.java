@@ -74,6 +74,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *@author         Stefan Kuhn (chiral smiles)
  *@cdk.created    2002-02-26
  *@cdk.keyword    SMILES, generator
+ *
+ * @cdk.module    smiles
  */
 public class SmilesGenerator
 {
