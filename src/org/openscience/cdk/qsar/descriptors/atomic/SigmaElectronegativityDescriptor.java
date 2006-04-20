@@ -181,7 +181,7 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    public Object[] getParameterType(String name) {
+    public Object getParameterType(String name) {
     	Integer[] object = {new Integer(0), new Integer(0)};
         return object;
     }
