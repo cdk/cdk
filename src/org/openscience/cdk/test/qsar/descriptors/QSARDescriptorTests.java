@@ -51,7 +51,7 @@ public class QSARDescriptorTests {
         suite.addTest(AromaticBondsCountDescriptorTest.suite());
         suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
         suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
-        suite.addTest(EffectivePolarizabilityDescriptorTest.suite());
+        // suite.addTest(EffectivePolarizabilityDescriptorTest.suite());
         suite.addTest(HBondAcceptorCountDescriptorTest.suite());
         suite.addTest(HBondDonorCountDescriptorTest.suite());
         suite.addTest(ValenceConnectivityOrderZeroDescriptorTest.suite());
