@@ -46,6 +46,6 @@ public class CMLRSSFormat implements IChemFormat {
     }
 
     public String getReaderClassName() { return null; }
-    public String getWriterClassName() { return null; }
+    public String getWriterClassName() { return "org.openscience.cdk.io.RssWriter"; }
 
 }
