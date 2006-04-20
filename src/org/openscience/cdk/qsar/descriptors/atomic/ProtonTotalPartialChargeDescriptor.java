@@ -127,7 +127,9 @@ public class ProtonTotalPartialChargeDescriptor implements IDescriptor {
         int counter = 1;
         Molecule mol = new Molecule(ac);
         try {
+        	
             peoe = new GasteigerMarsiliPartialCharges();
+            peoe.setMaxGasteigerIters(6);
         //	HydrogenAdder hAdder = new HydrogenAdder();
         //	hAdder.addExplicitHydrogensToSatisfyValency(mol);
             peoe.assignGasteigerMarsiliPartialCharges(mol, true);

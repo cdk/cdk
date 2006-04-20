@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -63,6 +62,7 @@ public class PartialSigmaChargeDescriptor implements IDescriptor {
 
     private int atomPosition = 0;
     private GasteigerMarsiliPartialCharges peoe = null;
+	private int maxIterations;
 
 
     /**
@@ -92,17 +92,25 @@ public class PartialSigmaChargeDescriptor implements IDescriptor {
      *  Sets the parameters attribute of the PartialSigmaChargeDescriptor
      *  object
      *
-     *@param  params            The new parameters value
+     *@param  params            1: Atom position and 2: max iterations
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
+        if (params.length > 2) {
+            throw new CDKException("PartialSigmaChargeDescriptor only expects two parameter");
         }
         if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
+            throw new CDKException("The parameter 1 must be of type Integer");
         }
         atomPosition = ((Integer) params[0]).intValue();
+        
+
+        if((params.length > 1)&& params[1] != null ){
+            if (!(params[1] instanceof Integer) ){
+                throw new CDKException("The parameter 2 must be of type Integer");
+            }
+            maxIterations = ((Integer) params[1]).intValue();
+        }
     }
 
 
@@ -113,8 +121,9 @@ public class PartialSigmaChargeDescriptor implements IDescriptor {
      */
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
+        Object[] params = new Object[2];
         params[0] = new Integer(atomPosition);
+        params[1] = new Integer(maxIterations);
         return params;
     }
 
@@ -131,6 +140,8 @@ public class PartialSigmaChargeDescriptor implements IDescriptor {
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
         try {
+        	if(maxIterations != 0)
+        		peoe.setMaxGasteigerIters(maxIterations);
             peoe.assignGasteigerMarsiliPartialCharges(mol, true);
         } catch (Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
@@ -149,8 +160,9 @@ public class PartialSigmaChargeDescriptor implements IDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
+        String[] params = new String[2];
         params[0] = "atomPosition";
+        params[1] = "maxIterations";
         return params;
     }
 
@@ -163,7 +175,8 @@ public class PartialSigmaChargeDescriptor implements IDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+    	Integer[] object = {new Integer(0), new Integer(0)};
+        return object;
     }
 }
 

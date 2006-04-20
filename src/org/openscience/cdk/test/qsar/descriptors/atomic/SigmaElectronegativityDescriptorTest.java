@@ -51,7 +51,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 	public void testSigmaElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={8.7177,11.306};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IDescriptor descriptor  = new SigmaElectronegativityDescriptor() ;
-		Integer[] params = new Integer[1];
+		Integer[] params = new Integer[2];
         
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("CF"); 
@@ -60,6 +60,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
         
         for (int i = 0 ; i < 2 ; i++){
 			params[0] = new Integer(i);
+			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
@@ -73,7 +74,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 	public void testSigmaElectronegativityDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={8.3293,10.491};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IDescriptor descriptor = new SigmaElectronegativityDescriptor();
-		Integer[] params = new Integer[1];
+		Integer[] params = new Integer[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CCl");
@@ -81,6 +82,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < 2 ; i++){
 			params[0] = new Integer(i);
+			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.05);
@@ -92,7 +94,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 	public void testSigmaElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={7.8677,8.1073,8.4452,10.154}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IDescriptor descriptor = new SigmaElectronegativityDescriptor();
-		Integer[] params = new Integer[1];
+		Integer[] params = new Integer[2];
         
         
 		SmilesParser sp = new SmilesParser();
@@ -102,6 +104,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < 4 ; i++){
 			params[0] = new Integer(i);
+			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.02);
@@ -130,7 +133,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 	public void testSigmaElectronegativityDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={7.6009,8.3948,9.4663,8.3948,7.6009}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IDescriptor descriptor = new SigmaElectronegativityDescriptor();
-		Integer[] params = new Integer[1];
+		Integer[] params = new Integer[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CCOCC");
@@ -139,6 +142,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < 5 ; i++){
 			params[0] = new Integer(i);
+			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.002);
@@ -150,7 +154,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 	public void testSigmaElectronegativityDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={8.1395,8.1321,8.5049,9.3081}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IDescriptor descriptor = new SigmaElectronegativityDescriptor();
-		Integer[] params = new Integer[1];
+		Integer[] params = new Integer[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("NCCO");
@@ -159,6 +163,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < 4 ; i++){
 			params[0] = new Integer(i);
+			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.002);
@@ -181,7 +186,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.001);
+			assertEquals(testResult[i],result,0.005);
 		}
 	}
 }

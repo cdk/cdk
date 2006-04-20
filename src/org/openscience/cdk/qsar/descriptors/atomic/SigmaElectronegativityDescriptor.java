@@ -60,9 +60,10 @@ import org.openscience.cdk.qsar.DescriptorValue;
 public class SigmaElectronegativityDescriptor implements IDescriptor {
 
     private int atomPosition = 0;
-  private GasteigerMarsiliPartialCharges peoe = null;
-  private IAtomContainer oldac=null;
-  private double[] gasteigerFactors = null;
+    private int maxIterations = 0;
+    private GasteigerMarsiliPartialCharges peoe = null;
+    private IAtomContainer oldac=null;
+    private double[] gasteigerFactors = null;
 
 
     /**
@@ -92,17 +93,24 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
      *  Sets the parameters attribute of the SigmaElectronegativityDescriptor
      *  object
      *
-     *@param  params            Atom position
+     *@param  params            1: Atom position and 2: max iterations
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
+        if (params.length > 2) {
+            throw new CDKException("SigmaElectronegativityDescriptor only expects two parameter");
         }
         if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
+            throw new CDKException("The parameter 1 must be of type Integer");
         }
         atomPosition = ((Integer) params[0]).intValue();
+        
+        if((params.length > 1)&& params[1] != null ){
+            if (!(params[1] instanceof Integer) ){
+                throw new CDKException("The parameter 2 must be of type Integer");
+            }
+            maxIterations = ((Integer) params[1]).intValue();
+        }
     }
 
 
@@ -114,8 +122,9 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
      */
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
+        Object[] params = new Object[2];
         params[0] = new Integer(atomPosition);
+        params[1] = new Integer(maxIterations);
         return params;
     }
 
@@ -132,18 +141,20 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
         double sigmaElectronegativity = 0;
         Molecule mol = new Molecule(ac);
         try {
-      long starttime=System.currentTimeMillis();
-      if(oldac!=ac){
-        peoe.assignGasteigerMarsiliPartialCharges(mol, true);
-        gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
-        oldac=ac;
-      }
-      int stepSize = peoe.getStepSize();
-            int start = (stepSize * (atomPosition) + atomPosition);
-            sigmaElectronegativity = ((gasteigerFactors[start]) + (mol.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((mol.getAtomAt(atomPosition).getCharge() * mol.getAtomAt(atomPosition).getCharge()))));
-      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(sigmaElectronegativity));
+	      @SuppressWarnings("unused") long starttime=System.currentTimeMillis();
+	      if(oldac!=ac){
+	    	  if(maxIterations != 0)
+	    		  peoe.setMaxGasteigerIters(maxIterations);
+	    	  peoe.assignGasteigerMarsiliPartialCharges(mol, true);
+	    	  gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
+	    	  oldac=ac;
+	      }
+	      int stepSize = peoe.getStepSize();
+	            int start = (stepSize * (atomPosition) + atomPosition);
+	            sigmaElectronegativity = ((gasteigerFactors[start]) + (mol.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((mol.getAtomAt(atomPosition).getCharge() * mol.getAtomAt(atomPosition).getCharge()))));
+	      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(sigmaElectronegativity));
         } catch (Exception ex1) {
-      ex1.printStackTrace();
+        	ex1.printStackTrace();
             throw new CDKException("Problems with GasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }
     }
@@ -156,8 +167,9 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
+        String[] params = new String[2];
         params[0] = "atomPosition";
+        params[1] = "maxIterations";
         return params;
     }
 
@@ -169,8 +181,9 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    public Object getParameterType(String name) {
-        return new Integer(0);
+    public Object[] getParameterType(String name) {
+    	Integer[] object = {new Integer(0), new Integer(0)};
+        return object;
     }
 }
 

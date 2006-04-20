@@ -116,7 +116,6 @@ public class GasteigerMarsiliPartialCharges {
 		
 		out:
 		for (int i = 0; i < MX_ITERATIONS; i++) {
-			System.out.println("i: "+i);
 			alpha *= MX_DAMP;
 			boolean isDifferent = false;
 			for (int j = 0; j < ac.getAtomCount(); j++) {
@@ -129,7 +128,7 @@ public class GasteigerMarsiliPartialCharges {
 				
 				gasteigerFactors[STEP_SIZE * j + j + 4] = gasteigerFactors[STEP_SIZE * j + j + 2] * q * q + gasteigerFactors[STEP_SIZE * j + j + 1] * q + gasteigerFactors[STEP_SIZE * j + j];
 			}
-			if(!isDifferent)/* automatically break the max iterations*/
+			if(!isDifferent)/* automatically break the maximum iterations*/
 				break out;
 			
 			bonds = ac.getBonds();

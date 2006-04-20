@@ -60,7 +60,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 	public void testPartialSigmaChargeDescriptor_Methyl_Floride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IDescriptor descriptor = new PartialSigmaChargeDescriptor();
-		Integer[] params = new Integer[1];
+		Integer[] params = new Integer[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CF");
@@ -69,6 +69,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
+			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
@@ -80,7 +81,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 	public void testPartialSigmaChargeDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0382,-0.1755,0.0457,0.0457,0.0457};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IDescriptor descriptor = new PartialSigmaChargeDescriptor();
-		Integer[] params = new Integer[1];
+		Integer[] params = new Integer[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CCl");
@@ -88,6 +89,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
+			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
