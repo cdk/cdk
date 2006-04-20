@@ -37,21 +37,17 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
+import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.FormatStringBuffer;
 
 /**
  * Saves molecules in a rudimentary PDB format.
@@ -60,15 +56,17 @@ import org.openscience.cdk.tools.FormatStringBuffer;
  */
 public class PDBWriter extends DefaultChemObjectWriter {
 
+    final String SERIAL_FORMAT = "%5d";
+    final String ATOM_NAME_FORMAT = "%-4s";
+    final String POSITION_FORMAT = "%8.3f";	
+	
 	static BufferedWriter writer;
-    private LoggingTool logger;
     
     /**
      * Creates a PDB writer.
     * @param output the stream to write the XYZ file to.
     */
     public PDBWriter(Writer out) {
-    	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;
@@ -143,35 +141,32 @@ public class PDBWriter extends DefaultChemObjectWriter {
    public void writeMolecule(IMolecule molecule) throws CDKException {
        
        try {
-           int na = 0;
            int atomNumber = 1;
-           String info = "";
-           String st = "";
-           String tab = "\t";
-           boolean writecharge = false;
-           boolean writevect = false;
            
            String hetatmRecordName = "HETATM";
            String terRecordName = "TER";
-           FormatStringBuffer serialFormat = new FormatStringBuffer("%5d");
-           FormatStringBuffer atomNameFormat = new FormatStringBuffer("%-4s");
-           FormatStringBuffer positionFormat = new FormatStringBuffer("%8.3f");
            
            // Loop through the atoms and write them out:
            StringBuffer buffer = new StringBuffer();
            IAtom[] atoms = molecule.getAtoms();
+           FormatStringBuffer fsb = new FormatStringBuffer("");
            for (int i = 0; i < atoms.length; i++) {
                buffer.setLength(0);
                buffer.append(hetatmRecordName);
-               buffer.append(serialFormat.format(atomNumber));
+               fsb.reset(SERIAL_FORMAT).format(atomNumber);
+               buffer.append(fsb.toString());
                buffer.append(' ');
                IAtom atom = atoms[i];
-               buffer.append(atomNameFormat.format(atom.getSymbol()));
+               fsb.reset(ATOM_NAME_FORMAT).format(atom.getSymbol());
+               buffer.append(fsb.toString());
                buffer.append(" MOL          ");
                Point3d position = atom.getPoint3d();
-               buffer.append(positionFormat.format(position.x));
-               buffer.append(positionFormat.format(position.y));
-               buffer.append(positionFormat.format(position.z));
+               fsb.reset(POSITION_FORMAT).format(position.x);
+               buffer.append(fsb.toString());
+               fsb.reset(POSITION_FORMAT).format(position.y);
+               buffer.append(fsb.toString());
+               fsb.reset(POSITION_FORMAT).format(position.z);
+               buffer.append(fsb.toString());
                
                writer.write(buffer.toString(), 0, buffer.length());
                writer.newLine();
@@ -191,15 +186,23 @@ public class PDBWriter extends DefaultChemObjectWriter {
            Vector3d b = crystal.getB();
            Vector3d c = crystal.getC();
            double[] ucParams = CrystalGeometryTools.cartesianToNotional(a,b,c);
-           FormatStringBuffer lengthFormat = new FormatStringBuffer("%4.3f");
-           FormatStringBuffer angleFormat = new FormatStringBuffer("%3.3f");
-           writer.write("CRYST1 " + lengthFormat.format(ucParams[0])
-                                                   + lengthFormat.format(ucParams[1])
-                                                   + lengthFormat.format(ucParams[2])
-                                                   + angleFormat.format(ucParams[3])
-                                                   + angleFormat.format(ucParams[4])
-                                                   + angleFormat.format(ucParams[5]) + "\n");
-                                                   
+           final String LENGTH_FORMAT = "%4.3f";
+           final String ANGLE_FORMAT = "%3.3f";
+           FormatStringBuffer fsb = new FormatStringBuffer("");
+           fsb.reset(LENGTH_FORMAT).format(ucParams[0]);
+           writer.write("CRYST1 " + fsb.toString());
+           fsb.reset(LENGTH_FORMAT).format(ucParams[1]);
+           writer.write(fsb.toString());
+           fsb.reset(LENGTH_FORMAT).format(ucParams[2]);
+           writer.write(fsb.toString());
+           fsb.reset(ANGLE_FORMAT).format(ucParams[3]);
+           writer.write(fsb.toString());
+           fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
+           writer.write(fsb.toString());
+           fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
+           writer.write(fsb.toString());
+           writer.newLine();
+                                                                                                 
            // before saving the atoms, we need to create cartesian coordinates
            IAtom[] atoms = crystal.getAtoms();
             for (int i=0; i<atoms.length; i++) {
