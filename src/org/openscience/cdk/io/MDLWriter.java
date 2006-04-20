@@ -201,13 +201,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
 			writeSetOfMolecules((ISetOfMolecules)object);
 		} else if (object instanceof IChemFile) {
 			writeChemFile((IChemFile)object);
-		} else if (object instanceof IMolecule) {
+		} else if (object instanceof IMolecule || object instanceof IAtomContainer) {
 			try{
-				boolean[] isVisible=new boolean[((IMolecule)object).getAtomCount()];
+				boolean[] isVisible=new boolean[((IAtomContainer)object).getAtomCount()];
 				for(int i=0;i<isVisible.length;i++){
 					isVisible[i]=true;
 				}
-				writeMolecule((IMolecule)object,isVisible);
+				writeMolecule((IAtomContainer)object,isVisible);
 			}
 			catch (Exception ex) {
 				logger.error(ex.getMessage());
@@ -215,7 +215,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 				throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
 			}
 		} else {
-			throw new CDKException("Only supported is writing of ChemFile, SetOfMolecules and Molecule objects.");
+			throw new CDKException("Only supported is writing of ChemFile, SetOfMolecules, AtomContainer and Molecule objects.");
 		}
 	}
 	
@@ -277,7 +277,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 * @param   molecule  Molecule that is written to an OutputStream
    * @param   isVisible Should a certain atom be written to mdl?
 	 */
-    public void writeMolecule(IMolecule molecule, boolean[] isVisible) throws Exception {
+    public void writeMolecule(IAtomContainer container, boolean[] isVisible) throws Exception {
         String line = "";
         // taking care of the $$$$ signs:
         // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule
@@ -287,7 +287,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
         // write header block
         // lines get shortened to 80 chars, that's in the spec
-        String title = (String)molecule.getProperty(CDKConstants.TITLE);
+        String title = (String)container.getProperty(CDKConstants.TITLE);
         if (title == null) title = "";
         if(title.length()>80)
           title=title.substring(0,80);
@@ -309,7 +309,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         );
         writer.write('\n');
         
-        String comment = (String)molecule.getProperty(CDKConstants.REMARK);
+        String comment = (String)container.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
         if(comment.length()>80)
           comment=comment.substring(0,80);
@@ -323,20 +323,20 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
         line += formatMDLInt(upToWhichAtom, 3);
         int numberOfBonds=0;
-        if(upToWhichAtom<molecule.getAtomCount()){
-          for(int i=0;i<molecule.getBondCount();i++){
-            if(isVisible[molecule.getAtomNumber(molecule.getBondAt(i).getAtoms()[0])] && isVisible[molecule.getAtomNumber(molecule.getBondAt(i).getAtoms()[1])])
+        if(upToWhichAtom<container.getAtomCount()){
+          for(int i=0;i<container.getBondCount();i++){
+            if(isVisible[container.getAtomNumber(container.getBondAt(i).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBondAt(i).getAtoms()[1])])
               numberOfBonds++;
           }
         }else{
-          numberOfBonds=molecule.getBondCount();
+          numberOfBonds=container.getBondCount();
         }
         line += formatMDLInt(numberOfBonds, 3);
         line += "  0  0  0  0  0  0  0  0999 V2000\n";
         writer.write(line);
 
         // write Atom block
-        IAtom[] atoms = molecule.getAtoms();
+        IAtom[] atoms = container.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
           if(isVisible[f]){
         	  IAtom atom = atoms[f];
@@ -356,10 +356,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 line += formatMDLFloat((float)0.0);
                 line += formatMDLFloat((float)0.0) + " ";
             }
-            if(molecule.getAtomAt(f) instanceof IPseudoAtom)
-		    line += formatMDLString(((IPseudoAtom) molecule.getAtomAt(f)).getLabel(), 3);
+            if(container.getAtomAt(f) instanceof IPseudoAtom)
+		    line += formatMDLString(((IPseudoAtom) container.getAtomAt(f)).getLabel(), 3);
 	    else
-		    line += formatMDLString(molecule.getAtomAt(f).getSymbol(), 3); 
+		    line += formatMDLString(container.getAtomAt(f).getSymbol(), 3); 
             line += " 0  0  0  0  0  0  0  0  0  0  0  0";
             writer.write(line);
             writer.newLine();
@@ -367,9 +367,9 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        IBond[] bonds = molecule.getBonds();
+        IBond[] bonds = container.getBonds();
         for (int g = 0; g < bonds.length; g++) {
-          if(upToWhichAtom==molecule.getAtomCount() || (isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[0])] && isVisible[molecule.getAtomNumber(molecule.getBondAt(g).getAtoms()[1])])){
+          if(upToWhichAtom==container.getAtomCount() || (isVisible[container.getAtomNumber(container.getBondAt(g).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBondAt(g).getAtoms()[1])])){
         	  IBond bond = bonds[g];
             if (bond.getAtoms().length != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
@@ -377,11 +377,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 if (bond.getStereo() == CDKConstants.STEREO_BOND_UP_INV || 
                     bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
                     // turn around atom coding to correct for inv stereo
-                    line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
-                    line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+                    line = formatMDLInt(container.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                    line += formatMDLInt(container.getAtomNumber(bond.getAtomAt(0)) + 1,3);
                 } else {
-                    line = formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(0)) + 1,3);
-                    line += formatMDLInt(molecule.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                    line = formatMDLInt(container.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+                    line += formatMDLInt(container.getAtomNumber(bond.getAtomAt(1)) + 1,3);
                 }
                 line += formatMDLInt((int)bond.getOrder(),3);
                 line += "  ";
