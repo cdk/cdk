@@ -56,7 +56,6 @@ import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
-import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
 import org.openscience.cdk.test.qsar.descriptors.QSARDescriptorTests;
 import org.openscience.cdk.test.qsar.model.QSARRModelTests;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
@@ -117,8 +116,6 @@ public class MextraTests {
         // from cdk.test.math
         // from cdk.test.modeling
         suite.addTest(ModelBuilder3dTest.suite());
-        // from cdk.test.modeling.forcefield
-        suite.addTest(ForceFieldTests.suite());
         // from cdk.test.qsar
         suite.addTest(QSARDescriptorTests.suite());
         // from cdk.test.ringsearch
