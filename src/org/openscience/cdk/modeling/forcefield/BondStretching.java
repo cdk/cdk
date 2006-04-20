@@ -18,7 +18,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  *@author     vlabarta
  *@cdk.created    January 27, 2005
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  */
 public class BondStretching {
 

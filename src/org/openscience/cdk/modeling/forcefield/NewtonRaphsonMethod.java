@@ -12,7 +12,7 @@ import Jama.Matrix;
  *
  *@author        vlabarta
  *@cdk.created       June 1, 2005
- *@cdk.module    builder3d
+ *@cdk.module    forcefield
  */
 public class NewtonRaphsonMethod {
 	GVector gradientPerInverseHessianVector = null;

@@ -9,7 +9,7 @@ import java.util.Vector;
  *
  * @author         chhoppe
  * @cdk.created    2004-10-8
- * @cdk.module     builder3d
+ * @cdk.module     forcefield
  */
 public class MMFF94ParametersCall {
 	

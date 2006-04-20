@@ -18,7 +18,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  *@author     vlabarta
  *@cdk.created    February 17, 2005
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  */
 public class VanDerWaalsInteractions {
 

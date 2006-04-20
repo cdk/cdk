@@ -19,7 +19,7 @@ import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
  *
  *@author     vlabarta
  *@cdk.created    February 8, 2005
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  */
 public class AngleBending {
 

@@ -7,7 +7,7 @@ import javax.vecmath.GVector;
  * 
  *
  * @author     vlabarta
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  * 
  */
 public class LineSearchForTheWolfeConditions {

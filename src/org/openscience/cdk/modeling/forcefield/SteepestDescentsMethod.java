@@ -9,7 +9,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  Find a direction from a point of the coordinates space using the steepest descents approach.
  *
  *@author     vlabarta
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  *
  */
 public class SteepestDescentsMethod {

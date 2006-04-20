@@ -56,12 +56,12 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *  private Hashtable parameterSet;
  *  key=nameofdatafield+atomid1+;atomid2;atomxid
  *  
- *  MM2 and MMFF94 force field are implemented 
+ *  <p>MM2 and MMFF94 force field are implemented 
  *  With force field data it configures the cdk atom (assign atomtype, van der Waals radius, charge...)
  *
  * @author     chhoppe
  * @cdk.created    2004-09-07
- * @cdk.module     builder3d
+ * @cdk.module     forcefield
  */
 public class ForceFieldConfigurator {
 

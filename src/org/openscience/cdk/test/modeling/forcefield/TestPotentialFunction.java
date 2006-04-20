@@ -10,7 +10,7 @@ import org.openscience.cdk.modeling.forcefield.IPotentialFunction;
  *
  * @author     vlabarta
  *
- * @cdk.module test-extra
+ * @cdk.module test-forcefield
  */
 public class TestPotentialFunction implements IPotentialFunction {
 	String energyFunctionShape = " f(X,Y) = X2 + 2 Y2 ";

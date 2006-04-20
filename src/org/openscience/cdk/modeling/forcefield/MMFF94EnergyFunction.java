@@ -14,7 +14,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  *@author     vlabarta
  *@cdk.created    March 14, 2005
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  *
  */
 public class MMFF94EnergyFunction implements IPotentialFunction {

@@ -46,8 +46,8 @@ import org.openscience.cdk.AtomType;
  *
  * @author         chhoppe
  * @cdk.created    2004-09-07
- * @cdk.module     builder3d
- * @cdk.keyword    atom, type, mmff94
+ * @cdk.module     forcefield
+ * @cdk.keyword    atom type, mmff94
  */
 public class MMFF94BasedParameterSetReader {
 

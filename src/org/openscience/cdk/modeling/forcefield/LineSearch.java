@@ -10,7 +10,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  Bracket the minimum and interpolation. The interpolation is quadratic.
  *  
  *@author     vlabarta
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  *
  */
 public class LineSearch {

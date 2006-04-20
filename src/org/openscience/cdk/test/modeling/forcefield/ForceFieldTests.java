@@ -56,13 +56,11 @@ import org.openscience.cdk.io.*;
 
 import java.io.*;
 
-
-
 /**
  *  Check forcefield package using some examples.
  *
  *@author         vlabarta
- *@cdk.module     test-extra
+ *@cdk.module     test-forcefield
  *@cdk.created    2005-01-17
  */
 public class ForceFieldTests extends CDKTestCase {
@@ -91,9 +89,10 @@ public class ForceFieldTests extends CDKTestCase {
 		logger = new LoggingTool(this);
 		
 		try {
-
-			FileReader fileReader = new FileReader("src/data/Ethan-TestFF.mol");
-			MDLReader mdlReader = new MDLReader(fileReader);
+	        String filename = "data/Ethan-TestFF.mol";
+	        logger.info("Testing: " + filename);
+	        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader mdlReader = new MDLReader(ins);
         	molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
         	mdlReader.close();
         	//System.out.println("molecule: " +  molecule);

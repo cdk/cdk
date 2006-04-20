@@ -8,11 +8,11 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- *  To work with the coordinates of the molecule, like get the 3d coordinates of the atoms or 
- *  calculate the distance between two atoms.
- *@author     vlabarta
- *@cdk.module     builder3d
+ * To work with the coordinates of the molecule, like get the 3d coordinates of the atoms or 
+ * calculate the distance between two atoms.
  *
+ * @author     vlabarta
+ * @cdk.module forcefield
  */
 public class ForceField extends GeometricMinimizer{
 	

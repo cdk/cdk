@@ -16,6 +16,7 @@ import org.openscience.cdk.AtomContainer;
  *
  * @author      vlabarta
  * @cdk.created 2005-03-03
+ * @cdk.module  forcefield
  */
 public class ForceFieldTools {
 

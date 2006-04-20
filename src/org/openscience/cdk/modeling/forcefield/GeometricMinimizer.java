@@ -11,7 +11,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  Call the minimization methods. Check the convergence.
  *
  *@author     vlabarta
- *@cdk.module     builder3d
+ *@cdk.module     forcefield
  *
  */
 public class GeometricMinimizer {
