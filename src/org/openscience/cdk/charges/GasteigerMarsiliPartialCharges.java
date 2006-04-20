@@ -45,7 +45,7 @@ public class GasteigerMarsiliPartialCharges {
 
 	private double DEOC_HYDROGEN = 20.02;
 	private double MX_DAMP = 0.5;
-	private double MX_ITERATIONS = 6;
+	private double MX_ITERATIONS = 20;
 	private int STEP_SIZE = 5;
 	private AtomTypeCharges atomTypeCharges = new AtomTypeCharges();
 
@@ -109,12 +109,29 @@ public class GasteigerMarsiliPartialCharges {
 		IAtom[] atoms = null;
 		int atom1 = 0;
 		int atom2 = 0;
+		
+		double[] q_old = new double[ac.getAtomCount()];
+		for(int i = 0 ; i < q_old.length ; i++)
+			q_old[0] = 20.0;
+		
+		out:
 		for (int i = 0; i < MX_ITERATIONS; i++) {
+			System.out.println("i: "+i);
 			alpha *= MX_DAMP;
+			boolean isDifferent = false;
 			for (int j = 0; j < ac.getAtomCount(); j++) {
 				q = gasteigerFactors[STEP_SIZE * j + j + 5];
+				
+				double difference = Math.abs(q_old[j])-Math.abs(q);
+				if(Math.abs(difference) > 0.001)
+					isDifferent = true;
+				q_old[j] = q;
+				
 				gasteigerFactors[STEP_SIZE * j + j + 4] = gasteigerFactors[STEP_SIZE * j + j + 2] * q * q + gasteigerFactors[STEP_SIZE * j + j + 1] * q + gasteigerFactors[STEP_SIZE * j + j];
 			}
+			if(!isDifferent)/* automatically break the max iterations*/
+				break out;
+			
 			bonds = ac.getBonds();
 			for (int k = 0; k < bonds.length; k++) {
 				atoms = bonds[k].getAtoms();
