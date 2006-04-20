@@ -32,7 +32,7 @@ import java.util.Vector;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.smiles.SmilesGenerator;
+//import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
@@ -58,7 +58,7 @@ public class GENMDeterministicGenerator
 	private int[] numberOfBasicFragment;
 	private Vector basicFragment;
 	private Vector structures;
-	private Vector smiles;
+//	private Vector smiles;
 	private org.openscience.cdk.tools.LoggingTool logger;
 	private PrintWriter structureout;
 	
@@ -82,7 +82,7 @@ public class GENMDeterministicGenerator
 		numberOfBasicFragment=new int[34];
 		basicFragment=new Vector();
 		structures=new Vector();
-		smiles=new Vector();
+//		smiles=new Vector();
 		
 		logger = new org.openscience.cdk.tools.LoggingTool(this);
 		
@@ -2144,7 +2144,7 @@ public class GENMDeterministicGenerator
 			 writeToFile(originalSet,numberOfStructure, originMatrix);
 			 if(numberOfStructure<500)
 				 convertToMol(originalSet,originMatrix,structures);
-			 convertToSMILES(originalSet,originMatrix,smiles);
+//			 convertToSMILES(originalSet,originMatrix,smiles);
 		  //	 writeToFile(setOfBasicFragment,numberOfStructure, adjacencyMatrix);
 		  }
 		  else
@@ -2152,7 +2152,7 @@ public class GENMDeterministicGenerator
 			writeToFile(setOfBasicFragment,numberOfStructure, adjacencyMatrix);
 			if(numberOfStructure<500)
 				convertToMol(setOfBasicFragment,adjacencyMatrix,structures);
-			convertToSMILES(setOfBasicFragment,adjacencyMatrix,smiles);
+//			convertToSMILES(setOfBasicFragment,adjacencyMatrix,smiles);
 		  }
 	  }
 	  
@@ -2684,9 +2684,9 @@ public class GENMDeterministicGenerator
 			 for(j=i+1;j<size;j++)
 				 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
 		 
-		 SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
-		 String smilesString = sg.createSMILES(mol);
-		 smiles.addElement(smilesString);
+//		 SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
+//		 String smilesString = sg.createSMILES(mol);
+//		 smiles.addElement(smilesString);
 	 }
 	 
 	 
@@ -2714,10 +2714,10 @@ public class GENMDeterministicGenerator
 	   * Get the vector of SMILES
 	   * @return	vector contains suitable SMILES format for suitable structures
 	   */
-	  public Vector getSMILES()
-	  {
-		 return this.smiles;
-	  }
+//	  public Vector getSMILES()
+//	  {
+//		 return this.smiles;
+//	  }
 	 
 	 /**
 	  * As only used in this class might now, define it as an inner class. It just works as fragment class
