@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class DMol3Format implements IChemFormatMatcher {
+public class DMol3Format implements IChemFormat {
 
     public DMol3Format() {}
     
@@ -50,5 +50,5 @@ public class DMol3Format implements IChemFormatMatcher {
 
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
-    public boolean matches(int lineNumber, String line) { return false; }
+
 }

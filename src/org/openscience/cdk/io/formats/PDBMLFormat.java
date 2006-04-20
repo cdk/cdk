@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class PDBMLFormat implements IChemFormatMatcher {
+public class PDBMLFormat implements IChemFormat {
 
     public PDBMLFormat() {}
     
@@ -53,10 +53,6 @@ public class PDBMLFormat implements IChemFormatMatcher {
     }
     public String getWriterClassName() { 
       return null;
-    }
-
-    public boolean matches(int lineNumber, String line) {
-        return false;
     }
 
 }

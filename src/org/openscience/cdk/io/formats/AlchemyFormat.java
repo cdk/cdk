@@ -29,7 +29,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class AlchemyFormat implements IChemFormatMatcher {
+public class AlchemyFormat implements IChemFormat {
 
     public AlchemyFormat() {}
     
@@ -49,5 +49,5 @@ public class AlchemyFormat implements IChemFormatMatcher {
 
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
-    public boolean matches(int lineNumber, String line) { return false; }
+
 }

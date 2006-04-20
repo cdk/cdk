@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class JMEFormat implements IChemFormatMatcher {
+public class JMEFormat implements IChemFormat {
 
     public JMEFormat() {}
     
@@ -49,9 +49,5 @@ public class JMEFormat implements IChemFormatMatcher {
       return "org.openscience.cdk.io.JMEReader";
     }
     public String getWriterClassName() { return null; }
-
-    public boolean matches(int lineNumber, String line) {
-        return false;
-    }
 
 }

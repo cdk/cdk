@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class SVGFormat implements IChemFormatMatcher {
+public class SVGFormat implements IChemFormat {
 
     public SVGFormat() {}
     
@@ -48,7 +48,4 @@ public class SVGFormat implements IChemFormatMatcher {
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
 
-    public boolean matches(int lineNumber, String line) {
-        return false;
-    }
 }

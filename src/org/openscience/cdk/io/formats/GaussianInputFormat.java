@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class GaussianInputFormat implements IChemFormatMatcher {
+public class GaussianInputFormat implements IChemFormat {
 
     public GaussianInputFormat() {}
     
@@ -48,10 +48,6 @@ public class GaussianInputFormat implements IChemFormatMatcher {
     public String getReaderClassName() { return null; }
     public String getWriterClassName() {
       return "org.openscience.cdk.io.program.GaussianInputWriter";
-    }
-
-    public boolean matches(int lineNumber, String line) {
-        return false;
     }
 
 }

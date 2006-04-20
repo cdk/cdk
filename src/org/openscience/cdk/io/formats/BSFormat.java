@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class BSFormat implements IChemFormatMatcher {
+public class BSFormat implements IChemFormat {
 
     public BSFormat() {}
     
@@ -51,5 +51,5 @@ public class BSFormat implements IChemFormatMatcher {
 
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
-    public boolean matches(int lineNumber, String line) { return false; }
+
 }

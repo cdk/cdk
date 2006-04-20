@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class CRK2DFormat implements IChemFormatMatcher {
+public class CRK2DFormat implements IChemFormat {
 
     public CRK2DFormat() {}
     
@@ -51,5 +51,5 @@ public class CRK2DFormat implements IChemFormatMatcher {
 
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
-    public boolean matches(int lineNumber, String line) { return false; }
+
 }

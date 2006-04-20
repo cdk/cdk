@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class XYZFormat implements IChemFormatMatcher {
+public class XYZFormat implements IChemFormat {
 
     public XYZFormat() {}
     
@@ -50,12 +50,6 @@ public class XYZFormat implements IChemFormatMatcher {
     }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.XYZWriter";
-    }
-
-    public boolean matches(int lineNumber, String line) {
-        return false;
-        /* IMPORTANT: this should never match. The format has not
-             specific features */
     }
 
 }

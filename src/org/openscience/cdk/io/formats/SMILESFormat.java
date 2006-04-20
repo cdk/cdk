@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class SMILESFormat implements IChemFormatMatcher {
+public class SMILESFormat implements IChemFormat {
 
     public SMILESFormat() {}
     
@@ -50,12 +50,6 @@ public class SMILESFormat implements IChemFormatMatcher {
     }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.SMILESWriter";
-    }
-
-    public boolean matches(int lineNumber, String line) {
-        return false;
-        /* IMPORTANT: this should never match because several formats
-             allow comment lines on which often SMILES is stored!!! */
     }
 
 }
