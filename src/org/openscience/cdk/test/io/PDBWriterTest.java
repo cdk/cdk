@@ -89,7 +89,7 @@ public class PDBWriterTest extends TestCase {
 		String output = sWriter.toString();
 		System.out.println(output);
 		assertNotNull(output);
-		assertNotSame(0, output.length());
+		assertTrue(output.length() > 0);
 		
 		PDBReader reader = new PDBReader();
 		ChemFile chemFile = null;
