@@ -182,8 +182,8 @@ public class SigmaElectronegativityDescriptor implements IDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-    	Integer[] object = {new Integer(0), new Integer(0)};
-        return object;
+        // since both params are of Integer type, we don't need to check
+        return new Integer(0); 
     }
 }
 
