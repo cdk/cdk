@@ -36,7 +36,7 @@ public class CMLFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-cml";
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];

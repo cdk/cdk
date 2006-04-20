@@ -38,7 +38,7 @@ public class PDBFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-pdb";
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];

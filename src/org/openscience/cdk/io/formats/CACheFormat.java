@@ -37,7 +37,7 @@ public class CACheFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-cache-csf";
     }
     public String getPreferredNameExtension() {
         return null;

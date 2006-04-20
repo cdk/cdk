@@ -38,13 +38,13 @@ public class Mol2Format implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-mol2";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"mol2"};
     }
 
     public String getReaderClassName() { 

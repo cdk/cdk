@@ -38,7 +38,7 @@ public class AlchemyFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-alchemy";
     }
     public String getPreferredNameExtension() {
         return null;

@@ -32,11 +32,11 @@ public class CIFFormat implements IChemFormatMatcher {
     public CIFFormat() {}
     
     public String getFormatName() {
-        return "CIF-like (not CIF)";
+        return "Crystallographic Interchange Format";
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-cif";
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];

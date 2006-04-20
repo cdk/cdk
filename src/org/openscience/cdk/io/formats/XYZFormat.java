@@ -36,7 +36,7 @@ public class XYZFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-xyz";
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];

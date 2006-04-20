@@ -36,7 +36,7 @@ public class SMILESFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-daylight-smiles";
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];

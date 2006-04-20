@@ -32,11 +32,11 @@ public class MDLRXNFormat implements IChemFormatMatcher {
     public MDLRXNFormat() {}
     
     public String getFormatName() {
-        return "MDL RXN";
+        return "MDL Reaction format";
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-mdl-rxnfile";
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];

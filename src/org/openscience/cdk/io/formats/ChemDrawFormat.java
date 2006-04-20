@@ -35,11 +35,11 @@ public class ChemDrawFormat implements IChemFormatMatcher {
     public ChemDrawFormat() {}
     
     public String getFormatName() {
-        return "ChemDraw";
+        return "ChemDraw eXchange file";
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-cdx";
     }
     public String getPreferredNameExtension() {
         return null;

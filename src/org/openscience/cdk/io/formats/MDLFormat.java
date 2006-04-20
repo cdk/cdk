@@ -34,17 +34,17 @@ public class MDLFormat implements IChemFormatMatcher {
     public MDLFormat() {}
     
     public String getFormatName() {
-        return "MDL Mol/SDF";
+        return "MDL Molfile";
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-mdl-molfile";
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[]{"sdf", "sd", "mol"};
+        return new String[]{"mol"};
     }
 
     public String getReaderClassName() { 

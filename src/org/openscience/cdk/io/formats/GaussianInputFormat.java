@@ -36,7 +36,7 @@ public class GaussianInputFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-gaussian-input";
     }
     public String getPreferredNameExtension() {
         return null;
