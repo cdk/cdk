@@ -44,13 +44,12 @@ import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
 import org.openscience.cdk.io.formats.Aces2Format;
 import org.openscience.cdk.io.formats.CMLFormat;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.Gaussian92Format;
 import org.openscience.cdk.io.formats.Gaussian94Format;
 import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.formats.GhemicalSPMFormat;
-import org.openscience.cdk.io.formats.IChIFormat;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.JaguarFormat;
@@ -101,10 +100,6 @@ public class ReaderFactoryTest extends CDKTestCase {
 
     public void testJaguar() {
         expectFormat("data/jaguar/ch4-opt.out", new JaguarFormat());
-    }
-
-    public void testIChI() {
-        expectReader("data/ichi/random.ichi", new IChIFormat());
     }
 
     public void testINChI() {
