@@ -69,7 +69,7 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 	/**
 	 *  Description of the Field
 	 */
-	public final static String ichi = "txt";
+	public final static String inchi = "txt";
 	/**
 	 *  Description of the Field
 	 */
@@ -115,7 +115,7 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 	{
 		chooser.addChoosableFileFilter(new JCPSaveFileFilter(JCPFileFilter.mol));
 		chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.smi));
-		chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.ichi));
+		chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.inchi));
 		chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.sdf));
 		chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.rxn));
 		chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.rdf));
@@ -202,7 +202,7 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 		{
 			return "MDL RDF Molfile";
 		}
-		if (type.equals(ichi))
+		if (type.equals(inchi))
 		{
 			return "IUPAC Chemical Identifier";
 		}

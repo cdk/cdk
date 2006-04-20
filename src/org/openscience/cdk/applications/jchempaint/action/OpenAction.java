@@ -46,7 +46,7 @@ import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.IChIReader;
+import org.openscience.cdk.io.INChIReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 
@@ -131,8 +131,8 @@ public class OpenAction extends JCPAction {
 					else if (type.equals(JCPFileFilter.mol)) {
 						cor = new MDLReader(reader);
 					}
-					else if (type.equals(JCPFileFilter.ichi)) {
-						cor = new IChIReader(reader);
+					else if (type.equals(JCPFileFilter.inchi)) {
+						cor = new INChIReader(reader);
 					}
 				} catch (FileNotFoundException exception) {
 					logger.warn("File cannot be found.");
