@@ -2,7 +2,6 @@ cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
-cdk-datadebug.jar
 cdk-io.jar
 cdk-experimental.jar
 cdk-extra.jar
@@ -13,11 +12,8 @@ cdk-builder3d.jar
 cdk-reaction.jar
 cdk-qsar.jar
 cdk-qsar-pdb.jar
+cdk-applications.jar
+cdk-valencycheck.jar
+cdk-forcefield.jar
 cdk-smiles.jar
 cdk-test-core.jar
-cdk-test-standard.jar
-cdk-test-extra.jar
-cdk-test-io.jar
-cdk-test-data.jar
-cdk-test-datadebug.jar
-cdk-test-smiles.jar

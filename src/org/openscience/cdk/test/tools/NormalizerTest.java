@@ -39,7 +39,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-smiles
  */
 public class NormalizerTest extends CDKTestCase {
 	

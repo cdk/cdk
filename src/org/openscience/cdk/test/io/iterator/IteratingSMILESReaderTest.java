@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the reading SMILES mol files using one test file.
  *
- * @cdk.module test-io
+ * @cdk.module test-smiles
  *
  * @see org.openscience.cdk.io.SMILESReader
  */

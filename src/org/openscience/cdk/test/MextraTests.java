@@ -60,8 +60,6 @@ import org.openscience.cdk.test.qsar.descriptors.QSARDescriptorTests;
 import org.openscience.cdk.test.qsar.model.QSARRModelTests;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
-import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
-import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.test.templates.AminoAcidsTest;
 
@@ -122,9 +120,6 @@ public class MextraTests {
         suite.addTest(RingSearchTest.suite());
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());
-        // from cdk.test.smiles
-        suite.addTest(SmilesGeneratorTest.suite());
-        suite.addTest(SmilesParserTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
         // from cdk.test.templates

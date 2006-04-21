@@ -42,11 +42,9 @@ import org.openscience.cdk.test.io.PDBReaderTest;
 import org.openscience.cdk.test.io.PDBWriterTest;
 import org.openscience.cdk.test.io.ReaderFactoryTest;
 import org.openscience.cdk.test.io.SDFReaderTest;
-import org.openscience.cdk.test.io.SMILESReaderTest;
 import org.openscience.cdk.test.io.ShelXReaderTest;
 import org.openscience.cdk.test.io.cml.CMLIOTests;
 import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
-import org.openscience.cdk.test.io.iterator.IteratingSMILESReaderTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
@@ -76,7 +74,6 @@ public class MioTests {
         suite.addTest(PDBReaderTest.suite());
         suite.addTest(PDBWriterTest.suite());
         suite.addTest(ShelXReaderTest.suite());
-        suite.addTest(SMILESReaderTest.suite());
         //suite.addTest(VASPReaderTest.suite()); Class is in experimental
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
@@ -84,7 +81,6 @@ public class MioTests {
         
         // cdk.io.iterator package
         suite.addTest(IteratingMDLReaderTest.suite());
-        suite.addTest(IteratingSMILESReaderTest.suite());
         return suite;
     }
 
