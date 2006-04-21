@@ -32,7 +32,28 @@ cdk/$ ls build.xml
 build.xml
 cdk/$ ant
 
-2.1 Applying patches
+"ant -p" gives a list of possible compilation targets. The default target is 'dist-all', which
+creates a number of .jar files in the 'dist' directory corresponding to subsets of the CDK
+functionality. For convenience, one large .jar file containing everything can be created using the
+target 'dist-large' (using the command "ant dist-large"). This is also created in dist/jar and is
+typically named something like 'cdk-cvs-20060303.jar'.
+
+2.1 Creating the JavaDoc documentation for the API
+
+The JavaDoc documentation for the API describes all of the CDK classes in detail. It functions as
+the user manual for the CDK, although you should also look at the list of examples and tutorials
+below. This documentation is created by 'ant' from the Java source code for the CDK as follows:
+
+cdk/$ ls javadoc.xml
+javadoc.xml
+cdk/$ ant -t javadoc.xml
+
+The documenation is created as a series of .html pages in doc/api. If you use firefox, you can read
+the documentation using the following command:
+
+cdk/$ firefox doc/api/index.html
+
+2.2 Applying patches
 
 A list of available patches is given by the command
 
@@ -44,10 +65,10 @@ cdk/$ ant -Ddo.lazy.creation=yes clean dist-all
 
 3. Running tests
 
-After you compiled the code, you can do "ant test" to run the test suite of non-interactive, automated
+After you compiled the code, you can do "ant test-all" to run the test suite of non-interactive, automated
 tests. You might need to copy an appropriate junit.jar into your $ANT_HOME/lib
 directory or somewhere else in your classpath.
-Upon "ant test", you should see something like:
+Upon "ant test-all", you should see something like:
 
 test:
 Running org.openscience.cdk.test.CDKTests
@@ -87,3 +108,14 @@ the distribution jars by running "ant dist-all". They will end up in
 $CDK_HOME/dist/jar. Copy all cdk-*.jars as well as all jars from $CDK_HOME/jar
 to the lib directory of the project for which you intend to have CDK support and
 use them as you would use any other third party jar.
+
+5. Examples and tutorials
+
+To get started using the CDK, you may be interested in the following websites which contain
+examples and tutorials:
+* http://www.chemistry-development-kit.org
+* http://blue.chem.psu.edu/~rajarshi/code/java
+* http://www.redbrick.dcu.ie/~noel/CDKJython.html
+
+Further examples can also be found in issues of the CDK News:
+* http://almost.cubic.uni-koeln.de/cdk/cdk_top/cdk_news/
