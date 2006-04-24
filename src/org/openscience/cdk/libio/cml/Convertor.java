@@ -79,7 +79,7 @@ import org.xmlcml.cml.element.CMLScalar;
  * 
  * @cdk.keyword      CML
  * @cdk.keyword      class convertor
- * @cdk.builddepends jumbo50.jar
+ * @cdk.builddepends jumbo52.jar
  * @cdk.require      java1.5
  */
 public class Convertor {
@@ -337,12 +337,7 @@ public class Convertor {
 		}
 		for (int i= 0; i<structure.getBondCount(); i++) {
 			CMLBond cmlBond = cdkBondToCMLBond(structure.getBondAt(i));
-			try {
-				cmlMolecule.addBond(cmlBond);
-			} catch (CMLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			cmlMolecule.addBond(cmlBond, true);
 		}
 
         Iterator elements = customizers.iterator();

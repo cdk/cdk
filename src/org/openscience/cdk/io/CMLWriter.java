@@ -41,6 +41,7 @@ import nu.xom.Serializer;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -58,6 +59,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.tools.LoggingTool;
+import org.xmlcml.cml.base.CMLSerializer;
 
 /**
  * Serializes a SetOfMolecules or a Molecule object to CML 2 code.
@@ -151,6 +153,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     public void setWriter(OutputStream output) throws CDKException {
+    	//TODO dont know what the intention here is, but without this line it is not working...
+    	this.output = output;
     	setWriter(new OutputStreamWriter(output));
     }
     
@@ -184,6 +188,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
      */
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
+        } else if (object instanceof IAtomContainer) {
         } else if (object instanceof IReaction) {
         } else if (object instanceof ISetOfReactions) {
         } else if (object instanceof ISetOfMolecules) {
@@ -224,14 +229,15 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
         } else if (object instanceof IChemModel) {
         	root = convertor.cdkChemModelToCMLList((IChemModel)object);
+        } else if (object instanceof IAtomContainer) {
+        	root = convertor.cdkAtomContainerToCMLMolecule((IAtomContainer)object);
         } else if (object instanceof IChemFile) {
         	root = convertor.cdkChemFileToCMLList((IChemFile)object);
         }
+
         Document doc = new Document(root);
-        
         try {
             Serializer serializer = new Serializer(output, "ISO-8859-1");
-            
             if (indent.isSet()) {
                 logger.info("Indenting XML output");
                 serializer.setIndent(2);

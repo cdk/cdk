@@ -1,9 +1,9 @@
 baysmith-io.jar
 jgrapht-0.6.0.jar
-jumbo50.jar
+jumbo52.jar
 log4j.jar
 printf.jar
 vecmath1.2-1.14.jar
 xindice.jar
 xmldb.jar
-xom-1.0.jar
+xom-1.1.jar
