@@ -322,10 +322,12 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintColouredAtomBackground(org.openscience.cdk.interfaces.IAtom atom, Color color, Graphics2D graphics)
 	{
+		if(r2dm.getRenderingCoordinate(atom)==null)
+			return;
 		int atomRadius = r2dm.getAtomRadius();
 		graphics.setColor(color);
-		int[] coords = {(int) atom.getX2d() - (atomRadius / 2),
-				(int) atom.getY2d() + (atomRadius / 2)};
+		int[] coords = {(int) r2dm.getRenderingCoordinate(atom).x - (atomRadius / 2),
+				(int) r2dm.getRenderingCoordinate(atom).y + (atomRadius / 2)};
 		int radius = (int) getScreenSize(atomRadius);
 		coords = getScreenCoordinates(coords);
     if(r2dm.getIsCompact())
@@ -360,7 +362,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public void paintAtomSymbol(IAtom atom, Color backColor, Graphics2D graphics,
 			int alignment, int atomNumber, boolean isRadical)
 	{
-		if (atom.getPoint2d() == null)
+		if (r2dm.getRenderingCoordinate(atom) == null)
 		{
 			logger.warn("Cannot draw atom without 2D coordinate");
 			return;
@@ -371,8 +373,8 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			if (!atom.getSymbol().equals("C"))
 			{
-				int labelX = (int) (atom.getPoint2d().x - 2);
-				int labelY = (int) (atom.getPoint2d().y + 2);
+				int labelX = (int) (r2dm.getRenderingCoordinate(atom).x - 2);
+				int labelY = (int) (r2dm.getRenderingCoordinate(atom).y + 2);
         try{
           AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt",
               atom.getBuilder());
@@ -513,15 +515,15 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		if (alignment == 1)
 		{
 			// left alignment
-			labelX = (int) (atom.getPoint2d().x - (atomSymbolXOffset + isotopeW));
+			labelX = (int) (r2dm.getRenderingCoordinate(atom).x - (atomSymbolXOffset + isotopeW));
 		} else
 		{
 			// right alignment
-			labelX = (int) (atom.getPoint2d().x -
+			labelX = (int) (r2dm.getRenderingCoordinate(atom).x -
 					(atomSymbolXOffset + Math.max(isotopeW, hMultiplierW) + hSymbolW));
 		}
 		// labelY and labelH are the same for both left/right aligned
-		labelY = (int) (atom.getPoint2d().y + (atomSymbolYOffset + isotopeH));
+		labelY = (int) (r2dm.getRenderingCoordinate(atom).y + (atomSymbolYOffset + isotopeH));
 
 		// xy for atom symbol
 		int[] atomSymbolCoords = new int[2];
@@ -741,7 +743,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public void paintPseudoAtomLabel(IPseudoAtom atom, Color backColor,
 			Graphics2D graphics, int alignment, boolean isRadical)
 	{
-		if (atom.getPoint2d() == null)
+		if (r2dm.getRenderingCoordinate(atom) == null)
 		{
 			logger.warn("Cannot draw atom without 2D coordinate");
 			return;
@@ -785,14 +787,14 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		if (alignment == 1)
 		{
 			// left alignment
-			labelX = (int) (atom.getPoint2d().x - (atomSymbolFirstCharW / 2));
+			labelX = (int) (r2dm.getRenderingCoordinate(atom).x - (atomSymbolFirstCharW / 2));
 		} else
 		{
 			// right alignment
-			labelX = (int) (atom.getPoint2d().x - (atomSymbolW + atomSymbolLastCharW / 2));
+			labelX = (int) (r2dm.getRenderingCoordinate(atom).x - (atomSymbolW + atomSymbolLastCharW / 2));
 		}
 		// labelY and labelH are the same for both left/right aligned
-		labelY = (int) (atom.getPoint2d().y - (atomSymbolH / 2));
+		labelY = (int) (r2dm.getRenderingCoordinate(atom).y - (atomSymbolH / 2));
 		{
 			// make empty space
 
@@ -931,8 +933,8 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		if (bond.getAtomAt(0).getPoint2d() == null ||
-				bond.getAtomAt(1).getPoint2d() == null)
+		if (r2dm.getRenderingCoordinate(bond.getAtomAt(0)) == null ||
+				r2dm.getRenderingCoordinate(bond.getAtomAt(1)) == null)
 		{
 			return;
 		}
@@ -1084,7 +1086,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		if (GeometryTools.has2DCoordinates(bond))
 		{
-			paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
+			paintOneBond(GeometryTools.getBondCoordinates(bond, r2dm.getRenderingCoordinates()), bondColor, graphics);
 		}
 	}
 
@@ -1098,7 +1100,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintDoubleBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates()), r2dm.getBondDistance() / 2);
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
 		paintOneBond(newCoords1, bondColor, graphics);
@@ -1119,7 +1121,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		paintSingleBond(bond, bondColor, graphics);
 
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates()), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
 		paintOneBond(newCoords1, bondColor, graphics);
@@ -1141,7 +1143,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		Point2d center = GeometryTools.get2DCenter(ring);
 
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates()), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x), 2) + Math.pow((coords[1] - center.y), 2));
 		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x), 2) + Math.pow((coords[3] - center.y), 2));
 		if (dist1 < dist2)
@@ -1204,7 +1206,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		double wedgeWidth = r2dm.getBondWidth() * 2.0;
 		// this value should be made customazible
 
-		int[] coords = GeometryTools.getBondCoordinates(bond);
+		int[] coords = GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates());
 		int[] screenCoords = getScreenCoordinates(coords);
 		graphics.setColor(bondColor);
 		int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
@@ -1241,13 +1243,13 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		// this value should be made customazible
 
 		double widthStep = wedgeWidth / (double) numberOfLines;
-		Point2d p1 = bond.getAtomAt(0).getPoint2d();
-		Point2d p2 = bond.getAtomAt(1).getPoint2d();
+		Point2d p1 = r2dm.getRenderingCoordinate(bond.getAtomAt(0));
+		Point2d p2 = r2dm.getRenderingCoordinate(bond.getAtomAt(1));
 		if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV)
 		{
 			// draw the wedge bond the other way around
-			p1 = bond.getAtomAt(1).getPoint2d();
-			p2 = bond.getAtomAt(0).getPoint2d();
+			p1 = r2dm.getRenderingCoordinate(bond.getAtomAt(1));
+			p2 = r2dm.getRenderingCoordinate(bond.getAtomAt(0));
 		}
 		Vector2d lengthStep = new Vector2d(p2);
 		lengthStep.sub(p1);
@@ -1428,7 +1430,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		}
 		graphics.setFont(normalFont);
 		FontMetrics fm = graphics.getFontMetrics();
-		int[] provcoords = {(int) atom.getPoint2d().x + 10, (int) atom.getPoint2d().y};
+		int[] provcoords = {(int) r2dm.getRenderingCoordinate(atom).x + 10, (int) r2dm.getRenderingCoordinate(atom).y};
 		int[] screenCoords = getScreenCoordinates(provcoords);
 		for (int i = 0; i < result.length; i++)
 		{

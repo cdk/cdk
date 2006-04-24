@@ -190,9 +190,9 @@ public class CleanupAction extends JCPAction
 					 *  See constructor of JCPPanel
 					 */
 					// Thread.sleep(5000);
-					GeometryTools.translateAllPositive(cleanedMol);
+					GeometryTools.translateAllPositive(cleanedMol,jcpmodel.getRendererModel().getRenderingCoordinates());
 					double scaleFactor = GeometryTools.getScaleFactor(cleanedMol, jcpmodel.getRendererModel().getBondLength());
-					GeometryTools.scaleMolecule(cleanedMol, scaleFactor);
+					GeometryTools.scaleMolecule(cleanedMol, scaleFactor,jcpmodel.getRendererModel().getRenderingCoordinates());
 					GeometryTools.translate2DCentreOfMassTo(cleanedMol, centre);
 				} catch (Exception exc)
 				{

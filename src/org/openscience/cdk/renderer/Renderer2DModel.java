@@ -37,12 +37,14 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.vecmath.Point2d;
+
+import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.event.ICDKChangeListener;
-import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.renderer.color.IAtomColorer;
 
 /**
  * Model for Renderer2D that contains settings for drawing objects.
@@ -144,6 +146,21 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private double[] rotateCenter=null;
 	private double rotateRadius=0;
+	
+	private HashMap renderingCoordinates=new HashMap();
+	
+	
+	public void setRenderingCoordinate(IAtom atom, Point2d point){
+		this.renderingCoordinates.put(atom,point);
+	}
+	
+	public Point2d getRenderingCoordinate(IAtom atom){
+		return (Point2d)this.renderingCoordinates.get(atom);
+	}
+	
+	public HashMap getRenderingCoordinates(){
+		return this.renderingCoordinates;
+	}
     
     /**
      * @return null if no custom font set

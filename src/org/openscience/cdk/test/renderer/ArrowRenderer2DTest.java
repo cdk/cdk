@@ -104,9 +104,9 @@ public class ArrowRenderer2DTest extends JPanel {
 			r2dm.setDrawNumbers(true);
 			ht.put(molecule.getAtomAt(an1), Color.red);
 			ht.put(molecule.getAtomAt(an2), Color.red);
-			GeometryTools.translateAllPositive(molecule);
-			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8);
-			GeometryTools.center(molecule, getPreferredSize());
+			GeometryTools.translateAllPositive(molecule,r2dm.getRenderingCoordinates());
+			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8,r2dm.getRenderingCoordinates());
+			GeometryTools.center(molecule, getPreferredSize(),r2dm.getRenderingCoordinates());
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}

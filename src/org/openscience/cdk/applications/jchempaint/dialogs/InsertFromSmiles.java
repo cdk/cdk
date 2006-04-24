@@ -165,7 +165,7 @@ public class InsertFromSmiles extends JFrame
                     m = sdg.getMolecule();
                      double bondLength = renderModel.getBondLength();
                     double scaleFactor = GeometryTools.getScaleFactor(m, bondLength);
-                    GeometryTools.scaleMolecule(m, scaleFactor);
+                    GeometryTools.scaleMolecule(m, scaleFactor,renderModel.getRenderingCoordinates());
                     //if there are no atoms in the actual chemModel all 2D-coordinates would be set to NaN
                     if (ChemModelManipulator.getAllInOneContainer(chemModel).getAtomCount() != 0) {
 	                    GeometryTools.translate2DCenterTo(m,
@@ -174,7 +174,7 @@ public class InsertFromSmiles extends JFrame
 	                        )
 	                    );
                     }
-                    GeometryTools.translate2D(m, 5*bondLength, 0); // in pixels
+                    GeometryTools.translate2D(m, 5*bondLength, 0,renderModel.getRenderingCoordinates()); // in pixels
 				} catch (Exception exc) {
 					exc.printStackTrace();
 				}

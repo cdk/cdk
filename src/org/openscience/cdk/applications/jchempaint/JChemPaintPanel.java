@@ -65,6 +65,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEditSupport;
+import javax.vecmath.Point2d;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -645,7 +646,7 @@ public abstract class JChemPaintPanel
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
 	    org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
 	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
-	    GeometryTools.scaleMolecule(ac, scaleFactor);
+	    GeometryTools.scaleMolecule(ac, scaleFactor, jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
 	    double x = view.getX() + view.getWidth();
 	    double y = view.getY() + view.getHeight();
@@ -656,7 +657,7 @@ public abstract class JChemPaintPanel
 	   //GeometryTools.center(ac, viewablePart);
 	    //to be fixed - check if molDim is reaching over viewablePart borders...
 	    if (this instanceof JChemPaintViewerOnlyPanel) {
-	        GeometryTools.center(ac, model.getBackgroundDimension());
+	        GeometryTools.center(ac, model.getBackgroundDimension(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	        relocatedX=0;
 	        relocatedY=0;
 	    } else {
@@ -664,21 +665,20 @@ public abstract class JChemPaintPanel
 	            if(viewablePart.getWidth()==0 && viewablePart.getHeight()==0){
 	                relocatedX=0;
 	                relocatedY=0;
-	                GeometryTools.center(ac, model.getBackgroundDimension());
+	                GeometryTools.center(ac, model.getBackgroundDimension(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	            }else{
-	                 GeometryTools.center(ac, viewablePart);
+	                 GeometryTools.center(ac, viewablePart,jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	            }
 	        }else{
 	            relocatedY = model.getBackgroundDimension().getSize().getHeight() - (dim.getHeight());
 	            relocatedX = 0;
-	            GeometryTools.center(ac, dim);
+	            GeometryTools.center(ac, dim,jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	        }
 	    }
 	    //fixing the coords regarding the position of the viewablePart
 	    for (int i = 0; i < atoms.length; i++) {
 	        if (atoms[i].getPoint2d() != null) {
-	            atoms[i].getPoint2d().x = atoms[i].getPoint2d().x + relocatedX;
-	            atoms[i].getPoint2d().y = atoms[i].getPoint2d().y + relocatedY;
+	        	jchemPaintModel.getRendererModel().setRenderingCoordinate(atoms[i],new Point2d(((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i])).x + relocatedX,((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i])).y + relocatedY));
 	        }
 	    }
 	}

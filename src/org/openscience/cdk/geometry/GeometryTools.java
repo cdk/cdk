@@ -31,6 +31,7 @@ package org.openscience.cdk.geometry;
 
 import java.awt.Dimension;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -64,6 +65,38 @@ public class GeometryTools {
 	/**
 	 *  Adds an automatically calculated offset to the coordinates of all atoms
 	 *  such that all coordinates are positive and the smallest x or y coordinate
+	 *  is exactly zero, using an external set of coordinates.
+	 *
+	 *@param  atomCon  AtomContainer for which all the atoms are translated to
+	 *      positive coordinates
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
+	 */
+	public static void translateAllPositive(IAtomContainer atomCon,HashMap renderingCoordinates) {
+		double minX = Double.MAX_VALUE;
+		double
+				minY = Double.MAX_VALUE;
+		IAtom[] atoms = atomCon.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+			if (renderingCoordinates.get(atoms[i]) == null && atoms[i].getPoint2d()!=null) {
+				renderingCoordinates.put(atoms[i],new Point2d(atoms[i].getPoint2d().x,atoms[i].getPoint2d().y));
+			}
+			if (renderingCoordinates.get(atoms[i]) != null) {
+				if (((Point2d)renderingCoordinates.get(atoms[i])).x < minX) {
+					minX = ((Point2d)renderingCoordinates.get(atoms[i])).x;
+				}
+				if (((Point2d)renderingCoordinates.get(atoms[i])).y < minY) {
+					minY = ((Point2d)renderingCoordinates.get(atoms[i])).y;
+				}
+			}
+		}
+		logger.debug("Translating: minx=" + minX + ", minY=" + minY);
+		translate2D(atomCon, minX * -1, minY * -1, renderingCoordinates);
+	}
+
+
+	/**
+	 *  Adds an automatically calculated offset to the coordinates of all atoms
+	 *  such that all coordinates are positive and the smallest x or y coordinate
 	 *  is exactly zero.
 	 *
 	 *@param  atomCon  AtomContainer for which all the atoms are translated to
@@ -87,8 +120,8 @@ public class GeometryTools {
 		logger.debug("Translating: minx=" + minX + ", minY=" + minY);
 		translate2D(atomCon, minX * -1, minY * -1);
 	}
-
-
+	
+	
 	/**
 	 *  Translates the given molecule by the given Vector.
 	 *
@@ -99,8 +132,25 @@ public class GeometryTools {
 	public static void translate2D(IAtomContainer atomCon, double transX, double transY) {
 		translate2D(atomCon, new Vector2d(transX, transY));
 	}
-
-
+	
+	
+	/**
+	 *  Scales a molecule such that it fills a given percentage of a given
+	 *  dimension
+	 *
+	 *@param  atomCon     The molecule to be scaled
+	 *@param  areaDim     The dimension to be filled
+	 *@param  fillFactor  The percentage of the dimension to be filled
+	 */
+	public static void scaleMolecule(IAtomContainer atomCon, Dimension areaDim, double fillFactor) {
+		Dimension molDim = get2DDimension(atomCon);
+		double widthFactor = (double) areaDim.width / (double) molDim.width;
+		double heightFactor = (double) areaDim.height / (double) molDim.height;
+		double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
+		scaleMolecule(atomCon, scaleFactor);
+	}
+	
+	
 	/**
 	 *  Multiplies all the coordinates of the atoms of the given molecule with the
 	 *  scalefactor.
@@ -113,6 +163,74 @@ public class GeometryTools {
 			if (atomCon.getAtomAt(i).getPoint2d() != null) {
 				atomCon.getAtomAt(i).getPoint2d().x *= scaleFactor;
 				atomCon.getAtomAt(i).getPoint2d().y *= scaleFactor;
+			}
+		}
+	}
+	
+	
+	/**
+	 *  Centers the molecule in the given area
+	 *
+	 *@param  atomCon  molecule to be centered
+	 *@param  areaDim  dimension in which the molecule is to be centered
+	 */
+	public static void center(IAtomContainer atomCon, Dimension areaDim) {
+		Dimension molDim = get2DDimension(atomCon);
+		int transX = (int) ((areaDim.width - molDim.width) / 2);
+		int transY = (int) ((areaDim.height - molDim.height) / 2);
+		translateAllPositive(atomCon);
+		translate2D(atomCon, new Vector2d(transX, transY));
+	}
+	
+	
+	/**
+	 *  Translates a molecule from the origin to a new point denoted by a vector.
+	 *
+	 *@param  atomCon  molecule to be translated
+	 *@param  vector   dimension that represents the translation vector
+	 */
+	public static void translate2D(IAtomContainer atomCon, Vector2d vector) {
+		IAtom[] atoms = atomCon.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+			if (atoms[i].getPoint2d() != null) {
+				atoms[i].getPoint2d().add(vector);
+			} else {
+				logger.warn("Could not translate atom in 2D space");
+			}
+		}
+	}
+	
+	
+	/**
+	 *  Translates the given molecule by the given Vector, using an external set of coordinates.
+	 *
+	 *@param  atomCon  The molecule to be translated
+	 *@param  transX   translation in x direction
+	 *@param  transY   translation in y direction
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
+	 */
+	public static void translate2D(IAtomContainer atomCon, double transX, double transY,HashMap renderingCoordinates) {
+		translate2D(atomCon, new Vector2d(transX, transY), renderingCoordinates);
+	}
+
+
+	/**
+	 *  Multiplies all the coordinates of the atoms of the given molecule with the
+	 *  scalefactor, using an external set of coordinates..
+	 *
+	 *@param  atomCon      The molecule to be scaled
+	 *@param  scaleFactor  Description of the Parameter
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
+	 */
+	public static void scaleMolecule(IAtomContainer atomCon, double scaleFactor, HashMap renderingCoordinates) {
+		for (int i = 0; i < atomCon.getAtomCount(); i++) {
+			if(renderingCoordinates.get(atomCon.getAtomAt(i))!=null){
+				((Point2d)renderingCoordinates.get(atomCon.getAtomAt(i))).x *= scaleFactor;
+				((Point2d)renderingCoordinates.get(atomCon.getAtomAt(i))).y *= scaleFactor;
+				return;
+			}
+			if (atomCon.getAtomAt(i).getPoint2d() != null) {
+				renderingCoordinates.put(atomCon.getAtomAt(i),new Point2d(atomCon.getAtomAt(i).getPoint2d().x *= scaleFactor,atomCon.getAtomAt(i).getPoint2d().y *= scaleFactor));
 			}
 		}
 	}
@@ -143,18 +261,19 @@ public class GeometryTools {
 
 	/**
 	 *  Scales a molecule such that it fills a given percentage of a given
-	 *  dimension
+	 *  dimension, using an external set of coordinates
 	 *
 	 *@param  atomCon     The molecule to be scaled
 	 *@param  areaDim     The dimension to be filled
 	 *@param  fillFactor  The percentage of the dimension to be filled
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 */
-	public static void scaleMolecule(IAtomContainer atomCon, Dimension areaDim, double fillFactor) {
+	public static void scaleMolecule(IAtomContainer atomCon, Dimension areaDim, double fillFactor, HashMap renderingCoordinates) {
 		Dimension molDim = get2DDimension(atomCon);
 		double widthFactor = (double) areaDim.width / (double) molDim.width;
 		double heightFactor = (double) areaDim.height / (double) molDim.height;
 		double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
-		scaleMolecule(atomCon, scaleFactor);
+		scaleMolecule(atomCon, scaleFactor, renderingCoordinates);
 	}
 
 
@@ -224,16 +343,20 @@ public class GeometryTools {
 
 
 	/**
-	 *  Translates a molecule from the origin to a new point denoted by a vector.
+	 *  Translates a molecule from the origin to a new point denoted by a vector, using an external set of coordinates.
 	 *
 	 *@param  atomCon  molecule to be translated
 	 *@param  vector   dimension that represents the translation vector
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 */
-	public static void translate2D(IAtomContainer atomCon, Vector2d vector) {
+	public static void translate2D(IAtomContainer atomCon, Vector2d vector, HashMap renderingCoordinates) {
 		IAtom[] atoms = atomCon.getAtoms();
 		for (int i = 0; i < atoms.length; i++) {
-			if (atoms[i].getPoint2d() != null) {
-				atoms[i].getPoint2d().add(vector);
+			if (renderingCoordinates.get(atoms[i]) == null && atoms[i].getPoint2d()!=null) {
+				renderingCoordinates.put(atoms[i],new Point2d(atoms[i].getPoint2d().x,atoms[i].getPoint2d().y));
+			}
+			if (((Point2d)renderingCoordinates.get(atoms[i])) != null) {
+				((Point2d)renderingCoordinates.get(atoms[i])).add(vector);
 			} else {
 				logger.warn("Could not translate atom in 2D space");
 			}
@@ -260,17 +383,18 @@ public class GeometryTools {
 
 
 	/**
-	 *  Centers the molecule in the given area
+	 *  Centers the molecule in the given area, using an external set of coordinates
 	 *
 	 *@param  atomCon  molecule to be centered
 	 *@param  areaDim  dimension in which the molecule is to be centered
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 */
-	public static void center(IAtomContainer atomCon, Dimension areaDim) {
+	public static void center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) {
 		Dimension molDim = get2DDimension(atomCon);
 		int transX = (int) ((areaDim.width - molDim.width) / 2);
 		int transY = (int) ((areaDim.height - molDim.height) / 2);
-		translateAllPositive(atomCon);
-		translate2D(atomCon, new Vector2d(transX, transY));
+		translateAllPositive(atomCon,renderingCoordinates);
+		translate2D(atomCon, new Vector2d(transX, transY),renderingCoordinates);
 	}
 
 
@@ -497,6 +621,35 @@ public class GeometryTools {
 
 	/**
 	 *  Writes the coordinates of the atoms participating the given bond into an
+	 *  array, using renderingCoordinates, using an external set of coordinates.
+	 *
+	 *@param  bond  The given bond
+	 *@param  renderingCoordindates The rendering coordinates, this is the hashmap getRenderingCoordinates from the Renderer2dModel
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
+	 *@return       The array with the coordinates
+	 */
+	public static int[] getBondCoordinates(IBond bond, HashMap renderingCoordinates) {
+		if (renderingCoordinates.get(bond.getAtomAt(0)) == null && bond.getAtomAt(0).getPoint2d()!=null) {
+			renderingCoordinates.put(bond.getAtomAt(0),new Point2d(bond.getAtomAt(0).getPoint2d().x,bond.getAtomAt(0).getPoint2d().y));
+		}
+		if (renderingCoordinates.get(bond.getAtomAt(1)) == null && bond.getAtomAt(1).getPoint2d()!=null) {
+			renderingCoordinates.put(bond.getAtomAt(1),new Point2d(bond.getAtomAt(1).getPoint2d().x,bond.getAtomAt(1).getPoint2d().y));
+		}		
+		if (bond.getAtomAt(0).getPoint2d() == null || bond.getAtomAt(1).getPoint2d() == null) {
+			logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
+			return new int[0];
+		}
+		int beginX = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(0))).x;
+		int endX = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(1))).x;
+		int beginY = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(0))).y;
+		int endY = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(1))).y;
+		int[] coords = {beginX, beginY, endX, endY};
+		return coords;
+	}
+	
+	
+	/**
+	 *  Writes the coordinates of the atoms participating the given bond into an
 	 *  array.
 	 *
 	 *@param  bond  The given bond
@@ -515,18 +668,19 @@ public class GeometryTools {
 		int[] coords = {beginX, beginY, endX, endY};
 		return coords;
 	}
-
+	
 
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
-	 *  coordinates.
+	 *  coordinates, using an external set of coordinates.
 	 *
 	 *@param  xPosition  The x coordinate
 	 *@param  yPosition  The y coordinate
 	 *@param  atomCon    The molecule that is searched for the closest atom
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return            The atom that is closest to the given coordinates
 	 */
-	public static IAtom getClosestAtom(int xPosition, int yPosition, IChemModel model, IAtom ignore) {
+	public static IAtom getClosestAtom(int xPosition, int yPosition, IChemModel model, IAtom ignore, HashMap renderingCoordinates) {
 		IAtom closestAtom = null;
 		IAtom currentAtom;
 		double smallestMouseDistance = -1;
@@ -538,9 +692,12 @@ public class GeometryTools {
 				IAtomContainer atomCon=model.getSetOfMolecules().getAtomContainer(k);
 				for (int i = 0; i < atomCon.getAtomCount(); i++) {
 					currentAtom = atomCon.getAtomAt(i);
-					if(currentAtom!=ignore){
-						atomX = currentAtom.getX2d();
-						atomY = currentAtom.getY2d();
+					if (renderingCoordinates.get(currentAtom) == null && currentAtom.getPoint2d()!=null) {
+						renderingCoordinates.put(currentAtom,new Point2d(currentAtom.getPoint2d().x,currentAtom.getPoint2d().y));
+					}
+					if(currentAtom!=ignore && renderingCoordinates.get(currentAtom)!=null){
+						atomX =((Point2d) renderingCoordinates.get(currentAtom)).x;
+						atomY = ((Point2d)renderingCoordinates.get(currentAtom)).y;
 						mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
 						if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
 							smallestMouseDistance = mouseDistance;

@@ -257,10 +257,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			 *  this code ensures that the molecule ends up somewhere in the model
 			 *  of the view screen
 			 */
-			GeometryTools.translateAllPositive(ac);
+			GeometryTools.translateAllPositive(ac,rendererModel.getRenderingCoordinates());
 			double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
-			GeometryTools.scaleMolecule(ac, scaleFactor);
-			layoutInTable(oneMoleculeDimension, jchemPaintModel.getChemModel());
+			GeometryTools.scaleMolecule(ac, scaleFactor,rendererModel.getRenderingCoordinates());
+			layoutInTable(oneMoleculeDimension, jchemPaintModel.getChemModel(),jchemPaintModel.getRendererModel());
 			// GeometryTools.center(ac, getPreferredSize());
 			// GeometryTools.center(ac, new Dimension(300,200));
 		}
@@ -537,7 +537,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             IChemModel model = (IChemModel) jchemPaintModel.getChemModel().clone();
             IAtomContainer ac = SetOfMoleculesManipulator.getAllInOneContainer(model.getSetOfMolecules());
             Dimension dim = GeometryTools.get2DDimension(ac);
-            GeometryTools.translateAllPositive(ac);
+            GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             snapImage = createImage((int)dim.getWidth()+20, (int)dim.getHeight()+20);
             Graphics2D snapGraphics = (Graphics2D) snapImage.getGraphics();
             snapGraphics.setBackground(Color.WHITE);
@@ -605,7 +605,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *@param  baseDim  Description of the Parameter
 	 *@param  model    Description of the Parameter
 	 */
-	private void layoutInTable(Dimension baseDim, IChemModel model)
+	private void layoutInTable(Dimension baseDim, IChemModel model, Renderer2DModel rm)
 	{
 		// a bit ugly, but assume moleculeSet *or* reactionSet
 		ISetOfMolecules moleculeSet = model.getSetOfMolecules();
@@ -614,8 +614,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();
 			for (int i = 0; i < mols.length; i++)
 			{
-				GeometryTools.center(mols[i], baseDim);
-				GeometryTools.translate2D(mols[i], 0, baseDim.height * i);
+				GeometryTools.center(mols[i], baseDim,rm.getRenderingCoordinates());
+				GeometryTools.translate2D(mols[i], 0, baseDim.height * i,rm.getRenderingCoordinates());
 			}
 			return;
 		}
@@ -626,8 +626,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			for (int i = 1; i <= reactions.length; i++)
 			{
 				org.openscience.cdk.interfaces.IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);
-				GeometryTools.center(ac, baseDim);
-				GeometryTools.translate2D(ac, 0, baseDim.height * (reactions.length - i));
+				GeometryTools.center(ac, baseDim,rm.getRenderingCoordinates());
+				GeometryTools.translate2D(ac, 0, baseDim.height * (reactions.length - i),rm.getRenderingCoordinates());
 			}
 		}
 	}

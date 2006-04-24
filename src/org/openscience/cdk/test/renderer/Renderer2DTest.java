@@ -98,9 +98,9 @@ public class Renderer2DTest extends JPanel
             r2dm.setSelectedPart(selected);
 			ht.put(molecule.getAtomAt(2), Color.red);
 			ht.put(molecule.getAtomAt(4), Color.red);
-			GeometryTools.translateAllPositive(molecule);
-			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8);
-			GeometryTools.center(molecule, getPreferredSize());
+			GeometryTools.translateAllPositive(molecule,r2dm.getRenderingCoordinates());
+			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8,r2dm.getRenderingCoordinates());
+			GeometryTools.center(molecule, getPreferredSize(),r2dm.getRenderingCoordinates());
 		
 		}
 		catch(Exception exc)

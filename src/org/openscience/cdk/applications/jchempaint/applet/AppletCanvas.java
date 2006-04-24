@@ -111,10 +111,10 @@ public class AppletCanvas extends Canvas
 		 *  this code ensures that the molecule ends up somewhere in the model
 		 *  of the view screen
 		 */
-		GeometryTools.translateAllPositive(container);
+		GeometryTools.translateAllPositive(container,renderer.getRenderer2DModel().getRenderingCoordinates());
 		double scaleFactor = GeometryTools.getScaleFactor(container, 40.0);
-		GeometryTools.scaleMolecule(container, scaleFactor);
-		GeometryTools.center(container, getSize());
+		GeometryTools.scaleMolecule(container, scaleFactor,renderer.getRenderer2DModel().getRenderingCoordinates());
+		GeometryTools.center(container, getSize(),renderer.getRenderer2DModel().getRenderingCoordinates());
 
 		setBackground(Color.white);
 		if (model != null)

@@ -178,6 +178,7 @@ org/openscience/cdk/io/formats/VASPFormat.class
 org/openscience/cdk/io/formats/XYZFormat.class
 org/openscience/cdk/io/formats/ZMatrixFormat.class
 org/openscience/cdk/io/listener/ChemObjectIOListener.class
+org/openscience/cdk/io/listener/IChemObjectIOListener.class
 org/openscience/cdk/io/MDLReader.class
 org/openscience/cdk/io/ReaderFactory.class
 org/openscience/cdk/io/setting/BooleanIOSetting.class
@@ -203,6 +204,7 @@ org/openscience/cdk/SetOfAtomContainers.class
 org/openscience/cdk/SetOfMolecules.class
 org/openscience/cdk/SingleElectron.class
 org/openscience/cdk/tools/LoggingTool.class
+org/openscience/cdk/tools/IValencyChecker.class
 org/openscience/cdk/tools/manipulator/ChemModelManipulator.class
 org/openscience/cdk/tools/manipulator/RingSetManipulator.class
 org/openscience/cdk/tools/manipulator/SetOfAtomContainersManipulator.class
