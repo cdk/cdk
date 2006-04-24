@@ -227,10 +227,6 @@ public class GeometryTools {
 			if(renderingCoordinates.get(atomCon.getAtomAt(i))!=null){
 				((Point2d)renderingCoordinates.get(atomCon.getAtomAt(i))).x *= scaleFactor;
 				((Point2d)renderingCoordinates.get(atomCon.getAtomAt(i))).y *= scaleFactor;
-				return;
-			}
-			if (atomCon.getAtomAt(i).getPoint2d() != null) {
-				renderingCoordinates.put(atomCon.getAtomAt(i),new Point2d(atomCon.getAtomAt(i).getPoint2d().x *= scaleFactor,atomCon.getAtomAt(i).getPoint2d().y *= scaleFactor));
 			}
 		}
 	}
@@ -821,6 +817,58 @@ public class GeometryTools {
 
 
 	/**
+	 *  Determines the scale factor for displaying a structure loaded from disk in
+	 *  a frame. An average of all bond length values is produced and a scale
+	 *  factor is determined which would scale the given molecule such that its
+	 *
+	 *@param  ac          The AtomContainer for which the ScaleFactor is to be
+	 *      calculated
+	 *@param  bondLength  The target bond length
+	 *@return             The ScaleFactor with which the AtomContainer must be
+	 *      scaled to have the target bond length
+	 */
+
+	public static double getScaleFactor(IAtomContainer ac, double bondLength, HashMap renderingCoordinates) {
+		IAtom[] atoms = ac.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+			if (renderingCoordinates.get(atoms[i]) == null && atoms[i].getPoint2d()!=null) {
+				renderingCoordinates.put(atoms[i],new Point2d(atoms[i].getPoint2d().x,atoms[i].getPoint2d().y));
+			}
+		}
+		double currentAverageBondLength = getBondLengthAverage(ac,renderingCoordinates);
+    if(currentAverageBondLength==0 || Double.isNaN(currentAverageBondLength))
+      return 1;
+		return bondLength / currentAverageBondLength;
+	}
+	
+	
+	/**
+	 *  An average of all 2D bond length values is produced. Bonds which have
+	 *  Atom's with no coordinates are disregarded.
+	 *
+	 *@param  ac  The AtomContainer for which the average bond length is to be
+	 *      calculated
+	 *@return     the average bond length
+	 */
+	public static double getBondLengthAverage(IAtomContainer ac, HashMap renderingCoordinates) {
+		double bondLengthSum = 0;
+		IBond[] bonds = ac.getBonds();
+		int bondCounter = 0;
+		for (int f = 0; f < bonds.length; f++) {
+			IBond bond = bonds[f];
+			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtomAt(0);
+			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtomAt(1);
+			if (renderingCoordinates.get(atom1) != null &&
+					renderingCoordinates.get(atom2) != null) {
+				bondCounter++;
+				bondLengthSum += getLength2D(bond, renderingCoordinates);
+			}
+		}
+		return bondLengthSum / bondCounter;
+	}
+	
+	
+	/**
 	 *  An average of all 2D bond length values is produced. Bonds which have
 	 *  Atom's with no coordinates are disregarded.
 	 *
@@ -846,6 +894,25 @@ public class GeometryTools {
 	}
 
 
+	/**
+	 *  Returns the geometric length of this bond in 2D space.
+	 *
+	 *@param  bond  Description of the Parameter
+	 *@return       The geometric length of this bond
+	 */
+	public static double getLength2D(IBond bond, HashMap renderingCoordinates) {
+		if (bond.getAtomAt(0) == null ||
+				bond.getAtomAt(1) == null) {
+			return 0.0;
+		}
+		Point2d p1 = ((Point2d)renderingCoordinates.get(bond.getAtomAt(0)));
+		Point2d p2 = ((Point2d)renderingCoordinates.get(bond.getAtomAt(1)));
+		if (p1 == null || p2 == null) {
+			return 0.0;
+		}
+		return p1.distance(p2);
+	}
+	
 	/**
 	 *  Returns the geometric length of this bond in 2D space.
 	 *
