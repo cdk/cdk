@@ -51,6 +51,10 @@ import org.openscience.cdk.renderer.color.IAtomColorer;
  *
  * @cdk.module render
  */
+/**
+ * @author shk3
+ *
+ */
 public class Renderer2DModel implements java.io.Serializable, Cloneable
 {
     
@@ -71,7 +75,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private Color foreColor = Color.black;
 	private Color mappingColor = Color.gray;
     
-	private Color highlightColor = Color.lightGray;
+	private Color hoverOverColor = Color.lightGray;
+	private Color selectedPartColor = Color.lightGray;
+	private Color externalHighlightColor = Color.orange;	
 	
 	private double highlightRadius = 10.0;
 
@@ -107,6 +113,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private Polygon selectRect = null;
 	
 	private IAtomContainer selectedPart = null;
+	private IAtomContainer externalSelectedPart = null;
 	private IAtomContainer clipboardContent = null;
 	
 	private Vector lassoPoints = new Vector();
@@ -495,28 +502,6 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		return drawNumbers;
 	}
 
-	/**
-	 * Returns the color used for highlighting things in this model.
-	 *
-	 * @return     the color used for highlighting things in this model 
-	 */
-	public Color getHighlightColor()
-	{
-		return this.highlightColor;
-	}
-
-
-	/**
-	 * Sets the color used for highlighting things in this model.
-	 *
-	 * @param   highlightColor  the color to be used for highlighting things in this model 
-	 */
-	public void setHighlightColor(Color highlightColor)
-	{
-		this.highlightColor = highlightColor;
-        fireChange();
-	}
-
 
 	/**
 	 * Returns the radius around an atoms, for which the atom is 
@@ -679,7 +664,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
         }
         if (atom == this.getHighlightedAtom()) {
             // logger.debug("Background color atom according to highlighting");
-            atomColor = this.getHighlightColor();
+            atomColor = this.getHoverOverColor();
         }
         // logger.debug("Color: " + atomColor.toString());
         return atomColor;
@@ -812,7 +797,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     }
 
 	/**
-	 * Get selected atoms
+	 * Get selected atoms. These are atoms selected internally in e. g. JCP with the lasso, painted in selectedPartColor
 	 *
 	 * @return an atomcontainer with the selected atoms
 	 */
@@ -822,7 +807,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	}
 
 	/**
-	 * Sets the selected atoms
+	 * Sets the selected atoms. These are atoms selected internally in e. g. JCP with the lasso, painted in selectedPartColor
 	 *
 	 * @param   selectedPart  
 	 */
@@ -832,11 +817,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		getColorHash().clear();
 		for (int i = 0; i < selectedPart.getAtomCount(); i++)
 		{
-			getColorHash().put(selectedPart.getAtomAt(i), getHighlightColor());
+			getColorHash().put(selectedPart.getAtomAt(i), this.getSelectedPartColor());
 		}
         IBond[] bonds = selectedPart.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
-			getColorHash().put(bonds[i], getHighlightColor());
+			getColorHash().put(bonds[i], getSelectedPartColor());
 		}		
         fireChange();
 	}
@@ -969,29 +954,101 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
   public HashMap getToolTipTextMap(){
     return toolTipTextMap;
   }
-
-/**
- * @return Returns the merge.
- */
-public HashMap getMerge() {
-	return merge;
-}
-
-
-public double[] getRotateCenter() {
-	return rotateCenter;
-}
-
-public void setRotateCenter(double x, double y) {
-	double[] rotateCenter={x,y};
-	this.rotateCenter = rotateCenter;
-}
-
-public double getRotateRadius() {
-	return rotateRadius;
-}
-
-public void setRotateRadius(double rotateRadius) {
-	this.rotateRadius = rotateRadius;
-}
+	
+	/**
+	 * @return Returns the merge.
+	 */
+	public HashMap getMerge() {
+		return merge;
+	}
+	
+	
+	public double[] getRotateCenter() {
+		return rotateCenter;
+	}
+	
+	public void setRotateCenter(double x, double y) {
+		double[] rotateCenter={x,y};
+		this.rotateCenter = rotateCenter;
+	}
+	
+	public double getRotateRadius() {
+		return rotateRadius;
+	}
+	
+	public void setRotateRadius(double rotateRadius) {
+		this.rotateRadius = rotateRadius;
+	}
+	
+	/**
+	 * Gets the color used for drawing the part which was selected externally
+	 * 
+	 * @param externalHighlightColor The color
+	 */
+	public Color getExternalHighlightColor() {
+		return externalHighlightColor;
+	}
+	
+	/**
+	 * Sets the color used for drawing the part which was selected externally
+	 * 
+	 * @param externalHighlightColor The color
+	 */
+	public void setExternalHighlightColor(Color externalHighlightColor) {
+		this.externalHighlightColor = externalHighlightColor;
+	}
+	
+	/**
+	 * Gets the color used for drawing the part we are hovering over.
+	 * 
+	 * @param hoverOverColor The color
+	 */
+	public Color getHoverOverColor() {
+		return hoverOverColor;
+	}
+	
+	/**
+	 * Sets the color used for drawing the part we are hovering over.
+	 * 
+	 * @param hoverOverColor The color
+	 */
+	public void setHoverOverColor(Color hoverOverColor) {
+		this.hoverOverColor = hoverOverColor;
+	}
+	
+	/**
+	 * Gets the color used for drawing the internally selected part.
+	 * 
+	 * @param selectedPartColor The color
+	 */
+	public Color getSelectedPartColor() {
+		return selectedPartColor;
+	}
+	
+	/**
+	 * Sets the color used for drawing the internally selected part.
+	 * 
+	 * @param selectedPartColor The color
+	 */
+	public void setSelectedPartColor(Color selectedPartColor) {
+		this.selectedPartColor = selectedPartColor;
+	}
+	
+	/**
+	 * Get externally selected atoms. These are atoms selected externally in e. g. Bioclipse via the ChemObjectTree, painted in externalSelectedPartColor
+	 *
+	 * @return the selected part
+	 */
+	public IAtomContainer getExternalSelectedPart() {
+		return externalSelectedPart;
+	}
+	
+	/**
+	 * Set externally selected atoms. These are atoms selected externally in e. g. Bioclipse via the ChemObjectTree, painted in externalSelectedPartColor
+	 * 
+	 * @param externalSelectedPart the selected part
+	 */
+	public void setExternalSelectedPart(IAtomContainer externalSelectedPart) {
+		this.externalSelectedPart = externalSelectedPart;
+	}
 }

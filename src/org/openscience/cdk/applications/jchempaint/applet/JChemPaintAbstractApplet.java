@@ -46,6 +46,7 @@ import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.swing.JExternalFrame;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
@@ -300,8 +301,10 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   }
 
   public void selectAtom(int atom){
-    theJcpp.getJChemPaintModel().getRendererModel().setHighlightColor(Color.RED);
-    theJcpp.getJChemPaintModel().getRendererModel().setHighlightedAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(atom));
+    theJcpp.getJChemPaintModel().getRendererModel().setExternalHighlightColor(Color.RED);
+    IAtomContainer ac=theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getBuilder().newAtomContainer();
+    ac.addAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(atom));
+    theJcpp.getJChemPaintModel().getRendererModel().setExternalSelectedPart(ac);
     getTheJcpp().repaint();
   }
 

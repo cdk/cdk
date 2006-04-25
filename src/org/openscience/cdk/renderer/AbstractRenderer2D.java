@@ -238,12 +238,18 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		logger.debug("Painting atom ");
 		Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
-		if (atom.equals(r2dm.getHighlightedAtom()) || (r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond())) && r2dm.getSelectedPart().contains(atom)) || (r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()==1 && r2dm.getSelectedPart().getAtomAt(0)==atom))
+		if (atom.equals(r2dm.getHighlightedAtom()))
 		{
-			paintColouredAtomBackground(atom, r2dm.getHighlightColor(), graphics);
+			paintColouredAtomBackground(atom, r2dm.getHoverOverColor(), graphics);
 		}
+		if((r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond())) && r2dm.getSelectedPart().contains(atom)) || (r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()==1 && r2dm.getSelectedPart().getAtomAt(0)==atom)){
+			paintColouredAtomBackground(atom, r2dm.getSelectedPartColor(), graphics);
+		}	
+		if(r2dm.getExternalSelectedPart()!=null && r2dm.getExternalSelectedPart().contains(atom)){
+			paintColouredAtomBackground(atom, r2dm.getExternalHighlightColor(), graphics);
+		}	
 		if(r2dm.getMerge().get(atom)!=null || r2dm.getMerge().values().contains(atom)){
-			paintColouredAtomBackground(atom, r2dm.getHighlightColor(),graphics);
+			paintColouredAtomBackground(atom, r2dm.getHoverOverColor(),graphics);
 		}
 
 		int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
@@ -850,7 +856,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			}
 			if (currentBond == r2dm.getHighlightedBond() && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(currentBond)))
 			{
-				bondColor = r2dm.getHighlightColor();
+				bondColor = r2dm.getHoverOverColor();
 				for (int j = 0; j < currentBond.getAtomCount(); j++)
 				{
 					paintColouredAtomBackground(currentBond.getAtomAt(j),

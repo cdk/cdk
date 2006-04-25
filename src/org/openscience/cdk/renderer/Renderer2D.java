@@ -125,7 +125,7 @@ public class Renderer2D extends SimpleRenderer2D
 			logger.debug("setOfMolecules is null");
 		}
 		if(r2dm.getRotateRadius()!=0){
-			graphics.setColor(r2dm.getHighlightColor());
+			graphics.setColor(r2dm.getSelectedPartColor());
 			int radius=(int)getScreenSize((int)r2dm.getRotateRadius());
 			int[] provCoords={(int)r2dm.getRotateCenter()[0],(int)r2dm.getRotateCenter()[1]};
 			int[] screenCoords = this.getScreenCoordinates(provCoords);
@@ -136,7 +136,7 @@ public class Renderer2D extends SimpleRenderer2D
 			graphics.drawLine(screenCoords[0]+radius,screenCoords[1],screenCoords[0]+radius+radius/2,screenCoords[1]+radius/2);
 		}
 		if(r2dm.getSelectRect()!=null){
-			graphics.setColor(r2dm.getHighlightColor());
+			graphics.setColor(r2dm.getSelectedPartColor());
 			int[] worldCoords={r2dm.getSelectRect().xpoints[0],r2dm.getSelectRect().ypoints[0],r2dm.getSelectRect().xpoints[1],r2dm.getSelectRect().ypoints[1],r2dm.getSelectRect().xpoints[2],r2dm.getSelectRect().ypoints[2],r2dm.getSelectRect().xpoints[3],r2dm.getSelectRect().ypoints[3]};
 			int[] screenCoords = getScreenCoordinates(worldCoords);
 			graphics.drawRect(screenCoords[0]<screenCoords[4] ? screenCoords[0] : screenCoords[4],screenCoords[1]<screenCoords[3] ? screenCoords[1] : screenCoords[3],Math.abs(screenCoords[0]-screenCoords[4]), Math.abs(screenCoords[1]-screenCoords[3]));
@@ -204,7 +204,7 @@ public class Renderer2D extends SimpleRenderer2D
 				IAtom atom1=(IAtom)it.next();
 				int[] coords = { (int)atom1.getPoint2d().x,(int)atom1.getPoint2d().y};
 				int[] screenCoords = getScreenCoordinates(coords);
-				graphics.setColor(r2dm.getHighlightColor());
+				graphics.setColor(r2dm.getSelectedPartColor());
 				graphics.drawOval((int)(screenCoords[0]-r2dm.getBondLength()/2),(int)(screenCoords[1]-r2dm.getBondLength()/2),(int)r2dm.getBondLength(),(int)r2dm.getBondLength());
 				
 			}

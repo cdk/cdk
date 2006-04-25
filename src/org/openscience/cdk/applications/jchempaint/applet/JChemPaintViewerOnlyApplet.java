@@ -32,6 +32,7 @@ import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Method;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 import org.openscience.cdk.controller.Controller2D;
@@ -96,9 +97,11 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
       IChemObject objectInRange = controller.getChemObjectInRange(mouseX, mouseY);
       if (objectInRange!=lastHighlighted && objectInRange instanceof IAtom)
       {
-        getTheJcpp().getJChemPaintModel().getRendererModel().setHighlightColor(Color.red);
+   	    getTheJcpp().getJChemPaintModel().getRendererModel().setExternalHighlightColor(Color.RED);
+   	    IAtomContainer ac=getTheJcpp().getJChemPaintModel().getChemModel().getSetOfMolecules().getBuilder().newAtomContainer();
+   	    ac.addAtom((IAtom)objectInRange);
+   	    getTheJcpp().getJChemPaintModel().getRendererModel().setExternalSelectedPart(ac);
         highlightPeakInSpectrum(getTheJcpp().getChemModel().getSetOfMolecules().getMolecule(0).getAtomNumber((IAtom)objectInRange));
-        getTheJcpp().getJChemPaintModel().getRendererModel().setHighlightedAtom((IAtom)objectInRange);
         repaint();
         lastHighlighted=objectInRange;
       }

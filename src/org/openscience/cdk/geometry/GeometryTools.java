@@ -395,10 +395,13 @@ public class GeometryTools {
 
 
 	/**
-	 *  Calculates the center of the given atoms and returns it as a Point2d
+	 *  Calculates the center of the given atoms and returns it as a Point2d, using
+	 *  an external set of coordinates
 	 *
 	 *@param  atoms  The vector of the given atoms
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return        The center of the given atoms as Point2d
+	 *
 	 */
 	public static Point2d get2DCenter(IAtom[] atoms, HashMap renderingCoordinates) {
 		IAtom atom;
@@ -868,12 +871,13 @@ public class GeometryTools {
 
 	/**
 	 *  Determines the scale factor for displaying a structure loaded from disk in
-	 *  a frame. An average of all bond length values is produced and a scale
+	 *  a frame, using an external set of coordinates. An average of all bond length values is produced and a scale
 	 *  factor is determined which would scale the given molecule such that its
 	 *
 	 *@param  ac          The AtomContainer for which the ScaleFactor is to be
 	 *      calculated
 	 *@param  bondLength  The target bond length
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return             The ScaleFactor with which the AtomContainer must be
 	 *      scaled to have the target bond length
 	 */
@@ -893,11 +897,12 @@ public class GeometryTools {
 	
 	
 	/**
-	 *  An average of all 2D bond length values is produced. Bonds which have
+	 *  An average of all 2D bond length values is produced, using an external set of coordinates. Bonds which have
 	 *  Atom's with no coordinates are disregarded.
 	 *
 	 *@param  ac  The AtomContainer for which the average bond length is to be
 	 *      calculated
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return     the average bond length
 	 */
 	public static double getBondLengthAverage(IAtomContainer ac, HashMap renderingCoordinates) {
@@ -945,9 +950,10 @@ public class GeometryTools {
 
 
 	/**
-	 *  Returns the geometric length of this bond in 2D space.
+	 *  Returns the geometric length of this bond in 2D space, using an external set of coordinates
 	 *
 	 *@param  bond  Description of the Parameter
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return       The geometric length of this bond
 	 */
 	public static double getLength2D(IBond bond, HashMap renderingCoordinates) {

@@ -143,7 +143,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 		paintAtoms(atomCon, graphics);
 		if (r2dm.getSelectRect() != null)
 		{
-			graphics.setColor(r2dm.getHighlightColor());
+			graphics.setColor(r2dm.getSelectedPartColor());
 			graphics.drawPolygon(r2dm.getSelectRect());
 		}
 		paintLassoLines(graphics);
