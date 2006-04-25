@@ -400,6 +400,27 @@ public class GeometryTools {
 	 *@param  atoms  The vector of the given atoms
 	 *@return        The center of the given atoms as Point2d
 	 */
+	public static Point2d get2DCenter(IAtom[] atoms, HashMap renderingCoordinates) {
+		IAtom atom;
+		double x = 0;
+		double y = 0;
+		for (int f = 0; f < atoms.length; f++) {
+			atom = (IAtom) atoms[f];
+			if (atom.getPoint2d() != null) {
+				x += ((Point2d)renderingCoordinates.get(atom)).x;
+				y += ((Point2d)renderingCoordinates.get(atom)).y;
+			}
+		}
+		return new Point2d(x / (double) atoms.length, y / (double) atoms.length);
+	}
+	
+	
+	/**
+	 *  Calculates the center of the given atoms and returns it as a Point2d
+	 *
+	 *@param  atoms  The vector of the given atoms
+	 *@return        The center of the given atoms as Point2d
+	 */
 	public static Point2d get2DCenter(IAtom[] atoms) {
 		IAtom atom;
 		double x = 0;
@@ -737,6 +758,35 @@ public class GeometryTools {
 	}
 
 
+	/**
+	 *  Returns the bond of the given molecule that is closest to the given
+	 *  coordinates.
+	 *
+	 *@param  xPosition  The x coordinate
+	 *@param  yPosition  The y coordinate
+	 *@param  atomCon    The molecule that is searched for the closest bond
+	 *@return            The bond that is closest to the given coordinates
+	 */
+	public static IBond getClosestBond(int xPosition, int yPosition, IAtomContainer atomCon, HashMap renderingCoordinates) {
+		Point2d bondCenter;
+		IBond closestBond = null;
+		IBond currentBond;
+		double smallestMouseDistance = -1;
+		double mouseDistance;
+		IBond[] bonds = atomCon.getBonds();
+		for (int i = 0; i < bonds.length; i++) {
+			currentBond = bonds[i];
+			bondCenter = get2DCenter(currentBond.getAtoms(),renderingCoordinates);
+			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
+			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
+				smallestMouseDistance = mouseDistance;
+				closestBond = currentBond;
+			}
+		}
+		return closestBond;
+	}
+	
+	
 	/**
 	 *  Returns the bond of the given molecule that is closest to the given
 	 *  coordinates.

@@ -1700,7 +1700,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
         double highlightRadius = r2dm.getHighlightRadius();
 		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
         if (atomCon.getBondCount() != 0) {
-            IBond closestBond = GeometryTools.getClosestBond(X, Y, atomCon);
+            IBond closestBond = GeometryTools.getClosestBond(X, Y, atomCon,r2dm.getRenderingCoordinates());
     		if (closestBond == null)
     		{
     			return null;
