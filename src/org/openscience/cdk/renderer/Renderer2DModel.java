@@ -51,10 +51,6 @@ import org.openscience.cdk.renderer.color.IAtomColorer;
  *
  * @cdk.module render
  */
-/**
- * @author shk3
- *
- */
 public class Renderer2DModel implements java.io.Serializable, Cloneable
 {
     
