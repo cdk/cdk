@@ -1707,7 +1707,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
     		}
     		// logger.debug("closestBond  "+ closestBond);
     		int[] coords = GeometryTools.distanceCalculator(
-    				GeometryTools.getBondCoordinates(closestBond), highlightRadius);
+    				GeometryTools.getBondCoordinates(closestBond, r2dm.getRenderingCoordinates()), highlightRadius);
     		int[] xCoords = {coords[0], coords[2], coords[4], coords[6]};
     		int[] yCoords = {coords[1], coords[3], coords[5], coords[7]};
     		if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(X, Y)))
