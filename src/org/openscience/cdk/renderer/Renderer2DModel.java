@@ -152,6 +152,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private HashMap renderingCoordinates=new HashMap();
 	
+	private boolean notification = true;
+	
 	
 	public void setRenderingCoordinate(IAtom atom, Point2d point){
 		this.renderingCoordinates.put(atom,point);
@@ -880,17 +882,18 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 * Notifies registered listeners of certain changes
 	 * that have occurred in this model.
 	 */
-	public void fireChange()
-	{
-		EventObject event = new EventObject(this);
-		if (listeners == null)
-		{
-			listeners = new Vector();	
+	public void fireChange() {
+		if (getNotification()) {
+			EventObject event = new EventObject(this);
+			if (listeners == null)
+			{
+				listeners = new Vector();	
+			}
+			
+			for (int i = 0; i < listeners.size(); i++)
+			{
+				((ICDKChangeListener)listeners.get(i)).stateChanged(event);
 		}
-		
-		for (int i = 0; i < listeners.size(); i++)
-		{
-			((ICDKChangeListener)listeners.get(i)).stateChanged(event);
 		}
 	}
   
@@ -1057,4 +1060,12 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		}		
         fireChange();
     }
+
+	public boolean getNotification() {
+		return notification;
+	}
+
+	public void setNotification(boolean notification) {
+		this.notification = notification;
+	}
 }
