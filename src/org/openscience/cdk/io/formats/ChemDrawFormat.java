@@ -42,10 +42,10 @@ public class ChemDrawFormat implements IChemFormat {
         return "chemical/x-cdx";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"cdx"};
     }
 
     public String getReaderClassName() { return null; }

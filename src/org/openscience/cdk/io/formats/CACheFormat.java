@@ -40,10 +40,10 @@ public class CACheFormat implements IChemFormatMatcher {
         return "chemical/x-cache-csf";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"cache"};
     }
 
     public String getReaderClassName() { return null; }

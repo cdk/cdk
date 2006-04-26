@@ -24,7 +24,6 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +42,10 @@ public class SMILESFIXFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"fix"};
     }
 
     public String getReaderClassName() { return null; }

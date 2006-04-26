@@ -28,6 +28,8 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.math.MathTools;
 
 /**
+ * See <a href="http://www.hyper.com/"></a>
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

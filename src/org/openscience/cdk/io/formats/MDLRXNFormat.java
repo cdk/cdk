@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp"></a>
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

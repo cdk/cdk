@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp"></a>
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */
@@ -36,13 +38,13 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-mdl-rxnfile";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"rxn"};
     }
 
     public String getReaderClassName() { 

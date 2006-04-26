@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://dasher.wustl.edu/tinker/
+ * See <a href="http://dasher.wustl.edu/tinker/"></a>
  * 
  * @author Miguel Rojas
  * 

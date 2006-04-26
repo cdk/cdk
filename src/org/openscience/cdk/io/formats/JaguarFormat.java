@@ -25,7 +25,7 @@ package org.openscience.cdk.io.formats;
 
 
 /**
- * http://www.schrodinger.com/
+ * See <a href="http://www.schrodinger.com/"></a>
  * 
  * @cdk.module io
  * @cdk.set    io-formats
@@ -42,10 +42,10 @@ public class JaguarFormat implements IChemFormatMatcher {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"j","jin","jout"};
     }
 
     public String getReaderClassName() { return null; }

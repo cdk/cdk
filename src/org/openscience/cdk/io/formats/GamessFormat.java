@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.msg.ameslab.gov/GAMESS/doc.menu.html
+ * See <a href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html"></a>
  * 
  * @cdk.module io
  * @cdk.set    io-formats
@@ -38,13 +38,13 @@ public class GamessFormat implements IChemFormatMatcher {
     }
 
     public String getMIMEType() {
-        return null;
+        return "chemical/x-gamess-input";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"gam","gamin","inp","gamout"};
     }
 
     public String getReaderClassName() { 

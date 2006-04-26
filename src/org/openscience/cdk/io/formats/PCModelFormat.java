@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.serenasoft.com/
+ * See <a href="http://www.serenasoft.com/"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class PCModelFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"pcm"};
     }
 
     public String getReaderClassName() { return null; }

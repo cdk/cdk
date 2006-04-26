@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * See <a href="http://shelx.uni-ac.gwdg.de/SHELX/"></a>
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */
@@ -42,7 +44,7 @@ public class ShelXFormat implements IChemFormatMatcher {
         return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[]{"res"};
+        return new String[]{"ins","res"};
     }
 
     public String getReaderClassName() { 

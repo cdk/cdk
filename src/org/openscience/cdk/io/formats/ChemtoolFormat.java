@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html
+ * See <a href="http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class ChemtoolFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"cht"};
     }
 
     public String getReaderClassName() { return null; }

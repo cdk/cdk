@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.cosmologic.de/turbomole.html
+ * See <a href="http://www.cosmologic.de/turbomole.html"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class TurboMoleFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"tmol"};
     }
 
     public String getReaderClassName() { return null; }

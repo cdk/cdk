@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.q-chem.com/
+ * See <a href="http://www.q-chem.com/"></a>
  * 
  * @cdk.module io
  * @cdk.set    io-formats
@@ -41,10 +41,10 @@ public class QChemFormat implements IChemFormatMatcher {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"qc"};
     }
 
     public String getReaderClassName() { return null; }

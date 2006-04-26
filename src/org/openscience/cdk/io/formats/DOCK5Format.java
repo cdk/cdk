@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://dock.compbio.ucsf.edu
+ * See <a href="http://dock.compbio.ucsf.edu"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class DOCK5Format implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"bgf"};
     }
 
     public String getReaderClassName() { return null; }

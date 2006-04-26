@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html
+ * See <a href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -33,20 +33,21 @@ package org.openscience.cdk.io.formats;
  */
 public class ZindoFormat implements IChemFormat {
 
-    public ZindoFormat() {}
+	public ZindoFormat() {
+    }
     
     public String getFormatName() {
         return "Zindo";
     }
 
     public String getMIMEType() {
-        return null;
+    	return "chemical/x-daylight-smiles";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"zin"};
     }
 
     public String getReaderClassName() { return null; }

@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.tripos.com/data/support/mol2.pdf
+ * See <a href="http://www.tripos.com/data/support/mol2.pdf"></a>
  * 
  * @cdk.module io
  * @cdk.set    io-formats

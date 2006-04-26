@@ -41,10 +41,10 @@ public class AlchemyFormat implements IChemFormat {
         return "chemical/x-alchemy";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"alc"};
     }
 
     public String getReaderClassName() { return null; }

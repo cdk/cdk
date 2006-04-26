@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://viewmol.sourceforge.net/
+ * See <a href="http://viewmol.sourceforge.net/"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,12 +43,11 @@ public class ViewmolFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"vmol"};
     }
-
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
 

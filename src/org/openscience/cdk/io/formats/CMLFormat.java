@@ -24,6 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * See <a http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage"></a>
  * @cdk.module io
  * @cdk.set    io-formats
  */

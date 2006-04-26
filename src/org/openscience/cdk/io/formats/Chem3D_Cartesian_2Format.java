@@ -42,10 +42,10 @@ public class Chem3D_Cartesian_2Format implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"c3d2"};
     }
 
     public String getReaderClassName() { return null; }

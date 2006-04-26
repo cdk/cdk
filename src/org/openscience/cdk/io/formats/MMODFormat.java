@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.ch.ic.ac.uk/local/organic/t2_mmod.html
+ * See <a href="http://www.ch.ic.ac.uk/local/organic/t2_mmod.html"></a>
  * 
  * @author Miguel Rojas
  * 

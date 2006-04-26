@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html
+ * See <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html"></a>
  * 
  * @cdk.module io
  * @cdk.set    io-formats
@@ -44,7 +44,7 @@ public class PDBFormat implements IChemFormatMatcher {
         return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[]{"pdb"};
+        return new String[]{"pdb,ent"};
     }
 
     public String getReaderClassName() { 

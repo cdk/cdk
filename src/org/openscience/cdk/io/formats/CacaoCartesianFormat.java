@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml
+ * See <a href="http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -36,17 +36,17 @@ public class CacaoCartesianFormat implements IChemFormat {
     public CacaoCartesianFormat() {}
     
     public String getFormatName() {
-        return "Chem3D Cartesian 2";
+        return "Cacao Cartesian";
     }
 
     public String getMIMEType() {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"caccrt"};
     }
 
     public String getReaderClassName() { return null; }

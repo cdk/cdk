@@ -40,10 +40,10 @@ public class MOPAC7Format implements IChemFormatMatcher {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"mop","mopcrt","mopout"};
     }
 
     public String getReaderClassName() { return null; }

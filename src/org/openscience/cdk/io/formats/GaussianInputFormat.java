@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * See <a href="http://www.gaussian.com/g_ur/m_input.htm"></a>
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */
@@ -39,10 +41,10 @@ public class GaussianInputFormat implements IChemFormat {
         return "chemical/x-gaussian-input";
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"gau","com"};
     }
 
     public String getReaderClassName() { return null; }

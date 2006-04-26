@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.igc.ethz.ch/gromos/
+ * See <a href="http://www.igc.ethz.ch/gromos/"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class GROMOS96Format implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"gr96 "};
     }
 
     public String getReaderClassName() { return null; }

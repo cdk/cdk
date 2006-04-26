@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml
+ * See <a href="http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class BSFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"bs"};
     }
 
     public String getReaderClassName() { return null; }

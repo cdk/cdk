@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://crk.sourceforge.net/
+ * See <a href="http://crk.sourceforge.net/"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class CRK2DFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"crk2d"};
     }
 
     public String getReaderClassName() { return null; }

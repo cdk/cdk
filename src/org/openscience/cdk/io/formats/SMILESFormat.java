@@ -24,6 +24,8 @@
 package org.openscience.cdk.io.formats;
 
 /**
+ * See <a href="http://www.daylight.com/smiles/f_smiles.html"></a>
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */

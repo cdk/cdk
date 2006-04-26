@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.uku.fi/~thassine/ghemical/
+ * See <a href="http://www.uku.fi/~thassine/ghemical/"></a>
  * 
  * @cdk.module io
  * @cdk.set    io-formats
@@ -41,10 +41,10 @@ public class GhemicalMMFormat implements IChemFormatMatcher {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"gpr"};
     }
 
     public String getReaderClassName() { 

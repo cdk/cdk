@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.gaussian.com/g_ur/m_input.htm
+ * See <a href="http://www.gaussian.com/g_ur/m_input.htm"></a>
  * 
  * @cdk.module io
  * @cdk.set    io-formats

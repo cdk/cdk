@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.yasara.org/
+ * See <a href="http://www.yasara.org/"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -32,7 +32,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.set    io-formats
  */
 public class YasaraFormat implements IChemFormat {
-
+    
     public YasaraFormat() {}
     
     public String getFormatName() {
@@ -43,10 +43,10 @@ public class YasaraFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"yob"};
     }
 
     public String getReaderClassName() { return null; }

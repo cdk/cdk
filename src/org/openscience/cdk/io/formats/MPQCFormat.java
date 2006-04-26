@@ -24,7 +24,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * http://www.mpqc.org/mpqc-html/mpqcinp.html
+ * See <a href="http://www.mpqc.org/mpqc-html/mpqcinp.html"></a>
  * 
  * @author Miguel Rojas
  * 
@@ -43,10 +43,10 @@ public class MPQCFormat implements IChemFormat {
         return null;
     }
     public String getPreferredNameExtension() {
-        return null;
+        return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[0];
+        return new String[]{"mpqcin"};
     }
 
     public String getReaderClassName() { return null; }
