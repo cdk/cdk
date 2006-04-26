@@ -143,8 +143,8 @@ public class GenerateFragments {
 								if (firstRingSubstituents.getAtomAt(i).getFlag(CDKConstants.ISINRING) && secondRingAtomContainer.contains(firstRingSubstituents.getAtomAt(i))){
 									//System.out.println("\tFound a ring-ring System");
 									murckoFragment=new Molecule();
-									murckoFragment=addFragments(firstRingAtomContainer,murckoFragment);
-									murckoFragment=addFragments(secondRingAtomContainer,murckoFragment);
+									murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
+									murckoFragment=addFragments(secondRingAtomContainer,murckoFragment,molecule);
 									murckoFragment=addFragmentBonds(murckoFragment,molecule);
 									
 									this.murckoFragments.add(murckoFragment);
@@ -192,8 +192,8 @@ public class GenerateFragments {
 													//2. add rings  
 													//3. connect ring atoms to path
 													murckoFragment=addPathFragments(path,murckoFragment,molecule);
-													murckoFragment=addFragments(firstRingAtomContainer,murckoFragment);
-													murckoFragment=addFragments(secondRingAtomContainer,murckoFragment);
+													murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
+													murckoFragment=addFragments(secondRingAtomContainer,murckoFragment,molecule);
 													
 													murckoFragment=addFragmentBonds(murckoFragment,molecule);
 													linkerFragment=new Molecule(murckoFragment);
@@ -220,7 +220,7 @@ public class GenerateFragments {
 			}//For-f				
 		}else if (this.ringFragments.size() ==1){
 			murckoFragment=new Molecule();
-			murckoFragment=addFragments(RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(0)),murckoFragment);
+			murckoFragment=addFragments(RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(0)),murckoFragment,molecule);
 			murckoFragment=addFragmentBonds(murckoFragment,molecule);
 			this.murckoFragments.add(murckoFragment);
 		}
@@ -250,23 +250,23 @@ public class GenerateFragments {
 				for (int j = 0; j < this.ringFragments.size(); j++) {
 					ringAtomContainer = RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(j));
 					if (ringAtomContainer.contains(addAtomContainer.getAtomAt(i))){
-						targetMolecule=addFragments(ringAtomContainer, targetMolecule);
+						targetMolecule=addFragments(ringAtomContainer, targetMolecule,mainMolecule);
 						break;
 					}
 				}
-			}else if((this.sidechainHetatoms || this.exocyclicDoubleBonds) && !addAtomContainer.getAtomAt(i).getFlag(CDKConstants.ISINRING) && !targetMolecule.contains(addAtomContainer.getAtomAt(i))){
+			}else if((this.sidechainHetatoms || this.exocyclicDoubleBonds) && !targetMolecule.contains(addAtomContainer.getAtomAt(i))){
 				atoms=mainMolecule.getConnectedAtoms(addAtomContainer.getAtomAt(i));
 				targetMolecule.addAtom(addAtomContainer.getAtomAt(i));	
 				for (int j = 0; j < atoms.length; j++) {
 					//System.out.println("HETATOM:"+atoms[j].getSymbol());
-					if (this.sidechainHetatoms && !(atoms[j].getSymbol()).equals("C") && !(atoms[j].getSymbol()).equals("H") && !targetMolecule.contains(atoms[j])){
+					if (this.sidechainHetatoms && !addAtomContainer.getAtomAt(i).getFlag(CDKConstants.ISINRING) && !(atoms[j].getSymbol()).equals("C") && !(atoms[j].getSymbol()).equals("H") && !targetMolecule.contains(atoms[j])){
 						//System.out.println("HETATOM TRUE");
 						targetMolecule.addAtom(atoms[j]);
 					}
-					if (this.sidechainHetatoms && mainMolecule.getBond(atoms[j],addAtomContainer.getAtomAt(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
+					if (this.exocyclicDoubleBonds && mainMolecule.getBond(atoms[j],addAtomContainer.getAtomAt(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
+						System.out.println("EXOCYCLIC DB TRUE");
 						targetMolecule.addAtom(atoms[j]);
-					}
-					
+					}	
 				}
 			}else{
 				if (!targetMolecule.contains(addAtomContainer.getAtomAt(i))){
@@ -308,9 +308,18 @@ public class GenerateFragments {
 	 * @param targetMolecule	murcko fragment
 	 * @return	IMolecule		murcko fragment
 	 */
-	private IMolecule addFragments(IAtomContainer addAtomContainer, IMolecule targetMolecule){
+	private IMolecule addFragments(IAtomContainer addAtomContainer, IMolecule targetMolecule, IMolecule mainMolecule){
+		IAtom[] atoms=null;
 		for (int i=0;i<addAtomContainer.getAtomCount();i++){
-			targetMolecule.addAtom(addAtomContainer.getAtomAt(i));					
+			targetMolecule.addAtom(addAtomContainer.getAtomAt(i));
+			targetMolecule.addAtom(addAtomContainer.getAtomAt(i));	
+			//Check for double bonds
+			atoms=mainMolecule.getConnectedAtoms(addAtomContainer.getAtomAt(i));
+			for (int j = 0; j < atoms.length; j++) {
+				if (this.exocyclicDoubleBonds && mainMolecule.getBond(atoms[j],addAtomContainer.getAtomAt(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
+					targetMolecule.addAtom(atoms[j]);
+				}
+			}
 		}
 		return targetMolecule;
 	}
