@@ -645,7 +645,7 @@ public abstract class JChemPaintPanel
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
 	    org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
+	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	    GeometryTools.scaleMolecule(ac, scaleFactor, jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
 	    double x = view.getX() + view.getWidth();
