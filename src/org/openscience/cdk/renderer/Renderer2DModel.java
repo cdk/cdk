@@ -1046,5 +1046,15 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public void setExternalSelectedPart(IAtomContainer externalSelectedPart) {
 		this.externalSelectedPart = externalSelectedPart;
-	}
+		getColorHash().clear();
+		for (int i = 0; i < externalSelectedPart.getAtomCount(); i++)
+		{
+			getColorHash().put(externalSelectedPart.getAtomAt(i), this.getExternalHighlightColor());
+		}
+        IBond[] bonds = externalSelectedPart.getBonds();
+		for (int i = 0; i < bonds.length; i++) {
+			getColorHash().put(bonds[i], getExternalHighlightColor());
+		}		
+        fireChange();
+    }
 }
