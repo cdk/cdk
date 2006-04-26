@@ -173,7 +173,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		ISetOfMolecules oSet = oFile.getBuilder().newSetOfMolecules();
 		
 		// some variables needed
-		StringBuffer cLine;
+		StringBuffer cLine = new StringBuffer();
 		String cCol;
 		PDBAtom oAtom;
 		PDBPolymer oBP = new PDBPolymer();
@@ -261,10 +261,15 @@ public class PDBReader extends DefaultChemObjectReader {
 						// create bonds and finish the molecule
 						if (oBP.getAtomCount() != 0) {
 							// Create bonds. If bonds could not be created, all bonds are deleted.
-							if(!createBonds(oBP))	{
-								// Get rid of all potentially created bonds.
-								logger.info("Bonds could not be created when PDB file was read.");								
-								oBP.removeAllBonds();								
+							try {
+								if(!createBonds(oBP))	{
+									// Get rid of all potentially created bonds.
+									logger.info("Bonds could not be created when PDB file was read.");								
+									oBP.removeAllBonds();								
+								}
+							} catch (Exception exception) {
+								logger.info("Bonds could not be created when PDB file was read.");
+								logger.debug(exception);
 							}
 							oSet.addMolecule(oBP);
 						}
@@ -360,16 +365,18 @@ public class PDBReader extends DefaultChemObjectReader {
 					    structure.setStartInsertionCode(pdbLine.charAt(25));
 					    structure.setEndChainID(pdbLine.charAt(31));
 					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(33, 37).trim()));
+					    structure.setEndInsertionCode(pdbLine.charAt(37));
 					    oBP.addStructure(structure);
 					} else if (cCol.equals("SHEET ")) {
 						String pdbLine = cLine.toString();
 						PDBStructure structure = new PDBStructure();
 						structure.setStructureType(PDBStructure.SHEET);
-					    structure.setStartChainID(pdbLine.charAt(19));
-					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(20, 24).trim()));
-					    structure.setStartInsertionCode(pdbLine.charAt(24));
-					    structure.setEndChainID(pdbLine.charAt(30));
-					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(31, 35).trim()));
+					    structure.setStartChainID(pdbLine.charAt(21));
+					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(22, 26).trim()));
+					    structure.setStartInsertionCode(pdbLine.charAt(26));
+					    structure.setEndChainID(pdbLine.charAt(32));
+					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(33, 37).trim()));
+					    structure.setEndInsertionCode(pdbLine.charAt(37));
 					    oBP.addStructure(structure);
 					} else if (cCol.equals("TURN  ")) {
 						String pdbLine = cLine.toString();
@@ -380,11 +387,17 @@ public class PDBReader extends DefaultChemObjectReader {
 					    structure.setStartInsertionCode(pdbLine.charAt(24));
 					    structure.setEndChainID(pdbLine.charAt(30));
 					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(31, 35).trim()));
+					    structure.setEndInsertionCode(pdbLine.charAt(35));
 					    oBP.addStructure(structure);
 					}
 				}
 			} while (_oInput.ready() && (cRead != null));
 		} catch (Exception e) {
+			System.out.println("Found a problem at line:\n");
+			System.out.println(cLine.toString());
+			System.out.println("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
+			System.out.println("          1         2         3         4         5         6         7         ");
+			System.out.println("  error: " + e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -507,7 +520,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		
         oAtom.setRecord(cLine);
         oAtom.setSerial(Integer.parseInt(cLine.substring(6, 11).trim()));
-        oAtom.setName((new String(cLine.substring(12, 16))).trim());
+        oAtom.setName(rawAtomName.trim());
         oAtom.setAltLoc((new String(cLine.substring(16, 17))).trim());
         oAtom.setResName((new String(cLine.substring(17, 20))).trim());
         oAtom.setChainID((new String(cLine.substring(21, 22))).trim());
