@@ -164,7 +164,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
-        		////System.out.println("MF"+i+" :"+smiles[i]);
+        		//System.out.println("MF"+i+" :"+smiles[i]);
         	}
         	assertEquals(0,smiles.length);
         }catch (Exception e){
@@ -423,5 +423,28 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	e.printStackTrace();
         }
 	}
+	
+	public void testGenerateMurckoFragments16() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    	String filename = "data/mdl/murckoTest10.mol";
+    	//System.out.println("\nMurckoTesting: " + filename);
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	GenerateFragments gf=new GenerateFragments();
+    	try {
+        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	Molecule mol = (Molecule)reader.read(new Molecule());
+        	gf.generateMurckoFragments(mol,true,true);
+        	//System.out.println("Murcko Fragments generated");
+        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+        	for (int i =0;i<smiles.length;i++){
+        		//System.out.println("MF"+i+" :"+smiles[i]);
+        	}
+        	assertEquals("O=C2CC=CN2(Cc1ccccc1)",smiles[0]);
+        	assertEquals(1,smiles.length);
+        }catch (Exception e){
+        	System.out.println("Error in testGenerateMurckoFragments5:");
+        	e.printStackTrace();
+        }
+	}
+	
 }
 	            
