@@ -66,6 +66,7 @@ public class GeometryTools {
 	 *  Adds an automatically calculated offset to the coordinates of all atoms
 	 *  such that all coordinates are positive and the smallest x or y coordinate
 	 *  is exactly zero, using an external set of coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  AtomContainer for which all the atoms are translated to
 	 *      positive coordinates
@@ -98,6 +99,7 @@ public class GeometryTools {
 	 *  Adds an automatically calculated offset to the coordinates of all atoms
 	 *  such that all coordinates are positive and the smallest x or y coordinate
 	 *  is exactly zero.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  AtomContainer for which all the atoms are translated to
 	 *      positive coordinates
@@ -124,6 +126,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Translates the given molecule by the given Vector.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  The molecule to be translated
 	 *@param  transX   translation in x direction
@@ -137,6 +140,7 @@ public class GeometryTools {
 	/**
 	 *  Scales a molecule such that it fills a given percentage of a given
 	 *  dimension
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon     The molecule to be scaled
 	 *@param  areaDim     The dimension to be filled
@@ -154,6 +158,7 @@ public class GeometryTools {
 	/**
 	 *  Multiplies all the coordinates of the atoms of the given molecule with the
 	 *  scalefactor.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon      The molecule to be scaled
 	 *@param  scaleFactor  Description of the Parameter
@@ -170,6 +175,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Centers the molecule in the given area
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  molecule to be centered
 	 *@param  areaDim  dimension in which the molecule is to be centered
@@ -185,6 +191,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Translates a molecule from the origin to a new point denoted by a vector.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  molecule to be translated
 	 *@param  vector   dimension that represents the translation vector
@@ -203,6 +210,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Translates the given molecule by the given Vector, using an external set of coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  The molecule to be translated
 	 *@param  transX   translation in x direction
@@ -217,6 +225,7 @@ public class GeometryTools {
 	/**
 	 *  Multiplies all the coordinates of the atoms of the given molecule with the
 	 *  scalefactor, using an external set of coordinates..
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon      The molecule to be scaled
 	 *@param  scaleFactor  Description of the Parameter
@@ -258,6 +267,7 @@ public class GeometryTools {
 	/**
 	 *  Scales a molecule such that it fills a given percentage of a given
 	 *  dimension, using an external set of coordinates
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon     The molecule to be scaled
 	 *@param  areaDim     The dimension to be filled
@@ -275,6 +285,7 @@ public class GeometryTools {
 
 	/**
 	 *  Returns the java.awt.Dimension of a molecule
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  of which the dimension should be returned
 	 *@return          The java.awt.Dimension of this molecule
@@ -300,6 +311,7 @@ public class GeometryTools {
 	 *   minmax[2] = maxX;
 	 *   minmax[3] = maxY;
 	 * </pre>
+	 * See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  container  Description of the Parameter
 	 *@return            An four int array as defined above.
@@ -340,6 +352,7 @@ public class GeometryTools {
 
 	/**
 	 *  Returns the java.awt.Dimension of a molecule
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  of which the dimension should be returned
 	 *@return          The java.awt.Dimension of this molecule
@@ -365,6 +378,7 @@ public class GeometryTools {
 	 *   minmax[2] = maxX;
 	 *   minmax[3] = maxY;
 	 * </pre>
+	 * See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  container  Description of the Parameter
 	 *@return            An four int array as defined above.
@@ -405,6 +419,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Translates a molecule from the origin to a new point denoted by a vector, using an external set of coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  molecule to be translated
 	 *@param  vector   dimension that represents the translation vector
@@ -427,6 +442,7 @@ public class GeometryTools {
 
 	/**
 	 *  Translates a molecule from the origin to a new point denoted by a vector.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  molecule to be translated
 	 *@param  p        Description of the Parameter
@@ -445,6 +461,11 @@ public class GeometryTools {
 
 	/**
 	 *  Centers the molecule in the given area, using an external set of coordinates
+	 *  Attention: Many methods in this class working on coordinates exist in two versions: One with a HashMap as last parameter, one without
+	 *  this. The difference is as follows: The methods without the HashMap change the coordinates in the Atoms of the AtomContainer. The methods with the HashMaps
+	 *  expect in this HashMaps pairs of atoms and Point2ds. They work on the Point2ds associated with a particular atom and leave the atom itself
+	 *  unchanged. If there is no entry in the HashMap for an atom, they put the coordinates from the Atom in this HashMap and then work on the HashMap.
+	 *  
 	 *
 	 *@param  atomCon  molecule to be centered
 	 *@param  areaDim  dimension in which the molecule is to be centered
@@ -463,6 +484,7 @@ public class GeometryTools {
 	/**
 	 *  Calculates the center of the given atoms and returns it as a Point2d, using
 	 *  an external set of coordinates
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atoms  The vector of the given atoms
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
@@ -486,6 +508,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Calculates the center of the given atoms and returns it as a Point2d
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atoms  The vector of the given atoms
 	 *@return        The center of the given atoms as Point2d
@@ -507,6 +530,7 @@ public class GeometryTools {
 
 	/**
 	 *  Returns the geometric center of all the rings in this ringset.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ringSet  Description of the Parameter
 	 *@return          the geometric center of the rings in this ringset
@@ -527,6 +551,7 @@ public class GeometryTools {
 	/**
 	 *  Calculates the center of mass for the <code>Atom</code>s in the
 	 *  AtomContainer for the 2D coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac      AtomContainer for which the center of mass is calculated
 	 *@return         Description of the Return Value
@@ -553,6 +578,7 @@ public class GeometryTools {
 
 	/**
 	 *  Returns the geometric center of all the atoms in the atomContainer.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  container  Description of the Parameter
 	 *@return            the geometric center of the atoms in this atomContainer
@@ -597,6 +623,7 @@ public class GeometryTools {
 	/**
 	 *  Calculates the center of mass for the <code>Atom</code>s in the
 	 *  AtomContainer for the 2D coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac      AtomContainer for which the center of mass is calculated
 	 *@return         Description of the Return Value
@@ -626,6 +653,7 @@ public class GeometryTools {
 
 	/**
 	 *  Returns the geometric center of all the atoms in this atomContainer.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac  Description of the Parameter
 	 *@return     the geometric center of the atoms in this atomContainer
@@ -708,6 +736,7 @@ public class GeometryTools {
 	/**
 	 *  Writes the coordinates of the atoms participating the given bond into an
 	 *  array, using renderingCoordinates, using an external set of coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  bond  The given bond
 	 *@param  renderingCoordindates The rendering coordinates, this is the hashmap getRenderingCoordinates from the Renderer2dModel
@@ -737,6 +766,7 @@ public class GeometryTools {
 	/**
 	 *  Writes the coordinates of the atoms participating the given bond into an
 	 *  array.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  bond  The given bond
 	 *@return       The array with the coordinates
@@ -759,6 +789,7 @@ public class GeometryTools {
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
 	 *  coordinates, using an external set of coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  xPosition  The x coordinate
 	 *@param  yPosition  The y coordinate
@@ -800,6 +831,7 @@ public class GeometryTools {
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
 	 *  coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  xPosition  The x coordinate
 	 *@param  yPosition  The y coordinate
@@ -830,6 +862,7 @@ public class GeometryTools {
 	/**
 	 *  Returns the bond of the given molecule that is closest to the given
 	 *  coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  xPosition  The x coordinate
 	 *@param  yPosition  The y coordinate
@@ -859,6 +892,7 @@ public class GeometryTools {
 	/**
 	 *  Returns the bond of the given molecule that is closest to the given
 	 *  coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  xPosition  The x coordinate
 	 *@param  yPosition  The y coordinate
@@ -888,6 +922,7 @@ public class GeometryTools {
 	/**
 	 *  Sorts a Vector of atoms such that the 2D distances of the atom locations
 	 *  from a given point are smallest for the first atoms in the vector
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  point  The point from which the distances to the atoms are measured
 	 *@param  atoms  The atoms for which the distances to point are measured
@@ -919,6 +954,7 @@ public class GeometryTools {
 	 *  Determines the scale factor for displaying a structure loaded from disk in
 	 *  a frame. An average of all bond length values is produced and a scale
 	 *  factor is determined which would scale the given molecule such that its
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac          The AtomContainer for which the ScaleFactor is to be
 	 *      calculated
@@ -939,6 +975,7 @@ public class GeometryTools {
 	 *  Determines the scale factor for displaying a structure loaded from disk in
 	 *  a frame, using an external set of coordinates. An average of all bond length values is produced and a scale
 	 *  factor is determined which would scale the given molecule such that its
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac          The AtomContainer for which the ScaleFactor is to be
 	 *      calculated
@@ -965,6 +1002,7 @@ public class GeometryTools {
 	/**
 	 *  An average of all 2D bond length values is produced, using an external set of coordinates. Bonds which have
 	 *  Atom's with no coordinates are disregarded.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac  The AtomContainer for which the average bond length is to be
 	 *      calculated
@@ -992,6 +1030,7 @@ public class GeometryTools {
 	/**
 	 *  An average of all 2D bond length values is produced. Bonds which have
 	 *  Atom's with no coordinates are disregarded.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac  The AtomContainer for which the average bond length is to be
 	 *      calculated
@@ -1017,6 +1056,7 @@ public class GeometryTools {
 
 	/**
 	 *  Returns the geometric length of this bond in 2D space, using an external set of coordinates
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  bond  Description of the Parameter
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
@@ -1037,6 +1077,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Returns the geometric length of this bond in 2D space.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  bond  Description of the Parameter
 	 *@return       The geometric length of this bond
@@ -1057,6 +1098,7 @@ public class GeometryTools {
 
 	/**
 	 *  Determines if this AtomContainer contains 2D coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  m  Description of the Parameter
 	 *@return    boolean indication that 2D coordinates are available
@@ -1068,6 +1110,7 @@ public class GeometryTools {
 	
 	/**
 	 *  Determines if this AtomContainer contains 2D coordinates for some or all molecules.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  m  Description of the Parameter
 	 *@return    0 no 2d, 1=some, 2= for each atom
@@ -1095,6 +1138,7 @@ public class GeometryTools {
 
 	/**
 	 *  Determines if this Atom contains 2D coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  a  Description of the Parameter
 	 *@return    boolean indication that 2D coordinates are available
@@ -1106,6 +1150,7 @@ public class GeometryTools {
 
 	/**
 	 *  Determines if this Bond contains 2D coordinates.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  b  Description of the Parameter
 	 *@return    boolean indication that 2D coordinates are available
@@ -1159,6 +1204,7 @@ public class GeometryTools {
 	/**
 	 *  Calculates the normalization factor in order to get an average bond length
 	 *  of 1.5. It takes only into account Bond's with two atoms.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  container  Description of the Parameter
 	 *@return            The normalizationFactor value
@@ -1193,6 +1239,7 @@ public class GeometryTools {
 	/**
 	 *  Determines the best alignment for the label of an atom in 2D space. It
 	 *  returns 1 if left aligned, and -1 if right aligned.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  container  Description of the Parameter
 	 *@param  atom       Description of the Parameter
