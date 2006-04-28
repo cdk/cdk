@@ -46,10 +46,12 @@ import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.swing.JExternalFrame;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
@@ -139,6 +141,9 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		jcpp.registerModel(theModel);
 		if(getParameter("detachable")!=null && getParameter("detachable").equals("true"))
 			jcpp.addFilePopUpMenu();		
+		if(getParameter("compact")!=null && getParameter("compact").equals("true")){
+			theModel.getRendererModel().setIsCompact(true);
+		}
 		if(theJcpp.getJChemPaintModel()!=null){
 			jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
 		if(theModel.getChemModel().getSetOfMolecules()!=null){
@@ -158,14 +163,23 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	              largestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
 	          }
 	        }
-	        int x=largestX-smallestX+30;
-	        int y=largestY - smallestY+30;
-	        if(x<300)
-	          x=300;
-	        if(y<300)
-	          y=300;
-	        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
-	        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
+	        if(!theModel.getRendererModel().getIsCompact()){
+		        int x=largestX-smallestX+30;
+		        int y=largestY - smallestY+30;
+		        if(x<300)
+		          x=300;
+		        if(y<300)
+		          y=300;
+		        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
+		        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
+	        }else{
+	        	theModel.getRendererModel().setBackgroundDimension(new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
+	        	IAtomContainer atomContainer=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules());
+	    		GeometryTools.translateAllPositive(atomContainer,theModel.getRendererModel().getRenderingCoordinates());
+	    		GeometryTools.scaleMolecule(atomContainer, theModel.getRendererModel().getBackgroundDimension(), 0.8,theModel.getRendererModel().getRenderingCoordinates());			
+	    		GeometryTools.center(atomContainer, theModel.getRendererModel().getBackgroundDimension(),theModel.getRendererModel().getRenderingCoordinates());
+
+	        }
 	      }
 	    }
 		//embedded means that additional instances can't be created, which is

@@ -265,7 +265,7 @@ public class GeometryTools {
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 */
 	public static void scaleMolecule(IAtomContainer atomCon, Dimension areaDim, double fillFactor, HashMap renderingCoordinates) {
-		Dimension molDim = get2DDimension(atomCon);
+		Dimension molDim = get2DDimension(atomCon, renderingCoordinates);
 		double widthFactor = (double) areaDim.width / (double) molDim.width;
 		double heightFactor = (double) areaDim.height / (double) molDim.height;
 		double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
@@ -339,6 +339,71 @@ public class GeometryTools {
 
 
 	/**
+	 *  Returns the java.awt.Dimension of a molecule
+	 *
+	 *@param  atomCon  of which the dimension should be returned
+	 *@return          The java.awt.Dimension of this molecule
+	 */
+	public static Dimension get2DDimension(IAtomContainer atomCon, HashMap renderingCoordinates) {
+		double[] minmax = getMinMax(atomCon, renderingCoordinates);
+		double maxX = minmax[2];
+		double
+				maxY = minmax[3];
+		double
+				minX = minmax[0];
+		double
+				minY = minmax[1];
+		return new Dimension((int) (maxX - minX + 1), (int) (maxY - minY + 1));
+	}
+
+
+	/**
+	 *  Returns the minimum and maximum X and Y coordinates of the atoms in the
+	 *  AtomContainer. The output is returned as: <pre>
+	 *   minmax[0] = minX;
+	 *   minmax[1] = minY;
+	 *   minmax[2] = maxX;
+	 *   minmax[3] = maxY;
+	 * </pre>
+	 *
+	 *@param  container  Description of the Parameter
+	 *@return            An four int array as defined above.
+	 */
+	public static double[] getMinMax(IAtomContainer container, HashMap renderingCoordinates) {
+		double maxX = Double.MIN_VALUE;
+		double
+				maxY = Double.MIN_VALUE;
+		double
+				minX = Double.MAX_VALUE;
+		double
+				minY = Double.MAX_VALUE;
+		for (int i = 0; i < container.getAtomCount(); i++) {
+			IAtom atom = container.getAtomAt(i);
+			if (renderingCoordinates.get(atom) != null) {
+				if (((Point2d)renderingCoordinates.get(atom)).x > maxX) {
+					maxX = ((Point2d)renderingCoordinates.get(atom)).x;
+				}
+				if (((Point2d)renderingCoordinates.get(atom)).x < minX) {
+					minX = ((Point2d)renderingCoordinates.get(atom)).x;
+				}
+				if (((Point2d)renderingCoordinates.get(atom)).y > maxY) {
+					maxY = ((Point2d)renderingCoordinates.get(atom)).y;
+				}
+				if (((Point2d)renderingCoordinates.get(atom)).y < minY) {
+					minY = ((Point2d)renderingCoordinates.get(atom)).y;
+				}
+			}
+		}
+		double[] minmax = new double[4];
+		minmax[0] = minX;
+		minmax[1] = minY;
+		minmax[2] = maxX;
+		minmax[3] = maxY;
+		return minmax;
+	}
+
+	
+	/**
 	 *  Translates a molecule from the origin to a new point denoted by a vector, using an external set of coordinates.
 	 *
 	 *@param  atomCon  molecule to be translated
@@ -386,7 +451,8 @@ public class GeometryTools {
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 */
 	public static void center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) {
-		Dimension molDim = get2DDimension(atomCon);
+	    org.openscience.cdk.interfaces.IAtom[] atoms = atomCon.getAtoms();
+		Dimension molDim = get2DDimension(atomCon, renderingCoordinates);
 		int transX = (int) ((areaDim.width - molDim.width) / 2);
 		int transY = (int) ((areaDim.height - molDim.height) / 2);
 		translateAllPositive(atomCon,renderingCoordinates);

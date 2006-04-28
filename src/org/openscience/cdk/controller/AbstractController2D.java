@@ -1254,7 +1254,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 		r2dm.fireChange();
 		fireChange();
-		r2dm.setRenderingCoordinate(newAtom1,new Point2d(newAtom1.getPoint2d()));
+		if(r2dm.getRenderingCoordinate(newAtom1)==null)
+			r2dm.setRenderingCoordinate(newAtom1,new Point2d(newAtom1.getPoint2d()));
 		if(newAtom2!=null)
 			r2dm.setRenderingCoordinate(newAtom2,new Point2d(newAtom2.getPoint2d()));
 		centerAtom(newAtom1,chemModel);

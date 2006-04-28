@@ -657,7 +657,7 @@ public abstract class JChemPaintPanel
 	   //GeometryTools.center(ac, viewablePart);
 	    //to be fixed - check if molDim is reaching over viewablePart borders...
 	    if (this instanceof JChemPaintViewerOnlyPanel) {
-	        GeometryTools.center(ac, model.getBackgroundDimension(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
+	    	GeometryTools.center(ac, model.getBackgroundDimension(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	        relocatedX=0;
 	        relocatedY=0;
 	    } else {
@@ -677,7 +677,7 @@ public abstract class JChemPaintPanel
 	    }
 	    //fixing the coords regarding the position of the viewablePart
 	    for (int i = 0; i < atoms.length; i++) {
-	        if (atoms[i].getPoint2d() != null) {
+	        if (jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i]) != null) {
 	        	jchemPaintModel.getRendererModel().setRenderingCoordinate(atoms[i],new Point2d(((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i])).x + relocatedX,((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i])).y + relocatedY));
 	        }
 	    }
