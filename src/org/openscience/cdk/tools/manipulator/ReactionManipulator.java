@@ -34,7 +34,9 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
@@ -204,6 +206,25 @@ public class ReactionManipulator {
             list.add(products[i]);
         }
         return list;
+    }
+    /**
+     * get the IAtom which is mapped
+     * 
+     * @param reaction   The IReaction which contains the mapping 
+     * @param atom       The IChemObject which will be searched its mapped IChemObject
+     * @return           The mapped IChemObject
+     */
+    public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject){
+    	IMapping[] mappings = reaction.getMappings();
+    	for(int i = 0 ; i < mappings.length ; i++){
+    		IMapping mapping = mappings[i];
+    		IChemObject[] map = mapping.getRelatedChemObjects();
+			if(map[0].equals(chemObject)){
+				return map[1];
+			}else if(map[1].equals(chemObject))
+				return map[0];
+    	}
+    	return null;
     }
     
 }

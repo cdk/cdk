@@ -29,9 +29,19 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
@@ -82,6 +92,62 @@ public class ReactionManipulatorTest extends CDKTestCase {
         Vector ids = ReactionManipulator.getAllIDs(reaction);
         assertNotNull(ids);
         assertEquals(5, ids.size());
+    }
+    /**
+	 * A unit test suite for JUnit. Test of mapped IAtoms
+	 *
+	 * @return    The test suite
+	 */
+    public void testMappingAtoms()throws ClassNotFoundException, CDKException, java.lang.Exception {
+    	IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+    	IMolecule reactant = (new SmilesParser()).parseSmiles("[C+]-C=C");
+    	IMolecule product = (new SmilesParser()).parseSmiles("C=C=C");
+    	
+    	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(0),product.getAtomAt(0));
+        reaction.addMapping(mapping);
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(1),product.getAtomAt(1));
+        reaction.addMapping(mapping);
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(2),product.getAtomAt(2));
+        reaction.addMapping(mapping);
+    	
+        reaction.addReactant(reactant);
+        reaction.addProduct(product);
+        
+        IAtom mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, reactant.getAtomAt(0));
+        assertEquals(mappedAtom, product.getAtomAt(0));
+        
+        mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, product.getAtomAt(1));
+        assertEquals(mappedAtom, reactant.getAtomAt(1));
+        
+        
+    }
+    /**
+	 * A unit test suite for JUnit. Test of mapped IBond
+	 *
+	 * @return    The test suite
+	 */
+    public void testMappingBonds()throws ClassNotFoundException, CDKException, java.lang.Exception {
+    	IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+    	IMolecule reactant = (new SmilesParser()).parseSmiles("[C+]-C=C");
+    	IMolecule product = (new SmilesParser()).parseSmiles("C=C=C");
+    	
+    	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(0),product.getAtomAt(0));
+        reaction.addMapping(mapping);
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getBondAt(0),product.getBondAt(0));
+        reaction.addMapping(mapping);
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getBondAt(1),product.getBondAt(1));
+        reaction.addMapping(mapping);
+    	
+        reaction.addReactant(reactant);
+        reaction.addProduct(product);
+        
+        IBond mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, reactant.getBondAt(0));
+        assertEquals(mappedBond, product.getBondAt(0));
+        
+        mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, product.getBondAt(1));
+        assertEquals(mappedBond, reactant.getBondAt(1));
+        
+        
     }
 }
 
