@@ -104,7 +104,9 @@
         <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
             <formatter type="xml" toFile="${reports.tests}/pmd/libio.xml"/>
             <fileset dir="${src}">
-                <includesfile name="${src}/libio.javafiles"/>
+                <includesfile name="${src}/libio-biojava.javafiles"/>
+                <includesfile name="${src}/libio-cml.javafiles"/>
+                <includesfile name="${src}/libio-joelib.javafiles"/>
             </fileset>
         </pmd>
     </target>
