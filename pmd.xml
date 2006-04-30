@@ -5,7 +5,7 @@
     <property name="build" value="build" />
     <property name="src" value="src" />
     <property name="reports.tests" value="reports" />
-    
+
     <path id="pmd.classpath">
         <pathelement location="${build}"/>
         <fileset dir="${lib}">
@@ -25,130 +25,41 @@
     <taskdef name="pmd" id="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
                         classpathref="pmd.classpath"/>
 
-    <target name="pmd" id="pmd" depends="pmd-data, pmd-core, pmd-standard, pmd-io, 
-        pmd-extra, pmd-render, pmd-applications, pmd-libio, pmd-experimental,
-        pmd-builder3d, pmd-test, pmd-qsar"/>
-    
-    <target name="pmd-data" id="pmd-data" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom-data.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/data.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/data.javafiles"/>
-            </fileset>
-        </pmd>
+    <target name="pmd" id="pmd">
+      <antcall target="test-module"><param name="module" value="interfaces"/></antcall>
+      <antcall target="test-module"><param name="module" value="core"/></antcall>
+      <antcall target="test-module"><param name="module" value="data"/></antcall>
+      <antcall target="test-module"><param name="module" value="datadebug"/></antcall>
+      <antcall target="test-module"><param name="module" value="nonotify"/></antcall>
+      <antcall target="test-module"><param name="module" value="standard"/></antcall>
+      <antcall target="test-module"><param name="module" value="io"/></antcall>
+      <antcall target="test-module"><param name="module" value="io-jmol"/></antcall>
+      <antcall target="test-module"><param name="module" value="extra"/></antcall>
+      <antcall target="test-module"><param name="module" value="render"/></antcall>
+      <antcall target="test-module"><param name="module" value="libio-cml"/></antcall>
+      <antcall target="test-module"><param name="module" value="libio-joelib"/></antcall>
+      <antcall target="test-module"><param name="module" value="libio-biojava"/></antcall>
+      <antcall target="test-module"><param name="module" value="builder3d"/></antcall>
+      <antcall target="test-module"><param name="module" value="smiles"/></antcall>
+      <antcall target="test-module"><param name="module" value="forcefield"/></antcall>
+      <antcall target="test-module"><param name="module" value="qsar"/></antcall>
+      <antcall target="test-module"><param name="module" value="experimental"/></antcall>
+      <antcall target="test-module"><param name="module" value="svg"/></antcall>
+      <antcall target="test-module"><param name="module" value="valencycheck"/></antcall>
     </target>
 
-    <target name="pmd-core" id="pmd-core" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/core.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/core.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
+    <target id="test-module" name="test-module"
+            description="Performs a PMD checks for the given CDK module.">
 
-    <target name="pmd-standard" id="pmd-standard" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/standard.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/standard.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
+      <echo message="Running PMD checks for CDK's ${module} module." />
 
-    <target name="pmd-io" id="pmd-io" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/io.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/io.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-render" id="pmd-render" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/render.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/render.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-extra" id="pmd-extra" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/extra.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/extra.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-applications" id="pmd-applications" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/applications.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/applications.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-libio" id="pmd-libio" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/libio.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/libio-biojava.javafiles"/>
-                <includesfile name="${src}/libio-cml.javafiles"/>
-                <includesfile name="${src}/libio-joelib.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-experimental" id="pmd-experimental" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/experimental.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/experimental.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-qsar" id="pmd-qsar" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/qsar.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/qsar.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-builder3d" id="pmd-builder3d" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/builder3d.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/builder3d.javafiles"/>
-            </fileset>
-        </pmd>
-    </target>
-
-    <target name="pmd-test" id="pmd-test" depends="compileRenderer">
-        <mkdir dir="${reports.tests}/pmd"/>
-        <pmd shortFilenames="true" rulesetfiles="pmd/custom-test.xml">
-            <formatter type="xml" toFile="${reports.tests}/pmd/test.xml"/>
-            <fileset dir="${src}">
-                <includesfile name="${src}/test.javafiles"/>
-            </fileset>
-        </pmd>
+      <mkdir dir="${reports.tests}/pmd"/>
+      <pmd shortFilenames="true" rulesetfiles="pmd/custom-${module}.xml">
+        <formatter type="xml" toFile="${reports.tests}/pmd/${module}.xml"/>
+        <fileset dir="${src}">
+          <includesfile name="${src}/${module}.javafiles"/>
+        </fileset>
+      </pmd>
     </target>
 
 </project>
