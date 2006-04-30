@@ -688,7 +688,10 @@
             </unjar>
 
             <!-- then zip up things -->
-            <jar jarfile="${dist}/jar/cdk-${version}.jar">
+            <tstamp>
+                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
+            </tstamp>
+            <jar jarfile="${dist}/jar/cdk-svn-${TODAY_SVN}.jar">
                 <manifest>
                     <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
                     <section name="org.openscience.cdk">
