@@ -9,9 +9,9 @@
     <path id="pmd.classpath">
         <pathelement location="${build}"/>
         <fileset dir="${lib}">
-            <include name="jaxen-core-1.0-fcs.jar"/>
-            <include name="pmd-2.2.jar"/>
-            <include name="saxpath-1.0-fcs.jar"/>
+          <include name="jakarta-oro-2.0.8.jar"/>
+          <include name="pmd-3.6.jar"/>
+          <include name="jaxen-1.1-beta-7.jar"/>
         </fileset>
     </path>
 
@@ -53,8 +53,11 @@
 
       <echo message="Running PMD checks for CDK's ${module} module." />
 
+      <!-- FIXME: check out custom rule sets -->
+
       <mkdir dir="${reports.tests}/pmd"/>
-      <pmd shortFilenames="true" rulesetfiles="pmd/custom-${module}.xml">
+      <pmd shortFilenames="true">
+        <ruleset>pmd/custom.xml</ruleset>
         <formatter type="xml" toFile="${reports.tests}/pmd/${module}.xml"/>
         <fileset dir="${src}">
           <includesfile name="${src}/${module}.javafiles"/>
