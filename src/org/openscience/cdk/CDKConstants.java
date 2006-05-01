@@ -45,7 +45,8 @@ public class CDKConstants {
         /** A bond of degree 1.0. */
         public final static double BONDORDER_SINGLE = 1.0;
 
-        /** A bond of degree 1.5. */
+        /** A bond of degree 1.5. To indicate aromaticity, the flag ISAROMATIC should be used instead.
+         *  This constant is used for specific file formats only, and should generally not be used. */
         public final static double BONDORDER_AROMATIC = 1.5;
 
         /** A bond of degree 2.0. */
@@ -170,7 +171,9 @@ public class CDKConstants {
          */
         public final static int MAPPED = 5;
 
+        /** Set to true if the atom is an hydrogen bond donor. */
         public final static int IS_HYDROGENBOND_DONOR = 6;
+        /** Set to true if the atom is an hydrogen bond acceptor. */
         public final static int IS_HYDROGENBOND_ACCEPTOR = 7;
         
         /** Flag is set if a chemobject has reactive center.
@@ -267,10 +270,13 @@ public class CDKConstants {
     * AtomTypes                             *
     ****************************************/
 
+    /** Used as property key for indicating the ring size of a certain atom type. */
     public static final String PART_OF_RING_OF_SIZE = "Part of ring of size";
 
+    /** Used as property key for indicating the chemical group of a certain atom type. */
     public static final String CHEMICAL_GROUP_CONSTANT = "Chemical Group";
 
+    /** Used as property key for indicating the HOSE code for a certain atom type. */
     public static final String SPHERICAL_MATCHER = "HOSE code spherical matcher";
 
 }

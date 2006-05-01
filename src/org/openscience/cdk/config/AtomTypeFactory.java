@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OptionalDataException;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -100,10 +99,9 @@ public class AtomTypeFactory {
 	 * Private constructor for the AtomTypeFactory singleton.
 	 *
 	 * @exception  IOException             Thrown if something goes wrong with reading the config
-	 * @exception  OptionalDataException   What ever that may be
 	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-    private AtomTypeFactory(String configFile, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    private AtomTypeFactory(String configFile, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
@@ -115,10 +113,9 @@ public class AtomTypeFactory {
 	 * Private constructor for the AtomTypeFactory singleton.
 	 *
 	 * @exception  IOException             Thrown if something goes wrong with reading the config
-	 * @exception  OptionalDataException   What ever that may be
 	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-    private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
@@ -133,12 +130,12 @@ public class AtomTypeFactory {
      * @see #getInstance(String)
      * @param  ins                    InputStream containing the data
      * @param  format                 String representing the possible formats ('xml' and 'txt')
+     * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      * @throws IOException            when the file cannot be read
-     * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
         return new AtomTypeFactory(ins, format, builder);
     }
 
@@ -146,12 +143,12 @@ public class AtomTypeFactory {
      * Method to create a default AtomTypeFactory, using the structgen atom type list.
      *
      * @see #getInstance(String)
+     * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      * @throws IOException            when the file cannot be read
-     * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
         return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", builder);
     }
 
@@ -167,12 +164,12 @@ public class AtomTypeFactory {
      * </ul>
      *
      * @param  configFile             String the name of the data file
+     * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      * @throws IOException            when the file cannot be read
-     * @throws OptionalDataException  ???
      * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) throws IOException, OptionalDataException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
         if (tables == null) {
             tables = new Hashtable();
         }
@@ -186,6 +183,7 @@ public class AtomTypeFactory {
 	 * Read the config from a text file.
 	 *
 	 * @param  configFile  name of the config file
+     * @param  builder     IChemObjectBuilder used to make IChemObject instances
 	 */
 	private void readConfiguration(String fileName, IChemObjectBuilder builder)
 	{
