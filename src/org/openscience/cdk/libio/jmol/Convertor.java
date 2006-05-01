@@ -33,10 +33,11 @@ import java.util.Hashtable;
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter.AtomIterator;
 import org.jmol.api.JmolAdapter.BondIterator;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Only converts Jmol objects to CDK objects; the CdkJmolAdapter is not used
@@ -53,7 +54,10 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class Convertor {
 
-    public Convertor() {
+	private IChemObjectBuilder builder = null;
+	
+    public Convertor(IChemObjectBuilder builder) {
+    	this.builder = builder;
     }
 
     /**
@@ -61,15 +65,15 @@ public class Convertor {
      *
      * @param model A Jmol model as returned by the method ModelAdapter.openBufferedReader()
      */
-    public AtomContainer convert(Object model) throws CDKException {
-        AtomContainer atomContainer = new org.openscience.cdk.AtomContainer();
+    public IAtomContainer convert(Object model) throws CDKException {
+        IAtomContainer atomContainer = builder.newAtomContainer();
         SmarterJmolAdapter adapter = new SmarterJmolAdapter(null);
         // use this hashtable to map the ModelAdapter Unique IDs to
         // our CDK Atom's
         Hashtable htMapUidsToAtoms = new Hashtable();
         AtomIterator atomIterator = adapter.getAtomIterator(model);
         while (atomIterator.hasNext()) {
-            Atom atom = new Atom(atomIterator.getElementSymbol());
+            IAtom atom = builder.newAtom(atomIterator.getElementSymbol());
             atom.setX3d(atomIterator.getX());
             atom.setY3d(atomIterator.getY());
             atom.setZ3d(atomIterator.getZ());
@@ -82,15 +86,21 @@ public class Convertor {
             Object uid2 = bondIterator.getAtomUniqueID2();
             int order = bondIterator.getEncodedOrder();
             // now, look up the uids in our atom map.
-            Atom atom1 = (Atom)htMapUidsToAtoms.get(uid1);
-            Atom atom2 = (Atom)htMapUidsToAtoms.get(uid2);
-            Bond bond = new Bond(atom1, atom2, (double)order);
+            IAtom atom1 = (IAtom)htMapUidsToAtoms.get(uid1);
+            IAtom atom2 = (IAtom)htMapUidsToAtoms.get(uid2);
+            IBond bond = builder.newBond(atom1, atom2, (double)order);
             atomContainer.addBond(bond);
         }
         return atomContainer;
     };
 
-    public Object convert(AtomContainer container) {
+    /**
+     * Empty tub to convert a CDK object into a Jmol object.
+     * 
+     * @param container
+     * @return
+     */
+    public Object convert(IAtomContainer container) {
         // I need something like the CdkModelAdapter from Jmol here
         return null;
     }

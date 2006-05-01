@@ -38,17 +38,8 @@ import java.io.StringReader;
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.JMEFormat;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -129,7 +120,7 @@ public class JMEReader extends DefaultChemObjectReader {
         JmolAdapter adapter = new SmarterJmolAdapter(null);
         // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);
-        molecule.add( new Convertor().convert(model));
+        molecule.add( new Convertor(molecule.getBuilder()).convert(model));
 		return molecule; 
 	}
     
