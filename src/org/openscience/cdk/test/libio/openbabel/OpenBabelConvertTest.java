@@ -27,7 +27,9 @@
  *  */
 package org.openscience.cdk.test.libio.openbabel;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -65,8 +67,6 @@ public class OpenBabelConvertTest extends CDKTestCase {
     }
 
     public void test5_Hexen_3_one() {
-    	final String filenameOuput = "src/data/mdl/540545.cml"; 
-    	
         String filenameInput = "src/data/mdl/540545.mol";
         logger.info("Testing: " + filenameInput);
         try {
@@ -82,10 +82,15 @@ public class OpenBabelConvertTest extends CDKTestCase {
         	
 //        	 test the resulting ChemFile content
             assertNotNull(chemFile);
-            assertNotNull(new File(filenameOuput));
             
-            File file = new File("src/data/mdl/540545.cml");
-//            file.delete();
+            BufferedReader reader = new BufferedReader(new FileReader(tmpFile));
+            String line = reader.readLine();
+            int lineCount = 0;
+            while (line != null) {
+            	lineCount++; 
+            	line = reader.readLine();
+            }
+            assertTrue(lineCount > 0);
             
         } catch (Exception exception) {
             System.out.println("Error while reading file: " + exception.getMessage());
