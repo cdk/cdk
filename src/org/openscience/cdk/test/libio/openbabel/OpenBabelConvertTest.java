@@ -65,8 +65,9 @@ public class OpenBabelConvertTest extends CDKTestCase {
     }
 
     public void test5_Hexen_3_one() {
+    	final String filenameOuput = "src/data/mdl/540545.cml"; 
+    	
         String filenameInput = "src/data/mdl/540545.mol";
-        String filenameOuput = "src/data/mdl/540545.cml";
         logger.info("Testing: " + filenameInput);
         try {
         	/* the path only necessary for windows systems*/
@@ -74,9 +75,10 @@ public class OpenBabelConvertTest extends CDKTestCase {
         	
         	OpenBabelConvert convertOB = new OpenBabelConvert(PATH);
         	convertOB.setInputFileToConvert(new File(filenameInput),"mol",null);
-        	convertOB.convertTo(new File(filenameOuput),"cml","-h");
+        	File tmpFile = File.createTempFile("540545.", ".cml");
+        	convertOB.convertTo(tmpFile,"cml","-h");
         	IChemFile chemFile = convertOB.getChemFile();
-            convertOB.resest();
+            convertOB.reset();
         	
 //        	 test the resulting ChemFile content
             assertNotNull(chemFile);

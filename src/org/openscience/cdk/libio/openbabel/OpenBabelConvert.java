@@ -32,11 +32,12 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 
 /**
- * <p>File writer thats convert input files with OpenBabel.
- * <p>And it has the option to obtain the file as ChemFile.
- * <p>First its necessary that you install correct Openbabel.
- * <p>It was tested with OpenBabel-1.100.2. More information in
- * http://openbabel.sourceforge.net/babel.shtml
+ * File writer thats convert input files with OpenBabel.
+ * It has the option to obtain the file as ChemFile.
+ * First, it's necessary that you install correct Openbabel.
+ * It was tested with OpenBabel-1.100.2. More information in
+ * <a href="http://openbabel.sourceforge.net/babel.shtml">http://openbabel.sourceforge.net/babel.shtml</a>.
+ * 
  * <p>Currently supported types:
  * <table>
  * <tr>
@@ -125,7 +126,7 @@ public class OpenBabelConvert {
      */
     private void setPATH(File path) {
         if (!path.exists()) {
-            System.out.println("The File-PAHT to load not exist: " + path.toString());
+            System.out.println("The File-PATH to load not exist: " + path.toString());
             System.exit(-1);
         }
         PATH = convertorFileToString(path);
@@ -204,7 +205,7 @@ public class OpenBabelConvert {
             p.waitFor();
         } catch (Exception e) {
             System.err.println(e);
-            System.err.println("There is same problem with babel. Check: ");
+            System.err.println("There is some problem with babel. Check: ");
             System.err.println("PATH: " + PATH);
         }
     }
@@ -318,7 +319,7 @@ public class OpenBabelConvert {
     /**
      * resest the molecule_IN_MEMORY.cml to
      */
-    public void resest() {
+    public void reset() {
         File file = new File("data/mdl/molecule_IN_MEMORY.cml");
         if (file.exists())
             file.delete();
