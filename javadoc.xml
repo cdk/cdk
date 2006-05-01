@@ -27,11 +27,9 @@
         </fileset>
     </path>
 
-    <target name="doccheck-all" depends="doccheck-data, doccheck-core, doccheck-standard, doccheck-io, doccheck-render, doccheck-extra, doccheck-qsar"/>
-
     <taskdef name="doxygen" classname="org.doxygen.tools.DoxygenTask"
             classpath="develjar/ant_doxygen.jar" />
-    
+
     <target name="doxygen" id="doxygen">
         <mkdir dir="${doxygen.dir}" />
         <doxygen>
