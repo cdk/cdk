@@ -91,7 +91,7 @@ import org.apache.log4j.Logger;
  */
 public class LoggingTool {
 
-    private boolean debug = false;
+    private boolean doDebug = false;
     private boolean tostdout = false;
 
     private Logger log4jLogger;
@@ -148,7 +148,7 @@ public class LoggingTool {
          * this exception handler. So we are going to check the JVM
          * version first
          ****************************************************************/
-        debug = false;
+        doDebug = false;
         String strJvmVersion = System.getProperty("java.version");
         if (strJvmVersion.compareTo("1.2") >= 0) {
           // Use a try {} to catch SecurityExceptions when used in applets
@@ -156,7 +156,7 @@ public class LoggingTool {
             // by default debugging is set off, but it can be turned on
             // with starting java like "java -Dcdk.debugging=true"
             if (System.getProperty("cdk.debugging", "false").equals("true")) {
-              debug = true;
+              doDebug = true;
             }
             if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
               tostdout = true;
@@ -228,7 +228,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      */
     public void debug(Object object) {
-        if (debug) {
+        if (doDebug) {
             if (object instanceof Throwable) {
                 debugThrowable((Throwable)object);
             } else {
@@ -253,7 +253,7 @@ public class LoggingTool {
      * @param object2 Object to apply toString() too and output
      */
     public void debug(Object object, Object object2) {
-        if (debug) {
+        if (doDebug) {
             debugString("" + object + object2);
         }
     }
@@ -266,7 +266,7 @@ public class LoggingTool {
      * @param number int to concatenate to object
      */
     public void debug(Object object, int number) {
-        if (debug) {
+        if (doDebug) {
             debugString("" + object + number);
         }
     }
@@ -279,7 +279,7 @@ public class LoggingTool {
      * @param number int to concatenate to object
      */
     public void debug(Object object, double number) {
-        if (debug) {
+        if (doDebug) {
             debugString("" + object + number);
         }
     }
@@ -292,7 +292,7 @@ public class LoggingTool {
      * @param bool   boolean to concatenate to object
      */
     public void debug(Object object, boolean bool) {
-        if (debug) {
+        if (doDebug) {
             debugString("" + object + bool);
         }
     }
@@ -306,7 +306,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      */
     public void debug(Object obj, Object obj2, Object obj3) {
-        if (debug) {
+        if (doDebug) {
             debugString("" + obj + obj2 + obj3);
         }
     }
@@ -321,7 +321,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      */
     public void debug(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (debug) {
+        if (doDebug) {
             debugString("" + obj + obj2 + obj3 + obj4);
         }
     }
@@ -337,7 +337,7 @@ public class LoggingTool {
      * @param obj5 Object to apply toString() too and output
      */
     public void debug(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (debug) {
+        if (doDebug) {
             debugString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
@@ -383,7 +383,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      */
     public void error(Object object) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + object);
         }
     }
@@ -396,7 +396,7 @@ public class LoggingTool {
      * @param number int to concatenate to object
      */
     public void error(Object object, int number) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + object + number);
         }
     }
@@ -409,7 +409,7 @@ public class LoggingTool {
      * @param number double to concatenate to object
      */
     public void error(Object object, double number) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + object + number);
         }
     }
@@ -422,7 +422,7 @@ public class LoggingTool {
      * @param bool   boolean to concatenate to object
      */
     public void error(Object object, boolean bool) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + object + bool);
         }
     }
@@ -443,7 +443,7 @@ public class LoggingTool {
      * @param object2 Object to apply toString() too and output
      */
     public void error(Object object, Object object2) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + object + object2);
         }
     }
@@ -457,7 +457,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      */
     public void error(Object obj, Object obj2, Object obj3) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + obj + obj2 + obj3);
         }
     }
@@ -472,7 +472,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      */
     public void error(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + obj + obj2 + obj3 + obj4);
         }
     }
@@ -488,7 +488,7 @@ public class LoggingTool {
      * @param obj5 Object to apply toString() too and output
      */
     public void error(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (debug) {
+        if (doDebug) {
             errorString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
@@ -499,7 +499,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      */
     public void fatal(Object object) {
-        if (debug) {
+        if (doDebug) {
             if (tostdout) {
                 toSTDOUT("FATAL", object.toString());
             } else {
@@ -514,7 +514,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      */
     public void info(Object object) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + object);
         }
     }
@@ -527,7 +527,7 @@ public class LoggingTool {
      * @param number int to concatenate to object
      */
     public void info(Object object, int number) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + object + number);
         }
     }
@@ -540,7 +540,7 @@ public class LoggingTool {
      * @param number double to concatenate to object
      */
     public void info(Object object, double number) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + object + number);
         }
     }
@@ -553,7 +553,7 @@ public class LoggingTool {
      * @param bool   boolean to concatenate to object
      */
     public void info(Object object, boolean bool) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + object + bool);
         }
     }
@@ -574,7 +574,7 @@ public class LoggingTool {
      * @param object2 Object to apply toString() too and output
      */
     public void info(Object object, Object object2) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + object + object2);
         }
     }
@@ -588,7 +588,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      */
     public void info(Object obj, Object obj2, Object obj3) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + obj + obj2 + obj3);
         }
     }
@@ -603,7 +603,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      */
     public void info(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + obj + obj2 + obj3 + obj4);
         }
     }
@@ -619,7 +619,7 @@ public class LoggingTool {
      * @param obj5 Object to apply toString() too and output
      */
     public void info(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (debug) {
+        if (doDebug) {
             infoString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
@@ -630,7 +630,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      */
     public void warn(Object object) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + object);
         }
     }
@@ -651,7 +651,7 @@ public class LoggingTool {
      * @param number int to concatenate to object
      */
     public void warn(Object object, int number) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + object + number);
         }
     }
@@ -664,7 +664,7 @@ public class LoggingTool {
      * @param bool   boolean to concatenate to object
      */
     public void warn(Object object, boolean bool) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + object + bool);
         }
     }
@@ -677,7 +677,7 @@ public class LoggingTool {
      * @param number double to concatenate to object
      */
     public void warn(Object object, double number) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + object + number);
         }
     }
@@ -690,7 +690,7 @@ public class LoggingTool {
      * @param object2 Object to apply toString() too and output
      */
     public void warn(Object object, Object object2) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + object + object2);
         }
     }
@@ -704,7 +704,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      */
     public void warn(Object obj, Object obj2, Object obj3) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + obj + obj2 + obj3);
         }
     }
@@ -719,7 +719,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      */
     public void warn(Object obj, Object obj2, Object obj3, Object obj4) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + obj + obj2 + obj3 + obj4);
         }
     }
@@ -735,7 +735,7 @@ public class LoggingTool {
      * @param obj5 Object to apply toString() too and output
      */
     public void warn(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
-        if (debug) {
+        if (doDebug) {
             warnString("" + obj + obj2 + obj3 + obj4 + obj5);
         }
     }
@@ -753,7 +753,7 @@ public class LoggingTool {
      * @return true, if debug is enabled
      */
     public boolean isDebugEnabled() {
-        return debug;
+        return doDebug;
     }
     
     private void toSTDOUT(String level, String message) {
