@@ -49,8 +49,7 @@
 
         <!-- Call javacc target in build.xml to re-generate the source code -->
         <ant antfile="build.xml" target="javacc"/>
-
-            <tstamp>
+   <tstamp>
                 <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
             </tstamp>
         <javadoc destdir="${javadoc.dir}"
@@ -58,7 +57,7 @@
                  public="true"
                  windowtitle="CDK API - version ${TODAY_SVN}">
             <classpath refid="project.class.path" />
-            <tag name="cdk.set" scope="all" description="Belongs to the set:"  />
+            <tag name="cdk.set" scope="all" description="Belongs to the set:" />
             <tag name="cdk.keyword" scope="all" description="Keywords:" />
             <tag name="cdk.created" scope="all" description="Created on:" />
             <tag name="cdk.require" scope="all" description="Requires:" />
@@ -99,164 +98,45 @@
 
     <!-- The doclet used in the following targets cannot be put in CVS because it is 
          licensed otherwise, but it can be downloaded from:
-         
+
          http://java.sun.com/j2se/javadoc/doccheck/
-         
+
       -->
-          
+
     <target name="doccheck">
-        <mkdir dir="reports/doccheck"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/doccheck/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <package name="org.openscience.cdk"/>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
+      <antcall target="doccheck-module"><param name="module" value="interfaces"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="core"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="data"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="datadebug"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="nonotify"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="standard"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="io"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="io-jmol"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="extra"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="render"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="libio-cml"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="libio-joelib"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="libio-biojava"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="builder3d"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="smiles"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="forcefield"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="qsar"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="experimental"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="svg"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="valencycheck"/></antcall>
     </target>
 
-    <target name="doccheck-data">
-        <mkdir dir="reports/javadoc/data/"/>
+    <target name="doccheck-module">
+        <mkdir dir="reports/javadoc/${module}/"/>
         <javadoc private="false" public="true"
-                 destdir="reports/javadoc/data/"
+                 destdir="reports/javadoc/${module}/"
                  excludepackagenames="org.openscience.cdk.test.*">
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
                     path="develjar/doccheck.jar" />
             <fileset dir="${src}">
-                <includesfile name="${src}/data.javafiles"/>
-            </fileset>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
-    <target name="doccheck-core">
-        <mkdir dir="reports/javadoc/core/"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/core/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-                <includesfile name="${src}/core.javafiles"/>
-            </fileset>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
-    <target name="doccheck-standard">
-        <mkdir dir="reports/javadoc/standard/"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/standard/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-                <includesfile name="${src}/standard.javafiles"/>
-            </fileset>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
-    <target name="doccheck-io">
-        <mkdir dir="reports/javadoc/io/"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/io/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-                <includesfile name="${src}/io.javafiles"/>
-            </fileset>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
-    <target name="doccheck-render">
-        <mkdir dir="reports/javadoc/render/"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/render/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-                <includesfile name="${src}/render.javafiles"/>
-            </fileset>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
-    <target name="doccheck-extra">
-        <mkdir dir="reports/javadoc/extra/"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/extra/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-                <includesfile name="${src}/extra.javafiles"/>
-            </fileset>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
-   <target name="doccheck-qsar">
-        <mkdir dir="reports/javadoc/qsar/"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/qsar/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-                <includesfile name="${src}/qsar.javafiles"/>
-            </fileset>
-            <sourcepath>
-                <pathelement path="${src}"/>
-            </sourcepath>
-        </javadoc>
-    </target>
-
-   <target name="doccheck-builder3d">
-        <mkdir dir="reports/javadoc/builder3d/"/>
-        <javadoc private="false" public="true"
-                 destdir="reports/javadoc/builder3d/"
-                 excludepackagenames="org.openscience.cdk.test.*">
-            <classpath refid="project.class.path" />
-
-            <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
-                    path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-                <includesfile name="${src}/builder3d.javafiles"/>
+              <includesfile name="${src}/${module}.javafiles"/>
             </fileset>
             <sourcepath>
                 <pathelement path="${src}"/>
