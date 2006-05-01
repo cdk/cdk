@@ -26,8 +26,6 @@ package org.openscience.cdk.interfaces;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.IChemObjectListener;
-
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
  *  ElectronContainers. <p>

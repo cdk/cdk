@@ -24,7 +24,6 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
-import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * The base class for all chemical objects in this cdk. It provides methods for
