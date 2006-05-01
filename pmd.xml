@@ -22,7 +22,9 @@
         </javac>
     </target>
 
-    <taskdef name="pmd" id="pmd">
+    <taskdef name="pmd" id="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath"/>
+
+    <target name="pmd" id="pmd">
       <!-- the data classes modules -->
       <antcall target="test-module"><param name="pmd.test" value="custom-data"/><param name="module" value="data"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-data"/><param name="module" value="datadebug"/></antcall>
