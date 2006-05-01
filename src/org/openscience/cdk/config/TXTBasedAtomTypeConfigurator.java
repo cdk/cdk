@@ -81,7 +81,6 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         StringTokenizer tokenizer;
         String string;
         
-        try {
             while (true) {
                 string = reader.readLine();
                 if (string == null) {
@@ -134,11 +133,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                 }
             }    // end while
             ins.close();
-        } catch (IOException exception) {
-            System.err.println(exception.toString());
-            exception.printStackTrace();
-            throw exception;
-        }        
+        
         return atomTypes;
     }
 }
