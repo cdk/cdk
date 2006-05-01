@@ -58,7 +58,7 @@
       <mkdir dir="${reports.tests}/pmd"/>
       <pmd shortFilenames="true">
         <ruleset>pmd/custom.xml</ruleset>
-        <formatter type="xml" toFile="${reports.tests}/pmd/${module}.xml"/>
+        <formatter type="html" toFile="${reports.tests}/pmd/${module}.html"/>
         <fileset dir="${src}">
           <includesfile name="${src}/${module}.javafiles"/>
         </fileset>
