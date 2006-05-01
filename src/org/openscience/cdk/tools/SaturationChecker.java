@@ -31,16 +31,16 @@ package org.openscience.cdk.tools;
 import java.io.IOException;
 import java.util.Vector;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -133,10 +133,10 @@ public class SaturationChecker implements IValencyChecker {
     /**
      * Determines of all atoms on the AtomContainer are saturated.
      */
-	public boolean isSaturated(org.openscience.cdk.interfaces.IAtomContainer container) throws CDKException {
+	public boolean isSaturated(IAtomContainer container) throws CDKException {
         return allSaturated(container);
     }
-	public boolean allSaturated(org.openscience.cdk.interfaces.IAtomContainer ac) throws CDKException
+	public boolean allSaturated(IAtomContainer ac) throws CDKException
 	{
         logger.debug("Are all atoms saturated?");
         for (int f = 0; f < ac.getAtomCount(); f++) {
@@ -151,9 +151,9 @@ public class SaturationChecker implements IValencyChecker {
      * Returns wether a bond is unsaturated. A bond is unsaturated if 
      * <b>both</b> Atoms in the bond are unsaturated.
      */
-    public boolean isUnsaturated(org.openscience.cdk.interfaces.IBond bond, IAtomContainer atomContainer) throws CDKException {
+    public boolean isUnsaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
 
-    	org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
+    	IAtom[] atoms = bond.getAtoms();
         boolean isUnsaturated = true;
         for (int i=0; i<atoms.length; i++) {
             isUnsaturated = isUnsaturated && !isSaturated(atoms[i], atomContainer);
@@ -165,8 +165,8 @@ public class SaturationChecker implements IValencyChecker {
      * Returns wether a bond is saturated. A bond is saturated if 
      * <b>both</b> Atoms in the bond are saturated.
      */
-    public boolean isSaturated(org.openscience.cdk.interfaces.IBond bond, IAtomContainer atomContainer) throws CDKException {
-    	org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
+    public boolean isSaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
+    	IAtom[] atoms = bond.getAtoms();
         boolean isSaturated = true;
         for (int i=0; i<atoms.length; i++) {
             isSaturated = isSaturated && isSaturated(atoms[i], atomContainer);
@@ -177,7 +177,7 @@ public class SaturationChecker implements IValencyChecker {
     /**
      * Checks wether an Atom is saturated by comparing it with known AtomTypes.
      */
-	public boolean isSaturated(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtomContainer ac) throws CDKException {
+	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
 		IAtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if(atomTypes.length==0)
           return true;
@@ -248,7 +248,7 @@ public class SaturationChecker implements IValencyChecker {
 	 * @param  ac    The AtomContainer that provides the context
 	 * @return       the currently maximum formable bond order for this atom
 	 */
-	public double getCurrentMaxBondOrder(org.openscience.cdk.interfaces.IAtom atom, IAtomContainer ac) throws CDKException
+	public double getCurrentMaxBondOrder(IAtom atom, IAtomContainer ac) throws CDKException
 	{
 		IAtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
     if(atomTypes.length==0)
@@ -279,7 +279,7 @@ public class SaturationChecker implements IValencyChecker {
     /**
      * Resets the bond order of the Bond to 1.0.
      */
-    public void unsaturate(org.openscience.cdk.interfaces.IBond[] bonds) {
+    public void unsaturate(IBond[] bonds) {
         for (int i = 1; i < bonds.length; i++) {
             bonds[i].setOrder(1.0);
         }
@@ -297,13 +297,13 @@ public class SaturationChecker implements IValencyChecker {
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
             boolean succeeded = newSaturate(atomContainer.getBonds(), atomContainer);
-            org.openscience.cdk.interfaces.IBond[] bonds=atomContainer.getBonds();
+            IBond[] bonds=atomContainer.getBonds();
             for(int i=0;i<bonds.length;i++){
               if(bonds[i].getOrder()==2 && bonds[i].getFlag(CDKConstants.ISAROMATIC) && (bonds[i].getAtomAt(0).getSymbol().equals("N") && bonds[i].getAtomAt(1).getSymbol().equals("N"))){
                 int atomtohandle=0;
                 if(bonds[i].getAtomAt(0).getSymbol().equals("N"))
                   atomtohandle=1;
-                org.openscience.cdk.interfaces.IBond[] bondstohandle=atomContainer.getConnectedBonds(bonds[i].getAtomAt(atomtohandle));
+                IBond[] bondstohandle=atomContainer.getConnectedBonds(bonds[i].getAtomAt(atomtohandle));
                 for(int k=0;k<bondstohandle.length;k++){
                   if(bondstohandle[k].getOrder()==1 && bondstohandle[k].getFlag(CDKConstants.ISAROMATIC)){
                     bondstohandle[k].setOrder(2);
@@ -322,11 +322,11 @@ public class SaturationChecker implements IValencyChecker {
     /**
      * Saturates a set of Bonds in an AtomContainer.
      */
-    public boolean newSaturate(org.openscience.cdk.interfaces.IBond[] bonds, IAtomContainer atomContainer) throws CDKException {
+    public boolean newSaturate(IBond[] bonds, IAtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: " + bonds.length);
         boolean bondsAreFullySaturated = true;
         if (bonds.length > 0) {
-        	org.openscience.cdk.interfaces.IBond bond = bonds[0];
+        	IBond bond = bonds[0];
 
             // determine bonds left
             int leftBondCount = bonds.length-1;
@@ -392,10 +392,10 @@ public class SaturationChecker implements IValencyChecker {
     /**
      * Saturate atom by adjusting its bond orders.
      */
-    public boolean newSaturate(org.openscience.cdk.interfaces.IBond bond, IAtomContainer atomContainer) throws CDKException {
-    	org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
-    	org.openscience.cdk.interfaces.IAtom atom = atoms[0];
-    	org.openscience.cdk.interfaces.IAtom partner = atoms[1];
+    public boolean newSaturate(IBond bond, IAtomContainer atomContainer) throws CDKException {
+    	IAtom[] atoms = bond.getAtoms();
+    	IAtom atom = atoms[0];
+    	IAtom partner = atoms[1];
         logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
         IAtomType[] atomTypes1 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(atom.getSymbol());
         IAtomType[] atomTypes2 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(partner.getSymbol());
@@ -433,7 +433,7 @@ public class SaturationChecker implements IValencyChecker {
     /**
      * Determines if the atom can be of type AtomType.
      */
-    public boolean couldMatchAtomType(IAtomContainer atomContainer, org.openscience.cdk.interfaces.IAtom atom, IAtomType atomType) {
+    public boolean couldMatchAtomType(IAtomContainer atomContainer, IAtom atom, IAtomType atomType) {
         logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", atomType);
         if (atomContainer.getBondOrderSum(atom) + atom.getHydrogenCount() < atomType.getBondOrderSum()) {
            logger.debug("    Match!");
@@ -452,12 +452,12 @@ public class SaturationChecker implements IValencyChecker {
         /* newSaturate(atomContainer);
     }
     public void oldSaturate(AtomContainer atomContainer) throws CDKException { */
-    	org.openscience.cdk.interfaces.IAtom partner = null;
-		org.openscience.cdk.interfaces.IAtom atom = null;
-		org.openscience.cdk.interfaces.IAtom[] partners = null;
+    	IAtom partner = null;
+		IAtom atom = null;
+		IAtom[] partners = null;
 		IAtomType[] atomTypes1 = null;
 		IAtomType[] atomTypes2 = null;
-		org.openscience.cdk.interfaces.IBond bond = null;
+		IBond bond = null;
 		for (int i = 1; i < 4; i++)
 		{
 			// handle atoms with degree 1 first and then proceed to higher order
@@ -523,7 +523,7 @@ public class SaturationChecker implements IValencyChecker {
 		IRingSet rs = new SSSRFinder(atomContainer.getBuilder().newMolecule(atomContainer)).findSSSR();
 		Vector ringSets = RingPartitioner.partitionRings(rs);
 		IAtomContainer ac = null;
-		org.openscience.cdk.interfaces.IAtom atom = null;
+		IAtom atom = null;
 		int temp[];
 		for (int f = 0; f < ringSets.size(); f++)
 		{
@@ -606,16 +606,16 @@ public class SaturationChecker implements IValencyChecker {
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtomContainer container) throws CDKException {
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException {
         return this.calculateNumberOfImplicitHydrogens(atom, container, false);
     }
     
-	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.IAtom atom) throws CDKException {
+	public int calculateNumberOfImplicitHydrogens(IAtom atom) throws CDKException {
         IBond[] bonds = new IBond[0];
         return this.calculateNumberOfImplicitHydrogens(atom, 0, bonds, false);
     }
 
-	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
         return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
             container.getConnectedBonds(atom),
@@ -634,7 +634,7 @@ public class SaturationChecker implements IValencyChecker {
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateNumberOfImplicitHydrogens(org.openscience.cdk.interfaces.IAtom atom, double bondOrderSum, org.openscience.cdk.interfaces.IBond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, IBond[] connectedBonds, boolean throwExceptionForUnknowAtom) 
         throws CDKException {
         int missingHydrogen = 0;
         if (atom instanceof IPseudoAtom) {
