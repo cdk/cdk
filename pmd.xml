@@ -22,30 +22,29 @@
         </javac>
     </target>
 
-    <taskdef name="pmd" id="pmd" classname="net.sourceforge.pmd.ant.PMDTask" 
-                        classpathref="pmd.classpath"/>
-
-    <target name="pmd" id="pmd">
-      <antcall target="test-module"><param name="module" value="interfaces"/></antcall>
-      <antcall target="test-module"><param name="module" value="core"/></antcall>
-      <antcall target="test-module"><param name="module" value="data"/></antcall>
-      <antcall target="test-module"><param name="module" value="datadebug"/></antcall>
-      <antcall target="test-module"><param name="module" value="nonotify"/></antcall>
-      <antcall target="test-module"><param name="module" value="standard"/></antcall>
-      <antcall target="test-module"><param name="module" value="io"/></antcall>
-      <antcall target="test-module"><param name="module" value="io-jmol"/></antcall>
-      <antcall target="test-module"><param name="module" value="extra"/></antcall>
-      <antcall target="test-module"><param name="module" value="render"/></antcall>
-      <antcall target="test-module"><param name="module" value="libio-cml"/></antcall>
-      <antcall target="test-module"><param name="module" value="libio-joelib"/></antcall>
-      <antcall target="test-module"><param name="module" value="libio-biojava"/></antcall>
-      <antcall target="test-module"><param name="module" value="builder3d"/></antcall>
-      <antcall target="test-module"><param name="module" value="smiles"/></antcall>
-      <antcall target="test-module"><param name="module" value="forcefield"/></antcall>
-      <antcall target="test-module"><param name="module" value="qsar"/></antcall>
-      <antcall target="test-module"><param name="module" value="experimental"/></antcall>
-      <antcall target="test-module"><param name="module" value="svg"/></antcall>
-      <antcall target="test-module"><param name="module" value="valencycheck"/></antcall>
+    <taskdef name="pmd" id="pmd">
+      <!-- the data classes modules -->
+      <antcall target="test-module"><param name="pmd.test" value="custom-data"/><param name="module" value="data"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-data"/><param name="module" value="datadebug"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-data"/><param name="module" value="nonotify"/></antcall>
+      <!-- the other modules -->
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="interfaces"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="core"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="standard"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="io"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="io-jmol"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="extra"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="render"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libio-cml"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libio-joelib"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libio-biojava"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="builder3d"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="smiles"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="forcefield"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsar"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="experimental"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="svg"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="valencycheck"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"
@@ -53,11 +52,8 @@
 
       <echo message="Running PMD checks for CDK's ${module} module." />
 
-      <!-- FIXME: check out custom rule sets -->
-
       <mkdir dir="${reports.tests}/pmd"/>
-      <pmd shortFilenames="true">
-        <ruleset>pmd/custom.xml</ruleset>
+      <pmd shortFilenames="true" rulesetfiles="pmd/${pmd.test}.xml">
         <formatter type="html" toFile="${reports.tests}/pmd/${module}.html"/>
         <fileset dir="${src}">
           <includesfile name="${src}/${module}.javafiles"/>
