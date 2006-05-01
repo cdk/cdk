@@ -181,23 +181,29 @@ def getLogFilePath(logFileName):
     return os.path.join(nightly_dir, logFileName)
 
 def updateSVN():
+    olddir = os.getcwd()
     os.chdir(nightly_repo)
     status = os.system('svn update > %s' % getLogFilePath('svn.log'))
     if status == 0:
         print 'svn ok'
+        os.chdir(olddir)        
         return True
     else:
         print 'svn failed'
+        os.chdir(olddir)
         return False
 
 def runAntJob(cmdLine, logFileName, jobName):
+    olddir = os.getcwd()
     os.chdir(nightly_repo)
     os.system('%s > %s' % (cmdLine, getLogFilePath(logFileName)))
     if checkIfAntJobFailed( getLogFilePath(logFileName) ):
         print '%s failed' % (jobName)
+        os.chdir(olddir)
         return False
     else:
         print '%s ok' % (jobName)
+        os.chdir(olddir)
         return True
 
 def generateCDKDepGraph(page):
@@ -308,10 +314,10 @@ if __name__ == '__main__':
     os.chdir(nightly_dir)
 
     if not dryRun:
-        # move to the nightly dir and clean up log files
+        # clean up log files in the run dir
         os.system('rm -f *.log')
 
-        # sync with SVN
+        # go into the repo and sync with SVN
         successSVN = updateSVN()
 
         # if we failed, report it and use previous build info
@@ -334,12 +340,12 @@ if __name__ == '__main__':
 
     if not dryRun:
         # compile the distro
-        successDist = runAntJob('ant clean dist-large', 'build.log', 'distro')
+        successDist = runAntJob('nice -n 19 ant clean dist-large', 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
-            successTest = runAntJob('export R_HOME=/usr/local/lib/R && ant -DrunSlowTests=false test-all', 'test.log', 'test') 
-            successJavadoc = runAntJob('ant -f javadoc.xml', 'javadoc.log', 'javadoc')
-            successDoccheck = runAntJob('ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
-            successPMD = runAntJob('ant -f pmd.xml pmd', 'pmd.log', 'pmd')
+            successTest = runAntJob('export R_HOME=/usr/local/lib/R && nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
+            successJavadoc = runAntJob('nice -n 19 ant -f javadoc.xml', 'javadoc.log', 'javadoc')
+            successDoccheck = runAntJob('nice -n 19 ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
+            successPMD = runAntJob('nice -n 19 ant -f pmd.xml pmd', 'pmd.log', 'pmd')
         else: # if the distro could not be built, there's not much use doing the other stuff
             print 'Distro compile failed. Generating error page'
             os.system('cp %s/build.log %s/' % (nightly_dir, nightly_web))
