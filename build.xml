@@ -135,7 +135,7 @@
             <available property="log4j.present"
                        file="${lib}/log4j.jar"/>
             <available property="jgrapht.present"
-                       file="${lib}/jgrapht-0.5.3.jar"/>
+                       file="${lib}/jgrapht-0.6.0.jar"/>
             <available property="gnujaxp.present"
                        file="${lib}/gnujaxp.jar"/>
 
@@ -151,8 +151,7 @@
             </condition>
             <condition property="cmllibs.present">
               <or>
-                <available file="${lib}/jumbo50.jar"/>
-                <available file="${lib}/jumbo51.jar"/>
+                <available file="${lib}/jumbo52.jar"/>
               </or>
             </condition>
             <available property="dadml.present"
