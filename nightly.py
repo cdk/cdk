@@ -395,7 +395,7 @@ if __name__ == '__main__':
     <head>
     <body>
     <center>
-    <h2>CDK Nightly Build - %s
+    <h2>CDK Nightly Build - %s</h2>
     <table border=0 cellspacing=5>
     <thead>
     <tr>
