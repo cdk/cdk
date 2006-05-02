@@ -50,7 +50,10 @@ public class CDKConstantsTest extends CDKTestCase {
     }
     
     public void testCDKConstants() {
-        assertFalse(CDKConstants.ISAROMATIC == -1);
+        assertNotSame(-1, CDKConstants.ISAROMATIC);
     }
+    
+    // FIXME: should add a test here that used introspection and test wether there
+    // are not constant conflicts
     
 }

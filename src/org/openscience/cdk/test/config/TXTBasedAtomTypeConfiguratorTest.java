@@ -51,7 +51,7 @@ public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase
         return new TestSuite(TXTBasedAtomTypeConfiguratorTest.class);
     }
 
-    public void testTXTBasedAtomTypeConfigurator() throws Exception {
+    public void testTXTBasedAtomTypeConfigurator() {
         TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
         assertNotNull(configurator);
     }
@@ -66,11 +66,12 @@ public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase
         );
     }
     
-    public void testSetInputStream_InputStream() throws Exception {
-        String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.xml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-        TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
-        configurator.setInputStream(ins);
+    public void testSetInputStream_InputStream() {
+    	try {
+    		testReadAtomTypes_IChemObjectBuilder();
+    	} catch (Exception exception) {
+    		fail(exception.getMessage());
+    	}
     }
     
 }

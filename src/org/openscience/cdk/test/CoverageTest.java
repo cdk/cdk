@@ -82,7 +82,7 @@ abstract public class CoverageTest extends CDKTestCase {
         }
     }
 
-    protected void runCoverageTest() {
+    protected boolean runCoverageTest() {
         int missingTestsCount = 0;
         int uncoveredClassesCount = 0;
         Enumeration classes = classesToTest.elements();
@@ -96,6 +96,7 @@ abstract public class CoverageTest extends CDKTestCase {
             fail("The core module is not fully tested! Missing number of method tests: " + 
                  missingTestsCount + " in number of classes: " + uncoveredClassesCount);
         }
+        return true;
     }
     
     private int checkClass(String className) {

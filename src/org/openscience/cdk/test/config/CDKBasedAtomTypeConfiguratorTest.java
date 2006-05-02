@@ -51,7 +51,7 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase
         return new TestSuite(CDKBasedAtomTypeConfiguratorTest.class);
     }
 
-    public void testCDKBasedAtomTypeConfigurator() throws Exception {
+    public void testCDKBasedAtomTypeConfigurator() {
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
         assertNotNull(configurator);
     }
@@ -66,11 +66,12 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase
         );
     }
     
-    public void testSetInputStream_InputStream() throws Exception {
-        String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-        CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
-        configurator.setInputStream(ins);
+    public void testSetInputStream_InputStream() {
+    	try {
+    		testReadAtomTypes_IChemObjectBuilder();
+    	} catch (Exception exception) {
+    		fail(exception.getMessage());
+    	}
     }
     
 }

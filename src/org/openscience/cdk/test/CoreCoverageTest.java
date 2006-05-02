@@ -56,7 +56,7 @@ public class CoreCoverageTest extends CoverageTest {
     }
 
     public void testCoverage() {
-        super.runCoverageTest();
+        assertTrue(super.runCoverageTest());
     }
 
 }

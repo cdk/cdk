@@ -65,7 +65,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 	}
 
 	public void testAtomTypeFactory() {
-        assertTrue(atf != null);
+        assertNotNull(atf);
         assertNotSame(new Integer(0), new Integer(atf.getSize()));
     }
     

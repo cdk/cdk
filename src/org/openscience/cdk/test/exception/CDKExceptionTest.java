@@ -61,7 +61,7 @@ public class CDKExceptionTest extends CDKTestCase {
         try {
         	int[] array = new int[0];
         	int dummy = array[50];
-        	dummy++;
+        	dummy = dummy + 1;
         	fail("Should not have reached this place. The test *requires* the error to occur!");
         } catch (Exception exception) {
             CDKException cdkException = new CDKException(EXPLANATION, exception);

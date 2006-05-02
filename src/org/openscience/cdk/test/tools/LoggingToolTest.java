@@ -59,6 +59,7 @@ public class LoggingToolTest extends CDKTestCase {
 	
 	public void testClass$_String() {
         // no idea why the Coverage test requires this test
+		assertTrue(true);
     }
 
     public void testConfigureLog4j() {
