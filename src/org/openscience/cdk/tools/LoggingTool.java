@@ -92,7 +92,7 @@ import org.apache.log4j.Logger;
 public class LoggingTool {
 
     private boolean doDebug = false;
-    private boolean tostdout = false;
+    private boolean toSTDOUT = false;
 
     private Logger log4jLogger;
     private LoggingTool logger;
@@ -134,13 +134,13 @@ public class LoggingTool {
         try {
             log4jLogger = Logger.getLogger(classname);
         } catch (NoClassDefFoundError e) {
-            tostdout = true;
+            toSTDOUT = true;
             logger.debug("Log4J class not found!");
         } catch (NullPointerException e) { // NOPMD
-            tostdout = true;
+            toSTDOUT = true;
             logger.debug("Properties file not found!");
         } catch (Exception e) {
-            tostdout = true;
+            toSTDOUT = true;
             logger.debug("Unknown error occured: ", e.getMessage());
         }
         /****************************************************************
@@ -159,7 +159,7 @@ public class LoggingTool {
               doDebug = true;
             }
             if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
-              tostdout = true;
+              toSTDOUT = true;
             }
           } catch (Exception e) {
             logger.debug("guessed what happened: security exception thrown by applet runner");
@@ -238,8 +238,8 @@ public class LoggingTool {
     }
     
     private void debugString(String string) {
-        if (tostdout) {
-            toSTDOUT("DEBUG", string);
+        if (toSTDOUT) {
+            printToSTDOUT("DEBUG", string);
         } else {
             log4jLogger.debug(string);
         }
@@ -428,8 +428,8 @@ public class LoggingTool {
     }
     
     private void errorString(String string) {
-        if (tostdout) {
-            toSTDOUT("ERROR", string);
+        if (toSTDOUT) {
+            printToSTDOUT("ERROR", string);
         } else {
             log4jLogger.error(string);
         }
@@ -500,8 +500,8 @@ public class LoggingTool {
      */
     public void fatal(Object object) {
         if (doDebug) {
-            if (tostdout) {
-                toSTDOUT("FATAL", object.toString());
+            if (toSTDOUT) {
+                printToSTDOUT("FATAL", object.toString());
             } else {
                 log4jLogger.fatal("" + object.toString());
             }
@@ -559,8 +559,8 @@ public class LoggingTool {
     }
     
     private void infoString(String string) {
-        if (tostdout) {
-            toSTDOUT("INFO", string);
+        if (toSTDOUT) {
+            printToSTDOUT("INFO", string);
         } else {
             log4jLogger.info(string);
         }
@@ -636,8 +636,8 @@ public class LoggingTool {
     }
     
     private void warnString(String string) {
-        if (tostdout) {
-            toSTDOUT("WARN", string);
+        if (toSTDOUT) {
+            printToSTDOUT("WARN", string);
         } else {
             log4jLogger.warn(string);
         }
@@ -756,7 +756,7 @@ public class LoggingTool {
         return doDebug;
     }
     
-    private void toSTDOUT(String level, String message) {
+    private void printToSTDOUT(String level, String message) {
         System.out.print(classname);
         System.out.print(" ");
         System.out.print(level);
