@@ -51,6 +51,7 @@ per_line = 4
 
 today = time.localtime()
 todayStr = '%04d%02d%02d' % (today[0], today[1], today[2])
+todayNice = '%04d-%02d-%02d' % (today[0], today[1], today[2])
 dryRun = False
 segv_occured = False
 haveXSLT = True
@@ -86,7 +87,6 @@ def transformXML2HTML(src, dest):
         shutil.copyfile(src, dest)
     
 def writeJunitSummaryHTML(stats):
-    datestr = '%02d / %02d / %04d' % (today[1], today[2], today[0])    
     summary = """
     <html>
     <head>
@@ -104,7 +104,7 @@ def writeJunitSummaryHTML(stats):
     <tr>
     <td colspan=4><hr></td>
     </tr>
-    """ % (datestr, datestr)    
+    """ % (todayNice, todayNice)
     for entry in stats:
         summary = summary + "<tr>"
         summary = summary + "<td align=\"left\">%s</td>" % (entry[0])
@@ -385,7 +385,7 @@ if __name__ == '__main__':
     <html>
     <head>
       <title>
-      CDK Nightly Build - %02d / %02d / %04d
+      CDK Nightly Build - %s
       </title>
       <style>
       <!--
@@ -395,7 +395,7 @@ if __name__ == '__main__':
     <head>
     <body>
     <center>
-    <h2>CDK Nightly Build - %02d / %02d / %04d</h2>
+    <h2>CDK Nightly Build - %s
     <table border=0 cellspacing=5>
     <thead>
     <tr>
@@ -404,7 +404,7 @@ if __name__ == '__main__':
     <th>Extra Info</th>
     </tr>
     </thead>
-    """ % (today[1], today[2], today[0], today[1], today[2], today[0])
+    """ % (todayNice, todayNice)
 
     # lets now make the web site for nightly builds
     if successDist:
