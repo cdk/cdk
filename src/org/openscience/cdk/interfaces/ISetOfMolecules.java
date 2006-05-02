@@ -33,25 +33,32 @@ package org.openscience.cdk.interfaces;
 public interface ISetOfMolecules extends ISetOfAtomContainers {
 
     /**
-     *  Adds an molecule to this container.
+     * Adds an IMolecule to this container.
      *
      * @param  molecule  The molecule to be added to this container 
      */
     public void addMolecule(IMolecule molecule);
     
     /**
-     *  Adds all molecules in the SetOfMolecules to this container.
+     * Adds all molecules in the SetOfMolecules to this container.
      *
-     * @param  moleculeSet  The SetOfMolecules 
+     * @param  moleculeSet  The SetOfMolecules to add
      */
     public void add(ISetOfMolecules moleculeSet);
     
+    /**
+     * Sets the molecules in the ISetOfMolecules, removing previously added
+     * IMolecule's.
+     * 
+     * @param molecules New set of molecules
+     */
     public void setMolecules(IMolecule[] molecules);
     
     /**
-     *  Returns the array of Molecules of this container.
+     * Returns the array of Molecules of this container.
      *
      * @return    The array of Molecules of this container 
+     * @see       #setMolecules(IMolecule[])
      */
     public IMolecule[] getMolecules();
     
