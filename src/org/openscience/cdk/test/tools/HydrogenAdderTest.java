@@ -293,7 +293,38 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(2, mol.getBondCount(atom));
     }
-
+    
+    public void testSulfite() {
+        Molecule mol = new Molecule();
+        Atom s = new Atom("S");
+        Atom o1 = new Atom("O");
+        Atom o2 = new Atom("O");
+        Atom o3 = new Atom("O");
+        mol.addAtom(s);
+        mol.addAtom(o1);
+        mol.addAtom(o2);
+        mol.addAtom(o3);
+        Bond b1 = new Bond(s, o1, 1.0);
+        Bond b2 = new Bond(s, o2, 1.0);
+        Bond b3 = new Bond(s, o3, 2.0);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        mol.addBond(b3);
+        
+        try {
+            adder.addExplicitHydrogensToSatisfyValency(mol);
+        } catch (Exception exception) {
+            System.err.println(exception);
+            exception.printStackTrace();
+            fail();
+        }
+        
+        assertEquals(6, mol.getAtomCount());
+        assertEquals(5, mol.getBondCount());
+        assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
+        assertEquals(3, mol.getBondCount(s));
+    }
+    
     public void testAceticAcid() {
         Molecule mol = new Molecule();
         Atom carbonylOxygen = new Atom("O");
