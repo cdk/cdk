@@ -34,13 +34,12 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * SAX Handler for the AtomTypeReader.
- * -changed 21/7/05 by cho: added stuff to fit mmff94AtomTypeMatcher
  *
  * @see AtomTypeReader
  *
  * @cdk.module core
  */
-public class AtomTypeHandler extends DefaultHandler { //NOPMD
+public class AtomTypeHandler extends DefaultHandler {
 
     private final int SCALAR_UNSET = 0;
     private final int SCALAR_MAXBONDORDER = 1; 
@@ -56,7 +55,6 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
     private final int SCALAR_FORMALCHARGE=11;
     private final int SCALAR_VANDERWAALSRADIUS=12;
     
-    
     private LoggingTool logger;
     private String currentChars;
     private Vector atomTypes;
@@ -65,11 +63,22 @@ public class AtomTypeHandler extends DefaultHandler { //NOPMD
 
     private static IChemObjectBuilder builder;
 
+    /**
+     * Constructs a new AtomTypeHandler and will create IAtomType
+     * implementations using the given IChemObjectBuilder.
+     * 
+     * @param builder The IChemObjectBuilder used to create the IAtomType's.
+     */
     public AtomTypeHandler(IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         this.builder = builder;
     }
 
+    /**
+     * Returns a Vector with read IAtomType's.
+     * 
+     * @return The read IAtomType's.
+     */
     public Vector getAtomTypes() {
         return atomTypes;
     }

@@ -62,6 +62,11 @@ public class IsotopeHandler extends DefaultHandler {
     
     private IChemObjectBuilder builder;
 
+    /**
+     * Constructs an IsotopeHandler used by the IsotopeReader.
+     *
+     * @param builder The IChemObjectBuilder used to create new IIsotope's.
+     */
     public IsotopeHandler(IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         this.builder = builder;

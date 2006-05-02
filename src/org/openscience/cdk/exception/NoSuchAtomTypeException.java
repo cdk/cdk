@@ -29,11 +29,21 @@
 package org.openscience.cdk.exception;
 
 /**
+ * Exception that may be thrown when an atom type is looked up or perceived
+ * but no such atom type was found.
+ * 
  * @cdk.module core
  */
 public class NoSuchAtomTypeException extends CDKException {
 
-    public NoSuchAtomTypeException(String message) {
+	private static final long serialVersionUID = 2689048410917221667L;
+
+	/**
+	 * Constructs a new NoSuchAtomTypeException.
+	 * 
+	 * @param message Message explaining why the atom type could not be found
+	 */
+	public NoSuchAtomTypeException(String message) {
         super( message );
     }
 }

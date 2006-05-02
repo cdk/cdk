@@ -350,6 +350,8 @@ public class AtomTypeFactory {
 	 *
 	 * @param  atom  The atom to be configured
 	 * @return       The configured atom
+	 * @throws       CDKException when it could not recognize and configure the 
+	 *               IAtom
 	 */
     public IAtom configure(IAtom atom) throws CDKException {
         if (atom instanceof IPseudoAtom) {

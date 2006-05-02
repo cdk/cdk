@@ -52,6 +52,8 @@ public class AtomTypeReader {
 
     /**
      * Instantiates the XML based AtomTypeReader.
+     * 
+     * @param The Reader to read the IAtomType's from.
      */
     public AtomTypeReader(Reader input) {
         this.init();
@@ -109,7 +111,8 @@ public class AtomTypeReader {
     /**
      * Reads the atom types from the data file.
      *
-     * @return a Vector with atom types. Is empty if some reading error occured.
+     * @param  builder The IChemObjectBuilder used to create new IAtomType's.
+     * @return         a Vector with atom types. Is empty if some reading error occured.
      */
     public Vector readAtomTypes(IChemObjectBuilder builder) {
     	Vector isotopes = new Vector();

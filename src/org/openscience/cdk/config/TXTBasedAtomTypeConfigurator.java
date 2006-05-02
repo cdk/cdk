@@ -55,14 +55,18 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 	}
 
     /**
-     * Sets the file containing the config data
+     * Sets the file containing the config data.
      */
     public void setInputStream(InputStream ins) {
         this.ins = ins;
     }
     
     /**
-     * Read a text based configuration file
+     * Reads a text based configuration file.
+     * 
+     * @param builder IChemObjectBuilder used to construct the IAtomType's.
+     * @throws        IOException when a problem occured with reading from the InputStream
+     * @return        A Vector with read IAtomType's.
      */
     public Vector readAtomTypes(IChemObjectBuilder builder) throws IOException {
         Vector atomTypes = new Vector();

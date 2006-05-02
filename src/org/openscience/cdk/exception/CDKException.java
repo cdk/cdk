@@ -34,7 +34,9 @@ package org.openscience.cdk.exception;
  */
 public class CDKException extends Exception {
 
-    /**
+	private static final long serialVersionUID = 8371328769230823678L;
+
+	/**
      * Constructs a new CDKException with the given message.
      *
      * @param message for the constructed exception
@@ -48,6 +50,7 @@ public class CDKException extends Exception {
      * Exception as cause.
      *
      * @param message for the constructed exception
+     * @param cause   the Throwable that triggered this CDKException
      */
     public CDKException(String message, Throwable cause) {
         super(message, cause);

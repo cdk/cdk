@@ -54,6 +54,13 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         this.ins = ins;
     }
     
+    /**
+     * Reads the atom types from the CDK based atom type list.
+     * 
+     * @param builder IChemObjectBuilder used to construct the IAtomType's.
+     * @throws        IOException when a problem occured with reading from the InputStream
+     * @return        A Vector with read IAtomType's.
+     */
     public Vector readAtomTypes(IChemObjectBuilder builder) throws IOException {
         Vector atomTypes = new Vector(0);
         if (ins == null) {

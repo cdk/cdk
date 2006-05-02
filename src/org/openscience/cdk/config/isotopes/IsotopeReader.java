@@ -59,7 +59,8 @@ public class IsotopeReader {
     /**
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
      *
-     * @param input Reader with the XML source
+     * @param input   InputStream with the XML source
+     * @param builder The IChemObjectBuilder used to create new IIsotope's.
      */
     public IsotopeReader(InputStream input, IChemObjectBuilder builder) {
         this.init();
