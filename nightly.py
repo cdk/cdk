@@ -156,11 +156,16 @@ def parseJunitOutput(summaryFile):
     f.close()
     
 def checkIfAntJobFailed(logFileName):
+    """
+    Returns True if the specified log file does
+    not contain the string 'BUILD SUCCESSFUL'
+    otherwise returns False
+    """
     f = open(logFileName, 'r')
     loglines = f.readlines()
     f.close()
     loglines = string.join(loglines)
-    if loglines.find('BUILD FAILED') != -1:
+    if loglines.find('BUILD SUCCESSFUL') == -1:
         return True
     else: return False
 
