@@ -71,41 +71,41 @@ public interface IReaction extends IChemObject {
     public int getProductCount();
 
     /**
-     * Returns a SetOfMolecules containing the reactants in this reaction.
+     * Returns a ISetOfMolecules containing the reactants in this reaction.
      *
-     * @return A SetOfMolecules containing the reactants in this reaction
+     * @return A ISetOfMolecules containing the reactants in this reaction
      * @see    #setReactants
      */
     public ISetOfMolecules getReactants();
 
     /**
-     * Assigns a  to the reactants in this reaction.
+     * Assigns a ISetOfMolecules to the reactants in this reaction.
      *
-     * @param  The new set of reactants
-     * @see   #getReactants
+     * @param  reactants The new set of reactants
+     * @see              #getReactants
      */
     public void setReactants(ISetOfMolecules reactants);
 	
     /**
-     * Returns a  containing the products of this reaction.
+     * Returns a ISetOfMolecules containing the products of this reaction.
      *
-     * @return A  containing the products in this reaction
+     * @return A ISetOfMolecules containing the products in this reaction
      * @see    #setProducts
      */
     public ISetOfMolecules getProducts();
     
 	/**
-     * Assigns a  to the products of this reaction.
+     * Assigns a ISetOfMolecules to the products of this reaction.
      *
-     * @param  The new set of products
-     * @see   #getProducts
+     * @param products The new set of products
+     * @see            #getProducts
      */
     public void setProducts(ISetOfMolecules products);
 	
     /**
-     * Returns a  containing the agents in this reaction.
+     * Returns a ISetOfMolecules containing the agents in this reaction.
      *
-     * @return A  containing the agents in this reaction
+     * @return A ISetOfMolecules containing the agents in this reaction
      * @see    #addAgent
      */
     public ISetOfMolecules getAgents();
@@ -116,7 +116,7 @@ public interface IReaction extends IChemObject {
      * @return An array of Mapping's.
      * @see    #addMapping
      */
-    public org.openscience.cdk.interfaces.IMapping[] getMappings();
+    public IMapping[] getMappings();
     
     /**
      * Adds a reactant to this reaction.

@@ -84,7 +84,7 @@ public interface IPolymer extends IMolecule {
 	/**
 	 * Removes a particular monomer, specified by its name.
 	 * 
-	 * @param name
+	 * @param name The name of the monomer to be removed
 	 */
 	public void removeMonomer(String name);
 

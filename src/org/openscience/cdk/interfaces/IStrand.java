@@ -44,6 +44,7 @@ public interface IStrand extends IAtomContainer {
 	 * Retrieve the strand name.
 	 *
 	 * @return The name of the Strand object
+	 * @see    #setStrandName(String)
 	 */
 	public String getStrandName();
 	
@@ -51,6 +52,7 @@ public interface IStrand extends IAtomContainer {
 	 * Retrieve the strand type.
 	 *
 	 * @return The type of the Strand object
+	 * @see    #setStrandType(String)
 	 */
 	public String getStrandType();
 	
@@ -58,6 +60,7 @@ public interface IStrand extends IAtomContainer {
 	 * Set the name of the Strand object.
 	 *
 	 * @param cStrandName  The new name for this strand
+	 * @see                #getStrandName()
 	 */
 	public void setStrandName(String cStrandName);
 	
@@ -65,6 +68,7 @@ public interface IStrand extends IAtomContainer {
 	 * Set the type of the Strand object.
 	 *
 	 * @param cStrandType  The new type for this strand
+	 * @see                #getStrandType()
 	 */
 	public void setStrandType(String cStrandType);
 	
@@ -110,7 +114,7 @@ public interface IStrand extends IAtomContainer {
 	/**
 	 * Removes a particular monomer, specified by its name.
 	 * 
-	 * @param name
+	 * @param name The name of the monomer to remove
 	 */
 	public void removeMonomer(String name);
 	

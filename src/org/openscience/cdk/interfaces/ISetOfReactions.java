@@ -62,6 +62,10 @@ public interface ISetOfReactions extends IChemObject {
 	 * @return     The number of Reactions in this Container
 	 */
 	public int getReactionCount();
+	
+	/**
+	 * Removes all reactions from this set.
+	 */
 	public void removeAllReactions();
 
 }

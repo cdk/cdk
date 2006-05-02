@@ -65,6 +65,7 @@ public interface IChemObject extends Cloneable {
 	 * to true.
 	 * 
 	 * @param bool if true, then notification messages are sent.
+	 * @see        #getNotification()
 	 */
 	public void setNotification(boolean bool);
 
@@ -72,6 +73,7 @@ public interface IChemObject extends Cloneable {
 	 * Returns the flag that indicates wether notification messages are sent around.
 	 * 
 	 * @return true if messages are sent.
+	 * @see    #setNotification(boolean)
 	 */
 	public boolean getNotification();
 	
@@ -209,6 +211,8 @@ public interface IChemObject extends Cloneable {
     /**
      * Returns a ChemObjectBuilder for the data classes that extend
      * this class.
+     * 
+     * @return The IChemObjectBuilder matching this IChemObject
      */
     public IChemObjectBuilder getBuilder();
 }

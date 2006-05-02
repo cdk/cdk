@@ -26,10 +26,20 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
+ * Defines the abililty to be matched against IAtom's. Most prominent application
+ * is in isomorphism and substructure matching in the UniversalIsomorphismTester.
+ * 
  * @cdk.module interfaces
+ * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryAtom extends IAtom {
     
+	/**
+	 * Returns true of the given <code>atom</code> matches this IQueryAtom.
+	 * 
+	 * @param atom IAtom to match against
+	 * @return     true, if this IQueryAtom matches the given IAtom
+	 */
 	public boolean matches(IAtom atom);
     
 }

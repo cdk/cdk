@@ -57,17 +57,17 @@ public interface IBioPolymer extends IPolymer {
 	 * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
 	 * the atom will be added to a Monomer of type UNKNOWN in the specified Strand.
 	 *
-	 * @param oAtom  The atom to add
-	 * @param oMonomer  The strand the atom belongs to
+	 * @param oAtom   The atom to add
+	 * @param oStrand The strand the atom belongs to
 	 */
 	public void addAtom(IAtom oAtom, IStrand oStrand);
 	
 	/**
 	 * Adds the atom to a specified Strand and a specified Monomer.
 	 * 
-	 * @param oAtom
-	 * @param oMonomer
-	 * @param oStrand
+	 * @param oAtom    The atom to add
+	 * @param oMonomer The monomer the atom belongs to
+	 * @param oStrand  The strand the atom belongs to
 	 */
 	public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 	
@@ -79,13 +79,15 @@ public interface IBioPolymer extends IPolymer {
 	public int getMonomerCount();
 	
 	/**
-	 * Retrieve a Monomer object by specifying its name. [You have to specify the strand to enable
+	 * Retrieve a <code>Monomer</code> object by specifying its name.
+	 * 
+	 * <p>You have to specify the strand to enable
 	 * monomers with the same name in different strands. There is at least one such case: every
-	 * strand contains a monomer called "".]
+	 * strand contains a monomer called "".
 	 *
-	 * @param cName  The name of the monomer to look for
-	 * @return The Monomer object which was asked for
-	 *
+	 * @param  monName    The name of the monomer to look for
+	 * @param  strandName The name of the strand to look for
+	 * @return            The Monomer object which was asked for
 	 */
 	public IMonomer getMonomer(String monName, String strandName);
 		
@@ -123,7 +125,7 @@ public interface IBioPolymer extends IPolymer {
 	/**
 	 * Removes a particular strand, specified by its name.
 	 * 
-	 * @param name
+	 * @param name  The name of the strand to remove
 	 */
 	public void removeStrand(String name);
 	

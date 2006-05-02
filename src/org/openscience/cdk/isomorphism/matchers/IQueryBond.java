@@ -26,10 +26,20 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
+ * Defines the abililty to be matched against IBond's. Most prominent application
+ * is in isomorphism and substructure matching in the UniversalIsomorphismTester.
+ * 
  * @cdk.module interfaces
+ * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryBond {
 
+	/**
+	 * Returns true of the given <code>bond</code> matches this IQueryBond.
+	 * 
+	 * @param bond IBond to match against
+	 * @return     true, if this IQueryBond matches the given IBond
+	 */
 	public boolean matches(IBond bond);
     
 }
