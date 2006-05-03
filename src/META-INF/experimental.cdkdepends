@@ -7,3 +7,4 @@ cdk-pdb.jar
 cdk-standard.jar
 cdk-valencycheck.jar
 cdk-smiles.jar
+cdk-reaction.jar
