@@ -1154,5 +1154,28 @@ public class SmilesParserTest extends CDKTestCase {
 		}
 	}
 	
+	/**
+	 * @cdk.bug 1235852
+	 */
+	public void testBug1235852(){
+		SmilesParser p = new SmilesParser();
+		try {
+			//                            0 1 234 56 7 890 12 3456 78
+			Molecule mol = p.parseSmiles("O=C(CCS)CC(C)CCC2Cc1ccsc1CC2");
+			assertNotNull(mol);
+			assertEquals(19, mol.getAtomCount());
+			assertEquals(20, mol.getBondCount());
+			// test only option for delocalized bond system
+			assertEquals(4.0, mol.getBondOrderSum(mol.getAtomAt(12)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(13)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(14)), 0.001);
+			assertEquals(2.0, mol.getBondOrderSum(mol.getAtomAt(15)), 0.001);
+			assertEquals(4.0, mol.getBondOrderSum(mol.getAtomAt(16)), 0.001);
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
+	
 }
 
