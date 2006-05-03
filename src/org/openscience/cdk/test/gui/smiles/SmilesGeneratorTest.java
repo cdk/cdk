@@ -1,7 +1,7 @@
 /*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+ *  $Author: egonw $
+ *  $Date: 2006-04-21 10:59:31 +0200 (Fri, 21 Apr 2006) $
+ *  $Revision: 6067 $
  *
  *  Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -21,11 +21,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.smiles;
+package org.openscience.cdk.test.gui.smiles;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -36,11 +38,14 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -48,12 +53,15 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @author         steinbeck
- * @cdk.created    2004-02-09
- * @cdk.module     test-smiles
+ *@author         steinbeck
+ *@cdk.created    February 9, 2004
+ *@cdk.module     test-gui-smiles
  */
-public class SmilesGeneratorTest extends CDKTestCase {
-	
+public class SmilesGeneratorTest extends CDKTestCase
+{
+	boolean standAlone = false;
+
+
 	/**
 	 *  Constructor for the SmilesGeneratorTest object
 	 *
@@ -75,6 +83,18 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		return new TestSuite(SmilesGeneratorTest.class);
 	}
 
+
+	/**
+	 *  Sets the standAlone attribute of the SmilesGeneratorTest object
+	 *
+	 *@param  standAlone  The new standAlone value
+	 */
+	public void setStandAlone(boolean standAlone)
+	{
+		this.standAlone = standAlone;
+	}
+
+
 	/**
 	 *  A unit test for JUnit
 	 */
@@ -83,7 +103,26 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Molecule mol2 = MoleculeFactory.makeAlphaPinene();
 		SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
 		fixCarbonHCount(mol2);
-		String smiles2 = sg.createSMILES(mol2);
+		String smiles2 = null;
+		if (standAlone)
+		{
+			display(mol2);
+		}
+		try
+		{
+			smiles2 = sg.createSMILES(mol2);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 2: " + smiles2);
+		}
 		assertNotNull(smiles2);
 		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
 	}
@@ -97,7 +136,26 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
         SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
 		fixCarbonHCount(mol1);
-		String smiles1 = sg.createSMILES(mol1);
+		String smiles1 = null;
+		if (standAlone)
+		{
+			display(mol1);
+		}
+		try
+		{
+			smiles1 = sg.createSMILES(mol1);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
 		assertTrue(smiles1.equals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC"));
 	}
@@ -112,7 +170,26 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Molecule mol1 = MoleculeFactory.makePropylCycloPropane();
         SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
 		fixCarbonHCount(mol1);
-		String smiles1 = sg.createSMILES(mol1);
+		String smiles1 = null;
+		if (standAlone)
+		{
+			display(mol1);
+		}
+		try
+		{
+			smiles1 = sg.createSMILES(mol1);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
 		assertTrue(smiles1.equals("CCCC1CC1"));
 	}
@@ -123,7 +200,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 *  A unit test for JUnit
 	 *
 	 */
-	public void testAlanin() throws Exception
+	public void testAlanin()
 	{
 		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         Molecule mol1 = new Molecule();
@@ -165,16 +242,47 @@ public class SmilesGeneratorTest extends CDKTestCase {
 			fail();
 		}
 
-		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		String smiles1 = null;
+		if (standAlone)
+		{
+			display(mol1);
+		}
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
-		assertEquals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]", smiles1);
+		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]"));
 		mol1.getBondAt(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
 		mol1.getBondAt(2).setStereo(CDKConstants.STEREO_BOND_UP);
-		
-		// what is tested below?
-		smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
-		assertEquals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]", smiles1);
+		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]"));
 	}
 
 
@@ -228,17 +336,57 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 5
 		mol1.addBond(7, 2, 1);
 		// 6
-		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
-		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
-		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
-		ifac.configureAtoms(mol1);
-		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		try
+		{
+			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
+			IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
+			ifac.configureAtoms(mol1);
+		} catch (IOException ex)
+		{
+		} catch (ClassNotFoundException ex)
+		{
+		}
+		String smiles1 = null;
+		if (standAlone)
+		{
+			display(mol1);
+		}
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
-		assertEquals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])", smiles1);
+		assertTrue(smiles1.equals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])"));
 		mol1 = (Molecule) AtomContainerManipulator.removeHydrogens(mol1);
-		smiles1 = sg.createSMILES(mol1);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
-		assertEquals("OC1CCCCC1(O)", smiles1);
+		assertTrue(smiles1.equals("OC1CCCCC1(O)"));
 	}
 
 
@@ -302,17 +450,53 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 6
 		mol1.addBond(1, 6, 1);
 		// 6
-
-		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
-		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
-		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
-		ifac.configureAtoms(mol1);
-		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		try
+		{
+			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
+			IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
+			ifac.configureAtoms(mol1);
+		} catch (IOException ex)
+		{
+		} catch (ClassNotFoundException ex)
+		{
+		}
+		String smiles1 = null;
+		if (standAlone)
+		{
+			display(mol1);
+		}
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
-		assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
+		assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))"));
 		mol1.getBondAt(6).setStereo(CDKConstants.STEREO_BOND_UP);
-		String smiles3 = smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
-		assertNotSame(smiles1, smiles3);
+		String smiles3 = null;
+		try
+		{
+			smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		assertFalse(smiles1.equals(smiles3));
 	}
 
 
@@ -349,30 +533,94 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 4
 		mol1.addBond(3, 5, 1);
 		// 4
-		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
-		ifac.configureAtoms(mol1);
+		try
+		{
+			IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
+			ifac.configureAtoms(mol1);
+		} catch (IOException ex)
+		{
+		} catch (ClassNotFoundException ex)
+		{
+		}
+		String smiles1 = null;
+		if (standAlone)
+		{
+			display(mol1);
+		}
 		boolean[] bool = new boolean[mol1.getBondCount()];
 		bool[2] = true;
-		String smiles1 = sg.createSMILES(mol1, true, bool);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, bool);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
 		assertTrue(smiles1.equals("F/C(=C/(F)S)S"));
 		mol1.getAtomAt(4).setPoint2d(new Point2d(0, 3));
 		mol1.getAtomAt(5).setPoint2d(new Point2d(2, 3));
-		
-		smiles1 = sg.createSMILES(mol1, true, bool);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, bool);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES 1: " + smiles1);
+		}
 		assertNotNull(smiles1);
 		assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
-
-		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
-		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
+		try
+		{
+			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
+		} catch (IOException ex)
+		{
+		} catch (ClassNotFoundException ex)
+		{
+		}
 		bool = new boolean[mol1.getBondCount()];
 		bool[2] = true;
-		smiles1 = sg.createSMILES(mol1, true, bool);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, bool);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
 		assertTrue(smiles1.equals("[H]S/C(F)=C/(F)S[H]"));
-		
 		mol1.getAtomAt(5).setPoint2d(new Point2d(0, 3));
 		mol1.getAtomAt(4).setPoint2d(new Point2d(2, 3));
-		smiles1 = sg.createSMILES(mol1, true, bool);
+		try
+		{
+			smiles1 = sg.createSMILES(mol1, true, bool);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
 		assertTrue(smiles1.equals("[H]S/C(F)=C\\(F)S[H]"));
 	}
 
@@ -392,13 +640,27 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		hydroxyl.setFormalCharge(-1);
 		molecule.addAtom(sodium);
 		molecule.addAtom(hydroxyl);
-		smiles = sg.createSMILES(molecule);
+		try
+		{
+			smiles = sg.createSMILES(molecule);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES: " + smiles);
+		}
 		assertTrue(smiles.indexOf(".") != -1);
 	}
 
 
 	/**
-	 * @cdk.bug 791091
+	 *  A unit test for JUnit
 	 */
 	public void testBug791091()
 	{
@@ -416,15 +678,27 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(4, 0, 1.0);
 		molecule.addBond(4, 3, 1.0);
 		fixCarbonHCount(molecule);
-		smiles = sg.createSMILES(molecule);
+		try
+		{
+			smiles = sg.createSMILES(molecule);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES: " + smiles);
+		}
 		assertEquals("N1(C)CCC1", smiles);
 	}
 
 
 	/**
-	 * A bug reported for JChemPaint.
-	 * 
-	 * @cdk.bug 956923
+	 *  A bug reported for JChemPaint.
 	 */
 	public void testSFBug956923()
 	{
@@ -446,7 +720,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(3, 4, 1.0);
 		molecule.addBond(4, 5, 1.0);
 		molecule.addBond(5, 0, 1.0);
-		smiles = sg.createSMILES(molecule);
+		try
+		{
+			smiles = sg.createSMILES(molecule);
+		} catch (Exception exc)
+		{
+			fail(exc.getMessage());
+		}
 		assertEquals("c1ccccc1", smiles);
 	}
 
@@ -468,7 +748,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol.addBond(0, 4, 1.0);
 		mol.getAtomAt(3).setHydrogenCount(1);
 		mol.getAtomAt(4).setHydrogenCount(1);
-		AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(mol);
+		AtomContainerAtomPermutor acap = new
+				AtomContainerAtomPermutor(mol);
 		SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
 		String smiles = "";
 		String oldSmiles = sg.createSMILES(mol);
@@ -499,7 +780,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol.addBond(0, 4, 1.0);
 		mol.getAtomAt(3).setHydrogenCount(1);
 		mol.getAtomAt(4).setHydrogenCount(1);
-		AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(mol);
+		AtomContainerBondPermutor acbp = new
+				AtomContainerBondPermutor(mol);
 		SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
 		String smiles = "";
 		String oldSmiles = sg.createSMILES(mol);
@@ -512,7 +794,14 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
 	}
 
-	private void fixCarbonHCount(Molecule mol) {
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  mol  Description of the Parameter
+	 */
+	private void fixCarbonHCount(Molecule mol)
+	{
 		/*
 		 *  the following line are just a quick fix for this
 		 *  particluar carbon-only molecule until we have a proper
@@ -532,6 +821,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
 			{
 				atom.setHydrogenCount(3 - (int) bondCount - (int) atom.getCharge());
 			}
+			if (standAlone)
+			{
+				System.out.println("Hydrogen count for atom " + f + ": " + atom.getHydrogenCount());
+			}
 		}
 	}
 
@@ -546,8 +839,23 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles = "";
 		Molecule molecule = new Molecule();
 		molecule.addAtom(atom);
-		smiles = sg.createSMILES(molecule);
+		try
+		{
+			smiles = sg.createSMILES(molecule);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+			if (!standAlone)
+			{
+				fail();
+			}
+		}
+		if (standAlone)
+		{
+			System.err.println("SMILES: " + smiles);
+		}
 		assertEquals("[*]", smiles);
+
 	}
 
 
@@ -555,7 +863,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 *  Test generation of a reaction SMILES. I know, it's a stupid alchemic
 	 *  reaction, but it serves its purpose.
 	 */
-	public void testReactionSMILES() throws Exception {
+	public void testReactionSMILES()
+	{
 		Reaction reaction = new Reaction();
 		Molecule methane = new Molecule();
 		methane.addAtom(new Atom("C"));
@@ -568,125 +877,235 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		reaction.addProduct(gold);
 
 		SmilesGenerator sg = new SmilesGenerator(methane.getBuilder());
-		String smiles = sg.createSMILES(reaction);
-		//System.out.println("Generated SMILES: " + smiles);
-		assertEquals("C>[*]>[Au]", smiles);
+		try
+		{
+			String smiles = sg.createSMILES(reaction);
+			//System.out.println("Generated SMILES: " + smiles);
+			assertEquals("C>[*]>[Au]", smiles);
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+		}
 	}
 
 
 	/**
-	 *  Test generation of a D and L alanin.
+	 *  Test generation of a d and l alanin
 	 */
-	public void testAlaSMILES() throws Exception {
-		String filename = "data/mdl/l-ala.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
-		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
-		filename = "data/mdl/d-ala.mol";
-		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins);
-		Molecule mol2 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
-		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
-		SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
-		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
-		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-		assertFalse(smiles1.equals(smiles2));
+	public void testAlaSMILES()
+	{
+		try
+		{
+			String filename = "data/mdl/l-ala.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(ins);
+			Molecule mol1 = (Molecule) reader.read(new Molecule());
+			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+			new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
+			filename = "data/mdl/d-ala.mol";
+			ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			reader = new MDLReader(ins);
+			Molecule mol2 = (Molecule) reader.read(new Molecule());
+			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+			new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
+			SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
+			String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
+			String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
+			assertFalse(smiles1.equals(smiles2));
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+		}
 	}
 
 
 	/**
 	 *  Test some sugars
 	 */
-	public void testSugarSMILES() throws Exception {
-		String filename = "data/mdl/D-mannose.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
-		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
-		filename = "data/mdl/D+-glucose.mol";
-		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins);
-		Molecule mol2 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
-		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
-		SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
-		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
-		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-		assertFalse(smiles1.equals(smiles2));
+	public void testSugarSMILES()
+	{
+		try
+		{
+			String filename = "data/mdl/D-mannose.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(ins);
+			Molecule mol1 = (Molecule) reader.read(new Molecule());
+			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+			new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
+			filename = "data/mdl/D+-glucose.mol";
+			ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			reader = new MDLReader(ins);
+			Molecule mol2 = (Molecule) reader.read(new Molecule());
+			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+			new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
+			SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
+			String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
+			String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
+			assertFalse(smiles1.equals(smiles2));
+		} catch (Exception exc)
+		{
+			System.out.println(exc);
+		}
 	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  molecule  Description of the Parameter
+	 */
+	private void display(Molecule molecule)
+	{
+		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		MoleculeViewer2D mv = new MoleculeViewer2D();
+		Renderer2DModel r2dm = mv.getRenderer2DModel();
+		r2dm.setDrawNumbers(true);
+
+		try
+		{
+			sdg.setMolecule((Molecule) molecule.clone());
+			sdg.generateCoordinates(new Vector2d(0, 1));
+			mv.setAtomContainer(sdg.getMolecule());
+			mv.display();
+		} catch (Exception exc)
+		{
+			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			exc.printStackTrace();
+		}
+	}
+
 
 	/**
 	 *  Test for some rings where the double bond is broken
 	 */
-	public void testCycloOctan() throws Exception {
-		String filename = "data/mdl/cyclooctan.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
-		String moleculeSmile = sg.createSMILES(mol1);
-		assertEquals(moleculeSmile, "C1=CCCCCCC1");
+	public void testCycloOctan()
+	{
+		try
+		{
+			String filename = "data/mdl/cyclooctan.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(ins);
+			Molecule mol1 = (Molecule) reader.read(new Molecule());
+            SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
+			String moleculeSmile = sg.createSMILES(mol1);
+			assertEquals(moleculeSmile, "C1=CCCCCCC1");
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			System.out.println(exc);
+			fail(exc.getMessage());
+		}
 	}
 
 
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testCycloOcten() throws Exception {
-		String filename = "data/mdl/cycloocten.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
-		String moleculeSmile = sg.createSMILES(mol1);
-		assertEquals(moleculeSmile, "C1C=CCCCCC1");
+	public void testCycloOcten()
+	{
+		try
+		{
+			String filename = "data/mdl/cycloocten.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(ins);
+			Molecule mol1 = (Molecule) reader.read(new Molecule());
+            SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
+			String moleculeSmile = sg.createSMILES(mol1);
+			assertEquals(moleculeSmile, "C1C=CCCCCC1");
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			System.out.println(exc);
+			fail(exc.getMessage());
+		}
 	}
 
 
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testCycloOctadien() throws Exception {
-		String filename = "data/mdl/cyclooctadien.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
-		String moleculeSmile = sg.createSMILES(mol1);
-		assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
+	public void testCycloOctadien()
+	{
+		try
+		{
+			String filename = "data/mdl/cyclooctadien.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(ins);
+			Molecule mol1 = (Molecule) reader.read(new Molecule());
+            SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
+			String moleculeSmile = sg.createSMILES(mol1);
+			assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			System.out.println(exc);
+			fail(exc.getMessage());
+		}
 	}
 
 
 	/**
-	 * @cdk.bug 1089770
+	 *  A unit test for JUnit
 	 */
-	public void testSFBug1089770_1() throws Exception {
-		String filename = "data/mdl/bug1089770-1.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
-		String moleculeSmile = sg.createSMILES(mol1);
-		//System.out.println(filename + " -> " + moleculeSmile);
-		assertEquals(moleculeSmile, "C1CCC=2CCCC=2(C1)");
+	public void testSFBug1089770_1()
+	{
+		try
+		{
+			String filename = "data/mdl/bug1089770-1.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(ins);
+			Molecule mol1 = (Molecule) reader.read(new Molecule());
+            SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
+			String moleculeSmile = sg.createSMILES(mol1);
+			//System.out.println(filename + " -> " + moleculeSmile);
+			assertEquals(moleculeSmile, "C1CCC=2CCCC=2(C1)");
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			System.out.println(exc);
+			fail(exc.getMessage());
+		}
+	}
+
+
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testSFBug1089770_2()
+	{
+		try
+		{
+			String filename = "data/mdl/bug1089770-2.mol";
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+			MDLReader reader = new MDLReader(ins);
+			Molecule mol1 = (Molecule) reader.read(new Molecule());
+            SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
+			String moleculeSmile = sg.createSMILES(mol1);
+			//System.out.println(filename + " -> " + moleculeSmile);
+			assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+			System.out.println(exc);
+			fail(exc.getMessage());
+		}
 	}
 
 	/**
-	 * @cdk.bug 1089770
+	 *  The main program for the SmilesGeneratorTest class
+	 *
+	 *@param  args  The command line arguments
 	 */
-	public void testSFBug1089770_2() throws Exception {
-		String filename = "data/mdl/bug1089770-2.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
-		String moleculeSmile = sg.createSMILES(mol1);
-		//System.out.println(filename + " -> " + moleculeSmile);
-		assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
+	public static void main(String[] args)
+	{
+		SmilesGeneratorTest sgt = new SmilesGeneratorTest("SmilesGeneratorTest");
+		sgt.setStandAlone(true);
+		//sgt.testAtomPermutation();
+		//sgt.testBondPermutation();
+		//sgt.testSmilesGenerator();
+		//sgt.testAlanin();
+		sgt.testPropylCycloPropane();
+		
 	}
 
 }
