@@ -328,7 +328,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone() {
+    public void testClone() throws Exception {
         IAtom atom = builder.newAtom("C");
         Object clone = atom.clone();
         assertTrue(clone instanceof IAtom);
@@ -337,7 +337,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_Point2d() {
+    public void testClone_Point2d() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setPoint2d(new Point2d(2, 3));
         IAtom clone = (IAtom)atom.clone();
@@ -350,7 +350,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_Point3d() {
+    public void testClone_Point3d() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
@@ -363,7 +363,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_FractionalPoint3d() {
+    public void testClone_FractionalPoint3d() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
@@ -376,7 +376,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_HydrogenCount() {
+    public void testClone_HydrogenCount() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setHydrogenCount(3);
         IAtom clone = (IAtom)atom.clone();
@@ -389,7 +389,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_StereoParity() {
+    public void testClone_StereoParity() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setStereoParity(3);
         IAtom clone = (IAtom)atom.clone();
@@ -402,7 +402,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_Charge() {
+    public void testClone_Charge() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setCharge(1.0);
         IAtom clone = (IAtom)atom.clone();

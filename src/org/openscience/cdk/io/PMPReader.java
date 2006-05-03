@@ -310,9 +310,13 @@ public class PMPReader extends DefaultChemObjectReader {
                 line = readLine();
             }
         } catch (IOException e) {
-            // should make some noise now
+            logger.error("An IOException happened: ", e.getMessage());
+            logger.debug(e);
             chemFile = null;
-        }
+        } catch (CloneNotSupportedException e) {
+            logger.error("An CloneNotSupportedException happened: ", e.getMessage());
+            logger.debug(e);
+		}
 
         return chemFile;
     }

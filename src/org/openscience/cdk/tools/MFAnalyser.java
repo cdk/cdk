@@ -491,7 +491,13 @@ public class MFAnalyser {
 			// Clone/remove this atom?
 			IAtom atom = ac.getAtomAt(i);
 			if (!atom.getSymbol().equals(H_ELEMENT_SYMBOL) || preserve.contains(atom)) {
-				IAtom a = (IAtom) atom.clone();
+				IAtom a = null;
+				try {
+					a = (IAtom) atom.clone();
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				a.setHydrogenCount(0);
 				mol.addAtom(a);
 				map.put(atom, a);
@@ -524,7 +530,13 @@ public class MFAnalyser {
 			if (!remove_bond) {
 				// if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
 
-				IBond clone = (IBond) ac.getBondAt(i).clone();
+				IBond clone = null;
+				try {
+					clone = (IBond) ac.getBondAt(i).clone();
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
 				mol.addBond(clone);
 			}

@@ -700,7 +700,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 	/**
 	 *  A bug reported for JChemPaint.
 	 */
-	public void testSFBug956923()
+	public void testSFBug956923() throws Exception 
 	{
 		String smiles = "";
 		Molecule molecule = new Molecule();

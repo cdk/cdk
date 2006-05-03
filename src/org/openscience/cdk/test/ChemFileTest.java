@@ -146,13 +146,13 @@ public class ChemFileTest extends CDKTestCase {
         }
     }
 
-	public void testClone() {
+	public void testClone() throws Exception {
         ChemFile file = new ChemFile();
         Object clone = file.clone();
         assertTrue(clone instanceof ChemFile);
     }    
         
-    public void testClone_ChemSequence() {
+    public void testClone_ChemSequence() throws Exception {
 		ChemFile file = new ChemFile();
 		file.addChemSequence(new ChemSequence()); // 1
 		file.addChemSequence(new ChemSequence()); // 2

@@ -64,7 +64,7 @@ public class VicinitySamplerTest extends CDKTestCase
 		return new TestSuite(VicinitySamplerTest.class);
 	}
 
-	public  void testVicinitySampler()
+	public  void testVicinitySampler() throws Exception 
 	{
 		Molecule mol = MoleculeFactory.makeEthylPropylPhenantren();
 		configureAtoms(mol);
@@ -119,7 +119,7 @@ public class VicinitySamplerTest extends CDKTestCase
 	}
 
 	
-	private void display(Vector structures)
+	private void display(Vector structures) throws Exception 
 	{
 		MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
 		moleculeListViewer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -153,6 +153,11 @@ public class VicinitySamplerTest extends CDKTestCase
 	public static void main(String[] args)
 	{
 		VicinitySamplerTest vst = new VicinitySamplerTest("VicinitySamplerTest");
-		vst.testVicinitySampler();
+		try {
+			vst.testVicinitySampler();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

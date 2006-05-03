@@ -234,7 +234,7 @@ public class Isotope extends Element implements java.io.Serializable, org.opensc
 	 *
 	 * @return    The cloned object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		Object clone = null;
 		try {
 			clone = super.clone();

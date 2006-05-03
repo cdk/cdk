@@ -249,7 +249,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone() {
+    public void testClone() throws Exception {
         IAtomType at = builder.newAtomType("C");
         Object clone = at.clone();
         assertTrue(clone instanceof IAtomType);
@@ -258,7 +258,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_MaxBondOrder() {
+    public void testClone_MaxBondOrder() throws Exception {
         IAtomType at = builder.newAtomType("C");
         at.setMaxBondOrder(1.0);
         IAtomType clone = (IAtomType)at.clone();
@@ -270,7 +270,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_IBondOrderSum() {
+    public void testClone_IBondOrderSum() throws Exception {
         IAtomType at = builder.newAtomType("C");
         at.setBondOrderSum(1.0);
         IAtomType clone = (IAtomType)at.clone();
@@ -282,7 +282,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_VanderwaalsRadius() {
+    public void testClone_VanderwaalsRadius() throws Exception {
         IAtomType at = builder.newAtomType("C");
         at.setVanderwaalsRadius(1.0);
         IAtomType clone = (IAtomType)at.clone();
@@ -294,7 +294,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_CovalentRadius() {
+    public void testClone_CovalentRadius() throws Exception {
         IAtomType at = builder.newAtomType("C");
         at.setCovalentRadius(1.0);
         IAtomType clone = (IAtomType)at.clone();
@@ -306,7 +306,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_FormalCharge() {
+    public void testClone_FormalCharge() throws Exception {
         IAtomType at = builder.newAtomType("C");
         at.setFormalCharge(1);
         IAtomType clone = (IAtomType)at.clone();
@@ -318,7 +318,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_FormalNeighbourCount() {
+    public void testClone_FormalNeighbourCount() throws Exception {
         IAtomType at = builder.newAtomType("C");
         at.setFormalNeighbourCount(1);
         IAtomType clone = (IAtomType)at.clone();
@@ -330,7 +330,7 @@ public class AtomTypeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_Hybridization() {
+    public void testClone_Hybridization() throws Exception {
         IAtomType at = builder.newAtomType("C");
         at.setHybridization(1);
         IAtomType clone = (IAtomType)at.clone();

@@ -126,7 +126,7 @@ public class DebugChemModel extends org.openscience.cdk.ChemModel
 		return super.getFlags();
 	}
 
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();

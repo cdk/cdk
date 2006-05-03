@@ -147,7 +147,12 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 							int atom1P = reactant.getAtomNumber(atom);
 							
 							/* action */
-							IAtomContainer acCloned = (IAtomContainer)reactant.clone();
+							IAtomContainer acCloned;
+							try {
+								acCloned = (IAtomContainer)reactant.clone();
+							} catch (CloneNotSupportedException e) {
+								throw new CDKException("Could not clone IMolecule!", e);
+							}
 									
 							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtomAt(atom0P));
 							acCloned.removeElectronContainer(selectron[0]);

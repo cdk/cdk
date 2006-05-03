@@ -162,7 +162,13 @@ public class AtomContainerManipulator {
             IAtom atom = atomContainer.getAtomAt(i);
             if (!atom.getSymbol().equals("H"))
             {
-                IAtom clonedAtom = (IAtom) atom.clone();
+                IAtom clonedAtom = null;
+				try {
+					clonedAtom = (IAtom) atom.clone();
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 clonedAtom.setHydrogenCount(0);
                 mol.addAtom(clonedAtom);
                 map.put(atom, clonedAtom);
@@ -199,7 +205,13 @@ public class AtomContainerManipulator {
             if (!removedBond)
                 // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
             {
-                IBond clone = (IBond) atomContainer.getBondAt(i).clone();
+                IBond clone = null;
+				try {
+					clone = (IBond) atomContainer.getBondAt(i).clone();
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
                 mol.addBond(clone);
             }

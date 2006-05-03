@@ -125,7 +125,13 @@ public class IUPACNameGenerator {
      */
     public void generateName(IAtomContainer moleculeToName) {       
         //Must use a clone to avoid deleting the user's atoms.
-        IAtomContainer m = (IAtomContainer) moleculeToName.clone();
+        IAtomContainer m = null;
+		try {
+			m = (IAtomContainer) moleculeToName.clone();
+		} catch (CloneNotSupportedException exception) {
+            logger.error("Error while cloning molecule: ", exception.getMessage());
+            logger.debug(exception);
+		}
         
         if (!(m instanceof Fragment || m instanceof IMolecule)) {
             return;
@@ -141,7 +147,8 @@ public class IUPACNameGenerator {
         try {
             hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
         } catch (Exception exception) {
-            logger.error("Error while saturating molecule");
+            logger.error("Error while saturating molecule: ", exception.getMessage());
+            logger.debug(exception);
         };
         MFAnalyser mfa = new MFAnalyser(molecule);
         logger.info("Naming struct with MF: " + mfa.getMolecularFormula());

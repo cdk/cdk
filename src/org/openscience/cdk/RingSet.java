@@ -217,7 +217,7 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
 	 *
 	 * @return  The cloned object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		RingSet clone = new RingSet();
 		IAtomContainer[] result = getAtomContainers();
 		for (int i = 0; i < result.length; i++) {

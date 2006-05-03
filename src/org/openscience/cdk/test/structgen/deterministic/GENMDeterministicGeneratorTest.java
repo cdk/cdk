@@ -151,7 +151,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	
 	
 	
-	private boolean everythingOk(Vector structures)
+	private boolean everythingOk(Vector structures) throws Exception 
 	{
 		StructureDiagramGenerator sdg = null;
 		MoleculeViewer2D mv = null;

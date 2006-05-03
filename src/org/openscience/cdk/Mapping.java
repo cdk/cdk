@@ -79,7 +79,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 	 *
 	 * @return  The cloned object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		Mapping clone = (Mapping)super.clone();
         // clone the related IChemObject's
         if (relation != null) {

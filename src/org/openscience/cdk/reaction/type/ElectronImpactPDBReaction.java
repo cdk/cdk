@@ -137,7 +137,12 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 				/**/
 				for (int j = 0; j < 2; j++)
 				{
-					IMolecule reactantCloned = (IMolecule) reactant.clone();
+					IMolecule reactantCloned;
+					try {
+						reactantCloned = (IMolecule) reactant.clone();
+					} catch (CloneNotSupportedException e) {
+						throw new CDKException("Could not clone IMolecule!", e);
+					}
 					
 					double order = reactantCloned.getBondAt(posB1).getOrder();
 					reactantCloned.getBondAt(posB1).setOrder(order - 1);

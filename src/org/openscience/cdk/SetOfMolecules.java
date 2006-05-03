@@ -142,7 +142,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
 	 *
 	 *@return    the cloned object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		SetOfMolecules clone = new SetOfMolecules();
 		org.openscience.cdk.interfaces.IMolecule[] result = getMolecules();
 		for (int i = 0; i < result.length; i++) {

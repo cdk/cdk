@@ -426,7 +426,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 * 
 	 * @cdk.bug 956923
 	 */
-	public void testSFBug956923()
+	public void testSFBug956923() throws Exception 
 	{
 		String smiles = "";
 		Molecule molecule = new Molecule();

@@ -169,7 +169,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
      *
      * @param   molecule  Molecule of which the data is outputed.
      */
-    public void writeAtomContainer(IAtomContainer molecule) {
+    public void writeAtomContainer(IAtomContainer molecule) throws CDKException {
         DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
         Document document = domImpl.createDocument(null, "svg", null);
         SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(document);
@@ -179,7 +179,12 @@ public class SVGWriter extends DefaultChemObjectWriter {
         // paintPanel.paint((Graphics)svgGenerator);
         // let's try to do without the SVGPaintPanel
         Renderer2D r2d = new Renderer2D();
-        IAtomContainer container = (IAtomContainer)molecule.clone();
+        IAtomContainer container;
+		try {
+			container = (IAtomContainer)molecule.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new CDKException("Clone error while creating SVG image! ", e);
+		}
         GeometryTools.translateAllPositive(container);
         GeometryTools.center(container, new Dimension(600,400));
         r2d.paintMolecule(container, (Graphics2D)svgGenerator,false,true);

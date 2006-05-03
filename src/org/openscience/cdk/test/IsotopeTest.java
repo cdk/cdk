@@ -113,7 +113,7 @@ public class IsotopeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone() {
+    public void testClone() throws Exception {
         IIsotope iso = builder.newIsotope("C");
         Object clone = iso.clone();
         assertTrue(clone instanceof IIsotope);
@@ -122,7 +122,7 @@ public class IsotopeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_ExactMass() {
+    public void testClone_ExactMass() throws Exception {
         IIsotope iso = builder.newIsotope("C");
         iso.setExactMass(1.0);
         IIsotope clone = (IIsotope)iso.clone();
@@ -135,7 +135,7 @@ public class IsotopeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_NaturalAbundance() {
+    public void testClone_NaturalAbundance() throws Exception {
         IIsotope iso = builder.newIsotope("C");
         iso.setNaturalAbundance(1.0);
         IIsotope clone = (IIsotope)iso.clone();
@@ -148,7 +148,7 @@ public class IsotopeTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone_MassNumber() {
+    public void testClone_MassNumber() throws Exception {
         IIsotope iso = builder.newIsotope("C");
         iso.setMassNumber(12);
         IIsotope clone = (IIsotope)iso.clone();

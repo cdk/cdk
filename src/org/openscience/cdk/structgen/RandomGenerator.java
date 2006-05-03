@@ -34,6 +34,7 @@ import java.util.Vector;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 
 /**
@@ -86,7 +87,12 @@ public class RandomGenerator
 		if(debug) System.out.println("RandomGenerator->proposeStructure() Start");
 		do
 		{
-			trial = (Molecule)molecule.clone();
+			try {
+				trial = (Molecule)molecule.clone();
+			} catch (CloneNotSupportedException e) {
+				System.out.println("Could not clone IAtomContainer!" + e.getMessage());
+				trial = null;
+			}
 			mutate(trial);
 			if(debug)
 			{
@@ -104,7 +110,7 @@ public class RandomGenerator
 				System.out.println(s);
 			}
 		}
-		while(!ConnectivityChecker.isConnected(trial));
+		while(trial == null || !ConnectivityChecker.isConnected(trial));
 		proposedStructure = trial;
 		
 		return proposedStructure;

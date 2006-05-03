@@ -161,7 +161,13 @@ public class IsotopeFactory
 		{
 			if (((IIsotope) isotopes.elementAt(f)).getSymbol().equals(symbol))
 			{
-				list.add((IIsotope) ((IIsotope) isotopes.elementAt(f)).clone());
+				try {
+					IIsotope clone = (IIsotope) ((IIsotope) isotopes.elementAt(f)).clone();
+					list.add(clone);
+				} catch (CloneNotSupportedException e) {
+					logger.error("Could not clone IIsotope: ", e.getMessage());
+					logger.debug(e);
+				}
 			}
 		}
   	return (IIsotope[]) list.toArray(new IIsotope[list.size()]);
@@ -186,13 +192,18 @@ public class IsotopeFactory
         for (int f = 0; f < isotopes.size(); f++) {
             IIsotope current = (IIsotope) isotopes.elementAt(f);
             if (current.getAtomicNumber() == atomicNumber) {
-                if (major == null) {
-                    major = (IIsotope)current.clone();
-                } else {
-                    if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
-                        major = (IIsotope)current.clone();
-                    }
-                }
+            	try {
+            		if (major == null) {
+            			major = (IIsotope)current.clone();
+            		} else {
+            			if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
+            				major = (IIsotope)current.clone();
+            			}
+            		}
+            	} catch (CloneNotSupportedException e) {
+					logger.error("Could not clone IIsotope: ", e.getMessage());
+					logger.debug(e);
+				}
             }
         }
         if (major == null) logger.error("Could not find major isotope for: ", atomicNumber);
@@ -223,14 +234,18 @@ public class IsotopeFactory
             for (int f = 0; f < isotopes.size(); f++) {
                 IIsotope current = (IIsotope) isotopes.elementAt(f);
                 if (current.getSymbol().equals(symbol)) {
-                    if (major == null) {
-                        major = (IIsotope)current.clone();
-                    } else {
-                        if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
-                            major = (IIsotope)current.clone();
-                        }
-                    }
-                }
+                	try {
+                		if (major == null) {
+                			major = (IIsotope)current.clone();
+                		} else {
+                			if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
+                				major = (IIsotope)current.clone();
+                			}
+                		}
+                	} catch (CloneNotSupportedException e) {
+    					logger.error("Could not clone IIsotope: ", e.getMessage());
+    					logger.debug(e);
+    				}                }
             }
             if (major == null) {
                 logger.error("Could not find major isotope for: ", symbol);

@@ -123,7 +123,11 @@ public class ProteinBuilderTool {
                 if (aminoAcid == null) {
                     throw new CDKException("Cannot build sequence! Unknown amino acid: " + aminoAcidCode);
                 }
-                aminoAcid = (AminoAcid)aminoAcid.clone();
+                try {
+					aminoAcid = (AminoAcid)aminoAcid.clone();
+				} catch (CloneNotSupportedException e) {
+					throw new CDKException("Cannot build sequence! Clone exception: " + e.getMessage());
+				}
                 aminoAcid.setMonomerName(aminoAcidCode + i);
                 logger.debug("protein: ", protein);
                 logger.debug("strand: ", strand);

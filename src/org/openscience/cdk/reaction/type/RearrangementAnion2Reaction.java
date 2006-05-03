@@ -149,7 +149,12 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 								int atom2P = reactant.getAtomNumber(bondsI[k].getConnectedAtom(atom));
 								
 								/* action */
-								IAtomContainer acCloned = (IAtomContainer)reactant.clone();
+								IAtomContainer acCloned;
+								try {
+									acCloned = (IAtomContainer)reactant.clone();
+								} catch (CloneNotSupportedException e) {
+									throw new CDKException("Could not clone IMolecule!", e);
+								}
 								
 								int charge = acCloned.getAtomAt(atom0P).getFormalCharge();
 								acCloned.getAtomAt(atom0P).setFormalCharge(charge+1);

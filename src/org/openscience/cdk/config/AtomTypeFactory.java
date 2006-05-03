@@ -309,7 +309,14 @@ public class AtomTypeFactory {
             // logger.debug("  does symbol match for: ", atomType);
             if (atomType.getSymbol().equals(symbol)) {
                 // logger.debug("Atom type found for symbol: ", atomType);
-                atomList.addElement((IAtomType)atomType.clone());
+            	IAtomType clone;
+				try {
+					clone = (IAtomType)atomType.clone();
+	                atomList.addElement(clone);
+				} catch (CloneNotSupportedException e) {
+					logger.error("Could not clone IAtomType: ", e.getMessage());
+					logger.debug(e);
+				}
             }
         }
         IAtomType[] atomTypes = new IAtomType[atomList.size()];
@@ -334,8 +341,13 @@ public class AtomTypeFactory {
 		IAtomType atomType = null;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
-			atomType = (IAtomType) atomTypes.elementAt(f);
-			atomtypeList.addElement((IAtomType) atomType.clone());
+			try {
+				atomType = (IAtomType)((IAtomType)atomTypes.elementAt(f)).clone();
+				atomtypeList.addElement(atomType);
+			} catch (CloneNotSupportedException e) {
+				logger.error("Could not clone IAtomType: ", e.getMessage());
+				logger.debug(e);
+			}
 		}
 		IAtomType[] atomTypes = new IAtomType[atomtypeList.size()];
 		atomtypeList.copyInto(atomTypes);

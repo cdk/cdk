@@ -62,7 +62,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 	 * Test method for
 	 * 'org.openscience.cdk.applications.undoredo.ConvertToRadicalEdit.undo()'
 	 */
-	public void testUndo() {
+	public void testUndo() throws Exception {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		Molecule allRadicalsMol = createAllRadicalsMol(mol);
 		for (int i = 0; i < electronContainerList.size(); i++) {
@@ -83,7 +83,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		assertTrue(singleElectronContainerCount == 0);
 	}
 
-	private Molecule createAllRadicalsMol(Molecule mol) {
+	private Molecule createAllRadicalsMol(Molecule mol) throws Exception {
 		Molecule allRadicalsMol = (Molecule) mol.clone();
 		electronContainerList = new ArrayList();
 		for (int i = 0; i < allRadicalsMol.getAtomCount(); i++) {

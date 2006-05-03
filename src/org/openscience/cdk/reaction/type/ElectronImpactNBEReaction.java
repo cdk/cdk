@@ -133,7 +133,12 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 				
 				int posA = reactant.getAtomNumber(atoms[i]);
 				
-				IMolecule reactantCloned = (IMolecule) reactants.getMolecule(0).clone();
+				IMolecule reactantCloned;
+				try {
+					reactantCloned = (IMolecule) reactants.getMolecule(0).clone();
+				} catch (CloneNotSupportedException e) {
+					throw new CDKException("Could not clone IMolecule!", e);
+				}
 				
 				ILonePair[] lps = reactantCloned.getLonePairs(reactantCloned.getAtomAt(posA));
 				reactantCloned.removeElectronContainer(lps[0]);

@@ -3,6 +3,7 @@ package org.openscience.cdk.modeling.forcefield;
 import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -67,7 +68,12 @@ public class GeometricMinimizer {
 	public void setMolecule(Molecule mol, boolean clone) {
 
 		if (clone) {
-			this.molecule = (Molecule) mol.clone();
+			try {
+				this.molecule = (Molecule) mol.clone();
+			} catch (CloneNotSupportedException e) {
+				logger.error("Should clone, but exception occured: ", e.getMessage());
+				logger.debug(e);
+			}
 		} else {
 			this.molecule = mol;
 		}

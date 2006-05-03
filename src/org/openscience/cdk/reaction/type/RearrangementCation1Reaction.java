@@ -148,7 +148,12 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 							int atom1P = reactant.getAtomNumber(atom1);
 							
 							/* action */
-							IAtomContainer acCloned = (IAtomContainer)reactant.clone();
+							IAtomContainer acCloned;
+							try {
+								acCloned = (IAtomContainer)reactant.clone();
+							} catch (CloneNotSupportedException e) {
+								throw new CDKException("Could not clone IMolecule!", e);
+							}
 							
 							int charge = acCloned.getAtomAt(atom0P).getFormalCharge();
 							acCloned.getAtomAt(atom0P).setFormalCharge(charge-1);

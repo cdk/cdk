@@ -437,7 +437,12 @@ public class UniversalIsomorphismTester {
       a1 = (IAtom) table.get(a);
 
       if (a1 == null) {
-        a1 = (IAtom)((IAtom)a).clone();
+        try {
+			a1 = (IAtom)((IAtom)a).clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         ac.addAtom(a1);
         table.put(a, a1);
       }
@@ -446,7 +451,12 @@ public class UniversalIsomorphismTester {
       a2 = (IAtom) table.get(a);
 
       if (a2 == null) {
-        a2 = (IAtom)((IAtom)a).clone();
+        try {
+			a2 = (IAtom)((IAtom)a).clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         ac.addAtom(a2);
         table.put(a, a2);
       }

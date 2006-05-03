@@ -225,7 +225,7 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
      *
      * @return The cloned crystal.
      */
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         Crystal clone = null;
         try {
             clone = (Crystal)super.clone();

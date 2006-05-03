@@ -70,7 +70,7 @@ public class ElectronContainerTest extends CDKTestCase {
         testSetElectronCount_int();
     }
 
-    public void testClone() {
+    public void testClone() throws Exception {
         IElectronContainer ec = builder.newElectronContainer();
         ec.setElectronCount(2);
         Object clone = ec.clone();

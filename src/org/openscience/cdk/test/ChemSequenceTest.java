@@ -150,13 +150,13 @@ public class ChemSequenceTest extends CDKTestCase {
         }
     }
 
-	public void testClone() {
+	public void testClone() throws Exception {
         ChemSequence sequence = new ChemSequence();
         Object clone = sequence.clone();
         assertTrue(clone instanceof ChemSequence);
     }    
         
-    public void testClone_IChemModel() {
+    public void testClone_IChemModel() throws Exception {
 		ChemSequence sequence = new ChemSequence();
 		sequence.addChemModel(new ChemModel()); // 1
 		sequence.addChemModel(new ChemModel()); // 2

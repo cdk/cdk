@@ -587,8 +587,14 @@ public abstract class JChemPaintPanel
 			return answer;
 		} else if(guiString.equals("applet")){
 			//In case of the applet we do not ask for save but put the clear into the undo stack
-			ClearAllEdit coa=new ClearAllEdit(this.getChemModel(),(ISetOfMolecules)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getSetOfReactions());
-			this.jchemPaintModel.getControllerModel().getUndoSupport().postEdit(coa);
+			ClearAllEdit coa = null;
+			try {
+				coa = new ClearAllEdit(this.getChemModel(),(ISetOfMolecules)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getSetOfReactions());
+				this.jchemPaintModel.getControllerModel().getUndoSupport().postEdit(coa);
+			} catch (CloneNotSupportedException e) {
+				logger.error("Clone of ISetOfMolecules failed: ", e.getMessage());
+            	logger.debug(e);
+			}
 			return JOptionPane.YES_OPTION;
 		} else {
 			return JOptionPane.YES_OPTION;

@@ -125,7 +125,12 @@ public class ElementPTFactory
 		for (int f = 0; f < elements.size(); f++)
 		{
 			if (((PeriodicTableElement) elements.elementAt(f)).getSymbol().equals(symbol))
-				return (PeriodicTableElement) ((PeriodicTableElement) elements.elementAt(f)).clone();
+				try {
+					return (PeriodicTableElement) ((PeriodicTableElement) elements.elementAt(f)).clone();
+				} catch (CloneNotSupportedException e) {
+					logger.error("Could not clone PeriodicTableElement: ", e.getMessage());
+					logger.debug(e);
+				}
 
 		}
 		return null;

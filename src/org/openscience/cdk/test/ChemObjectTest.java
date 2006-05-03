@@ -159,7 +159,7 @@ public class ChemObjectTest extends CDKTestCase {
         testSetFlag_int_boolean();
     }
     
-    public void testClone() {
+    public void testClone() throws Exception {
         IChemObject chemObject = builder.newChemObject();
         chemObject.setFlag(3, true);
         
@@ -168,7 +168,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertTrue(clone instanceof IChemObject);
     }
     
-    public void testClone_Flags() {
+    public void testClone_Flags() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         chemObject1.setFlag(3, true);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
@@ -178,7 +178,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertTrue(chemObject1.getFlag(3));
     }
 
-    public void testClone_Identifier() {
+    public void testClone_Identifier() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         chemObject1.setID("co1");
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
@@ -188,7 +188,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertEquals("co1", chemObject1.getID());
     }
     
-    public void testClone_Properties() {
+    public void testClone_Properties() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         Hashtable props1 = new Hashtable();
         chemObject1.setProperties(props1);
@@ -203,7 +203,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertEquals(0, chemObject1.getProperties().size());
     }
     
-    public void testClone_Properties2() {
+    public void testClone_Properties2() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         Hashtable props1 = new Hashtable();
         IAtom atom = builder.newAtom("C");
@@ -221,7 +221,7 @@ public class ChemObjectTest extends CDKTestCase {
         assertNotSame(atom, chemObject2.getProperties().get("atom"));
     }
     
-    public void testClone_ChemObjectListeners() {
+    public void testClone_ChemObjectListeners() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
@@ -260,7 +260,7 @@ public class ChemObjectTest extends CDKTestCase {
         public void stateChanged(IChemObjectChangeEvent event) {};
     }
     
-   public void testShallowCopy() {
+   public void testShallowCopy() throws Exception {
         IChemObject chemObject = builder.newChemObject();
         Object clone = chemObject.clone();
         assertNotNull(clone);

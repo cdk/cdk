@@ -561,7 +561,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
 		return currentChemFile.getFlags();
 	}
 
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		return currentChemFile.clone();
 	}
 

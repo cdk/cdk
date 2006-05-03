@@ -67,7 +67,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 	/** A complex alkaloid with two separate ring systems to 
 	  * be laid out.
 	  */
-	public void testIt()
+	public void testIt() throws Exception 
 	{
 		String s = null;
 		Vector structures = new Vector();	
@@ -151,7 +151,12 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 	{
 		RandomStructureGeneratorTest test = new RandomStructureGeneratorTest();
 		test.setStandAlone(true);
-        test.testIt();
+        try {
+			test.testIt();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 

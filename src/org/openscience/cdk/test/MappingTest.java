@@ -69,7 +69,7 @@ public class MappingTest extends CDKTestCase {
         }
     }
 
-	public void testClone() {
+	public void testClone() throws Exception {
         Mapping mapping = new Mapping(new Atom(), new Atom());
         Object clone = mapping.clone();
         assertTrue(clone instanceof Mapping);
@@ -87,7 +87,7 @@ public class MappingTest extends CDKTestCase {
         assertEquals(ethene, map[1]);
     }
 
-    public void testClone_ChemObject() {
+    public void testClone_ChemObject() throws Exception {
 		Mapping mapping = new Mapping(new Atom(), new Atom());
 
 		Mapping clone = (Mapping)mapping.clone();

@@ -311,14 +311,14 @@ public class ReactionTest extends CDKTestCase {
         }
     }
     
-    public void testClone() {
+    public void testClone() throws Exception {
         IReaction reaction = builder.newReaction();
         Object clone = reaction.clone();
         assertNotNull(clone);
         assertTrue(clone instanceof IReaction);
     }
     
-    public void testClone_Mapping() {
+    public void testClone_Mapping() throws Exception {
         IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);

@@ -171,7 +171,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
         }
     }
 
-    public void testClone() {
+    public void testClone() throws Exception {
         ISetOfMolecules som = builder.newSetOfMolecules();
         Object clone = som.clone();
         assertTrue(clone instanceof ISetOfMolecules);

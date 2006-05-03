@@ -137,7 +137,7 @@ public class AtomParity extends ChemObject implements java.io.Serializable, IAto
      *
      * @return  The cloned object   
      */
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         AtomParity clone = null;
         try {
             clone = (AtomParity)super.clone();

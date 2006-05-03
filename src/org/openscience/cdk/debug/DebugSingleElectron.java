@@ -141,7 +141,7 @@ public class DebugSingleElectron extends org.openscience.cdk.SingleElectron
 		return super.getFlags();
 	}
 
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();

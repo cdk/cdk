@@ -451,7 +451,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getFlags();
 	}
 
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();

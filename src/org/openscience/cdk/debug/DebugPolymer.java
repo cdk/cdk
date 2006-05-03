@@ -439,7 +439,7 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		return super.getFlags();
 	}
 
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();

@@ -99,13 +99,13 @@ public class LonePairTest extends CDKTestCase {
         assertTrue(lp.contains(atom));
     }
     
-    public void testClone() {
+    public void testClone() throws Exception {
         ILonePair lp = builder.newLonePair();
         Object clone = lp.clone();
         assertTrue(clone instanceof ILonePair);
     }
     
-    public void testClone_IAtom() {
+    public void testClone_IAtom() throws Exception {
         IAtom atom = builder.newAtom("N");
         ILonePair lp = builder.newLonePair();
         lp.setAtom(atom);

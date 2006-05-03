@@ -184,15 +184,19 @@ public class VicinitySampler
 									b21 = a11 + a21 - b11;
 									b22 = a22 - a11 + b11;
 									if (debug) System.out.println("Trying atom combination : " + x1 + ":" + x2 + ":"+ y1 + ":"+ y2);
-									newAc = (AtomContainer)ac.clone();
-									change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
-									if (ConnectivityChecker.isConnected(newAc))
-									{
-										structures.add(newAc);
-									}
-									else
-									{
-										if (debug) System.out.println("not connected");	
+									try {
+										newAc = (AtomContainer)ac.clone();
+										change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
+										if (ConnectivityChecker.isConnected(newAc))
+										{
+											structures.add(newAc);
+										}
+										else
+										{
+											if (debug) System.out.println("not connected");	
+										}
+									} catch (CloneNotSupportedException e) {
+										System.out.println("Cloning exception: " + e.getMessage());
 									}
 								}
 							}

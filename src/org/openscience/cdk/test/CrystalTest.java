@@ -208,13 +208,13 @@ public class CrystalTest extends CDKTestCase {
         }
     }
 
-    public void testClone() {
+    public void testClone() throws Exception {
         ICrystal crystal = builder.newCrystal();
         Object clone = crystal.clone();
         assertTrue(clone instanceof ICrystal);
     }
 
-    public void testClone_Axes() {
+    public void testClone_Axes() throws Exception {
         ICrystal crystal1 = builder.newCrystal();
         Vector3d axes = new Vector3d(1.0, 2.0, 3.0);
         crystal1.setA(axes);

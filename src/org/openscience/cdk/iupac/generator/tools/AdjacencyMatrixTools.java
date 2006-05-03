@@ -25,6 +25,8 @@ package org.openscience.cdk.iupac.generator.tools;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Methods for playing with Adjacency Matrices
@@ -42,9 +44,9 @@ public class AdjacencyMatrixTools {
      * @return An adjacency matrix for the carbon atoms in the given AtomContainer.
      */
     public static int[][] getCarbonOnly(AtomContainer ac) {
-        AtomContainer copy = (AtomContainer)ac.clone();
+    	IAtomContainer copy = (IAtomContainer)ac.getBuilder().newAtomContainer(ac);
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom a = copy.getAtomAt(i);
+        	IAtom a = copy.getAtomAt(i);
             if (!a.getSymbol().equals("C")) {
                 copy.removeAtomAndConnectedElectronContainers(a);
             }

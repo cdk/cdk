@@ -60,7 +60,7 @@ public class SetOfReactionsTest extends CDKTestCase {
         assertNotNull(reactionSet);
     }
     
-	public void testClone() {
+	public void testClone() throws Exception {
         ISetOfReactions reactionSet = builder.newSetOfReactions();
         Object clone = reactionSet.clone();
         assertTrue(clone instanceof ISetOfReactions);
@@ -121,7 +121,7 @@ public class SetOfReactionsTest extends CDKTestCase {
         assertEquals(third, reactionSet.getReaction(2));
     }
     
-    public void testClone_Reaction() {
+    public void testClone_Reaction() throws Exception {
 		ISetOfReactions reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2

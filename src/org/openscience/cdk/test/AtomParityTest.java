@@ -144,7 +144,7 @@ public class AtomParityTest extends CDKTestCase {
         }
     }
 
-	public void testClone() {
+	public void testClone() throws Exception {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -161,7 +161,7 @@ public class AtomParityTest extends CDKTestCase {
         assertTrue(clone instanceof AtomParity);
     }    
         
-    public void testClone_SurroundingAtoms() {
+    public void testClone_SurroundingAtoms() throws Exception {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -188,7 +188,7 @@ public class AtomParityTest extends CDKTestCase {
 		}        
     }
     
-    public void testClone_IAtom() {
+    public void testClone_IAtom() throws Exception {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");

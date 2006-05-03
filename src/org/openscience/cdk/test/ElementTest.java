@@ -98,13 +98,13 @@ public class ElementTest extends CDKTestCase {
         assertEquals(1, e.getAtomicNumber());
     }
 
-    public void testClone() {
+    public void testClone() throws Exception {
         IElement elem = builder.newElement();
         Object clone = elem.clone();
         assertTrue(clone instanceof IElement);
     }
     
-    public void testClone_Symbol() {
+    public void testClone_Symbol() throws Exception {
         IElement elem = builder.newElement("C");
         IElement clone = (IElement)elem.clone();
         
@@ -113,7 +113,7 @@ public class ElementTest extends CDKTestCase {
         assertEquals("C", clone.getSymbol());
     }
     
-    public void testClone_IAtomicNumber() {
+    public void testClone_IAtomicNumber() throws Exception {
         IElement elem = builder.newElement("C", 6);
         IElement clone = (IElement)elem.clone();
         

@@ -44,7 +44,9 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.layout.AtomPlacer;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -87,6 +89,7 @@ public class ModelBuilder3D {
 	ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 	String forceFieldName = "mm2";
 	
+	private LoggingTool logger = new LoggingTool(ModelBuilder3D.class);
 	
 	/**
 	 *  Constructor for the ModelBuilder3D object
@@ -150,7 +153,12 @@ public class ModelBuilder3D {
 	public void setMolecule(IMolecule mol, boolean clone) {
 
 		if (clone) {
-			this.molecule = (IMolecule) mol.clone();
+			try {
+				this.molecule = (IMolecule) mol.clone();
+			} catch (CloneNotSupportedException e) {
+				logger.error("Should clone, but exception occured: ", e.getMessage());
+				logger.debug(e);
+			}
 		} else {
 			this.molecule = mol;
 		}

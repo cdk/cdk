@@ -326,7 +326,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @return    the cloned Object
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		SetOfAtomContainers clone = new SetOfAtomContainers();
 		org.openscience.cdk.interfaces.IAtomContainer[] result = getAtomContainers();
 		for (int i = 0; i < result.length; i++) {

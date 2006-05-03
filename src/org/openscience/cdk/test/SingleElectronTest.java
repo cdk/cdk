@@ -94,14 +94,14 @@ public class SingleElectronTest extends CDKTestCase {
         assertEquals(atom, radical.getAtom());
     }
     
-    public void testClone() {
+    public void testClone() throws Exception {
         ISingleElectron radical = builder.newSingleElectron();
         Object clone = radical.clone();
         assertNotNull(clone);
         assertTrue(clone instanceof ISingleElectron);
     }
     
-    public void testClone_IAtom() {
+    public void testClone_IAtom() throws Exception {
         IAtom atom = builder.newAtom("N");
         ISingleElectron radical = builder.newSingleElectron();
         radical.setAtom(atom);

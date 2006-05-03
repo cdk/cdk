@@ -82,13 +82,13 @@ public class AtomContainerTest extends CDKTestCase {
     /**
      * Only test wether the atoms are correctly cloned.
      */
-	public void testClone() {
+	public void testClone() throws Exception {
         IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
         Object clone = molecule.clone();
         assertTrue(clone instanceof IAtomContainer);
     }    
         
-    public void testClone_IAtom() {
+    public void testClone_IAtom() throws Exception {
 		IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
 		molecule.addAtom(builder.newAtom("C")); // 1
 		molecule.addAtom(builder.newAtom("C")); // 2
@@ -106,7 +106,7 @@ public class AtomContainerTest extends CDKTestCase {
 		}        
     }
     
-	public void testClone_IAtom2() {
+	public void testClone_IAtom2() throws Exception {
 		IMolecule molecule = builder.newMolecule();
         IAtom carbon = builder.newAtom("C");
         carbon.setPoint2d(new Point2d(2, 4));
@@ -118,7 +118,7 @@ public class AtomContainerTest extends CDKTestCase {
 		assertEquals(clonedMol.getAtomAt(0).getX2d(), 2.0, 0.001);
 	}
 
-    public void testClone_IBond() {
+    public void testClone_IBond() throws Exception {
 		IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
 		molecule.addAtom(builder.newAtom("C")); // 1
 		molecule.addAtom(builder.newAtom("C")); // 2
@@ -139,7 +139,7 @@ public class AtomContainerTest extends CDKTestCase {
 		}
 	}
 
-    public void testClone_IBond2() {
+    public void testClone_IBond2() throws Exception {
 		IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("C");
@@ -153,7 +153,7 @@ public class AtomContainerTest extends CDKTestCase {
         assertNotSame(atom2, clonedMol.getBondAt(0).getAtomAt(1));
 	}
 
-    public void testClone_IBond3() {
+    public void testClone_IBond3() throws Exception {
 		IAtomContainer molecule = new org.openscience.cdk.AtomContainer();
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("C");
@@ -493,7 +493,7 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(3, container.getBondCount());
     }
     
-    public void testRemove_IAtomContainer() {
+    public void testRemove_IAtomContainer() throws Exception {
         IMolecule acetone = builder.newMolecule();
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
@@ -510,7 +510,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        IAtomContainer container = new org.openscience.cdk.AtomContainer();
+        IAtomContainer container = builder.newAtomContainer();
         container.add(acetone);
         assertEquals(4, container.getAtomCount());
         assertEquals(3, container.getBondCount());

@@ -123,7 +123,7 @@ public class DebugSetOfReactions extends org.openscience.cdk.SetOfReactions
 		return super.getFlags();
 	}
 
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();

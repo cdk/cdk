@@ -220,7 +220,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
         }
     }
     
-     public void testClone() {
+     public void testClone() throws Exception {
         ISetOfAtomContainers containerSet = builder.newSetOfAtomContainers();
         Object clone = containerSet.clone();
         assertTrue(clone instanceof ISetOfAtomContainers);

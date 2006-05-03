@@ -170,7 +170,7 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	 *
 	 * @return  The cloned SetOfReactions
 	 */
-	public Object clone() {
+	public Object clone() throws CloneNotSupportedException {
 		SetOfReactions clone = (SetOfReactions)super.clone();
         // clone the reactions
         clone.reactionCount = this.reactionCount;

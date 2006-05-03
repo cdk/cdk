@@ -325,12 +325,13 @@ public class AtomPlacer
 	 */
 	public void placeLinearChain(IAtomContainer ac, Vector2d initialBondVector, double bondLength)
 	{
-		IAtomContainer withh=(IAtomContainer) ac.clone();
+		IMolecule withh = ac.getBuilder().newMolecule(ac);
 		if(GeometryTools.has2DCoordinatesNew(ac)==2){
 			try{
-				new HydrogenAdder().addExplicitHydrogensToSatisfyValency((IMolecule)withh);
+				new HydrogenAdder().addExplicitHydrogensToSatisfyValency(withh);
 			}catch(Exception ex){
-				logger.debug("Excpetion in hydrogen adding. This could mean that cleanup does not respect E/Z");
+				logger.warn("Exception in hydrogen adding. This could mean that cleanup does not respect E/Z: ", ex.getMessage());
+				logger.debug(ex);
 			}
 		    new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
 		}

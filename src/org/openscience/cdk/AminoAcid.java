@@ -140,7 +140,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializab
      *
      * @return    The cloned object
      */
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         AminoAcid clone = null;
         try {
             clone = (AminoAcid) super.clone();

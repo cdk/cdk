@@ -86,7 +86,12 @@ public class AllRingsFinder
 	public IRingSet findAllRings(IAtomContainer atomContainer) throws CDKException
 	{
 		startTime = System.currentTimeMillis();
-		SpanningTree spanningTree = new SpanningTree((IAtomContainer) atomContainer.clone());
+		SpanningTree spanningTree;
+		try {
+			spanningTree = new SpanningTree((IAtomContainer) atomContainer.clone());
+		} catch (CloneNotSupportedException e) {
+			throw new CDKException("Could not clone IAtomContainer!", e);
+		}
 		spanningTree.identifyBonds();
 		if (spanningTree.getBondsCyclicCount() < 37)
 		{

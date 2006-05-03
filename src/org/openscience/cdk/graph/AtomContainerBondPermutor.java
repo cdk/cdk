@@ -78,7 +78,14 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor
 		}
 		AtomContainer ac = new org.openscience.cdk.AtomContainer(atomContainer);
 		ac.setElectronContainers(bonds);
-		return (AtomContainer)ac.clone();
+		AtomContainer clone = null;
+		try {
+			clone = (AtomContainer)ac.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return clone;
 	}
 	
 }

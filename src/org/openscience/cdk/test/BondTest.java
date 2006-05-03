@@ -271,14 +271,14 @@ public class BondTest extends CDKTestCase {
         assertEquals(0.5, b.get3DCenter().z, 0.001);
     }
 
-    public void testClone() {
+    public void testClone() throws Exception {
         IBond bond = builder.newBond();
         Object clone = bond.clone();
         assertNotNull(clone);
         assertTrue(clone instanceof org.openscience.cdk.interfaces.IBond);
     }
 
-    public void testClone_IAtom() {
+    public void testClone_IAtom() throws Exception {
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("O");
         IBond bond = builder.newBond(atom1, atom2);
@@ -289,7 +289,7 @@ public class BondTest extends CDKTestCase {
         assertNotSame(atom2, clone.getAtomAt(1));
     }
 
-    public void testClone_Order() {
+    public void testClone_Order() throws Exception {
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("O");
         IBond bond = builder.newBond(atom1, atom2, 1.0);
@@ -300,7 +300,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(1.0, clone.getOrder(), 0.01);
     }
 
-    public void testClone_Stereo() {
+    public void testClone_Stereo() throws Exception {
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("O");
         IBond bond = builder.newBond(atom1, atom2, 1.0, 1);

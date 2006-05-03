@@ -55,7 +55,7 @@ public class CloneAtomContainerTest extends CDKTestCase {
 		junit.textui.TestRunner.run(new TestSuite(CloneAtomContainerTest.class));
 	}
 
-	public void testClone() 
+	public void testClone() throws Exception  
 	{
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		Molecule clonedMol = (Molecule)molecule.clone();

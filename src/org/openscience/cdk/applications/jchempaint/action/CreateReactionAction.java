@@ -81,7 +81,14 @@ public class CreateReactionAction extends JCPAction
 			logger.error("Cannot find container to add object to!");
 		} else
 		{
-			IAtomContainer newContainer = (IAtomContainer) container.clone();
+			IAtomContainer newContainer;
+			try {
+				newContainer = (IAtomContainer) container.clone();
+			} catch (CloneNotSupportedException e) {
+				logger.error("Could not clone IAtomContainer: ", e.getMessage());
+				logger.debug(e);
+				return;
+			}
 			// delete atoms in current model
 			IAtom[] atoms = container.getAtoms();
 			for (int i = 0; i < atoms.length; i++)

@@ -95,7 +95,7 @@ public class MoleculeTest extends CDKTestCase {
         assertEquals(3, m.getBondCount());
     }
 
-	public void testClone() {
+	public void testClone() throws Exception {
         IMolecule molecule = builder.newMolecule();
         Object clone = molecule.clone();
         assertTrue(clone instanceof IMolecule);

@@ -127,7 +127,12 @@ public class StructureDiagramGenerator
 		org.openscience.cdk.interfaces.IAtom atom = null;
 		if (clone)
 		{
-			this.molecule = (IMolecule) mol.clone();
+			try {
+				this.molecule = (IMolecule) mol.clone();
+			} catch (CloneNotSupportedException e) {
+				logger.error("Should clone, but exception occured: ", e.getMessage());
+				logger.debug(e);
+			}
 		} else
 		{
 			this.molecule = mol;

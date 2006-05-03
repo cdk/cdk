@@ -534,7 +534,14 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
             Renderer2D r2d = new Renderer2D(jchemPaintModel.getRendererModel());
             r2d.setRenderer2DModel(jchemPaintModel.getRendererModel());
-            IChemModel model = (IChemModel) jchemPaintModel.getChemModel().clone();
+            IChemModel model = null;
+            try {
+            	model = (IChemModel) jchemPaintModel.getChemModel().clone();
+            } catch (CloneNotSupportedException exception) {
+            	logger.error("Clone of IChemModel failed: ", exception.getMessage());
+            	logger.debug(exception);
+            	return null;
+            }
             IAtomContainer ac = SetOfMoleculesManipulator.getAllInOneContainer(model.getSetOfMolecules());
             Dimension dim = GeometryTools.get2DDimension(ac);
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());

@@ -31,7 +31,7 @@ package org.openscience.cdk.graph;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * This class allows to iterate trough the set of all possible
@@ -75,9 +75,16 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 		{
 			atoms[f] = ((Atom)objects[f]);	
 		}
-		AtomContainer ac = new org.openscience.cdk.AtomContainer(atomContainer);
+		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer(atomContainer);
 		ac.setAtoms(atoms);
-		return (AtomContainer)ac.clone();
+		AtomContainer clone = null;
+		try {
+			clone = (AtomContainer)ac.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return clone;
 	}
 	
 }

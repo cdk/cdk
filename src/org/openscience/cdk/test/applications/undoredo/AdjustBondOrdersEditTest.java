@@ -44,8 +44,7 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 	 * Test method for
 	 * 'org.openscience.cdk.applications.undoredo.AdjustBondOrdesEdit.redo()'
 	 */
-	public void testClearBondOrdersRedo() throws IOException,
-			ClassNotFoundException {
+	public void testClearBondOrdersRedo() throws Exception {
 		HashMap changedBonds = makeClearMolecule();
 		AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
 		edit.undo();
@@ -63,7 +62,7 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 	 * Test method for
 	 * 'org.openscience.cdk.applications.undoredo.AdjustBondOrdesEdit.redo()'
 	 */
-	public void testFitBondOrdersRedo() throws CDKException {
+	public void testFitBondOrdersRedo() throws Exception {
 		HashMap changedBonds = makeFittingMolecule();
 		AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
 		edit.undo();
@@ -81,8 +80,7 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 	 * Test method for
 	 * 'org.openscience.cdk.applications.undoredo.AdjustBondOrdesEdit.undo()'
 	 */
-	public void testClearBondOrdersUndo() throws IOException,
-			ClassNotFoundException {
+	public void testClearBondOrdersUndo() throws Exception {
 		HashMap changedBonds = makeClearMolecule();
 		AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
 		edit.undo();
@@ -99,7 +97,7 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 	 * Test method for
 	 * 'org.openscience.cdk.applications.undoredo.AdjustBondOrdesEdit.undo()'
 	 */
-	public void testFitBondOrdersUndo() throws CDKException {
+	public void testFitBondOrdersUndo() throws Exception {
 		HashMap changedBonds = makeFittingMolecule();
 		AdjustBondOrdersEdit edit = new AdjustBondOrdersEdit(changedBonds);
 		edit.undo();
@@ -112,8 +110,7 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 		}
 	}
 
-	private HashMap makeClearMolecule() throws IOException,
-			ClassNotFoundException {
+	private HashMap makeClearMolecule() throws Exception {
 		HashMap changedBonds = new HashMap();
 		clearMol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer containerCopy = (AtomContainer) clearMol.clone();
@@ -131,7 +128,7 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 		return changedBonds;
 	}
 
-	private HashMap makeFittingMolecule() throws CDKException {
+	private HashMap makeFittingMolecule() throws Exception {
 		HashMap changedBonds = new HashMap();
 		fittingMol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer containerCopy = (AtomContainer) fittingMol.clone();

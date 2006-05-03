@@ -205,8 +205,9 @@ public interface IChemObject extends Cloneable {
      * Returns a deep clone of this IChemObject.
      *
      * @return Object the clone of this IChemObject.
+     * @throws CloneNotSupportedException TODO
      */
-    public Object clone();
+    public Object clone() throws CloneNotSupportedException;
     
     /**
      * Returns a ChemObjectBuilder for the data classes that extend

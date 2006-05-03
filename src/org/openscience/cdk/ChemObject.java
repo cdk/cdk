@@ -280,7 +280,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 *
 	 *@return    The cloned object
 	 */
-	public Object clone()
+	public Object clone() throws CloneNotSupportedException
 	{
 		Object clone = null;
 		try

@@ -100,7 +100,7 @@ public class AminoAcidTest extends CDKTestCase {
         }
     }
 
-    public void testClone() {
+    public void testClone() throws Exception {
         IAminoAcid aa = builder.newAminoAcid();
         Object clone = aa.clone();
         assertTrue(clone instanceof IAminoAcid);

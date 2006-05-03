@@ -52,7 +52,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
 	private ISetOfAtomContainers substructureSet;
 	
 	public SubstructureFingerprinter(ISetOfAtomContainers substructureSet) {
-		this.substructureSet = (ISetOfAtomContainers)substructureSet.clone();
+		this.substructureSet = substructureSet;
 	}
 	
 	/**

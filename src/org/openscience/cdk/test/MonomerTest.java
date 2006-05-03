@@ -98,7 +98,7 @@ public class MonomerTest extends CDKTestCase {
         }
     }
 
-    public void testClone() {
+    public void testClone() throws Exception {
         IMonomer oMonomer = builder.newMonomer();
         Object clone = oMonomer.clone();
         assertTrue(clone instanceof IMonomer);
