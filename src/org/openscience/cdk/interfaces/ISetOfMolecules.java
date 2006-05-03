@@ -51,6 +51,7 @@ public interface ISetOfMolecules extends ISetOfAtomContainers {
      * IMolecule's.
      * 
      * @param molecules New set of molecules
+     * @see             #getMolecules()
      */
     public void setMolecules(IMolecule[] molecules);
     

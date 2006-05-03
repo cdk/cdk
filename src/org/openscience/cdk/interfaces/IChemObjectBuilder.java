@@ -312,9 +312,11 @@ public interface IChemObjectBuilder {
     public ILonePair newLonePair(IAtom atom);
 	
     /**
-	 * Creates a IMapping.
+	 * Creates a directional IMapping between IChemObject's.
 	 * 
-     * @return IMapping implementation defined for this IChemObjectBuilder
+	 * @param objectOne object which is being mapped 
+	 * @param objectTwo object to which is being mapped
+     * @return          IMapping implementation defined for this IChemObjectBuilder
 	 */
 	public IMapping newMapping(IChemObject objectOne, IChemObject objectTwo);
     
@@ -375,7 +377,8 @@ public interface IChemObjectBuilder {
 	/**
 	 * Constructs a IRing from an IAtomContainer.
 	 * 
-     * @return IRing implementation defined for this IChemObjectBuilder
+	 * @param  container IAtomContainer to create the IRing from
+     * @return           IRing implementation defined for this IChemObjectBuilder
 	 */
 	public IRing newRing(IAtomContainer container);
 	

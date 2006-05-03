@@ -53,7 +53,7 @@ public class AtomTypeReader {
     /**
      * Instantiates the XML based AtomTypeReader.
      * 
-     * @param The Reader to read the IAtomType's from.
+     * @param input The Reader to read the IAtomType's from.
      */
     public AtomTypeReader(Reader input) {
         this.init();
