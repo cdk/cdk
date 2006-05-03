@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @cdk.keyword ring, set of
  */
-public interface IRingSet extends List {
+public interface IRingSet extends ISetOfAtomContainers {
 
 	/**
 	 * Checks - and returns 'true' - if a certain ring is already
@@ -77,12 +77,20 @@ public interface IRingSet extends List {
 	public void add(IRingSet ringSet);
 
 	/**
-	 * True, if at least one of the rings in the ringset cotains
+	 * True, if at least one of the rings in the ringset contains
 	 * the given atom.
 	 *
-     * @param  atom Atom to check
+     * @param  atom IAtom to check
 	 * @return      true, if the ringset contains the atom
 	 */
 	public boolean contains(IAtom atom);
+	
+	/**
+	 * True, if this set contains the IAtomContainer
+	 *
+     * @param  container IAtomContainer to check
+	 * @return           true, if the ringset contains the container
+	 */
+	public boolean contains(IAtomContainer container);
 	
 }

@@ -327,7 +327,7 @@ public class StructureDiagramGenerator
 			SSSRFinder sssrf = new SSSRFinder(molecule);
 
 			sssr = sssrf.findSSSR();
-			if (sssr.size() < 1)
+			if (sssr.getAtomContainerCount() < 1)
 			{
 				return;
 			}
@@ -355,14 +355,14 @@ public class StructureDiagramGenerator
 			 *  Do the layout for the first connected ring system ...
 			 */
 			int largest = 0;
-			int largestSize = ((IRingSet) ringSystems.elementAt(0)).size();
+			int largestSize = ((IRingSet) ringSystems.elementAt(0)).getAtomContainerCount();
 			logger.debug("We have " + ringSystems.size() + " ring system(s).");
 			for (int f = 0; f < ringSystems.size(); f++)
 			{
-				logger.debug("RingSet " + f + " has size " + ((IRingSet) ringSystems.elementAt(f)).size());
-				if (((IRingSet) ringSystems.elementAt(f)).size() > largestSize)
+				logger.debug("RingSet " + f + " has size " + ((IRingSet) ringSystems.elementAt(f)).getAtomContainerCount());
+				if (((IRingSet) ringSystems.elementAt(f)).getAtomContainerCount() > largestSize)
 				{
-					largestSize = ((IRingSet) ringSystems.elementAt(f)).size();
+					largestSize = ((IRingSet) ringSystems.elementAt(f)).getAtomContainerCount();
 					largest = f;
 				}
 			}
@@ -496,11 +496,11 @@ public class StructureDiagramGenerator
 				ringPlacer.placeConnectedRings(rs, ring, RingPlacer.SPIRO, bondLength);
 			}
 			thisRing++;
-			if (thisRing == rs.size())
+			if (thisRing == rs.getAtomContainerCount())
 			{
 				thisRing = 0;
 			}
-			ring = (IRing) rs.get(thisRing);
+			ring = (IRing) rs.getAtomContainer(thisRing);
 		} while (!allPlaced(rs));
 		logger.debug("End of layoutRingSet");
 	}
@@ -861,11 +861,11 @@ public class StructureDiagramGenerator
 	 *@param  rings  The Vector to be checked
 	 *@return        Description of the Return Value
 	 */
-	private boolean allPlaced(List rings)
+	private boolean allPlaced(IRingSet rings)
 	{
-		for (int f = 0; f < rings.size(); f++)
+		for (int f = 0; f < rings.getAtomContainerCount(); f++)
 		{
-			if (!((IRing) rings.get(f)).getFlag(CDKConstants.ISPLACED))
+			if (!((IRing) rings.getAtomContainer(f)).getFlag(CDKConstants.ISPLACED))
 			{
 				logger.debug("allPlaced->Ring " + f + " not placed");
 				return false;
@@ -880,12 +880,12 @@ public class StructureDiagramGenerator
 	 *
 	 *@param  rings  The Vector to be checked
 	 */
-	private void markRingAtoms(List rings)
+	private void markRingAtoms(IRingSet rings)
 	{
 		IRing ring = null;
-		for (int i = 0; i < rings.size(); i++)
+		for (int i = 0; i < rings.getAtomContainerCount(); i++)
 		{
-			ring = (IRing) rings.get(i);
+			ring = (IRing) rings.getAtomContainer(i);
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
 				ring.getAtomAt(j).setFlag(CDKConstants.ISINRING, true);
@@ -949,9 +949,9 @@ public class StructureDiagramGenerator
 			return;
 		}
 		int unplacedCounter = 0;
-		for (int f = 0; f < sssr.size(); f++)
+		for (int f = 0; f < sssr.getAtomContainerCount(); f++)
 		{
-			ring = (IRing) sssr.get(f);
+			ring = (IRing) sssr.getAtomContainer(f);
 			if (!ring.getFlag(CDKConstants.ISPLACED))
 			{
 				logger.debug("Ring with " + ring.getAtomCount() + " atoms is not placed.");

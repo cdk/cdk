@@ -118,9 +118,9 @@ public class RingPlacer
 		IAtomContainer primaryAtoms = new org.openscience.cdk.AtomContainer();
 		IAtomContainer treatedAtoms = new org.openscience.cdk.AtomContainer();
 		Point2d centerOfRingGravity = null;
-		for (int j = 0; j < rs.size(); j++)
+		for (int j = 0; j < rs.getAtomContainerCount(); j++)
 		{
-			ring = (IRing)rs.get(j); /* Get the j-th Ring in RingSet rs */
+			ring = (IRing)rs.getAtomContainer(j); /* Get the j-th Ring in RingSet rs */
 			for (int k = 0; k < ring.getAtomCount(); k++)
 			{
 				unplacedPartners.removeAllElements();
@@ -488,9 +488,9 @@ public class RingPlacer
 
 	public  boolean allPlaced(IRingSet rs)
 	{
-		for (int i = 0; i < rs.size(); i++)
+		for (int i = 0; i < rs.getAtomContainerCount(); i++)
 		{
-			if (!((IRing)rs.get(i)).getFlag(CDKConstants.ISPLACED)) 
+			if (!((IRing)rs.getAtomContainer(i)).getFlag(CDKConstants.ISPLACED)) 
 			{
 				return false;
 			}
@@ -508,9 +508,9 @@ public class RingPlacer
 	{
 		IRing ring = null;
 		boolean allPlaced = true;
-		for (int i = 0; i < rs.size(); i++)
+		for (int i = 0; i < rs.getAtomContainerCount(); i++)
 		{
-			ring = (IRing)rs.get(i);
+			ring = (IRing)rs.getAtomContainer(i);
 			allPlaced = true;
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{

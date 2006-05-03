@@ -95,7 +95,7 @@ public class AtomTypeTools {
 			if (ringSetMolecule.contains((org.openscience.cdk.interfaces.IAtom)atom2)) {
 				ringSetA = ringSetMolecule.getRings(atom2);
 				RingSetManipulator.sort(ringSetA);
-				IRing sring = (IRing) ringSetA.get(ringSetA.size()-1);
+				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);
 				atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(sring.getRingSize()));
 				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(ringSystemClassifier(
 						sring, sg.createSMILES(atom2.getBuilder().newMolecule(sring)))

@@ -210,7 +210,7 @@ public class ModelBuilder3D {
 		IRingSet largestRingSet = null;
 		double NumberOfRingAtoms = 0;
 
-		if (ringSetMolecule.size() > 0) {
+		if (ringSetMolecule.getAtomContainerCount() > 0) {
 			ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
 			largestRingSet = getLargestRingSet(ringSystems);
 			NumberOfRingAtoms = (double) ((IAtomContainer) RingSetManipulator.getAllInOneContainer(largestRingSet)).getAtomCount();

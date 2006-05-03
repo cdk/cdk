@@ -181,7 +181,7 @@ public class AllRingsFinder
 		}
 		if (debug)
 		{
-			System.out.println("ringSet.size(): " + ringSet.size());
+			System.out.println("ringSet.size(): " + ringSet.getAtomContainerCount());
 		}
 	}
 
@@ -328,7 +328,7 @@ public class AllRingsFinder
 						ring.addBond(bond);
 					}
 				}
-				ringSet.add(ring);
+				ringSet.addAtomContainer(ring);
 			}
 		}
 	}

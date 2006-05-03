@@ -24,8 +24,13 @@
 
 package org.openscience.cdk;
 
-import java.util.Enumeration;
 import java.util.Vector;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * Maintains a set of Ring objects.
@@ -34,19 +39,10 @@ import java.util.Vector;
  *
  * @cdk.keyword     ring, set of
  */
-public class RingSet extends Vector implements java.io.Serializable, org.openscience.cdk.interfaces.IRingSet
-{
+public class RingSet extends SetOfAtomContainers implements java.io.Serializable, IRingSet {
 
-    /**
-     * Determines if a de-serialized object is compatible with this class.
-     *
-     * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
-     * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = -1859706720484903351L;
-
+	private static final long serialVersionUID = 7168431521057961434L;
+	
 	/** Flag to denote that the set is order with the largest ring first? */
 	public final static int LARGE_FIRST = 1;
     /** Flag to denote that the set is order with the smallest ring first? */
@@ -68,19 +64,18 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @param   newRing  The ring to be tested if it is already stored here
 	 * @return     true if it is already stored
 	 */
-	public boolean ringAlreadyInSet(org.openscience.cdk.interfaces.IRing newRing)
-	{
-		Ring ring;
-		org.openscience.cdk.interfaces.IBond[] bonds;
-		org.openscience.cdk.interfaces.IBond[] newBonds;
-		org.openscience.cdk.interfaces.IBond bond;
+	public boolean ringAlreadyInSet(IRing newRing) {
+		IRing ring;
+		IBond[] bonds;
+		IBond[] newBonds;
+		IBond bond;
 		int equalCount;
 		boolean equals;
-		for (int f = 0; f < this.size(); f++)
+		for (int f = 0; f < getAtomContainerCount(); f++)
 		{
 			equals = false;
 			equalCount = 0;
-			ring = (Ring)this.elementAt(f);
+			ring = (IRing)getAtomContainer(f);
 			bonds = ring.getBonds();
             newBonds = newRing.getBonds();
 			if (bonds.length == newBonds.length) {
@@ -115,9 +110,9 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	{
 		Vector rings = new Vector();
 		Ring ring;
-		for (int i = 0; i < this.size();i++)
+		for (int i = 0; i < getAtomContainerCount(); i++)
 		{
-			ring = (Ring)elementAt(i);
+			ring = (Ring)getAtomContainer(i);
 			if (ring.contains(bond))
 			{
 				rings.addElement(ring);
@@ -133,16 +128,16 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public org.openscience.cdk.interfaces.IRingSet getRings(org.openscience.cdk.interfaces.IAtom atom)
+	public IRingSet getRings(IAtom atom)
 	{
-		RingSet rings = new RingSet();
-		Ring ring;
-		for (int i = 0; i < this.size();i++)
+		IRingSet rings = new RingSet();
+		IRing ring;
+		for (int i = 0; i < getAtomContainerCount();i++)
 		{
-			ring = (Ring)elementAt(i);
+			ring = (Ring)getAtomContainer(i);
 			if (ring.contains(atom))
 			{
-				rings.addElement(ring);
+				rings.addAtomContainer(ring);
 			}
 		}
 		return rings;
@@ -156,17 +151,17 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
 
-	public Vector getConnectedRings(org.openscience.cdk.interfaces.IRing ring)
+	public Vector getConnectedRings(IRing ring)
 	{
 		Vector connectedRings = new Vector();
-		Ring tempRing;
-		org.openscience.cdk.interfaces.IAtom atom;
+		IRing tempRing;
+		IAtom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)
 		{
 			atom = ring.getAtomAt(i);
-			for (int j = 0; j < size(); j++)
+			for (int j = 0; j < getAtomContainerCount(); j++)
 			{	
-				tempRing = (Ring)elementAt(j);
+				tempRing = (IRing)getAtomContainer(j);
 				if (tempRing != ring && tempRing.contains(atom))
 				{
 					connectedRings.addElement(tempRing);
@@ -181,13 +176,13 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 *
 	 * @param   ringSet  the ring set to be united with this one.
 	 */
-	public void add(org.openscience.cdk.interfaces.IRingSet ringSet)
+	public void add(IRingSet ringSet)
 	{
-		for (int f = 0; f < ringSet.size(); f++)
+		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 		{
-			if (!contains(ringSet.get(f)))
+			if (!contains((IRing)ringSet.getAtomContainer(f)))
 			{
-				addElement(ringSet.get(f));
+				addAtomContainer(ringSet.getAtomContainer(f));
 			}
 		}
 	}
@@ -199,12 +194,18 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
      * @param  atom Atom to check
 	 * @return      true, if the ringset contains the atom
 	 */
-	public boolean contains(org.openscience.cdk.interfaces.IAtom atom)
-	{
-		for (int i = 0; i < size(); i++)
-		{
-			if (((Ring)elementAt(i)).contains(atom))
-			{
+	public boolean contains(IAtom atom) {
+		for (int i = 0; i < getAtomContainerCount(); i++) {
+			if (((IRing)getAtomContainer(i)).contains(atom)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean contains(IAtomContainer ring) {
+		for (int i = 0; i < getAtomContainerCount(); i++) {
+			if (ring == getAtomContainer(i)) {
 				return true;
 			}
 		}
@@ -217,18 +218,11 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
 	 * @return  The cloned object
 	 */
 	public Object clone() {
-		RingSet clone = (RingSet)super.clone();
-        // clone the rings
-        clone.removeAllElements();
-        Enumeration rings = elements();
-        while (rings.hasMoreElements()) {
-            Object possibleRing = rings.nextElement();
-            if (possibleRing instanceof ChemObject) {
-                clone.addElement(((ChemObject)possibleRing).clone());
-            } else {
-                clone.addElement(possibleRing);
-            }
-        }
+		RingSet clone = new RingSet();
+		IAtomContainer[] result = getAtomContainers();
+		for (int i = 0; i < result.length; i++) {
+			clone.addAtomContainer((IAtomContainer) result[i].clone());
+		}
 		return clone;
 	}
 
@@ -241,12 +235,12 @@ public class RingSet extends Vector implements java.io.Serializable, org.opensci
         StringBuffer buffer = new StringBuffer();
         buffer.append("RingSet(");
         buffer.append(this.hashCode()).append(", ");
-        buffer.append("R=").append(size()).append(", ");
-        Enumeration rings = elements();
-        while (rings.hasMoreElements()) {
-            Ring possibleRing = (Ring)rings.nextElement();
+        buffer.append("R=").append(getAtomContainerCount()).append(", ");
+        IAtomContainer[] rings = getAtomContainers();
+        for (int i = 0; i < rings.length; i++) {
+            IRing possibleRing = (IRing)rings[i];
             buffer.append(possibleRing.toString());
-            if (rings.hasMoreElements()) {
+            if (i++ < rings.length) {
                 buffer.append(", ");
             }
         }

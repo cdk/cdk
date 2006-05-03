@@ -86,7 +86,7 @@ public class GenerateFragments {
 	 */
 	public void generateRingFragments(IMolecule molecule){
 		this.ringSetsMolecule = new SSSRFinder(molecule).findSSSR();
-		if (this.ringSetsMolecule.size() > 0) {
+		if (this.ringSetsMolecule.getAtomContainerCount() > 0) {
 			this.ringFragments=RingPartitioner.partitionRings(ringSetsMolecule);
 		}
 	}

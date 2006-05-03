@@ -141,7 +141,7 @@ public class HueckelAromaticityDetector
 		long after = System.currentTimeMillis();
 		logger.debug("time for finding all rings: " + (after - before) + " milliseconds");
 		logger.debug("Finished AllRingsFinder");
-		if (ringSet.size() > 0)
+		if (ringSet.getAtomContainerCount() > 0)
 		{
 			return detectAromaticity(atomContainer, ringSet, removeAromatictyFlags);
 		}
@@ -177,17 +177,17 @@ public class HueckelAromaticityDetector
 					electronContainer.setFlag(CDKConstants.ISAROMATIC, false);
 				}
 			}
-			for (int f = 0; f < ringSet.size(); f++)
+			for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 			{
-				((IRing) ringSet.get(f)).setFlag(CDKConstants.ISAROMATIC, false);
+				((IRing) ringSet.getAtomContainer(f)).setFlag(CDKConstants.ISAROMATIC, false);
 			}
 		}
 
 		IRing ring = null;
 		RingSetManipulator.sort(ringSet);
-		for (int f = 0; f < ringSet.size(); f++)
+		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 		{
-			ring = (IRing) ringSet.get(f);
+			ring = (IRing) ringSet.getAtomContainer(f);
 			logger.debug("Testing for aromaticity in ring no ", f);
 			if (AromaticityCalculator.isAromatic(ring, atomContainer))
 			{
@@ -227,10 +227,10 @@ public class HueckelAromaticityDetector
 	 */
 	public static void setRingFlags(IRingSet ringset)
 	{
-		for (int i = 0; i < ringset.size(); i++)
+		for (int i = 0; i < ringset.getAtomContainerCount(); i++)
 		{
 			boolean aromatic = true;
-			IRing ring = (IRing) ringset.get(i);
+			IRing ring = (IRing) ringset.getAtomContainer(i);
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
 				if (ring.getAtomAt(j).getFlag(CDKConstants.ISAROMATIC) != true)

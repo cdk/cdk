@@ -218,7 +218,7 @@ public class SpanningTree {
 		IRingSet ringset = molecule.getBuilder().newRingSet();
 		IAtomContainer spt = getSpanningTree();
 		for (int i = 0; i < E; i++) if (!bondsInTree[i])  
-			ringset.add(getRing(spt,molecule.getBondAt(i)));
+			ringset.addAtomContainer(getRing(spt,molecule.getBondAt(i)));
 		spt = null;	
 		return ringset;
 	}
@@ -258,9 +258,9 @@ public class SpanningTree {
 		IRing newring = null;
 		//System.out.println("Rings "+ringset.size());
 		
-		int nBasicRings = ringset.size();
+		int nBasicRings = ringset.getAtomContainerCount();
 		for (int i = 0; i < nBasicRings; i++) 
-			getBondsInRing(molecule,(IRing) ringset.get(i), cb[i]);
+			getBondsInRing(molecule,(IRing) ringset.getAtomContainer(i), cb[i]);
 		
 		
 		
@@ -269,7 +269,7 @@ public class SpanningTree {
 				//System.out.println("combining rings "+(i+1)+","+(j+1));
 				newring = combineRings(ringset, i, j);				
 				//newring = combineRings((Ring)ringset.get(i),(Ring)ringset.get(j));
-				if (newring != null) ringset.add(newring);
+				if (newring != null) ringset.addAtomContainer(newring);
 			}
 		}
 			
@@ -290,8 +290,8 @@ public class SpanningTree {
 		}
 		if (c < 2) return null;
 		IRing ring = molecule.getBuilder().newRing();
-		IRing ring1 = (IRing) ringset.get(i);
-		IRing ring2 = (IRing) ringset.get(j);
+		IRing ring1 = (IRing) ringset.getAtomContainer(i);
+		IRing ring2 = (IRing) ringset.getAtomContainer(j);
 		for (int b= 0; b < cb[i].length; b++) {
 			c = cb[i][b] + cb[j][b];
 			if ((c == 1) && (cb[i][b] == 1)) ring.addBond(molecule.getBondAt(b));

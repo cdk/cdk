@@ -77,7 +77,7 @@ public class AllRingsFinderTest extends CDKTestCase
 			System.out.println(exc);	
 		}
 
-		assertTrue(ringSet.size() == 6); 
+		assertTrue(ringSet.getAtomContainerCount() == 6); 
 	}
 	
 	
@@ -92,9 +92,9 @@ public class AllRingsFinderTest extends CDKTestCase
 		try
 		{
 			ringSet = arf.findAllRings(molecule);
-			for (int i = 0; i < ringSet.size(); i++) 
+			for (int i = 0; i < ringSet.getAtomContainerCount(); i++) 
 			{
-				Ring ring = (Ring)ringSet.get(i);
+				Ring ring = (Ring)ringSet.getAtomContainer(i);
 				for (int j = 0; j < ring.getElectronContainerCount(); j++) 
 				{
 					org.openscience.cdk.interfaces.IElectronContainer ec = ring.getElectronContainerAt(j);
@@ -132,7 +132,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		    //System.out.println("Starting AllRingsFinder");
 		    ringSet = new AllRingsFinder().findAllRings(mol);
 		    //System.out.println("Finished AllRingsFinder");
-            assertEquals(24, ringSet.size());
+            assertEquals(24, ringSet.getAtomContainerCount());
 		    //display(mol);
 		
 		} catch (Exception e) 
@@ -164,7 +164,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		    if (standAlone) System.out.println("Starting AllRingsFinder");
 		    IRingSet ringSet = new AllRingsFinder().findAllRings(mol);
 		    if (standAlone) System.out.println("Finished AllRingsFinder");
-		    if (standAlone) System.out.println("Found " + ringSet.size() + " rings.");
+		    if (standAlone) System.out.println("Found " + ringSet.getAtomContainerCount() + " rings.");
 	
 		   //display(mol);
 		

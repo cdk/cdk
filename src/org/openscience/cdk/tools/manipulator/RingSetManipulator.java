@@ -27,8 +27,10 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -52,9 +54,9 @@ public class RingSetManipulator {
 	public static IAtomContainer getAllInOneContainer(IRingSet ringSet) {
 		// FIXME: make RingSet a subclass of IChemObject (see bug #) and clean up
 		// the code in the next line
-		IAtomContainer container = ((IRing)ringSet.get(0)).getBuilder().newAtomContainer();
-		for (int i = 0; i < ringSet.size(); i++) {
-			container.add((IRing)ringSet.get(i));
+		IAtomContainer container = ringSet.getBuilder().newAtomContainer();
+		for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
+			container.add((IRing)ringSet.getAtomContainer(i));
 		}
 		return container;
 	}
@@ -64,7 +66,16 @@ public class RingSetManipulator {
      * first.
      */
 	public static void sort(IRingSet ringSet) {
-		Collections.sort(ringSet, new RingSizeComparator(RingSizeComparator.LARGE_FIRST));	
+		List ringList = new ArrayList();
+		IAtomContainer[] rings = ringSet.getAtomContainers();
+		for (int i=0; i<rings.length; i++) {
+			ringList.add(rings[i]);
+		}
+		Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.LARGE_FIRST));
+		ringSet.removeAllAtomContainers();
+		Iterator iter = ringList.iterator();
+		while (iter.hasNext()) ringSet.addAtomContainer((IRing)iter.next());
+		
 	}
 
 	/**
@@ -97,23 +108,23 @@ public class RingSetManipulator {
 	 */
 	public static IRing getMostComplexRing(IRingSet ringSet)
 	{
-		int[] neighbors = new int[ringSet.size()];
+		int[] neighbors = new int[ringSet.getAtomContainerCount()];
 		IRing ring1, ring2;
 		IAtom atom1, atom2;
 		int mostComplex = 0, mostComplexPosition = 0;
 		/* for all rings in this RingSet */
-		for (int i = 0; i < ringSet.size(); i++)
+		for (int i = 0; i < ringSet.getAtomContainerCount(); i++)
 		{
 			/* Take each ring */
-			ring1 = (IRing)ringSet.get(i);
+			ring1 = (IRing)ringSet.getAtomContainer(i);
 			/* look at each Atom in this ring whether it is part of any other ring */
 			for (int j = 0; j < ring1.getAtomCount(); j++)
 			{
 				atom1 = ring1.getAtomAt(j);
 				/* Look at each of the other rings in the ringset */
-				for (int k = i + 1; k < ringSet.size(); k++)
+				for (int k = i + 1; k < ringSet.getAtomContainerCount(); k++)
 				{
-					ring2 = (IRing)ringSet.get(k);
+					ring2 = (IRing)ringSet.getAtomContainer(k);
 					if (ring1 != ring2)
 					{
 						for (int l = 0; l < ring2.getAtomCount(); l++)
@@ -138,26 +149,26 @@ public class RingSetManipulator {
 				mostComplexPosition = i;
 			}
 		}
-		return (IRing) ringSet.get(mostComplexPosition);
+		return (IRing) ringSet.getAtomContainer(mostComplexPosition);
 	}
 
 	  /**
 	   * Checks if <code>atom1</code> and <code>atom2</code> share membership in the same ring or ring system.
 	   * Membership in the same ring is checked if the RingSet contains the SSSR of a molecule; membership in
 	   * the same ring or same ring system is checked if the RingSet contains all rings of a molecule.<BR><BR>
-	   * <B>Important:</B> This method only returns meaningful results if <code>atom1</code> and
+	   * 
+	   * <p><B>Important:</B> This method only returns meaningful results if <code>atom1</code> and
 	   * <code>atom2</code> are members of the same molecule for which the RingSet was calculated!
 	   *
-	   * @param atom1 The first atom
-	   * @param atom2 The second atom
-	   * @return ???boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
+	   * @param  atom1   The first atom
+	   * @param  atom2   The second atom
+	   * @return boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
 	   */
 	  public static boolean isSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
 	  {
-	    Iterator iterator = ringSet.iterator();
-	    while(iterator.hasNext())
-	    {
-	      IRing ring = (IRing) iterator.next();
+	    IAtomContainer[] rings = ringSet.getAtomContainers();
+	    for (int i=0; i<rings.length; i++) {
+	      IRing ring = (IRing)rings[i];
 	      if(ring.contains(atom1))
 	        if(ring.contains(atom2))
 	          return true;

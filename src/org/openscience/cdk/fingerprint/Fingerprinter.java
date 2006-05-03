@@ -205,12 +205,12 @@ public class Fingerprinter implements IFingerprinter {
 			rs=new SSSRFinder(ac).findSSSR();
 		}
 		for(int i=0;i<7;i++){
-			if(rs.size()>i)
+			if(rs.getAtomContainerCount()>i)
 				bs.set(size-15+i);
 		}
-		for(int i=0;i<rs.size();i++){
+		for(int i=0;i<rs.getAtomContainerCount();i++){
 			for(int k=3;k<11;k++){
-				if(((IRing)rs.get(i)).getAtomCount()==k){
+				if(((IRing)rs.getAtomContainer(i)).getAtomCount()==k){
 					bs.set(size-8+k-3);
 					break;					
 				}					

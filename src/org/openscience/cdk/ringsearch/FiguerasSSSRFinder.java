@@ -149,7 +149,7 @@ public class FiguerasSSSRFinder {
 						// check, if this ring already is in SSSR
 						if (!sssr.ringAlreadyInSet(ring))
 						{
-							sssr.addElement(ring);
+							sssr.addAtomContainer(ring);
 							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
 							nodesToBreakCounter++;
 						}
@@ -179,7 +179,7 @@ public class FiguerasSSSRFinder {
 					// check, if this ring already is in SSSR
 					if (!sssr.ringAlreadyInSet(ring))
 					{
-						sssr.addElement(ring);
+						sssr.addAtomContainer(ring);
 					}
 					brokenBond = checkEdges(ring, molecule);
 					molecule.removeElectronContainer(brokenBond);
@@ -422,19 +422,19 @@ public class FiguerasSSSRFinder {
 			logger.debug("checkEdges: " + bond);
 			if (r1.getAtomCount() > r2.getAtomCount())
 			{
-				ringSet.addElement(r1);
+				ringSet.addAtomContainer(r1);
 			}
 			else
 			{
-				ringSet.addElement(r2);
+				ringSet.addAtomContainer(r2);
 			}
 			molecule.addBond(bond);
 		}
-		for (int i = 0; i < ringSet.size(); i++)
+		for (int i = 0; i < ringSet.getAtomContainerCount(); i++)
 		{
-			if (((Ring)ringSet.elementAt(i)).getBondCount() < minMaxSize)
+			if (((Ring)ringSet.getAtomContainer(i)).getBondCount() < minMaxSize)
 			{
-				minMaxSize = ((Ring)ringSet.elementAt(i)).getBondCount();
+				minMaxSize = ((Ring)ringSet.getAtomContainer(i)).getBondCount();
 				minMax = i;
 			}
 		}

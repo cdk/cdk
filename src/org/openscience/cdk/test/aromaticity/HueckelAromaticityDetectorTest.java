@@ -34,6 +34,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -106,8 +108,8 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.setRingFlags(ringset);
 			
 			int numberOfAromaticRings = 0;
-			for (int i = 0; i < ringset.size(); i++) {
-				if (((Ring)ringset.get(i)).getFlag(CDKConstants.ISAROMATIC))
+			for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
+				if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
 					numberOfAromaticRings++;
 			}
 			assertEquals(numberOfAromaticRings, 1);
@@ -136,8 +138,8 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.setRingFlags(ringset);
 			
 			int numberOfAromaticRings = 0;
-			for (int i = 0; i < ringset.size(); i++) {
-				if (((Ring)ringset.get(i)).getFlag(CDKConstants.ISAROMATIC))
+			for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
+				if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
 					numberOfAromaticRings++;
 			}
 			assertEquals(numberOfAromaticRings, 1);
@@ -276,13 +278,11 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			//System.out.println("rs.size(): " + rs.size());
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
-			Iterator iter = rs.iterator();
-			Ring r = null;
+			IRing r = null;
 			int i = 0, aromacount = 0;
-			
-			while (iter.hasNext())
-			{
-				r = (Ring) iter.next();
+			IAtomContainer[] rings = rs.getAtomContainers();
+			for (int j=0; j<rings.length; j++) {
+				r = (IRing)rings[j];
 				isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
 				
 				if (standAlone && isAromatic)

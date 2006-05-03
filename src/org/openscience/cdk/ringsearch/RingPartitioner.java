@@ -61,25 +61,25 @@ public class RingPartitioner {
      */
     public static Vector partitionRings(IRingSet ringSet) {
         Vector ringSets = new Vector();
-        if (ringSet.size() == 0) return ringSets;
+        if (ringSet.getAtomContainerCount() == 0) return ringSets;
         IRingSet tempRingSet = null;
-        IRing ring = (IRing)ringSet.get(0);
+        IRing ring = (IRing)ringSet.getAtomContainer(0);
         if (ring == null) return ringSets;
         IRingSet rs = ring.getBuilder().newRingSet();
-        for (int f = 0; f < ringSet.size(); f++) {
-            rs.add(ringSet.get(f));
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
+            rs.addAtomContainer(ringSet.getAtomContainer(f));
         }
         do {
-            ring = (IRing) rs.get(0);
+            ring = (IRing) rs.getAtomContainer(0);
             IRingSet newRs = ring.getBuilder().newRingSet();
-            newRs.add(ring);
+            newRs.addAtomContainer(ring);
             tempRingSet = walkRingSystem(rs, ring, newRs);
             if (debug) {
-                System.out.println("found ringset with ringcount: " + tempRingSet.size());
+                System.out.println("found ringset with ringcount: " + tempRingSet.getAtomContainerCount());
             }
             ringSets.addElement(walkRingSystem(rs, ring, newRs));
 
-        } while (rs.size() > 0);
+        } while (rs.getAtomContainerCount() > 0);
 
         return ringSets;
     }
@@ -92,11 +92,11 @@ public class RingPartitioner {
      *@return          The AtomContainer containing the bonds and atoms of the ringSet.
      */
     public static IAtomContainer convertToAtomContainer(IRingSet ringSet) {
-    	IRing ring = (IRing) ringSet.get(0);
+    	IRing ring = (IRing) ringSet.getAtomContainer(0);
     	if (ring == null) return null;
         IAtomContainer ac = ring.getBuilder().newAtomContainer();
-        for (int i = 0; i < ringSet.size(); i++) {
-            ring = (IRing) ringSet.get(i);
+        for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
+            ring = (IRing) ringSet.getAtomContainer(i);
             for (int r = 0; r < ring.getBondCount(); r++) {
             	org.openscience.cdk.interfaces.IBond bond = ring.getBondAt(r);
                 if (!ac.contains(bond)) {
@@ -128,11 +128,11 @@ public class RingPartitioner {
         if (debug) {
             System.out.println("walkRingSystem -> tempRings.size(): " + tempRings.size());
         }
-        rs.remove(ring);
+        rs.removeAtomContainer(ring);
         for (int f = 0; f < tempRings.size(); f++) {
             tempRing = (IRing) tempRings.elementAt(f);
             if (!newRs.contains(tempRing)) {
-                newRs.add(tempRing);
+                newRs.addAtomContainer(tempRing);
                 newRs.add(walkRingSystem(rs, tempRing, newRs));
             }
         }

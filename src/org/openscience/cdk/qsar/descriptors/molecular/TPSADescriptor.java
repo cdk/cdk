@@ -271,9 +271,9 @@ public class TPSADescriptor implements IDescriptor {
 				if(rs.contains(atoms[atomIndex]))
         {
 					org.openscience.cdk.interfaces.IRingSet rsAtom = rs.getRings(atoms[atomIndex]);
-					for(int ringSetIndex = 0; ringSetIndex < rsAtom.size(); ringSetIndex++)
+					for(int ringSetIndex = 0; ringSetIndex < rsAtom.getAtomContainerCount(); ringSetIndex++)
 					{
-						Ring ring = (Ring)rsAtom.get(ringSetIndex);
+						Ring ring = (Ring)rsAtom.getAtomContainer(ringSetIndex);
 						if(ring.getRingSize() == 3)
 							isIn3MemberRing = 1;
 					}

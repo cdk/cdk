@@ -233,7 +233,7 @@ public class SSSRFinder {
 			ring.addElectronContainer(ac.getBond(atoms[vertices.size() - 1], atoms[0]));
 			ring.setAtoms(atoms);
 
-			ringSet.add(ring);
+			ringSet.addAtomContainer(ring);
 		}
 		
 		return ringSet;	  

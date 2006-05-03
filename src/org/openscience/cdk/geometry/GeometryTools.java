@@ -538,12 +538,12 @@ public class GeometryTools {
 	public static Point2d get2DCenter(IRingSet ringSet) {
 		double centerX = 0;
 		double centerY = 0;
-		for (int i = 0; i < ringSet.size(); i++) {
-			Point2d centerPoint = GeometryTools.get2DCenter((org.openscience.cdk.interfaces.IRing)ringSet.get(i));
+		for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
+			Point2d centerPoint = GeometryTools.get2DCenter((org.openscience.cdk.interfaces.IRing)ringSet.getAtomContainer(i));
 			centerX += centerPoint.x;
 			centerY += centerPoint.y;
 		}
-		Point2d point = new Point2d(centerX / ((double) ringSet.size()), centerY / ((double) ringSet.size()));
+		Point2d point = new Point2d(centerX / ((double) ringSet.getAtomContainerCount()), centerY / ((double) ringSet.getAtomContainerCount()));
 		return point;
 	}
 

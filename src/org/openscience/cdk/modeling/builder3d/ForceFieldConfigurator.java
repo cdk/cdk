@@ -265,7 +265,7 @@ public class ForceFieldConfigurator {
 				atom.setFlag(CDKConstants.ISALIPHATIC, false);
 				ringSetA = ringSetMolecule.getRings(atom);
 				RingSetManipulator.sort(ringSetA);
-				IRing sring = (IRing) ringSetA.get(ringSetA.size()-1);
+				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);
 				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
 				isInHeteroRing = isHeteroRingSystem(RingSetManipulator.getAllInOneContainer(ringSetA));
 			} else {

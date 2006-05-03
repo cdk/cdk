@@ -50,8 +50,8 @@ public class RingSetManipulatorTest extends CDKTestCase {
         ring2.addBond(ring2Bond2);
         ring2.addBond(ring2Bond3);
         
-        ringset.add(ring1);
-        ringset.add(ring2);
+        ringset.addAtomContainer(ring1);
+        ringset.addAtomContainer(ring2);
         
         assertTrue(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring1Atom3));
         assertFalse(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring2Atom3));

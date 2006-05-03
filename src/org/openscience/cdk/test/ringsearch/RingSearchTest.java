@@ -93,7 +93,7 @@ public class RingSearchTest extends CDKTestCase
 	{
 		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(2, ringSet.size());
+		assertEquals(2, ringSet.getAtomContainerCount());
 	}
 
 
@@ -107,7 +107,7 @@ public class RingSearchTest extends CDKTestCase
 		SmilesParser sp = new SmilesParser();
 		IMolecule molecule = sp.parseSmiles("c1ccccc1");
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(1, ringSet.size());
+		assertEquals(1, ringSet.getAtomContainerCount());
 	}
 
 
@@ -121,7 +121,7 @@ public class RingSearchTest extends CDKTestCase
 		SmilesParser sp = new SmilesParser();
 		IMolecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(2, ringSet.size());
+		assertEquals(2, ringSet.getAtomContainerCount());
 	}
 
 	public void testSFBug826942() throws Exception
@@ -129,7 +129,7 @@ public class RingSearchTest extends CDKTestCase
 		SmilesParser sp = new SmilesParser();
 		IMolecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(4, ringSet.size());
+		assertEquals(4, ringSet.getAtomContainerCount());
 	}
 
 	/**
@@ -148,11 +148,11 @@ public class RingSearchTest extends CDKTestCase
 			if (standAlone) System.out.println("Testing " + filename);
 			
             IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
-			assertEquals(3, ringSet.size());
-			for (int f = 0; f < ringSet.size(); f++)
+			if (standAlone) System.out.println("Found ring set of size: " + ringSet.getAtomContainerCount());
+			assertEquals(3, ringSet.getAtomContainerCount());
+			for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 			{
-				ring = (IRing) ringSet.get(f);
+				ring = (IRing) ringSet.getAtomContainer(f);
 				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
@@ -179,11 +179,11 @@ public class RingSearchTest extends CDKTestCase
 			if (standAlone) System.out.println("Testing " + filename);
 			
             IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
-			assertEquals(10, ringSet.size());
-			for (int f = 0; f < ringSet.size(); f++)
+			if (standAlone) System.out.println("Found ring set of size: " + ringSet.getAtomContainerCount());
+			assertEquals(10, ringSet.getAtomContainerCount());
+			for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 			{
-				ring = (IRing) ringSet.get(f);
+				ring = (IRing) ringSet.getAtomContainer(f);
 				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
@@ -210,11 +210,11 @@ public class RingSearchTest extends CDKTestCase
 			if (standAlone) System.out.println("Testing " + filename);
 			
             IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
-			assertEquals(5, ringSet.size());
-			for (int f = 0; f < ringSet.size(); f++)
+			if (standAlone) System.out.println("Found ring set of size: " + ringSet.getAtomContainerCount());
+			assertEquals(5, ringSet.getAtomContainerCount());
+			for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 			{
-				ring = (IRing) ringSet.get(f);
+				ring = (IRing) ringSet.getAtomContainer(f);
 				if (standAlone) System.out.println("ring: " + toString(ring, molecule));
 			}
 		} catch (Exception exc)
@@ -234,7 +234,7 @@ public class RingSearchTest extends CDKTestCase
 			if (standAlone) System.out.println("Testing " + filename);
 			
             IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-			if (standAlone) System.out.println("Found ring set of size: " + ringSet.size());
+			if (standAlone) System.out.println("Found ring set of size: " + ringSet.getAtomContainerCount());
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			fail();

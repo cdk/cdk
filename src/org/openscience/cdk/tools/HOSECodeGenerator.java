@@ -274,9 +274,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 		}
 		boolean[] bool=new boolean[1000];
 		StringBuffer sb=new StringBuffer();
-		for(int i=0;i<soar.getRings(root).size();i++){
-			if(((IRing)soar.getRings(root).get(i)).getAtomCount()<bool.length)
-				bool[((IRing)soar.getRings(root).get(i)).getAtomCount()]=true;
+		for(int i=0;i<soar.getRings(root).getAtomContainerCount();i++){
+			if(((IRing)soar.getRings(root).getAtomContainer(i)).getAtomCount()<bool.length)
+				bool[((IRing)soar.getRings(root).getAtomContainer(i)).getAtomCount()]=true;
 		}
 		for(int i=0;i<bool.length;i++){
 			if(bool[i])

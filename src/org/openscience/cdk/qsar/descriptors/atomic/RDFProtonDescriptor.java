@@ -220,7 +220,7 @@ public class RDFProtonDescriptor implements IDescriptor {
 			
 			for (int w = 0; w < atomsInContainer.length; w++) {
 				ringsWithThisAtom = rs.getRings(atomsInContainer[w]);
-				if (ringsWithThisAtom.size() > 0) {
+				if (ringsWithThisAtom.getAtomContainerCount() > 0) {
 					atomsInContainer[w].setFlag(CDKConstants.ISINRING, true);
 				}
 			}
