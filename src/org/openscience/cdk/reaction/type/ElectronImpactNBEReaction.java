@@ -17,7 +17,25 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * IReactionProcess which make an alectron impact for for Non-Bondind Electron Lost 
+ * <p>IReactionProcess which make an alectron impact for for Non-Bondind Electron Lost. 
+ * This reaction type is a representation of the processes which occure in the mass spectrometer.</p>
+ * 
+ *<pre>
+ *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+ *  setOfReactants.addMolecule(new Molecule());
+ *  IReactionProcess type = new RearrangementAnion1Reaction();
+ *  Object[] params = {Boolean.FALSE};
+    type.setParameters(params);
+ *  ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+ *  </pre>
+ * 
+ * <p>We have the possibility to localize the reactive center. Good method if you
+ * want to localize the reaction in a fixed point</p>
+ * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
+ * <p>Moreover you must put the parameter Boolean.TRUE</p>
+ * <p>If the reactive center is not localized then the reaction process will
+ * try to find automatically the posible reactive center.</p>
+ * 
  * 
  * @author         Miguel Rojas
  * 
@@ -53,7 +71,8 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 	/**
 	 *  Sets the parameters attribute of the ElectronImpactNBEReaction object
 	 *
-	 *@param  params            The parameter is the the molecule has center acitve or not
+	 *@param  params            The parameter is if the molecule has already fixed the center active or not. It 
+	 *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
@@ -81,12 +100,11 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 	/**
 	 *  Initiate process.
 	 *
-	 *@param  reactants         reactants to initiate.
-	 *@param  agents            agents to initiate.
+	 *@param  reactants         reactants of the reaction.
+	 *@param  agents            agents of the reaction (Must be in this case null).
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
-
 	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
 
 		logger.debug("initiate reaction: ElectronImpactNBEReaction");
@@ -100,6 +118,7 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 		
 		ISetOfReactions setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
 		
+		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
 		if(!hasActiveCenter){
 			setActiveCenters(reactants.getMolecule(0));
 		}
@@ -120,6 +139,7 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 				reactantCloned.removeElectronContainer(lps[0]);
 
 				reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtomAt(posA)));
+				reactantCloned.getAtomAt(posA).setFormalCharge(1);
 
 				/* mapping */
 				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], reactantCloned.getAtomAt(posA));
@@ -136,23 +156,18 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 		
 	}
 	/**
-	 * set the active center for this molecule. The active center will be double bonds.
+	 * set the active center for this molecule. The active center will be heteroatoms which contain lone pair electrons.
 	 * 
 	 * @param reactant The molecule to set the activity
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		boolean foundAC = false;
 		IAtom[] atoms = reactant.getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
 			if(reactant.getLonePairs(atoms[i]).length > 0){
 				atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				foundAC = true;
 			}
 		}
-		if(!foundAC)
-			throw new CDKException("it wasn't possible to find active center for this reactant: "+reactant);
-		
 	}
 	/**
 	 *  Gets the parameterNames attribute of the ElectronImpactNBEReaction object

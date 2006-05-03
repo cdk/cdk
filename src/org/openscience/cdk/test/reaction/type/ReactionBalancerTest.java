@@ -21,10 +21,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.reaction;
+package org.openscience.cdk.test.reaction.type;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Hashtable;
 
 import junit.framework.Test;
@@ -35,7 +34,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLRXNReader;
-import org.openscience.cdk.reaction.ReactionBalancer;
+import org.openscience.cdk.reaction.type.ReactionBalancer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;

@@ -1,8 +1,6 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
@@ -18,7 +16,25 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * IReactionProcess which make an alectron impact for pi-Bond Dissociation 
+ * <p>IReactionProcess which make an alectron impact for pi-Bond Dissociation.</p>
+ * This reaction type is a representation of the processes which occure in the mass spectrometer.</p>
+ * 
+ * <pre>
+ *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+ *  setOfReactants.addMolecule(new Molecule());
+ *  IReactionProcess type = new RearrangementAnion1Reaction();
+ *  Object[] params = {Boolean.FALSE};
+    type.setParameters(params);
+ *  ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+ *  </pre>
+ * 
+ * <p>We have the possibility to localize the reactive center. Good method if you
+ * want to localize the reaction in a fixed point</p>
+ * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
+ * <p>Moreover you must put the parameter Boolean.TRUE</p>
+ * <p>If the reactive center is not localized then the reaction process will
+ * try to find automatically the posible reactive center.</p>
+ * 
  * 
  * @author         Miguel Rojas
  * 
@@ -54,7 +70,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	/**
 	 *  Sets the parameters attribute of the ElectronImpactPDBReaction object
 	 *
-	 *@param  params            The parameter is the the molecule has center acitve or not
+	 *@param  params            The parameter is if the molecule has already fixed the center active or not. It 
+	 *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
@@ -82,8 +99,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	/**
 	 *  Initiate process.
 	 *
-	 *@param  reactants         reactants to initiate.
-	 *@param  agents            agents to initiate.
+	 *@param  reactants         reactants of the reaction.
+	 *@param  agents            agents of the reaction (Must be in this case null).
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
@@ -100,26 +117,30 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 		
 		ISetOfReactions setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
 		
+		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
 		if(!hasActiveCenter){
 			setActiveCenters(reactants.getMolecule(0));
 		}
 		
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
-		Vector controllerA = new Vector();
 		for(int i = 0 ; i < bonds.length ; i++){
-			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER)){
+			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[i].getOrder() == 2){
 				
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactants.getMolecule(0));
 				IMolecule reactant = reaction.getReactants().getMolecule(0);
+				
 				int posA1 = reactant.getAtomNumber(bonds[i].getAtoms()[0]);
 				int posA2 = reactant.getAtomNumber(bonds[i].getAtoms()[1]);
-
+				int posB1 = reactant .getBondNumber(bonds[i]);
+				
+				/**/
 				for (int j = 0; j < 2; j++)
 				{
 					IMolecule reactantCloned = (IMolecule) reactant.clone();
-					double order = reactant.getBondAt(i).getOrder();
-					reactantCloned.getBondAt(i).setOrder(order - 1);
+					
+					double order = reactantCloned.getBondAt(posB1).getOrder();
+					reactantCloned.getBondAt(posB1).setOrder(order - 1);
 					
 					if (j == 0)
 					{
@@ -134,16 +155,13 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					}
 					
 					/* mapping */
-					if(!controllerA.contains(bonds[i].getAtoms()[0])){
-						IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtomAt(posA1));
-				        reaction.addMapping(mapping);
-				        controllerA.add(bonds[i].getAtoms()[0]);
-					}
-					if(!controllerA.contains(bonds[i].getAtoms()[1])){
-						IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtomAt(posA2));
-				        reaction.addMapping(mapping);
-				        controllerA.add(bonds[i].getAtoms()[1]);
-					}
+					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBondAt(posB1));
+			        reaction.addMapping(mapping);
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtomAt(posA1));
+			        reaction.addMapping(mapping);
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtomAt(posA2));
+			        reaction.addMapping(mapping);
+					
 					
 					reaction.addProduct(reactantCloned);
 				}
@@ -161,17 +179,12 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		boolean foundAC = false;
 		IBond[] bonds = reactant.getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getOrder() == 2){
 				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				foundAC = true;
 			}
 		}
-		if(!foundAC)
-			throw new CDKException("it wasn't possible to find active center for this reactant: "+reactant);
-		
 	}
 	/**
 	 *  Gets the parameterNames attribute of the ElectronImpactPDBReaction object

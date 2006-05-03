@@ -27,10 +27,19 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.reaction.ReactionBalancerTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactNBEReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactPDBReactionTest;
+import org.openscience.cdk.test.reaction.type.ReactionBalancerTest;
 import org.openscience.cdk.test.reaction.type.ReactionTypeTest;
+import org.openscience.cdk.test.reaction.type.RearrangementAnion1ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementAnion2ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementAnion3ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementCation1ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementCation2ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementCation3ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementRadical1ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementRadical2ReactionTest;
+import org.openscience.cdk.test.reaction.type.RearrangementRadical3ReactionTest;
 
 /**
  * TestSuite that runs all the tests for the CDK reaction module.
@@ -49,6 +58,15 @@ public class MreactionTests {
         suite.addTest(ReactionBalancerTest.suite());
         suite.addTest(ElectronImpactNBEReactionTest.suite());
         suite.addTest(ElectronImpactPDBReactionTest.suite());
+        suite.addTest(RearrangementAnion1ReactionTest.suite());
+        suite.addTest(RearrangementAnion2ReactionTest.suite());
+        suite.addTest(RearrangementAnion3ReactionTest.suite());
+        suite.addTest(RearrangementCation1ReactionTest.suite());
+        suite.addTest(RearrangementCation2ReactionTest.suite());
+        suite.addTest(RearrangementCation3ReactionTest.suite());
+        suite.addTest(RearrangementRadical1ReactionTest.suite());
+        suite.addTest(RearrangementRadical2ReactionTest.suite());
+        suite.addTest(RearrangementRadical3ReactionTest.suite());
         suite.addTest(ReactionTypeTest.suite());
         
         return suite;
