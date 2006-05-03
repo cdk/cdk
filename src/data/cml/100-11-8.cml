@@ -2,7 +2,7 @@
 <!DOCTYPE list SYSTEM "cml.dtd" >
 <!--CML conversion of file 100-11-8.pdb
 Produced by PDB2CML (c) Steve Zara 1999-->
-<list title="molecules" convention="PDB" xmlns="http://www.xmlcml.org/schema">
+<list title="molecules" convention="PDB" xmlns="http://www.xml-cml.org/schema">
     <list title="model">
         <list title="header">
             <string title="classification">NCI NSC 4609</string>

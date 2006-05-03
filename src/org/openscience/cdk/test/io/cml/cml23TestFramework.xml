@@ -78,7 +78,7 @@
   </atomArray></molecule>
 
   <!-- .testQSAROutput() -->
-  <molecule id="m1" xmlns="http://www.xmlcml.org/schema">
+  <molecule id="m1" xmlns="http://www.xml-cml.org/schema">
     <atomArray>
       <atom id="a1" elementType="C" formalCharge="0" hydrogenCount="0"/>
       <atom id="a2" elementType="C" formalCharge="0" hydrogenCount="0"/>
