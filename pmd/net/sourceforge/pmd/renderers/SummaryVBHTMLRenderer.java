@@ -41,7 +41,7 @@ public class SummaryVBHTMLRenderer implements Renderer {
             }
 
             colorize = !colorize;
-            sb.append("<td width=\"50\" align=\"right\"><font class=body>" + rv.getLine() + "&nbsp;&nbsp;&nbsp;</font></td>");
+            sb.append("<td width=\"50\" align=\"right\"><font class=body>" + rv.getBeginLine() + "&nbsp;&nbsp;&nbsp;</font></td>");
             sb.append("<td><font class=body>" + rv.getDescription() + "</font></td>");
             sb.append("</tr>");
             sb.append(lineSep);
@@ -146,5 +146,10 @@ public class SummaryVBHTMLRenderer implements Renderer {
     private String footer() {
         return "</center></body></html>";
     }
+
+	public void showSuppressedViolations(boolean arg0) {
+		// skip suppressed violations
+		
+	}
 }
 
