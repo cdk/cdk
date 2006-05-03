@@ -1,11 +1,13 @@
 package org.openscience.cdk.reaction;
 
+import org.openscience.cdk.IImplementationSpecification;
+
 /**
  * Class that is used to distribute reactions specifications.
  *
  * @cdk.module reaction
  */
-public class ReactionSpecification {
+public class ReactionSpecification implements IImplementationSpecification {
 
     private String specificationReference;
     private String implementationTitle;

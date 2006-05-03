@@ -23,12 +23,14 @@
  */
 package org.openscience.cdk.qsar;
 
+import org.openscience.cdk.IImplementationSpecification;
+
 /**
  * Class that is used to distribute descriptor specifications.
  *
  * @cdk.module standard
  */
-public class DescriptorSpecification {
+public class DescriptorSpecification implements IImplementationSpecification {
 
     private String specificationReference;
     private String implementationTitle;
