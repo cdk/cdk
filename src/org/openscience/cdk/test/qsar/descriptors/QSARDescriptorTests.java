@@ -27,6 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.qsar.descriptors.atomic.*;
+import org.openscience.cdk.test.qsar.descriptors.bond.*;
 import org.openscience.cdk.test.qsar.descriptors.molecular.*;
 import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 
@@ -93,6 +94,7 @@ public class QSARDescriptorTests {
         suite.addTest(WeightedPathDescriptorTest.suite());
         suite.addTest(PetitjeanShapeIndexDescriptorTest.suite());
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
+        suite.addTest(PartialPiChargeDescriptorTest.suite());
         suite.addTest(PartialTotalChargeDescriptorTest.suite());
 
         return suite;

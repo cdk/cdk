@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.qsar.descriptors.atomic;
+package org.openscience.cdk.test.qsar.descriptors.bond;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,9 +29,11 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomCountDescriptor;
+import org.openscience.cdk.qsar.descriptors.bond.BondCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.qsar.descriptors.atomic.AtomCountDescriptorTest;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -44,16 +46,16 @@ public class BondCountDescriptorTest extends CDKTestCase {
     public  BondCountDescriptorTest() {}
 
     public static Test suite() {
-        return new TestSuite(AtomCountDescriptorTest.class);
+        return new TestSuite(BondCountDescriptorTest.class);
     }
 
-    public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IDescriptor descriptor  = new AtomCountDescriptor();
+    public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        IDescriptor descriptor  = new BondCountDescriptor();
         Object[] params = {new Double(1.0)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        assertEquals(13, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
     }
 }
 
