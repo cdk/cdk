@@ -81,8 +81,9 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         ILonePair[] selectron = molecule.getLonePairs(atom);
 		molecule.removeElectronContainer(selectron[0]);
 
-		ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
-		
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,false,false);
+		ISetOfAtomContainers setOfMolecules = gRI.getAllStructures(molecule);
+
 		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
        
 		/*1*/
@@ -160,7 +161,8 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         ILonePair[] selectron = molecule.getLonePairs(atom);
 		molecule.removeElectronContainer(selectron[0]);
 
-		ISetOfAtomContainers setOfMolecules = gR.getStructures(molecule);
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,false,false);
+		ISetOfAtomContainers setOfMolecules = gRI.getStructures(molecule);
 
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 		
@@ -197,7 +199,8 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         ILonePair[] selectron = molecule.getLonePairs(atom);
 		molecule.removeElectronContainer(selectron[0]);
 
-		ISetOfAtomContainers setOfMolecules = gR.getStructures(molecule);
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,false,false);
+		ISetOfAtomContainers setOfMolecules = gRI.getStructures(molecule);
 
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 		
@@ -232,7 +235,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		molecule.getBondAt(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtomAt(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-        StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true);
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,true);
 		ISetOfAtomContainers setOfMolecules = gRI.getStructures(molecule);
         
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
@@ -262,5 +265,40 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+	}
+	/**
+	 * A unit test suite for JUnit: Resonance Formic acid  C(=O)O <=> [C-](-[O+])O <=> [C+](-[O-])O <=> C([O-])=[O+]
+	 *
+	 * @return    The test suite
+	 */
+	public void testResonanceFormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Molecule molecule = (new SmilesParser()).parseSmiles("C(=O)O");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+        lpcheck.newSaturate(molecule);
+        
+        ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
+        
+		Assert.assertEquals(4,setOfMolecules.getAtomContainerCount());
+
+        Molecule molecule1 = (new SmilesParser()).parseSmiles("[C-](-[O+])O");
+        adder.addImplicitHydrogensToSatisfyValency(molecule1);
+        lpcheck.newSaturate(molecule1);
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+        
+        Molecule molecule2 = (new SmilesParser()).parseSmiles("[C+](-[O-])O");
+        adder.addImplicitHydrogensToSatisfyValency(molecule2);
+        lpcheck.newSaturate(molecule2);
+        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
+        
+        Molecule molecule3 = (new SmilesParser()).parseSmiles("C([O-])=[O+]");
+        adder.addImplicitHydrogensToSatisfyValency(molecule3);
+        lpcheck.newSaturate(molecule3);
+        
+        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule3);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(3),qAC));
 	}
 }
