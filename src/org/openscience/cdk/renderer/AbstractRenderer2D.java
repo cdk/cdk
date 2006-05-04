@@ -307,11 +307,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		}
 		if (drawSymbol || isRadical)
 		{
-      paintAtomSymbol(atom, atomBackColor, graphics, alignment,
-					atom.getProperty("OriginalNumber")!=null ? ((Integer)atom.getProperty("OriginalNumber")).intValue()+1 : container.getAtomNumber(atom) + 1, isRadical);
+			paintAtomSymbol(atom, atomBackColor, graphics, alignment,
+			atom.getProperty("OriginalNumber")!=null ? ((Integer)atom.getProperty("OriginalNumber")).intValue()+1 : container.getAtomNumber(atom) + 1, isRadical);
 		}
-		
-		if (r2dm.getShowTooltip() && atom == r2dm.getHighlightedAtom() && r2dm.getToolTipText(r2dm.getHighlightedAtom()) != null)
+		if (r2dm.getShowTooltip() && (atom == r2dm.getHighlightedAtom() ||( r2dm.getExternalSelectedPart()!=null &&  r2dm.getExternalSelectedPart().contains(atom))) && r2dm.getToolTipText(atom) != null)
 		{
 			paintToolTip(atom, graphics, container.getAtomNumber(atom) + 1);
 		}
@@ -1410,7 +1409,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public void paintToolTip(org.openscience.cdk.interfaces.IAtom atom, Graphics2D graphics, int atomNumber)
 	{
 		tooltiparea = new int[4];
-		String text = r2dm.getToolTipText(r2dm.getHighlightedAtom());
+		String text = r2dm.getToolTipText(atom);
 		String[] result = text.split("\\n");
 		int widestline = 0;
 		for (int i = 0; i < result.length; i++)

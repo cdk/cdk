@@ -35,6 +35,7 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.PropertyResourceBundle;
+import java.util.StringTokenizer;
 
 import javax.swing.JApplet;
 
@@ -47,6 +48,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.swing.JExternalFrame;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLWriter;
@@ -143,6 +145,15 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			jcpp.addFilePopUpMenu();		
 		if(getParameter("compact")!=null && getParameter("compact").equals("true")){
 			theModel.getRendererModel().setIsCompact(true);
+		}
+		if(getParameter("tooltips")!=null){
+			StringTokenizer st=new StringTokenizer(getParameter("tooltips"),"|");
+			while(st.hasMoreTokens()){
+				StringTokenizer st2=new StringTokenizer(st.nextToken(),"\\");
+				IAtom atom=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules()).getAtomAt(Integer.parseInt(st2.nextToken())-1);
+				theModel.getRendererModel().getToolTipTextMap().put(atom,st2.nextToken());
+			}
+			theModel.getRendererModel().setShowTooltip(true);
 		}
 		if(theJcpp.getJChemPaintModel()!=null){
 			jcpp.scaleAndCenterMolecule(theModel.getChemModel(),new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
@@ -298,7 +309,6 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
       s = e + 1;
     }
     newmol.append(mol.substring(s));
-    System.err.println(newmol.toString());
     theJcpp.showChemFile(new StringReader(newmol.toString()));
     repaint();
   }

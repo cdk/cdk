@@ -56,10 +56,10 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
 	public void init() {
     JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100), "applet");
     setTheJcpp(jcpvop);
-		String atomNumbers=getParameter("spectrumRenderer");
-    if(atomNumbers!=null){
+	/*String atomNumbers=getParameter("spectrumRenderer");
+    if(atomNumbers!=null){*/
       getTheJcpp().getDrawingPanel().addMouseMotionListener(this);
-    }
+    //}
     super.init();
 	}
 	
@@ -84,8 +84,8 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
   
   public void mouseMoved(MouseEvent event)
   {
-    if(getParameter("spectrumRenderer")==null)
-      return;
+    //if(getParameter("spectrumRenderer")==null)
+    //  return;
     try{
       getSpectrumApplet();
       if(controller==null)
