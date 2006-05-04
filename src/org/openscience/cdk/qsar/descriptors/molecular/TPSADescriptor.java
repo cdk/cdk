@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 
@@ -66,7 +66,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:tpsa
  */
-public class TPSADescriptor implements IDescriptor {
+public class TPSADescriptor implements IMolecularDescriptor {
 	private boolean checkAromaticity = false;
 	private static HashMap map;
 	

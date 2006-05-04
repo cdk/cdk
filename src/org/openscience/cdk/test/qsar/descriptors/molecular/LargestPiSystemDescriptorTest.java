@@ -5,7 +5,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.LargestPiSystemDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -25,7 +25,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 	}
     
 	public void test1LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor = new LargestPiSystemDescriptor();
+		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -34,7 +34,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		System.out.println("test1>:"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test2LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor = new LargestPiSystemDescriptor();
+		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -43,7 +43,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		//System.out.println("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test3LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor = new LargestPiSystemDescriptor();
+		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -52,7 +52,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		assertEquals(8, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test4LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor = new LargestPiSystemDescriptor();
+		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -61,7 +61,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test5LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor = new LargestPiSystemDescriptor();
+		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -70,7 +70,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test6LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor = new LargestPiSystemDescriptor();
+		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -79,7 +79,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test7LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor = new LargestPiSystemDescriptor();
+		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

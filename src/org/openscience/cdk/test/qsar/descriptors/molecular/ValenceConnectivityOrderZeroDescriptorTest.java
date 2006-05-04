@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.molecular.ValenceConnectivityOrderZeroDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -50,7 +50,7 @@ public class ValenceConnectivityOrderZeroDescriptorTest extends CDKTestCase {
 
     public void testValenceConnectivityOrderZeroDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {3.0625687, 2.2071068};
-        IDescriptor descriptor = new ValenceConnectivityOrderZeroDescriptor();
+        IMolecularDescriptor descriptor = new ValenceConnectivityOrderZeroDescriptor();
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("O=C(O)CC");
         DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();
@@ -58,7 +58,7 @@ public class ValenceConnectivityOrderZeroDescriptorTest extends CDKTestCase {
     }
 
     public void testSFBug1298108() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IDescriptor descriptor = new ValenceConnectivityOrderZeroDescriptor();
+        IMolecularDescriptor descriptor = new ValenceConnectivityOrderZeroDescriptor();
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("[Cu]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
         DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();

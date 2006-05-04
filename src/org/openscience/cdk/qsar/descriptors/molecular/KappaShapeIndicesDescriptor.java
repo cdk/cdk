@@ -26,12 +26,12 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 /**
  *  Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
@@ -48,7 +48,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierValues
  */
-public class KappaShapeIndicesDescriptor implements IDescriptor {
+public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
 
     private ArrayList singlePaths = null;
     private ArrayList doublePaths = null;

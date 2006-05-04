@@ -85,20 +85,5 @@ public interface IDescriptor {
      * */
     public Object[] getParameters();
     
-    /** 
-     * Calculates the descriptor value for the given AtomContainer.
-     * 
-     * Optionally, parameters may be set which can affect the nature of the
-     * calculation.
-     *
-     * @param container An {@link IAtomContainer} for which this descriptor should be
-     * calculated
-     * @return An object of {@link DescriptorValue} that contain the calculated value 
-     * as well as specification details
-     * @throws CDKException if an error occurs during calculation. See documentation for
-     * individual descriptors
-     */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException;
-    
 }
 

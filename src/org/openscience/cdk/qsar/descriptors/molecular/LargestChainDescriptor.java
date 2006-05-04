@@ -26,17 +26,17 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.Vector;
 
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -69,7 +69,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * @cdk.set     qsar-descriptors
  */
 
-public class LargestChainDescriptor implements IDescriptor{
+public class LargestChainDescriptor implements IMolecularDescriptor {
 	private boolean checkAromaticity = false;
 	private boolean checkRingSystem = false;
 

@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -48,7 +48,7 @@ public class WienerNumbersDescriptorTest extends CDKTestCase {
 
     public void testWienerNumbersDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {18, 2};
-        IDescriptor descriptor = new WienerNumbersDescriptor();
+        IMolecularDescriptor descriptor = new WienerNumbersDescriptor();
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
         AtomContainerManipulator.removeHydrogens(mol);

@@ -24,16 +24,16 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.BooleanResult;
 
 /**
  *  This class evaluates if a proton is joined to a conjugated system.
@@ -63,7 +63,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
  */
-public class IsProtonInConjugatedPiSystemDescriptor implements IDescriptor {
+public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescriptor {
 
     private int atomPosition = 0;
     private boolean checkAromaticity = false;

@@ -25,13 +25,13 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 import Jama.EigenvalueDecomposition;
@@ -89,7 +89,7 @@ import Jama.Matrix;
  * @cdk.set    qsar-descriptors
  * @cdk.dictref qsar-descriptors:WHIM
  */
-public class WHIMDescriptor implements IDescriptor {
+public class WHIMDescriptor implements IMolecularDescriptor {
 
     LoggingTool logger;
     String type = "";

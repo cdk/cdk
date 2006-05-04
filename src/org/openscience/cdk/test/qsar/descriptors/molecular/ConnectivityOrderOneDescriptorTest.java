@@ -29,7 +29,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.molecular.ConnectivityOrderOneDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -50,7 +50,7 @@ public class ConnectivityOrderOneDescriptorTest extends CDKTestCase {
 
     public void testConnectivityOrderOneDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {1.414};
-        IDescriptor descriptor = new ConnectivityOrderOneDescriptor();
+        IMolecularDescriptor descriptor = new ConnectivityOrderOneDescriptor();
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("FCF");
         DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();

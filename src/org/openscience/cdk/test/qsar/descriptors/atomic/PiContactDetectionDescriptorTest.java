@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PiContactDetectionDescriptor;
 import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -50,7 +50,7 @@ public class PiContactDetectionDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testPiContactDetectionDescriptorOut() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor  = new PiContactDetectionDescriptor();
+		IMolecularDescriptor descriptor  = new PiContactDetectionDescriptor();
 		Object[] params = {new Integer(1), new Integer(6), new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -61,7 +61,7 @@ public class PiContactDetectionDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testPiContactDetectionDescriptorInside() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor  = new PiContactDetectionDescriptor();
+		IMolecularDescriptor descriptor  = new PiContactDetectionDescriptor();
 		Object[] params = {new Integer(2), new Integer(4), new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
@@ -72,7 +72,7 @@ public class PiContactDetectionDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testPiContactDetectionDescriptorFalse() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor  = new PiContactDetectionDescriptor();
+		IMolecularDescriptor descriptor  = new PiContactDetectionDescriptor();
 		Object[] params = {new Integer(3), new Integer(9), new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

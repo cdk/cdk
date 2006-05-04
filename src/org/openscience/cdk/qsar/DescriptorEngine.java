@@ -153,7 +153,7 @@ public class DescriptorEngine {
     public void process(IAtomContainer molecule) throws CDKException {
 
         for (int i = 0; i < descriptors.size(); i++) {
-            IDescriptor descriptor = (IDescriptor) descriptors.get(i);
+            IMolecularDescriptor descriptor = (IMolecularDescriptor) descriptors.get(i);
             try {
                 DescriptorValue value = descriptor.calculate(molecule);
                 molecule.setProperty(speclist.get(i), value);

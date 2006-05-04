@@ -24,15 +24,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.MMFF94PartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  The calculation of partial charges of an heavy atom is based on MMFF94.
@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @x.dictref qsar-descriptors:PartialCharge
  * @see MMFF94PartialCharges
  */
-public class PartialTotalChargeDescriptor implements IDescriptor {
+public class PartialTotalChargeDescriptor implements IMolecularDescriptor {
 
     private int atomPosition = 0;
 	private MMFF94PartialCharges mmff;

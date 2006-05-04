@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  * Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
@@ -40,7 +40,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:zagrebIndex
  */
-public class ZagrebIndexDescriptor implements IDescriptor {
+public class ZagrebIndexDescriptor implements IMolecularDescriptor {
 
     /**
      *  Constructor for the ZagrebIndexDescriptor object.

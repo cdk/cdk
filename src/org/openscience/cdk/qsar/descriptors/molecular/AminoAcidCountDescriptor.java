@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.List;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,11 +32,9 @@ import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.templates.AminoAcids;
-
-import java.util.List;
 
 
 /**
@@ -46,7 +46,7 @@ import java.util.List;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aminoAcidsCount
  */
-public class AminoAcidCountDescriptor implements IDescriptor {
+public class AminoAcidCountDescriptor implements IMolecularDescriptor {
 
     private ISetOfAtomContainers substructureSet;
 

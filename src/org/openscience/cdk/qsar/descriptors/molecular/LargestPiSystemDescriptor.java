@@ -34,9 +34,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 
@@ -64,7 +64,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  */
 
 
-public class LargestPiSystemDescriptor implements IDescriptor{
+public class LargestPiSystemDescriptor implements IMolecularDescriptor {
 
 	private boolean checkAromaticity = false;
 

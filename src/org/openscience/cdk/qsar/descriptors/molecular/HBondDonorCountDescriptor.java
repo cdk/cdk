@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  * This descriptor calculates the number of hydrogen bond donors using a slightly simplified version of the
@@ -51,7 +51,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
-public class HBondDonorCountDescriptor implements IDescriptor {
+public class HBondDonorCountDescriptor implements IMolecularDescriptor {
 
     /**
      *  Constructor for the HBondDonorCountDescriptor object

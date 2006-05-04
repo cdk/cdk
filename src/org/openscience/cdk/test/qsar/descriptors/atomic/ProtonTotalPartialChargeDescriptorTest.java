@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -47,7 +47,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends CDKTestCase {
 	
 	public void testProtonTotalPartialChargeDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.07915,0.05783,0.05783,0.05783};
-		IDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
+		IMolecularDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
 		
 		Object[] params = {new Integer(0)};
 		descriptor.setParameters(params);

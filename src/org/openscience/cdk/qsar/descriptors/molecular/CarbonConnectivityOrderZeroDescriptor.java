@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  Carbon Connectivity index (order 0):
@@ -44,7 +44,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:chi0C
  */
-public class CarbonConnectivityOrderZeroDescriptor implements IDescriptor {
+public class CarbonConnectivityOrderZeroDescriptor implements IMolecularDescriptor {
 
     /**
      *  Constructor for the CarbonConnectivityOrderZeroDescriptor object

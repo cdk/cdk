@@ -50,7 +50,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -117,7 +117,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:xlogP
  */
-public class XLogPDescriptor implements IDescriptor {
+public class XLogPDescriptor implements IMolecularDescriptor {
     
 	private boolean checkAromaticity = false;
 	private boolean salicylFlag=false;

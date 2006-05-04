@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -50,7 +50,7 @@ public class AtomHybridizationDescriptorTest extends CDKTestCase {
     }
 
     public void testAtomHybridizationDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IDescriptor descriptor  = new AtomHybridizationDescriptor();
+        IMolecularDescriptor descriptor  = new AtomHybridizationDescriptor();
         Object[] params = {new Integer(0)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();

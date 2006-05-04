@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -58,7 +58,7 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
     }
 
     public void testWeightedPathDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        IDescriptor descriptor = new WeightedPathDescriptor();
+        IMolecularDescriptor descriptor = new WeightedPathDescriptor();
 
         SmilesParser sp = new SmilesParser();
         IAtomContainer mol = null;

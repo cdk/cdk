@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -52,7 +52,7 @@ public class RDFProtonDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testRDFProtonDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor  = new RDFProtonDescriptor();
+		IMolecularDescriptor descriptor  = new RDFProtonDescriptor();
 		Object[] params = {new Integer(16), new Boolean(true)};
 		descriptor.setParameters(params);
 		

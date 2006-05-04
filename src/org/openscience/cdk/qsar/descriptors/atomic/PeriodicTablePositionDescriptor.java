@@ -26,12 +26,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:period
  */
-public class PeriodicTablePositionDescriptor implements IDescriptor {
+public class PeriodicTablePositionDescriptor implements IMolecularDescriptor {
 
 	private int targetPosition = 0;
 	private LoggingTool logger;

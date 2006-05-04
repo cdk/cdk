@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptor;
 import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -50,7 +50,7 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testIsProtonInConjugatedPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor  = new IsProtonInConjugatedPiSystemDescriptor();
+		IMolecularDescriptor descriptor  = new IsProtonInConjugatedPiSystemDescriptor();
 		Object[] params = {new Integer(13), new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

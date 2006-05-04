@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  *  This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
@@ -54,7 +54,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomDegree
  */
-public class AtomDegreeDescriptor implements IDescriptor {
+public class AtomDegreeDescriptor implements IMolecularDescriptor {
 
     private int targetPosition = 0;
 

@@ -29,7 +29,7 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -59,7 +59,7 @@ public class CPSADescriptorTest extends CDKTestCase {
         IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = c[0];
 
-        IDescriptor descriptor = new CPSADescriptor();
+        IMolecularDescriptor descriptor = new CPSADescriptor();
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         /*
         System.out.println("Num ret = "+retval.size());

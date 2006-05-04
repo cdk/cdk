@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -49,7 +49,7 @@ public class IsProtonInAromaticSystemDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IDescriptor descriptor  = new IsProtonInAromaticSystemDescriptor();
+		IMolecularDescriptor descriptor  = new IsProtonInAromaticSystemDescriptor();
 		Object[] params = {new Integer(13), new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();

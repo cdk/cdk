@@ -29,7 +29,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -50,7 +50,7 @@ public class RuleOfFiveDescriptorTest extends CDKTestCase {
     }
 
     public void testRuleOfFiveDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IDescriptor descriptor = new RuleOfFiveDescriptor();
+        IMolecularDescriptor descriptor = new RuleOfFiveDescriptor();
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();

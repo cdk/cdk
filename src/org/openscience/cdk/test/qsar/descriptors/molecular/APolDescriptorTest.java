@@ -29,7 +29,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -50,7 +50,7 @@ public class APolDescriptorTest extends CDKTestCase {
     }
 
     public void testAPolDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IDescriptor descriptor = new APolDescriptor();
+        IMolecularDescriptor descriptor = new APolDescriptor();
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("O=C(O)CC");
         HydrogenAdder hAdder = new HydrogenAdder();

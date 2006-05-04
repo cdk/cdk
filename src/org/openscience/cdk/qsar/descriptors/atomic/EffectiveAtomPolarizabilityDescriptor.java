@@ -24,14 +24,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  * Effective polarizability of an heavy atom
@@ -57,7 +57,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.dictref qsar-descriptors:sigmaElectronegativity
  * @see Polarizability
  */
-public class EffectiveAtomPolarizabilityDescriptor implements IDescriptor {
+public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescriptor {
 
 	private int atomPosition = 0;
 	private Polarizability pol;

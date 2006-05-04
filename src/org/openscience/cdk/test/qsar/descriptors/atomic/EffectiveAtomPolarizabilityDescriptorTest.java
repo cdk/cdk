@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -52,7 +52,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 	 */
 	public void testEffectivePolarizabilityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {4.7253,6.1345,6.763,6.925,5.41,5.41};
-        IDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        IMolecularDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         Integer[] params = new Integer[1];
         
         SmilesParser sp = new SmilesParser();

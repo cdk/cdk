@@ -26,12 +26,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  This class returns the 3D distance between two atoms.
@@ -61,7 +61,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
-public class DistanceToAtomDescriptor implements IDescriptor {
+public class DistanceToAtomDescriptor implements IMolecularDescriptor {
 
     private int targetPosition = 0;
     private int focusPosition = 0;

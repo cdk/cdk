@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
@@ -50,7 +50,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
 	}
     
 	public void testAACount() throws CDKException {
-        IDescriptor descriptor = new AminoAcidCountDescriptor();
+        IMolecularDescriptor descriptor = new AminoAcidCountDescriptor();
         
         BioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
@@ -63,7 +63,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
 	}
 
 	public void testFCount() throws CDKException {
-        IDescriptor descriptor = new AminoAcidCountDescriptor();
+        IMolecularDescriptor descriptor = new AminoAcidCountDescriptor();
         
         BioPolymer protein = ProteinBuilderTool.createProtein("FF");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
@@ -74,7 +74,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
 	}
 
 	public void testTCount() throws CDKException {
-        IDescriptor descriptor = new AminoAcidCountDescriptor();
+        IMolecularDescriptor descriptor = new AminoAcidCountDescriptor();
         
         BioPolymer protein = ProteinBuilderTool.createProtein("TT");
         IDescriptorResult result = descriptor.calculate(protein).getValue();

@@ -7,8 +7,8 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -50,7 +50,7 @@ public class VanDerWaalsInteractions {
 	GVector dIvdw = null;
 	
 	//int[][] distances = null;	//Better check common atom connected
-	IDescriptor shortestPathBetweenToAtoms=new BondsToAtomDescriptor();
+	IMolecularDescriptor shortestPathBetweenToAtoms=new BondsToAtomDescriptor();
 	Object[] params = {new Integer(0), new Integer(0)};
 	
 	int vdwInteractionNumber;

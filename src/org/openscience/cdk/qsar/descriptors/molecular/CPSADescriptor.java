@@ -19,15 +19,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.surface.NumericalSurface;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 
@@ -120,7 +120,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:CPSA
  */
-public class CPSADescriptor implements IDescriptor {
+public class CPSADescriptor implements IMolecularDescriptor {
     
     private LoggingTool logger;
     

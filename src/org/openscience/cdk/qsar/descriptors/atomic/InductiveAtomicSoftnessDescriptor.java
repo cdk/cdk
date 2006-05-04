@@ -28,14 +28,14 @@ import java.io.IOException;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
 /**
  *  Inductive atomic softness of an atom in a polyatomic system can be defined
@@ -85,7 +85,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomicSoftness
  */
-public class InductiveAtomicSoftnessDescriptor implements IDescriptor {
+public class InductiveAtomicSoftnessDescriptor implements IMolecularDescriptor {
 
 	private int atomPosition = 0;
 	private LoggingTool logger;

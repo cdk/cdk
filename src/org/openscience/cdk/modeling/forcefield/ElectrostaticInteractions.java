@@ -6,8 +6,8 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -33,7 +33,7 @@ public class ElectrostaticInteractions {
 	double[][] dR = null;	// internuclear separation first order derivative respect to atoms coordinates
 	double[][][] ddR = null;	// internuclear separation second order derivative respect to atoms coordinates
 
-	IDescriptor shortestPathBetweenTwoAtoms = new BondsToAtomDescriptor();
+	IMolecularDescriptor shortestPathBetweenTwoAtoms = new BondsToAtomDescriptor();
 	Object[] params = {new Integer(0), new Integer(0)};
 	
 	int electrostaticInteractionNumber;

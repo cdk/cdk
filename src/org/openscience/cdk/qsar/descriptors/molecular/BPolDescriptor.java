@@ -24,15 +24,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bpol
  */
-public class BPolDescriptor implements IDescriptor {
+public class BPolDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     private IsotopeFactory ifac = null;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */

@@ -29,7 +29,7 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -59,7 +59,7 @@ public class BCUTDescriptorTest extends CDKTestCase {
         IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = c[0];
 
-        IDescriptor descriptor = new BCUTDescriptor();
+        IMolecularDescriptor descriptor = new BCUTDescriptor();
         Object[] params = new Object[3];
         params[0] = new Integer(2);
         params[1] = new Integer(2);

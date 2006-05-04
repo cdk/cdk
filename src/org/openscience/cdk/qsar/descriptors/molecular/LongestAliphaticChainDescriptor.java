@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
@@ -64,7 +64,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * @cdk.set     qsar-descriptors
  */
 
-public class LongestAliphaticChainDescriptor implements IDescriptor{
+public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 	private boolean checkRingSystem = false;
 
 

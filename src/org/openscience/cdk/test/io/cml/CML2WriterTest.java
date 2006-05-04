@@ -40,8 +40,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.protein.data.PDBAtom;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -123,7 +123,7 @@ public class CML2WriterTest extends CDKTestCase {
     public void testQSARCustomization() {
         StringWriter writer = new StringWriter();
         Molecule molecule = MoleculeFactory.makeBenzene();
-        IDescriptor descriptor = new WeightDescriptor();
+        IMolecularDescriptor descriptor = new WeightDescriptor();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
         try {

@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -48,7 +48,7 @@ public class AtomCountDescriptorTest extends CDKTestCase {
 	}
     
 	public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IDescriptor descriptor  = new AtomCountDescriptor();
+        IMolecularDescriptor descriptor  = new AtomCountDescriptor();
         Object[] params = {"C"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();

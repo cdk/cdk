@@ -24,14 +24,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 
 /**
@@ -49,7 +49,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:petitjeanNumber
  */
-public class PetitjeanNumberDescriptor implements IDescriptor {
+public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
 
     /**
      *  Constructor for the PetitjeanNumberDescriptor object

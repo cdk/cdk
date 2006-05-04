@@ -27,7 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -50,7 +50,7 @@ public class BondCountDescriptorTest extends CDKTestCase {
     }
 
     public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IDescriptor descriptor  = new BondCountDescriptor();
+        IMolecularDescriptor descriptor  = new BondCountDescriptor();
         Object[] params = {new Double(1.0)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();

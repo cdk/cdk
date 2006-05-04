@@ -23,14 +23,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
-import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  *  This class returns the number of bonds on the shortest path between two atoms.
@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:bondsToAtom
  */
-public class BondsToAtomDescriptor implements IDescriptor {
+public class BondsToAtomDescriptor implements IMolecularDescriptor {
 
     private int targetPosition = 0;
     private int focusPosition = 0;

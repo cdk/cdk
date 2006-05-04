@@ -23,12 +23,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
 
 /**
  * This Class contains a method that returns the number failures of the
@@ -55,7 +57,7 @@ import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:lipinskifailures
  */
-public class RuleOfFiveDescriptor implements IDescriptor {
+public class RuleOfFiveDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
 
 
@@ -139,7 +141,7 @@ public class RuleOfFiveDescriptor implements IDescriptor {
 
         int lipinskifailures = 0;
 
-        IDescriptor xlogP = new XLogPDescriptor();
+        IMolecularDescriptor xlogP = new XLogPDescriptor();
         Object[] xlogPparams = {
         	new Boolean(checkAromaticity),
         	Boolean.TRUE,
@@ -147,21 +149,21 @@ public class RuleOfFiveDescriptor implements IDescriptor {
         xlogP.setParameters(xlogPparams);
         double xlogPvalue = ((DoubleResult)xlogP.calculate(mol).getValue()).doubleValue();
 
-        IDescriptor acc = new HBondAcceptorCountDescriptor();
+        IMolecularDescriptor acc = new HBondAcceptorCountDescriptor();
         Object[] hBondparams = { new Boolean(checkAromaticity) };
         acc.setParameters(hBondparams);
         int acceptors = ((IntegerResult)acc.calculate(mol).getValue()).intValue();
 
-        IDescriptor don = new HBondDonorCountDescriptor();
+        IMolecularDescriptor don = new HBondDonorCountDescriptor();
         don.setParameters(hBondparams);
         int donors = ((IntegerResult)don.calculate(mol).getValue()).intValue();
 
-        IDescriptor mw = new WeightDescriptor();
+        IMolecularDescriptor mw = new WeightDescriptor();
         Object[] mwparams = {new String("")};
         mw.setParameters(mwparams);
         double mwvalue = ((DoubleResult)mw.calculate(mol).getValue()).doubleValue();
 
-        IDescriptor rotata = new RotatableBondsCountDescriptor();
+        IMolecularDescriptor rotata = new RotatableBondsCountDescriptor();
         rotata.setParameters(hBondparams);
         int rotatablebonds = ((IntegerResult)rotata.calculate(mol).getValue()).intValue();
 

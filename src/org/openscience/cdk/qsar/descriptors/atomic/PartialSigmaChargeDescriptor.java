@@ -24,15 +24,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  The calculation of sigma partial charges in sigma-bonded systems (PEOE) of an heavy atom is based on Gasteiger Marsili
@@ -58,7 +58,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
  * @cdk.dictref qsar-descriptors:PartialCharge
  * @see GasteigerMarsiliPartialCharges
  */
-public class PartialSigmaChargeDescriptor implements IDescriptor {
+public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
 
     private int atomPosition = 0;
     private GasteigerMarsiliPartialCharges peoe = null;

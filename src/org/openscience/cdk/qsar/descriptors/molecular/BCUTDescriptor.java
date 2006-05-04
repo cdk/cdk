@@ -33,7 +33,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -92,7 +92,7 @@ import Jama.Matrix;
  * @cdk.set    qsar-descriptors
  * @cdk.dictref qsar-descriptors:BCUT
  */
-public class BCUTDescriptor implements IDescriptor {
+public class BCUTDescriptor implements IMolecularDescriptor {
 
     // the number of negative & positive eigenvalues
     // to return for each class of BCUT descriptor
