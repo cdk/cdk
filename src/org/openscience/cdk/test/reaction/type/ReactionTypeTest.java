@@ -13,6 +13,7 @@ public class ReactionTypeTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite("All Reaction Type Tests");
+        suite.addTest(DisplacementChargeReactionTest.suite());
         suite.addTest(ElectronImpactPDBReactionTest.suite());
         suite.addTest(ElectronImpactNBEReactionTest.suite());
         suite.addTest(RearrangementAnion1ReactionTest.suite());
