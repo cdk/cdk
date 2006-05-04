@@ -72,7 +72,6 @@
             <echo message="    Batik found: ${batik.present}" />
             <echo message="   CMLDOM found: ${cmllibs.present}" />
             <echo message="    DADML found: ${dadml.present}" />
-            <echo message=" GNU JAXP found: ${gnujaxp.present}" />
             <echo message="      JAI found: ${jai.present}" />
             <echo message=" JavaHelp found: ${javahelp.present}" />
             <echo message="  XIndice found: ${xindice.present}"/>
@@ -136,8 +135,6 @@
                        file="${lib}/log4j.jar"/>
             <available property="jgrapht.present"
                        file="${lib}/jgrapht-0.6.0.jar"/>
-            <available property="gnujaxp.present"
-                       file="${lib}/gnujaxp.jar"/>
 
             <!-- test for optional jars -->
             <condition property="batik.present">
