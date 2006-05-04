@@ -94,7 +94,6 @@ public class QSARDescriptorTests {
         suite.addTest(WeightedPathDescriptorTest.suite());
         suite.addTest(PetitjeanShapeIndexDescriptorTest.suite());
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
-        suite.addTest(PartialPiChargeDescriptorTest.suite());
         suite.addTest(PartialTotalChargeDescriptorTest.suite());
 
         return suite;
