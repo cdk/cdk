@@ -143,7 +143,12 @@ public class DisplacementChargeReaction implements IReactionProcess{
 							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 							reaction.addReactant(reactant);
 							
-							IAtomContainer acCloned = (IAtomContainer)reactant.clone();
+							IAtomContainer acCloned;
+							try {
+								acCloned = (IAtomContainer)reactant.clone();
+							} catch (CloneNotSupportedException e) {
+								throw new CDKException("Could not clone reactant", e);
+							}
 							
 							double order = acCloned.getBondAt(bond1P).getOrder();
 							acCloned.getBondAt(bond1P).setOrder(order - 1);
