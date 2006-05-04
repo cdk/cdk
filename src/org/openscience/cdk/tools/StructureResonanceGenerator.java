@@ -148,7 +148,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementCation1Reaction");
+//							System.out.println("RearrangementCation1Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -163,7 +163,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementCation2Reaction");
+//							System.out.println("RearrangementCation2Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -178,7 +178,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementCation3Reaction");
+//							System.out.println("RearrangementCation3Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -194,7 +194,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementAnion1Reaction");
+//							System.out.println("RearrangementAnion1Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -209,7 +209,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementAnion2Reaction");
+//							System.out.println("RearrangementAnion2Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -224,7 +224,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementAnion3Reaction");
+//							System.out.println("RearrangementAnion3Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -240,7 +240,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementRadical1Reaction");
+//							System.out.println("RearrangementRadical1Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -255,7 +255,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementRadical2Reaction");
+//							System.out.println("RearrangementRadical2Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -270,7 +270,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("RearrangementRadical3Reaction");
+//							System.out.println("RearrangementRadical3Reaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -286,7 +286,7 @@ public class StructureResonanceGenerator {
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-							System.out.println("DisplacementChargeReaction");
+//							System.out.println("DisplacementChargeReaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -312,7 +312,7 @@ public class StructureResonanceGenerator {
 			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(ac);
 			try {
 				if(UniversalIsomorphismTester.isIsomorph(atomContainer,qAC)){
-					System.out.println("exist");
+//					System.out.println("exist");
 					return true;
 				}
 			} catch (CDKException e1) {
