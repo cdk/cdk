@@ -647,7 +647,7 @@ public abstract class JChemPaintPanel
 	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
 	 */
 	public void scaleAndCenterMolecule(IAtomContainer ac, Dimension dim){
-    	((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));
+		((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
 	    org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();

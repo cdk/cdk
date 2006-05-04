@@ -38,6 +38,7 @@ import java.util.PropertyResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.swing.JApplet;
+import javax.vecmath.Point2d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
@@ -164,14 +165,14 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	        int largestY=Integer.MIN_VALUE;
 	        for(int i=0;i<theModel.getChemModel().getSetOfMolecules().getMolecules().length;i++){
 	          for(int k=0;k<theModel.getChemModel().getSetOfMolecules().getMolecule(i).getAtomCount();k++){
-	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x<smallestX)
-	              smallestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x;
-	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x>largestX)
-	              largestX=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().x;
-	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y<smallestY)
-	              smallestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
-	            if(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y>largestY)
-	              largestY=(int)theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k).getPoint2d().y;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x<smallestX)
+	              smallestX=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x>largestX)
+	              largestX=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y<smallestY)
+	              smallestY=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y>largestY)
+	              largestY=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y;
 	          }
 	        }
 	        if(!theModel.getRendererModel().getIsCompact()){
