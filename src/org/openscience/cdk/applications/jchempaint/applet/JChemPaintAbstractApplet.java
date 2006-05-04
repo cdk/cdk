@@ -184,7 +184,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
 		        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
 	        }else{
-	        	theModel.getRendererModel().setBackgroundDimension(new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100));
+	        	theModel.getRendererModel().setBackgroundDimension(new Dimension((int)(.9*this.getSize().getWidth()),(int)(.9*this.getSize().getHeight())));
 	        	IAtomContainer atomContainer=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules());
 	    		GeometryTools.translateAllPositive(atomContainer,theModel.getRendererModel().getRenderingCoordinates());
 	    		GeometryTools.scaleMolecule(atomContainer, theModel.getRendererModel().getBackgroundDimension(), 0.8,theModel.getRendererModel().getRenderingCoordinates());			
