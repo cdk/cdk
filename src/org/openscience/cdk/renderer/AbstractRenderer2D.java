@@ -1241,7 +1241,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		graphics.setColor(bondColor);
 
-		double bondLength = GeometryTools.getLength2D(bond);
+		double bondLength = GeometryTools.getLength2D(bond, r2dm.getRenderingCoordinates());
 		int numberOfLines = (int) (bondLength / 4.0);
 		// this value should be made customizable
 		double wedgeWidth = r2dm.getBondWidth() * 2.0;
