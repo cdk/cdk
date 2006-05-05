@@ -27,7 +27,8 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.reaction.type.DisplacementChargeReactionTest;
+import org.openscience.cdk.test.reaction.type.DisplacementChargeFromAcceptorReactionTest;
+import org.openscience.cdk.test.reaction.type.DisplacementChargeFromDonorReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactNBEReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactPDBReactionTest;
 import org.openscience.cdk.test.reaction.type.ReactionBalancerTest;
@@ -57,7 +58,8 @@ public class MreactionTests {
         // make sure to check it agains src/test-reaction.files
         // before each release!
         suite.addTest(ReactionBalancerTest.suite());
-        suite.addTest(DisplacementChargeReactionTest.suite());
+        suite.addTest(DisplacementChargeFromAcceptorReactionTest.suite());
+        suite.addTest(DisplacementChargeFromDonorReactionTest.suite());
         suite.addTest(ElectronImpactNBEReactionTest.suite());
         suite.addTest(ElectronImpactPDBReactionTest.suite());
         suite.addTest(RearrangementAnion1ReactionTest.suite());

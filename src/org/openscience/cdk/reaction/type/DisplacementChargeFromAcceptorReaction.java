@@ -7,6 +7,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
@@ -18,13 +19,13 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
- * This reaction could be represented as A=B => [A+]-[B-] or also [A-]-[B+]. 
- * </p>
+ * This reaction could be represented as two forms</p>
+ * <pre>X=A => [X-]-[A+]. X represents an acceptor atomType</pre>
  * 
  * <pre>
  *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
  *  setOfReactants.addMolecule(new Molecule());
- *  IReactionProcess type = new DisplacementChargeReaction();
+ *  IReactionProcess type = new DisplacementChargeFromAcceptorReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
  *  ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
@@ -45,7 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set        reaction-types
  * 
  **/
-public class DisplacementChargeReaction implements IReactionProcess{
+public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
 
@@ -53,7 +54,7 @@ public class DisplacementChargeReaction implements IReactionProcess{
 	 * Constructor of the DisplacementChargeReaction object
 	 *
 	 */
-	public DisplacementChargeReaction(){
+	public DisplacementChargeFromAcceptorReaction(){
 		logger = new LoggingTool(this);
 	}
 	/**
@@ -130,38 +131,44 @@ public class DisplacementChargeReaction implements IReactionProcess{
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[i].getOrder() == 2.0){
 				IAtom atom1 = bonds[i].getAtoms()[0];
 				IAtom atom2 = bonds[i].getAtoms()[1];
-				if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0)
-					if(atom2.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0){
-				
+				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0))
+						&&(atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0))
+						|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0))
+						&&(atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0))){
+							
 						/* positions atoms and bonds */
 						int atom0P = reactant.getAtomNumber(bonds[i].getAtoms()[0]);
 						int bond1P = reactant.getBondNumber(bonds[i]);
 						int atom1P = reactant.getAtomNumber(bonds[i].getAtoms()[1]);
 						
 						/* action */
-						for(int j = 0; j < 2 ; j++){
-							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-							reaction.addReactant(reactant);
+						IAtomContainer acCloned;
+						try {
+							acCloned = (IAtomContainer)reactant.clone();
+						} catch (CloneNotSupportedException e) {
+							throw new CDKException("Could not clone reactant", e);
+						}
+						
+						double order = acCloned.getBondAt(bond1P).getOrder();
+						acCloned.getBondAt(bond1P).setOrder(order - 1);
+						
+						IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+						reaction.addReactant(reactant);
+
+						
+						if(reactant.getLonePairCount(atom1) > 0){
+							acCloned.getAtomAt(atom0P).setFormalCharge(-1);
+							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtomAt(atom0P));
+							acCloned.addElectronContainer(lpelectron[0]);
 							
-							IAtomContainer acCloned;
-							try {
-								acCloned = (IAtomContainer)reactant.clone();
-							} catch (CloneNotSupportedException e) {
-								throw new CDKException("Could not clone reactant", e);
-							}
+							acCloned.getAtomAt(atom1P).setFormalCharge(1);
+						}else{
+							acCloned.getAtomAt(atom0P).setFormalCharge(1);
+							acCloned.getAtomAt(atom1P).setFormalCharge(-1);
+							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtomAt(atom1P));
+							acCloned.addElectronContainer(lpelectron[0]);
 							
-							double order = acCloned.getBondAt(bond1P).getOrder();
-							acCloned.getBondAt(bond1P).setOrder(order - 1);
-							
-							if (j == 0)
-							{
-								acCloned.getAtomAt(atom0P).setFormalCharge(1);
-								acCloned.getAtomAt(atom1P).setFormalCharge(-1);
-							} else
-							{
-								acCloned.getAtomAt(atom0P).setFormalCharge(-1);
-								acCloned.getAtomAt(atom1P).setFormalCharge(1);
-							}
+						}
 							
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], acCloned.getBondAt(bond1P));
@@ -175,8 +182,7 @@ public class DisplacementChargeReaction implements IReactionProcess{
 							reaction.addProduct((IMolecule) acCloned);
 							setOfReactions.addReaction(reaction);
 						}
-					}
-			}
+				}
 		}
 		
 		return setOfReactions;	
@@ -187,7 +193,7 @@ public class DisplacementChargeReaction implements IReactionProcess{
 	 * set the active center for this molecule. 
 	 * The active center will be those which correspond with A=B. 
 	 * <pre>
-	 * A: Atom
+	 * A: Atom with lone pair electrons
 	 * =: Double bond
 	 * B: Atom
 	 *  </pre>
@@ -201,12 +207,14 @@ public class DisplacementChargeReaction implements IReactionProcess{
 			if(bonds[i].getOrder() == 2.0){
 				IAtom atom1 = bonds[i].getAtoms()[0];
 				IAtom atom2 = bonds[i].getAtoms()[1];
-				if(atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0)
-					if(atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0){
+				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0))
+					&&(atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0))
+					|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0))
+					&&(atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0))){
 						atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 						atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
 						bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-					}
+				}
 			}
 	}
 	/**

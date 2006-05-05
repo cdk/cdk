@@ -7,6 +7,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
@@ -15,18 +16,17 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+
 /**
  * <p>IReactionProcess which participate in movement resonance. 
- * This reaction could be represented as [A-]-B=C => A=B-[C-]. Due to 
- * excess of charge of the atom B, the double bond in the position 2 is 
- * desplaced.</p>
- * <p>Make sure that the molecule has the corresponend lone pair electrons
- * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
+ * This reaction could be represented as </p>
+ * <pre>X-A=B => [X+]=A-[B-]. X represents a donor atomType which contains
+ * lone pair electrons</pre>
  * 
  * <pre>
  *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
  *  setOfReactants.addMolecule(new Molecule());
- *  IReactionProcess type = new RearrangementAnion2Reaction();
+ *  IReactionProcess type = new DisplacementChargeFromDonorReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
  *  ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
@@ -47,19 +47,19 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set        reaction-types
  * 
  **/
-public class RearrangementAnion2Reaction implements IReactionProcess{
+public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
 
 	/**
-	 * Constructor of the RearrangementAnion2Reaction object
+	 * Constructor of the DisplacementChargeFromDonorReaction object
 	 *
 	 */
-	public RearrangementAnion2Reaction(){
+	public DisplacementChargeFromDonorReaction(){
 		logger = new LoggingTool(this);
 	}
 	/**
-	 *  Gets the specification attribute of the RearrangementAnion2Reaction object
+	 *  Gets the specification attribute of the DisplacementChargeFromDonorReaction object
 	 *
 	 *@return    The specification value
 	 */
@@ -67,12 +67,12 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 		return new ReactionSpecification(
 				"http://",
 				this.getClass().getName(),
-				"$Id: RearrangementAnion2Reaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
+				"$Id: DisplacementChargeFromDonorReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
 				"The Chemistry Development Kit");
 	}
 	
 	/**
-	 *  Sets the parameters attribute of the RearrangementAnion2Reaction object
+	 *  Sets the parameters attribute of the DisplacementChargeFromDonorReaction object
 	 *
 	 *@param  params            The parameter is if the molecule has already fixed the center active or not. It 
 	 *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
@@ -80,7 +80,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
-			throw new CDKException("RearrangementAnion2Reaction only expects one parameter");
+			throw new CDKException("DisplacementChargeFromDonorReaction only expects one parameter");
 		}
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The parameter 1 must be of type boolean");
@@ -90,7 +90,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 
 
 	/**
-	 *  Gets the parameters attribute of the RearrangementAnion2Reaction object
+	 *  Gets the parameters attribute of the DisplacementChargeFromDonorReaction object
 	 *
 	 *@return    The parameters value
 	 */
@@ -110,13 +110,13 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 	 */
 	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
 
-		logger.debug("initiate reaction: RearrangementAnion2Reaction");
+		logger.debug("initiate reaction: DisplacementChargeFromDonorReaction");
 		
 		if (reactants.getMoleculeCount() != 1) {
-			throw new CDKException("RearrangementAnion2Reaction only expects one reactant");
+			throw new CDKException("DisplacementChargeFromDonorReaction only expects one reactant");
 		}
 		if (agents != null) {
-			throw new CDKException("RearrangementAnion2Reaction don't expects agents");
+			throw new CDKException("DisplacementChargeFromDonorReaction don't expects agents");
 		}
 		
 		ISetOfReactions setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
@@ -129,7 +129,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 		
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
-			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& atoms[i].getFormalCharge() == -1 ){
+			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getLonePairCount(atoms[i]) > 0){
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactant);
 				
@@ -158,6 +158,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 								
 								int charge = acCloned.getAtomAt(atom0P).getFormalCharge();
 								acCloned.getAtomAt(atom0P).setFormalCharge(charge+1);
+								ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtomAt(atom0P));
+								acCloned.removeElectronContainer(lpelectron[0]);
 								
 								double order = acCloned.getBondAt(bond1P).getOrder();
 								acCloned.getBondAt(bond1P).setOrder(order+1);
@@ -189,16 +191,14 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 			}
 		}
 		return setOfReactions;	
-		
-		
 	}
 	/**
 	 * set the active center for this molecule. 
-	 * The active center will be those which correspond with [A-]-B=C. 
+	 * The active center will be those which correspond with X-A=B. 
 	 * <pre>
-	 * A: Atom with negative charge (Moreover it contains lone pair electrons)
+	 * A: Atom with lone pair electrons
 	 * -: Single bond
-	 * B: Atom 
+	 * B: Atom
 	 * =: Double bond
 	 * C: Atom
 	 *  </pre>
@@ -209,9 +209,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IAtom[] atoms = reactant.getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++)
-			if(atoms[i].getFormalCharge() == -1 ){
+			if(reactant.getLonePairCount(atoms[i]) > 0 ){
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
-				
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getOrder() == 1.0){
 						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtomAt(i));
@@ -230,7 +229,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 			}
 	}
 	/**
-	 *  Gets the parameterNames attribute of the RearrangementAnion2Reaction object
+	 *  Gets the parameterNames attribute of the DisplacementChargeFromDonorReaction object
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -242,7 +241,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 
 
 	/**
-	 *  Gets the parameterType attribute of the RearrangementAnion2Reaction object
+	 *  Gets the parameterType attribute of the DisplacementChargeFromDonorReaction object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
