@@ -18,7 +18,9 @@
 #
 
 import string, sys, os, os.path, time, re, glob, shutil
-
+from email.MIMEText import MIMEText
+import email.Utils
+import smtplib
 
 #################################################################
 #
@@ -34,6 +36,8 @@ import string, sys, os, os.path, time, re, glob, shutil
 # classpath    - required to generate the dependency graph. Should
 #                contain the BeanShell and JGraphT jar files
 # per_line     - how many items per line in the final output
+# japitools_path - path to the japitools directory if you have it.
+#                  Otherwise set it to "" or None
 #
 #################################################################
 
@@ -41,7 +45,12 @@ nightly_repo = '/home/rajarshi/src/java/cdk-nightly/cdk/'
 nightly_dir = '/home/rajarshi/src/java/cdk-nightly/'
 nightly_web = '/home/rajarshi/public_html/code/java/nightly/'
 classpath = '/home/rajarshi/src/java/beanshell/bsh.jar:/home/rajarshi/src/java/cdk/trunk/cdk/jar/jgrapht-0.6.0.jar'
+japitools_path = None
 per_line = 4
+
+smtpServerName = 'smtp.psu.edu'
+fromName = 'nightly.py <rajarshi@presidency.com>'
+toName = 'cdk-devel@lists.sourceforge.net'
 
 #################################################################
 #
@@ -63,6 +72,20 @@ try:
 except ImportError:
     haveXSLT = False
     print 'Will not tranlate PMD XML output'
+
+def sendMail(message):
+    try:        
+        msg = MIMEText(message)
+        msg['Subject'] = 'CDK Nightly Build Failed %s' % (todayNice)
+        msg['Message-id'] = email.Utils.make_msgid()
+        msg['From'] = fromName
+        msg['To'] = toName
+
+        server = smtplib.SMTP(smtpServerName)
+        server.sendmail(fromName, toName, msg.as_string())
+        server.quit()
+    except Exception, e:
+        print e
     
 def transformXML2HTML(src, dest):
     if haveXSLT: # if we have the proper libs do the xform
@@ -358,7 +381,9 @@ if __name__ == '__main__':
             successPMD = runAntJob('nice -n 19 ant -f pmd.xml pmd', 'pmd.log', 'pmd')
         else: # if the distro could not be built, there's not much use doing the other stuff
             print 'Distro compile failed. Generating error page'
-            os.system('cp %s/build.log %s/' % (nightly_dir, nightly_web))
+            srcFile = os.path.join(nightly_dir, 'build.log')
+            destFile = os.path.join(nightly_web, 'build.log')
+            shutil.copyfile(srcFile, destFile)
             f = open(os.path.join(nightly_web, 'index.html'), 'r')
             lines = string.join(f.readlines())
             f.close()
@@ -372,6 +397,14 @@ if __name__ == '__main__':
             f = open(os.path.join(nightly_web, 'index.html'), 'w')
             f.write(newlines)
             f.close()
+
+            # before finishing send of an email with the last 20 lines of build.log
+            f = open('build.log', 'r')
+            lines = f.readlines()
+            f.close()
+            sendMail(string.join(lines[-20:]))
+
+            # finally done!
             os.chdir(start_dir)
             sys.exit(0)
     else:
@@ -382,7 +415,14 @@ if __name__ == '__main__':
 
 
     # so we have done a build (hopefully). Get rid of the old stuff
-    # and set up a temporary page
+    # and set up a temporary page. However we want to get at the previous
+    # dist jar file to do the api comparison with
+
+    jarFile = glob.glob(os.path.join(nightly_web, "*.jar"))
+    jarBase = os.path.basename(jarFile[0])
+    oldCDKJar = os.path.join(nightly_dir, jarBase)
+    shutil.copyfile(jarFile[0], oldCDKJar)
+    
     os.system('rm -rf %s/*' % (nightly_web))
     writeTemporaryPage()
 
@@ -413,7 +453,7 @@ if __name__ == '__main__':
 
     # lets now make the web site for nightly builds
     if successDist:
-        distSrc = os.path.join(nightly_repo, 'dist/jar/cdk-svn-%s.jar' % (todayStr))
+        distSrc = os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-%s.jar' % (todayStr))
         os.system('cp %s %s' % (distSrc, nightly_web))
         page = page + """
         <tr>
@@ -442,7 +482,16 @@ if __name__ == '__main__':
         # check whether we can copy the run output
         page = copyLogFile('javadoc.log', nightly_dir, nightly_web, page)
         page = page + "<tr><td colspan=3><hr></td></tr>"
+    else:
+        page = page + """
+        <tr>
+        <td valign=\"top\">Javadocs:</td>
+        <td bgcolor=\"#ea3f3f\"><b>FAILED</b></td>
+        """
+        page = copyLogFile('javadoc.log', nightly_dir, nightly_web, page)                
+        page = page + "<tr><td colspan=3><hr></td></tr>"
 
+        
     # generate the dependency graph entry
     page = generateCDKDepGraph(page)
 
@@ -480,8 +529,22 @@ if __name__ == '__main__':
             <a href=\"junitsummary.html\">Summary</a>
             </td></tr>
             """
-        else:
-            page = page + "</tr>"        
+        else: page = page + "</tr>"
+    else:
+        page = page + """
+        <tr>
+        <td valign=\"top\"><a href=\"http://www.junit.org/index.htm\">JUnit</a> results:</td>
+        <td bgcolor='#ea3f3f'><b>FAILED</b></td>
+        """
+        if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
+            shutil.copyfile(os.path.join(nightly_dir, 'test.log'),
+                            os.path.join(nightly_web, 'test.log'))            
+            page = page + """
+            <td valign=\"top\">
+            <a href=\"test.log\">test.log</a>
+            </td></tr>
+            """
+        else: page = page + "</tr>"        
 
     # get the results of doccheck
     if successDoccheck:
@@ -489,7 +552,9 @@ if __name__ == '__main__':
                         '%s/javadoc' % (nightly_web))        
         page = page + """
         <tr>
-        <td valign=\"top\"><a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> results:</td><td> """
+        <td valign=\"top\">
+        <a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a>
+        results:</td><td> """
         subdirs = os.listdir('%s/reports/javadoc' % (nightly_repo))
         subdirs.sort()
         count = 1
@@ -499,6 +564,24 @@ if __name__ == '__main__':
             if count % per_line == 0: page = page + "<br>"
             count += 1
         page = page + "</td></tr>"
+    else:
+        page = page + """
+        <tr>
+        <td valign=\"top\">
+        <a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> results:</td>
+        <td bgcolor=\"#ea3f3f\"><b>FAILED</b></td> """
+        if os.path.exists( os.path.join(nightly_dir, 'doccheck.log') ):
+            shutil.copyfile(os.path.join(nightly_dir, 'doccheck.log'),
+                            os.path.join(nightly_web, 'doccheck.log'))            
+            page = page + """
+            <td valign=\"top\">
+            <a href=\"doccheck.log\">doccheck.log</a>
+            </td></tr>
+            """
+        else: page = page + "</tr>"
+
+
+        
 
     # get the results of the PMD analysis
     if successPMD:
@@ -521,7 +604,53 @@ if __name__ == '__main__':
             if count % per_line == 0: page = page + "<br>"
             count += 1
         page = page + "</td></tr>"
+    else: # PMD stafe failed for some reason
+        page = page + """
+        <tr>
+        <td valign=\"top\"><a href=\"http://pmd.sourceforge.net/\">PMD</a> results:</td>
+        <td bgcolor=\"ea3f3f\"><b>FAILED</b></td>
+        """
+        if os.path.exists( os.path.join(nightly_dir, 'pmd.log') ):
+            shutil.copyfile(os.path.join(nightly_dir, 'pmd.log'),
+                            os.path.join(nightly_web, 'pmd.log'))            
+            page = page + """
+            <td valign=\"top\">
+            <a href=\"pmdcheck.log\">pmd.log</a>
+            </td></tr>
+            """
+        else: page = page + "</tr>"        
 
+    if japitools_path != "" and japitools_path != None:
+        print 'japi ok'
+        japize = os.path.join(japitools_path, 'bin', 'japize')
+        japcompat = os.path.join(japitools_path, 'bin', 'japicompat')
+
+        # run japize on the old cdk and the new one
+        os.system('%s as oldCDK.japi.gz %s' % (japize, oldCDKJar))
+        distSrc = os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-%s.jar' % (todayStr))        
+        os.system('%s as newCDK.japi.gz %s' % (japize, distSrc))
+
+        # do the comparison
+        os.system('%s -vh -o apicomp.html oldCDK.japi.gz newCDK.japi.gz > japi.log')
+
+        # copy output
+        srcFile = os.path.join(nightly_dir, 'apicomp.html')
+        destFile = os.path.join(nightly_web, 'apicomp.html')
+        shutil.copyfile(srcFile, destFile)
+
+        # make an entry on the page
+        page = page + """
+        <tr>
+        <td><a href=\"http://www.kaffe.org/~stuart/japi/\">JAPI Comparison</td>
+        <td><a href=\"apicomp.html\">Summary</a></td>
+        </tr>
+        """
+        
+    # get rid of  yesterdays distro jar file which we moved to nightly_dir
+    # in anticipation of japi
+    os.unlink(oldCDKJar)
+        
+        
     # copy this script to the nightly we dir. The script should be in nightly_dir
     shutil.copy( os.path.join(nightly_dir,'nightly.py'), nightly_web)
 
