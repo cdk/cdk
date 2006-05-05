@@ -83,6 +83,7 @@ def sendMail(message):
         server = smtplib.SMTP(smtpServerName)
         server.sendmail(fromName, toName, msg.as_string())
         server.quit()
+        print 'Sent mail to %s' % (toName)
     except Exception, e:
         print e
     
