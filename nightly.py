@@ -62,7 +62,6 @@ today = time.localtime()
 todayStr = '%04d%02d%02d' % (today[0], today[1], today[2])
 todayNice = '%04d-%02d-%02d' % (today[0], today[1], today[2])
 dryRun = False
-segv_occured = False
 haveXSLT = True
 
 # check to see if we have libxml2 and libxslt
@@ -192,18 +191,6 @@ def checkIfAntJobFailed(logFileName):
         return True
     else: return False
 
-def checkForSEGV(logFileName):
-    f = open(logFileName, 'r')
-    loglines = f.readlines()
-    f.close()
-    loglines = string.join(loglines)
-    if loglines.find('SIGSEGV') != -1:
-        segv_occured = True
-        return True
-    else:
-        segv_occurred = False
-        return False
-    
 def getLogFilePath(logFileName):
     """
     Creates the full path for a specified log file.
