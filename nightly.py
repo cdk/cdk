@@ -369,14 +369,14 @@ if __name__ == '__main__':
         else: # if the distro could not be built, there's not much use doing the other stuff
             print 'Distro compile failed. Generating error page'
             srcFile = os.path.join(nightly_dir, 'build.log')
-            destFile = os.path.join(nightly_web, 'build.log')
+            destFile = os.path.join(nightly_web, 'build.log.fail')
             shutil.copyfile(srcFile, destFile)
             f = open(os.path.join(nightly_web, 'index.html'), 'r')
             lines = string.join(f.readlines())
             f.close()
             newlines = re.sub("<h2>CDK Nightly Build",
                           """<center><b><h3>Could not compile the sources -
-                          <a href=\"build.log\">build.log</a>
+                          <a href=\"build.log.fail\">build.log</a>
                           </h3></b></center>
                           <hr>
                           <p>
