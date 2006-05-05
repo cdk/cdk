@@ -406,9 +406,12 @@ if __name__ == '__main__':
     # dist jar file to do the api comparison with
 
     jarFile = glob.glob(os.path.join(nightly_web, "*.jar"))
-    jarBase = os.path.basename(jarFile[0])
-    oldCDKJar = os.path.join(nightly_dir, jarBase)
-    shutil.copyfile(jarFile[0], oldCDKJar)
+    if len(jarFile) == 1:
+        jarBase = os.path.basename(jarFile[0])
+        oldCDKJar = os.path.join(nightly_dir, jarBase)
+        shutil.copyfile(jarFile[0], oldCDKJar)
+    else:
+        oldCDKJar = None
     
     os.system('rm -rf %s/*' % (nightly_web))
     writeTemporaryPage()
@@ -608,30 +611,33 @@ if __name__ == '__main__':
         else: page = page + "</tr>"        
 
     if japitools_path != "" and japitools_path != None:
-        print 'japi ok'
-        japize = os.path.join(japitools_path, 'bin', 'japize')
-        japcompat = os.path.join(japitools_path, 'bin', 'japicompat')
+        if oldCDKJar == None:
+            print 'Didn\'t find yesterdays dist jar. Skipping'
+        else:
+            japize = os.path.join(japitools_path, 'bin', 'japize')
+            japcompat = os.path.join(japitools_path, 'bin', 'japicompat')
+            
+            # run japize on the old cdk and the new one
+            os.system('%s as oldCDK.japi.gz %s' % (japize, oldCDKJar))
+            distSrc = os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-%s.jar' % (todayStr))        
+            os.system('%s as newCDK.japi.gz %s' % (japize, distSrc))
 
-        # run japize on the old cdk and the new one
-        os.system('%s as oldCDK.japi.gz %s' % (japize, oldCDKJar))
-        distSrc = os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-%s.jar' % (todayStr))        
-        os.system('%s as newCDK.japi.gz %s' % (japize, distSrc))
+            # do the comparison
+            os.system('%s -vh -o apicomp.html oldCDK.japi.gz newCDK.japi.gz > japi.log')
 
-        # do the comparison
-        os.system('%s -vh -o apicomp.html oldCDK.japi.gz newCDK.japi.gz > japi.log')
+            # copy output
+            srcFile = os.path.join(nightly_dir, 'apicomp.html')
+            destFile = os.path.join(nightly_web, 'apicomp.html')
+            shutil.copyfile(srcFile, destFile)
 
-        # copy output
-        srcFile = os.path.join(nightly_dir, 'apicomp.html')
-        destFile = os.path.join(nightly_web, 'apicomp.html')
-        shutil.copyfile(srcFile, destFile)
-
-        # make an entry on the page
-        page = page + """
-        <tr>
-        <td><a href=\"http://www.kaffe.org/~stuart/japi/\">JAPI Comparison</td>
-        <td><a href=\"apicomp.html\">Summary</a></td>
-        </tr>
-        """
+            # make an entry on the page
+            page = page + """
+            <tr>
+            <td><a href=\"http://www.kaffe.org/~stuart/japi/\">JAPI Comparison</td>
+            <td><a href=\"apicomp.html\">Summary</a></td>
+            </tr>
+            """
+            print 'japi ok'
         
     # get rid of  yesterdays distro jar file which we moved to nightly_dir
     # in anticipation of japi
