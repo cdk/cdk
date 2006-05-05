@@ -380,17 +380,14 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			{
 				int labelX = (int) (r2dm.getRenderingCoordinate(atom).x - 2);
 				int labelY = (int) (r2dm.getRenderingCoordinate(atom).y + 2);
-        try{
-          AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt",
-              atom.getBuilder());
-          factory.configure(atom);
-        }catch(Exception ex){
-           //We choose black if reading not possible
-           logger.debug(ex);
-        }
-        Color atomColor = (Color)atom.getProperty("org.openscience.cdk.renderer.color");
-        if(atomColor==null)
-          atomColor=Color.BLACK;
+				try{
+					AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/jmol_atomtypes.txt",atom.getBuilder());
+					factory.configure(atom);
+				}catch(Exception ex){
+					//We choose black if reading not possible
+					logger.debug(ex);
+				}
+				Color atomColor = r2dm.getAtomColor(atom, Color.BLACK);
 				paintEmptySpace(labelX, labelY, 5, 5, 0, atomColor, graphics);
 			}
 			return;
