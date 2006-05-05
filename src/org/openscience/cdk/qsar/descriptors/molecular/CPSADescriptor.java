@@ -197,7 +197,7 @@ public class CPSADescriptor implements IMolecularDescriptor {
         GasteigerMarsiliPartialCharges peoe = null;
         try {
             peoe= new GasteigerMarsiliPartialCharges();
-            peoe.assignGasteigerMarsiliPartialCharges(container, true);
+            peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
         } catch (Exception e) {
             throw new CDKException("Problem assigning Gasteiger - Marsili partial charges", e);
         }

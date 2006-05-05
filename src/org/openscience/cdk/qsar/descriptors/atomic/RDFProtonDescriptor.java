@@ -195,7 +195,7 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
           rs=precalculatedringset;
         try {
           GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-          peoe.assignGasteigerMarsiliPartialCharges(mol, true);
+          peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
         } catch (Exception ex1) {
           throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }

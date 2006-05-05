@@ -55,6 +55,27 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		return new TestSuite(PartialSigmaChargeDescriptorTest.class);
 	}
 	/**
+	 *  A unit test for JUnit with Fluoroethylene
+	 */
+	public void testPartialSigmaChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={-0.2138,0.079,-0.072,0.0942,0.0563,0.0563};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IMolecularDescriptor descriptor = new PartialSigmaChargeDescriptor();
+		Integer[] params = new Integer[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("F-C=C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		for (int i = 0 ; i < mol.getAtomCount() ; i++){
+			params[0] = new Integer(i);
+			params[1] = new Integer(6);
+	        descriptor.setParameters(params);
+			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			assertEquals(testResult[i],result,0.001);
+		}
+	}
+	/**
 	 *  A unit test for JUnit with Ethyl chloride
 	 */
 	public void testPartialSigmaChargeDescriptor_Methyl_Floride() throws ClassNotFoundException, CDKException, java.lang.Exception {

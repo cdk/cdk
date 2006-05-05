@@ -132,7 +132,7 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
             peoe.setMaxGasteigerIters(6);
         //	HydrogenAdder hAdder = new HydrogenAdder();
         //	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-            peoe.assignGasteigerMarsiliPartialCharges(mol, true);
+            peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
         } catch (Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }

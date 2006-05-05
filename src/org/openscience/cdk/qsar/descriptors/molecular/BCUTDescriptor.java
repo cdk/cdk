@@ -292,7 +292,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         GasteigerMarsiliPartialCharges peoe = null;
         try {
             peoe = new GasteigerMarsiliPartialCharges();
-            peoe.assignGasteigerMarsiliPartialCharges(ac, true);
+            peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
         } catch (Exception e) {
             System.out.println(e.toString());
         }

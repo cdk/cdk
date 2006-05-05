@@ -89,19 +89,19 @@ public class GasteigerMarsiliPartialCharges {
 	
 	
 	/**
-	 *  Main method which assigns Gasteiger Marisili partial charges
+	 *  Main method which assigns Gasteiger Marisili partial sigma charges
 	 *
 	 *@param  ac             AtomContainer
 	 *@param  setCharge      boolean flag to set charge on atoms
 	 *@return                AtomContainer with partial charges
 	 *@exception  Exception  Possible Exceptions
 	 */
-	public IAtomContainer assignGasteigerMarsiliPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
+	public IAtomContainer assignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 		if (setCharge) {
 			atomTypeCharges.setCharges(ac);
 		}
 
-		double[] gasteigerFactors = assignGasteigerMarsiliFactors(ac);//a,b,c,deoc,chi,q
+		double[] gasteigerFactors = assignGasteigerSigmaMarsiliFactors(ac);//a,b,c,deoc,chi,q
 		double alpha = 1.0;
 		double q;
 		double deoc;
@@ -162,8 +162,6 @@ public class GasteigerMarsiliPartialCharges {
 		}
 		return ac;
 	}
-
-	
 	/**
 	 *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
 	 *  object
@@ -181,7 +179,7 @@ public class GasteigerMarsiliPartialCharges {
 	 *@param  ac  AtomContainer
 	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
-	public double[] assignGasteigerMarsiliFactors(IAtomContainer ac) {
+	public double[] assignGasteigerSigmaMarsiliFactors(IAtomContainer ac) {
 		//a,b,c,denom,chi,q
 		double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE+1))];
 		String AtomSymbol = "";

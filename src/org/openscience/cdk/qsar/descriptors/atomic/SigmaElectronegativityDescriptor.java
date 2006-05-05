@@ -145,8 +145,8 @@ public class SigmaElectronegativityDescriptor implements IMolecularDescriptor {
 	      if(oldac!=ac){
 	    	  if(maxIterations != 0)
 	    		  peoe.setMaxGasteigerIters(maxIterations);
-	    	  peoe.assignGasteigerMarsiliPartialCharges(mol, true);
-	    	  gasteigerFactors = peoe.assignGasteigerMarsiliFactors(mol);
+	    	  peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+	    	  gasteigerFactors = peoe.assignGasteigerSigmaMarsiliFactors(mol);
 	    	  oldac=ac;
 	      }
 	      int stepSize = peoe.getStepSize();

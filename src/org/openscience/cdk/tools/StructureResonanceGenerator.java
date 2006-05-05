@@ -11,7 +11,8 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.DisplacementChargeReaction;
+import org.openscience.cdk.reaction.type.DisplacementChargeFromAcceptorReaction;
+import org.openscience.cdk.reaction.type.DisplacementChargeFromDonorReaction;
 import org.openscience.cdk.reaction.type.RearrangementAnion1Reaction;
 import org.openscience.cdk.reaction.type.RearrangementAnion2Reaction;
 import org.openscience.cdk.reaction.type.RearrangementAnion3Reaction;
@@ -42,9 +43,10 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  *  
  * @author      Miguel Rojas
  * @cdk.created     2006-5-05
- * @cdk.module experimental
+ * @cdk.module reaction
  * 
- * @see DisplacementChargeReaction
+ * @see DisplacementChargeFromAcceptorReaction
+ * @see DisplacementChargeFromDonorReaction
  * @see RearrangementAnion1Reaction
  * @see RearrangementAnion2Reaction
  * @see RearrangementAnion3Reaction
@@ -276,11 +278,25 @@ public class StructureResonanceGenerator {
 						}
 				}
 				if(bondR){
-					/* DisplacementChargeReaction*/
-					IReactionProcess type  = new DisplacementChargeReaction();
+					/* DisplacementChargeFromAcceptorReaction*/
+					IReactionProcess type  = new DisplacementChargeFromAcceptorReaction();
 			        type.setParameters(params);
 					
 			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			        
+			        if(setOfReactions.getReactionCount() != 0)
+						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
+						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
+							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
+//							System.out.println("DisplacementChargeFromAcceptorReaction");
+							if(!existAC(setOfAtomContainer,set))
+								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
+						}
+			        /* DisplacementChargeFromDonorReaction*/
+					type  = new DisplacementChargeFromDonorReaction();
+			        type.setParameters(params);
+					
+			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
