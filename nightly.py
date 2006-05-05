@@ -6,7 +6,7 @@
 #
 # Requires a Unix system, for now
 #
-# Requires on the path:   java, ant, svn, nice, cp, rm, tar
+# Requires on the path:   java, ant, svn, nice, rm, tar
 # Optionally on the path: dot (from graphviz)
 #
 # Python requirements: Python 2.4, libxml & libxslt bindings
@@ -456,7 +456,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     # check for the presence of required executable
-    executableList = ['java', 'ant', 'tar', 'nice', 'svn', 'cp', 'rm']
+    executableList = ['java', 'ant', 'tar', 'nice', 'svn', 'rm']
     ret = map( executableExists, executableList )
     if False in executableList:
         print 'Could not find one or more required executables: '+executableList
@@ -584,7 +584,8 @@ if __name__ == '__main__':
     # lets now make the web site for nightly builds
     if successDist:
         distSrc = os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-%s.jar' % (todayStr))
-        os.system('cp %s %s' % (distSrc, nightly_web))
+        distDest = os.path.join(nightly_web, 'cdk-svn-%s.jar' % (todayStr))
+        shutil.copyfile(distSrc, distDest)
         page = page + """
         <tr>
         <td>
@@ -627,9 +628,17 @@ if __name__ == '__main__':
 
     # get the JUnit test results
     if successTest:
+
+        # make the directory for reports
         testDir = os.path.join(nightly_web, 'test')
         os.mkdir(testDir)
-        os.system('cp -r %s/reports/result-* %s' % (nightly_repo, testDir))
+
+        # copy the individual report files
+        reportFiles = glob.glob(os.path.join(nightly_repo, 'reports', 'result-*'))
+        for report in reportFiles:
+            dest = os.path.join(testDir, os.path.basename(report))
+            shutil.copyfile(report, dest)
+
         page = page + """
         <tr>
         <td valign=\"top\"><a href=\"http://www.junit.org/index.htm\">JUnit</a> results:</td><td> """
