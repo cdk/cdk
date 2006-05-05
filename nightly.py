@@ -641,7 +641,7 @@ if __name__ == '__main__':
         
     # get rid of  yesterdays distro jar file which we moved to nightly_dir
     # in anticipation of japi
-    os.unlink(oldCDKJar)
+    if oldCDKJar != None: os.unlink(oldCDKJar)
         
         
     # copy this script to the nightly we dir. The script should be in nightly_dir
