@@ -23,6 +23,8 @@
 #                     to dependency graphs
 # Update 05/05/2006 - Added JAPI comparison. Checked for required
 #                     executables and env vars
+# Update 05/07/2006 - Added a command line option to prevent mail
+#                     from being sent
 #
 
 import string, sys, os, os.path, time, re, glob, shutil
@@ -86,6 +88,7 @@ todayStr = '%04d%02d%02d' % (today[0], today[1], today[2])
 todayNice = '%04d-%02d-%02d' % (today[0], today[1], today[2])
 dryRun = False
 haveXSLT = True
+noMail = False
 
 # check to see if we have libxml2 and libxslt
 try:
@@ -247,6 +250,11 @@ def runAntJob(cmdLine, logFileName, jobName):
     olddir = os.getcwd()
     os.chdir(nightly_repo)
     os.system('%s > %s' % (cmdLine, getLogFilePath(logFileName)))
+
+    if not os.path.exists(getLogFilePath(logFileName)):
+        print '%s failed' % (jobName)
+        return False
+        
     if checkIfAntJobFailed( getLogFilePath(logFileName) ):
         print '%s failed' % (jobName)
         os.chdir(olddir)
@@ -452,6 +460,7 @@ if __name__ == '__main__':
           help   - this message
           dryrun - do a dry run. This does not sync with SVN or run ant tasks. It is expected
                    that you have stuff from a previous run available and is mainly for testing
+          nomail - if specified no mail will be sent in response to build errors
         """
         sys.exit(0)
 
@@ -473,6 +482,9 @@ if __name__ == '__main__':
     # are we going to do a dry run?
     if 'dryrun' in sys.argv or 'dry' in sys.argv:
         dryRun = True
+
+    if 'nomail' in sys.argv:
+        noMail = True
 
     successDist = True
     successTest = True
@@ -539,7 +551,7 @@ if __name__ == '__main__':
             f = open('build.log', 'r')
             lines = f.readlines()
             f.close()
-            sendMail(string.join(lines[-20:]))
+            if not noMail: sendMail(string.join(lines[-20:]))
 
             # finally done!
             os.chdir(start_dir)
