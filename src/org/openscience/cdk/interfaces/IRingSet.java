@@ -86,7 +86,7 @@ public interface IRingSet extends ISetOfAtomContainers {
 	public boolean contains(IAtom atom);
 	
 	/**
-	 * True, if this set contains the IAtomContainer
+	 * True, if this set contains the IAtomContainer.
 	 *
      * @param  container IAtomContainer to check
 	 * @return           true, if the ringset contains the container
