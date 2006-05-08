@@ -73,7 +73,6 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1,5,1);
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
-        System.out.println(mol);
         assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
         
@@ -124,6 +123,51 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertEquals("incorrect bond count", 0, ac.getBondCount());
         assertEquals("incorrect hydrogen count", 4, ac.getAtomAt(0).getHydrogenCount());
         assertEquals("incorrect hydrogen count", 4, ac.getAtomAt(1).getHydrogenCount());
+    }
+    /**
+     * Test total formal charge.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    public void testgetTotalFormalCharge() throws IOException, ClassNotFoundException, CDKException
+    {
+        SmilesParser parser = new SmilesParser();
+        Molecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        int totalCharge = AtomContainerManipulator.getTotalFormalCharge((IAtomContainer)mol);
+
+        assertEquals(1,totalCharge);
+    }
+    /**
+     * Test total positive formal charge.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    public void testgetTotalPositiveFormalCharge() throws IOException, ClassNotFoundException, CDKException
+    {
+        SmilesParser parser = new SmilesParser();
+        Molecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        int totalCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)mol);
+
+        assertEquals(2,totalCharge);
+    }
+    /**
+     * Test total negative formal charge.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    public void testgetTotalNegativeFormalCharge() throws IOException, ClassNotFoundException, CDKException
+    {
+        SmilesParser parser = new SmilesParser();
+        Molecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        int totalCharge = AtomContainerManipulator.getTotalNegativeFormalCharge((IAtomContainer)mol);
+
+        assertEquals(-1,totalCharge);
     }
 }
 

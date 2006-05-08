@@ -101,9 +101,33 @@ public class AtomContainerManipulator {
      * @return The summed formal charges of all atoms in this AtomContainer.
      */
     public static int getTotalFormalCharge(IAtomContainer atomContainer) {
+        int chargeP = getTotalNegativeFormalCharge(atomContainer);
+        int chargeN = getTotalPositiveFormalCharge(atomContainer);
+        int totalCharge = chargeP + chargeN;
+        
+        return totalCharge;
+    }
+    /**
+     * @return The summed negative formal charges of all atoms in this AtomContainer. 
+     */
+    public static int getTotalNegativeFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            charge += atomContainer.getAtomAt(i).getFormalCharge();
+        	double chargeI = atomContainer.getAtomAt(i).getFormalCharge();
+        	if(chargeI < 0)
+        		charge += chargeI;
+        }
+        return charge;
+    }
+    /**
+     * @return The summed positive formal charges of all atoms in this AtomContainer. 
+     */
+    public static int getTotalPositiveFormalCharge(IAtomContainer atomContainer) {
+        int charge = 0;
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+        	double chargeI = atomContainer.getAtomAt(i).getFormalCharge();
+        	if(chargeI > 0)
+        		charge += chargeI;
         }
         return charge;
     }
