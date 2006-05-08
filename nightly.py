@@ -24,10 +24,13 @@
 # Update 05/05/2006 - Added JAPI comparison. Checked for required
 #                     executables and env vars
 # Update 05/07/2006 - Added a command line option to prevent mail
-#                     from being sent
+#                     from being sent. Also replaced the system() to
+#                     tar with calls to the tarfile python module.
+#                     Added some more checks
 #
 
 import string, sys, os, os.path, time, re, glob, shutil
+import tarfile
 from email.MIMEText import MIMEText
 import email.Utils
 import smtplib
@@ -49,6 +52,8 @@ nightly_dir = '/home/rajarshi/src/java/cdk-nightly/'
 # points to a web accessible directory where the
 # nightly build site will be generated
 nightly_web = '/home/rajarshi/public_html/code/java/nightly/'
+#nightly_web = '/home/rajarshi/public_html/tmp/'
+
 
 
 # Optional
@@ -480,12 +485,22 @@ if __name__ == '__main__':
         sys.exit(-1)
         
     # are we going to do a dry run?
-    if 'dryrun' in sys.argv or 'dry' in sys.argv:
+    if 'dryrun' in [x.lower() for x in sys.argv] or 'dry' in [x.lower() for x in sys.argv]:
         dryRun = True
 
-    if 'nomail' in sys.argv:
+    if 'nomail' in [x.lower() for x in sys.argv]:
         noMail = True
 
+
+    # print out some status stuff
+    print """
+    Variable settings
+    
+    nightly_repo = %s
+    nightly_dir  = %s
+    nightly_web  = %s
+    """ % (nightly_repo, nightly_dir, nightly_web)
+    
     successDist = True
     successTest = True
     successJavadoc = True
@@ -612,7 +627,15 @@ if __name__ == '__main__':
     # Lets tar up the java docs and put them away
     if successJavadoc:
         destFile = os.path.join(nightly_web, 'javadoc-%s.tgz' % (todayStr))
-        os.system('nice -n 19 tar -zcvf %s -C %s/doc api > %s/tar.log' % (destFile, nightly_repo, nightly_dir))
+
+        # tar up the javadocs
+        olddir = os.getcwd()
+        os.chdir(os.path.join(nightly_repo,'doc'))
+        tfile = tarfile.open(destFile, 'w:gz')
+        tfile.add('api')
+        tfile.close()
+        os.chdir(olddir)
+        
         shutil.copytree('%s/doc/api' % (nightly_repo),
                         '%s/api' % (nightly_web))                
         page = page + """
