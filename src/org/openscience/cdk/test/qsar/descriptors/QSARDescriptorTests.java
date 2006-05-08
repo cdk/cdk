@@ -47,6 +47,7 @@ public class QSARDescriptorTests {
         suite.addTest(BondCountDescriptorTest.suite());
         suite.addTest(RotatableBondsCountDescriptorTest.suite());
         suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
+        suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
         suite.addTest(SigmaElectronegativityDescriptorTest.suite());
         suite.addTest(AromaticAtomsCountDescriptorTest.suite());
         suite.addTest(AromaticBondsCountDescriptorTest.suite());
