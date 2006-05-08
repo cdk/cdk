@@ -16,6 +16,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -128,6 +129,13 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 			setActiveCenters(reactant);
 		}
 		
+		/*control of the volume of number of charge - it will be made possible if
+		 * if the atoms[i] is the only atom with charge*/
+		int negCharge = AtomContainerManipulator.getTotalNegativeFormalCharge((IAtomContainer)reactant);
+		int posCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)reactant);
+		if(posCharge+Math.abs(negCharge) > 1)
+			return setOfReactions;
+		
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
 			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER) && atoms[i].getFormalCharge() == 1 ){
@@ -142,6 +150,10 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 						IAtom atom1 = bonds[j].getConnectedAtom(atoms[i]);
 						ILonePair[] lp = reactant.getLonePairs(atom1);
 						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length > 0 ){
+							
+							
+							
+							
 							/* positions atoms and bonds */
 							int atom0P = reactant.getAtomNumber(atoms[i]);
 							int bond1P = reactant.getBondNumber(bonds[j]);

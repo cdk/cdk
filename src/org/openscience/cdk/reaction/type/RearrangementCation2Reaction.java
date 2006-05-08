@@ -15,6 +15,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -126,6 +127,12 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 		if(!hasActiveCenter){
 			setActiveCenters(reactant);
 		}
+		/*control of the volume of number of charge - it will be made possible if
+		 * if the atoms[i] is the only atom with charge*/
+		int negCharge = AtomContainerManipulator.getTotalNegativeFormalCharge((IAtomContainer)reactant);
+		int posCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)reactant);
+		if(posCharge+Math.abs(negCharge) > 1)
+			return setOfReactions;
 		
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
