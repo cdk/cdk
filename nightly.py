@@ -27,7 +27,7 @@
 #                     from being sent. Also replaced the system() to
 #                     tar with calls to the tarfile python module.
 #                     Added some more checks
-#
+# Update 05/08/2006 - Added checks for JVM segfaults
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile
@@ -214,6 +214,16 @@ def parseJunitOutput(summaryFile):
     f = open(fileName, 'w')
     f.write(summary)
     f.close()
+
+def checkIfSEGV(dir):
+    """
+    Look in dir to see if there are any hs_* files
+    which indicate a SEGV in the JVM. If found
+    return True else return False
+    """
+    hsfiles = glob.glob(os.path.join(dir, 'hs_*'))
+    if len(hsfiles) == 0: return False
+    else: return True
     
 def checkIfAntJobFailed(logFileName):
     """
@@ -256,6 +266,12 @@ def runAntJob(cmdLine, logFileName, jobName):
     os.chdir(nightly_repo)
     os.system('%s > %s' % (cmdLine, getLogFilePath(logFileName)))
 
+    # if a JVM segfault occured we've failed
+    if checkIfSEGV(nightly_repo):
+        print '%s failed. JVM segfault'
+        return False
+    
+    # if for some reason a log file was not written we've failed
     if not os.path.exists(getLogFilePath(logFileName)):
         print '%s failed' % (jobName)
         return False
@@ -512,8 +528,16 @@ if __name__ == '__main__':
     os.chdir(nightly_dir)
 
     if not dryRun:
+
+        # clean out any files from a previous SEGV in the repo dir
+        hsfiles = glob.glob(os.path.join(nightly_repo, 'hs_*'))
+        for hsfile in hsfiles:
+            os.unlink(hsfile)
+        
         # clean up log files in the run dir
-        os.system('rm -f *.log')
+        logfiles = glob.glob(os.path.join(nightly_dir, '*.log'))
+        for logfile in logfiles:
+            os.unlink(logfile)
 
         # go into the repo and sync with SVN
         successSVN = updateSVN()
