@@ -789,7 +789,7 @@ if __name__ == '__main__':
                             os.path.join(nightly_web, 'pmd.log'))            
             page = page + """
             <td valign=\"top\">
-            <a href=\"pmdcheck.log\">pmd.log</a>
+            <a href=\"pmd.log\">pmd.log</a>
             </td></tr>
             """
         else: page = page + "</tr>"        
