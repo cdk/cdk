@@ -49,11 +49,10 @@ public class SMARTSFormat implements IChemFormat {
         return new String[0];
     }
 
-    public String getReaderClassName() { 
-      return "org.openscience.cdk.io.SMILESReader";
-    }
-    public String getWriterClassName() { 
-      return "org.openscience.cdk.io.SMILESWriter";
-    }
+    public String getReaderClassName() { return null; }
+    public String getWriterClassName() { return null; }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }
