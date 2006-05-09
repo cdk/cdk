@@ -706,7 +706,7 @@ public abstract class JChemPaintPanel
 
 		// check for coordinates
 		if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
-			String error = "Model does not have coordinates. Cannot open file.";
+			String error = "Model does not have 2D coordinates. Cannot open file.";
 			logger.warn(error);
 			JOptionPane.showMessageDialog(this, error);
 			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
