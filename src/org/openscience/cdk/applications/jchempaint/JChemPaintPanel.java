@@ -522,7 +522,7 @@ public abstract class JChemPaintPanel
 		if (cor.accepts(ChemFile.class)) {
 			// try to read a ChemFile
 			try {
-				chemFile = (ChemFile) cor.read((ChemObject) new ChemFile());
+				chemFile = (ChemFile) cor.read(new ChemFile());
 				if (chemFile != null) {
 					processChemFile(chemFile);
 					return;

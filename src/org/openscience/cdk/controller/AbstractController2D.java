@@ -920,9 +920,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				((Point2d)r2dm.getRenderingCoordinate(atom)).y-=highlightRadius/4;
 			}
 		}
-		for(int i=0;i<newRing.getAtomCount();i++){
-			r2dm.setRenderingCoordinate(newRing.getAtomAt(i),new Point2d(((Point2d)r2dm.getRenderingCoordinate(newRing.getAtomAt(i))).x,((Point2d)r2dm.getRenderingCoordinate(newRing.getAtomAt(i))).y));
-		}
 		this.updateMoleculeCoordinates();
 		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtomAt(0)), newRing.getAtoms());
 		undoRedoContainer.add(newRing);

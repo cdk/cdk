@@ -31,6 +31,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
+import javax.vecmath.Point2d;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.interfaces.IAtom;
@@ -184,6 +185,21 @@ public class CreateReactionAction extends JCPAction
 			}
 		}
 		model.setSetOfReactions(reactionSet);
+		int atomcount=0;
+		for(int i=0;i<reactionSet.getReactionCount();i++){
+			for(int k=0;k<reactionSet.getReaction(i).getProductCount();k++){
+				for(int l=0;l<reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomCount();l++){
+					if(jcpmodel.getRendererModel().getRenderingCoordinates().get(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomAt(l))==null)
+						jcpmodel.getRendererModel().getRenderingCoordinates().put(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomAt(l),new Point2d(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomAt(l).getPoint2d()));
+				}
+			}
+			for(int k=0;k<reactionSet.getReaction(i).getReactantCount();k++){
+				for(int l=0;l<reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomCount();l++){
+					if(jcpmodel.getRendererModel().getRenderingCoordinates().get(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomAt(l))==null)
+						jcpmodel.getRendererModel().getRenderingCoordinates().put(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomAt(l),new Point2d(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomAt(l).getPoint2d()));
+				}
+			}
+		}
 	}
 
 
