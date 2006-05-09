@@ -57,6 +57,40 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
  */
 public class ChemModelManipulator {
     
+    public static int getAtomCount(IChemModel chemModel) {
+    	int count = 0;
+        ICrystal crystal = chemModel.getCrystal();
+        if (crystal != null) {
+            count += crystal.getAtomCount();
+        }
+        ISetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+        if (moleculeSet != null) {
+            count += SetOfMoleculesManipulator.getAtomCount(moleculeSet);
+        }
+        ISetOfReactions reactionSet = chemModel.getSetOfReactions();
+        if (reactionSet != null) {
+            count += SetOfReactionsManipulator.getAtomCount(reactionSet);
+        }
+        return count;
+    }
+    
+    public static int getBondCount(IChemModel chemModel) {
+    	int count = 0;
+        ICrystal crystal = chemModel.getCrystal();
+        if (crystal != null) {
+            count += crystal.getBondCount();
+        }
+        ISetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+        if (moleculeSet != null) {
+            count += SetOfMoleculesManipulator.getBondCount(moleculeSet);
+        }
+        ISetOfReactions reactionSet = chemModel.getSetOfReactions();
+        if (reactionSet != null) {
+            count += SetOfReactionsManipulator.getBondCount(reactionSet);
+        }
+        return count;
+    }
+    
     public static void removeAtomAndConnectedElectronContainers(IChemModel chemModel, IAtom atom) {
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {

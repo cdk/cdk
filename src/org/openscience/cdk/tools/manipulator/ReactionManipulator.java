@@ -48,6 +48,32 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
  */
 public class ReactionManipulator {
     
+    public static int getAtomCount(IReaction reaction) {
+    	int count = 0;
+        IMolecule[] reactants = reaction.getReactants().getMolecules();
+        for (int i=0; i<reactants.length; i++) {
+        	count += reactants[i].getAtomCount();
+        }
+        IMolecule[] products = reaction.getProducts().getMolecules();
+        for (int i=0; i<products.length; i++) {
+        	count += products[i].getAtomCount();
+        }
+        return count;
+    }
+    
+    public static int getBondCount(IReaction reaction) {
+    	int count = 0;
+        IMolecule[] reactants = reaction.getReactants().getMolecules();
+        for (int i=0; i<reactants.length; i++) {
+        	count += reactants[i].getBondCount();
+        }
+        IMolecule[] products = reaction.getProducts().getMolecules();
+        for (int i=0; i<products.length; i++) {
+        	count += products[i].getBondCount();
+        }
+        return count;
+    }
+    
     public static void removeAtomAndConnectedElectronContainers(IReaction reaction, IAtom atom) {
         IMolecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {

@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 
 /**
@@ -43,6 +44,14 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
  */
 public class SetOfMoleculesManipulator {
     
+	public static int getAtomCount(ISetOfAtomContainers set) {
+		return SetOfAtomContainersManipulator.getAtomCount(set);
+	}
+	
+	public static int getBondCount(ISetOfAtomContainers set) {
+		return SetOfAtomContainersManipulator.getBondCount(set);
+	}
+	
     public static void removeAtomAndConnectedElectronContainers(ISetOfMolecules set, IAtom atom) {
         SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(set, atom);
     }

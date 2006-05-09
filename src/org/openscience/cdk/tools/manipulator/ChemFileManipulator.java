@@ -48,6 +48,22 @@ import org.openscience.cdk.interfaces.IChemSequence;
  */
 public class ChemFileManipulator {
 
+    public static int getAtomCount(IChemFile file) {
+    	int count = 0;
+        for (int i=0; i<file.getChemSequenceCount(); i++) {
+        	count += ChemSequenceManipulator.getAtomCount(file.getChemSequence(i));
+        }
+        return count;
+    }
+
+    public static int getBondCount(IChemFile file) {
+    	int count = 0;
+        for (int i=0; i<file.getChemSequenceCount(); i++) {
+        	count += ChemSequenceManipulator.getBondCount(file.getChemSequence(i));
+        }
+        return count;
+    }
+
     /**
      * Puts all the Molecules of this container together in one 
      * AtomCcntainer.
