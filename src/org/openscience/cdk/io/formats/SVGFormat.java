@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class SVGFormat implements IChemFormat {
+public class SVGFormat implements IResourceFormat {
 
     public SVGFormat() {}
     
@@ -45,7 +45,7 @@ public class SVGFormat implements IChemFormat {
         return new String[]{"svg"};
     }
 
-    public String getReaderClassName() { return null; }
-    public String getWriterClassName() { return null; }
-
+	public boolean isXMLBased() {
+		return true;
+	}
 }

@@ -31,7 +31,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class POVRayFormat implements IChemFormat {
+public class POVRayFormat implements IResourceFormat {
 
     public POVRayFormat() {}
     
@@ -49,7 +49,7 @@ public class POVRayFormat implements IChemFormat {
         return new String[]{"pov"};
     }
 
-    public String getReaderClassName() { return null; }
-    public String getWriterClassName() { return null; }
-
+	public boolean isXMLBased() {
+		return false;
+	}
 }
