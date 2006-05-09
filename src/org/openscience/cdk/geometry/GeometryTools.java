@@ -497,7 +497,6 @@ public class GeometryTools {
 		double y = 0;
 		for (int f = 0; f < atoms.length; f++) {
 			atom = (IAtom) atoms[f];
-			System.err.println(atom.getPoint2d()+"  "+((Point2d)renderingCoordinates.get(atom)));
 			if (renderingCoordinates.get(atom) != null) {
 				x += ((Point2d)renderingCoordinates.get(atom)).x;
 				y += ((Point2d)renderingCoordinates.get(atom)).y;
