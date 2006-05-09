@@ -54,4 +54,7 @@ public class PubChemFormat implements IChemFormat {
       return null;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

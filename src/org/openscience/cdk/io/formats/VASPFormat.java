@@ -57,4 +57,7 @@ public class VASPFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

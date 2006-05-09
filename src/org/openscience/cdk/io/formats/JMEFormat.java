@@ -50,4 +50,7 @@ public class JMEFormat implements IChemFormat {
     }
     public String getWriterClassName() { return null; }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

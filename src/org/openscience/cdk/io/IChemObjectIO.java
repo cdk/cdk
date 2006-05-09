@@ -30,8 +30,7 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
@@ -54,7 +53,7 @@ public interface IChemObjectIO {
     /**
      * Returns the ChemFormat class for this IO class.
      */
-    public IChemFormat getFormat();
+    public IResourceFormat getFormat();
 
     /**
      * Returns whether the given IChemObject can be read or not.

@@ -57,4 +57,8 @@ public class NWChemFormat implements IChemFormatMatcher {
         }
         return false;
     }
+
+	public boolean isXMLBased() {
+		return false;
+	}
 }

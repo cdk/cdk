@@ -97,7 +97,8 @@ public class WWMMatrixReader {
             public String getPreferredNameExtension() { return null; };
             public String[] getNameExtensions() { return new String[0]; };
             public String getReaderClassName() { return null; };
-            public String getWriterClassName() { return null; };
+            public String getWriterClassName() { return null; }
+			public boolean isXMLBased() { return false; };
         };
     }
     public void setReader(Reader input) throws CDKException {

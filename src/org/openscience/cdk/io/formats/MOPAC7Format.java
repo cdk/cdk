@@ -55,4 +55,8 @@ public class MOPAC7Format implements IChemFormatMatcher {
         }
         return false;
     }
+
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -55,4 +55,8 @@ public class ABINITFormat implements IChemFormatMatcher {
         }
         return false;
     }
+
+	public boolean isXMLBased() {
+		return false;
+	}
 }

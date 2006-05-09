@@ -88,4 +88,7 @@ public class MDLFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

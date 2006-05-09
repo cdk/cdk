@@ -57,4 +57,7 @@ public class PMPFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -55,4 +55,7 @@ public class PDBMLFormat implements IChemFormat {
       return null;
     }
 
+	public boolean isXMLBased() {
+		return true;
+	}
 }

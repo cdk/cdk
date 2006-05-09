@@ -58,4 +58,8 @@ public class JaguarFormat implements IChemFormatMatcher {
         }
         return false;
     }
+
+	public boolean isXMLBased() {
+		return false;
+	}
 }

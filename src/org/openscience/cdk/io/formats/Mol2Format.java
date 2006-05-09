@@ -61,4 +61,7 @@ public class Mol2Format implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

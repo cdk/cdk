@@ -56,4 +56,7 @@ public class SpartanFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

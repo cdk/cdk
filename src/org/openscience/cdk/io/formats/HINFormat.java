@@ -71,4 +71,7 @@ public class HINFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

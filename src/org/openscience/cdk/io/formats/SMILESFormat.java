@@ -54,4 +54,7 @@ public class SMILESFormat implements IChemFormat {
       return "org.openscience.cdk.io.SMILESWriter";
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

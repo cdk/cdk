@@ -56,4 +56,7 @@ public class Aces2Format implements IChemFormatMatcher {
         return false;
     }
     
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -58,5 +58,12 @@ public interface IResourceFormat {
      * @return null if no MIME type has been accepted on
      */
     public String getMIMEType();
+    
+    /**
+     * Indicates if the format is an XML-based language.
+     * 
+     * @return if the format is XML-based.
+     */
+    public boolean isXMLBased();
 }
 

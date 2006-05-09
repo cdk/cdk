@@ -52,4 +52,7 @@ public class GaussianInputFormat implements IChemFormat {
       return "org.openscience.cdk.io.program.GaussianInputWriter";
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -54,4 +54,7 @@ public class RawCopyFormat implements IChemFormat {
       return null;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -54,4 +54,7 @@ public class SybylDescriptorFormat implements IChemFormat {
       return null;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

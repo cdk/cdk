@@ -59,4 +59,7 @@ public class MDLRXNFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -51,4 +51,7 @@ public class FingerprintFormat implements IChemFormat {
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -59,4 +59,7 @@ public class INChIFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return true;
+	}
 }

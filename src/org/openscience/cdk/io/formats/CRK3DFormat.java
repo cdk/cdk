@@ -52,4 +52,7 @@ public class CRK3DFormat implements IChemFormat {
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

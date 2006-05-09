@@ -64,4 +64,7 @@ public class CMLFormat implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return true;
+	}
 }

@@ -56,4 +56,8 @@ public class DaltonFormat implements IChemFormatMatcher {
         }
         return false;
     }
+
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -51,4 +51,7 @@ public class Chem3D_Cartesian_1Format implements IChemFormat {
     public String getReaderClassName() { return null; }
     public String getWriterClassName() { return null; }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

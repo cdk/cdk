@@ -59,4 +59,7 @@ public class Gaussian03Format implements IChemFormatMatcher {
         return false;
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

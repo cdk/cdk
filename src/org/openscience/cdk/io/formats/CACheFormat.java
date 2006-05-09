@@ -55,4 +55,8 @@ public class CACheFormat implements IChemFormatMatcher {
         }
         return false;
     }
+
+	public boolean isXMLBased() {
+		return false;
+	}
 }

@@ -50,4 +50,7 @@ public class CDKSourceCodeFormat implements IChemFormat {
       return "org.openscience.cdk.io.CDKSourceCodeWriter";
     }
 
+	public boolean isXMLBased() {
+		return false;
+	}
 }

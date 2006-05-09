@@ -70,6 +70,7 @@ public class DBWriter {
 			public String getPreferredNameExtension() { return null; }
 			public String[] getNameExtensions() { return new String[0]; }
 			public String getMIMEType() { return null; }
+			public boolean isXMLBased() { return false; }
         };
     }
     
