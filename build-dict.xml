@@ -1,0 +1,81 @@
+<project name="Dict XHTML+MathML+SVG script" default="all-process" basedir=".">
+	<import file="build.xml"/>
+	
+	<!-- directories -->
+	<property name="build" value="build" />
+    <property name="build.dict" value="${build}/dict" />
+    <property name="build.react" value="${build.dict}/react" />
+    <property name="build.qsar" value="${build.dict}/qsar" />
+	<property name="src" value="src" />
+    <property name="data.dict" value="${src}/org/openscience/cdk/dict/data" />
+	<property name="dict.xsl" value="doc/dict/xsl" />
+  
+	<target id="clean" name="clean">
+        <delete dir="${build.dict}" />
+    	<delete>
+    		<fileset dir="." includes="*~"/>
+    		<fileset dir="." file="*.html"/>
+    		<fileset dir="." file="*.xhtml"/>
+
+    	</delete>
+ 	 </target>
+  
+	 <target id="all-process" name="all-process" depends="clean,react-process,qsar-process,fixMathML">
+	 </target>
+	
+  	 <target id="react-process" name="react-process" depends="inR,xml">
+  	 	<xslt basedir="${data.dict}/react/" destdir="${build.react}" extension=".xhtml"
+      		includes="reaction-types.xml, reaction-types-metadata.xml"
+      		style="dictReactxhtml.xsl"/>
+ 	 </target>
+	 
+	<target id="inR" name="inR">
+		<mkdir dir="${build.react}"/>
+		<copy todir="${build.react}">
+			<fileset dir="${dict.xsl}">
+				<excludesfile name="${dict.xsl}/ctop.xsl"/>
+				<excludesfile name="${dict.xsl}/mathml.xsl"/>
+				<excludesfile name="${dict.xsl}/pmathml.xsl"/>
+				<excludesfile name="${dict.xsl}/pmathmlcss.xsl"/>
+		  	</fileset>
+		 </copy>
+	</target>
+	
+	
+	<target id="qsar-process" name="qsar-process" depends="inQ,xml">
+		<xslt basedir="${data.dict}/qsar/" destdir="${build.qsar}" extension=".xhtml"
+	   		includes="qsar-descriptors.xml, qsar-descriptors-metadata.xml"
+	   		style="dictQsarxhtml.xsl"/>
+	 </target>
+	 
+	<target id="inQ" name="inQ">
+		 <mkdir dir="${build.qsar}"/>
+		 <copy todir="${build.qsar}">
+		 	<fileset dir="${dict.xsl}">
+		 		<excludesfile name="${dict.xsl}/ctop.xsl"/>
+		  		<excludesfile name="${dict.xsl}/mathml.xsl"/>
+		  		<excludesfile name="${dict.xsl}/pmathml.xsl"/>
+		  		<excludesfile name="${dict.xsl}/pmathmlcss.xsl"/>
+		  	</fileset>
+		  </copy>
+	 </target>
+	
+	 <target id="xml" name="xml">
+	 	<!-- here should be the creator of xml -->
+	 </target>
+	
+  	 <target id="fixMathML" name="fixMathML">
+    	<replace dir=".">
+      		<include name="**/*.xhtml"/>
+      		<replacetoken><![CDATA[<!DOCTYPE]]></replacetoken>
+      		<replacevalue><![CDATA[<?xml-stylesheet type="text/xsl" href="mathml.xsl"?>
+				<!DOCTYPE]]></replacevalue>
+    	</replace>
+    	<replace dir=".">
+      		<include name="**/*.xhtml"/>
+      		<replacetoken><![CDATA[<math>]]></replacetoken>
+      		<replacevalue><![CDATA[<math xmlns="http://www.w3.org/1998/Math/MathML">]]></replacevalue>
+    	</replace>
+  	 </target>
+
+</project>
