@@ -51,27 +51,27 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	private boolean hasActiveCenter;
 
 	/**
-	 * Constructor of the DisplacementChargeReaction object
+	 * Constructor of the DisplacementChargeFromAcceptorReaction object
 	 *
 	 */
 	public DisplacementChargeFromAcceptorReaction(){
 		logger = new LoggingTool(this);
 	}
 	/**
-	 *  Gets the specification attribute of the DisplacementChargeReaction object
+	 *  Gets the specification attribute of the DisplacementChargeFromAcceptorReaction object
 	 *
 	 *@return    The specification value
 	 */
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
-				"http://",
+				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#DisplacementChargeFromAcceptorReaction",
 				this.getClass().getName(),
 				"$Id: DisplacementChargeReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
 				"The Chemistry Development Kit");
 	}
 	
 	/**
-	 *  Sets the parameters attribute of the DisplacementChargeReaction object
+	 *  Sets the parameters attribute of the DisplacementChargeFromAcceptorReaction object
 	 *
 	 *@param  params            The parameter is if the molecule has already fixed the center active or not. It 
 	 *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
@@ -79,7 +79,7 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
-			throw new CDKException("DisplacementChargeReaction only expects one parameter");
+			throw new CDKException("DisplacementChargeFromAcceptorReaction only expects one parameter");
 		}
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The parameter 1 must be of type boolean");
@@ -89,7 +89,7 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 
 
 	/**
-	 *  Gets the parameters attribute of the DisplacementChargeReaction object
+	 *  Gets the parameters attribute of the DisplacementChargeFromAcceptorReaction object
 	 *
 	 *@return    The parameters value
 	 */
@@ -109,13 +109,13 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	 */
 	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
 
-		logger.debug("initiate reaction: DisplacementChargeReaction");
+		logger.debug("initiate reaction: DisplacementChargeFromAcceptorReaction");
 		
 		if (reactants.getMoleculeCount() != 1) {
-			throw new CDKException("DisplacementChargeReaction only expects one reactant");
+			throw new CDKException("DisplacementChargeFromAcceptorReaction only expects one reactant");
 		}
 		if (agents != null) {
-			throw new CDKException("DisplacementChargeReaction don't expects agents");
+			throw new CDKException("DisplacementChargeFromAcceptorReaction don't expects agents");
 		}
 		
 		ISetOfReactions setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
@@ -218,7 +218,7 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 			}
 	}
 	/**
-	 *  Gets the parameterNames attribute of the DisplacementChargeReaction object
+	 *  Gets the parameterNames attribute of the DisplacementChargeFromAcceptorReaction object
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -230,7 +230,7 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 
 
 	/**
-	 *  Gets the parameterType attribute of the DisplacementChargeReaction object
+	 *  Gets the parameterType attribute of the DisplacementChargeFromAcceptorReaction object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value

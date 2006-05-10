@@ -68,7 +68,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 	 */
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
-				"http://",
+				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RearrangementRadical2Reaction",
 				this.getClass().getName(),
 				"$Id: RearrangementRadical2Reaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
 				"The Chemistry Development Kit");

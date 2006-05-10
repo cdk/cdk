@@ -68,7 +68,7 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 	 */
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
-				"http://",
+				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RearrangementCation1Reaction",
 				this.getClass().getName(),
 				"$Id: RearrangementCation1Reaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
 				"The Chemistry Development Kit");

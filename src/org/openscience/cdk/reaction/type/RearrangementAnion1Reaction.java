@@ -48,6 +48,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    2006-05-05
  * @cdk.module     reaction
  * @cdk.set        reaction-types
+ * @cdk.dictref    reaction-types:rearrangementCharge
  * 
  **/
 public class RearrangementAnion1Reaction implements IReactionProcess{
@@ -68,7 +69,7 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 	 */
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
-				"http://",
+				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RearrangementAnion1Reaction",
 				this.getClass().getName(),
 				"$Id: RearrangementAnion1Reaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
 				"The Chemistry Development Kit");

@@ -23,7 +23,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *<pre>
  *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
  *  setOfReactants.addMolecule(new Molecule());
- *  IReactionProcess type = new RearrangementAnion1Reaction();
+ *  IReactionProcess type = new ElectronImpactNBEReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
  *  ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2006-04-01
  * @cdk.module     reaction
  * @cdk.set        reaction-types
+ * @cdk.dictref    reaction-types:electronImpact
  * 
  **/
 public class ElectronImpactNBEReaction implements IReactionProcess{
@@ -62,7 +63,7 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 	 */
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
-				"http://gold.zvon.org/E01999.html",
+				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactNBEReaction",
 				this.getClass().getName(),
 				"$Id: ElectronImpactNBEReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
 				"The Chemistry Development Kit");
