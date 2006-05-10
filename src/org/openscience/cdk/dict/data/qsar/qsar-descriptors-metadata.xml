@@ -1,0 +1,223 @@
+<dictionary
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core cmlAll.xsd
+                      http://bibtexml.sf.net/                 bibtexml.xsd"
+  
+  xmlns="http://www.xml-cml.org/schema/cml2/core"
+  xmlns:bibtex="http://bibtexml.sf.net/"
+  xmlns:cvs="https://www.cvshome.org/"
+  xmlns:dc="http://dublincore.org/"
+  
+  xmlns:qsar-descriptors-metadata="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata"
+  id="qsar-descriptors-metadata" title="QSAR.sf.net Metadata Dictionary">
+
+  <annotation>
+    <documentation>
+      <metadata name="cvs:revision" content="$Revision: 109 $"/>
+      <metadata name="cvs:last-change-by" content="$Author: egonw $"/>
+      <metadata name="cvs:date" content="$Date: 2005-02-21 14:49:48 +0100 (Mo, 21 Feb 2005) $"/>
+      <metadata name="cvs:id" content="$Id: qsar-descriptors-metadata.xml 109 2005-02-21 13:49:48Z egonw $"/>
+    </documentation>
+    <appinfo>
+      <contributor id="elw">Egon Willighagen</contributor>
+    </appinfo>
+    <documentation title="bibliography">
+      <bibtex:file>
+        <bibtex:entry id="TOD2000">
+          <bibtex:incollection>
+            <bibtex:author>Todeschini, R. and Consonni, V.</bibtex:author>
+            <bibtex:title>Methods and Principles in Medicinal Chemistry</bibtex:title>
+            <bibtex:booktitle>Handbook of Molecular Descriptors</bibtex:booktitle>
+            <bibtex:publisher>Wiley-VCH</bibtex:publisher>
+            <bibtex:year>2000</bibtex:year>
+          </bibtex:incollection>
+        </bibtex:entry>
+        <bibtex:entry id="QSARDICT">
+          <bibtex:misc>
+            <bibtex:author>The QSAR.sf.net Project</bibtex:author>
+            <bibtex:title>QSAR Descriptor Dictionary</bibtex:title>
+            <bibtex:url>http://qsar.sourceforge.net/dicts/qsar-descriptors/index.xhtml</bibtex:url>
+          </bibtex:misc>
+        </bibtex:entry>
+      </bibtex:file>
+    </documentation>
+  </annotation>
+
+  <description>
+    This dictionary describes terminology used in the qsar-descriptors <bibtex:cite ref="QSARDICT"/>
+    dictionary. As further reading the Handbook of Molecular Descriptors is 
+    recommended <bibtex:cite ref="TOD2000"/>.
+  </description>
+
+  <entry id="atomicDescriptor" term="Atomic Descriptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      A descriptor that is a property of a single molecule in the molecule.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorType"/>
+  </entry>
+
+  <entry id="constitutionalDescriptor" term="Constitutional Descriptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2005-02-07"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Descriptor reflecting the molecular composition of a compound without
+      connectivity and geometry information.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClass"/>
+  </entry>
+
+  <entry id="descriptorClass" term="Descriptor Class">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2005-02-07"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Class of descriptor.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClassifier"/>
+  </entry>
+
+  <entry id="descriptorClassification" term="Descriptor Classification">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Classification of the descriptor.
+    </definition>
+  </entry>
+
+  <entry id="descriptorClassifier" term="Descriptor Classifier">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Concept that allows descriptors to be classified into groups.
+    </definition>
+  </entry>
+
+  <entry id="descriptorType" term="Descriptor Type">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Type of descriptor.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClassifier"/>
+  </entry>
+
+  <entry id="electronicDescriptor" term="Electronic Descriptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2005-02-07"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Descriptor relating to the electronic distribution in a molecule.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClass"/>
+  </entry>
+
+  <entry id="geometricalDescriptor" term="Geometrical Descriptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2005-02-07"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Any descriptor derived from the three-dimensional structure of the molecule.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClass"/>
+  </entry>
+
+  <entry id="instanceOf" term="Is a">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Indicates that the entry is a instance of the linked entry.
+    </definition>
+  </entry>
+
+  <entry id="isAModificationOf" term="Is a Modification Of">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Indicates a relation between two descriptors of which the first is a
+      modification of the second.
+    </definition>
+  </entry>
+
+  <entry id="isModificatedAs" term="Is Modificated Into">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Indicates a relation between two descriptors of which the second is a
+      modification of the first.
+    </definition>
+  </entry>
+
+  <entry id="molecularDescriptor" term="Molecular Descriptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2004-12-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      A descriptor that is a property of the whole of the molecule.
+    </definition>
+    <definition>
+      Example molecular descriptors include the molecular mass, the number
+      of carbon atoms, and the polar surface size.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorType"/>
+  </entry>
+
+  <entry id="topologicalDescriptor" term="Topological Descriptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="elw"/>
+        <metadata name="dc:date" content="2005-02-07"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Descriptor reflecting the molecular connectivity without geometry information.
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClass"/>
+  </entry>
+
+</dictionary>
