@@ -53,6 +53,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -90,7 +91,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new Mol2Format();
     }
 

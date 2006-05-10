@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MOPAC97Format;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
@@ -66,7 +67,7 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         }
 	}
 
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new MOPAC97Format();
     }
 

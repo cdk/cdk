@@ -46,6 +46,7 @@ import org.openscience.cdk.io.cml.ChemFileCDO;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.DeAromatizationTool;
 import org.openscience.cdk.tools.LoggingTool;
@@ -113,7 +114,7 @@ public class CMLReader extends DefaultChemObjectReader {
         this.url = url;
     }
 
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new CMLFormat();
     }
 

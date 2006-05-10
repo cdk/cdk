@@ -61,6 +61,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MACiEFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -147,7 +148,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new MACiEFormat();
     }
 

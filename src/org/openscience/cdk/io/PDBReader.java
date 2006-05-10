@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
@@ -110,7 +111,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		this(new StringReader(""));
 	}
 	
-	public IChemFormat getFormat() {
+	public IResourceFormat getFormat() {
 		return new PDBFormat();
 	}
 	

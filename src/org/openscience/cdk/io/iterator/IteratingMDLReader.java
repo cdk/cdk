@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -93,7 +94,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         this(new InputStreamReader(in), builder);
     }
 
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new MDLFormat();
     }
 

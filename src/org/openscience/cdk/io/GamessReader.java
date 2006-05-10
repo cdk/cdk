@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 
 
 /**
@@ -157,7 +158,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	 */
 	//TODO Update comment with appropriate information to comply Constructor's documentation. 
 	
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new GamessFormat();
     }
     

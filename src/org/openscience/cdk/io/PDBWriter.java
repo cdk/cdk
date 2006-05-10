@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.LoggingTool;
@@ -81,7 +82,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(output));
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new PDBFormat();
     }
     

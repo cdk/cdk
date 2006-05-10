@@ -54,6 +54,7 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
@@ -144,7 +145,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new CMLFormat();
     }
     

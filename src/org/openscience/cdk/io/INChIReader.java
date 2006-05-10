@@ -47,6 +47,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.INChIFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.inchi.INChIHandler;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
@@ -104,7 +105,7 @@ public class INChIReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new INChIFormat();
     }
     

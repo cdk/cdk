@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -92,7 +93,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     public CDKSourceCodeWriter() {
         this(new StringWriter());
     }
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new CDKSourceCodeFormat();
     }
     

@@ -50,6 +50,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
 
 /**
@@ -99,7 +100,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new INChIPlainTextFormat();
     }
     

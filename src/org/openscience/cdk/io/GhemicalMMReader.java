@@ -48,6 +48,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.GhemicalMMFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -77,7 +78,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new GhemicalMMFormat();
     }
 

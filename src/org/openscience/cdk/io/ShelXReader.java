@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.math.FortranFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -96,7 +97,7 @@ public class ShelXReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new ShelXFormat();
     }
 

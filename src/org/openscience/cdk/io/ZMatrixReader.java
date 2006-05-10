@@ -53,6 +53,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ZMatrixFormat;
 
 /**
@@ -86,7 +87,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
   
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new ZMatrixFormat();
     }
 

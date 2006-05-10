@@ -39,6 +39,7 @@ import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
@@ -83,7 +84,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         this.addChemObjectIOListener(listener);
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new CMLFormat();
     }
 

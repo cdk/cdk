@@ -50,6 +50,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.HINFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 
 /**
  * Reads an object from HIN formated input.
@@ -82,7 +83,7 @@ public class HINReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new HINFormat();
     }
 

@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.GaussianInputFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.IntegerIOSetting;
@@ -96,7 +97,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new GaussianInputFormat();
     }
     

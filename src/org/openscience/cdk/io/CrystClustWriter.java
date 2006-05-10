@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.CrystClustFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -87,7 +88,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
     
-    public IChemFormat getFormat() {
+    public IResourceFormat getFormat() {
         return new CrystClustFormat();
     }
     
