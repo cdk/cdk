@@ -34,14 +34,14 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
- *  Calculation of the polarizability of a molecule by the method of Kang and
- *  Jhon and Gasteiger based on {@cdk.cite KJ81} and {@cdk.cite GH82}
- *  Limitations in parameterization of atoms:
- *  H,Csp3,Csp2,Csp2arom,Csp3,Nsp3,Nsp2,Nsp3,P,Osp3,Osp2 Aromaticity must be
- *  calculated before hand
+ * Calculation of the polarizability of a molecule by the method of Kang and
+ * Jhon and Gasteiger based on {@cdk.cite KJ81} and {@cdk.cite GH82}
+ * Limitations in parameterization of atoms:
+ * H, Csp3, Csp2, Csp2arom, Csp3, Nsp3, Nsp2, Nsp3,
+ * P, Osp3 and Osp2. Aromaticity must be calculated on beforehand.
  *
- *@author         chhoppe
- *@cdk.created    2004-11-03
+ * @author         chhoppe
+ * @cdk.created    2004-11-03
  */
 public class Polarizability {
 

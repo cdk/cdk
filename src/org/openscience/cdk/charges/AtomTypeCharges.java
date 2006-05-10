@@ -32,11 +32,11 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
- *  Assigns charges to atom types
- *  Both compilation and use of this class requires Java 1.4.
+ * Assigns charges to atom types.
  *
- *@author     chhoppe
- *@cdk.created    2004-11-03
+ * @author      chhoppe
+ * @cdk.created 2004-11-03
+ * @cdk.module  charges
  */
 public class AtomTypeCharges {
 	HOSECodeGenerator hcg = new HOSECodeGenerator();

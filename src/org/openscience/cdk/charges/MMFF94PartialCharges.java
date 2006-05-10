@@ -32,23 +32,23 @@ import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 /**
  *  The calculation of the MMFF94 partial charges.
  *  Charges are stored as atom properties:
- *  for an AtomContainer ac, values are calculated with
+ *  for an AtomContainer ac, values are calculated with:
  *  <pre>
- *  HydrogenAdder hAdder=new HydrogenAdder();
+ *  HydrogenAdder hAdder = new HydrogenAdder();
  *  SmilesParser sp = new SmilesParser();
  *  AtomContainer ac = sp.parseSmiles("CC");
  *  hAdder.addExplicitHydrogensToSatisfyValency((Molecule)ac);
  *  MMFF94PartialCharges mmff = new MMFF94PartialCharges();
  *  mmff.assignMMFF94PartialCharges(ac);
  *  </pre>
- *  and for each atom, the value is given by
+ *  and for each atom, the value is given by:
  *  <pre>
  *  ( (Double)atom.getProperty("MMFF94charge") ).doubleValue().
  *  </pre>
  *
- *@author     mfe4
- *@cdk.created    2004-11-03
- *@cdk.module     builder3d
+ * @author      mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module  forcefield
  */
 public class MMFF94PartialCharges {
 

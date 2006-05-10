@@ -37,14 +37,15 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- *  The calculation of the inductive partial atomic charges and equalization of
- *  effective electronegativities is based on {@cdk.cite CHE03}.
+ * The calculation of the inductive partial atomic charges and equalization of
+ * effective electronegativities is based on {@cdk.cite CHE03}.
  *
- *@author         mfe4
- *@cdk.created    2004-11-03
- *@cdk.keyword    partial atomic charges
- *@cdk.keyword    charge distribution
- *@cdk.keyword    electronegativity
+ * @author      mfe4
+ * @cdk.module  charges
+ * @cdk.created 2004-11-03
+ * @cdk.keyword partial atomic charges
+ * @cdk.keyword charge distribution
+ * @cdk.keyword electronegativity
  */
 public class InductivePartialCharges {
 

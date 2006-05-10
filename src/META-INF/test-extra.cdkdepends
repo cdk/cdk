@@ -16,4 +16,5 @@ cdk-applications.jar
 cdk-valencycheck.jar
 cdk-forcefield.jar
 cdk-smiles.jar
+cdk-charges.jar
 cdk-test-core.jar
