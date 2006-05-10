@@ -224,8 +224,6 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    	  }
 		      }
 		      rdfElement.appendChild(itemElement);
-		      Element liElement = new Element("rdf:li",NS_RDF);
-		      liElement.addAttribute(new Attribute("rdf:resource",NS_RDF,easylink));
 		      Element imageElement2 = new Element("rdf:li",NS_RDF);
 		      imageElement2.addAttribute(new Attribute("rdf:resource",NS_RDF,(String)linkmap.get(co)));
 		      seqElement.appendChild(imageElement2);
