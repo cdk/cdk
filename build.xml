@@ -592,16 +592,16 @@
             <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="valencycheck"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
-	    <antcall target="compile-module"><param name="module" value="charges"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb-cml"/></antcall>
+            <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
+    	    <antcall target="compile-module"><param name="module" value="charges"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
-            <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
             <antcall target="compile-module"><param name="module" value="svg"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>

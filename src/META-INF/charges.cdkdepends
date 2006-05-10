@@ -4,3 +4,4 @@ cdk-extra.jar
 cdk-interfaces.jar
 cdk-io.jar
 cdk-standard.jar
+cdk-reaction.jar

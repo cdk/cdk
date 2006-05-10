@@ -41,9 +41,9 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  * <p>If the reactive center is not localized then the reaction process will
  * try to find automatically the posible reactive center.</p>
  *  
- * @author      Miguel Rojas
- * @cdk.created     2006-5-05
- * @cdk.module reaction
+ * @author       Miguel Rojas
+ * @cdk.created  2006-5-05
+ * @cdk.module   reaction
  * 
  * @see DisplacementChargeFromAcceptorReaction
  * @see DisplacementChargeFromDonorReaction
@@ -103,7 +103,7 @@ public class StructureResonanceGenerator {
 	 * @return The different resonance structures
 	 */
 	public ISetOfAtomContainers getStructures(IAtomContainer atomContainer) {
-		ISetOfAtomContainers setOfAC = DefaultChemObjectBuilder.getInstance().newSetOfAtomContainers();
+		ISetOfAtomContainers setOfAC = atomContainer.getBuilder().newSetOfAtomContainers();
 		
 		ISetOfAtomContainers set = getAllStructures(atomContainer); 
 		/*analize sum of bonds */
