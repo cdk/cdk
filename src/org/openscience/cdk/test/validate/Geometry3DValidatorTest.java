@@ -23,30 +23,21 @@
  */
 package org.openscience.cdk.test.validate;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Hashtable;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.validate.Geometry3DValidator;
 import org.openscience.cdk.validate.ValidationReport;
 import org.openscience.cdk.validate.ValidatorEngine;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-extra
  */
 public class Geometry3DValidatorTest extends CDKTestCase {
 	
