@@ -46,7 +46,6 @@ import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
-import org.openscience.cdk.test.qsar.descriptors.QSARDescriptorTests;
 import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
@@ -113,10 +112,9 @@ public class MosjvmtsTests {
         	// from cdk.test.similarity
         	suite.addTest(TanimotoTest.suite());
         	// from cdk.test.smiles
-        	suite.addTest(SmilesGeneratorTest.suite());
-        	suite.addTest(SmilesParserTest.suite());
+        	suite.addTest(MsmilesTests.suite());
         	// from cdk.test.qsar
-        	suite.addTest(QSARDescriptorTests.suite());
+        	suite.addTest(MqsarTests.suite());
         }
 
         return suite;
