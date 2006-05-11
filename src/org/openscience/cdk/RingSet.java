@@ -26,7 +26,6 @@ package org.openscience.cdk;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -155,7 +154,7 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
 
 	public List getConnectedRings(IRing ring)
 	{
-		List connectedRings = new Vector();
+		List connectedRings = new ArrayList();
 		IRing tempRing;
 		IAtom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)

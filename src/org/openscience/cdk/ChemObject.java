@@ -29,9 +29,10 @@
  */
 package org.openscience.cdk;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -59,9 +60,9 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	private static final long serialVersionUID = 2798134548764323328L;
 
 	/**
-	 *  Vector for listener administration.
+	 * List for listener administration.
 	 */
-	private Vector chemObjectListeners;
+	private List chemObjectListeners;
 	/**
 	 *  A hashtable for the storage of any kind of properties of this IChemObject.
 	 */
@@ -95,14 +96,14 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 
 
 	/**
-	 *  Lazy creation of chemObjectListeners Vector.
+	 *  Lazy creation of chemObjectListeners List.
 	 *
-	 *@return    Vector with the ChemObjects associated.
+	 *@return    List with the ChemObjects associated.
 	 */
-	private Vector lazyChemObjectListeners()
+	private List lazyChemObjectListeners()
 	{
 		if (chemObjectListeners == null) {
-			chemObjectListeners = new Vector();
+			chemObjectListeners = new ArrayList();
 		}
 		return chemObjectListeners;
 	}
@@ -117,11 +118,11 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 */
 	public void addListener(IChemObjectListener col)
 	{
-		Vector listeners = lazyChemObjectListeners();
+		List listeners = lazyChemObjectListeners();
 
 		if (!listeners.contains(col))
 		{
-			listeners.addElement(col);
+			listeners.add(col);
 		}
 		// Should we throw an exception if col is already in here or
 		// just silently ignore it?
@@ -153,9 +154,9 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 			return;
 		}
         
-		Vector listeners = lazyChemObjectListeners();
+        List listeners = lazyChemObjectListeners();
 		if (listeners.contains(col)) {
-			listeners.removeElement(col);
+			listeners.remove(col);
 		}
 	}
 
@@ -166,9 +167,9 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 */
 	public void notifyChanged() {
         if (getNotification() && getListenerCount() > 0) {
-            Vector listeners = lazyChemObjectListeners();
+        	List listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
-                ((IChemObjectListener) listeners.elementAt(f)).stateChanged(
+                ((IChemObjectListener) listeners.get(f)).stateChanged(
                     new org.openscience.cdk.event.ChemObjectChangeEvent(this)
                 );
             }
@@ -187,9 +188,9 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 */
 	public void notifyChanged(IChemObjectChangeEvent evt) {
         if (getListenerCount() > 0) {
-            Vector listeners = lazyChemObjectListeners();
+        	List listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
-                ((IChemObjectListener) listeners.elementAt(f)).stateChanged(evt);
+                ((IChemObjectListener) listeners.get(f)).stateChanged(evt);
             }
         }
 	}

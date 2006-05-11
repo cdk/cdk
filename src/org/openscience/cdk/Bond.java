@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk;
 
-import java.util.Vector;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -144,23 +142,6 @@ public class Bond extends ElectronContainer implements java.io.Serializable, IBo
 		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
 		return returnAtoms;
 	}
-
-
-	/**
-	 *  Prepares and returns a Vector containing all the Atom objects in this bond.
-	 *
-	 *@return    A Vector containing all the Atom objects in this AtomContainer
-	 */
-	public Vector getAtomsVector()
-	{
-		Vector atomsVector = new Vector();
-		for (int f = 0; f < getAtomCount(); f++)
-		{
-			atomsVector.addElement(getAtomAt(f));
-		}
-		return atomsVector;
-	}
-
 
 	/**
 	 *  Sets the array of atoms making up this bond.

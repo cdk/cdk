@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -396,7 +395,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 */
 	public ILonePair[] getLonePairs(IAtom atom)
 	{
-		Vector lps = new Vector();
+		List lps = new ArrayList();
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			IElectronContainer electronContainer = getElectronContainerAt(i);
@@ -407,7 +406,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 			}
 		}
 		ILonePair[] result = new ILonePair[lps.size()];
-		lps.copyInto(result);
+		for (int i=0; i<lps.size(); i++) {
+			result[i] = (ILonePair)lps.get(i);
+		}
 		return result;
 	}
 
@@ -612,22 +613,24 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 */
 	public IElectronContainer[] getConnectedElectronContainers(IAtom atom)
 	{
-		Vector bondsVec = new Vector();
+		List bondsVec = new ArrayList();
 		for (int i = 0; i < electronContainerCount; i++)
 		{
 			if (electronContainers[i] instanceof IBond &&
 					((IBond) electronContainers[i]).contains(atom)) {
-				bondsVec.addElement(electronContainers[i]);
+				bondsVec.add(electronContainers[i]);
 			} else if (electronContainers[i] instanceof ILonePair &&
                     ((ILonePair) electronContainers[i]).contains((Atom)atom)) {
-				bondsVec.addElement(electronContainers[i]);
+				bondsVec.add(electronContainers[i]);
 			} else if (electronContainers[i] instanceof ISingleElectron &&
 					((ISingleElectron) electronContainers[i]).contains((Atom)atom)) {
-				bondsVec.addElement(electronContainers[i]);
+				bondsVec.add(electronContainers[i]);
 			}
 		}
 		IElectronContainer[] cons = new IElectronContainer[bondsVec.size()];
-		bondsVec.copyInto(cons);
+		for (int i=0; i<bondsVec.size(); i++) {
+			cons[i] = (IElectronContainer)bondsVec.get(i);
+		}
 		return cons;
 	}
 
@@ -754,7 +757,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 */
 	public ISingleElectron[] getSingleElectron(IAtom atom)
 	{
-		Vector lps = new Vector();
+		List lps = new ArrayList();
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			if ((electronContainers[i] instanceof ISingleElectron) && 
@@ -764,7 +767,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 			}
 		}
 		ISingleElectron[] result = new ISingleElectron[lps.size()];
-		lps.copyInto(result);
+		for (int i=0; i<lps.size(); i++) {
+			result[i] = (ISingleElectron)lps.get(i);
+		}
 		return result;
 	}
 	/**
