@@ -39,11 +39,19 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -430,7 +438,11 @@ public class MDLReader extends DefaultChemObjectReader {
                 atom1 = java.lang.Integer.valueOf(line.substring(0,3).trim()).intValue();
                 atom2 = java.lang.Integer.valueOf(line.substring(3,6).trim()).intValue();
                 order = java.lang.Integer.valueOf(line.substring(6,9).trim()).intValue();
-                stereo = java.lang.Integer.valueOf(line.substring(9,12).trim()).intValue();
+                if (line.length() > 12) {
+                	stereo = java.lang.Integer.valueOf(line.substring(9,12).trim()).intValue();
+                } else {
+                	logger.warn("Missing expected stereo field at line: " + line);
+                }
                 if (logger.isDebugEnabled()) {
                     logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
                 }
@@ -555,10 +567,10 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
             }
 		} catch (CDKException exception) {
-            String error = "Error while parsing line " + linecount + ": " + line + " in property block: " + exception.getMessage();
+            String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             throw exception;
 		} catch (Exception exception) {
-            String error = "Error while parsing line " + linecount + ": " + line + " in property block: " + exception.getMessage();
+            String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
             throw new CDKException(error, exception);
