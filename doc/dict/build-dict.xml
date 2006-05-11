@@ -1,14 +1,14 @@
 <project name="Dict XHTML+MathML+SVG script" default="all-process" basedir=".">
-	<import file="build.xml"/>
+	<import file="../../build.xml"/>
 	
 	<!-- directories -->
-	<property name="build" value="build" />
-    <property name="build.dict" value="${build}/dict" />
+	<property name="build" value="../../build" />
+    <property name="build.dict" value="../../build/dict" />
     <property name="build.react" value="${build.dict}/react" />
     <property name="build.qsar" value="${build.dict}/qsar" />
-	<property name="src" value="src" />
-    <property name="data.dict" value="${src}/org/openscience/cdk/dict/data" />
-	<property name="dict.xsl" value="doc/dict/xsl" />
+	<property name="src" value="../../src" />
+    <property name="data.dict" value="../../src/org/openscience/cdk/dict/data" />
+	<property name="dict.xsl" value="xsl" />
   
 	<target id="clean" name="clean">
         <delete dir="${build.dict}" />
