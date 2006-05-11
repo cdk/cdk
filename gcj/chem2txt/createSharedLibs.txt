@@ -1,7 +1,0 @@
-gcj-4.0 -shared -Wall -o gnujaxp.so gnujaxp.jar
-gcj-4.0 -shared -Wall -o jgrapht-0.5.3.so jgrapht-0.5.3.jar
-gcj-4.0 -shared -Wall -o log4j.so log4j.jar
-gcj-4.0 -shared -Wall -o printf.so printf.jar
-gcj-4.0 -shared -Wall -o vecmath1.2-1.14.so vecmath1.2-1.14.jar
-
-
