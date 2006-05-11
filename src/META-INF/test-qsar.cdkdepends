@@ -14,4 +14,5 @@ cdk-smiles.jar
 cdk-test-core.jar
 cdk-applications.jar
 cdk-builder3d.jar
+cdk-forcefield.jar
 
