@@ -54,6 +54,7 @@ import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.JaguarFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
@@ -150,6 +151,10 @@ public class ReaderFactoryTest extends CDKTestCase {
         expectReader("data/pdb/coffeine.pdb", new PDBFormat());
     }
     
+    public void testMol2() {
+    	expectReader("data/mol2/fromWebsite.mol2", new Mol2Format());
+    }
+    
     private void expectFormat(String filename, IChemFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
@@ -179,6 +184,7 @@ public class ReaderFactoryTest extends CDKTestCase {
             ins = this.getClass().getClassLoader().getResourceAsStream(filename);
             IChemObjectReader reader = factory.createReader(ins);
             assertNotNull(reader);
+            assertEquals(format.getReaderClassName(), reader.getClass().getName());
             // now try reading something from it
             ChemObject[] objects = { 
                 new ChemFile(), new ChemModel(), new Molecule(),
