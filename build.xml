@@ -577,9 +577,8 @@
         	<antcall target="dist-jmol"/>
       		<antcall target="dist-joelib"/>
         </target>
-        
-	
-    	<target id="dist-all" name="dist-all" description="dist-all">
+
+    <target id="dist-all" name="dist-all" description="dist-all">
             <antcall target="compile-init"/>
             <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
@@ -621,8 +620,8 @@
         <antcall target="compile-module"><param name="module" value="test-forcefield"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-experimental"/></antcall>
+	<antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-osjvmts"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all" 

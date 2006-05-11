@@ -21,3 +21,4 @@ cdk-test-io.jar
 cdk-test-data.jar
 cdk-test-datadebug.jar
 cdk-test-smiles.jar
+cdk-test-qsar.jar
