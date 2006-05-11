@@ -26,6 +26,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.io.ChemObjectIOInstantionTests;
 import org.openscience.cdk.test.io.CrystClustReaderTest;
 import org.openscience.cdk.test.io.GamessReaderTest;
 import org.openscience.cdk.test.io.Gaussian98ReaderTest;
@@ -78,6 +79,7 @@ public class MioTests {
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
         suite.addTest(ReaderFactoryTest.suite());
+        suite.addTest(ChemObjectIOInstantionTests.suite());
         
         // cdk.io.iterator package
         suite.addTest(IteratingMDLReaderTest.suite());
