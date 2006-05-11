@@ -28,6 +28,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.vecmath.Point3d;
@@ -43,11 +44,9 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.tools.FormatStringBuffer;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -63,6 +62,10 @@ public class PDBWriter extends DefaultChemObjectWriter {
 	
 	static BufferedWriter writer;
     
+	public PDBWriter() {
+		this(new StringWriter());
+	}
+	
     /**
      * Creates a PDB writer.
     * @param output the stream to write the XYZ file to.

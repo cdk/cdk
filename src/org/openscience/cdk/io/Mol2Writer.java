@@ -27,22 +27,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.ISetOfReactions;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
@@ -61,10 +54,14 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 	static BufferedWriter writer;
 	private LoggingTool logger;
     
+    public Mol2Writer() {
+    	this(new StringWriter());
+    }
+
     /**
-    * Constructs a new Mol2 writer.
-    * @param out the stream to write the Mol2 file to.
-    */
+     * Constructs a new Mol2 writer.
+     * @param out the stream to write the Mol2 file to.
+     */
     public Mol2Writer(Writer out) {
     	logger = new LoggingTool(this);
     	try {
@@ -131,9 +128,6 @@ public class Mol2Writer extends DefaultChemObjectWriter {
      */
     public void writeMolecule(IMolecule mol) throws IOException {
 
-        String st = "";
-        boolean writecharge = true;
-
         try {
 
 /*
@@ -145,6 +139,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 #        Modification time: Wed Dec 28 00:18:30 1988
 */
 
+        	logger.debug("Writing header...");
             if (mol.getProperty(CDKConstants.TITLE) != null) {
                 writer.write("#        Name: " + mol.getProperty(CDKConstants.TITLE) + "\n");
             }
@@ -159,6 +154,7 @@ SMALL
 NO_CHARGES 
 */
 
+            logger.debug("Writing molecule block...");
             writer.write("@<TRIPOS>MOLECULE\n");
             writer.write(mol.getID() + "\n");
             writer.write(mol.getAtomCount() + " " + 
@@ -184,6 +180,7 @@ NO_CHARGES
 */
 
             // write atom block
+            logger.debug("Writing atom block...");
             writer.write("@<TRIPOS>ATOM\n");
             IAtom[] atoms = mol.getAtoms();
             for (int i=0; i<atoms.length; i++) {
@@ -220,6 +217,7 @@ NO_CHARGES
 */
 
             // write bond block
+            logger.debug("Writing bond block...");
             writer.write("@<TRIPOS>BOND\n");
             IBond[] bonds = mol.getBonds();
             for (int i=0; i<bonds.length; i++) {
