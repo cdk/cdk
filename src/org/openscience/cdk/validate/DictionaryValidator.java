@@ -27,7 +27,7 @@ package org.openscience.cdk.validate;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -51,7 +51,7 @@ public class DictionaryValidator extends AbstractValidator {
         this.db = db;
     }
 
-    public ValidationReport validateChemObject(ChemObject subject) {
+    public ValidationReport validateChemObject(IChemObject subject) {
         ValidationReport report = new ValidationReport();
         Map properties = subject.getProperties();
         Iterator iter = properties.keySet().iterator();

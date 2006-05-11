@@ -24,23 +24,7 @@
  */
 package org.openscience.cdk.validate;
 
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Vector;
-
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.EnzymeResidueLocator;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.io.MACiEReader;
-import org.openscience.cdk.io.PDBReader;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * Validates the 3D geometry of the model.

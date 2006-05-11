@@ -29,11 +29,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.EnzymeResidueLocator;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.MACiEReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.tools.LoggingTool;
@@ -62,20 +63,20 @@ public class PDBValidator extends AbstractValidator {
 
     public PDBValidator() {}
 
-    public ValidationReport validateChemModel(ChemModel subject) {
+    public ValidationReport validateChemModel(IChemModel subject) {
         ValidationReport report = new ValidationReport();
         logger.debug("Starting to validate against PDB entry...");
         Object PDBcodeObject = subject.getProperty(MACiEReader.PDBCode);
         if (PDBcodeObject != null) {
             String PDB = PDBcodeObject.toString();
             logger.info("Validating against PDB code: " + PDB);
-            ChemFile file = null;
+            IChemFile file = null;
             try {
                 URL pdbQuery = new URL(prefix + PDB + postfix);
                 logger.info("Downloading PDB file from: " + pdbQuery.toString());
                 URLConnection connection = pdbQuery.openConnection();
                 PDBReader reader = new PDBReader(new InputStreamReader(connection.getInputStream()));
-                file = (ChemFile)reader.read(new ChemFile());
+                file = (IChemFile)reader.read(subject.getBuilder().newChemFile());
             } catch (Exception exception) {
                 logger.error("Could not download or parse PDB entry");
                 logger.debug(exception);
@@ -86,7 +87,7 @@ public class PDBValidator extends AbstractValidator {
             // ok, now make a hash with all residueLocator in the PDB file
             Vector residues = new Vector();
             IAtomContainer allPDBAtoms = ChemFileManipulator.getAllInOneContainer(file);
-            org.openscience.cdk.interfaces.IAtom[] atoms = allPDBAtoms.getAtoms();
+            IAtom[] atoms = allPDBAtoms.getAtoms();
             logger.info("Found in PDB file, #atoms: " + atoms.length);
             for (int i=0; i< atoms.length; i++) {
                 String resName = (String)atoms[i].getProperty("pdb.resName");
@@ -100,15 +101,15 @@ public class PDBValidator extends AbstractValidator {
             
             // now see if the model undergoing validation has bad locators
             IAtomContainer allAtoms = ChemModelManipulator.getAllInOneContainer(subject);
-            org.openscience.cdk.interfaces.IAtom[] validateAtoms = allAtoms.getAtoms();
+            IAtom[] validateAtoms = allAtoms.getAtoms();
             for (int i=0; i<validateAtoms.length; i++) {
                 // only testing PseudoAtom's
-            	org.openscience.cdk.interfaces.IAtom validateAtom = validateAtoms[i];
+            	IAtom validateAtom = validateAtoms[i];
                 if (validateAtom instanceof EnzymeResidueLocator) {
                     ValidationTest badResidueLocator = new ValidationTest(validateAtom,
                         "ResidueLocator does not exist in PDB entry."
                     );
-                    String label = ((PseudoAtom)validateAtom).getLabel();
+                    String label = ((IPseudoAtom)validateAtom).getLabel();
                     if (residues.contains(label.toLowerCase())) {
                         // yes, not problem
                         report.addOK(badResidueLocator);

@@ -24,8 +24,9 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyChecker;
 import org.openscience.cdk.tools.IValencyChecker;
@@ -50,11 +51,11 @@ public class ValencyValidator extends AbstractValidator {
     public ValencyValidator() {
     }
     
-    public ValidationReport validateMolecule(Molecule subject) {
+    public ValidationReport validateMolecule(IMolecule subject) {
         ValidationReport report = new ValidationReport();
-        org.openscience.cdk.interfaces.IAtom[] atoms = subject.getAtoms();
+        IAtom[] atoms = subject.getAtoms();
         for (int i=0; i<atoms.length; i++) {
-            if (!(atoms[i] instanceof PseudoAtom)) {
+            if (!(atoms[i] instanceof IPseudoAtom)) {
                 report.addReport(validateAtomValency(atoms[i], subject));
             }
         }
@@ -63,7 +64,7 @@ public class ValencyValidator extends AbstractValidator {
     
     // the Molecule tests
 
-    private static ValidationReport validateAtomValency(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
+    private static ValidationReport validateAtomValency(IAtom atom, IMolecule molecule) {
         ValidationReport report = new ValidationReport();
         ValidationTest checkValency = new ValidationTest(atom,
             "The atom has an unfulfilled valency."

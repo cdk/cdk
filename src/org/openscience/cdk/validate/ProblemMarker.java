@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.validate;
 
+import org.openscience.cdk.interfaces.IChemObject;
+
 /**
  * Tool to mark IChemObject's as having a problem. There are two levels:
  * a problem, and a warning, to allow for different coloring by renderer's.
@@ -38,23 +40,23 @@ public class ProblemMarker {
     public static String ERROR_MARKER = "org.openscience.cdk.validate.error";
     public static String WARNING_MARKER = "org.openscience.cdk.validate.warning";
     
-    public static void markWithError(org.openscience.cdk.interfaces.IChemObject object) {
+    public static void markWithError(IChemObject object) {
         object.setProperty(ERROR_MARKER, new Boolean(true));
     }
 
-    public static void markWithWarning(org.openscience.cdk.interfaces.IChemObject object) {
+    public static void markWithWarning(IChemObject object) {
         object.setProperty(WARNING_MARKER, new Boolean(true));
     }
 
-    public static void unmarkWithError(org.openscience.cdk.interfaces.IChemObject object) {
+    public static void unmarkWithError(IChemObject object) {
         object.removeProperty(ERROR_MARKER);
     }
 
-    public static void unmarkWithWarning(org.openscience.cdk.interfaces.IChemObject object) {
+    public static void unmarkWithWarning(IChemObject object) {
         object.removeProperty(WARNING_MARKER);
     }
     
-    public static void unmark(org.openscience.cdk.interfaces.IChemObject object) {
+    public static void unmark(IChemObject object) {
         unmarkWithWarning(object);
         unmarkWithError(object);
     }

@@ -24,8 +24,9 @@
  */
 package org.openscience.cdk.validate;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemSequence;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
  * This Validator tests the internal datastructures, and
@@ -39,16 +40,16 @@ public class CDKValidator extends AbstractValidator {
     public CDKValidator() {
     }
     
-    public ValidationReport validateChemFile(ChemFile subject) {
+    public ValidationReport validateChemFile(IChemFile subject) {
         return validateChemFileNulls(subject);
     }
-    public ValidationReport validateChemSequence(ChemSequence subject) {
+    public ValidationReport validateChemSequence(IChemSequence subject) {
         return validateChemSequenceNulls(subject);
     }
 
-    private ValidationReport validateChemFileNulls(ChemFile chemFile) {
+    private ValidationReport validateChemFileNulls(IChemFile chemFile) {
         ValidationReport report = new ValidationReport();
-        org.openscience.cdk.interfaces.IChemSequence[] sequences = chemFile.getChemSequences();
+        IChemSequence[] sequences = chemFile.getChemSequences();
         ValidationTest hasNulls = new ValidationTest(chemFile,
             "ChemFile contains a null ChemSequence."
         );
@@ -63,9 +64,9 @@ public class CDKValidator extends AbstractValidator {
         return report;
     }
         
-    private ValidationReport validateChemSequenceNulls(ChemSequence sequence) {
+    private ValidationReport validateChemSequenceNulls(IChemSequence sequence) {
         ValidationReport report = new ValidationReport();
-        org.openscience.cdk.interfaces.IChemModel[] models = sequence.getChemModels();
+        IChemModel[] models = sequence.getChemModels();
         ValidationTest hasNulls = new ValidationTest(sequence,
             "ChemSequence contains a null ChemModel."
         );
